@@ -193,7 +193,7 @@ class goto_task extends plugin
 
     $divlist = new divlist("goto_task");
     $divlist->SetPluginMode(); 
-    $divlist->SetHeight("160");
+    $divlist->SetWidth("100%");
     $divlist->SetEntriesPerPage(0);
 
     $acl_target = $this->parent->getacl("Target");

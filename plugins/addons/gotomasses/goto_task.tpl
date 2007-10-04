@@ -198,7 +198,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-            <table  summary="" style="border:1px solid #B0B0B0;width:600px; " cellspacing=0 cellpadding=0>
+            <table  summary="" style="border:1px solid #B0B0B0;width:100%; " cellspacing=0 cellpadding=0>
                 <tr>
                     <td>
 						{render acl=$TargetACL}
