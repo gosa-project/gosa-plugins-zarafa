@@ -574,3 +574,10 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.39 NAME 'goVirusServer' SUP top AUXILIARY
 objectclass (1.3.6.1.4.1.10098.1.2.1.40 NAME 'gosaLogServer' SUP top AUXILIARY
 	DESC 'GOsa log server (v2.6)'
 	MUST ( cn $ goLogDB $ goLogDBUser $ goLogDBPassword ))
+
+# Environment Server
+objectclass (1.3.6.1.4.1.10098.1.2.1.41 NAME 'goEnvironmentServer' SUP top AUXILIARY
+	DESC 'Environment server definition (v2.6)'
+	MUST ( cn )
+	MAY  ( gotoKioskProfile ) )
+
