@@ -85,8 +85,13 @@
    <table summary="{t}Kiosk profile settings{/t}">
     <tr>
      <td>
+      <label for="kiosk_server">{t}Kiosk profile{/t}</label>
+     </td>
+    </tr>
+    <tr>
+     <td>
       {t}Server{/t}
-      <select name='kiosk_server' onChange='document.mainform.submit();'>
+      <select name='kiosk_server' id="kiosk_server" onChange='document.mainform.submit();'>
        {html_options options=$kiosk_servers selected=$kiosk_server}
       </select>
      </td>
