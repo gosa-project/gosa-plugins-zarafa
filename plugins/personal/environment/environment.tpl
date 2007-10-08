@@ -85,18 +85,16 @@
    <table summary="{t}Kiosk profile settings{/t}">
     <tr>
      <td>
-      <label for="gotoKioskProfile">{t}Kiosk profile{/t}</label>
+      {t}Server{/t}
+      <select name='kiosk_server' onChange='document.mainform.submit();'>
+       {html_options options=$kiosk_servers selected=$kiosk_server}
+      </select>
      </td>
      <td>
-{render acl=$gotoKioskProfileACL}
-      <select name="gotoKioskProfile" id="gotoKioskProfile">
-       {html_options values=$gotoKioskProfileKeys output=$gotoKioskProfiles selected=$gotoKioskProfile}
-       <option disabled>&nbsp;</option>
-      </select>&nbsp;
-{/render}
-{render acl=$gotoKioskProfileACL}
-      <input type="submit" name="KioskManagementDialog" value="{t}Manage{/t}">
-{/render}
+      {t}Profile{/t}
+      <select name='kiosk_profile'>
+       {html_options values=$kiosk_profiles output=$kiosk_profiles selected=$kiosk_profile}
+      </select>
      </td>
     </tr>
     <tr>

@@ -51,10 +51,10 @@ class environment extends plugin
 
   /* Kiosk profile */
   var $kiosk_enabled      = FALSE;
-  var $gotoKioskProfile   = "none";     // The selected Kiosk Profile
+  var $gotoKioskProfile   = "";     // The selected Kiosk Profile
+  var $gotoKioskiProfile_Server    = "";     // The selected Kiosk Profile
+  var $gotoKioskiProfile_Profile   = "";     // The selected Kiosk Profile
   var $gotoKioskProfiles  = array();// All available Kiosk profiles
-  var $newKioskProfiles   = array();
-  var $kioskProfileList   = array(); // Displayed List of Profiles
 
   /* Hotplug Devices */
   var $gotoHotplugDevice  = array();     // Selected hotplug
@@ -66,15 +66,14 @@ class environment extends plugin
   /* general settings */
   // Sets the attributes which will kept on page reload, which will be saved, ...
 
-  var $CopyPasteVars      = array("gotoHotplugDevices","newKioskProfiles","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
+  var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDevice",
       "gotoXResolution","gotoProfileQuota",
       "gotoLogonScripts","gotoLogonScript",
       "gotoPrinter", "gosaDefaultPrinter",
       "gotoShares","gotoShare",
-      "gotoKioskProfile","gotoKioskProfiles"
-      );
+      "gotoKioskProfile");
   var $objectclasses      = array("gotoEnvironment"); // Specifies the objectClass which contains the attributes edited here 
   var $cn;
   var $OrigCn;
@@ -98,8 +97,6 @@ class environment extends plugin
     }else{
       $suffix="User";
     }
-
-    $this->gotoKioskProfile= preg_replace("/^.*\//i","",$this->gotoKioskProfile);
 
     /* Get all Printer assignments */
     $ldap = $this->config->get_ldap_link();
@@ -238,16 +235,51 @@ class environment extends plugin
     $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);  
 
+    $this->update_kiosk_profiles();
+  
+    $this->gotoKioskProfile= preg_replace("/^.*\//i","",$this->gotoKioskProfile);
+  }
 
-    if($this->config->search('environment', 'kioskpath',array('menu','tabs')) != ""){
-      $tmp = new kioskManagementDialog($this->config,$this->dn);
-      $list = $tmp->getKioskProfiles($this->newKioskProfiles);
-      $list['none']=_("None");
-      $this->kioskProfileList = array_reverse($list);
+
+  function update_kiosk_profiles()
+  { 
+    $tmp1  = array("none" => array(_("None")));
+    $tmp2  = array("none" => _("None"));
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=goEnvironmentServer)(gotoKioskProfile=*)(cn=*))",array("cn","gotoKioskProfile"));
+    $cnt = 0;
+    while($attrs = $ldap->fetch()){
+      for($i = 0 ; $i < $attrs['gotoKioskProfile']['count'] ; $i ++){
+        $name = preg_replace("/^.*kiosk\//","",$attrs['gotoKioskProfile'][$i]);
+        $tmp1[$attrs['cn'][0]][] = $name;
+      }
+      $tmp2[$attrs['cn'][0]]= $attrs['cn'][0];
+      $cnt ++;
+    }
+
+    if($cnt && $this->config->search("environment","kioskpath",array('menu','tabs'))){
       $this->kiosk_enabled = TRUE;
-    }else{
-      $this->kiosk_enabled = FALSE;
-      $this->kioskProfileList = array();
+    }
+
+    $this->gotoKioskProfiles['BY_SERVER'] = $tmp1;
+    $this->gotoKioskProfiles['SERVERS']   = $tmp2;
+  
+    $this->gotoKioskProfile_Server = preg_replace("/^.*:\/\/([^\/]*).*$/","\\1",$this->gotoKioskProfile);
+    $this->gotoKioskProfile_Profile= preg_replace("/^.*\//","",$this->gotoKioskProfile);
+
+    $error = false;
+    if(!in_array($this->gotoKioskProfile_Server, $this->gotoKioskProfiles['SERVERS'])){
+      $this->gotoKioskProfile_Server = key($this->gotoKioskProfiles['SERVERS']);
+      $error = true;
+    }
+    if(!in_array($this->gotoKioskProfile_Profile, $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
+      $this->gotoKioskProfile_Profile = $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server][0];
+      $error = true;
+    }
+    if($error && !empty($this->gotoKioskProfile)){
+      print_red(sprintf(_("The selected kiosk profile wasn't available anymore. Profile was set to %s.%s."),
+            $this->gotoKioskProfile_Server,$this->gotoKioskProfile_Profile));
     }
   }
 
@@ -267,6 +299,9 @@ class environment extends plugin
 
   function execute()
   {
+
+  
+
     /* Call parent execute */
     plugin::execute();
     /* Log view */
@@ -493,37 +528,12 @@ class environment extends plugin
     }
     $smarty->assign("gotoProfileServerKeys",array_flip($this->gotoProfileServers));
 
-    /* Handle kiosk profiles 
-     * Read available from filesystem
-     * Open management if post is transmitted
-     */
-
-    /* Save */
-    if(isset($_POST['KioskClose'])){
-      $this->newKioskProfiles = array_merge($this->newKioskProfiles,$this->dialog->save());
-
-      /* Update list of kiosk profiles */
-      $list = $this->dialog->getKioskProfiles($this->newKioskProfiles);
-      $list['none']=_("None");
-      $this->kioskProfileList = array_reverse($list);
-
-      unset($this->dialog);
-      $this->dialog = false;
-      $this->is_dialog = false;
-    }
-
-    /* Reassign help class */
-    $_SESSION['current_class_for_help'] = get_class($this);
-
-    /* Open Management Dialog */
-    if(isset($_POST['KioskManagementDialog'])){
-      $this->dialog = new kioskManagementDialog($this->config,$this->dn,$this->newKioskProfiles); 
-      $this->dialog->parent= $this;
-      $this->dialog->acl = $this->acl;
-      $this->is_dialog = true;
-    }
-    $smarty->assign("gotoKioskProfiles",$this->kioskProfileList);
-    $smarty->assign("gotoKioskProfileKeys",array_flip($this->kioskProfileList));
+    /* Handle kiosk profiles*/
+    $smarty->assign("kiosk_servers" , $this->gotoKioskProfiles['SERVERS']);
+    $smarty->assign("kiosk_server" ,  $this->gotoKioskProfile_Server);
+    $smarty->assign("kiosk_profiles" , $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server]);
+    $smarty->assign("kiosk_profile" ,  $this->gotoKioskProfile_Profile);
+  
 
     /* Logonscript Management
      * Get available LogonScripts (possibly grey out (or mark) these script that are defined for the group) 
@@ -917,15 +927,6 @@ class environment extends plugin
     if(is_object($this->dialog)){
       $this->dialog->save_object();
       $disp =$this->dialog->execute();
-
-      $tmp = new kioskManagementDialog($this->config,$this->dn);
-      $list = $tmp->getKioskProfiles($this->newKioskProfiles);
-      $list['none']=_("None");
-      $list = array_reverse($list);
-      if(!isset($list[$this->gotoKioskProfile])){
-        print_red(sprintf(_("The selected kiosk profile '%s' is no longer available, setting current profile to 'none'."),$this->gotoKioskProfile));
-        $this->gotoKioskProfile = 'none';
-      }
       return($disp);
     }
 
@@ -948,7 +949,7 @@ class environment extends plugin
     plugin::remove_from_parent();
 
     /* Don't save our template variables */
-    $skip = array("uid","gotoLogonScripts","gotoPrinter","gotoShares","gotoKioskProfiles","gotoHotplugDevices" );
+    $skip = array("uid","gotoLogonScripts","gotoPrinter","gotoShares","gotoHotplugDevices" );
 
     /* Skip all these attributes */
     foreach($skip as $del){
@@ -984,6 +985,19 @@ class environment extends plugin
     if(isset($_POST['iamposted'])){
 
       $PACL =  $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly);
+
+      if(isset($_POST['kiosk_server'])){
+        $tmp = $_POST['kiosk_server'];
+        if(isset($this->gotoKioskProfiles['SERVERS'][$tmp])){
+          $this->gotoKioskProfile_Server = $_POST['kiosk_server'];
+        }
+      }
+      if(isset($_POST['kiosk_profile'])){
+        $tmp = $_POST['kiosk_profile'];
+        if(in_array($tmp,$this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
+          $this->gotoKioskProfile_Profile = $_POST['kiosk_profile'];
+        }
+      }
 
       if(preg_match("/w/",$PACL)){
         if(isset($_POST['useProfile'])){
@@ -1056,16 +1070,13 @@ class environment extends plugin
     /* If group was renamed, all printer settings get lost
      */ 
     /* only save changed variables ....*/
-    if ($this->gotoKioskProfile =="none") $this->gotoKioskProfile ="";
-    if((!empty($this->gotoKioskProfile))&&($this->gotoKioskProfile != "none")){
+    if ($this->gotoKioskProfile_Server !="none"){
       if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
-        $method="https://";
+        $method="https://".$this->gotoKioskProfile_Server."/kiosk/".$this->gotoKioskProfile_Profile;
       }else{
-        $method="http://";
+        $method="http://".$this->gotoKioskProfile_Server."/kiosk/".$this->gotoKioskProfile_Profile;
       }
-
-      $str = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/kiosk/");
-      $this->gotoKioskProfile= $str.$this->gotoKioskProfile;
+      $this->gotoKioskProfile= $method;
     }else{
       $this->gotoKioskProfile= array();
     }
@@ -1074,19 +1085,6 @@ class environment extends plugin
     $ldap= $this->config->get_ldap_link();
 
     $realyUsedAttrs= array();
-
-    $tmp = $this->config->search("environment", "KIOSKPATH",array('tabs'));
-    /* Creating Kiosk Profiles */
-    foreach($this->newKioskProfiles as $file){
-      $contents = $file['contents'];
-      $fp = @fopen($path."/".$file['name'],"w");
-      if(!$fp){
-        print_red(_("Can't save new kiosk profiles, possibly permission denied for folder")." : ",$path);
-      }else{
-        fwrite($fp,$contents,strlen($contents));
-      }
-      @unlink($file['tmp_name']);
-    }
 
     /* Save already used objectClasses */
     $ocs        = $this->attrs['objectClass'];
