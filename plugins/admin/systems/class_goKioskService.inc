@@ -72,9 +72,6 @@ class goKioskService extends goService{
       }
     }
 
-    print_a($_POST);
-
-  
     $only_once = true;
     foreach($_POST as $name => $value){
 
