@@ -42,7 +42,27 @@ class goKioskService extends goService{
     }
   }
 
-    
+
+  function remove_from_parent()
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gotoEnvironment)(gotoKioskProfile=*/".$this->cn."/*))",array("cn"));
+    $str ="";
+    $cnt = 3;
+    while($cnt && $attrs = $ldap->fetch()){
+      $str .= $attrs['cn'][0].", ";
+      $cnt --;
+    }    
+    $str = preg_replace("/, $/","",$str);
+    if($cnt != 3){
+      print_red(sprintf(_("Can not remove kiosk profile service, it is currently in use by following user(s) : %s."),$str));
+    }else{
+      goService::remove_from_parent();
+    }
+  }
+  
+  
   function execute()
   { 
     /* log actions */

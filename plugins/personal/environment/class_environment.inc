@@ -278,7 +278,7 @@ class environment extends plugin
       $error = true;
     }
     if($error && !empty($this->gotoKioskProfile)){
-      print_red(sprintf(_("The selected kiosk profile wasn't available anymore. Profile was set to %s.%s."),
+      print_red(sprintf(_("The selected kiosk profile wasn't available anymore. The current profile is now 'none'."),
             $this->gotoKioskProfile_Server,$this->gotoKioskProfile_Profile));
     }
   }
