@@ -64,12 +64,20 @@ $config= $_SESSION['config'];
 /* Check ACL's */
 #FIXME Use more specific acl categories instead of all/all
 $ui = get_userinfo();
-$acl = $ui->get_permissions(base64_decode($_GET['id']),"all/all");
-if(!preg_match("/r/",$acl)){
+
+$tmp = $ui->get_module_departments("server/goKioskService");
+$found = FALSE;
+foreach($tmp as $dir){
+  if(preg_match("/r/",$ui->get_permissions($dir,"server/goKioskService"))){
+    $found = TRUE;
+    break;
+  }
+}
+if(!$found){
   header ("Location: index.php");
   exit;
 }
-$dir= $config->search('environment', 'kioskpath', array('main','tabs'));
+$dir= $config->search('environment', 'kioskpath', array('tabs','menu'));
 getkiosk($dir."/".$_GET['id']);
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
