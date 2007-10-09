@@ -120,18 +120,22 @@ class environment extends plugin
       $ldap->cd($this->config->current['BASE']);
       for($i = 0 ; $i < $this->attrs['gotoHotplugDeviceDN']['count'] ; $i ++){
         $ldap->cat($this->attrs['gotoHotplugDeviceDN'][$i]);
-        $attrs = $ldap->fetch(); 
+        if($ldap->count()){
+          $attrs = $ldap->fetch(); 
 
-        if(isset($attrs['gotoHotplugDevice'][0])){
-          $tmp      = preg_split("/\|/",$attrs['gotoHotplugDevice'][0]);
-          $tmp2     = array();
-          $tmp2['name']         = $attrs['cn'][0];
-          $tmp2['description']  = $tmp[0];
-          $tmp2['id']           = $tmp[1];
-          $tmp2['produkt']      = $tmp[2];
-          $tmp2['vendor']       = $tmp[3];
-          $tmp2['dn']           = $attrs['dn'];
-          $this->gotoHotplugDevices[] = $tmp2; 
+          if(isset($attrs['gotoHotplugDevice'][0])){
+            $tmp      = preg_split("/\|/",$attrs['gotoHotplugDevice'][0]);
+            $tmp2     = array();
+            $tmp2['name']         = $attrs['cn'][0];
+            $tmp2['description']  = $tmp[0];
+            $tmp2['id']           = $tmp[1];
+            $tmp2['produkt']      = $tmp[2];
+            $tmp2['vendor']       = $tmp[3];
+            $tmp2['dn']           = $attrs['dn'];
+            $this->gotoHotplugDevices[] = $tmp2; 
+          }
+        }else{
+          print_red(sprintf(_("The selected hotplug device %s is no longer available, it will be removed when you save this account."),$this->attrs['gotoHotplugDeviceDN'][$i]));
         }
       }
     }
