@@ -68,7 +68,7 @@ class environment extends plugin
 
   var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
 
-  var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDevice",
+  var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDeviceDN",
       "gotoXResolution","gotoProfileQuota",
       "gotoLogonScripts","gotoLogonScript",
       "gotoPrinter", "gosaDefaultPrinter",
@@ -120,37 +120,22 @@ class environment extends plugin
       for($i = 0 ; $i < $this->attrs['gotoHotplugDeviceDN']['count'] ; $i ++){
         $ldap->cat(base64_decode($this->attrs['gotoHotplugDeviceDN'][$i]));
         $attrs = $ldap->fetch(); 
-        $this->gotoHotplugDevices[$attrs['cn'][0]] = array('name' => $attrs['cn'][0], 'id' => rand(1,10));
+
+        if(isset($attrs['gotoHotplugDevice'][0])){
+          $tmp      = preg_split("/\|/",$attrs['gotoHotplugDevice'][0]);
+          $tmp2     = array();
+          $tmp2['name']         = $attrs['cn'][0];
+          $tmp2['description']  = $tmp[0];
+          $tmp2['id']           = $tmp[1];
+          $tmp2['produkt']      = $tmp[2];
+          $tmp2['vendor']       = $tmp[3];
+          $tmp2['dn']           = $attrs['dn'];
+          $this->gotoHotplugDevices[] = $tmp2; 
+        }
       }
     }
-  
 
-#   /* prepare hotplugs */
-#   if((isset($this->attrs['gotoHotplugDevice']))&&(is_array($this->attrs['gotoHotplugDevice']))){
-#     unset($this->attrs['gotoHotplugDevice']['count']);
-#     foreach($this->attrs['gotoHotplugDevice'] as $device){
-#       $tmp = $tmp2 = array();
-#       $tmp = split("\|",$device);
-#       $tmp2['name']        = $tmp[0]; 
-#       $tmp2['description'] = $tmp[1]; 
-#       $tmp2['id']          = $tmp[2]; 
-#
-#       /* Produkt ID */
-#       if(!isset($tmp[3])){
-#         $tmp[3] = "";
-#       }
-#       /* Vendor ID */
-#       if(!isset($tmp[4])){
-#         $tmp[4] = "";
-#       }
-#
-#       $tmp2['produkt']     = $tmp[3]; 
-#       $tmp2['vendor']      = $tmp[4];
-#
-#       $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
-#     }
-#   }
-
+ 
     /* prepare LogonScripts */
     if((isset($this->attrs['gotoLogonScript']))&&(is_array($this->attrs['gotoLogonScript']))){
       unset($this->attrs['gotoLogonScript']['count']);
@@ -312,8 +297,6 @@ class environment extends plugin
 
   function execute()
   {
-
-  
 
     /* Call parent execute */
     plugin::execute();
@@ -749,12 +732,6 @@ class environment extends plugin
      * Editing an entry will open a dialog where the informations about the selcted entry can be changed
      */
 
-    /* If there is a new entry wanted, open a new entry by initilising the dialog */
-    if((isset($_POST['gotoHotplugDeviceNew'])) && ($this->acl_is_writeable("gotoHotplugDevice"))){
-      $this->dialog = new hotplugDialog($this->config,$this->dn);
-      $this->is_dialog = true;
-    }
-
     /* We have to delete the selected hotplug from the list*/
     if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice_post'])) && $this->acl_is_writeable("gotoHotplugDevice")){
       if($this->acl_is_writeable("gotoHotplugDevice")){
@@ -770,7 +747,7 @@ class environment extends plugin
       foreach($this->gotoHotplugDevices as $plugs){
         $tmp[] = $plugs['name'];
       }
-      $this->dialog = new hotplugDialog($this->config,$this->dn,true,$tmp);
+      $this->dialog = new hotplugDialog($this->config,$tmp);
       $this->is_dialog = true;
     }
 
@@ -1167,12 +1144,7 @@ class environment extends plugin
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDevice'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
-
-      $tmp= $device['name']."|".$device['description']."|".$device['id'];
-      if (isset($device['produkt']) && isset($device['vendor'])){
-        $tmp.= "|".$device['produkt']."|".$device['vendor'];
-      }
-      $this->attrs['gotoHotplugDevice'][]= $tmp;
+      $this->attrs['gotoHotplugDeviceDN'][]= base64_encode($device['dn']);
     }
 
     /* Prepare LogonScripts */

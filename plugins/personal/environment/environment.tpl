@@ -258,9 +258,6 @@
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" name="gotoHotplugDeviceNew" value="{t}New{/t}">
-{/render}
-{render acl=$gotoHotplugDeviceACL}
       <input type="submit" name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
