@@ -59,7 +59,7 @@ attributetype ( 1.3.6.1.4.1.10098.1.1.11.13 NAME 'gotoUserAdminPrinter'
         SUBSTR caseIgnoreIA5SubstringsMatch
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.26)
 
-attributetype ( 1.3.6.1.4.1.10098.1.1.11.16 NAME 'gotoGroupPrinter'
+attributetype ( 1.3.6.1.4.1.10098.1.1.11.18 NAME 'gotoGroupPrinter'
         DESC 'GOto - keeps printers shown for this user'
         EQUALITY caseIgnoreIA5Match
         SUBSTR caseIgnoreIA5SubstringsMatch
@@ -148,7 +148,7 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.35 NAME 'gotoTerminalTemplate'
 	       gotoTerminalPath $ gotoLdapServer $ gotoScannerModel ))
 
 # objectclass for the Terminal Conecept
-objectclass (1.3.6.1.4.1.10098.1.2.1.36 NAME 'gotoDevice'
+objectclass (1.3.6.1.4.1.10098.1.2.1.42 NAME 'gotoDevice'
 	DESC 'GOto - contains environment settings (v2.2)' SUP top AUXILIARY
   MUST ( cn )
 	MAY ( gotoHotplugDevice ) )
