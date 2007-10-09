@@ -112,31 +112,44 @@ class environment extends plugin
       $this->gotoPrinter[$printer['cn'][0]]['mode']="admin";
     }
 
-    /* prepare hotplugs */
-    if((isset($this->attrs['gotoHotplugDevice']))&&(is_array($this->attrs['gotoHotplugDevice']))){
-      unset($this->attrs['gotoHotplugDevice']['count']);
-      foreach($this->attrs['gotoHotplugDevice'] as $device){
-        $tmp = $tmp2 = array();
-        $tmp = split("\|",$device);
-        $tmp2['name']        = $tmp[0]; 
-        $tmp2['description'] = $tmp[1]; 
-        $tmp2['id']          = $tmp[2]; 
 
-        /* Produkt ID */
-        if(!isset($tmp[3])){
-          $tmp[3] = "";
-        }
-        /* Vendor ID */
-        if(!isset($tmp[4])){
-          $tmp[4] = "";
-        }
-
-        $tmp2['produkt']     = $tmp[3]; 
-        $tmp2['vendor']      = $tmp[4];
-
-        $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
+    /* Prepare hotplugs */
+    if(isset($this->attrs['gotoHotplugDeviceDN']) && is_array($this->attrs['gotoHotplugDeviceDN'])){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      for($i = 0 ; $i < $this->attrs['gotoHotplugDeviceDN']['count'] ; $i ++){
+        $ldap->cat(base64_decode($this->attrs['gotoHotplugDeviceDN'][$i]));
+        $attrs = $ldap->fetch(); 
+        $this->gotoHotplugDevices[$attrs['cn'][0]] = array('name' => $attrs['cn'][0], 'id' => rand(1,10));
       }
     }
+  
+
+#   /* prepare hotplugs */
+#   if((isset($this->attrs['gotoHotplugDevice']))&&(is_array($this->attrs['gotoHotplugDevice']))){
+#     unset($this->attrs['gotoHotplugDevice']['count']);
+#     foreach($this->attrs['gotoHotplugDevice'] as $device){
+#       $tmp = $tmp2 = array();
+#       $tmp = split("\|",$device);
+#       $tmp2['name']        = $tmp[0]; 
+#       $tmp2['description'] = $tmp[1]; 
+#       $tmp2['id']          = $tmp[2]; 
+#
+#       /* Produkt ID */
+#       if(!isset($tmp[3])){
+#         $tmp[3] = "";
+#       }
+#       /* Vendor ID */
+#       if(!isset($tmp[4])){
+#         $tmp[4] = "";
+#       }
+#
+#       $tmp2['produkt']     = $tmp[3]; 
+#       $tmp2['vendor']      = $tmp[4];
+#
+#       $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
+#     }
+#   }
 
     /* prepare LogonScripts */
     if((isset($this->attrs['gotoLogonScript']))&&(is_array($this->attrs['gotoLogonScript']))){
