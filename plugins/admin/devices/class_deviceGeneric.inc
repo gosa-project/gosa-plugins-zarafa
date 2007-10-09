@@ -119,6 +119,35 @@ class deviceGeneric extends plugin
     }
   }
 
+  
+  public function remove_from_parent()
+  {
+    plugin::remove_from_parent();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDeviceDN=*))",array("cn","gotoHotplugDeviceDN"));
+    $skip = FALSE;
+    $str ="";
+    $cnt = 3;
+    while($cnt && $attrs = $ldap->fetch()){
+      if(in_array($this->dn,$attrs['gotoHotplugDeviceDN'])){
+        $skip =TRUE;
+        $str .= $attrs['cn'][0].", ";
+        $cnt --;
+      }
+    }
+    if($skip){
+      $str  = preg_replace("/, $/","",$str);
+
+      if($cnt == 0){
+        $str .= "...";
+      }
+      print_red(sprintf(_("Can't remove the device '%s' it is still in use be this user(s) : %s"),$this->cn,$str));
+    }else{
+      $ldap->rmdir_recursive($this->dn);
+    }
+  }
+
 
   public function save()
   {

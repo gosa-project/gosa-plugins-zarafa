@@ -59,6 +59,7 @@ class environment extends plugin
   /* Hotplug Devices */
   var $gotoHotplugDevice  = array();     // Selected hotplug
   var $gotoHotplugDevices = array();// Already configured hotplug devices 
+  var $gotoHotplugDeviceDN= array();
 
   var $NewAddedPrinters   = array();
   var $NewDeletedPrinters = array();
@@ -118,7 +119,7 @@ class environment extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
       for($i = 0 ; $i < $this->attrs['gotoHotplugDeviceDN']['count'] ; $i ++){
-        $ldap->cat(base64_decode($this->attrs['gotoHotplugDeviceDN'][$i]));
+        $ldap->cat($this->attrs['gotoHotplugDeviceDN'][$i]);
         $attrs = $ldap->fetch(); 
 
         if(isset($attrs['gotoHotplugDevice'][0])){
@@ -1144,7 +1145,7 @@ class environment extends plugin
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDevice'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
-      $this->attrs['gotoHotplugDeviceDN'][]= base64_encode($device['dn']);
+      $this->attrs['gotoHotplugDeviceDN'][]= $device['dn'];
     }
 
     /* Prepare LogonScripts */
