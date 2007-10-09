@@ -84,7 +84,7 @@
 
    <table summary="{t}Kiosk profile settings{/t}">
     <tr>
-     <td>
+     <td colwidth=2>
       <label for="kiosk_server">{t}Kiosk profile{/t}</label>
      </td>
     </tr>
@@ -96,10 +96,14 @@
       </select>
      </td>
      <td>
+      {if $kiosk_server != "none"}
       {t}Profile{/t}
       <select name='kiosk_profile'>
        {html_options values=$kiosk_profiles output=$kiosk_profiles selected=$kiosk_profile}
       </select>
+      {else}
+        &nbsp;
+      {/if}
      </td>
     </tr>
     <tr>

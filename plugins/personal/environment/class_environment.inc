@@ -246,8 +246,8 @@ class environment extends plugin
 
   function update_kiosk_profiles()
   { 
-    $tmp1  = array("none" => array(_("None")));
-    $tmp2  = array("none" => _("None"));
+    $tmp1  = array("none" => array(_("disabled")));
+    $tmp2  = array("none" => _("disabled"));
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=goEnvironmentServer)(gotoKioskProfile=*)(cn=*))",array("cn","gotoKioskProfile"));
@@ -1065,7 +1065,7 @@ class environment extends plugin
     /* If group was renamed, all printer settings get lost
      */ 
     /* only save changed variables ....*/
-    if ($this->gotoKioskProfile_Server !="none"){
+    if ($this->gotoKioskProfile_Server != "none"){
       if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
         $method="https://".$this->gotoKioskProfile_Server."/kiosk/".$this->gotoKioskProfile_Profile;
       }else{
