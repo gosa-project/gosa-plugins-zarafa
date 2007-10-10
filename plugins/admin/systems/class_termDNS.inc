@@ -65,10 +65,8 @@ class termDNS extends plugin
 
     /* Hide all dhcp specific code, if dhcp plugin is not present in config */
     $dhcpEnabled = FALSE;
-    foreach($this->config->data['TABS']['SERVTABS'] as $tab){
-      if(preg_match("/^servdhcp$/",$tab['CLASS'])){
-        $this->dhcpEnabled = TRUE;
-      }
+    if($this->config->search("servdhcp","class",array("tabs"))){
+      $this->dhcpEnabled = TRUE;
     }
     if($this->dhcpEnabled){
       $this->dhcpParentNodes = $this->get_dhcp_parent_nodes();
