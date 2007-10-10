@@ -142,7 +142,11 @@ class wingeneric extends plugin
     $smarty->assign("base_select", $this->base);
 
     /* Show main page */
-    $smarty->assign("netconfig", $this->netConfigDNS->execute());
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
     return($smarty->fetch (get_template_path('wingeneric.tpl', TRUE)));
   }
 

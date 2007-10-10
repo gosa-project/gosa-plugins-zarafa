@@ -358,7 +358,11 @@ class termgeneric extends plugin
     $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
 
     /* Show main page */
-    $smarty->assign("netconfig", $this->netConfigDNS->execute());
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
     return($smarty->fetch (get_template_path('terminal.tpl', TRUE)));
   }
 

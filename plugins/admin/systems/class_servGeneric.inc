@@ -224,7 +224,12 @@ class servgeneric extends plugin
 
     /* Show main page */
     $smarty->assign("fai_activated",$this->fai_activated);
-    $smarty->assign("netconfig", $this->netConfigDNS->execute());
+
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
     $smarty->assign("modes", $this->modes);
 
     return($smarty->fetch (get_template_path('server.tpl', TRUE)));

@@ -343,8 +343,13 @@ class workgeneric extends plugin
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
     $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
 
+    $str = $this->netConfigDNS->execute();
+    if(is_object($this->netConfigDNS->dialog)){
+      return($str);
+    }
+    $smarty->assign("netconfig", $str);
+
     /* Show main page */
-    $smarty->assign("netconfig", $this->netConfigDNS->execute());
     return($smarty->fetch (get_template_path('workstation.tpl', TRUE)));
   }
 

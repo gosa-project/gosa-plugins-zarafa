@@ -821,6 +821,11 @@ class systems extends plugin
         }  
       }
 
+      if(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
+        $this->systab->by_object[$this->systab->current]->netConfigDNS->dialog){
+        $dialog = TRUE;
+      }
+
       if (!$dialog){
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";

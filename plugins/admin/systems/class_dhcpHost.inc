@@ -127,7 +127,10 @@ class dhcpHost extends dhcpPlugin
   {
     $message= array();
 
-    $cache = $this->parent->dhcpObjectCache;
+    $cache = array();
+    if(isset($this->parent)){
+      $cache = $this->parent->dhcpObjectCache;
+    }
   
     /* All required fields are set? */
     if ($this->cn == ""){
