@@ -1147,7 +1147,7 @@ class environment extends plugin
     }    
 
     /* Prepare HotPlug devices */
-    $this->attrs['gotoHotplugDevice'] = array();
+    $this->attrs['gotoHotplugDeviceDN'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
       $this->attrs['gotoHotplugDeviceDN'][]= $device['dn'];
     }
@@ -1207,7 +1207,7 @@ class environment extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
-
+  
     $cat = "users";
     if($this->is_group){
       $cat = "groups";
