@@ -737,16 +737,28 @@ class workstartup extends plugin
           }
           break;
         }
+        if(preg_match("/gotoLdapRemove_/",$name)){
+          $id = preg_replace("/^gotoLdapRemove_([0-9]*)_(x|y)$/","\\1",$name);
+          $value = $this->gotoLdapServers[$id];
+          $this->gotoLdapServers = array_remove_entries(array($value),$this->gotoLdapServers);
+          break;
+        }
       } 
     }
   
     /* Add Entries 
      */
     foreach($this->gotoLdapServers as $key => $server){
+      if(!in_array($server,$this->gotoLdapServerList)){
+        $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+      }
+
       $SelectBoxLdapServer->AddEntry(
           array(array("string" => $server),
-            array("string" => "<input type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
-              "<input type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>",
+            array("string" => 
+              "<input class='center' type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/edittrash.png' name='gotoLdapRemove_".$key."'>",
               "attach" => "style='border-right:0px;'")));
     }    
 
@@ -755,8 +767,15 @@ class workstartup extends plugin
     }else{
       $smarty->assign("gotoLdapServerACL_inherit", $this->getacl("gotoLdapServer"));
     }
+    
+    $list = array();
+    foreach($this->gotoLdapServerList as $key => $entry){
+      if(!in_array($entry,$this->gotoLdapServers)){
+        $list[$key] = $entry;
+      }
+    }
     $smarty->assign("gotoLdapServers",    $SelectBoxLdapServer->DrawList());
-    $smarty->assign("gotoLdapServerList", $this->gotoLdapServerList);
+    $smarty->assign("gotoLdapServerList", $list);
     $smarty->assign("gotoLdap_inherit",   $this->gotoLdap_inherit);
     $smarty->assign("JS",  $_SESSION['js']);
 
