@@ -52,8 +52,8 @@ class environment extends plugin
   /* Kiosk profile */
   var $kiosk_enabled      = FALSE;
   var $gotoKioskProfile   = "";     // The selected Kiosk Profile
-  var $gotoKioskiProfile_Server    = "";     // The selected Kiosk Profile
-  var $gotoKioskiProfile_Profile   = "";     // The selected Kiosk Profile
+  var $gotoKioskProfile_Server    = "";     // The selected Kiosk Profile
+  var $gotoKioskProfile_Profile   = "";     // The selected Kiosk Profile
   var $gotoKioskProfiles  = array();// All available Kiosk profiles
 
   /* Hotplug Devices */
@@ -67,7 +67,7 @@ class environment extends plugin
   /* general settings */
   // Sets the attributes which will kept on page reload, which will be saved, ...
 
-  var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
+  var $CopyPasteVars      = array("gotoHotplugDevices","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn","gotoKioskProfile_Server","gotoKioskProfile_Profile");
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDeviceDN",
       "gotoXResolution","gotoProfileQuota",
@@ -1280,6 +1280,18 @@ class environment extends plugin
       }
     }
     return($a_return);
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $class= get_class($this);
+    $o_source = new $class($this->config,$source['dn']);
+    foreach($this->CopyPasteVars as $attr){
+      $this->$attr = $o_source->$attr;  
+    }
   }
 
 
