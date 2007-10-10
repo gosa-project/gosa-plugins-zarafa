@@ -26,7 +26,23 @@
     <tr>
      <td colspan="2" style='vertical-align:top;padding-top:3px;'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL><br>
 {render acl=$gotoLdapServerACL}
-	  {$SelectBoxLdapServer}	
+<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
+	onClick="document.mainform.submit();" class='center'>
+&nbsp;{t}Inherit ldap server settings from group{/t}
+{if !$JS}
+	<input type='image' src="images/list_reload.png" alt='{t}Reload{/t}' class='center'>
+{/if}
+{/render}
+{render acl=$gotoLdapServerACL_inherit}
+	  {$gotoLdapServers}	
+{/render}
+{render acl=$gotoLdapServerACL_inherit}
+	<select name='ldap_server_to_add' id='ldap_server_to_add'>
+	  {html_options options=$gotoLdapServerList}	
+    </select>
+{/render}
+{render acl=$gotoLdapServerACL_inherit}
+	<input type='submit' name='add_ldap_server' value="{t}Add{/t}" id='add_ldap_server'>
 {/render}
      </td>
     </tr>

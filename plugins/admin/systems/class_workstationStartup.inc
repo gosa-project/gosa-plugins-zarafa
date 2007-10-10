@@ -6,9 +6,13 @@ class workstartup extends plugin
   var $cli_description= "Some longer text\nfor help";
   var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
+  /* Ldap server list */
+  var $gotoLdapServers    = array();
+  var $gotoLdapServerList = array();
+  var $gotoLdap_inherit   = FALSE;
+
   /* Generic terminal attributes */
   var $bootmode             = "G";
-  var $goLdapServerList     = array();
   var $gotoBootKernel       = "default-inherited";
   var $gotoKernelParameters = "";
   var $gotoLdapServer       = "default-inherited";
@@ -85,9 +89,17 @@ class workstartup extends plugin
     $ldap->cd($this->config->current['BASE']);
 
     foreach($this->config->data['SERVERS']['LDAP'] as $server) {
-      $this->goLdapServerList[$server]= $server; // $this->config->data['SERVERS']['LDAP'];
+      $this->gotoLdapServerList[]= $server; 
     }
-  
+ 
+    if(isset($this->attrs['gotoLdapServer'])){
+      for($i = 0 ; $i < $this->attrs['gotoLdapServer']['count'];$i++){
+        $this->gotoLdapServers[] = $this->attrs['gotoLdapServer'][$i];
+      }
+    }
+    if(!count($this->gotoLdapServers)){ 
+      $this->gotoLdap_inherit = TRUE;
+    }
 
     /* FAI Initialization
        Skip this if FAI is not activated 
@@ -317,9 +329,9 @@ class workstartup extends plugin
       }
 
       if($this->fai_activated){
-        $map= array("gotoLdapServer","FAIclass","FAIdebianMirror");
+        $map= array("gotoBootKernel","FAIclass","FAIdebianMirror");
       }else{
-        $map= array("gotoLdapServer");
+        $map= array("gotoBootKernel");
       }
       $attrs= $ldap->fetch();
 
@@ -329,10 +341,6 @@ class workstartup extends plugin
         }
 
         switch ($name){
-          case 'gotoLdapServer':
-            $this->goLdapServerList= array_merge(array('default-inherited' => _("inherited").' ['.$attrs[$name][0].']' ), $this->goLdapServerList);
-            break;
-
           case 'gotoBootKernel':
             $this->gotoBootKernels['default-inherited']=  _("inherited").' ['.$attrs[$name][0].']' ;
             break;
@@ -654,8 +662,6 @@ class workstartup extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     } 
 
-    $smarty->assign("SelectBoxLdapServer","");
-
     /* In this section server shares will be defined
      * A user can select one of the given shares and a mount point
      *  and attach this combination to his setup.
@@ -693,44 +699,66 @@ class workstartup extends plugin
     $smarty->assign("gotoShareKeys",array_flip($this->printOutAssignedShares()));
     $smarty->assign("gotoBootKernels",$this->gotoBootKernels);
 
-    /* Arrays */
-    $tmp = $this->goLdapServerList;
-
     /* Create divSelectBox for ldap server selection
      */
     $SelectBoxLdapServer = new divSelectBox("LdapServer");
     $SelectBoxLdapServer->SetHeight(130);
 
-    /* Set first entry as selected, if $this->gotoLdapServer is empty
-     *  or given entry is no longer available ... 
-     */
-    $found = false;
-    foreach($tmp as $server){
-      if($this->gotoLdapServer==$server){
-        $found = true;
+    /* Add new ldap server to the list */
+    if(!$this->gotoLdap_inherit && isset($_POST['add_ldap_server']) && isset($_POST['ldap_server_to_add'])){
+      if(isset($this->gotoLdapServerList[$_POST['ldap_server_to_add']])){
+        $to_add = $this->gotoLdapServerList[$_POST['ldap_server_to_add']];
+        if(!in_array($to_add,$this->gotoLdapServers)){
+          $this->gotoLdapServers[] = $to_add;
+        }
       }
     }
-
+    
+    /* Move ldap servers up and down */
+    if(!$this->gotoLdap_inherit){
+      foreach($_POST as $name => $value){
+        if(preg_match("/sort_ldap_up_/",$name)){
+          $id = preg_replace("/^sort_ldap_up_([0-9]*)_(x|y)$/","\\1",$name);
+          $from =  $id;  
+          $to   =  $id -1;
+          $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
+          if($tmp){
+            $this->gotoLdapServers = $tmp;
+          }
+          break;
+        }
+        if(preg_match("/sort_ldap_down_/",$name)){
+          $id = preg_replace("/^sort_ldap_down_([0-9]*)_(x|y)$/","\\1",$name);
+          $from =  $id;  
+          $to   =  $id +1;
+          $tmp = $this->array_switch_item($this->gotoLdapServers,$from,$to);
+          if($tmp){
+            $this->gotoLdapServers = $tmp;
+          }
+          break;
+        }
+      } 
+    }
+  
     /* Add Entries 
      */
-    foreach($tmp as $key => $server){
-      $use ="";
-      if(($this->gotoLdapServer == $server) || ($found == false)) {
-        $found = true;
-        $use = " checked ";
-      };
-
-      $display = $server;
-
+    foreach($this->gotoLdapServers as $key => $server){
       $SelectBoxLdapServer->AddEntry(
-          array(
-            array("string"=>"<input type='radio' name='gotoLdapServer' value='".$key."' ".$use.">",
-                  "attach"=>"style='border-left:0px;'"),
-            array("string"=>$display)
-            ));
+          array(array("string" => $server),
+            array("string" => "<input type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
+              "<input type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>",
+              "attach" => "style='border-right:0px;'")));
     }    
 
-    $smarty->assign("SelectBoxLdapServer",$SelectBoxLdapServer->DrawList());
+    if($this->gotoLdap_inherit){
+      $smarty->assign("gotoLdapServerACL_inherit", preg_replace("/w/","",$this->getacl("gotoLdapServer")));;
+    }else{
+      $smarty->assign("gotoLdapServerACL_inherit", $this->getacl("gotoLdapServer"));
+    }
+    $smarty->assign("gotoLdapServers",    $SelectBoxLdapServer->DrawList());
+    $smarty->assign("gotoLdapServerList", $this->gotoLdapServerList);
+    $smarty->assign("gotoLdap_inherit",   $this->gotoLdap_inherit);
+    $smarty->assign("JS",  $_SESSION['js']);
 
     foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem") as $val){
       $smarty->assign("$val", $this->$val);
@@ -964,16 +992,23 @@ class workstartup extends plugin
   {
     plugin::save_object();
 
-    /* Save group radio buttons */
-    if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
-      $this->bootmode= $_POST["bootmode"];
-    }
+    if(isset($_POST['WorkstationStarttabPosted'])){
+      if(isset($_POST['gotoLdap_inherit'])){
+        $this->gotoLdap_inherit = TRUE;
+      }else{
+        $this->gotoLdap_inherit = FALSE;
+      }
 
-    /* Save kernel parameters */
-    if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
-      $this->customParameters= $_POST["customParameters"];
-    }
+      /* Save group radio buttons */
+      if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
+        $this->bootmode= $_POST["bootmode"];
+      }
 
+      /* Save kernel parameters */
+      if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
+        $this->customParameters= $_POST["customParameters"];
+      }
+    }
   }
 
 
@@ -1081,9 +1116,12 @@ class workstartup extends plugin
       if(!isset($this->attrs["$val"])) $this->attrs["$val"]=array();
     }
 
-    /* Strip out 'default' values */
-    if ($this->attrs['gotoLdapServer'] == "default-inherited"){
-      $this->attrs['gotoLdapServer']= array();
+    /* Prepare list of ldap servers */
+    $this->attrs['gotoLdapServer'] = array();
+    if(!$this->gotoLdap_inherit){
+      foreach($this->gotoLdapServers as $server){
+        $this->attrs['gotoLdapServer'][] = $server;
+      }
     }
 
     if (($this->attrs['gotoBootKernel'] == "default-inherited") || ($this->attrs['gotoBootKernel'] == "%default%")){
@@ -1200,6 +1238,25 @@ class workstartup extends plugin
     foreach(array("gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters","gotoShares","customParameters") as $attr){
       $this->$attr = $source_o->$attr;
     }
+  }
+
+  
+  function array_switch_item($ar,$from,$to)
+  {
+    if(!is_array($ar)){
+      return(false);
+    }
+    if(!isset($ar[$from])){
+      return(false);
+    }
+    if(!isset($ar[$to])){
+      return(false);
+    }
+
+    $tmp = $ar[$from];
+    $ar[$from] = $ar[$to];    
+    $ar[$to] = $tmp;    
+    return($ar);
   }
 
 
