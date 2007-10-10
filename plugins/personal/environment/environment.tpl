@@ -262,7 +262,7 @@
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
+      <input type="submit" name="gotoHotplugDeviceUse" value="{t}Add{/t}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
       <input type="submit" name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
