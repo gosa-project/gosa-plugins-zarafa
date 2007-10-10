@@ -93,8 +93,10 @@ class workstartup extends plugin
     }
  
     if(isset($this->attrs['gotoLdapServer'])){
-      for($i = 0 ; $i < $this->attrs['gotoLdapServer']['count'];$i++){
-        $this->gotoLdapServers[] = $this->attrs['gotoLdapServer'][$i];
+      unset($this->attrs['gotoLdapServer']['count']);
+      sort($this->attrs['gotoLdapServer']);
+      foreach($this->attrs['gotoLdapServer'] as $value){
+        $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
       }
     }
     if(!count($this->gotoLdapServers)){ 
@@ -1138,8 +1140,10 @@ class workstartup extends plugin
     /* Prepare list of ldap servers */
     $this->attrs['gotoLdapServer'] = array();
     if(!$this->gotoLdap_inherit){
+      $i = 0;
       foreach($this->gotoLdapServers as $server){
-        $this->attrs['gotoLdapServer'][] = $server;
+        $i ++;
+        $this->attrs['gotoLdapServer'][] = $i.":".$server;
       }
     }
 
