@@ -125,20 +125,18 @@ class deviceGeneric extends plugin
     plugin::remove_from_parent();
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDeviceDN=*))",array("cn","gotoHotplugDeviceDN"));
+
+    $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDeviceDN=".$this->dn."))",array("cn","gotoHotplugDeviceDN"));
     $skip = FALSE;
     $str ="";
     $cnt = 3;
     while($cnt && $attrs = $ldap->fetch()){
-      if(in_array($this->dn,$attrs['gotoHotplugDeviceDN'])){
-        $skip =TRUE;
-        $str .= $attrs['cn'][0].", ";
-        $cnt --;
-      }
+      $skip =TRUE;
+      $str .= $attrs['cn'][0].", ";
+      $cnt --;
     }
     if($skip){
       $str  = preg_replace("/, $/","",$str);
-
       if($cnt == 0){
         $str .= "...";
       }
