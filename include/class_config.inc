@@ -318,7 +318,7 @@ class config  {
     $ldap->search ("(objectClass=goImapServer)");
 
     $this->data['SERVERS']['IMAP']= array();
-    error_reporting(0);
+    $old_err = error_reporting(0);
     while ($attrs= $ldap->fetch()){
       $name= $attrs['goImapName'][0];
       $this->data['SERVERS']['IMAP'][$name]= array( "connect" => $attrs['goImapConnect'][0],
@@ -327,7 +327,7 @@ class config  {
           "sieve_server" => $attrs['goImapSieveServer'][0],
           "sieve_port" => $attrs['goImapSievePort'][0]);
     }
-    error_reporting(E_ALL | E_STRICT);
+    error_reporting($old_err);
 
     /* Get kerberos server. FIXME: only one is supported currently */
     $ldap->cd ($this->current['BASE']);
