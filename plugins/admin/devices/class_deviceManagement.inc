@@ -15,6 +15,7 @@ class deviceManagement extends plugin
   var $snapDialog                     = NULL;
   var $CopyPasteHandler               = NULL;
   var $start_pasting_copied_objects;
+  var $dn ="";
 
   function deviceManagement(&$config, $dn= NULL)
   {

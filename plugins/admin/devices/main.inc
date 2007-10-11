@@ -29,7 +29,7 @@ if ($remove_lock){
 
 		/* Create DeviceManagement object on demand */
 		if (!isset($_SESSION['DeviceManagement']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-				$_SESSION['DeviceManagement']= new deviceManagement ($config, $_SESSION['ui']);
+				$_SESSION['DeviceManagement']= new deviceManagement ($config);
 		}
 
 		/* Get object */

@@ -1260,7 +1260,7 @@ class plugin
       $snapldapbase = $cfg['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
-      show_ldap_error($ldap->get_error(), sprintf(_("Method get deleted snapshots with dn '%s' failed."),$this->dn));
+      show_ldap_error($ldap_to->get_error(), sprintf(_("Method get deleted snapshots with dn '%s' failed."),$this->dn));
     }else{
       $ldap_to    = $ldap;
     }
