@@ -39,9 +39,9 @@ if ($remove_lock){
 
 		/* Page header*/
 		if (isset($_SESSION['objectinfo'])){
-				$display= print_header(get_template_path('images/device.png'), _("Device management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
+				$display= print_header(get_template_path('images/devices.png'), _("Device management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
 		} else {
-				$display= print_header(get_template_path('images/device.png'), _("Device management"));
+				$display= print_header(get_template_path('images/devices.png'), _("Device management"));
 		}
 
 		/* Reset requested? */
