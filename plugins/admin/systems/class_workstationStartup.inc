@@ -761,7 +761,7 @@ class workstartup extends plugin
               "<input class='center' type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/edittrash.png' name='gotoLdapRemove_".$key."'>",
-              "attach" => "style='border-right:0px;'")));
+              "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
     }    
 
     if($this->gotoLdap_inherit){
