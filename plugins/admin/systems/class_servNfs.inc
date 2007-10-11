@@ -194,11 +194,11 @@ class servnfs extends plugin
       }
     }
 
-    if(preg_match("/^[a-z0-9\._äüö]*$/ui",$this->description)){
+    if(preg_match("/^[a-z0-9\._äüö\+ -]*$/ui",$this->description)){
       $message[]=_("Description contains invalid characters.");
     }
 
-    if(preg_match("/^[a-z0-9\._äüö]*$/ui",$this->volume)){
+    if(preg_match("/^[a-z0-9\._äüö\+ -]*$/ui",$this->volume)){
       $message[]=_("Volume contains invalid characters.");
     }
 
@@ -206,7 +206,7 @@ class servnfs extends plugin
       $message[]=_("Path contains invalid characters.");
     }
 
-    if(preg_match("/^[a-z0-9\._äüö,=\+ ]*$/ui",$this->option)){
+    if(preg_match("/^[a-z0-9\._äüö,=\+- ]*$/ui",$this->option)){
       $message[]=_("Option contains invalid characters.");
     }
 
