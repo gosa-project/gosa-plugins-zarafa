@@ -1,9 +1,10 @@
 <?php
 
-define("INFO_DIALOG"	, 10001);
-define("WARNING_DIALOG"	, 10002);
-define("ERROR_DIALOG"	, 10003);
-define("CONFIRM_DIALOG"	, 10004);
+define("INFO_DIALOG"		, 10001);
+define("WARNING_DIALOG"		, 10002);
+define("ERROR_DIALOG"		, 10003);
+define("CONFIRM_DIALOG"		, 10004);
+define("FATAL_ERROR_DIALOG"	, 10005);
 
 class msg_dialog
 {
@@ -15,7 +16,7 @@ class msg_dialog
 
 	public function __construct($s_title,$s_message,$i_type)
 	{
-		if(!in_array($i_type,array(INFO_DIALOG,WARNING_DIALOG,ERROR_DIALOG,CONFIRM_DIALOG))){
+		if(!in_array($i_type,array(INFO_DIALOG,WARNING_DIALOG,ERROR_DIALOG,CONFIRM_DIALOG,FATAL_ERROR_DIALOG))){
 			trigger_error("Invalid msg_dialog type.");
 			$i_type = INFO_DIALOG;
 		}
@@ -28,7 +29,13 @@ class msg_dialog
 		if(!isset($_SESSION['msg_dialogs'])){
 			$_SESSION['msg_dialogs'] = array();
 		}
-		$_SESSION['msg_dialogs'][] = $this;
+		if($this->i_Type == FATAL_ERROR_DIALOG){
+		restore_error_handler();
+		error_reporting(E_ALL);
+			echo $this->execute();
+		}else{
+			$_SESSION['msg_dialogs'][] = $this;
+		}
 	}
 
 	public static function display($s_title,$s_message,$i_type = INFO_DIALOG)
@@ -43,16 +50,36 @@ class msg_dialog
 
 	public function execute()
 	{
-		$smarty = get_smarty();
-		$smarty->assign("s_Trace",print_a($this->a_Trace,TRUE));
-		$smarty->assign("i_Type",$this->i_Type);
-		$smarty->assign("s_Message",$this->s_Message);
-		$smarty->assign("s_Title",$this->s_Title);
-		$smarty->assign("i_ID",$this->i_ID);
-		$smarty->assign("frame",false);
-		$smarty->assign("JS",$_SESSION['js']);
-		$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
-		return($smarty->fetch(get_template_path('msg_dialog.tpl')));
+		if($this->i_Type == FATAL_ERROR_DIALOG)	{
+			$display = 
+				"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"
+				\"http://www.w3.org/TR/html4/transitional.dtd\">
+				<html><head>
+				<title>GOsa startup failed</title>
+				</head><body>
+				<table style='width:100%; border:2px solid red;' summary=''>
+				<tr><td style='vertical-align:top;padding:10px'>
+				<img src='images/error.png' alt='{t}Error{/t}'>
+				</td><td style='width:100%'>
+				<b>Fatal Error - GOsa execution abortet - ".$this->s_Title."</b><br>
+				".$this->s_Message."<br><br>
+				"._("Please fix the above error and reload the page.")."
+				</td></tr>
+				</table></body></html>";
+			return($display);;
+		}else{
+
+			$smarty = get_smarty();
+			$smarty->assign("s_Trace",print_a($this->a_Trace,TRUE));
+			$smarty->assign("i_Type",$this->i_Type);
+			$smarty->assign("s_Message",$this->s_Message);
+			$smarty->assign("s_Title",$this->s_Title);
+			$smarty->assign("i_ID",$this->i_ID);
+			$smarty->assign("frame",false);
+			$smarty->assign("JS",$_SESSION['js']);
+			$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
+			return($smarty->fetch(get_template_path('msg_dialog.tpl')));
+		}
 	}
 
 	
