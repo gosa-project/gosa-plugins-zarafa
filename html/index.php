@@ -126,7 +126,7 @@ if(isset($_POST['javascript']) && $_POST['javascript'] == "true") {
 
 /* Check if gosa.conf (.CONFIG_FILE) is accessible */
 if (!is_readable(CONFIG_DIR."/".CONFIG_FILE)){
-  echo sprintf(_("GOsa configuration %s/%s is not readable. Aborted."), CONFIG_DIR,CONFIG_FILE);
+  msg_dialog::display(_("Configuration accessibility"),sprintf(_("GOsa configuration %s/%s is not readable. Aborted."), CONFIG_DIR,CONFIG_FILE),FATAL_ERROR_DIALOG);
   exit();
 }
 
@@ -152,8 +152,8 @@ $smarty->assign ('nextfield', 'username');
 
 /* Check for compile directory */
 if (!(is_dir($smarty->compile_dir) && is_writable($smarty->compile_dir))){
-  echo sprintf(_("Directory '%s' specified as compile directory is not accessible!"),
-      $smarty->compile_dir);
+  msg_dialog::display(_("Smarty"),sprintf(_("Directory '%s' specified as compile directory is not accessible!"),
+    $smarty->compile_dir),FATAL_ERROR_DIALOG);
   exit();
 }
 
