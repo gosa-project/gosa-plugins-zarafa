@@ -524,14 +524,14 @@ class appgroup extends plugin
             }
             unset($this->gosaMemberApplication[$cat]);
             unset($this->Categories[$cat]);
-            foreach($this->Categories as $key => $name){
-              if(preg_match("/^".$cat."\/.*/",$key)){
-                foreach($this->gosaMemberApplication[$key] as $app){
-                  $free_apps[] = $app['App'];
-                }
-                unset($this->gosaMemberApplication[$key]);
-                unset($this->Categories[$key]);
+          }
+          foreach($this->Categories as $key => $name){
+            if(preg_match("/^".normalizePreg($cat)."\/.*/",$key)){
+              foreach($this->gosaMemberApplication[$key] as $app){
+                $free_apps[] = $app['App'];
               }
+              unset($this->gosaMemberApplication[$key]);
+              unset($this->Categories[$key]);
             }
           }
           foreach($free_apps as $app){
@@ -745,8 +745,9 @@ class appgroup extends plugin
       $tmp = split("/",$this->curCatDir);
       $bbk = "";
       for($i = 0 ; $i < ($cnt -1 ) ; $i++){
-        $bbk .= $tmp[$i];
+        $bbk .= $tmp[$i]."/";
       }
+      $bbk = preg_replace("/\/$/","",$bbk);
       $div2 ->AddEntry(array(array("string"=>sprintf($linkopen,base64_encode($bbk),".. ["._("Back")."]")),array("string"=>"&nbsp;","attach"=>"style='border-right:0px;'")));
     }
 
