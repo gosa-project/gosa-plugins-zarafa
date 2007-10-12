@@ -679,7 +679,7 @@ class appgroup extends plugin
       if($value["description"][0]!=".."){
         $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
       }else{
-        $departments[$value['dn']]=convert_department_dn($fdn);
+        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
       }
     }
 
@@ -747,7 +747,7 @@ class appgroup extends plugin
       for($i = 0 ; $i < ($cnt -1 ) ; $i++){
         $bbk .= $tmp[$i];
       }
-      $div2 ->AddEntry(array(array("string"=>sprintf($linkopen,base64_encode($bbk),"..")),array("string"=>"&nbsp;","attach"=>"style='border-right:0px;'")));
+      $div2 ->AddEntry(array(array("string"=>sprintf($linkopen,base64_encode($bbk),".. ["._("Back")."]")),array("string"=>"&nbsp;","attach"=>"style='border-right:0px;'")));
     }
 
     /* Add sub categories */ 
