@@ -62,11 +62,54 @@ class passwordMethodkerberos extends passwordMethod
 
 			kadm5_destroy($handle);
 
-			$newpass= "{kerberos}".$this->attrs['uid'][0]."@".$cfg['REALM'];
+      $mode= "kerberos";
+      if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+        $mode= "sasl";
+      }
+			$newpass= "{$mode}".$this->attrs['uid'][0]."@".$cfg['REALM'];
 
 			return $newpass;       
 		}
 	}
+
+
+  function remove_from_parent()
+  {
+    /* Kerberos server defined? */
+    if (isset($this->config->data['SERVERS']['KERBEROS'])){
+      $cfg= $this->config->data['SERVERS']['KERBEROS'];
+    }
+    if (isset($cfg['SERVER']) && function_exists('kadm5_init_with_password')){
+
+      /* Connect to the admin interface */
+      $handle = kadm5_init_with_password($cfg['SERVER'], $cfg['REALM'],
+          $cfg['ADMIN'], $cfg['PASSWORD']);
+
+      /* Errors? */
+      if ($handle === FALSE){
+        print_red (_("Kerberos database communication failed"));
+        return (2);
+      }
+
+      /* Build user principal, get list of existsing principals */
+      $principal= $this->uid."@".$cfg['REALM'];
+      $principals = kadm5_get_principals($handle);
+
+      /* User exists in database? */
+      if (in_array($principal, $principals)){
+
+        /* Ok. User exists. Remove him/her */
+          $ret= kadm5_delete_principal ( $handle, $principal);
+          if ($ret === FALSE){
+            print_red (_("Can't remove user from kerberos database."));
+          }
+      }
+
+      /* Free kerberos admin handle */
+      kadm5_destroy($handle);
+    }
+  }
+
 }
 
 /* Dummy class for OpenLDAP Kerberos/SASL change  */

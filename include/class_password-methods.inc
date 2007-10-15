@@ -86,6 +86,12 @@ class passwordMethod
     }
     return($ret);
   }
+  
+
+  function remove_from_parent()
+  {
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -621,42 +621,17 @@ class user extends plugin
       $og->save ();
     }
 
-    /* Kerberos server defined? */
-    if (isset($this->config->data['SERVERS']['KERBEROS'])){
-      $cfg= $this->config->data['SERVERS']['KERBEROS'];
-    }
-    if (isset($cfg['SERVER']) && function_exists('kadm5_init_with_password')){
-
-      /* Connect to the admin interface */
-      $handle = kadm5_init_with_password($cfg['SERVER'], $cfg['REALM'],
-          $cfg['ADMIN'], $cfg['PASSWORD']);
-
-      /* Errors? */		
-      if ($handle === FALSE){
-        print_red (_("Kerberos database communication failed"));
-        return (2);
-      }
-
-      /* Build user principal, get list of existsing principals */
-      $principal= $this->uid."@".$cfg['REALM'];
-      $principals = kadm5_get_principals($handle);
-
-      /* User exists in database? */
-      if (in_array($principal, $principals)){
-
-        /* Ok. User exists. Remove him/her */
-          $ret= kadm5_delete_principal ( $handle, $principal);
-          if ($ret === FALSE){
-            print_red (_("Can't remove user from kerberos database."));
-          }
-      }
-
-      /* Free kerberos admin handle */
-      kadm5_destroy($handle);
+    /* If needed, let the password method do some cleanup */
+    $tmp = new passwordMethod($_SESSION['config']);
+    $available = $tmp->get_available_methods();
+    if (in_array_ics($this->pw_storage, $available['name'])){
+      $test= new $available[$this->pw_storage]($this->config);
+      $test->attrs= $this->attrs;
+      $test->dn= $this->dn;
+      $test->remove_from_parent();
     }
 
-    /* Remove ACL dependencies too, 
-     */
+    /* Remove ACL dependencies too */
     $tmp = new acl($this->config,$this->parent,$this->dn);
     $tmp->remove_acl();
 
@@ -963,8 +938,7 @@ class user extends plugin
     }
 
 
-    /* Remove ACL dependencies too, 
-     */
+    /* Remove ACL dependencies too */
     if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
       $tmp = new acl($this->config,$this->parent,$this->dn);
       $tmp->update_acl_membership($this->orig_dn,$this->dn);
@@ -1007,54 +981,16 @@ class user extends plugin
       ldap_close($ds);
     }
 
-    /* Kerberos server defined? */
-    if (isset($this->config->data['SERVERS']['KERBEROS'])){
-      $cfg= $this->config->data['SERVERS']['KERBEROS'];
-    }
-    if (isset($cfg['SERVER']) && function_exists('kadm5_init_with_password')){
-
-      /* Connect to the admin interface */
-      $handle = kadm5_init_with_password($cfg['SERVER'], $cfg['REALM'],
-          $cfg['ADMIN'], $cfg['PASSWORD']);
-
-      /* Errors? */		
-      if ($handle === FALSE){
-        print_red (_("Kerberos database communication failed"));
-        return (2);
+    /* If needed, let the password method do some cleanup */
+    if ($this->pw_storage != $this->last_pw_storage){
+      $tmp = new passwordMethod($_SESSION['config']);
+      $available = $tmp->get_available_methods();
+      if (in_array_ics($this->pw_storage, $available['name'])){
+        $test= new $available[$this->pw_storage]($this->config);
+        $test->attrs= $this->attrs;
+        $test->dn= $this->dn;
+        $test->remove_from_parent();
       }
-
-      /* Build user principal, get list of existsing principals */
-      $principal= $this->uid."@".$cfg['REALM'];
-      $principals = kadm5_get_principals($handle);
-
-      /* User exists in database? */
-      if (in_array($principal, $principals)){
-
-        /* Ok. User exists. Remove him/her when pw_storage has
-           changed to be NOT kerberos. */
-        if ($this->pw_storage != $this->config->current['KRBSASL']){
-          $ret= kadm5_delete_principal ( $handle, $principal);
-
-          if ($ret === FALSE){
-            print_red (_("Can't remove user from kerberos database."));
-          }
-        }
-
-      } else {
-
-        /* User doesn't exists, create it when pw_storage is kerberos. */
-        if ($this->pw_storage == "kerberos" || $this->pw_storage == "sasl" ){
-          $ret= kadm5_create_principal ( $handle, $principal);
-
-          if ($ret === FALSE){
-            print_red (_("Can't add user to kerberos database."));
-          }
-        }
-
-      }
-
-      /* Free kerberos admin handle */
-      kadm5_destroy($handle);
     }
 
     /* Optionally execute a command after we're done */
