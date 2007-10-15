@@ -427,7 +427,7 @@ class departmentManagement extends plugin
       if(empty($tmp2['dn'])){
         $tmp2['dn']="/";
       }
-      $tmp2    ['description'][0] = _("..");
+      $tmp2    ['description'][0] = ".. "._("Back");
       $result[$tmp[$base_back]]=$tmp2;
     }
 
