@@ -88,9 +88,19 @@ class passwordMethod
   }
   
 
+  // Method to let password backends remove additional information besides
+  // the userPassword attribute
   function remove_from_parent()
   {
   }
+
+
+  // Method to let passwords backends manage additional information
+  // besides the userAttribute entry
+  function set_password()
+  {
+  }
+
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

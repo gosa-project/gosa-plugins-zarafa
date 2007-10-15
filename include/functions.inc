@@ -2429,14 +2429,18 @@ function change_password ($dn, $password, $mode=0, $hash= "")
     }
 
     $test = new  $available[$hash]($config);
-    $test->attrs= $attrs;
     $newpass =  $test->generate_hash($password);
 
   } else {
-    // Crypt it by default
+    // User MD5 by default
+    $hash= "md5";
     $test = new  $available['md5']($config);
     $newpass =  $test->generate_hash($password);
   }
+
+  /* Feed password backends with information */
+  $test->dn= $dn;
+  $test->attrs= $attrs;
 
   // Update shadow timestamp?
   if (isset($attrs["shadowLastChange"][0])){
@@ -2476,6 +2480,9 @@ function change_password ($dn, $password, $mode=0, $hash= "")
     print_red(sprintf(_("Setting the password failed. LDAP server says '%s'."),
           $ldap->get_error()));
   } else {
+
+    /* Run backend method for change/create */
+    $test->set_password($password);
 
     /* Find postmodify entries for this class */
     $command= $config->search("password", "POSTMODIFY",array('menu'));
