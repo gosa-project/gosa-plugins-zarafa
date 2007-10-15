@@ -66,6 +66,19 @@ class passwordMethodheimdal extends passwordMethod
     }
     return "$mode";
   }
+
+
+  function is_configurable()
+  {
+    return TRUE;
+  }
+
+
+  function configure()
+  {
+    echo "Show dialog";
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

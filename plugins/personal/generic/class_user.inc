@@ -527,6 +527,8 @@ class user extends plugin
 
     $temp= passwordMethod::get_available_methods();
     $hashes = $temp['name'];
+    $test= new $temp[$this->pw_storage]($this->config);
+    $is_configurable= $test->is_configurable();
     
     /* Load attributes and acl's */
     $ui =get_userinfo();
@@ -542,6 +544,7 @@ class user extends plugin
 
     $smarty->assign("pwmode", $hashes);
     $smarty->assign("pwmode_select", $this->pw_storage);
+    $smarty->assign("pw_configurable", $is_configurable);
     $smarty->assign("passwordStorageACL", $this->getacl("userPassword",(!is_object($this->parent) && !isset($_SESSION['edit']))));
     $smarty->assign("base_select",      $this->base);
     $smarty->assign("CertificatesACL",  $this->getacl("Certificate",(!is_object($this->parent) && !isset($_SESSION['edit']))));

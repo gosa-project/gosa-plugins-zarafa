@@ -199,6 +199,9 @@
 	      <select size="1" id="pw_storage" name="pw_storage">
 	       {html_options values=$pwmode output=$pwmode selected=$pwmode_select}
 	      </select>
+	{if $pw_configurable eq "true"}
+	      &nbsp; <input id="edit_pw_method" type="submit" name="edit_pw_method" value="{t}Configure{/t}...">
+	{/if}
 	{/render}
      </td>
     </tr>
@@ -212,15 +215,6 @@
 	{/render}
      </td>
     </tr>
-<!--
-    <tr>
-     <td><label for="edit_krb">{t}Kerberos{/t}</label></td>
-     <td>
-	no acls
-		<input id="edit_krb" type="submit" name="edit_krb" disabled value="{t}Edit properties{/t}...">
-     </td>
-    </tr>
--->
     {/if}
 
    </table>

@@ -106,6 +106,20 @@ class passwordMethod
   }
 
 
+  // Return true if this password method provides a configuration dialog
+  function is_configurable()
+  {
+    return FALSE;
+  }
+
+
+  // Provide a subdialog to configure a password method
+  function configure()
+  {
+    return "";
+  }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
