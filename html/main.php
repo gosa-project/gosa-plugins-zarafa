@@ -62,7 +62,6 @@ if (!isset($_SESSION['config'])){
   exit;
 } 
 
-
 /* Check for uniqe ip address */
 $ui= $_SESSION["ui"];
 if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
@@ -411,6 +410,9 @@ if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->d
     if(isset($_SESSION[$var])){
       @setcookie($var,base64_encode(serialize($_SESSION[$var])),time()+ 60*60*24*30);
     }
+  }
+  if(isset($_GET['plug'])){
+    @setcookie("plug", $_GET['plug'],time()+ 60*60*24*30);
   }
 }
 

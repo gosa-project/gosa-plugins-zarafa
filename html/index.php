@@ -295,13 +295,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
       /* Restore filter settings from cookie, if available 
        */
       if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->data['MAIN']['SAVE_FILTER'])){
-        $cookie_vars= array("MultiDialogFilters","CurrentMainBase");
+        $cookie_vars= array("MultiDialogFilters","CurrentMainBase","plug");
         foreach($cookie_vars as $var){
           if(isset($_COOKIE[$var])){
             $_SESSION[$var] = unserialize(base64_decode($_COOKIE[$var]));
           }elseif(isset($HTTP_COOKIE_VARS[$var])){
             $_SESSION[$var] = unserialize(base64_decode($HTTP_COOKIE_VARS[$var]));
           }
+        }
+        if(isset($_COOKIE['plug'])){
+          $plug = $_COOKIE['plug'];
+        }elseif($HTTP_COOKIE_VARS['plug']){
+          $plug = $HTTP_COOKIE_VARS['plug'];
         }
       }
 
@@ -326,18 +331,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
             }
           }
         }
-
-        /* Not account expired or password forced change go to main page */
-        new log("security","login","",array(),"User \"$username\" logged in successfully") ;
-        header ("Location: main.php?global_check=1");
-        exit;
-
-      } else {
-        /* Go to main page */
-        new log("security","login","",array(),"User \"$username\" logged in successfully") ;
-        header ("Location: main.php?global_check=1");
-        exit;
       }
+      /* Not account expired or password forced change go to main page */
+      new log("security","login","",array(),"User \"$username\" logged in successfully") ;
+      $plist= new pluglist($config, $ui);
+      if(isset($plug) && isset($plist->dirlist[$plug])){
+        header ("Location: main.php?plug=".$plug."&amp;global_check=1");
+      }else{
+        header ("Location: main.php?global_check=1");
+      }
+      exit;
     }
   }
 }
