@@ -47,6 +47,8 @@ class config  {
   var $idepartments= array();
   var $adepartments= array();
   var $tdepartments= array();
+  var $filename = "";
+  var $last_modified = 0;
 
   function config($filename, $basedir= "")
   {
@@ -62,8 +64,31 @@ class config  {
     }
   }
 
+  
+  function check_and_reload()
+  {
+    if($this->filename != "" && filemtime($this->filename) != $this->last_modified){
+      $this->parser = xml_parser_create();
+      xml_set_object($this->parser, $this);
+      xml_set_element_handler($this->parser, "tag_open", "tag_close");
+      $this->parse($this->filename);
+      if(isset($_SESSION['plist'])){
+        unset($_SESSION['plist']);
+      }
+      if(isset($_SESSION['plug'])){
+        unset($_SESSION['plug']);
+      }
+      if(isset($_GET['plug'])){
+        unset($_GET['plug']);
+      }
+    }
+  }  
+
+
   function parse($filename)
   { 
+    $this->last_modified = filemtime($filename);
+    $this->filename = $filename;
     $fh= fopen($filename, "r"); 
     $xmldata= fread($fh, 100000);
     fclose($fh); 

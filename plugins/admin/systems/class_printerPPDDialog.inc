@@ -290,8 +290,8 @@ class printerPPDDialog extends plugin
             print_red(sprintf(_("Can't add new ppd file, the source file '%s' is not accessible."),$_PathOnHdd));         
           }else{
             $this->add_ppd_later = $_PathOnHdd."_back";
-            $this->add_later_msg_dialog = new msg_dialog(_("PPD file already exists"),
-                _("There is already a ppd file for this kind of printer."),CONFIRM_DIALOG);
+            $this->add_later_msg_dialog = new msg_dialog(_("Overwrite existing PPD"),
+                _("There is already a ppd file for this kind of printer. Do you want to overwrite it?"),CONFIRM_DIALOG);
           }
           return;
         }

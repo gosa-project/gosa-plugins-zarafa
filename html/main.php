@@ -70,6 +70,7 @@ if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
   exit;
 }
 $config= $_SESSION['config'];
+$config->check_and_reload();
 
 /* Enable compressed output */
 if (isset($config->data['MAIN']['COMPRESSED']) && preg_match('/^(true|on)$/i', $config->data['MAIN']['COMPRESSED'])){
