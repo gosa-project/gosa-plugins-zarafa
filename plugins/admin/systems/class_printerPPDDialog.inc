@@ -28,7 +28,7 @@ class printerPPDDialog extends plugin
 
   /* If there is already a ppd file for the same type of printer, 
    *  remember the path to ppd file and display a dialog which allows 
-   *  to overwrite the current ppd file.
+   *  to overwrite the current ppd file. 
    */
   var $add_ppd_later            = "";
   var $add_later_msg_dialog     = NULL;
