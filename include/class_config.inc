@@ -68,6 +68,14 @@ class config  {
   function check_and_reload()
   {
     if($this->filename != "" && filemtime($this->filename) != $this->last_modified){
+
+      $this->config_found= FALSE;
+      $this->tags= array();
+      $this->level= 0;
+      $this->gpc= 0;
+      $this->section= "";
+      $this->currentLocation= "";
+
       $this->parser = xml_parser_create();
       xml_set_object($this->parser, $this);
       xml_set_element_handler($this->parser, "tag_open", "tag_close");
