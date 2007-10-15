@@ -196,7 +196,7 @@
      <td><label for="pw_storage">{t}Password storage{/t}</label></td>
      <td>
       	{render acl=$passwordStorageACL}
-	      <select size="1" id="pw_storage" name="pw_storage">
+	      <select size="1" id="pw_storage" name="pw_storage" onchange='document.mainform.submit()'>
 	       {html_options values=$pwmode output=$pwmode selected=$pwmode_select}
 	      </select>
 	{if $pw_configurable eq "true"}
