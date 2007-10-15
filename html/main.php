@@ -62,10 +62,6 @@ if (!isset($_SESSION['config'])){
   exit;
 } 
 
-/* Reset errors */
-$_SESSION['errors']             = "";
-$_SESSION['errorsAlreadyPosted']= array();
-$_SESSION['LastError']          = "";
 
 /* Check for uniqe ip address */
 $ui= $_SESSION["ui"];
@@ -424,6 +420,7 @@ echo $display;
 /* Save plist and config */
 $_SESSION['plist']= $plist;
 $_SESSION['config']= $config;
+$_SESSION['errorsAlreadyPosted']= array();
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
