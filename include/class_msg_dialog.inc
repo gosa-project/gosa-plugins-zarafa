@@ -21,20 +21,32 @@ class msg_dialog
 			$i_type = INFO_DIALOG;
 		}
 
-		$this->i_ID 	 = preg_replace("/[^0-9]*/","",microtime()); 
-		$this->s_Title	 = $s_title;
-		$this->s_Message = $s_message;
-		$this->i_Type	 = $i_type;
-		$this->a_Trace	 = debug_backtrace();
-		if(!isset($_SESSION['msg_dialogs'])){
-			$_SESSION['msg_dialogs'] = array();
+		if((!isset($_SESSION['errorsAlreadyPosted'])) || !is_array($_SESSION['errorsAlreadyPosted'])){
+			$_SESSION['errorsAlreadyPosted'] = array();
 		}
-		if($this->i_Type == FATAL_ERROR_DIALOG){
-		restore_error_handler();
-		error_reporting(E_ALL);
-			echo $this->execute();
-		}else{
-			$_SESSION['msg_dialogs'][] = $this;
+
+		if(!isset($_SESSION['errorsAlreadyPosted'][$s_title.$s_message])){
+			$_SESSION['errorsAlreadyPosted'][$s_title.$s_message] = 0;
+		}
+		$_SESSION['errorsAlreadyPosted'][$s_title.$s_message]++;
+
+		if($_SESSION['errorsAlreadyPosted'][$s_title.$s_message] <=1  ){
+
+			$this->i_ID 	 = preg_replace("/[^0-9]*/","",microtime()); 
+			$this->s_Title	 = $s_title;
+			$this->s_Message = $s_message;
+			$this->i_Type	 = $i_type;
+			$this->a_Trace	 = debug_backtrace();
+			if(!isset($_SESSION['msg_dialogs'])){
+				$_SESSION['msg_dialogs'] = array();
+			}
+			if($this->i_Type == FATAL_ERROR_DIALOG){
+				restore_error_handler();
+				error_reporting(E_ALL);
+				echo $this->execute();
+			}else{
+				$_SESSION['msg_dialogs'][] = $this;
+			}
 		}
 	}
 

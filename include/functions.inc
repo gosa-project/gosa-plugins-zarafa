@@ -1011,114 +1011,28 @@ function print_red()
     $string= preg_replace ("/%s/", $array[$i], $string, 1);
   }
 
-  if((!isset($_SESSION['errorsAlreadyPosted'])) || !is_array($_SESSION['errorsAlreadyPosted'])){
-    $_SESSION['errorsAlreadyPosted'] = array(); 
-  }
-
   /* If DEBUGLEVEL is set, we're in web mode, use textual output in
      the other case... */
-
   if (isset($_SESSION['DEBUGLEVEL'])){
-
-    if($_SESSION['LastError'] == $string){
-    
-      if((!isset($_SESSION['errorsAlreadyPosted'][$string]))){
-        $_SESSION['errorsAlreadyPosted'][$string] = 1;
+    if($string !== NULL){
+      if (preg_match("/"._("LDAP error:")."/", $string)){
+        $addmsg= _("Problems with the LDAP server mean that you probably lost the last changes. Please check your LDAP setup for possible errors and try again.");
+      } else {
+        if (!preg_match('/[.!?]$/', $string)){
+          $string.= ".";
+        }
+        $string= preg_replace('/<br>/', ' ', $string);
+        $addmsg= _("Please check your input and fix the error. Press 'OK' to close this message box.");
       }
-      $_SESSION['errorsAlreadyPosted'][$string]++;
-
+      msg_dialog::display($addmsg, $string,ERROR_DIALOG);
+      return;
     }else{
-      if($string !== NULL){
-        if (preg_match("/"._("LDAP error:")."/", $string)){
-          $addmsg= _("Problems with the LDAP server mean that you probably lost the last changes. Please check your LDAP setup for possible errors and try again.");
-          $img= "images/error.png";
-        } else {
-          if (!preg_match('/[.!?]$/', $string)){
-            $string.= ".";
-          }
-          $string= preg_replace('/<br>/', ' ', $string);
-          $img= "images/warning.png";
-          $addmsg= _("Please check your input and fix the error. Press 'OK' to close this message box.");
-        }
-     
-        msg_dialog::display($addmsg, $string,ERROR_DIALOG);
- 
-        return;
-/*
-        if(isset($_SESSION['errors']) && strlen($_SESSION['errors'])==0) {
-
-          if(preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT'])){
-
-            $_SESSION['errors'].= "
-              <iframe id='e_layer3' 
-                style=\"  position:absolute;
-                          width:100%;
-                          height:100%;
-                          top:0px;
-                          left:0px;
-                          border:none;  
-                          border-style:none; 
-                          border-width:0pt;
-                          display:block;
-                          allowtransparency='true';
-                          background-color: #FFFFFF;
-                          filter:chroma(color=#FFFFFF);
-                          z-index:0; \">
-              </iframe>
-              <div  id='e_layer2'
-                style=\"
-                  position: absolute;
-                  left: 0px;
-                  top: 0px;
-                  right:0px;
-                  bottom:0px;
-                  z-index:0;
-                  width:100%;
-                  height:100%;
-                  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images/opacity_black.png'); \">
-              </div>";
-              $hide = "hide(\"e_layer\");hide(\"e_layer2\");hide(\"e_layer3\");";
-          }else{
-
-            $_SESSION['errors'].= "
-              <div  id='e_layer2'
-                style=\"
-                  position: absolute;
-                  left: 0px;
-                  top: 0px;
-                  right:0px;
-                  bottom:0px;
-                  z-index:0;
-                  background-image: url(images/opacity_black.png);\">
-               </div>";
-              $hide = "hide(\"e_layer\");hide(\"e_layer2\");";
-          }
-
-        $_SESSION['errors'].= "
-         <div style='left:20%;right:20%;top:30%;".
-         "background-color:white;padding:5px;border:5px solid red;z-index:150;".
-         "position:absolute' id='e_layer'><table style='width:100%' summary='' border=0>".
-         "<tr><td style='vertical-align:top;padding:10px'><img alt='' src='".
-         get_template_path($img)."'></td>".
-         "<td style='width:100%'><h1>"._("An error occurred while processing your request").
-         "</h1><b>$string</b><br><br>$addmsg</td></tr><tr><td colspan='2' align='center'><br><button ".
-         (($_SESSION['js']==FALSE)?"type='submit'":"type='button' name='error_accept'").
-         " style='width:80px' onClick='".$hide."'>".
-         _("OK")."</button></td></tr></table></div>";
-
-        }
-        */
-      }else{
-        return;
-      }
-      $_SESSION['errorsAlreadyPosted'][$string] = 1;
-
+      return;
     }
 
   } else {
     echo "Error: $string\n";
   }
-  $_SESSION['LastError'] = $string; 
 }
 
 
