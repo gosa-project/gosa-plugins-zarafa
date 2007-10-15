@@ -42,6 +42,12 @@ class passwordMethodsmd5 extends passwordMethod
     $hash = "{SMD5}".base64_encode(pack("H*",md5($pwd . $salt)) . $salt);
     return $hash;       
   }
+
+  function get_hash_name()
+  {
+    return "smd5";
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

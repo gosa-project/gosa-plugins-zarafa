@@ -35,6 +35,13 @@ class passwordMethodClear extends passwordMethod
 	{
 		return $pwd;       
 	}
+
+  
+  function get_hash_name()
+  {
+    return ("clear");
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

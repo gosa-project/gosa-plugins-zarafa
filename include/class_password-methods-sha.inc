@@ -30,8 +30,6 @@ class passwordMethodsha extends passwordMethod
       return(true);
     }elseif(function_exists('mhash')){
       return true;
-    }elseif(function_exists('crypt')){
-      return true;
     }else{
       return false;
     }
@@ -44,15 +42,20 @@ class passwordMethodsha extends passwordMethod
       $hash = "{SHA}" . base64_encode(pack("H*",sha1($password)));
     }elseif (function_exists('mhash')) {
       $hash = "{SHA}" . base64_encode(mHash(MHASH_SHA1, $password));
-    }elseif(function_exists('crypt')) {
-      $hash = "{CRYPT}" . crypt($password);
     }else{
-      print_red(_("Can't use sha for encryption, missing function sha1 / mhash / crypt"));
+      print_red(_("Can't use sha for encryption, missing function sha1 / mhash"));
       return false;
     }
 
     return $hash; 
   }
+
+
+  function get_hash_name()
+  {
+    return "sha";
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

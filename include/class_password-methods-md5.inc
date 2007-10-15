@@ -40,6 +40,12 @@ class passwordMethodMd5 extends passwordMethod
 	{
 		return  "{MD5}".base64_encode( pack('H*', md5($pwd)));
 	}
+
+
+  function get_hash_name()
+  {
+    return "md5";
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

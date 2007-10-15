@@ -53,6 +53,13 @@ class passwordMethodssha extends passwordMethod
     }
     return $pwd;
   }
+
+
+  function get_hash_name()
+  {
+    return "ssha";
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -66,7 +66,7 @@ class passwordMethodkerberos extends passwordMethod
       if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
         $mode= "sasl";
       }
-			$newpass= "{$mode}".$this->attrs['uid'][0]."@".$cfg['REALM'];
+			$newpass= "{".$mode."}".$this->attrs['uid'][0]."@".$cfg['REALM'];
 
 			return $newpass;       
 		}
@@ -110,11 +110,15 @@ class passwordMethodkerberos extends passwordMethod
     }
   }
 
-}
+  function get_hash_name()
+  {
+    $mode= "kerberos";
+    if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+      $mode= "sasl";
+    }
+    return "$mode";
+  }
 
-/* Dummy class for OpenLDAP Kerberos/SASL change  */
-class passwordMethodsasl extends passwordMethodkerberos
-{
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

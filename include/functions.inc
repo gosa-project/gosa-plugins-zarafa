@@ -2429,18 +2429,17 @@ function change_password ($dn, $password, $mode=0, $hash= "")
     }
 
     $test = new  $available[$hash]($config);
-    $newpass =  $test->generate_hash($password);
 
   } else {
     // User MD5 by default
     $hash= "md5";
     $test = new  $available['md5']($config);
-    $newpass =  $test->generate_hash($password);
   }
 
   /* Feed password backends with information */
   $test->dn= $dn;
   $test->attrs= $attrs;
+  $newpass= $test->generate_hash($password);
 
   // Update shadow timestamp?
   if (isset($attrs["shadowLastChange"][0])){

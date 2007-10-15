@@ -18,33 +18,54 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class passwordMethodCrypt extends passwordMethod
+
+class passwordMethodheimdal extends passwordMethod
 {
-  function passwordMethodCrypt($config)  
-  {
-  }
+	function passwordMethodheimdal(&$config)  
+	{
+    $this->config= $config;
+	}
 
-  function is_available()
-  {
-    if(function_exists("crypt")){
-      return true;
-    }else{
-      return false;
+
+	function is_available()
+	{
+    # Check if heimdal information is available
+    # in configuration and return true/false
+    return true;
+	}
+
+
+	function generate_hash($pwd)
+	{
+    $mode= "kerberos";
+    if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+      $mode= "sasl";
     }
+
+    return "{".$mode."}".$this->attrs['uid'][0]."@".$cfg= $this->config->data['SERVERS']['KERBEROS']['REALM'];
+	}
+
+
+  function remove_from_parent()
+  {
+    # Find and remove kerberos entry below $this->dn
   }
 
 
-  function generate_hash($pwd)
+  function set_password()
   {
-    return "{CRYPT}".crypt($pwd, substr(session_id(),0,2));
+    # Add or modify kerberos entry below $this->dn
   }
 
 
   function get_hash_name()
   {
-    return "crypt";
+    $mode= "kerberos";
+    if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+      $mode= "sasl";
+    }
+    return "$mode";
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

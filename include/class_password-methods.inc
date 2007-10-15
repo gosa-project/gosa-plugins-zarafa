@@ -29,6 +29,11 @@ class passwordMethod
   {
   }
 
+
+  function get_hash_name()
+  {
+  }
+
   // Loads Methods in annother way as  get_available_methods do, (For setup ..)
   // and loads them,.
   function get_available_methods_if_not_loaded($path_to_load="../include")
@@ -44,7 +49,6 @@ class passwordMethod
     }
     return(passwordMethod::get_available_methods());
   }
-
 
 
 
@@ -66,15 +70,15 @@ class passwordMethod
   // this function returns all loaded classes for password encryption
   static function get_available_methods()
   {
-    global $class_mapping;
+    global $class_mapping, $config;
     $ret =false;
     $i =0;
     foreach($class_mapping as $class => $path) {
       if(preg_match('/passwordMethod/i', $class) && !preg_match("/^passwordMethod$/i", $class)){
         $name = preg_replace ("/passwordMethod/i", "", $class);
-        $test = new $class(false);
+        $test = new $class($config);
         if($test->is_available()) {
-          $plugname= strtolower(preg_replace ("/passwordMethod/i","",$class));
+          $plugname= $test->get_hash_name();
           $ret['name'][$i]= $plugname;
           $ret['class'][$i]=$class;
           $ret[$i]['name']= $plugname;
