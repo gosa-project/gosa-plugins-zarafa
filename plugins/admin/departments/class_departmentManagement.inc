@@ -289,7 +289,10 @@ class departmentManagement extends plugin
       if (count($message) == 0){
 
         $this->deptabs->save(true);
-        $this->config->get_departments();
+        global $config;
+        $config->get_departments();
+        $config->make_idepartments();
+        $this->config = $config;
 
         /* This object must be tagged, so set ObjectTaggingRequested to true */
         if($this->deptabs->by_object['department']->must_be_tagged()){
