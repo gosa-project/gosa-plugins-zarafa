@@ -27,7 +27,7 @@ class goLogDBServer extends goService{
   function goLogDBServer(&$config,$dn)
   {
     goService::goService($config,$dn);
-    $this->DisplayName = _("Logging database");
+    $this->DisplayName = _("Syslog service database");
   }
 
 
@@ -55,7 +55,7 @@ class goLogDBServer extends goService{
   function getListEntry()
   {
     $fields = goService::getListEntry();
-    $fields['Message']      = _("Logging database");
+    $fields['Message']      = _("Syslog service database");
     $fields['AllowEdit']    = true;
     return($fields);
   }

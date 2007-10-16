@@ -24,7 +24,7 @@ class gosaLogServer extends goService{
   function gosaLogServer(&$config,$dn)
   {
     goService::goService($config,$dn);
-    $this->DisplayName = _("GOsa logging service");
+    $this->DisplayName = _("GOsa MySQL logging service");
   }
 
 
@@ -52,7 +52,7 @@ class gosaLogServer extends goService{
   function getListEntry()
   {
     $fields = goService::getListEntry();
-    $fields['Message']      = _("GOsa logging service");
+    $fields['Message']      = _("GOsa MySQL logging service");
     $fields['AllowEdit']    = true;
     $fields['AllowStart']   = FALSE;
     $fields['AllowStop']    = FALSE;

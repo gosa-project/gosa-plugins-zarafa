@@ -24,7 +24,7 @@ class goSyslogServer extends goService{
   function goSyslogServer(&$config,$dn)
   {
     goService::goService($config,$dn);
-    $this->DisplayName = _("Logging service");
+    $this->DisplayName = _("Syslog server");
   }
 
 
@@ -44,7 +44,7 @@ class goSyslogServer extends goService{
   function getListEntry()
   {
     $fields               = goService::getListEntry();
-    $fields['Message']    = _("Logging service");
+    $fields['Message']    = _("Syslog server");
     $fields['AllowEdit']  = false;
     return($fields);
   }
