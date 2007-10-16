@@ -98,7 +98,13 @@ class log {
           $this->log_into_syslog($entry);
         }
         if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
-          $this->log_into_db($entry);
+          $res = $this->log_into_db($entry);
+
+          if(!$res){
+            global $config;
+            $config->current['LOGGING'] = preg_replace("/(^|,)mysql(,|$)/",",",$config->current['LOGGING']);
+            msg_dialog::display(_("Logging to MySQL disabled"),_("The logging to a MySQL database is now disabled for this session of GOsa, due to communication errors with the specified logging database."), INFO_DIALOG);
+          }
         }
       }
     }
@@ -147,10 +153,12 @@ class log {
       $con = @mysql_pconnect($server_name,$server['USER'],$server['PWD']);
       if(!$con){
         print_red(sprintf(_("Could not connect to logging server %s."),$server_name));
+        return(FALSE);
       }else{
         $db = mysql_select_db($server['DB'],$con);
         if(!$db){
           print_red(sprintf(_("Could not select database %s on server %s. Server says :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
+          return(FALSE);
         }else{
 
           /* Create mysql syntax */
@@ -170,12 +178,13 @@ class log {
           $res = mysql_query($query,$con);
           if(!$res){
             print_red(sprintf(_("Could not query database %s on server %s. Server ssys :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
-            
+            return(FALSE);
           } 
         }
         mysql_close($con);
       }
     }
+    return(TRUE);
   }
 }
 
