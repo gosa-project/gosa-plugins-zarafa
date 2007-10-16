@@ -385,8 +385,6 @@ class appgroup extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    print_a($this);
-
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
