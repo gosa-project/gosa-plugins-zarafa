@@ -108,8 +108,15 @@
 				<tr>
 					<td>
 	{render acl=$FAIdebianMirrorACL}
-						<select name="FAIdebianMirror" onchange='document.mainform.submit()'>
-							{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
+						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
+							{foreach from=$FAIdebianMirrors item=val key=key}
+								{if $val.USE}
+									<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{$val.NAME}</option>
+								{else}
+									<option value="auto" disabled>{$val.NAME}</option>
+								{/if}
+							{/foreach}
+							<option disabled>&nbsp;</option>
 						</select>
 	{/render}
 	{if $javascript eq 'false'}
@@ -120,8 +127,14 @@
 					</td>
 					<td>
 	{render acl=$FAIreleaseACL}
-						<select name="FAIrelease"  onchange='document.mainform.submit()'>
-						{html_options options=$FAIreleases output=$FAIreleases selected=$FAIrelease}
+						<select name="FAIrelease"  onchange='document.mainform.submit()' {$FAIclassACL}>
+							{foreach from=$FAIreleases item=val key=key}
+								{if $val.USE}
+									<option value="{$val.NAME}" {if $FAIrelease == $key} selected {/if}>{$val.NAME}</option>
+								{else}
+									<option value="auto" disabled>{$val.NAME}</option>
+								{/if}
+							{/foreach}
 						</select>
 	{/render}
 					</td>
