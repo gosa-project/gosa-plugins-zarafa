@@ -605,6 +605,7 @@ function get_multiple_locks($objects)
     return("");
   }
 
+  $users = array();
   while($attrs = $ldap->fetch()){
     $dn   = base64_decode($attrs['gosaObject'][0]);
     $user = $attrs['gosaUser'][0];
