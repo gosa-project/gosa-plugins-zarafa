@@ -449,6 +449,13 @@ function add_lock ($object, $user)
 {
   global $config;
 
+  if(is_array($object)){
+    foreach($object as $obj){
+      add_lock($obj,$user);
+    }
+    return;
+  }
+
   /* Just a sanity check... */
   if ($object == "" || $user == ""){
     print_red(_("Error while adding a lock. Parameters are not set correctly, please check the source!"));
@@ -487,6 +494,13 @@ function add_lock ($object, $user)
 function del_lock ($object)
 {
   global $config;
+
+  if(is_array($object)){
+    foreach($object as $obj){
+      del_lock($obj);
+    }
+    return;
+  }
 
   /* Sanity check */
   if ($object == ""){
@@ -563,8 +577,40 @@ function get_lock ($object)
     $attrs = $ldap->fetch();
     $user= $attrs['gosaUser'][0];
   }
-
   return ($user);
+}
+
+
+function get_multiple_locks($objects)
+{
+  global $config;
+
+  if(is_array($objects)){
+    $filter = "(&(objectClass=gosaLockEntry)(|";
+    foreach($objects as $obj){
+      $filter.="(gosaObject=".base64_encode($obj).")";
+    }
+    $filter.= "))";
+  }else{
+    $filter = "(&(objectClass=gosaLockEntry)(gosaObject=".base64_encode($objects)."))";
+  }
+
+  /* Get LDAP link, check for presence of the lock entry */
+  $user= "";
+  $ldap= $config->get_ldap_link();
+  $ldap->cd ($config->current['CONFIG']);
+  $ldap->search($filter, array("gosaUser","gosaObject"));
+  if (!preg_match("/Success/i", $ldap->error)){
+    print_red (_("Can't get locking information in LDAP database. Please check the 'config' entry in gosa.conf!"));
+    return("");
+  }
+
+  while($attrs = $ldap->fetch()){
+    $dn   = base64_decode($attrs['gosaObject'][0]);
+    $user = $attrs['gosaUser'][0];
+    $users[] = array("dn"=> $dn,"user"=>$user);
+  }
+  return ($users);
 }
 
 
@@ -1041,19 +1087,6 @@ function gen_locked_message($user, $dn)
   global $plug, $config;
 
   $_SESSION['dn']= $dn;
-  $ldap= $config->get_ldap_link();
-  $ldap->cat ($user, array('uid', 'cn'));
-  $attrs= $ldap->fetch();
-
-  /* Stop if we have no user here... */
-  if (count($attrs)){
-    $uid= $attrs["uid"][0];
-    $cn= $attrs["cn"][0];
-  } else {
-    $uid= $attrs["uid"][0];
-    $cn= $attrs["cn"][0];
-  }
-  
   $remove= false;
 
   /* Save variables from LOCK_VARS_TO_USE in session - for further editing */
@@ -1079,13 +1112,24 @@ function gen_locked_message($user, $dn)
 
   /* Prepare and show template */
   $smarty= get_smarty();
-  $smarty->assign ("dn", $dn);
+  
+  if(is_array($dn)){
+    $msg = "<pre>";
+    foreach($dn as $sub_dn){
+      $msg .= "\n".$sub_dn.", ";
+    }
+    $msg = preg_replace("/, $/","</pre>",$msg);
+  }else{
+    $msg = $dn;
+  }
+
+  $smarty->assign ("dn", $msg);
   if ($remove){
     $smarty->assign ("action", _("Continue anyway"));
   } else {
     $smarty->assign ("action", _("Edit anyway"));
   }
-  $smarty->assign ("message", sprintf(_("You're going to edit the LDAP entry '%s' which appears to be used by '%s'. Please contact the person in order to clarify proceedings."), "<b>".$dn."</b>", "<b><a href=\"main.php?plug=0&amp;viewid=$uid\">$cn</a></b>"));
+  $smarty->assign ("message", sprintf(_("You're going to edit the LDAP entry/entries '%s'"), "<b>".$msg."</b>", ""));
 
   return ($smarty->fetch (get_template_path('islocked.tpl')));
 }
