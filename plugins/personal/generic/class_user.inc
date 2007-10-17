@@ -83,7 +83,7 @@ class user extends plugin
 
   /* variables to trigger password changes */
   var $pw_storage= "crypt";
-  var $last_pw_storage= "crypt";
+  var $last_pw_storage= "unset";
   var $had_userCertificate= FALSE;
 
   var $view_logged = FALSE;
@@ -105,8 +105,8 @@ class user extends plugin
       "functionalTitle", "certificateSerialNumber", "publicVisible", "street", "role",
       "postalCode");
 
-  var $multiple_support =TRUE;
-
+  var $multiple_support = TRUE;
+  var $multiple_handle  = FALSE;
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
@@ -119,9 +119,10 @@ class user extends plugin
       $this->attributes=array_merge($this->attributes,$this->govattrs);
     }
 
-    $this->dn = $dn;
     if(is_array($dn)){
-      return;
+      $this->dn = $dn;
+      $this->multiple_handle = TRUE;
+      return($this->construct_multiple());
     }
 
     /* Load base attributes */
@@ -225,14 +226,51 @@ class user extends plugin
   }
 
 
+  function construct_multiple()
+  {
+    /* Configuration is fine, allways */
+    $this->multiple_attrs = array();
+    foreach($this->dn as $dn){
+      $this->multiple_attrs[] = new user($this->config,$dn);
+    } 
+  }
+
+  
+  function execute_multiple()
+  {
+ 
+    $smarty =get_smarty(); 
+
+    $u_attrs = array();
+    $d_attrs = array();
+    foreach($this->attributes as $attr){
+      foreach($this->multiple_attrs as $class){
+        if(!isset($u_attrs[$attr]) && !empty($class->$attr)){
+          $u_attrs[$attr] = $class->$attr;
+        }elseif(isset($u_attrs[$attr]) && !empty($class->$attr)){
+          $d_attrs[$attr] = TRUE;
+        }
+      }
+    }
+    print_a(array($u_attrs,$d_attrs));
+    foreach($this->attributes as $attr){
+      if(!isset($u_attrs[$attr])){
+        $u_attrs[$attr] = "empty";
+      }
+      $smarty->assign($attr,$u_attrs[$attr]);
+    }
+    return($smarty->fetch (get_template_path('multiple_generic.tpl', TRUE, dirname(__FILE__))));
+  }
+
+
   /* execute generates the html output for this node */
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
 
-    if(is_array($this->dn)){
-      return("Still not supported.");
+    if($this->multiple_handle){
+      return($this->execute_multiple());
     }
     /* Log view */
     if($this->is_account && !$this->view_logged){
