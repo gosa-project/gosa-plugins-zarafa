@@ -53,7 +53,6 @@ class tabs
       $this->multiple_entries = TRUE;
     }
 
-
     foreach ($data as &$tab){
 
       /* Check we want to handle multiple obejcts at once 
@@ -270,19 +269,24 @@ class tabs
 
   function save($ignore_account= FALSE)
   {
-    /* Save all plugins */
-    foreach ($this->by_object as $key => &$obj){
-      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-          $key, "Saving");
+    if($this->multiple_entries){
+      echo "Save is not supported for multiple entries yet";
 
-      $obj->dn= $this->dn;
+    }else{
+      /* Save all plugins */
+      foreach ($this->by_object as $key => &$obj){
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            $key, "Saving");
 
-      if ($obj->is_account || $ignore_account || $obj->ignore_account){
-        if ($obj->save() == 1){
-          return (1);
+        $obj->dn= $this->dn;
+
+        if ($obj->is_account || $ignore_account || $obj->ignore_account){
+          if ($obj->save() == 1){
+            return (1);
+          }
+        } else {
+          $obj->remove_from_parent();
         }
-      } else {
-        $obj->remove_from_parent();
       }
     }
     return (0);
@@ -337,7 +341,7 @@ class tabs
 
   function addSpecialTabs()
   {
-    if(!is_array($this->dn)){
+    if(!$this->multiple_entries){
       $this->by_name['acl']= _("ACL");
       $this->by_object['acl']= new acl($this->config, $this, $this->dn);
       $this->by_object['acl']->parent= &$this;

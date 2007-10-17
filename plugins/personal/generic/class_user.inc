@@ -83,7 +83,7 @@ class user extends plugin
 
   /* variables to trigger password changes */
   var $pw_storage= "crypt";
-  var $last_pw_storage= "unset";
+  var $last_pw_storage= "crypt";
   var $had_userCertificate= FALSE;
 
   var $view_logged = FALSE;
