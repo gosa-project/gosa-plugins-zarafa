@@ -105,15 +105,23 @@ class user extends plugin
       "functionalTitle", "certificateSerialNumber", "publicVisible", "street", "role",
       "postalCode");
 
+  var $multiple_support =TRUE;
+
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
   function user (&$config, $dn= NULL)
   {
+
     $this->config= $config;
     /* Configuration is fine, allways */
     if ($this->config->current['GOVERNMENTMODE']){
       $this->attributes=array_merge($this->attributes,$this->govattrs);
+    }
+
+    $this->dn = $dn;
+    if(is_array($dn)){
+      return;
     }
 
     /* Load base attributes */
@@ -223,6 +231,9 @@ class user extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if(is_array($this->dn)){
+      return("Still not supported.");
+    }
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;

@@ -168,6 +168,8 @@ class divListUsers extends MultiSelectWindow
         title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_users'>&nbsp;";
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/list_password.png'
         title='"._("Change password")."' alt='"._("Change password")."' name='multiple_password_change'>&nbsp;";
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edit.png'
+        title='"._("Edit")."' alt='"._("Edit")."' name='multiple_edit'>&nbsp;";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){

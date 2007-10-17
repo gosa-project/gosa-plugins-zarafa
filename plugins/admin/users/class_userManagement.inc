@@ -62,7 +62,7 @@ class userManagement extends plugin
     plugin::execute();
 
     /* LOCK MESSAGE Vars */
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/","/^item_selected/","/^remove_multiple_users/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/","/^item_selected/","/^remove_multiple_users/","/^multiple_edit/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -78,7 +78,8 @@ class userManagement extends plugin
     foreach($_POST as $key => $val){
 
       /* Get every possible POST combination and set s_action/s_entry accordingly */
-      foreach(array("del"       => "user_del",    "edit"      => "user_edit",
+      foreach(array("del"       => "user_del",    
+                    "edit"      => "user_edit",
                     "new"       => "user_new",
                     "new_tpl"   => "user_tplnew",
                     "del_multiple" => "^remove_multiple_users",
@@ -86,6 +87,7 @@ class userManagement extends plugin
                     "change_pw" => "user_chgpw", 
                     "editPaste" => "editPaste",  
                     "copy_multiple" => "multiple_copy_users",
+                    "multiple_edit" => "multiple_edit",
                     "cut_multiple" => "multiple_cut_users",
                     "multiple_password_change" => "multiple_password_change",
                     "copy"      => "^copy",
@@ -269,15 +271,23 @@ class userManagement extends plugin
      ********************/
 
     /* User wants to edit data? */
-    if (($s_action=="edit") && (!isset($this->usertab->config))){
+    if (($s_action == "multiple_edit" || $s_action=="edit") && (!isset($this->usertab->config))){
 
+      $this->dn = array();
       /* Get 'dn' from posted 'uid', must be unique */
-      $this->dn= $this->list[trim($s_entry)]['dn'];
+      if($s_action == "multiple_edit"){
+        foreach($this->list_get_selected_items() as $id){
+          $this->dn[] = $this->list[trim($id)]['dn'];
+        }
+      }else{
+        $this->dn= array($this->list[trim($s_entry)]['dn']);
+      }
 
       /* Check locking, save current plugin in 'back_plugin', so
          the dialog knows where to return. */
-      if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($user, $this->dn));
+      $users= get_multiple_locks($this->dn);
+      if (count($users)){
+        return(gen_locked_message($users, $this->dn));
       }
 
       /* Lock the current entry, so everyone will get the
@@ -285,15 +295,18 @@ class userManagement extends plugin
       add_lock ($this->dn, $this->ui->dn);
 
       /* Register usertab to trigger edit dialog */
-      $this->usertab= new usertabs($this->config, 
-          $this->config->data['TABS']['USERTABS'], $this->dn);
+      $tbs = new usertabs($this->config,$this->config->data['TABS']['USERTABS'], $this->dn);
 
-      /* Switch tab, if it was requested by the user */
-      $this->usertab->current = $s_tab;
+      if($tbs){
+        $this->usertab = $tbs;
 
-      /* Set ACL and move DN to the headline */
-      $this->usertab->set_acl_base($this->dn);
-      $_SESSION['objectinfo']= $this->dn;
+        /* Switch tab, if it was requested by the user */
+        $this->usertab->current = $s_tab;
+
+        /* Set ACL and move DN to the headline */
+#        $this->usertab->set_acl_base($this->dn);
+         $_SESSION['objectinfo']= _("Multiple edit");
+      }
     }
 
 

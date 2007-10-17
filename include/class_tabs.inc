@@ -33,6 +33,8 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
+  var $multiple_entries = FALSE;
+
   function tabs(&$config, $data, $dn, $acl_category= "")
   {
     /* Save dn */
@@ -41,7 +43,27 @@ class tabs
 
     $baseobject= NULL;
 
+    /* Check specified dn 
+     */
+    if(is_string($dn)){
+
+    }elseif(is_array($dn)&&count($dn) == 1){
+      $this->dn = $dn[key($dn)];
+    }elseif(is_array($dn)&&count($dn) > 1){
+      $this->multiple_entries = TRUE;
+    }
+
+
     foreach ($data as &$tab){
+
+      /* Check we want to handle multiple obejcts at once 
+       *  and if this is supported by enabled plugins 
+       */
+      $tmp = get_class_vars($tab['CLASS']);
+      if($this->multiple_entries  && !$tmp['multiple_support']){
+        continue;
+      } 
+
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
       if ($baseobject === NULL){
@@ -58,6 +80,11 @@ class tabs
       if ($this->current == ""){
         $this->current= $tab['CLASS'];
       }
+    }
+
+    /* Return false if tabs */
+    if(!count($this->by_object)){
+      return(FALSE);
     }
   }
 
@@ -310,12 +337,14 @@ class tabs
 
   function addSpecialTabs()
   {
-    $this->by_name['acl']= _("ACL");
-    $this->by_object['acl']= new acl($this->config, $this, $this->dn);
-    $this->by_object['acl']->parent= &$this;
-    $this->by_name['reference']= _("References");
-    $this->by_object['reference']= new reference($this->config, $this->dn);
-    $this->by_object['reference']->parent= &$this;
+    if(!is_array($this->dn)){
+      $this->by_name['acl']= _("ACL");
+      $this->by_object['acl']= new acl($this->config, $this, $this->dn);
+      $this->by_object['acl']->parent= &$this;
+      $this->by_name['reference']= _("References");
+      $this->by_object['reference']= new reference($this->config, $this->dn);
+      $this->by_object['reference']->parent= &$this;
+    }
   }
 
 

@@ -118,6 +118,10 @@ class plugin
   /* This can be set to render the tabulators in another stylesheet */
   var $pl_notify= FALSE;
 
+
+  /* This variable indicates that this class can handle multiple dns at once. */
+  var $multiple_support = FALSE; 
+
   /*! \brief plugin constructor
 
     If 'dn' is set, the node loads the given 'dn' from LDAP
