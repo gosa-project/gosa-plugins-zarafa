@@ -107,7 +107,8 @@ class user extends plugin
 
   var $multiple_support = TRUE;
   var $multiple_handle  = FALSE;
-
+  var $attrs_to_update  = array();
+  var $multiple_user_handles  = array();
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
   function user (&$config, $dn= NULL)
@@ -229,22 +230,37 @@ class user extends plugin
   function construct_multiple()
   {
     /* Configuration is fine, allways */
-    $this->multiple_attrs = array();
+    $this->multiple_user_handles = array();
     foreach($this->dn as $dn){
-      $this->multiple_attrs[] = new user($this->config,$dn);
+      $this->multiple_user_handles[] = new user($this->config,$dn);
     } 
   }
 
+  function save_object_multiple()
+  {
+    foreach(array("pw_storage","base","edit_cert") as $attr){
+      if(isset($_POST["use_".$attr])){
+        $this->attrs_to_update[$attr] = TRUE;
+      }else{
+        $this->attrs_to_update[$attr] = FALSE;
+      }
+    }
+    foreach($this->attributes as $attr){
+      if(isset($_POST["use_".$attr])){
+        $this->attrs_to_update[$attr] = TRUE;
+      }else{
+        $this->attrs_to_update[$attr] = FALSE;
+      }
+    } 
+  }
   
   function execute_multiple()
   {
- 
     $smarty =get_smarty(); 
-
     $u_attrs = array();
     $d_attrs = array();
     foreach($this->attributes as $attr){
-      foreach($this->multiple_attrs as $class){
+      foreach($this->multiple_user_handles as $class){
         if(!isset($u_attrs[$attr]) && !empty($class->$attr)){
           $u_attrs[$attr] = $class->$attr;
         }elseif(isset($u_attrs[$attr]) && !empty($class->$attr)){
@@ -252,13 +268,55 @@ class user extends plugin
         }
       }
     }
-    print_a(array($u_attrs,$d_attrs));
-    foreach($this->attributes as $attr){
-      if(!isset($u_attrs[$attr])){
-        $u_attrs[$attr] = "empty";
+    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
+    $smarty->assign("preferredLanguage_list", $language);
+    @$smarty->assign("bases", $this->allowedBasesToMoveTo());
+    $smarty->assign("base_select",      $this->base);
+
+    /* Save government mode attributes */
+    if (isset($this->config->current['GOVERNMENTMODE']) &&
+        preg_match('/true/i', $this->config->current['GOVERNMENTMODE'])){
+      $smarty->assign("governmentmode", "true");
+      $ivbbmodes= array("nein", "ivbv", "testa", "ivbv,testa", "internet",
+          "internet,ivbv", "internet,testa", "internet,ivbv,testa");
+      $smarty->assign("ivbbmodes", $ivbbmodes);
+      foreach ($this->govattrs as $val){
+        $smarty->assign("$val", $this->$val);
+        $smarty->assign("$val"."ACL", $this->getacl($val,(!is_object($this->parent) && !isset($_SESSION['edit']))));
       }
-      $smarty->assign($attr,$u_attrs[$attr]);
+    } else {
+      $smarty->assign("governmentmode", "false");
     }
+
+    $temp= passwordMethod::get_available_methods();
+    $hashes = $temp['name'];
+    $test= new $temp[$this->pw_storage]($this->config);
+    $is_configurable= $test->is_configurable();
+    $smarty->assign("pwmode", $hashes);
+    $smarty->assign("pwmode_select", $this->pw_storage);
+    $smarty->assign("pw_configurable", $is_configurable);
+
+    foreach($this->attributes as $attr){
+#      if(!isset($u_attrs[$attr])){
+#        $u_attrs[$attr] = "empty";
+#      }
+      
+      if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
+        $smarty->assign("use_".$attr,TRUE);
+      }else{
+        $smarty->assign("use_".$attr,FALSE);
+      }
+      $smarty->assign($attr,$this->$attr);
+    }
+    foreach(array("pw_storage","base","edit_cert") as $attr){
+      if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
+        $smarty->assign("use_".$attr,TRUE);
+      }else{
+        $smarty->assign("use_".$attr,FALSE);
+      }
+    }
+
+
     return($smarty->fetch (get_template_path('multiple_generic.tpl', TRUE, dirname(__FILE__))));
   }
 
@@ -695,7 +753,10 @@ class user extends plugin
   /* Save data to object */
   function save_object()
   {
-    if (isset($_POST['generic'])){
+    if (isset($_POST['multiple_user_posted'])){
+      $this->save_object_multiple();
+    }
+    if(isset($_POST['generic']) || isset($_POST['multiple_user_posted'])){
 
       /* Make a backup of the current selected base */
       $base_tmp = $this->base;
@@ -770,16 +831,34 @@ class user extends plugin
     }
   }
 
+  
+  function multiple_save()
+  {
+    foreach($this->multiple_user_handles as $handle){
+      foreach($this->attributes as $attr){
+        if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
+          $handle->$attr = $this->$attr;         
+        }
+      }
+      $handle->save();
+    }
+  }
+
+
+
   /* Save data to LDAP, depending on is_account we save or delete */
   function save()
   {
+    if($this->multiple_handle){
+      return($this->multiple_save());
+    }
+ 
     /* Only force save of changes .... 
        If this attributes aren't changed, avoid saving.
      */
     if($this->gender=="0") $this->gender ="";
     if($this->preferredLanguage=="0") $this->preferredLanguage ="";
     
- 
     /* First use parents methods to do some basic fillup in $this->attrs */
     plugin::save ();
 
@@ -1164,7 +1243,8 @@ class user extends plugin
   /* Indicate whether a password change is needed or not */
   function password_change_needed()
   {
-    return ($this->pw_storage != $this->last_pw_storage);
+    
+    return (!$this->multiple_handle && $this->pw_storage != $this->last_pw_storage);
   }
 
 

@@ -304,8 +304,14 @@ class userManagement extends plugin
         $this->usertab->current = $s_tab;
 
         /* Set ACL and move DN to the headline */
-#        $this->usertab->set_acl_base($this->dn);
-         $_SESSION['objectinfo']= _("Multiple edit");
+        if(count($this->dn) == 1){  
+          reset($this->dn) ;
+          $dn = current($this->dn);
+          $this->usertab->set_acl_base($dn);
+          $_SESSION['objectinfo'] = $dn;
+        }else{
+          $_SESSION['objectinfo']= _("Multiple edit");
+        }
       }
     }
 

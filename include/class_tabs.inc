@@ -270,8 +270,11 @@ class tabs
   function save($ignore_account= FALSE)
   {
     if($this->multiple_entries){
-      echo "Save is not supported for multiple entries yet";
-
+      foreach ($this->by_object as $key => &$obj){
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            $key, "Saving");
+        $obj->save();
+      }
     }else{
       /* Save all plugins */
       foreach ($this->by_object as $key => &$obj){
