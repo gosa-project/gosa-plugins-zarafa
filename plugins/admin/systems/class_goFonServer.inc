@@ -134,7 +134,7 @@ class goFonServer extends goService{
       if($this->orig_dn != "new" && $this->orig_dn != $this->dn){
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
-        $ldap->search("(&(goFonHomeServer=*)(|(objectClass=goFonAccount)(objectClass=goFonConference)))",array("goFonHomeServer"));
+        $ldap->search("(&(goFonHomeServer=".$this->orig_dn.")(|(objectClass=goFonAccount)(objectClass=goFonConference)))",array("goFonHomeServer"));
         $dns = array();
         while($attrs = $ldap->fetch()){
           $dns[] = $attrs['dn'];
