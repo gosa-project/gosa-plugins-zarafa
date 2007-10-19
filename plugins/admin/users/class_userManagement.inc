@@ -265,29 +265,20 @@ class userManagement extends plugin
 
 
 
-
-    /********************
-      Edit existing entry 
+     /********************
+      Edit existing entry
      ********************/
 
     /* User wants to edit data? */
-    if (($s_action == "multiple_edit" || $s_action=="edit") && (!isset($this->usertab->config))){
+    if (($s_action=="edit") && (!isset($this->usertab->config))){
 
-      $this->dn = array();
       /* Get 'dn' from posted 'uid', must be unique */
-      if($s_action == "multiple_edit"){
-        foreach($this->list_get_selected_items() as $id){
-          $this->dn[] = $this->list[trim($id)]['dn'];
-        }
-      }else{
-        $this->dn= array($this->list[trim($s_entry)]['dn']);
-      }
+      $this->dn= $this->list[trim($s_entry)]['dn'];
 
       /* Check locking, save current plugin in 'back_plugin', so
          the dialog knows where to return. */
-      $users= get_multiple_locks($this->dn);
-      if (count($users)){
-        return(gen_locked_message($users, $this->dn));
+      if (($user= get_lock($this->dn)) != ""){
+        return(gen_locked_message ($user, $this->dn));
       }
 
       /* Lock the current entry, so everyone will get the
@@ -295,23 +286,39 @@ class userManagement extends plugin
       add_lock ($this->dn, $this->ui->dn);
 
       /* Register usertab to trigger edit dialog */
-      $tbs = new usertabs($this->config,$this->config->data['TABS']['USERTABS'], $this->dn);
+      $this->usertab= new usertabs($this->config,
+          $this->config->data['TABS']['USERTABS'], $this->dn);
 
-      if($tbs){
-        $this->usertab = $tbs;
+      /* Switch tab, if it was requested by the user */
+      $this->usertab->current = $s_tab;
 
-        /* Switch tab, if it was requested by the user */
-        $this->usertab->current = $s_tab;
+      /* Set ACL and move DN to the headline */
+      $this->usertab->set_acl_base($this->dn);
+      $_SESSION['objectinfo']= $this->dn;
+    }
 
-        /* Set ACL and move DN to the headline */
-        if(count($this->dn) == 1){  
-          reset($this->dn) ;
-          $dn = current($this->dn);
-          $this->usertab->set_acl_base($dn);
-          $_SESSION['objectinfo'] = $dn;
-        }else{
-          $_SESSION['objectinfo']= _("Multiple edit");
-        }
+ 
+
+    /********************
+      Edit multiple entries
+     ********************/
+
+    /* User wants to edit data? */
+    if ($s_action == "multiple_edit" && !isset($this->usertab->config)){
+
+      $this->dn = array();
+      foreach($this->list_get_selected_items() as $id){
+        $this->dn[] = $this->list[$id]['dn'];;
+      }
+      $tmp = new multi_plug($this->config,"usertabs",$this->config->data['TABS']['USERTABS'],$this->dn);
+      if ($tmp->entries_locked()){
+        return($tmp->display_lock_message());
+      }
+      $tmp->lock_entries($this->ui->dn);
+      if($tmp->multiple_available()){
+        $this->usertab = $tmp;
+        $this->usertab->set_active_tab($s_tab);
+        $_SESSION['objectinfo']= $this->usertab->get_object_info();
       }
     }
 
