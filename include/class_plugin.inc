@@ -122,6 +122,9 @@ class plugin
   /* This variable indicates that this class can handle multiple dns at once. */
   var $multiple_support = FALSE; 
 
+  /* This aviable indicates, that we are currently in multiple edit handle */
+  var $multiple_support_active = FALSE; 
+
   /*! \brief plugin constructor
 
     If 'dn' is set, the node loads the given 'dn' from LDAP

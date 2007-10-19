@@ -33,8 +33,6 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
-  var $multiple_entries = FALSE;
-
   function tabs(&$config, $data, $dn, $acl_category= "")
   {
     /* Save dn */
@@ -43,26 +41,7 @@ class tabs
 
     $baseobject= NULL;
 
-    /* Check specified dn 
-     */
-    if(is_string($dn)){
-
-    }elseif(is_array($dn)&&count($dn) == 1){
-      $this->dn = $dn[key($dn)];
-    }elseif(is_array($dn)&&count($dn) > 1){
-      $this->multiple_entries = TRUE;
-    }
-
     foreach ($data as &$tab){
-
-      /* Check we want to handle multiple obejcts at once 
-       *  and if this is supported by enabled plugins 
-       */
-      $tmp = get_class_vars($tab['CLASS']);
-      if($this->multiple_entries  && !$tmp['multiple_support']){
-        continue;
-      } 
-
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
       if ($baseobject === NULL){
@@ -80,12 +59,36 @@ class tabs
         $this->current= $tab['CLASS'];
       }
     }
-
-    /* Return false if tabs */
-    if(!count($this->by_object)){
-      return(FALSE);
-    }
   }
+
+  
+  function multiple_support_available()
+  {
+    foreach($this->by_object as $name => $obj){
+      if($obj->multiple_support){
+        return(TRUE);
+      }
+    }
+    return(FALSE);
+  }  
+
+  function enable_multiple_support()
+  {
+    if(!$this->multiple_support_available()){
+      return(FALSE);
+    }else{
+      foreach($this->by_object as $name => $obj){
+        if($obj->multiple_support){
+          $this->by_object[$name]->multiple_support_active = TRUE;
+        }else{
+          unset($this->by_object[$name]);
+          unset($this->by_name[$name]);
+        }
+      }
+    }
+    return(TRUE);
+  }
+
 
   function execute()
   {
@@ -269,27 +272,19 @@ class tabs
 
   function save($ignore_account= FALSE)
   {
-    if($this->multiple_entries){
-      foreach ($this->by_object as $key => &$obj){
-        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-            $key, "Saving");
-        $obj->save();
-      }
-    }else{
-      /* Save all plugins */
-      foreach ($this->by_object as $key => &$obj){
-        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-            $key, "Saving");
+    /* Save all plugins */
+    foreach ($this->by_object as $key => &$obj){
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $key, "Saving");
 
-        $obj->dn= $this->dn;
+      $obj->dn= $this->dn;
 
-        if ($obj->is_account || $ignore_account || $obj->ignore_account){
-          if ($obj->save() == 1){
-            return (1);
-          }
-        } else {
-          $obj->remove_from_parent();
+      if ($obj->is_account || $ignore_account || $obj->ignore_account){
+        if ($obj->save() == 1){
+          return (1);
         }
+      } else {
+        $obj->remove_from_parent();
       }
     }
     return (0);
@@ -344,14 +339,12 @@ class tabs
 
   function addSpecialTabs()
   {
-    if(!$this->multiple_entries){
-      $this->by_name['acl']= _("ACL");
-      $this->by_object['acl']= new acl($this->config, $this, $this->dn);
-      $this->by_object['acl']->parent= &$this;
-      $this->by_name['reference']= _("References");
-      $this->by_object['reference']= new reference($this->config, $this->dn);
-      $this->by_object['reference']->parent= &$this;
-    }
+    $this->by_name['acl']= _("ACL");
+    $this->by_object['acl']= new acl($this->config, $this, $this->dn);
+    $this->by_object['acl']->parent= &$this;
+    $this->by_name['reference']= _("References");
+    $this->by_object['reference']= new reference($this->config, $this->dn);
+    $this->by_object['reference']->parent= &$this;
   }
 
 
