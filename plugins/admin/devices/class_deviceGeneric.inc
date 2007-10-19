@@ -76,7 +76,7 @@ class deviceGeneric extends plugin
     }
 
     /* Skip serial check if vendor and product id are given */
-    if(preg_match("/^[0-9a-z]+$/i",$this->dev_id)){
+    if(preg_match("/^\s+$/i",$this->dev_id)){
       $message[]=_("Please specify a valid iSerial.");
     }
     if(empty($this->serial) || !$this->is_2byteHex($this->serial)){

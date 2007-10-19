@@ -21,6 +21,7 @@
 
 class passwordMethodheimdal extends passwordMethod
 {
+
 	function passwordMethodheimdal(&$config)  
 	{
     $this->config= $config;
@@ -31,6 +32,9 @@ class passwordMethodheimdal extends passwordMethod
 	{
     # Check if heimdal information is available
     # in configuration and return true/false
+    #
+    # In particular, we need the hook to feed kadmin
+    #
     return true;
 	}
 
@@ -55,6 +59,7 @@ class passwordMethodheimdal extends passwordMethod
   function set_password()
   {
     # Add or modify kerberos entry below $this->dn
+
   }
 
 
