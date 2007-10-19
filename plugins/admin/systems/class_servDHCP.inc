@@ -522,9 +522,15 @@ class servdhcp extends goService
         if ($modify){
           $ldap->modify($attrs);
           show_ldap_error($ldap->get_error(), _("Can't save DHCP object!"));
+
+          /* Optionally execute a command after we're done */
+          $this->handle_post_events("modify");
         } else {
           $ldap->add($attrs);
           show_ldap_error($ldap->get_error(), _("Can't save DHCP object!"));
+
+          /* Optionally execute a command after we're done */
+          $this->handle_post_events("create");
         }
       }
     }
