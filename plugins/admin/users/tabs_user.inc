@@ -93,29 +93,29 @@ class usertabs extends tabs
 
   function save($ignore_account= FALSE)
   {
-    if(!$this->multiple_entries){
+    /* Check for new 'dn', in order to propagate the
+       'dn' to all plugins */
+    $baseobject= $this->by_object['user'];
 
-      /* Check for new 'dn', in order to propagate the
-         'dn' to all plugins */
-      $baseobject= $this->by_object['user'];
+    if ($this->dn != 'new'){
 
-      if ($this->dn != 'new'){
+      $new_dn= $baseobject->new_dn;
 
-        $new_dn= $baseobject->new_dn;
-        if (strtolower($this->dn) != strtolower($new_dn)){
+      echo $new_dn;
 
-          /* Udpate acls */
-          $baseobject->update_acls($this->dn,$new_dn);
-          $baseobject->move($this->dn, $new_dn);
-          $this->by_object['user']= $baseobject;
+      if (strtolower($this->dn) != strtolower($new_dn)){
 
-          /* Did we change ourselves? Update ui object. */
-          change_ui_dn($this->dn, $new_dn);
-        }
+        /* Udpate acls */
+        $baseobject->update_acls($this->dn,$new_dn);
+    #    $baseobject->move($this->dn, $new_dn);
+        $this->by_object['user']= $baseobject;
+
+        /* Did we change ourselves? Update ui object. */
+        change_ui_dn($this->dn, $new_dn);
       }
-
-      $this->dn= $baseobject->new_dn;
     }
+
+    $this->dn= $baseobject->new_dn;
 
     return tabs::save();
   }

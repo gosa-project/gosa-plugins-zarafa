@@ -124,6 +124,7 @@ class plugin
 
   /* This aviable indicates, that we are currently in multiple edit handle */
   var $multiple_support_active = FALSE; 
+  var $selected_edit_values = array();
 
   /*! \brief plugin constructor
 
@@ -279,6 +280,16 @@ class plugin
   /* Save data to object */
   function save_object()
   {
+    if($this->multiple_support_active){
+      foreach($this->attributes as $attr){
+        if(isset($_POST["use_".$attr])){
+          $this->selected_edit_values[$attr] = TRUE;
+        }else{
+          $this->selected_edit_values[$attr] = FALSE;
+        }
+      }
+    }
+
     /* Save values to object */
     foreach ($this->attributes as $val){
       if ($this->acl_is_writeable($val) && isset ($_POST["$val"])){
@@ -1628,6 +1639,25 @@ class plugin
       }
     }
   }
+
+  
+  function get_multi_edit_values()
+  {
+    $ret = array();
+    foreach($this->selected_edit_values as $attr => $active){
+      if($active){
+        $ret[$attr] = $this->$attr;
+      }
+    }
+    return($ret);
+  }
+
+  function set_multi_edit_value()
+  {
+
+  }
+
 }
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

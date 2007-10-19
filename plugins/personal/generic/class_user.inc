@@ -106,9 +106,10 @@ class user extends plugin
       "postalCode");
 
   var $multiple_support = TRUE;
-  var $multiple_handle  = FALSE;
-  var $attrs_to_update  = array();
+  var $multiple_support_active  = FALSE;
+  var $selected_edit_values  = array();
   var $multiple_user_handles  = array();
+
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
   function user (&$config, $dn= NULL)
@@ -118,12 +119,6 @@ class user extends plugin
     /* Configuration is fine, allways */
     if ($this->config->current['GOVERNMENTMODE']){
       $this->attributes=array_merge($this->attributes,$this->govattrs);
-    }
-
-    if(is_array($dn)){
-      $this->dn = $dn;
-      $this->multiple_handle = TRUE;
-      return($this->construct_multiple());
     }
 
     /* Load base attributes */
@@ -222,103 +217,11 @@ class user extends plugin
     if (isset ($this->attrs['gender'])){
       $this->gender= strtoupper($this->attrs['gender'][0]);
     }
-  
+ 
     $this->orig_base = $this->base;
   }
 
 
-  function construct_multiple()
-  {
-    /* Configuration is fine, allways */
-    $this->multiple_user_handles = array();
-    foreach($this->dn as $dn){
-      $this->multiple_user_handles[] = new user($this->config,$dn);
-    } 
-  }
-
-  function save_object_multiple()
-  {
-    foreach(array("pw_storage","base","edit_cert") as $attr){
-      if(isset($_POST["use_".$attr])){
-        $this->attrs_to_update[$attr] = TRUE;
-      }else{
-        $this->attrs_to_update[$attr] = FALSE;
-      }
-    }
-    foreach($this->attributes as $attr){
-      if(isset($_POST["use_".$attr])){
-        $this->attrs_to_update[$attr] = TRUE;
-      }else{
-        $this->attrs_to_update[$attr] = FALSE;
-      }
-    } 
-  }
-  
-  function execute_multiple()
-  {
-    $smarty =get_smarty(); 
-    $u_attrs = array();
-    $d_attrs = array();
-    foreach($this->attributes as $attr){
-      foreach($this->multiple_user_handles as $class){
-        if(!isset($u_attrs[$attr]) && !empty($class->$attr)){
-          $u_attrs[$attr] = $class->$attr;
-        }elseif(isset($u_attrs[$attr]) && !empty($class->$attr)){
-          $d_attrs[$attr] = TRUE;
-        }
-      }
-    }
-    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
-    $smarty->assign("preferredLanguage_list", $language);
-    @$smarty->assign("bases", $this->allowedBasesToMoveTo());
-    $smarty->assign("base_select",      $this->base);
-
-    /* Save government mode attributes */
-    if (isset($this->config->current['GOVERNMENTMODE']) &&
-        preg_match('/true/i', $this->config->current['GOVERNMENTMODE'])){
-      $smarty->assign("governmentmode", "true");
-      $ivbbmodes= array("nein", "ivbv", "testa", "ivbv,testa", "internet",
-          "internet,ivbv", "internet,testa", "internet,ivbv,testa");
-      $smarty->assign("ivbbmodes", $ivbbmodes);
-      foreach ($this->govattrs as $val){
-        $smarty->assign("$val", $this->$val);
-        $smarty->assign("$val"."ACL", $this->getacl($val,(!is_object($this->parent) && !isset($_SESSION['edit']))));
-      }
-    } else {
-      $smarty->assign("governmentmode", "false");
-    }
-
-    $temp= passwordMethod::get_available_methods();
-    $hashes = $temp['name'];
-    $test= new $temp[$this->pw_storage]($this->config);
-    $is_configurable= $test->is_configurable();
-    $smarty->assign("pwmode", $hashes);
-    $smarty->assign("pwmode_select", $this->pw_storage);
-    $smarty->assign("pw_configurable", $is_configurable);
-
-    foreach($this->attributes as $attr){
-#      if(!isset($u_attrs[$attr])){
-#        $u_attrs[$attr] = "empty";
-#      }
-      
-      if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
-        $smarty->assign("use_".$attr,TRUE);
-      }else{
-        $smarty->assign("use_".$attr,FALSE);
-      }
-      $smarty->assign($attr,$this->$attr);
-    }
-    foreach(array("pw_storage","base","edit_cert") as $attr){
-      if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
-        $smarty->assign("use_".$attr,TRUE);
-      }else{
-        $smarty->assign("use_".$attr,FALSE);
-      }
-    }
-
-
-    return($smarty->fetch (get_template_path('multiple_generic.tpl', TRUE, dirname(__FILE__))));
-  }
 
 
   /* execute generates the html output for this node */
@@ -327,7 +230,7 @@ class user extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    if($this->multiple_handle){
+    if($this->multiple_support_active){
       return($this->execute_multiple());
     }
     /* Log view */
@@ -815,6 +718,7 @@ class user extends plugin
 
       $this->set_acl_base('dummy,'.$this->base);
     }
+    echo $this->base."<br>" ;
   }
 
   function rebind($ldap, $referral)
@@ -832,27 +736,9 @@ class user extends plugin
   }
 
   
-  function multiple_save()
-  {
-    foreach($this->multiple_user_handles as $handle){
-      foreach($this->attributes as $attr){
-        if(isset($this->attrs_to_update[$attr]) && $this->attrs_to_update[$attr] == TRUE){
-          $handle->$attr = $this->$attr;         
-        }
-      }
-      $handle->save();
-    }
-  }
-
-
-
   /* Save data to LDAP, depending on is_account we save or delete */
   function save()
   {
-    if($this->multiple_handle){
-      return($this->multiple_save());
-    }
- 
     /* Only force save of changes .... 
        If this attributes aren't changed, avoid saving.
      */
@@ -1170,48 +1056,52 @@ class user extends plugin
       $this->set_acl_base($this->base);
     }
 
-    /* must: sn, givenName, uid */
-    if ($this->sn == "" && ($this->acl_is_writeable("sn",(!is_object($this->parent) && !isset($_SESSION['edit'])) || ($this->is_new)))){
-      $message[]= _("The required field 'Name' is not set.");
-    }
 
-    /* UID already used? */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(uid=$this->uid)", array("uid"));
-    $ldap->fetch();
-    if ($ldap->count() != 0 && $this->dn == 'new'){
-      $message[]= _("There's already a person with this 'Login' in the database.");
-    }
+    if(!$this->multiple_support_active){
 
-    /* In template mode, the uid and givenName are autogenerated... */
-    if (!$this->is_template){
-      if ($this->givenName == "" && $this->acl_is_writeable("givenName",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-        $message[]= _("The required field 'Given name' is not set.");
+      /* must: sn, givenName, uid */
+      if ($this->sn == "" && ($this->acl_is_writeable("sn",(!is_object($this->parent) && !isset($_SESSION['edit'])) || ($this->is_new)))){
+        $message[]= _("The required field 'Name' is not set.");
       }
-      if ($this->uid == "" && $this->acl_is_writeable("uid",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-        $message[]= _("The required field 'Login' is not set.");
+
+      /* UID already used? */
+      $ldap= $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(uid=$this->uid)", array("uid"));
+      $ldap->fetch();
+      if ($ldap->count() != 0 && $this->dn == 'new'){
+        $message[]= _("There's already a person with this 'Login' in the database.");
       }
-      if (!(isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid")){
-        $ldap->cat($this->new_dn);
-        if ($ldap->count() != 0 && $this->dn != $this->new_dn && $this->dn == 'new'){
-          $message[]= _("There's already a person with this 'Name'/'Given name' combination in the database.");
+
+      /* In template mode, the uid and givenName are autogenerated... */
+      if (!$this->is_template){
+        if ($this->givenName == "" && $this->acl_is_writeable("givenName",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
+          $message[]= _("The required field 'Given name' is not set.");
+        }
+        if ($this->uid == "" && $this->acl_is_writeable("uid",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
+          $message[]= _("The required field 'Login' is not set.");
+        }
+        if (!(isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid")){
+          $ldap->cat($this->new_dn);
+          if ($ldap->count() != 0 && $this->dn != $this->new_dn && $this->dn == 'new'){
+            $message[]= _("There's already a person with this 'Name'/'Given name' combination in the database.");
+          }
         }
       }
-    }
 
-    /* Check for valid input */
-    if ($this->is_modified && !is_uid($this->uid)){
-      $message[]= _("The field 'Login' contains invalid characters. Lowercase, numbers and dashes are allowed.");
-    }
-    if (!is_url($this->labeledURI)){
-      $message[]= _("The field 'Homepage' contains an invalid URL definition.");
-    }
-    if (preg_match ("/[\\\\]/", $this->sn)){
-      $message[]= _("The field 'Name' contains invalid characters.");
-    }
-    if (preg_match ("/[\\\\]/", $this->givenName)){
-      $message[]= _("The field 'Given name' contains invalid characters.");
+      /* Check for valid input */
+      if ($this->is_modified && !is_uid($this->uid)){
+        $message[]= _("The field 'Login' contains invalid characters. Lowercase, numbers and dashes are allowed.");
+      }
+      if (!is_url($this->labeledURI)){
+        $message[]= _("The field 'Homepage' contains an invalid URL definition.");
+      }
+      if (preg_match ("/[\\\\]/", $this->sn)){
+        $message[]= _("The field 'Name' contains invalid characters.");
+      }
+      if (preg_match ("/[\\\\]/", $this->givenName)){
+        $message[]= _("The field 'Given name' contains invalid characters.");
+      }
     }
 
     /* Check phone numbers */
@@ -1243,8 +1133,7 @@ class user extends plugin
   /* Indicate whether a password change is needed or not */
   function password_change_needed()
   {
-    
-    return (!$this->multiple_handle && $this->pw_storage != $this->last_pw_storage);
+    return($this->pw_storage != $this->last_pw_storage);
   }
 
 
@@ -1529,9 +1418,85 @@ class user extends plugin
         $ret["plProvidedAcls"][$attr] = $desc;
       }
     }
-
     return($ret);
   }
+
+
+
+
+
+
+
+
+  function get_values_to_update()
+  {
+    $ret = plugin::get_multi_edit_values();
+    return($ret); 
+  }
+
+
+  function save_object_multiple()
+  {
+    foreach(array("pw_storage","base","edit_cert") as $attr){
+      if(isset($_POST["use_".$attr])){
+        $this->selected_edit_values[$attr] = TRUE;
+      }else{
+        $this->selected_edit_values[$attr] = FALSE;
+      }
+    }
+  }
+
+
+  function execute_multiple()
+  {
+    $smarty =get_smarty(); 
+    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
+    $smarty->assign("preferredLanguage_list", $language);
+    @$smarty->assign("bases", $this->allowedBasesToMoveTo());
+    $smarty->assign("base_select",      $this->base);
+
+    /* Save government mode attributes */
+    if (isset($this->config->current['GOVERNMENTMODE']) &&
+        preg_match('/true/i', $this->config->current['GOVERNMENTMODE'])){
+      $smarty->assign("governmentmode", "true");
+      $ivbbmodes= array("nein", "ivbv", "testa", "ivbv,testa", "internet",
+          "internet,ivbv", "internet,testa", "internet,ivbv,testa");
+      $smarty->assign("ivbbmodes", $ivbbmodes);
+      foreach ($this->govattrs as $val){
+        $smarty->assign("$val", $this->$val);
+        $smarty->assign("$val"."ACL", $this->getacl($val,(!is_object($this->parent) && !isset($_SESSION['edit']))));
+      }
+    } else {
+      $smarty->assign("governmentmode", "false");
+    }
+
+    $temp= passwordMethod::get_available_methods();
+    $hashes = $temp['name'];
+    $test= new $temp[$this->pw_storage]($this->config);
+    $is_configurable= $test->is_configurable();
+    $smarty->assign("pwmode", $hashes);
+    $smarty->assign("pwmode_select", $this->pw_storage);
+    $smarty->assign("pw_configurable", $is_configurable);
+
+    foreach($this->attributes as $attr){
+      if(isset($this->selected_edit_values[$attr]) && $this->selected_edit_values[$attr] == TRUE){
+        $smarty->assign("use_".$attr,TRUE);
+      }else{
+        $smarty->assign("use_".$attr,FALSE);
+      }
+      $smarty->assign($attr,$this->$attr);
+    }
+    foreach(array("pw_storage","base","edit_cert") as $attr){
+      if(isset($this->selected_edit_values[$attr]) && $this->selected_edit_values[$attr] == TRUE){
+        $smarty->assign("use_".$attr,TRUE);
+      }else{
+        $smarty->assign("use_".$attr,FALSE);
+      }
+    }
+    return($smarty->fetch (get_template_path('multiple_generic.tpl', TRUE, dirname(__FILE__))));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

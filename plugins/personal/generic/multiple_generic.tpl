@@ -98,6 +98,7 @@
       </div>
      </td>
     </tr>
+<!--
     <tr>
      <td>
       <label for="pw_storage">
@@ -110,6 +111,7 @@
       </select>
      </td>
     </tr>
+-->
     <tr>
      <td>
       <label for="edit_cert">

@@ -8,14 +8,15 @@ class multi_plug
   /* Dummy handler which collects the data */
   private $o_tab     = NULL;  
 
-  private $a_dns    = array();
-  private $o_config = NULL;
+  public $dn    = array();
+  public $config = NULL;
   private $s_class  = "";
+  public $current = "";
 
   public function __construct($config,$class,$tab,$dns)
   {
-    $this->a_dns = $dns;
-    $this->o_config = $config;
+    $this->dn = $dns;
+    $this->config = $config;
     $this->s_class = $class;
     $this->o_tab = new $class($config,$tab,"new");
 
@@ -28,6 +29,11 @@ class multi_plug
     }
   }
 
+  public function execute()
+  {
+    return($this->o_tab->execute());
+  }
+
   public function entries_locked()
   {
     return(FALSE);
@@ -35,7 +41,7 @@ class multi_plug
 
   public function display_lock_message()
   {
-    return("");
+    return("sdf");
   }
 
   public function lock_entries($uid)
@@ -45,16 +51,65 @@ class multi_plug
 
   public function multiple_available()
   {
-    return(TRUE);
+    return($this->o_tab->multiple_support_available());
   }
 
   public function set_active_tab($str)
   {
+    $this->current = $str;
   }
 
   public function get_object_info()
   {
-    return("Oi");
+    return("Oi -----");
+  }
+
+  public function save_object()
+  {
+    $this->o_tab->save_object(); 
+  }
+
+  public function check()
+  {
+    $this->populate_values();
+    $messages = $this->o_tab->check();
+    foreach($this->a_handles as $key => $obj){
+      $msgs = $obj->check();
+      foreach($msgs as $msg){
+        $messages[] = $msg;
+      }
+    }
+    return($messages);
+  }
+
+  public function password_change_needed()
+  {
+    return(FALSE);
+  }
+
+  public function populate_values()
+  {
+
+    if($this->multiple_available() && is_array($this->a_handles)){
+      foreach($this->o_tab->by_object as $name => $obj){
+        $values = $this->o_tab->by_object[$name]->get_multi_edit_values();
+        foreach($values as $a_name => $a_value){
+          foreach($this->a_handles as $i_id => $o_handle){
+            $o_handle->by_object[$name]->$a_name = $a_value;
+          }
+        }
+      }
+    }
+  }
+
+  public function save()
+  {
+    if($this->multiple_available() && is_array($this->a_handles)){
+      $this->populate_values();
+      foreach($this->a_handles as $i_id => $o_handle){
+        $o_handle->save();
+      }
+    }
   }
 }
 

@@ -826,7 +826,6 @@ class userManagement extends plugin
       $display= $this->usertab->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if(isset($this->usertab->by_object)){
       
         $dia = FALSE;
         if(isset($this->usertab->by_object[$this->usertab->current]->dialog)){
@@ -844,7 +843,6 @@ class userManagement extends plugin
           $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
           $display.= "</p>";
         }
-      }
       return ($display);
     }
     
