@@ -1246,8 +1246,10 @@ class systems extends plugin
 
   function get_system_type($attrs)
   {
-    #$enable_arp_device_handling = preg_match("/ArpNewDevice/i",search_config($this->config->data['TABS'], "ArpNewDevice", "CLASS"));
-    $enable_arp_device_handling = TRUE; 
+    if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
+      $enable_arp_device_handling = TRUE;
+    }
+ 
     $classes = $attrs['objectClass'];
 
     $type= "";
