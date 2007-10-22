@@ -655,8 +655,6 @@ class termDNS extends plugin
         $tmp = new servdhcp($this->config,$this->dhcpParentNode);
         $tmp->handle_post_events("add");
 
-#        print_a($attrs);
-#        print("cn=".$this->cn.",".$this->dhcpParentNode);
         show_ldap_error($ldap->get_error(),_("Tried to add new dhcp entry failed."));
       }
 
@@ -698,10 +696,6 @@ class termDNS extends plugin
           show_ldap_error($ldap->get_error(),_("Modifying dhcp entry failed."));
         }    
       }
-
-      /* Handle post event */
-      $tmp = new servdns($this->config,$this->dn);
-      $tmp->handle_post_events("modify");
     }
       
 
