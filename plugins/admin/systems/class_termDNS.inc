@@ -773,6 +773,9 @@ class termDNS extends plugin
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of terminal/dns account with dn '%s' failed."),$this->dn));
       }
 
+      $tmp2 = new servdns($this->config,$this->dn);
+      $tmp2->handle_post_events("modify")
+
       $this->dnsEntry =  $backup_dnsEntry;
     }
   }
@@ -854,11 +857,8 @@ class termDNS extends plugin
         $tmp['plProvidedAcls']["Records"]        = _("DNS records");
         $tmp['plProvidedAcls']["zoneName"]       = _("Zone name");
         $tmp['plProvidedAcls']["dNSTTL"]         = _("TTL");
+        break;
       }
-
-      /* Handle post event */
-      $tmp2 = new servdns($this->config,$this->dn);
-      $tmp2->handle_post_events("modify");
     }
     return($tmp);
   }
