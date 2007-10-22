@@ -12,7 +12,7 @@ class ArpNewDevice extends plugin
   {
     plugin :: plugin($config,$dn);
     $this->cn ="";
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->acl = "#all#";
     $this->netConfigDNS->acl = $this->acl;
     $this->netConfigDNS->force_dns();

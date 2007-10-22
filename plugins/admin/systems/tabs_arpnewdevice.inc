@@ -3,9 +3,9 @@
 class ArpNewDeviceTabs extends tabs
 {
 
-  function save()
+  function save($ignore_account= FALSE)
   {
-    tabs::save(TRUE);
+    tabs::save($ignore_account);
   }
 
   function execute()

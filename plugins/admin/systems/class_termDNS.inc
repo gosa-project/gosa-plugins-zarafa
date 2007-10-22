@@ -44,6 +44,7 @@ class termDNS extends plugin
   var $initially_was_account = false;
   var $dnsEntry                 = array();
   var $DNSenabled               = false;
+  var $hide_dns_check_box       = FALSE;
 
   /*  Terminal dns 
    */
@@ -336,6 +337,8 @@ class termDNS extends plugin
 
       /* Assign all needed vars */
       $smarty->assign("DNSAccount",$this->DNS_is_account);
+      $smarty->assign("hide_dns_check_box",$this->hide_dns_check_box);
+  
       $smarty->assign("Zones",$this->Zones);
       $smarty->assign("ZoneCnt",count($this->Zones));
       $smarty->assign("ZoneKeys",($this->Zones));
@@ -449,6 +452,9 @@ class termDNS extends plugin
         }
 
 
+      }
+      if($this->hide_dns_check_box){
+        $this->DNS_is_account = true;
       }
     }
   }
@@ -582,6 +588,21 @@ class termDNS extends plugin
   
     /* New entry */
     if($this->dhcpEnabled){
+
+      if(count($this->dhcpHostEntry) == 0){
+        $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
+        $this->dialog->cn = $this->cn;
+        $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress;
+        if(!empty($this->ipHostNumber)){
+          $this->dialog->statements['fixed-address'] = $this->ipHostNumber;
+        }
+        $this->dialog->execute();
+        $this->dialog->save_object(); 
+        $this->dhcpHostEntry = $this->dialog->save();
+        if(count($this->dhcpHostEntry['dhcpOption']) == 0){
+          $this->dhcpHostEntry['dhcpOption']= array("host-name ".$this->cn);
+        }
+      }
 
       if(count($this->dhcpHostEntry) == 0){
         $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
@@ -834,6 +855,10 @@ class termDNS extends plugin
         $tmp['plProvidedAcls']["zoneName"]       = _("Zone name");
         $tmp['plProvidedAcls']["dNSTTL"]         = _("TTL");
       }
+
+      /* Handle post event */
+      $tmp2 = new servdns($this->config,$this->dn);
+      $tmp2->handle_post_events("modify");
     }
     return($tmp);
   }
@@ -951,6 +976,14 @@ class termDNS extends plugin
       } 
     }
     return($ret);
+  }
+
+  function force_dns()
+  {
+    if($this->DNSenabled){
+      $this->DNS_is_account  = TRUE;
+      $this->hide_dns_check_box = TRUE;
+    }
   }
 }
 
