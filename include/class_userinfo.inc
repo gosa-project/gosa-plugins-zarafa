@@ -280,6 +280,11 @@ class userinfo
      accessible department) */
   function get_module_departments($module)
   {
+    /* Use cached results if possilbe */
+    if(isset($_SESSION['ACL_CACHE']['MODULE_DEPARTMENTS'][serialize($module)])){
+      return($_SESSION['ACL_CACHE']['MODULE_DEPARTMENTS'][serialize($module)]);
+    }
+
     global $plist;
 
     $objects= array();
@@ -372,6 +377,7 @@ class userinfo
       }
     }
 
+    $_SESSION['ACL_CACHE']['MODULE_DEPARTMENTS'][serialize($module)] = $deps;
     return ($deps);
   }
 
