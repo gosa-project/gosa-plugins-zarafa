@@ -309,9 +309,9 @@ class systems extends plugin
 
       /* Find out more about the object type */
       $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('objectClass'));
+      $ldap->cat($this->dn, array('objectClass','gotoMode'));
       $attrs= $ldap->fetch();
-      $type= $this->get_system_type($attrs['objectClass']);
+      $type= $this->get_system_type($attrs);
 
       /* Lock the current entry, so everyone will get the
          above dialog */
@@ -325,7 +325,9 @@ class systems extends plugin
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
 
-      if($type == "NewDevice"){
+      if($type == "ArpNewDevice"){
+        $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
+      }elseif($type == "NewDevice"){
         $this->systab = new SelectDeviceType($this->config,$this->dn) ;
       }elseif(isset($tabs[$type])){
 
@@ -354,7 +356,7 @@ class systems extends plugin
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
 
-      $type = $this->get_system_type($this->terminals[$s_entry]['objectClass']);
+      $type = $this->get_system_type($this->terminals[$s_entry]);
       $class    = $tabs[$type]["CLASS"];
       $tabname  = $tabs[$type]["TABNAME"];
       $acl_cat  = $tabs[$type]["ACL"];
@@ -400,7 +402,7 @@ class systems extends plugin
       $type = "";
       foreach($this->terminals as $terminal){
         if($terminal['dn'] == $this->dn){
-          $type = $this->get_system_type($terminal['objectClass']);
+          $type = $this->get_system_type($terminal);
           break;
         } 
       }
@@ -512,7 +514,7 @@ class systems extends plugin
 
         /* Get 'dn' from posted termlinst */
         $attrs    = $this->terminals[$key];
-        $type= $this->get_system_type($attrs['objectClass']);
+        $type= $this->get_system_type($attrs);
 
         /* get object type */
         $tabtype  = "termtabs";
@@ -577,7 +579,7 @@ class systems extends plugin
       $this->dn = $this->terminals[$s_entry]['dn'];
       $attrs    = $this->terminals[$s_entry];
 
-      $type= $this->get_system_type($attrs['objectClass']);
+      $type= $this->get_system_type($attrs);
       $ui = get_userinfo();
       $tabs = array(
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
@@ -633,7 +635,7 @@ class systems extends plugin
       $ldap= $this->config->get_ldap_link();
       $ldap->cat($this->dn, array('objectClass'));
       $attrs= $ldap->fetch();
-      $type= $this->get_system_type($attrs['objectClass']);
+      $type= $this->get_system_type($attrs);
 
       $ui = get_userinfo();
 
@@ -958,7 +960,7 @@ class systems extends plugin
     }
 
     /* Attributes to fetch */
-    $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName");
+    $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode");
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer");
 
     /* Add FAIstate to attributes if FAI is activated */
@@ -1021,6 +1023,8 @@ class systems extends plugin
           $add= "- "._("New terminal");
         }elseif (in_array_ics('gotoWorkstation', $value['objectClass'])){
           $add= "- "._("New workstation");
+        }elseif (in_array_ics('GOhard', $value['objectClass']) && !isset($value['gotoMode'])){
+          $add= "- "._("Unknown device");
         }elseif (in_array_ics('GOhard', $value['objectClass'])){
           $add= "- "._("New Device");
         }
@@ -1177,7 +1181,7 @@ class systems extends plugin
       $this->CopyPasteHandler->cleanup_queue();
       $dn     = $this->terminals[$s_entry]['dn'];
       $oc     = $this->terminals[$s_entry]['objectClass'];
-      $type   = $this->get_system_type($oc);
+      $type   = $this->get_system_type($this->terminals[$s_entry]);
 
       $tab_o  = $tabs[$type]['CLASS'];
       $tab_c  = $tabs[$type]['TABCLASS'];
@@ -1196,7 +1200,7 @@ class systems extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->terminals[$id]['dn'];
         $oc = $this->terminals[$id]['objectClass']; 
-        $type = $this->get_system_type($oc);
+        $type = $this->get_system_type($this->terminals[$id]);
 
         $tab_o  = $tabs[$type]['CLASS'];
         $tab_c  = $tabs[$type]['TABCLASS'];
@@ -1240,8 +1244,12 @@ class systems extends plugin
   }
 
 
-  function get_system_type($classes)
+  function get_system_type($attrs)
   {
+    #$enable_arp_device_handling = preg_match("/ArpNewDevice/i",search_config($this->config->data['TABS'], "ArpNewDevice", "CLASS"));
+    $enable_arp_device_handling = TRUE; 
+    $classes = $attrs['objectClass'];
+
     $type= "";
     if (in_array_ics('ieee802Device', $classes)){
       $type= "component";
@@ -1255,6 +1263,8 @@ class systems extends plugin
       $type= "phone";
     }elseif (in_array_ics('goServer', $classes)){
       $type= "server";
+    }elseif (in_array_ics('GOhard', $classes) && !isset($attrs['gotoMode']) && $enable_arp_device_handling){
+      $type= "ArpNewDevice";
     }elseif (in_array_ics('GOhard', $classes)){
       $type= "NewDevice";
     }elseif (in_array_ics('sambaAccount', $classes) ||

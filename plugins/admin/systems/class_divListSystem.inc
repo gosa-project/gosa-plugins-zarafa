@@ -297,7 +297,7 @@ class divListSystem extends MultiSelectWindow
 
       /* Get system type, it is used to fetch the acls for the current object.
           "winstation" acls are stored as 2winworkstation", so we have to map this here */
-      $type     = $this->parent->get_system_type($val['objectClass']);
+      $type     = $this->parent->get_system_type($val);
       if($type == "winstation") {
         $acl_type = "winworkstation";
       }else{
@@ -305,7 +305,7 @@ class divListSystem extends MultiSelectWindow
       }
 
       /* Map NewDevice acls to workstation acls */
-      if($type == "NewDevice"){
+      if($type == "NewDevice" || $type == "ArpNewDevice"){
         $type     = "incoming";
         $acl_type = "incoming";
       }
@@ -406,7 +406,10 @@ class divListSystem extends MultiSelectWindow
         }
       }
 
-      $type = $this->parent->get_system_type($val['objectClass']);
+      $type = $this->parent->get_system_type($val);
+      if($type == "ArpNewDevice"){
+        $type = "NewDevice";
+      }
       $cnts[$type] ++;
 
 
