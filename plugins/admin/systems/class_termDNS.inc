@@ -774,7 +774,7 @@ class termDNS extends plugin
       }
 
       $tmp2 = new servdns($this->config,$this->dn);
-      $tmp2->handle_post_events("modify")
+      $tmp2->handle_post_events("modify");
 
       $this->dnsEntry =  $backup_dnsEntry;
     }
