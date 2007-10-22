@@ -111,7 +111,6 @@
       </select>
      </td>
     </tr>
--->
     <tr>
      <td>
       <label for="edit_cert">
@@ -122,6 +121,7 @@
       <input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}...">
      </td>
     </tr>
+-->
    </table>
   </td>
  </tr>
