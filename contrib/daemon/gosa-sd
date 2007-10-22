@@ -40,7 +40,7 @@ my ($ldap, $bind_phrase, $password, $ldap_base) ;
 $procid = -1 ;
 $foreground = 0 ;
 $verbose = 0 ;
-$max_process = 1 ;
+$max_process = 2 ;
 $max_process_timeout = 1 ;
 $ldap_base = "dc=gonicus,dc=de" ;
 #$ldap_path = "/var/run/gosa-support-daemon.socket";
@@ -318,8 +318,7 @@ sub open_fifo {
 sub add_ldap_entry {
     my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip, $interface, $desc) = @_;
     my $dn = "cn=$mac,ou=incoming,$ldap_base";
-
-    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(macAddress=$mac)");
+    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
     my $c_res = $s_res->count;
     if($c_res == 1) {
         daemon_log("WARNING: macAddress $mac already in LDAP", 1);
@@ -370,7 +369,7 @@ sub change_ldap_entry {
     my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus ) = @_;
     
     # check if ldap_entry exists or not
-    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(macAddress=$mac)");
+    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
     my $c_res = $s_res->count;
     if($c_res == 0) {
         daemon_log("WARNING: macAddress $mac not in LDAP", 1);
@@ -449,8 +448,6 @@ if( not -p $fifo_path ) { die "fifo file disappeared\n" }
 sysopen(FIFO, $fifo_path, O_RDONLY) or die "can't read from $fifo_path: $!" ;
 
 while( 1 ) {
-    # wenn FIFO nicht offen, dann öffne ihn
-
     # checke alle prozesse im hash daemon_children ob sie noch aktiv sind, wenn
     # nicht, dann entferne prozess aus hash
     while( (my $key, my $val) = each( %daemon_children) ) {
@@ -556,7 +553,6 @@ while( 1 ) {
         # ldap add
        
         
-        sleep( 1 ) ;
         $ldap->unbind;
         exit;
     }
