@@ -815,15 +815,17 @@ class systems extends plugin
 
       /* Don't show buttons if tab dialog requests this */
 
-      $dialog = FALSE;
-      if(isset($this->systab->by_object[$this->systab->current]->dialog)){
+      $dialog     = FALSE;
+      $hide_apply = $this->dn == "new";
+      if(is_object($this->systab) && !isset($this->systab->by_object)){
+        $dialog = TRUE;
+        $hide_apply = TRUE;
+      }elseif(isset($this->systab->by_object[$this->systab->current]->dialog)){
         $dia = $this->systab->by_object[$this->systab->current]->dialog;
         if($dia === TRUE || is_object($dia)){
           $dialog = TRUE;
         }  
-      }
-
-      if(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
+      }elseif(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
         $this->systab->by_object[$this->systab->current]->netConfigDNS->dialog){
         $dialog = TRUE;
       }
@@ -832,7 +834,7 @@ class systems extends plugin
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
+        if ($hide_apply){
           $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
           $display.= "&nbsp;\n";
         }
