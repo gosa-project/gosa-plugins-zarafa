@@ -176,7 +176,7 @@ class gotomasses extends plugin
      * Handle Divlist 
      ************/
 
-    $this->divlist->ClearElementsList();
+    $this->divlist->execute();
     $this->divlist->SetEntries($this->tasks); 
     return($this->divlist->Draw());
   }

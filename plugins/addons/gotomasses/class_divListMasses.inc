@@ -28,7 +28,22 @@ class divListMasses extends MultiSelectWindow
       $this->$name = TRUE;
       $this->AddCheckBox($name,$desc,$desc,TRUE);
     }
-    $this->GenHeader();
+    $plug  = $_GET['plug'];
+
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
+    /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
+
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
+                                      "attach"=>"style='width:100px;'"));
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
+                                      "attach"=>"style='width:80px;'"));
+    $this->AddHeader(array("string"=>_("Action"),
+                                      "attach"=>"style='border-right:0px;width:40px;'"));
   }
 
   function GenHeader()
@@ -49,22 +64,6 @@ class divListMasses extends MultiSelectWindow
     /* Create divlist */
     $this->SetListHeader($header);
 
-    $plug  = $_GET['plug'];
-
-    /* Toggle all selected / deselected */
-    $chk = "<input type='checkbox' id='select_all' name='select_all'
-               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
-
-    /* set Page header */
-    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
-                                      "attach"=>"style='width:100px;'"));
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
-                                      "attach"=>"style='width:80px;'"));
-    $this->AddHeader(array("string"=>_("Action"),
-                                      "attach"=>"style='border-right:0px;width:40px;'"));
   }
 
   function execute()
