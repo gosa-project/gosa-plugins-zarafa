@@ -26,7 +26,8 @@ class divListMasses extends MultiSelectWindow
 
     foreach($this->parent->get_actions() as $name => $desc){
       $this->$name = TRUE;
-      $this->AddCheckBox($name,$desc,$desc,TRUE);
+      $this->AddCheckBox($name,sprintf(_("Display entries with action %s."),$desc),
+                               sprintf(_("Display entries with action %s."),$desc),TRUE);
     }
     $plug  = $_GET['plug'];
 
