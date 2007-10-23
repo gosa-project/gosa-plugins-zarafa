@@ -31,6 +31,7 @@ class gotomasses extends plugin
     if(!empty($file)){
       $this->data_file = $file;
     }
+    $this->divlist = new divListMasses($this->config,$this);
     $this->load_gotomasses_data();
   }
 
@@ -175,9 +176,9 @@ class gotomasses extends plugin
      * Handle Divlist 
      ************/
 
-    $list = new divListMasses($this->config,$this);
-    $list->SetEntries($this->tasks); 
-    return($list->Draw());
+    $this->divlist->ClearElementsList();
+    $this->divlist->SetEntries($this->tasks); 
+    return($this->divlist->Draw());
   }
 
   
@@ -299,7 +300,7 @@ class gotomasses extends plugin
 
   function save_gotomasses_data()
   {
-    $str = "#GOsa generated file, please just modify if you realy know what you do.";
+    $str = "#GOsa generated file, please just modify if you really know what you do.";
     foreach($this->tasks as $task){
       $str .= "\n#".trim($task['Comment']);
       $str .= "\n";
@@ -351,6 +352,7 @@ class gotomasses extends plugin
 
   function save_object()
   {
+    $this->divlist->save_object();
   }
 
 

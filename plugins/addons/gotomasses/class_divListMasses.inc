@@ -10,6 +10,8 @@ class divListMasses extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
+  var $wake = TRUE;  
+  
   function divListMasses (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "gotoMasses", array("gotomasses"));
@@ -21,6 +23,11 @@ class divListMasses extends MultiSelectWindow
     $this->EnableCloseButton(FALSE);
     $this->EnableSaveButton(FALSE);
     $this->SetInformation(_("This menu allows you to add, remove and change the properties of system deployment tasks."));
+
+    foreach($this->parent->get_actions() as $name => $desc){
+      $this->$name = TRUE;
+      $this->AddCheckBox($name,$desc,$desc,TRUE);
+    }
     $this->GenHeader();
   }
 
@@ -73,7 +80,21 @@ class divListMasses extends MultiSelectWindow
     $plug = $_GET['plug'];
     $edit_link = "<div style='width:100%;overflow:hidden;'><nobr><a href='?plug=".$_GET['plug']."&act=edit&id=%key%'>%str%</nobr></div>";
 
+    /* Create action filter array, to sort out those actions we do not want to see */
+    $allowed_action = array();
+    foreach($this->parent->get_actions() as $name => $desc){
+      if($this->$name){
+        $allowed_action[] = $name;
+      }
+    }
+
     foreach($tasks as $key => $task){
+
+      /* Skip unchecked actions */ 
+      if(!in_array($task['Action'],$allowed_action)){
+        continue;
+      }
+ 
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
       if($this->parent->acl_is_removeable()){
         $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
