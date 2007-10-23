@@ -718,7 +718,6 @@ class user extends plugin
 
       $this->set_acl_base('dummy,'.$this->base);
     }
-    echo $this->base."<br>" ;
   }
 
   function rebind($ldap, $referral)
