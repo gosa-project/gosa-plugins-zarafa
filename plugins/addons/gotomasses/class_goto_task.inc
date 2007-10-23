@@ -28,10 +28,12 @@ class goto_task extends plugin
   var $Initial_Target   = array();
   var $Actions  = array();
   var $new      = FALSE;
-  var $attributes     = array("Zone","Section","OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target","Initial_Target");
+  var $attributes     = array("Zone","Section","OGroup","Minute","Hour","Day",
+                              "Month","Weekday","Action","Comment","Target","Initial_Target");
 
   var $configure_dhcp = FALSE;
-  var $configure_dns = FALSE;
+  var $configure_dns  = FALSE;
+
 
   function goto_task(&$config, &$parent, $data = array())
   {
@@ -167,7 +169,7 @@ class goto_task extends plugin
     }
 
     /* Save selected objects as target */
-    if(isset($_POST['SaveMultiSelectWindow'])){
+    if(isset($_POST['SaveMultiSelectWindow']) && is_object($this->dialog)){
       $this->dialog->save_object();
       $ret = $this->dialog->save();
       foreach($ret as $entry){
@@ -192,7 +194,8 @@ class goto_task extends plugin
      ********/
 
     $divlist = new divlist("goto_task");
-    $divlist->SetPluginMode(); 
+#    $divlist->SetPluginMode(); 
+    $divlist->setHeight(200);
     $divlist->SetWidth("100%");
     $divlist->SetEntriesPerPage(0);
 

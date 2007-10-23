@@ -12,6 +12,8 @@ class target_list extends MultiSelectWindow
 
   /* Regex */
   var $Regex              = "*";
+  var $IP_start           = "0.0.0.0";
+  var $IP_end             = "255.255.255.255";
 
   /* CheckBoxes, to change default values modify $this->AddCheckBox */
   var $ogroups        ;
@@ -55,6 +57,8 @@ class target_list extends MultiSelectWindow
 
     /* Name,Text,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Regular expression for matching group names"), "*" , true);
+    $this->AddRegex   ("IP_start",  _("IP range start"),  "*" , true);
+    $this->AddRegex   ("IP_end",    _("IP range end"),    "*" , true);
     $this->EnableAplhabet(TRUE);
   }
 
@@ -136,9 +140,6 @@ class target_list extends MultiSelectWindow
     $this->GenHeader();
     $this->reload();
     $this->SetEntries($this->list);
-    foreach($this->list as $key => $data){
-      
-    } 
     return($this->Draw());
   }
 
@@ -165,6 +166,12 @@ class target_list extends MultiSelectWindow
       }else{
         $desc = " - [ ".$val['description'][0]." ]";
       }
+      if(!isset($val['ipHostNumber'][0])){
+        $desc.= "";
+      }else{
+        $desc.= " - ".$val['ipHostNumber'][0]."";
+      }
+
 
       $img ="Hmm";
       if(in_array("goServer",$val['objectClass'])){
@@ -212,6 +219,18 @@ class target_list extends MultiSelectWindow
     $base     = $this->selectedBase;
     $filter   = "";
     $Regex    = $this->Regex;
+    $IP_start = $this->IP_start;
+    $IP_end   = $this->IP_end;
+
+    if(!is_ip($IP_start)){
+      print_red(_("Please specify a valid IP range."));
+      return;
+    }
+    if(!is_ip($IP_end)){
+      print_red(_("Please specify a valid IP range."));
+      return;
+    }
+  
 
     $chk = array(
         "ogroups"       => "(&(objectClass=gosaGroupOfNames)(|(gosaGroupObjects=*S*)(gosaGroupObjects=*W*)))" ,
@@ -228,15 +247,14 @@ class target_list extends MultiSelectWindow
 
     if($this->SubSearch){
       $res= get_list($filter, array("ogroups","workstations","servers"), $base, 
-            array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT | GL_SUBSEARCH);
+            array("cn","objectClass","gosaGroupObjects","ipHostNumber","description"), GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
       $res= get_list($filter, "ogroups", get_groups_ou().$base, 
-            array("cn","objectClass"), GL_SIZELIMIT );
+            array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT );
       $res= array_merge($res,get_list($filter, "workstation",  "ou=workstations,ou=systems,".$base, 
-            array("cn","objectClass"), GL_SIZELIMIT ));
+            array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
       $res= array_merge($res,get_list($filter, "server", "ou=servers,ou=systems,".$base, 
-            array("cn","objectClass"), GL_SIZELIMIT ));
-  
+            array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
     }
 
     $this->list= $res;
@@ -244,7 +262,14 @@ class target_list extends MultiSelectWindow
     reset ($this->list);
     $tmp=array();
     foreach($this->list as $tkey => $val ){
-      $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+
+      if(isset($val['ipHostNumber'][0])){
+        if(is_ip_range($IP_start,$val['ipHostNumber'][0]) && is_ip_range($val['ipHostNumber'][0],$IP_end)){
+          $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+        }
+      }else{
+        $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+      }
     }
     ksort($tmp);
     $this->list=array();

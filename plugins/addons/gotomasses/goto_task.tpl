@@ -88,7 +88,7 @@
 	<tr>
 		<td colspan="2">
             <table  summary="" style="border:1px solid #B0B0B0;width:100%; " cellspacing=0 cellpadding=0>
-                <tr>
+                <tr>	
                     <td>
 						{render acl=$TargetACL}
 						{$Target_list}	

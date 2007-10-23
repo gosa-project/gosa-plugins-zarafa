@@ -205,7 +205,8 @@ class gotomasses extends plugin
  
     /* Create divlist */
     $divlist->SetListHeader($header);
- /* Toggle all selected / deselected */
+
+    /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
                onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
 
