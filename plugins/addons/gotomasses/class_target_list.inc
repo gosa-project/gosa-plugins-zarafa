@@ -23,6 +23,7 @@ class target_list extends MultiSelectWindow
 
   /* Subsearch checkbox */
   var $SubSearch          ;
+  var $IPMatch            ;
   var $parent             ;
   var $ui                 ;
  
@@ -54,6 +55,7 @@ class target_list extends MultiSelectWindow
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Search in subtrees"), false);
+    $this->AddCheckBox("IPMatch",    _("Select to search for a specific IP range only"), _("Match IP range"), false);
 
     /* Name,Text,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Regular expression for matching group names"), "*" , true);
@@ -263,9 +265,11 @@ class target_list extends MultiSelectWindow
     $tmp=array();
     foreach($this->list as $tkey => $val ){
 
-      if(isset($val['ipHostNumber'][0])){
-        if(is_ip_range($IP_start,$val['ipHostNumber'][0]) && is_ip_range($val['ipHostNumber'][0],$IP_end)){
-          $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+      if($this->IPMatch){
+        if(isset($val['ipHostNumber'][0])){
+          if(is_ip_range($IP_start,$val['ipHostNumber'][0]) && is_ip_range($val['ipHostNumber'][0],$IP_end)){
+            $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+          }
         }
       }else{
         $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
