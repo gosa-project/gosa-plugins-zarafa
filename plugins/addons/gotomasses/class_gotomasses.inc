@@ -18,7 +18,7 @@ class gotomasses extends plugin
   var $current =false;
   var $dialog = FALSE;
   var $ids_to_remove = array();
-
+  var $divlist = NULL;
 
   function gotomasses(&$config, $dn= NULL)
   {
@@ -31,7 +31,6 @@ class gotomasses extends plugin
     if(!empty($file)){
       $this->data_file = $file;
     }
-  
     $this->load_gotomasses_data();
   }
 
@@ -176,73 +175,9 @@ class gotomasses extends plugin
      * Handle Divlist 
      ************/
 
-    $plug = $_GET['plug'];
-    $divlist = new MultiSelectWindow($this->config,"GotoMasses","gotomassses");
-    $divlist->SetSummary(_("List of system deployment tasks"));
-    $divlist->SetHeadpageMode();
-    $divlist->EnableCloseButton(FALSE);
-    $divlist->EnableSaveButton(FALSE);
-    $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of system deployment tasks."));
- 
-    /* Display add button if allowed */ 
-    $header = "<div style='padding:5px'>";
-    if($this->acl_is_createable()){ 
-      $header .= "<input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>&nbsp;";
-    }
-
-    /* Display add button if allowed */ 
-    if($this->acl_is_removeable()){ 
-      $header .= "<input type='image' src='images/edittrash.png' name='remove_multiple_task' class='center'>&nbsp;";
-    }
-    $header .= "</div>";
-
-    /* Get Permissions */ 
-    $ui = get_userinfo();
-    $acls = $this->getacl("");
-    foreach($ui->get_module_departments("gotomasses") as $dep){
-      $acls .= $ui->get_category_permissions($dep,"gotomasses");
-    }
- 
-    /* Create divlist */
-    $divlist->SetListHeader($header);
-
-    /* Toggle all selected / deselected */
-    $chk = "<input type='checkbox' id='select_all' name='select_all'
-               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
-
-    /* set Page header */
-    $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
-                                      "attach"=>"style='width:100px;'"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
-                                      "attach"=>"style='width:80px;'"));
-    $divlist->AddHeader(array("string"=>_("Action"),
-                                      "attach"=>"style='border-right:0px;width:40px;'"));
-
-    /* Create edit link */
-    $edit_link = "<div style='width:100%;overflow:hidden;'><nobr><a href='?plug=".$_GET['plug']."&act=edit&id=%key%'>%str%</nobr></div>";
-  
-    if(!empty($acls)){
-      foreach($this->tasks as $key => $task){
-        $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
-        if($this->acl_is_removeable()){
-          $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
-        }
-        /* Create each field */
-        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
-                        "attach" => "style='width:20px;'");
-
-        $field1 = array("string" => preg_replace(array("/%key%/","/%str%/"),array($key,$this->target_to_string($task)),$edit_link));
-        $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
-        $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:80px;'");
-        $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
-        $divlist->AddElement(array($field0,$field1,$field2,$field3,$field4));
-      }
-    }
- 
-    return($divlist->Draw());
+    $list = new divListMasses($this->config,$this);
+    $list->SetEntries($this->tasks); 
+    return($list->Draw());
   }
 
   
