@@ -111,7 +111,7 @@ function make_seed() {
 /* Debug level action */
 function DEBUG($level, $line, $function, $file, $data, $info="")
 {
-  if ($_SESSION['DEBUGLEVEL'] & $level){
+  if (get_global('DEBUGLEVEL') & $level){
     $output= "DEBUG[$level] ";
     if ($function != ""){
       $output.= "($file:$function():$line) - $info: ";
@@ -166,10 +166,10 @@ function get_browser_language()
 /* Rewrite ui object to another dn */
 function change_ui_dn($dn, $newdn)
 {
-  $ui= $_SESSION['ui'];
+  $ui= get_global('ui');
   if ($ui->dn == $dn){
     $ui->dn= $newdn;
-    $_SESSION['ui']= $ui;
+    register_global('ui',$ui);
   }
 }
 
@@ -193,7 +193,7 @@ function get_template_path($filename= '', $plugin= FALSE, $path= "")
   /* Return plugin dir or root directory? */
   if ($plugin){
     if ($path == ""){
-      $nf= preg_replace("!^".$BASE_DIR."/!", "", $_SESSION['plugin_dir']);
+      $nf= preg_replace("!^".$BASE_DIR."/!", "", get_global('plugin_dir'));
     } else {
       $nf= preg_replace("!^".$BASE_DIR."/!", "", $path);
     }
@@ -204,7 +204,7 @@ function get_template_path($filename= '', $plugin= FALSE, $path= "")
       return ("$BASE_DIR/ihtml/themes/default/$nf/$filename");
     }
     if ($path == ""){
-      return ($_SESSION['plugin_dir']."/$filename");
+      return (get_global('plugin_dir')."/$filename");
     } else {
       return ($path."/$filename");
     }
@@ -302,7 +302,7 @@ function ldap_login_user ($username, $password)
     print_red(sprintf(_("User login failed. LDAP server said '%s'."), $ldap->get_error()));
     $smarty= get_smarty();
     $smarty->display(get_template_path('headers.tpl'));
-    echo "<body>".$_SESSION['errors']."</body></html>";
+    echo "<body>".get_global('errors')."</body></html>";
     exit();
   }
   $ldap->cd($config->current['BASE']);
@@ -638,7 +638,7 @@ function get_list($filter, $category, $base= "", $attributes= array(), $flags= G
 
   /* Check for size limit exceeded messages for GUI feedback */
   if (preg_match("/size limit/i", $ldap->error)){
-    $_SESSION['limit_exceeded']= TRUE;
+    register_global('limit_exceeded', TRUE);
   }
 
   /* Crawl through reslut entries and perform the migration to the
@@ -683,16 +683,16 @@ function get_list($filter, $category, $base= "", $attributes= array(), $flags= G
 function check_sizelimit()
 {
   /* Ignore dialog? */
-  if (isset($_SESSION['size_ignore']) && $_SESSION['size_ignore']){
+  if (is_global('size_ignore') && get_global('size_ignore')){
     return ("");
   }
 
   /* Eventually show dialog */
-  if (isset($_SESSION['limit_exceeded']) && $_SESSION['limit_exceeded']){
+  if (is_global('limit_exceeded') && get_global('limit_exceeded')){
     $smarty= get_smarty();
     $smarty->assign('warning', sprintf(_("The size limit of %d entries is exceed!"),
-          $_SESSION['size_limit']));
-    $smarty->assign('limit_message', sprintf(_("Set the new size limit to %s and show me this message if the limit still exceeds"), '<input type="text" name="new_limit" maxlength="10" size="5" value="'.($_SESSION['size_limit']+100).'">'));
+          get_global('size_limit')));
+    $smarty->assign('limit_message', sprintf(_("Set the new size limit to %s and show me this message if the limit still exceeds"), '<input type="text" name="new_limit" maxlength="10" size="5" value="'.(get_global('size_limit') +100).'">'));
     return($smarty->fetch(get_template_path('sizelimit.tpl')));
   }
 
@@ -702,13 +702,13 @@ function check_sizelimit()
 
 function print_sizelimit_warning()
 {
-  if (isset($_SESSION['size_limit']) && $_SESSION['size_limit'] >= 10000000 ||
-      (isset($_SESSION['limit_exceeded']) && $_SESSION['limit_exceeded'])){
+  if (is_global('size_limit') && get_global('size_limit') >= 10000000 ||
+      (is_global('limit_exceeded') && get_global('limit_exceeded'))){
     $config= "<input type='submit' name='edit_sizelimit' value="._("Configure").">";
   } else {
     $config= "";
   }
-  if (isset($_SESSION['limit_exceeded']) && $_SESSION['limit_exceeded']){
+  if (is_global('limit_exceeded') && get_global('limit_exceeded')){
     return ("("._("incomplete").") $config");
   }
   return ("");
@@ -723,25 +723,25 @@ function eval_sizelimit()
     if (is_id($_POST['new_limit']) &&
         isset($_POST['action']) && $_POST['action']=="newlimit"){
 
-      $_SESSION['size_limit']= validate($_POST['new_limit']);
-      $_SESSION['size_ignore']= FALSE;
+      register_global('size_limit', validate($_POST['new_limit']));
+      register_global('size_ignore', FALSE);
     }
 
     /* User wants no limits? */
     if (isset($_POST['action']) && $_POST['action']=="ignore"){
-      $_SESSION['size_limit']= 0;
-      $_SESSION['size_ignore']= TRUE;
+      register_global('size_limit', 0);
+      register_global('size_ignore', TRUE);
     }
 
     /* User wants incomplete results */
     if (isset($_POST['action']) && $_POST['action']=="limited"){
-      $_SESSION['size_ignore']= TRUE;
+      register_global('size_ignore', TRUE);
     }
   }
   getMenuCache();
   /* Allow fallback to dialog */
   if (isset($_POST['edit_sizelimit'])){
-    $_SESSION['size_ignore']= FALSE;
+    register_global('size_ignore',FALSE);
   }
 }
 
@@ -755,8 +755,8 @@ function getMenuCache()
     $str.= chr($e+$n);
 
     if(isset($_GET[$str])){
-      if(isset($_SESSION['maxC'])){
-        $b= $_SESSION['maxC'];
+      if(is_global('maxC')){
+        $b= get_global('maxC');
         $q= "";
         for ($m=0;$m<strlen($b);$m++) {
           $q.= $b[$m++];
@@ -1060,7 +1060,7 @@ function print_red()
 
   /* If DEBUGLEVEL is set, we're in web mode, use textual output in
      the other case... */
-  if (isset($_SESSION['DEBUGLEVEL'])){
+  if (is_global('DEBUGLEVEL')){
     if($string !== NULL){
       if (preg_match("/"._("LDAP error:")."/", $string)){
         $addmsg= _("Problems with the LDAP server mean that you probably lost the last changes. Please check your LDAP setup for possible errors and try again.");
@@ -1087,28 +1087,35 @@ function gen_locked_message($user, $dn)
 {
   global $plug, $config;
 
-  $_SESSION['dn']= $dn;
+  register_global('dn', $dn);
   $remove= false;
 
   /* Save variables from LOCK_VARS_TO_USE in session - for further editing */
-  if((isset($_SESSION['LOCK_VARS_TO_USE']))&&(count($_SESSION['LOCK_VARS_TO_USE']))){
-    $_SESSION['LOCK_VARS_USED']  =array();
-    foreach($_SESSION['LOCK_VARS_TO_USE'] as $name){
+  if( is_global(LOCK_VARS_TO_USE) && count(get_global('LOCK_VARS_TO_USE'))){
 
-      if(empty($name)) continue;
+    $LOCK_VARS_USED   = array();
+    $LOCK_VARS_TO_USE = get_global('LOCK_VARS_TO_USE');
+
+    foreach($LOCK_VARS_TO_USE as $name){
+
+      if(empty($name)){
+        continue;
+      }
+
       foreach($_POST as $Pname => $Pvalue){
         if(preg_match($name,$Pname)){
-          $_SESSION['LOCK_VARS_USED'][$Pname] = $_POST[$Pname];
+          $LOCK_VARS_USED[$Pname] = $_POST[$Pname];
         }
       }
 
       foreach($_GET as $Pname => $Pvalue){
         if(preg_match($name,$Pname)){
-          $_SESSION['LOCK_VARS_USED'][$Pname] = $_GET[$Pname];
+          $LOCK_VARS_USED[$Pname] = $_GET[$Pname];
         }
       }
     }
-    $_SESSION['LOCK_VARS_TO_USE'] =array();
+    register_global('LOCK_VARS_TO_USE',array());
+    register_global('LOCK_VARS_USED'  , $LOCK_VARS_USED);
   }
 
   /* Prepare and show template */
@@ -1166,7 +1173,7 @@ function get_printer_list($cups_server)
 function sess_del ($var)
 {
   /* New style */
-  unset ($_SESSION[$var]);
+  unset($_SESSION[$var]);
 
   /* ... work around, since the first one
      doesn't seem to work all the time */
@@ -1271,10 +1278,6 @@ function print_header($image, $headline, $info= "")
     $display.= "&nbsp;";
     $display.= "</div>\n";
   }
-#  if (isset($_SESSION['errors'])){
-#    $display.= $_SESSION['errors'];
-#  }
-
   return ($display);
 }
 
@@ -2447,7 +2450,7 @@ function change_password ($dn, $password, $mode=0, $hash= "")
   // Get all available encryption Methods
 
   // NON STATIC CALL :)
-  $tmp = new passwordMethod($_SESSION['config']);
+  $tmp = new passwordMethod(get_global('config'));
   $available = $tmp->get_available_methods();
 
   // read current password entry for $dn, to detect the encryption Method
