@@ -1,0 +1,260 @@
+<?php
+/*
+   This code is part of GOsa (https://gosa.gonicus.de)
+   Copyright (C) 2007  Fabian Hickert
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
+/*! 
+  \brief   This class represents the host action queue.
+  \author  Fabian Hickert <hickert@gonicus.de>
+  \version 2.6
+  \date    24.10.2007
+
+  This class is a queue handler, which allows adding,removing,
+   priority settings,stop and resume actions... for each queue entry
+ */
+class hostActionQueue {
+
+  private $o_config       = NULL;
+  private $s_queue_file   = ""; 
+  private $s_error        = "";
+  private $b_error        = FALSE;
+
+  private $a_queue        = array();
+  private $i_pointer      = 0;
+  private $b_queue_loaded = false;
+  private $i_fileversion  = 0;
+
+  public function __construct($config)
+  {
+    $this->o_config= $config;
+
+    /* Define source file */
+    $this->s_queue_file = CONFIG_DIR."/gotomasses_machines";
+
+    $file = $this->o_config->search("gotomasses", "STORAGE_FILE",array('menu'));
+    if(!empty($file)){
+      $this->s_queue_file = $file;
+    }
+  }
+
+  private function _reload_queue()
+  {
+    $this->_reset_error();
+    $this->b_queue_loaded = FALSE;
+    $this->b_error        = FALSE;
+    $this->s_error        = "";
+    $this->i_pointer      = 0;
+ 
+    /* Check file accessibility */
+    if(!file_exists($this->s_queue_file)){
+      $this->set_error(sprintf(_("Can't locate gotomasses queue file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+    if(!is_readable($this->s_queue_file)){
+      $this->set_error(sprintf(_("Can't read gotomasses queue file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+
+    /* Check if file contents could be read */
+    $fp = @fopen($this->s_queue_file,"r");
+    if(!$fp){
+      $this->set_error(sprintf(_("Can't read gotomasses storage file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+    $this->i_fileversion = filemtime($this->s_queue_file);
+    echo $this->i_fileversion."reload<br>";
+ 
+    /* Get file contents */
+    $data ="";
+    while(!feof($fp)){
+      $data.= fread($fp,512);
+    }
+    
+    /* Get lines from file */
+    $this->a_queue  = array();
+    $comment        = "";
+    $rows           = split("\n",$data);
+  
+    /* Walk trough rows and parse data */
+    foreach($rows as $row){
+
+      /* Skip empty lines */
+      $row = trim($row);
+      if(empty($row)){
+        continue;
+      }
+
+      /* Get comment, if available */
+      if(preg_match("/^#/",$row)){
+        $comment = preg_replace("/^#/","",$row);
+        continue;
+      }
+
+      /* Split row into minutes/ hours ...*/
+      $row    = preg_replace('/[\t ]/umi'," ",$row);
+      $row    = preg_replace('/  */umi'," ",$row);
+      $parts  = split(" ",$row);
+
+      if(count($parts) != 10){
+        print_red(_("Entry broken, skipped."));
+      }else{
+
+        $entry = array();
+        $entry['Minute']  = $parts[0];
+        $entry['Hour']    = $parts[1];
+        $entry['Day']     = $parts[2];
+        $entry['Month']   = $parts[3];
+        $entry['Weekday'] = $parts[4];
+        $entry['Action']  = $parts[5];
+        $entry['OGroup']  = $parts[6];
+        $entry['Zone']    = $parts[7];
+        $entry['Section'] = $parts[8];
+        if($entry['Action'] == "initial_install"){
+          $tmp2 = split(";",$parts[9]);
+          foreach($tmp2 as $target){
+            $tmp = split(",",$target);
+            $entry['Initial_Target'][]  = array(
+                          "MAC"     => $tmp[0],
+                          "IP"      => $tmp[1],
+                          "NAME"    => $tmp[2]);
+          }
+          $entry['Target']  = array();
+        }else{
+          $entry['Initial_Target']  = array();
+          $entry['Target']  = split(";",$parts[7]);
+        }
+        $entry['Comment'] = $comment;
+        $this->a_queue[]   = $entry;
+      }
+    }
+    return(TRUE);
+  }
+
+
+  private function _save_data()
+  {
+    $this->_reset_error();
+
+    /* Check file accessibility */
+    if(!file_exists($this->s_queue_file)){
+      $this->set_error(sprintf(_("Can't locate gotomasses queue file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+    if(!is_writeable($this->s_queue_file)){
+      $this->set_error(sprintf(_("Can't write gotomasses queue file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+    if($this->i_fileversion != filemtime($this->s_queue_file)){
+      $this->set_error(_("The queue file was modified since last reload. Can't save changes."));
+      return(FALSE);
+    }
+    $fp = @fopen($this->s_queue_file,"w");
+    if(!$fp){
+      $this->set_error(sprintf(_("Can't write gotomasses queue file '%s'."),$this->s_queue_file));
+      return(FALSE);
+    }
+
+    $str = "#GOsa generated file, please just modify if you really know what you do.";
+    foreach($this->a_queue as $task){
+      $str .= "\n#".trim($task['Comment']);
+      $str .= "\n";
+      if($task['Action'] == "initial_install"){
+        $str .= "*     *     *     *     *     ";
+      }else{
+        $str .= str_pad($task['Minute'] ,5," ")." ";
+        $str .= str_pad($task['Hour']   ,5," ")." ";
+        $str .= str_pad($task['Day']    ,5," ")." ";
+        $str .= str_pad($task['Month']  ,5," ")." ";
+        $str .= str_pad($task['Weekday'],5," ")." ";
+      }
+      $str .= str_pad($task['Action'] ,5," ")." ";
+      $str .= str_pad($task['OGroup'] ,5," ")." ";
+      $str .= str_pad($task['Zone']   ,5," ")." ";
+      $str .= str_pad($task['Section'],5," ")." ";
+      if($task['Action'] == "initial_install"){
+        foreach($task['Initial_Target'] as $target){
+          $str .= trim($target['MAC']).",".trim($target['IP']).",".trim($target['NAME']).";";
+        }
+      }else{
+        foreach($task['Target'] as $target){
+          $str .= $target.";";
+        }
+      }
+      $str = preg_replace("/;$/","",$str);
+    }
+
+    /* Write contents */
+    $str .= "\n";
+    fwrite($fp,$str);
+    fclose($fp);
+    $this->i_fileversion = filemtime($this->s_queue_file);
+    return(TRUE);
+  }
+
+  public function add($entry)
+  {
+    $this->a_queue[] = $entry;
+    return($this->_save_data());
+  }
+
+  public function fetch()
+  {
+    if(isset($this->a_queue[$this->i_pointer])){
+      $p = $this->a_queue[$this->i_pointer];
+      $this->i_pointer ++;
+      return($p);
+    }   
+    return(FALSE);    
+  }
+
+  public function load()
+  {
+    return($this->_reload_queue());    
+  }
+
+  public function save()
+  {
+    return($this->_save_data());    
+  }
+
+  private function _reset_error()
+  {
+    $this->b_error = FALSE;
+    $this->s_error = "";
+  }
+ 
+  private function set_error($str)
+  {
+    $this->b_error = TRUE;
+    $this->s_error = $str;
+  }
+
+  public function is_error()
+  {
+    return($this->b_error);
+  }
+
+  public function get_error()
+  {
+    return($this->s_error);
+  }
+
+}
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+?>

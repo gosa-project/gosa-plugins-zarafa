@@ -10,11 +10,7 @@ class gotomasses extends plugin
   var $attributes= array();
   var $objectclasses= array();
 
-  /* Source file that contains the gotomasses data */
-  var $data_file = "Undefined"; #Set in constructor 
-
   /* Queue tasks */
-  var $tasks = array();
   var $current =false;
   var $dialog = FALSE;
   var $ids_to_remove = array();
@@ -24,15 +20,8 @@ class gotomasses extends plugin
   {
     /* Include config object */
     $this->config= &$config;
-
-    /* Define source file */
-    $this->data_file = CONFIG_DIR."/gotomasses_machines";
-    $file = $this->config->search("gotomasses", "STORAGE_FILE",array('menu'));
-    if(!empty($file)){
-      $this->data_file = $file;
-    }
     $this->divlist = new divListMasses($this->config,$this);
-    $this->load_gotomasses_data();
+    $this->o_queue = new hostActionQueue(&$config);
   }
 
 
@@ -63,7 +52,7 @@ class gotomasses extends plugin
     }
 
     /************
-     * List posts 
+     * REMOVE 
      ************/
 
     /* Remove multiple */
@@ -91,31 +80,8 @@ class gotomasses extends plugin
     /* Remove specified tasks */
     if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
       foreach($this->ids_to_remove as $id){
-        if(isset($this->tasks[$id])){
-          unset($this->tasks[$id]);
-        }
+        $this->o_queue->remove($id);    
       }
-      $this->save();
-    }
-
-    /* Remove entry from list */
-    if($s_action == "remove" && isset($this->tasks[$s_entry])){
-      if(!$this->acl_is_removeable()){
-        print_red(_("You are not allowed to remove a task."));
-      }else{
-        $entry = $this->tasks[$s_entry];
-        $this->current = $s_entry;
-        $smarty->assign("info",sprintf(_("Your are about to delete the following tasks: %s"),
-                                    "<pre>".$this->target_to_string($entry)."</pre>"));
-        $smarty->assign("multiple", FALSE); 
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-      }
-    }
-
-    /* Remove entry, remove is confirmed */
-    if($this->current != -1 && isset($_POST['delete_confirm'])){
-      unset($this->tasks[$this->current]);
-      $this->current = -1;
       $this->save();
     }
 
@@ -123,6 +89,11 @@ class gotomasses extends plugin
     if(isset($_POST['delete_cancel'])){
       $this->ids_to_remove = array();;
     }
+
+
+    /************
+     * EDIT 
+     ************/
 
     /* Edit selected entry */
     if($s_action == "edit" && isset($this->tasks[$s_entry])){
@@ -155,7 +126,15 @@ class gotomasses extends plugin
         if(isset($this->tasks[$this->current]) && $this->current != -1){
           $this->tasks[$this->current] = $this->dialog->save();
         }else{
-          $this->tasks[] = $this->dialog->save();
+          $tmp = $this->dialog->save();
+
+          $targets =$tmp['Target'];
+          foreach($targets as $target){
+            $tmp['Target'] = array($target);
+            if(!$this->o_queue->add($tmp)){
+              print_red($this->o_queue->get_error());
+            }
+          }
         }
         if(!isset($_POST['apply_goto_task'])){
           $this->dialog = FALSE;
@@ -177,11 +156,34 @@ class gotomasses extends plugin
      ************/
 
     $this->divlist->execute();
-    $this->divlist->SetEntries($this->tasks); 
+    $this->divlist->SetEntries($this->get_queue_entries()); 
     return($this->divlist->Draw());
   }
 
-  
+    
+  function get_queue_entries()
+  {
+   if(!$this->o_queue->load()){
+     print_red("ERROR:".$this->o_queue->get_error());
+     return(FALSE);
+   }
+    $ret = array();
+    while($entry = $this->o_queue->fetch()){
+      $ret[] = $entry;
+    }
+    return($ret);
+  }
+ 
+
+
+
+
+
+
+
+
+
+ 
   function target_to_string($data)
   {
     $ret = "";
@@ -215,141 +217,6 @@ class gotomasses extends plugin
   }
 
   
-  function load_gotomasses_data()
-  {
-    $ui = get_userinfo();
-
-    /* Check file existence */
-    if(!file_exists($this->data_file) || !is_readable($this->data_file)){
-      print_red(sprintf(_("Can't locate or read gotomasses storage file '%s'."),$this->data_file));
-      return(FALSE);
-    }
-
-    /* check if file is readable */
-    $fp = @fopen($this->data_file,"r");
-    if(!$fp){
-      print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
-      return(FALSE);
-    }
-
-    /* Get file contents */
-    $data ="";
-    while(!feof($fp)){
-      $data.= fread($fp,512);
-    }
-
-    /* Get lines from file */
-    $this->tasks  = array(); 
-    $comment      = "";
-    $rows         = split("\n",$data);
-
-    /* Walk trough rows and parse data */
-    foreach($rows as $row){
-
-      /* Skip empty lines */
-      $row = trim($row);
-      if(empty($row)){
-        continue;
-      }
-
-      /* Get comment, if available */     
-      if(preg_match("/^#/",$row)){
-        $comment = preg_replace("/^#/","",$row);
-        continue;
-      }
-
-      /* Split row into minutes/ hours ...*/ 
-      $row    = preg_replace('/[\t ]/umi'," ",$row);
-      $row    = preg_replace('/  */umi'," ",$row);
-      $parts  = split(" ",$row);
-
-      if(count($parts) != 10){
-        print_red(_("Entry broken, skipped."));
-      }else{
-
-        $entry = array();
-        $entry['Minute']  = $parts[0];  
-        $entry['Hour']    = $parts[1];  
-        $entry['Day']     = $parts[2];  
-        $entry['Month']   = $parts[3];  
-        $entry['Weekday'] = $parts[4];  
-        $entry['Action']  = $parts[5];  
-        $entry['OGroup']  = $parts[6];  
-        $entry['Zone']    = $parts[7];  
-        $entry['Section'] = $parts[8];  
-        if($entry['Action'] == "initial_install"){
-          $tmp2 = split(";",$parts[9]);
-          foreach($tmp2 as $target){
-            $tmp = split(",",$target);
-            $entry['Initial_Target'][]  = array(
-                          "MAC"     => $tmp[0],
-                          "IP"      => $tmp[1],
-                          "NAME"    => $tmp[2]);
-          }
-          $entry['Target']  = array();
-        }else{
-          $entry['Initial_Target']  = array();
-          $entry['Target']  = split(";",$parts[7]);
-        }
-        $entry['Comment'] = $comment;  
-        $this->tasks []   = $entry;
-      }
-    } 
-  }
-
-
-  function save_gotomasses_data()
-  {
-    $str = "#GOsa generated file, please just modify if you really know what you do.";
-    foreach($this->tasks as $task){
-      $str .= "\n#".trim($task['Comment']);
-      $str .= "\n";
-      if($task['Action'] == "initial_install"){
-        $str .= "*     *     *     *     *     ";
-      }else{
-        $str .= str_pad($task['Minute'] ,5," ")." ";
-        $str .= str_pad($task['Hour']   ,5," ")." ";
-        $str .= str_pad($task['Day']    ,5," ")." ";
-        $str .= str_pad($task['Month']  ,5," ")." ";
-        $str .= str_pad($task['Weekday'],5," ")." ";
-      }
-      $str .= str_pad($task['Action'] ,5," ")." ";
-      $str .= str_pad($task['OGroup'] ,5," ")." ";
-      $str .= str_pad($task['Zone']   ,5," ")." ";
-      $str .= str_pad($task['Section'],5," ")." ";
-      if($task['Action'] == "initial_install"){
-        foreach($task['Initial_Target'] as $target){
-          $str .= trim($target['MAC']).",".trim($target['IP']).",".trim($target['NAME']).";";
-        }
-      }else{
-        foreach($task['Target'] as $target){
-          $str .= $target.";";
-        }
-      }
-      $str = preg_replace("/;$/","",$str);
-    }
-
-    /* check file existence*/
-    $ui = get_userinfo();
-    if(!file_exists($this->data_file) || !is_writeable($this->data_file)){
-      print_red(sprintf(_("Can't locate or write gotomasses storage file '%s'."),$this->data_file));
-      return(FALSE);
-    }
-
-    /* check permissions */
-    $fp = @fopen($this->data_file,"w");
-    if(!$fp){
-      print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
-      return(FALSE);
-    }
-
-    /* Write contents */
-    $str .= "\n";
-    fwrite($fp,$str);
-    fclose($fp);
-  }
-
-
   function save_object()
   {
     $this->divlist->save_object();
@@ -372,7 +239,6 @@ class gotomasses extends plugin
   
   function save()
   {
-    $this->save_gotomasses_data();
   }
 
 
