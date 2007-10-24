@@ -59,8 +59,8 @@ class target_list extends MultiSelectWindow
 
     /* Name,Text,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Regular expression for matching group names"), "*" , true);
-    $this->AddRegex   ("IP_start",  _("IP range start"),  "*" , true);
-    $this->AddRegex   ("IP_end",    _("IP range end"),    "*" , true);
+    $this->AddRegex   ("IP_start",  _("IP range start"),  "0.0.0.0" , true);
+    $this->AddRegex   ("IP_end",    _("IP range end"),    "255.255.255.255" , true);
     $this->EnableAplhabet(TRUE);
   }
 
