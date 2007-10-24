@@ -224,13 +224,15 @@ class target_list extends MultiSelectWindow
     $IP_start = $this->IP_start;
     $IP_end   = $this->IP_end;
 
-    if(!is_ip($IP_start)){
-      print_red(_("Please specify a valid IP range."));
-      return;
-    }
-    if(!is_ip($IP_end)){
-      print_red(_("Please specify a valid IP range."));
-      return;
+    if($this->IPMatch){
+      if(!is_ip($IP_start)){
+        print_red(_("Please specify a valid IP range."));
+        return;
+      }
+      if(!is_ip($IP_end)){
+        print_red(_("Please specify a valid IP range."));
+        return;
+      }
     }
   
 
