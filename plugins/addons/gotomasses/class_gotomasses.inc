@@ -63,8 +63,8 @@ class gotomasses extends plugin
         $this->ids_to_remove = $this->list_get_selected_items();
         $tmp = "";
         foreach($this->ids_to_remove as $key => $id){
-          if(isset($this->tasks[$id])){
-            $task = $this->tasks[$id];
+          if($this->o_queue->id_exists($id)){
+            $task = $this->o_queue->get_entry($id);
             $tmp.= "\n".$this->target_to_string($task);
           }else{
             unset($this->ids_to_remove[$key]);
@@ -80,7 +80,9 @@ class gotomasses extends plugin
     /* Remove specified tasks */
     if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
       foreach($this->ids_to_remove as $id){
-        $this->o_queue->remove($id);    
+        if($this->o_queue->id_exists($id)){
+          $this->o_queue->remove_entry($id);
+        }
       }
       $this->save();
     }

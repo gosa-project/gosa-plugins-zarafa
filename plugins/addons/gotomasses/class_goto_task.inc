@@ -332,7 +332,7 @@ class goto_task extends plugin
       "Action" => _("Action")       ,"Comment"=> _("Description"));
     
     foreach($tmp as $name => $desc){
-      if(empty($this->$name)){
+      if(empty($this->$name) && $this->$name != 0){
         $message[] = sprintf(_("The given value for attribute '%s' is invalid."),$desc);
       }
     }

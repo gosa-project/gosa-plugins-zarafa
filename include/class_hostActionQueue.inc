@@ -270,11 +270,22 @@ class hostActionQueue {
 
   public function update_entry($id,$entry)
   {
-    if(isset($this->a_queue[$this->id_entry_map[$id]])){
+    if(isset($this->id_entry_map[$id])){
       $this->a_queue[$this->id_entry_map[$id]] = $entry;
       return($this->_save_data());
     }else{
       $this->set_error(sprintf(_("Could not update entry, entry with id '%s' not found."),$id));
+    }
+  }
+
+  public function remove_entry($id)
+  {
+    if(isset($this->id_entry_map[$id])){
+      unset($this->a_queue[$this->id_entry_map[$id]]);
+      unset($this->id_entry_map[$id]);
+      return($this->_save_data());
+    }else{
+      $this->set_error(sprintf(_("Could not remove entry, entry with id '%s' not found."),$id));
     }
   }
 
