@@ -105,6 +105,8 @@ class goto_task extends plugin
         $target = get_post("target_text");
         if($this->is_valid_target($target) && !in_array($target,$this->Target)){
           $this->Target[] = $target;
+        }else{
+          print_red(_("You must specify a valid MAC address or host name."));
         }
       }
     }else{
