@@ -96,10 +96,12 @@ class gotomasses extends plugin
      ************/
 
     /* Edit selected entry */
-    if($s_action == "edit" && isset($this->tasks[$s_entry])){
-      $entry = $this->tasks[$s_entry];
-      $this->dialog = new goto_task($this->config,$this,$entry);
-      $this->current = $s_entry;
+    if($s_action == "edit"){
+      $entry = $this->o_queue->get_entry($s_entry);
+      if($entry){
+        $this->dialog = new goto_task($this->config,$this,$entry);
+        $this->current = $s_entry;
+      }
     }
 
     /* New entry */
@@ -122,18 +124,20 @@ class gotomasses extends plugin
         foreach($msgs as $msg){
           print_red($msg);  
         }
-      }else{
-        if(isset($this->tasks[$this->current]) && $this->current != -1){
-          $this->tasks[$this->current] = $this->dialog->save();
+      }else{  
+        
+        if($this->o_queue->id_exists($this->current)){
+          $this->o_queue->update_entry($this->current,$this->dialog->save());
         }else{
           $tmp = $this->dialog->save();
-
+          $tmp2= array();
           $targets =$tmp['Target'];
           foreach($targets as $target){
             $tmp['Target'] = array($target);
-            if(!$this->o_queue->add($tmp)){
-              print_red($this->o_queue->get_error());
-            }
+            $tmp2[] = $tmp;
+          }
+          if(!$this->o_queue->add_multiple($tmp2)){
+            print_red($this->o_queue->get_error());
           }
         }
         if(!isset($_POST['apply_goto_task'])){
@@ -149,7 +153,6 @@ class gotomasses extends plugin
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
-
 
     /************
      * Handle Divlist 
@@ -169,21 +172,12 @@ class gotomasses extends plugin
    }
     $ret = array();
     while($entry = $this->o_queue->fetch()){
-      $ret[] = $entry;
+      $ret[]= $entry;
     }
     return($ret);
   }
  
 
-
-
-
-
-
-
-
-
- 
   function target_to_string($data)
   {
     $ret = "";

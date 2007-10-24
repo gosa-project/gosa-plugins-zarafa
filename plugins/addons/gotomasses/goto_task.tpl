@@ -78,6 +78,7 @@
 	</tr>
 </table>
 {if $Action == "initial_install"}
+{if $ID == 0}
 <p class='seperator'>&nbsp;</p>
 <table style='width:100%;'>
 	<tr>
@@ -145,7 +146,7 @@
 		</td>
 	</tr>
 </table>
-
+{/if}
 {else}
 <p class='seperator'>&nbsp;</p>
 <table style='width:100%;'>
@@ -189,6 +190,7 @@
 		</td>
 	</tr>
 </table>
+{if $ID == 0}
 <p class='seperator'>&nbsp;</p>
 <table style='width:100%;'>
 	<tr>
@@ -220,6 +222,7 @@
 		</td>
 	</tr>
 </table>
+{/if}
 {/if}
 <p class='seperator'>&nbsp;</p>
 <input type='hidden' name='goto_task_posted' value='1'>

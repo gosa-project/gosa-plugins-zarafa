@@ -28,7 +28,9 @@ class goto_task extends plugin
   var $Initial_Target   = array();
   var $Actions  = array();
   var $new      = FALSE;
-  var $attributes     = array("Zone","Section","OGroup","Minute","Hour","Day",
+  var $ID = 0;
+  var $TASK_ID =0;
+  var $attributes     = array("ID","TASK_ID","Zone","Section","OGroup","Minute","Hour","Day",
                               "Month","Weekday","Action","Comment","Target","Initial_Target");
 
   var $configure_dhcp = FALSE;
@@ -99,7 +101,7 @@ class goto_task extends plugin
     if($this->Action != "initial_install"){
       
       /* Add target */
-      if(isset($_POST['add_target']) && !empty($_POST['target_text'])){
+      if($this->ID == 0 && isset($_POST['add_target']) && !empty($_POST['target_text'])){
         $target = get_post("target_text");
         if($this->is_valid_target($target) && !in_array($target,$this->Target)){
           $this->Target[] = $target;
@@ -108,7 +110,7 @@ class goto_task extends plugin
     }else{
 
       /* Add target */
-      if(isset($_POST['add_target']) && !empty($_POST['task_MAC'])){
+      if($this->ID ==0 && isset($_POST['add_target']) && !empty($_POST['task_MAC'])){
         $MAC = $_POST['task_MAC'];
         $NAME= "";
         $IP  = "";
@@ -133,7 +135,7 @@ class goto_task extends plugin
     }
 
     /* Add via csv */
-    if(isset($_FILES['import_file'])){
+    if($this->ID == 0 && isset($_FILES['import_file'])){
       $file = $_FILES['import_file']['tmp_name'];
       if(file_exists($file) && is_readable($file)){
         $str ="";
@@ -240,6 +242,8 @@ class goto_task extends plugin
     $smarty->assign("Zones", $this->Zones);
     $smarty->assign("Sections", $this->Sections);
 
+    $smarty->assign("ID",$this->ID);
+  
     $smarty->assign("Zone", $this->Zone);
     $smarty->assign("Section", $this->Section);
 

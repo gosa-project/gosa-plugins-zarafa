@@ -78,7 +78,7 @@ class divListMasses extends MultiSelectWindow
   {
     /* Create edit link */
     $plug = $_GET['plug'];
-    $edit_link = "<div style='width:100%;overflow:hidden;'><nobr><a href='?plug=".$_GET['plug']."&act=edit&id=%key%'>%str%</nobr></div>";
+    $edit_link = "<div style='width:100%;overflow:hidden;'><nobr><a href='?plug=".$_GET['plug']."&act=edit&id=%id%'>%str%</nobr></div>";
 
     /* Create action filter array, to sort out those actions we do not want to see */
     $allowed_action = array();
@@ -94,16 +94,18 @@ class divListMasses extends MultiSelectWindow
       if(!in_array($task['Action'],$allowed_action)){
         continue;
       }
+
+      $id = $task['ID'];
  
-      $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
+      $action = "<input type='image' src='images/edit.png' name='edit_task_".$id."' class='center' alt='"._("Edit")."'>";
       if($this->parent->acl_is_removeable()){
-        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
+        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$id."' class='center' alt='"._("Reomve")."'>";
       }
       /* Create each field */
-      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
           "attach" => "style='width:20px;'");
 
-      $field1 = array("string" => preg_replace(array("/%key%/","/%str%/"),array($key,$this->parent->target_to_string($task)),$edit_link));
+      $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link));
       $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='width:100px;'");
       $field3 = array("string" => $this->parent->action_to_string($task),"attach" => "style='width:80px;'");
       $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");

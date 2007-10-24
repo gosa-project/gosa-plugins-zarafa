@@ -40,6 +40,8 @@ class hostActionQueue {
   private $b_queue_loaded = false;
   private $i_fileversion  = 0;
 
+  private $id_entry_map   = array();
+
   public function __construct($config)
   {
     $this->o_config= $config;
@@ -90,7 +92,9 @@ class hostActionQueue {
     $this->a_queue  = array();
     $comment        = "";
     $rows           = split("\n",$data);
-  
+ 
+    $used_ids = array();
+ 
     /* Walk trough rows and parse data */
     foreach($rows as $row){
 
@@ -106,6 +110,29 @@ class hostActionQueue {
         continue;
       }
 
+      $entry_id = $taks_id= 0;    
+  
+      /* Comment must be set correctly */
+      if(empty($comment)){
+        $desc     = "";
+      }else{
+        $task_id =preg_replace("/^.*taskid:([0-9]*).*$/","\\1",$comment);
+        $entry_id=preg_replace("/^.*entryid:([0-9]*).*$/","\\1",$comment);
+        $desc    =preg_replace("/^.*desc:(.*)$/","\\1",$comment);
+      }
+      if($task_id == 0 || !is_numeric($task_id)){ 
+        $task_id  = preg_replace("/[^0-9]*/","",microtime());
+      }
+      if($entry_id == 0 || !is_numeric($entry_id)){
+        $entry_id = preg_replace("/[^0-9]*/","",microtime());
+      }
+   
+      /* Get unige id */ 
+      while(in_array($entry_id,$used_ids)){
+        $entry_id = preg_replace("/[^0-9]*/","",microtime());
+      }
+      $used_ids[] = $entry_id;
+ 
       /* Split row into minutes/ hours ...*/
       $row    = preg_replace('/[\t ]/umi'," ",$row);
       $row    = preg_replace('/  */umi'," ",$row);
@@ -116,6 +143,8 @@ class hostActionQueue {
       }else{
 
         $entry = array();
+        $entry['TASK_ID'] = $task_id;
+        $entry['ID']      = $entry_id;
         $entry['Minute']  = $parts[0];
         $entry['Hour']    = $parts[1];
         $entry['Day']     = $parts[2];
@@ -137,12 +166,19 @@ class hostActionQueue {
           $entry['Target']  = array();
         }else{
           $entry['Initial_Target']  = array();
-          $entry['Target']  = split(";",$parts[7]);
+          $entry['Target']  = split(";",$parts[9]);
         }
-        $entry['Comment'] = $comment;
+        $entry['Comment'] = $desc;
         $this->a_queue[]   = $entry;
+        
       }
     }
+   
+    /* Udpate ENTRY_ID -> id mapping */ 
+    foreach($this->a_queue as $id => $entry){
+      $this->id_entry_map[$entry['ID']] = $id;
+    }   
+ 
     return(TRUE);
   }
 
@@ -172,7 +208,7 @@ class hostActionQueue {
 
     $str = "#GOsa generated file, please just modify if you really know what you do.";
     foreach($this->a_queue as $task){
-      $str .= "\n#".trim($task['Comment']);
+      $str .= "\n#taskid:".trim($task['TASK_ID']).";entryid:".$task['ID'].";desc:".trim($task['Comment']);
       $str .= "\n";
       if($task['Action'] == "initial_install"){
         $str .= "*     *     *     *     *     ";
@@ -207,9 +243,61 @@ class hostActionQueue {
     return(TRUE);
   }
 
+  private function _add_entry($entry,$task_id = 0)
+  {
+    if($task_id == 0 || !is_numeric($task_id) || !isset($entry['TASK_ID']) || !is_numeric($entry['TASK_ID'])){
+      $task_id=preg_replace("/[^0-9]*/","",microtime());
+      $entry['TASK_ID'] = $task_id;
+    }
+    if(!isset($entry['ID']) || !is_numeric($entry['ID'])){
+      $entry['ID'] = preg_replace("/[^0-9]*/","",microtime());
+    }
+    $this->a_queue[] = $entry;
+    
+    return(true);
+  }
+
+  public function get_entry($id)
+  {
+    if(isset($this->a_queue[$this->id_entry_map[$id]])){
+      return($this->a_queue[$this->id_entry_map[$id]]);
+    }else{
+      $this->set_error(sprintf(_("Entry with id '%s' not found."),$id));
+    }
+  }
+
+  public function update_entry($id,$entry)
+  {
+    if(isset($this->a_queue[$this->id_entry_map[$id]])){
+      $this->a_queue[$this->id_entry_map[$id]] = $entry;
+      return($this->_save_data());
+    }else{
+      $this->set_error(sprintf(_("Could not update entry, entry with id '%s' not found."),$id));
+    }
+  }
+
+  public function id_exists($id)
+  {
+    return(isset($this->id_entry_map[$id]));
+  }
+
+
   public function add($entry)
   {
-    $this->a_queue[] = $entry;
+    if(!$this->_add_entry($entry)){
+      return(FALSE);
+    }
+    return($this->_save_data());
+  }
+
+  public function add_multiple($array)
+  {
+    $task_id = preg_replace("/[^0-9]*/","",microtime()); 
+    foreach($array as $entry){
+      if(!$this->_add_entry($entry,$task_id)){
+        return(FALSE);
+      }
+    }
     return($this->_save_data());
   }
 
