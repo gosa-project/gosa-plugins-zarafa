@@ -56,11 +56,20 @@ class gotomasses extends plugin
      ************/
 
     /* Remove multiple */
-    if($s_action == "remove_multiple"){
+    if($s_action == "remove_multiple" || $s_action == "remove"){
+
       if(!$this->acl_is_removeable()){
         print_red(_("You are not allowed to remove a task."));
       }else{
-        $this->ids_to_remove = $this->list_get_selected_items();
+
+        if($s_action == "remove"){
+          $ids = array($s_entry);
+        }else{
+          $ids = $this->list_get_selected_items();
+        }
+  
+
+        $this->ids_to_remove = $ids;
         $tmp = "";
         foreach($this->ids_to_remove as $key => $id){
           if($this->o_queue->id_exists($id)){
