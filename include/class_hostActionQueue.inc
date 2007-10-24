@@ -80,7 +80,7 @@ class hostActionQueue {
       return(FALSE);
     }
     $this->i_fileversion = filemtime($this->s_queue_file);
-    echo $this->i_fileversion."reload<br>";
+    clearstatcache();
  
     /* Get file contents */
     $data ="";
@@ -239,7 +239,9 @@ class hostActionQueue {
     $str .= "\n";
     fwrite($fp,$str);
     fclose($fp);
+    clearstatcache();
     $this->i_fileversion = filemtime($this->s_queue_file);
+    clearstatcache();
     return(TRUE);
   }
 
