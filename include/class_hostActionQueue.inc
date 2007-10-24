@@ -120,10 +120,10 @@ class hostActionQueue {
         $entry_id=preg_replace("/^.*entryid:([0-9]*).*$/","\\1",$comment);
         $desc    =preg_replace("/^.*desc:(.*)$/","\\1",$comment);
       }
-      if($task_id == 0 || !is_numeric($task_id)){ 
+      if($task_id == 0 || empty($task_id)){ 
         $task_id  = preg_replace("/[^0-9]*/","",microtime());
       }
-      if($entry_id == 0 || !is_numeric($entry_id)){
+      if($entry_id == 0 || empty($entry_id)){
         $entry_id = preg_replace("/[^0-9]*/","",microtime());
       }
    
@@ -245,11 +245,11 @@ class hostActionQueue {
 
   private function _add_entry($entry,$task_id = 0)
   {
-    if($task_id == 0 || !is_numeric($task_id) || !isset($entry['TASK_ID']) || !is_numeric($entry['TASK_ID'])){
+    if($task_id == 0 || empty($task_id)){
       $task_id=preg_replace("/[^0-9]*/","",microtime());
-      $entry['TASK_ID'] = $task_id;
     }
-    if(!isset($entry['ID']) || !is_numeric($entry['ID'])){
+    $entry['TASK_ID'] = $task_id;
+    if(!isset($entry['ID']) || empty($entry['ID']) || !isset($entry['ID']) || empty($entry['ID'])){
       $entry['ID'] = preg_replace("/[^0-9]*/","",microtime());
     }
     $this->a_queue[] = $entry;

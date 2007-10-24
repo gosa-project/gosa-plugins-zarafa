@@ -166,17 +166,25 @@ class gotomasses extends plugin
     
   function get_queue_entries()
   {
-   if(!$this->o_queue->load()){
-     print_red("ERROR:".$this->o_queue->get_error());
-     return(FALSE);
-   }
+    if(!$this->o_queue->load()){
+      print_red("ERROR:".$this->o_queue->get_error());
+      return(FALSE);
+    }
+
+    $tasks = array();
     $ret = array();
     while($entry = $this->o_queue->fetch()){
+      $task = $entry['TASK_ID']; 
+      if(!isset($tasks[$task])){
+        $tasks[$task] = dechex(rand(100,240)).dechex(rand(100,240)).dechex(rand(100,240));
+      }
+
+      $entry['color'] = $tasks[$task]; 
       $ret[]= $entry;
     }
     return($ret);
   }
- 
+
 
   function target_to_string($data)
   {

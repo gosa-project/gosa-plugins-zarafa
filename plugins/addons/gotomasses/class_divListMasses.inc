@@ -96,6 +96,7 @@ class divListMasses extends MultiSelectWindow
       }
 
       $id = $task['ID'];
+      $color= "background-color: #".$task['color'];
  
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$id."' class='center' alt='"._("Edit")."'>";
       if($this->parent->acl_is_removeable()){
@@ -105,10 +106,11 @@ class divListMasses extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
           "attach" => "style='width:20px;'");
 
-      $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link));
-      $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='width:100px;'");
-      $field3 = array("string" => $this->parent->action_to_string($task),"attach" => "style='width:80px;'");
-      $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
+      $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link),
+                      "attach" => "style='".$color."'");
+      $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='".$color.";width:100px;'");
+      $field3 = array("string" => $this->parent->action_to_string($task),"attach" => "style='".$color.";width:80px;'");
+      $field4 = array("string" => $action,"attach" => "style='".$color.";text-align:right;width:40px;border-right:0px;'");
       $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
     }
   }
