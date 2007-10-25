@@ -62,6 +62,8 @@ class hostActionQueue {
     $this->b_error        = FALSE;
     $this->s_error        = "";
     $this->i_pointer      = 0;
+
+    $this->get_new_id();
  
     /* Check file accessibility */
     if(!file_exists($this->s_queue_file)){
@@ -110,7 +112,7 @@ class hostActionQueue {
         continue;
       }
 
-      $entry_id = $taks_id= 0;    
+      $entry_id = $task_id= 0;    
   
       /* Comment must be set correctly */
       if(empty($comment)){
@@ -175,6 +177,7 @@ class hostActionQueue {
     }
    
     /* Udpate ENTRY_ID -> id mapping */ 
+    reset($this->a_queue);
     foreach($this->a_queue as $id => $entry){
       $this->id_entry_map[$entry['ID']] = $id;
     }   
@@ -207,6 +210,7 @@ class hostActionQueue {
     }
 
     $str = "#GOsa generated file, please just modify if you really know what you do.";
+    reset($this->a_queue);
     foreach($this->a_queue as $task){
       $str .= "\n#taskid:".trim($task['TASK_ID']).";entryid:".$task['ID'].";desc:".trim($task['Comment']);
       $str .= "\n";
@@ -242,6 +246,13 @@ class hostActionQueue {
     clearstatcache();
     $this->i_fileversion = filemtime($this->s_queue_file);
     clearstatcache();
+
+    /* Update ENTRY_ID -> id mapping */ 
+    reset($this->a_queue);
+    foreach($this->a_queue as $id => $entry){
+      $this->id_entry_map[$entry['ID']] = $id;
+    }   
+ 
     return(TRUE);
   }
 
@@ -360,9 +371,11 @@ class hostActionQueue {
   {
     if(!$this->id_exists($id)){
       $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+      return(FALSE);
     }
     $tmp = array();
     $tmp[]= $this->get_entry($id);
+    reset($this->a_queue);
     foreach($this->a_queue as $key => $entry){
       if($id != $entry['ID']){
         $tmp[] = $entry;
@@ -376,10 +389,12 @@ class hostActionQueue {
   {
     if(!$this->id_exists($id)){
       $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+      return(FALSE);
     }
     $tmp = array();
     $skip = NULL;
     $next = NULL;
+    reset($this->a_queue);
     foreach($this->a_queue as $key => $entry){
       if($next != NULL){
         if($id == $entry['ID']){
@@ -405,9 +420,11 @@ class hostActionQueue {
   {
     if(!$this->id_exists($id)){
       $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+      return(FALSE);
     }
     $tmp = array();
     $skip = NULL;
+    reset($this->a_queue);
     foreach($this->a_queue as $key => $entry){
       if($id != $entry['ID']){
         $tmp[] = $entry;
@@ -426,11 +443,17 @@ class hostActionQueue {
     return($this->_save_data());
   }
 
+  private function get_new_id()
+  {
+  }
+
   public function min_entry_priority($id)
   {
     if(!$this->id_exists($id)){
       $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+      return(FALSE);
     }
+    reset($this->a_queue);
     $tmp = array();
     foreach($this->a_queue as $key => $entry){
       if($id != $entry['ID']){

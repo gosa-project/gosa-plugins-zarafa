@@ -94,6 +94,9 @@ class gotomasses extends plugin
         case 'prio_bottom'    : $this->o_queue->min_entry_priority($s_entry);break;
         default : trigger_error("Undefined priority setting used.");
       }
+      if($this->o_queue->is_error()){
+        print_red($this->o_queue->get_error());
+      }
     }
 
     /************
