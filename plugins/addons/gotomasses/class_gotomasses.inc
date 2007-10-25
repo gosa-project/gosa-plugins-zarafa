@@ -269,7 +269,17 @@ class gotomasses extends plugin
 
   function get_additional_entry_informations($data)
   {
-    return("<div style='width:80px;background-color:#999999;'><div style='background-color:#00FF00;width:40%'>&nbsp;</div></div>");
+    $i = rand(0,3);
+    if($i == 0){
+      return("<div style='width:80px;background-color:#999999;'><div style='background-color:#00FF00;width:40%'>&nbsp;</div></div>");
+    }
+    if($i == 1){
+      return("<font style='color: #FF0000;'>Failed</font>");
+    }
+    if($i == 1){
+      return("<font style='color: #00FF00;'>OK</font>");
+    }
+    return("-");
   }
 
 
