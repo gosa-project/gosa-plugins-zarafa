@@ -195,7 +195,17 @@ class gotomasses extends plugin
 
     $this->divlist->execute();
     $this->divlist->SetEntries($this->get_queue_entries()); 
-    return($this->divlist->Draw());
+    $str = 
+      "<script type=\"text/javascript\">
+      <!--
+        var time = null
+        function move() {
+          window.location = '?plug=".$_GET['plug']."'
+        }
+        setInterval(\"move()\",20000);
+        //-->
+        </script>";
+    return($str.$this->divlist->Draw());
   }
 
     
