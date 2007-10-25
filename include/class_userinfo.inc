@@ -191,7 +191,14 @@ class userinfo
   {
     /* Push cache answer? */
     if (isset($_SESSION['ACL_CACHE']["$dn+$object+$attribute"])){
-      return ($_SESSION['ACL_CACHE']["$dn+$object+$attribute"]);
+
+      /* Remove write if needed */
+      if ($skip_write){
+        $ret = preg_replace('/w/', '', $_SESSION['ACL_CACHE']["$dn+$object+$attribute"]);
+      }else{
+        $ret = $_SESSION['ACL_CACHE']["$dn+$object+$attribute"];
+      } 
+      return($ret);
     }
 
     $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
@@ -266,12 +273,12 @@ class userinfo
       }
     }
 
+    $_SESSION['ACL_CACHE']["$dn+$object+$attribute"]= $ret;
+
     /* Remove write if needed */
     if ($skip_write){
       $ret= preg_replace('/w/', '', $ret);
     }
-
-    $_SESSION['ACL_CACHE']["$dn+$object+$attribute"]= $ret;
     return ($ret);
   }
 
