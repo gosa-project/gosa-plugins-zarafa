@@ -63,8 +63,6 @@ class hostActionQueue {
     $this->s_error        = "";
     $this->i_pointer      = 0;
 
-    $this->get_new_id();
- 
     /* Check file accessibility */
     if(!file_exists($this->s_queue_file)){
       $this->set_error(sprintf(_("Can't locate gotomasses queue file '%s'."),$this->s_queue_file));
@@ -123,15 +121,15 @@ class hostActionQueue {
         $desc    =preg_replace("/^.*desc:(.*)$/","\\1",$comment);
       }
       if($task_id == 0 || empty($task_id)){ 
-        $task_id  = preg_replace("/[^0-9]*/","",microtime());
+        $task_id  = $this->get_new_id();
       }
       if($entry_id == 0 || empty($entry_id)){
-        $entry_id = preg_replace("/[^0-9]*/","",microtime());
+        $entry_id = $this->get_new_id();
       }
    
       /* Get unige id */ 
       while(in_array($entry_id,$used_ids)){
-        $entry_id = preg_replace("/[^0-9]*/","",microtime());
+        $entry_id = $this->get_new_id();
       }
       $used_ids[] = $entry_id;
  
@@ -172,8 +170,8 @@ class hostActionQueue {
         }
         $entry['Comment'] = $desc;
         $this->a_queue[]   = $entry;
-        
       }
+      $comment = "";
     }
    
     /* Udpate ENTRY_ID -> id mapping */ 
@@ -259,11 +257,11 @@ class hostActionQueue {
   private function _add_entry($entry,$task_id = 0)
   {
     if($task_id == 0 || empty($task_id)){
-      $task_id=preg_replace("/[^0-9]*/","",microtime());
+      $task_id = $this->get_new_id();
     }
     $entry['TASK_ID'] = $task_id;
     if(!isset($entry['ID']) || empty($entry['ID']) || !isset($entry['ID']) || empty($entry['ID'])){
-      $entry['ID'] = preg_replace("/[^0-9]*/","",microtime());
+      $entry['ID'] = $this->get_new_id();
     }
     $this->a_queue[] = $entry;
     
@@ -316,7 +314,7 @@ class hostActionQueue {
 
   public function add_multiple($array)
   {
-    $task_id = preg_replace("/[^0-9]*/","",microtime()); 
+    $task_id = $this->get_new_id();
     foreach($array as $entry){
       if(!$this->_add_entry($entry,$task_id)){
         return(FALSE);
@@ -445,6 +443,10 @@ class hostActionQueue {
 
   private function get_new_id()
   {
+    $mt = microtime();
+    $sec  = preg_replace("/^0.([0-9]*) ([0-9]*)$/","\\2",$mt);
+    $msec = preg_replace("/^0.([0-9]*) ([0-9]*)$/","\\1",$mt);
+    return(strtoupper(base_convert($sec,10,36).base_convert($msec,10,36)));
   }
 
   public function min_entry_priority($id)
