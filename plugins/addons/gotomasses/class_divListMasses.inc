@@ -94,6 +94,10 @@ class divListMasses extends MultiSelectWindow
     $colors[1] = "#EEEEEE";
     $c_keys = array();
     $last_c = 0;
+    if($this->parent->sort_dir=="down"){
+      $last_c = !$last_c; 
+    }
+  
     foreach($tasks as $key => $task){
 
       /* Skip unchecked actions */ 
@@ -101,6 +105,9 @@ class divListMasses extends MultiSelectWindow
         continue;
       }
 
+      
+
+      /* Handle coloring */
       $color="";
       if($this->parent->sort_by == "TaskID"){
         if(!in_array($task['TASK_ID'],$c_keys)){
@@ -110,30 +117,33 @@ class divListMasses extends MultiSelectWindow
         $color = "background-color: ".$colors[$last_c];
       }
 
-
+      /* Create actions */
       $id         = $task['ID'];
       $queue_pos  = $task['Queue_Position'];
       $prio_actions = "<input class='center' type='image' src='images/prio_top.png'      name='prio_top_".$id."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' name='prio_increase_".$id."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_decrease_".$id."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_bottom.png'   name='prio_bottom_".$id."'>&nbsp;";
- 
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$id."' class='center' alt='"._("Edit")."'>";
       if($this->parent->acl_is_removeable()){
         $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$id."' class='center' alt='"._("Reomve")."'>";
       }
-      /* Create each field */
-      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
-          "attach" => "style='width:20px;".$color."'");
+
+      $display = preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link);
+      $display2= $this->parent->get_additional_entry_informations($task);
 
       /* Create each field */
-      $field0a = array("string" => $queue_pos ,"attach" => "style='width:20px;".$color."'");
-      $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link),
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
+                      "attach" => "style='width:20px;".$color."'");
+      $field0a= array("string" => $queue_pos ,"attach" => "style='width:20px;".$color."'");
+      $field1 = array("string" => $display,
                       "attach" => "style='".$color."'");
+      $field1a= array("string" => $display2,
+                      "attach" => "style='".$color.";width:80px;'");
       $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='".$color.";width:100px;'");
       $field3 = array("string" => $this->parent->action_to_string($task),"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
-      $this->AddElement(array($field0,$field0a,$field1,$field2,$field3,$field4));
+      $this->AddElement(array($field0,$field0a,$field1,$field1a,$field2,$field3,$field4));
     }
   }
 

@@ -267,6 +267,12 @@ class gotomasses extends plugin
   }
 
 
+  function get_additional_entry_informations($data)
+  {
+    return("<div style='width:80px;background-color:#999999;'><div style='background-color:#00FF00;width:40%'>&nbsp;</div></div>");
+  }
+
+
   function target_to_string($data)
   {
     $ret = "";
