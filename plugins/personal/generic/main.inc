@@ -66,7 +66,7 @@ if (!$remove_lock){
   if (isset($_POST['password_finish'])){
 
     /* For security reasons, check if user is allowed to set password again */
-    if ($user->acl_is_writable("userPassword") || $user->acl_is_createable()){
+    if ($user->acl_is_writeable("userPassword") || $user->acl_is_createable()){
 
       /* Check input and feed errors into 'message' */
       $message= array();
@@ -93,7 +93,7 @@ if (!$remove_lock){
         return ($display);
       }
       change_password ($user->dn, $_POST['new_password'], 0, $user->pw_storage);
-      new log("modify","users/".get_class($this),"",array(),"Password has been changed");
+      new log("modify","users/password","",array(),"Password has been changed");
 
     } else {
 
