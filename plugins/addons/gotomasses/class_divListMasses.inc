@@ -90,6 +90,10 @@ class divListMasses extends MultiSelectWindow
       }
     }
 
+    $colors[0] = "#DDDDDD";
+    $colors[1] = "#EEEEEE";
+    $c_keys = array();
+    $last_c = 0;
     foreach($tasks as $key => $task){
 
       /* Skip unchecked actions */ 
@@ -97,10 +101,18 @@ class divListMasses extends MultiSelectWindow
         continue;
       }
 
+      $color="";
+      if($this->parent->sort_by == "TaskID"){
+        if(!in_array($task['TASK_ID'],$c_keys)){
+          $c_keys[] = $task['TASK_ID'];
+          $last_c = !$last_c;
+        }
+        $color = "background-color: ".$colors[$last_c];
+      }
+
+
       $id         = $task['ID'];
       $queue_pos  = $task['Queue_Position'];
-      $color= "background-color: #".$task['color'];
-    
       $prio_actions = "<input class='center' type='image' src='images/prio_top.png'      name='prio_top_".$id."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' name='prio_increase_".$id."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_decrease_".$id."'>&nbsp;";
@@ -112,10 +124,10 @@ class divListMasses extends MultiSelectWindow
       }
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
-          "attach" => "style='width:20px;'");
+          "attach" => "style='width:20px;".$color."'");
 
       /* Create each field */
-      $field0a = array("string" => $queue_pos ,"attach" => "style='width:20px;'");
+      $field0a = array("string" => $queue_pos ,"attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link),
                       "attach" => "style='".$color."'");
       $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='".$color.";width:100px;'");
