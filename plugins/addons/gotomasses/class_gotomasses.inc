@@ -42,6 +42,11 @@ class gotomasses extends plugin
                   "/^prio_decrease_/" => "prio_decrease",
                   "/^prio_bottom_/"   => "prio_bottom",
 
+                  "/^multiple_prio_top_/"      => "mprio_top",
+                  "/^multiple_prio_increase_/" => "mprio_increase",
+                  "/^multiple_prio_decrease_/" => "mprio_decrease",
+                  "/^multiple_prio_bottom_/"   => "mprio_bottom",
+
                   "/^edit_task_/"=>"edit","/^remove_task_/"=>"remove",
                   "/^new_task_/"=>"new_task","/^remove_multiple_task_/" => "remove_multiple");
     foreach($arr as $regex => $action){
@@ -64,9 +69,25 @@ class gotomasses extends plugin
      * REMOVE 
      ************/
     
-    if(preg_match("/^prio_/",$s_action)){
+    if(preg_match("/^mprio_/",$s_action) || preg_match("/^prio_/",$s_action)){
 
       switch($s_action){
+        case 'mprio_top'       : foreach($this->list_get_selected_items() as $id ){
+                                   $this->o_queue->max_entry_priority($id);
+                                 }
+                                 break;
+        case 'mprio_increase'  : foreach($this->list_get_selected_items() as $id ){
+                                   $this->o_queue->increase_entry_priority($id);
+                                 }
+                                 break;
+        case 'mprio_decrease'  : foreach($this->list_get_selected_items() as $id ){
+                                   $this->o_queue->decrease_entry_priority($id);
+                                 }
+                                 break;
+        case 'mprio_bottom'    : foreach($this->list_get_selected_items() as $id ){
+                                   $this->o_queue->min_entry_priority($id);
+                                 }
+                                 break;
         case 'prio_top'       : $this->o_queue->max_entry_priority($s_entry);break;
         case 'prio_increase'  : $this->o_queue->increase_entry_priority($s_entry);break;
         case 'prio_decrease'  : $this->o_queue->decrease_entry_priority($s_entry);break;
