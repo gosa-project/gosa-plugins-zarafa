@@ -16,6 +16,9 @@ class gotomasses extends plugin
   var $ids_to_remove = array();
   var $divlist = NULL;
 
+  var $sort_by = "QueuePosition";
+  var $sort_dir= "up";
+
   function gotomasses(&$config, $dn= NULL)
   {
     /* Include config object */
@@ -33,7 +36,13 @@ class gotomasses extends plugin
      ************/
 
     $s_entry = $s_action = "";
-    $arr = array( "/^edit_task_/"=>"edit","/^remove_task_/"=>"remove",
+    $arr = array( 
+                  "/^prio_top_/"      => "prio_top",
+                  "/^prio_increase_/" => "prio_increase",
+                  "/^prio_decrease_/" => "prio_decrease",
+                  "/^prio_bottom_/"   => "prio_bottom",
+
+                  "/^edit_task_/"=>"edit","/^remove_task_/"=>"remove",
                   "/^new_task_/"=>"new_task","/^remove_multiple_task_/" => "remove_multiple");
     foreach($arr as $regex => $action){
       foreach($_POST as $name => $value){
@@ -49,6 +58,21 @@ class gotomasses extends plugin
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id']) && isset($this->tasks[$_GET['id']])){
       $s_action = "edit";
       $s_entry = $_GET['id'];
+    }
+
+    /************
+     * REMOVE 
+     ************/
+    
+    if(preg_match("/^prio_/",$s_action)){
+
+      switch($s_action){
+        case 'prio_top'       : $this->o_queue->max_entry_priority($s_entry);break;
+        case 'prio_increase'  : $this->o_queue->increase_entry_priority($s_entry);break;
+        case 'prio_decrease'  : $this->o_queue->decrease_entry_priority($s_entry);break;
+        case 'prio_bottom'    : $this->o_queue->min_entry_priority($s_entry);break;
+        default : trigger_error("Undefined priority setting used.");
+      }
     }
 
     /************
@@ -182,6 +206,7 @@ class gotomasses extends plugin
       return(FALSE);
     }
 
+    $queue_pos = 1;
     $tasks = array();
     $ret = array();
     while($entry = $this->o_queue->fetch()){
@@ -189,11 +214,46 @@ class gotomasses extends plugin
       if(!isset($tasks[$task])){
         $tasks[$task] = dechex(rand(100,240)).dechex(rand(100,240)).dechex(rand(100,240));
       }
-
+      $entry['Queue_Position'] = $queue_pos;
       $entry['color'] = $tasks[$task]; 
       $ret[]= $entry;
+      $queue_pos ++;
     }
-    return($ret);
+  
+    /* Sort entries */
+    $simple_map = array("QueuePosition" => "Queue_Position",
+                        "Action"        => "Action",
+                        "TaskID"        => "TASK_ID");
+    $sort_arr = array();
+    if(isset($simple_map[$this->sort_by])){
+      foreach($ret as $id => $entry){
+        $sort_arr[$entry[$simple_map[$this->sort_by]]][] = $id;
+      }
+    }
+    if($this->sort_by == "TargetName"){
+      foreach($ret as $id => $entry){
+        $name = $this->target_to_string($entry);
+        $sort_arr[$name][] = $id;
+      }
+    }
+    if($this->sort_by == "Schedule"){
+      foreach($ret as $id => $entry){
+        $name = $entry['Minute'].$entry['Hour'].$entry['Day'].$entry['Month'].$entry['Weekday'];
+        $sort_arr[$name][] = $id;
+      }
+    }
+    if($this->sort_dir == "up"){
+      ksort($sort_arr);
+    }else{
+      krsort($sort_arr);
+    }
+    $ret2 = array();
+    foreach($sort_arr as $key => $entries){
+      foreach($entries as $entry_id){
+        $ret2[] = $ret[$entry_id];
+      }
+    }
+    return($ret2);
   }
 
 
@@ -233,6 +293,18 @@ class gotomasses extends plugin
   function save_object()
   {
     $this->divlist->save_object();
+    $sort_vals = array("Action","QueuePosition","TargetName","Schedule","TaskID");
+    if(isset($_GET['sort']) && in_array($_GET['sort'],$sort_vals)){
+      $sort = $_GET['sort'];
+      if($this->sort_by == $sort){
+        if($this->sort_dir == "up"){
+           $this->sort_dir = "down";
+        }else{
+           $this->sort_dir = "up";
+        }
+      }
+      $this->sort_by = $sort;
+    }
   }
 
 

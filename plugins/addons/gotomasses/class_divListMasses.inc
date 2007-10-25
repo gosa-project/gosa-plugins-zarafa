@@ -37,14 +37,16 @@ class divListMasses extends MultiSelectWindow
 
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=QueuePosition'>"._("#")."</a>",
+                           "attach"=>"style='width:20px;'"));
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target")."</a>&nbsp;/&nbsp;".
+                                     "<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task")."</a>"));
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule")."</a>",
                                       "attach"=>"style='width:100px;'"));
-    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
+    $this->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Type")."</a>",
                                       "attach"=>"style='width:80px;'"));
     $this->AddHeader(array("string"=>_("Action"),
-                                      "attach"=>"style='border-right:0px;width:40px;'"));
+                                      "attach"=>"style='border-right:0px;width:120px;'"));
   }
 
   function GenHeader()
@@ -95,8 +97,14 @@ class divListMasses extends MultiSelectWindow
         continue;
       }
 
-      $id = $task['ID'];
+      $id         = $task['ID'];
+      $queue_pos  = $task['Queue_Position'];
       $color= "background-color: #".$task['color'];
+    
+      $prio_actions = "<input class='center' type='image' src='images/prio_top.png'      name='prio_top_".$id."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' name='prio_increase_".$id."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_decrease_".$id."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/prio_bottom.png'   name='prio_bottom_".$id."'>&nbsp;";
  
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$id."' class='center' alt='"._("Edit")."'>";
       if($this->parent->acl_is_removeable()){
@@ -106,12 +114,14 @@ class divListMasses extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$id."' name='item_selected_".$id."'>" ,
           "attach" => "style='width:20px;'");
 
+      /* Create each field */
+      $field0a = array("string" => $queue_pos ,"attach" => "style='width:20px;'");
       $field1 = array("string" => preg_replace(array("/%id%/","/%str%/"),array($id,$this->parent->target_to_string($task)),$edit_link),
                       "attach" => "style='".$color."'");
       $field2 = array("string" => $this->parent->time_to_string($task),"attach" => "style='".$color.";width:100px;'");
       $field3 = array("string" => $this->parent->action_to_string($task),"attach" => "style='".$color.";width:80px;'");
-      $field4 = array("string" => $action,"attach" => "style='".$color.";text-align:right;width:40px;border-right:0px;'");
-      $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
+      $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
+      $this->AddElement(array($field0,$field0a,$field1,$field2,$field3,$field4));
     }
   }
 

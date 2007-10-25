@@ -356,6 +356,91 @@ class hostActionQueue {
     return($this->s_error);
   }
 
+  public function max_entry_priority($id)
+  {
+    if(!$this->id_exists($id)){
+      $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+    }
+    $tmp = array();
+    $tmp[]= $this->get_entry($id);
+    foreach($this->a_queue as $key => $entry){
+      if($id != $entry['ID']){
+        $tmp[] = $entry;
+      }
+    }
+    $this->a_queue=$tmp;
+    return($this->_save_data());
+  }
+
+  public function increase_entry_priority($id)
+  {
+    if(!$this->id_exists($id)){
+      $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+    }
+    $tmp = array();
+    $skip = NULL;
+    $next = NULL;
+    foreach($this->a_queue as $key => $entry){
+      if($next != NULL){
+        if($id == $entry['ID']){
+          $tmp[] = $entry; 
+          $tmp[] = $next;
+          $next = NULL;
+        }else{
+          $tmp[] = $next;
+          $next = $entry;
+        }
+      }else{
+        $next = $entry;
+      }
+    }
+    if($next != NULL){
+      $tmp[] = $next;
+    }
+    $this->a_queue=$tmp;
+    return($this->_save_data());
+  }
+
+  public function decrease_entry_priority($id)
+  {
+    if(!$this->id_exists($id)){
+      $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+    }
+    $tmp = array();
+    $skip = NULL;
+    foreach($this->a_queue as $key => $entry){
+      if($id != $entry['ID']){
+        $tmp[] = $entry;
+        if($skip != NULL){
+          $tmp[] = $skip;
+          $skip = NULL;
+        }
+      }else{
+        $skip = $entry;
+      }
+    }
+    if($skip != NULL){
+      $tmp[] = $skip;
+    }
+    $this->a_queue=$tmp;
+    return($this->_save_data());
+  }
+
+  public function min_entry_priority($id)
+  {
+    if(!$this->id_exists($id)){
+      $this->set_error(sprintf(_("Can't set priority for ID '%s'. ID does not exist."),$id));
+    }
+    $tmp = array();
+    foreach($this->a_queue as $key => $entry){
+      if($id != $entry['ID']){
+        $tmp[] = $entry;
+      }
+    }
+    $tmp[]= $this->get_entry($id);
+    $this->a_queue=$tmp;
+    return($this->_save_data());
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
