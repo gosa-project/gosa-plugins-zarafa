@@ -113,8 +113,6 @@ class divListMasses extends MultiSelectWindow
         continue;
       }
 
-      
-
       /* Handle coloring */
       $color="";
       if($this->parent->sort_by == "TaskID"){

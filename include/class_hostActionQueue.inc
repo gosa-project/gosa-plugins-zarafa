@@ -110,20 +110,20 @@ class hostActionQueue {
         continue;
       }
 
-      $entry_id = $task_id= 0;    
+      $entry_id = $task_id= "";    
   
       /* Comment must be set correctly */
       if(empty($comment)){
         $desc     = "";
       }else{
-        $task_id =preg_replace("/^.*taskid:([0-9]*).*$/","\\1",$comment);
-        $entry_id=preg_replace("/^.*entryid:([0-9]*).*$/","\\1",$comment);
+        $task_id =preg_replace("/^.*taskid:([0-9a-z]*).*$/i","\\1",$comment);
+        $entry_id=preg_replace("/^.*entryid:([0-9a-z]*).*$/i","\\1",$comment);
         $desc    =preg_replace("/^.*desc:(.*)$/","\\1",$comment);
       }
-      if($task_id == 0 || empty($task_id)){ 
+      if($task_id == "" || empty($task_id)){ 
         $task_id  = $this->get_new_id();
       }
-      if($entry_id == 0 || empty($entry_id)){
+      if($entry_id == "" || empty($entry_id)){
         $entry_id = $this->get_new_id();
       }
    
@@ -254,9 +254,9 @@ class hostActionQueue {
     return(TRUE);
   }
 
-  private function _add_entry($entry,$task_id = 0)
+  private function _add_entry($entry,$task_id = "")
   {
-    if($task_id == 0 || empty($task_id)){
+    if($task_id == "" || empty($task_id)){
       $task_id = $this->get_new_id();
     }
     $entry['TASK_ID'] = $task_id;

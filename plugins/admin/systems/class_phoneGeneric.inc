@@ -334,6 +334,11 @@ class phoneGeneric extends plugin
       }
     }
 
+    /* Check if given name is a valid host/dns name */
+    if(!is_dns_name($this->cn) && chkacl ($this->acl, "cn") == ""){
+      $message[] = _("Please specify a valid name for this object.");
+    }
+
     if ($this->cn == ""){
       $message[]= _("The required field 'Phone name' is not set.");
     }
