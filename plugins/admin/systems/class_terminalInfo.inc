@@ -115,7 +115,7 @@ class terminfo extends plugin
           /* Fill data if we have snmp */
           $host= $this->cn;
 
-          /* Use goto as snmp community or the configured value from the config */
+          /* Use 'goto' as snmp community or the configured value from the config */
           $community= 'goto';
           $str = search_config($this->config->data['TABS'],"terminfo","SNMPCOMMUNITY");
           if(!empty($str)){
