@@ -417,6 +417,13 @@ class servdns extends goService
       return;
     }
 
+    /* Save zone editor changes now */
+    foreach($this->Zones as $name => $zone){
+      if(isset($zone['zoneEditor'] ) && $zone['zoneEditor'] != NULL && is_object($zone['zoneEditor'])){
+        $zone['zoneEditor']->save();
+        unset($this->Zones[$name]['zoneEditor']);;
+      }
+    }
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);  
