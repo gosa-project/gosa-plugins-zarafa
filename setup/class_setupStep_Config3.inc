@@ -37,6 +37,7 @@ class Step_Config3 extends setup_step
               "ppd_path" => "/var/spool/ppd/",
               "ppd_path_active" => FALSE,
               "compile" =>  "/var/spool/gosa",
+              "snmpcommunity" =>  "goto",
               "debuglevel" => 0,
               "session_lifetime" => 7200,
               "max_ldap_query_time" => "5.0",
