@@ -13,6 +13,7 @@ class MultiSelectWindow{
 
 	var $string_Title			  = "";
 	var $string_ListHeader	= "";
+  var $string_ListDropDown= "";
 	var $string_Summary			= "";
 	var $string_Information	= "";
 
@@ -72,6 +73,33 @@ class MultiSelectWindow{
 		$arr['connAlpha']	= $conn;		// Connect with alphabet select 
 		$this->array_Regexes[] = $arr;
 	}
+
+
+  function SetDropDownHeaderMenu($str)
+  {
+    $this->string_ListDropDown = $str;
+  }
+
+  function GetDropDownHeaderMenu()
+  {
+    if(!empty($this->string_ListDropDown)){
+      $mid = new LayersMenu(6, 7, 2, 1);
+      $mid->setImgwww("./images/");
+      $mid->setIcondir("./images/");
+      $mid->setDirroot("/storage/hickert/gosa/include/php_layers_menu/");
+      $mid->setHorizontalMenuTpl('GOsa_MultiSelectHeader.ihtml');
+      $mid->setMenuStructureString($this->string_ListDropDown);
+      $mid->parseStructureForMenu('menu');
+      $mid->newHorizontalMenu('menu');
+      $s = $mid->getHeader();
+      $s.= $mid->getMenu('menu');
+      $s.= $mid->getFooter('menu');
+      return($s);
+    }else{
+      return("");
+    }
+  }
+
 
 	/* Contrucktion */
 	function MultiSelectWindow(&$config, $filterName, $module)
@@ -172,14 +200,13 @@ class MultiSelectWindow{
       $enable_back = FALSE;
       $enable_root = FALSE;
     }
-   
+  
+    $listhead ="";
+ 
     /* Check if we are in users home  department */ 
     if(!count($deps) ||$this->selectedBase == get_base_from_people($ui->dn)){
       $enable_home = FALSE;
     }
-
-    /* Create header with selected base */
-    $listhead = "<div style='background:white;padding:5px;'>";
 
     /* Draw root button */
     if($enable_root){
@@ -375,7 +402,8 @@ class MultiSelectWindow{
 		 */	
 		$smarty->assign("Display_alphabet",	$this->bool_DisplayAlpahabet);
 		$smarty->assign("alphabet", 		generate_alphabet());
-		$smarty->assign("Header"			, $this->string_ListHeader );
+		$smarty->assign("Header"			, $this->string_ListHeader);
+		$smarty->assign("HeaderDropDown", $this->GetDropDownHeaderMenu());
 		$smarty->assign("Summary"			, $this->string_Summary);
 		$smarty->assign("Title"				, $this->string_Title);
 		$smarty->assign("Information"		, $this->string_Information);

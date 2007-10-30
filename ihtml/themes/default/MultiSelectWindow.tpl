@@ -10,7 +10,18 @@
 				</p>
 			</div>
   			<div class="contentboxb">
-      			{$Header}
+				<div style='background:white;padding:5px;'>
+				<table>
+					<tr>
+						<td>
+			      			{$Header}
+						</td>
+						<td>
+      						{$HeaderDropDown}
+						</td>
+					</tr>
+				</table>
+				</div>
   			</div>
   			<div style='height:4px;'>
 			</div>

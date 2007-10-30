@@ -239,8 +239,20 @@ class divListSystem extends MultiSelectWindow
       $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
         title='"._("cut selected system")."' alt='"._("Cut systems")."' name='multiple_cut_systems'>&nbsp;";
     }
-    $listhead .="</div>";
+    
+    $s= ".|"._("Actions")."|\n";
+    $s.= "..|"._("Create")."|\n";
+    $s.= "...|"._("Terminal")."|\n";
+    $s.= "...|"._("Workstation")."|\n";
+    $s.= "...|"._("Server")."|\n";
+    $s.= "...|"._("Phone")."|\n";
+    $s.= "...|"._("Printer")."|\n";
+    $s.= "...|"._("Component")."|\n";
+    $s.= "..|"._("Remove all")."|\n";
+    $s.= "..|"._("Copy all")."|\n";
+    $s.= "..|"._("Cut all")."|\n";
 
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
@@ -249,7 +261,6 @@ class divListSystem extends MultiSelectWindow
     $this->ClearElementsList();
     $this->GenHeader();
   }
-
 
   function setEntries($terminals)
   {
