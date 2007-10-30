@@ -241,16 +241,17 @@ class divListSystem extends MultiSelectWindow
     }
     
     $s= ".|"._("Actions")."|\n";
-    $s.= "..|"._("Create")."|\n";
-    $s.= "...|"._("Terminal")."|\n";
-    $s.= "...|"._("Workstation")."|\n";
-    $s.= "...|"._("Server")."|\n";
-    $s.= "...|"._("Phone")."|\n";
-    $s.= "...|"._("Printer")."|\n";
-    $s.= "...|"._("Component")."|\n";
-    $s.= "..|"._("Remove all")."|\n";
-    $s.= "..|"._("Copy all")."|\n";
-    $s.= "..|"._("Cut all")."|\n";
+    $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."|\n";
+    $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>&nbsp;"._("Terminal")."|\n";
+    $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>&nbsp;"._("Workstation")."|\n";
+    $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>&nbsp;"._("Server")."|\n";
+    $s.= "...|<img src='images/select_phone.png' alt='' border='0' class='center'>&nbsp;"._("Phone")."|\n";
+    $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>&nbsp;"._("Printer")."|\n";
+    $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>&nbsp;"._("Component")."|\n";
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>&nbsp;"._("Remove all")."|\n";
+    $s.= "..|---|\n";
+    $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>&nbsp;"._("Copy all")."|\n";
+    $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>&nbsp;"._("Cut all")."|\n";
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);

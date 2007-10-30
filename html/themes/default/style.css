@@ -1423,16 +1423,16 @@ td.container_:hover,div.container_:hover {
 
 .khorbar    {
     color: black;
-    background-color: #eeeee6;
+    background-color: #FFFFFF;
     border: 1px outset #666663;
-	
+	padding:2px;
 }
 
 .khorbaritem    {
     float: left;
     white-space: nowrap;
     font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .khorbaritem a  {
@@ -1452,7 +1452,7 @@ td.container_:hover,div.container_:hover {
 
 .khorbaritem a:hover    {
     color: #000000;
-    background-color: #ffdd76;
+    background-color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -1463,7 +1463,6 @@ td.container_:hover,div.container_:hover {
 
 .kverbar    {
     color: black;
-    background-color: #eeeee6;
     border: 1px outset #666663
 }
 
@@ -1484,15 +1483,17 @@ td.container_:hover,div.container_:hover {
 .subframe   {
     position: relative;
     display: block;
-    background-color: #dcdad5;
-    border: 2px outset #cecac1;
+    background-color: #FFFFFF;
+    border: 1px outset #666663;
+	padding:2px;
 }
 
 .item   {
     text-align: left;
     white-space: nowrap;
     font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
+	padding-top:2px;
 }
 
 .item a {
@@ -1523,14 +1524,13 @@ td.container_:hover,div.container_:hover {
     position: relative;
     display: block;
     background-color: #f9f9f0;
-    border: 1px outset #666663
 }
 
 .kitem  {
     text-align: left;
     white-space: nowrap;
     font-family: bitstream vera sans, luxi sans, verdana, geneva, arial, helvetica, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 
@@ -1576,6 +1576,4 @@ td.container_:hover,div.container_:hover {
     font-size: 1px;
     line-height: 0;
 }
-
-
 
