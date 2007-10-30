@@ -867,6 +867,7 @@ class mailAccount extends plugin
                 $this->gosaSpamMailbox,
                 $this->gosaSpamSortLevel,
                 $this->gosaVacationMessage);
+            $this->is_modified = TRUE;
           }else{
             $this->sieve_management->save();
           }
