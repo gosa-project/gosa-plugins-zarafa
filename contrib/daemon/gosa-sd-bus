@@ -1,0 +1,459 @@
+#!/usr/bin/perl
+#===============================================================================
+#
+#         FILE:  gosa-server
+#
+#        USAGE:  ./gosa-server
+#
+#  DESCRIPTION:
+#
+#      OPTIONS:  ---
+# REQUIREMENTS:  ---
+#         BUGS:  ---
+#        NOTES: 
+#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
+#      COMPANY:
+#      VERSION:  1.0
+#      CREATED:  12.09.2007 08:54:41 CEST
+#     REVISION:  ---
+#===============================================================================
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Config::IniFiles;
+use POSIX;
+use Time::HiRes qw( gettimeofday );
+
+use IO::Socket::INET;
+use Crypt::Rijndael;
+use XML::Simple;
+use Data::Dumper;
+use Sys::Syslog qw( :DEFAULT setlogsock);
+
+my ($cfg_file, %cfg_defaults, $foreground);
+my ($bus_passwd, $bus_ip, $bus_port, $bus);
+my ($pid_file, $procid, $pid, $log_file);
+my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
+
+$foreground = 0 ;
+%cfg_defaults =
+("general" =>
+    {"log_file" => [\$log_file, "/var/run/gosa-server-bus.log"],
+    "pid_file" => [\$pid_file, "/var/run/gosa-server-bus.pid"],
+
+    },
+"bus" =>
+    {"bus_passwd" => [\$bus_passwd, "tester78901234567890123456789012"],
+    "bus_ip" => [\$bus_ip, "10.89.1.155"],
+    "bus_port" => [\$bus_port, "10001"],
+    "child_max" => [\$child_max, 10],
+    "child_min" => [\$child_min, 3],
+    "child_timeout" => [\$child_timeout, 180],
+    }
+    );
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_configfile
+#   PARAMETERS:  cfg_file - string - 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub read_configfile {
+    my $cfg;
+    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+        if( -r $cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+        }
+    }
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  logging
+#   PARAMETERS:  level - string - default 'info' 
+#                msg - string - 
+#                facility - string - default 'LOG_DAEMON' 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub daemon_log {
+    my( $msg, $level ) = @_;
+    if(not defined $msg) { return }
+    if(not defined $level) { $level = 1 }
+    if(defined $log_file){
+        open(LOG_HANDLE, ">>$log_file");
+        if(not defined open( LOG_HANDLE, ">>$log_file" )) { 
+            print STDERR "cannot open $log_file: $!";
+            return }
+        chomp($msg);
+        print LOG_HANDLE $msg."\n";
+        if(defined $foreground) { print $msg."\n" }
+    }
+    close( LOG_HANDLE );
+#    my ($msg, $level, $facility) = @_;
+#    if(not defined $msg) {return}
+#    if(not defined $level) {$level = "info"}
+#    if(not defined $facility) {$facility = "LOG_DAEMON"}
+#    openlog($0, "pid,cons,", $facility);
+#    syslog($level, $msg);
+#    closelog;
+#    return;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME: check_cmdline_param
+#   PARAMETERS: 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub check_cmdline_param () {
+    my $err_config;
+    my $err_counter = 0;
+    if( not defined( $cfg_file)) {
+        $err_config = "please specify a config file";
+        $err_counter += 1;
+    }
+    if( $err_counter > 0 ) {
+        &usage( "", 1 );
+        if( defined( $err_config)) { print STDERR "$err_config\n"}
+        print STDERR "\n";
+        exit( -1 );
+    }
+}
+
+#===  FUNCTION  ================================================================
+#         NAME: check_pid
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub check_pid {
+    $pid = -1;
+    # Check, if we are already running
+    if( open(LOCK_FILE, "<$pid_file") ) {
+        $pid = <LOCK_FILE>;
+        if( defined $pid ) {
+            chomp( $pid );
+            if( -f "/proc/$pid/stat" ) {
+                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
+                if( "faimond" eq $stat ) {
+                    close( LOCK_FILE );
+                    exit -1;
+                }
+            }
+        }
+        close( LOCK_FILE );
+        unlink( $pid_file );
+    }
+    # Try to open PID file
+    if (!sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
+        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
+
+        if (open(LOCK_FILE, '<', $pid_file)
+                && ($pid = <LOCK_FILE>))
+        {
+            chomp($pid);
+            $msg .= "(PID $pid)\n";
+        } else {
+            $msg .= "(unable to read PID)\n";
+        }
+        if( ! ($foreground) ) {
+            openlog( "gosa-server-bus", "cons,pid", "daemon" );
+            syslog( "warning", $msg );
+            closelog();
+        }
+        else {
+            print( STDERR " $msg " );
+        }
+        exit( -1 );
+    }
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  usage
+#   PARAMETERS: 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub usage {
+        my( $text, $help ) = @_;
+        $text = undef if( "h" eq $text );
+        (defined $text) && print STDERR "\n$text\n";
+        if( (defined $help && $help) || (!defined $help && !defined $text) ) {
+                print STDERR << "EOF" ;
+usage: $0 [-hvf] [-c config]
+
+    -h        : this (help) message
+    -c <file> : config file
+    -v        : be verbose (multiple to increase verbosity)
+EOF
+        }
+        print "\n" ;
+}
+
+sub sig_int_handler {
+    my ($signal) = @_;
+    if($bus){
+        close($bus);
+        print "$bus closed\n";
+    }
+    print "$signal\n";
+    exit(1);
+}
+$SIG{INT} = \&sig_int_handler;
+
+#===  FUNCTION  ================================================================
+#         NAME:  activating_child
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub activating_child {
+    my ($msg) = @_;
+    my $child = &get_processing_child();
+    my $pipe_wr = $$child{'pipe_wr'};
+    print "activating: childpid:$$child{'pid'}\n";
+    #print "activating: pipe_wr:$pipe_wr\n";
+    print $pipe_wr $msg."\n";
+    #print "activating: done\n";
+    return;
+
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_processing_child
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub get_processing_child {
+    my $child;
+    # schaue durch alle %busy_child{pipe_wr} ob irgendwo 'done' drinsteht, wenn ja, dann setze das kind von busy auf free um
+    while(my ($key, $val) = each(%busy_child)) {
+        # test ob prozess noch existiert
+        my $exitus_pid = waitpid($key, WNOHANG);
+        if($exitus_pid != 0) {
+            delete $busy_child{$key};
+            print "prozess:$key wurde aus busy_child entfernt\n";
+            next;
+        }
+
+        # test ob prozess noch arbeitet
+        my $fh = $$val{'pipe_rd'};
+        $fh->blocking(0); 
+        my $child_answer;
+        if(not $child_answer = <$fh>) { next }
+        chomp($child_answer);
+        if($child_answer eq "done") {
+            delete $busy_child{$key};
+            $free_child{$key} = $val;
+        }
+    }
+
+    while(my ($key, $val) = each(%free_child)) {
+        my $exitus_pid = waitpid($key, WNOHANG);
+        if($exitus_pid != 0) {
+            delete $free_child{$key};
+            print "prozess:$key wurde aus free_child entfernt\n";
+        }
+        print "free child:$key\n";
+    }
+
+
+    # teste @free_child und @busy_child
+    my $free_len = scalar(keys(%free_child));
+    my $busy_len = scalar(keys(%busy_child));
+    print "free children $free_len, busy children $busy_len\n";
+    
+    # gibt es bereits ein freies kind, dann lass es arbeiten
+    if($free_len > 0){
+        my @keys = keys(%free_child);
+        $child = $free_child{$keys[0]};
+        if(defined $child) {
+            $busy_child{$$child{'pid'}} = $child ; 
+            delete $free_child{$$child{'pid'}};          
+        }
+        return $child;
+    }
+    
+    # no free child, try to fork another one 
+    if($free_len + $busy_len < $child_max) {
+                
+        print "not enough children, create a new one\n";
+
+        # New pipes for communication
+        my( $PARENT_wr, $PARENT_rd );
+        my( $CHILD_wr, $CHILD_rd );
+        pipe( $CHILD_rd,  $PARENT_wr );
+        pipe( $PARENT_rd, $CHILD_wr  );
+        $PARENT_wr->autoflush(1);
+        $CHILD_wr->autoflush(1);
+
+        ############
+        # fork child
+        ############
+        my $child_pid = fork();
+        
+        #CHILD
+        if($child_pid == 0) {
+            # Close unused pipes
+            close( $CHILD_rd );
+            close( $CHILD_wr );
+            while( 1 ) {
+                my $rbits = "";
+                vec( $rbits, fileno $PARENT_rd , 1 ) = 1;
+                my $nf = select($rbits, undef, undef, $child_timeout);
+                if($nf < 0 ) {
+                    # wenn $nf < 1, error handling
+                    die "select(): $!\n";
+                } elsif (! $nf) {
+                    # seit timeout ist nichts mehr passiert,
+                    print "timeout!!\n";
+
+                    # ist dieses kind nicht eines der letzenen $child_min, dann springe aus while schleife raus
+                    $free_len = scalar(keys(%free_child));
+                    $busy_len = scalar(keys(%busy_child));
+                    if($free_len + $busy_len >= $child_min) {
+                        last;
+                    } else {
+                        redo;
+                    }
+                } 
+
+                # ansonsten
+                if ( vec $rbits, fileno $PARENT_rd, 1 ) {
+                    my $msg = <$PARENT_rd>;
+                    &process_incoming_msg($msg);
+                    
+                    # schreibe an den parent_wr zurück 'done' 
+                    print $PARENT_wr "done"."\n";
+                    
+                    redo;
+                }
+            }
+            # child die die while-schleife verlassen haben, "stirbt!"
+            exit(0);
+
+        #PARENT
+        } else {
+            # Close unused pipes
+            close( $PARENT_rd );
+            close( $PARENT_wr );
+            
+            # add child to child alive hash
+            my %child_hash = (
+                    'pid' => $child_pid,
+                    'pipe_wr' => $CHILD_wr,
+                    'pipe_rd' => $CHILD_rd,
+                    );
+
+            $child = \%child_hash;
+            $busy_child{$$child{'pid'}} = $child;
+            return $child;
+        }
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  process_incoming_msg
+#   PARAMETERS:  
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub process_incoming_msg {
+    my ($msg) = @_;
+    print "msg to process:$msg\n";
+    sleep(10);
+    return;
+}
+
+#==== MAIN = main ==============================================================
+
+#  parse commandline options
+Getopt::Long::Configure( "bundling" );
+GetOptions("h|help" => \&usage,
+           "c|config=s" => \$cfg_file,
+           "f|foreground" => \$foreground,
+           );
+
+#  read and set config parameters
+&read_configfile;
+&check_cmdline_param ;
+&check_pid;
+
+$SIG{CHLD} = 'IGNORE';
+
+# restart daemon log file
+if(-e $log_file ) { unlink $log_file }
+daemon_log("started!");
+
+# Just fork, if we"re not in foreground mode
+if( ! $foreground ) { $pid = fork(); }
+else { $pid = $$; }
+
+# Do something useful - put our PID into the pid_file
+if( 0 != $pid ) {
+    open( LOCK_FILE, ">$pid_file" );
+    print LOCK_FILE "$pid\n";
+    close( LOCK_FILE );
+    if( !$foreground ) { exit( 0 ) };
+}
+
+# open the bus socket
+$bus = IO::Socket::INET->new(LocalPort => $bus_port,
+                            Type => SOCK_STREAM,
+                            Reuse => 1,
+                            Listen => 20,
+        ) or die "kann kein TCP-Server an Port $bus_port sein: $@\n";
+
+# waiting for incoming msg
+my $client;
+while($client = $bus->accept()){ 
+    my $other_end = getpeername($client)
+        or die "Gegenstelle konnte nicht identifiziert werden: $!\n";
+    my ($port, $iaddr) = unpack_sockaddr_in($other_end);
+    my $actual_ip = inet_ntoa($iaddr);
+    my $claimed_hostname = gethostbyaddr($iaddr, AF_INET);
+    daemon_log("accept client from $actual_ip\n");
+    
+    my $in_msg;
+    chomp( $in_msg = <$client> );
+    
+    &activating_child($in_msg);
+    close($client);
+}
+
+
+
+#Struktur Parent:
+# syslog(Parent gestartet)
+
+# forken von min_child kindern
+#   liste mit child refs
+#   
+# aufbau des sockets
+# warten auf eingang
+# kinder die älter als child_timeout sind werden beendet, aber nicht mehr als child_min
+# wenn eingang da, abfrage, ist ein kind frei?
+#   kind frei: kind nimmt eingang entgegen und arbeitet ihn ab
+#   kind nicht frei: existieren bereits max_child kinder?
+#       max ereicht: tue nichts, warte bis ein kind fertig ist
+#       max nicht erreicht: forke neues kind
+
+
+
+
+
+
