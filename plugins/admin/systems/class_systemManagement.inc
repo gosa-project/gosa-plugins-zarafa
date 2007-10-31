@@ -85,17 +85,6 @@ class systems extends plugin
       }elseif(preg_match("/gen_cd_.*/i",$key)){
         $s_action="gen_cd";
         $s_entry  = preg_replace("/gen_cd_/i","",$key);
-      }elseif(preg_match("/^remove_multiple_systems/i",$key)){
-        $s_action="del_multiple";
-      }elseif(preg_match("/newsystem_.*/i",$key)){
-        $s_action="newsystem";
-        $s_entry  = preg_replace("/newsystem_/i","",$key);
-      }elseif(preg_match("/^multiple_copy_systems/",$key)){
-        $s_action = "copy_multiple";
-      }elseif(preg_match("/^multiple_cut_systems/",$key)){
-        $s_action = "cut_multiple";
-      }elseif(preg_match("/^editPaste.*/i",$key)){
-        $s_action="editPaste";
       }elseif(preg_match("/^copy_.*/",$key)){
         $s_action="copy";
         $s_entry  = preg_replace("/^copy_/i","",$key);
@@ -129,6 +118,23 @@ class systems extends plugin
       $s_action = "newsystem";
       $s_entry  = preg_replace("/^newsystem_/","",$_POST['menu_action']);
     }
+
+    /* handle C&P from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
+      $s_action = "cut_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
+      $s_action = "editPaste";
+    }
+
+    /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^remvove_multiple/",$_POST['menu_action'])){
+      $s_action = "del_multiple";
+    }
+    
 
     /* Check for exeeded sizelimit */
     if (($message= check_sizelimit()) != ""){
@@ -1209,15 +1215,17 @@ class systems extends plugin
         $oc = $this->terminals[$id]['objectClass']; 
         $type = $this->get_system_type($this->terminals[$id]);
 
-        $tab_o  = $tabs[$type]['CLASS'];
-        $tab_c  = $tabs[$type]['TABCLASS'];
-        $acl    = $tabs[$type]['ACL'];
-          
-        if($s_action == "copy_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
-        }
-        if($s_action == "cut_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut",$tab_c,$tab_o,$acl);
+        if(isset($tabs[$type])){
+          $tab_o  = $tabs[$type]['CLASS'];
+          $tab_c  = $tabs[$type]['TABCLASS'];
+          $acl    = $tabs[$type]['ACL'];
+
+          if($s_action == "copy_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
+          }
+          if($s_action == "cut_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"cut",$tab_c,$tab_o,$acl);
+          }
         }
       }
     }

@@ -214,7 +214,6 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Copy all")."|"."multiple_copy_systems|\n";
       $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Cut all")."|"."multiple_cut_systems|\n";
-      $s.= "..|"._("Cut all")."|"."multiple_cut_systems||editcut.png|\n";
     }
 
     /* Get copy & paste icon */
@@ -222,7 +221,7 @@ class divListSystem extends MultiSelectWindow
     if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
       if($this->parent->CopyPasteHandler->entries_queued()){
         $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|\n";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
       }else{
         $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."\n";
