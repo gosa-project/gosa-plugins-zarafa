@@ -620,4 +620,14 @@ function move_div_by_cursor(e)
 		}
 }
 
+function send_menu_action(str)
+{
+		if(str != "" && str != "#"){
+				if(document.getElementById('menu_action')){
+						document.getElementById('menu_action').value=str;
+						document.mainform.submit();
+				}
+	}
+}
+
 // vim:ts=2:syntax

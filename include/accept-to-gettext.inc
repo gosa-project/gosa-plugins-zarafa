@@ -198,11 +198,11 @@ function al2gt($gettextlangs, $mime)
   $gtparts=@preg_split("/\./",$curgtlang);
   $tmp=strtolower($gtparts[0]);
   $lang=preg_replace("/\_/", "-", $tmp);
-  $charset=$gtparts[1];
-
   header("Content-Language: $lang");
-  header("Content-Type: $mime; charset=$charset");
-
+  if(isset($gtparts[1])){
+    $charset=$gtparts[1];
+    header("Content-Type: $mime; charset=$charset");
+  }
   return $curgtlang;
 }
 

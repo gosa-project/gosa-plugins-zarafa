@@ -39,13 +39,13 @@ you can safely remove it.
 <div class="subframe">
 <!-- BEGIN sub_menu_cell -->
 <div id="{refid}" class="item">
-<a href="{href}"{onmouseover}{title}{target}><img
+<div style='cursor: pointer;' onClick="send_menu_action('{href}');"{onmouseover}{title}{target}><img
 align="top" src="{imgwww}{transparent}" width="1" height="16" border="0"
 alt="" /><!-- BEGIN cell_icon --><img
 align="top" src="{iconsrc}" width="{iconwidth}" height="{iconheight}" border="0"
 alt="{iconalt}" />&nbsp;<!-- END cell_icon -->{text}<!-- BEGIN cell_arrow -->&nbsp;<img
 class="fwdarr" src="{imgwww}{arrowsrc}" width="{arrowwidth}" height="{arrowheight}"
-border="0" alt=">>" /><!-- END cell_arrow -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+border="0" alt=">>" /><!-- END cell_arrow -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 </div>
 <!-- END sub_menu_cell -->
 <!-- BEGIN separator -->

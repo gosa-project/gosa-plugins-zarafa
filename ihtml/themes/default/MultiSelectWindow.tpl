@@ -128,5 +128,6 @@
 </div>
 {/if}
 
+<input type="hidden" name="menu_action" id='menu_action'>
 <input type="hidden" name="ignore">
 <input type="hidden" name="MultiSelectWindow{$filterName}" value="1">

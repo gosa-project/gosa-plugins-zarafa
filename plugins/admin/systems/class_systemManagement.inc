@@ -125,9 +125,9 @@ class systems extends plugin
       $s_entry  = $_GET['id'];
     }
     /* Create options */
-    if(isset($_GET['act']) && preg_match("/^newsystem_/",$_GET['act'])){
+    if(isset($_POST['menu_action']) && preg_match("/^newsystem_/",$_POST['menu_action'])){
       $s_action = "newsystem";
-      $s_entry  = preg_replace("/^newsystem_/","",$_GET['act']);
+      $s_entry  = preg_replace("/^newsystem_/","",$_POST['menu_action']);
     }
 
     /* Check for exeeded sizelimit */

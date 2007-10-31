@@ -177,44 +177,44 @@ class divListSystem extends MultiSelectWindow
       title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;";
 
     /* Handle create icons */ 
-    $l = "?plug=".$_GET['plug']."&act=";
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
       $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Terminal")."|".$l."newsystem_terminal|\n";
+        "&nbsp;"._("Terminal")."|"."newsystem_terminal|\n";
     }
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
       $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Workstation")."|".$l."newsystem_workstation|\n";
+        "&nbsp;"._("Workstation")."|"."newsystem_workstation|\n";
     }
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
       $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Server")."|".$l."newsystem_server|\n";
+        "&nbsp;"._("Server")."|"."newsystem_server|\n";
     }
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
       $s.= "...|<img src='images/select_phone.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Phone")."|".$l."newsystem_phone|\n";
+        "&nbsp;"._("Phone")."|"."newsystem_phone|\n";
     }
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
       $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Printer")."|".$l."newsystem_printer|\n";
+        "&nbsp;"._("Printer")."|"."newsystem_printer|\n";
     }
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
       $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Component")."|".$l."newsystem_component|\n";
+        "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove all")."|".$l."remvove_multiple|\n";
+      "&nbsp;"._("Remove all")."|"."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Copy all")."|".$l."multiple_copy_systems|\n";
+        "&nbsp;"._("Copy all")."|"."multiple_copy_systems|\n";
       $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut all")."|".$l."multiple_cut_systems|\n";
+        "&nbsp;"._("Cut all")."|"."multiple_cut_systems|\n";
+      $s.= "..|"._("Cut all")."|"."multiple_cut_systems||editcut.png|\n";
     }
 
     /* Get copy & paste icon */
@@ -228,6 +228,7 @@ class divListSystem extends MultiSelectWindow
         $s.="..|".$img."&nbsp;"._("Paste")."\n";
       }
     }
+
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
