@@ -162,13 +162,6 @@ class divListSystem extends MultiSelectWindow
     /* Must we add an additional seperator */
     $add_sep = false;
    
-    /* Get copy & paste icon */
-    $Copy_Paste ="";
-    if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-      $addsep = true;
-    }
-
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
@@ -178,80 +171,63 @@ class divListSystem extends MultiSelectWindow
       $add_sep = true;
     }
 
-    /* Assign copy & paste icons */
-    $listhead.=      $Copy_Paste;
-
-    /* Handle create icons */ 
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_terminal.png'
-        name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>&nbsp;";
-    }
-
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_workstation.png'
-        name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>&nbsp;";
-    }
-
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"server/servgeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_server.png'     
-        name='newsystem_server' alt='"._("New Server")."' title='"._("New Server")."'>&nbsp;";
-    }
-
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_printer.png'    
-        name='newsystem_printer'     alt='"._("New Printer")."' title='"._("New Printer")."'>&nbsp;";
-    }
-
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_phone.png'      
-        name='newsystem_phone' alt='"._("New Phone")."' title='"._("New Phone")."'>&nbsp;";
-    }
-
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
-      $add_sep = true;
-      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_component.png'  
-        name='newsystem_component' alt='"._("New Component")."' title='"._("New Component")."'>&nbsp;";
-    }
-
-    /* Should we add a seperator ? */
-    if($add_sep){
-      $listhead .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
-
     /* Add base selection */
     $listhead .= _("Base")."&nbsp; <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle'
       title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;";
 
-    /* Multiple options */
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected systems")."' alt='"._("Remove systems")."' name='remove_multiple_systems'>&nbsp;";
+    /* Handle create icons */ 
+    $l = "?plug=".$_GET['plug']."&act=";
+    $s = ".|"._("Actions")."|\n";
+    $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
+      $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Terminal")."|".$l."newsystem_terminal|\n";
+    }
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
+      $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Workstation")."|".$l."newsystem_workstation|\n";
+    }
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
+      $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Server")."|".$l."newsystem_server|\n";
+    }
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
+      $s.= "...|<img src='images/select_phone.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Phone")."|".$l."newsystem_phone|\n";
+    }
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
+      $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Printer")."|".$l."newsystem_printer|\n";
+    }
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
+      $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Component")."|".$l."newsystem_component|\n";
+    }
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Remove all")."|".$l."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-        title='"._("Copy selected system")."' alt='"._("Copy systems")."' name='multiple_copy_systems'>&nbsp;";
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-        title='"._("cut selected system")."' alt='"._("Cut systems")."' name='multiple_cut_systems'>&nbsp;";
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy all")."|".$l."multiple_copy_systems|\n";
+      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Cut all")."|".$l."multiple_cut_systems|\n";
     }
-    
-    $s= ".|"._("Actions")."|\n";
-    $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."|\n";
-    $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>&nbsp;"._("Terminal")."|\n";
-    $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>&nbsp;"._("Workstation")."|\n";
-    $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>&nbsp;"._("Server")."|\n";
-    $s.= "...|<img src='images/select_phone.png' alt='' border='0' class='center'>&nbsp;"._("Phone")."|\n";
-    $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>&nbsp;"._("Printer")."|\n";
-    $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>&nbsp;"._("Component")."|\n";
-    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>&nbsp;"._("Remove all")."|\n";
-    $s.= "..|---|\n";
-    $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>&nbsp;"._("Copy all")."|\n";
-    $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>&nbsp;"._("Cut all")."|\n";
+
+    /* Get copy & paste icon */
+    $Copy_Paste ="";
+    if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
+    }
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);

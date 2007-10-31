@@ -104,8 +104,7 @@ class systems extends plugin
         $s_entry  = preg_replace("/^cut_/i","",$key);
       }
     }
-    
-      
+   
     /* Incoming handling  
      * If someone made a systemtype and ogroup selection 
      * Display the new requested entry type ... servtab  in case of server and so on.
@@ -124,6 +123,11 @@ class systems extends plugin
     if((isset($_GET['act']))&&($_GET['act']=="edit_entry")){
       $s_action ="edit";
       $s_entry  = $_GET['id'];
+    }
+    /* Create options */
+    if(isset($_GET['act']) && preg_match("/^newsystem_/",$_GET['act'])){
+      $s_action = "newsystem";
+      $s_entry  = preg_replace("/^newsystem_/","",$_GET['act']);
     }
 
     /* Check for exeeded sizelimit */
@@ -263,13 +267,14 @@ class systems extends plugin
         }
         $this->dn= "new";
       }
+
       $tabs = array(
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
           "printer"     => array("CLASS"=>"PRINTTABS",    "TABNAME"=>"printgeneric",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
           "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phoneGeneric",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentgeneric","TABCLASS" =>"componenttabs", "ACL"=> "component"));
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentGeneric","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
       if(isset($tabs[$sw])){
         $class    = $tabs[$sw]["CLASS"];
@@ -1173,7 +1178,7 @@ class systems extends plugin
           "TABCLASS"  =>"printtabs",    "ACL"     =>"printer"),
         "phone"       => array( "CLASS"     =>"PHONETABS",    "TABNAME" =>"phoneGeneric",    
           "TABCLASS"  =>"phonetabs",    "ACL"     =>"phone"),
-        "component"   => array( "CLASS"     =>"COMPONENTTABS","TABNAME" =>"componentgeneric",
+        "component"   => array( "CLASS"     =>"COMPONENTTABS","TABNAME" =>"componentGeneric",
           "TABCLASS"  =>"componenttabs","ACL"     =>"component"));
 
     /* Add a single entry to queue */
