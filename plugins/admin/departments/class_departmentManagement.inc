@@ -98,6 +98,16 @@ class departmentManagement extends plugin
       }
     }
 
+    /* Create options */
+    if(isset($_POST['menu_action']) && $_POST['menu_action'] == "dep_new"){
+      $s_action = "new";
+    }
+
+    /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^remvove_multiple/",$_POST['menu_action'])){
+      $s_action = "del_multiple";
+    }
+
 
     /***************
       Create a new department

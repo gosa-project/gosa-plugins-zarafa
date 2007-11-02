@@ -121,25 +121,28 @@ class divListDepartment extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
-    if(preg_match("/c/",$acl)){
-      $listhead .=  " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-        " <input class='center' type='image' src='images/list_new_department.png' ".
-        "   align='middle' alt='"._("Create new department")."' name='dep_new'>&nbsp; ";
-    }
-  
-
     $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' ".
       " alt='' height='16' width='1'>&nbsp;".
       " "._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' ".
       "   title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
 
-    /* Multiple options */
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected departments")."' alt='"._("Remove departments")."' name='remove_multiple_departments'>&nbsp;";
+    /* Create Layers menu */
+    $s  = ".|"._("Actions")."|\n";
+    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
 
-    $listhead .="</div>";;
+    /* Append create options */
+    if(preg_match("/c/",$acl)) {
+      $s.= "...|<input class='center' type='image' src='images/list_new_department' alt=''>".
+        "&nbsp;"._("Department")."|dep_new|\n";
+    }
+    $s.= "..|---|\n";
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
 
+
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
