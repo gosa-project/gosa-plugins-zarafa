@@ -16,9 +16,14 @@
 						<td>
 			      			{$Header}
 						</td>
-						<td>
-      						{$HeaderDropDown}
-						</td>
+						{if $HeaderDropDown != ""}
+							<td>
+								<img src='images/rocket.png' alt=''>
+							</td>
+							<td>
+								{$HeaderDropDown}
+							</td>
+						{/if}
 					</tr>
 				</table>
 				</div>
