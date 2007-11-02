@@ -156,45 +156,53 @@ class divListOGroup extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
-    /* Add snapshot restore icons */ 
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-      $add_sep = true;
-    }
-
-    /* Create new ogroup icon */
-    if(preg_match("/c/",$acls)) {
-      $listhead .=" <input class='center' type='image' align='middle' src='images/list_new_ogroup.png' 
-        title='"._("Create new object group")."' alt='"._("new")."' name='group_new'>";
-      $add_sep = true;
-    }
-
-    /* Add copy & paste icon */
-    $listhead .=  $Copy_Paste;
-    
-    /* Should we add a seperator here ? */
-    if($add_sep){
-      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
   
     /* Add department selector */
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
 
+
+    /* Create Layers menu */
+    $s  = ".|"._("Actions")."|\n";
+    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
+
+    /* Append create options */
+    if(preg_match("/c/",$acls)) {
+      $s.= "...|<input class='center' type='image' src='images/list_new_ogroup.png' alt=''>".
+        "&nbsp;"._("Object group")."|group_new|\n";
+    }
+
     /* Multiple options */
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected object groups")."' alt='"._("Remove object groups")."' name='remove_multiple_ogroups'>&nbsp;";
+    $s.= "..|---|\n";
+    $s.= "..|<img src='images/edit.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Edit")."|"."multiple_edit|\n";
 
     /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler)){
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-        title='"._("Copy selected object group")."' alt='"._("Copy object groups")."' name='multiple_copy_ogroups'>&nbsp;";
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-        title='"._("cut selected object group")."' alt='"._("Cut object groups")."' name='multiple_cut_ogroups'>&nbsp;";
-    }
-    $listhead .="</div>";
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
 
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
+    }
+
+    /* Add snapshot icons */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $s .= "..|---|\n";
+      $s .= $this->get_snapshot_header(TRUE);
+    }
+
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
