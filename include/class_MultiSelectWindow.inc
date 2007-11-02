@@ -88,6 +88,7 @@ class MultiSelectWindow{
       $mid->setIcondir("./images/");
       $mid->setDirroot("/storage/hickert/gosa/include/php_layers_menu/");
       $mid->setHorizontalMenuTpl('GOsa_MultiSelectHeader.ihtml');
+      $mid->setSubMenuTpl('GOsa_MultiSelectHeaderSubEntry.ihtml');
       $mid->setMenuStructureString($this->string_ListDropDown);
       $mid->parseStructureForMenu('menu');
       $mid->newHorizontalMenu('menu');
