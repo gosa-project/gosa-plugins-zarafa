@@ -199,20 +199,21 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove all")."|"."remvove_multiple|\n";
+      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Copy all")."|"."multiple_copy_systems|\n";
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
       $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut all")."|"."multiple_cut_systems|\n";
+        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
     }
 
     /* Get copy & paste icon */
     $Copy_Paste ="";
     if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
+      $s .= "..|---|\n";
       if($this->parent->CopyPasteHandler->entries_queued()){
         $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
@@ -224,6 +225,7 @@ class divListSystem extends MultiSelectWindow
 
     /* Add snapshot icons */
     if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
+      $s .= "..|---|\n";
       $s .= $this->get_snapshot_header(TRUE);
     }
 
