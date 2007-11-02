@@ -136,58 +136,55 @@ class divListApplication extends MultiSelectWindow
     $acl      = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
     $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"application");
 
-    /* If this is true we have to add a seperator after 
-      adding the special icons, just have a look at the lines below */
-    $add_sep = false;
-
-    /* Get copy & paste icon */
-    $Copy_Paste ="";
-    if((preg_match("/(c.*w|w.*c)/",$acl_all)) && ($this->parent->CopyPasteHandler)){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon(); 
-      $add_sep = true;
-    }
-
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
-
-    /* Add snapshot header icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-      $add_sep = true;
-    }
-
-    /* Add create icon */
-    if(preg_match("/c/",$acl)){
-      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new")."'
-       title='"._("Create new application")."' name='appl_new'>&nbsp;";
-      $add_sep = true;
-    }
-
-    /* Add copy & paste icon */
-    $listhead.=  $Copy_Paste;
-
-    /* Add a seperator if required and the list will look perfectly */
-    if($add_sep){
-      $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
 
     /* And the rest, a base selection box */
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
         title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
 
-        /* Multiple options */
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected applications")."' alt='"._("Remove applications")."' name='remove_multiple_applications'>&nbsp;";
+    /* Create Layers menu */
+    $s  = ".|"._("Actions")."|\n";
+    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
+
+    /* Append create options */
+    if(preg_match("/c/",$acl)) {
+      $s.= "...|<input class='center' type='image' src='images/list_new_app' alt=''>".
+        "&nbsp;"._("Application")."|appl_new|\n";
+    }
+
+    /* Multiple options */
+    $s.= "..|---|\n";
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler)){
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-        title='"._("Copy selected group")."' alt='"._("Copy groups")."' name='multiple_copy_groups'>&nbsp;";
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-        title='"._("cut selected group")."' alt='"._("Cut groups")."' name='multiple_cut_groups'>&nbsp;";
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
     }
-    $listhead .="</div>";
+
+    /* Add snapshot icons */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $s .= "..|---|\n";
+      $s .= $this->get_snapshot_header(TRUE);
+    }
+
+    $this->SetDropDownHeaderMenu($s);
+    $this->SetListHeader($listhead);
 
     $this->SetListHeader($listhead);
   }
