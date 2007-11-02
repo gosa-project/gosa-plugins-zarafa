@@ -607,7 +607,7 @@ class MultiSelectWindow{
         }
       }else{
         if($layer_menu){
-          $str = "..|<img class='center' src='images/restore_grey.png' alt=''>&nbsp;"._("Restore")."|RestoreDeletedSnapShot|\n";
+          $str = "..|<img class='center' src='images/restore_grey.png' alt=''>&nbsp;"._("Restore")."||\n";
         }else{
           $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
         }

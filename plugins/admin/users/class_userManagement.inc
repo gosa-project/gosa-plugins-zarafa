@@ -118,6 +118,35 @@ class userManagement extends plugin
       $s_tab = "user";
     }
 
+
+    /* handle C&P from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
+      $s_action = "cut_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
+      $s_action = "editPaste";
+    }
+
+    /* Create options */
+    if(isset($_POST['menu_action']) && $_POST['menu_action'] == "user_new"){
+      $s_action = "new";
+    }
+    if(isset($_POST['menu_action']) && $_POST['menu_action'] == "user_tplnew"){
+      $s_action = "new_tpl";
+    }
+    if(isset($_POST['menu_action']) && $_POST['menu_action'] == "multiple_edit"){
+      $s_action = "multiple_edit";
+    }
+
+    /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^remvove_multiple/",$_POST['menu_action'])){
+      $s_action = "del_multiple";
+    }
+
+
     /********************
       Copy & Paste 
      ********************/

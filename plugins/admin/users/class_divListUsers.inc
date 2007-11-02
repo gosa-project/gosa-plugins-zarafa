@@ -136,50 +136,61 @@ class divListUsers extends MultiSelectWindow
     /* Get copy & paste icon */
     $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
     $acl      = $ui->get_permissions($this->selectedBase,"users/user");
-    if(preg_match("/(c.*w|w.*c)/",$acl_all) && is_object($this->parent->CopyPasteHandler)){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-    }else{
-      $Copy_Paste ="";
-    }
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
-    
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-    }
-
-    if(preg_match("/c/",$acl)) {
-      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
-        title='"._("Create new user")."' alt='"._("New user")."' name='user_new'>&nbsp;";
-      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new.png' 
-        title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;";
-    }
-
-    $listhead .= $Copy_Paste;
-    
     $listhead .=
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
 
+
+    /* Create Layers menu */
+    $s  = ".|"._("Actions")."|\n";
+    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
+
+    /* Append create options */
+    if(preg_match("/c/",$acl)) {
+      $s.= "...|<input class='center' type='image' src='images/list_new_user.png' alt=''>".
+        "&nbsp;"._("User")."|user_new|\n";
+      $s.= "...|<input class='center' type='image' src='images/list_new.png' alt=''>".
+        "&nbsp;"._("Template")."|user_tplnew|\n";
+    }
+
     /* Multiple options */ 
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_users'>&nbsp;";
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/list_password.png'
-        title='"._("Change password")."' alt='"._("Change password")."' name='multiple_password_change'>&nbsp;";
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edit.png'
-        title='"._("Edit")."' alt='"._("Edit")."' name='multiple_edit'>&nbsp;";
+    $s.= "..|---|\n";
+    $s.= "..|<img src='images/edit.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Edit")."|"."multiple_edit|\n";
+    $s.= "..|<img src='images/list_password.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Change password")."|"."multiple_password_change|\n";
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-        title='"._("Copy selected user")."' alt='"._("Copy users")."' name='multiple_copy_users'>&nbsp;";
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-        title='"._("cut selected user")."' alt='"._("Cut users")."' name='multiple_cut_users'>&nbsp;";
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+      
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
     }
 
-    $listhead .="</div>";;
+    /* Add snapshot icons */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $s .= "..|---|\n";
+      $s .= $this->get_snapshot_header(TRUE);
+    }
+
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
