@@ -134,6 +134,30 @@ class faiManagement extends plugin
         "FAIprofile"         => "faiProfile",
         "FAItemplate"        => "faiTemplate");
 
+
+    /* handle C&P from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
+      $s_action = "cut_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
+      $s_action = "editPaste";
+    }
+
+    /* Create options */
+    if(isset($_POST['menu_action']) && preg_match("/^Create_/",$_POST['menu_action'])){
+      $s_action = "new_".preg_replace("/^Create_/","",$_POST['menu_action']);;
+      $s_entry  = preg_replace("/^Create_/","",$_POST['menu_action']);
+    }
+
+    /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^remvove_multiple/",$_POST['menu_action'])){
+      $s_action = "del_multiple";
+    }
+
+
     /****************
       Delete confirme dialog 
      ****************/

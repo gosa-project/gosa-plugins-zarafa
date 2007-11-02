@@ -174,65 +174,77 @@ class divListFai extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
-    $acl = $ui->get_permissions($this->selectedBase,"fai/faiProfile");
-    if(preg_match("/c/",$acl)){
-      $listhead .=" <input class='center' type='image' src='images/fai_new_profile.png' align='middle'
-        title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;";
-      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
-
-    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-    }
-
-    /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-    }
-
-    /* Append create icons for each fai component */
-    $arr = array(
-        array("images/fai_new_partitionTable.png" , _("New partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
-        array("images/fai_new_script.png"         , _("New scripts")          ,"Create_script"    , _("S")  , "faiScript"),
-        array("images/fai_new_hook.png"           , _("New hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
-        array("images/fai_new_variable.png"       , _("New variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
-        array("images/fai_new_template.png"       , _("New templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
-        array("images/fai_new_packages.png"       , _("New package list")     ,"Create_package"   , _("PK") , "faiPackage"));
-
-    foreach($arr as $ar){
-      $acl = $ui->get_permissions($this->selectedBase,"fai/".$ar[4]);
-      if(preg_match("/c/",$acl)){
-        $add_sep = true;
-        $listhead .=" <input class='center' type='image' src='".$ar[0]."' align='middle' title='".$ar[1]."' name='".$ar[2]."' alt='".$ar[3]."'>&nbsp;";
-      }
-    }
-
     /* Add additional seperator */
     if($add_sep){
       $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
-  
+
     $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-                  " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-                  title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
+      " <input class='center' type='image' src='images/list_submit.png' align='middle'
+      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
+
+
+    $s  = ".|"._("Actions")."|\n";
+    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
+
+    $acl = $ui->get_permissions($this->selectedBase,"fai/faiProfile");
+    if(preg_match("/c/",$acl)){
+      $s.= "...|<input class='center' type='image' src='images/fai_new_profile.png' alt=''>".
+        "&nbsp;"._("Profile")."|Create_profile|\n";
+    }
+
+    /* Append create icons for each fai component */
+    $arr = array(
+        array("images/fai_new_partitionTable.png" , _("Partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
+        array("images/fai_new_script.png"         , _("Scripts")          ,"Create_script"    , _("S")  , "faiScript"),
+        array("images/fai_new_hook.png"           , _("Hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
+        array("images/fai_new_variable.png"       , _("Variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
+        array("images/fai_new_template.png"       , _("Templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
+        array("images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
+
+    foreach($arr as $ar){
+      $acl = $ui->get_permissions($this->selectedBase,"fai/".$ar[4]);
+      if(preg_match("/c/",$acl)){
+        $s.= "...|<input class='center' type='image' src='".$ar[0]."' alt=''>".
+          "&nbsp;".$ar[1]."|".$ar[2]."|\n";
+      }
+    }
 
     /* Multiple options */
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected fai objects")."' alt='"._("Remove fai objects")."' name='remove_multiple_fai_objects'>&nbsp;";
+    $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-        title='"._("Copy selected objects")."' alt='"._("Copy fai objects")."' name='multiple_copy_fai'>&nbsp;";
-      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-        title='"._("cut selected objects")."' alt='"._("Cut fai objects")."' name='multiple_cut_fai'>&nbsp;";
-      $listhead .= "</div>";
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
     }
 
-    $listhead .="</div>";;
+    /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
+      $s .= "..|---|\n";
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
+    }
 
+    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
+      if($this->parent->snapshotEnabled()){
+        $s .= "..|---|\n";
+        $s .= $this->get_snapshot_header(TRUE);
+      }
+    }
 
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
@@ -309,7 +321,7 @@ class divListFai extends MultiSelectWindow
          $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
 
-         if(preg_match("/(c&w)/",$value['acl'])){
+         if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
            $action.= $this->GetSnapShotActions($value['dn']);;
          }
 
