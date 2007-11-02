@@ -236,13 +236,13 @@ class divListFai extends MultiSelectWindow
       }
     }
 
-    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
-      if($this->parent->snapshotEnabled()){
-        $s .= "..|---|\n";
-        $s .= $this->get_snapshot_header(TRUE);
-      }
-    }
+#    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
+#   if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
+#      if($this->parent->snapshotEnabled()){
+#        $s .= "..|---|\n";
+#        $s .= $this->get_snapshot_header(TRUE);
+#      }
+#    }
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -321,9 +321,9 @@ class divListFai extends MultiSelectWindow
          $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
 
-         if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
-           $action.= $this->GetSnapShotActions($value['dn']);;
-         }
+#         if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
+#           $action.= $this->GetSnapShotActions($value['dn']);;
+#         }
 
          if(preg_match("/d/",$value['acl'])){
            $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
