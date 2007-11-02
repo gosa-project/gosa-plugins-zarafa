@@ -589,7 +589,7 @@ class MultiSelectWindow{
 
 
   /* Create header snapshot value */
-  function get_snapshot_header()
+  function get_snapshot_header($layer_menu = FALSE)
   {
     $str = "&nbsp;";
     if($this->parent->snapshotEnabled()){
@@ -598,13 +598,20 @@ class MultiSelectWindow{
         $ok |= count($this->parent->getAllDeletedSnapshots($base)) >= 1 ;
       }
       if($ok){
-        $str = "<input class='center' type='image' align='middle' src='images/restore.png'
-          title='"._("Restore snapshopts of already deleted objects")."' 
-          alt='"._("Restore")."' name='RestoreDeletedSnapShot'>&nbsp;"; 
+        if($layer_menu){
+          $str = "..|<img class='center' src='images/restore.png'>&nbsp;"._("Restore")."|RestoreDeletedSnapShot|\n";
+        }else{
+          $str = "<input class='center' type='image' align='middle' src='images/restore.png'
+            title='"._("Restore snapshopts of already deleted objects")."' 
+            alt='"._("Restore")."' name='RestoreDeletedSnapShot'>&nbsp;"; 
+        }
       }else{
-        $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
+        if($layer_menu){
+          $str = "..|<img class='center' src='images/restore_grey.png' alt=''>&nbsp;"._("Restore")."|RestoreDeletedSnapShot|\n";
+        }else{
+          $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
+        }
       }
-
 #      $str .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
     return($str);

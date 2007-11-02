@@ -1383,7 +1383,8 @@ class plugin
       }
 
       /* Restore one of the already deleted objects */
-      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
+      if(((isset($_POST['menu_action']) && $_POST['menu_action'] == "RestoreDeletedSnapShot") 
+          || preg_match("/^RestoreDeletedSnapShot_/",$name)) && $once){
         $once = false;
         $this->snapDialog = new SnapShotDialog($this->config,"",$this);
         $this->snapDialog->set_snapshot_bases($baseSuffixe);

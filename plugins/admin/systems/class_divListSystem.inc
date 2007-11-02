@@ -165,12 +165,6 @@ class divListSystem extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
-    /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-      $add_sep = true;
-    }
-
     /* Add base selection */
     $listhead .= _("Base")."&nbsp; <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle'
@@ -228,6 +222,10 @@ class divListSystem extends MultiSelectWindow
       }
     }
 
+    /* Add snapshot icons */
+    if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
+      $s .= $this->get_snapshot_header(TRUE);
+    }
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
