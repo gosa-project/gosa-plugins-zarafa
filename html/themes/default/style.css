@@ -342,7 +342,7 @@ div.copynotice{
 	font-size:10px;
 }
 
-div:link {
+a:link {
 	text-decoration:none;
 	color:#00008f;
 }
