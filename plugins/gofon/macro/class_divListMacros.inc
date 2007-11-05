@@ -143,7 +143,7 @@ class divListMacro extends MultiSelectWindow
     /* Multiple options */
     $s.= "..|---|\n";
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
+      "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(preg_match("/(c.*w|w.*c)/",$acls) && is_object( $this->parent->CopyPasteHandler)){

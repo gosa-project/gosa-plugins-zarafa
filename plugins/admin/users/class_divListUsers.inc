@@ -165,7 +165,7 @@ class divListUsers extends MultiSelectWindow
     $s.= "..|<img src='images/list_password.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Change password")."|"."multiple_password_change|\n";
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
+      "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){

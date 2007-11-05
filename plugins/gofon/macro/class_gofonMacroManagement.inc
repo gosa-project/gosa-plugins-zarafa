@@ -126,7 +126,7 @@ class goFonMacro extends plugin
     }
 
     /* handle remove from layers menu */
-    if(isset($_POST['menu_action']) && preg_match("/^remvove_multiple/",$_POST['menu_action'])){
+    if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
     }
 

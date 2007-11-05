@@ -117,6 +117,27 @@ class phoneConferenceManagment extends plugin
       $s_entry  = $_GET['id'];
     }
 
+    /* handle C&P from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
+      $s_action = "cut_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
+      $s_action = "editPaste";
+    }
+
+    /* Create options */
+    if(isset($_POST['menu_action']) && $_POST['menu_action'] == "conference_new"){
+      $s_action = "new";
+    }
+
+    /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
+      $s_action = "del_multiple";
+    }
+
 
     /***************
       Cancel dialogs 

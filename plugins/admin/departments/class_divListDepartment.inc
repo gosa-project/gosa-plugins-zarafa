@@ -121,8 +121,7 @@ class divListDepartment extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
-    $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' ".
-      " alt='' height='16' width='1'>&nbsp;".
+    $listhead .=  
       " "._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' ".
       "   title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
@@ -139,7 +138,7 @@ class divListDepartment extends MultiSelectWindow
     }
     $s.= "..|---|\n";
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Remove")."|"."remvove_multiple|\n";
+      "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
 
     $this->SetDropDownHeaderMenu($s);
