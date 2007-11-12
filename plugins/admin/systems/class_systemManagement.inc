@@ -736,6 +736,26 @@ class systems extends plugin
       /* Save, or display error message? */
       if (count($message) == 0){
 
+        /* Incoming behavior; you can select a system type and an ogroup membership.
+         * If this object is an Incoming object, $_SESSION['SelectedSystemType'] isset.
+         * Check if we must add the new object to an object group.
+         *
+         * If this is done, delete the old incoming entry... it is still there, because this is a new
+         * entry and not an edited one, so we will delete it.
+         *
+         */
+
+        if(isset($_SESSION['SelectedSystemType'])){
+          $SelectedSystemType= $_SESSION['SelectedSystemType'];
+          if($SelectedSystemType['ogroup'] != "none"){
+            $og = new ogroup($this->config,$SelectedSystemType['ogroup']);
+            if($og){
+              $og->AddDelMembership($this->systab->dn);
+              $og->save();
+            }
+          }
+        }
+
         /* Save terminal data to ldap */
         if(isset($_SESSION['SelectedSystemType']['ogroup']) && $_SESSION['SelectedSystemType']['ogroup'] != 'none'){
           foreach (array("workservice", "termservice") as $cls){
@@ -750,25 +770,8 @@ class systems extends plugin
 
         $this->systab->save();
 
-        /* Incoming behavior; you can select a system type and an ogroup membership.
-         * If this object is an Incoming object, $_SESSION['SelectedSystemType'] isset.
-         * Check if we must add the new object to an object group.
-         *
-         * If this is done, delete the old incoming entry... it is still there, because this is a new
-         * entry and not an edited one, so we will delete it.
-         *
-         */
-
         if(isset($_SESSION['SelectedSystemType'])){
-          $SelectedSystemType= $_SESSION['SelectedSystemType'];
           unset($_SESSION['SelectedSystemType']);
-          if($SelectedSystemType['ogroup'] != "none"){
-            $og = new ogroup($this->config,$SelectedSystemType['ogroup']);
-            if($og){
-              $og->AddDelMembership($this->systab->dn);
-              $og->save();
-            }
-          }
           if(!isset($ldap)){
             $ldap = $this->config->get_ldap_link();
           }
