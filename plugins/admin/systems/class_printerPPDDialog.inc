@@ -298,9 +298,6 @@ class printerPPDDialog extends plugin
       }
     }
 
-    /* Open file handle */
-    $fp           = fopen($filename,"w+");
-
     /* Create the vendors path, if it doesn't exists already */
     if(!is_dir($this->pathToPPD.$vendor)){
       if(!(@mkdir($this->pathToPPD.$vendor))){
@@ -309,6 +306,9 @@ class printerPPDDialog extends plugin
       }
     }
   
+    /* Open file handle */
+    $fp           = fopen($filename,"w+");
+
     /* Check file handle & contents */
     if(!$fp){
       print_red(sprintf(_("Can't save file '%s'."),$filename));
