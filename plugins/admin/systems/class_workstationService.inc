@@ -453,7 +453,7 @@ class workservice extends plugin
 
   function getListOfXDrivers()
   {
-    /* Generate list of xdrivers from from CONFIG_DIR./xdrivers */
+    /* Generate a list of xdrivers from CONFIG_DIR./xdrivers */
     $drivers = array();
     if (file_exists(CONFIG_DIR.'/xdrivers')){
       $xdrivers = file (CONFIG_DIR.'/xdrivers');
