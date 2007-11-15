@@ -39,10 +39,7 @@ class termservice extends plugin
   var $cn= "";
   var $orig_dn= "";
   var $XMethods= array();
-  var $XDrivers= array("ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
-      "i128", "i740", "i810", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
-      "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
-      "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware");
+  var $XDrivers= array();
   var $XResolutions= array();
   var $XColordepths= array();
   var $XKbModels= array ();
@@ -68,7 +65,9 @@ class termservice extends plugin
   function termservice (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-    
+   
+    /* Get list of available xdrivers */
+    $this->XDrivers = $this->getListOfXDrivers();
     array_unshift($this->XDrivers, "["._("unknown")."]");
     
     $this->XResolutions= array(
@@ -467,7 +466,29 @@ class termservice extends plugin
   }
 
 
-/* Return plugin informations for acl handling */
+  function getListOfXDrivers()
+  {
+    $drivers = array();
+
+    /* Generate list of xdrivers from from CONFIG_DIR./xdrivers */
+    if (file_exists(CONFIG_DIR.'/xdrivers')){
+      $xdrivers = file (CONFIG_DIR.'/xdrivers');
+      foreach ($xdrivers as $line){
+        if (!preg_match ("/^#/", $line)){
+          $drivers[]= trim($line);
+        }
+      }
+    } else {
+      $drivers = array("ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
+          "i128", "i740", "i810", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
+          "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
+          "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware");
+    }
+    return($drivers);
+  }
+
+
+  /* Return plugin informations for acl handling */
   function plInfo()
   {
     return (array(
