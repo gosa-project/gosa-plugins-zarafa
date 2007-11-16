@@ -4,6 +4,7 @@ useTimeouts = 1;
 timeoutLength = 1000;	// time in ms; not significant if useTimeouts = 0;
 shutdownOnClick = 0;
 
+
 loaded = 0;
 layersMoved = 0;
 layerPoppedUp = '';

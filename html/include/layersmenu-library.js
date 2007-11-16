@@ -3,6 +3,7 @@
 layerLeft = new Array();
 layerTop = new Array();
 
+
 function setVisibility(layer, on)
 {
 	if (on) {

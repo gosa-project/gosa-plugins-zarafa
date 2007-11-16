@@ -23,8 +23,8 @@
   <script language="javascript" src="include/calendar.js" type="text/javascript"></script>
   <script language="javascript" src="include/focus.js" type="text/javascript"></script>
   <script language="javascript" src="include/warning.js" type="text/javascript"></script>
-  <script language="javascript" src="include/layersmenu.js" type="text/javascript"></script>
-  <script language="javascript" src="include/layersmenu-library.js" type="text/javascript"></script>
   <script language="javascript" src="include/layersmenu-browser_detection.js" type="text/javascript"></script>
+  <script language="javascript" src="include/layersmenu-library.js" type="text/javascript"></script>
+  <script language="javascript" src="include/layersmenu.js" type="text/javascript"></script>
 </head>
 

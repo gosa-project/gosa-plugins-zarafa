@@ -438,22 +438,22 @@ class addressbook extends plugin
                           "&amp;show=".urlencode(base64_encode($attrs['dn']))."\">".
                $attrs['sn'][0].", ".$attrs['givenName'][0].
             "</a>
-            </td>
+            &nbsp;</td>
             <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['telephoneNumber'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=telephoneNumber&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['telephoneNumber'][0]."
             </a>
-            </td>
+            &nbsp;</td>
             <td class=\"phonelist\" title=\"".$attrs['facsimileTelephoneNumber'][0]."\">
             ".$attrs['facsimileTelephoneNumber'][0]."
-            </td>
+            &nbsp;</td>
             <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['mobile'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=mobile&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['mobile'][0]."
             </a>
-            </td>
+            &nbsp;</td>
             <td class=\"phonelist\" title=\""._("Dial")." ".$attrs['homePhone'][0]."\">
             <a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;dial=homePhone&amp;start=".validate($_GET['start'])."&amp;target=".base64_encode($attrs['dn'])."\">".$attrs['homePhone'][0]."
             </a>
-            </td>
+            &nbsp;</td>
             <td>
             <a href=\"getvcard.php?dn=".base64_encode($attrs['dn'])."\">
             <img align=\"top\" border=0 src=\"images/save.png\" alt=\"vcf\" title=\"".sprintf(_("Save contact for %s as vcard"), $attrs['givenName'][0]." ".$attrs['sn'][0])."\">
@@ -469,7 +469,7 @@ class addressbook extends plugin
                 "<img  align=\"top\" border=0 src=\"images/mailto.png\" alt=\"vcf\" title=\"$dest\"></a>";
             }
           }
-          $this->telephone_list[$attrs['sn'][0].$attrs['dn']].= "</td>";
+          $this->telephone_list[$attrs['sn'][0].$attrs['dn']].= "&nbsp;</td>";
         }
       }
       error_reporting(E_ALL | E_STRICT);
