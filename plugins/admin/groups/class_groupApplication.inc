@@ -941,7 +941,7 @@ class appgroup extends plugin
     $this->cleanup();
     
     $ldap->modify ($this->attrs); 
-    new log("remove","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","group/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/applications with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
