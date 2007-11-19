@@ -192,9 +192,9 @@
         plugin::save_object();
         #echo "base = ".$_POST['base']."<br>\n";
       #}
-      if (chkacl($this->acl, "create") == "") {
+#      if (chkacl($this->acl, "create") == "") {
         $this->base = $_POST['base'];
-      }
+#      }
     }
 
     function delete() {

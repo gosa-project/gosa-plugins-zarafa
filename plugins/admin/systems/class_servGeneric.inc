@@ -297,7 +297,7 @@ class servgeneric extends plugin
     }
     
     /* Check if given name is a valid host/dns name */
-    if(!is_dns_name($this->cn) && chkacl ($this->acl, "cn") == ""){
+    if(!is_dns_name($this->cn)){
       $message[] = _("Please specify a valid name for this object.");
     }
 
