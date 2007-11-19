@@ -142,6 +142,11 @@ class userManagement extends plugin
     }
 
     /* handle remove from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_password_change/",$_POST['menu_action'])){
+      $s_action = "multiple_password_change";
+    }
+
+    /* handle remove from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
     }
