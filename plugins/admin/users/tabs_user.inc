@@ -107,7 +107,7 @@ class usertabs extends tabs
 
         /* Udpate acls */
         $baseobject->update_acls($this->dn,$new_dn);
-    #    $baseobject->move($this->dn, $new_dn);
+        $baseobject->move($this->dn, $new_dn);
         $this->by_object['user']= $baseobject;
 
         /* Did we change ourselves? Update ui object. */
