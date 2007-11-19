@@ -26,11 +26,13 @@
     <tr>
      <td colspan="2" style='vertical-align:top;padding-top:3px;'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
 {render acl=$gotoLdapServerACL}
+{if $member_of_ogroup}
 (<input type='checkbox' name='gotoLdap_inherit' {if $gotoLdap_inherit} checked {/if} value="1"
 	onClick="document.mainform.submit();" class='center'>
 &nbsp;{t}inherit from group{/t})
 {if !$JS}
 	<input type='image' src="images/list_reload.png" alt='{t}Reload{/t}' class='center'>
+{/if}
 {/if}
 {/render}
 {render acl=$gotoLdapServerACL_inherit}

@@ -103,7 +103,7 @@ class workstartup extends plugin
         $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
       }
     }
-    if(!count($this->gotoLdapServers)){ 
+    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){ 
       $this->gotoLdap_inherit = TRUE;
     }
 
@@ -325,7 +325,9 @@ class workstartup extends plugin
     $this->orig_dn= $this->dn;
 
     /* Handle inheritance value "default" */
-    $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']');
+    if ($this->member_of_ogroup){
+      $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']'); 
+    }
 
     /* Load hardware list */
     if ($this->member_of_ogroup){
@@ -676,6 +678,8 @@ class workstartup extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     } 
+
+    $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
 
     /* In this section server shares will be defined
      * A user can select one of the given shares and a mount point
