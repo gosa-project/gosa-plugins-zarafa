@@ -308,7 +308,7 @@ class environment extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      if(isset($this->parent->by_object['user']) || in_array("gosaAccount",$this->attrs['objectClass'])){
+      if(isset($this->parent->by_object['user']) || (isset($this->attrs['objectClass']) &&in_array("gosaAccount",$this->attrs['objectClass']))){
         new log("view","users/".get_class($this),$this->dn);
       }else{
         new log("view","groups/".get_class($this),$this->dn);
@@ -826,8 +826,9 @@ class environment extends plugin
           $type = false;
 
           if($this->is_group){
-
-            if(isset($this->NewDeletedPrinters[$pname])){
+            if($this->dn == "new"){  
+              $type = "AddGroup";
+            }elseif(isset($this->NewDeletedPrinters[$pname])){
               $type = "AddGroup";
             }elseif($printerObj->by_object['printgeneric']->AddMember("AddGroup",$this->dn)){
               $type = "AddGroup";

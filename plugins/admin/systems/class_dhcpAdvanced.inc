@@ -93,7 +93,7 @@ class dhcpAdvanced extends plugin
 
     /* Show main page */
     $smarty->assign("show_advanced", $this->show_advanced);
-    return ($smarty->fetch (get_template_path('dhcp_advanced.tpl', TRUE)));
+    return ($smarty->fetch (get_template_path('dhcp_advanced.tpl', TRUE,dirname(__FILE__))));
   }
 
   function remove_from_parent()

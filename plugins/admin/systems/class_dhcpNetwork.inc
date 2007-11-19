@@ -136,7 +136,7 @@ class dhcpNetwork extends plugin
       }
     }
 
-    return $smarty->fetch(get_template_path('dhcp_network.tpl', TRUE));
+    return $smarty->fetch(get_template_path('dhcp_network.tpl', TRUE,dirname(__FILE__)));
   }
 
   function remove_from_parent()
