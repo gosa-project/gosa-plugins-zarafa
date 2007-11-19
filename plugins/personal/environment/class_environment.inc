@@ -308,7 +308,7 @@ class environment extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      if(in_array("gosaAccount",$this->attrs['objectClass'])){
+      if(isset($this->parent->by_object['user']) || in_array("gosaAccount",$this->attrs['objectClass'])){
         new log("view","users/".get_class($this),$this->dn);
       }else{
         new log("view","groups/".get_class($this),$this->dn);
