@@ -210,7 +210,7 @@ class faiTemplate extends plugin
     }
 
     /* Save Dialog */
-    if(isset($_POST['SaveSubObject'])){
+    if(isset($_POST['SaveSubObject']) && is_object($this->dialog)){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)>0){
@@ -302,7 +302,7 @@ class faiTemplate extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='getFAIscript.php?is_template&id=".base64_encode($dn)."'>
+        $down = "<a href='getFAIscript.php?is_template&amp;id=".base64_encode($dn)."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>";
       }
@@ -311,7 +311,7 @@ class faiTemplate extends plugin
       $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
 
-        $edit_link = "<a href='?plug=".$_GET['plug']."&act=edit&id=".$key."'>".$tmp[$key]."</a>";
+        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$tmp[$key]."</a>";
         $divlist->AddEntry(array( array("string"=> $edit_link), 
               array("string"=>$down , "attach" => "style='width:20px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),

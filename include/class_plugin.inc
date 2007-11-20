@@ -1406,7 +1406,7 @@ class plugin
 
     /* Create a new snapshot requested, check
        the given attributes and create the snapshot*/
-    if(isset($_POST['CreateSnapshot'])){
+    if(isset($_POST['CreateSnapshot']) && is_object($this->snapDialog)){
       $this->snapDialog->save_object();
       $msgs = $this->snapDialog->check();
       if(count($msgs)){

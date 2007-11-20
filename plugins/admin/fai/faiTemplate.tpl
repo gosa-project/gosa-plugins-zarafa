@@ -23,7 +23,7 @@
 						</td>
 						<td>
 {render acl=$descriptionACL}
-							<input value="{$description}" size="45" maxlength="80" {$description} name="description" id="description">
+							<input value="{$description}" size="45" maxlength="80" name="description" id="description">
 {/render}
 						</td>
 					</tr>
@@ -31,9 +31,7 @@
 		</td>
 		<td style="width:50%">
 				<h2><img class="center" alt="" src="images/fai_template.png" align="middle" title="{t}Objects{/t}">&nbsp;
-					<LABEL for="SubObject">
-						{t}List of template files{/t}
-					</LABEL>
+					{t}List of template files{/t}
 				</h2>
 			{$Entry_divlist}
 {if $sub_object_is_addable}

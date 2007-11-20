@@ -599,7 +599,7 @@ class MultiSelectWindow{
       }
       if($ok){
         if($layer_menu){
-          $str = "..|<img class='center' src='images/restore.png'>&nbsp;"._("Restore")."|RestoreDeletedSnapShot|\n";
+          $str = "..|<img class='center' src='images/restore.png' alt='"._("Restore")."'>&nbsp;"._("Restore")."|RestoreDeletedSnapShot|\n";
         }else{
           $str = "<input class='center' type='image' align='middle' src='images/restore.png'
             title='"._("Restore snapshopts of already deleted objects")."' 

@@ -559,6 +559,7 @@ class mimetypeManagement extends plugin
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
+      $this->start_pasting_copied_objects = FALSE;
       $dn = $this->mimetypes[$s_entry]['dn'];
       $this->CopyPasteHandler->add_to_queue($dn,$s_action,"mimetabs","MIMETABS","mimetypes");
     }
