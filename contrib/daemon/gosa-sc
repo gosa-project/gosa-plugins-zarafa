@@ -1,0 +1,695 @@
+#!/usr/bin/perl
+#===============================================================================
+#
+#         FILE:  gosa-server
+#
+#        USAGE:  ./gosasc
+#
+#  DESCRIPTION:
+#
+#      OPTIONS:  ---
+# REQUIREMENTS:  ---
+#         BUGS:  ---
+#        NOTES:
+#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
+#      COMPANY:
+#      VERSION:  1.0
+#      CREATED:  12.09.2007 08:54:41 CEST
+#     REVISION:  ---
+#===============================================================================
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Config::IniFiles;
+use POSIX;
+use Time::HiRes qw( gettimeofday );
+
+use Fcntl;
+use IO::Socket::INET;
+use Crypt::Rijndael;
+use XML::Simple;
+use Data::Dumper;
+use Sys::Syslog qw( :DEFAULT setlogsock);
+
+
+my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
+my ($server_address, $server_ip, $server_port, $server_passwd, $server_cipher, $server_timeout);
+my ($my_address, $my_ip, $my_port, $input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
+
+# default variables
+$known_hosts = {};
+$foreground = 0 ;
+$my_ip = "10.89.1.155";
+$my_port = "10010";
+%cfg_defaults =
+("general" =>
+    {"log_file" => [\$log_file, "/var/run/".$0.".log"],
+    "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+
+    },
+"server" =>
+    {"server_ip" => [\$server_ip, "10.89.1.155"],
+    "server_port" => [\$server_port, "10001"],
+    "server_passwd" => [\$server_passwd, "tester"],
+    "server_timeout" => [\$server_timeout, 10],
+    }
+    );
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_configfile
+#   PARAMETERS:  cfg_file - string - 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub read_configfile {
+    my $cfg;
+    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+        if( -r $cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+        }
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  logging
+#   PARAMETERS:  level - string - default 'info' 
+#                msg - string - 
+#                facility - string - default 'LOG_DAEMON' 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub daemon_log {
+    my( $msg, $level ) = @_;
+    if(not defined $msg) { return }
+    if(not defined $level) { $level = 1 }
+    if(defined $log_file){
+        open(LOG_HANDLE, ">>$log_file");
+        if(not defined open( LOG_HANDLE, ">>$log_file" )) { 
+            print STDERR "cannot open $log_file: $!";
+            return }
+        chomp($msg);
+        if($level <= $verbose){
+            print LOG_HANDLE $msg."\n";
+            if(defined $foreground) { print $msg."\n" }
+        }
+    }
+    close( LOG_HANDLE );
+#    my ($msg, $level, $facility) = @_;
+#    if(not defined $msg) {return}
+#    if(not defined $level) {$level = "info"}
+#    if(not defined $facility) {$facility = "LOG_DAEMON"}
+#    openlog($0, "pid,cons,", $facility);
+#    syslog($level, $msg);
+#    closelog;
+#    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME: check_cmdline_param
+#   PARAMETERS: 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub check_cmdline_param () {
+    my $err_config;
+    my $err_counter = 0;
+    if( not defined( $cfg_file)) {
+        $err_config = "please specify a config file";
+        $err_counter += 1;
+    }
+    if( $err_counter > 0 ) {
+        &usage( "", 1 );
+        if( defined( $err_config)) { print STDERR "$err_config\n"}
+        print STDERR "\n";
+        exit( -1 );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME: check_pid
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub check_pid {
+    $pid = -1;
+    # Check, if we are already running
+    if( open(LOCK_FILE, "<$pid_file") ) {
+        $pid = <LOCK_FILE>;
+        if( defined $pid ) {
+            chomp( $pid );
+            if( -f "/proc/$pid/stat" ) {
+                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
+                if( $0 eq $stat ) {
+                    close( LOCK_FILE );
+                    exit -1;
+                }
+            }
+        }
+        close( LOCK_FILE );
+        unlink( $pid_file );
+    }
+
+    # create a syslog msg if it is not to possible to open PID file
+    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
+        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
+        if (open(LOCK_FILE, '<', $pid_file)
+                && ($pid = <LOCK_FILE>))
+        {
+            chomp($pid);
+            $msg .= "(PID $pid)\n";
+        } else {
+            $msg .= "(unable to read PID)\n";
+        }
+        if( ! ($foreground) ) {
+            openlog( $0, "cons,pid", "daemon" );
+            syslog( "warning", $msg );
+            closelog();
+        }
+        else {
+            print( STDERR " $msg " );
+        }
+        exit( -1 );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  usage
+#   PARAMETERS: 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub usage {
+        my( $text, $help ) = @_;
+        $text = undef if( "h" eq $text );
+        (defined $text) && print STDERR "\n$text\n";
+        if( (defined $help && $help) || (!defined $help && !defined $text) ) {
+                print STDERR << "EOF" ;
+usage: $0 [-hvf] [-c config]
+
+    -h        : this (help) message
+    -c <file> : config file
+    -v        : be verbose (multiple to increase verbosity)
+EOF
+        }
+        print "\n" ;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  register_at_server
+#   PARAMETERS:  
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub register_at_server {
+    my ($tmp) = @_;
+
+    # create new passwd and ciphering object for client-server communication
+    my $new_server_passwd = &create_passwd();
+    my $new_server_cipher;
+
+    # fill in all possible servers
+    my @servers = ($server_address);
+
+    my ($rout, $wout, $reg_server);
+    foreach my $server (@servers) {
+        #   sende xml anfrage
+        my $msg_hash = &create_xml_hash("here_i_am", $my_address, $server_address);
+        &add_content2xml_hash($msg_hash, "new_passwd", $new_server_passwd);
+
+        # fetch header for logging
+        my $header = &get_content_from_xml_hash($msg_hash, "header");
+        # generiere xml string
+        my $msg_xml = &create_xml_string($msg_hash);
+        # erzeuge ein ciphering object
+        $server_cipher = &create_ciphering($server_passwd);
+
+        # encrypt xml msg
+        my $crypted_msg = &encrypt_msg($msg_xml, $server_cipher);
+        # öffne socket
+        my $socket = &open_socket($server);
+        if(not defined $socket){
+            print "cannot send '$header'-msg to $server , server not reachable\n";
+            last;
+        }
+        # versende xml msg
+        print $socket $crypted_msg."\n";
+        # schließe socket
+        close $socket;
+
+        daemon_log("send '$header'-msg to $server", 5);
+        daemon_log("crypted_msg:\n\t$crypted_msg", 7);
+
+        # waiting for response
+        daemon_log("waiting for response...", 5);
+        my $nf = select($rout=$rbits, $wout=$wbits, undef, $server_timeout);
+        # error handling
+        if($nf < 0 ) {
+        }
+
+        # something is coming in
+        if(vec $rout, fileno $input_socket, 1) {
+            my $crypted_msg;
+            my $client = $input_socket->accept();
+            my $other_end = getpeername($client);
+            if(not defined $other_end) {
+                daemon_log("client cannot be identified: $!\n");
+            } else {
+                my ($port, $iaddr) = unpack_sockaddr_in($other_end);
+                my $actual_ip = inet_ntoa($iaddr);
+                daemon_log("\naccept client from $actual_ip\n", 5);
+                my $in_msg = &read_from_socket($client);
+                if(defined $in_msg){
+                    chomp($in_msg);
+                    $crypted_msg = $in_msg;
+                } else {
+                    daemon_log("cannot read from $actual_ip\n", 5);
+                }
+            }
+            close($client);
+            
+            # validate acknowledge msg from server
+            $new_server_cipher = &create_ciphering($new_server_passwd);
+            eval {
+                my $decrypted_msg = &decrypt_msg($crypted_msg, $new_server_cipher);
+                $msg_hash = $xml->XMLin($decrypted_msg, ForceArray=>1);
+            };
+            if($@) {
+                daemon_log("cannot register at $server", 1);
+                daemon_log("ERROR: do not understand the message:\n\t$crypted_msg" , 5);   
+            } else {
+                my $header = &get_content_from_xml_hash($msg_hash, "header");
+                if($header eq "registered") {
+                    $reg_server = $server;
+                    last;
+                } else {
+                    daemon_log("cannot register at $server", 1);
+                }
+            }
+        }
+        # kommt antwort nicht, dann probiere es mit dem nächsten in der liste
+
+    }
+    
+    if(defined $reg_server) {
+        daemon_log("registered at $reg_server", 1);
+    } else {
+        daemon_log("cannot register at any server", 1);
+        daemon_log("exiting!!!", 1);
+        exit(1);
+    }
+
+    # update the global available variables
+    $server_passwd = $new_server_passwd;
+    $server_cipher = $new_server_cipher;
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_xml_hash
+#   PARAMETERS:  
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub create_xml_hash {
+    my ($header, $source, $target) = @_;
+    my $hash = {
+            header => [$header],
+            source => [$source],
+            target => [$target],
+            $header => [],
+    };
+    daemon_log("create_xml_hash:", 7),
+    chomp(my $tmp = Dumper $hash);
+    daemon_log("\t$tmp\n", 7);
+    return $hash
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_xml_string
+#   PARAMETERS:  
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub create_xml_string {
+    my ($xml_hash) = @_ ;
+    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
+    $xml_string =~ s/[\s]+//g;
+    daemon_log("create_xml_string:\n\t$xml_string\n", 7);
+    return $xml_string;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  add_content2xml_hash
+#   PARAMETERS:  
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub add_content2xml_hash {
+    my ($xml_ref, $element, $content) = @_;
+    if(not exists $$xml_ref{$element} ) {
+        $$xml_ref{$element} = [];
+    }
+    my $tmp = $$xml_ref{$element};
+    push(@$tmp, $content);
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_content_from_xml_hash
+#   PARAMETERS:  
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub get_content_from_xml_hash {
+    my ($xml_ref, $element) = @_;
+    my $result = $xml_ref->{$element};
+    if( @$result == 1) {
+        $result = @$result[0];
+    }
+    return $result;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  encrypt_msg
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub encrypt_msg {
+    my ($msg, $my_cipher) = @_;
+    if(not defined $my_cipher) { print "no cipher object\n"; }
+    $msg =~ s/[\s]+//g;
+    my $msg_length = length($msg);
+    my $multiplier = int($msg_length / 16) + 1;
+    my $extension = 16*$multiplier - $msg_length;
+    $msg = "a"x$extension.$msg;
+    my $crypted_msg = $my_cipher->encrypt($msg);
+    #my $crypted_msg = $msg;
+    return $crypted_msg;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  decrypt_msg
+#   PARAMETERS:
+#      RETURNS:
+#  DESCRIPTION:
+#===============================================================================
+sub decrypt_msg {
+    my ($crypted_msg, $my_cipher) =@_;
+    my $msg = $my_cipher->decrypt($crypted_msg);
+    #my $msg = $crypted_msg;
+    $msg =~ s/^a*//gi;
+    return $msg;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_ciphering
+#   PARAMETERS:  
+#      RETURNS:  cipher object
+#  DESCRIPTION:  
+#===============================================================================
+sub create_ciphering {
+    my ($passwd) = @_;
+    my $passwd_length = length($passwd);
+    my $multiplier = int($passwd_length / 32) + 1;
+    my $extension = 32*$multiplier - $passwd_length;
+    $passwd = "a"x$extension.$passwd;
+
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
+    return $my_cipher;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_passwd
+#   PARAMETERS:
+#      RETURNS:  cipher object
+#  DESCRIPTION:
+#===============================================================================
+sub create_passwd {
+    my $new_passwd = "";
+    for(my $i=0; $i<31; $i++) {
+        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
+    }
+
+    return $new_passwd;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  send_msg_hash2address
+#   PARAMETERS:  msg string - xml message
+#                PeerAddr string - socket address to send msg
+#                PeerPort string - socket port, if not included in socket address
+#      RETURNS:  nothing
+#  DESCRIPTION:  ????
+#===============================================================================
+sub send_msg_hash2address {
+    my ($msg_hash, $address) = @_ ;
+
+    # fetch header for logging
+    my $header = &get_content_from_xml_hash($msg_hash, "header");
+    # generiere xml string
+    my $msg_xml = &create_xml_string($msg_hash);
+    # hole das entsprechende passwd aus dem hash
+    my $passwd = $known_hosts->{$address}->{passwd};
+    # erzeuge ein ciphering object
+    my $act_cipher = &create_ciphering($passwd);
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
+    # öffne socket
+    my $socket = &open_socket($address);
+    if(not defined $socket){
+        print "cannot send '$header'-msg to $address , server not reachable\n";
+        return;
+    }
+    # versende xml msg
+    print $socket $crypted_msg."\n";
+    # schließe socket
+    close $socket;
+
+    daemon_log("send '$header'-msg to $address", 5);
+    daemon_log("crypted_msg:\n\t$crypted_msg", 7);
+
+    return
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  open_socket
+#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
+#                [PeerPort] string necessary if port not appended by PeerAddr
+#      RETURNS:  socket IO::Socket::INET
+#  DESCRIPTION:
+#===============================================================================
+sub open_socket {
+    my ($PeerAddr, $PeerPort) = @_ ;
+    if(defined($PeerPort)){
+        $PeerAddr = $PeerAddr.":".$PeerPort;
+    }
+    my $socket;
+    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
+            Porto => "tcp" ,
+            Type => SOCK_STREAM,
+            Timeout => 5,
+            );
+    if(not defined $socket) {
+        #daemon_log("cannot connect to socket at $PeerAddr, $@\n");
+        return;
+    }
+    daemon_log("open_socket:\n\t$PeerAddr", 7);
+    return $socket;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_from_socket
+#   PARAMETERS:  socket fh - 
+#      RETURNS:  result string - readed characters from socket
+#  DESCRIPTION:  reads data from socket in 16 byte steps
+#===============================================================================
+sub read_from_socket {
+    my ($socket) = @_;
+    my $result = "";
+    my $len = 16;
+    while($len == 16){
+        my $char;
+        $len = sysread($socket, $char, 16);
+        if($len != 16) { last }
+        if($len != 16) { last }
+        $result .= $char;
+    }
+    return $result;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  print_known_hosts_hash
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
+sub print_known_hosts_hash {
+    my ($tmp) = @_;
+    print "####################################\n";
+    print "# status of $known_hosts\n";
+    my $hosts;
+    my $host_hash;
+    my @hosts = keys %$known_hosts;
+    foreach my $host (@hosts) {
+        #my @elements = keys %$known_hosts->{$host};
+        my $status = $known_hosts->{$host}->{status} ;
+        my $passwd = $known_hosts->{$host}->{passwd};
+        my $timestamp = $known_hosts->{$host}->{timestamp};
+        print "$host\n";
+        print "\t$status\n";
+        print "\t$passwd\n";
+        print "\t$timestamp\n";
+    }
+    print "####################################\n";
+    return;
+}
+
+
+sub create_known_hosts_entry {
+    my ($hostname) = @_;
+    $known_hosts->{$hostname} = {};
+    $known_hosts->{$hostname}->{status} = "none";
+    $known_hosts->{$hostname}->{passwd} = "none";
+    $known_hosts->{$hostname}->{timestamp} = "none";
+    return;  
+}
+
+sub update_known_hosts_entry {
+    my ($hostname, $status, $passwd, $timestamp) = @_;
+    my ($Sekunden, $Minuten, $Stunden, $Monatstag, $Monat,
+    $Jahr, $Wochentag, $Jahrestag, $Sommerzeit) = localtime(time);
+    $Stunden = $Stunden < 10 ? $Stunden = "0".$Stunden : $Stunden;
+    $Minuten = $Minuten < 10 ? $Minuten = "0".$Minuten : $Minuten;
+    $Sekunden = $Sekunden < 10 ? $Sekunden = "0".$Sekunden : $Sekunden;
+    $Monat+=1;
+    $Monat = $Monat < 10 ? $Monat = "0".$Monat : $Monat;
+    $Monatstag = $Monatstag < 10 ? $Monatstag = "0".$Monatstag : $Monatstag;
+    $Jahr+=1900;
+    my $t = "$Jahr$Monat$Monatstag$Stunden$Minuten$Sekunden";
+
+    if($status) {
+        $known_hosts->{$hostname}->{status} = $status;
+    }
+    if($passwd) {
+        $known_hosts->{$hostname}->{passwd} = $passwd;
+    }
+    if($timestamp) {
+        $t = $timestamp;
+    }
+    $known_hosts->{$hostname}->{timestamp} = $t;
+    return;  
+}
+
+
+
+
+
+#==== MAIN = main ==============================================================
+
+#  parse commandline options
+Getopt::Long::Configure( "bundling" );
+GetOptions("h|help" => \&usage,
+           "c|config=s" => \$cfg_file,
+           "f|foreground" => \$foreground,
+           "v|verbose+" => \$verbose,
+           );
+
+#  read and set config parameters
+&read_configfile;
+&check_cmdline_param ;
+&check_pid;
+
+# restart daemon log file
+if(-e $log_file ) { unlink $log_file }
+daemon_log("started!");
+
+# Just fork, if we"re not in foreground mode
+if( ! $foreground ) { $pid = fork(); }
+else { $pid = $$; }
+
+# Do something useful - put our PID into the pid_file
+if( 0 != $pid ) {
+    open( LOCK_FILE, ">$pid_file" );
+    print LOCK_FILE "$pid\n";
+    close( LOCK_FILE );
+    if( !$foreground ) { exit( 0 ) };
+}
+
+# prepare variables
+$my_address = $my_ip.":".$my_port;
+$server_address = $server_ip.":".$server_port;
+
+# setup xml parser
+$xml = new XML::Simple();
+
+# create input socket
+$rbits = $wbits = $ebits = "";
+$input_socket = IO::Socket::INET->new(LocalPort => $my_port,
+        Type => SOCK_STREAM,
+        Reuse => 1,
+        Listen => 20,
+        ); 
+if(not defined $input_socket){
+    daemon_log("cannot be a tcp server at $my_port : $@\n");
+} else {
+    daemon_log("start server:\n\t$server_ip:$my_port",1) ;
+    vec($rbits, fileno $input_socket, 1) = 1;
+    vec($wbits, fileno $input_socket, 1) = 1;
+}
+
+# register at server
+&register_at_server();
+
+
+###################################
+#everything ready, okay, lets start
+###################################
+while(1) {
+    my ($rout, $wout);
+    my $nf = select($rout=$rbits, $wout=$wbits, undef, undef);
+
+    # error handling
+    if($nf < 0 ) {
+    }
+
+    # something is coming in
+    if(vec $rout, fileno $input_socket, 1) {
+        print "debug: es ist was rein gekommen\n";
+    }
+
+}
+ 
+
+
+
