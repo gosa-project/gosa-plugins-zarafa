@@ -85,8 +85,9 @@ class selectUserToPrinterDialog extends plugin
 
     /* Get all departments within this subtree */
     $base = $this->config->current['BASE'];
-    $deps_res= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", array("users","groups"), $this->config->current['BASE'],
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+    $deps_res[] = array("dn"=>$this->config->current['BASE']);
+    $deps_res= array_merge($deps_res,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", array("users","groups"), $this->config->current['BASE'],
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
     /* Load possible departments */
     $ui     = get_userinfo();
@@ -170,7 +171,7 @@ class selectUserToPrinterDialog extends plugin
     $cat    = $this->search_cat;
 
     if ($this->subtree){
-      $res= get_list($filter,$cat,$base,$attrs, GL_SUBSEARCH);
+      $res= get_list($filter,$cat,$this->depselect,$attrs, GL_SUBSEARCH);
     } else {
       $res= get_list($filter,$cat,$base,$attrs);
     }
