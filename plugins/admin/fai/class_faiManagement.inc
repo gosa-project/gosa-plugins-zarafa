@@ -698,15 +698,17 @@ class faiManagement extends plugin
         foreach($this->dialog->check() as $msg){
           print_red($msg);
         }		
-      }else{
+      }elseif(isset($this->dialog->objectClass)){
         $this->dn = "new" ;
         $a_setup= $this->get_type(array("objectClass"=>array($this->dialog->objectClass)));
         $name = $this->dialog->save();
 
-        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
-        $this->dialog->by_object[$a_setup[1]]->cn = $name;
-        $this->is_dialog = true;
+        if(class_exists($a_setup[0])){
+          $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+          $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+          $this->dialog->by_object[$a_setup[1]]->cn = $name;
+          $this->is_dialog = true;
+        }
       }		
     }	
 
