@@ -282,6 +282,7 @@ class mimetypeManagement extends plugin
     if ($s_action=="del_multiple"){
       $ids = $this->list_get_selected_items();
 
+      $this->dns = array();
       if(count($ids)){
 
         foreach($ids as $id){
@@ -567,7 +568,8 @@ class mimetypeManagement extends plugin
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
-
+      $this->start_pasting_copied_objects = FALSE;
+  
       /* Add new entries to CP queue */
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->mimetypes[$id]['dn'];
