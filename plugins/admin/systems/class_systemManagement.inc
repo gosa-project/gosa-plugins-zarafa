@@ -839,7 +839,8 @@ class systems extends plugin
         if($dia === TRUE || is_object($dia)){
           $dialog = TRUE;
         }  
-      }elseif(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
+      }
+      if(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
         $this->systab->by_object[$this->systab->current]->netConfigDNS->dialog){
         $dialog = TRUE;
       }
