@@ -46,15 +46,15 @@
 							{html_options options=$SubObjects}
 						</select><br>
 {if $is_createable}
-					<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
+					<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}">
 {else}
-					<input disabled type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
+					<input disabled type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}">
 {/if}
 					<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
 {if $is_removeable}
-					<input type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}" {$cnACL}>
+					<input type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
 {else}
-					<input disabled type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}" {$cnACL}>
+					<input disabled type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
 {/if}
 					</td>
 				</tr>

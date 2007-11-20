@@ -79,7 +79,7 @@
 </div>
 <br>
 <div style="align:right;" align="right">
-	<input type="submit" value="{t}Apply{/t}" 	name="SaveSubObject" {$cnACL}>&nbsp;
+	<input type="submit" value="{t}Apply{/t}" 	name="SaveSubObject">&nbsp;
 	<input type="submit" value="{t}Cancel{/t}" 	name="CancelSubObject">
 </div>
 <!-- Place cursor -->
