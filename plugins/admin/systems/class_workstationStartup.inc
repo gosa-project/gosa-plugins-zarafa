@@ -264,7 +264,9 @@ class workstartup extends plugin
             $this->FAIrelease = substr( $class, 1 );
           }
           else
+          {
             $tmp2[$class] = $class;
+          }
         }
         $this->FAIclass = $tmp2;
       }
@@ -1282,7 +1284,7 @@ class workstartup extends plugin
 
     $source_o = new workstartup ($this->config, $source['dn']);
     
-    foreach(array("gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters","gotoShares","customParameters") as $attr){
+    foreach(array("FAIclass","gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters","gotoShares","customParameters") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
