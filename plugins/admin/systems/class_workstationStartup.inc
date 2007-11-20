@@ -110,7 +110,7 @@ class workstartup extends plugin
     /* FAI Initialization
        Skip this if FAI is not activated 
      */
-      if($this->fai_activated) {
+    if($this->fai_activated) {
 
       $_SESSION['getAvailableClassesForThisRelease_CACHE'] = array();
       $_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'] = array();
@@ -421,7 +421,9 @@ class workstartup extends plugin
     }
 
     $test2  = array();
-    $bb     = $this->generateDNSyn($release).$_SESSION['CurrentMainBase'];
+#    $bb     = $this->generateDNSyn($release).$_SESSION['CurrentMainBase'];
+    $bb     = $this->generateDNSyn($release).$this->config->current['BASE'];
+
     $ldap   = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
   
