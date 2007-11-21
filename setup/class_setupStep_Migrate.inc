@@ -675,7 +675,7 @@ class Step_Migrate extends setup_step
     /* Skip GOsa internal departments */
     $skip_dns = array("/".$cv['peopleou']."/","/".$cv['groupou']."/","/^ou=people,/","/^ou=groups,/",
         "/(,|)ou=configs,/","/(,|)ou=systems,/",
-        "/(,|)ou=apps,/","/(,|)ou=mime,/","/^ou=aclroles,/","/^ou=incoming,/",
+        "/(,|)ou=apps,/","/(,|)ou=mime,/","/(,|)ou=devices/","/^ou=aclroles,/","/^ou=incoming,/",
         "/ou=snapshots,/","/(,|)dc=addressbook,/","/^(,|)ou=machineaccounts,/",
         "/(,|)ou=winstations,/");
 
@@ -699,7 +699,7 @@ class Step_Migrate extends setup_step
      */
     foreach($this->deps_to_migrate as $key => $attrs){
       $dn = $attrs['dn'];
-      $skip = false;
+      $skip = false;;
       foreach($skip_dns as $skip_dn){
         if(preg_match($skip_dn,$dn)){
           $skip = true;
@@ -1216,10 +1216,17 @@ class Step_Migrate extends setup_step
     }
     
     if($this->outside_winstations_dialog){
+
+      /* Fix displayed dn syntax */ 
+      $tmp = $this->outside_winstations;
+      foreach($tmp as $key => $data){
+        $tmp[$key]['dn'] = @LDAP::fix($data['dn']);
+      }
+
       $smarty = get_smarty();
       $smarty->assign("ous",$this->get_all_winstation_ous());
       $smarty->assign("method","outside_winstations");
-      $smarty->assign("outside_winstations",$this->outside_winstations);
+      $smarty->assign("outside_winstations",$tmp);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
     /*************
@@ -1255,10 +1262,17 @@ class Step_Migrate extends setup_step
     }
     
     if($this->outside_groups_dialog){
+
+      /* Fix displayed dn syntax */ 
+      $tmp = $this->outside_groups;
+      foreach($tmp as $key => $data){
+        $tmp[$key]['dn'] = @LDAP::fix($data['dn']);
+      }
+
       $smarty = get_smarty();
       $smarty->assign("ous",$this->get_all_group_ous());
       $smarty->assign("method","outside_groups");
-      $smarty->assign("outside_groups",$this->outside_groups);
+      $smarty->assign("outside_groups",$tmp);
       $smarty->assign("group_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
@@ -1296,10 +1310,17 @@ class Step_Migrate extends setup_step
     }
     
     if($this->outside_users_dialog){
+
+      /* Fix displayed dn syntax */ 
+      $tmp = $this->outside_users;
+      foreach($tmp as $key => $data){
+        $tmp[$key]['dn'] = @LDAP::fix($data['dn']);
+      }
+
       $smarty = get_smarty();
       $smarty->assign("ous",$this->get_all_people_ous());
       $smarty->assign("method","outside_users");
-      $smarty->assign("outside_users",$this->outside_users);
+      $smarty->assign("outside_users",$tmp);
       $smarty->assign("user_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
@@ -1413,8 +1434,15 @@ class Step_Migrate extends setup_step
 
     /* Display migration dialog */
     if($this->users_migration_dialog){
+
+      /* Fix displayed dn syntax */ 
+      $tmp = $this->users_to_migrate;
+      foreach($tmp as $key => $data){
+        $tmp[$key]['dn'] = @LDAP::fix($data['dn']);
+      }
+
       $smarty = get_smarty();
-      $smarty->assign("users_to_migrate",$this->users_to_migrate);
+      $smarty->assign("users_to_migrate",$tmp);
       $smarty->assign("method","migrate_users");
       $smarty->assign("user_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
@@ -1462,7 +1490,14 @@ class Step_Migrate extends setup_step
     /* Display migration dialog */
     if($this->dep_migration_dialog){
       $smarty = get_smarty();
-      $smarty->assign("deps_to_migrate",$this->deps_to_migrate);
+   
+      /* Fix displayed dn syntax */ 
+      $tmp = $this->deps_to_migrate;
+      foreach($tmp as $key => $data){
+        $tmp[$key]['dn'] = @LDAP::fix($data['dn']);
+      }
+
+      $smarty->assign("deps_to_migrate",$tmp);
       $smarty->assign("method","migrate_deps");
       $smarty->assign("deps_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
