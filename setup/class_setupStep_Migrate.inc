@@ -934,9 +934,9 @@ class Step_Migrate extends setup_step
     }
 
     if($only_ldif){
-      $this->acl_create_changes ="\n".$cv['base']."\n";
+      $this->acl_create_changes ="\n".($ldap->fix($cv['base']))."\n";
       $this->acl_create_changes.=$this->array_to_ldif($attrs)."\n";
-      $this->acl_create_changes.="\n".$cv['base']."\n";
+      $this->acl_create_changes.="\n".($ldap->fix($cv['base']))."\n";
       $this->acl_create_changes.=$this->array_to_ldif($attrs_new);
     }else{
    
