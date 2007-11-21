@@ -1063,7 +1063,7 @@ class Step_Migrate extends setup_step
         $dn = base64_decode($b_dn);
         $d_dn = preg_replace("/,.*$/",",".base64_decode($destination_dep),$dn);
         if(!$perform){
-          $this->outside_winstations[$b_dn]['ldif'] = _("Winstation will be moved from").":<br>\t".$dn."<br>"._("to").":<br>\t".$d_dn;
+          $this->outside_winstations[$b_dn]['ldif'] = _("Winstation will be moved from").":<br>\t".($ldap->fix($dn))."<br>"._("to").":<br>\t".($ldap->fix($d_dn));
 
 
           /* Check if there are references to this object */
@@ -1111,8 +1111,8 @@ class Step_Migrate extends setup_step
         $dn = base64_decode($b_dn);
         $d_dn = preg_replace("/,.*$/",",".base64_decode($destination_dep),$dn);
         if(!$perform){
-          $this->outside_groups[$b_dn]['ldif'] = _("Group will be moved from").":<br>\t".$dn."<br>"._("to").":<br>\t".$d_dn;
 
+          $this->outside_groups[$b_dn]['ldif'] = _("Group will be moved from").":<br>\t".($ldap->fix($dn))."<br>"._("to").":<br>\t".($ldap->fix($d_dn));
 
           /* Check if there are references to this object */
           $ldap->search("(&(member=".$dn.")(|(objectClass=gosaGroupOfNames)(objectClass=groupOfNames)))",array('dn'));
@@ -1159,7 +1159,7 @@ class Step_Migrate extends setup_step
         $dn = base64_decode($b_dn);
         $d_dn = preg_replace("/,.*$/",",".base64_decode($destination_dep),$dn);
         if(!$perform){
-          $this->outside_users[$b_dn]['ldif'] = _("User will be moved from").":<br>\t".$dn."<br>"._("to").":<br>\t".$d_dn;
+          $this->outside_users[$b_dn]['ldif'] = _("User will be moved from").":<br>\t".($ldap->fix($dn))."<br>"._("to").":<br>\t".($ldap->fix($d_dn));
 
           /* Check if there are references to this object */
           $ldap->search("(&(member=".$dn.")(|(objectClass=gosaGroupOfNames)(objectClass=groupOfNames)))",array('dn'));
