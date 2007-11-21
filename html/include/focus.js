@@ -381,7 +381,7 @@ function adjust_width(e)
 			// Resize the Header cells (only the relative-width ones)
 			document.getElementById('t_scrollhead').style.width=div_width+"px";
 		}
-	} else if(document.defaultView && document.getElementById("t_scrolltable_onlywidth") && document.getElementById('d_scrolltable_onlywidth')) {
+	} else if(document.defaultView && document.getElementById("t_scrolltable_onlywidth")){
 		// Resize the div
 		var div_width=parseInt(document.defaultView.getComputedStyle(document.getElementById("t_scrolltable_onlywidth"),"").getPropertyValue('width'));
 		var width= parseInt(window.innerWidth);
@@ -391,7 +391,9 @@ function adjust_width(e)
 		
 		// window has been upscaled
 		if(div_width+diff>=600) {
-			document.getElementById('d_scrollbody_onlywidth').style.width=div_width+diff+"px";
+			if(document.getElementById('d_scrollbody_onlywidth')){
+				document.getElementById('d_scrollbody_onlywidth').style.width=div_width+diff+"px";
+			}
 			document.getElementById('t_scrollbody_onlywidth').style.width=(div_width-19)+diff+"px";
 	
 			// Resize the Header cells (only the relative-width ones)
@@ -401,7 +403,9 @@ function adjust_width(e)
 		} else if (width < 930) {
 			// Reset layout (set width to 600px)
 			div_width=600;
-			document.getElementById('d_scrollbody_onlywidth').style.width=div_width+"px";
+			if(document.getElementById('d_scrollbody_onlywidth')){
+				document.getElementById('d_scrollbody_onlywidth').style.width=div_width+"px";
+			}
 			document.getElementById('t_scrollbody_onlywidth').style.width=(div_width-19)+"px";
 	
 			// Resize the Header cells (only the relative-width ones)
