@@ -3,6 +3,8 @@
 layerLeft = new Array();
 layerTop = new Array();
 
+var numl = 0;
+var toBeHidden;
 
 function setVisibility(layer, on)
 {
