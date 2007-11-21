@@ -280,6 +280,7 @@ function resizeHandler()
 	}
 //	moveLayers();
 	layersMoved = 0;
+	adjust();
 }
 window.onresize = resizeHandler;
 
