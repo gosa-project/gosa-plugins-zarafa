@@ -36,9 +36,7 @@
 	<tr>
 		<td>
 				<h2><img class="center" alt="" src="images/fai_hook.png" align="middle" title="{t}Objects{/t}">&nbsp;
-					<LABEL for="SubObject">
-						{t}List of hook scripts{/t}
-					</LABEL>
+					{t}List of hook scripts{/t}
 				</h2>
 				<table width="100%" summary=''>
 				<tr>

@@ -38,7 +38,7 @@
 							{t}Task{/t}&nbsp;
 							</LABEL>
 {render acl=$FAItaskACL}
-							<select name="FAItask" title="{t}Choose an existing FAI task{/t}">
+							<select id="FAItask" name="FAItask" title="{t}Choose an existing FAI task{/t}">
 								{html_options values=$tasks output=$tasks selected=$FAItask}
 							</select>
 {/render}
@@ -60,7 +60,8 @@
     <tr>
         <td>
 {render acl=$FAIscriptACL}
-            <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" >{$FAIscript}</textarea>
+            <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript" 
+				rows=20 cols=120>{$FAIscript}</textarea>
 {/render}
         </td>
     </tr>
