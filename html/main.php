@@ -393,11 +393,9 @@ if (isset($_SESSION['errors']) && $_SESSION['errors'] != ""){
   $focus.= '</script>';
 }
 
- $focus= '<script language="JavaScript" type="text/javascript">';
-  $focus.= 'next_msg_dialog();';
-  $focus.= '</script>';
-
-
+$focus= '<script language="JavaScript" type="text/javascript">';
+$focus.= 'next_msg_dialog();';
+$focus.= '</script>';
 $smarty->assign("focus", $focus);
 
 $display= $header.$smarty->fetch(get_template_path('framework.tpl'));

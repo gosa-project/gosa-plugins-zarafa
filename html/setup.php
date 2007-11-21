@@ -117,21 +117,32 @@ print_red(NULL);
 
 $smarty->assign("date", date("l, dS F Y H:i:s O"));
 $header= "<!-- headers.tpl-->".$smarty->fetch(get_template_path('setup_headers.tpl'));
+
+
+
+/* Set focus to the error button if we've an error message */
+$focus= "";
+if (isset($_SESSION['errors']) && $_SESSION['errors'] != ""){
+  $focus= '<script language="JavaScript" type="text/javascript">';
+  $focus.= 'document.forms[0].error_accept.focus();';
+  $focus.= '</script>';
+}
+
+$focus= '<script language="JavaScript" type="text/javascript">';
+$focus.= 'next_msg_dialog();';
+$focus.= '</script>';
+
 /* show web frontend */
 $smarty->assign("contents"  , $display);
 $smarty->assign("navigation", $_SESSION['setup']->get_navigation_html());
 $smarty->assign("header", $_SESSION['setup']->get_header_html());
-$smarty->assign("bottom", $_SESSION['setup']->get_bottom_html());
+$smarty->assign("bottom", $focus.$_SESSION['setup']->get_bottom_html());
+$smarty->assign("msg_dialogs", msg_dialog::get_dialogs());
 
 if ($error_collector != ""){
   $smarty->assign("php_errors", preg_replace("/%BUGBODY%/",$error_collector_mailto,$error_collector)."</div>");
 } else {
   $smarty->assign("php_errors", "");
-}
-if (isset($_SESSION['errors'])){
-  $smarty->assign("errors", $_SESSION['errors']);
-}else{
-  $smarty->assign("errors"    , "");
 }
 
 $smarty->assign("version",get_gosa_version());
