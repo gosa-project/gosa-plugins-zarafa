@@ -381,7 +381,7 @@ function adjust_width(e)
 			// Resize the Header cells (only the relative-width ones)
 			document.getElementById('t_scrollhead').style.width=div_width+"px";
 		}
-	} else if(document.defaultView && document.getElementById("t_scrolltable_onlywidth")) {
+	} else if(document.defaultView && document.getElementById("t_scrolltable_onlywidth") && document.getElementById('d_scrolltable_onlywidth')) {
 		// Resize the div
 		var div_width=parseInt(document.defaultView.getComputedStyle(document.getElementById("t_scrolltable_onlywidth"),"").getPropertyValue('width'));
 		var width= parseInt(window.innerWidth);
