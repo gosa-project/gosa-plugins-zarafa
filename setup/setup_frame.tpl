@@ -1,6 +1,7 @@
 <body class='setup_body'>
 {$php_errors}
 <form action='setup.php' name='mainform' method='post' enctype='multipart/form-data'>
+	{$msg_dialogs}
 <input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' >
 <div class='setup_dialog'>
 	<div class='setup_header'>
