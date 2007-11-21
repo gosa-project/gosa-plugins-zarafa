@@ -22,8 +22,16 @@ class faiProfileEntry extends plugin
 
     /* Search only in fai tree */
     $base = "ou=fai,ou=configs,ou=systems,".$_SESSION['CurrentMainBase'];
-
+    if($_SESSION['faifilter']['branch']!="main"){
+      $base = $_SESSION['faifilter']['branch'];
+    }
+  
     $this->ui = get_userinfo();
+
+    $filter = "(|(objectClass=FAIscript)(objectClass=FAItemplate)(objectClass=FAIhook)".
+                "(objectClass=FAIvariable)(objectClass=FAIpartitionTable)(objectClass=FAIpackageList))";
+
+    $FAI_objects = get_all_objects_for_given_base($base,$filter,true);
 
     /* Create array with categories to be able to sort different types of objects */
     $categories = array("FAIscript"         => "faiScript",
@@ -36,22 +44,22 @@ class faiProfileEntry extends plugin
     /* Read out all objects from fai tree */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($base);
-    $ldap->search("(| (objectClass=FAIscript)(objectClass=FAItemplate)(objectClass=FAIhook)(objectClass=FAIvariable)
-                      (objectClass=FAIpartitionTable)(objectClass=FAIpackageList))",array("*"));
-    
     $sort=array();
-    while($attrs = $ldap->fetch()){
-      
+    foreach($FAI_objects as $obj){
+
+      $ldap->cat($obj['dn']);
+      $attrs = $ldap->fetch();
+
       /* Only use objects which have cn set */
       if((isset($attrs['cn'][0]))&&(!in_array($attrs['cn'][0],$used))){
         foreach($categories as $cat => $acl){
           if(in_array($cat,$attrs['objectClass'])){
-        
+
             $acl =  $this->ui->get_permissions($attrs['dn'],"fai/".$acl); 
 
             /* Append different types of objects */
             $this->FAIAllclasses[$attrs['cn'][0]]['objects'][$cat]=$cat;
-      
+
             if(!isset($this->FAIAllclasses[$attrs['cn'][0]]['acl'])){
               $this->FAIAllclasses[$attrs['cn'][0]]['acl']="";
             }
@@ -62,7 +70,7 @@ class faiProfileEntry extends plugin
 
             $sort[strtolower($attrs['cn'][0])] = $attrs['cn'][0];
           }
-        }
+        } 
       }
     }
 
