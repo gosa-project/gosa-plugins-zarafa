@@ -106,6 +106,11 @@ class faiScriptEntry extends plugin
     }
 
     $smarty->assign("FAIprioritys",$FAIprioritys);
+    if(get_magic_quotes_gpc()){
+      $smarty->assign("FAIscript" , htmlentities(stripslashes($this->FAIscript)));
+    }else{
+      $smarty->assign("FAIscript" , htmlentities($this->FAIscript));
+    }
     $display.= $smarty->fetch(get_template_path('faiScriptEntry.tpl', TRUE));
     return($display);
   }

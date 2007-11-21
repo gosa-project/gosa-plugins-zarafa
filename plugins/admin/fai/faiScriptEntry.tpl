@@ -40,7 +40,7 @@
 						</td>
 						<td>
 {render acl=$FAIpriorityACL}
-						    <select name="FAIpriority" title="{t}Choose a priority{/t}">
+						    <select id="FAIpriority" name="FAIpriority" title="{t}Choose a priority{/t}">
                 				{html_options options=$FAIprioritys selected=$FAIpriority}
             				</select>
 {/render}
@@ -60,7 +60,8 @@
     <tr>
         <td>
 {render acl=$FAIscriptACL}
-            <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript"  >{$FAIscript}</textarea>
+            <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript"  
+				rows="20" cols="120">{$FAIscript}</textarea>
 {/render}
         </td>
     </tr>

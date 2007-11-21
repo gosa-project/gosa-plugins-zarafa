@@ -64,7 +64,7 @@
    		</div>
   	</td>
 </tr>
-</table summary="">
+</table>
 
 <div align="right" style="align:right;">
 	<input name="SaveSubObject" value="{t}Apply{/t}" type="submit">

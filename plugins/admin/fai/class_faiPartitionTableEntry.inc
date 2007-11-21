@@ -183,7 +183,7 @@ class faiPartitionTableEntry extends plugin
     $FAIfsTypes       = array("ext2","ext3","xfs","swap","reiser","dosfat16","winfat32");
 
     /* Display Header */
-    $str = "<table summary='' style='width:100%'>";
+    $str = "";
     if (count($this->partitions)){
       $str .= "<tr>";
       $str .= "<td><b>"._("Type")."</b></td>";
@@ -298,7 +298,10 @@ class faiPartitionTableEntry extends plugin
         $str .= "\n</tr>";    
       }
     }
-    $str.="</table>";
+    
+    if(!empty($str)){
+      $str = "<table summary='' style='width:100%'>".$str."</table>";
+    }
     return($str);
 
   }

@@ -158,30 +158,31 @@ class faiPartitionTable extends plugin
 
     if((isset($_POST['EditDisk']))&&(isset($_POST['disks']))){
       $usedDiskNames =array();
-
       $Udisk = $_POST['disks'][0];
-      
-      foreach($this->disks  as $key=>$disk){
-        if($key != $Udisk){
-          $usedDiskNames[]= $key;
-        }
-      }
-    
-      /* Set object info string, which will be displayed in plugin info line */ 
-      if(isset($this->disks[$Udisk]['dn'])){
-        $_SESSION['objectinfo'] = $this->disks[$Udisk]['dn'];
-        $dn = $this->disks[$Udisk]['dn'];
-      }else{
-        $_SESSION['objectinfo'] = "";
-        $dn = "new";
-      }
+      if(isset($this->disks[$Udisk])){
 
-      $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
-      $this->dialog->set_acl_category("fai");
-      $this->dialog->FAIstate = $this->FAIstate;
-     
-      $this->is_dialog = true;
+        foreach($this->disks  as $key=>$disk){
+          if($key != $Udisk){
+            $usedDiskNames[]= $key;
+          }
+        }
+
+        /* Set object info string, which will be displayed in plugin info line */ 
+        if(isset($this->disks[$Udisk]['dn'])){
+          $_SESSION['objectinfo'] = $this->disks[$Udisk]['dn'];
+          $dn = $this->disks[$Udisk]['dn'];
+        }else{
+          $_SESSION['objectinfo'] = "";
+          $dn = "new";
+        }
+
+        $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
+        $this->dialog->set_acl_category("fai");
+        $this->dialog->FAIstate = $this->FAIstate;
+
+        $this->is_dialog = true;
+      }
     }
 
     /* Edit aborted, close dialog, without saving anything
@@ -240,20 +241,23 @@ class faiPartitionTable extends plugin
     if((isset($_POST['DelDisk']))&&(!empty($_POST['disks']))){
       if($this->FAIstate != "freeze"){
         foreach($_POST['disks'] as $disk) {
-          if($this->disks[$disk]['status']=="edited"){
-            $this->disks[$disk."-delete"]=$this->disks[$disk];
-            unset($this->disks[$disk]);
-            $disk = $disk."-delete";        
-            $this->disks[$disk]['status']="delete";
-            foreach($this->disks[$disk]['partitions'] as $name => $value ){
-              if($value['status']=="edited"){
-                $this->disks[$disk]['partitions'][$name]['status']="delete"; 
-              }else{
-                unset($this->disks[$disk]['partitions'][$name]);
+
+          if(isset($this->disks[$disk])){
+            if($this->disks[$disk]['status']=="edited"){
+              $this->disks[$disk."-delete"]=$this->disks[$disk];
+              unset($this->disks[$disk]);
+              $disk = $disk."-delete";        
+              $this->disks[$disk]['status']="delete";
+              foreach($this->disks[$disk]['partitions'] as $name => $value ){
+                if($value['status']=="edited"){
+                  $this->disks[$disk]['partitions'][$name]['status']="delete"; 
+                }else{
+                  unset($this->disks[$disk]['partitions'][$name]);
+                }
               }
+            }else{
+              unset($this->disks[$disk]);
             }
-          }else{
-            unset($this->disks[$disk]);
           }
         }
       }

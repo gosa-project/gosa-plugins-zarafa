@@ -43,6 +43,7 @@
 					<td>
 						<select name="disks[]" title="{t}Choose a disk to delete or edit{/t}" style="width:100%" size="20" id="SubObject" multiple>
 							{html_options options=$disks}
+							<option>&nbsp;</option>
 						</select><br>
 {if $sub_object_is_addable}
 						<input type="submit" name="AddDisk"     value="{t}Add{/t}"     title="{t}Add{/t}">
