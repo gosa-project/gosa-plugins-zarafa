@@ -280,9 +280,7 @@ function resizeHandler()
 	}
 //	moveLayers();
 	layersMoved = 0;
-	adjust();
 }
-window.onresize = resizeHandler;
 
 function yaresizeHandler()
 {
@@ -304,7 +302,6 @@ function loadHandler()
 		yaresizeHandler();
 	}
 }
-window.onload = loadHandler;
 
 function fixieflm(menuName)
 {

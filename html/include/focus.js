@@ -293,9 +293,6 @@ function divtoggle(element) {
 	}
 }
 
-window.onload = adjust;
-window.onresize = adjust;
-
 function adjust (e) {
 	adjust_height(e);
 	adjust_width(e);
