@@ -536,7 +536,7 @@ class application extends plugin
 
   /* Return plugin informations for acl handling
       #FIXME FAIscript seams to ununsed within this class... */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("Generic"),

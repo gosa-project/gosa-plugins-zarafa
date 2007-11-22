@@ -1345,7 +1345,7 @@ class posixAccount extends plugin
   }
 
 
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plDescription"     => _("POSIX account"),

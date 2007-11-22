@@ -406,7 +406,7 @@ class gotomasses extends plugin
   }
 
 
-  function plInfo()
+  static function plInfo()
   {
     return (array(
         "plShortName"   => _("System mass deployment"),

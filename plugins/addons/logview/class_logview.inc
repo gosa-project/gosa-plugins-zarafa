@@ -396,7 +396,7 @@ class logview extends plugin
 
   /* Return plugin informations for acl handling
      #FIXME You can only read attributes within this report plugin */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
         "plShortName"   => _("Log view"),

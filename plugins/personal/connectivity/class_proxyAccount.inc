@@ -301,7 +301,7 @@ class proxyAccount extends plugin
 
   /* Return plugin informations for acl handling 
       #FIME There possibly some attributes that can be combined to one acl. */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"     => _("Proxy"),

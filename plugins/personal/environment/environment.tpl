@@ -110,7 +110,7 @@
      <td colspan=2>
       <br>
 {render acl=$gotoProfileFlagLACL}
-      <input type="checkbox" name="gotoProfileFlagL" id="gotoProfileFlagL" value="L"  {$gotoProfileFlagLCHK}>
+      <input type="checkbox" name="gotoProfileFlagL" id="gotoProfileFlagL" value="L" {$gotoProfileFlagLCHK}>
 {/render}
       <label for="gotoProfileFlagL">{t}Resolution changeable during session{/t}</label>
      </td>

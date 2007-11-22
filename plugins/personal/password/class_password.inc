@@ -134,7 +134,7 @@ class password extends plugin
   {
   }
 
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plDescription"     => _("User password"),

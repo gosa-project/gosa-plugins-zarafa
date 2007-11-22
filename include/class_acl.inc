@@ -41,7 +41,7 @@ class acl extends plugin
     if (isset($this->attrs['gosaAclEntry'])){
       for ($i= 0; $i<$this->attrs['gosaAclEntry']['count']; $i++){
         $acl= $this->attrs['gosaAclEntry'][$i];
-        $this->gosaAclEntry= array_merge($this->gosaAclEntry, $this->explodeACL($acl));
+        $this->gosaAclEntry= array_merge($this->gosaAclEntry, acl::explodeACL($acl));
       }
     }
     ksort($this->gosaAclEntry);
@@ -103,7 +103,7 @@ class acl extends plugin
       $this->roles[$role_id]['acls'] =array();
       for ($i= 0; $i < $attrs['gosaAclTemplate']['count']; $i++){
         $acl= $attrs['gosaAclTemplate'][$i];
-        $this->roles[$role_id]['acls'] = array_merge($this->roles[$role_id]['acls'],$this->explodeACL($acl));
+        $this->roles[$role_id]['acls'] = array_merge($this->roles[$role_id]['acls'],acl::explodeACL($acl));
       }
       $this->roles[$role_id]['description'] = $dsc;
       $this->roles[$role_id]['cn'] = $attrs['cn'][0];
@@ -774,7 +774,7 @@ class acl extends plugin
   }
 
 
-  function explodeACL($acl)
+  static function explodeACL($acl)
   {
     list($index, $type)= split(':', $acl);
     $a= array( $index => array("type" => $type,
@@ -805,7 +805,7 @@ class acl extends plugin
   }
 
 
-  function extractMembers($acl,$role = FALSE)
+  static function extractMembers($acl,$role = FALSE)
   {
     global $config;
     $a= array();
@@ -849,7 +849,7 @@ class acl extends plugin
   }
 
 
-  function extractACL($acl)
+  static function extractACL($acl)
   {
     /* Rip acl off the string, seperate by ',' and place it in an array */
     $as= preg_replace('/^[^:]+:[^:]+:[^:]*:(.*)$/', '\1', $acl);
@@ -1081,7 +1081,7 @@ class acl extends plugin
 
   
   /* Return plugin informations for acl handling */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("ACL"),

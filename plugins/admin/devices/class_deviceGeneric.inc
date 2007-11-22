@@ -219,7 +219,7 @@ class deviceGeneric extends plugin
 
 
   /* Return plugin informations for acl handling  */
-  public function plInfo()
+  public static function plInfo()
   {
     return (array(
           "plShortName"   => _("Generic"),

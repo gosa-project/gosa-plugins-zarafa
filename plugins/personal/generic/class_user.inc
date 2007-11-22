@@ -1350,7 +1350,7 @@ class user extends plugin
   }
 
 
-  function plInfo()
+  static function plInfo()
   {
   
     $govattrs= array(

@@ -1321,7 +1321,7 @@ class environment extends plugin
 
   /* Return plugin informations for acl handling 
 #FIXME these ACLs should work for groups too */ 
-  function plInfo()
+  static function plInfo()
   {
     return (array("plShortName"     => _("Environment"),
           "plDescription"   => _("Environment settings"),         // Description

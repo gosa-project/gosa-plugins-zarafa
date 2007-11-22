@@ -679,7 +679,7 @@ class servdhcp extends goService
 
 
   /* Return plugin informations for acl handling */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("DHCP service"),

@@ -332,7 +332,7 @@ class opengwAccount extends plugin
 
  /* Return plugin informations for acl handling 
       #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */	
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"     => _("Opengroupware"),

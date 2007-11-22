@@ -1435,7 +1435,7 @@ class plugin
   }
 
 
-  function plInfo()
+  static function plInfo()
   {
     return array();
   }

@@ -827,7 +827,7 @@ class gofaxAccount extends plugin
 
   /* Return plugin informations for acl handling 
       #FIXME some attributes are still missing in this plugin acls */
-  function plInfo()
+  static function plInfo()
   {
     return (array(  
           "plShortName"     => _("Fax"),

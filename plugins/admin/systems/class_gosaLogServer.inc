@@ -85,7 +85,7 @@ class gosaLogServer extends goService{
   } 
 
   /* Return plugin informations for acl handling */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("GOsa logging service"),

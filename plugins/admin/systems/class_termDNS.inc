@@ -828,7 +828,7 @@ class termDNS extends plugin
 
 
   /* Return plugin informations for acl handling  */ 
-  function plInfo()
+  static function plInfo()
   {
     $tmp =  array(
         "plShortName"   => _("DNS"),

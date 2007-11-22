@@ -1100,7 +1100,7 @@ class sambaAccount extends plugin
   }
 
   
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"     => _("Samba"),

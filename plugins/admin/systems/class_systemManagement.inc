@@ -1368,7 +1368,7 @@ class systems extends plugin
 
   /* !! Incoming dummy acls, required to defined acls for incoming objects
    */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("Incoming objects"),

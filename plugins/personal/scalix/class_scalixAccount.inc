@@ -391,7 +391,7 @@ class scalixAccount extends plugin
   }
 
 
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plDescription"     => _("Scalix account"),

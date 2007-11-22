@@ -731,7 +731,7 @@ class conference extends plugin
 
 
   /* Return plugin informations for acl handling */
-  function plInfo()
+  static function plInfo()
   {
     return (array(
           "plShortName"   => _("Conference"),
