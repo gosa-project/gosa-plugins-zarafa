@@ -31,7 +31,7 @@ if (!$remove_lock){
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/log_tabs.png'), _("System log view")).$display;
+	$display= print_header(get_template_path('images/logview.png'), _("System log view")).$display;
 
 	/* Store changes  in session */
 	$_SESSION['log_tabs']= $log_tabs;
