@@ -40,7 +40,7 @@
 						</td>
 						<td>
 {render acl=$FAIpriorityACL}
-						    <select id="FAIpriority" name="FAIpriority" title="{t}Choose a priority{/t}">
+						    <select id="FAIpriority" name="FAIpriority" title="{t}Choose a priority. Low values result in earlyer, high values in later excecution.{/t}">
                 				{html_options options=$FAIprioritys selected=$FAIpriority}
             				</select>
 {/render}
