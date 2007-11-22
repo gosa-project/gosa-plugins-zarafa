@@ -216,7 +216,6 @@ class LDAP{
         $basedn= LDAP::convert($basedn);
   
       $start = microtime();
-
       $this->sr = @ldap_list($this->cid, LDAP::fix($basedn), $filter,$attrs);
       $this->error = @ldap_error($this->cid);
       $this->resetResult();
@@ -276,8 +275,12 @@ class LDAP{
       if($this->hasres){
         if ($this->start == 0)
         {
-          $this->start = 1;
-          $this->re= @ldap_first_entry($this->cid, $this->sr);
+          if ($this->sr){
+            $this->start = 1;
+            $this->re= @ldap_first_entry($this->cid, $this->sr);
+          } else {
+            return array();
+          }
         } else {
           $this->re= @ldap_next_entry($this->cid, $this->re);
         }
@@ -816,7 +819,6 @@ class LDAP{
         if ($info= @ldap_get_values_len($this->cid, $ei, "$name")){
           $data= $info[0];
         }
-
       }
     }
     if($r_array==0)
