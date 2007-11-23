@@ -479,7 +479,7 @@ class termDNS extends plugin
     if(!empty($this->macAddress) && $this->dhcp_is_Account && 
         $this->macAddress != $this->orig_macAddress && 
         in_array("mac:".$this->macAddress,$this->used_ip_mac)){
-      $message[] =_("The specified MAC address is already in use.");
+      print_red(sprintf(_("The specified MAC address '%s' for this system '%s' is already in use."),$this->macAddress,$this->cn));
     }
 
     /* Check if ip must be given
