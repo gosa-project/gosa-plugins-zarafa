@@ -19,7 +19,7 @@ class gosa_logview extends plugin
   var $sort   = 1;
 
   var $sort_direction = "down";
-  var $fields         = array("action","timestamp","object","user","result","repeated");
+  var $fields         = array("action","timestamp","user","objecttype","object","result","repeated");
   var $range          = 25;
   var $view_logged    = FALSE;
 
@@ -84,6 +84,8 @@ class gosa_logview extends plugin
     $smarty->assign("mode2", "");
     $smarty->assign("mode3", "");
     $smarty->assign("mode4", "");
+    $smarty->assign("mode5", "");
+    $smarty->assign("mode6", "");
 
     /* Assign select option content */
     foreach( array("server", "action", "time", "regex") as $type){
@@ -160,7 +162,7 @@ class gosa_logview extends plugin
     
     if(!preg_match("/r/",$acls)){
       $res = "<tr>
-        <td colspan=4>
+        <td colspan=".count($this->fields).">
         "._("You have insufficient permissions to view syslog entries.")."
         </td>
         </tr>";
@@ -263,6 +265,7 @@ class gosa_logview extends plugin
           $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
           $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
           $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
+          $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
           $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
           $res.="   <td>".$line['result']."</td>";
           if($line['repeated'] == 1){
@@ -337,7 +340,7 @@ class gosa_logview extends plugin
       }
 
       $this->sort= (int)$_GET['sort'];
-      if ($this->sort < 0 || $this->sort > 4){
+      if ($this->sort < 0 || $this->sort > count($this->fields)){
         $this->sort= 0;
       }
     }
