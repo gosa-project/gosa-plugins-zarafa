@@ -879,22 +879,22 @@ class user extends plugin
 
         /* Load the new uploaded Photo */
         if(!$handle  =  imagick_blob2image($this->photoData))  {
-          new log("debug","users/".get_class($this),"",array(),"Could not access uploaded image");
+          new log("debug","users/".get_class($this),$this->dn,array(),"Could not access uploaded image");
         }
 
         /* Resizing image to 147x200 and blur */
         if(!imagick_resize($handle,147,200,IMAGICK_FILTER_GAUSSIAN,0)){
-          new log("debug","users/".get_class($this),"",array(),"Could not resize uploaded image");
+          new log("debug","users/".get_class($this),$this->dn,array(),"Could not resize uploaded image");
         }
 
         /* Converting image to JPEG */
         if(!imagick_convert($handle,"JPEG")) {
-          new log("debug","users/".get_class($this),"",array(),"Could not convert uploaded image to jepg");
+          new log("debug","users/".get_class($this),$this->dn,array(),"Could not convert uploaded image to jepg");
         }
 
         /* Creating binary Code for the Image */
         if(!$dump = imagick_image2blob($handle)){
-          new log("debug","users/".get_class($this),"",array(),"Could not create new user image");
+          new log("debug","users/".get_class($this),$this->dn,array(),"Could not create new user image");
         }
 
         /* Sending Image */
