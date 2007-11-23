@@ -183,7 +183,8 @@ class tabs
       $title= preg_replace("/ /","&nbsp;",$title);
 
       /* Take care about notifications */
-      if ($this->by_object[$class]->pl_notify){
+      $obj = $this->by_object[$class];
+      if ( $this->by_object[$class]->pl_notify && ($obj->is_account || $obj->ignore_account)){
         $notify= "id=\"notify\"";
       } else {
         $notify= "";
