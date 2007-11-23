@@ -114,9 +114,6 @@ class log {
   function check($entry = array())
   {
     $msgs = array();
-  #  if(!isset($entry['user']) || empty($entry['user'])){
-  #    $msgs[] = "Currently active user is empty.";
-  #  }
 
     if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view","security","debug"))){
       $msgs[] = "Invalid option specified '".$entry['action']."'";
