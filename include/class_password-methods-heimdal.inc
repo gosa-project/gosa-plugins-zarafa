@@ -30,12 +30,13 @@ class passwordMethodheimdal extends passwordMethod
 
 	function is_available()
 	{
+    #TODO
     # Check if heimdal information is available
     # in configuration and return true/false
     #
-    # In particular, we need the hook to feed kadmin
+    # In particular, we need the "heimdal_keygen" to feed kadmin in order to return "true".
     #
-    return true;
+    return false;
 	}
 
 
@@ -52,14 +53,19 @@ class passwordMethodheimdal extends passwordMethod
 
   function remove_from_parent()
   {
+    #TODO
     # Find and remove kerberos entry below $this->dn
+    # See https://oss.gonicus.de/labs/gosa/ticket/223
   }
 
 
   function set_password()
   {
+    #TODO
     # Add or modify kerberos entry below $this->dn
-
+    # See https://oss.gonicus.de/labs/gosa/ticket/223
+    # Order: create entries, then call the heimdal_keygen hook with the realm (returned by generate_hash)
+    #        to let it add the missing kerberos keys.
   }
 
 
@@ -81,7 +87,10 @@ class passwordMethodheimdal extends passwordMethod
 
   function configure()
   {
-    echo "Show dialog";
+    #TODO
+    # * Handle POST's from and for this dialog
+    # * Return filled template for the config sub-dialog.
+    # See https://oss.gonicus.de/labs/gosa/ticket/223
   }
 
 }
