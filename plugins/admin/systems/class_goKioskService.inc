@@ -90,6 +90,9 @@ class goKioskService extends goService{
             'exists'  => TRUE);
         $this->gotoKioskProfiles[] = $tmp;
       }
+      if(!is_writeable($this->baseDir)){
+        print_red(sprintf(_("Can't save new kiosk profiles, possibly permission denied for folder: '%s'."),$this->baseDir));
+      }
     }
 
     $only_once = true;
