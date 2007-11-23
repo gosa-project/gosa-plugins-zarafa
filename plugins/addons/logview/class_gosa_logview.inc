@@ -19,7 +19,7 @@ class gosa_logview extends plugin
   var $sort   = 1;
 
   var $sort_direction = "down";
-  var $fields         = array("action","timestamp","user","result","repeated");
+  var $fields         = array("action","timestamp","object","user","result","repeated");
   var $range          = 25;
   var $view_logged    = FALSE;
 
@@ -255,10 +255,15 @@ class gosa_logview extends plugin
             $col= "background-color: #F5F5F5;";
           }
 
+          $base = ", ".substr($this->config->current['BASE'],0,5)."...";
+          $user = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['user']);
+          $object = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['object']);
+
           $res.=" <tr style=\"$col\">\n";
           $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
           $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
-          $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$line['user'])."</td>"; 
+          $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
+          $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
           $res.="   <td>".$line['result']."</td>";
           if($line['repeated'] == 1){
             $res.="   <td>-</td>";
