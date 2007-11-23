@@ -8,7 +8,7 @@
    <td width="33%">
     <table summary="">
      <tr>
-      <td><img class="center" alt="" align="middle" border=0 src="{$server_image}">&nbsp;<LABEL FOR="host">{t}Show hosts{/t}</LABEL></td>
+      <td><img class="center" alt="" align="middle" border=0 src="{$server_image}">&nbsp;<LABEL FOR="server">{t}Show hosts{/t}</LABEL></td>
       <td>
        <select id="server" name="server" size=1 onChange="mainform.submit()">
 		       {html_options options=$servers selected=$server}
@@ -79,13 +79,13 @@
 {if $search_result ne ""}
  <table summary="" style="width:100%; vertical-align:top; text-align:left; border:1px solid #B0B0B0;" cellpadding=2 cellspacing=1 rules="cols">
   <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
-   <td><a href=main.php{$plug}&amp;sort=0&amp;direction={$direction}>{t}Action{/t} {$mode0}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=1&amp;direction={$direction}>{t}Date{/t} {$mode1}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=2&amp;direction={$direction}>{t}User{/t} {$mode2}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=3&amp;direction={$direction}>{t}Object type{/t} {$mode3}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=4&amp;direction={$direction}>{t}Object{/t} {$mode4}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=5&amp;direction={$direction}>{t}Message{/t} {$mode5}</a></td>
-   <td><a href=main.php{$plug}&amp;sort=6&amp;direction={$direction}>{t}Repeated{/t} {$mode6}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=0&amp;direction={$direction}">{t}Action{/t} {$mode0}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=1&amp;direction={$direction}">{t}Date{/t} {$mode1}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=2&amp;direction={$direction}">{t}User{/t} {$mode2}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=3&amp;direction={$direction}">{t}Object type{/t} {$mode3}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=4&amp;direction={$direction}">{t}Object{/t} {$mode4}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=5&amp;direction={$direction}">{t}Message{/t} {$mode5}</a></td>
+   <td><a href="main.php{$plug}&amp;sort=6&amp;direction={$direction}">{t}Repeated{/t} {$mode6}</a></td>
   </tr>
   {$search_result}
  </table>
@@ -103,6 +103,6 @@
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.search_for.focus();
+  focus_field('regex');
   -->
 </script>
