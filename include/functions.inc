@@ -1236,8 +1236,10 @@ function show_ldap_error($message, $addon= "")
       msg_dialog::display(_("LDAP error:"),$message,ERROR_DIALOG);
       #print_red (_("LDAP error:")." $message");
     } else {
-      msg_dialog::display(sprintf(_("LDAP error in plugin '%s':"),"<i>".$addon."</i>"),$message,ERROR_DIALOG);
-      #print_red ("$addon<br><br><b>"._("LDAP error:")."</b> $message");
+      if(!preg_match("/No such object/i",$message)){
+        msg_dialog::display(sprintf(_("LDAP error in plugin '%s':"),"<i>".$addon."</i>"),$message,ERROR_DIALOG);
+#print_red ("$addon<br><br><b>"._("LDAP error:")."</b> $message");
+      }
     }
     return TRUE;
   } else {

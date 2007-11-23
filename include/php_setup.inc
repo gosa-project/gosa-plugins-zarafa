@@ -22,10 +22,6 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
 {
   global $error_collector,$config, $error_collector_mailto;
 
-  if(@class_exists("log")){
-    new log("debug","all",$errfile,array(),"Type:".$errno.", Message:".$errstr.", File:".$errfile.", Line: ".$errline);
-  }
-
   if(function_exists("gosa_log")){
     gosa_log($errno." ".$errstr." ".$errfile." ".$errline);
   }
@@ -47,15 +43,25 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
     }
   }
 
+  /* Error messages are hidden in GOsa, so we only send them to the logging class and abort here */
   if((isset($config->data))){ 
     if((isset($config->data['MAIN']['DISPLAYERRORS']))&&(!preg_match("/^true$/i",$config->data['MAIN']['DISPLAYERRORS']))){
 
+      
       /* Write to syslog */
-      new log("view","error","",array(),"PHP error: $errstr ($errfile, line $errline)");
+      if(!preg_match("/No such object/",$message)){
+        new log("view","error","",array(),"PHP error: $errstr ($errfile, line $errline)");
+      }
       return;
     }
   }
+  
+  /* Send all errors to logging class, except "Ldap : No such object" messages*/
+  if(@class_exists("log") && !preg_match("/No such object/",$message)){
+    new log("debug","all",$errfile,array(),"Type:".$errno.", Message:".$errstr.", File:".$errfile.", Line: ".$errline);
+  }
 
+ 
 
   /* Create header as needed */
   if ($error_collector == ""){
