@@ -23,6 +23,7 @@ class gosa_logview extends plugin
   var $range          = 25;
   var $view_logged    = FALSE;
 
+  var $timezone_offset  = 0;
 
   function gosa_logview (&$config, $dn= NULL)
   {
@@ -36,6 +37,9 @@ class gosa_logview extends plugin
        $this->$attr = $_SESSION['logview']['gosa_log'][$attr];
       }
     }
+
+    $tz = get_default_timezone();
+    $this->timezone_offset = $tz['value'] * 60 * 60 ;
   }
 
 
@@ -57,15 +61,17 @@ class gosa_logview extends plugin
         "4" => _("2 days"),   "5" => _("one week"),
         "6" => _("2 weeks"),  "7" => _("one month"));
 
+
+    $time = time();
     $date_select_ = array(
-        "0" => time() - 3600, 
-        "1" => time() - 21600,
-        "2" => time() - 43200,
-        "3" => time() - 86400,
-        "4" => time() - 172800,
-        "5" => time() - 604800,
-        "6" => time() - 1209600,
-        "7" => time() - 2419200);
+        "0" => $time - 3600, 
+        "1" => $time - 21600,
+        "2" => $time - 43200,
+        "3" => $time - 86400,
+        "4" => $time - 172800,
+        "5" => $time - 604800,
+        "6" => $time - 1209600,
+        "7" => $time - 2419200);
 
     $smarty= get_smarty();
     $smarty->assign("search_result", "");
@@ -204,7 +210,7 @@ class gosa_logview extends plugin
           $desc= "";
           $sort_sign="/\\";
         }
-        $end= date ("YmdHis");
+        $end= date ("YmdHis",time());
         $query_base= "  FROM 
           gosa_log 
           WHERE 
@@ -263,7 +269,7 @@ class gosa_logview extends plugin
 
           $res.=" <tr style=\"$col\">\n";
           $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
-          $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
+          $res.="   <td>".date("H:i:s d.m.Y",($line['timestamp'] + $this->timezone_offset))."</td>";
           $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
           $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
           $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
