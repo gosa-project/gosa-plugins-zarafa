@@ -603,8 +603,10 @@ class environment extends plugin
     }
 
     /* Append List to smarty*/
-    $smarty->assign("gotoLogonScripts",   $this->printOutLogonScripts());
-    $smarty->assign("gotoLogonScriptKeys",array_flip($this->printOutLogonScripts()));
+    $ls = $this->printOutLogonScripts();
+    $smarty->assign("gotoLogonScripts",  $ls);
+    $smarty->assign("gotoLogonScriptKeys",array_flip($ls));
+    $smarty->assign("gotoLogonScriptKeysCnt",count($ls));
 
     /* In this section server shares will be defined 
      * A user can select one of the given shares and a mount point

@@ -227,10 +227,10 @@
       <input type="submit" name="gotoLogonScriptNew" value="{t}Add{/t}">
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptEdit"  value="{t}Edit{/t}">
+      <input type="submit" name="gotoLogonScriptEdit"  value="{t}Edit{/t}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptDel"  value="{t}Delete{/t}" >
+      <input type="submit" name="gotoLogonScriptDel"  value="{t}Delete{/t}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
 {/render}
      </td>
     </tr>
