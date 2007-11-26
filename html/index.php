@@ -295,18 +295,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
       /* Restore filter settings from cookie, if available 
        */
       if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->data['MAIN']['SAVE_FILTER'])){
-        $cookie_vars= array("MultiDialogFilters","CurrentMainBase","plug");
-        foreach($cookie_vars as $var){
-          if(isset($_COOKIE[$var])){
-            $_SESSION[$var] = unserialize(base64_decode($_COOKIE[$var]));
-          }elseif(isset($HTTP_COOKIE_VARS[$var])){
-            $_SESSION[$var] = unserialize(base64_decode($HTTP_COOKIE_VARS[$var]));
+
+        if(isset($_COOKIE['GOsa_Filter_Settings']) || isset($HTTP_COOKIE_VARS['GOsa_Filter_Settings'])){
+
+          if(isset($_COOKIE['GOsa_Filter_Settings'])){
+            $cookie_all = unserialize(base64_decode($_COOKIE['GOsa_Filter_Settings']));
+          }else{
+            $cookie_all = unserialize(base64_decode($HTTP_COOKIE_VARS['GOsa_Filter_Settings']));
           }
-        }
-        if(isset($_COOKIE['plug'])){
-          $plug = $_COOKIE['plug'];
-        }elseif($HTTP_COOKIE_VARS['plug']){
-          $plug = $HTTP_COOKIE_VARS['plug'];
+          if(isset($cookie_all[$ui->dn])){
+            $cookie = $cookie_all[$ui->dn];
+            $cookie_vars= array("MultiDialogFilters","CurrentMainBase","plug");
+            foreach($cookie_vars as $var){
+              if(isset($cookie[$var])){
+                $_SESSION[$var] = $cookie[$var];
+              }
+            }
+            if(isset($cookie['plug'])){
+              $plug =$cookie['plug'];
+            }
+          }
         }
       }
 
