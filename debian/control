@@ -73,3 +73,14 @@ Description: Dutch online help for GOsa
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
 
+Package: smarty-render
+Architecture: all
+Depends: smarty
+Suggests: gosa
+Description: Provide ACL based rendering for Smarty
+ smarty-render provides acl based rendering support for Smarty,
+ the popular PHP templating engine (http://smarty.php.net/). This
+ module is mainly used by GOsa.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
