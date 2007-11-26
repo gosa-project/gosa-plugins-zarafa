@@ -91,8 +91,11 @@ class divListSystemService extends MultiSelectWindow
   
       $WasAccount = $this->parent->plugins[$name] -> initially_was_account;    
   
+      $plug = $_GET['plug'];
+      $link = "<a href='?plug=".$plug."&amp;act=open&amp;id=".$name."'>".$entry['Message']."</a>";
+
       $field1 = array("string" => $str ,"attach" => "style='width:20px;'");
-      $field2 = array("string" => $entry['Message'] );
+      $field2 = array("string" => $link);
 
       $actions ="";
       if($entry['AllowStart'] && $WasAccount){

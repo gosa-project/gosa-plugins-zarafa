@@ -115,6 +115,14 @@ class ServerService extends plugin
       $this->ServiceStatusUpdate($type,$service);
     }
 
+    /* Handle actions linked via href */
+    if(isset($_GET['act']) && $_GET['act'] == "open" && isset($_GET['id'])){
+      $id = $_GET['id'];
+      if(isset($this->plugins[$id])){
+        $s_entry = $id;
+        $s_action = "EditSingleService";
+      } 
+    }
 
     /* Open service add dialog */
     if($s_action == "addNewService"){
