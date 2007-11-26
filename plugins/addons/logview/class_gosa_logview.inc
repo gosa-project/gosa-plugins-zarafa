@@ -25,6 +25,9 @@ class gosa_logview extends plugin
 
   var $timezone_offset  = 0;
 
+  var $uid_map = array();
+  
+
   function gosa_logview (&$config, $dn= NULL)
   {
     /* Include config object */
@@ -34,12 +37,18 @@ class gosa_logview extends plugin
     /* Restore last filter settings */
     foreach(array("action","server","time","regex") as $attr){
       if(isset($_SESSION['logview']['gosa_log'][$attr])){
-       $this->$attr = $_SESSION['logview']['gosa_log'][$attr];
+        $this->$attr = $_SESSION['logview']['gosa_log'][$attr];
       }
     }
 
     $tz = get_default_timezone();
     $this->timezone_offset = $tz['value'] * 60 * 60 ;
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->search("(&(objectClass=person)(uid=*))",array("uid","dn"));
+    while($attrs = $ldap->fetch()){
+      $this->uid_map[$attrs['dn']] = $attrs['uid'][0];
+    }
   }
 
 
@@ -264,7 +273,12 @@ class gosa_logview extends plugin
           }
 
           $base = ", ".substr($this->config->current['BASE'],0,5)."...";
-          $user = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['user']);
+  
+          if(isset($this->uid_map[$line['user']])){
+            $user = $this->uid_map[$line['user']];
+          }else{
+            $user = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['user']);
+          }
           $object = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['object']);
 
           $res.=" <tr style=\"$col\">\n";
