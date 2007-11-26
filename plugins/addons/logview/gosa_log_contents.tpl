@@ -3,7 +3,7 @@
 </div>
 <div class="contentboxb">
 
- <table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
+ <table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;" border=0>
   <tr>
    <td width="33%">
     <table summary="">
@@ -99,7 +99,7 @@
 {else}
   <b>{t}Search returned no results...{/t}</b>
 {/if}
-
+<input type='hidden' name='gosa_log_contents_posted' value='1'>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

@@ -303,61 +303,63 @@ class gosa_logview extends plugin
 
   function save_object()
   {
-    /* Get submitted range */	
-    if(isset($_POST['EntriesPerPage'])){
-      if(is_numeric($_POST['EntriesPerPage'])){
-        $this->range = $_POST['EntriesPerPage'];
-      }
-    }
+    if(isset($_POST['gosa_log_contents_posted'])){
 
-    /* Get actual select boxe values */
-    $logfilter_changed = FALSE;
-    foreach( array("server", "action","time","regex") as $type){
-      if(isset($_POST[$type])){
-        $this->$type = $_POST[$type];   
-      }
-    }
-
-    /* Filter regex values */
-    if ($this->regex == ""){
-      $this->regex= '*';
-    } else {
-      $new = preg_replace('/\*\**/', '*', $this->regex);
-      $this->regex= $new;
-    }
-
-    /* Set start value */
-    if (isset($_GET['start'])){
-      $this->start= (int)$_GET['start'];
-    }
-  
-    /* Reset page number if filter has changed */
-    if ($logfilter_changed > 0){
-      $this->start= 0;
-    }
-
-    /* Adapt sorting */
-    if (isset($_GET['sort'])){
-
-      if($_GET['direction'] == "up"){
-        $this->sort_direction = "down";
-      }else{
-        $this->sort_direction = "up";
+      /* Get submitted range */	
+      if(isset($_POST['EntriesPerPage'])){
+        if(is_numeric($_POST['EntriesPerPage'])){
+          $this->range = $_POST['EntriesPerPage'];
+        }
       }
 
-      $this->sort= (int)$_GET['sort'];
-      if ($this->sort < 0 || $this->sort > count($this->fields)){
-        $this->sort= 0;
+      /* Get actual select boxe values */
+      $logfilter_changed = FALSE;
+      foreach( array("server", "action","time","regex") as $type){
+        if(isset($_POST[$type])){
+          $this->$type = $_POST[$type];   
+        }
       }
+
+      /* Filter regex values */
+      if ($this->regex == ""){
+        $this->regex= '*';
+      } else {
+        $new = preg_replace('/\*\**/', '*', $this->regex);
+        $this->regex= $new;
+      }
+
+      /* Set start value */
+      if (isset($_GET['start'])){
+        $this->start= (int)$_GET['start'];
+      }
+
+      /* Reset page number if filter has changed */
+      if ($logfilter_changed > 0){
+        $this->start= 0;
+      }
+
+      /* Adapt sorting */
+      if (isset($_GET['sort'])){
+
+        if($_GET['direction'] == "up"){
+          $this->sort_direction = "down";
+        }else{
+          $this->sort_direction = "up";
+        }
+
+        $this->sort= (int)$_GET['sort'];
+        if ($this->sort < 0 || $this->sort > count($this->fields)){
+          $this->sort= 0;
+        }
+      }
+
+      /* Save attributes in Sessiob, so we are able to recontruct filter on plugin reload */
+      $_SESSION['logview']['gosa_log'] = array();
+      foreach(array("action","server","time","regex") as $attr){
+        $_SESSION['logview']['gosa_log'][$attr] = $this->$attr;
+      }
+
     }
-
-    /* Save attributes in Sessiob, so we are able to recontruct filter on plugin reload */
-    $_SESSION['logview']['gosa_log'] = array();
-    foreach(array("action","server","time","regex") as $attr){
-      $_SESSION['logview']['gosa_log'][$attr] = $this->$attr;
-    }
-
-
   }
 
 
