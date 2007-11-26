@@ -407,7 +407,7 @@ $cookie = array();
 
 if(isset($_COOKIE['GOsa_Filter_Settings'])){
   $cookie = unserialize(base64_decode($_COOKIE['GOsa_Filter_Settings']));
-}elseif($HTTP_COOKIE_VARS['GOsa_Filter_Settings']){
+}elseif(isset($HTTP_COOKIE_VARS['GOsa_Filter_Settings'])){
   $cookie = unserialize(base64_decode($HTTP_COOKIE_VARS['GOsa_Filter_Settings']));
 }
 if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->data['MAIN']['SAVE_FILTER'])){
