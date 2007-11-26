@@ -174,7 +174,7 @@ class log {
               ";
           $res = mysql_query($query,$con);
           if(!$res){
-            print_red(sprintf(_("Could not query database %s on server %s. Server ssys :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
+            print_red(sprintf(_("Could not query database %s on server %s. Server says :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
             return(FALSE);
           } 
         }
