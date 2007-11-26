@@ -77,7 +77,7 @@
 <br>
 
 {if $search_result ne ""}
- <table summary="" style="width:100%; vertical-align:top; text-align:left; border:1px solid #B0B0B0;" cellpadding=2 cellspacing=1 rules="cols">
+ <table style="width:100%;background-color: #B0B0B0;" cellspacing=1 cellpadding=2>
   <tr style="background-color: #E8E8E8; height:26px; font-weight:bold">
    <td><a href="main.php{$plug}&amp;sort=0&amp;direction={$direction}">{t}Action{/t} {$mode0}</a></td>
    <td><a href="main.php{$plug}&amp;sort=1&amp;direction={$direction}">{t}Date{/t} {$mode1}</a></td>
