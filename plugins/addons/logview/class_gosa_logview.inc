@@ -11,7 +11,7 @@ class gosa_logview extends plugin
   var $objectclasses  = array();
 
   var $server         = "";
-  var $action         = "view";
+  var $action         = "modify";
   var $time           = 2;
   var $regex          = "*";
 
