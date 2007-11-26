@@ -140,7 +140,7 @@ class gosa_logview extends plugin
      * Connect to currently selected server 
      ****/
     $cfg = $list_of_servers[$this->server];
-    $link = mysql_pconnect($this->server, $cfg['USER'], $cfg['PWD']);
+    $link = @mysql_pconnect($this->server, $cfg['USER'], $cfg['PWD']);
     if ($link === FALSE){
       print_red(_("Can't connect to log database, no logs can be shown!"));
       new log("debug","logview","",array(),@mysql_error());
