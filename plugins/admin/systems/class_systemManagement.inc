@@ -33,6 +33,9 @@ class systems extends plugin
   var $start_pasting_copied_objects = FALSE;
   var $CopyPasteHandler   = NULL;
 
+  /* Arp hanlding activated */
+  var $arp_handling_active = FALSE;
+
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -46,6 +49,12 @@ class systems extends plugin
     if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
+
+    /* Check whether the arp handling active or not */
+    if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
+      $this->arp_handling_active = TRUE;
+    }
+
   }
 
 
@@ -1265,10 +1274,6 @@ class systems extends plugin
 
   function get_system_type($attrs)
   {
-    if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
-      $enable_arp_device_handling = TRUE;
-    }
- 
     $classes = $attrs['objectClass'];
 
     $type= "";
@@ -1284,7 +1289,7 @@ class systems extends plugin
       $type= "phone";
     }elseif (in_array_ics('goServer', $classes)){
       $type= "server";
-    }elseif (in_array_ics('GOhard', $classes) && !isset($attrs['gotoMode']) && $enable_arp_device_handling){
+    }elseif (in_array_ics('GOhard', $classes) && !isset($attrs['gotoMode']) && $this->arp_handling_active){
       $type= "ArpNewDevice";
     }elseif (in_array_ics('GOhard', $classes)){
       $type= "NewDevice";
