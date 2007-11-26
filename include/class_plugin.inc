@@ -1215,11 +1215,15 @@ class plugin
     $cfg= &$this->config->current;
 
     /* check if there are special server configurations for snapshots */
-    if(isset($cfg['SNAPSHOT_SERVER'])){
+
+    if(isset($cfg['SERVER']) && isset($cfg['SNAPSHOT_SERVER']) && $cfg['SERVER'] == $cfg['SNAPSHOT_SERVER']){
+      $ldap_to    = $ldap;
+    }elseif(isset($cfg['SNAPSHOT_SERVER'])){
       $server       = $cfg['SNAPSHOT_SERVER'];
       $user         = $cfg['SNAPSHOT_USER'];
       $password     = $cfg['SNAPSHOT_PASSWORD'];
       $snapldapbase = $cfg['SNAPSHOT_BASE'];
+
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to -> cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Method get available snapshots with dn '%s' failed."),$this->dn));
