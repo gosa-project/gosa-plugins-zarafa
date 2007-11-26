@@ -457,7 +457,9 @@ class workstartup extends plugin
   function selectFriendlyClasses(){
     $tmp=array();
 
-    if($this->FAIdebianMirror == "inherited") return($tmp);
+    if($this->FAIdebianMirror == "inherited" || $this->FAIrelease == ""){
+      return($tmp);
+    }
 
     /* check if the current release exists,
         else select the first one ..
