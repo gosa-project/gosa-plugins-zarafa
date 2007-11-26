@@ -38,15 +38,7 @@ class divListSystemService extends MultiSelectWindow
     /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
-    $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
-      }
-    }
-    $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
+    $listhead = "<div style='background:#F0F0F9;height:16px;padding:0px;'>".
     " <input type='image' align='middle' src='images/select_new_server.png' class='center' 
         name='addNewService' alt='"._("Add service")."' title='"._("Add new service")."'>&nbsp;".
     " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
