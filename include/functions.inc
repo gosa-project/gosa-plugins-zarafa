@@ -1100,6 +1100,10 @@ function print_red()
         }
         $string= preg_replace('/<br>/', ' ', $string);
         $addmsg= _("Please check your input and fix the error. Press 'OK' to close this message box.");
+        $addmsg = "";
+      }
+      if(empty($addmsg)){
+        $addmsg = _("Error");
       }
       msg_dialog::display($addmsg, $string,ERROR_DIALOG);
       return;
