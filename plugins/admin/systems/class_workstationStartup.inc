@@ -865,9 +865,11 @@ class workstartup extends plugin
         $i ++ ; 
   
         $desc = ""; 
-        foreach($this->FAIclassInfo[$class] as $types ){
-          if(isset($types['desc'][0])){
-            $desc.= $types['desc'][0]." ";
+        if(isset($this->FAIclassInfo[$class])){
+          foreach($this->FAIclassInfo[$class] as $types ){
+            if(isset($types['desc'][0])){
+              $desc.= $types['desc'][0]." ";
+            }
           }
         }
         if(!empty($desc)){
