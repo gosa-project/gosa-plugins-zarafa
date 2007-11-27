@@ -210,6 +210,9 @@ class gosa_logview extends plugin
         
 
         $start = $date_select_[$this->time];
+        
+        $sql_regex =trim(preg_replace("/\*/","%",$this->regex));
+        $sql_regex = "%".trim($sql_regex,"%")."%";
 
         /* Order setting */
         if ($this->sort_direction == "down"){
@@ -222,8 +225,10 @@ class gosa_logview extends plugin
         $end= date ("YmdHis",time());
         $query_base= "  FROM 
           gosa_log 
-          WHERE 
-          result like '".preg_replace("/\*/","%",$this->regex)."' ";
+          WHERE
+          timestamp <= $end AND timestamp >= $start 
+          AND  
+          result like '".$sql_regex."' OR user like '".$sql_regex."' ";
 
 
         if($this->action != "!ALL"){
@@ -232,10 +237,6 @@ class gosa_logview extends plugin
             action like '".$this->action."'
             ";
         } 
-
-        $query_base .="
-          AND  
-          timestamp <= $end AND timestamp >= $start";
 
         /* Get number of entries */
         $query= "SELECT COUNT(*)".$query_base.";";
