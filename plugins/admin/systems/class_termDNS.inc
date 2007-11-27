@@ -211,7 +211,7 @@ class termDNS extends plugin
     $display= "";
 
     $smarty->assign("staticAddress", ""); 
-    $smarty->assign("autonet", "");
+    $smarty->assign("autonet", $this->autonet);
  
     /* Check for autonet button */
     if ($this->autonet && isset($_POST['autonet'])){

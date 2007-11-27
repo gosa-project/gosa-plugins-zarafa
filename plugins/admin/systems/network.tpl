@@ -20,8 +20,7 @@
             <input	name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
 {/render}
             {if $autonet==true}
-					    <input type="submit" name="autonet" value="{t}Autodetect{/t}" 
-                {if ($ipHostNumberACL !="" || $macAddressACL!= "")} disabled {/if}>
+					    <input type="submit" name="autonet" value="{t}Autodetect{/t}">
             {/if}
           </td>
 				</tr>
