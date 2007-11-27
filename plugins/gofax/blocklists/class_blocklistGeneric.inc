@@ -287,9 +287,6 @@ class blocklistGeneric extends plugin
   }
 
 
-
-
-
   function getCopyDialog()
   { 
     $smarty = get_smarty();
@@ -308,18 +305,43 @@ class blocklistGeneric extends plugin
     }
   }
 
+  
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
+
+    /* We will not be able to rename edited blocklists */
+    $this->readonly = TRUE;
+
+    /* Get blocklist type and defined numbers */
+    if (in_array("goFaxSBlock",$source['objectClass'])){
+      if(isset($source["goFaxSBlocklist"])){
+        for ($i= 0; $i<$source["goFaxSBlocklist"]["count"]; $i++){
+          $this->goFaxBlocklist[]= $source["goFaxSBlocklist"][$i];
+        }
+      }
+      $this->type= BLOCK_LIST_SEND;
+    } elseif (in_array("goFaxRBlock",$source['objectClass'])){
+      if(isset($source["goFaxRBlocklist"])){
+        for ($i= 0; $i<$source["goFaxRBlocklist"]["count"]; $i++){
+          $this->goFaxBlocklist[]= $source["goFaxRBlocklist"][$i];
+        }
+      }
+      $this->type= BLOCK_LIST_RECEIVE;
+    }
+
+    /* Set base */
+    if ($this->dn == "new"){
+      if(isset($_SESSION['CurrentMainBase'])){
+        $this->base= $_SESSION['CurrentMainBase'];
+      }else{
+        $ui= get_userinfo();
+        $this->base= dn2base($ui->dn);
+      }
+    } else {
+      $this->base =preg_replace ("/^[^,]+,[^,]+,[^,]+,/","",$this->dn);
+    }
   }
-
-
-
-
-
-
-
-
 
 
   /* Return plugin informations for acl handling */
