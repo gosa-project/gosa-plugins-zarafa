@@ -858,7 +858,7 @@ class systems extends plugin
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
-        if ($hide_apply){
+        if (!$hide_apply){
           $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
           $display.= "&nbsp;\n";
         }
