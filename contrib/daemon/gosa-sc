@@ -31,29 +31,37 @@ use Crypt::Rijndael;
 use XML::Simple;
 use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
+use File::Spec;
+use Cwd;
+
 
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
-my ($server_address, $server_ip, $server_port, $server_passwd, $server_cipher, $server_timeout);
-my ($my_address, $my_ip, $my_port, $input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
+my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
+my ($client_address, $client_ip, $client_port, $mac_address);
+my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
 
 # default variables
 $known_hosts = {};
 $foreground = 0 ;
-$my_ip = "10.89.1.155";
-$my_port = "10010";
 %cfg_defaults =
 ("general" =>
     {"log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
 
     },
+"client" => 
+    {"client_ip" => [\$client_ip, "10.89.1.155"],
+    "client_port" => [\$client_port, "10010"],
+    "mac_address" => [\$mac_address, ""],
+    },
 "server" =>
     {"server_ip" => [\$server_ip, "10.89.1.155"],
     "server_port" => [\$server_port, "10001"],
     "server_passwd" => [\$server_passwd, "tester"],
     "server_timeout" => [\$server_timeout, 10],
-    }
+    "server_domain" => [\$server_domain, "intranet.gonicus.de"],
+    },
     );
 
 
@@ -128,8 +136,12 @@ sub check_cmdline_param () {
     my $err_config;
     my $err_counter = 0;
     if( not defined( $cfg_file)) {
-        $err_config = "please specify a config file";
-        $err_counter += 1;
+        #$err_config = "please specify a config file";
+        #$err_counter += 1;
+        my $cwd = getcwd;
+        my $name = "gosa-sc.cfg";
+        $cfg_file = File::Spec->catfile( $cwd, $name );
+        print STDERR "no conf file specified\n   try to use default: $cfg_file\n";        
     }
     if( $err_counter > 0 ) {
         &usage( "", 1 );
@@ -205,10 +217,50 @@ usage: $0 [-hvf] [-c config]
 
     -h        : this (help) message
     -c <file> : config file
+    -f        : foreground, process will not be forked to background
     -v        : be verbose (multiple to increase verbosity)
 EOF
         }
         print "\n" ;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_server_addresses
+#   PARAMETERS:  
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub get_server_addresses {
+    my $domain= shift;
+    my @result;
+    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
+
+    my $output= `$dig_cmd 2>&1`;
+    open (PIPE, "$dig_cmd 2>&1 |");
+    while(<PIPE>) {
+        chomp $_;
+        # If it's not a comment
+        if($_ =~ m/^[^;]/) {
+            my @matches= split /\s+/;
+
+            # Push hostname with port
+            if($matches[3] eq 'SRV') {
+                push @result, $matches[7].':'.$matches[6];
+            } elsif ($matches[3] eq 'A') {
+                my $i=0;
+
+                # Substitute the hostname with the ip address of the matching A record
+                foreach my $host (@result) {
+                    if ((split /\:/, $host)[0] eq $matches[0]) {
+                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
+                    }
+                    $i++;
+                }
+            }
+        }
+    }
+    close(PIPE);
+    return @result;
 }
 
 
@@ -225,44 +277,53 @@ sub register_at_server {
     my $new_server_passwd = &create_passwd();
     my $new_server_cipher;
 
+    # detect all client accepted events
+    opendir(DIR, "/etc/gosac/events") 
+        or daemon_log("cannot find directory /etc/gosac/events!\ngosac starts without any accepting events!", 1);
+    my $file_name;
+    my @events = ();
+    while(defined($file_name = readdir(DIR))){
+        if ($file_name eq "." || $file_name eq "..") {
+            next;
+        }
+        push(@events, $file_name);
+    }
+    my $events = join(",", @events);
+    #print "debug: events: $events\n";
+
+
     # fill in all possible servers
-    my @servers = ($server_address);
+    my @servers;
+    if (defined $server_domain) {
+        my @tmp_servers = &get_server_addresses($server_domain);
+        foreach my $server (@tmp_servers) { unshift(@servers, $server); }
+    }
+    # add server address from config file at first position of server list
+    if (defined $server_address) {
+        unshift(@servers, $server_address);
+    }
+    daemon_log("found servers in configuration file and via DNS:", 5);
+    foreach my $server (@servers) {
+        daemon_log("\t$server", 5);
+    }
 
     my ($rout, $wout, $reg_server);
     foreach my $server (@servers) {
-        #   sende xml anfrage
-        my $msg_hash = &create_xml_hash("here_i_am", $my_address, $server_address);
-        &add_content2xml_hash($msg_hash, "new_passwd", $new_server_passwd);
+        # create msg hash
+        my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
+        &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
+        &add_content2xml_hash($register_hash, "mac_address", $mac_address);
+        &add_content2xml_hash($register_hash, "events", $events);
 
-        # fetch header for logging
-        my $header = &get_content_from_xml_hash($msg_hash, "header");
-        # generiere xml string
-        my $msg_xml = &create_xml_string($msg_hash);
-        # erzeuge ein ciphering object
-        $server_cipher = &create_ciphering($server_passwd);
-
-        # encrypt xml msg
-        my $crypted_msg = &encrypt_msg($msg_xml, $server_cipher);
-        # öffne socket
-        my $socket = &open_socket($server);
-        if(not defined $socket){
-            print "cannot send '$header'-msg to $server , server not reachable\n";
-            last;
-        }
-        # versende xml msg
-        print $socket $crypted_msg."\n";
-        # schließe socket
-        close $socket;
-
-        daemon_log("send '$header'-msg to $server", 5);
-        daemon_log("crypted_msg:\n\t$crypted_msg", 7);
-
+        # send xml hash to server with general server passwd
+        my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);
+        
+        # sending fails, no sens to wait for response
+        if ($answer ne "done") { next; }
+    
         # waiting for response
-        daemon_log("waiting for response...", 5);
+        daemon_log("waiting for response...\n", 5);
         my $nf = select($rout=$rbits, $wout=$wbits, undef, $server_timeout);
-        # error handling
-        if($nf < 0 ) {
-        }
 
         # something is coming in
         if(vec $rout, fileno $input_socket, 1) {
@@ -287,6 +348,7 @@ sub register_at_server {
             
             # validate acknowledge msg from server
             $new_server_cipher = &create_ciphering($new_server_passwd);
+            my $msg_hash;
             eval {
                 my $decrypted_msg = &decrypt_msg($crypted_msg, $new_server_cipher);
                 $msg_hash = $xml->XMLin($decrypted_msg, ForceArray=>1);
@@ -295,10 +357,15 @@ sub register_at_server {
                 daemon_log("cannot register at $server", 1);
                 daemon_log("ERROR: do not understand the message:\n\t$crypted_msg" , 5);   
             } else {
+                print "debug: register_at_server: incoming msg konnte geparst werden\n";
                 my $header = &get_content_from_xml_hash($msg_hash, "header");
+                print "debug: header: $header\n";
                 if($header eq "registered") {
                     $reg_server = $server;
                     last;
+                } elsif($header eq "denied") {
+                    my $reason = (&get_content_from_xml_hash($msg_hash, "denied"))[0];
+                    daemon_log("registration at $server denied: $reason", 1);
                 } else {
                     daemon_log("cannot register at $server", 1);
                 }
@@ -317,6 +384,7 @@ sub register_at_server {
     }
 
     # update the global available variables
+    $server_address = $reg_server;
     $server_passwd = $new_server_passwd;
     $server_cipher = $new_server_cipher;
     return;
@@ -330,12 +398,12 @@ sub register_at_server {
 #  DESCRIPTION:
 #===============================================================================
 sub create_xml_hash {
-    my ($header, $source, $target) = @_;
+    my ($header, $source, $target, $header_value) = @_;
     my $hash = {
             header => [$header],
             source => [$source],
             target => [$target],
-            $header => [],
+            $header => [$header_value],
     };
     daemon_log("create_xml_hash:", 7),
     chomp(my $tmp = Dumper $hash);
@@ -353,7 +421,7 @@ sub create_xml_hash {
 sub create_xml_string {
     my ($xml_hash) = @_ ;
     my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-    $xml_string =~ s/[\s]+//g;
+    $xml_string =~ s/[\n]+//g;
     daemon_log("create_xml_string:\n\t$xml_string\n", 7);
     return $xml_string;
 }
@@ -378,18 +446,36 @@ sub add_content2xml_hash {
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_content_from_xml_hash
-#   PARAMETERS:  
-#      RETURNS:
-#  DESCRIPTION:
+#   PARAMETERS:  ref : reference to the xml hash
+#                string: key of the value you want
+#      RETURNS:  STRING AND ARRAY
+#  DESCRIPTION:  if key of the hash is either 'header', 'target' or 'source' the 
+#                function returns a string cause it is expected that these keys
+#                do just have one value, all other keys returns an array!!!
 #===============================================================================
 sub get_content_from_xml_hash {
     my ($xml_ref, $element) = @_;
     my $result = $xml_ref->{$element};
-    if( @$result == 1) {
-        $result = @$result[0];
+    if( $element eq "header" || $element eq "target" || $element eq "source") {
+        return @$result[0];
     }
-    return $result;
+    return @$result;
 }
+
+#    my ($xml_ref, $element) = @_;
+#    if (exists $xml_ref->{$element}) {
+#        my $result = $xml_ref->{$element};
+#        if( $element eq "header" || $element eq "target" || $element eq "source") {
+#            return @$result[0];
+#        } else {
+#            return @$result;
+#        }
+#        
+#    } else {
+#        my $result = ();
+#        return @$result;
+#    }
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -401,7 +487,7 @@ sub get_content_from_xml_hash {
 sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
-    $msg =~ s/[\s]+//g;
+    $msg =~ s/[\n]+//g;
     my $msg_length = length($msg);
     my $multiplier = int($msg_length / 16) + 1;
     my $extension = 16*$multiplier - $msg_length;
@@ -470,33 +556,50 @@ sub create_passwd {
 #  DESCRIPTION:  ????
 #===============================================================================
 sub send_msg_hash2address {
-    my ($msg_hash, $address) = @_ ;
+    my ($msg_hash, $address, $passwd) = @_ ;
 
     # fetch header for logging
     my $header = &get_content_from_xml_hash($msg_hash, "header");
+
     # generiere xml string
     my $msg_xml = &create_xml_string($msg_hash);
+
     # hole das entsprechende passwd aus dem hash
-    my $passwd = $known_hosts->{$address}->{passwd};
+    if(not defined $passwd) {
+        if(exists $known_hosts->{$address}) {
+            $passwd = $known_hosts->{$address}->{passwd};
+        } elsif ($address eq $server_address) {
+            $passwd = $server_passwd;
+        } else {
+            daemon_log("$address not known, neither as server nor as client", 1);
+            return "failed";
+        }
+    }
+
     # erzeuge ein ciphering object
     my $act_cipher = &create_ciphering($passwd);
+
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
+
     # öffne socket
     my $socket = &open_socket($address);
     if(not defined $socket){
-        print "cannot send '$header'-msg to $address , server not reachable\n";
-        return;
+        daemon_log("cannot open socket to $address, server not reachable", 1);
+        daemon_log("cannot send '$header'-msg", 1);
+        return "failed";
     }
+
     # versende xml msg
     print $socket $crypted_msg."\n";
+
     # schließe socket
     close $socket;
 
     daemon_log("send '$header'-msg to $address", 5);
     daemon_log("crypted_msg:\n\t$crypted_msg", 7);
 
-    return
+    return "done";
 }
 
 
@@ -557,7 +660,7 @@ sub read_from_socket {
 sub print_known_hosts_hash {
     my ($tmp) = @_;
     print "####################################\n";
-    print "# status of $known_hosts\n";
+    print "# status of known_hosts\n";
     my $hosts;
     my $host_hash;
     my @hosts = keys %$known_hosts;
@@ -575,7 +678,12 @@ sub print_known_hosts_hash {
     return;
 }
 
-
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
 sub create_known_hosts_entry {
     my ($hostname) = @_;
     $known_hosts->{$hostname} = {};
@@ -585,18 +693,25 @@ sub create_known_hosts_entry {
     return;  
 }
 
+
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
 sub update_known_hosts_entry {
     my ($hostname, $status, $passwd, $timestamp) = @_;
-    my ($Sekunden, $Minuten, $Stunden, $Monatstag, $Monat,
-    $Jahr, $Wochentag, $Jahrestag, $Sommerzeit) = localtime(time);
-    $Stunden = $Stunden < 10 ? $Stunden = "0".$Stunden : $Stunden;
-    $Minuten = $Minuten < 10 ? $Minuten = "0".$Minuten : $Minuten;
-    $Sekunden = $Sekunden < 10 ? $Sekunden = "0".$Sekunden : $Sekunden;
-    $Monat+=1;
-    $Monat = $Monat < 10 ? $Monat = "0".$Monat : $Monat;
-    $Monatstag = $Monatstag < 10 ? $Monatstag = "0".$Monatstag : $Monatstag;
-    $Jahr+=1900;
-    my $t = "$Jahr$Monat$Monatstag$Stunden$Minuten$Sekunden";
+    my ($seconds, $minutes, $hours, $monthday, $month,
+    $year, $weekday, $yearday, $sommertime) = localtime(time);
+    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+    $month+=1;
+    $month = $month < 10 ? $month = "0".$month : $month;
+    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+    $year+=1900;
+    my $t = "$year$month$monthday$hours$minutes$seconds";
 
     if($status) {
         $known_hosts->{$hostname}->{status} = $status;
@@ -612,6 +727,208 @@ sub update_known_hosts_entry {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
+sub add_content2known_hosts {
+    my ($hostname, $element, $content) = @_;
+    my ($seconds, $minutes, $hours, $monthday, $month,
+    $year, $weekday, $yearday, $sommertime) = localtime(time);
+    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+    $month+=1;
+    $month = $month < 10 ? $month = "0".$month : $month;
+    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+    $year+=1900;
+    my $t = "$year$month$monthday$hours$minutes$seconds";
+    
+    $known_hosts->{$hostname}->{$element} = $content;
+    $known_hosts->{$hostname}->{timestamp} = $t;
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
+sub process_incoming_msg {
+    my ($crypted_msg) = @_;
+    if(not defined $crypted_msg) {
+        daemon_log("function 'process_incoming_msg': got no msg", 7);
+    }
+    $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
+    $crypted_msg = $1;
+    my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
+    daemon_log("msg from host:", 1);
+    daemon_log("\t$host", 1);
+    daemon_log("crypted msg:", 7);
+    daemon_log("\t$crypted_msg", 7);
+
+    # try to decrypt incoming msg
+    my ($msg, $msg_hash);
+    eval{
+        $msg = &decrypt_msg($crypted_msg, $server_cipher);
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+    };
+    if($@) {
+        daemon_log("ERROR: incoming msg cannot be decrypted with server passwd", 1);
+        return;
+    } 
+
+    my $header = &get_content_from_xml_hash($msg_hash, "header");
+    
+    daemon_log("header from msg:", 1);
+    daemon_log("\t$header", 1);
+    daemon_log("msg to process:", 7);
+    daemon_log("\t$msg", 7);
+
+    if ($header eq 'new_ldap_config') { &new_ldap_config($msg_hash)}
+    elsif ($header eq 'ping') { &got_ping($msg_hash) }
+    elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
+    elsif ($header eq 'new_passwd') { &new_passwd()}
+    else { daemon_log("ERROR: no function assigned to msg $header", 5) }
+
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
+sub update_status { 
+    my ($new_status) = @_ ;
+    #print "debug: update_status: client_address: $client_address\n";
+    #print "debug: update_status: server_address: $server_address\n";
+    my $out_hash = &create_xml_hash("update_status", $client_address, $server_address);      
+    &add_content2xml_hash($out_hash, "update_status", $new_status);
+    &send_msg_hash2address($out_hash, $server_address);
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  
+#   PARAMETERS:
+#      RETURNS: 
+#  DESCRIPTION: 
+#===============================================================================
+sub server_leaving {
+    my ($msg_hash) = @_ ;
+    my $source = &get_content_from_xml_hash("source");
+    my $header = &get_content_from_xml_hash("header");
+    
+    daemon_log("gosa daemon $source is going down, cause registration procedure", 1);
+    my $server_address = "none";
+    my $server_passwd = "none";
+    my $server_cipher = "none";
+
+    # reinitialization of default values in config file
+    &read_configfile;
+    
+    # registrated at new daemon
+    &register_at_server();
+       
+    return;   
+}
+
+
+sub got_ping {
+    my ($msg_hash) = @_ ;
+
+    my $source = &get_content_from_xml_hash($msg_hash, 'source');
+    my $target = &get_content_from_xml_hash($msg_hash, 'target');
+    my $header = &get_content_from_xml_hash($msg_hash, 'header');    
+    
+    &add_content2known_hosts(hostname=>$target, status=>$header);
+    
+    my $out_hash = &create_xml_hash("got_ping", $target, $source);
+    &send_msg_hash2address($out_hash, $source, $server_passwd);
+
+    return;
+}
+
+
+sub new_ldap_config {
+    my ($msg_hash) = @_ ;
+
+    my @gotoLdapServer = &get_content_from_xml_hash($msg_hash, "new_ldap_config");
+    print Dumper @gotoLdapServer;
+
+
+    return;
+
+}
+
+
+sub execute_event {
+    my ($msg_hash)= @_;
+    my $configdir= '/etc/gosac/events/';
+    my $result;
+
+    my $header = &get_content_from_xml_hash($msg_hash, 'header');
+    my $source = &get_content_from_xml_hash($msg_hash, 'source');
+    my $target = &get_content_from_xml_hash($msg_hash, 'target');
+
+
+    if((not defined $source)
+            && (not defined $target)
+            && (not defined $header)) {
+        daemon_log("ERROR: Entries missing in XML msg for gosa events under /etc/gosac/events");
+    } else {
+        my $parameters="";
+        my @params = &get_content_from_xml_hash($msg_hash, $header);
+        my $params = join(", ", @params);
+        daemon_log("execute_event: got parameters: $params", 5);
+
+        if (@params) {
+            foreach my $param (@params) {
+                my $param_value = (&get_content_from_xml_hash($msg_hash, $param))[0];
+                daemon_log("execute_event: parameter -> value: $param -> $param_value", 7);
+                $parameters.= " ".$param_value;
+            }
+        }
+
+        my $cmd= $configdir.$header."$parameters";
+        daemon_log("execute_event: executing cmd: $cmd", 7);
+        $result= "";
+        open(PIPE, "$cmd 2>&1 |");
+        while(<PIPE>) {
+            $result.=$_;
+        }
+        close(PIPE);
+    }
+
+    # process the event result
+
+
+    return;
+}
+
+
+sub new_passwd {
+    # my ($msg_hash) = @_ ;
+    my $new_server_passwd = &create_passwd();
+    my $new_server_cipher = &create_ciphering($new_server_passwd);
+
+    my $out_hash = &create_xml_hash("new_passwd", $client_address, $server_address, $new_server_passwd);
+    
+    &send_msg_hash2address($out_hash, $server_address, $server_passwd);
+
+    $server_passwd = $new_server_passwd;
+    $server_cipher = $new_server_cipher;
+    return; 
+}
+
 
 
 
@@ -626,8 +943,8 @@ GetOptions("h|help" => \&usage,
            );
 
 #  read and set config parameters
-&read_configfile;
 &check_cmdline_param ;
+&read_configfile;
 &check_pid;
 
 # restart daemon log file
@@ -647,23 +964,25 @@ if( 0 != $pid ) {
 }
 
 # prepare variables
-$my_address = $my_ip.":".$my_port;
-$server_address = $server_ip.":".$server_port;
+if (defined $server_ip && defined $server_port) {
+    $server_address = $server_ip.":".$server_port;
+}
+$client_address = $client_ip.":".$client_port;
 
 # setup xml parser
 $xml = new XML::Simple();
 
 # create input socket
 $rbits = $wbits = $ebits = "";
-$input_socket = IO::Socket::INET->new(LocalPort => $my_port,
+$input_socket = IO::Socket::INET->new(LocalPort => $client_port,
         Type => SOCK_STREAM,
         Reuse => 1,
         Listen => 20,
         ); 
 if(not defined $input_socket){
-    daemon_log("cannot be a tcp server at $my_port : $@\n");
+    daemon_log("cannot be a tcp server at $client_port : $@\n");
 } else {
-    daemon_log("start server:\n\t$server_ip:$my_port",1) ;
+    daemon_log("start server:\n\t$server_ip:$client_port",1) ;
     vec($rbits, fileno $input_socket, 1) = 1;
     vec($wbits, fileno $input_socket, 1) = 1;
 }
@@ -671,6 +990,12 @@ if(not defined $input_socket){
 # register at server
 &register_at_server();
 
+
+##############
+# Debugging
+#############
+#sleep(2);
+#&update_status("ich_bin_ein_neuer_status");
 
 ###################################
 #everything ready, okay, lets start
@@ -685,9 +1010,24 @@ while(1) {
 
     # something is coming in
     if(vec $rout, fileno $input_socket, 1) {
-        print "debug: es ist was rein gekommen\n";
-    }
+        my $client = $input_socket->accept();
+        my $other_end = getpeername($client);
+        
+        if(not defined $other_end) {
+            daemon_log("client cannot be identified: $!");
+        } else {
+            my ($port, $iaddr) = unpack_sockaddr_in($other_end);
+            my $actual_ip = inet_ntoa($iaddr);
+            daemon_log("accept client from $actual_ip", 5);
+            my $in_msg = &read_from_socket($client);
+            if(defined $in_msg){
+                chomp($in_msg);
+                $in_msg = $in_msg.".".$actual_ip;
+                &process_incoming_msg($in_msg);
 
+            }
+        }
+    }
 }
  
 
