@@ -85,7 +85,6 @@
    <td><a href="main.php{$plug}&amp;sort=3&amp;direction={$direction}">{t}Object type{/t} {$mode3}</a></td>
    <td><a href="main.php{$plug}&amp;sort=4&amp;direction={$direction}">{t}Object{/t} {$mode4}</a></td>
    <td><a href="main.php{$plug}&amp;sort=5&amp;direction={$direction}">{t}Message{/t} {$mode5}</a></td>
-   <td><a href="main.php{$plug}&amp;sort=6&amp;direction={$direction}">{t}Repeated{/t} {$mode6}</a></td>
   </tr>
   {$search_result}
  </table>

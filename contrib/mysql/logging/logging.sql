@@ -11,7 +11,7 @@ CREATE TABLE `gosa_log` (
   `changes` blob NOT NULL,
   `result` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
-  KEY `action` (`action`),
   KEY `timestamp` (`timestamp`)
+  KEY `action` (`action`),
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

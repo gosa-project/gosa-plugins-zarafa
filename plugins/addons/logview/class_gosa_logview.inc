@@ -207,14 +207,7 @@ class gosa_logview extends plugin
         new log("debug","logview","",array(),@mysql_error());
       } else {
 
-        
-
-        $start = $date_select_[$this->time];
-        
-        $sql_regex =trim(preg_replace("/\*/","%",$this->regex));
-        $sql_regex = "%".trim($sql_regex,"%")."%";
-
-        /* Order setting */
+        /* Prepare order setting */
         if ($this->sort_direction == "down"){
           $desc= "DESC";
           $sort_sign = "<img src='images/sort_down.png' alt='\/' class='center' title='down' border=0>";
@@ -222,44 +215,51 @@ class gosa_logview extends plugin
           $desc= "";
           $sort_sign = "<img src='images/sort_up.png' alt='/\' class='center' title='up' border=0>";
         }
-        $end= date ("YmdHis",time());
-        $query_base= "  FROM 
-          gosa_log 
-          WHERE
-          timestamp <= $end AND timestamp >= $start 
-          AND  
-          result like '".$sql_regex."' OR user like '".$sql_regex."' ";
 
+        /* Get start time */
+        $start = $date_select_[$this->time];
+        
+        /* Prepare search filter */
+        $sql_regex =trim(preg_replace("/\*/","%",$this->regex));
+        $sql_regex = "%".trim($sql_regex,"%")."%";
 
+        /* Create search filter */
+        $query_base= "FROM  gosa_log WHERE timestamp >= $start ";
+  
+        /* Append action filter */
         if($this->action != "!ALL"){
-          $query_base .="
-            AND
-            action like '".$this->action."'
-            ";
-        } 
+          $query_base .=" AND action like '".$this->action."' ";
+        }
+
+        /* Append search filter */
+        if($sql_regex != "%%"){
+          $query_base .=" AND ( result like '".$sql_regex."' OR user like '".$sql_regex."') ";
+        }
 
         /* Get number of entries */
-        $query= "SELECT COUNT(*)".$query_base.";";
+        $query= "SELECT COUNT(`user`) ".$query_base.";";
         $result = mysql_query($query);
         if(!$result){
           new log("debug","logview","",array(),@mysql_error());
         }
         $line= mysql_fetch_array($result, MYSQL_ASSOC);
-        $count= $line['COUNT(*)'];
+        $count= $line['COUNT(`user`)'];
         if ($count > 25){
           $smarty->assign("range_selector", range_selector($count, $this->start, $this->range,"EntriesPerPage"));
         } else {
           $smarty->assign("range_selector", "");
         }
 
-        /* Query results */
-        $query= "SELECT count(`action`) as 'repeated',`user`,`result`,`timestamp`,`action`,`action`,`objecttype`,`object`".$query_base." GROUP BY `action`,`result`,`timestamp` ORDER BY ".$this->fields[$this->sort]." $desc LIMIT ".$this->start.",".$this->range.";";
+        /* Query results that will be displayed */
+        $query= "SELECT * ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
-
         if(!$result){
           new log("debug","logview","",array(),@mysql_error());
         }
+
+        echo "<pre>".$query."</pre>";
+
         /* Display results */
         $mod= 0;
 
@@ -289,11 +289,11 @@ class gosa_logview extends plugin
           $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
           $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
           $res.="   <td>".$line['result']."</td>";
-          if($line['repeated'] == 1){
-            $res.="   <td>-</td>";
-          }else{
-            $res.="   <td>".($line['repeated']-1)."</td>";
-          }
+#         if($line['repeated'] == 1){
+#           $res.="   <td>-</td>";
+#         }else{
+#           $res.="   <td>".($line['repeated']-1)."</td>";
+#         }
           $res.=" </tr>\n";
         }
         mysql_close($link);
