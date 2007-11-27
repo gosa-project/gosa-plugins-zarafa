@@ -258,8 +258,6 @@ class gosa_logview extends plugin
           new log("debug","logview","",array(),@mysql_error());
         }
 
-        echo "<pre>".$query."</pre>";
-
         /* Display results */
         $mod= 0;
 
