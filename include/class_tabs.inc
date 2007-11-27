@@ -307,7 +307,7 @@ class tabs
   function saveCopyDialog()
   {
 	  foreach ($this->by_object as &$obj){
-		  if($obj->is_account){
+		  if($obj->is_account || $obj->ignore_account){
 			  $obj->saveCopyDialog();
 		  }
 	  }
@@ -321,7 +321,7 @@ class tabs
     $ret = "";
     $this->SubDialog = false;
     foreach ($this->by_object as &$obj){
-      if($obj->is_account){
+      if($obj->is_account || $obj->ignore_account){
         $tmp = $obj->getCopyDialog();
         if($tmp['status'] == "SubDialog"){
           $this->SubDialog = true;

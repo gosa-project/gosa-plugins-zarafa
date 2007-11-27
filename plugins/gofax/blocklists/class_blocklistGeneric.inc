@@ -290,6 +290,28 @@ class blocklistGeneric extends plugin
 
 
 
+  function getCopyDialog()
+  { 
+    $smarty = get_smarty();
+    $smarty->assign("cn",$this->cn);
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = get_post('cn');
+    }
+  }
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+  }
 
 
 

@@ -400,7 +400,7 @@ class CopyPasteHandler {
   {
     $ret = array();
     foreach($this->current['object']->by_object as $obj){
-      if($obj->is_account){
+      if($obj->is_account || $obj->ignore_account){
         $ret = array_merge($ret , $obj->check());
       }
     }

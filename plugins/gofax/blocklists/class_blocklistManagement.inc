@@ -5,18 +5,12 @@ class blocklist extends plugin
   var $plHeadline= "FAX Blocklists";
   var $plDescription= "This does something";
 
-  /* CLI vars */
-  var $cli_summary= "Handling of GOfax block lists";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   var $blocklists       = array();
   var $DivListBlocklist = NULL;
   var $CopyPasteHandler = NULL;
 
   var $start_pasting_copied_objects = FALSE;
   
-
   function blocklist (&$config, $ui)
   {
     $this->ui     = $ui;
@@ -239,7 +233,7 @@ class blocklist extends plugin
       Delete MULTIPLE entries confirmed
      ********************/
 
-    /* Confirmation for deletion has been passed. Users should be deleted. */
+    /* Confirmation for deletion has been passed. */
     if (isset($_POST['delete_multiple_blocklist_confirm'])){
 
       /* Remove user by user and check acls before removeing them */
@@ -428,7 +422,7 @@ class blocklist extends plugin
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->blocklists[$s_entry]['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"blocklistGeneric","","users");
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"faxblocktabs","FAXBLOCKTABS","gofaxlist");
     }
 
     /* Add entries to queue */
@@ -442,10 +436,10 @@ class blocklist extends plugin
         $dn = $this->blocklists[$id]['dn'];
 
         if($s_action == "copy_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS","users");
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","faxblocktabs","FAXBLOCKTABS","gofaxlist");
         }
         if($s_action == "cut_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS","users");
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","faxblocktabs","FAXBLOCKTABS","gofaxlist");
         }
       }
     }
@@ -460,24 +454,13 @@ class blocklist extends plugin
 
       /* Load entry from queue and set base */
       $this->CopyPasteHandler->load_entry_from_queue();
-      $this->CopyPasteHandler->SetVar("base",$this->DivListUsers->selectedBase);
+      $this->CopyPasteHandler->SetVar("base",$this->DivListBlocklist->selectedBase);
 
       /* Get dialog */
       $data = $this->CopyPasteHandler->execute();
 
-      /* Set CPPasswordChange to s_entry which indicates that this entry requires a new password. */
-      if(isset($_POST['passwordTodo']) && ($_POST['passwordTodo'] == "new")){
-        $s_entry = $this->CopyPasteHandler->last_entry();
-        $this->reload();
-        foreach($this->blocklists as $key => $entry){
-          if($entry['dn'] == $s_entry){
-            $this->CPPasswordChange = $key;
-          }
-        }
-      }
-
       /* Return dialog data */
-      if(!empty($data) && $this->CPPasswordChange == ""){
+      if(!empty($data)){
         return($data);
       }
     }
