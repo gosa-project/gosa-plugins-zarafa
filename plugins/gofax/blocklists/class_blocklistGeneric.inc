@@ -19,7 +19,7 @@ class blocklistGeneric extends plugin
   var $view_logged = FALSE;
   var $attributes = array("cn","description");
   
-  
+  var $orig_dn;  
 
   function __construct($config,$dn = "new")
   {
@@ -27,6 +27,7 @@ class blocklistGeneric extends plugin
 
     /* Set default list type */
     $this->type = BLOCK_LIST_SEND;
+    $this->orig_dn = $this->dn;  
 
     /* Load defined numbers */
     if($dn != "new"){
@@ -160,7 +161,9 @@ class blocklistGeneric extends plugin
   public function save_object()
   {
     if(isset($_POST['blocklist_posted'])){
+      $tmp_cn = $this->cn;
       plugin::save_object();
+      $this->cn = $tmp_cn;
 
       /* Save base, since this is no LDAP attribute */
       $tmp = $this->get_allowed_bases();
@@ -169,14 +172,14 @@ class blocklistGeneric extends plugin
           $this->base= $_POST['base'];
         }
       }
-      foreach($this->attributes as $attr){
-        if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
+      $tmp = $this->attributes;
+      $tmp[] = "type";
+      foreach($tmp as $attr){
+        if(in_array($attr,array("cn","type")) && $this->readonly){
+          continue;
+        }elseif(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
           $this->$attr = $_POST[$attr];
         }
-      }
-      if(isset($_POST['type']) && $this->acl_is_writeable("type",$this->readonly)){
-        
-        $this->type = $_POST['type'];
       }
     }
   }
@@ -223,7 +226,6 @@ class blocklistGeneric extends plugin
   {
     plugin::save();
 
-
     /* Type selection */
     if ($this->type == BLOCK_LIST_SEND){
       $type= "goFaxSBlocklist";
@@ -241,6 +243,10 @@ class blocklistGeneric extends plugin
     /* Create base */
     $this->dn = "cn=".$this->cn.",ou=gofax,ou=systems,".$this->base;
 
+    /* Move object in necessary */
+    if($this->orig_dn != "new" && $this->dn != $this->orig_dn){
+      $this->move($this->orig_dn,$this->dn);
+    }
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
