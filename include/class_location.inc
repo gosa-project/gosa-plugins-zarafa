@@ -26,6 +26,7 @@ $class_mapping= array(
                 "connectivity" => "plugins/personal/connectivity/class_connectivity.inc",
                 "blocklist" => "plugins/gofax/blocklists/class_blocklistManagement.inc",
                 "divListBlocklist" => "plugins/gofax/blocklists/class_divListBlocklists.inc",
+                "blocklistGeneric" => "plugins/gofax/blocklists/class_blocklistGeneric.inc",
                 "gofaxAccount" => "plugins/gofax/faxaccount/class_gofaxAccount.inc",
                 "faxreport" => "plugins/gofax/faxreports/class_faxreport.inc",
                 "addressbook" => "plugins/addons/addressbook/class_addressbook.inc",
