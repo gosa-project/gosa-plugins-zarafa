@@ -9,7 +9,7 @@
       <td>
 
 {render acl=$cnACL}
-       <input name="cn" id="cn" size=25 maxlength=60 {$mode} value="{$cn}" title="{t}Name of blocklist{/t}">
+       <input name="cn" id="cn" size=25 maxlength=60 value="{$cn}" title="{t}Name of blocklist{/t}">
 {/render}
       </td>
      </tr>
@@ -18,7 +18,7 @@
       <td>
 {render acl=$baseACL}
       <select id="base" size="1" name="base" title="{t}Choose subtree to place group in{/t}">
-       {html_options options=$bases selected=$base_select}
+       {html_options options=$bases selected=$base}
       </select>
 {/render}
 
@@ -95,17 +95,12 @@
  </tr>
 </table>
 
-
 <p class="plugbottom">
   <input type=submit name="edit_finish" style="width:80px" value="{t}Ok{/t}">
-  &nbsp;
-  {if $apply eq "1"}
   <input type=submit name="edit_apply" value="{t}Apply{/t}">
-  &nbsp;
-  {/if}
   <input type=submit name="edit_cancel" value="{t}Cancel{/t}">
 </p>
-
+<input type='hidden' name='blocklist_posted' value="1">
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
