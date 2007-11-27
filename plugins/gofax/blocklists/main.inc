@@ -2,7 +2,6 @@
 if ($remove_lock){
         if(isset($_SESSION['blocklist'])){
                 $blocklist= $_SESSION['blocklist'];
-                $blocklist->remove_lock();
                 del_lock ($ui->dn);
                 sess_del ('blocklist');
         }

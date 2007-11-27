@@ -18,16 +18,15 @@ class blocklistGeneric extends plugin
   var $readonly = FALSE;
   var $view_logged = FALSE;
   var $attributes = array("cn","description");
-  
-  var $orig_dn;  
 
+  var $ignore_account = TRUE;
+  
   function __construct($config,$dn = "new")
   {
     plugin::plugin($config,$dn);
 
     /* Set default list type */
     $this->type = BLOCK_LIST_SEND;
-    $this->orig_dn = $this->dn;  
 
     /* Load defined numbers */
     if($dn != "new"){
@@ -238,14 +237,6 @@ class blocklistGeneric extends plugin
     /* Add list */
     if (count($this->goFaxBlocklist)){
       $this->attrs[$type]= $this->goFaxBlocklist;
-    }
-
-    /* Create base */
-    $this->dn = "cn=".$this->cn.",ou=gofax,ou=systems,".$this->base;
-
-    /* Move object in necessary */
-    if($this->orig_dn != "new" && $this->dn != $this->orig_dn){
-      $this->move($this->orig_dn,$this->dn);
     }
 
     /* Write back to ldap */

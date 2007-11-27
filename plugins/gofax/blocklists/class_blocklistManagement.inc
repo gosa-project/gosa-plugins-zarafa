@@ -14,6 +14,8 @@ class blocklist extends plugin
   var $DivListBlocklist = NULL;
   var $CopyPasteHandler = NULL;
 
+  var $start_pasting_copied_objects = FALSE;
+  
 
   function blocklist (&$config, $ui)
   {
@@ -22,6 +24,11 @@ class blocklist extends plugin
     $this->config = &$config;
     $this->base = $_SESSION['CurrentMainBase']; 
     $this->DivListBlocklist = new divListBlocklist($this->config,$this);
+
+    /* Initialize copy&paste queue */
+    if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){
+      $this->CopyPasteHandler= new CopyPasteHandler($this->config);
+    }
   }
 
 
@@ -62,9 +69,15 @@ class blocklist extends plugin
         $s_action="new";
       }elseif(preg_match("/^remove_multiple_blocklists/",$key)){
         $s_action="del_multiple";
+      }elseif(preg_match("/^copy/",$key)){
+        $s_action = "copy";
+        $s_entry= preg_replace("/^copy_/i", "", $key);
+      }elseif(preg_match("/^cut/",$key)){
+        $s_action = "cut";
+        $s_entry= preg_replace("/^cut_/i", "", $key);
       }
-    }
 
+    }
     if((isset($_GET['act']))&&($_GET['act']=="edit_entry")){
       $s_action ="edit";
       $s_entry  = $_GET['id'];
@@ -72,21 +85,17 @@ class blocklist extends plugin
 
     $s_entry  = preg_replace("/_.$/","",$s_entry);
 
-    
 
-
-    
-    
     /* handle C&P from layers menu */
-#   if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
-#     $s_action = "copy_multiple";
-#   }
-#   if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
-#     $s_action = "cut_multiple";
-#   }
-#   if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
-#     $s_action = "editPaste";
-#   }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_cut_systems/",$_POST['menu_action'])){
+      $s_action = "cut_multiple";
+    }
+    if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
+      $s_action = "editPaste";
+    }
 
 
     /* Create options */
@@ -97,6 +106,16 @@ class blocklist extends plugin
     /* handle remove from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
+    }
+
+
+    /***************
+      Handle copy & paste  
+     ***************/
+
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
     }
 
 
@@ -128,7 +147,7 @@ class blocklist extends plugin
       if (count ($message) == 0){
 
         $this->dialog->save ();
-      
+
         if (!isset($_POST['edit_apply'])){
           del_lock ($this->dn);
           $this->dn= "";
@@ -140,8 +159,8 @@ class blocklist extends plugin
         show_errors ($message);
       }
     }
-   
- 
+
+
     /***************
       Create a new blocklist (dialog)
      ***************/
@@ -149,7 +168,7 @@ class blocklist extends plugin
     /* Create new blocklist? */
     if ($s_action=="new"){
       $this->dn= "new";
-      $this->dialog = new blocklistGeneric($this->config,$this->dn);
+      $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
       $this->dialog->set_acl_base($this->base);
     }
 
@@ -168,7 +187,7 @@ class blocklist extends plugin
         add_lock ($this->dn, $this->ui->dn);
       }
       $_SESSION['objectinfo']= trim($this->dn);
-      $this->dialog = new blocklistGeneric($this->config,$this->dn);
+      $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
       $this->dialog->set_acl_base($this->dn);
     }    
 
@@ -177,7 +196,7 @@ class blocklist extends plugin
       Display dialog  
      ***************/
 
-    if(is_object($this->dialog) && ($this->dialog instanceof blocklistGeneric)){
+    if(is_object($this->dialog) && ($this->dialog instanceof faxblocktabs)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
@@ -225,11 +244,10 @@ class blocklist extends plugin
 
       /* Remove user by user and check acls before removeing them */
       foreach($this->dns as $key => $dn){
-        $acl = $this->ui->get_permissions($dn, "blocklist/blocklist");
-        if (preg_match('/d/', $acl)){
+        if (preg_match("/d/",$this->ui->get_permissions($this->dn,"gofaxlist/blocklistGeneric"))){
           $this->dn = $dn;
-          $this->dialog = new blocklistGeneric($this->config,$this->dn);
-          $this->dialog->remove_from_parent();
+          $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
+          $this->dialog->delete();
           $this->dialog = NULL;
         } else {
           print_red (sprintf(_("You are not allowed to delete the blocklist '%s'!"),$dn));
@@ -284,10 +302,11 @@ class blocklist extends plugin
 
     /* Finally delete blocklist */
     if (isset($_POST['delete_blocklist_confirm'])){
-      if ($this->acl_is_removeable()){
-        $this->dialog = new blocklistGeneric($this->config,$this->dn);
-        $this->dialog->remove_from_parent();
+      if (preg_match("/d/",$this->ui->get_permissions($this->dn,"gofaxlist/blocklistGeneric"))){
+        $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
+        $this->dialog->delete();
         $this->dialog = NULL;
+        del_lock ($this->dn);
       } else {
         print_red (_("You have no permission to remove this blocklist."));
       }
@@ -366,7 +385,7 @@ class blocklist extends plugin
       $filter2= "(&(objectClass=goFaxRBlock)(|(cn=".$Regex.")(goFaxRBlocklist=".$Regex.")))";
       $res2= get_list($filter2, "gofaxlist", $base,array("*"), $Flags);
     }
-   
+
     $this->blocklists = array_merge($res,$res2);
 
     /* appen && sort */
@@ -392,6 +411,84 @@ class blocklist extends plugin
   {
     $this->DivListBlocklist->save_object();
   }
+
+
+
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->blocklists[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"blocklistGeneric","","users");
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->blocklists[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS","users");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS","users");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListUsers->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Set CPPasswordChange to s_entry which indicates that this entry requires a new password. */
+      if(isset($_POST['passwordTodo']) && ($_POST['passwordTodo'] == "new")){
+        $s_entry = $this->CopyPasteHandler->last_entry();
+        $this->reload();
+        foreach($this->blocklists as $key => $entry){
+          if($entry['dn'] == $s_entry){
+            $this->CPPasswordChange = $key;
+          }
+        }
+      }
+
+      /* Return dialog data */
+      if(!empty($data) && $this->CPPasswordChange == ""){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

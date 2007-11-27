@@ -42,7 +42,7 @@ class divListBlocklist extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 60;
+    $action_col_size = 100;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -193,7 +193,7 @@ class divListBlocklist extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 60;
+    $action_col_size = 100;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -215,7 +215,16 @@ class divListBlocklist extends MultiSelectWindow
       if(preg_match("/w/",$acl) && preg_match("/c/",$acl)){
         $action.= $this->GetSnapShotActions($val['dn']);
       }
-      
+     
+      /* Add copy & cut icons */
+      if(preg_match("/(c.*w|w.*c)/",$acl) && $this->parent->CopyPasteHandler){
+        $action .= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $action.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+
+ 
       /* Delete entry ; requires remove access */
       if(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='goFaxBlocklist_del_%KEY%' title='"._("Delete user")."'>";
@@ -231,7 +240,7 @@ class divListBlocklist extends MultiSelectWindow
       /* Cutted objects should be displayed in light grey */
       if(isset($this->parent->CopyPasteHandler->queue) && is_array($this->parent->CopyPasteHandler->queue)){
         foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
-          if($queue_data['dn'] == $acl_entry['dn']) {
+          if($queue_data['dn'] == $val['dn']) {
             $display = "<font color='#999999'>".$display."</font>";
             break;
           }
