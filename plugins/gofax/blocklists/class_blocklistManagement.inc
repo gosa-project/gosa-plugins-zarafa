@@ -150,6 +150,7 @@ class blocklist extends plugin
     if ($s_action=="new"){
       $this->dn= "new";
       $this->dialog = new blocklistGeneric($this->config,$this->dn);
+      $this->dialog->set_acl_base($this->base);
     }
 
 
@@ -168,6 +169,7 @@ class blocklist extends plugin
       }
       $_SESSION['objectinfo']= trim($this->dn);
       $this->dialog = new blocklistGeneric($this->config,$this->dn);
+      $this->dialog->set_acl_base($this->dn);
     }    
 
 
