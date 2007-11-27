@@ -18,7 +18,6 @@ class divListSystemService extends MultiSelectWindow
     $this->SetSummary(_("Installed services"));
 
     /* Result page will look like a headpage */
-//    $this->SetHeadpageMode();
     $this->SetInformation(_("This menu allows you to add, remove and configure the properties of a specific service."));
 
     /* Disable buttonsm */
@@ -30,7 +29,6 @@ class divListSystemService extends MultiSelectWindow
     $this->AddHeader(array("string"=>_("Service name")));
     $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:100px;border-right:0px;'"));
     $this->HideFilterPart();
-    $this->SetHeadpageMode();
   }
 
   function GenHeader()
