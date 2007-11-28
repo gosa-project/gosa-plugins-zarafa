@@ -103,6 +103,11 @@ class divListFai extends MultiSelectWindow
       $smarty->assign("selectedBranch",$this->selectedBranch);
       $smarty->assign("branchimage","images/branch.png");
       $smarty->assign("branches",$this->AvailableBranches);
+      $plug_id = 0;       
+      if(isset($_GET['plug'])){
+        $plug_id = $_GET['plug'];
+      }
+      $smarty->assign("plug_id",$plug_id);
       $str = $smarty->fetch(get_template_path('branch_selector.tpl', TRUE));
     }
     return($str);

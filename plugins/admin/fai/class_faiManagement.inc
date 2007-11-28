@@ -118,6 +118,16 @@ class faiManagement extends plugin
 			$s_entry = $_GET['edit_entry'];
 			$s_action = "edit";
 		}
+
+    if(isset($_GET['act']) && $_GET['act'] == "freeze_branch"){
+      $s_action = "freeze_branch";
+    }
+    if(isset($_GET['act']) && $_GET['act'] == "branch_branch"){
+      $s_action = "branch_branch";
+    }
+    if(isset($_GET['act']) && $_GET['act'] == "remove_branch"){
+      $s_action = "remove_branch";
+    }
     
     if((isset($_POST['CancelBranchName'])) || (isset($_POST['CloseIFrame']))){
       $this->dispNewBranch = false;
@@ -494,7 +504,9 @@ class faiManagement extends plugin
      ****************/
 
     if(isset($_GET['PerformBranch'])){
-
+    
+      $base= $this->DivListFai->selectedBranch;
+      $this->set_acl_base($base);
       if(!$this->acl_is_createable()){
         print_red(_("You are not allowed to create a new branch."));
       }else{
@@ -626,10 +638,16 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
-        $this->dispNewBranch=true;
-        $smarty->assign("iframe",false);
-        $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
-        return($display);
+        $base= $this->DivListFai->selectedBranch;
+        $this->set_acl_base($base);
+        if(!$this->acl_is_createable()){
+          print_red(_("You are not allowed to create a new branch."));
+        }else{
+          $this->dispNewBranch=true;
+          $smarty->assign("iframe",false);
+          $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
+          return($display);
+        }
       } 
     }
 
@@ -643,10 +661,16 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
-        $this->dispNewFreeze = true;
-        $smarty->assign("iframe",false);
-        $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
-        return($display);
+        $base= $this->DivListFai->selectedBranch;
+        $this->set_acl_base($base);
+        if(!$this->acl_is_createable()){
+          print_red(_("You are not allowed to create a new branch."));
+        }else{
+          $this->dispNewFreeze = true;
+          $smarty->assign("iframe",false);
+          $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
+          return($display);
+        }
       }
     }
 
@@ -840,7 +864,7 @@ class faiManagement extends plugin
   /* Get available branches for current base */
   function getBranches($base = false,$prefix = "")
   {
-    $ret = array("main"=>"/");
+    $ret = array("/"=>"main");
     $ldap = $this->config->get_ldap_link();
     if(!$base){
       $base= $_SESSION['CurrentMainBase'];
@@ -851,6 +875,7 @@ class faiManagement extends plugin
     }
     natcasesort($ret);
     $ret = array_flip($ret);
+
     return ($ret);
   }
   

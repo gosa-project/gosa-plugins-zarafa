@@ -17,26 +17,23 @@
      <tr>
       <td>
     {if $allow_create}
-        <input type="image" align="middle" value="branch" name="branch_branch" src="images/branch_small.png">
-        &nbsp;
-        {t}Create new branch{/t}
+        <input class="center" type="image" name="branch_branch" src="images/branch_small.png">
+        <a href="?plug={$plug_id}&act=branch_branch">{t}Create new branch{/t}</a>
         <br>
-        <input type="image" align="middle" value="freeze" name="freeze_branch" src="images/freeze.png">
+        <input class="center" type="image" name="freeze_branch" src="images/freeze.png">
+		<a href="?plug={$plug_id}&act=freeze_branch">{t}Create new locked branch{/t}</a>
     {else}
         <img src="images/branch_small_grey.png" alt='{t}Branch{/t}' class='center'>
-        &nbsp;
         {t}Create new branch{/t}
         <br>
         <img src="images/freeze_grey.png" alt='{t}Freeze{/t}' class='center'>
+		{t}Create new locked branch{/t}
     {/if}
-    &nbsp;
-    {t}Create new locked branch{/t}
 
     {if $selectedBranch != "main" && $allow_remove}
     <br>
-        <input type="image" align="middle" value="delete" name="remove_branch" src="images/edittrash.png">
-    &nbsp;
-    {t}Delete current release{/t}
+        <input class="center" type="image" name="remove_branch" src="images/edittrash.png">
+	    <a href="?plug={$plug_id}&act=remove_branch">{t}Delete current release{/t}</a>
     {/if}
       </td>
      </tr>
