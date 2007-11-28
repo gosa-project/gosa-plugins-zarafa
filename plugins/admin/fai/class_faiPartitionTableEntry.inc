@@ -151,6 +151,7 @@ class faiPartitionTableEntry extends plugin
         $tmp[$attr]                = "";     
       }
       $tmp["old_cn"]               = "";     
+      $tmp["FAIencrypted"] = FALSE;     
       $tmp['status']="new";
       $this->partitions[count($this->partitions)+1]=$tmp;
     }
