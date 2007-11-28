@@ -16,6 +16,8 @@ class msg_dialog
 
 	public function __construct($s_title,$s_message,$i_type)
 	{
+		global $config;
+	
 		if(!in_array($i_type,array(INFO_DIALOG,WARNING_DIALOG,ERROR_DIALOG,CONFIRM_DIALOG,FATAL_ERROR_DIALOG))){
 			trigger_error("Invalid msg_dialog type.");
 			$i_type = INFO_DIALOG;
@@ -36,7 +38,14 @@ class msg_dialog
 			$this->s_Title	 = $s_title;
 			$this->s_Message = $s_message;
 			$this->i_Type	 = $i_type;
-			$this->a_Trace	 = debug_backtrace();
+
+			/* Append trace information, only if error messages are enabled */
+			if(	isset($config) && 
+				is_object($config) && 
+				isset($config->data['MAIN']['DISPLAYERRORS']) &&
+				!preg_match("/^true$/i",$config->data['MAIN']['DISPLAYERRORS'])){
+				$this->a_Trace	 = debug_backtrace();
+			}
 			if(!isset($_SESSION['msg_dialogs'])){
 				$_SESSION['msg_dialogs'] = array();
 			}
