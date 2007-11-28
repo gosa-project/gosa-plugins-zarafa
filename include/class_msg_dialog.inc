@@ -43,7 +43,7 @@ class msg_dialog
 			if(	isset($config) && 
 				is_object($config) && 
 				isset($config->data['MAIN']['DISPLAYERRORS']) &&
-				!preg_match("/^true$/i",$config->data['MAIN']['DISPLAYERRORS'])){
+				preg_match("/^true$/i",$config->data['MAIN']['DISPLAYERRORS'])){
 				$this->a_Trace	 = debug_backtrace();
 			}
 			if(!isset($_SESSION['msg_dialogs'])){
@@ -91,7 +91,8 @@ class msg_dialog
 		}else{
 
 			$smarty = get_smarty();
-			$smarty->assign("s_Trace",print_a($this->a_Trace,TRUE));
+			$smarty->assign("s_Trace"	,print_a($this->a_Trace,TRUE));
+			$smarty->assign("i_TraceCnt",count($this->a_Trace));
 			$smarty->assign("i_Type",$this->i_Type);
 			$smarty->assign("s_Message",$this->s_Message);
 			$smarty->assign("s_Title",$this->s_Title);
