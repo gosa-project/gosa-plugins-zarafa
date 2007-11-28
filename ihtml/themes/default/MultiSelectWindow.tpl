@@ -10,7 +10,7 @@
 				</p>
 			</div>
   			<div class="contentboxb">
-				<div style='background:white;padding:5px;'>
+				<div style='background:white;padding:0px;'>
 				<table>
 					<tr>
 						<td>
