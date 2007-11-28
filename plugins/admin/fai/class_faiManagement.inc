@@ -847,8 +847,10 @@ class faiManagement extends plugin
     }
     $tmp = get_all_releases_from_base($base,true);
     foreach($tmp as $dn => $name){
-      $ret[$dn]=$name;
+      $ret[$name]=$dn;
     }
+    natcasesort($ret);
+    $ret = array_flip($ret);
     return ($ret);
   }
   
