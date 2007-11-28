@@ -12,9 +12,6 @@ class servrepository extends goService
   var $attributes             = array("FAIrepository");
   var $objectclasses          = array("FAIrepositoryServer");
   
-  /* Search filter */
-  var $regex                  = "*";
-
   /* Repositories */
   var $repositories          = array();
   var $FAIrepository         = array();
@@ -24,6 +21,8 @@ class servrepository extends goService
   
   var $view_logged            = FALSE;
   var $fai_activated          = FALSE;
+
+  var $divlist = NULL;
 
   function servrepository (&$config, $dn= NULL, $parent= NULL)
   {
@@ -79,6 +78,24 @@ class servrepository extends goService
         $this->repositories[$tmp[2]]=$tmp2;      
       }
     }
+
+
+    /* Create divlist */
+    $divlist = new MultiSelectWindow($this->config,"repositories","server/servRepository");
+    $divlist->SetTitle("repositories");
+    $divlist->SetSummary(_("List of configured repositories."));
+    $divlist->SetInformation(_("This menu allows you to create, delete and edit repository settings."));
+    $divlist->EnableCloseButton(FALSE);
+    $divlist->EnableSaveButton(FALSE);
+    $divlist->AddHeader(array("string"=>_("Release"),"attach"=>"style='width:80px;'"));
+    $divlist->AddHeader(array("string"=>_("Sections")));
+    $divlist->AddHeader(array("string"=>_("Options"),"attach"=>"style='border-right:0px;width:55px;'"));
+    $divlist->AddRegex("regex",_("Regular expression for matching object names"),"*",TRUE);
+    $divlist->EnableAplhabet(TRUE);
+    if($this->acl_is_createable()){
+      $divlist->SetListHeader("<input type=\"image\" src=\"images/fai_new_packages.png\" title=\""._("Add repository")."\" name=\"AddRepository\">");
+    }
+    $this->divlist = $divlist;
   }
 
   function execute()
@@ -100,15 +117,6 @@ class servrepository extends goService
     $smarty= get_smarty();
     $smarty->assign("is_createable",$this->acl_is_createable());
     $display= "";
-
-    /* Smarty vars*/
-    $smarty->assign("infoimage",    get_template_path('images/info.png'));
-    $smarty->assign("search_image", get_template_path('images/search.png'));
-    $smarty->assign("launchimage",  get_template_path('images/small_filter.png'));
-    $smarty->assign("tree_image",   get_template_path('images/tree.png'));
-    $smarty->assign("alphabet",     generate_alphabet());
-    $smarty->assign("apply",        apply_filter());
-    $smarty->assign("regex",        $this->regex);
 
     /* Show tab dialog headers */
     /*
@@ -200,14 +208,14 @@ class servrepository extends goService
         }
       }
     }
-    if((isset($_GET['act']))&&($_GET['act']=="open")&&(isset($_GET['id']))){
+    if((isset($_GET['act']))&&($_GET['act']=="open_repository")&&(isset($_GET['id']))){
       $obj = $this->repositories[base64_decode($_GET['id'])];
       $obj['initialy_was'] = $obj['Release'];
       $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
       $this->dialog->parent = $this;
     }
 
-    if(isset($_POST['repository_setup_save'])){
+    if(isset($_POST['repository_setup_save']) && is_object($this->dialog)){
       $this->dialog->save_object();
       if(($this->dialog->is_new_name())&&(isset($this->repositories[$this->dialog->GetName()]))){
         print_red(_("This name is already in use."));
@@ -246,17 +254,8 @@ class servrepository extends goService
       Repository setup dialog handling /END
     */
 
-    $divlist = new divlist("repositories");
-    $divlist->SetEntriesPerPage(0);
-    $divlist->setHeight(400);
-    $divlist->SetPluginMode();
 
-    $divlist->setHeader(array(array("string"=>_("Release"),"attach"=>"style='width:80px;'"),
-                              array("string"=>_("Sections")),
-                              array("string"=>_("Options"),"attach"=>"style='border-right:0px;width:55px;'")
-                       )     );
-
-    $link   = "<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
+    $link   = "<a href='?plug=".$_GET['plug']."&amp;act=open_repository&amp;id=%s'>%s</a>";
     $edit   = "<input type='image' value='%s' name='edit_%s'   src='images/edit.png'>&nbsp;";
    
     /* Hide delete icon, if delete is not allowed */ 
@@ -266,22 +265,23 @@ class servrepository extends goService
       $delete = "<img src='images/empty.png' alt='&nbsp;'>";
     }
   
+    $this->divlist->ClearElementsList(); 
     foreach($this->repositories as $name => $reps){
 
       $str = " ";
-      if(preg_match("/".str_replace("*",".*",$this->regex)."/",$reps['Release'])){
-      foreach($reps['Sections'] as $sec){
-        $str.=$sec." ";  
-      }    
-      $divlist->AddEntry(array(
-          array("string"=>sprintf($link,base64_encode($name),$name),"attach"=>"style='width:80px;'"),
-          array("string"=>sprintf($link,base64_encode($name),_("Sections")." :".$str)),
-          array("string"=>preg_replace("/%s/",base64_encode($name),$edit.$delete),"attach"=>"style='border-right:0px;width:55px;text-align:right;'")
-                              ));
+      if(preg_match("/".str_replace("*",".*",$this->divlist->regex)."/",$reps['Release'])){
+        foreach($reps['Sections'] as $sec){
+          $str.=$sec." ";  
+        }    
+        $this->divlist->AddElement(array(
+              array("string"=>sprintf($link,base64_encode($name),$name),"attach"=>"style='width:80px;'"),
+              array("string"=>sprintf($link,base64_encode($name),_("Sections")." :".$str)),
+              array("string"=>preg_replace("/%s/",base64_encode($name),$edit.$delete),"attach"=>"style='border-right:0px;width:55px;text-align:right;'")
+              ));
       }
     }
  
-    $smarty -> assign("Repositories",$divlist->DrawList());
+    $smarty->assign("Repositories",$this->divlist->Draw());
 
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE));
     return($display);
@@ -292,8 +292,8 @@ class servrepository extends goService
   function save_object()
   {
     plugin::save_object();
-    if(isset($_POST['regex'])){
-      $this->regex = $_POST['regex'];
+    if(is_object($this->divlist)){
+      $this->divlist->save_object();
     }
   }
 
