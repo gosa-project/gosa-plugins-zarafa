@@ -81,21 +81,7 @@ class servrepository extends goService
 
 
     /* Create divlist */
-    $divlist = new MultiSelectWindow($this->config,"repositories","server/servRepository");
-    $divlist->SetTitle("repositories");
-    $divlist->SetSummary(_("List of configured repositories."));
-    $divlist->SetInformation(_("This menu allows you to create, delete and edit repository settings."));
-    $divlist->EnableCloseButton(FALSE);
-    $divlist->EnableSaveButton(FALSE);
-    $divlist->AddHeader(array("string"=>_("Release"),"attach"=>"style='width:80px;'"));
-    $divlist->AddHeader(array("string"=>_("Sections")));
-    $divlist->AddHeader(array("string"=>_("Options"),"attach"=>"style='border-right:0px;width:55px;'"));
-    $divlist->AddRegex("regex",_("Regular expression for matching object names"),"*",TRUE);
-    $divlist->EnableAplhabet(TRUE);
-    if($this->acl_is_createable()){
-      $divlist->SetListHeader("<input type=\"image\" src=\"images/fai_new_packages.png\" title=\""._("Add repository")."\" name=\"AddRepository\">");
-    }
-    $this->divlist = $divlist;
+    $this->divlist = new divListRepository($this->config,$this);
   }
 
   function execute()
@@ -264,25 +250,10 @@ class servrepository extends goService
     }else{
       $delete = "<img src='images/empty.png' alt='&nbsp;'>";
     }
-  
-    $this->divlist->ClearElementsList(); 
-    foreach($this->repositories as $name => $reps){
 
-      $str = " ";
-      if(preg_match("/".str_replace("*",".*",$this->divlist->regex)."/",$reps['Release'])){
-        foreach($reps['Sections'] as $sec){
-          $str.=$sec." ";  
-        }    
-        $this->divlist->AddElement(array(
-              array("string"=>sprintf($link,base64_encode($name),$name),"attach"=>"style='width:80px;'"),
-              array("string"=>sprintf($link,base64_encode($name),_("Sections")." :".$str)),
-              array("string"=>preg_replace("/%s/",base64_encode($name),$edit.$delete),"attach"=>"style='border-right:0px;width:55px;text-align:right;'")
-              ));
-      }
-    }
- 
+    $this->divlist->execute(); 
+    $this->divlist->setEntries($this->repositories);
     $smarty->assign("Repositories",$this->divlist->Draw());
-
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE));
     return($display);
   }
