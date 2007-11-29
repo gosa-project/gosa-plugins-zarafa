@@ -17,11 +17,11 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <style type="text/css">
-  	@import url('themes/default/style.css');
 	{if $dojo}
 	@import url('include/dojo/dijit/themes/tundra/tundra.css');
 	@import url('include/dojo/dojo/resources/dojo.css');
 	{/if}
+  	@import url('themes/default/style.css');
   </style>
   <link rel="shortcut icon" href="favicon.ico">
 
@@ -39,7 +39,10 @@
   <script type="text/javascript">
   	dojo.require("dojo.parser");
 	dojo.require("dijit.form.TextBox");
+	dojo.require("dijit.form.DateTextBox");
 	dojo.require("dijit.form.ValidationTextBox");
+	dojo.require("dijit.form.ComboBox");
+	dojo.require("dijit.form.FilteringSelect");
   </script>
   {/if}
 

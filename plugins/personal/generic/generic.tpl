@@ -63,7 +63,7 @@
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
-     <td>{render acl=$uidACL}<input id="uid" name="uid" size="25" maxLength="60"  value="{$uid}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="true" invalidMessage="{$uid_invalid_message}" regExp="{$uid_regex}">{/render}</td>
+     <td>{render acl=$uidACL}<input id="uid" name="uid" size="25" maxLength="60"  value="{$uid}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{$uid_invalid_message}" regExp="{$uid_regex}">{/render}</td>
     </tr>
     {/if}
       
@@ -75,7 +75,7 @@
      <td>
       <div style="height:10px;"></div>
       	{render acl=$personalTitleACL}
-		<input id="personalTitle" name="personalTitle" size=25 maxlength=60 value="{$personalTitle}">
+		<input id="personalTitle" name="personalTitle" dojoType="dijit.form.TextBox" size=25 maxLength=60 value="{$personalTitle}">
 	{/render}
      </td>
     </tr>
@@ -83,7 +83,7 @@
      <td><label for="academicTitle">{t}Academic title{/t}</label></td>
      <td>
       	{render acl=$academicTitleACL}
-	      <input id="academicTitle" name="academicTitle" size=25 maxlength=60 value="{$academicTitle}">
+	      <input id="academicTitle" name="academicTitle" size=25 dojoType="dijit.form.TextBox" maxLength=60 value="{$academicTitle}">
 	{/render}
      </td>
     </tr>
@@ -95,6 +95,9 @@
      <td>
       <div style="height:10px;"></div>
       	{render acl=$dateOfBirthACL}
+	{if $dojo}
+	      <input id="dateOfBirth" name="dateOfBirth" size=11 dojoType="dijit.form.DateTextBox" maxLength=11 value="{$dateOfBirth}">
+	{else}
 	      {if $use_dob eq 1}
 	      <select id="day" name=day onChange="createResult(this.form,this.form.dateOfBirth);"> 
 	       {html_options values=$days output=$days selected=$day}
@@ -110,6 +113,7 @@
 	      {else}
 	      <input type="submit" name="set_dob" value="{t}Set{/t}" >
 	      {/if}
+	{/if}
 	{/render}
      </td>
     </tr>

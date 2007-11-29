@@ -203,14 +203,16 @@ class user extends plugin
     }
 
     /* Generate dateOfBirth entry */
-    if (isset ($this->attrs['dateOfBirth'])){
-      /* This entry is ISO 8601 conform */
-      list($year, $month, $day)= split("-", $this->attrs['dateOfBirth'][0], 3);
-    
-      $this->dateOfBirth=array( 'mon'=> $month,"mday"=> $day,"year"=> $year);
-      $this->use_dob= "1";
-    } else {
-      $this->use_dob= "0";
+    if (!$_SESSION['DOJO']){
+      if (isset ($this->attrs['dateOfBirth'])){
+        /* This entry is ISO 8601 conform */
+        list($year, $month, $day)= split("-", $this->attrs['dateOfBirth'][0], 3);
+      
+        $this->dateOfBirth=array( 'mon'=> $month,"mday"=> $day,"year"=> $year);
+        $this->use_dob= "1";
+      } else {
+        $this->use_dob= "0";
+      }
     }
 
     /* Put gender attribute to upper case */
@@ -242,48 +244,52 @@ class user extends plugin
     $smarty= get_smarty();
 
     /* Fill calendar */
-    if ($this->dateOfBirth == "0"){
-      $date= getdate();
+    if ($_SESSION['DOJO']){
+      $smarty->assign('dateOfBirth', $this->dateOfBirth);
     } else {
-      if(is_array($this->dateOfBirth)){
-        $date = $this->dateOfBirth;
-  
-        // Trigger on dates like 1985-04-01, getdate only understands timestamps
-      } else if (!empty($this->dateOfBirth) && !is_numeric($this->dateOfBirth)){
-        $date= getdate(strtotime($this->dateOfBirth));
-
+      if ($this->dateOfBirth == "0"){
+        $date= getdate();
       } else {
-        $date = getdate($this->dateOfBirth);
-      }
-    }
-
-    $days= array();
-    for($d= 1; $d<32; $d++){
-      $days[$d]= $d;
-    }
-    $years= array();
-
-    if(($date['year']-100)<1901){
-      $start = 1901;
-    }else{
-      $start = $date['year']-100;
-    }
-
-    $end = $start +100;
+        if(is_array($this->dateOfBirth)){
+          $date = $this->dateOfBirth;
     
-    for($y= $start; $y<=$end; $y++){
-      $years[]= $y;
+          // Trigger on dates like 1985-04-01, getdate only understands timestamps
+        } else if (!empty($this->dateOfBirth) && !is_numeric($this->dateOfBirth)){
+          $date= getdate(strtotime($this->dateOfBirth));
+
+        } else {
+          $date = getdate($this->dateOfBirth);
+        }
+      }
+
+      $days= array();
+      for($d= 1; $d<32; $d++){
+        $days[$d]= $d;
+      }
+      $years= array();
+
+      if(($date['year']-100)<1901){
+        $start = 1901;
+      }else{
+        $start = $date['year']-100;
+      }
+
+      $end = $start +100;
+      
+      for($y= $start; $y<=$end; $y++){
+        $years[]= $y;
+      }
+      $years['-']= "-&nbsp;";
+      $months= array(_("January"), _("February"), _("March"), _("April"),
+          _("May"), _("June"), _("July"), _("August"), _("September"),
+          _("October"), _("November"), _("December"), '-' => '-&nbsp;');
+      $smarty->assign("day", $date["mday"]);
+      $smarty->assign("days", $days);
+      $smarty->assign("months", $months);
+      $smarty->assign("month", $date["mon"]-1);
+      $smarty->assign("years", $years);
+      $smarty->assign("year", $date["year"]);
     }
-    $years['-']= "-&nbsp;";
-    $months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"), '-' => '-&nbsp;');
-    $smarty->assign("day", $date["mday"]);
-    $smarty->assign("days", $days);
-    $smarty->assign("months", $months);
-    $smarty->assign("month", $date["mon"]-1);
-    $smarty->assign("years", $years);
-    $smarty->assign("year", $date["year"]);
 
     /* Assign uid regex for dojo */
     $smarty->assign("uid_regex", get_uid_regexp());
@@ -755,10 +761,12 @@ class user extends plugin
     /* First use parents methods to do some basic fillup in $this->attrs */
     plugin::save ();
 
-    if ($this->use_dob == "1"){
-      /* If it is an array, the generic page has never been loaded - so there's no difference. Using an array would cause an error btw. */
-      if(!is_array($this->attrs['dateOfBirth'])) {
-        $this->attrs['dateOfBirth'] = date("Y-m-d", $this->dateOfBirth);
+    if (!$_SESSION['DOJO']){
+      if ($this->use_dob == "1"){
+        /* If it is an array, the generic page has never been loaded - so there's no difference. Using an array would cause an error btw. */
+        if(!is_array($this->attrs['dateOfBirth'])) {
+          $this->attrs['dateOfBirth'] = date("Y-m-d", $this->dateOfBirth);
+        }
       }
     }
 
@@ -820,12 +828,14 @@ class user extends plugin
       $remove_userCertificate= true;
     }
 
-    /* Special handling for dateOfBirth value */
-    if ($this->use_dob != "1"){
-      if ($this->is_new) {
-        unset($this->attrs["dateOfBirth"]);
-      } else {
-        $this->attrs["dateOfBirth"]= array();
+    if (!$_SESSION['DOJO']){
+      /* Special handling for dateOfBirth value */
+      if ($this->use_dob != "1"){
+        if ($this->is_new) {
+          unset($this->attrs["dateOfBirth"]);
+        } else {
+          $this->attrs["dateOfBirth"]= array();
+        }
       }
     }
     if (!$this->gender){
@@ -1055,6 +1065,13 @@ class user extends plugin
         $this->new_dn= $this->dn;
       } else {
         $this->new_dn= $this->create_unique_dn('cn', get_people_ou().$this->base);
+      }
+    }
+
+    /* Date in dojo mode... */
+    if ($_SESSION['DOJO']){
+      if (!preg_match('/^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/', $_POST['dateOfBirth'])){
+        $message[]= _("Please provide a valid date of birth.");
       }
     }
 
