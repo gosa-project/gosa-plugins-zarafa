@@ -528,11 +528,16 @@
 
 <input type=hidden name="generic">
 
+{literal}
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-	focus_field('sn');
+	var init = function(){
+		dijit.byId('sn').focus();
+	};
+        dojo.addOnLoad(init);
   	if (document.mainform.yearSel != "")
 				populate(document.mainform,document.mainform.dateOfBirth);
   -->
 </script>
+{/literal}
