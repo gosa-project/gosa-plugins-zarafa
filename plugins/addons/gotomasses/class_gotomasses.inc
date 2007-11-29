@@ -237,7 +237,7 @@ class gotomasses extends plugin
   {
     if(!$this->o_queue->load()){
       print_red("ERROR:".$this->o_queue->get_error());
-      return(FALSE);
+      return(array());
     }
 
     $queue_pos = 1;
