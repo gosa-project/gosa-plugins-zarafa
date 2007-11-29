@@ -49,6 +49,7 @@ class faiManagement extends plugin
   var $DivListFai;
   var $start_pasting_copied_objects = FALSE;
   var $CopyPasteHandler = FALSE;
+  var $base = "";
 
 	/* construction/reconstruction 
 	 */
@@ -401,10 +402,8 @@ class faiManagement extends plugin
        *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
        */
       if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
-
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
-        $this->set_acl_base($base);
         if($this->acl_is_removeable()){
 
           $smarty->assign("info", sprintf(_("You're about to delete a fai branch / freeze  '%s'."), $this->DivListFai->selectedBranch));
@@ -505,8 +504,6 @@ class faiManagement extends plugin
 
     if(isset($_GET['PerformBranch'])){
     
-      $base= $this->DivListFai->selectedBranch;
-      $this->set_acl_base($base);
       if(!$this->acl_is_createable()){
         print_red(_("You are not allowed to create a new branch."));
       }else{
@@ -638,8 +635,6 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
-        $base= $this->DivListFai->selectedBranch;
-        $this->set_acl_base($base);
         if(!$this->acl_is_createable()){
           print_red(_("You are not allowed to create a new branch."));
         }else{
@@ -661,8 +656,6 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
-        $base= $this->DivListFai->selectedBranch;
-        $this->set_acl_base($base);
         if(!$this->acl_is_createable()){
           print_red(_("You are not allowed to create a new branch."));
         }else{
@@ -703,7 +696,7 @@ class faiManagement extends plugin
       if(preg_match("/c/",$acl)){
         $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
         $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+        $this->dialog->set_acl_base($this->base);
 
         $this->is_dialog = false;
       }else{
@@ -729,7 +722,7 @@ class faiManagement extends plugin
 
         if(class_exists($a_setup[0])){
           $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-          $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+          $this->dialog->set_acl_base($this->base);
           $this->dialog->by_object[$a_setup[1]]->cn = $name;
           $this->is_dialog = true;
         }
@@ -911,6 +904,8 @@ class faiManagement extends plugin
         $base = "ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
       }
     }
+    $this->base = $base;
+    $this->set_acl_base($this->base);
 
     $this->lock_type = get_release_tag(get_release_dn($base));
 
