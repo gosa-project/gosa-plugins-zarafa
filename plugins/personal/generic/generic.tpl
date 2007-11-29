@@ -47,19 +47,19 @@
     {if $is_template ne "true"}
     <tr>
      <td><label for="sn">{t}Last name{/t}{$must}</label></td>
-     <td>{render acl=$snACL}<input id="sn" name="sn" size="25" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" propercase="true" trim="true" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+" required="true">{/render}</td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" size="25" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" propercase="true" trim="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+" required="true">{/render}</td>
     </tr>
     {else}
     <tr>
      <td><label for="sn">{t}Template name{/t}{$must}</label></td>
-     <td>{render acl=$snACL}<input id="sn" name="sn" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+">{/render}</td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+">{/render}</td>
     </tr>
     {/if}
 
     {if $is_template ne "true"}
     <tr>
      <td><label for="givenName">{t}First name{/t}{$must}</label></td>
-     <td>{render acl=$givenNameACL}<input id="givenName" size="25" name="givenName" maxLength="60" value="{$givenName}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" invalidMessage="{t}Please specify the first name{/t}" regExp="[^\\\\]+">{/render}</td>
+     <td>{render acl=$givenNameACL}<input id="givenName" size="25" name="givenName" maxLength="60" value="{$givenName}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}Please specify the first name{/t}" regExp="[^\\\\]+">{/render}</td>
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
