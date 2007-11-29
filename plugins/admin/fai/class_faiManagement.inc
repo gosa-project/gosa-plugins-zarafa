@@ -866,7 +866,7 @@ class faiManagement extends plugin
     foreach($tmp as $dn => $name){
       $ret[$name]=$dn;
     }
-    natcasesort($ret);
+    ksort($ret);
     $ret = array_flip($ret);
 
     return ($ret);
