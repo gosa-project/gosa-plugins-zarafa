@@ -289,8 +289,6 @@ sub register_at_server {
         push(@events, $file_name);
     }
     my $events = join(",", @events);
-    #print "debug: events: $events\n";
-
 
     # fill in all possible servers
     my @servers;
@@ -357,9 +355,7 @@ sub register_at_server {
                 daemon_log("cannot register at $server", 1);
                 daemon_log("ERROR: do not understand the message:\n\t$crypted_msg" , 5);   
             } else {
-                print "debug: register_at_server: incoming msg konnte geparst werden\n";
                 my $header = &get_content_from_xml_hash($msg_hash, "header");
-                print "debug: header: $header\n";
                 if($header eq "registered") {
                     $reg_server = $server;
                     last;
@@ -807,8 +803,6 @@ sub process_incoming_msg {
 #===============================================================================
 sub update_status { 
     my ($new_status) = @_ ;
-    #print "debug: update_status: client_address: $client_address\n";
-    #print "debug: update_status: server_address: $server_address\n";
     my $out_hash = &create_xml_hash("update_status", $client_address, $server_address);      
     &add_content2xml_hash($out_hash, "update_status", $new_status);
     &send_msg_hash2address($out_hash, $server_address);
