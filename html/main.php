@@ -154,7 +154,7 @@ if (!isset($_SESSION['plist'])){
   /* Initially load all classes */
   $class_list= get_declared_classes();
   foreach ($class_mapping as $class => $path){
-    if (!in_array($class, $class_list)){
+    if (!in_array($class, $class_list) && !preg_match('/\/dojo\//', $path)){
         require_once("$BASE_DIR/$path");
     }
   }

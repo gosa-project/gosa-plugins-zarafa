@@ -285,6 +285,14 @@ class user extends plugin
     $smarty->assign("years", $years);
     $smarty->assign("year", $date["year"]);
 
+    /* Assign uid regex for dojo */
+    $smarty->assign("uid_regex", get_uid_regexp());
+    if (strict_uid_mode()){
+      $smarty->assign("uid_invalid_message", _("Please use only a-z, 0-9, _ or - as valid characters"));
+    } else {
+      $smarty->assign("uid_invalid_message", _("Please use only a-z, A-Z, 0-9, ., space, _ or - as valid characters"));
+    }
+
     /* Assign sex */
     $sex= array(0 => "&nbsp;", "F" => _("female"), "M" => _("male"));
     $smarty->assign("gender_list", $sex);

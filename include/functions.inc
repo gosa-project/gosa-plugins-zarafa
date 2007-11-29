@@ -956,6 +956,24 @@ function is_dn($dn)
 }
 
 
+function strict_uid_mode()
+{
+  return !(isset($config->current['STRICT']) && preg_match('/^(no|false)$/i', $config->current['STRICT']));
+}
+
+
+function get_uid_regexp()
+{
+  /* STRICT adds spaces and case insenstivity to the uid check.
+     This is dangerous and should not be used. */
+  if (strict_uid_mode()){
+    return "^[a-z0-9_-]+$";
+  } else {
+    return "^[a-zA-Z0-9 _.-]+$";
+  }
+}
+
+
 function is_uid($uid)
 {
   global $config;
@@ -966,10 +984,10 @@ function is_uid($uid)
 
   /* STRICT adds spaces and case insenstivity to the uid check.
      This is dangerous and should not be used. */
-  if (isset($config->current['STRICT']) && preg_match('/^(no|false)$/i', $config->current['STRICT'])){
-    return preg_match ("/^[a-z0-9 _.-]+$/i", $uid);
-  } else {
+  if (strict_uid_mode()){
     return preg_match ("/^[a-z0-9_-]+$/", $uid);
+  } else {
+    return preg_match ("/^[a-z0-9 _.-]+$/i", $uid);
   }
 }
 
