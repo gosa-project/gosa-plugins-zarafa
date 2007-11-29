@@ -213,13 +213,14 @@ class workstartup extends plugin
       
               /* Result will be cached
                */
-              $test[$url]['RELEASE'][$release]['PACKAGES'] = $this->getAvailableClassesForThisRelease($release);
+              $rel_classes = $this->getAvailableClassesForThisRelease($release);
+              $test[$url]['RELEASE'][$release]['PACKAGES'] = $rel_classes;
               $test[$url]['SERVER'] = $server;
 
               /* auto gets all releases/classes 
                */
               $test['auto']['RELEASE'][$release]['SECTION'] = $sections;
-              $test['auto']['RELEASE'][$release]['PACKAGES'] = $this->getAvailableClassesForThisRelease($release);
+              $test['auto']['RELEASE'][$release]['PACKAGES'] = $rel_classes;
             }
           }
         }
@@ -405,6 +406,13 @@ class workstartup extends plugin
     if (!isset($this->gotoBootKernels['default-inherited']) && $this->gotoBootKernel == "default-inherited"){
       $this->gotoBootKernel= "default";
     }
+
+    /* Preselect release if none was selected yet */
+    if(empty($this->FAIrelease) && $this->FAIdebianMirror == "auto"){
+      if(isset($this->FAIServRepConfig['auto']['RELEASE']) && is_array($this->FAIServRepConfig['auto']['RELEASE'])){
+        $this->FAIrelease = key($this->FAIServRepConfig['auto']['RELEASE']);
+      }
+    }
   }
 
   
@@ -417,14 +425,13 @@ class workstartup extends plugin
   {
     /* There could be more than one server providing this release,
         so use cached result if available
-     */ 
+     */
     if(isset($_SESSION['getAvailableClassesForThisRelease_CACHE'][$release]))  {
       return($_SESSION['getAvailableClassesForThisRelease_CACHE'][$release]);
     }
 
     $test2  = array();
-#    $bb     = $this->generateDNSyn($release).$_SESSION['CurrentMainBase'];
-    $bb     = $this->generateDNSyn($release).$this->config->current['BASE'];
+    $bb     = $this->generateDNSyn($release);
 
     $ldap   = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -918,15 +925,22 @@ class workstartup extends plugin
     $str = "";
     $tmp = split("\/",$release);
     $tmp = array_reverse($tmp);
-
     $base = "ou=fai,ou=configs,ou=systems,";   
     foreach($tmp as $departmentname){
-      
       $str .= ",ou=".$departmentname;
     }
     $str = preg_replace("/^,/","",($str.",".$base));
-    
-    return($str);
+
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=FAIbranch))",array("ou"));
+    while($attrs = $ldap->fetch()){
+      if(preg_match("/".normalizePreg($str)."/",$attrs['dn'])){
+        return($attrs['dn']);
+      }
+    }
+
+    return($str.$this->config->current['BASE']);
   }
 
   function getFAIdebianMirrors()
