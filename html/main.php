@@ -285,6 +285,8 @@ if ($_SESSION['js']==FALSE){
   $smarty->assign("help_method"," onclick=\"return popup('helpviewer.php$plug','GOsa help');\"");
 }
 
+$smarty->assign("dojo", $_SESSION['DOJO']);
+
 $smarty->assign ("username", $ui->username);
 $smarty->assign ("go_logo", get_template_path('images/go_logo.png'));
 $smarty->assign ("go_base", get_template_path('images/dtree.png'));

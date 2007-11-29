@@ -528,6 +528,7 @@
 
 <input type=hidden name="generic">
 
+{if $dojo}
 {literal}
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
@@ -541,3 +542,13 @@
   -->
 </script>
 {/literal}
+{else}
+<!-- Place cursor -->
+<script language="JavaScript" type="text/javascript">
+  <!-- // First input field on page
+        focus_field('sn');
+  	if (document.mainform.yearSel != "")
+				populate(document.mainform,document.mainform.dateOfBirth);
+  -->
+</script>
+{/if}

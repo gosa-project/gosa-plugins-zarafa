@@ -18,8 +18,10 @@
 
   <style type="text/css">
   	@import url('themes/default/style.css');
+	{if $dojo}
 	@import url('include/dojo/dijit/themes/tundra/tundra.css');
 	@import url('include/dojo/dojo/resources/dojo.css');
+	{/if}
   </style>
   <link rel="shortcut icon" href="favicon.ico">
 
@@ -31,6 +33,7 @@
   <script language="javascript" src="include/layersmenu-browser_detection.js" type="text/javascript"></script>
   <script language="javascript" src="include/layersmenu-library.js" type="text/javascript"></script>
   <script language="javascript" src="include/layersmenu.js" type="text/javascript"></script>
+  {if $dojo}
   <script language="javascript" src="include/dojo/dojo/dojo.js" type="text/javascript" djConfig="parseOnLoad: true"></script>
 
   <script type="text/javascript">
@@ -38,5 +41,7 @@
 	dojo.require("dijit.form.TextBox");
 	dojo.require("dijit.form.ValidationTextBox");
   </script>
+  {/if}
+
 </head>
 
