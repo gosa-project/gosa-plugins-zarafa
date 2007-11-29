@@ -26,6 +26,8 @@ class mimetype extends plugin
 	var $gotoMimeGroup						        = "";
 	var $iconData							            = NULL;	
 	var $base								              = "";
+  var $ApplicationList                  = array();  
+
 
   /* To prevent errors when using the 'apply' button, we use this variables 
       to manage array attributes */
@@ -71,6 +73,15 @@ class mimetype extends plugin
           $this->$varna = true;
         }
       }
+    }
+
+    /* Create list of defined applications in GOsa */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaApplication)(cn=*))",array('cn'));
+    $this->ApplicationList = array();
+    while($attrs = $ldap->fetch()){
+      $this->ApplicationList[$attrs['cn'][0]] = $attrs['cn'][0];
     }
 
     /* If both radio buttons arn't set, set option I */
@@ -247,20 +258,36 @@ class mimetype extends plugin
     }	
 
     /* Add gotoMimeFilePattern */
-    if(isset($_POST['AddNewApplication']) && isset($_POST['NewApplication'])){
+    if(isset($_POST['AddNewApplication']) && 
+            (isset($_POST['NewApplication']) || isset($_POST['NewApplicationSelect']))){
       if($this->acl_is_writeable("gotoMimeApplication")){
-        $str = $_POST['NewApplication'];
-        if(!empty($str)){
+        $str = "";
+        if(isset($_POST['NewApplicationSelect']) && !empty($_POST['NewApplicationSelect'])){
+          $str = get_post("NewApplicationSelect");
+        }
+        if(isset($_POST['NewApplication']) && !empty($_POST['NewApplication'])){
+          $str = get_post("NewApplication");
+        }
+        if(!empty($str) && !in_array($str,$this->use_gotoMimeApplication)){
           $this->use_gotoMimeApplication[] = $str;
         }
       }
     }	
 
-    /* Add gotoMimeFilePattern */
-    if(isset($_POST['AddNewEmbeddedApplication']) && isset($_POST['NewEmbeddedApplication'])){
+    /* Add embedded application 
+     *  - From input or from select box 
+     */
+    if(isset($_POST['AddNewEmbeddedApplication']) && 
+            (isset($_POST['NewEmbeddedApplication']) || isset($_POST['NewEmbeddedApplicationSelect']))){
       if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
-        $str = $_POST['NewEmbeddedApplication'];
-        if(!empty($str)){
+        $str = "";
+        if(isset($_POST['NewEmbeddedApplicationSelect']) && !empty($_POST['NewEmbeddedApplicationSelect'])){
+          $str = get_post('NewEmbeddedApplicationSelect');
+        }
+        if(isset($_POST['NewEmbeddedApplication']) && !empty($_POST['NewEmbeddedApplication'])){
+          $str = get_post('NewEmbeddedApplication');
+        }
+        if(!empty($str) && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
           $this->use_gotoMimeEmbeddedApplication[] = $str;
         }
       }
@@ -332,6 +359,8 @@ class mimetype extends plugin
     $smarty->assign("gotoMimeApplications",			$DivApps->DrawList());
     $smarty->assign("gotoMimeEmbeddedApplications",	$DivEApps->DrawList());
 
+    $smarty->assign("ApplicationList",$this->ApplicationList);
+  
     /* Assign class vars to smarty */
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);

@@ -113,6 +113,13 @@
 {render acl=$gotoMimeApplicationACL}	
 			{$gotoMimeApplications}		
 {/render}
+
+{render acl=$gotoMimeApplicationACL}	
+			<select name="NewApplicationSelect">
+				<option value="">-</option>
+				{html_options options=$ApplicationList}
+			</select>
+{/render}
 {render acl=$gotoMimeApplicationACL}	
 			<input type='text'	 name='NewApplication'	  value='' title='{t}Enter an application name here{/t}'>
 {/render}
@@ -165,6 +172,12 @@
 			{t}Applications{/t}
 {render acl=$gotoMimeEmbeddedApplicationACL}
 			{$gotoMimeEmbeddedApplications}		
+{/render}
+{render acl=$gotoMimeEmbeddedApplicationACL}
+			<select name="NewEmbeddedApplicationSelect">
+				<option value="">-</option>
+				{html_options options=$ApplicationList}
+			</select>
 {/render}
 {render acl=$gotoMimeEmbeddedApplicationACL}
 			<input type='text'	 name='NewEmbeddedApplication'	  value='' 
