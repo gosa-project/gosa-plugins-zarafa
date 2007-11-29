@@ -591,7 +591,7 @@ class MultiSelectWindow{
   /* Create header snapshot value */
   function get_snapshot_header($layer_menu = FALSE)
   {
-    $str = "&nbsp;";
+    $str = "";
     if($this->parent->snapshotEnabled()){
       $ok = false;
       foreach($this->parent->get_used_snapshot_bases() as $base){

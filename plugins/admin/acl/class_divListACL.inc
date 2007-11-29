@@ -171,8 +171,11 @@ class divListACL extends MultiSelectWindow
 
     /* Add snapshot icons */
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
+      $str = $this->get_snapshot_header(TRUE) ;
+      if(!empty($str)){
+        $s .= "..|---|\n";
+        $s .= $str;
+      }
     }
 
     $this->SetDropDownHeaderMenu($s);
