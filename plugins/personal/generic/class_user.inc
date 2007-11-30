@@ -55,6 +55,7 @@ class user extends plugin
   var $old_photoData= "";
   var $cert_dialog= FALSE;
   var $picture_dialog= FALSE;
+  var $pwObject= NULL;
 
   var $userPKCS12= "";
   var $userSMIMECertificate= "";
@@ -328,6 +329,16 @@ class user extends plugin
       }
     }
 
+    /* Password configure dialog handling */
+    if(is_object($this->pwObject) && is_object($this->dialog)){
+      $output= $this->pwObject->configure();
+      if ($output != ""){
+        return $output;
+      }
+
+      $this->dialog= false;
+    }
+
     /* Dialog handling */
     if(is_object($this->dialog)){
       /* Must be called before save_object */
@@ -345,6 +356,18 @@ class user extends plugin
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
+      }
+    }
+
+    /* Want password method editing? */
+    if ($this->acl_is_writeable("userPassword")){
+      if (isset($_POST['edit_pw_method'])){
+        if (!is_object($this->pwObject) || $this->pw_storage != $this->pwObject->get_hash_name()){
+          $temp= passwordMethod::get_available_methods();
+          $this->pwObject= new $temp[$this->pw_storage]($this->config);
+          $this->dialog= &$this->pwObject;
+        }
+        return ($this->pwObject->configure());
       }
     }
 
@@ -1025,6 +1048,11 @@ class user extends plugin
         $test->dn= $this->dn;
         $test->remove_from_parent();
       }
+    }
+
+    /* Maybe the current password method want's to do some changes... */
+    if (is_object($this->pwObject)){
+      $this->pwObject->save($this->dn);
     }
 
     /* Optionally execute a command after we're done */
