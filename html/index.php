@@ -150,16 +150,6 @@ if (isset ($config->data['MAIN']['COMPILE'])){
 }
 $smarty->assign ('nextfield', 'username');
 
-/* Setup dojo according to the configuration */
-if (isset ($config->data['MAIN']['DOJO']) && preg_match('/^(no|false)$/i', $config->data['MAIN']['DOJO'])){
-  $smarty->assign ('dojo', FALSE);
-  $_SESSION['DOJO']= FALSE;
-} else {
-  $smarty->assign ('dojo', TRUE);
-  $_SESSION['DOJO']= TRUE;
-}
-
-
 /* Check for compile directory */
 if (!(is_dir($smarty->compile_dir) && is_writable($smarty->compile_dir))){
   msg_dialog::display(_("Smarty"),sprintf(_("Directory '%s' specified as compile directory is not accessible!"),
