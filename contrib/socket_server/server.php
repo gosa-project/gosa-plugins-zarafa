@@ -13,7 +13,7 @@ $bind_port = 10000;
 $max_clients = 3;
 
 // Rijndal encrypt key 
-$enable_encryption = FALSE;
+$enable_encryption = TRUE;
 $encrypt_key = "Hallo hier bin ich.";
 
 
@@ -70,7 +70,7 @@ while(TRUE) {
 				socket_write($clients[$i]['socket'],encrypt(
 "Welcome to GOsa Test Server 
 ============================
-Type some text here:\n",$encrypt_key));
+Type some text here:",$encrypt_key)."\n");
 
 				echo("New client connected: " . $clients[$i]['ipaddy'] . " \n");
 				break;
@@ -93,7 +93,7 @@ Type some text here:\n",$encrypt_key));
 		if(isset($clients[$i]) && in_array($clients[$i]['socket'],$read)) {
 
 			/* Read socket data */
-			$data = socket_read($clients[$i]['socket'],1024000, PHP_NORMAL_READ);
+			$data = @socket_read($clients[$i]['socket'],1024000, PHP_NORMAL_READ);
 
 			/* Client disconnected */
 			if ($data === FALSE) {
@@ -128,7 +128,7 @@ function encrypt($data,$key)
 	if($enable_encryption){
 		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+		$data = base64_encode(mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv));
 	}
 	return($data);
 }
@@ -140,7 +140,7 @@ function decrypt($data,$key)
 	if($enable_encryption){
 		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($data), MCRYPT_MODE_ECB, $iv);
 	}
 	return($data);
 }

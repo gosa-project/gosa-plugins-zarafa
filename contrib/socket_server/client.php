@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 echo "\n\nTry to connect";
 $sock = new Socket_Client("localhost","10000",TRUE,1);
-#$sock->SetEncryptionKey("Hallo hier bin ich.");
+$sock->SetEncryptionKey("Hallo hier bin ich.");
 if($sock->connected()){
 	echo "... successful\n";
 	echo "|--Reading welcome message : \n";

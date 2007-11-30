@@ -44,7 +44,7 @@ class Socket_Client
 	{
 		/* Encrypt data */
 		if($this->encrypt){
-			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv); 
+			$data = base64_encode(mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv)); 
 		}
 		return($data);
 	}
@@ -53,7 +53,7 @@ class Socket_Client
 	{
 		/* decrypt data */
 		if($this->encrypt){
-			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv);
+			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, base64_decode($data), MCRYPT_MODE_ECB, $this->iv);
 		}
 		return($data);
 	}
@@ -114,7 +114,8 @@ class Socket_Client
 			/* Check if there is something to read for us */
 			$read = array("0"=>$this->handle);	
 			$num = @stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
-				
+			$str = "";		
+		
 			/* Read data if necessary */
 			while($num && $this->b_data_send){
 				$str.= fread($this->handle, 1024000);
