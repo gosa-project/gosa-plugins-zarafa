@@ -119,6 +119,12 @@ class passwordMethod
     return "";
   }
 
+  
+  // Save information to LDAP
+  function save($dn)
+  {
+  }
+
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

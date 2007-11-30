@@ -36,7 +36,7 @@ class passwordMethodheimdal extends passwordMethod
     #
     # In particular, we need the "heimdal_keygen" to feed kadmin in order to return "true".
     #
-    return false;
+    return true;
 	}
 
 
@@ -91,8 +91,21 @@ class passwordMethodheimdal extends passwordMethod
     # * Handle POST's from and for this dialog
     # * Return filled template for the config sub-dialog.
     # See https://oss.gonicus.de/labs/gosa/ticket/223
+    if (isset($_POST['pw_abort'])){
+      return "";
+    }
+    return "<input type='submit' id='pw_abort' name='pw_abort' value='Abort'>";
   }
 
+
+  function save($dn)
+  {
+    #TODO
+    # Write information to the LDAP
+    echo "Possible write changes for $dn...";
+  }
+
+  
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
