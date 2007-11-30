@@ -4,7 +4,7 @@
 error_reporting(E_ALL);
 
 echo "\n\nTry to connect";
-$sock = new Socket_Client("localhost","10000");
+$sock = new Socket_Client("localhost","10000",TRUE,1);
 if($sock->connected()){
 	echo "... successful\n";
 	echo "|--Reading welcome message : \n";
@@ -12,18 +12,24 @@ if($sock->connected()){
 	
 	/* Prepare a hunge bunch of data to be send */
 	$data = "a";
-	for($i = 0 ; $i < (1024 * 1024); $i++){
+	for($i = 0 ; $i < (1024 * 4); $i++){
 		$data .= "a";
 	}
 	echo "|--Sending ".strlen($data)."bytes of data to socket.\n";
 	$sock->send($data);
+	echo "|--Done!\n";
 	$sock->read();	
-	$sock->bytes_read();
 	echo "|--".$sock->bytes_read()."bytes read.\n";
 	echo "|--Sending 'exit' command to socket.\n";	
-	echo $sock->read();
-		
-
+	$sock->send("exit");
+	echo "|--Reading message:\n";
+	echo $sock->read()."\n";	
+	
+	echo "|--Closing connection.\n";
+	$sock->close();	
+	echo "|--Done!\n";
+	echo "|--End\n\n";
+	
 }else{
 	echo "... FAILED!\n";
 }
@@ -94,13 +100,13 @@ class Socket_Client
 
 			/* Check if there is something to read for us */
 			$read = array("0"=>$this->handle);	
-			$num = stream_select($read,$write=NULL,$accept=NULL,1);
-
+			$num = stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
+				
 			/* Read data if necessary */
-			while($num){
-				$str.= fread($this->handle, 1024);
+			while($num && $this->b_data_send){
+				$str.= fread($this->handle, 1024000);
 				$read = array("0"=>$this->handle);	
-				$num = stream_select($read,$write=NULL,$accept=NULL,1);
+				$num = stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
 			}
 			$this->bytes_read = strlen($str);
 			$this->b_data_send = FALSE;

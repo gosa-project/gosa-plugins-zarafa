@@ -98,14 +98,14 @@ Type some text here:\n");
 			}
 
 			$data = trim($data);
-			echo "Client (".$clients[$i]['ipaddy'].") send : ".$data." \n";
+			echo "Client (".$clients[$i]['ipaddy'].") send : ".substr($data,0,30)."... \n";
 	
 			if($data == "exit"){
 				/* Close conenction */
-				socket_write($clients[$i]['socket'],"Bye Bye! \n");
-				echo "Client disconnected! ".$clients[$i]['ipaddy']."\n";
-				unset($clients[$i]);
-				continue;
+				socket_write($clients[$i]['socket'],"Bye Bye!");
+				socket_close($clients[$i]);
+				echo "Client disconnected! bye bye!".$clients[$i]['ipaddy']."\n";
+#				unset($clients[$i]);
 				
 			}else{
 				/* Send some data back to the client */
