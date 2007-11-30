@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 echo "\n\nTry to connect";
 $sock = new Socket_Client("localhost","10000",TRUE,1);
+#$sock->SetEncryptionKey("Hallo hier bin ich.");
 if($sock->connected()){
 	echo "... successful\n";
 	echo "|--Reading welcome message : \n";
@@ -14,13 +15,13 @@ if($sock->connected()){
 	
 	/* Prepare a hunge bunch of data to be send */
 	$data = "a";
-	for($i = 0 ; $i < (1024 * 1); $i++){
+	for($i = 0 ; $i < (100 * 1); $i++){
 		$data .= "a";
 	}
 	echo "|--Sending ".strlen($data)."bytes of data to socket.\n";
 	$sock->send($data);
 	echo "|--Done!\n";
-	$sock->read();	
+	echo $sock->read();	
 	echo "|--".$sock->bytes_read()."bytes read.\n";
 	echo "|--Sending 'exit' command to socket.\n";	
 	$sock->send("exit");

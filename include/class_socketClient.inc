@@ -12,6 +12,11 @@ class Socket_Client
 	private $bytes_read = 0;
 	private $error = "";
 
+	private $encrypt 	= FALSE;
+	private $crypt_key 	= "";
+
+	private $iv;
+
 	public function __construct($host, $port, $connect = TRUE,$timeout = 3){
 		$this->host 	= $host;
 		$this->port 	= $port;
@@ -19,6 +24,38 @@ class Socket_Client
 		if($connect){
 			$this->connect();
 		}
+	}
+
+	public function SetEncryptionKey($data)
+	{
+		if(!function_exists("mcrypt_get_iv_size")){
+			$this->error = _("The mcrypt module was not found. Please install php5-mcrypt.") ;	
+			return(FALSE);
+		}else{
+			$this->encrypt 	= TRUE;
+			$this->crypt_key= $data; 
+			$iv_size  = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+			$this->iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+			return(TRUE);
+		}
+	}
+
+	private function encrypt($data)
+	{
+		/* Encrypt data */
+		if($this->encrypt){
+			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv); 
+		}
+		return($data);
+	}
+
+	private function decrypt($data)
+	{
+		/* decrypt data */
+		if($this->encrypt){
+			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv);
+		}
+		return($data);
 	}
 
 	public function connected()
@@ -49,6 +86,10 @@ class Socket_Client
 	public function send($data)
 	{
 		if($this->handle){
+			if($this->encrypt){
+				$data = $this->encrypt($data);
+			}
+
 			$data = trim($data);
 			fputs($this->handle,$data."\n");
 			$this->b_data_send = TRUE;
@@ -82,6 +123,9 @@ class Socket_Client
 			}
 			$this->bytes_read = strlen($str);
 			$this->b_data_send = FALSE;
+			if($this->encrypt){
+				$str = $this->decrypt($str);
+			}
 		}
 		return($str);
 	}

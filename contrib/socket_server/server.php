@@ -12,6 +12,9 @@ $bind_port = 10000;
 // Max clients 
 $max_clients = 3;
 
+// Rijndal encrypt key 
+$enable_encryption = FALSE;
+$encrypt_key = "Hallo hier bin ich.";
 
 
 /* Create Socket - 
@@ -64,10 +67,10 @@ while(TRUE) {
 				socket_getpeername($clients[$i]['socket'],$ip);
 				$clients[$i]['ipaddy'] = $ip;
 
-				socket_write($clients[$i]['socket'],
+				socket_write($clients[$i]['socket'],encrypt(
 "Welcome to GOsa Test Server 
 ============================
-Type some text here:\n");
+Type some text here:\n",$encrypt_key));
 
 				echo("New client connected: " . $clients[$i]['ipaddy'] . " \n");
 				break;
@@ -90,7 +93,7 @@ Type some text here:\n");
 		if(isset($clients[$i]) && in_array($clients[$i]['socket'],$read)) {
 
 			/* Read socket data */
-			$data = @socket_read($clients[$i]['socket'],1024000, PHP_NORMAL_READ);
+			$data = socket_read($clients[$i]['socket'],1024000, PHP_NORMAL_READ);
 
 			/* Client disconnected */
 			if ($data === FALSE) {
@@ -99,20 +102,48 @@ Type some text here:\n");
 				continue;
 			}
 
-			$data = trim($data);
+			$data = trim(decrypt($data,$encrypt_key));
 			echo "Client (".$clients[$i]['ipaddy'].") send : ".substr($data,0,30)."... \n";
 	
 			if($data == "exit"){
 				/* Close conenction */
-				socket_write($clients[$i]['socket'],"Bye Bye!");
+				socket_write($clients[$i]['socket'],encrypt("Bye Bye!",$encrypt_key));
 				@socket_close($clients[$i]);
 				echo "Client disconnected! bye bye!".$clients[$i]['ipaddy']."\n";
 			}else{
 				/* Send some data back to the client */
-				$data = strrev($data);
+				$data = encrypt(strrev($data),$encrypt_key);
 				socket_write($clients[$i]['socket'],$data);
 			}
 		}
 	}
 }
+
+
+
+function encrypt($data,$key)
+{
+	global $enable_encryption;
+	/* Encrypt data */
+	if($enable_encryption){
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+	}
+	return($data);
+}
+
+function decrypt($data,$key)
+{
+	global $enable_encryption;
+	/* Decrypt data */
+	if($enable_encryption){
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+		$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+	}
+	return($data);
+}
+
+
 ?> 
