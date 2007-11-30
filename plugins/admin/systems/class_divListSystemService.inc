@@ -100,19 +100,19 @@ class divListSystemService extends MultiSelectWindow
         $actions .= "&nbsp;<input type='image' name='StartSingleService_".$name."' src='images/status_start.png'
                             title='"._("Start service")."'>";
       }else{
-        $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
+        $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
       if($entry['AllowStart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='StopSingleService_".$name."' src='images/status_stop.png'
                             title='"._("Stop service")."'>";
       }else{
-        $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
+        $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
       if($entry['AllowStart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'
                             title='"._("Restart service")."'>";
       }else{
-        $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
+        $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
 
       /* Check if edit is enabled and allowed for current service */
@@ -120,7 +120,7 @@ class divListSystemService extends MultiSelectWindow
         $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/edit.png'
                             title='"._("Edit service")."'>";
       }else{
-        $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
+        $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
 
       /* Check if remove is enabled and allowed for current service */
@@ -128,7 +128,7 @@ class divListSystemService extends MultiSelectWindow
         $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/edittrash.png'
                             title='"._("Remove service")."'>";
       }else{
-        $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
+        $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
 
       $field3 = array("string" => $actions ,"attach" => "style='width:100px;border-right:0px;'");
