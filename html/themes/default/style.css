@@ -690,23 +690,16 @@ input {
 	font-size:12px;
 }
 
-input.text {
-	font-size:12px;
-	border:1px solid #AAA;
-}
-
 input:focus {
 	font-size:12px;
 }
 
 select {
 	font-size:12px;
-	border:1px solid #AAA;
 }
 
 textarea {
 	font-size:12px;
-	border:1px solid #AAA;
 }
 
 textarea:focus {
@@ -1538,22 +1531,5 @@ td.container_:hover,div.container_:hover {
     height: 0;
     font-size: 1px;
     line-height: 0;
-}
-
-/* Dojo override */
-.tundra .dijitTextBox,
-.tundra .dijitComboBox,
-.tundra .dijitSpinner,
-.tundra .dijitInlineEditor input,
-.tundra .dijitTextArea {
-	background: #fff;
-}
-
-.tundra .dijitTextBoxError,
-.tundra .dijitComboBoxError,
-.tundra .dijitSpinnerError {
-        border:1px solid #f3d118;
-        background-color:#f9f7ba;
-        background-image:none;
 }
 
