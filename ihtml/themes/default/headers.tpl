@@ -16,13 +16,7 @@
   <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <style type="text/css">
-	{if $dojo}
-	@import url('include/dojo/dijit/themes/tundra/tundra.css');
-	@import url('include/dojo/dojo/resources/dojo.css');
-	{/if}
-  	@import url('themes/default/style.css');
-  </style>
+  <style type="text/css">@import url('themes/default/style.css');</style>
   <link rel="shortcut icon" href="favicon.ico">
 
   <script language="javascript" src="include/events.js" type="text/javascript"></script>
@@ -33,19 +27,5 @@
   <script language="javascript" src="include/layersmenu-browser_detection.js" type="text/javascript"></script>
   <script language="javascript" src="include/layersmenu-library.js" type="text/javascript"></script>
   <script language="javascript" src="include/layersmenu.js" type="text/javascript"></script>
-  {if $dojo}
-  <script language="javascript" src="include/dojo/dojo/dojo.js" type="text/javascript" djConfig="parseOnLoad: true"></script>
-
-  <script type="text/javascript">
-  	dojo.require("dojo.parser");
-	dojo.require("dijit.form.TextBox");
-	dojo.require("dijit.form.DateTextBox");
-	dojo.require("dijit.form.ValidationTextBox");
-	dojo.require("dijit.form.ComboBox");
-	dojo.require("dijit.form.Button");
-	dojo.require("dijit.form.FilteringSelect");
-  </script>
-  {/if}
-
 </head>
 
