@@ -47,23 +47,23 @@
     {if $is_template ne "true"}
     <tr>
      <td><label for="sn">{t}Last name{/t}{$must}</label></td>
-     <td>{render acl=$snACL}<input id="sn" name="sn" size="25" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" propercase="true" trim="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+" required="true">{/render}</td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">{/render}</td>
     </tr>
     {else}
     <tr>
      <td><label for="sn">{t}Template name{/t}{$must}</label></td>
-     <td>{render acl=$snACL}<input id="sn" name="sn" maxLength="60" value="{$sn}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}The field should not contain \\ characters{/t}" regExp="[^\\\\]+">{/render}</td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">{/render}</td>
     </tr>
     {/if}
 
     {if $is_template ne "true"}
     <tr>
      <td><label for="givenName">{t}First name{/t}{$must}</label></td>
-     <td>{render acl=$givenNameACL}<input id="givenName" size="25" name="givenName" maxLength="60" value="{$givenName}" dojoType="dijit.form.ValidationTextBox" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{t}Please specify the first name{/t}" regExp="[^\\\\]+">{/render}</td>
+     <td>{render acl=$givenNameACL}<input id="givenName" name="givenName" size=25 maxlength=60 value="{$givenName}">{/render}</td>
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
-     <td>{render acl=$uidACL}<input id="uid" name="uid" size="25" maxLength="60"  value="{$uid}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="true" promptMessage="{t}This field is required{/t}" invalidMessage="{$uid_invalid_message}" regExp="{$uid_regex}">{/render}</td>
+     <td>{render acl=$uidACL}<input id="uid" name="uid" size=25 maxlength=60  value="{$uid}">{/render}</td>
     </tr>
     {/if}
       
@@ -75,7 +75,7 @@
      <td>
       <div style="height:10px;"></div>
       	{render acl=$personalTitleACL}
-		<input id="personalTitle" name="personalTitle" dojoType="dijit.form.TextBox" size=25 maxLength=60 value="{$personalTitle}">
+		<input id="personalTitle" name="personalTitle" size=25 maxlength=60 value="{$personalTitle}">
 	{/render}
      </td>
     </tr>
@@ -83,7 +83,7 @@
      <td><label for="academicTitle">{t}Academic title{/t}</label></td>
      <td>
       	{render acl=$academicTitleACL}
-	      <input id="academicTitle" name="academicTitle" size=25 dojoType="dijit.form.TextBox" maxLength=60 value="{$academicTitle}">
+	      <input id="academicTitle" name="academicTitle" size=25 maxlength=60 value="{$academicTitle}">
 	{/render}
      </td>
     </tr>
@@ -95,9 +95,6 @@
      <td>
       <div style="height:10px;"></div>
       	{render acl=$dateOfBirthACL}
-	{if $dojo}
-	      <input id="dateOfBirth" name="dateOfBirth" size=11 dojoType="dijit.form.DateTextBox" maxLength=11 value="{$dateOfBirth}">
-	{else}
 	      {if $use_dob eq 1}
 	      <select id="day" name=day onChange="createResult(this.form,this.form.dateOfBirth);"> 
 	       {html_options values=$days output=$days selected=$day}
@@ -113,7 +110,6 @@
 	      {else}
 	      <input type="submit" name="set_dob" value="{t}Set{/t}" >
 	      {/if}
-	{/if}
 	{/render}
      </td>
     </tr>
@@ -179,7 +175,7 @@
      <td><label for="homePhone">{t}Private phone{/t}</label>
      </td><td>
       	{render acl=$homePhoneACL}
-	     <input id="homePhone" name="homePhone" size=25 maxlength=60 value="{$homePhone}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
+	     <input id="homePhone" name="homePhone" size=25 maxlength=60 value="{$homePhone}">
 	{/render}
      </td>
     </tr>
@@ -187,7 +183,7 @@
      <td><label for="labeledURI">{t}Homepage{/t}</label></td>
      <td>
       	{render acl=$labeledURIACL}
-	 	<input id="labeledURI" name="labeledURI" size=25 maxlength=60 value="{$labeledURI}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid URL{/t}" regExp="^(ftp|http|https):\/\/(\w+:\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$">
+	 	<input id="labeledURI" name="labeledURI" size=25 maxlength=60 value="{$labeledURI}">
 	{/render}
      </td>
     </tr>
@@ -215,7 +211,7 @@
      <td><label for="edit_cert">{t}Certificates{/t}</label></td>
      <td>
       	{render acl=$CertificatesACL mode=read_active}
-      	  <input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}..." >
+      		<input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}...">
 	{/render}
      </td>
     </tr>
@@ -248,7 +244,7 @@
      <td><label for="o">{t}Organization{/t}</label></td>
      <td>	
       	{render acl=$oACL}
-		<input class="text" id="o" name="o" size=22 maxlength=60 value="{$o}">
+		<input id="o" name="o" size=22 maxlength=60 value="{$o}">
 	{/render}
      </td>
     </tr>
@@ -256,7 +252,7 @@
      <td><label for="ou">{t}Department{/t}</label></td>
      <td>
       	{render acl=$ouACL}
-		<input class="text" id="ou" name="ou" size=22 maxlength=60 value="{$ou}">
+		<input id="ou" name="ou" size=22 maxlength=60 value="{$ou}">
 	{/render}
      </td>
     </tr>
@@ -264,7 +260,7 @@
      <td><label for="departmentNumber">{t}Department No.{/t}</label></td>
      <td>
       	{render acl=$departmentNumberACL}
-	      <input class="text" id="departmentNumber" name="departmentNumber" size=22 maxlength=60 value="{$departmentNumber}">
+	      <input id="departmentNumber" name="departmentNumber" size=22 maxlength=60 value="{$departmentNumber}">
 	{/render}
      </td>
     </tr>
@@ -272,7 +268,7 @@
      <td><label for="employeeNumber">{t}Employee No.{/t}</label></td>
      <td>
       	{render acl=$employeeNumberACL}
-      		<input class="text" id="employeeNumber" name="employeeNumber" size=22 maxlength=60 value="{$employeeNumber}">
+      		<input id="employeeNumber" name="employeeNumber" size=22 maxlength=60 value="{$employeeNumber}">
 	{/render}
      </td>
     </tr>
@@ -280,7 +276,7 @@
      <td><label for="employeeType">{t}Employee type{/t}</label></td>
      <td>
       	{render acl=$employeeTypeACL}
-      		<input class="text" id="employeeType" name="employeeType" size=22 maxlength=60 value="{$employeeType}">
+      		<input id="employeeType" name="employeeType" size=22 maxlength=60 value="{$employeeType}">
 	{/render}
      </td>
     </tr>
@@ -298,7 +294,7 @@
      <td><label for="roomNumber">{t}Room No.{/t}</label></td>
      <td>
       	{render acl=$roomNumberACL}
-		<input class="text" id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
+		<input id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
 	{/render}
      </td>
     </tr>
@@ -307,7 +303,7 @@
      <td><label for="telephoneNumber">{t}Phone{/t}</label></td>
      <td>
       	{render acl=$telephoneNumberACL}
-      		<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
+      		<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}">
 	{/render}
      </td>
     </tr>
@@ -316,7 +312,7 @@
      <td><label for="mobile">{t}Mobile{/t}</label></td>
      <td>
       	{render acl=$mobileACL}
-		<input id="mobile" name="mobile" size=22 maxlength=60 value="{$mobile}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
+		<input id="mobile" name="mobile" size=22 maxlength=60 value="{$mobile}">
 	{/render}
      </td>
     </tr>
@@ -324,7 +320,7 @@
      <td><label for="pager">{t}Pager{/t}</label></td>
      <td>
       	{render acl=$pagerACL}
-      		<input id="pager" name="pager" size=22 maxlength=60 value="{$pager}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
+      		<input id="pager" name="pager" size=22 maxlength=60 value="{$pager}">
 	{/render}
      </td>
     </tr>
@@ -332,7 +328,7 @@
      <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label></td>
      <td>
       	{render acl=$facsimileTelephoneNumberACL}
-		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 value="{$facsimileTelephoneNumber}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
+		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 value="{$facsimileTelephoneNumber}">
 	{/render}
      </td>
     </tr>
@@ -350,7 +346,7 @@
      <td><label for="l">{t}Location{/t}</label></td>
      <td>
       	{render acl=$lACL}
-		<input class="text" id="l" name="l" size=22 maxlength=60 value="{$l}">
+		<input id="l" name="l" size=22 maxlength=60 value="{$l}">
 	{/render}
      </td>
     </tr>
@@ -358,7 +354,7 @@
      <td><label for="st">{t}State{/t}</label></td>
      <td>
       	{render acl=$stACL}
-		<input class="text" id="st" name="st" size=22 maxlength=60 value="{$st}">
+		<input id="st" name="st" size=22 maxlength=60 value="{$st}">
 	{/render}
      </td>
     </tr>
@@ -532,27 +528,11 @@
 
 <input type=hidden name="generic">
 
-{if $dojo}
-{literal}
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-	var init = function(){
-		dijit.byId('sn').focus();
-	};
-        dojo.addOnLoad(init);
+	focus_field('sn');
   	if (document.mainform.yearSel != "")
 				populate(document.mainform,document.mainform.dateOfBirth);
   -->
 </script>
-{/literal}
-{else}
-<!-- Place cursor -->
-<script language="JavaScript" type="text/javascript">
-  <!-- // First input field on page
-        focus_field('sn');
-  	if (document.mainform.yearSel != "")
-				populate(document.mainform,document.mainform.dateOfBirth);
-  -->
-</script>
-{/if}
