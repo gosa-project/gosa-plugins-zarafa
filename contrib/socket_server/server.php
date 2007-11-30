@@ -1,11 +1,29 @@
 #!/usr/bin/php5 -q
 <?php
-$socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
-$max_clients = 10;
-$port = 10000;
 
+//IP to bind to, use 0 for all 
+$bind_ip = 0;
+
+// Port to bind  
+$bind_port = 10000;
+
+// Max clients 
+$max_clients = 10;
+
+
+
+/* Create Socket - 
+ *  AF_INET means IPv4 Socket 
+ *  SOCK_STREAM means Fullduplex TCP
+ *  SOL_TCP - Protocol type TCP
+ */
+$socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+
+/* Enable reuse of local address */
 socket_set_option($socket,SOL_SOCKET,SO_REUSEADDR,1);
-socket_bind($socket,0,$port);
+
+/* Bind to socket */
+socket_bind($socket,$bind_ip,$bind_port);
 socket_listen($socket,$max_clients);
 
 $clients = array('0' => array('socket' => $socket));
@@ -14,7 +32,10 @@ echo "\nServer startet on port : ".$port."
 You may use telnet to connect to the server
 ";
 
+/* Accept connections till server is killed */
 while(TRUE) {
+
+	/* Create an array of sockets to read from */
 	$read[0] = $socket;
 	for($i=1;$i<count($clients)+1;$i++) {
 		if($clients[$i] != NULL) {
@@ -22,10 +43,20 @@ while(TRUE) {
 		}
 	}
 
+	/* Check each socket listed in array $read for readable data.
+     * We must do this to prevent the server from freezing if the socket is blocked.
+	 * All sockets that are readable will remain in the array, all blocked sockets will be removed.  
+     */
 	$ready = socket_select($read,$write=NULL,$except=NULL,0);
 
+    /* Handle incoming connections / Incoming data
+     */
 	if(in_array($socket,$read)) {
+
+		/* Check each client slot for a new connection */
 		for($i=1;$i<$max_clients+1;$i++) {
+		
+			/* Accept new connections */
 			if(!isset($clients[$i])) {
 				$clients[$i]['socket'] = socket_accept($socket);
 				socket_getpeername($clients[$i]['socket'],$ip);
@@ -47,32 +78,28 @@ Type some text here:\n");
 			}
 		}
 	}
+
+	/* Check if there is data to read from the client sockets 
+     */
 	for($i=1;$i<$max_clients+1;$i++) {
+
+		/* Check if socket has send data to the server 
+         */
 		if(in_array($clients[$i]['socket'],$read)) {
 
+			/* Read socket data */
 			$data = @socket_read($clients[$i]['socket'],1024000, PHP_NORMAL_READ);
 
+			/* Client disconnected */
 			if ($data === FALSE) {
 				unset($clients[$i]);
 				echo "Client disconnected! ";
 				continue;
 			}
 
-			$data = trim($data);
-
+			/* Send some data back to the client */
+			$data = base64_encode(trim($data));
 			socket_write($clients[$i]['socket'],$data);
-
-#		if(!empty($data)) {
-#			for($j=1;$j<$max_clients+1;$j++) {
-#				if(isset($clients[$j]['socket'])) {
-#					if(($clients[$j]['socket'] != $clients[$i]['socket']) && ($clients[$j]['socket'] != $socket)) {
-#						echo($clients[$i]['ipaddy'] . " is sending a message! ");
-#						socket_write($clients[$j]['socket'],"[" . $clients[$i]['ipaddy'] . "] says: " . $data . " ");
-#					}
-#				}
-#			}
-#			break;
-#		}
 		}
 	}
 }
