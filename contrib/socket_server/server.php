@@ -67,11 +67,11 @@ while(TRUE) {
 ============================
 Type some text here:\n");
 
-				echo("New client connected: " . $clients[$i]['ipaddy'] . " ");
+				echo("New client connected: " . $clients[$i]['ipaddy'] . " \n");
 				break;
 			}
 			elseif($i == $max_clients - 1) {
-				echo("To many Clients connected! ");
+				echo("To many Clients connected! \n");
 			}
 			if($ready < 1) {
 				continue;
@@ -93,13 +93,25 @@ Type some text here:\n");
 			/* Client disconnected */
 			if ($data === FALSE) {
 				unset($clients[$i]);
-				echo "Client disconnected! ";
+				echo "Client disconnected! \n";
 				continue;
 			}
 
-			/* Send some data back to the client */
-			$data = base64_encode(trim($data));
-			socket_write($clients[$i]['socket'],$data);
+			$data = trim($data);
+			echo "Client (".$clients[$i]['ipaddy'].") send : ".$data." \n";
+	
+			if($data == "exit"){
+				/* Close conenction */
+				socket_write($clients[$i]['socket'],"Bye Bye! \n");
+				echo "Client disconnected! ".$clients[$i]['ipaddy']."\n";
+				unset($clients[$i]);
+				continue;
+				
+			}else{
+				/* Send some data back to the client */
+				$data = base64_encode($data);
+				socket_write($clients[$i]['socket'],$data);
+			}
 		}
 	}
 }
