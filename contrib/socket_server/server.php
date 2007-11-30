@@ -128,19 +128,22 @@ function encrypt($data,$key)
 	if($enable_encryption){
 		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = base64_encode(mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv));
+		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
 	}
-	return($data);
+	return(base64_encode($data));
 }
 
 function decrypt($data,$key)
 {
 	global $enable_encryption;
+	$data = base64_decode($data);
+
 	/* Decrypt data */
 	if($enable_encryption){
 		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($data), MCRYPT_MODE_ECB, $iv);
+		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+		$data = rtrim($data,"\x00");
 	}
 	return($data);
 }

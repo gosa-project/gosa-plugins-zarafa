@@ -4,7 +4,6 @@
 require_once("../../include/class_socketClient.inc");
 error_reporting(E_ALL);
 
-
 echo "\n\nTry to connect";
 $sock = new Socket_Client("localhost","10000",TRUE,1);
 $sock->SetEncryptionKey("Hallo hier bin ich.");
@@ -15,8 +14,8 @@ if($sock->connected()){
 	
 	/* Prepare a hunge bunch of data to be send */
 	$data = "a";
-	for($i = 0 ; $i < (100 * 1); $i++){
-		$data .= "a";
+	for($i = 0 ; $i < (12 * 1); $i++){
+		$data .= "a\n";
 	}
 	echo "|--Sending ".strlen($data)."bytes of data to socket.\n";
 	$sock->send($data);

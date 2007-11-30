@@ -44,16 +44,18 @@ class Socket_Client
 	{
 		/* Encrypt data */
 		if($this->encrypt){
-			$data = base64_encode(mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv)); 
+			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv); 
 		}
-		return($data);
+		return(base64_encode($data));
 	}
 
 	private function decrypt($data)
 	{
+		$data = base64_decode($data);	
 		/* decrypt data */
 		if($this->encrypt){
-			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, base64_decode($data), MCRYPT_MODE_ECB, $this->iv);
+			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv);
+			$data = rtrim($data,"\x00");
 		}
 		return($data);
 	}
@@ -86,10 +88,7 @@ class Socket_Client
 	public function send($data)
 	{
 		if($this->handle){
-			if($this->encrypt){
-				$data = $this->encrypt($data);
-			}
-
+			$data = $this->encrypt($data);
 			$data = trim($data);
 			fputs($this->handle,$data."\n");
 			$this->b_data_send = TRUE;
@@ -124,9 +123,7 @@ class Socket_Client
 			}
 			$this->bytes_read = strlen($str);
 			$this->b_data_send = FALSE;
-			if($this->encrypt){
-				$str = $this->decrypt($str);
-			}
+			$str = $this->decrypt($str);
 		}
 		return($str);
 	}
