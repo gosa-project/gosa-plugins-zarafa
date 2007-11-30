@@ -690,6 +690,11 @@ input {
 	font-size:12px;
 }
 
+input.text {
+	font-size:12px;
+	border:1px solid #AAA;
+}
+
 input:focus {
 	font-size:12px;
 }

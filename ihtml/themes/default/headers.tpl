@@ -42,6 +42,7 @@
 	dojo.require("dijit.form.DateTextBox");
 	dojo.require("dijit.form.ValidationTextBox");
 	dojo.require("dijit.form.ComboBox");
+	dojo.require("dijit.form.Button");
 	dojo.require("dijit.form.FilteringSelect");
   </script>
   {/if}

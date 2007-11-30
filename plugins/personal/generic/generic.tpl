@@ -179,7 +179,7 @@
      <td><label for="homePhone">{t}Private phone{/t}</label>
      </td><td>
       	{render acl=$homePhoneACL}
-	     <input id="homePhone" name="homePhone" size=25 maxlength=60 value="{$homePhone}">
+	     <input id="homePhone" name="homePhone" size=25 maxlength=60 value="{$homePhone}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
 	{/render}
      </td>
     </tr>
@@ -187,7 +187,7 @@
      <td><label for="labeledURI">{t}Homepage{/t}</label></td>
      <td>
       	{render acl=$labeledURIACL}
-	 	<input id="labeledURI" name="labeledURI" size=25 maxlength=60 value="{$labeledURI}">
+	 	<input id="labeledURI" name="labeledURI" size=25 maxlength=60 value="{$labeledURI}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid URL{/t}" regExp="^(ftp|http|https):\/\/(\w+:\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$">
 	{/render}
      </td>
     </tr>
@@ -215,7 +215,7 @@
      <td><label for="edit_cert">{t}Certificates{/t}</label></td>
      <td>
       	{render acl=$CertificatesACL mode=read_active}
-      		<input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}...">
+      	  <input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}..." >
 	{/render}
      </td>
     </tr>
@@ -248,7 +248,7 @@
      <td><label for="o">{t}Organization{/t}</label></td>
      <td>	
       	{render acl=$oACL}
-		<input id="o" name="o" size=22 maxlength=60 value="{$o}">
+		<input class="text" id="o" name="o" size=22 maxlength=60 value="{$o}">
 	{/render}
      </td>
     </tr>
@@ -256,7 +256,7 @@
      <td><label for="ou">{t}Department{/t}</label></td>
      <td>
       	{render acl=$ouACL}
-		<input id="ou" name="ou" size=22 maxlength=60 value="{$ou}">
+		<input class="text" id="ou" name="ou" size=22 maxlength=60 value="{$ou}">
 	{/render}
      </td>
     </tr>
@@ -264,7 +264,7 @@
      <td><label for="departmentNumber">{t}Department No.{/t}</label></td>
      <td>
       	{render acl=$departmentNumberACL}
-	      <input id="departmentNumber" name="departmentNumber" size=22 maxlength=60 value="{$departmentNumber}">
+	      <input class="text" id="departmentNumber" name="departmentNumber" size=22 maxlength=60 value="{$departmentNumber}">
 	{/render}
      </td>
     </tr>
@@ -272,7 +272,7 @@
      <td><label for="employeeNumber">{t}Employee No.{/t}</label></td>
      <td>
       	{render acl=$employeeNumberACL}
-      		<input id="employeeNumber" name="employeeNumber" size=22 maxlength=60 value="{$employeeNumber}">
+      		<input class="text" id="employeeNumber" name="employeeNumber" size=22 maxlength=60 value="{$employeeNumber}">
 	{/render}
      </td>
     </tr>
@@ -280,7 +280,7 @@
      <td><label for="employeeType">{t}Employee type{/t}</label></td>
      <td>
       	{render acl=$employeeTypeACL}
-      		<input id="employeeType" name="employeeType" size=22 maxlength=60 value="{$employeeType}">
+      		<input class="text" id="employeeType" name="employeeType" size=22 maxlength=60 value="{$employeeType}">
 	{/render}
      </td>
     </tr>
@@ -298,7 +298,7 @@
      <td><label for="roomNumber">{t}Room No.{/t}</label></td>
      <td>
       	{render acl=$roomNumberACL}
-		<input id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
+		<input class="text" id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
 	{/render}
      </td>
     </tr>
@@ -307,7 +307,7 @@
      <td><label for="telephoneNumber">{t}Phone{/t}</label></td>
      <td>
       	{render acl=$telephoneNumberACL}
-      		<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}">
+      		<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
 	{/render}
      </td>
     </tr>
@@ -316,7 +316,7 @@
      <td><label for="mobile">{t}Mobile{/t}</label></td>
      <td>
       	{render acl=$mobileACL}
-		<input id="mobile" name="mobile" size=22 maxlength=60 value="{$mobile}">
+		<input id="mobile" name="mobile" size=22 maxlength=60 value="{$mobile}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
 	{/render}
      </td>
     </tr>
@@ -324,7 +324,7 @@
      <td><label for="pager">{t}Pager{/t}</label></td>
      <td>
       	{render acl=$pagerACL}
-      		<input id="pager" name="pager" size=22 maxlength=60 value="{$pager}">
+      		<input id="pager" name="pager" size=22 maxlength=60 value="{$pager}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
 	{/render}
      </td>
     </tr>
@@ -332,7 +332,7 @@
      <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label></td>
      <td>
       	{render acl=$facsimileTelephoneNumberACL}
-		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 value="{$facsimileTelephoneNumber}">
+		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 value="{$facsimileTelephoneNumber}" dojoType="dijit.form.ValidationTextBox" propercase="false" trim="true" required="false" invalidMessage="{t}Please enter a valid phone number{/t}" regExp="^[0-9/+ ()-]*$">
 	{/render}
      </td>
     </tr>
@@ -350,7 +350,7 @@
      <td><label for="l">{t}Location{/t}</label></td>
      <td>
       	{render acl=$lACL}
-		<input id="l" name="l" size=22 maxlength=60 value="{$l}">
+		<input class="text" id="l" name="l" size=22 maxlength=60 value="{$l}">
 	{/render}
      </td>
     </tr>
@@ -358,7 +358,7 @@
      <td><label for="st">{t}State{/t}</label></td>
      <td>
       	{render acl=$stACL}
-		<input id="st" name="st" size=22 maxlength=60 value="{$st}">
+		<input class="text" id="st" name="st" size=22 maxlength=60 value="{$st}">
 	{/render}
      </td>
     </tr>
