@@ -14,7 +14,7 @@ if($sock->connected()){
 	
 	/* Prepare a hunge bunch of data to be send */
 	$data = "a";
-	for($i = 0 ; $i < (1024 * 4); $i++){
+	for($i = 0 ; $i < (1024 * 1); $i++){
 		$data .= "a";
 	}
 	echo "|--Sending ".strlen($data)."bytes of data to socket.\n";
