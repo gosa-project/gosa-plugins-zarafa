@@ -109,7 +109,7 @@ Type some text here:\n");
 				echo "Client disconnected! bye bye!".$clients[$i]['ipaddy']."\n";
 			}else{
 				/* Send some data back to the client */
-				$data = base64_encode($data);
+				$data = strrev($data);
 				socket_write($clients[$i]['socket'],$data);
 			}
 		}

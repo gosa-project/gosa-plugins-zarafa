@@ -10,6 +10,7 @@ class Socket_Client
 	private $b_data_send = FALSE;
 	private $handle	= NULL;
 	private $bytes_read = 0;
+	private $error = "";
 
 	public function __construct($host, $port, $connect = TRUE,$timeout = 3){
 		$this->host 	= $host;
@@ -30,10 +31,15 @@ class Socket_Client
 		$this->handle = @fsockopen($this->host, $this->port, $this->errno, $this->errstr, $this->timeout);
 		if(!$this->handle){
 			$this->handle = NULL;
-			echo $this->errstr;
+			$this->error = $this->errstr;
 		}else{
 			$this->b_data_send = TRUE;
 		}
+	}
+
+	public function get_error()
+	{
+		return($this->error);	
 	}
 
 	public function write($data){
@@ -66,13 +72,13 @@ class Socket_Client
 
 			/* Check if there is something to read for us */
 			$read = array("0"=>$this->handle);	
-			$num = stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
+			$num = @stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
 				
 			/* Read data if necessary */
 			while($num && $this->b_data_send){
 				$str.= fread($this->handle, 1024000);
 				$read = array("0"=>$this->handle);	
-				$num = stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
+				$num = @stream_select($read,$write=NULL,$accept=NULL,$this->timeout);
 			}
 			$this->bytes_read = strlen($str);
 			$this->b_data_send = FALSE;
