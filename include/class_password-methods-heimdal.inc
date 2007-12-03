@@ -93,14 +93,26 @@ class passwordMethodheimdal extends passwordMethod
 
 	function is_available()
 	{
-    #TODO
-    # Check if heimdal information is available
-    # in configuration and return true/false
-    #
-    # In particular, we need the "heimdal_keygen" to feed kadmin in order to return "true".
-    #
-    return true;
-	}
+    global $config;
+    $cmd = "";
+    if(isset($config->current['HEIMDAL_KEYGEN'])){
+      $cmd = $config->current['HEIMDAL_KEYGEN'];
+      if(!check_command($cmd)){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+      }
+    }
+    if(isset($this->config->data['MAIN']['HEIMDAL_KEYGEN'])){
+      $cmd = $this->config->data['MAIN']['HEIMDAL_KEYGEN'];
+      if(!check_command($cmd)){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+      }
+    }
+    if(isset($config->data['SERVERS']['KERBEROS']['REALM']) && check_command($cmd)){
+      return TRUE;
+    }else{
+      return FALSE;
+    }
+  }
 
 
 	function generate_hash($pwd)

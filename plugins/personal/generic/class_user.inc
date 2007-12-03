@@ -560,9 +560,14 @@ class user extends plugin
     }
 
     $temp= passwordMethod::get_available_methods();
+    $is_configurable= FALSE;
     $hashes = $temp['name'];
-    $test= new $temp[$this->pw_storage]($this->config);
-    $is_configurable= $test->is_configurable();
+    if(isset($temp[$this->pw_storage])){
+      $test= new $temp[$this->pw_storage]($this->config);
+      $is_configurable= $test->is_configurable();
+    }else{
+      new msg_dialog(_("Password method"),_("The selected password method is no longer available."),WARNING_DIALOG);
+    }
     
     /* Load attributes and acl's */
     $ui =get_userinfo();
