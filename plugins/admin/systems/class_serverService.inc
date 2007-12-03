@@ -192,7 +192,7 @@ class ServerService extends plugin
   
 
     /* Abort dialog */
-    if(isset($_POST['SaveService'])){
+    if(isset($_POST['SaveService']) && is_object($this->dialog)){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
