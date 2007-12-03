@@ -38,6 +38,8 @@ class MultiSelectWindow{
   var $SaveAdditionalVars = array();  // Additional Post vars to store 
   var $module= "";
 
+  var $IgnoreAccount = TRUE;
+
 	function ClearElementsList()
 	{
 		$this->array_Elements = array();
@@ -307,6 +309,11 @@ class MultiSelectWindow{
     return("");
   }
 
+  function EnableJSLeaveMsg($ignore = TRUE)
+  {
+    $this->IgnoreAccount = !$ignore;
+  }
+
 	/* Draw the list with all list elements and filters */
 	function Draw()
 	{
@@ -408,6 +415,7 @@ class MultiSelectWindow{
 		$smarty->assign("Summary"			, $this->string_Summary);
 		$smarty->assign("Title"				, $this->string_Title);
 		$smarty->assign("Information"		, $this->string_Information);
+		$smarty->assign("IgnoreAccount"		, $this->IgnoreAccount);
 
 		/* Check for exeeded sizelimit */
 		$smarty->assign("hint"				, print_sizelimit_warning());

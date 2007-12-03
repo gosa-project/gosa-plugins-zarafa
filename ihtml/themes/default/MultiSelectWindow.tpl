@@ -133,7 +133,8 @@
 	</p>
 </div>
 {/if}
-
-<input type="hidden" name="menu_action" id='menu_action'>
+{if $IgnoreAccount}
 <input type="hidden" name="ignore">
+{/if}
+<input type="hidden" name="menu_action" id='menu_action'>
 <input type="hidden" name="MultiSelectWindow{$filterName}" value="1">

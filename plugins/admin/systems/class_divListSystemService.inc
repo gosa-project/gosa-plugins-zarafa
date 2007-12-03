@@ -12,6 +12,7 @@ class divListSystemService extends MultiSelectWindow
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
+    $this->EnableJSLeaveMsg(TRUE);
 
     /* Set list strings */
     $this->SetTitle(_("Installed services"));
