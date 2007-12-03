@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w -I.
+#!/usr/bin/perl -w -I/usr/local/lib/perl
 #
 # This code is part of GOsa (https://gosa.gonicus.de)
 # Copyright (C) 2007 Frank Moeller
@@ -22,26 +22,28 @@ use IMAP::Sieve;
 use XML::Simple;
 use Data::Dumper;
 use Net::LDAP;
+use URI;
 use utf8;
 use Getopt::Std;
+use Date::Format;
 use vars qw/ %opt /;
 
 #
 # Definitions
 #
 my $gosa_config = "/etc/gosa/gosa.conf";
-my $opt_string = 'l:h';
+my $opt_string = 'l:hs';
 my $location = "";
-my $today = time ();
-# default mailMethod = kolab
-my $server_attribute = "kolabHomeServer";
-my $alternate_address_attribute = "alias";
+my $today_gmt = time ();
+my $today = $today_gmt + 3600;
+my $server_attribute = "";
+my $alternate_address_attribute = "";
 my $gosa_sieve_script_name = "gosa";
 my $simple_bind_dn = "";
 my $simple_bind_dn_pwd = "";
 my $gosa_sieve_script_status = "FALSE";
-my $sieve_vacation = "";
 my $gosa_sieve_spam_header = "Sort mails with higher spam level";
+my ($ss,$mm,$hh,$day,$month,$year,$zone);
 
 #
 # Templates
@@ -51,10 +53,21 @@ my $vacation_header_template = "\# Begin vacation message";
 my $vacation_footer_template = "\# End vacation message";
 
 #
+# Placeholder
+#
+my $start_date_ph = "##STARTDATE##";
+my $stop_date_ph = "##STOPDATE##";
+
+#
 # Usage
 #
 sub usage {
-	die "Usage:\nperl $0 [option]\n\n\tOptions:\n\t\t-l <\"location name\">\tuse special location\n\t\t-h\t\t\tthis help \n";
+	die "Usage:\nperl $0 [option]\n
+	     \twithout any option $0 uses the default location\n
+	     \tOptions:
+	     \t\t-l <\"location name\">\tuse special location
+	     \t\t-s\t\t\tshow all locations
+	     \t\t-h\t\t\tthis help \n";
 }
 
 #
@@ -84,26 +97,30 @@ sub parseconfig {
 	my $xml = new XML::Simple ();
 	my $c_data = $xml -> XMLin( $xmldata);
 	my $config = {};
-	my $server;
 	my $config_base;
 	my $ldap_admin;
 	my $ldap_admin_pwd;
+	my $url;
 	my $mailMethod;
-	if ( ! ( ref($c_data->{main}->{location}->{server}) ) ) {
-		$server = $c_data->{main}->{location}->{server};
+	#print Dumper ($c_data->{main}->{location}->{config});
+	if ( $c_data->{main}->{location}->{config} ) {
+		#print "IF\n";
 		$config_base = $c_data->{main}->{location}->{config};
+		$url = $c_data->{main}->{location}->{referral}->{url};
 		$ldap_admin = $c_data->{main}->{location}->{referral}->{admin};
 		$ldap_admin_pwd = $c_data->{main}->{location}->{referral}->{password};
 		$mailMethod = $c_data->{main}->{location}->{mailMethod};
 	} else {
-		$server = $c_data->{main}->{location}->{$c_location}->{server};
+		#print "ELSE\n";
 		$config_base = $c_data->{main}->{location}->{$c_location}->{config};
+		$url = $c_data->{main}->{location}->{$c_location}->{referral}->{url};
 		$ldap_admin = $c_data->{main}->{location}->{$c_location}->{referral}->{admin};
 		$ldap_admin_pwd = $c_data->{main}->{location}->{$c_location}->{referral}->{password};
 		$mailMethod = $c_data->{main}->{location}->{$c_location}->{mailMethod};
 	}
-	$config->{server} = $server;
+	print "$config_base -- $url -- $ldap_admin -- $ldap_admin_pwd -- $mailMethod\n";
 	$config->{config_base} = $config_base;
+	$config->{url} = $url;
 	$config->{mailMethod} = $mailMethod;
 	$config->{ldap_admin} = $ldap_admin;
 	$config->{ldap_admin_pwd} = $ldap_admin_pwd;
@@ -121,6 +138,23 @@ sub get_default_location {
 	my $default = $c_data->{main}->{default};
 
 	return $default;
+}
+
+#
+# List all location
+#
+sub list_locations {
+	my $xmldata = shift;
+	my $xml = new XML::Simple ( RootName=>'conf' );
+	my $c_data = $xml -> XMLin( $xmldata );
+	my $default = get_default_location ( $xmldata );
+	$default = $default . " (default)";
+	my @locations = ( $default );
+	my $data_ref = $c_data->{main}->{location};
+	my @keys = keys ( %{$data_ref} );
+	@locations = (@locations, @keys);
+
+	return @locations;
 }
 
 #
@@ -170,6 +204,23 @@ sub ldap_search {
 	$ldap->unbind;
 	
 	return $result;
+}
+
+#
+# Retrieve LDAP server
+#
+sub get_ldap_server {
+	my $url = shift;
+	
+	my $uri = URI->new($url);
+
+	my $scheme = $uri->scheme;
+	my $host = $uri->host;
+	my $port = $uri->port;
+	#print "$scheme - $host - $port\n";
+	my $server = $scheme . "://" . $host . ":" . $port;
+
+	return $server;
 }
 
 #
@@ -233,6 +284,7 @@ sub listscripts {
 
 	my @scripts = $sieve->listscripts;
 	my $script_list = join("\n",@scripts)."\n";
+	#print $script_list;
 	return $script_list;
 }
 
@@ -285,14 +337,25 @@ if ( $opt{l} ) {
 } elsif ( $opt{h} ) {
 	usage ();
 	exit (0);
+} elsif ( $opt{s} ) {
+	my $loc;
+	my $counter = 1;
+	my @locations = list_locations ( $input_stream );
+	print "\nConfigured Locations: \n";
+	print "---------------------\n";
+	foreach $loc ( @locations ) {
+		print $counter . ". " . $loc . "\n";
+		$counter++;
+	}
+	print "\n\n";
+	exit (0);
 } else {
 	$location = get_default_location ( $input_stream );
 }
-#print "$location\n";
 
 # parse config
 my $config = parseconfig ( $location, $input_stream );
-my $ldap_url = $config->{server};
+my $ldap_url = get_ldap_server ( $config->{url} );
 my $gosa_config_base = $config->{config_base};
 my $bind_dn = $config->{ldap_admin};
 my $bind_dn_pwd = $config->{ldap_admin_pwd};
@@ -301,9 +364,15 @@ utf8::encode($ldap_url);
 utf8::encode($gosa_config_base);
 utf8::encode($mailMethod);
 
-if ( $mailMethod =~ m/cyrus/i ) {
-	my $server_attribute = "gosaMailServer";
-	my $alternate_address_attribute = "gosaMailAlternateAddress";
+# default mailMethod = kolab
+if ( $mailMethod =~ m/kolab/i ) {
+	$server_attribute = "kolabHomeServer";
+	$alternate_address_attribute = "alias";
+} elsif ( $mailMethod =~ m/cyrus/i ) {
+	$server_attribute = "gosaMailServer";
+	$alternate_address_attribute = "gosaMailAlternateAddress";
+} else {
+	exit (0);
 }
 
 # determine LDAP base
@@ -316,15 +385,30 @@ my $search_scope = "sub";
 my $result = ldap_search ( $ldap_url, $filter, $search_scope, $ldap_base, $list_of_attributes, $simple_bind_dn, $simple_bind_dn_pwd );
 
 my @entries = $result->entries;
+my $noe = @entries;
+#print "NOE = $noe\n";
 my $entry = {};
 foreach $entry ( @entries ) {
+	# INITIALISATIONS
+	$gosa_sieve_script_status = "FALSE";
+	my @sieve_scripts = "";
+	my $script_name = "";
+	my $sieve_script = "";
+	my $sieve_vacation = "";
+	# END INITIALISATIONS
 	my $uid_v = $entry->get_value ( 'uid' );
+	#print "$uid_v\n";
 	my $mail_v = $entry->get_value ( 'mail' );
 	my @mailalternate = $entry->get_value ( $alternate_address_attribute );
 	my $vacation = $entry->get_value ( 'gosaVacationMessage' );
 	my $start_v = $entry->get_value ( 'gosaVacationStart' );
 	my $stop_v = $entry->get_value ( 'gosaVacationStop' );
 	my $server_v = $entry->get_value ( $server_attribute );
+
+	# temp. hack to compensate old gosa server name style
+	#if ( $server_v =~ m/^imap\:\/\//i ) {
+	#	$server_v =~ s/^imap\:\/\///;
+	#}
 	if ( ! ( $uid_v ) ) {
 		$uid_v = "";
 	}
@@ -345,12 +429,26 @@ foreach $entry ( @entries ) {
 	if ( ! ( $vacation ) ) {
 		$vacation = "";
 	}
+
 	if ( ! ( $start_v ) ) {
 		$start_v = 0;
+		next;
 	}
+	#print time2str("%d.%m.%Y", $start_v)."\n";
+	my $start_date_string = time2str("%d.%m.%Y", $start_v)."\n";
+
 	if ( ! ( $stop_v ) ) {
 		$stop_v = 0;
+		next;
 	}
+	#print time2str("%d.%m.%Y", $stop_v)."\n";
+	my $stop_date_string = time2str("%d.%m.%Y", $stop_v)."\n";
+
+	chomp $start_date_string;
+	chomp $stop_date_string;
+	$vacation =~ s/$start_date_ph/$start_date_string/g;
+	$vacation =~ s/$stop_date_ph/$stop_date_string/g;
+
 	if ( ! ( $server_v ) ) {
 		$server_v = "";
 		next;
@@ -361,7 +459,9 @@ foreach $entry ( @entries ) {
 
 	my ($sieve_user, $tmp) = split ( /\@/, $mail_v );
 
-	if ( ( $today >= $start_v ) && ( $today < $stop_v ) ) {
+	print "today = $today\nstart = $start_v\nstop = $stop_v\n";
+	my $real_stop = $stop_v + 86400;
+	if ( ( $today >= $start_v ) && ( $today < $real_stop ) ) {
 		print "activating vacation for user $uid_v\n";
 
 		my $srv_filter = "(&(goImapName=$server_v)(objectClass=goImapServer))";
@@ -380,9 +480,14 @@ foreach $entry ( @entries ) {
 			my $goImapAdmin = $srv_entries[0]->get_value ( 'goImapAdmin' );
 			my $goImapPassword = $srv_entries[0]->get_value ( 'goImapPassword' );
 			if ( ( $goImapSieveServer ) && ( $goImapSievePort ) && ( $goImapAdmin ) && ( $goImapPassword ) ) {
-				my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $sieve_user, $goImapSieveServer, $goImapSievePort);
-				my @sieve_scripts = listscripts ( $sieve );
-				my $script_name = "";
+#				if ( ! ( $sieve_user = $uid_v ) ) {
+#					$sieve_user = $uid_v;
+#				}
+				#my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $sieve_user, $goImapSieveServer, $goImapSievePort);
+				my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $uid_v, $goImapSieveServer, $goImapSievePort);
+				@sieve_scripts = listscripts ( $sieve );
+				#print Dumper (@sieve_scripts);
+				$script_name = "";
 				if ( @sieve_scripts ) {
 					foreach $script_name ( @sieve_scripts ) {
 						if ( $script_name =~ m/$gosa_sieve_script_name/ ) {
@@ -390,9 +495,9 @@ foreach $entry ( @entries ) {
 						}
 					}
 					if ( $gosa_sieve_script_status eq "TRUE" ) {
-						print "retrieving and modifying gosa sieve script\n";
+						print "retrieving and modifying gosa sieve script for user $uid_v\n";
 						# requirements
-						my $sieve_script = getscript( $sieve, $gosa_sieve_script_name );
+						$sieve_script = getscript( $sieve, $gosa_sieve_script_name );
 						#print "$sieve_script\n";
 						if ( ! ( $sieve_script ) ) {
 							print "No Sieve Script! Creating New One!\n";
@@ -424,7 +529,7 @@ foreach $entry ( @entries ) {
 							#print "MATCH\n";
 							$sieve_script =~ s/($gosa_sieve_spam_header[^{}]*{[^{}]*})/$1\n\n$sieve_vacation/;
 						} else {
-							$sieve_script =~ s/require(.*\[.*\])/require$1\n\n$sieve_vacation/;
+							$sieve_script =~ s/require(.*\[.*\]\;)/require$1\n\n$sieve_vacation/;
 						}
 						#print ( "START SIEVE $sieve_script\nSTOP SIEVE" );
 						# uploading new sieve script
@@ -432,17 +537,18 @@ foreach $entry ( @entries ) {
 						# activating new sieve script
 						setactive( $sieve, $gosa_sieve_script_name );
 					} else {
-						print "no gosa script available, creating new one";
-						my $sieve_script = $gosa_sieve_header . "\n\n" . $sieve_vacation;
+						print "no gosa script available for user $uid_v, creating new one";
+						$sieve_script = $gosa_sieve_header . "\n\n" . $sieve_vacation;
 						# uploading new sieve script
 						putscript( $sieve, $gosa_sieve_script_name, $sieve_script );
 						# activating new sieve script
 						setactive( $sieve, $gosa_sieve_script_name );
 					}
 				}
+				closesieve ( $sieve );
 			}
 		}
-	} elsif ( $today >= $stop_v ) {
+	} elsif ( $today >= $real_stop ) {
 		print "deactivating vacation for user $uid_v\n";
 
 		my $srv_filter = "(&(goImapName=$server_v)(objectClass=goImapServer))";
@@ -461,9 +567,10 @@ foreach $entry ( @entries ) {
 			my $goImapAdmin = $srv_entries[0]->get_value ( 'goImapAdmin' );
 			my $goImapPassword = $srv_entries[0]->get_value ( 'goImapPassword' );
 			if ( ( $goImapSieveServer ) && ( $goImapSievePort ) && ( $goImapAdmin ) && ( $goImapPassword ) ) {
-				my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $sieve_user, $goImapSieveServer, $goImapSievePort);
-				my @sieve_scripts = listscripts ( $sieve );
-				my $script_name = "";
+				#my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $sieve_user, $goImapSieveServer, $goImapSievePort);
+				my $sieve = opensieve ( $goImapAdmin, $goImapPassword, $uid_v, $goImapSieveServer, $goImapSievePort);
+				@sieve_scripts = listscripts ( $sieve );
+				$script_name = "";
 				if ( @sieve_scripts ) {
 					foreach $script_name ( @sieve_scripts ) {
 						if ( $script_name =~ m/$gosa_sieve_script_name/ ) {
@@ -472,7 +579,7 @@ foreach $entry ( @entries ) {
 					}
 					if ( $gosa_sieve_script_status eq "TRUE" ) {
 						# removing vacation part
-						my $sieve_script = getscript( $sieve, $gosa_sieve_script_name );
+						$sieve_script = getscript( $sieve, $gosa_sieve_script_name );
 						if ( $sieve_script ) {
 							#print "OLD SIEVE SCRIPT:\n$sieve_script\n\n";
 							$sieve_script =~ s/$vacation_header_template[^#]*$vacation_footer_template//;
@@ -484,9 +591,10 @@ foreach $entry ( @entries ) {
 						}
 					}
 				}
+				closesieve ( $sieve );
 			}
 		}
 	} else {
-		print "no vacation process necessary\n";
+		print "no vacation process necessary for user $uid_v\n";
 	}
 }
