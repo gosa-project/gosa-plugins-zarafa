@@ -2,7 +2,9 @@
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
-{t}Server path{/t}&nbsp;<input name="server_path" value="{$server_path}"><br>
+{t}Server path{/t}&nbsp;<input name="server_path" style="width:300px;" value="{$server_path}">
+<br>
+<br>
 {$divlist}
 <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
 <input type="submit" name="profileAdd" value="{t}Add{/t}">
