@@ -316,12 +316,12 @@ class user extends plugin
     }
 
     /* Password configure dialog handling */
-    if(is_object($this->pwObject) && is_object($this->dialog)){
+    if(is_object($this->pwObject) && $this->pwObject->display){
       $output= $this->pwObject->configure();
       if ($output != ""){
+        $this->dialog= TRUE;
         return $output;
       }
-
       $this->dialog= false;
     }
 
@@ -350,9 +350,10 @@ class user extends plugin
       if (isset($_POST['edit_pw_method'])){
         if (!is_object($this->pwObject) || $this->pw_storage != $this->pwObject->get_hash_name()){
           $temp= passwordMethod::get_available_methods();
-          $this->pwObject= new $temp[$this->pw_storage]($this->config);
-          $this->dialog= &$this->pwObject;
+          $this->pwObject= new $temp[$this->pw_storage]($this->config,$this->dn);
         }
+        $this->pwObject->display = TRUE;
+        $this->dialog= TRUE;
         return ($this->pwObject->configure());
       }
     }

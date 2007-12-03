@@ -24,15 +24,17 @@ class passwordMethodheimdal extends passwordMethod
 
   var $krb5MaxLife      = 86400;
   var $krb5MaxRenew     = 604800;
-  var $krb5ValidStart   = 20071231000000;
-  var $krb5ValidEnd     = 20101231000000;
-  var $krb5PasswordEnd  = 20101231000000;
+  var $krb5ValidStart   = "200712310000Z";
+  var $krb5ValidEnd     = "201012310000Z";
+  var $krb5PasswordEnd  = "201012310000Z";
 
   var $unlimited_krb5MaxLife    = FALSE;
   var $unlimited_krb5MaxRenew   = FALSE;
   var $unlimited_krb5ValidStart = FALSE;
   var $unlimited_krb5ValidEnd   = FALSE;
   var $unlimited_krb5PasswordEnd= FALSE;
+
+  var $display = TRUE;
 
   var $flag_list = array(
       "0"=>"initial" , 
@@ -56,9 +58,27 @@ class passwordMethodheimdal extends passwordMethod
 
   var $attributes = array("krb5MaxLife","krb5MaxRenew","krb5KDCFlags","krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
 
-	function passwordMethodheimdal(&$config)  
+	function passwordMethodheimdal(&$config,$dn = "new")  
 	{
     $this->config= $config;
+
+    if($dn != "new"){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($dn);
+      $ldap->ls("objectClass=krb5Principal",$dn,array("*"));
+
+      if($ldap->count()==1){
+        $attrs = $ldap->fetch();
+        foreach($this->attributes as $attr){
+          $uattr = "unlimited_".$attr;
+          if(isset($attrs[$attr][0])){
+            $this->$attr = $attrs[$attr][0];
+          }else{
+            $this->$uattr = TRUE;
+          }
+        }
+      }
+    }
 	}
 
 
@@ -136,7 +156,7 @@ class passwordMethodheimdal extends passwordMethod
           msg_dialog::display(_("Heimdal properties"),$msg,WARNING_DIALOG);
         }
       }else{
-        $this->save();
+        $this->display = FALSE;
         return "";
       }
     }
@@ -196,21 +216,99 @@ class passwordMethodheimdal extends passwordMethod
     if(!is_numeric($this->krb5MaxRenew) && !$this->unlimited_krb5MaxRenew){
       $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max renew"));
     }
-    if(!is_numeric($this->krb5ValidStart) && !$this->unlimited_krb5ValidStart){
-      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
-    }
-    if(!is_numeric($this->krb5ValidEnd) && !$this->unlimited_krb5ValidEnd){
-      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
-    }
-    if(!is_numeric($this->krb5PasswordEnd) && !$this->unlimited_krb5PasswordEnd){
-      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid password"));
-    }
+   if((empty($this->krb5ValidStart) || !$this->chk_times($this->krb5ValidStart)) && !$this->unlimited_krb5ValidStart){
+     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
+   }
+   if((empty($this->krb5ValidStop) || !$this->chk_times($this->krb5ValidEnd)) && !$this->unlimited_krb5ValidEnd){
+     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
+   }
+   if((empty($this->krb5PasswordEnd) || !$this->chk_times($this->krb5PasswordEnd)) && !$this->unlimited_krb5PasswordEnd){
+     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid password"));
+   }
     return($message);
   }
 
+
+  function chk_times($str)
+  {
+    if(preg_match("/^([0-9]){12,12}[a-z]$/i",$str)){
+      return(true);
+    }
+    return(false);
+  }
+  
+  
+
   function save($dn)
   {
-    echo "Save, haha not realy"; 
+    $realm = $this->config->data['SERVERS']['KERBEROS']['REALM'];
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($dn);
+    $ldap->cat($dn,array('uid'));
+    $attrs = $ldap->fetch();
+    if(isset($attrs['uid'][0])){
+
+      /* Detect old principal entry */
+      $ldap->cd($dn);
+      $ldap->ls("objectClass=krb5Principal",$dn,array('*'));
+
+      if($ldap->count() == 0){
+        $new = true;
+      }elseif($ldap->count() == 1){
+        $new = false;
+        $old_data = $ldap->fetch();  
+      }
+
+      $uid  = $attrs['uid'][0];
+      $name = $uid."@".strtoupper($realm); 
+      $dn   = "krb5PrincipalName=".$name.",".$dn;
+
+      $data = array();
+      $data['krb5PrincipalName'] = $name;
+      $data['objectClass']  = array("top","account","krb5Principal","krb5KDCEntry");
+      $data['krb5PrincipalName'] =$name;
+      $data['uid'] = $uid;
+      $data['krb5KeyVersionNumber'] = rand(100000,99999999);
+
+      if(!$new){ 
+        foreach($this->attributes as $attr){
+          $data[$attr] = array();
+        }
+      }
+
+      /* Append Flags */
+      $data['krb5KDCFlags']   = $this->krb5KDCFlags;
+      if(!$this->unlimited_krb5MaxLife){
+        $data['krb5MaxLife']    = $this->krb5MaxLife;
+      }
+      if(!$this->unlimited_krb5MaxRenew){
+        $data['krb5MaxRenew']   = $this->krb5MaxRenew;
+      }
+      if(!$this->unlimited_krb5ValidStart){
+        $data['krb5ValidStart'] = $this->krb5ValidStart;
+      }
+      if(!$this->unlimited_krb5ValidEnd){
+        $data['krb5ValidEnd']   = $this->krb5ValidEnd;
+      }
+      if(!$this->unlimited_krb5PasswordEnd){
+        $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
+      }
+
+      /* This should not happen, because the UID can't be modified via GOsa ui */
+      if(!$new && $dn != $old_data['dn']){  
+        plugin::move($old_data['dn'],$dn);
+      }
+
+      /* Add / Updated data */
+      $ldap->cd($dn);
+      if($new){
+        $ldap->add($data);
+      }else{
+        $ldap->modify($data);
+      }
+      show_ldap_error($ldap->get_error(),"Mist");   
+    }
   }
 }
 
