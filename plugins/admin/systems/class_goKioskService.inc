@@ -24,6 +24,7 @@ class goKioskService extends goService{
 
     $this->DisplayName = _("Kiosk profile service");
     $this->baseDir = $this->config->search('environment', 'kioskpath',array('menu','tabs'));
+    $this->server_path = preg_replace("/%cn/", $this->cn, $this->server_path);
 
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
@@ -34,7 +35,6 @@ class goKioskService extends goService{
         for($i = 0 ; $i < $this->attrs['gotoKioskProfile']['count']; $i ++){
           $url = $this->attrs['gotoKioskProfile'][$i];
           $this->server_path = preg_replace("/\/[^\/]*$/","",$url);
-          $this->server_path = preg_replace("/".normalizePreg($this->cn)."/","%cn",$this->server_path);
           $name= preg_replace("/^.*\//","",$url);
           $this->gotoKioskProfiles[] = array('url'     => $url , 
                                             'name'    => $name , 
@@ -186,7 +186,7 @@ class goKioskService extends goService{
   {
     goService::save();
 
-    $method = preg_replace("/%cn/",$this->cn,$this->server_path."/");
+    $method = $this->server_path."/";
     $method = preg_replace("/\/\/*$/","/",$method);
     $this->attrs['gotoKioskProfile'] = array();
     foreach($this->gotoKioskProfiles as $profile){
