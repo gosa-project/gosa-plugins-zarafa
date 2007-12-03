@@ -2,6 +2,7 @@
 
     <input type="hidden" name="dialogissubmitted" value="1">
 
+{t}Server path{/t}&nbsp;<input name="server_path" value="{$server_path}"><br>
 {$divlist}
 <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
 <input type="submit" name="profileAdd" value="{t}Add{/t}">
@@ -12,7 +13,7 @@
     &nbsp;
     <input type='submit' name='CancelService' value='{t}Cancel{/t}'>
 </div>
-<input type="hidden" name="goCupsServerPosted" value="1">
+<input type="hidden" name="goKioskPosted" value="1">
 
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

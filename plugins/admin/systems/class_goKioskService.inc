@@ -4,7 +4,7 @@ class goKioskService extends goService{
 	
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goEnvironmentServer");
-  var $attributes       = array("gotoKioskProfile");
+  var $attributes       = array("gotoKioskProfile","cn");
   var $StatusFlag       = "";
  
   /* This class can't be assigned twice so it conflicts with itsself */
@@ -13,8 +13,10 @@ class goKioskService extends goService{
   var $baseDir          = "../kiosk";
   var $filesToAttach    = array();
   var $cn               = "unknown";  
-  var $gotoKioskProfiles = array();
-  var $gotoKioskProfile  = array();
+  var $gotoKioskProfiles= array();
+  var $gotoKioskProfile = array();
+
+  var $server_path      = "http://%cn/kiosk";
  
   function goKioskService(&$config,$dn)
   {
@@ -31,8 +33,9 @@ class goKioskService extends goService{
       if(isset($this->attrs['gotoKioskProfile']) && is_array($this->attrs['gotoKioskProfile'])){
         for($i = 0 ; $i < $this->attrs['gotoKioskProfile']['count']; $i ++){
           $url = $this->attrs['gotoKioskProfile'][$i];
-          $name= preg_replace("/^.*\/kiosk\//","",$url);
-
+          $this->server_path = preg_replace("/\/[^\/]*$/","",$url);
+          $this->server_path = preg_replace("/".normalizePreg($this->cn)."/","%cn",$this->server_path);
+          $name= preg_replace("/^.*\//","",$url);
           $this->gotoKioskProfiles[] = array('url'     => $url , 
                                             'name'    => $name , 
                                             'initial' =>TRUE,
@@ -158,6 +161,7 @@ class goKioskService extends goService{
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+    $smarty->assign("server_path",$this->server_path);
     return($smarty->fetch(get_template_path("goKioskService.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -182,13 +186,8 @@ class goKioskService extends goService{
   {
     goService::save();
 
-    /* Create server url */
-    if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
-      $method="https://".$this->cn."/kiosk/";
-    }else{
-      $method="http://".$this->cn."/kiosk/";
-    }
-
+    $method = preg_replace("/%cn/",$this->cn,$this->server_path."/");
+    $method = preg_replace("/\/\/*$/","/",$method);
     $this->attrs['gotoKioskProfile'] = array();
     foreach($this->gotoKioskProfiles as $profile){
       if(!$profile['initial']){
@@ -213,6 +212,18 @@ class goKioskService extends goService{
     $ldap->modify($this->attrs);
     show_ldap_error($ldap->get_error(),_("Wohl kaum"));
   }
+
+  
+  function save_object()
+  {
+    if(isset($_POST['goKioskPosted'])){
+      goService::save_object();
+      if(isset($_POST['server_path'])){
+        $this->server_path = get_post("server_path");
+      }
+    }
+  }  
+
 
   /* Return plugin informations for acl handling */
   static function plInfo()
