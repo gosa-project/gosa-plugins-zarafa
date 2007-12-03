@@ -634,6 +634,12 @@ class user extends plugin
   /* remove object from parent */
   function remove_from_parent()
   {
+    /* Remove password extension */
+    $temp= passwordMethod::get_available_methods();
+    $this->pwObject= new $temp[$this->pw_storage]($this->config,$this->dn);
+    $this->pwObject->remove_from_parent();
+
+    /* Remove user */
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir ($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/generic account with dn '%s' failed."),$this->dn));

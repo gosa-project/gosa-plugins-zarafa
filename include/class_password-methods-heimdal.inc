@@ -54,29 +54,38 @@ class passwordMethodheimdal extends passwordMethod
   var $krb5KDCFlags     = 123;
 
   /* Dummy */
-  var $unlimited_krb5KDCFlags     = FALSE;
-
-  var $attributes = array("krb5MaxLife","krb5MaxRenew","krb5KDCFlags","krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+  var $unlimited_krb5KDCFlags = FALSE;
+  var $dn                     = "new";
+  var $parent_dn              = "new";
+  var $attributes             = array("krb5MaxLife","krb5MaxRenew","krb5KDCFlags",
+                                      "krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+  var $attrs                  = array();
+  var $is_account             = FALSE;
 
 	function passwordMethodheimdal(&$config,$dn = "new")  
 	{
     $this->config= $config;
+    $this->parent_dn = $dn;
 
+    /* Load existing entries */
     if($dn != "new"){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($dn);
       $ldap->ls("objectClass=krb5Principal",$dn,array("*"));
-
       if($ldap->count()==1){
-        $attrs = $ldap->fetch();
+        $this->is_account = TRUE;
+        $this->attrs = $ldap->fetch();
+        $this->dn = $this->attrs['dn'];
         foreach($this->attributes as $attr){
           $uattr = "unlimited_".$attr;
-          if(isset($attrs[$attr][0])){
-            $this->$attr = $attrs[$attr][0];
+          if(isset($this->attrs[$attr][0])){
+            $this->$attr = $this->attrs[$attr][0];
           }else{
             $this->$uattr = TRUE;
           }
         }
+      }elseif($ldap->count() >= 2){
+        new msg_dialog(_("Error initialising heimdal"),_("Error loading heimdal principals, more than one entry found."));
       }
     }
 	}
@@ -107,9 +116,14 @@ class passwordMethodheimdal extends passwordMethod
 
   function remove_from_parent()
   {
-    #TODO
-    # Find and remove kerberos entry below $this->dn
-    # See https://oss.gonicus.de/labs/gosa/ticket/223
+    if($this->is_account && $this->dn != "new"){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cat($this->dn,array("dn"));
+      if($ldap->count()){
+        $ldap->rmdir($this->dn);
+        show_ldap_error($ldap->get_error(),_("Tried to remove heimdal principal extension."));
+      }
+    }
   }
 
 
@@ -219,7 +233,7 @@ class passwordMethodheimdal extends passwordMethod
    if((empty($this->krb5ValidStart) || !$this->chk_times($this->krb5ValidStart)) && !$this->unlimited_krb5ValidStart){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
    }
-   if((empty($this->krb5ValidStop) || !$this->chk_times($this->krb5ValidEnd)) && !$this->unlimited_krb5ValidEnd){
+   if((empty($this->krb5ValidEnd) || !$this->chk_times($this->krb5ValidEnd)) && !$this->unlimited_krb5ValidEnd){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
    }
    if((empty($this->krb5PasswordEnd) || !$this->chk_times($this->krb5PasswordEnd)) && !$this->unlimited_krb5PasswordEnd){
@@ -236,9 +250,8 @@ class passwordMethodheimdal extends passwordMethod
     }
     return(false);
   }
-  
-  
-
+ 
+ 
   function save($dn)
   {
     $realm = $this->config->data['SERVERS']['KERBEROS']['REALM'];
@@ -248,17 +261,6 @@ class passwordMethodheimdal extends passwordMethod
     $ldap->cat($dn,array('uid'));
     $attrs = $ldap->fetch();
     if(isset($attrs['uid'][0])){
-
-      /* Detect old principal entry */
-      $ldap->cd($dn);
-      $ldap->ls("objectClass=krb5Principal",$dn,array('*'));
-
-      if($ldap->count() == 0){
-        $new = true;
-      }elseif($ldap->count() == 1){
-        $new = false;
-        $old_data = $ldap->fetch();  
-      }
 
       $uid  = $attrs['uid'][0];
       $name = $uid."@".strtoupper($realm); 
@@ -271,7 +273,7 @@ class passwordMethodheimdal extends passwordMethod
       $data['uid'] = $uid;
       $data['krb5KeyVersionNumber'] = rand(100000,99999999);
 
-      if(!$new){ 
+      if(!$this->is_account){ 
         foreach($this->attributes as $attr){
           $data[$attr] = array();
         }
@@ -296,13 +298,13 @@ class passwordMethodheimdal extends passwordMethod
       }
 
       /* This should not happen, because the UID can't be modified via GOsa ui */
-      if(!$new && $dn != $old_data['dn']){  
-        plugin::move($old_data['dn'],$dn);
+      if(!$this->is_account& $dn != $this->dn){  
+        plugin::move($this->dn,$dn);
       }
 
       /* Add / Updated data */
       $ldap->cd($dn);
-      if($new){
+      if($this->is_account){
         $ldap->add($data);
       }else{
         $ldap->modify($data);
