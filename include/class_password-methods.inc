@@ -101,7 +101,7 @@ class passwordMethod
 
   // Method to let passwords backends manage additional information
   // besides the userAttribute entry
-  function set_password()
+  function set_password($password)
   {
   }
 

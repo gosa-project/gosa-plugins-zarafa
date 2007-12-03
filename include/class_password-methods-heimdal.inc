@@ -115,6 +115,7 @@ class passwordMethodheimdal extends passwordMethod
   }
 
 
+
 	function generate_hash($pwd)
 	{
     $mode= "kerberos";
@@ -139,13 +140,35 @@ class passwordMethodheimdal extends passwordMethod
   }
 
 
-  function set_password()
+  function set_password($password)
   {
     #TODO
     # Add or modify kerberos entry below $this->dn
     # See https://oss.gonicus.de/labs/gosa/ticket/223
     # Order: create entries, then call the heimdal_keygen hook with the realm (returned by generate_hash)
     #        to let it add the missing kerberos keys.
+
+    global $config;
+    $cmd = "";
+    if(isset($config->current['HEIMDAL_KEYGEN'])){
+      $cmd = $config->current['HEIMDAL_KEYGEN'];
+      if(!check_command($cmd)){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+      }
+    }
+    if(isset($this->config->data['MAIN']['HEIMDAL_KEYGEN'])){
+      $cmd = $this->config->data['MAIN']['HEIMDAL_KEYGEN'];
+      if(!check_command($cmd)){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+      }
+    }
+    if ($cmd != ""){
+      $cmd = $cmd." ".$this->generate_hash($password);
+      $res = exec($cmd);
+      if(!$res){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command does not reurn 0."),$cmd),WARNING_DIALOG);
+      }
+    }
   }
 
 
@@ -310,9 +333,9 @@ class passwordMethodheimdal extends passwordMethod
       }
 
       /* This should not happen, because the UID can't be modified via GOsa ui */
-      if(!$this->is_account& $dn != $this->dn){  
-        plugin::move($this->dn,$dn);
-      }
+#      if(!$this->is_account& $dn != $this->parent_dn){  
+#        plugin::move($this->dn,$dn);
+#      }
 
       /* Add / Updated data */
       $ldap->cd($dn);
