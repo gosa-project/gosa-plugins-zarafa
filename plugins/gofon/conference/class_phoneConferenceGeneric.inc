@@ -456,6 +456,7 @@ class conference extends plugin
     if($this->goFonHomeServer != $this->init_HomeServer){
       $query = "SELECT id FROM ".$cfg_Current['EXT_TABLE']." WHERE exten='".$this->telephoneNumber."' OR '".$this->cn."';";
       $res = @mysql_query($query,$res_cur);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
         return(_("Can not check if there are already some entries with given telephone number and/or cn in the destination home server.").
@@ -468,6 +469,7 @@ class conference extends plugin
 
         /* Query and ensure that everything went fine */
         $res =  @mysql_query($SQL,$res_cur);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
         if(!$res){
           new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
           return(_("Can not remove entries with some telephone number and/or cn from destination home server.").
@@ -553,6 +555,7 @@ class conference extends plugin
       }
       foreach($SQL as $sqlsyn){
         mysql_query($sqlsyn,$res_cur);
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$sqlsyn, "Database query");
       }
     } 
 
@@ -586,6 +589,7 @@ class conference extends plugin
     /* Check if there is an old entry */
     $query = "SELECT id FROM ".$cfg_Init['EXT_TABLE']." WHERE exten='".$this->old_tele_number."' OR '".$this->old_cn."';";
     $res = @mysql_query($query,$r_init);
+    @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
     if(!$res){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
       return(_("Can not check if entry exists in old database. Please have a look a the gosa logfiles."));
@@ -599,6 +603,7 @@ class conference extends plugin
   
       /* Query and ensure that everything went fine */
       $res =  @mysql_query($SQL,$r_init);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
         return(_("Can not remove old entries from initial home server. Please have a look a the gosa logfiles."));
