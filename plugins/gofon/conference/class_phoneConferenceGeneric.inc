@@ -454,7 +454,7 @@ class conference extends plugin
      * We must remove those entries to avoid duplicate use of the same extension name.
      */
     if($this->goFonHomeServer != $this->init_HomeServer){
-      $query = "SELECT id FROM ".$cfg_Current['EXT_TABLE']." WHERE exten='".$this->telephoneNumber."' OR '".$this->cn."';";
+      $query = "SELECT id FROM ".$cfg_Current['EXT_TABLE']." WHERE exten='".$this->telephoneNumber."' OR exten='".$this->cn."';";
       $res = @mysql_query($query,$res_cur);
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
       if(!$res){
@@ -587,7 +587,7 @@ class conference extends plugin
     $db_init   =  @mysql_select_db($cfg_Init['DB'],$r_init);
    
     /* Check if there is an old entry */
-    $query = "SELECT id FROM ".$cfg_Init['EXT_TABLE']." WHERE exten='".$this->old_tele_number."' OR '".$this->old_cn."';";
+    $query = "SELECT id FROM ".$cfg_Init['EXT_TABLE']." WHERE exten='".$this->old_tele_number."' OR exten='".$this->old_cn."';";
     $res = @mysql_query($query,$r_init);
     @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
     if(!$res){
