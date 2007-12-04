@@ -702,6 +702,14 @@ class environment extends plugin
     foreach($tmp as $key => $value){
       $img = "";
 
+      /* Skip apssword only entries */
+      if( empty($this->gotoShares[$key]['server']) && 
+          empty($this->gotoShares[$key]['name']) &&
+          empty($this->gotoShares[$key]['mountPoint']) &&
+          empty($this->gotoShares[$key]['Username'])){
+        continue;
+      } 
+
       /* Check if entry starts with an ! */
       if(preg_match("/^!/",$this->gotoShares[$key]['server'])){
 
