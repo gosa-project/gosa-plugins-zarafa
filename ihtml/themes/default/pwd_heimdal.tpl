@@ -6,7 +6,7 @@
 			<table>
 				<tr>
 					<td>
-						<label for="unlimited_krb5MaxLife">{t}Max life{/t}</label>
+						<label for="unlimited_krb5MaxLife">{t}Ticket max life{/t}</label>
 					</td>
 					<td>
 						<input id="unlimited_krb5MaxLife" name="unlimited_krb5MaxLife" value="1"  type="checkbox" 
@@ -17,7 +17,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5MaxRenew">{t}Max renew{/t}</label>
+						<label for="unlimited_krb5MaxRenew">{t}Ticket max renew{/t}</label>
 					</td>
 					<td>
 						<input id="unlimited_krb5MaxRenew" name="unlimited_krb5MaxRenew" value="1"  type="checkbox" 
@@ -28,7 +28,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5ValidStart">{t}Valid start{/t}</label>
+						<label for="unlimited_krb5ValidStart">{t}Valid ticket start time{/t}</label>
 					</td>
 					<td>
 						<input id="unlimited_krb5ValidStart" name="unlimited_krb5ValidStart" value="1"  type="checkbox" 
@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5ValidEnd">{t}Valid end{/t}</label>
+						<label for="unlimited_krb5ValidEnd">{t}Valid ticket end time{/t}</label>
 					</td>
 					<td>
 						<input id="unlimited_krb5ValidEnd" name="unlimited_krb5ValidEnd" value="1"  type="checkbox"
