@@ -48,7 +48,6 @@ $foreground = 0 ;
 ("general" =>
     {"log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
-
     },
 "client" => 
     {"client_ip" => [\$client_ip, "10.89.1.155"],
@@ -487,7 +486,7 @@ sub encrypt_msg {
     my $msg_length = length($msg);
     my $multiplier = int($msg_length / 16) + 1;
     my $extension = 16*$multiplier - $msg_length;
-    $msg = "a"x$extension.$msg;
+    $msg = $msg."\0"x$extension;
     my $crypted_msg = $my_cipher->encrypt($msg);
     #my $crypted_msg = $msg;
     return $crypted_msg;
@@ -504,7 +503,7 @@ sub decrypt_msg {
     my ($crypted_msg, $my_cipher) =@_;
     my $msg = $my_cipher->decrypt($crypted_msg);
     #my $msg = $crypted_msg;
-    $msg =~ s/^a*//gi;
+    #$msg =~ s/^a*//gi;
     return $msg;
 }
 

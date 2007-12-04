@@ -452,7 +452,7 @@ sub process_incoming_msg {
     my $target = &get_content_from_xml_hash($msg_hash, "target");
 
     daemon_log("header from msg:\n\t$header", 1);
-    daemon_log("msg to process:\n\t$msg", 7);
+    daemon_log("msg to process:\n\t$msg", 5);
     daemon_log("msg is for: \n\t$target", 7);
 
     if($target eq $bus_address) {
@@ -541,7 +541,7 @@ sub encrypt_msg {
     my $msg_length = length($msg);
     my $multiplier = int($msg_length / 16) + 1;
     my $extension = 16*$multiplier - $msg_length;
-    $msg = "a"x$extension.$msg;
+    $msg = $msg."\0"x$extension;
     my $crypted_msg = $my_cipher->encrypt($msg);
     #my $crypted_msg = $msg;
     return $crypted_msg;
@@ -560,7 +560,7 @@ sub decrypt_msg {
     my $len = length $crypted_msg;
     my $msg = $my_cipher->decrypt($crypted_msg);
     #my $msg = $crypted_msg;
-    $msg =~ s/^a*//gi;
+    #$msg =~ s/^a*//gi;
     return $msg;
 }
 
@@ -869,6 +869,7 @@ sub confirm_new_passwd {
 sub ping {
     my ($msg_hash) = @_ ;
     my $source = &get_content_from_xml_hash($msg_hash, "source");   
+    &update_known_daemons_entry(hostname=>$source, status=>"ping");
     my $out_hash = &create_xml_hash("got_ping", $bus_address, $source);
     &send_msg_hash2address($out_hash, $source);
     return;
