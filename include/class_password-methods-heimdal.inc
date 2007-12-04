@@ -85,7 +85,7 @@ class passwordMethodheimdal extends passwordMethod
           }
         }
       }elseif($ldap->count() >= 2){
-        new msg_dialog(_("Error initialising heimdal"),_("Error loading heimdal principals, more than one entry found."));
+        new msg_dialog(_("Heimdal"),sprintf(_("Error loading heimdal configuration, more than one configuration entry was found for '%s'."),$this->parent_dn));
       }
     }
 	}
@@ -115,7 +115,6 @@ class passwordMethodheimdal extends passwordMethod
   }
 
 
-
 	function generate_hash($pwd)
 	{
     $mode= "kerberos";
@@ -134,7 +133,7 @@ class passwordMethodheimdal extends passwordMethod
       $ldap->cat($this->dn,array("dn"));
       if($ldap->count()){
         $ldap->rmdir($this->dn);
-        show_ldap_error($ldap->get_error(),_("Tried to remove heimdal principal extension."));
+        show_ldap_error($ldap->get_error(),_("Tried to remove heimdal extension."));
       }
     }
   }
@@ -163,10 +162,15 @@ class passwordMethodheimdal extends passwordMethod
       }
     }
     if ($cmd != ""){
-      $cmd = $cmd." ".$this->generate_hash($password);
-      $res = exec($cmd);
-      if(!$res){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command does not reurn 0."),$cmd),WARNING_DIALOG);
+
+      /* Display in error message */
+      $cmdd = $cmd." '".$this->generate_hash($password)."' 'PASSWORD'";
+
+      /* Execute command and check return value */
+      $cmd  = $cmd." '".$this->generate_hash($password)."' '".$password."'" ;
+      passthru($cmd,$res);
+      if($res != 0){
+        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command does not return 0."),$cmdd),WARNING_DIALOG);
       }
     }
   }
@@ -202,7 +206,7 @@ class passwordMethodheimdal extends passwordMethod
       $msgs = $this->check();
       if(count($msgs)){
         foreach($msgs as $msg){
-          msg_dialog::display(_("Heimdal properties"),$msg,WARNING_DIALOG);
+          msg_dialog::display(_("Heimdal"),$msg,WARNING_DIALOG);
         }
       }else{
         $this->display = FALSE;
@@ -332,11 +336,6 @@ class passwordMethodheimdal extends passwordMethod
         $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
       }
 
-      /* This should not happen, because the UID can't be modified via GOsa ui */
-#      if(!$this->is_account& $dn != $this->parent_dn){  
-#        plugin::move($this->dn,$dn);
-#      }
-
       /* Add / Updated data */
       $ldap->cd($dn);
       if($this->is_account){
@@ -344,7 +343,7 @@ class passwordMethodheimdal extends passwordMethod
       }else{
         $ldap->modify($data);
       }
-      show_ldap_error($ldap->get_error(),"Mist");   
+      show_ldap_error($ldap->get_error(),_("Could not add or update heimdal extensions."));   
     }
   }
 }
