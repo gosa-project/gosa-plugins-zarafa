@@ -337,8 +337,10 @@ class phoneConferenceManagment extends plugin
 
       if (count($message) == 0){
         if($this->conftab->save() == 1){
+          gosa_log ("goFonConference object '".$this->dn."' saving failed.");
           return;
         }
+        gosa_log ("goFonConference object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           if ($this->dn != "new"){
@@ -346,7 +348,6 @@ class phoneConferenceManagment extends plugin
           }
         }
 
-        $this->conftab->save ();
         del_lock ($this->conftab->dn);;
         unset ($this->conftab);
         $this->conftab= NULL;
