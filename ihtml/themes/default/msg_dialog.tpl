@@ -54,10 +54,20 @@
 					left:200px;
 					top:200px;
 					background-color:white;
-					padding:5px;
 					border:5px solid red;
 					z-index:150;
 					position:absolute;'>
+			<div id="e_layerTitle{$i_ID}" style="vertical-align: middle;
+												 width:100%; 
+												 font-size: 1.2em;
+												 padding-top:3px;
+												 padding-bottom:2px;
+												 font-weight:bold;
+												 background-color: #999999; 
+												 ">
+				&nbsp;&nbsp;{$s_Title}
+			</div>
+			<div style="height:2px; width:100% ; background-color: #BBBBBB;"></div>
 			<table style='width:100%' summary='' border=0>
 				<tr>
 					<td style='vertical-align:top;padding:10px'>
@@ -70,7 +80,6 @@
 	{/if}
 					</td>
 					<td style='width:100%'>
-						<h1>{$s_Title}</h1>
 						<b>{$s_Message}</b>
 						<br>
 						<br>
@@ -104,11 +113,23 @@
 					left:200px;
 					top:200px;
 					background-color:white;
-					padding:5px;
 					border:5px solid red;
 					z-index:150;
 					display:none;
 					position:absolute;'>
+
+		<div id="e_layerTitle{$i_ID}" style="vertical-align: middle;
+											 width:100%; 
+											 font-size: 1.2em;
+											 padding-top:3px;
+											 padding-bottom:2px;
+											 font-weight:bold;
+										     background-color: #999999; 
+                						     ">
+			&nbsp;&nbsp;{$s_Title}
+		</div>
+		<div style="height:2px; width:100% ; background-color: #BBBBBB;"></div>
+
 			<table style='width:100%' summary='' border=0>
 				<tr>
 					<td style='vertical-align:top;padding:10px'>
@@ -121,7 +142,6 @@
 	{/if}
 					</td>
 					<td style='width:100%'>
-						<h1>{$s_Title}</h1>
 						<b>{$s_Message}</b>
 						<br>
 						<br>

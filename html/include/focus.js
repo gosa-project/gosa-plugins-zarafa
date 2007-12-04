@@ -491,11 +491,12 @@ function next_msg_dialog()
 						tmp = tmp.replace(/,$/g,"");
 						if(i_id != ""){
 								ele = document.getElementById('e_layer' + i_id);
+								ele3 = document.getElementById('e_layerTitle' + i_id);
 								ele.style.display= 'block'	;
 								document.getElementById('pending_msg_dialogs').value= tmp;
 								document.getElementById('current_msg_dialogs').value= i_id;
 								ele2 = document.getElementById('e_layer2') ;
-								ele.onmousedown = start_move_div_by_cursor;
+								ele3.onmousedown = start_move_div_by_cursor;
 								ele2.onmouseup 	= stop_move_div_by_cursor;
 								ele2.onmousemove = move_div_by_cursor;
 						}else{
