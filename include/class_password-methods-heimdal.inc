@@ -168,7 +168,7 @@ class passwordMethodheimdal extends passwordMethod
 
       /* Execute command and check return value */
       $cmd  = $cmd." '".$this->generate_hash($password)."' '".$password."'" ;
-      passthru($cmd,$res);
+      exec($cmd,$out,$res);
       if($res != 0){
         new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command does not return 0."),$cmdd),WARNING_DIALOG);
       }
