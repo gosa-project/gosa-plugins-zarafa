@@ -4,10 +4,30 @@
 <table width="100%" summary="">
 <tr>
 	<td width="50%">
-		{t}Name{/t}{$must}&nbsp;
+		<table>
+		  <tr>
+		    <td>
+		{t}File name{/t}{$must}&nbsp;
+		    </td>
+		    <td>
 {render acl=$cnACL}
 		<input value="{$cn}" name="cn" size="45" maxlength="80">&nbsp;&nbsp;
 {/render}
+		    </td>
+		   </tr>
+		  <tr>
+			<td>
+				<LABEL for="templatePath">
+					{t}Destination path{/t}{$must}&nbsp;
+				</LABEL>
+				</td>
+			<td>
+{render acl=$FAItemplatePathACL}
+				<input type="text" name="FAItemplatePath" value="{$templatePath}" id="templatePath" size="45">
+{/render}
+				</td>
+		  </tr>
+		</table>
 	</td>
 	<td>
 		{t}Description{/t}&nbsp;
@@ -53,13 +73,11 @@
 			</td>
 	</tr><tr>
 			<td>
-				<LABEL for="FAItemplatePath">
-					{t}Destination path{/t}{$must}&nbsp;
-				</LABEL>
+				{t}Full path{/t}&nbsp;
 				</td>
 			<td>
 {render acl=$FAItemplatePathACL}
-				<input type="text" name="FAItemplatePath" value="{$FAItemplatePath}" id="FAItemplatePath" size="45">
+				<i>{$FAItemplatePath}</i>
 {/render}
 				</td>
 		</tr>

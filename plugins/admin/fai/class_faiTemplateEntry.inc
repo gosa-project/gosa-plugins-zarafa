@@ -137,6 +137,10 @@ class faiTemplateEntry extends plugin
       $smarty->assign($attr."ACL",$this->getacl($attr,preg_match("/freeze/",$this->FAIstate)));
     }
 
+    /* We now split cn/FAItemplatePath to make things more clear... */
+    $smarty->assign("cn", basename($this->FAItemplatePath));
+    $smarty->assign("templatePath", dirname($this->FAItemplatePath));
+
     $display.=  $smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
     return($display);
   }
@@ -173,6 +177,10 @@ class faiTemplateEntry extends plugin
           $tmode= $tmode.$dest;
         }
         $this->FAImode= $tmode;
+
+        /* Assemble cn/FAItemplatePath */
+        $this->cn= preg_replace('/\/+/', '/', $this->FAItemplatePath.'/'.$this->cn);
+        $this->FAItemplatePath= $this->cn;
       }
     }
   }
@@ -192,12 +200,16 @@ class faiTemplateEntry extends plugin
       $message[]=_("Please specify a value for attribute 'file'.");
     } 
 
-    if(empty($this->FAItemplatePath)){
-      $message[]=_("Please specify a value for attribute 'path'.");
+    if(!preg_match('/^\//', $this->FAItemplatePath)){
+      $message[]=_("Please specify a valid value for attribute 'Destination path'.");
     } 
   
     if(empty($this->cn)){
-      $message[] = _("Please enter a name.");
+      $message[] = _("Please enter a file name.");
+    }
+
+    if(preg_match('/\//', $this->cn)){
+      $message[] = _("The file name should not contain / characters.");
     }
 
     if(empty($this->user)){
