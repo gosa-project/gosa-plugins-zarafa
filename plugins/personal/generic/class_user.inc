@@ -1036,10 +1036,9 @@ class user extends plugin
     if ($this->pw_storage != $this->last_pw_storage){
       $tmp = new passwordMethod($_SESSION['config']);
       $available = $tmp->get_available_methods();
-      if (in_array_ics($this->pw_storage, $available['name'])){
-        $test= new $available[$this->pw_storage]($this->config);
+      if (in_array_ics($this->last_pw_storage, $available['name'])){
+        $test= new $available[$this->last_pw_storage]($this->config,$this->dn);
         $test->attrs= $this->attrs;
-        $test->dn= $this->dn;
         $test->remove_from_parent();
       }
     }
