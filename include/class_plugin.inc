@@ -154,11 +154,6 @@ class plugin
     $ldap= $this->config->get_ldap_link();
     if ($dn !== NULL){
 
-      /* Get entry CSN */
-      if($this->CSN_check_active){
-        $this->entryCSN = getEntryCSN($dn);
-      }
-
       /* Load data to 'attrs' and save 'dn' */
       if ($parent !== NULL){
         $this->attrs= $parent->attrs;
@@ -1690,6 +1685,7 @@ class plugin
   function enable_CSN_check()
   {
     $this->CSN_check_active =TRUE;
+    $this->entryCSN = getEntryCSN($this->dn);
   }
 
 
