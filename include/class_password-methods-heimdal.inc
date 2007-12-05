@@ -62,9 +62,9 @@ class passwordMethodheimdal extends passwordMethod
     $this->is_account = FALSE;
     $this->krb5MaxLife    = 86400;
     $this->krb5MaxRenew   = 604800;
-    $this->krb5ValidStart = date("YmdHi",time()."Z");
-    $this->krb5ValidEnd   = date("YmdHi",time()."Z");
-    $this->krb5PasswordEnd= date("YmdHi",time()."Z");
+    $this->krb5ValidStart = date("YmdHi",time())."Z";
+    $this->krb5ValidEnd   = date("YmdHi",time())."Z";
+    $this->krb5PasswordEnd= date("YmdHi",time())."Z";
 
     /* Load existing entries */
     if($dn != "new"){
