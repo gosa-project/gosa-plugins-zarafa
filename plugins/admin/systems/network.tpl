@@ -11,6 +11,13 @@
 {render acl=$ipHostNumberACL}
             <input	id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
 {/render}
+{render acl=$ipHostNumberACL}
+{if $DNSAccount == true}
+      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:visible;">
+      {else}
+      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:hidden;">
+      {/if}
+{/render}
           </td>
 				</tr>
 				<tr>
@@ -77,6 +84,7 @@
         onclick="toggle('test2');
           changeState('zoneName');
           changeState('dNSTTL');
+          toggle('propose_ip');
           changeState('AddNewRecord');
           {$changeStateForRecords}"/>
         {else}
@@ -84,6 +92,7 @@
         onclick="toggle('test2');
           changeState('zoneName');
           changeState('dNSTTL');
+          toggle('propose_ip');
           changeState('AddNewRecord');"/>
         {/if}
 

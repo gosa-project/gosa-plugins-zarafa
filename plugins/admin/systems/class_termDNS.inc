@@ -231,7 +231,6 @@ class termDNS extends plugin
         }
       }
     }
-
     
   
     /**********
@@ -282,6 +281,10 @@ class termDNS extends plugin
     $smarty->assign("dhcpParentNodeCnt",count($this->dhcpParentNodes));
 
 
+    /**********
+     * DNS Handling
+     **********/
+
     /* There is no dns available
      */
     if($this->DNSenabled == false){
@@ -303,6 +306,16 @@ class termDNS extends plugin
       /* Add new empty array to our record list */
       if(isset($_POST['AddNewRecord'])){
         $this->dnsEntry['RECORDS'][]  =array("type"=>"aRecord","value"=>"");
+      }
+
+      /* propose_ip */
+      if(isset($_POST['propose_ip'])){
+        foreach($this->Zones as $key => $name){
+          if($name == $this->dnsEntry['zoneName']){
+            $net = FlipIp(str_replace(".in-addr.arpa","",getNameFromMix($key)));
+            $this->ipHostNumber = $this->generateRandomIp($net);
+          }
+        }
       }
 
       /* Handle all posts */
@@ -953,6 +966,20 @@ class termDNS extends plugin
     }else{
       return(FALSE);
     }
+  }
+
+  
+  function generateRandomIP($net = "")
+  {
+    $str = $net;
+    $cnt = 4;
+    while(substr_count($str,".") < 3 && $cnt > 0){
+      $str .= ".".rand(0,255);
+      $str = preg_replace("/\.\.*/",".",$str);
+      $str = trim($str,". ");
+      $cnt --;
+    }
+    return($str);
   }
 
   
