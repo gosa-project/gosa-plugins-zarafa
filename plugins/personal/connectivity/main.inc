@@ -32,6 +32,7 @@ if (!$remove_lock){
   if (!isset($_SESSION['connectivity']) || (isset($_GET['reset']) &&
       $_GET['reset'] == 1)){
     $_SESSION['connectivity']= new connectivity ($config, $ui->dn);
+    $_SESSION['connectivity']->enable_CSN_check();
     $_SESSION['connectivity']->set_acl_base($ui->dn);
     $_SESSION['connectivity']->set_acl_category("users");
 

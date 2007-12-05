@@ -30,6 +30,7 @@ if (!$remove_lock) {
   /* Create netatalk object on demand */
   if (!isset ($_SESSION['netatalk']) || (isset ($_GET['reset']) && $_GET['reset'] == 1)) {
     $_SESSION['netatalk'] = new netatalk($config, $ui->dn);
+    $_SESSION['netatalk']->enable_CSN_check();
     $_SESSION['netatalk']->set_acl_base($ui->dn);
     $_SESSION['netatalk']->set_acl_category("users");
   }

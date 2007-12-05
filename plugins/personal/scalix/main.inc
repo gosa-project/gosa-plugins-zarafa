@@ -31,6 +31,7 @@ if (!$remove_lock){
   /* Create mail object on demand */
   if (!isset($_SESSION['scalixAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['scalixAccount']= new scalixAccount ($config, $ui->dn);
+    $_SESSION['scalixAccount']->enable_CSN_check();
     $_SESSION['scalixAccount']->set_acl_base($ui->dn);
     $_SESSION['scalixAccount']->set_acl_category("users");
   }
