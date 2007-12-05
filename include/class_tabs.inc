@@ -284,7 +284,6 @@ class tabs
         $obj->pl_notify= FALSE;
       }
     }
-    $messages = array_unique($messages);
     return ($messages);
   }
 

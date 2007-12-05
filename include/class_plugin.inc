@@ -118,6 +118,9 @@ class plugin
   /* This can be set to render the tabulators in another stylesheet */
   var $pl_notify= FALSE;
 
+  /* Object entry CSN */
+  var $entryCSN         = "";
+  var $CSN_check_active = FALSE;
 
   /* This variable indicates that this class can handle multiple dns at once. */
   var $multiple_support = FALSE; 
@@ -150,6 +153,11 @@ class plugin
     /* Get LDAP descriptor */
     $ldap= $this->config->get_ldap_link();
     if ($dn !== NULL){
+
+      /* Get entry CSN */
+      if($this->CSN_check_active){
+        $this->entryCSN = getEntryCSN($dn);
+      }
 
       /* Load data to 'attrs' and save 'dn' */
       if ($parent !== NULL){
@@ -280,6 +288,11 @@ class plugin
   /* Save data to object */
   function save_object()
   {
+    /* Update entry CSN if it is empty. */
+    if(empty($this->entryCSN) && $this->CSN_check_active){
+      $this->entryCSN = getEntryCSN($this->dn);
+    }
+
     if($this->multiple_support_active){
       foreach($this->attributes as $attr){
         if(isset($_POST["use_".$attr])){
@@ -327,6 +340,9 @@ class plugin
   {
     /* include global link_info */
     $ldap= $this->config->get_ldap_link();
+
+    /* Save all plugins */
+    $this->entryCSN = "";
 
     /* Start with empty array */
     $this->attrs= array();
@@ -477,6 +493,14 @@ class plugin
 
     }
 
+    /* Check entryCSN */
+    if($this->CSN_check_active){
+      $current_csn = getEntryCSN($this->dn);
+      if($current_csn != $this->entryCSN && !empty($this->entryCSN) && !empty($current_csn)){
+        $this->entryCSN = $current_csn;
+        $message[] = _("The object has changed since opened in GOsa. Please ensure that nobody has done serious changes that may get lost   if you save this entry.");
+      }
+    }
     return ($message);
   }
 
@@ -1656,6 +1680,18 @@ class plugin
     }
     return($ret);
   }
+
+
+  /* This function enables the entry Serial ID check.
+   * If an entry was edited while we have edited the entry too,
+   *  an error message will be shown. 
+   * To configure this check correctly read the FAQ.
+   */    
+  function enable_CSN_check()
+  {
+    $this->CSN_check_active =TRUE;
+  }
+
 
   function set_multi_edit_value()
   {
