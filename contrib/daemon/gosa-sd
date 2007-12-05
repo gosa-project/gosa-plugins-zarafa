@@ -43,7 +43,7 @@ my $modules_path = "/etc/gosad/modules";
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
-my ($server, $server_mac, $server_events);
+my ($server, $server_mac_address, $server_events);
 my ($gosa_server);
 my ($known_daemons, $shmda, $known_clients, $shmcl, $known_modules);
 my ($max_clients);
@@ -285,6 +285,33 @@ sub check_pid {
         exit( -1 );
     }
 }
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_ip_and_mac 
+#   PARAMETERS:  nothing
+#      RETURNS:  (ip, mac) 
+#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
+#                of a inet address is returned as well as the mac address in the line
+#                above the inet address
+#===============================================================================
+sub get_ip_and_mac {
+    my $ip = "0.0.0.0.0"; # Defualt-IP
+    my $mac = "00:00:00:00:00:00";  # Default-MAC
+    my @ifconfig = qx(/sbin/ifconfig);
+    foreach(@ifconfig) {
+        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
+            $mac = "$1:$2:$3:$4:$5:$6";
+            next;
+        }
+        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
+            $ip = "$1.$2.$3.$4";
+            last;
+        }
+    }
+    return ($ip, $mac);
+}
+
 
 
 #===  FUNCTION  ================================================================
@@ -1760,6 +1787,14 @@ if( 0 != $pid ) {
 close( LOCK_FILE );
     if( !$foreground ) { exit( 0 ) };
 }
+
+# detect own ip and mac address
+($server_ip, $server_mac_address) = &get_ip_and_mac(); 
+if (not defined $server_ip) {
+    die "EXIT: ip address of $0 could not be detected";
+}
+daemon_log("server ip address detected: $server_ip", 1);
+daemon_log("server mac address detected: $server_mac_address", 1);
 
 # setup xml parser
 $xml = new XML::Simple();

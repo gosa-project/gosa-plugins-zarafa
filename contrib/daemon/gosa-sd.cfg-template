@@ -13,7 +13,6 @@ child_timeout = 10
 
 [server]
 server_activ = on
-server_ip = 10.89.1.155
 server_port = 10001
 server_passwd = tester
 max_clients = 5
