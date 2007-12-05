@@ -2647,6 +2647,30 @@ function crypt_single($string,$enc_type )
 }
 
 
+function getEntryCSN($dn)
+{
+  global $config;
+  if(empty($dn) || !is_object($config)){
+    return("");
+  }
+
+  /* Get attribute that we should use as serial number */
+  if(isset($config->current['UNIQ_IDENTIFIER'])){
+    $attr = $config->current['UNIQ_IDENTIFIER'];
+  }elseif(isset($config->data['MAIN']['UNIQ_IDENTIFIER'])){
+    $attr = $config->data['MAIN']['UNIQ_IDENTIFIER'];
+  }
+  if(!empty($attr)){
+    $ldap = $config->get_ldap_link();
+    $ldap->cat($dn,array($attr));
+    $csn = $ldap->fetch();
+    if(isset($csn[$attr][0])){
+      return($csn[$attr][0]);
+    }
+  }
+  return("");
+}
+
 /* This function returns the offset for the default timezone. 
  * $stamp is used to detect summer or winter time.
  * In case of PHP5, the integrated timezone functions are used.

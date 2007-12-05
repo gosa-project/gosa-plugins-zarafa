@@ -33,6 +33,8 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
+  var $entryCSN = "";
+
   function tabs(&$config, $data, $dn, $acl_category= "")
   {
     /* Save dn */
@@ -40,6 +42,8 @@ class tabs
     $this->config= &$config;
 
     $baseobject= NULL;
+
+    $this->entryCSN = getEntryCSN($dn);
 
     foreach ($data as &$tab){
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
@@ -127,6 +131,11 @@ class tabs
 
   function save_object($save_current= FALSE)
   {
+    /* Update entry CSN if it is empty. */
+    if(empty($this->entryCSN)){
+      $this->entryCSN = getEntryCSN($this->dn);
+    }
+
     /* Save last tab */
     if ($this->last != ""){
       @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
@@ -247,6 +256,13 @@ class tabs
 
     $current_set = FALSE;
 
+    /* Check entryCSN */
+    $current_csn = getEntryCSN($this->dn);
+    if($current_csn != $this->entryCSN && !empty($this->entryCSN) && !empty($current_csn)){
+      $this->entryCSN = $current_csn;
+      $messages[] = _("The object has changed since opened in GOsa. Please ensure that nobody has done serious changes that may get lost if you save this entry.");
+    }
+
     /* Check all plugins */
     foreach ($this->by_object as $key => &$obj){
       if ($obj->is_account || $ignore_account || $obj->ignore_account){
@@ -268,12 +284,14 @@ class tabs
         $obj->pl_notify= FALSE;
       }
     }
+    $messages = array_unique($messages);
     return ($messages);
   }
 
   function save($ignore_account= FALSE)
   {
     /* Save all plugins */
+    $this->entryCSN = "";
     foreach ($this->by_object as $key => &$obj){
       @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
           $key, "Saving");
@@ -362,7 +380,6 @@ class tabs
       }
     }
   }
-
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
