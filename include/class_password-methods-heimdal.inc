@@ -22,17 +22,11 @@
 class passwordMethodheimdal extends passwordMethod
 {
 
-  var $krb5MaxLife      = 86400;
-  var $krb5MaxRenew     = 604800;
-  var $krb5ValidStart   = "200712310000Z";
-  var $krb5ValidEnd     = "201012310000Z";
-  var $krb5PasswordEnd  = "201012310000Z";
-
-  var $unlimited_krb5MaxLife    = FALSE;
-  var $unlimited_krb5MaxRenew   = FALSE;
-  var $unlimited_krb5ValidStart = FALSE;
-  var $unlimited_krb5ValidEnd   = FALSE;
-  var $unlimited_krb5PasswordEnd= FALSE;
+  var $krb5MaxLife      = "";
+  var $krb5MaxRenew     = "";
+  var $krb5ValidStart   = "";
+  var $krb5ValidEnd     = "";
+  var $krb5PasswordEnd  = "";
 
   var $display = TRUE;
 
@@ -53,8 +47,6 @@ class passwordMethodheimdal extends passwordMethod
       "13"=>"immutable");
   var $krb5KDCFlags     = 123;
 
-  /* Dummy */
-  var $unlimited_krb5KDCFlags = FALSE;
   var $dn                     = "new";
   var $parent_dn              = "new";
   var $attributes             = array("krb5MaxLife","krb5MaxRenew","krb5KDCFlags",
@@ -68,7 +60,11 @@ class passwordMethodheimdal extends passwordMethod
     $this->parent_dn = $dn;
 
     /* Load existing entries */
-    if($dn != "new"){
+    $this->krb5MaxLife  = "86400";
+    $this->krb5MaxRenew = "604800";
+    if($dn == "new"){
+      $this->is_account = FALSE;
+    }else{
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($dn);
       $ldap->ls("objectClass=krb5Principal",$dn,array("*"));
@@ -77,11 +73,8 @@ class passwordMethodheimdal extends passwordMethod
         $this->attrs = $ldap->fetch();
         $this->dn = $this->attrs['dn'];
         foreach($this->attributes as $attr){
-          $uattr = "unlimited_".$attr;
           if(isset($this->attrs[$attr][0])){
             $this->$attr = $this->attrs[$attr][0];
-          }else{
-            $this->$uattr = TRUE;
           }
         }
       }elseif($ldap->count() >= 2){
@@ -216,9 +209,7 @@ class passwordMethodheimdal extends passwordMethod
 
     $smarty = get_smarty();
     foreach($this->attributes as $attr){
-      $uattr = "unlimited_".$attr;
       $smarty->assign($attr ,$this->$attr);
-      $smarty->assign($uattr,$this->$uattr);
     }
     foreach($this->flag_list as $key => $name){
       $val = pow(2,$key);
@@ -237,13 +228,6 @@ class passwordMethodheimdal extends passwordMethod
   {
     if(isset($_POST['pwd_heimdal_posted'])){
       foreach($this->attributes as $attr){
-        $uattr = "unlimited_".$attr;
-        if(isset($_POST[$uattr])){
-          $this->$uattr = TRUE;
-        }else{
-          $this->$uattr = FALSE;
-        }
-
         if(isset($_POST[$attr])){
           $this->$attr = get_post($attr);
         }
@@ -263,19 +247,19 @@ class passwordMethodheimdal extends passwordMethod
   function check()
   {
     $message = array();
-    if(!is_numeric($this->krb5MaxLife) && !$this->unlimited_krb5MaxLife){
+    if(!is_numeric($this->krb5MaxLife) && !empty($this->krb5MaxLife)){
       $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max life"));
     }
-    if(!is_numeric($this->krb5MaxRenew) && !$this->unlimited_krb5MaxRenew){
+    if(!is_numeric($this->krb5MaxRenew) && !empty($this->krb5MaxRenew)){
       $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max renew"));
     }
-   if((empty($this->krb5ValidStart) || !$this->chk_times($this->krb5ValidStart)) && !$this->unlimited_krb5ValidStart){
+   if(!empty($this->krb5ValidStart) && !$this->chk_times($this->krb5ValidStart)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
    }
-   if((empty($this->krb5ValidEnd) || !$this->chk_times($this->krb5ValidEnd)) && !$this->unlimited_krb5ValidEnd){
+   if(!empty($this->krb5ValidEnd) && !$this->chk_times($this->krb5ValidEnd)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
    }
-   if((empty($this->krb5PasswordEnd) || !$this->chk_times($this->krb5PasswordEnd)) && !$this->unlimited_krb5PasswordEnd){
+   if(!empty($this->krb5PasswordEnd) && !$this->chk_times($this->krb5PasswordEnd)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid password"));
    }
     return($message);
@@ -312,7 +296,7 @@ class passwordMethodheimdal extends passwordMethod
       $data['uid'] = $uid;
       $data['krb5KeyVersionNumber'] = rand(100000,99999999);
 
-      if(!$this->is_account){ 
+      if($this->is_account){ 
         foreach($this->attributes as $attr){
           $data[$attr] = array();
         }
@@ -320,25 +304,25 @@ class passwordMethodheimdal extends passwordMethod
 
       /* Append Flags */
       $data['krb5KDCFlags']   = $this->krb5KDCFlags;
-      if(!$this->unlimited_krb5MaxLife){
+      if(!empty($this->krb5MaxLife)){
         $data['krb5MaxLife']    = $this->krb5MaxLife;
       }
-      if(!$this->unlimited_krb5MaxRenew){
+      if(!empty($this->krb5MaxRenew)){
         $data['krb5MaxRenew']   = $this->krb5MaxRenew;
       }
-      if(!$this->unlimited_krb5ValidStart){
+      if(!empty($this->krb5ValidStart)){
         $data['krb5ValidStart'] = $this->krb5ValidStart;
       }
-      if(!$this->unlimited_krb5ValidEnd){
+      if(!empty($this->krb5ValidEnd)){
         $data['krb5ValidEnd']   = $this->krb5ValidEnd;
       }
-      if(!$this->unlimited_krb5PasswordEnd){
+      if(!empty($this->krb5PasswordEnd)){
         $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
       }
 
       /* Add / Updated data */
       $ldap->cd($dn);
-      if($this->is_account){
+      if(!$this->is_account){ 
         $ldap->add($data);
       }else{
         $ldap->modify($data);

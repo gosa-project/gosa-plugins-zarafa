@@ -3,60 +3,46 @@
 	<tr>
 		<td style="width:50%;vertical-align:top;">
 			<h2>{t}Heimdal options{/t}</h2>
+			<i>{t}Use empty values for infinite{/t}</i>
 			<table>
 				<tr>
 					<td>
-						<label for="unlimited_krb5MaxLife">{t}Ticket max life{/t}</label>
+						<label for="krb5MaxLife">{t}Ticket max life{/t}</label>
 					</td>
 					<td>
-						<input id="unlimited_krb5MaxLife" name="unlimited_krb5MaxLife" value="1"  type="checkbox" 
-							{if $unlimited_krb5MaxLife} checked {/if} onClick="changeState('krb5MaxLife');">
-						<input id="krb5MaxLife" type="text" name="krb5MaxLife" value="{$krb5MaxLife}" 
-							{if $unlimited_krb5MaxLife} disabled {/if}>
+						<input id="krb5MaxLife" type="text" name="krb5MaxLife" value="{$krb5MaxLife}"> 
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5MaxRenew">{t}Ticket max renew{/t}</label>
+						<label for="krb5MaxRenew">{t}Ticket max renew{/t}</label>
 					</td>
 					<td>
-						<input id="unlimited_krb5MaxRenew" name="unlimited_krb5MaxRenew" value="1"  type="checkbox" 
-							{if $unlimited_krb5MaxRenew} checked {/if} onClick="changeState('krb5MaxRenew');">
-						<input id="krb5MaxRenew" type="text" name="krb5MaxRenew" value="{$krb5MaxRenew}" 
-							{if $unlimited_krb5MaxRenew} disabled {/if}>
+						<input id="krb5MaxRenew" type="text" name="krb5MaxRenew" value="{$krb5MaxRenew}">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5ValidStart">{t}Valid ticket start time{/t}</label>
+						<label for="krb5ValidStart">{t}Valid ticket start time{/t}</label>
 					</td>
 					<td>
-						<input id="unlimited_krb5ValidStart" name="unlimited_krb5ValidStart" value="1"  type="checkbox" 
-							{if $unlimited_krb5ValidStart} checked {/if} onClick="changeState('krb5ValidStart');">
-						<input id="krb5ValidStart" type="text" name="krb5ValidStart" value="{$krb5ValidStart}" 
-							{if $unlimited_krb5ValidStart} disabled {/if}>
+						<input id="krb5ValidStart" type="text" name="krb5ValidStart" value="{$krb5ValidStart}">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5ValidEnd">{t}Valid ticket end time{/t}</label>
+						<label for="krb5ValidEnd">{t}Valid ticket end time{/t}</label>
 					</td>
 					<td>
-						<input id="unlimited_krb5ValidEnd" name="unlimited_krb5ValidEnd" value="1"  type="checkbox"
-							{if $unlimited_krb5ValidEnd} checked {/if} onClick="changeState('krb5ValidEnd');">
-						<input id="krb5ValidEnd" type="text" name="krb5ValidEnd" value="{$krb5ValidEnd}" 
-							{if $unlimited_krb5ValidEnd} disabled {/if}>
+						<input id="krb5ValidEnd" type="text" name="krb5ValidEnd" value="{$krb5ValidEnd}">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="unlimited_krb5PasswordEnd">{t}Password end{/t}</label>
+						<label for="krb5PasswordEnd">{t}Password end{/t}</label>
 					</td>
 					<td>
-						<input id="unlimited_krb5PasswordEnd" name="unlimited_krb5PasswordEnd" value="1"  type="checkbox"
-							{if $unlimited_krb5PasswordEnd} checked {/if} onClick="changeState('krb5PasswordEnd');">
-						<input id="krb5PasswordEnd" type="text" name="krb5PasswordEnd" value="{$krb5PasswordEnd}" 
-							{if $unlimited_krb5PasswordEnd} disabled {/if}>
+						<input id="krb5PasswordEnd" type="text" name="krb5PasswordEnd" value="{$krb5PasswordEnd}">
 					</td>
 				</tr>
 			</table>
