@@ -586,8 +586,7 @@ sub decrypt_msg {
     my ($crypted_msg, $my_cipher) =@_;
     my $len = length $crypted_msg;
     my $msg = $my_cipher->decrypt($crypted_msg);
-    #my $msg = $crypted_msg;
-    #$msg =~ s/^a*//gi;
+    $msg =~ s/\0*$//gi;
     $msg =~ s/\0$//gi;
     return $msg;
 }
@@ -825,7 +824,7 @@ sub create_ciphering {
     my $passwd_length = length $passwd;
     my $multiplier = int($passwd_length / 32) + 1;
     my $extension = 32*$multiplier - $passwd_length;
-    $passwd = "a"x$extension.$passwd;
+    $passwd = substr(0,32, 32x$passwd);
     my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
     return $my_cipher;
 }
