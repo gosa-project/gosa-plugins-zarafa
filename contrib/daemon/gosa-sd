@@ -512,12 +512,12 @@ sub get_processing_child {
                     no strict "refs";
                     my $answer;
                     while( my ($module, $tag_hash) = each(%$known_modules)) {
-                        if(exists $known_modules->{$module}->{server_packages}) {
+                        #if(exists $known_modules->{$module}->{server_packages}) {
                             my $tmp = &{ $module."::process_incoming_msg" }($msg);
                             if (defined $tmp) {
                                 $answer = $tmp;
                             }
-                        }
+                        #}
                     }        
 
                     &print_known_daemons();
@@ -900,6 +900,7 @@ sub decrypt_msg {
     my $msg = $my_cipher->decrypt($crypted_msg);
     #my $msg = $crypted_msg;
     #$msg =~ s/^a*//gi;
+    $msg =~ s/\0*$//gi;
     return $msg;
 }
 
