@@ -59,12 +59,15 @@ class passwordMethodheimdal extends passwordMethod
     $this->config= $config;
     $this->parent_dn = $dn;
 
+    $this->is_account = FALSE;
+    $this->krb5MaxLife    = 86400;
+    $this->krb5MaxRenew   = 604800;
+    $this->krb5ValidStart = date("YmdHi",time()."Z");
+    $this->krb5ValidEnd   = date("YmdHi",time()."Z");
+    $this->krb5PasswordEnd= date("YmdHi",time()."Z");
+
     /* Load existing entries */
-    $this->krb5MaxLife  = "86400";
-    $this->krb5MaxRenew = "604800";
-    if($dn == "new"){
-      $this->is_account = FALSE;
-    }else{
+    if($dn != "new"){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($dn);
       $ldap->ls("objectClass=krb5Principal",$dn,array("*"));
@@ -75,6 +78,8 @@ class passwordMethodheimdal extends passwordMethod
         foreach($this->attributes as $attr){
           if(isset($this->attrs[$attr][0])){
             $this->$attr = $this->attrs[$attr][0];
+          }else{
+            $this->$attr = "";
           }
         }
       }elseif($ldap->count() >= 2){
