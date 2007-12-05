@@ -908,7 +908,7 @@ sub encrypt_msg {
     my $msg_length = length($msg);
     my $multiplier = int($msg_length / 16) + 1;
     my $extension = 16*$multiplier - $msg_length;
-    $msg = $msg."\0"x$extension;
+    $msg = "0"x$extension.$msg;
     my $crypted_msg = $my_cipher->encrypt($msg);
     #my $crypted_msg = $msg;
     return $crypted_msg;
@@ -925,7 +925,7 @@ sub encrypt_msg {
 sub decrypt_msg {
     my ($crypted_msg, $my_cipher) = @_ ;
     my $msg = $my_cipher->decrypt($crypted_msg);
-    $msg =~ s/\0*$//gi;
+    $msg =~ s/^0*//g;
     return $msg;
 }
 
