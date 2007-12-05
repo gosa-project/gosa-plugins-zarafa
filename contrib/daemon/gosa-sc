@@ -38,7 +38,7 @@ use Cwd;
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
 my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
-my ($client_address, $client_ip, $client_port, $mac_address);
+my ($client_address, $client_ip, $client_port, $client_mac_address);
 my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
 
 # default variables
@@ -50,9 +50,7 @@ $foreground = 0 ;
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
     },
 "client" => 
-    {"client_ip" => [\$client_ip, "10.89.1.155"],
-    "client_port" => [\$client_port, "10010"],
-    "mac_address" => [\$mac_address, ""],
+    {"client_port" => [\$client_port, "10010"],
     },
 "server" =>
     {"server_ip" => [\$server_ip, "10.89.1.155"],
@@ -201,6 +199,32 @@ sub check_pid {
 
 
 #===  FUNCTION  ================================================================
+#         NAME:  get_ip_and_mac 
+#   PARAMETERS:  nothing
+#      RETURNS:  (ip, mac) 
+#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
+#                of a inet address is returned as well as the mac address in the line
+#                above the inet address
+#===============================================================================
+sub get_ip_and_mac {
+    my $ip = "0.0.0.0.0"; # Defualt-IP
+    my $mac = "00:00:00:00:00:00";  # Default-MAC
+    my @ifconfig = qx(/sbin/ifconfig);
+    foreach(@ifconfig) {
+        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
+            $mac = "$1:$2:$3:$4:$5:$6";
+            next;
+        }
+        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
+            $ip = "$1.$2.$3.$4";
+            last;
+        }
+    }
+    return ($ip, $mac);
+}
+
+
+#===  FUNCTION  ================================================================
 #         NAME:  usage
 #   PARAMETERS: 
 #      RETURNS:  
@@ -309,7 +333,7 @@ sub register_at_server {
         # create msg hash
         my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
         &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
-        &add_content2xml_hash($register_hash, "mac_address", $mac_address);
+        &add_content2xml_hash($register_hash, "client_mac_address", $client_mac_address);
         &add_content2xml_hash($register_hash, "events", $events);
 
         # send xml hash to server with general server passwd
@@ -504,6 +528,7 @@ sub decrypt_msg {
     my $msg = $my_cipher->decrypt($crypted_msg);
     #my $msg = $crypted_msg;
     #$msg =~ s/^a*//gi;
+    $msg =~ s/\0$//gi;
     return $msg;
 }
 
@@ -955,6 +980,14 @@ if( 0 != $pid ) {
     close( LOCK_FILE );
     if( !$foreground ) { exit( 0 ) };
 }
+
+# detect own ip and mac address
+($client_ip, $client_mac_address) = &get_ip_and_mac(); 
+if (not defined $client_ip) {
+    die "EXIT: ip address of $0 could not be detected";
+}
+daemon_log("client ip address detected: $client_ip", 1);
+daemon_log("client mac address detected: $client_mac_address", 1);
 
 # prepare variables
 if (defined $server_ip && defined $server_port) {

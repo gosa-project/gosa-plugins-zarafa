@@ -36,7 +36,7 @@ use IPC::Shareable qw( :lock);
 IPC::Shareable->clean_up_all;
 
 my ($cfg_file, $default_cfg_file, %cfg_defaults, $foreground, $verbose);
-my ($bus_activ, $bus_passwd, $bus_ip, $bus_port, $bus_address, $bus);
+my ($bus_activ, $bus_passwd, $bus_ip, $bus_port, $bus_address, $bus, $bus_mac_address);
 my ($pid_file, $procid, $pid, $log_file, $my_own_address);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
 my ($xml, $bus_cipher, $known_daemons, $shmkh);
@@ -57,7 +57,7 @@ $shmkh = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
     "bus_passwd" => [\$bus_passwd, "tester"],
-    "bus_ip" => [\$bus_ip, "10.89.1.155"],
+#    "bus_ip" => [\$bus_ip, "10.89.1.155"],
     "bus_port" => [\$bus_port, "10001"],
     "child_max" => [\$child_max, 10],
     "child_min" => [\$child_min, 3],
@@ -232,6 +232,33 @@ sub sig_int_handler {
     exit(1);
 }
 $SIG{INT} = \&sig_int_handler;
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_ip_and_mac 
+#   PARAMETERS:  nothing
+#      RETURNS:  (ip, mac) 
+#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
+#                of a inet address is returned as well as the mac address in the line
+#                above the inet address
+#===============================================================================
+sub get_ip_and_mac {
+    my $ip = "0.0.0.0.0"; # Defualt-IP
+    my $mac_address = "00:00:00:00:00:00";  # Default-MAC
+    my @ifconfig = qx(/sbin/ifconfig);
+    foreach(@ifconfig) {
+        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
+            $mac_address = "$1:$2:$3:$4:$5:$6";
+            next;
+        }
+        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
+            $ip = "$1.$2.$3.$4";
+            last;
+        }
+    }
+    return ($ip, $mac_address);
+}
+
 
 
 #===  FUNCTION  ================================================================
@@ -561,6 +588,7 @@ sub decrypt_msg {
     my $msg = $my_cipher->decrypt($crypted_msg);
     #my $msg = $crypted_msg;
     #$msg =~ s/^a*//gi;
+    $msg =~ s/\0$//gi;
     return $msg;
 }
 
@@ -1067,7 +1095,7 @@ $SIG{CHLD} = 'IGNORE';
 
 # restart daemon log file
 if(-e $log_file ) { unlink $log_file }
-daemon_log("started!");
+daemon_log("$0 started!");
 
 # Just fork, if we"re not in foreground mode
 if( ! $foreground ) { $pid = fork(); }
@@ -1081,8 +1109,13 @@ if( 0 != $pid ) {
     if( !$foreground ) { exit( 0 ) };
 }
 
-# detect own ip, port and address(= ip:port)
- 
+# detect own ip and mac address
+($bus_ip, $bus_mac_address) = &get_ip_and_mac(); 
+if (not defined $bus_ip) {
+    die "EXIT: ip address of $0 could not be detected";
+}
+daemon_log("bus ip address detected: $bus_ip", 1);
+daemon_log("bus mac address detected: $bus_mac_address", 1);
 
 
 # setup xml parser
