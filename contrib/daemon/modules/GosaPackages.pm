@@ -45,10 +45,17 @@ sub process_incoming_msg {
     if(not defined $crypted_msg) {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
     }
+    &main::daemon_log("GosaPackages: crypted_msg:$crypted_msg", 7);
+    &main::daemon_log("GosaPackages: crypted_msg len:".length($crypted_msg), 7);
+
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
     my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
-    
+ 
+    &main::daemon_log("GosaPackages: crypted_msg:$crypted_msg", 7);
+    &main::daemon_log("GosaPackages: crypted_msg len:".length($crypted_msg), 7);
+
+
     # collect addresses from possible incoming clients
     # only gosa is allowd as incoming client
     &main::daemon_log("GosaPackages: host_key: $host", 7);
@@ -59,11 +66,12 @@ sub process_incoming_msg {
     my $msg_hash;
     eval{
         $msg = &main::decrypt_msg($crypted_msg, $gosa_cipher);
+
+        &main::daemon_log("GosaPackages: decrypted_msg: $msg", 7);
         $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
     };
     if($@) {
-        &main::daemon_log("ERROR: GosaPackages do not understand the message:", 1);
-        &main::daemon_log("\t$msg", 7);
+        &main::daemon_log("ERROR: GosaPackages do not understand the message: $@", 1);
         return;
     }
 
