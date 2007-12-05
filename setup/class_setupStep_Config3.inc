@@ -56,6 +56,9 @@ class Step_Config3 extends setup_step
               "notifydir" => "",
               "notifydir_active" => FALSE,
 
+              "uniq_identifier" => "entryCSN",
+              "uniq_identifier_active" => TRUE,
+
               "kioskpath" => "/var/spool/kiosk",
               "kioskpath_active" => FALSE,
 
@@ -84,6 +87,8 @@ class Step_Config3 extends setup_step
   {
     $smarty = get_smarty();
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
+    $smarty->assign("uniq_identifiers",array( "entryCNS" => "entryCSN",
+                                              "contextCSN"=>"contextCSN" ));
     $smarty->assign("optional", $this->optional);
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -171,6 +176,15 @@ class Step_Config3 extends setup_step
         }
       }else{
         $this->optional['notifydir_active'] = FALSE;
+      }
+
+      if(isset($_POST['uniq_identifier_active'])){
+        $this->optional['uniq_identifier_active'] = TRUE;
+        if(isset($_POST['uniq_identifier'])){
+          $this->optional['uniq_identifier'] = get_post('uniq_identifier');
+        }
+      }else{
+        $this->optional['uniq_identifier_active'] = FALSE;
       }
     }
 

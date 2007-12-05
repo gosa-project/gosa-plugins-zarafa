@@ -65,7 +65,8 @@
                     onClick='changeState("ppd_path");'>
                 <input size=40 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}' disabled>
             {else}
-                <input type='checkbox' value='1' name='ppd_path_active' checked>
+                <input type='checkbox' value='1' name='ppd_path_active' checked
+					onClick='changeState("ppd_path");'>
                 <input size=40 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
             {/if}
         </div>
@@ -82,7 +83,8 @@
                 <input size=40 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}' disabled>
             {else}
-                <input type='checkbox' value='1' name='kioskpath_active' checked>
+                <input type='checkbox' value='1' name='kioskpath_active' checked
+					onClick='changeState("kioskpath");'>
                 <input size=40 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}'  >
             {/if}
@@ -100,7 +102,8 @@
                 <input size=40 id='gotomasses_file' name='gotomasses_file' 
 					type='text' value='{$optional.gotomasses_file}' disabled>
             {else}
-                <input type='checkbox' value='1' name='gotomasses_active' checked>
+                <input type='checkbox' value='1' name='gotomasses_active' checked
+					onClick='changeState("gotomasses_file");'>
                 <input size=40 id='gotomasses_file' name='gotomasses_file' 
 					type='text' value='{$optional.gotomasses_file}'  >
             {/if}
@@ -119,7 +122,8 @@
                 <input size=40 id='auto_network_hook' name='auto_network_hook' 
 					type='text' value='{$optional.auto_network_hook}' disabled>
             {else}
-                <input type='checkbox' value='1' name='auto_network_hook_active' checked>
+                <input type='checkbox' value='1' name='auto_network_hook_active' checked
+					onClick='changeState("auto_network_hook");'>
                 <input size=40 id='auto_network_hook' name='auto_network_hook' type='text' 
 					value='{$optional.auto_network_hook}'  >
             {/if}
@@ -137,7 +141,8 @@
                 <input size=40 id='mailQueueScriptPath' name='mailQueueScriptPath' 
 					type='text' value='{$optional.mailQueueScriptPath}' disabled>
             {else}
-                <input type='checkbox' value='1' name='mailQueueScriptPath_active' checked>
+                <input type='checkbox' value='1' name='mailQueueScriptPath_active' checked 
+					onClick='changeState("mailQueueScriptPath");'>
                 <input size=40 id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
 					value='{$optional.mailQueueScriptPath}'  >
             {/if}
@@ -155,9 +160,31 @@
                 <input size=40 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}' disabled>
             {else}
-                <input type='checkbox' value='1' name='notifydir_active' checked>
+                <input type='checkbox' value='1' name='notifydir_active' checked 
+					onClick='changeState("notifydir");'>
                 <input size=40 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}'  >
+            {/if}
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Enable edit locking{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.uniq_identifier_active == FALSE}
+                <input type='checkbox' value='1' name='uniq_identifier_active'
+                    onClick='changeState("uniq_identifier");'>
+				<select name="uniq_identifier" id="uniq_identifier" disabled>
+					{html_options options=$uniq_identifiers selected=$optional.uniq_identifier}
+				</select>
+            {else}
+                <input type='checkbox' value='1' name='uniq_identifier_active' checked
+					onClick='changeState("uniq_identifier");'>
+				<select name="uniq_identifier" id="uniq_identifier" >
+					{html_options options=$uniq_identifiers selected=$optional.uniq_identifier}
+				</select>
             {/if}
         </div>
     </div>
