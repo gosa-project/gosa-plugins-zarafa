@@ -118,8 +118,6 @@ class plugin
   /* This can be set to render the tabulators in another stylesheet */
   var $pl_notify= FALSE;
 
-  /* The entries CSN value, if available */
-  var $entryCSN = "";
 
   /* This variable indicates that this class can handle multiple dns at once. */
   var $multiple_support = FALSE; 
@@ -152,13 +150,6 @@ class plugin
     /* Get LDAP descriptor */
     $ldap= $this->config->get_ldap_link();
     if ($dn !== NULL){
-
-      /* Try to get entry CSN for save checks later */
-      $ldap->cat($dn,array("entryCSN"));
-      $csn = $ldap->fetch();
-      if(isset($csn['entryCSN'][0])){
-        $this->entryCSN = $csn['entryCSN'][0];
-      }
 
       /* Load data to 'attrs' and save 'dn' */
       if ($parent !== NULL){
@@ -484,15 +475,6 @@ class plugin
         }
       }
 
-    }
-
-    /* Check if entry CSN has changed */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cat($this->dn,array("entryCSN"));
-    $csn = $ldap->fetch();
-    if(isset($csn['entryCSN'][0]) && !empty($this->entryCSN) && $this->entryCSN != $csn['entryCSN'][0]){
-      $this->entryCSN = $csn['entryCSN'][0];
-      $message[] = _("The object has changed since opened in GOsa. Please ensure that nobody has done serious changes that may get lost if you save this entry.");
     }
 
     return ($message);
