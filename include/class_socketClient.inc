@@ -79,7 +79,7 @@ class Socket_Client
 			$this->b_data_send = TRUE;
 
 			/* Open the cipher */
-			$this->td = mcrypt_module_open('rijndael-256', '', 'cbc', '');
+			$this->td = mcrypt_module_open('rijndael-128', '', 'cbc', '');
 
 			/* Create the IV and determine the keysize length */
 			$this->iv = substr(md5('GONICUS GmbH'),0, mcrypt_enc_get_iv_size($this->td));

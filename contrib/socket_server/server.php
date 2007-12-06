@@ -36,11 +36,12 @@ echo "\nServer startet on port : $bind_port\n";
 
 
 /* Open the cipher */
-$td = mcrypt_module_open('rijndael-256', '', 'cbc', '');
+$td = mcrypt_module_open('rijndael-128', '', 'cbc', '');
 
 /* Create the IV and determine the keysize length */
 $iv = substr(md5('GONICUS GmbH'),0, mcrypt_enc_get_iv_size($td));
 $ks = mcrypt_enc_get_key_size($td);
+echo "IV-Size: ".mcrypt_enc_get_iv_size($td)."\n";
 
 /* Create key */
 $key = substr(md5('ferdinand_frost'), 0, $ks);
