@@ -938,7 +938,7 @@ sub decrypt_msg {
 #===============================================================================
 sub create_ciphering {
     my ($passwd) = @_;
-    $passwd = substr("$passwd"x32, 0, 32);
+    $passwd = substr("$passwd" x 32, 0, 32);
 
     my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
     return $my_cipher;

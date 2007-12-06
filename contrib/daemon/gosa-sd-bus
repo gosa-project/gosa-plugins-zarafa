@@ -447,7 +447,7 @@ sub process_incoming_msg {
     }
 
     my $l = @valid_keys;
-    daemon_log("number of valid daemon_keys: $l\n", 7);
+    daemon_log("number of valid daemons: $l\n", 7);
 
     my ($msg, $msg_hash);
     my $msg_flag = 0;    
@@ -455,15 +455,17 @@ sub process_incoming_msg {
     # collect addresses from possible incoming clients
     foreach my $host_key (@valid_keys) {
         eval{
-            daemon_log( "key: $host_key\n", 7);
+            daemon_log( "daemon: $host_key\n", 7);
             my $key_passwd = $known_daemons->{$host_key}->{passwd};
-            daemon_log("key_passwd: $key_passwd\n", 7);
+            daemon_log("daemon_passwd: $key_passwd\n", 7);
             my $key_cipher = &create_ciphering($key_passwd);
             $msg = &decrypt_msg($crypted_msg, $key_cipher);
+            daemon_log("daemon decrypted msg: $msg", 7);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
         };
         if($@) {
-            daemon_log("key raise error", 7);
+            daemon_log("msg processing raise error", 7);
+            daemon_log("error string: $@", 7);
             $msg_flag += 1;
         } else {
             last;
@@ -553,6 +555,35 @@ sub process_incoming_msg {
 #    my ($host, $content) = @_;
 #    return;
 #}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_passwd
+#   PARAMETERS:  nothing
+#      RETURNS:  new_passwd - string 
+#  DESCRIPTION:  creates a 32 bit long random passwd out of "a".."z","A".."Z",0..9
+#===============================================================================
+sub create_passwd {
+    my $new_passwd = "";
+    for(my $i=0; $i<31; $i++) {
+        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
+    }
+    return $new_passwd;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_ciphering
+#   PARAMETERS:  passwd - string - used to create ciphering
+#      RETURNS:  cipher - object 
+#  DESCRIPTION:  creates a Crypt::Rijndael::MODE_CBC object with passwd as key
+#===============================================================================
+sub create_ciphering {
+    my ($passwd) = @_;
+    $passwd = substr("$passwd" x 32, 0, 32);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
+    return $my_cipher;
+}
 
 
 #===  FUNCTION  ================================================================
@@ -808,35 +839,6 @@ sub send_msg_hash2all {
         daemon_log("crypted_msg:\n\t$crypted_msg", 7);
     }
     return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_ciphering
-#   PARAMETERS:  passwd - string - used to create ciphering
-#      RETURNS:  cipher - object 
-#  DESCRIPTION:  creates a Crypt::Rijndael::MODE_CBC object with passwd as key
-#===============================================================================
-sub create_ciphering {
-    my ($passwd) = @_;
-    $passwd = substr("$passwd"x32, 0, 32);
-    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
-    return $my_cipher;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_passwd
-#   PARAMETERS:  nothing
-#      RETURNS:  new_passwd - string 
-#  DESCRIPTION:  creates a 32 bit long random passwd out of "a".."z","A".."Z",0..9
-#===============================================================================
-sub create_passwd {
-    my $new_passwd = "";
-    for(my $i=0; $i<31; $i++) {
-        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
-    }
-    return $new_passwd;
 }
 
 
