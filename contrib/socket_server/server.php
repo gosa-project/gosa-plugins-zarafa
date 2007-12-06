@@ -14,8 +14,7 @@ $max_clients = 3;
 
 // Rijndal encrypt key 
 $enable_encryption = TRUE;
-$encrypt_key = "Hallo hier bin ich.";
-
+$encrypt_key = "ferdinand_frostferdinand_frostfe";
 
 /* Create Socket - 
  *  AF_INET means IPv4 Socket 
@@ -70,7 +69,7 @@ while(TRUE) {
 				socket_write($clients[$i]['socket'],encrypt(
 "Welcome to GOsa Test Server 
 ============================
-Type some text here:",$encrypt_key)."\n");
+Type some text here:",$encrypt_key));
 
 				echo("New client connected: " . $clients[$i]['ipaddy'] . " \n");
 				break;
@@ -124,26 +123,31 @@ Type some text here:",$encrypt_key)."\n");
 function encrypt($data,$key)
 {
 	global $enable_encryption;
+
+	$data= str_repeat("0", 16 - strlen($data)%16).$data;
+	echo "1EEE>>>>>>>>>>>>>>>>>".strlen($data)."\n";
+
 	/* Encrypt data */
 	if($enable_encryption){
-		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
+		echo "Size: $iv_size\n";
+		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv);
 	}
-	return(base64_encode($data));
+	echo "2EEE>>>>>>>>>>>>>>>>>".strlen($data)."\n";
+	return($data);
 }
 
 function decrypt($data,$key)
 {
 	global $enable_encryption;
-	$data = base64_decode($data);
 
 	/* Decrypt data */
 	if($enable_encryption){
-		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
 		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
-		$data = rtrim($data,"\x00");
+		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv);
+		$data = ltrim($data,"0");
 	}
 	return($data);
 }
