@@ -28,13 +28,14 @@ class Socket_Client
 
 	public function SetEncryptionKey($data)
 	{
+		$data= str_pad($data, 32, $data);
 		if(!function_exists("mcrypt_get_iv_size")){
 			$this->error = _("The mcrypt module was not found. Please install php5-mcrypt.") ;	
 			return(FALSE);
 		}else{
 			$this->encrypt 	= TRUE;
 			$this->crypt_key= $data; 
-			$iv_size  = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+			$iv_size  = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
 			$this->iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 			return(TRUE);
 		}
@@ -44,17 +45,16 @@ class Socket_Client
 	{
 		/* Encrypt data */
 		if($this->encrypt){
-			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv); 
+			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_CBC, $this->iv); 
 		}
-		return(base64_encode($data));
+		return($data);
 	}
 
 	private function decrypt($data)
 	{
-		$data = base64_decode($data);	
 		/* decrypt data */
 		if($this->encrypt){
-			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_ECB, $this->iv);
+			$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_CBC, $this->iv);
 			$data = rtrim($data,"\x00");
 		}
 		return($data);
@@ -87,10 +87,11 @@ class Socket_Client
 
 	public function send($data)
 	{
+		$data= str_repeat("0", 16 - strlen($data)%16).$data;
 		if($this->handle){
 			$data = $this->encrypt($data);
 			$data = trim($data);
-			fputs($this->handle,$data."\n");
+			fputs($this->handle, $data."\n");
 			$this->b_data_send = TRUE;
 			return(TRUE);
 		}else{
@@ -125,7 +126,7 @@ class Socket_Client
 			$this->b_data_send = FALSE;
 			$str = $this->decrypt($str);
 		}
-		return($str);
+		return(preg_replace('/^0*/', '', $str));
 	}
 
 	public function read()
