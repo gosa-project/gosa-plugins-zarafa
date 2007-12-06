@@ -62,6 +62,11 @@ class faiManagement extends plugin
     
     /* Creat dialog object */
     $this->DivListFai = new divListFai($this->config,$this);
+
+    /* Copy & Paste handler */
+    if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){
+      $this->CopyPasteHandler= new CopyPasteHandler($this->config);
+    }
 	}
 
 	function execute()
@@ -96,12 +101,16 @@ class faiManagement extends plugin
                     "/edit_continue/"=>"select_class_name_finished",
                     "/^multiple_copy_fai/" => "copy_multiple", 
                     "/^multiple_cut_fai/" => "cut_multiple", 
+                    "/^copy/" => "copy",
+                    "/^cut/" => "cut",
                     "/^remove_multiple_fai_objects/" => "del_multiple");
 
 		foreach($_POST as $name => $value){
       foreach($posts as $reg => $act ){
         if(preg_match($reg,$name)){
           $s_action = $act;
+          $s_entry = ltrim(preg_replace($reg,"",$name),"_");
+          $s_entry = preg_replace("/_.*$/","",$s_entry);
         }
       }
 			if(preg_match("/^entry_edit_.*/",$name)){
@@ -166,6 +175,16 @@ class faiManagement extends plugin
     /* handle remove from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
+    }
+
+    /********************
+      Copy & Paste
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
     }
 
 
@@ -1037,6 +1056,84 @@ class faiManagement extends plugin
   function save_object()
   {
     $this->DivListFai->save_object();
+  }
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    $base = $this->DivListFai->selectedBranch;
+    if($base == "main"){
+      $base = $this->DivListFai->selectedBase;
+    }
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $entry    = $this->objects[$s_entry];
+      $a_setup  = $this->get_type($entry);
+      $dn = $entry['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+
+        /* Cleanup object queue */
+        $entry    = $this->objects[$id];
+        $a_setup  = $this->get_type($entry);
+        $dn = $entry['dn'];
+
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$base);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      save_release_changes_now();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
   }
 
 

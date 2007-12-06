@@ -336,8 +336,17 @@ class divListFai extends MultiSelectWindow
          }
        }
 
-       $edi = $editlink;
-       $acti = $action;
+
+       /* Add copy & cut icons */
+       $ui = get_userinfo();
+       $acl_all = $ui->has_complete_category_acls($this->selectedBase,$this->module);
+       if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
+         $action .= "<input class='center' type='image'
+           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+         $action.= "<input class='center' type='image'
+           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+       }
+
 
        /* Cutted objects should be displayed in light grey */
        $display = $value['cn'].$desc;
@@ -349,6 +358,8 @@ class divListFai extends MultiSelectWindow
            }
          }
        }
+       $edi = $editlink;
+       $acti = $action;
 
        /* Create each field */
        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
