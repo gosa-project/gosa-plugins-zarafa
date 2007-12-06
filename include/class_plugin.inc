@@ -744,35 +744,13 @@ class plugin
     }
   }
 
-  /* This is a workaround function. */
-  function copy($src_dn, $dst_dn)
+
+  /* Recursively copy ldap object */
+  function _copy($src_dn,$dst_dn)
   {
-    /* Rename dn in possible object groups */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->search('(&(objectClass=gosaGroupOfNames)(member='.@LDAP::fix($src_dn).'))',
-        array('cn'));
-    while ($attrs= $ldap->fetch()){
-      $og= new ogroup($this->config, $ldap->getDN());
-      unset($og->member[$src_dn]);
-      $og->member[$dst_dn]= $dst_dn;
-      $og->save ();
-    }
-
-    $ldap->cat($dst_dn);
-    $attrs= $ldap->fetch();
-    if (count($attrs)){
-      trigger_error("Trying to overwrite ".@LDAP::fix($dst_dn).", which already exists.",
-          E_USER_WARNING);
-      return (FALSE);
-    }
-
+    $ldap=$this->config->get_ldap_link();
     $ldap->cat($src_dn);
     $attrs= $ldap->fetch();
-    if (!count($attrs)){
-      trigger_error("Trying to move ".@LDAP::fix($src_dn).", which does not seem to exist.",
-          E_USER_WARNING);
-      return (FALSE);
-    }
 
     /* Grummble. This really sucks. PHP ldap doesn't support rdn stuff. */
     $ds= ldap_connect($this->config->current['SERVER']);
@@ -839,7 +817,47 @@ class plugin
           E_USER_WARNING);
       return(FALSE);
     }
+    return(TRUE);
+  }
 
+
+  /* This is a workaround function. */
+  function copy($src_dn, $dst_dn)
+  {
+    /* Rename dn in possible object groups */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->search('(&(objectClass=gosaGroupOfNames)(member='.@LDAP::fix($src_dn).'))',
+        array('cn'));
+    while ($attrs= $ldap->fetch()){
+      $og= new ogroup($this->config, $ldap->getDN());
+      unset($og->member[$src_dn]);
+      $og->member[$dst_dn]= $dst_dn;
+      $og->save ();
+    }
+
+    $ldap->cat($dst_dn);
+    $attrs= $ldap->fetch();
+    if (count($attrs)){
+      trigger_error("Trying to overwrite ".@LDAP::fix($dst_dn).", which already exists.",
+          E_USER_WARNING);
+      return (FALSE);
+    }
+
+    $ldap->cat($src_dn);
+    $attrs= $ldap->fetch();
+    if (!count($attrs)){
+      trigger_error("Trying to move ".@LDAP::fix($src_dn).", which does not seem to exist.",
+          E_USER_WARNING);
+      return (FALSE);
+    }
+
+    $ldap->cd($src_dn);
+    $ldap->search("objectClass=*",array("dn"));
+    while($attrs = $ldap->fetch()){
+      $src = $attrs['dn'];
+      $dst = preg_replace("/".normalizePreg($src_dn)."$/",$dst_dn,$attrs['dn']);
+      $this->_copy($src,$dst);
+    }
     return (TRUE);
   }
 
@@ -853,7 +871,7 @@ class plugin
 
     /* Delete source */
     $ldap= $this->config->get_ldap_link();
-    $ldap->rmdir($src_dn);
+    $ldap->rmdir_recursive($src_dn);
     if ($ldap->error != "Success"){
       trigger_error("Trying to delete $src_dn failed.",
           E_USER_WARNING);
