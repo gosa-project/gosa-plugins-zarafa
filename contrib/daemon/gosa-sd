@@ -933,11 +933,12 @@ sub decrypt_msg {
 #===============================================================================
 sub create_ciphering {
     my ($passwd) = @_;
-    $passwd = substr("$passwd" x 32, 0, 32);
-    daemon_log("create_ciphering: new passwd: $passwd", 7);
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
 
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
 
+    daemon_log("iv: $iv", 7);
+    daemon_log("key: $passwd", 7);
     my $my_cipher = Crypt::CBC->new(-key=>$passwd ,
                                     -cipher => 'Rijndael',
                                     -iv => $iv,

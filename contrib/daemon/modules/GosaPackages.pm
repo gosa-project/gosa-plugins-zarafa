@@ -24,7 +24,6 @@ END{}
 
 # create general settings for this module
 my $gosa_cipher = &main::create_ciphering($main::gosa_passwd);
-#$gosa_cipher->set_iv("hallo");
 
 sub get_module_tags {
     
@@ -62,6 +61,7 @@ sub process_incoming_msg {
     &main::daemon_log("GosaPackages: host_key: $host", 7);
     &main::daemon_log("GosaPackages: key_passwd: $main::gosa_passwd", 7);
 
+    $gosa_cipher = &main::create_ciphering($main::gosa_passwd);
     # determine the correct passwd for deciphering of the incoming msgs
     my $msg = "";
     my $msg_hash;
