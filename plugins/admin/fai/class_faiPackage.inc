@@ -55,6 +55,7 @@ class faiPackage extends plugin
 
   var $FAIstate         = "";
   var $view_logged      = FALSE;
+  var $base;
 
   var $FAIinstallMethods  = array( "install", "ninstall", "remove", 
       "dselect-upgrade", "taskinst", "taskrm",
@@ -464,6 +465,19 @@ class faiPackage extends plugin
   /* Save to LDAP */
   function save()
   {
+
+    /* Assemble release name */
+    if($this->FAIdebianRelease == "ClearFromCopyPaste"){
+      $tmp= preg_replace('/,ou=fai,ou=configs,ou=systems,.*$/', '', $_SESSION['faifilter']['branch']);
+      $tmp= preg_replace('/ou=/', '', $tmp);
+      $rev= array_reverse(split(',', $tmp));
+      $this->FAIdebianRelease= "";
+      foreach ($rev as $part){
+        $this->FAIdebianRelease.= "/$part";
+      }
+      $this->FAIdebianRelease= preg_replace('#^/#', '', $this->FAIdebianRelease);
+    }
+
     plugin::save();
 
     $ldap = $this->config->get_ldap_link();
@@ -550,6 +564,80 @@ class faiPackage extends plugin
             "FAIdebianRelease"  => _("Release")."&nbsp;("._("Readonly").")")
           ));
   }
+
+
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    if(isset($source['FAIstate'][0])){
+      $this->FAIstate = $source['FAIstate'][0];
+    }
+
+    $this->FAIdebianRelease = "ClearFromCopyPaste";
+
+    if(isset($source['FAIpackage'])){
+      unset($source['FAIpackage']['count']);
+      foreach($source['FAIpackage'] as $pkg){
+        $this->usedPackages[$pkg] = $pkg;
+      }
+      ksort($this->usedPackages);
+    }else{
+      $this->usedPackages = array();
+    }
+
+    if((isset($source['FAIdebianSection']))&&(is_array($source['FAIdebianSection']))){
+      $this->FAIdebianSection = array();
+      for($i = 0 ; $i < $source['FAIdebianSection']['count'] ; $i ++){
+        $this->FAIdebianSection[$source['FAIdebianSection'][$i]]=$source['FAIdebianSection'][$i];
+      }
+    }
+
+    /* Create one filter with all package names, 
+       instead of calling $ldap->search for every single package 
+     */
+    $PackageFilter = "";
+    foreach($this->usedPackages as $name){
+      $PackageFilter .= "(FAIpackage=".$name.")";
+    }
+    $PackageFilter = "(&(objectClass=FAIdebconfInfo)(|".$PackageFilter."))";
+
+    /* Search for configuration objects */ 
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($source['dn']);
+    $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType","FAIvariableContent","FAIpackage","FAIdebianSection","FAIstate"));
+
+    /* Walk through configurations and append them to our list of ConfiguredPackages */
+    while($attr = $ldap->fetch()){
+
+      /* Skip objects, that are tagged as removed */
+      if(isset($object['FAIstate'][0])){
+        if(preg_match("/removed$/",$attr['FAIstate'][0])){
+          continue;
+        }
+      }
+
+      $tmp =array(); 
+      $tmp['Name']  = $attr['FAIvariable'][0];
+      $tmp['Type']  = $attr['FAIvariableType'][0];
+
+      if (isset($attr['FAIvariableContent'][0])){
+        if(!in_array($attr['FAIvariableType'],array("multiselect"))){
+          $tmp['Value'] = $attr['FAIvariableContent'][0];
+        }else{
+          $content = array();        
+          unset($attr['FAIvariableContent']['count']);
+          foreach($attr['FAIvariableContent'] as $attr){
+            $tmp['Value'][] = $attr;
+          }
+        }
+        $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
+      }
+    }
+  }
+
 
   function getServerInfos()
   {

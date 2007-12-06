@@ -531,6 +531,74 @@ class faiPartitionTable extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    /* Get FAIstate
+     */
+    if(isset($source['FAIstate'][0])){
+      $this->FAIstate = $source['FAIstate'][0];
+    }
+
+    /* Read all disks from ldap taht are defined fot this partition table 
+     */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($source['dn']);
+    $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))",array("*"));
+    while($object = $ldap->fetch()){
+
+      /* Skip objects, that are tagged as removed */
+      if(isset($object['FAIstate'][0])){
+        if(preg_match("/removed$/",$object['FAIstate'][0])){
+          continue;
+        }
+      }
+
+      $this->disks[$object['cn'][0]]['status']      = "edited";
+      $this->disks[$object['cn'][0]]['dn']          = $object['dn'];
+      $this->disks[$object['cn'][0]]['cn']          = $object['cn'][0];
+      if(isset($object['description'][0])){
+        $this->disks[$object['cn'][0]]['description'] = $object['description'][0];
+      }else{
+        $this->disks[$object['cn'][0]]['description'] = "";
+      }
+      $this->disks[$object['cn'][0]]['partitions']   = array();
+    }
+
+    /* read all partitions for each disk 
+     */
+    foreach($this->disks as $name => $disk){
+      $ldap->cd ($disk['dn']);
+      $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))",array("*"));
+      while($partition = $ldap->fetch()){
+
+        /* Skip objects, that are tagged as removed */
+        if(isset($partition['FAIstate'][0])){
+          if(preg_match("/removed$/",$partition['FAIstate'][0])){
+            continue;
+          }
+        }
+
+        /* remove count ... from ldap result 
+         */
+        foreach($partition as $key=>$val){
+          if((is_numeric($key))||($key=="count")||($key=="dn")){
+            unset($partition[$key]);
+          }else{
+            $partition[$key] = $val[0];
+          }
+        }
+
+        /* Append fetched partitions
+         */
+        $partition['status']="edited";
+        $this->disks[$name]['partitions'][$partition['FAIpartitionNr']] = $partition; 
+      }  
+    }
+    ksort($this->disks);
+  }
+
+
   /* Return plugin informations for acl handling */ 
   static function plInfo()
   {
