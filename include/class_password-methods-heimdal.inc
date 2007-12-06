@@ -27,6 +27,9 @@ class passwordMethodheimdal extends passwordMethod
   var $krb5ValidStart   = "";
   var $krb5ValidEnd     = "";
   var $krb5PasswordEnd  = "";
+  var $krb5ValidStart_clear   = TRUE;
+  var $krb5ValidEnd_clear     = TRUE;
+  var $krb5PasswordEnd_clear  = TRUE;
 
   var $display = TRUE;
 
@@ -80,6 +83,15 @@ class passwordMethodheimdal extends passwordMethod
             $this->$attr = $this->attrs[$attr][0];
           }else{
             $this->$attr = "";
+          }
+        }
+        $date_values = array("krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+        foreach($date_values as $date_val){
+          $clear = $date_val."_clear";
+          if(empty($this->$date_val)){
+            $this->$clear = TRUE;
+          }else{
+            $this->$clear = FALSE;
           }
         }
       }elseif($ldap->count() >= 2){
@@ -212,7 +224,47 @@ class passwordMethodheimdal extends passwordMethod
       }
     }
 
+    $years = array();
+    $start = date("Y")-1;
+    for($i = $start; $i < ($start +20) ; $i++){
+      $years[$i] = $i;
+    }
+    $month= array();
+    for($i = 1; $i <= 12  ; $i++){
+      $month[str_pad($i,2,"0",STR_PAD_LEFT)] = $i;
+    }
+    $days= array();
+    for($i = 1; $i <= 31  ; $i++){
+      $days[str_pad($i,2,"0",STR_PAD_LEFT)] = $i;
+    }
+    $hours= array();
+    for($i = 0; $i <= 23  ; $i++){
+      $hours[str_pad($i,2,"0",STR_PAD_LEFT)] = $i;
+    }
+    $minutes= array();
+    for($i = 0; $i <= 59  ; $i++){
+      $minutes[str_pad($i,2,"0",STR_PAD_LEFT)] = $i;
+    }
+  
+
     $smarty = get_smarty();
+    $smarty->assign("years",$years);
+    $smarty->assign("month",$month);
+    $smarty->assign("days",$days);
+    $smarty->assign("hours",$hours);
+    $smarty->assign("minutes",$minutes);
+
+    $date_values = array("krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+    foreach($date_values as $date_val){
+      $clear = $date_val."_clear";
+      $smarty->assign($date_val."_clear",$this->$clear);
+      $smarty->assign($date_val."_y",substr($this->$date_val,0,4));
+      $smarty->assign($date_val."_m",substr($this->$date_val,4,2));
+      $smarty->assign($date_val."_d",substr($this->$date_val,6,2));
+      $smarty->assign($date_val."_h",substr($this->$date_val,8,2));
+      $smarty->assign($date_val."_i",substr($this->$date_val,10,2));
+    }
+
     foreach($this->attributes as $attr){
       $smarty->assign($attr ,$this->$attr);
     }
@@ -232,6 +284,24 @@ class passwordMethodheimdal extends passwordMethod
   function save_object()
   {
     if(isset($_POST['pwd_heimdal_posted'])){
+
+      $date_values = array("krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+      foreach($date_values as $date_value){
+        $clear = $date_value."_clear";
+        if(isset($_POST[$date_value."_clear"])){
+          $this->$clear = TRUE;
+        }else{
+          $this->$clear = FALSE;
+          $str = "";
+          foreach(array("y","m","d","h","i") as $val){
+            if(isset($_POST[$date_value."_".$val])){
+              $str .= $_POST[$date_value."_".$val]; 
+            }
+          }
+          $this->$date_value = $str."Z";
+        }
+      }
+
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
           $this->$attr = get_post($attr);
@@ -258,13 +328,13 @@ class passwordMethodheimdal extends passwordMethod
     if(!is_numeric($this->krb5MaxRenew) && !empty($this->krb5MaxRenew)){
       $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max renew"));
     }
-   if(!empty($this->krb5ValidStart) && !$this->chk_times($this->krb5ValidStart)){
+   if(!$this->krb5ValidStart_clear && !$this->chk_times($this->krb5ValidStart)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
    }
-   if(!empty($this->krb5ValidEnd) && !$this->chk_times($this->krb5ValidEnd)){
+   if(!$this->krb5ValidEnd_clear && !$this->chk_times($this->krb5ValidEnd)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
    }
-   if(!empty($this->krb5PasswordEnd) && !$this->chk_times($this->krb5PasswordEnd)){
+   if(!$this->krb5PasswordEnd_clear && !$this->chk_times($this->krb5PasswordEnd)){
      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid password"));
    }
     return($message);
@@ -315,13 +385,13 @@ class passwordMethodheimdal extends passwordMethod
       if(!empty($this->krb5MaxRenew)){
         $data['krb5MaxRenew']   = $this->krb5MaxRenew;
       }
-      if(!empty($this->krb5ValidStart)){
+      if(!$this->krb5ValidStart_clear){
         $data['krb5ValidStart'] = $this->krb5ValidStart;
       }
-      if(!empty($this->krb5ValidEnd)){
+      if(!$this->krb5ValidEnd_clear){
         $data['krb5ValidEnd']   = $this->krb5ValidEnd;
       }
-      if(!empty($this->krb5PasswordEnd)){
+      if(!$this->krb5PasswordEnd_clear){
         $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
       }
 

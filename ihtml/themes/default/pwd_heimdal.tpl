@@ -26,7 +26,29 @@
 						<label for="krb5ValidStart">{t}Valid ticket start time{/t}</label>
 					</td>
 					<td>
-						<input id="krb5ValidStart" type="text" name="krb5ValidStart" value="{$krb5ValidStart}">
+						<input type="checkbox" name="krb5ValidStart_clear" 
+							onClick="	changeState('krb5ValidStart_y');
+									  	changeState('krb5ValidStart_m');
+									  	changeState('krb5ValidStart_d');
+									  	changeState('krb5ValidStart_h');
+									  	changeState('krb5ValidStart_i');"
+							{if $krb5ValidStart_clear} checked {/if}
+						>
+						<select name="krb5ValidStart_y" id="krb5ValidStart_y" {if $krb5ValidStart_clear} disabled {/if}> 
+							{html_options options=$years selected=$krb5ValidStart_y}
+						</select>
+						<select name="krb5ValidStart_m" id="krb5ValidStart_m" {if $krb5ValidStart_clear} disabled {/if}>
+							{html_options options=$month selected=$krb5ValidStart_m}
+						</select>
+						<select name="krb5ValidStart_d" id="krb5ValidStart_d" {if $krb5ValidStart_clear} disabled {/if}>
+							{html_options options=$days selected=$krb5ValidStart_d}
+						</select>
+						<select name="krb5ValidStart_h" id="krb5ValidStart_h" {if $krb5ValidStart_clear} disabled {/if}>
+							{html_options options=$hours selected=$krb5ValidStart_h}
+						</select>
+						<select name="krb5ValidStart_i" id="krb5ValidStart_i" {if $krb5ValidStart_clear} disabled {/if}>
+							{html_options options=$minutes selected=$krb5ValidStart_i}
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -34,7 +56,29 @@
 						<label for="krb5ValidEnd">{t}Valid ticket end time{/t}</label>
 					</td>
 					<td>
-						<input id="krb5ValidEnd" type="text" name="krb5ValidEnd" value="{$krb5ValidEnd}">
+						<input type="checkbox" name="krb5ValidEnd_clear" 
+							onClick="	changeState('krb5ValidEnd_y');
+									  	changeState('krb5ValidEnd_m');
+									  	changeState('krb5ValidEnd_d');
+									  	changeState('krb5ValidEnd_h');
+									  	changeState('krb5ValidEnd_i');"
+							{if $krb5ValidEnd_clear} checked {/if}
+						>
+						<select name="krb5ValidEnd_y" id="krb5ValidEnd_y" {if $krb5ValidEnd_clear} disabled {/if}>
+							{html_options options=$years selected=$krb5ValidEnd_y}
+						</select>
+						<select name="krb5ValidEnd_m" id="krb5ValidEnd_m" {if $krb5ValidEnd_clear} disabled {/if}>
+							{html_options options=$month selected=$krb5ValidEnd_m}
+						</select>
+						<select name="krb5ValidEnd_d" id="krb5ValidEnd_d" {if $krb5ValidEnd_clear} disabled {/if}>
+							{html_options options=$days selected=$krb5ValidEnd_d}
+						</select>
+						<select name="krb5ValidEnd_h" id="krb5ValidEnd_h" {if $krb5ValidEnd_clear} disabled {/if}>
+							{html_options options=$hours selected=$krb5ValidEnd_h}
+						</select>
+						<select name="krb5ValidEnd_i" id="krb5ValidEnd_i" {if $krb5ValidEnd_clear} disabled {/if}>
+							{html_options options=$minutes selected=$krb5ValidEnd_i}
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -42,7 +86,30 @@
 						<label for="krb5PasswordEnd">{t}Password end{/t}</label>
 					</td>
 					<td>
-						<input id="krb5PasswordEnd" type="text" name="krb5PasswordEnd" value="{$krb5PasswordEnd}">
+						<input type="checkbox" name="krb5PasswordEnd_clear" 
+							onClick="	changeState('krb5PasswordEnd_y');
+									  	changeState('krb5PasswordEnd_m');
+									  	changeState('krb5PasswordEnd_d');
+									  	changeState('krb5PasswordEnd_h');
+									  	changeState('krb5PasswordEnd_i');"
+							{if $krb5PasswordEnd_clear} checked {/if}
+						>
+						<select name="krb5PasswordEnd_y" id="krb5PasswordEnd_y" {if $krb5PasswordEnd_clear} disabled {/if}>
+							{html_options options=$years selected=$krb5PasswordEnd_y}
+						</select>
+						<select name="krb5PasswordEnd_m" id="krb5PasswordEnd_m" {if $krb5PasswordEnd_clear} disabled {/if}>
+							{html_options options=$month selected=$krb5PasswordEnd_m}
+						</select>
+						<select name="krb5PasswordEnd_d" id="krb5PasswordEnd_d" {if $krb5PasswordEnd_clear} disabled {/if}>
+							{html_options options=$days selected=$krb5PasswordEnd_d}
+						</select>
+						<select name="krb5PasswordEnd_h" id="krb5PasswordEnd_h" {if $krb5PasswordEnd_clear} disabled {/if}>
+							{html_options options=$hours selected=$krb5PasswordEnd_h}
+						</select>
+						<select name="krb5PasswordEnd_i" id="krb5PasswordEnd_i" {if $krb5PasswordEnd_clear} disabled {/if}>
+							{html_options options=$minutes selected=$krb5PasswordEnd_i}
+						</select>
+
 					</td>
 				</tr>
 			</table>
