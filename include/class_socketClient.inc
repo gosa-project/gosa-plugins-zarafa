@@ -12,60 +12,64 @@ class Socket_Client
 	private $bytes_read = 0;
 	private $error = "";
 
-	private $encrypt 	= FALSE;
-	private $crypt_key 	= "";
-
+	/* Crypto information */
+	private $td= NULL;
+	private $ckey= "";
+	private $ks;
 	private $iv;
 
-	public function __construct($host, $port, $connect = TRUE,$timeout = 3){
-		$this->host 	= $host;
-		$this->port 	= $port;
-		$this->timeout 	= $timeout;
+
+	public function __construct($host, $port, $connect = TRUE, $timeout = 3){
+		$this->host= $host;
+		$this->port= $port;
+		$this->timeout= $timeout;
+
+		/* Connect if needed */
 		if($connect){
-			$this->connect();
+			$this->open();
 		}
 	}
 
-	public function SetEncryptionKey($data)
+
+	public function setEncryptionKey($key)
 	{
 		if(!function_exists("mcrypt_get_iv_size")){
-			$this->error = _("The mcrypt module was not found. Please install php5-mcrypt.") ;	
-			return(FALSE);
-		}else{
-			$this->encrypt 	= TRUE;
-			$this->iv_size  = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
-			$this->crypt_key= str_pad($data, $this->iv_size, $data);
-			echo "Setting key to $this->crypt_key\n";
-			$this->iv = mcrypt_create_iv($this->iv_size, MCRYPT_RAND);
-			return(TRUE);
+			$this->error = _("The mcrypt module was not found. Please install php5-mcrypt.");
+			$this->ckey = "";
+			return FALSE ;
 		}
+
+		if ($this->connected()){
+			$this->ckey = substr(md5($key), 0, $this->ks);
+			echo "Key: $this->ckey\n";
+			mcrypt_generic_init($this->td, $this->ckey, $this->iv);
+			return TRUE;
+		}
+
+		return FALSE;
 	}
+
 
 	private function encrypt($data)
 	{
-		/* Encrypt data */
-		if($this->encrypt){
-			$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, $data, MCRYPT_MODE_CBC, $this->iv); 
-		}
-		echo "EEEE>>>>>>>>>>>>>>>>>>>>>>>>> ".strlen($data)."\n";
-		return($data);
+		return mcrypt_generic($this->td, $data);
 	}
+
 
 	private function decrypt($data)
 	{
-		echo "DDDD>>>>>>>>>>>>>>>>>>>>>>>>> ".strlen($data)."\n";
 		/* decrypt data */
-		$data = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $this->crypt_key, rtrim($data), MCRYPT_MODE_CBC, $this->iv);
-		$data = ltrim($data,"0");
-		return($data);
+		return mdecrypt_generic($this->td, $data);
 	}
+
 
 	public function connected()
 	{
-		return($this->handle == TRUE);
+		return ($this->handle == TRUE);
 	}
 
-	public function connect()
+
+	public function open()
 	{
 		$this->handle = @fsockopen($this->host, $this->port, $this->errno, $this->errstr, $this->timeout);
 		if(!$this->handle){
@@ -73,40 +77,37 @@ class Socket_Client
 			$this->error = $this->errstr;
 		}else{
 			$this->b_data_send = TRUE;
+
+			/* Open the cipher */
+			$this->td = mcrypt_module_open('rijndael-256', '', 'cbc', '');
+
+			/* Create the IV and determine the keysize length */
+			$this->iv = substr(md5('GONICUS GmbH'),0, mcrypt_enc_get_iv_size($this->td));
+			$this->ks = mcrypt_enc_get_key_size($this->td);
 		}
 	}
+
 
 	public function get_error()
 	{
-		return($this->error);	
+		return $this->error;
 	}
+
 
 	public function write($data){
-		return($this->send($data));
-	}
-
-	public function send($data)
-	{
-		$data= str_repeat("0", 16 - strlen($data)%16).$data;
 		if($this->handle){
 			$data = $this->encrypt($data);
-			$data = trim($data);
 			fputs($this->handle, $data."\n");
 			$this->b_data_send = TRUE;
-			return(TRUE);
 		}else{
-			return(FALSE);
+			$this->b_data_send = FALSE;
 		}
+
+		return $this->b_data_send;
 	}
 
-	public function close()
-	{
-		if($this->handle){
-			fclose($this->handle);
-		}
-	}
-	
-	private function _read()
+
+	public function read()
 	{
 		$str = FALSE;
 		if($this->handle){
@@ -126,18 +127,26 @@ class Socket_Client
 			$this->b_data_send = FALSE;
 			$str = $this->decrypt($str);
 		}
-		return($str);
+		return $str;
 	}
 
-	public function read()
-	{
-		return($this->_read());
-	}
 
 	public function bytes_read()
 	{
-		return($this->bytes_read);
+		return $this->bytes_read;
 	}
+
+
+	public function close()
+	{
+		if($this->handle){
+			fclose($this->handle);
+		}
+
+		/* Terminate decryption handle and close module */
+		mcrypt_generic_deinit($this->td);
+	}
+
 }
 
 

@@ -32,9 +32,22 @@ socket_listen($socket,$max_clients);
 
 $clients = array('0' => array('socket' => $socket));
 
-echo "\nServer startet on port : ".$bind_port."
-You may use telnet to connect to the server
-";
+echo "\nServer startet on port : $bind_port\n";
+
+
+/* Open the cipher */
+$td = mcrypt_module_open('rijndael-256', '', 'cbc', '');
+
+/* Create the IV and determine the keysize length */
+$iv = substr(md5('GONICUS GmbH'),0, mcrypt_enc_get_iv_size($td));
+$ks = mcrypt_enc_get_key_size($td);
+
+/* Create key */
+$key = substr(md5('ferdinand_frost'), 0, $ks);
+echo "Key: $key\n";
+
+/* Intialize encryption */
+mcrypt_generic_init($td, $key, $iv);
 
 /* Accept connections till server is killed */
 while(TRUE) {
@@ -47,14 +60,9 @@ while(TRUE) {
 		}
 	}
 
-	/* Check each socket listed in array $read for readable data.
-     * We must do this to prevent the server from freezing if the socket is blocked.
-	 * All sockets that are readable will remain in the array, all blocked sockets will be removed.  
-     */
 	$ready = socket_select($read,$write=NULL,$except=NULL,0);
 
-    /* Handle incoming connections / Incoming data
-     */
+	/* Handle incoming connections / Incoming data */
 	if(in_array($socket,$read)) {
 
 		/* Check each client slot for a new connection */
@@ -65,11 +73,6 @@ while(TRUE) {
 				$clients[$i]['socket'] = socket_accept($socket);
 				socket_getpeername($clients[$i]['socket'],$ip);
 				$clients[$i]['ipaddy'] = $ip;
-
-				socket_write($clients[$i]['socket'],encrypt(
-"Welcome to GOsa Test Server 
-============================
-Type some text here:",$encrypt_key));
 
 				echo("New client connected: " . $clients[$i]['ipaddy'] . " \n");
 				break;
@@ -83,12 +86,10 @@ Type some text here:",$encrypt_key));
 		}
 	}
 
-	/* Check if there is data to read from the client sockets 
-     */
+	/* Check if there is data to read from the client sockets */
 	for($i=1;$i<$max_clients+1;$i++) {
 
-		/* Check if socket has send data to the server 
-         */
+		/* Check if socket has send data to the server */
 		if(isset($clients[$i]) && in_array($clients[$i]['socket'],$read)) {
 
 			/* Read socket data */
@@ -97,60 +98,19 @@ Type some text here:",$encrypt_key));
 			/* Client disconnected */
 			if ($data === FALSE) {
 				unset($clients[$i]);
-				echo "Client disconnected! \n";
+				echo "Client disconnected!\n";
 				continue;
 			}
 
-			$data = trim(decrypt($data,$encrypt_key));
-			echo "Client (".$clients[$i]['ipaddy'].") send : ".substr($data,0,30)."... \n";
-	
-			if($data == "exit"){
-				/* Close conenction */
-				socket_write($clients[$i]['socket'],encrypt("Bye Bye!",$encrypt_key));
-				@socket_close($clients[$i]);
-				echo "Client disconnected! bye bye!".$clients[$i]['ipaddy']."\n";
-			}else{
-				/* Send some data back to the client */
-				$data = encrypt(strrev($data),$encrypt_key);
-				socket_write($clients[$i]['socket'],$data);
-			}
+			$data = mdecrypt_generic($td, trim($data));
+			echo "Client (".$clients[$i]['ipaddy'].") sent: ".$data."... \n";
+
+			echo "Sending reply... \n";
+			socket_write($clients[$i]['socket'],mcrypt_generic($td, $data));
+
+			@socket_close($clients[$i]);
 		}
 	}
 }
-
-
-
-function encrypt($data,$key)
-{
-	global $enable_encryption;
-
-	$data= str_repeat("0", 16 - strlen($data)%16).$data;
-	echo "1EEE>>>>>>>>>>>>>>>>>".strlen($data)."\n";
-
-	/* Encrypt data */
-	if($enable_encryption){
-		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
-		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		echo "Size: $iv_size\n";
-		$data = mcrypt_encrypt (MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv);
-	}
-	echo "2EEE>>>>>>>>>>>>>>>>>".strlen($data)."\n";
-	return($data);
-}
-
-function decrypt($data,$key)
-{
-	global $enable_encryption;
-
-	/* Decrypt data */
-	if($enable_encryption){
-		$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
-		$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-		$data = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_CBC, $iv);
-		$data = ltrim($data,"0");
-	}
-	return($data);
-}
-
 
 ?> 
