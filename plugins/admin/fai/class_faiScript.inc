@@ -600,6 +600,40 @@ class faiScript extends plugin
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }
   }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
+     */
+    $ldap     = $this->config->get_ldap_link();
+    $ldap->cd ($source['dn']);
+
+    $attrs_to_search = $this->subAttributes;
+    $attrs_to_search[] = "FAIstate";
+    $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
+
+    while($object = $ldap->fetch()){
+
+      /* Skip objects, that are tagged as removed */
+      if(isset($object['FAIstate'][0])){
+        if(preg_match("/removed$/",$object['FAIstate'][0])){
+          continue;
+        }
+      }
+
+      /* Set status for save management */
+      $objects = array();
+      $objects['status']      = "edited";
+      $objects['dn']          = $object['dn'];
+      $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+      $objects                = $this->get_object_attributes($objects,$this->sub_Load_Later);
+  
+      $this->SubObjects[$objects['cn']] = $objects;
+    }
+  }
   
 
   /* Return plugin informations for acl handling */ 

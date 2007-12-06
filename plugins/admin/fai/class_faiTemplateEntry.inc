@@ -208,9 +208,10 @@ class faiTemplateEntry extends plugin
       $message[] = _("Please enter a file name.");
     }
 
-    if(preg_match('/\//', $this->cn)){
-      $message[] = _("The file name should not contain / characters.");
-    }
+#    echo $this->cn;
+#    if(preg_match('/\//', $this->cn)){
+#      $message[] = _("The file name should not contain / characters.");
+# #   }
 
     if(empty($this->user)){
       $message[] = _("Please enter a user.");
