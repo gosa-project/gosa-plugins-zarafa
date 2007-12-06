@@ -404,11 +404,18 @@ class faiProfile extends plugin
     }
 
     $ldap = $this->config->get_ldap_link();
-    $ldap->cd($_SESSION['CurrentMainBase']);
+
+    $base = $_SESSION['faifilter']['branch'];
+    if($base == "main"){
+      $base =$_SESSION['CurrentMainBase'];
+    }
+    $base = "ou=profiles,".$base;
+  
+    $ldap->cd($base);
     if ($this->old_cn == ""){
-      $ldap->search("(&(objectClass=FAIprofile)(cn=".$this->cn."))",array("*"));
+      $ldap->ls("(&(objectClass=FAIprofile)(cn=".$this->cn."))",$base,array("*"));
     } else {
-      $ldap->search("(&(objectClass=FAIprofile)(cn=".$this->cn.")(!cn=".$this->old_cn."))",array("*"));
+      $ldap->ls("(&(objectClass=FAIprofile)(cn=".$this->cn.")(!cn=".$this->old_cn."))",$base,array("*"));
     }
 
     if($ldap->count() || isset($this->FAIAllclasses[$this->cn])){
@@ -446,6 +453,28 @@ class faiProfile extends plugin
     /* Do object tagging */
     $this->handle_object_tagging();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Parse ldap attribute to get all assigned classes */
+    $tmp = split(" ",$this->FAIclass);
+    $tmp2 = array();
+    foreach($tmp as $class){
+      if(!empty($class)){
+        $tmp2[trim($class)] = trim($class);
+      }
+    }
+
+    /* Sort assigned classes */
+    if(is_array($tmp2)){
+      foreach($tmp2 as $class){
+        $this->FAIclasses[$class]=$class;
+      }
+    }
   }
 
 
