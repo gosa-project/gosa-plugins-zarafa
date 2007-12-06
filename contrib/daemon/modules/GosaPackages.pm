@@ -8,6 +8,7 @@ use Exporter;
 
 use strict;
 use warnings;
+use Crypt::CBC;
 
 
 BEGIN{
@@ -23,7 +24,7 @@ END{}
 
 # create general settings for this module
 my $gosa_cipher = &main::create_ciphering($main::gosa_passwd);
-
+#$gosa_cipher->set_iv("hallo");
 
 sub get_module_tags {
     
@@ -66,8 +67,8 @@ sub process_incoming_msg {
     my $msg_hash;
     eval{
         $msg = &main::decrypt_msg($crypted_msg, $gosa_cipher);
-
         &main::daemon_log("GosaPackages: decrypted_msg: $msg", 7);
+
         $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
     };
     if($@) {

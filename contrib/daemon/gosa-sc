@@ -27,7 +27,8 @@ use Time::HiRes qw( gettimeofday );
 
 use Fcntl;
 use IO::Socket::INET;
-use Crypt::Rijndael;
+use Crypt::CBC;
+use Digest::MD5  qw(md5 md5_hex md5_base64);
 use XML::Simple;
 use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
@@ -506,13 +507,9 @@ sub get_content_from_xml_hash {
 sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
-    $msg =~ s/[\n]+//g;
-    my $msg_length = length($msg);
-    my $multiplier = int($msg_length / 16) + 1;
-    my $extension = 16*$multiplier - $msg_length;
-    $msg = "0"x$extension.$msg;
+
     my $crypted_msg = $my_cipher->encrypt($msg);
-    #my $crypted_msg = $msg;
+
     return $crypted_msg;
 }
 
@@ -524,9 +521,8 @@ sub encrypt_msg {
 #  DESCRIPTION:
 #===============================================================================
 sub decrypt_msg {
-    my ($crypted_msg, $my_cipher) =@_;
-    my $msg = $my_cipher->decrypt($crypted_msg);
-    $msg =~ s/^0*$//g;
+    my ($crypted_msg, $my_cipher) = @_ ;
+    my $msg = $my_cipher->decrypt($crypted_msg); 
     return $msg;
 }
 
@@ -540,8 +536,15 @@ sub decrypt_msg {
 sub create_ciphering {
     my ($passwd) = @_;
     $passwd = substr("$passwd" x 32, 0, 32);
+    daemon_log("create_ciphering: new passwd: $passwd", 7);
 
-    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC );
+    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+
+    my $my_cipher = Crypt::CBC->new(-key=>$passwd ,
+                                    -cipher => 'Rijndael',
+                                    -iv => $iv,
+                                    -header => "none",
+                                    );
     return $my_cipher;
 }
 
