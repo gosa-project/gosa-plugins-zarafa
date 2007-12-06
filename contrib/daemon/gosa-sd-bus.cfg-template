@@ -1,14 +1,13 @@
 [general]
 log_file = /var/log/gosa-sd-bus.log
 pid_file = /var/run/gosa-sd-bus.pid
+child_max = 10
+child_min = 2
+child_timeout = 10
 
 [bus]
 bus_activ = on
 bus_passwd = hallali
 bus_ip = 10.89.1.155
 bus_port = 10000
-child_max = 10
-child_min = 2
-child_timeout = 10
-
 

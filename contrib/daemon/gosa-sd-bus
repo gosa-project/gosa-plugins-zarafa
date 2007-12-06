@@ -52,16 +52,15 @@ $shmkh = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
 ("general" =>
     {"log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+    "child_max" => [\$child_max, 10],
+    "child_min" => [\$child_min, 3],
+    "child_timeout" => [\$child_timeout, 180],
 
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
     "bus_passwd" => [\$bus_passwd, "tester"],
-#    "bus_ip" => [\$bus_ip, "10.89.1.155"],
     "bus_port" => [\$bus_port, "10001"],
-    "child_max" => [\$child_max, 10],
-    "child_min" => [\$child_min, 3],
-    "child_timeout" => [\$child_timeout, 180],
     }
     );
 
