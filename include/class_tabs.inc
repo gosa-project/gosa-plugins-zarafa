@@ -62,34 +62,6 @@ class tabs
     }
   }
 
-  
-  function multiple_support_available()
-  {
-    foreach($this->by_object as $name => $obj){
-      if($obj->multiple_support){
-        return(TRUE);
-      }
-    }
-    return(FALSE);
-  }  
-
-  function enable_multiple_support()
-  {
-    if(!$this->multiple_support_available()){
-      return(FALSE);
-    }else{
-      foreach($this->by_object as $name => $obj){
-        if($obj->multiple_support){
-          $this->by_object[$name]->multiple_support_active = TRUE;
-        }else{
-          unset($this->by_object[$name]);
-          unset($this->by_name[$name]);
-        }
-      }
-    }
-    return(TRUE);
-  }
-
 
   function execute()
   {
@@ -362,6 +334,42 @@ class tabs
         $obj->set_acl_base($base);
       }
     }
+  }
+
+ 
+  /*!   \brief    Checks if one of the used tab plugins supports multiple edit.
+        @param    boolean Returns TRUE if at least one plugins supports multiple edit. 
+  */
+  function multiple_support_available()
+  {
+    foreach($this->by_object as $name => $obj){
+      if($obj->multiple_support){
+        return(TRUE);
+      }
+    }
+    return(FALSE);
+  }  
+
+
+  /*!   \brief    Enables multiple edit support for the given tab.
+                  All unsupported plugins will be disabled.
+        @param    boolean Returns TRUE if at least one plugin supports multiple edit 
+  */
+  function enable_multiple_support()
+  {
+    if(!$this->multiple_support_available()){
+      return(FALSE);
+    }else{
+      foreach($this->by_object as $name => $obj){
+        if($obj->multiple_support){
+          $this->by_object[$name]->multiple_support_active = TRUE;
+        }else{
+          unset($this->by_object[$name]);
+          unset($this->by_name[$name]);
+        }
+      }
+    }
+    return(TRUE);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -280,7 +280,8 @@ class plugin
   }
 
 
-  /* Save data to object */
+  /*! \brief   Save HTML posted data to object 
+   */
   function save_object()
   {
     /* Update entry CSN if it is empty. */
@@ -288,6 +289,10 @@ class plugin
       $this->entryCSN = getEntryCSN($this->dn);
     }
 
+    /* MULTIPLE_EDIT 
+       Ensures that only selected values will be used.
+       Should be rewritten. 
+     */
     if($this->multiple_support_active){
       foreach($this->attributes as $attr){
         if(isset($_POST["use_".$attr])){
