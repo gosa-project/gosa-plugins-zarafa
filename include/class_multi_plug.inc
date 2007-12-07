@@ -126,6 +126,12 @@ class multi_plug
    */
   public function entries_locked()
   {
+    $ui = get_userinfo();
+    foreach($this->dn as $dn){
+      if(get_lock($dn) != ""){
+        return(TRUE);
+      }
+    }
     return(FALSE);
   }
 
@@ -135,7 +141,10 @@ class multi_plug
    */
   public function display_lock_message()
   {
-    return("sdf");
+    $ui = get_userinfo();
+    $lock_msg = "";
+    $lock_msg.=  gen_locked_message ($ui->dn, $this->dn);
+    return($lock_msg);
   }
 
 
@@ -170,7 +179,7 @@ class multi_plug
    */
   public function get_object_info()
   {
-    return("Oi -----");
+    return(_("You are currently editing mutliple entries."));
   }
 
 
@@ -234,7 +243,7 @@ class multi_plug
     if($this->multiple_available() && is_array($this->a_handles)){
       $this->populate_values();
       foreach($this->a_handles as $i_id => $o_handle){
-        $o_handle->save(TRUE);
+        $o_handle->save();
       }
     }
   }
