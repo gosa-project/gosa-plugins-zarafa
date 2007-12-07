@@ -33,7 +33,7 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
-  var $multiple_support = FALSE;
+  var $multiple_support_active = FALSE;
 
   function tabs(&$config, $data, $dn, $acl_category= "")
   {
@@ -94,10 +94,10 @@ class tabs
 
     /* If multiple edit is enabled for this tab, 
        we have tho display different templates */
-    if(!$this->multiple_support){
+    if(!$this->multiple_support_active){
       $display.= $this->by_object[$this->current]->execute();
     }else{
-      $display.= $this->by_object[$this->current]->execute_multiple();
+      $display.= $this->by_object[$this->current]->multiple_execute();
     }
 
     /* Footer for tabbed dialog */
@@ -113,7 +113,11 @@ class tabs
       @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
           $this->last, "Saving");
 
-      $this->by_object[$this->last]->save_object ();
+      if(!$this->multiple_support_active){
+        $this->by_object[$this->last]->save_object ();
+      }else{
+        $this->by_object[$this->last]->multiple_save_object();
+      }
     }
 
     /* Skip if curent and last are the same object */
@@ -128,7 +132,11 @@ class tabs
       @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
           $this->current, "Saving (current)");
 
-      $obj->save_object ();
+      if(!$this->multiple_support_active){
+        $obj->save_object();
+      }else{
+        $obj->multiple_save_object();
+      }
     }
   }
 
@@ -233,7 +241,11 @@ class tabs
       if ($obj->is_account || $ignore_account || $obj->ignore_account){
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$key, "Checking");
 
-        $msg = $obj->check();
+        if(!$this->multiple_support_active){
+          $msg = $obj->check();
+        }else{
+          $msg = $obj->multiple_check();
+        }
 
         if (count($msg)){
           $obj->pl_notify= TRUE;
@@ -368,10 +380,11 @@ class tabs
     if(!$this->multiple_support_available()){
       return(FALSE);
     }else{
-      $this->multiple_support = TRUE;
+      $this->multiple_support_active = TRUE;
       foreach($this->by_object as $name => $obj){
         if($obj->multiple_support){
           $this->by_object[$name]->multiple_support_active = TRUE;
+          $this->by_object[$name]->init_multiple_support();
         }else{
           unset($this->by_object[$name]);
           unset($this->by_name[$name]);

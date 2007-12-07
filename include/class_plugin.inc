@@ -233,23 +233,6 @@ class plugin
 
     Generates the html output for this node
    */
-  function execute_multiple()
-  {
-    /* This one is empty currently. Fabian - please fill in the docu code */
-    $_SESSION['current_class_for_help'] = get_class($this);
-
-    /* Reset Lock message POST/GET check array, to prevent perg_match errors*/
-    $_SESSION['LOCK_VARS_TO_USE'] = $_SESSION['LOCK_VARS_USED'] =array();
-    
-    return("Multiple edit is currently not implemented for this plugin.");
-  }
-
-
-
-  /*! \brief execute plugin
-
-    Generates the html output for this node
-   */
   function execute()
   {
     /* This one is empty currently. Fabian - please fill in the docu code */
@@ -305,20 +288,6 @@ class plugin
     /* Update entry CSN if it is empty. */
     if(empty($this->entryCSN) && $this->CSN_check_active){
       $this->entryCSN = getEntryCSN($this->dn);
-    }
-
-    /* MULTIPLE_EDIT 
-       Ensures that only selected values will be used.
-       Should be rewritten. 
-     */
-    if($this->multiple_support_active){
-      foreach($this->attributes as $attr){
-        if(isset($_POST["use_".$attr])){
-          $this->selected_edit_values[$attr] = TRUE;
-        }else{
-          $this->selected_edit_values[$attr] = FALSE;
-        }
-      }
     }
 
     /* Save values to object */
@@ -1707,17 +1676,6 @@ class plugin
   }
 
   
-  function get_multi_edit_values()
-  {
-    $ret = array();
-    foreach($this->selected_edit_values as $attr => $active){
-      if($active){
-        $ret[$attr] = $this->$attr;
-      }
-    }
-    return($ret);
-  }
-
 
   /* This function enables the entry Serial ID check.
    * If an entry was edited while we have edited the entry too,
@@ -1731,11 +1689,99 @@ class plugin
   }
 
 
+  
+
   function set_multi_edit_value()
   {
 
   }
 
+
+  /*! \brief  Prepares the plugin to be used for multiple edit
+   */
+  function init_multiple_support()
+  {
+    foreach($this->attributes as $attr){
+      if(isset($this->$attr) && is_string($this->$attr)){
+        $this->$attr = "{default}";
+      }
+    }
+  }
+
+
+  /*! \brief  Returns all values that have been modfied in multiple edit mode.
+      @return array Cotaining all mdofied values. 
+   */
+  function get_multi_edit_values()
+  {
+    $ret = array();
+    foreach($this->attributes as $attr){
+      if($this->$attr != "{default}"){
+        $ret[$attr] = $this->$attr;
+      }
+    }
+    return($ret);
+  }
+
+
+  /*! \brief execute plugin
+
+    Generates the html output for this node
+   */
+  function multiple_execute()
+  {
+    /* This one is empty currently. Fabian - please fill in the docu code */
+    $_SESSION['current_class_for_help'] = get_class($this);
+
+    /* Reset Lock message POST/GET check array, to prevent perg_match errors*/
+    $_SESSION['LOCK_VARS_TO_USE'] = $_SESSION['LOCK_VARS_USED'] =array();
+    
+    return("Multiple edit is currently not implemented for this plugin.");
+  }
+
+
+  /*! \brief   Save HTML posted data to object for multiple edit
+   */
+  function multiple_save_object()
+  {
+    if(empty($this->entryCSN) && $this->CSN_check_active){
+      $this->entryCSN = getEntryCSN($this->dn);
+    }
+
+    /* Save values to object */
+    foreach ($this->attributes as $val){
+      if ($this->acl_is_writeable($val) && isset ($_POST["$val"])){
+
+        /* Check for modifications */
+        if (get_magic_quotes_gpc()) {
+          $data= stripcslashes($_POST["$val"]);
+        } else {
+          $data= $this->$val = $_POST["$val"];
+        }
+        if ($this->$val != $data && $data != "{default}"){
+          $this->is_modified= TRUE;
+        }
+    
+        /* IE post fix */
+        if(isset($data[0]) && $data[0] == chr(194)) {
+          $data = "";  
+        }
+        if($data != "{default}"){
+          $this->$val= $data;
+        }
+      }
+    }
+  }
+
+
+  /*! \brief  Check given values in multiple edit
+      @return array Error messages
+   */
+  function multiple_check()
+  {
+    $message = plugin::check();
+    return($message);
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

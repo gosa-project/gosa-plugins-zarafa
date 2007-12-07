@@ -331,7 +331,6 @@ class userManagement extends plugin
       $_SESSION['objectinfo']= $this->dn;
     }
 
- 
 
     /********************
       Edit multiple entries
@@ -344,7 +343,8 @@ class userManagement extends plugin
       foreach($this->list_get_selected_items() as $id){
         $this->dn[] = $this->list[$id]['dn'];;
       }
-      $tmp = new multi_plug($this->config,"usertabs",$this->config->data['TABS']['USERTABS'],$this->dn);
+      $tmp = new multi_plug($this->config,"usertabs",$this->config->data['TABS']['USERTABS'],
+            $this->dn,$this->DivListUsers->selectedBase,"user");
       if ($tmp->entries_locked()){
         return($tmp->display_lock_message());
       }

@@ -4,6 +4,15 @@
  <tr>
   <td colspan="4">
    <h2><img alt="" align="middle" src="images/head.png" class="center"> {t}Personal information{/t}</h2>
+
+{if $multiple_support}
+	<p>
+		<b>You are currently editing multiple entries at once. Some attributes may be disabled.<br>
+			All touched values will be written.
+		</b>
+	</p>
+{/if}
+
   </td>
  </tr>
 
@@ -63,7 +72,15 @@
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
-     <td>{render acl=$uidACL}<input id="uid" name="uid" size=25 maxlength=60  value="{$uid}">{/render}</td>
+     <td>
+		{if !$multiple_support}
+		{render acl=$uidACL}
+			<input id="uid" name="uid" size=25 maxlength=60  value="{$uid}">
+		{/render}
+		{else}
+			<input id="uid" name="dummy1" size=25 maxlength=60  value="{t}Multiple edit{/t}" disabled>
+		{/if}
+	 </td>
     </tr>
     {/if}
       

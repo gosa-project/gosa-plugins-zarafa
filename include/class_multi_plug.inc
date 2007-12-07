@@ -20,8 +20,8 @@
 
 /*
 
-Data structure :  
-  
+Data structure : 
+================ 
   |->o_tab                      <-- dummy object, collects HTML posts, displays ui 
   |->a_handles                  <-- tab object for each given dn
      |->tab object for dn 1 
@@ -29,6 +29,26 @@ Data structure :
       ...
      |->tab object for dn n
 
+Using this class: 
+=================
+  Simple Example:
+
+    $dn   = array(dn1,dn2,dn3);
+    $tmp  = new multi_plug($config,"usertabs",$config->data['TABS']['USERTABS'],$dn);
+    echo $tmp->execute();
+
+  $tmp can now be used like the normal tab class, execute, save_object ...
+  
+  To enable multipe edit for a specific plugin, 
+  just set the plugin variable 'multiple_support' to true:
+
+    var $multiple_support = TRUE;
+
+  If plugin::multiple_support is true, the member function 
+  multiple_execute() will be called and displayed, NOT execute().
+
+  (I will put this in the wiki, later. This are just notes for me.)
+  
 */
 
 
@@ -62,7 +82,7 @@ class multi_plug
      @param   array   $dns    The object dns we want to edit.
      @return  object  multi_plug
    */
-  public function __construct($config,$class,$tab,$dns)
+  public function __construct($config,$class,$tab,$dns,$acl_base,$acl_category)
   {
     $this->dn       = $dns;
     $this->config   = $config;
@@ -71,7 +91,8 @@ class multi_plug
     /* Initialize collector object 
      * Used to display the ui and to collect the user input.
      */
-    $this->o_tab    = new $class($config,$tab,"new");
+    $this->o_tab    = new $class($config,$tab,"new",$acl_category);
+    $this->o_tab->set_acl_base($acl_base);
 
     /* Check if the specified tab object supports multiple edits 
      */
@@ -84,7 +105,9 @@ class multi_plug
       /* Initialize the objects we want to edit at once 
        */
       foreach($dns as $dn){
-        $this->a_handles[] = new $class($config,$tab,$dn);
+        $obj = new $class($config,$tab,$dn,$acl_category);
+        $obj->set_acl_base($acl_base);
+        $this->a_handles[] = $obj;
       }
     }
   }
@@ -166,12 +189,6 @@ class multi_plug
   {
     $this->populate_values();
     $messages = $this->o_tab->check();
-    foreach($this->a_handles as $key => $obj){
-      $msgs = $obj->check();
-      foreach($msgs as $msg){
-        $messages[] = $msg;
-      }
-    }
     return($messages);
   }
 
@@ -181,6 +198,12 @@ class multi_plug
    */
   public function password_change_needed()
   {
+    foreach($this->a_handles as $i_id => $o_handle){
+      if($o_handle->password_change_needed() && isset($o_handle->by_object['user'])){
+        new msg_dialog(_("Password reset"),_("The user password was resetted, please set a new password value!"),WARNING_DIALOG);
+        change_password ($o_handle->dn, "",0, $o_handle->by_object['user']->pw_storage);
+      }
+    }
     return(FALSE);
   }
 
@@ -192,10 +215,12 @@ class multi_plug
 
     if($this->multiple_available() && is_array($this->a_handles)){
       foreach($this->o_tab->by_object as $name => $obj){
+
         $values = $this->o_tab->by_object[$name]->get_multi_edit_values();
         foreach($values as $a_name => $a_value){
           foreach($this->a_handles as $i_id => $o_handle){
-            $o_handle->by_object[$name]->$a_name = $a_value;
+            $this->a_handles[$i_id]->by_object[$name]->$a_name = $a_value;
+            echo $name."->".$a_name." = ".$a_value."<br>";
           }
         }
       }
@@ -210,7 +235,7 @@ class multi_plug
     if($this->multiple_available() && is_array($this->a_handles)){
       $this->populate_values();
       foreach($this->a_handles as $i_id => $o_handle){
-        $o_handle->save();
+        $o_handle->save(TRUE);
       }
     }
   }

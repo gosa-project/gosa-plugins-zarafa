@@ -557,6 +557,7 @@ class user extends plugin
     $temp= passwordMethod::get_available_methods();
     $is_configurable= FALSE;
     $hashes = $temp['name'];
+    $hashes["{default}"] = "{default}";
     if(isset($temp[$this->pw_storage])){
       $test= new $temp[$this->pw_storage]($this->config);
       $is_configurable= $test->is_configurable();
@@ -627,6 +628,7 @@ class user extends plugin
     } else {
       $smarty->assign("has_phoneaccount", "false");
     }
+    $smarty->assign("multiple_support" , $this->multiple_support_active);
     return($smarty->fetch (get_template_path('generic.tpl', TRUE, dirname(__FILE__))));
   }
 
@@ -686,9 +688,6 @@ class user extends plugin
   /* Save data to object */
   function save_object()
   {
-    if (isset($_POST['multiple_user_posted'])){
-      $this->save_object_multiple();
-    }
     if(isset($_POST['generic']) || isset($_POST['multiple_user_posted'])){
 
       /* Make a backup of the current selected base */
@@ -773,7 +772,7 @@ class user extends plugin
      */
     if($this->gender=="0") $this->gender ="";
     if($this->preferredLanguage=="0") $this->preferredLanguage ="";
-    
+
     /* First use parents methods to do some basic fillup in $this->attrs */
     plugin::save ();
 
@@ -1454,78 +1453,46 @@ class user extends plugin
   }
 
 
+  function init_multiple_support()
+  {
+    plugin::init_multiple_support();
+    $this->pw_storage = "{default}";
+  }
 
 
-
-
-
-
-  function get_values_to_update()
+  function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
+    if($this->pw_storage != "{default}"){
+      $ret['pw_storage'] = $this->pw_storage;
+    }
     return($ret); 
   }
 
 
-  function save_object_multiple()
+  function multiple_save_object()
   {
-    foreach(array("pw_storage","base","edit_cert") as $attr){
-      if(isset($_POST["use_".$attr])){
-        $this->selected_edit_values[$attr] = TRUE;
-      }else{
-        $this->selected_edit_values[$attr] = FALSE;
+    plugin::multiple_save_object();
+
+    /* Get pw_storage mode */
+    if (isset($_POST['pw_storage'])){
+      foreach(array("pw_storage") as $val){
+        if(isset($_POST[$val])){
+          $data= validate($_POST[$val]);
+          if ($data != $this->$val){
+            $this->is_modified= TRUE;
+          }
+          $this->$val= $data;
+        }
       }
     }
+
   }
 
 
-  function execute_multiple()
+  function multiple_execute()
   {
-    $smarty =get_smarty(); 
-    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
-    $smarty->assign("preferredLanguage_list", $language);
-    @$smarty->assign("bases", $this->allowedBasesToMoveTo());
-    $smarty->assign("base_select",      $this->base);
-
-    /* Save government mode attributes */
-    if (isset($this->config->current['GOVERNMENTMODE']) &&
-        preg_match('/true/i', $this->config->current['GOVERNMENTMODE'])){
-      $smarty->assign("governmentmode", "true");
-      $ivbbmodes= array("nein", "ivbv", "testa", "ivbv,testa", "internet",
-          "internet,ivbv", "internet,testa", "internet,ivbv,testa");
-      $smarty->assign("ivbbmodes", $ivbbmodes);
-      foreach ($this->govattrs as $val){
-        $smarty->assign("$val", $this->$val);
-        $smarty->assign("$val"."ACL", $this->getacl($val,(!is_object($this->parent) && !isset($_SESSION['edit']))));
-      }
-    } else {
-      $smarty->assign("governmentmode", "false");
-    }
-
-    $temp= passwordMethod::get_available_methods();
-    $hashes = $temp['name'];
-    $test= new $temp[$this->pw_storage]($this->config);
-    $is_configurable= $test->is_configurable();
-    $smarty->assign("pwmode", $hashes);
-    $smarty->assign("pwmode_select", $this->pw_storage);
-    $smarty->assign("pw_configurable", $is_configurable);
-
-    foreach($this->attributes as $attr){
-      if(isset($this->selected_edit_values[$attr]) && $this->selected_edit_values[$attr] == TRUE){
-        $smarty->assign("use_".$attr,TRUE);
-      }else{
-        $smarty->assign("use_".$attr,FALSE);
-      }
-      $smarty->assign($attr,$this->$attr);
-    }
-    foreach(array("pw_storage","base","edit_cert") as $attr){
-      if(isset($this->selected_edit_values[$attr]) && $this->selected_edit_values[$attr] == TRUE){
-        $smarty->assign("use_".$attr,TRUE);
-      }else{
-        $smarty->assign("use_".$attr,FALSE);
-      }
-    }
-    return($smarty->fetch (get_template_path('multiple_generic.tpl', TRUE, dirname(__FILE__))));
+    return($this->execute());
   }
 
 
