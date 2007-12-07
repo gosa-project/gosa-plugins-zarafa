@@ -41,8 +41,6 @@ class Socket_Client
 
 		if ($this->connected()){
 			$this->ckey = substr(md5($key), 0, $this->ks);
-			echo "Key: $this->ckey\n";
-			mcrypt_generic_init($this->td, $this->ckey, $this->iv);
 			return TRUE;
 		}
 
@@ -52,6 +50,7 @@ class Socket_Client
 
 	private function encrypt($data)
 	{
+		mcrypt_generic_init($this->td, $this->ckey, $this->iv);
 		return mcrypt_generic($this->td, $data);
 	}
 
@@ -59,6 +58,7 @@ class Socket_Client
 	private function decrypt($data)
 	{
 		/* decrypt data */
+		mcrypt_generic_init($this->td, $this->ckey, $this->iv);
 		return mdecrypt_generic($this->td, $data);
 	}
 
