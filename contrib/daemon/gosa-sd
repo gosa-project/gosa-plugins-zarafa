@@ -28,7 +28,8 @@ use Time::HiRes qw( gettimeofday );
 
 use Fcntl;
 use IO::Socket::INET;
-use Crypt::CBC;
+use Crypt::Rijndael;
+use MIME::Base64;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 use XML::Simple;
 use Data::Dumper;
@@ -850,7 +851,7 @@ sub create_xml_hash {
 sub create_xml_string {
     my ($xml_hash) = @_ ;
     my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-    #$xml_string =~ s/[\n]+//g;
+    $xml_string =~ s/[\n]+//g;
     daemon_log("create_xml_string:",7);
     daemon_log("$xml_string\n", 7);
     return $xml_string;
@@ -904,9 +905,9 @@ sub get_content_from_xml_hash {
 sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
-
+    $msg = "\0"x(16-length($msg)%16).$msg;
     my $crypted_msg = $my_cipher->encrypt($msg);
-
+    chomp($crypted_msg = &encode_base64($crypted_msg));
     return $crypted_msg;
 }
 
@@ -920,6 +921,7 @@ sub encrypt_msg {
 #===============================================================================
 sub decrypt_msg {
     my ($crypted_msg, $my_cipher) = @_ ;
+    $crypted_msg = &decode_base64($crypted_msg);
     my $msg = $my_cipher->decrypt($crypted_msg); 
     return $msg;
 }
@@ -934,16 +936,12 @@ sub decrypt_msg {
 sub create_ciphering {
     my ($passwd) = @_;
     $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
 
     daemon_log("iv: $iv", 7);
     daemon_log("key: $passwd", 7);
-    my $my_cipher = Crypt::CBC->new(-key=>$passwd ,
-                                    -cipher => 'Rijndael',
-                                    -iv => $iv,
-                                    -header => "none",
-                                    );
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
     return $my_cipher;
 }
 
@@ -1978,7 +1976,18 @@ while(1) {
 
         if (vec($rout, fileno $fhd, 1) ) {
             daemon_log("process child $pid is ready to read", 5);
-            chomp( my $in_msg = <$fhd> );
+
+            $fhd->blocking(1);
+            my $in_msg = <$fhd>;
+            $fhd->blocking(0);
+            my $part_in_msg;
+            while ($part_in_msg = <$fhd>) {
+                if (not defined $part_in_msg) {
+                    last;
+                }
+                $in_msg .= $part_in_msg;
+            }
+
             daemon_log("process child read: $in_msg\n", 5);
             if (not defined $in_msg) { 
                 next; 

@@ -51,13 +51,14 @@ class Socket_Client
 	private function encrypt($data)
 	{
 		mcrypt_generic_init($this->td, $this->ckey, $this->iv);
-		return mcrypt_generic($this->td, $data);
+		return base64_encode(mcrypt_generic($this->td, $data));
 	}
 
 
 	private function decrypt($data)
 	{
 		/* decrypt data */
+    $data = base64_decode($data);
 		mcrypt_generic_init($this->td, $this->ckey, $this->iv);
 		return mdecrypt_generic($this->td, $data);
 	}

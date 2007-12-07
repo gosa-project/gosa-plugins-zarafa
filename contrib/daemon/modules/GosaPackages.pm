@@ -34,11 +34,6 @@ sub get_module_tags {
     return \%tag_hash;
 }
 
-#sub read_configfile {
-#    &main::read_configfile();
-#    return;
-#}
-
 
 sub process_incoming_msg {
     my ($crypted_msg) = @_ ;
@@ -69,7 +64,7 @@ sub process_incoming_msg {
         $msg = &main::decrypt_msg($crypted_msg, $gosa_cipher);
         &main::daemon_log("GosaPackages: decrypted_msg: $msg", 7);
 
-        $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
+        #$msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
     };
     if($@) {
         &main::daemon_log("ERROR: GosaPackages do not understand the message: $@", 1);
@@ -80,11 +75,12 @@ sub process_incoming_msg {
     &main::daemon_log("\t$host", 1);
     &main::daemon_log("GosaPackages: msg to process:", 5);
     &main::daemon_log("\t$msg", 5);
-
-
-
-
-    return "GosaPackages got msg: $msg";
+    
+    $msg = "GosaPackages got msg: ".$msg;
+    
+    my $out_cipher = &main::create_ciphering($main::gosa_passwd);
+    my $out_msg = &main::encrypt_msg($msg, $out_cipher);
+    return $out_msg;
 
 }
 

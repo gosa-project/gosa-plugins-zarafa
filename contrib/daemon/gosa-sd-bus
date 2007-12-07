@@ -26,7 +26,8 @@ use POSIX;
 use Time::HiRes qw( gettimeofday );
 
 use IO::Socket::INET;
-use Crypt::CBC;
+use Crypt::Rijndael;
+use MIME::Base64;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 use XML::Simple;
 use Data::Dumper;
@@ -460,8 +461,9 @@ sub process_incoming_msg {
             daemon_log("daemon_passwd: $key_passwd\n", 7);
             my $key_cipher = &create_ciphering($key_passwd);
             $msg = &decrypt_msg($crypted_msg, $key_cipher);
-            daemon_log("daemon decrypted msg: $msg", 7);
+            daemon_log("daemon decrypted msg:$msg", 7);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+            print Dumper $msg_hash;
         };
         if($@) {
             daemon_log("msg processing raise error", 7);
@@ -473,7 +475,7 @@ sub process_incoming_msg {
     } 
     
     if($msg_flag >= $l)  {
-        daemon_log("\nERROR: do not understand the message:\n\t$msg" , 1);
+        daemon_log("\nERROR: do not understand the message:\n$msg" , 1);
         return;
     }
 
@@ -580,16 +582,13 @@ sub create_passwd {
 #===============================================================================
 sub create_ciphering {
     my ($passwd) = @_;
-    $passwd = substr("$passwd" x 32, 0, 32);
-    daemon_log("create_ciphering: new passwd: $passwd", 7);
-
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
 
-    my $my_cipher = Crypt::CBC->new(-key=>$passwd ,
-                                    -cipher => 'Rijndael',
-                                    -iv => $iv,
-                                    -header => "none",
-                                    );
+    daemon_log("iv: $iv", 7);
+    daemon_log("key: $passwd", 7);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
     return $my_cipher;
 }
 
@@ -604,9 +603,9 @@ sub create_ciphering {
 sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
-
+    $msg = "\0"x(16-length($msg)%16).$msg;
     my $crypted_msg = $my_cipher->encrypt($msg);
-
+    chomp($crypted_msg = &encode_base64($crypted_msg));
     return $crypted_msg;
 }
 
@@ -620,6 +619,7 @@ sub encrypt_msg {
 #===============================================================================
 sub decrypt_msg {
     my ($crypted_msg, $my_cipher) = @_ ;
+    $crypted_msg = &decode_base64($crypted_msg);
     my $msg = $my_cipher->decrypt($crypted_msg); 
     return $msg;
 }
@@ -739,15 +739,25 @@ sub open_socket {
 #===============================================================================
 sub read_from_socket {
     my ($socket) = @_;
-    my $result = "";
-    my $len = 16;
-    while($len == 16){
-        my $char;
-        $len = sysread($socket, $char, 16);
-        if($len != 16) { last }
-        if($len != 16) { last }
-        $result .= $char;
+
+    $socket->blocking(1);
+    my $result = <$socket>;
+    $socket->blocking(0);
+    my $part_msg;
+    while ($part_msg = <$socket>) {
+        if (not defined $part_msg) { last; }
+        $result .= $part_msg;
     }
+    
+    #my $result = "";
+    #my $len = 16;
+    #while($len == 16){
+    #    my $char;
+    #    $len = sysread($socket, $char, 16);
+    #    if($len != 16) { last }
+    #    if($len != 16) { last }
+    #    $result .= $char;
+    #}
     return $result;
 }
 
