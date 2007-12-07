@@ -104,6 +104,7 @@
 	{/render}
      </td>
     </tr>
+{if !$multiple_support}
     <tr>
      <td>
       <div style="height:10px;"></div>
@@ -130,6 +131,8 @@
 	{/render}
      </td>
     </tr>
+{/if}
+{if !$multiple_support}
     <tr>
      <td>
       <label for="gender">{t}Sex{/t}</label>
@@ -142,6 +145,7 @@
 	{/render}
      </td>
     </tr>
+{/if}
     <tr>
      <td>
       <label for="preferredLanguage">{t}Preferred langage{/t}</label>

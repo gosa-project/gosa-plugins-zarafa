@@ -220,7 +220,6 @@ class multi_plug
         foreach($values as $a_name => $a_value){
           foreach($this->a_handles as $i_id => $o_handle){
             $this->a_handles[$i_id]->by_object[$name]->$a_name = $a_value;
-            echo $name."->".$a_name." = ".$a_value."<br>";
           }
         }
       }

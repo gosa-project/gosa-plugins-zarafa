@@ -284,8 +284,12 @@ class user extends plugin
     /* Assign sex */
     $sex= array(0 => "&nbsp;", "F" => _("female"), "M" => _("male"));
     $smarty->assign("gender_list", $sex);
-
-    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
+    
+    if($this->multiple_support_active){
+      $language= array_merge(array(0 => "&nbsp;","{default}"=>"{default}") ,get_languages(TRUE));
+    }else{
+      $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
+    }
     $smarty->assign("preferredLanguage_list", $language);
 
     /* Get random number for pictures */
@@ -557,11 +561,13 @@ class user extends plugin
     $temp= passwordMethod::get_available_methods();
     $is_configurable= FALSE;
     $hashes = $temp['name'];
-    $hashes["{default}"] = "{default}";
+    if($this->multiple_support_active){
+      $hashes["{default}"] = "{default}";
+    }
     if(isset($temp[$this->pw_storage])){
       $test= new $temp[$this->pw_storage]($this->config);
       $is_configurable= $test->is_configurable();
-    }else{
+    }elseif($this->pw_storage != "{default}"){
       new msg_dialog(_("Password method"),_("The selected password method is no longer available."),WARNING_DIALOG);
     }
     
@@ -877,7 +883,7 @@ class user extends plugin
       if (!function_exists("imagick_blob2image")){
         /* Get temporary file name for conversation */
         $fname = tempnam ("/tmp", "GOsa");
-
+  
         /* Open file and write out photoData */
         $fp = fopen ($fname, "w");
         fwrite ($fp, $this->photoData);
@@ -890,7 +896,7 @@ class user extends plugin
         $query= "convert -size 147x200 $fname -resize 147x200 +profile \"*\" -";
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
             $query, "Execute");
-
+  
         /* Read data written by convert */
         $output= "";
         $sh= popen($query, 'r');
@@ -1466,6 +1472,13 @@ class user extends plugin
     if($this->pw_storage != "{default}"){
       $ret['pw_storage'] = $this->pw_storage;
     }
+    if($this->jpegPhoto != "{default}"){
+      $ret['jpegPhoto'] = $this->jpegPhoto;
+      $ret['photoData'] = $this->photoData;
+      $ret['old_jpegPhoto'] = $this->old_jpegPhoto;
+      $ret['old_photoData'] = $this->old_photoData;
+    }
+    $ret['is_modified'] = $this->is_modified;
     return($ret); 
   }
 
