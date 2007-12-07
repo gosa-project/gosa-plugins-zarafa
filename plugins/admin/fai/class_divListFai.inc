@@ -54,9 +54,9 @@ class divListFai extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
    /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
-      $action_col_size += 20;
+      $action_col_size += 32;
     }
 
     /* Toggle all selected / deselected */
@@ -241,13 +241,13 @@ class divListFai extends MultiSelectWindow
       }
     }
 
-#    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
-#   if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
-#      if($this->parent->snapshotEnabled()){
-#        $s .= "..|---|\n";
-#        $s .= $this->get_snapshot_header(TRUE);
-#      }
-#    }
+    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
+      if($this->parent->snapshotEnabled()){
+        $s .= "..|---|\n";
+        $s .= $this->get_snapshot_header(TRUE);
+      }
+    }
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -279,9 +279,9 @@ class divListFai extends MultiSelectWindow
     $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
-      $action_col_size += 20;
+      $action_col_size += 32;
     }
 
     /********************
@@ -317,28 +317,9 @@ class divListFai extends MultiSelectWindow
          $desc= "";
        }
 
-
-       if($value['FAIstate'] == "freeze"){
-         $action=  "<img src='images/closedlock.png' alt='F' class='center'><img src='images/empty.png' width='38' height='2' class='center' alt=''>";
-         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
-           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-       }else{
-         $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
-           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-
-#         if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
-#           $action.= $this->GetSnapShotActions($value['dn']);;
-#         }
-
-         if(preg_match("/d/",$value['acl'])){
-           $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
-             name='entry_delete_%KEY%' title='"._("Delete class")."'>";
-         }
-       }
-
-
        /* Add copy & cut icons */
        $ui = get_userinfo();
+       $action ="";
        $acl_all = $ui->has_complete_category_acls($this->selectedBase,$this->module);
        if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
          $action .= "<input class='center' type='image'
@@ -347,6 +328,23 @@ class divListFai extends MultiSelectWindow
            src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
        }
 
+       if($value['FAIstate'] == "freeze"){
+         $action.=  "<img src='images/closedlock.png' alt='F' class='center'><img src='images/empty.png' width='38' height='2' class='center' alt=''>";
+         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+       }else{
+         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+
+         if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
+           $action.= $this->GetSnapShotActions($value['dn']);;
+         }
+
+         if(preg_match("/d/",$value['acl'])){
+           $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
+             name='entry_delete_%KEY%' title='"._("Delete class")."'>";
+         }
+       }
 
        /* Cutted objects should be displayed in light grey */
        $display = $value['cn'].$desc;

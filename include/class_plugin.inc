@@ -1184,10 +1184,11 @@ class plugin
 
       /* Inset this new snapshot */
       $ldap_to->cd($snapldapbase);
+      $ldap_to->create_missing_trees($snapldapbase);
       $ldap_to->create_missing_trees($new_base);
       $ldap_to->cd($new_dn);
       $ldap_to->add($target);
-
+    
       show_ldap_error($ldap->get_error(), sprintf(_("Saving object snapshot with dn '%s' failed."),$new_base));
       show_ldap_error($ldap_to->get_error(), sprintf(_("Saving object snapshot with dn '%s' failed."),$new_base));
     }
