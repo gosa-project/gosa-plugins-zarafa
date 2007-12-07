@@ -228,8 +228,8 @@ class multi_plug
       foreach($this->o_tab->by_object as $name => $obj){
 
         $values = $this->o_tab->by_object[$name]->get_multi_edit_values();
-        foreach($values as $a_name => $a_value){
-          foreach($this->a_handles as $i_id => $o_handle){
+        foreach($this->a_handles as $i_id => $o_handle){
+          foreach($values as $a_name => $a_value){
             $this->a_handles[$i_id]->by_object[$name]->$a_name = $a_value;
           }
         }

@@ -227,7 +227,7 @@
      </td>
     </tr>
 
-    {if $is_template ne "true"}
+    {if $is_template ne "true" && !$multiple_support}
     <tr>
      <td><label for="edit_cert">{t}Certificates{/t}</label></td>
      <td>
