@@ -107,8 +107,6 @@ class user extends plugin
       "postalCode");
 
   var $multiple_support = TRUE;
-  var $multiple_support_active  = FALSE;
-  var $selected_edit_values  = array();
   var $multiple_user_handles  = array();
 
   /* constructor, if 'dn' is set, the node loads the given
@@ -231,9 +229,6 @@ class user extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    if($this->multiple_support_active){
-      return($this->execute_multiple());
-    }
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -1094,6 +1089,8 @@ class user extends plugin
       $this->set_acl_base($this->base);
     }
 
+    /* This checks will only be done, if we are not editing multiple objects 
+     */
     if(!$this->multiple_support_active){
 
       /* UID already used? */

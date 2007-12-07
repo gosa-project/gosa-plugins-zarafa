@@ -33,6 +33,8 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
+  var $multiple_support = FALSE;
+
   function tabs(&$config, $data, $dn, $acl_category= "")
   {
     /* Save dn */
@@ -90,7 +92,13 @@ class tabs
     $display.= "<table summary=\"\" cellpadding=4 cellspacing=0 border=0 style=\"width:100%; background-color:#F8F8F8; border-style:solid; border-color:#AAA; border-top-width:0px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;\">\n";
     $display.= "<tr><td>\n";
 
-    $display.= $this->by_object[$this->current]->execute();
+    /* If multiple edit is enabled for this tab, 
+       we have tho display different templates */
+    if(!$this->multiple_support){
+      $display.= $this->by_object[$this->current]->execute();
+    }else{
+      $display.= $this->by_object[$this->current]->execute_multiple();
+    }
 
     /* Footer for tabbed dialog */
     $display.= "</td></tr></table>";
@@ -360,6 +368,7 @@ class tabs
     if(!$this->multiple_support_available()){
       return(FALSE);
     }else{
+      $this->multiple_support = TRUE;
       foreach($this->by_object as $name => $obj){
         if($obj->multiple_support){
           $this->by_object[$name]->multiple_support_active = TRUE;

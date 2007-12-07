@@ -22,12 +22,13 @@
 
 Data structure :  
   
-  |->o_tab                      <-- dummy object that will be displayed displayed 
+  |->o_tab                      <-- dummy object, collects HTML posts, displays ui 
   |->a_handles                  <-- tab object for each given dn
      |->tab object for dn 1 
      |->tab object for dn 2
       ...
      |->tab object for dn n
+
 */
 
 

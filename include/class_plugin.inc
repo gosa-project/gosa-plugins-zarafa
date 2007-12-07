@@ -228,6 +228,24 @@ class plugin
     $this->initially_was_account= $this->is_account;
   }
 
+
+  /*! \brief execute plugin
+
+    Generates the html output for this node
+   */
+  function execute_multiple()
+  {
+    /* This one is empty currently. Fabian - please fill in the docu code */
+    $_SESSION['current_class_for_help'] = get_class($this);
+
+    /* Reset Lock message POST/GET check array, to prevent perg_match errors*/
+    $_SESSION['LOCK_VARS_TO_USE'] = $_SESSION['LOCK_VARS_USED'] =array();
+    
+    return("Multiple edit is currently not implemented for this plugin.");
+  }
+
+
+
   /*! \brief execute plugin
 
     Generates the html output for this node
