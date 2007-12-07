@@ -153,6 +153,8 @@ class multi_plug
    */
   public function lock_entries($uid)
   {
+    foreach($this->dn as $dn)
+    add_lock($dn,$uid);
     return(TRUE);
   }
 
