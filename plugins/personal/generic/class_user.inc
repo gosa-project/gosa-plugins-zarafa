@@ -124,9 +124,7 @@ class user extends plugin
     plugin::plugin ($config, $dn);
 
     $this->orig_dn  = $this->dn;
-    $this->new_dn   = $this->dn;
-
-    $this->new_dn = $dn;
+    $this->new_dn   = $dn;
 
     if ($this->config->current['GOVERNMENTMODE']){
       /* Fix public visible attribute if unset */
@@ -1061,13 +1059,9 @@ class user extends plugin
     return (0);
   }
 
-
-  /* Check formular input */
-  function check()
+  
+  function update_new_dn()
   {
-    /* Call common method to give check the hook */
-    $message= plugin::check();
-
     $pt= "";
     if(isset($this->config->current['INCLUDE_PERSONAL_TITLE']) && preg_match("/true/i",$this->config->current['INCLUDE_PERSONAL_TITLE'])){
       if(!empty($this->personalTitle)){
@@ -1088,6 +1082,16 @@ class user extends plugin
         $this->new_dn= $this->create_unique_dn('cn', get_people_ou().$this->base);
       }
     }
+  }
+  
+
+  /* Check formular input */
+  function check()
+  {
+    /* Call common method to give check the hook */
+    $message= plugin::check();
+
+    $this->update_new_dn();
 
     /* Set the new acl base */
     if($this->dn == "new") {
@@ -1485,7 +1489,6 @@ class user extends plugin
     $ret['is_modified'] = $this->is_modified;
     $ret['base']=$this->base;
    
-    print_a($ret); 
     return($ret); 
   }
 
@@ -1516,27 +1519,6 @@ class user extends plugin
   {
     /* Call check() to set new_dn correctly ... */
     $message = plugin::multiple_check();
-
-
-
-    $pt= "";
-    if(isset($this->config->current['INCLUDE_PERSONAL_TITLE']) && preg_match("/true/i",$this->config->current['INCLUDE_PERSONAL_TITLE'])){
-      if(!empty($this->personalTitle)){
-        $pt = $this->personalTitle." ";
-      }
-    }
-    $this->cn= $pt.$this->givenName." ".$this->sn;
-
-    /* Permissions for that base? */
-    if (isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid"){
-      $this->new_dn= 'uid='.$this->uid.','.get_people_ou().$this->base;
-    } else {
-      if($this->orig_base == $this->base ){
-        $this->new_dn= $this->dn;
-      } else {
-        $this->new_dn= $this->create_unique_dn('cn', get_people_ou().$this->base);
-      }
-    }
 
     /* Set the new acl base */
     if($this->dn == "new") {
