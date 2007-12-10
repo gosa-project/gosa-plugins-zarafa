@@ -591,7 +591,11 @@ class user extends plugin
     $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit']))));
 
     /* Create base acls */
-    @$smarty->assign("bases", $this->allowedBasesToMoveTo());
+    $tmp = @$this->allowedBasesToMoveTo();
+    if($this->multiple_support_active){
+      $tmp['{default}'] = "{"._("default")."}";
+    }
+    $smarty->assign("bases", $tmp);
 
     /* Save government mode attributes */
     if (isset($this->config->current['GOVERNMENTMODE']) &&
@@ -1487,8 +1491,10 @@ class user extends plugin
       unset($ret['cn']);
     }
     $ret['is_modified'] = $this->is_modified;
-    $ret['base']=$this->base;
-   
+    if($this->base != "{default}"){
+      $ret['orig_base']="Changed_by_Multi_Plug";
+      $ret['base']=$this->base;
+    }
     return($ret); 
   }
 
