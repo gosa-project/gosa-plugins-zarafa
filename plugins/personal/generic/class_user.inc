@@ -983,6 +983,7 @@ class user extends plugin
     }
 
     $ldap->cd ($this->dn);
+    print_a(array("asdf"=>$this->attrs));
     $ldap->$mode ($this->attrs);
     if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
       return (1);
@@ -1165,6 +1166,9 @@ class user extends plugin
   /* Indicate whether a password change is needed or not */
   function password_change_needed()
   {
+    if($this->pw_storage == "{default}"){
+      return(FALSE);
+    }
     return($this->pw_storage != $this->last_pw_storage);
   }
 
@@ -1476,8 +1480,13 @@ class user extends plugin
     if(isset($ret['dateOfBirth'])){
       unset($ret['dateOfBirth']);
     }
+    if(isset($ret['cn'])){
+      unset($ret['cn']);
+    }
     $ret['is_modified'] = $this->is_modified;
     $ret['base']=$this->base;
+   
+    print_a($ret); 
     return($ret); 
   }
 
@@ -1508,11 +1517,68 @@ class user extends plugin
   {
     /* Call check() to set new_dn correctly ... */
     $message = plugin::multiple_check();
- 
-    echo "Checks missing";
+
+
+
+    $pt= "";
+    if(isset($this->config->current['INCLUDE_PERSONAL_TITLE']) && preg_match("/true/i",$this->config->current['INCLUDE_PERSONAL_TITLE'])){
+      if(!empty($this->personalTitle)){
+        $pt = $this->personalTitle." ";
+      }
+    }
+    $this->cn= $pt.$this->givenName." ".$this->sn;
+
+    /* Permissions for that base? */
+    if (isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid"){
+      $this->new_dn= 'uid='.$this->uid.','.get_people_ou().$this->base;
+    } else {
+      if($this->orig_base == $this->base ){
+        $this->new_dn= $this->dn;
+      } else {
+        $this->new_dn= $this->create_unique_dn('cn', get_people_ou().$this->base);
+      }
+    }
+
+    /* Set the new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+    if ($this->sn == ""){
+      $message[]= _("The required field 'Name' is not set.");
+    }
+    if ($this->givenName == ""){
+      $message[]= _("The required field 'Given name' is not set.");
+    }
+    if (!is_url($this->labeledURI) && $this->labeledURI != "{default}"){
+      $message[]= _("The field 'Homepage' contains an invalid URL definition.");
+    }
+    if (preg_match ("/[\\\\]/", $this->sn) && $this->sn != "{default}"){
+      $message[]= _("The field 'Name' contains invalid characters.");
+    }
+    if (preg_match ("/[\\\\]/", $this->givenName) && $this->givenName != "{default}"){
+      $message[]= _("The field 'Given name' contains invalid characters.");
+    }
+    if (!is_phone_nr($this->telephoneNumber) && $this->telephoneNumber != "{default}"){
+      $message[]= _("The field 'Phone' contains an invalid phone number.");
+    }
+    if (!is_phone_nr($this->facsimileTelephoneNumber) && $this->facsimileTelephoneNumber != "{default}"){
+      $message[]= _("The field 'Fax' contains an invalid phone number.");
+    }
+    if (!is_phone_nr($this->mobile) && $this->mobile != "{default}"){
+      $message[]= _("The field 'Mobile' contains an invalid phone number.");
+    }
+    if (!is_phone_nr($this->pager) && $this->pager != "{default}"){
+      $message[]= _("The field 'Pager' contains an invalid phone number.");
+    }
+    if (preg_match ('/[,+"?\'()=<>;]/', $this->givenName) && $this->givenName != "{default}"){
+      $message[]= _("The field 'Given name' contains invalid characters.");
+    }
+    if (preg_match ('/[,+"?\'()=<>;]/', $this->sn) && $this->sn != "{default}"){
+      $message[]= _("The field 'Name' contains invalid characters.");
+    }
     return($message);
   }
-  
+
 
 
   function multiple_execute()

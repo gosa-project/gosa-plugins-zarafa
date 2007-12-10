@@ -230,6 +230,7 @@ class multi_plug
         $values = $this->o_tab->by_object[$name]->get_multi_edit_values();
         foreach($this->a_handles as $i_id => $o_handle){
           foreach($values as $a_name => $a_value){
+            echo $a_name." -> ".$a_value."<br>";
             $this->a_handles[$i_id]->by_object[$name]->$a_name = $a_value;
           }
         }
@@ -245,6 +246,7 @@ class multi_plug
     if($this->multiple_available() && is_array($this->a_handles)){
       $this->populate_values();
       foreach($this->a_handles as $i_id => $o_handle){
+        $o_handle->check();
         $o_handle->save();
       }
     }

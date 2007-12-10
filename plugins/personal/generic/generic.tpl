@@ -56,7 +56,15 @@
     {if $is_template ne "true"}
     <tr>
      <td><label for="sn">{t}Last name{/t}{$must}</label></td>
-     <td>{render acl=$snACL}<input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">{/render}</td>
+     <td>
+{if $multiple_support}
+	 <input id="sn" name="dummy2" size=25 maxlength=60 value="{t}Multiple edit{/t}" disabled>
+{else}
+{render acl=$snACL}
+	 <input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">
+{/render}
+{/if}
+	 </td>
     </tr>
     {else}
     <tr>
@@ -68,7 +76,16 @@
     {if $is_template ne "true"}
     <tr>
      <td><label for="givenName">{t}First name{/t}{$must}</label></td>
-     <td>{render acl=$givenNameACL}<input id="givenName" name="givenName" size=25 maxlength=60 value="{$givenName}">{/render}</td>
+     <td>
+
+{if $multiple_support}
+	 <input id="givenName" name="dummy3" size=25 maxlength=60 value="{t}Multiple edit{/t}" disabled>
+{else}
+{render acl=$givenNameACL}
+	 <input id="givenName" name="givenName" size=25 maxlength=60 value="{$givenName}">
+{/render}
+{/if}
+	 </td>
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
