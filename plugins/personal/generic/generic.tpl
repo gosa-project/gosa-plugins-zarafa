@@ -4,15 +4,6 @@
  <tr>
   <td colspan="4">
    <h2><img alt="" align="middle" src="images/head.png" class="center"> {t}Personal information{/t}</h2>
-
-{if $multiple_support}
-	<p>
-		<b>You are currently editing multiple entries at once. Some attributes may be disabled.<br>
-			All touched values will be written.
-		</b>
-	</p>
-{/if}
-
   </td>
  </tr>
 
