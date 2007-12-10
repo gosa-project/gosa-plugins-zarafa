@@ -108,10 +108,10 @@ sub process_incoming_msg {
             &main::daemon_log("ServerPackage: key_passwd: $key_passwd", 7);
             my $key_cipher = &main::create_ciphering($key_passwd);
             $msg = &main::decrypt_msg($crypted_msg, $key_cipher);
-            &main::daemon_log("DEBUG: ServerPackages: decrypted msg: $msg", 7);
+            &main::daemon_log("ServerPackages: decrypted msg: $msg", 7);
             $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
-            my $tmp = printf Dumper $msg_hash;
-            &main::daemon_log("DEBUG: ServerPackages: xml hash: $tmp", 7);
+            #my $tmp = printf Dumper $msg_hash;
+            #&main::daemon_log("DEBUG: ServerPackages: xml hash: $tmp", 7);
         };
         if($@) {
             &main::daemon_log("ServerPackage: key raise error: $@", 7);

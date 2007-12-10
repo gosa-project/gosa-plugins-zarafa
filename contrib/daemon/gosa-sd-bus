@@ -585,8 +585,8 @@ sub create_ciphering {
     $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
 
-    daemon_log("iv: $iv", 7);
-    daemon_log("key: $passwd", 7);
+    #daemon_log("iv: $iv", 7);
+    #daemon_log("key: $passwd", 7);
     my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
     $my_cipher->set_iv($iv);
     return $my_cipher;
@@ -621,6 +621,7 @@ sub decrypt_msg {
     my ($crypted_msg, $my_cipher) = @_ ;
     $crypted_msg = &decode_base64($crypted_msg);
     my $msg = $my_cipher->decrypt($crypted_msg); 
+    $msg =~ s/^\0*//g;
     return $msg;
 }
 
@@ -971,8 +972,6 @@ sub delete_client {
     my $header = &get_content_from_xml_hash($msg_hash, "header");
     my $del_client = (&get_content_from_xml_hash($msg_hash, $header))[0];
    
-    print Dumper $msg_hash;    
-
     if (not exists $known_daemons->{$source}->{$del_client}) {
         daemon_log
     }

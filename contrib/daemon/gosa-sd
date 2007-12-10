@@ -852,8 +852,8 @@ sub create_xml_string {
     my ($xml_hash) = @_ ;
     my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
     $xml_string =~ s/[\n]+//g;
-    daemon_log("create_xml_string:",7);
-    daemon_log("$xml_string\n", 7);
+    #daemon_log("create_xml_string:",7);
+    #daemon_log("$xml_string\n", 7);
     return $xml_string;
 }
 
@@ -923,6 +923,7 @@ sub decrypt_msg {
     my ($crypted_msg, $my_cipher) = @_ ;
     $crypted_msg = &decode_base64($crypted_msg);
     my $msg = $my_cipher->decrypt($crypted_msg); 
+    $msg =~ s/\0*//g;
     return $msg;
 }
 
@@ -938,8 +939,8 @@ sub create_ciphering {
     $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
 
-    daemon_log("iv: $iv", 7);
-    daemon_log("key: $passwd", 7);
+    #daemon_log("iv: $iv", 7);
+    #daemon_log("key: $passwd", 7);
     my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
     $my_cipher->set_iv($iv);
     return $my_cipher;
@@ -1987,11 +1988,12 @@ while(1) {
                 }
                 $in_msg .= $part_in_msg;
             }
+            chomp($in_msg);
 
-            daemon_log("process child read: $in_msg\n", 5);
+            daemon_log("process child read: $in_msg", 5);
             if (not defined $in_msg) { 
                 next; 
-            } elsif ($in_msg eq "done") {
+            } elsif ($in_msg =~ "done") {
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
  
@@ -1999,6 +2001,7 @@ while(1) {
                 my $act_client = $busy_child{$pid}{client_ref};
                 print $act_client $in_msg."\n";
                 my $act_pipe = $busy_child{$pid}{pipe_rd};
+                sleep(10);
                 close ($act_client);   
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
