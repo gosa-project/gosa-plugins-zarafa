@@ -983,7 +983,6 @@ class user extends plugin
     }
 
     $ldap->cd ($this->dn);
-    print_a(array("asdf"=>$this->attrs));
     $ldap->$mode ($this->attrs);
     if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
       return (1);
