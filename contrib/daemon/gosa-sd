@@ -39,11 +39,10 @@ use File::Spec;
 use IPC::Shareable qw( :lock);
 IPC::Shareable->clean_up_all;
 
-
 use lib "/etc/gosad/modules";
 my $modules_path = "/etc/gosad/modules";
 
-my ($cfg_file, %cfg_defaults, $foreground, $verbose, $ping_timeout);
+my ($cfg_file, %cfg_defaults, $foreground, $verbose, $ping_timeout, $no_bus);
 my ($bus, $msg_to_bus, $bus_cipher);
 my ($server, $server_mac_address, $server_events);
 my ($gosa_server);
@@ -76,9 +75,7 @@ $foreground = 0 ;
 # specifies the timeout seconds while checking the online status of a registrating client
 $ping_timeout = 5;
 
-# specifies the listening port while checking the online status of a registrating client
-# this port HAS to be different to server_port!
-my $ping_port = "12345";
+$no_bus = 0;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_daemons = {};
@@ -333,7 +330,12 @@ sub import_modules {
         if (not $file =~ /(\S*?).pm$/) {
             next;
         }
-        require $file;
+        eval { require $file; };
+        if ($@) {
+            daemon_log("ERROR: gosa-sd could not load module $file", 1);
+            daemon_log("$@", 5);
+            next;
+        }
         my $mod_name = $1;
         my $module_tag_hash = eval( $mod_name.'::get_module_tags()' );
         $known_modules->{$mod_name} = $module_tag_hash;
@@ -1760,9 +1762,10 @@ sub update_known_clients {
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
 GetOptions("h|help" => \&usage,
-           "c|config=s" => \$cfg_file,
-           "f|foreground" => \$foreground,
-           "v|verbose+" => \$verbose,
+        "c|config=s" => \$cfg_file,
+        "f|foreground" => \$foreground,
+        "v|verbose+" => \$verbose,
+        "no-bus+" => \$no_bus,
            );
 
 #  read and set config parameters
@@ -1828,6 +1831,9 @@ if($server_activ eq "on"){
 }
 
 # register at bus
+if ($no_bus > 0) {
+    $bus_activ = "off"
+}
 if($bus_activ eq "on") {
     daemon_log(" ", 1);
     &register_at_bus();

@@ -35,15 +35,17 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use File::Spec;
 use Cwd;
-
+use GosaSupportDaemon;
 
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
 my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
 my ($client_address, $client_ip, $client_port, $client_mac_address);
 my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
+my (@events);
 
 # default variables
+my $event_dir = "/etc/gosac/events";
 $known_hosts = {};
 $foreground = 0 ;
 %cfg_defaults =
@@ -303,10 +305,10 @@ sub register_at_server {
     my $new_server_cipher;
 
     # detect all client accepted events
-    opendir(DIR, "/etc/gosac/events") 
-        or daemon_log("cannot find directory /etc/gosac/events!\ngosac starts without any accepting events!", 1);
+    opendir(DIR, $event_dir) 
+        or daemon_log("cannot find directory $event_dir!\ngosac starts without any accepting events!", 1);
     my $file_name;
-    my @events = ();
+    @events = ();
     while(defined($file_name = readdir(DIR))){
         if ($file_name eq "." || $file_name eq "..") {
             next;
@@ -579,7 +581,7 @@ sub send_msg_hash2address {
     my ($msg_hash, $address, $passwd) = @_ ;
 
     # fetch header for logging
-    my $header = &get_content_from_xml_hash($msg_hash, "header");
+    my $header = @{$msg_hash->{header}}[0];
 
     # generiere xml string
     my $msg_xml = &create_xml_string($msg_hash);
@@ -825,6 +827,35 @@ sub process_incoming_msg {
     daemon_log("\t$header", 1);
     daemon_log("msg to process:", 7);
     daemon_log("\t$msg", 7);
+
+    #check whether msg to process is a event 
+    opendir(DIR, $event_dir) 
+        or daemon_log("cannot find directory $event_dir, no events specified", 5);
+    my $file_name;
+    while(defined($file_name = readdir(DIR))){
+        if ($file_name eq "." || $file_name eq "..") {
+            next;
+        }
+        if ($file_name eq $header) {
+            my $cmd = "$event_dir/$file_name '$msg'";
+            my $result_xml = "";
+            open(PIPE, "$cmd 2>&1 |");
+            while(<PIPE>) {
+                $result_xml.=$_;
+                last;
+            }
+            close(PIPE);
+            my $res_hash = &transform_msg2hash($result_xml);
+            my $res_target = @{$res_hash->{target}}[0];
+            &send_msg_hash2address($res_hash, $server_address);
+            
+            return;
+        }
+    }
+    close(DIR);
+    daemon_log("could not assign the msg $header to an event", 5);
+    
+
 
     if ($header eq 'new_ldap_config') { &new_ldap_config($msg_hash)}
     elsif ($header eq 'ping') { &got_ping($msg_hash) }

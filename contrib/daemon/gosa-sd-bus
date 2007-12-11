@@ -463,7 +463,6 @@ sub process_incoming_msg {
             $msg = &decrypt_msg($crypted_msg, $key_cipher);
             daemon_log("daemon decrypted msg:$msg", 7);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
-            print Dumper $msg_hash;
         };
         if($@) {
             daemon_log("msg processing raise error", 7);

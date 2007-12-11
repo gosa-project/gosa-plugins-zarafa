@@ -8,16 +8,9 @@ use Exporter;
 
 use strict;
 use warnings;
-use Data::Dumper;
+use GosaSupportDaemon;
 
-
-BEGIN{
-    # prepare module for working
-    #print "ServerPackages loaded!\n";
-    
-}
-
-
+BEGIN{}
 
 END {}
 
@@ -25,42 +18,18 @@ END {}
 ### START ##########
 
 
+
 sub get_module_tags {
     
     # lese config file aus dort gibt es eine section Basic
-    # dort stehen drei packettypen, für die sich das modul anmelden kann, gosa-admin-packages, server-packages, client-packages
+    # dort stehen drei packettypen, für die sich das modul anmelden kann, gosa-admin-packages, 
+    #   server-packages, client-packages
     my %tag_hash = (gosa_admin_packages => "yes", 
                     server_packages => "yes", 
                     client_packages => "yes",
                     );
     return \%tag_hash;
 }
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  read_configfile
-#   PARAMETERS:  cfg_file - string -
-#      RETURNS:  nothing
-#  DESCRIPTION:  read cfg_file and set variables
-#===============================================================================
-#sub read_configfile {
-#    my $cfg;
-#    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
-#        if( -r $cfg_file ) {
-#            $cfg = Config::IniFiles->new( -file => $cfg_file );
-#        } else {
-#            print STDERR "Couldn't read config file!";
-#        }
-#    } else {
-#        $cfg = Config::IniFiles->new() ;
-#    }
-#    foreach my $section (keys %cfg_defaults) {
-#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-#            my $pinfo = $cfg_defaults{ $section }{ $param };
-#            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
-#        }
-#    }
-#}
 
 
 sub process_incoming_msg {
@@ -106,8 +75,8 @@ sub process_incoming_msg {
                 $key_passwd = $main::server_passwd;
             } 
             &main::daemon_log("ServerPackage: key_passwd: $key_passwd", 7);
-            my $key_cipher = &main::create_ciphering($key_passwd);
-            $msg = &main::decrypt_msg($crypted_msg, $key_cipher);
+            my $key_cipher = &create_ciphering($key_passwd);
+            $msg = &decrypt_msg($crypted_msg, $key_cipher);
             &main::daemon_log("ServerPackages: decrypted msg: $msg", 7);
             $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
             #my $tmp = printf Dumper $msg_hash;
@@ -122,8 +91,8 @@ sub process_incoming_msg {
     } 
     
     if($msg_flag >= $l)  {
-        &main::daemon_log("ERROR: ServerPackage do not understand the message:", 1);
-        &main::daemon_log("\t$msg", 7);
+        &main::daemon_log("WARNING: ServerPackage do not understand the message:", 5);
+        &main::daemon_log("$@", 7);
         return;
     }
 
@@ -131,10 +100,10 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0]; 
     my $source = @{$msg_hash->{source}}[0];
 
-    &main::daemon_log("ServerPackages: msg from host:", 1);
-    &main::daemon_log("\t$host", 1);
-    &main::daemon_log("ServerPackages: header from msg:", 1);
-    &main::daemon_log("\t$header", 1);
+    &main::daemon_log("ServerPackages: msg from host:", 5);
+    &main::daemon_log("\t$host", 5);
+    &main::daemon_log("ServerPackages: header from msg:", 5);
+    &main::daemon_log("\t$header", 5);
     &main::daemon_log("ServerPackages: msg to process:", 5);
     &main::daemon_log("\t$msg", 5);
 
@@ -172,16 +141,16 @@ sub process_incoming_msg {
                 &send_msg_hash2address($msg_hash, $target_address);
             }           
         } else {
-            # msg is for one client
+            # msg is for one host
 
             if (exists $main::known_clients->{$target}) {
+                &send_msg_hash2address($msg_hash, $target);
+            } elsif (exists $main::known_daemons->{$target}) {
                 # target is known
-
                 &send_msg_hash2address($msg_hash, $target);
             } else {
                 # target is not known
-
-                &main::daemon_log("ERROR: ServerPackages. target $target is not known in known_clients", 1);
+                &main::daemon_log("ERROR: ServerPackages: target $target is not known neither in known_clients nor in known_daemons", 1);
             }
         }
     }
@@ -227,8 +196,8 @@ sub new_passwd {
 
     if (exists $main::known_daemons->{$source}) {
         &main::add_content2known_daemons(hostname=>$source, status=>"new_passwd", passwd=>$passwd);
-        my $hash = &main::create_xml_hash("confirm_new_passwd", $main::server_address, $source);
-        &main::send_msg_hash2address($hash, $source);
+        my $hash = &create_xml_hash("confirm_new_passwd", $main::server_address, $source);
+        &send_msg_hash2address($hash, $source);
 
     } elsif (exists $main::known_clients->{$source}) {
         &main::add_content2known_clients(hostname=>$source, status=>"new_passwd", passwd=>$passwd);
@@ -271,10 +240,10 @@ sub here_i_am {
     &main::daemon_log("number of maximal allowed clients: $main::max_clients", 5);
 
     if($main::max_clients <= $act_nu_clients) {
-        my $out_hash = &main::create_xml_hash("denied", $main::server_address, $source);
-        &main::add_content2xml_hash($out_hash, "denied", "I_cannot_take_any_more_clients!");
+        my $out_hash = &create_xml_hash("denied", $main::server_address, $source);
+        &add_content2xml_hash($out_hash, "denied", "I_cannot_take_any_more_clients!");
         my $passwd = @{$msg_hash->{new_passwd}}[0]; 
-        &main::send_msg_hash2address($out_hash, $source, $passwd);
+        &send_msg_hash2address($out_hash, $source, $passwd);
         return;
     }
     
@@ -288,8 +257,8 @@ sub here_i_am {
                                 status=>"registered", passwd=>$new_passwd);
 
     # return acknowledgement to client
-    $out_hash = &main::create_xml_hash("registered", $main::server_address, $source);
-    &main::send_msg_hash2address($out_hash, $source);
+    $out_hash = &create_xml_hash("registered", $main::server_address, $source);
+    &send_msg_hash2address($out_hash, $source);
 
     # notify registered client to bus
     $out_hash = &main::create_xml_hash("new_client", $main::server_address, $main::bus_address, $source);
@@ -374,6 +343,10 @@ sub new_ldap_config {
     my $dn;
     my @gotoLdapServer;
     open (PIPE, "$goHard_cmd 2>&1 |");
+#    my $rbits = "";
+#    vec($rbits, fileno PIPE, 1) = 1;
+#    my $rout;
+#    my $nf = select($rout=$rbits, undef, undef, $ldap_timeout);
     while(<PIPE>) {
         chomp $_;
         # If it's a comment, goto next

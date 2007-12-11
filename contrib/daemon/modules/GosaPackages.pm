@@ -8,14 +8,9 @@ use Exporter;
 
 use strict;
 use warnings;
-use Crypt::CBC;
+use GosaSupportDaemon;
 
-
-BEGIN{
-    # prepare module for working
-    # print "Module Gosa started!\n";
-
-}
+BEGIN{}
 
 END{}
 
@@ -23,11 +18,12 @@ END{}
 ### START ##########################
 
 # create general settings for this module
-my $gosa_cipher = &main::create_ciphering($main::gosa_passwd);
+my $gosa_cipher = &create_ciphering($main::gosa_passwd);
 
 sub get_module_tags {
     
-    # dort stehen drei packettypen, für die sich das modul anmelden kann, gosa-admin-packages, server-packages, client-packages
+    # dort stehen drei packettypen, für die sich das modul anmelden kann, gosa-admin-packages, 
+    #   server-packages, client-packages
     my %tag_hash = (gosa_admin_packages => "yes", 
                     server_packages => "no", 
                     client_packages => "no");
@@ -67,7 +63,8 @@ sub process_incoming_msg {
         $msg_hash = $main::xml->XMLin($msg, ForceArray=>1);
     };
     if($@) {
-        &main::daemon_log("ERROR: GosaPackages do not understand the message: $@", 1);
+        &main::daemon_log("WARNING: GosaPackages do not understand the message:", 5);
+        &main::daemon_log("$@", 7);
         return;
     }
 
