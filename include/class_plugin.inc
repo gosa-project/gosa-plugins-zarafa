@@ -128,6 +128,7 @@ class plugin
   /* This aviable indicates, that we are currently in multiple edit handle */
   var $multiple_support_active = FALSE; 
   var $selected_edit_values = array();
+  var $multi_boxes = array();
 
   /*! \brief plugin constructor
 
@@ -1701,11 +1702,6 @@ class plugin
    */
   function init_multiple_support()
   {
-    foreach($this->attributes as $attr){
-      if(isset($this->$attr) && is_string($this->$attr)){
-        $this->$attr = "{default}";
-      }
-    }
   }
 
 
@@ -1716,7 +1712,7 @@ class plugin
   {
     $ret = array();
     foreach($this->attributes as $attr){
-      if($this->$attr != "{default}"){
+      if(in_array($attr,$this->multi_boxes)){
         $ret[$attr] = $this->$attr;
       }
     }

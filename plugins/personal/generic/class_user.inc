@@ -109,11 +109,12 @@ class user extends plugin
   var $multiple_support = TRUE;
   var $multiple_user_handles  = array();
 
+  var $multi_boxes = array();
+
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
   function user (&$config, $dn= NULL)
   {
-
     $this->config= $config;
     /* Configuration is fine, allways */
     if ($this->config->current['GOVERNMENTMODE']){
@@ -282,12 +283,7 @@ class user extends plugin
     /* Assign sex */
     $sex= array(0 => "&nbsp;", "F" => _("female"), "M" => _("male"));
     $smarty->assign("gender_list", $sex);
-    
-    if($this->multiple_support_active){
-      $language= array_merge(array(0 => "&nbsp;","{default}"=>"{default}") ,get_languages(TRUE));
-    }else{
-      $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
-    }
+    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
     $smarty->assign("preferredLanguage_list", $language);
 
     /* Get random number for pictures */
@@ -559,13 +555,10 @@ class user extends plugin
     $temp= passwordMethod::get_available_methods();
     $is_configurable= FALSE;
     $hashes = $temp['name'];
-    if($this->multiple_support_active){
-      $hashes["{default}"] = "{default}";
-    }
     if(isset($temp[$this->pw_storage])){
       $test= new $temp[$this->pw_storage]($this->config);
       $is_configurable= $test->is_configurable();
-    }elseif($this->pw_storage != "{default}"){
+    }else{
       new msg_dialog(_("Password method"),_("The selected password method is no longer available."),WARNING_DIALOG);
     }
     
@@ -573,6 +566,18 @@ class user extends plugin
     $ui =get_userinfo();
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
+      if(in_array($val,$this->multi_boxes)){
+        $smarty->assign("use_".$val,TRUE);
+      }else{
+        $smarty->assign("use_".$val,FALSE);
+      }
+    }
+    foreach(array("base","pw_storage","edit_picture") as $val){
+      if(in_array($val,$this->multi_boxes)){
+        $smarty->assign("use_".$val,TRUE);
+      }else{
+        $smarty->assign("use_".$val,FALSE);
+      }
     }
 
     /* Set acls */
@@ -592,9 +597,6 @@ class user extends plugin
 
     /* Create base acls */
     $tmp = @$this->allowedBasesToMoveTo();
-    if($this->multiple_support_active){
-      $tmp['{default}'] = "{"._("default")."}";
-    }
     $smarty->assign("bases", $tmp);
 
     /* Save government mode attributes */
@@ -990,7 +992,6 @@ class user extends plugin
       return (1);
     }
 
-
     /* Remove ACL dependencies too */
     if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
       $tmp = new acl($this->config,$this->parent,$this->dn);
@@ -1173,8 +1174,8 @@ class user extends plugin
   /* Indicate whether a password change is needed or not */
   function password_change_needed()
   {
-    if($this->pw_storage == "{default}"){
-      return(FALSE);
+    if(in_array("pw_storage",$this->multi_boxes)){
+      return(TRUE);
     }
     return($this->pw_storage != $this->last_pw_storage);
   }
@@ -1468,17 +1469,16 @@ class user extends plugin
   function init_multiple_support()
   {
     plugin::init_multiple_support();
-    $this->pw_storage = "{default}";
   }
 
 
   function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
-    if($this->pw_storage != "{default}"){
+    if(in_array("pw_storage",$this->multi_boxes)){
       $ret['pw_storage'] = $this->pw_storage;
     }
-    if($this->jpegPhoto != "{default}"){
+    if(in_array("edit_picture",$this->multi_boxes)){
       $ret['jpegPhoto'] = $this->jpegPhoto;
       $ret['photoData'] = $this->photoData;
       $ret['old_jpegPhoto'] = $this->old_jpegPhoto;
@@ -1491,7 +1491,7 @@ class user extends plugin
       unset($ret['cn']);
     }
     $ret['is_modified'] = $this->is_modified;
-    if($this->base != "{default}"){
+    if(in_array("base",$this->multi_boxes)){
       $ret['orig_base']="Changed_by_Multi_Plug";
       $ret['base']=$this->base;
     }
@@ -1518,6 +1518,20 @@ class user extends plugin
     if(isset($_POST['base'])){
       $this->base = get_post('base');
     }
+
+    if(isset($_POST['user_mulitple_edit'])){
+      $this->multi_boxes = array();
+      foreach($this->attributes as $val){
+        if(isset($_POST["use_".$val])){
+          $this->multi_boxes[] = $val;
+        }
+      }
+      foreach(array("base","pw_storage","edit_picture") as $val){
+        if(isset($_POST["use_".$val])){
+          $this->multi_boxes[] = $val;
+        }
+      }
+    }
   }
 
   
@@ -1530,37 +1544,31 @@ class user extends plugin
     if($this->dn == "new") {
       $this->set_acl_base($this->base);
     }
-    if ($this->sn == ""){
-      $message[]= _("The required field 'Name' is not set.");
-    }
-    if ($this->givenName == ""){
-      $message[]= _("The required field 'Given name' is not set.");
-    }
-    if (!is_url($this->labeledURI) && $this->labeledURI != "{default}"){
+    if (!is_url($this->labeledURI) && in_array("labeledURI",$this->multi_boxes)){
       $message[]= _("The field 'Homepage' contains an invalid URL definition.");
     }
-    if (preg_match ("/[\\\\]/", $this->sn) && $this->sn != "{default}"){
+    if (preg_match ("/[\\\\]/", $this->sn) && in_array("sn",$this->multi_boxes)){
       $message[]= _("The field 'Name' contains invalid characters.");
     }
-    if (preg_match ("/[\\\\]/", $this->givenName) && $this->givenName != "{default}"){
+    if (preg_match ("/[\\\\]/", $this->givenName) && in_array("givenName",$this->multi_boxes)){
       $message[]= _("The field 'Given name' contains invalid characters.");
     }
-    if (!is_phone_nr($this->telephoneNumber) && $this->telephoneNumber != "{default}"){
+    if (!is_phone_nr($this->telephoneNumber) && in_array("telephoneNumber",$this->multi_boxes)){
       $message[]= _("The field 'Phone' contains an invalid phone number.");
     }
-    if (!is_phone_nr($this->facsimileTelephoneNumber) && $this->facsimileTelephoneNumber != "{default}"){
+    if (!is_phone_nr($this->facsimileTelephoneNumber) &&  in_array("facsimileTelephoneNumber",$this->multi_boxes)){
       $message[]= _("The field 'Fax' contains an invalid phone number.");
     }
-    if (!is_phone_nr($this->mobile) && $this->mobile != "{default}"){
+    if (!is_phone_nr($this->mobile) && in_array("mobile",$this->multi_boxes)){
       $message[]= _("The field 'Mobile' contains an invalid phone number.");
     }
-    if (!is_phone_nr($this->pager) && $this->pager != "{default}"){
+    if (!is_phone_nr($this->pager) && in_array("pager",$this->multi_boxes)){
       $message[]= _("The field 'Pager' contains an invalid phone number.");
     }
-    if (preg_match ('/[,+"?\'()=<>;]/', $this->givenName) && $this->givenName != "{default}"){
+    if (preg_match ('/[,+"?\'()=<>;]/', $this->givenName) && in_array("givenName",$this->multi_boxes)){
       $message[]= _("The field 'Given name' contains invalid characters.");
     }
-    if (preg_match ('/[,+"?\'()=<>;]/', $this->sn) && $this->sn != "{default}"){
+    if (preg_match ('/[,+"?\'()=<>;]/', $this->sn) && in_array("sn",$this->multi_boxes)){
       $message[]= _("The field 'Name' contains invalid characters.");
     }
     return($message);
