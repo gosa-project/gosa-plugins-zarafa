@@ -50,7 +50,7 @@ my ($known_daemons, $shmda, $known_clients, $shmcl, $known_modules);
 my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
-my ($arp_activ, $arp_fifo, $arp_fifo_path);
+my ($arp_activ, $arp_fifo, $arp_fifo_path, $no_arp);
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
@@ -76,6 +76,8 @@ $foreground = 0 ;
 $ping_timeout = 5;
 
 $no_bus = 0;
+
+$no_arp = 0;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_daemons = {};
@@ -1766,6 +1768,7 @@ GetOptions("h|help" => \&usage,
         "f|foreground" => \$foreground,
         "v|verbose+" => \$verbose,
         "no-bus+" => \$no_bus,
+        "no-arp+" => \$no_arp,
            );
 
 #  read and set config parameters
@@ -1843,6 +1846,9 @@ if($bus_activ eq "on") {
 daemon_log(" ", 1);
 
 # start arp fifo
+if ($no_arp > 0) {
+    $arp_activ = "off";
+}
 my $my_fifo;
 if($arp_activ eq "on") {
     $my_fifo = &open_fifo($arp_fifo_path);
