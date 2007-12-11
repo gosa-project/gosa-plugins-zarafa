@@ -61,8 +61,8 @@ $shmkh = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, "tester"],
-    "bus_port" => [\$bus_port, "10001"],
+    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_port" => [\$bus_port, "20080"],
     }
     );
 

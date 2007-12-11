@@ -112,7 +112,7 @@ our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1,
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
     "server_ip" => [\$server_ip, ""],
-    "server_port" => [\$server_port, "20082"],
+    "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
     },
@@ -123,7 +123,7 @@ our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1,
 "gosa" =>
     {"gosa_activ" => [\$gosa_activ, "on"],
     "gosa_ip" => [\$gosa_ip, ""],
-    "gosa_port" => [\$gosa_port, "20083"],
+    "gosa_port" => [\$gosa_port, "20082"],
     "gosa_passwd" => [\$gosa_passwd, "none"],
     },
     );

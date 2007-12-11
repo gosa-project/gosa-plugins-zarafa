@@ -54,14 +54,14 @@ $foreground = 0 ;
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
     },
 "client" => 
-    {"client_port" => [\$client_port, "10010"],
+    {"client_port" => [\$client_port, "20083"],
     },
 "server" =>
-    {"server_ip" => [\$server_ip, "10.89.1.155"],
-    "server_port" => [\$server_port, "10001"],
-    "server_passwd" => [\$server_passwd, "tester"],
+    {"server_ip" => [\$server_ip, ""],
+    "server_port" => [\$server_port, "20081"],
+    "server_passwd" => [\$server_passwd, ""],
     "server_timeout" => [\$server_timeout, 10],
-    "server_domain" => [\$server_domain, "intranet.gonicus.de"],
+    "server_domain" => [\$server_domain, ""],
     },
     );
 
