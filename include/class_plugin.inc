@@ -1754,7 +1754,7 @@ class plugin
         } else {
           $data= $this->$val = $_POST["$val"];
         }
-        if ($this->$val != $data && $data != "{default}"){
+        if ($this->$val != $data){
           $this->is_modified= TRUE;
         }
     
@@ -1762,9 +1762,7 @@ class plugin
         if(isset($data[0]) && $data[0] == chr(194)) {
           $data = "";  
         }
-        if($data != "{default}"){
-          $this->$val= $data;
-        }
+        $this->$val= $data;
       }
     }
   }
