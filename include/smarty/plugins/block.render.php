@@ -8,14 +8,59 @@ function smarty_block_render($params, $text, &$smarty)
 	}
 
 	/* Get acl parameter */
+	$acl = "";
 	if (isset($params['acl'])) {
 		$acl = $params['acl'];
-		unset($params['acl']);
 	}
 
+	/* Debug output */
 	if (isset($_SESSION['DEBUGLEVEL']) && $_SESSION['DEBUGLEVEL'] & DEBUG_ACL ){
 		echo "<font color='blue' size='2'>&nbsp;".$acl."</font>";
 	}
+
+
+
+	/* Parameter : checkbox, checked
+     *  If the parameter 'checkbox' is given, we create a html checkbox in front 
+     *   of the current object. 
+     *	The parameter 'checked' specifies whether the box is checked or not.
+     *  The checkbox disables or enables the current object.
+     */
+	if(isset($params['checkbox'])){
+
+		/* Detect name and id of the current object */
+		$use_text = preg_replace("/\n/"," ",$text);
+		$name = preg_replace('/^.* name[ ]*=[ ]*("|\')([^\"\' ]*).*$/i',"\\2",$use_text);	
+
+		/* Detect id */
+		if(preg_match("/ id=(\"|')[^\"']*(\"|')/i",$text)){
+			$id = preg_replace('/^.* id[ ]*=[ ]*("|\')([^\"\' ]*).*$/i',"\\2",$use_text);	
+		}else{
+			$id = "";
+		}
+		
+		/* Is the box checked? */
+		isset($params['checked'])&&$params['checked'] ? $check = " checked " : $check = "";
+
+		/* If name isset, we have a html input field */	
+		if(!empty($name)){
+
+			/* Print checkbox */
+			echo "<input type='checkbox' name='use_".$name."' ".$check." 
+					onClick=\"changeState('".$name."');\" class='center'>";
+
+			/* Disable current object, if checkbox isn't checked */
+			if($check == ""){
+				$text = preg_replace("/name=/i"," disabled name=",$text);
+			}
+			
+			/* Add id to current entry, if it is missing */
+			if($id == ""){
+				$text = preg_replace("/name=/i"," id=\"".$name."\" name=",$text);
+			}
+		}
+	}
+
 
 	/* Read / Write*/
 	if(preg_match("/w/i",$acl)){
