@@ -224,7 +224,7 @@ sub check_cmdline_param () {
         #$err_config = "please specify a config file";
         #$err_counter += 1;
         my $cwd = getcwd;
-        my $name = "gosa-sd.cfg";
+        my $name = "/etc/gosa/gosa-si-server.conf";
         $cfg_file = File::Spec->catfile( $cwd, $name );
         print STDERR "no conf file specified\n   try to use default: $cfg_file\n";       
     }
