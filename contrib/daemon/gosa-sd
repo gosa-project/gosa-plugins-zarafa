@@ -105,26 +105,25 @@ our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1,
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, "tester"],
-    "bus_ip" => [\$bus_ip, "10.89.1.155"],
-    "bus_port" => [\$bus_port, "10001"],
+    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_ip" => [\$bus_ip, ""],
+    "bus_port" => [\$bus_port, "20080"],
     },
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
     "server_ip" => [\$server_ip, ""],
-    "server_port" => [\$server_port, ""],
+    "server_port" => [\$server_port, "20082"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
     },
-
 "arp" =>
     {"arp_activ" => [\$arp_activ, "on"],
-    "arp_fifo_path" => [\$arp_fifo_path, "/tmp/arp_fifo"],
+    "arp_fifo_path" => [\$arp_fifo_path, "/var/run/gosa-si/arp-notify"],
     },
 "gosa" =>
     {"gosa_activ" => [\$gosa_activ, "on"],
-    "gosa_ip" => [\$gosa_ip, "10.89.1.155"],
-    "gosa_port" => [\$gosa_port, "9999"],
+    "gosa_ip" => [\$gosa_ip, ""],
+    "gosa_port" => [\$gosa_port, "20083"],
     "gosa_passwd" => [\$gosa_passwd, "none"],
     },
     );
