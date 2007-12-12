@@ -1,4 +1,2 @@
-usr/share/ltsp/plugins/ltsp-build-client/common
-usr/share/ltsp/scripts
+etc/gosa
 usr/sbin
-etc/default
