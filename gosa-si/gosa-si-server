@@ -550,8 +550,8 @@ sub get_processing_child {
                         #}
                     }        
 
-                    &print_known_daemons();
-                    &print_known_clients();
+                    #&print_known_daemons();
+                    #&print_known_clients();
 
                     daemon_log("processing of msg finished", 5);
 

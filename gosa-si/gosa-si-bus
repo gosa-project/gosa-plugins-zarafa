@@ -540,7 +540,7 @@ sub process_incoming_msg {
         }
     }
 
-    &print_known_daemons_hash();
+    #&print_known_daemons_hash();
     return;
 }
 
