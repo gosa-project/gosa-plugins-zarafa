@@ -39,8 +39,8 @@ use File::Spec;
 use IPC::Shareable qw( :lock);
 IPC::Shareable->clean_up_all;
 
-use lib "/etc/gosad/modules";
-my $modules_path = "/etc/gosad/modules";
+use lib "/etc/gosa-si/modules";
+my $modules_path = "/etc/gosa-si/modules";
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $ping_timeout, $no_bus);
 my ($bus, $msg_to_bus, $bus_cipher);
@@ -224,9 +224,8 @@ sub check_cmdline_param () {
         #$err_config = "please specify a config file";
         #$err_counter += 1;
         my $cwd = getcwd;
-        my $name = "/etc/gosa/gosa-si-server.conf";
+        my $name = "/etc/gosa-si/server.conf";
         $cfg_file = File::Spec->catfile( $cwd, $name );
-        print STDERR "no conf file specified\n   try to use default: $cfg_file\n";       
     }
     if( $err_counter > 0 ) {
         &usage( "", 1 );

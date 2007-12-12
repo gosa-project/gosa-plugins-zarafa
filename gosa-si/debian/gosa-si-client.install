@@ -1,2 +1,2 @@
 gosa-si-client		usr/sbin
-gosa-si-client.conf	etc/gosa
+client.conf		etc/gosa-si

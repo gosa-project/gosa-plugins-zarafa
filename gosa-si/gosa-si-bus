@@ -136,9 +136,8 @@ sub check_cmdline_param () {
     my $err_counter = 0;
     if( not defined( $cfg_file)) {
         my $cwd = getcwd;
-        my $name = "/etc/gosa/gosa-si-bus.conf";
+        my $name = "/etc/gosa-si/bus.conf";
         $cfg_file = File::Spec->catfile( $cwd, $name );
-        print STDERR "no conf file specified\n   try to use default: $cfg_file\n";
     }
     if( $err_counter > 0 ) {
         &usage( "", 1 );
