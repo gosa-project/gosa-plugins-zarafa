@@ -384,7 +384,6 @@ class tabs
       foreach($this->by_object as $name => $obj){
         if($obj->multiple_support){
           $this->by_object[$name]->multiple_support_active = TRUE;
-          $this->by_object[$name]->init_multiple_support();
         }else{
           unset($this->by_object[$name]);
           unset($this->by_name[$name]);

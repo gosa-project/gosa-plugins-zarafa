@@ -1690,18 +1690,22 @@ class plugin
   }
 
 
-  
-
-  function set_multi_edit_value()
-  {
-
-  }
-
-
   /*! \brief  Prepares the plugin to be used for multiple edit
+   *          Update plugin attributes with given array of attribtues.
+   *  @param  array   Array with attributes that must be updated.
    */
-  function init_multiple_support()
+  function init_multiple_support($attrs)
   {
+    $ldap= $this->config->get_ldap_link();
+    $this->attrs= $attrs;
+
+    /* Copy needed attributes */
+    foreach ($this->attributes as $val){
+      $found= array_key_ics($val, $this->attrs);
+      if ($found != ""){
+        $this->$val= $this->attrs["$found"][0];
+      }
+    }
   }
 
 

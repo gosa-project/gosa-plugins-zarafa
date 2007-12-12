@@ -110,7 +110,39 @@ class multi_plug
         $this->a_handles[] = $obj;
       }
     }
+
+    /* Detect attributes used by all plugins and set 
+     *  those values as default in edit handle 
+     */
+    $this->detect_multiple_used_attributes();
   }
+
+  
+  /*! \brief    Detect values that are used in all edited objects.
+   * @returns   array   All multiple used attributes
+   */  
+  private function detect_multiple_used_attributes()
+  {
+    $attrs = array();
+    restore_error_handler();
+    $first = $this->o_tab->current;
+    foreach($this->a_handles as $handle){
+      if(count($attrs) == 0){
+        $attrs = $handle->by_object[$first]->attrs;
+      }else{
+
+        foreach($attrs as $key => $attr){
+          if(!isset($handle->by_object[$first]->attrs[$key]) || !($attr === $handle->by_object[$first]->attrs[$key])){
+            unset($attrs[$key]);
+          }
+        }
+      }
+    }
+    foreach($this->o_tab->by_object as $name => $obj){
+      $this->o_tab->by_object[$name]->init_multiple_support($attrs);
+    }
+  }
+
 
   /*! \brief    Returns the edit ui for multiple edit.
      @return    string  HTML User interface for given tab object.
