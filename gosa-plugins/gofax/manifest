@@ -1,0 +1,6 @@
+[manifest]
+name    = gofax
+description = GOfax intetragion for GOsa.
+author  = Cajus Pollmeier <pollmeier@gonicus.de>
+version = 1.0
+depends = gosa-core

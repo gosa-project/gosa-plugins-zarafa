@@ -1,0 +1,175 @@
+#!/bin/sh
+
+plugin=$1
+TMPDIR=/tmp/dh-make-gosa.$$
+
+check_plugin() {
+	[[ -r $1/manifest ]]
+}
+
+parse_manifest() {
+	pl_name=gofax
+	pl_version=1.0
+	pl_description="GOfax integration for GOsa"
+	pl_depends=
+	pl_author="Cajus Pollmeier <pollmeier@gonicus.de>"
+}
+
+
+##############################################################################
+#                                    M A I N                                 #
+##############################################################################
+
+# Sanity check
+if ! check_plugin $plugin; then
+	echo "Failed"
+	exit 1
+fi
+parse_manifest $plugin
+
+# Create temporary copy
+echo "Creating temporary copy of plugin '$plugin'..."
+mkdir -p $TMPDIR
+cp -a $plugin/* $TMPDIR
+rm $TMPDIR/manifest
+find $TMPDIR -name '*.svn' -type d -exec rm -rf {} \; 2> /dev/null
+
+# Add debian infrastructure
+mkdir $TMPDIR/debian
+cat <<EOF > $TMPDIR/debian/changelog
+gosa-plugin-$pl_name ($pl_version-1) unstable; urgency=low
+
+  * Initial release
+
+ -- $pl_author  $(822-date)
+EOF
+
+echo 5 > $TMPDIR/debian/compat
+
+cat <<EOF > $TMPDIR/debian/control
+Source: gosa-plugin-$pl_name
+Section: utils
+Priority: optional
+Maintainer: $pl_author
+Standards-Version: 3.7.2.2
+Build-Depends: debhelper(>= 4.2.32)
+
+Package: gosa-plugin-$pl_name
+Architecture: any
+Depends: gosa-core $pl_depends
+Suggests: gosa
+Description: $pl_description
+ This package includes the $pl_name plugin for use with GOsa.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+EOF
+
+cat <<EOF > $TMPDIR/debian/copyright
+This package was debianized by $pl_author
+on $(822-date)
+
+Copyright: GPL2
+
+This code is released under the terms of the GPLv2 license.
+
+See /usr/share/common-licenses/GPL-2 for the full license.
+EOF
+
+dirs=$(find $TMPDIR -maxdepth 1 -type d | grep -v debian)
+for dir in $(echo $dirs); do
+	[[ $dir == $TMPDIR ]] && continue
+	dir=$(basename $dir)
+	echo usr/share/gosa/plugins/$dir >> $TMPDIR/debian/dirs
+	echo $dir usr/share/gosa/plugins >> $TMPDIR/debian/install
+done
+
+cat <<EOF > $TMPDIR/debian/README.Debian
+README.Debian for $pl_name
+--------------------------
+
+You need a proper LDAP/GOsa setup to make this run. More
+text will follow later. Sorry.
+
+----
+$pl_author  $(822-date)
+EOF
+
+cat <<EOF > $TMPDIR/debian/rules
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build: patch 
+	#********************************************************
+	#*   Building plugin into a Debian/GNU Linux Package    *
+	#*                    please stand by                   *
+	#********************************************************
+
+clean: clean-patched unpatch
+clean-patched:
+	dh_testdir
+	rm -f install-stamp 
+	-rm -f debian/files
+	-rm -rf debian/tmp
+	-rm -f debian/substvars
+	dh_clean
+
+unpatch:
+	dpatch deapply-all
+	rm -rf patch-stamp debian/patched
+
+install: install-stamp
+install-stamp: 
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	touch install-stamp
+
+patch: patch-stamp
+patch-stamp:
+	dpatch apply-all
+	dpatch cat-all >patch-stamp
+
+binary-indep: install
+	dh_testdir
+	dh_testroot
+	
+	dh_install
+	dh_installdocs 
+	dh_installcron
+	dh_installexamples
+	dh_installchangelogs
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms 
+	dh_perl
+	dh_installdeb
+	dh_shlibdeps
+	
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+source diff:                                                                  
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+binary: binary-indep 
+.PHONY: build install clean binary-indep binary
+
+binary-arch:
+
+EOF
+
+chmod +x $TMPDIR/debian/rules
+
+(cd $TMPDIR && dpkg-buildpackage -uc -us -rfakeroot)
+
+# Cleanup
+echo "Cleaning up..."
+#rm -rf "$TMPDIR"
