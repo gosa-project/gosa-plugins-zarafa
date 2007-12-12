@@ -123,7 +123,9 @@ class plugin
   var $CSN_check_active = FALSE;
 
   /* This variable indicates that this class can handle multiple dns at once. */
-  var $multiple_support = FALSE; 
+  var $multiple_support = FALSE;
+  var $multi_attrs      = array();
+  var $multi_attrs_all  = array(); 
 
   /* This aviable indicates, that we are currently in multiple edit handle */
   var $multiple_support_active = FALSE; 
@@ -1694,16 +1696,17 @@ class plugin
    *          Update plugin attributes with given array of attribtues.
    *  @param  array   Array with attributes that must be updated.
    */
-  function init_multiple_support($attrs)
+  function init_multiple_support($attrs,$all)
   {
     $ldap= $this->config->get_ldap_link();
-    $this->attrs= $attrs;
+    $this->multi_attrs    = $attrs;
+    $this->multi_attrs_all= $all;
 
     /* Copy needed attributes */
     foreach ($this->attributes as $val){
-      $found= array_key_ics($val, $this->attrs);
+      $found= array_key_ics($val, $this->multi_attrs);
       if ($found != ""){
-        $this->$val= $this->attrs["$found"][0];
+        $this->$val= $this->multi_attrs["$found"][0];
       }
     }
   }
@@ -1749,8 +1752,13 @@ class plugin
     }
 
     /* Save values to object */
+    $this->multi_boxes = array();
     foreach ($this->attributes as $val){
       if ($this->acl_is_writeable($val) && isset ($_POST["$val"])){
+
+        if(isset($_POST["use_".$val])){
+          $this->multi_boxes[] = $val;
+        }
 
         /* Check for modifications */
         if (get_magic_quotes_gpc()) {

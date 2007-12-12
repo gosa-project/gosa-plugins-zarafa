@@ -107,9 +107,6 @@ class user extends plugin
       "postalCode");
 
   var $multiple_support = TRUE;
-  var $multiple_user_handles  = array();
-
-  var $multi_boxes = array();
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
@@ -1513,12 +1510,6 @@ class user extends plugin
     }
 
     if(isset($_POST['user_mulitple_edit'])){
-      $this->multi_boxes = array();
-      foreach($this->attributes as $val){
-        if(isset($_POST["use_".$val])){
-          $this->multi_boxes[] = $val;
-        }
-      }
       foreach(array("base","pw_storage","edit_picture") as $val){
         if(isset($_POST["use_".$val])){
           $this->multi_boxes[] = $val;

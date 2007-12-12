@@ -79,6 +79,7 @@ class posixAccount extends plugin
   var $objectclasses= array("posixAccount", "shadowAccount");
 
   var $uid= "";
+  var $multiple_support = TRUE;
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
@@ -237,7 +238,11 @@ class posixAccount extends plugin
       $_SESSION['CurrentMainBase']= validate($_POST['depselect']);
     }
 
-    if(!$isCopyPaste){
+    if($this->multiple_support_active){
+      $this->is_account = TRUE;
+    }
+
+    if(!$isCopyPaste && ! $this->multiple_support_active){
 
       /* Do we need to flip is_account state? */
       if(isset($_POST['modify_state'])){
@@ -535,8 +540,23 @@ class posixAccount extends plugin
 
     $smarty->assign("force_idsACL", $this->getacl("uidNumber",$SkipWrite).$this->getacl("gidNumber",$SkipWrite));
 
+    foreach(array("primaryGroup") as $val){
+      if(in_array($val,$this->multi_boxes)){
+        $smarty->assign("use_".$val,TRUE);
+      }else{
+        $smarty->assign("use_".$val,FALSE);
+      }
+    }
+
+
     /* Load attributes and acl's */
     foreach($this->attributes as $val){
+      if(in_array($val,$this->multi_boxes)){
+        $smarty->assign("use_".$val,TRUE);
+      }else{
+        $smarty->assign("use_".$val,FALSE);
+      }
+
       if(($_SESSION["js"])&&(($val=="uidNumber")||($val=="gidNumber")))
       {
         $smarty->assign("$val"."ACL",$this->getacl($val,$SkipWrite));
@@ -585,6 +605,7 @@ class posixAccount extends plugin
     $smarty->assign("workstations", $this->accessTo);
 
     $smarty->assign("apply", apply_filter());
+    $smarty->assign("multiple_support" , $this->multiple_support_active);
     $display.= $smarty->fetch (get_template_path('generic.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
@@ -1345,6 +1366,12 @@ class posixAccount extends plugin
   }
 
 
+  function multiple_execute()
+  {
+    return($this->execute());
+  }
+
+
   static function plInfo()
   {
     return (array(
@@ -1371,6 +1398,34 @@ class posixAccount extends plugin
             "shadowExpire"        =>  _("Shadow expire"),
             "trustModel"          =>  _("System trust model")))
             );
+  }
+
+  function get_multi_edit_values()
+  {
+    $ret = plugin::get_multi_edit_values();
+    return($ret);
+  }
+
+
+  function multiple_save_object()
+  {
+    if(isset($_POST['posix_mulitple_edit'])){
+      plugin::multiple_save_object();
+      foreach(array("primaryGroup") as $val){
+        if(isset($_POST["use_".$val])){
+          $this->multi_boxes[] = $val;
+        }
+      }
+
+      /* Save primary group settings */
+      if($this->acl_is_writeable("primaryGroup") && isset($_POST['primaryGroup'])){
+        $data= $_POST['primaryGroup'];
+        if ($this->primaryGroup != $data){
+          $this->is_modified= TRUE;
+        }
+        $this->primaryGroup= $_POST['primaryGroup'];
+      }
+    }
   }
 }
 

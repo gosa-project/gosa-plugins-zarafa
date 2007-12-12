@@ -128,22 +128,31 @@ class multi_plug
   private function detect_multiple_used_attributes()
   {
     $attrs = array();
-    restore_error_handler();
+    $all   = array();
     $first = $this->o_tab->current;
     foreach($this->a_handles as $handle){
       if(count($attrs) == 0){
         $attrs = $handle->by_object[$first]->attrs;
       }else{
-
         foreach($attrs as $key => $attr){
           if(!isset($handle->by_object[$first]->attrs[$key]) || !($attr === $handle->by_object[$first]->attrs[$key])){
             unset($attrs[$key]);
+          }
+          if(!is_numeric($key)){
+            if(!isset($all[$key])){
+              $all[$key] = $attr; 
+            }elseif(isset($attr['count'])){
+              for($i = 0; $i < $attr['count'] ; $i ++){
+                $all[$key][] = $attr[$i];
+              }
+              $all[$key] = array_unique($all[$key]);
+            }
           }
         }
       }
     }
     foreach($this->o_tab->by_object as $name => $obj){
-      $this->o_tab->by_object[$name]->init_multiple_support($attrs);
+      $this->o_tab->by_object[$name]->init_multiple_support($attrs,$all);
     }
   }
 
