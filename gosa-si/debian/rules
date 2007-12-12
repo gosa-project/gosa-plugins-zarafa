@@ -54,7 +54,7 @@ binary-indep: install
 	dh_installexamples
 	dh_installchangelogs
 	#dh_installdebconf
-	#dh_installcron -p goto-agents-printmanager
+	dh_installinit --init-script=gosa-si
 	dh_link
 	dh_strip
 	dh_compress

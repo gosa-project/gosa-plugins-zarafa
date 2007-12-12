@@ -8,7 +8,7 @@ Build-Depends: debhelper(>= 4.2.32), dpatch
 Package: gosa-si-common
 Architecture: any
 Depends: libconfig-inifiles-perl, libcrypt-rijndael-perl, libxml-simple-perl, libipc-shareable-perl, libdata-dumper-simple-perl, libmime-perl
-Suggests: gosa-si-daemon, gosa-si-client
+Suggests: gosa-si-server, gosa-si-client
 Description: GOsa support infrastructure
  This package provides common library functionality used by the
  infrastructure server and client packages.
@@ -16,11 +16,11 @@ Description: GOsa support infrastructure
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
 
-Package: gosa-si-daemon
+Package: gosa-si-server
 Architecture: any
 Depends: gosa-si-common
 Suggests: gosa
-Description: GOsa support infrastructure daemon
+Description: GOsa support infrastructure server
  This package provides everything you need in order to deploy a simple
  or distributed GOsa support infrastructure. It can be used to trigger
  certain actions or retrieve information from clients.

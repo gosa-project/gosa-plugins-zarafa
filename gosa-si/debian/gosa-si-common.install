@@ -1,2 +1,2 @@
-modules/GosaPackages.pm		usr/share/perl5/GOSA/GosaPackages.pm
+modules/GosaPackages.pm		usr/share/perl5/GOSA
 debian/gosa-si			etc/default
