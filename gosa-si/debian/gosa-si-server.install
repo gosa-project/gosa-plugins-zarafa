@@ -1,5 +1,5 @@
 gosa-si-server			usr/sbin
 gosa-si-bus			usr/sbin
-gosa-si-server.conf-template	etc/gosa
-gosa-si-bus.conf-template	etc/gosa
+gosa-si-server.conf		etc/gosa
+gosa-si-bus.conf		etc/gosa
 modules/ServerPackages.pm       usr/share/perl5/GOSA/ServerPackages.pm
