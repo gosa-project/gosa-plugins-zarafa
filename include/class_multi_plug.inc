@@ -84,6 +84,10 @@ class multi_plug
    */
   public function __construct($config,$class,$tab,$dns,$acl_base,$acl_category)
   {
+    if(!count($dns)){
+      return;
+    }
+
     $this->dn       = $dns;
     $this->config   = $config;
     $this->s_class  = $class;
@@ -195,8 +199,12 @@ class multi_plug
      @return    boolean   Returns TRUE if the given tab objects supports multiple edit else FALSE.
    */
   public function multiple_available()
-  {
-    return($this->o_tab->multiple_support_available());
+  { 
+    if(isset($this->o_tab) && is_object($this->o_tab)){
+      return($this->o_tab->multiple_support_available());
+    }else{
+      return(FALSE);
+    }
   }
 
 

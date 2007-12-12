@@ -1465,13 +1465,6 @@ class user extends plugin
     return($ret);
   }
 
-
-  function init_multiple_support()
-  {
-    plugin::init_multiple_support();
-  }
-
-
   function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
