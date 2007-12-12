@@ -77,6 +77,8 @@ install-stamp:
 
 	# Install binaries
 	-mv debian/gosa/usr/share/gosa/bin/* debian/gosa/usr/bin
+	-mkdir debian/gosa/usr/sbin
+	-mv debian/gosa/usr/share/gosa/update-gosa debian/gosa/usr/sbin
 
 	# Install documentation
 	-for lang in en de fr nl; do mkdir -p debian/gosa-help-$$lang/usr/share/gosa/doc/guide/user/$$lang; done
@@ -107,6 +109,11 @@ install-stamp:
 	cp include/smarty/plugins/block.render.php debian/smarty-render/usr/share/php/smarty/libs/plugins
 	rm -rf debian/gosa/usr/share/gosa/include/smarty; \
 	sed -i "s%require(\"smarty/Smarty.class.php\");%require(\"$SMARTY_LOCATION/Smarty.class.php\");%g" debian/gosa/usr/share/gosa/include/php_setup.inc
+
+	# Configure update location
+	sed -i 's%include/class_location.inc%/etc/gosa/classes%g' debian/gosa/usr/sbin/update-gosa
+	sed -i 's%$class_mapping= get_classes();%$class_mapping= get_classes("/usr/share/gosa");%g' debian/gosa/usr/sbin/update-gosa
+	sed -i 's%class_location.inc%/etc/gosa/classes%g' debian/gosa/usr/share/gosa/include/functions.inc
 
 	# Fix permissions
 	-find debian/gosa -type f -exec chmod -x {} \; &> /dev/null

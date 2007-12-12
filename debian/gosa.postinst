@@ -49,6 +49,9 @@ for source in /usr/bin/convert /usr/bin/lpstat; do
 	fi
 done
 
+# Update gosa
+/usr/sbin/update-gosa
+
 # Finally restart servers
 for server in $servers; do
 	if [ -x /usr/sbin/invoke-rc.d ]; then
