@@ -363,10 +363,15 @@ sub register_at_bus {
     # create known_daemons entry
     &create_known_daemon($bus_address);
     &add_content2known_daemons(hostname=>$bus_address, status=>"register_at_bus", passwd=>$bus_passwd);
-    daemon_log("register at bus: $bus_address", 1);
 
     my $msg_hash = &create_xml_hash("here_i_am", "$server_ip:$server_port", $bus_address);
-    &send_msg_hash2address($msg_hash, $bus_address);
+    my $answer = "";
+    $answer = &send_msg_hash2address($msg_hash, $bus_address);
+    if ($answer == 0) {
+        daemon_log("register at bus: $bus_address", 1);
+    } else {
+        daemon_log("unable to send 'register'-msg to bus: $bus_address", 1);
+    }
     return;
 }
 
@@ -418,16 +423,6 @@ sub activating_child {
 
     print $pipe_wr $msg.".".$host."\n";
 
-#    if (defined $client) {
-#        my $rbits = "";
-#        vec($rbits, fileno $client, 1) = 1;
-#        
-#        my ($rout);
-#        my $nf = select($rout=$rbits, undef, undef, $gosa_timeout);
-#        if($gosa_activ eq "on" && vec($rout, fileno $gosa_server, 1)) {
-#            
-#        }
-#    }
     return;
 }
 
@@ -441,27 +436,6 @@ sub activating_child {
 #===============================================================================
 sub get_processing_child {
     my $child;
-    # checking %busy_child{pipe_wr} if msg is 'done', then set child from busy to free
-#    while(my ($key, $val) = each(%busy_child)) {
-#        # test ob prozess noch existiert
-#        my $exitus_pid = waitpid($key, WNOHANG);
-#        if($exitus_pid != 0) {
-#            delete $busy_child{$key};
-#            print "prozess:$key wurde aus busy_child entfernt\n";
-#            next;
-#        }
-#
-#        # check wether process sitll works
-#        my $fh = $$val{'pipe_rd'};
-#        $fh->blocking(0);
-#        my $child_answer;
-#        if(not $child_answer = <$fh>) { next }
-#        chomp($child_answer);
-#        if($child_answer eq "done") {
-#            delete $busy_child{$key};
-#            $free_child{$key} = $val;
-#        }
-#    }
 
     while(my ($key, $val) = each(%free_child)) {
         my $exitus_pid = waitpid($key, WNOHANG);
@@ -690,7 +664,6 @@ sub process_incoming_msg {
             elsif ($header eq 'who_has') { &who_has($msg_hash) }
             elsif ($header eq 'who_has_i_do') { &who_has_i_do($msg_hash)}
             elsif ($header eq 'update_status') { &update_status($msg_hash) }
-            #elsif ($header eq 'got_ping') { &got_ping($msg_hash)}
             elsif ($header eq 'get_load') { &execute_actions($msg_hash)}
             else { daemon_log("ERROR: no function assigned to this msg", 5) }
 
@@ -809,13 +782,6 @@ sub read_from_socket {
         $result .= $char;
     }
 
-#    my $len = 16;
-#    while($len == 16){
-#        my $char;
-#        $len = sysread($socket, $char, 16);
-#        if($len != 16) { last }
-#        $result .= $char;
-#    }
     return $result;
 }
 
@@ -975,7 +941,7 @@ sub send_msg_hash2address {
             
         } else {
             daemon_log("$address not known, neither as server nor as client", 1);
-            return;
+            return 1;
         }
     }
     
@@ -1001,7 +967,7 @@ sub send_msg_hash2address {
 
             }
         }
-        return;
+        return 1;
     }
     
     # send xml msg
@@ -1023,7 +989,7 @@ sub send_msg_hash2address {
         &update_known_clients(hostname=>$address, status=>$header);
     }
 
-    return;
+    return 0;
 }
 
 
@@ -1591,9 +1557,6 @@ sub print_known_clients {
 }
 
 
-
-
-
 #===  FUNCTION  ================================================================
 #         NAME:  create_known_client
 #   PARAMETERS:  hostname - string - key for the hash known_clients
@@ -1612,8 +1575,6 @@ sub create_known_client {
     $shmcl->shunlock(LOCK_EX); 
     return;  
 }
-
-
 
 
 #===  FUNCTION  ================================================================
@@ -1780,7 +1741,7 @@ $SIG{CHLD} = 'IGNORE';
 # restart daemon log file
 if(-e $log_file ) { unlink $log_file }
 daemon_log(" ", 1);
-daemon_log("gosad started!", 1);
+daemon_log("gosa-si-server started!", 1);
 
 # Just fork, if we"re not in foreground mode
 if( ! $foreground ) { $pid = fork(); }
@@ -1824,8 +1785,7 @@ if($server_activ eq "on"){
     if(not defined $server){
         daemon_log("cannot be a tcp server at $server_port : $@");
     } else {
-        daemon_log("start server:", 1);
-        daemon_log("\t$server_ip:$server_port",1) ;
+        daemon_log("start server: $server_address", 1);
         vec($rbits, fileno $server, 1) = 1;
         vec($wbits, fileno $server, 1) = 1;
     }
@@ -1841,14 +1801,13 @@ if($bus_activ eq "on") {
 }
 
 
-daemon_log(" ", 1);
-
 # start arp fifo
 if ($no_arp > 0) {
     $arp_activ = "off";
 }
 my $my_fifo;
 if($arp_activ eq "on") {
+    daemon_log(" ", 1);
     $my_fifo = &open_fifo($arp_fifo_path);
     if($my_fifo == 0) { die "fifo file disappeared\n" }
     sysopen($arp_fifo, $arp_fifo_path, O_RDWR) or die "can't read from $arp_fifo: $!" ;
@@ -1868,20 +1827,10 @@ if ($gosa_activ eq "on") {
     if (not defined $gosa_server) {
         daemon_log("cannot start tcp server at $gosa_port for communication to gosa: $@", 1);
     } else {
-        daemon_log("start server at for communication to gosa", 1);
-        daemon_log("\t$server_ip:$gosa_port");
+        daemon_log("start server at for communication to gosa: $gosa_address", 1);
         vec($rbits, fileno $gosa_server, 1) = 1;
         
     }
-
-
-    #&open_fifo($gosa_fifo_in);
-    #sysopen(GOSA_FIFO_IN, $gosa_fifo_in, O_RDWR) or die "can't read from GOSA_FIFO_IN: $!" ;
-    #vec($rbits, fileno GOSA_FIFO_IN, 1) = 1;
-
-    #&open_fifo($gosa_fifo_out);
-    #sysopen(GOSA_FIFO_OUT, $gosa_fifo_out, O_RDWR) or die "can't read from GOSA_FIFO_IN: $!" ;
-    
 }
 
 
@@ -1970,7 +1919,6 @@ while(1) {
             my $in_msg = <$client>;
             #my $in_msg = &read_from_socket($client);
             
-            daemon_log(">>>>>>>>>>> frisch vom socket gelesen\n!$in_msg!\n",1);
             if(defined $in_msg){
                 chomp($in_msg);
                 &activating_child($in_msg, $actual_ip, $client);

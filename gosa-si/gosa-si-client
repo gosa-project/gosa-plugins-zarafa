@@ -343,10 +343,9 @@ sub register_at_server {
 
         # send xml hash to server with general server passwd
         my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);
-        
-        # sending fails, no sens to wait for response
-        if ($answer ne "done") { next; }
-    
+ 
+        if ($answer != 0) { next; }
+       
         # waiting for response
         daemon_log("waiting for response...\n", 5);
         my $nf = select($rout=$rbits, $wout=$wbits, undef, $server_timeout);
@@ -384,7 +383,7 @@ sub register_at_server {
                 daemon_log("ERROR: do not understand the incoming message:" , 5);  
                 daemon_log("$@", 7); 
             } else {
-                my $header = &get_content_from_xml_hash($msg_hash, "header");
+                my $header = @{$msg_hash->{header}}[0];
                 if($header eq "registered") {
                     $reg_server = $server;
                     last;
@@ -396,7 +395,7 @@ sub register_at_server {
                 }
             }
         }
-        # kommt antwort nicht, dann probiere es mit dem nächsten in der liste
+        # if no answer arrive, try next server in list
 
     }
     
@@ -422,19 +421,19 @@ sub register_at_server {
 #      RETURNS:
 #  DESCRIPTION:
 #===============================================================================
-sub create_xml_hash {
-    my ($header, $source, $target, $header_value) = @_;
-    my $hash = {
-            header => [$header],
-            source => [$source],
-            target => [$target],
-            $header => [$header_value],
-    };
-    daemon_log("create_xml_hash:", 7),
-    chomp(my $tmp = Dumper $hash);
-    daemon_log("\t$tmp\n", 7);
-    return $hash
-}
+#sub create_xml_hash {
+#    my ($header, $source, $target, $header_value) = @_;
+#    my $hash = {
+#            header => [$header],
+#            source => [$source],
+#            target => [$target],
+#            $header => [$header_value],
+#    };
+#    daemon_log("create_xml_hash:", 7),
+#    chomp(my $tmp = Dumper $hash);
+#    daemon_log("\t$tmp\n", 7);
+#    return $hash
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -443,13 +442,13 @@ sub create_xml_hash {
 #      RETURNS:
 #  DESCRIPTION:
 #===============================================================================
-sub create_xml_string {
-    my ($xml_hash) = @_ ;
-    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-    $xml_string =~ s/[\n]+//g;
-    daemon_log("create_xml_string:\n\t$xml_string\n", 7);
-    return $xml_string;
-}
+#sub create_xml_string {
+#    my ($xml_hash) = @_ ;
+#    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
+#    $xml_string =~ s/[\n]+//g;
+#    daemon_log("create_xml_string:\n\t$xml_string\n", 7);
+#    return $xml_string;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -458,15 +457,15 @@ sub create_xml_string {
 #      RETURNS:
 #  DESCRIPTION:
 #===============================================================================
-sub add_content2xml_hash {
-    my ($xml_ref, $element, $content) = @_;
-    if(not exists $$xml_ref{$element} ) {
-        $$xml_ref{$element} = [];
-    }
-    my $tmp = $$xml_ref{$element};
-    push(@$tmp, $content);
-    return;
-}
+#sub add_content2xml_hash {
+#    my ($xml_ref, $element, $content) = @_;
+#    if(not exists $$xml_ref{$element} ) {
+#        $$xml_ref{$element} = [];
+#    }
+#    my $tmp = $$xml_ref{$element};
+#    push(@$tmp, $content);
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -478,14 +477,14 @@ sub add_content2xml_hash {
 #                function returns a string cause it is expected that these keys
 #                do just have one value, all other keys returns an array!!!
 #===============================================================================
-sub get_content_from_xml_hash {
-    my ($xml_ref, $element) = @_;
-    my $result = $xml_ref->{$element};
-    if( $element eq "header" || $element eq "target" || $element eq "source") {
-        return @$result[0];
-    }
-    return @$result;
-}
+#sub get_content_from_xml_hash {
+#    my ($xml_ref, $element) = @_;
+#    my $result = $xml_ref->{$element};
+#    if( $element eq "header" || $element eq "target" || $element eq "source") {
+#        return @$result[0];
+#    }
+#    return @$result;
+#}
 
 #    my ($xml_ref, $element) = @_;
 #    if (exists $xml_ref->{$element}) {
@@ -509,14 +508,14 @@ sub get_content_from_xml_hash {
 #      RETURNS:
 #  DESCRIPTION:
 #===============================================================================
-sub encrypt_msg {
-    my ($msg, $my_cipher) = @_;
-    if(not defined $my_cipher) { print "no cipher object\n"; }
-    $msg = "\0"x(16-length($msg)%16).$msg;
-    my $crypted_msg = $my_cipher->encrypt($msg);
-    chomp($crypted_msg = &encode_base64($crypted_msg));
-    return $crypted_msg;
-}
+#sub encrypt_msg {
+#    my ($msg, $my_cipher) = @_;
+#    if(not defined $my_cipher) { print "no cipher object\n"; }
+#    $msg = "\0"x(16-length($msg)%16).$msg;
+#    my $crypted_msg = $my_cipher->encrypt($msg);
+#    chomp($crypted_msg = &encode_base64($crypted_msg));
+#    return $crypted_msg;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -525,13 +524,13 @@ sub encrypt_msg {
 #      RETURNS:
 #  DESCRIPTION:
 #===============================================================================
-sub decrypt_msg {
-    my ($crypted_msg, $my_cipher) = @_ ;
-    $crypted_msg = &decode_base64($crypted_msg);
-    my $msg = $my_cipher->decrypt($crypted_msg); 
-    $msg =~ s/\0*//g;
-    return $msg;
-}
+#sub decrypt_msg {
+#    my ($crypted_msg, $my_cipher) = @_ ;
+#    $crypted_msg = &decode_base64($crypted_msg);
+#    my $msg = $my_cipher->decrypt($crypted_msg); 
+#    $msg =~ s/\0*//g;
+#    return $msg;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -540,17 +539,17 @@ sub decrypt_msg {
 #      RETURNS:  cipher object
 #  DESCRIPTION:  
 #===============================================================================
-sub create_ciphering {
-    my ($passwd) = @_;
-    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-
-    #daemon_log("iv: $iv", 7);
-    #daemon_log("key: $passwd", 7);
-    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-    $my_cipher->set_iv($iv);
-    return $my_cipher;
-}
+#sub create_ciphering {
+#    my ($passwd) = @_;
+#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+#
+#    #daemon_log("iv: $iv", 7);
+#    #daemon_log("key: $passwd", 7);
+#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+#    $my_cipher->set_iv($iv);
+#    return $my_cipher;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -577,52 +576,52 @@ sub create_passwd {
 #      RETURNS:  nothing
 #  DESCRIPTION:  ????
 #===============================================================================
-sub send_msg_hash2address {
-    my ($msg_hash, $address, $passwd) = @_ ;
-
-    # fetch header for logging
-    my $header = @{$msg_hash->{header}}[0];
-
-    # generiere xml string
-    my $msg_xml = &create_xml_string($msg_hash);
-
-    # hole das entsprechende passwd aus dem hash
-    if(not defined $passwd) {
-        if(exists $known_hosts->{$address}) {
-            $passwd = $known_hosts->{$address}->{passwd};
-        } elsif ($address eq $server_address) {
-            $passwd = $server_passwd;
-        } else {
-            daemon_log("$address not known, neither as server nor as client", 1);
-            return "failed";
-        }
-    }
-
-    # erzeuge ein ciphering object
-    my $act_cipher = &create_ciphering($passwd);
-
-    # encrypt xml msg
-    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
-
-    # öffne socket
-    my $socket = &open_socket($address);
-    if(not defined $socket){
-        daemon_log("cannot open socket to $address, server not reachable", 1);
-        daemon_log("cannot send '$header'-msg", 1);
-        return "failed";
-    }
-
-    # versende xml msg
-    print $socket $crypted_msg."\n";
-
-    # schließe socket
-    close $socket;
-
-    daemon_log("send '$header'-msg to $address", 5);
-    daemon_log("crypted_msg:\n\t$crypted_msg", 7);
-
-    return "done";
-}
+#sub send_msg_hash2address {
+#    my ($msg_hash, $address, $passwd) = @_ ;
+#
+#    # fetch header for logging
+#    my $header = @{$msg_hash->{header}}[0];
+#
+#    # generiere xml string
+#    my $msg_xml = &create_xml_string($msg_hash);
+#
+#    # hole das entsprechende passwd aus dem hash
+#    if(not defined $passwd) {
+#        if(exists $known_hosts->{$address}) {
+#            $passwd = $known_hosts->{$address}->{passwd};
+#        } elsif ($address eq $server_address) {
+#            $passwd = $server_passwd;
+#        } else {
+#            daemon_log("$address not known, neither as server nor as client", 1);
+#            return "failed";
+#        }
+#    }
+#
+#    # erzeuge ein ciphering object
+#    my $act_cipher = &create_ciphering($passwd);
+#
+#    # encrypt xml msg
+#    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
+#
+#    # öffne socket
+#    my $socket = &open_socket($address);
+#    if(not defined $socket){
+#        daemon_log("cannot open socket to $address, server not reachable", 1);
+#        daemon_log("cannot send '$header'-msg", 1);
+#        return "failed";
+#    }
+#
+#    # versende xml msg
+#    print $socket $crypted_msg."\n";
+#
+#    # schließe socket
+#    close $socket;
+#
+#    daemon_log("send '$header'-msg to $address", 5);
+#    daemon_log("crypted_msg:\n\t$crypted_msg", 7);
+#
+#    return "done";
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -1015,7 +1014,8 @@ GetOptions("h|help" => \&usage,
 
 # restart daemon log file
 if(-e $log_file ) { unlink $log_file }
-daemon_log("started!");
+daemon_log(" ", 1);
+daemon_log("$0 started!", 1);
 
 # Just fork, if we"re not in foreground mode
 if( ! $foreground ) { $pid = fork(); }
@@ -1047,6 +1047,7 @@ $client_address = $client_ip.":".$client_port;
 $xml = new XML::Simple();
 
 # create input socket
+daemon_log(" ", 1);
 $rbits = $wbits = $ebits = "";
 $input_socket = IO::Socket::INET->new(LocalPort => $client_port,
         Type => SOCK_STREAM,
@@ -1056,12 +1057,13 @@ $input_socket = IO::Socket::INET->new(LocalPort => $client_port,
 if(not defined $input_socket){
     daemon_log("cannot be a tcp server at $client_port : $@\n");
 } else {
-    daemon_log("start server:\n\t$server_ip:$client_port",1) ;
+    daemon_log("start client at $client_address",1) ;
     vec($rbits, fileno $input_socket, 1) = 1;
     vec($wbits, fileno $input_socket, 1) = 1;
 }
 
 # register at server
+daemon_log(" ", 1);
 &register_at_server();
 
 
