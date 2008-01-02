@@ -13,6 +13,7 @@ use MIME::Base64;
 use XML::Simple;
 
 
+
 BEGIN {}
 
 END {}
@@ -233,7 +234,7 @@ sub add_content2xml_hash {
 sub create_xml_string {
     my ($xml_hash) = @_ ;
     my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-    $xml_string =~ s/[\n]+//g;
+    #$xml_string =~ s/[\n]+//g;
     #daemon_log("create_xml_string:",7);
     #daemon_log("$xml_string\n", 7);
     return $xml_string;
@@ -317,6 +318,17 @@ sub open_socket {
     &daemon_log("\t$PeerAddr", 7);
     return $socket;
 }
+
+
+1;
+
+
+
+
+
+
+
+
 
 
 

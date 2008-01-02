@@ -338,7 +338,7 @@ sub register_at_server {
         # create msg hash
         my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
         &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
-        &add_content2xml_hash($register_hash, "client_mac_address", $client_mac_address);
+        &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
         &add_content2xml_hash($register_hash, "events", $events);
 
         # send xml hash to server with general server passwd
@@ -820,12 +820,13 @@ sub process_incoming_msg {
         return;
     } 
 
-    my $header = &get_content_from_xml_hash($msg_hash, "header");
+    my $header = @{$msg_hash->{header}}[0];
     
-    daemon_log("header from msg:", 1);
-    daemon_log("\t$header", 1);
-    daemon_log("msg to process:", 7);
-    daemon_log("\t$msg", 7);
+    daemon_log("recieve '$header' from $host", 1);
+#    daemon_log("header from msg:", 1);
+#    daemon_log("\t$header", 1);
+#    daemon_log("msg to process:", 7);
+#    daemon_log("\t$msg", 7);
 
     #check whether msg to process is a event 
     opendir(DIR, $event_dir) 
