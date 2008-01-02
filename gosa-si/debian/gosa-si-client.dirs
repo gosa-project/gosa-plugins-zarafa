@@ -1,3 +1,3 @@
 etc/gosa-si
 usr/sbin
-etc/gosa-si/client/events
+usr/lib/gosa-si/client/events

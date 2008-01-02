@@ -11,5 +11,5 @@ case "$1" in
         *)                     exit 0;
 esac
 
-[ ! -d /etc/gosa-si/client/events ] && install -d -o root -g root -m 750 /etc/gosa-si/client/events
+[ ! -d /var/lib/gosa-si ] && install -d -o root -g root -m 750 /var/lib/gosa-si
 
