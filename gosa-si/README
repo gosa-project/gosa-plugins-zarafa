@@ -1,8 +1,10 @@
 
+/usr/share/perl5/GOSA
 common:
 - GosaSupportDaemon.pm
 - DBsqlite.pm
 
+/usr/lib/gosa-si/modules
 server-module:
 - ArpPackages.pm
 - GosaPackages.pm
@@ -10,16 +12,18 @@ server-module:
 - FAIPackages.pm
 
 server-events:
+/usr/lib/gosa-si/server
 - ping
 
 client-events:
+/usr/lib/gosa-si/client
 
 config-files: /etc/gosa-si/
 - bus.conf
 - client.conf
 - server.conf
 
-
+/var/lib/gosa-si
 db's:
 - jobs.db
 
