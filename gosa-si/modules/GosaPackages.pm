@@ -27,7 +27,7 @@ my $job_queue_table_name = 'jobs';
 
 my %cfg_defaults = 
 ("general" =>
-    {"job_queue_file_name" => [\$job_queue_file_name, '/tmp/jobs.db'],
+    {"job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     },
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
