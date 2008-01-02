@@ -32,10 +32,16 @@ install-stamp:
 
 	# Create a copy, remove svn stuff
 	-mkdir debian/tmp
-	-for i in `ls | grep -v debian`; do \
+	-for i in *; do \
 		cp -R $$i debian/tmp ; \
 	done
 	-find debian/tmp -name '*.svn' -type d -exec rm -rf {} \; 2> /dev/null
+
+	-for i in gosa-si-client gosa-si-server modules/GosaPackages.pm modules/ServerPackages.pm modules/TestModule.pm; do sed -i 's/use GosaSupportDaemon;/use GOSA::GosaSupportDaemon;/g;s/use DBsqlite;/use GOSA::DBsqlite;/g' debian/tmp/$$i; done
+
+	-sed -i 's!use lib "/etc/gosa-si/modules";!use lib "/usr/lib/gosa-si/modules";!g;s!my $modules_path = "/etc/gosa-si/modules";!my $modules_path = "/usr/lib/gosa-si/modules";!g' debian/tmp/gosa-si-server
+
+	-sed -i 's!"/etc/gosa-si/server/events";!"/usr/lib/gosa-si/server/events";!g' debian/tmp/modules/GosaPackages.pm
 
 	touch install-stamp
 
@@ -48,7 +54,7 @@ binary-indep: install
 	dh_testdir
 	dh_testroot
 	
-	dh_install
+	dh_install --sourcedir=debian/tmp
 	dh_installdocs 
 	dh_installcron
 	dh_installexamples

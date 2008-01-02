@@ -20,7 +20,7 @@ my ($gosa_activ, $gosa_ip, $gosa_port, $gosa_passwd);
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
-my $event_dir = "/home/rettenbe/gonicus/projekte/gosa-trunk/gosa-si/server/events";
+my $event_dir = "/etc/gosa-si/server/events";
 
 # name of table for storing gosa jobs
 my $job_queue_table_name = 'jobs';

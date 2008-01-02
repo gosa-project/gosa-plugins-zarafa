@@ -112,7 +112,7 @@ our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1,
     "child_min" => [\$child_min, 3],
     "child_timeout" => [\$child_timeout, 180],
     "job_queue_timeout" => [\$job_queue_timeout, undef],
-    "job_queue_file_name" => [\$job_queue_file_name, '/tmp/jobs.db'],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
