@@ -3,3 +3,6 @@ gosa-si-bus			usr/sbin
 server.conf			etc/gosa-si
 bus.conf			etc/gosa-si
 modules/ServerPackages.pm       usr/share/perl5/GOSA
+modules/DBsqlite.pm             usr/share/perl5/GOSA
+modules/GosaPackages.pm         usr/share/perl5/GOSA
+modules/GosaSupportDaemon.pm    usr/share/perl5/GOSA
