@@ -1,0 +1,25 @@
+
+common:
+- GosaSupportDaemon.pm
+- DBsqlite.pm
+
+server-module:
+- ArpPackages.pm
+- GosaPackages.pm
+- ServerPackages.pm
+- FAIPackages.pm
+
+server-events:
+- ping
+
+client-events:
+
+config-files: /etc/gosa-si/
+- bus.conf
+- client.conf
+- server.conf
+
+
+db's:
+- jobs.db
+
