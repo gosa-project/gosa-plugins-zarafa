@@ -1118,7 +1118,6 @@ while(1) {
     }
 
     # check gosa job queue for jobs with executable timestamp
-    print ">>>>>>>>>>>check gosa job queue ";
     my ($seconds, $minutes, $hours, $monthday, $month,
     $year, $weekday, $yearday, $sommertime) = localtime(time);
     $hours = $hours < 10 ? $hours = "0".$hours : $hours;
@@ -1129,7 +1128,6 @@ while(1) {
     $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
     $year+=1900;
     my $timestamp = "$year$month$monthday$hours$minutes$seconds";
-    print "$timestamp\n";
     
     
     my $sql = "SELECT * FROM '$job_queue_table_name' WHERE status='waiting' AND timestamp<'$timestamp'";

@@ -343,7 +343,7 @@ sub send_msg ($$$$) {
 		}
 	}
 
-	&send_msg_hash2address($out_hash, $address);
+	&send_msg_hash2address($out_hash, $to);
 }
 
 1;
