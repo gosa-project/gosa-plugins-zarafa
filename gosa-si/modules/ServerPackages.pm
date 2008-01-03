@@ -8,7 +8,7 @@ use Exporter;
 
 use strict;
 use warnings;
-use GosaSupportDaemon;
+use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
 

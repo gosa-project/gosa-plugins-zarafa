@@ -1,4 +1,4 @@
-package GosaSupportDaemon;
+package GOSA::GosaSupportDaemon;
 
 use Exporter;
 @ISA = qw(Exporter);

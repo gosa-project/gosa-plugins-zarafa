@@ -38,10 +38,11 @@ use Cwd;
 use File::Spec;
 use IPC::Shareable qw( :lock);
 IPC::Shareable->clean_up_all;
-use GosaSupportDaemon;
+use GOSA::GosaSupportDaemon;
+use GOSA::DBsqlite;
 
-use lib "/etc/gosa-si/modules";
-my $modules_path = "/etc/gosa-si/modules";
+my $modules_path = "/usr/lib/gosa-si/modules";
+use lib "/usr/lib/gosa-si/modules";
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
@@ -967,7 +968,7 @@ close( LOCK_FILE );
 # check wether all modules are gosa-si valid passwd check
 
 # connect to gosa-si job queue
-my $job_db = DBsqlite->new($job_queue_file_name);
+my $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 
 # create reading and writing vectors
 my $rbits = my $wbits = my $ebits = "";

@@ -5,11 +5,11 @@ use Exporter;
 
 use strict;
 use warnings;
-use GosaSupportDaemon;
+use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
 use File::Spec;
-use DBsqlite;
+use GOSA::DBsqlite;
 
 BEGIN{}
 END{}
@@ -87,7 +87,7 @@ if ($gosa_activ eq "on") {
 my @col_names = ("id", "timestamp", "status", "result", "header", 
                 "target", "xml", "mac");
 my $table_name = "jobs";
-my $sqlite = DBsqlite->new($job_queue_file_name);
+my $sqlite = GOSA::DBsqlite->new($job_queue_file_name);
 $sqlite->create_table($table_name, \@col_names);
 
 

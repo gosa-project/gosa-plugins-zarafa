@@ -35,7 +35,7 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use File::Spec;
 use Cwd;
-use GosaSupportDaemon;
+use GOSA::GosaSupportDaemon;
 
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
