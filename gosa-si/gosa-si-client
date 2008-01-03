@@ -997,6 +997,7 @@ sub new_ldap_config {
     	print file2 " $element";
     }
     print file "\nbase $ldap_base\n";
+    print file2 "\nbase $ldap_base\n";
     foreach $element (@pam_options) {
     	print file "$element";
     }
