@@ -320,15 +320,30 @@ sub open_socket {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME: send_msg
+#  DESCRIPTION: Send a message to a destination
+#   PARAMETERS: [header] Name of the header
+#               [from]   sender ip
+#               [to]     recipient ip
+#               [data]   Hash containing additional attributes for the xml
+#                        package
+#      RETURNS:  nothing
+#===============================================================================
+sub send_msg ($$$$) {
+	my ($header, $from, $to, $data) = @_;
+
+	my $out_hash = &create_xml_hash($header, $from, $to);
+
+	while ( my ($key, $value) = each(%$data) ) {
+		if(ref($value) eq 'ARRAY'){
+			map(&add_content2xml_hash($out_hash, $key, $_), @$value);
+		} else {
+			&add_content2xml_hash($out_hash, $key, $value);
+		}
+	}
+
+	&send_msg_hash2address($out_hash, $address);
+}
+
 1;
-
-
-
-
-
-
-
-
-
-
-

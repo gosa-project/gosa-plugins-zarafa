@@ -11,12 +11,13 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
+use Net::LDAP;
 
 BEGIN{}
 END {}
 
 
-my ($server_activ, $server_port, $server_passwd, $max_clients);
+my ($server_activ, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $no_bus;
@@ -27,6 +28,10 @@ my %cfg_defaults =
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
+    "ldap_uri" => [\$ldap_uri, ""],
+    "ldap_base" => [\$ldap_base, ""],
+    "ldap_admin_dn" => [\$ldap_admin_dn, ""],
+    "ldap_admin_password" => [\$ldap_admin_password, ""],
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -522,65 +527,67 @@ sub new_ldap_config {
         return;
     }
 
-    # fetch dn
-    my $goHard_cmd = "ldapsearch -x '(&(objectClass=goHard)(macAddress=00:11:22:33:44:57))' dn gotoLdapServer";
-    my $dn;
-    my @gotoLdapServer;
-    open (PIPE, "$goHard_cmd 2>&1 |");
-#    my $rbits = "";
-#    vec($rbits, fileno PIPE, 1) = 1;
-#    my $rout;
-#    my $nf = select($rout=$rbits, undef, undef, $ldap_timeout);
-    while(<PIPE>) {
-        chomp $_;
-        # If it's a comment, goto next
-        if ($_ =~ m/^[#]/) { next;}
-        if ($_ =~ m/^dn: ([\S]+?)$/) {
-            $dn = $1;
-        } elsif ($_ =~ m/^gotoLdapServer: ([\S]+?)$/) {
-            push(@gotoLdapServer, $1);
-        }
-    }
-    close(PIPE);
-    
-    # no dn found
-    if (not defined $dn) {
-        &main::daemon_log("ERROR: no dn arose from command: $goHard_cmd", 1);
+	# Build LDAP connection
+	my $ldap;
+	$ldap= Net::LDAP->new($ldap_uri);
+
+	# Bind to a directory with dn and password
+	my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
+
+	# Perform search
+	$mesg = $ldap->search( base   => $ldap_base,
+                       scope  => 'sub',
+                       attrs => ['dn', 'gotoLdapServer'],
+                       filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
+	$mesg->code && die $mesg->error;
+
+	# Sanity check
+	if ($mesg->count != 1) {
+        &main::daemon_log("WARNING: client mac address $mac_address not found/not unique", 1);
         return;
-    }
-    
-    # no gotoLdapServer found
-    my $gosaGroupOfNames_cmd = "ldapsearch -x '(&(objectClass=gosaGroupOfNames)(member=$dn))' gotoLdapServer";
-    if (@gotoLdapServer == 0) {
-        open (PIPE, "$gosaGroupOfNames_cmd 2>&1 |");
-        while(<PIPE>) {
-            chomp $_;
-            if ($_ =~ m/^[#]/) { next; }
-            if ($_ =~ m/^gotoLdapServer: ([\S]+?)$/) {
-                push(@gotoLdapServer, $1);
-            }
+	}
+
+	my $entry= $mesg->entry(0);
+	my $dn= $entry->dn;
+	my @servers= $entry->get_value("gotoLdapServer");
+	my @ldap_uris;
+	my $server;
+	my $base;
+
+	# Do we need to look at an object class?
+	if ($#servers < 1){
+        $mesg = $ldap->search( base   => $ldap_base,
+                               scope  => 'sub',
+                               attrs => ['dn', 'gotoLdapServer'],
+                               filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+        $mesg->code && die $mesg->error;
+
+        # Sanity check
+        if ($mesg->count != 1) {
+				&main::daemon_log("WARNING: no LDAP information found for client mac $mac_address", 1);
+				return;
         }
-        close(PIPE);
-    }
 
-    # still no gotoLdapServer found
-    if (@gotoLdapServer == 0) {
-        &main::daemon_log("ERROR: cannot find gotoLdapServer entry in command: $gosaGroupOfNames_cmd", 1);
-        return;
-    }
+        $entry= $mesg->entry(0);
+        $dn= $entry->dn;
+        @servers= $entry->get_value("gotoLdapServer");
+	}
 
-    # sort @gotoLdapServer and then split of ranking
-    my @sorted_gotoLdapServer = sort(@gotoLdapServer);
-    @gotoLdapServer = reverse(@sorted_gotoLdapServer);
-    foreach (@gotoLdapServer) {
-        $_ =~ s/^\d://;
-    }
+	@servers= sort (@servers);
 
-    my $t = join(" ", @gotoLdapServer);
- 
-    my $out_hash = &create_xml_hash("new_ldap_config", $server_address, $address);
-    map(&add_content2xml_hash($out_hash, "new_ldap_config", $_), @gotoLdapServer);
-    &send_msg_hash2address($out_hash, $address);
+	foreach $server (@servers){
+        $base= $server;
+        $server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;
+        $base =~ s%^[^:]+:[^:]+:ldap.*://[^/]+/(.*)$%$1%;
+        push (@ldap_uris, $server);
+	}
+
+	# Unbind
+	$mesg = $ldap->unbind;
+
+    # Send information
+    my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base );
+    send_msg("new_ldap_config", $server_address, $address, \%data);
 
     return;
 }
