@@ -41,7 +41,7 @@ use GOSA::GosaSupportDaemon;
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
 my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
 my ($client_address, $client_ip, $client_port, $client_mac_address, $ldap_config, $pam_config, $nss_config);
-my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts);
+my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts, $ldap_enabled);
 my (@events);
 
 # default variables
@@ -55,6 +55,7 @@ $foreground = 0 ;
     },
 "client" => 
     {"client_port" => [\$client_port, "20083"],
+     "ldap" => [\$ldap_enabled, 1],
      "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
      "nss_config" => [\$nss_config, "/etc/libnss_ldap.conf"],
@@ -858,9 +859,7 @@ sub process_incoming_msg {
     close(DIR);
     daemon_log("could not assign the msg $header to an event", 5);
     
-
-
-    if ($header eq 'new_ldap_config') { &new_ldap_config($msg_hash)}
+    if ($header eq 'new_ldap_config') { if ($ldap_enabled == 1) {&new_ldap_config($msg_hash)}}
     elsif ($header eq 'ping') { &got_ping($msg_hash) }
     elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
     elsif ($header eq 'new_passwd') { &new_passwd()}
@@ -935,6 +934,8 @@ sub new_ldap_config {
     my @ldap_options;
     my @pam_options;
     my @nss_options;
+    my $goto_admin;
+    my $goto_secret;
 
     # Transform input into array
     while ( my ($key, $value) = each(%$msg_hash) ) {
@@ -949,6 +950,14 @@ sub new_ldap_config {
 		}
 		if ($key =~ /^ldap_base$/) {
 			$ldap_base= $element;
+			next;
+		}
+		if ($key =~ /^goto_admin$/) {
+			$goto_admin= $element;
+			next;
+		}
+		if ($key =~ /^goto_secret$/) {
+			$goto_secret= $element;
 			next;
 		}
 		if ($key =~ /^ldap_cfg$/) {
@@ -1005,6 +1014,18 @@ sub new_ldap_config {
     daemon_log("wrote $nss_config", 5);
     close (file1);
     daemon_log("wrote $pam_config", 5);
+
+    # Create goto.secrets if told so
+    if (defined $goto_admin){
+	    open(file1, "> /etc/goto/secret");
+	    close(file1);
+	    chown(0,0, "/etc/goto/secret");
+	    chmod(0600, "/etc/goto/secret");
+	    open(file1, "> /etc/goto/secret");
+	    print file1 $goto_admin.":".$goto_secret."\n";
+	    close(file1);
+	    daemon_log("wrote /etc/goto/secret", 5);
+    }
 
     return;
 

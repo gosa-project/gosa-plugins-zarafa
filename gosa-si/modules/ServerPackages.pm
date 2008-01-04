@@ -21,7 +21,7 @@ my ($server_activ, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $no_bus;
-my (@ldap_cfg, @pam_cfg, @nss_cfg);
+my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
 my %cfg_defaults =
 ("server" =>
@@ -153,6 +153,13 @@ sub read_configfile {
 		foreach $param ($cfg->Parameters('nss_ldap')){
 			push (@nss_cfg, "$param ".$cfg->val('nss_ldap', $param));
 		}
+    }
+    if ($cfg->SectionExists('goto')){
+    	$goto_admin= $cfg->val('goto', 'terminal_admin');
+    	$goto_secret= $cfg->val('goto', 'terminal_secret');
+    } else {
+    	$goto_admin= undef;
+    	$goto_secret= undef;
     }
 
 }
@@ -547,67 +554,75 @@ sub new_ldap_config {
         return;
     }
 
-	# Build LDAP connection
-	my $ldap;
-	$ldap= Net::LDAP->new($ldap_uri);
+    # Build LDAP connection
+    my $ldap;
+    $ldap= Net::LDAP->new($ldap_uri);
 
-	# Bind to a directory with dn and password
-	my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
+    # Bind to a directory with dn and password
+    my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
 
-	# Perform search
-	$mesg = $ldap->search( base   => $ldap_base,
-                       scope  => 'sub',
-                       attrs => ['dn', 'gotoLdapServer'],
-                       filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
-	$mesg->code && die $mesg->error;
+    # Perform search
+    $mesg = $ldap->search( base   => $ldap_base,
+		    scope  => 'sub',
+		    attrs => ['dn', 'gotoLdapServer'],
+		    filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
+    $mesg->code && die $mesg->error;
 
-	# Sanity check
-	if ($mesg->count != 1) {
-        &main::daemon_log("WARNING: client mac address $mac_address not found/not unique", 1);
-        return;
-	}
+    # Sanity check
+    if ($mesg->count != 1) {
+	    &main::daemon_log("WARNING: client mac address $mac_address not found/not unique", 1);
+	    return;
+    }
 
-	my $entry= $mesg->entry(0);
-	my $dn= $entry->dn;
-	my @servers= $entry->get_value("gotoLdapServer");
-	my @ldap_uris;
-	my $server;
-	my $base;
+    my $entry= $mesg->entry(0);
+    my $dn= $entry->dn;
+    my @servers= $entry->get_value("gotoLdapServer");
+    my @ldap_uris;
+    my $server;
+    my $base;
 
-	# Do we need to look at an object class?
-	if ($#servers < 1){
-        $mesg = $ldap->search( base   => $ldap_base,
-                               scope  => 'sub',
-                               attrs => ['dn', 'gotoLdapServer'],
-                               filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
-        $mesg->code && die $mesg->error;
+    # Do we need to look at an object class?
+    if ($#servers < 1){
+	    $mesg = $ldap->search( base   => $ldap_base,
+			    scope  => 'sub',
+			    attrs => ['dn', 'gotoLdapServer'],
+			    filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+	    $mesg->code && die $mesg->error;
 
-        # Sanity check
-        if ($mesg->count != 1) {
-				&main::daemon_log("WARNING: no LDAP information found for client mac $mac_address", 1);
-				return;
-        }
+            # Sanity check
+	    if ($mesg->count != 1) {
+		    &main::daemon_log("WARNING: no LDAP information found for client mac $mac_address", 1);
+		    return;
+	    }
 
-        $entry= $mesg->entry(0);
-        $dn= $entry->dn;
-        @servers= $entry->get_value("gotoLdapServer");
-	}
+	    $entry= $mesg->entry(0);
+	    $dn= $entry->dn;
+	    @servers= $entry->get_value("gotoLdapServer");
+    }
 
-	@servers= sort (@servers);
+    @servers= sort (@servers);
 
-	foreach $server (@servers){
-        $base= $server;
-        $server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;
-        $base =~ s%^[^:]+:[^:]+:ldap.*://[^/]+/(.*)$%$1%;
-        push (@ldap_uris, $server);
-	}
+    foreach $server (@servers){
+	    $base= $server;
+	    $server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;
+	    $base =~ s%^[^:]+:[^:]+:ldap.*://[^/]+/(.*)$%$1%;
+	    push (@ldap_uris, $server);
+    }
 
-	# Unbind
-	$mesg = $ldap->unbind;
+    # Unbind
+    $mesg = $ldap->unbind;
 
-    # Send information
+    # Assemble data package
     my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
 	             'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
+
+    # Need to append GOto settings?
+    if (defined $goto_admin and defined $goto_secret){
+	    $data{'goto_admin'}= $goto_admin;
+	    $data{'goto_secret'}= $goto_secret;
+    }
+
+    # Send information
     send_msg("new_ldap_config", $server_address, $address, \%data);
 
     return;
