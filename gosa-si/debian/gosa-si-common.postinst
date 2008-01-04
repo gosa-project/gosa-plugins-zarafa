@@ -11,5 +11,5 @@ case "$1" in
         *)                     exit 0;
 esac
 
-[ ! -d /var/lib/gosa-si ] && install -d -o root -g root -m 750 /var/lib/gosa-si
+[ -d /var/lib/gosa-si ] || install -d -o root -g root -m 750 /var/lib/gosa-si
 
