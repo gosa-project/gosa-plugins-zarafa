@@ -21,6 +21,7 @@ my ($server_activ, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $no_bus;
+my (@ldap_cfg, @pam_cfg, @nss_cfg);
 
 my %cfg_defaults =
 ("server" =>
@@ -135,6 +136,25 @@ sub read_configfile {
             ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
         }
     }
+
+    # Read non predefined sections
+    my $param;
+    if ($cfg->SectionExists('ldap')){
+		foreach $param ($cfg->Parameters('ldap')){
+			push (@ldap_cfg, "$param ".$cfg->val('ldap', $param));
+		}
+    }
+    if ($cfg->SectionExists('pam_ldap')){
+		foreach $param ($cfg->Parameters('pam_ldap')){
+			push (@pam_cfg, "$param ".$cfg->val('pam_ldap', $param));
+		}
+    }
+    if ($cfg->SectionExists('nss_ldap')){
+		foreach $param ($cfg->Parameters('nss_ldap')){
+			push (@nss_cfg, "$param ".$cfg->val('nss_ldap', $param));
+		}
+    }
+
 }
 
 
@@ -586,7 +606,8 @@ sub new_ldap_config {
 	$mesg = $ldap->unbind;
 
     # Send information
-    my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base );
+    my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
+	             'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
     send_msg("new_ldap_config", $server_address, $address, \%data);
 
     return;

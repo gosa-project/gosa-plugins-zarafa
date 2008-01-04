@@ -951,19 +951,16 @@ sub new_ldap_config {
 			$ldap_base= $element;
 			next;
 		}
-		if ($key =~ /^ldap_/) {
-			my $post =~ s/^ldap_//;
-			push (@ldap_options, "$post $element");
+		if ($key =~ /^ldap_cfg$/) {
+			push (@ldap_options, "$element");
 			next;
 		}
-		if ($key =~ /^pam_/) {
-			my $post =~ s/^pam_//;
-			push (@pam_options, "$post $element");
+		if ($key =~ /^pam_cfg$/) {
+			push (@pam_options, "$element");
 			next;
 		}
-		if ($key =~ /^nss_/) {
-			my $post =~ s/^nss_//;
-			push (@nss_options, "$post $element");
+		if ($key =~ /^nss_cfg$/) {
+			push (@nss_options, "$element");
 			next;
 		}
 	}
@@ -980,7 +977,7 @@ sub new_ldap_config {
     }
     print file "\nBASE $ldap_base\n";
     foreach $element (@ldap_options) {
-    	print file "$element";
+    	print file "$element\n";
     }
     close (file);
     daemon_log("wrote $ldap_config", 5);
@@ -999,10 +996,10 @@ sub new_ldap_config {
     print file "\nbase $ldap_base\n";
     print file2 "\nbase $ldap_base\n";
     foreach $element (@pam_options) {
-    	print file "$element";
+    	print file "$element\n";
     }
     foreach $element (@nss_options) {
-    	print file2 "$element";
+    	print file2 "$element\n";
     }
     close (file2);
     daemon_log("wrote $nss_config", 5);
