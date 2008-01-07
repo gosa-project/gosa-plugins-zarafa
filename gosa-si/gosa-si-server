@@ -93,7 +93,7 @@ our $job_queue_table_name = 'jobs';
 our $job_db;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
-our $known_server;
+our $known_server_db;
 our $known_daemons = {};
 our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1, 
                                                             exclusive => 1, 
@@ -101,7 +101,7 @@ our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
                                                             destroy => 1,
                                                             });
 # holds all registrated clients
-our $known_clients;
+our $known_clients_db;
 #our $known_clients = {};
 #our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1, 
 #                                                            exclusive => 1, 
@@ -1166,6 +1166,7 @@ while(1) {
     
     #my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'$timestamp'} );
     my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'2007010709014800'} );
+
     while( my ($id, $hit) = each %{$res} ) {         
 
         my $jobdb_id = $hit->{ROWID};

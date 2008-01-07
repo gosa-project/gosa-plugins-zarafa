@@ -343,8 +343,8 @@ sub get_time {
 #                        package
 #      RETURNS:  nothing
 #===============================================================================
-sub send_msg ($$$$) {
-	my ($header, $from, $to, $data) = @_;
+sub send_msg ($$$$$) {
+	my ($header, $from, $to, $data, $hostkey) = @_;
 
 	my $out_hash = &create_xml_hash($header, $from, $to);
 
@@ -356,7 +356,7 @@ sub send_msg ($$$$) {
 		}
 	}
 
-	&send_msg_hash2address($out_hash, $to);
+	&send_msg_hash2address($out_hash, $to, $hostkey);
 }
 
 1;

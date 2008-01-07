@@ -84,7 +84,7 @@ if($server_activ eq "on"){
 }
 
 # connect to known_clients_db
-my $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+#my $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 
 
 # register at bus
@@ -447,7 +447,7 @@ sub here_i_am {
     my $out_hash;
 
     # number of known clients
-    my $nu_clients = keys %{$known_clients_db->select_dbentry( {table=>'known_clients'} )};
+    my $nu_clients = keys %{$main::known_clients_db->select_dbentry( {table=>'known_clients'} )};
 
     # check wether client address or mac address is already known
     if (exists $main::known_clients->{$source}) {
@@ -477,7 +477,7 @@ sub here_i_am {
     my $events = @{$msg_hash->{events}}[0];
     
     # add entry to known_clients_db
-    my $res = $known_clients_db->add_dbentry( {table=>'known_clients', 
+    my $res = $main::known_clients_db->add_dbentry( {table=>'known_clients', 
                                                 primkey=>'hostname',
                                                 hostname=>$source,
                                                 events=>$events,
@@ -487,7 +487,7 @@ sub here_i_am {
                                                 timestamp=>&get_time,
                                                 } );
     if ($res == 3) {
-        $res = $known_clients_db->update_dbentry( {table=>'known_clients', 
+        $res = $main::known_clients_db->update_dbentry( {table=>'known_clients', 
                                                 where=>'hostname',
                                                 hostname=>$source,
                                                 events=>$events,
@@ -573,13 +573,19 @@ sub who_has_i_do {
 sub new_ldap_config {
     my ($address) = @_ ;
     
-    if (not exists $main::known_clients->{$address}) {
-        &main::daemon_log("ERROR: $address does not exist in known_clients, cannot send him his ldap config", 1);
-        return;
+    my $res = $main::known_clients_db->select_dbentry( { table=>'known_clients', hostname=>$address } );
+
+    # check hit
+    my $hit_counter = keys %{$res};
+    if( not $hit_counter == 1 ) {
+        &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+        my $tmp = print Dumer $res;
     }
-    
-    my $mac_address = $main::known_clients->{$address}->{"mac_address"};
-    if (not defined $mac_address) {
+
+    my $macaddress = $res->{1}->{macaddress};
+    my $hostkey = $res->{1}->{hostkey};
+
+    if (not defined $macaddress) {
         &main::daemon_log("ERROR: no mac address found for client $address", 1);
         return;
     }
@@ -595,12 +601,12 @@ sub new_ldap_config {
     $mesg = $ldap->search( base   => $ldap_base,
 		    scope  => 'sub',
 		    attrs => ['dn', 'gotoLdapServer'],
-		    filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
+		    filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
     $mesg->code && die $mesg->error;
 
     # Sanity check
     if ($mesg->count != 1) {
-	    &main::daemon_log("WARNING: client mac address $mac_address not found/not unique", 1);
+	    &main::daemon_log("WARNING: client mac address $macaddress not found/not unique", 1);
 	    return;
     }
 
@@ -621,7 +627,7 @@ sub new_ldap_config {
 
             # Sanity check
 	    if ($mesg->count != 1) {
-		    &main::daemon_log("WARNING: no LDAP information found for client mac $mac_address", 1);
+		    &main::daemon_log("WARNING: no LDAP information found for client mac $macaddress", 1);
 		    return;
 	    }
 
@@ -653,7 +659,7 @@ sub new_ldap_config {
     }
 
     # Send information
-    send_msg("new_ldap_config", $server_address, $address, \%data);
+    send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
 
     return;
 }
