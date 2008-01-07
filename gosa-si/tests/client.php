@@ -12,9 +12,12 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 	#$data = "<xml><header>gosa_ping</header><source>10.89.1.155:20082</source><target></target><mac>11:22:33:44:55</mac></xml>";
 	#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000000</timestamp> </xml>";
-	$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20080102133900</timestamp> </xml>";
+	#$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+	#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+	$data = "<xml><header>gosa_query_jobdb</header><where>status</where><status>waiting</status></xml>";
 	$sock->write($data);
-  
+
+
   #$sock->setEncryptionKey("ferdinand_frost");
 
 	$answer = $sock->read();	

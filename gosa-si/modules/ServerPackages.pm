@@ -11,20 +11,25 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
+use Data::Dumper;
 use Net::LDAP;
 
 BEGIN{}
 END {}
 
-
+my ($known_clients_file_name);
 my ($server_activ, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
+
 my %cfg_defaults =
-("server" =>
+("general" =>
+    {"known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
+    },
+"server" =>
     {"server_activ" => [\$server_activ, "on"],
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
@@ -77,6 +82,10 @@ if($server_activ eq "on"){
         &main::daemon_log("start server: $server_address", 1);
     }
 }
+
+# connect to known_clients_db
+my $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+
 
 # register at bus
 if ($main::no_bus > 0) {
@@ -251,6 +260,8 @@ sub process_incoming_msg {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
     }
 
+    &main::daemon_log("ServerPackages: incoming msg: \n$crypted_msg", 7);
+
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
     my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
@@ -291,7 +302,7 @@ sub process_incoming_msg {
             &main::daemon_log("ServerPackage: key_passwd: $key_passwd", 7);
             my $key_cipher = &create_ciphering($key_passwd);
             $msg = &decrypt_msg($crypted_msg, $key_cipher);
-            &main::daemon_log("ServerPackages: decrypted msg: $msg", 7);
+            &main::daemon_log("ServerPackages: decrypted msg: \n$msg", 7);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
             #my $tmp = printf Dumper $msg_hash;
             #&main::daemon_log("DEBUG: ServerPackages: xml hash: $tmp", 7);
@@ -315,12 +326,7 @@ sub process_incoming_msg {
     my $source = @{$msg_hash->{source}}[0];
 
     &main::daemon_log("recieve '$header' at ServerPackages from $host", 1);
-#    &main::daemon_log("ServerPackages: msg from host:", 5);
-#    &main::daemon_log("\t$host", 5);
-#    &main::daemon_log("ServerPackages: header from msg:", 5);
-#    &main::daemon_log("\t$header", 5);
-    &main::daemon_log("ServerPackages: msg to process:", 5);
-    &main::daemon_log("\t$msg", 5);
+    &main::daemon_log("ServerPackages: msg to process: \n$msg", 5);
 
     my @targets = @{$msg_hash->{target}};
     my $len_targets = @targets;
@@ -331,11 +337,14 @@ sub process_incoming_msg {
         # we have only one target symbol
 
         my $target = $targets[0];
-        &main::daemon_log("SeverPackages: msg is for:", 7);
-        &main::daemon_log("\t$target", 7);
+        &main::daemon_log("SeverPackages: msg is for: $target", 7);
 
+        # msg is for server
         if ($target eq $server_address) {
-            # msg is for server
+
+            # msg is a event
+
+            # msg is a hard implemented function
             if ($header eq 'new_passwd'){ &new_passwd($msg_hash)}
             elsif ($header eq 'here_i_am') { &here_i_am($msg_hash)}
             elsif ($header eq 'who_has') { &who_has($msg_hash) }
@@ -346,18 +355,17 @@ sub process_incoming_msg {
             else { &main::daemon_log("ERROR: ServerPackages: no function assigned to this msg", 5) }
 
         
+       # msg is for all clients
        } elsif ($target eq "*") {
-            # msg is for all clients
-
             my @target_addresses = keys(%$main::known_clients);
             foreach my $target_address (@target_addresses) {
                 if ($target_address eq $source) { next; }
                 $msg_hash->{target} = [$target_address];
                 &send_msg_hash2address($msg_hash, $target_address);
-            }           
+            } 
+          
+        # msg is for one host
         } else {
-            # msg is for one host
-
             if (exists $main::known_clients->{$target}) {
                 &send_msg_hash2address($msg_hash, $target);
             } elsif (exists $main::known_daemons->{$target}) {
@@ -439,7 +447,7 @@ sub here_i_am {
     my $out_hash;
 
     # number of known clients
-    my $nu_clients = keys %$main::known_clients;
+    my $nu_clients = keys %{$known_clients_db->select_dbentry( {table=>'known_clients'} )};
 
     # check wether client address or mac address is already known
     if (exists $main::known_clients->{$source}) {
@@ -467,17 +475,39 @@ sub here_i_am {
 
     # create known_daemons entry
     my $events = @{$msg_hash->{events}}[0];
-    &main::create_known_client($source);
-    &main::add_content2known_clients(hostname=>$source, events=>$events, mac_address=>$mac_address, 
-                                status=>"registered", passwd=>$new_passwd);
-
+    
+    # add entry to known_clients_db
+    my $res = $known_clients_db->add_dbentry( {table=>'known_clients', 
+                                                primkey=>'hostname',
+                                                hostname=>$source,
+                                                events=>$events,
+                                                macaddress=>$mac_address,
+                                                status=>'registered',
+                                                hostkey=>$new_passwd,
+                                                timestamp=>&get_time,
+                                                } );
+    if ($res == 3) {
+        $res = $known_clients_db->update_dbentry( {table=>'known_clients', 
+                                                where=>'hostname',
+                                                hostname=>$source,
+                                                events=>$events,
+                                                macaddress=>$mac_address,
+                                                status=>'registered',
+                                                hostkey=>$new_passwd,
+                                                timestamp=>&get_time,
+                                                } );
+    } 
+    if ($res > 0)  {
+        &main::daemon_log("ERROR: cannot add entry to known_clients: $res");
+        return;
+    }
+    
     # return acknowledgement to client
     $out_hash = &create_xml_hash("registered", $server_address, $source);
-    &send_msg_hash2address($out_hash, $source);
+    &send_msg_hash2address($out_hash, $source, $new_passwd);
 
     # notify registered client to bus
     $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-    #&main::send_msg_hash2bus($out_hash);
     &send_msg_hash2address($out_hash, $bus_address);
 
     # give the new client his ldap config

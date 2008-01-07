@@ -9,21 +9,19 @@ use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
 use File::Spec;
+use Data::Dumper;
 use GOSA::DBsqlite;
+use MIME::Base64;
 
 BEGIN{}
 END{}
 
-my ($server_activ, $server_port, $server_passwd, $max_clients);
+my ($server_activ, $server_port, $server_passwd, $max_clients, $server_event_dir);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my ($gosa_activ, $gosa_ip, $gosa_port, $gosa_passwd);
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
-my $event_dir = "/etc/gosa-si/server/events";
-
-# name of table for storing gosa jobs
-my $job_queue_table_name = 'jobs';
 
 my %cfg_defaults = 
 ("general" =>
@@ -34,6 +32,7 @@ my %cfg_defaults =
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
+    "server_event_dir" => [\$server_event_dir, '/usr/lib/gosa-si/server/events'],
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -50,7 +49,7 @@ my %cfg_defaults =
 );
  
 
-### START ##########################
+## START ##########################
 
 # read configfile and import variables
 &read_configfile();
@@ -88,12 +87,12 @@ my @col_names = ("id", "timestamp", "status", "result", "header",
                 "target", "xml", "mac");
 my $table_name = "jobs";
 my $sqlite = GOSA::DBsqlite->new($job_queue_file_name);
-$sqlite->create_table($table_name, \@col_names);
+#$sqlite->create_table($table_name, \@col_names);
 
 
 
 
-### FUNCTIONS #################################################################
+## FUNCTIONS #################################################################
 
 sub get_module_info {
     my @info = ($gosa_address,
@@ -195,29 +194,25 @@ sub process_incoming_msg {
     if(not defined $crypted_msg) {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
     }
-#    &main::daemon_log("GosaPackages: crypted_msg:$crypted_msg", 7);
-#    &main::daemon_log("GosaPackages: crypted_msg len:".length($crypted_msg), 7);
+    &main::daemon_log("GosaPackages: incoming msg: \n$crypted_msg", 7);
 
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
     my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
  
-    &main::daemon_log("GosaPackages: crypted_msg:$crypted_msg", 7);
-#    &main::daemon_log("GosaPackages: crypted_msg len:".length($crypted_msg), 7);
-
-
     # collect addresses from possible incoming clients
     # only gosa is allowd as incoming client
     &main::daemon_log("GosaPackages: host_key: $host", 7);
     &main::daemon_log("GosaPackages: key_passwd: $gosa_passwd", 7);
 
     $gosa_cipher = &create_ciphering($gosa_passwd);
+
     # determine the correct passwd for deciphering of the incoming msgs
     my $msg = "";
     my $msg_hash;
     eval{
         $msg = &decrypt_msg($crypted_msg, $gosa_cipher);
-        &main::daemon_log("GosaPackages: decrypted_msg: $msg", 7);
+        &main::daemon_log("GosaPackages: decrypted_msg: \n$msg", 7);
 
         $msg_hash = $xml->XMLin($msg, ForceArray=>1);
     };
@@ -241,15 +236,14 @@ sub process_incoming_msg {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
     }
     
-
     if (not defined $out_msg) {
         return;
     }
 
     if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
-        my $sql = "UPDATE '$job_queue_table_name' SET status='done', result='$out_msg' WHERE id='$job_id'";
-        my $res = $sqlite->exec_statement($sql);
+        my $sql = "UPDATE '$main::job_queue_table_name' SET status='done', result='$out_msg' WHERE id='$job_id'";
+        my $res = $main::job_db->exec_statement($sql);
         return;
 
     } else {
@@ -266,31 +260,35 @@ sub process_gosa_msg {
     $header =~ s/gosa_//;
     &main::daemon_log("GosaPackages: got a gosa msg $header", 5);
 
-    # fetch all available eventhandler under $event_dir
-    opendir (DIR, $event_dir) or &main::daemon_log("ERROR cannot open $event_dir: $!\n", 1) and return;
-    while (defined (my $file = readdir (DIR))) {
-        if (not $file eq $header) {
-            next;
+    # decide wether msg is a core function or a event handler
+    if ( $header eq 'query_jobdb') { $out_msg = &query_jobdb }
+    else {
+        # msg could not be assigned to core function
+        # fetch all available eventhandler under $server_event_dir
+        opendir (DIR, $server_event_dir) or &main::daemon_log("ERROR cannot open $server_event_dir: $!\n", 1) and return;
+        while (defined (my $file = readdir (DIR))) {
+            if (not $file eq $header) {
+                next;
+            }
+            # try to deliver incoming msg to eventhandler
+            my $cmd = File::Spec->join($server_event_dir, $header)." '$msg'";
+            &main::daemon_log("GosaPackages: execute event_handler $header", 3);
+            &main::daemon_log("GosaPackages: cmd: $cmd", 7);
+
+            $out_msg = "";
+            open(PIPE, "$cmd 2>&1 |");
+            while(<PIPE>) {
+                $out_msg.=$_;
+            }
+            close(PIPE);
+            &main::daemon_log("GosaPackages: answer of cmd: $out_msg", 5);
+            last;
         }
-        # try to deliver incoming msg to eventhandler
-        
-        my $cmd = File::Spec->join($event_dir, $header)." '$msg'";
-        &main::daemon_log("GosaPackages: execute event_handler $header", 3);
-        &main::daemon_log("GosaPackages: cmd: $cmd", 7);
-        
-        $out_msg = "";
-        open(PIPE, "$cmd 2>&1 |");
-        while(<PIPE>) {
-            $out_msg.=$_;
-        }
-        close(PIPE);
-        &main::daemon_log("GosaPackages: answer of cmd: $out_msg", 5);
-        last;
     }
 
     # if delivery not possible raise error and return 
     if (not defined $out_msg) {
-        &main::daemon_log("ERROR: GosaPackages: no event_handler defined for $header", 1);
+        &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for $header", 1);
     } elsif ($out_msg eq "") {
         &main::daemon_log("ERROR: GosaPackages got not answer from event_handler $header", 1);
     }
@@ -310,16 +308,16 @@ sub process_job_msg {
     my $target = 'not known until now';
 
     # add job to job queue
-    my $func_dic = {table=>$table_name, 
+    my $func_dic = {table=>$main::job_queue_table_name, 
                     timestamp=>@{$msg_hash->{timestamp}}[0],
                     status=>'waiting', 
                     result=>'none',
                     header=>$header, 
                     target=>$target,
-                    xml=>$msg,
-                    mac=>@{$msg_hash->{mac}}[0],
+                    xmlmessage=>$msg,
+                    macaddress=>@{$msg_hash->{mac}}[0],
                     };
-    my $res = $sqlite->add_dbentry($func_dic);
+    my $res = $main::job_db->add_dbentry($func_dic);
     if (not $res == 0) {
         &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
     }
@@ -329,5 +327,65 @@ sub process_job_msg {
 
 }
 
+
+sub db_res_2_xml {
+    my ($db_res) = @_ ;
+    my $xml = "<xml>";
+
+    while ( my ($hit, $hash) = each %{ $db_res } ) {
+        $xml .= "<$hit>";
+
+        while ( my ($column_name, $column_value) = each %{$hash} ) {
+            $xml .= "<$column_name>";
+            my $xml_content = $column_value;
+            if( $column_name eq "xml" ) {
+                $xml_content = &encode_base64($column_value);
+            }
+            $xml .= $xml_content;
+            $xml .= "</$column_name>"; 
+        }
+
+        $xml .= "</$hit>";
+    }
+
+    $xml .= "</xml>";
+    return $xml;
+}
+
+
+## CORE FUNCTIONS ############################################################
+
+sub query_jobdb {
+    my ($msg) = @_;
+    my $msg_hash = &transform_msg2hash($msg);
+
+    # prepare query sql statement
+    my @where = @{$msg_hash->{where}};
+    my $where_hash = {table=>$main::job_queue_table_name };
+    foreach my $where_pram (@where) {
+        my $where_val = @{$msg_hash->{$where_pram}}[0];
+        if (defined $where_val) {
+            $where_hash->{$where_pram} = $where_val;
+        }
+    }
+ 
+    # execute db query   
+    my $res_hash = $main::job_db->select_dbentry($where_hash);
+
+    my $out_xml = &db_res_2_xml($res_hash);
+    return $out_xml;
+}
+
+
+
 1;
+
+
+
+
+
+
+
+
+
 

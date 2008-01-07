@@ -2,7 +2,7 @@ package GOSA::GosaSupportDaemon;
 
 use Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(create_xml_hash send_msg_hash2address get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash send_msg); 
+@EXPORT = qw(create_xml_hash send_msg_hash2address get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg); 
 
 use strict;
 use warnings;
@@ -21,7 +21,6 @@ END {}
 ### Start ######################################################################
 
 my $xml = new XML::Simple();
-
 
 sub process_incoming_msg {
     return;
@@ -100,7 +99,6 @@ sub create_xml_hash {
 
 sub transform_msg2hash {
     my ($msg) = @_ ;
-    
     my $hash = $xml->XMLin($msg, ForceArray=>1);
     return $hash;
 }
@@ -148,18 +146,18 @@ sub send_msg_hash2address {
         daemon_log("cannot send '$header'-msg to $address , server not reachable",
                     5);
 
-        if (exists $main::known_clients->{$address}) {
-            if ($main::known_clients->{$address}->{status} eq "down") {
-                # if status of not reachable client is already 'down', 
-                # then delete client from known_clients
-                &clean_up_known_clients($address);
-
-            } else {
-                # update status to 'down'
-                &update_known_clients(hostname=>$address, status=>"down");        
-
-            }
-        }
+#        if (exists $main::known_clients->{$address}) {
+#            if ($main::known_clients->{$address}->{status} eq "down") {
+#                # if status of not reachable client is already 'down', 
+#                # then delete client from known_clients
+#                &clean_up_known_clients($address);
+#
+#            } else {
+#                # update status to 'down'
+#                &update_known_clients(hostname=>$address, status=>"down");        
+#
+#            }
+#        }
         return 1;
     }
     
@@ -176,11 +174,11 @@ sub send_msg_hash2address {
     #daemon_log("\t$crypted_msg", 7);
 
     # update status of client in known_clients with last send msg
-    if(exists $main::known_daemons->{$address}) {
-        #&update_known_daemons();
-    } elsif(exists $main::known_clients->{$address}) {
-        &main::update_known_clients(hostname=>$address, status=>$header);
-    }
+#    if(exists $main::known_daemons->{$address}) {
+#        #&update_known_daemons();
+#    } elsif(exists $main::known_clients->{$address}) {
+#        &main::update_known_clients(hostname=>$address, status=>$header);
+#    }
 
     return 0;
 }
@@ -317,6 +315,21 @@ sub open_socket {
     &daemon_log("open_socket:", 7);
     &daemon_log("\t$PeerAddr", 7);
     return $socket;
+}
+
+
+sub get_time {
+    my ($seconds, $minutes, $hours, $monthday, $month,
+            $year, $weekday, $yearday, $sommertime) = localtime(time);
+    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+    $month+=1;
+    $month = $month < 10 ? $month = "0".$month : $month;
+    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+    $year+=1900;
+    return "$year$month$monthday$hours$minutes$seconds";
+
 }
 
 

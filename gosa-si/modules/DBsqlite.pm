@@ -25,7 +25,9 @@ sub create_table {
     my $object = shift;
     my $table_name = shift;
     my $col_names_ref = shift;
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name (".join(', ', @{$col_names_ref}).")";
+#    unshift(@{$col_names_ref}, "id INTEGER PRIMARY KEY AUTOINCREMENT");
+    my $col_names_string = join(', ', @{$col_names_ref});
+    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
     $object->{dbh}->do($sql_statement);
     return 0;
 }
@@ -42,50 +44,58 @@ sub add_dbentry {
     if (not defined $table) { 
         return 1; 
     }
- 
-    # incrementing running id
-    if (not exists $arg->{id}) {
-        my $max_id = @{@{$obj->{dbh}->selectall_arrayref("SELECT MAX(id) FROM $table")}[0]}[0];
-        if (not defined $max_id) {
-            $max_id = 0;
-        }
-        $arg->{id} = $max_id + 1;
+
+    # specify primary key in table
+    my $primkey = $arg->{primkey};
+
+    # check wether value to primary key is specified
+    if ( ( defined $primkey ) && ( not $arg->{ $primkey } ) ) {
+        return 2;
     }
-        
-   
+
+    # check wether primkey is unique in table, otherwise return errorflag 3
+    if ( defined $primkey ) {
+        my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
+        if ($res != 0) { 
+            return 3;
+        }
+    }
+  
     # fetch column names of table
     my $col_names = $obj->get_table_columns($table);
     
     # assign values to column name variables
     my @add_list;
     foreach my $col_name (@{$col_names}) {
+        # use function parameter for column values
         if (exists $arg->{$col_name}) {
             push(@add_list, $arg->{$col_name});
-        } else {
-            my $default_val = "none";
-            if ($col_name eq "timestamp") {
-                $default_val = "19700101000000";
-            }             
-            push(@add_list, $default_val);
         }
-    
+        # use default values for column values
+#        } else {
+#            my $default_val = "none";
+#            if ($col_name eq "timestamp") {
+#                $default_val = "19700101000000";
+#            }             
+#            push(@add_list, $default_val);
+#        }
     }    
 
-    # check wether id does not exists in table, otherwise return errorflag 2
-    my $res = @{$obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE id='$arg->{id}'")};
-    if ($res != 0) { 
-        return 2;
-    }
-
-    my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."') ";
+    my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
     print " INSERT INTO $table VALUES ('".join("', '", @add_list)."')\n";
     $obj->{dbh}->do($sql_statement);
-
     return 0;
 
 }
 
-sub change_dbentry {
+
+# error-flags
+# 1 no table ($table) defined
+# 2 no restriction parameter ($restric_pram) defined
+# 3 no restriction value ($restric_val) defined
+# 4 column name not known in table
+# 5 no column names to change specified
+sub update_dbentry {
     my $obj = shift;
     my $arg = shift;
 
@@ -134,7 +144,7 @@ sub change_dbentry {
         push(@change_list, "$pram='$val'");
     }
 
-    if (not@change_list) {
+    if (not @change_list) {
         return 5;
     }
 
@@ -210,13 +220,38 @@ sub select_dbentry {
 
     # collect select statements
     my @select_list;
-    my $sql_part;
+    my $sql_statement;
     while (my ($pram, $val) = each %{$arg}) {
-        push(@select_list, "$pram = '$val'");
+        if ( $pram eq 'timestamp' ) {
+            push(@select_list, "$pram < '$val'");
+        } else {
+            push(@select_list, "$pram = '$val'");
+        }
+
     }
+    if (@select_list == 0) {
+        $sql_statement = "SELECT ROWID, * FROM '$table'";
+    } else {
+        $sql_statement = "SELECT ROWID, * FROM '$table' WHERE ".join(' AND ', @select_list);
+    }
+
+    # query db
+    my $query_answer = $obj->{dbh}->selectall_arrayref($sql_statement);
+
+    # fetch column list of db and create a hash with column_name->column_value of the select query
+    my $column_list = &get_table_columns($obj, $table);    
+    my $list_len = @{ $column_list } ;
+    my $answer = {};
+    my $hit_counter = 0;
+
     
-    my $sql_statement = "SELECT * FROM 'jobs' WHERE ".join(' AND ', @select_list);
-    my $answer = $obj->{dbh}->selectall_arrayref($sql_statement);
+    foreach my $hit ( @{ $query_answer }) {
+        $hit_counter++;
+        $answer->{ $hit_counter }->{ 'ROWID' } = shift @{ $hit };
+        for ( my $i = 0; $i < $list_len; $i++) {
+            $answer->{ $hit_counter }->{ @{ $column_list }[$i] } = @{ $hit }[$i];
+        }
+    }
     return $answer;  
 }
 
@@ -224,7 +259,7 @@ sub select_dbentry {
 sub show_table {
     my $obj = shift;
     my $table_name = shift;
-    my @res = @{$obj->{dbh}->selectall_arrayref( "SELECT * FROM $table_name")};
+    my @res = @{$obj->{dbh}->selectall_arrayref( "SELECT ROWID, * FROM $table_name")};
     my @answer;
     foreach my $hit (@res) {
         push(@answer, "hit: ".join(', ', @{$hit}));

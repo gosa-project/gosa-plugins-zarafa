@@ -8,7 +8,9 @@
 #  DESCRIPTION:
 #
 #      OPTIONS:  ---
-# REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl libipc-shareable-perl libdata-dumper-simple-perl
+# REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl 
+#                libipc-shareable-perl libdata-dumper-simple-perl 
+#                libdbd-sqlite3-perl libnet-ldap-perl
 #         BUGS:  ---
 #        NOTES:
 #       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
@@ -48,7 +50,7 @@ my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
 my ($server, $server_mac_address, $server_events);
 my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name);
-my ($known_daemons, $shmda, $known_clients, $shmcl, $known_modules);
+my ($known_daemons, $shmda, $known_clients, $shmcl, $known_modules, $known_clients_file_name, $known_server_file_name, $known_clients_db, $known_server_db);
 my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
@@ -87,9 +89,11 @@ $no_bus = 0;
 $no_arp = 0;
 
 # name of table for storing gosa jobs
-$job_queue_table_name = 'jobs';
+our $job_queue_table_name = 'jobs';
+our $job_db;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
+our $known_server;
 our $known_daemons = {};
 our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1, 
                                                             exclusive => 1, 
@@ -97,12 +101,13 @@ our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
                                                             destroy => 1,
                                                             });
 # holds all registrated clients
-our $known_clients = {};
-our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1, 
-                                                            exclusive => 1, 
-                                                            mode => 0666, 
-                                                            destroy => 1,
-                                                            });
+our $known_clients;
+#our $known_clients = {};
+#our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1, 
+#                                                            exclusive => 1, 
+#                                                            mode => 0666, 
+#                                                            destroy => 1,
+#                                                            });
 
 
 %cfg_defaults =
@@ -114,6 +119,8 @@ our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1,
     "child_timeout" => [\$child_timeout, 180],
     "job_queue_timeout" => [\$job_queue_timeout, undef],
     "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
+    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/kown_server.db'],
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -514,10 +521,12 @@ sub get_processing_child {
                     my $answer;
                     my %act_modules = %$known_modules;
                     while( my ($module, $info) = each(%act_modules)) {
+                            &daemon_log("##########", 5);
                             my $tmp = &{ $module."::process_incoming_msg" }($msg);
                             if (defined $tmp) {
                                 $answer = $tmp;
                             }
+                            &daemon_log("##########", 5);
                     }        
 
                     #&print_known_daemons();
@@ -737,31 +746,31 @@ sub update_known_daemons {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nomen est omen
 #===============================================================================
-sub print_known_clients {
-
-    print "####################################\n";
-    print "# status of known_clients\n";
-    $shmcl->shlock(LOCK_EX);
-    my @hosts = keys %$known_clients;
-    if (@hosts) {
-        foreach my $host (@hosts) {
-            my $status = $known_clients->{$host}->{status} ;
-            my $passwd = $known_clients->{$host}->{passwd};
-            my $timestamp = $known_clients->{$host}->{timestamp};
-            my $mac_address = $known_clients->{$host}->{mac_address};
-            my $events = $known_clients->{$host}->{events};
-            print "$host\n";
-            print "\tstatus:      $status\n";
-            print "\tpasswd:      $passwd\n";
-            print "\ttimestamp:   $timestamp\n";
-            print "\tmac_address: $mac_address\n";
-            print "\tevents:      $events\n";
-        }
-    }
-    $shmcl->shunlock(LOCK_EX);
-    print "####################################\n";
-    return;
-}
+#sub print_known_clients {
+#
+#    print "####################################\n";
+#    print "# status of known_clients\n";
+#    $shmcl->shlock(LOCK_EX);
+#    my @hosts = keys %$known_clients;
+#    if (@hosts) {
+#        foreach my $host (@hosts) {
+#            my $status = $known_clients->{$host}->{status} ;
+#            my $passwd = $known_clients->{$host}->{passwd};
+#            my $timestamp = $known_clients->{$host}->{timestamp};
+#            my $mac_address = $known_clients->{$host}->{mac_address};
+#            my $events = $known_clients->{$host}->{events};
+#            print "$host\n";
+#            print "\tstatus:      $status\n";
+#            print "\tpasswd:      $passwd\n";
+#            print "\ttimestamp:   $timestamp\n";
+#            print "\tmac_address: $mac_address\n";
+#            print "\tevents:      $events\n";
+#        }
+#    }
+#    $shmcl->shunlock(LOCK_EX);
+#    print "####################################\n";
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -772,14 +781,28 @@ sub print_known_clients {
 #===============================================================================
 sub create_known_client {
     my ($hostname) = @_;
-    $shmcl->shlock(LOCK_EX);
-    $known_clients->{$hostname} = {};
-    $known_clients->{$hostname}->{status} = "none";
-    $known_clients->{$hostname}->{passwd} = "none";
-    $known_clients->{$hostname}->{timestamp} = "none";
-    $known_clients->{$hostname}->{mac_address} = "none";
-    $known_clients->{$hostname}->{events} = "none";
-    $shmcl->shunlock(LOCK_EX); 
+
+    my $entry = { table=>'known_clients',
+        hostname=>$hostname,
+        status=>'none',
+        hostkey=>'none',
+        timestamp=>'none',
+        macaddress=>'none',
+        events=>'none',
+    };
+    my $res = $known_clients_db->add_dbentry($entry);
+    if ($res > 0) {
+        daemon_log("ERROR: cannot add entry to known_clients.db: $res", 1);
+    }
+
+#    $shmcl->shlock(LOCK_EX);
+#    $known_clients->{$hostname} = {};
+#    $known_clients->{$hostname}->{status} = "none";
+#    $known_clients->{$hostname}->{passwd} = "none";
+#    $known_clients->{$hostname}->{timestamp} = "none";
+#    $known_clients->{$hostname}->{mac_address} = "none";
+#    $known_clients->{$hostname}->{events} = "none";
+#    $shmcl->shunlock(LOCK_EX); 
     return;  
 }
 
@@ -795,16 +818,17 @@ sub create_known_client {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
 #===============================================================================
-sub add_content2known_clients {
+sub update_known_clients {
     my $arg = {
-        hostname => undef, status => undef, passwd => undef,
-        mac_address => undef, events => undef, 
+        hostname => undef, status => undef, hostkey => undef,
+        macaddress => undef, events => undef, timestamp=>undef,
         @_ };
     my $hostname = $arg->{hostname};
     my $status = $arg->{status};
-    my $passwd = $arg->{passwd};
-    my $mac_address = $arg->{mac_address};
+    my $hostkey = $arg->{hostkey};
+    my $macaddress = $arg->{macaddress};
     my $events = $arg->{events};
+    my $timestamp = $arg->{timestamp}; 
 
     if (not defined $hostname) {
         daemon_log("ERROR: function add_content2known_clients is not invoked with requiered parameter 'hostname'", 1);
@@ -821,22 +845,27 @@ sub add_content2known_clients {
     $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
     $year+=1900;
     my $t = "$year$month$monthday$hours$minutes$seconds";
-    
-    $shmcl->shlock(LOCK_EX);
+ 
+    my $change_entry = { table=>'known_clients',
+                        where=>'hostname', 
+                        timestamp=>$t, 
+                        };
+   
+   
     if (defined $status) {
-        $known_clients->{$hostname}->{status} = $status;
+        $change_entry->{status} = $status;
     }
-    if (defined $passwd) {
-        $known_clients->{$hostname}->{passwd} = $passwd;
+    if (defined $hostkey) {
+        $change_entry->{hostkey} = $hostkey;
     }
-    if (defined $mac_address) {
-        $known_clients->{$hostname}->{mac_address} = $mac_address;
+    if (defined $macaddress) {
+        $change_entry->{macaddress} = $macaddress;
     }
     if (defined $events) {
-        $known_clients->{$hostname}->{events} = $events;
+        $change_entry->{events} = $events;
     }
-    $known_clients->{$hostname}->{timestamp} = $t;
-    $shmcl->shlock(LOCK_EX);
+    
+    $known_clients->change_dbentry($change_entry);
     return;
 }
  
@@ -875,50 +904,48 @@ sub clean_up_known_clients {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
 #===============================================================================
-sub update_known_clients {
-    my $arg = {
-        hostname => undef, status => undef, passwd => undef,
-        mac_address => undef, events => undef,
-        @_ };
-    my $hostname = $arg->{hostname};
-    my $status = $arg->{status};
-    my $passwd = $arg->{passwd};
-    my $mac_address = $arg->{mac_address};
-    my $events = $arg->{events};
-
-    if (not defined $hostname) {
-        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-        return;
-    }
-
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
-
-    $shmcl->shlock(LOCK_EX);
-    if (defined $status) {
-        $known_clients->{$hostname}->{status} = $status;
-    }
-    if (defined $passwd) {
-        $known_clients->{$hostname}->{passwd} = $passwd;
-    }
-    if (defined $mac_address) {
-        $known_clients->{$hostname}->{mac_address} = $mac_address; 
-    }
-    if (defined $events) {
-        $known_clients->{$hostname}->{events} = $events;
-    }
-    $known_clients->{$hostname}->{timestamp} = $t;
-    $shmcl->shunlock(LOCK_EX);
-    return;
-}
+#sub update_known_clients {
+#    my $arg = {
+#        hostname => undef, status => undef, passwd => undef,
+#        mac_address => undef, events => undef,
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $passwd = $arg->{passwd};
+#    my $mac_address = $arg->{mac_address};
+#    my $events = $arg->{events};
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $t = "$year$month$monthday$hours$minutes$seconds";
+#
+#    if (defined $status) {
+#        $known_clients->{$hostname}->{status} = $status;
+#    }
+#    if (defined $passwd) {
+#        $known_clients->{$hostname}->{passwd} = $passwd;
+#    }
+#    if (defined $mac_address) {
+#        $known_clients->{$hostname}->{mac_address} = $mac_address; 
+#    }
+#    if (defined $events) {
+#        $known_clients->{$hostname}->{events} = $events;
+#    }
+#    $known_clients_db->{$hostname}->{timestamp} = $t;
+#    return;
+#}
 
 
 
@@ -962,13 +989,20 @@ close( LOCK_FILE );
     if( !$foreground ) { exit( 0 ) };
 }
 
+# connect to gosa-si job queue
+my @job_col_names = ("timestamp", "status", "result", "header", "target", "xmlmessage", "macaddress");
+$job_db = GOSA::DBsqlite->new($job_queue_file_name);
+$job_db->create_table('jobs', \@job_col_names);
+
+# connect to known_clients_db
+my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
+$known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+$known_clients_db->create_table('known_clients', \@clients_col_names);
+
 # import all modules
 &import_modules;
 
 # check wether all modules are gosa-si valid passwd check
-
-# connect to gosa-si job queue
-my $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 
 # create reading and writing vectors
 my $rbits = my $wbits = my $ebits = "";
@@ -1130,23 +1164,17 @@ while(1) {
     my $timestamp = "$year$month$monthday$hours$minutes$seconds";
     
     
-    my $sql = "SELECT * FROM '$job_queue_table_name' WHERE status='waiting' AND timestamp<'$timestamp'";
-    my $res = $job_db->exec_statement($sql);
-    foreach my $msg (@{$res}) {
-        
-        my $jobdb_id = @{$msg}[0];
-        my $job_msg_hash = &transform_msg2hash(@{$msg}[6]);
+    #my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'$timestamp'} );
+    my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'2007010709014800'} );
+    while( my ($id, $hit) = each %{$res} ) {         
+
+        my $jobdb_id = $hit->{ROWID};
+        my $macaddress = $hit->{macaddress};
+        my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
         my $out_msg_hash = $job_msg_hash;
-    
-        # hole mac address und suche die entsprechende ip addresse
-        my $target;
-        my @hostnames = keys %{$known_clients};
-        foreach my $hostname (@hostnames) {
-            if ($known_clients->{$hostname}->{mac_address} eq $job_msg_hash->{mac}[0]) {
-                $target = $hostname;
-                last;
-            }
-        }
+        my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
+        # expect macaddress is unique!!!!!!
+        my $target = $res_hash->{1}->{hostname};
         
         if (not defined $target) {
             &daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
@@ -1167,16 +1195,16 @@ while(1) {
         # add sqlite_id 
         &add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
     
-#        my $out_msg = &create_xml_string($out_msg_hash);
-#
-#        # encrypt msg as a GosaPackage module
-#        my $cipher = &create_ciphering($gosa_passwd);
-#        my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
+        my $out_msg = &create_xml_string($out_msg_hash);
+
+        # encrypt msg as a GosaPackage module
+        my $cipher = &create_ciphering($gosa_passwd);
+        my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
 
         my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
 
         if ($error == 0) {
-            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', target='$target' WHERE id='$jobdb_id'";
+            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', target='$target' WHERE ROWID='$jobdb_id'";
             my $res = $job_db->exec_statement($sql);
         }
 
