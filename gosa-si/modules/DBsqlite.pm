@@ -83,7 +83,8 @@ sub add_dbentry {
 
     my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
     print " INSERT INTO $table VALUES ('".join("', '", @add_list)."')\n";
-    $obj->{dbh}->do($sql_statement);
+    my $db_res = $obj->{dbh}->do($sql_statement);
+    print " DB result: $db_res\n";
     return 0;
 
 }
@@ -107,49 +108,41 @@ sub update_dbentry {
     } else {
         delete $arg->{table};
     }
+    
     # extract where parameter from arg hash
-    my $restric_pram = $arg->{where};
-    if (not defined $restric_pram) {
-        return 2;
-    } else {  
-        delete $arg->{'where'};
-    }
-    # extrac where value from arg hash
-    my $restric_val = $arg->{$restric_pram};
-    if (not defined $restric_val) {
-        return 3;
-    } else {
-        delete $arg->{$restric_pram};
-    }
-
-    # check wether table has all specified columns
-    my $columns = {};
-    my @res = @{$obj->{dbh}->selectall_arrayref("pragma table_info('$table')")};
-    foreach my $column (@res) {
-        $columns->{@$column[1]} = "";
-    }
-    my @pram_list = keys %$arg;
-    foreach my $pram (@pram_list) {
-        if (not exists $columns->{$pram}) {
-            return 4;
+    my $where_statement = "";
+    if( exists $arg->{where} ) {
+        my $where_hash = @{ $arg->{where} }[0];
+        if( 0 < keys %{ $where_hash } ) {
+            my @where_list;    
+            while( my ($rest_pram, $rest_val) = each %{ $where_hash } ) {
+                my $statement;
+                if( $rest_pram eq 'timestamp' ) {
+                    $statement = "$rest_pram<'@{ $rest_val }[0]'";
+                } else {
+                    $statement = "$rest_pram='@{ $rest_val }[0]'";
+                }
+                push( @where_list, $statement );
+            }
+            $where_statement .= "WHERE ".join('AND ', @where_list);
         }
     }
-    
 
-    # select all changes
-    my @change_list;
-    my $sql_part;
-
-    while (my($pram, $val) = each(%{$arg})) {
-        push(@change_list, "$pram='$val'");
+    # extract update parameter from arg hash
+    my $update_hash = @{ $arg->{update} }[0];
+    my $update_statement = "";
+    if( 0 < keys %{ $update_hash } ) {
+        my @update_list;    
+        while( my ($rest_pram, $rest_val) = each %{ $update_hash } ) {
+            my $statement = "$rest_pram='@{ $rest_val }[0]'";
+            push( @update_list, $statement );
+        }
+        $update_statement .= join(', ', @update_list);
     }
 
-    if (not @change_list) {
-        return 5;
-    }
-
-    $obj->{dbh}->do("UPDATE $table SET ".join(', ',@change_list)." WHERE $restric_pram='$restric_val'");
-    return 0;
+    my $sql_statement = "UPDATE $table SET $update_statement $where_statement";
+    my $db_answer = $obj->{dbh}->do($sql_statement);
+    return $db_answer;
 }  
 
 
@@ -165,30 +158,28 @@ sub del_dbentry {
     } else {
         delete $arg->{table};
     }
-    # extract where parameter from arg hash
-    my $restric_pram = $arg->{where};
-    if (not defined $restric_pram) {
-        return 2;
-    } else {  
-        delete $arg->{'where'};
-    }
-    # extrac where value from arg hash
-    my $restric_val = $arg->{$restric_pram};
-    if (not defined $restric_val) {
-        return 3;
-    } else {
-        delete $arg->{$restric_pram};
-    }
-   
-    # check wether entry exists
-    my $res = @{$obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $restric_pram='$restric_val'")};
-    if ($res == 0) { 
-        return 4;
+
+    # collect select statements
+    my @del_list;
+    while (my ($pram, $val) = each %{$arg}) {
+        if ( $pram eq 'timestamp' ) {
+            push(@del_list, "$pram < '$val'");
+        } else {
+            push(@del_list, "$pram = '$val'");
+        }
     }
 
-    $obj->{dbh}->do("DELETE FROM $table WHERE $restric_pram='$restric_val'");
+    my $where_statement;
+    if( not @del_list ) {
+        $where_statement = "";
+    } else {
+        $where_statement = "WHERE ".join(' AND ', @del_list);
+    }
+
+    my $sql_statement = "DELETE FROM $table $where_statement";
+    my $db_res = $obj->{dbh}->do($sql_statement);
  
-    return 0;
+    return $db_res;
 }
 
 
@@ -227,8 +218,8 @@ sub select_dbentry {
         } else {
             push(@select_list, "$pram = '$val'");
         }
-
     }
+
     if (@select_list == 0) {
         $sql_statement = "SELECT ROWID, * FROM '$table'";
     } else {

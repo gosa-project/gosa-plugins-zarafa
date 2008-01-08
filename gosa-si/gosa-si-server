@@ -990,7 +990,7 @@ close( LOCK_FILE );
 }
 
 # connect to gosa-si job queue
-my @job_col_names = ("timestamp", "status", "result", "header", "target", "xmlmessage", "macaddress");
+my @job_col_names = ("timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 
@@ -1142,11 +1142,12 @@ while(1) {
                 print $act_client $in_msg."\n";
 
                 #my $act_pipe = $busy_child{$pid}{pipe_rd};
-                sleep(10);
-                close ($act_client);   
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
 
+                # give the client a chance to read 
+                sleep(2);
+                close ($act_client);   
             }
         }
     }
@@ -1164,8 +1165,7 @@ while(1) {
     my $timestamp = "$year$month$monthday$hours$minutes$seconds";
     
     
-    #my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'$timestamp'} );
-    my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>'2007010709014800'} );
+    my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
 
     while( my ($id, $hit) = each %{$res} ) {         
 
@@ -1179,6 +1179,13 @@ while(1) {
         
         if (not defined $target) {
             &daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
+            &daemon_log("xml message: $hit->{xmlmessage}", 5);
+            my $update_hash = { table=>$job_queue_table_name,
+                update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
+                where=> [ { ROWID=>[$jobdb_id] } ],
+            };
+            my $res = $job_db->update_dbentry($update_hash);
+
             next;
         }
 
@@ -1204,11 +1211,19 @@ while(1) {
 
         my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
 
-        if ($error == 0) {
-            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', target='$target' WHERE ROWID='$jobdb_id'";
-            my $res = $job_db->exec_statement($sql);
-        }
+#######################
+# TODO exchange ROWID with jobid, insert column jobid in table jobs befor
 
+        if ($error == 0) {
+            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE ROWID='$jobdb_id'";
+            my $res = $job_db->exec_statement($sql);
+        } else {
+            my $update_hash = { table=>$job_queue_table_name, 
+                                update=> [ { status=>'error' } ],
+                                where=> [ { ROWID=>$jobdb_id } ],
+                              };
+            my $res = $job_db->update_dbentry($update_hash);
+        }
 
     }  
 
