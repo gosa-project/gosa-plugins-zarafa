@@ -100,6 +100,7 @@ our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1,
                                                             mode => 0666, 
                                                             destroy => 1,
                                                             });
+
 # holds all registrated clients
 our $known_clients_db;
 #our $known_clients = {};
@@ -998,6 +999,9 @@ $job_db->create_table('jobs', \@job_col_names);
 my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table('known_clients', \@clients_col_names);
+
+# connect to known_server_db
+my @server_col_names = ();
 
 # import all modules
 &import_modules;
