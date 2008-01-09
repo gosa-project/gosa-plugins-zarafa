@@ -444,7 +444,6 @@ sub update_status_jobdb_entry {
         return "<xml><1>1</1></xml>";
     }
     $update_hash->{update} = [ { status=>$msg_hash->{update}[0]->{status} } ];
-    #$update_hash->{update} = $msg_hash->{update};
 
     # execute db query
     my $db_res = $main::job_db->update_dbentry($update_hash);

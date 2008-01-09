@@ -218,7 +218,7 @@ sub daemon_log {
             chomp($msg);
             if($level <= $verbose){
                 print LOG_HANDLE "$level $msg\n";
-                if(defined $foreground) { print $msg."\n" }
+                if($foreground) { print $msg."\n" }
             }
     }
 #    close( LOG_HANDLE );
@@ -601,25 +601,25 @@ sub read_from_socket {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nomen est omen
 #===============================================================================
-sub print_known_daemons {
-    my ($tmp) = @_ ;
-    print "####################################\n";
-    print "# status of known_daemons\n";
-    $shmda->shlock(LOCK_EX);
-    my @hosts = keys %$known_daemons;
-    foreach my $host (@hosts) {
-        my $status = $known_daemons->{$host}->{status} ;
-        my $passwd = $known_daemons->{$host}->{passwd};
-        my $timestamp = $known_daemons->{$host}->{timestamp};
-        print "$host\n";
-        print "\tstatus:    $status\n";
-        print "\tpasswd:    $passwd\n";
-        print "\ttimestamp: $timestamp\n";
-    }
-    $shmda->shunlock(LOCK_EX);
-    print "####################################\n";
-    return;
-}
+#sub print_known_daemons {
+#    my ($tmp) = @_ ;
+#    print "####################################\n";
+#    print "# status of known_daemons\n";
+#    $shmda->shlock(LOCK_EX);
+#    my @hosts = keys %$known_daemons;
+#    foreach my $host (@hosts) {
+#        my $status = $known_daemons->{$host}->{status} ;
+#        my $passwd = $known_daemons->{$host}->{passwd};
+#        my $timestamp = $known_daemons->{$host}->{timestamp};
+#        print "$host\n";
+#        print "\tstatus:    $status\n";
+#        print "\tpasswd:    $passwd\n";
+#        print "\ttimestamp: $timestamp\n";
+#    }
+#    $shmda->shunlock(LOCK_EX);
+#    print "####################################\n";
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -979,15 +979,20 @@ daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 
 # Just fork, if we"re not in foreground mode
-if( ! $foreground ) { $pid = fork(); }
-else { $pid = $$; }
+if( ! $foreground ) { 
+    $pid = fork();  
+} else { 
+    $pid = $$; 
+}
 
 # Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
     open( LOCK_FILE, ">$pid_file" );
     print LOCK_FILE "$pid\n";
-close( LOCK_FILE );
-    if( !$foreground ) { exit( 0 ) };
+    close( LOCK_FILE );
+    if( !$foreground ) { 
+        exit( 0 ) 
+    };
 }
 
 # connect to gosa-si job queue
@@ -1063,28 +1068,28 @@ while(1) {
     }
 
 
-    if($arp_activ eq "on" && vec($rout, fileno $arp_fifo, 1)) {
-        my $in_msg = <$arp_fifo>;
-        chomp($in_msg);
-        print "arp_activ: msg: $in_msg\n";
-        my $act_passwd = $known_daemons->{$bus_address}->{passwd};
-        print "arp_activ: arp_passwd: $act_passwd\n";
-
-        my $in_msg_hash = $xml->XMLin($in_msg, ForceArray=>1);
-
-        my $target = &get_content_from_xml_hash($in_msg_hash, 'target');
-
-        if ($target eq $server_address) { 
-             print "arp_activ: forward to server\n";
-            my $arp_cipher = &create_ciphering($act_passwd);
-            my $crypted_msg = &encrypt_msg($in_msg, $arp_cipher);
-            &activating_child($crypted_msg, $server_ip);
-        } else {
-            print "arp_activ: send to bus\n";
-            &send_msg_hash2address($in_msg_hash, $bus_address);
-        }
-        print "\n";
-    }
+#    if($arp_activ eq "on" && vec($rout, fileno $arp_fifo, 1)) {
+#        my $in_msg = <$arp_fifo>;
+#        chomp($in_msg);
+#        print "arp_activ: msg: $in_msg\n";
+#        my $act_passwd = $known_daemons->{$bus_address}->{passwd};
+#        print "arp_activ: arp_passwd: $act_passwd\n";
+#
+#        my $in_msg_hash = $xml->XMLin($in_msg, ForceArray=>1);
+#
+#        my $target = &get_content_from_xml_hash($in_msg_hash, 'target');
+#
+#        if ($target eq $server_address) { 
+#             print "arp_activ: forward to server\n";
+#            my $arp_cipher = &create_ciphering($act_passwd);
+#            my $crypted_msg = &encrypt_msg($in_msg, $arp_cipher);
+#            &activating_child($crypted_msg, $server_ip);
+#        } else {
+#            print "arp_activ: send to bus\n";
+#            &send_msg_hash2address($in_msg_hash, $bus_address);
+#        }
+#        print "\n";
+#    }
 
 
     # check input fhd of all modules 
@@ -1109,8 +1114,6 @@ while(1) {
                     daemon_log("cannot read from $actual_ip", 5);
                 }
             }
-            #close($client);
-
         }
     }
 
@@ -1194,13 +1197,11 @@ while(1) {
         }
 
         # add target
-        print "select: target: $target\n";
         &add_content2xml_hash($out_msg_hash, "target", $target);
 
         # add new header
         my $out_header = $job_msg_hash->{header}[0];
         $out_header =~ s/job_/gosa_/;
-        print "select: header: $out_header\n";
         delete $out_msg_hash->{header};
         &add_content2xml_hash($out_msg_hash, "header", $out_header);
         

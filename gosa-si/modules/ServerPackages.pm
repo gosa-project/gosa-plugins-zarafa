@@ -487,17 +487,17 @@ sub here_i_am {
                                                 timestamp=>&get_time,
                                                 } );
     if ($res == 3) {
-        $res = $main::known_clients_db->update_dbentry( {table=>'known_clients', 
-                                                where=>'hostname',
-                                                hostname=>$source,
-                                                events=>$events,
-                                                macaddress=>$mac_address,
-                                                status=>'registered',
-                                                hostkey=>$new_passwd,
-                                                timestamp=>&get_time,
-                                                } );
+        my $update_hash = { table=>'known_clients' };
+        $update_hash->{where} = [ { hostname=>[$source] } ],
+        $update_hash->{update} = [ { events=>[$events],
+                                     macaddress=>[$mac_address],
+                                     status=>['registered'],
+                                     hostkey=>[$new_passwd],
+                                     timestamp=>[&get_time],
+                                    } ];
+        $res = $main::known_clients_db->update_dbentry( $update_hash );
     } 
-    if ($res > 0)  {
+    if ($res != 1)  {
         &main::daemon_log("ERROR: cannot add entry to known_clients: $res");
         return;
     }
@@ -507,8 +507,11 @@ sub here_i_am {
     &send_msg_hash2address($out_hash, $source, $new_passwd);
 
     # notify registered client to bus
-    $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-    &send_msg_hash2address($out_hash, $bus_address);
+    if( $bus_activ eq "on") {
+        &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
+        $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
+        &send_msg_hash2address($out_hash, $bus_address);
+    }
 
     # give the new client his ldap config
     &new_ldap_config($source);
@@ -606,7 +609,11 @@ sub new_ldap_config {
 
     # Sanity check
     if ($mesg->count != 1) {
-	    &main::daemon_log("WARNING: client mac address $macaddress not found/not unique", 1);
+	    &main::daemon_log("WARNING: client mac address $macaddress not found/not unique in ldap search", 1);
+        &main::daemon_log("\tbase: $ldap_base", 1);
+        &main::daemon_log("\tscope: sub", 1);
+        &main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
+        &main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
 	    return;
     }
 

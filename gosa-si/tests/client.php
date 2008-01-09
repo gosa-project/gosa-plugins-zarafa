@@ -15,7 +15,7 @@ if($sock->connected()){
 	#$data = "<xml><header>gosa_ping</header><source>10.89.1.155:20082</source><target></target><mac>11:22:33:44:55</mac></xml>";
 	#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000000</timestamp> </xml>";
 	#$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
-	$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+	#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
 # delete
 	#$data = "<xml> <header>gosa_delete_jobdb_entry</header> <where>headertag</where> <headertag>sayHello</headertag> </xml>";
@@ -29,7 +29,7 @@ if($sock->connected()){
 	#$data = "<xml><header>gosa_query_jobdb</header><where>status</where><status>waiting</status></xml>";
 	
 # clear
-	#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+	$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
 
   $sock->write($data);
 

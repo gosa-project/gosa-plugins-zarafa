@@ -71,20 +71,10 @@ sub add_dbentry {
         if (exists $arg->{$col_name}) {
             push(@add_list, $arg->{$col_name});
         }
-        # use default values for column values
-#        } else {
-#            my $default_val = "none";
-#            if ($col_name eq "timestamp") {
-#                $default_val = "19700101000000";
-#            }             
-#            push(@add_list, $default_val);
-#        }
     }    
 
     my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
-    print " INSERT INTO $table VALUES ('".join("', '", @add_list)."')\n";
     my $db_res = $obj->{dbh}->do($sql_statement);
-    print " DB result: $db_res\n";
     return 0;
 
 }
