@@ -33,46 +33,6 @@ sub daemon_log {
 }
 
 
-##===  FUNCTION  ================================================================
-##         NAME:  logging
-##   PARAMETERS:  level - string - default 'info'
-##                msg - string -
-##                facility - string - default 'LOG_DAEMON'
-##      RETURNS:  nothing
-##  DESCRIPTION:  function for logging
-##===============================================================================
-#my $log_file = $main::log_file;
-#my $verbose = $main::verbose;
-#my $foreground = $main::forground;
-#sub daemon_log {
-#    # log into log_file
-#    my( $msg, $level ) = @_;
-#    if(not defined $msg) { return }
-#    if(not defined $level) { $level = 1 }
-#    if(defined $log_file){
-#        open(LOG_HANDLE, ">>$log_file");
-#        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
-#            print STDERR "cannot open $log_file: $!";
-#            return }
-#            chomp($msg);
-#            if($level <= $verbose){
-#                print LOG_HANDLE "$level $msg\n";
-#                if(defined $foreground) { print $msg."\n" }
-#            }
-#    }
-#    close( LOG_HANDLE );
-##log into syslog
-##    my ($msg, $level, $facility) = @_;
-##    if(not defined $msg) {return}
-##    if(not defined $level) {$level = "info"}
-##    if(not defined $facility) {$facility = "LOG_DAEMON"}
-##    openlog($0, "pid,cons,", $facility);
-##    syslog($level, $msg);
-##    closelog;
-##    return;
-#}
-
-
 #===  FUNCTION  ================================================================
 #         NAME:  create_xml_hash
 #   PARAMETERS:  header - string - message header (required)
@@ -90,9 +50,6 @@ sub create_xml_hash {
             target => [$target],
             $header => [$header_value],
     };
-    #daemon_log("create_xml_hash:", 7),
-    #chomp(my $tmp = Dumper $hash);
-    #daemon_log("\t$tmp", 7);
     return $hash
 }
 
@@ -121,19 +78,6 @@ sub send_msg_hash2address {
     # generate xml string
     my $msg_xml = &create_xml_string($msg_hash);
     
-    # fetch the appropriated passwd from hash 
-    if(not defined $passwd) {
-        if(exists $main::known_daemons->{$address}) {
-            $passwd = $main::known_daemons->{$address}->{passwd};
-        } elsif(exists $main::known_clients->{$address}) {
-            $passwd = $main::known_clients->{$address}->{passwd};
-            
-        } else {
-            daemon_log("$address not known, neither as server nor as client", 1);
-            return 1;
-        }
-    }
-    
     # create ciphering object
     my $act_cipher = &create_ciphering($passwd);
     
@@ -143,21 +87,7 @@ sub send_msg_hash2address {
     # opensocket
     my $socket = &open_socket($address);
     if(not defined $socket){
-        daemon_log("cannot send '$header'-msg to $address , server not reachable",
-                    5);
-
-#        if (exists $main::known_clients->{$address}) {
-#            if ($main::known_clients->{$address}->{status} eq "down") {
-#                # if status of not reachable client is already 'down', 
-#                # then delete client from known_clients
-#                &clean_up_known_clients($address);
-#
-#            } else {
-#                # update status to 'down'
-#                &update_known_clients(hostname=>$address, status=>"down");        
-#
-#            }
-#        }
+        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
         return 1;
     }
     
@@ -167,19 +97,7 @@ sub send_msg_hash2address {
     close $socket;
 
     daemon_log("send '$header'-msg to $address", 1);
-
     daemon_log("$msg_xml", 5);
-
-    #daemon_log("crypted message:",7);
-    #daemon_log("\t$crypted_msg", 7);
-
-    # update status of client in known_clients with last send msg
-#    if(exists $main::known_daemons->{$address}) {
-#        #&update_known_daemons();
-#    } elsif(exists $main::known_clients->{$address}) {
-#        &main::update_known_clients(hostname=>$address, status=>$header);
-#    }
-
     return 0;
 }
 

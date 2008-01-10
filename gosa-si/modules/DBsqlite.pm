@@ -54,28 +54,68 @@ sub add_dbentry {
     }
 
     # check wether primkey is unique in table, otherwise return errorflag 3
-    if ( defined $primkey ) {
-        my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
-        if ($res != 0) { 
-            return 3;
-        }
-    }
-  
-    # fetch column names of table
-    my $col_names = $obj->get_table_columns($table);
-    
-    # assign values to column name variables
-    my @add_list;
-    foreach my $col_name (@{$col_names}) {
-        # use function parameter for column values
-        if (exists $arg->{$col_name}) {
-            push(@add_list, $arg->{$col_name});
-        }
-    }    
+    my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
+    if ($res == 0) {
+        # fetch column names of table
+        my $col_names = $obj->get_table_columns($table);
 
-    my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
-    my $db_res = $obj->{dbh}->do($sql_statement);
-    return 0;
+        # assign values to column name variables
+        my @add_list;
+        foreach my $col_name (@{$col_names}) {
+        # use function parameter for column values
+            if (exists $arg->{$col_name}) {
+                push(@add_list, $arg->{$col_name});
+            }
+        }    
+
+        my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
+        my $db_res = $obj->{dbh}->do($sql_statement);
+        if( $db_res != 1 ) {
+            return 1;
+        } else { 
+            return 0;
+        }
+
+    } else  {
+        my $update_hash = { table=>$table };
+        $update_hash->{where} = [ { $primkey=>[ $arg->{$primkey} ] } ];
+        $update_hash->{update} = [ {} ];
+        while( my ($pram, $val) = each %{$arg} ) {
+            if( $pram eq 'table' ) { next; }
+            if( $pram eq 'primkey' ) { next; }
+            $update_hash->{update}[0]->{$pram} = [$val];
+        }
+        my $db_res = &update_dbentry( $obj, $update_hash );
+        if( $db_res != 1 ) {
+            return 1;
+        } else { 
+            return 0;
+        }
+
+    }
+#    # check wether primkey is unique in table, otherwise return errorflag 3
+#    if ( defined $primkey ) {
+#        my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
+#        if ($res != 0) { 
+#            return 3;
+#        }
+#    }
+#  
+#    # fetch column names of table
+#    my $col_names = $obj->get_table_columns($table);
+#    
+#    # assign values to column name variables
+#    my @add_list;
+#    foreach my $col_name (@{$col_names}) {
+#        # use function parameter for column values
+#        if (exists $arg->{$col_name}) {
+#            push(@add_list, $arg->{$col_name});
+#        }
+#    }    
+#
+#    my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
+#    my $db_res = $obj->{dbh}->do($sql_statement);
+#    return 0;
 
 }
 

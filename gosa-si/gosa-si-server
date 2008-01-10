@@ -94,22 +94,15 @@ our $job_db;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_server_db;
-our $known_daemons = {};
-our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1, 
-                                                            exclusive => 1, 
-                                                            mode => 0666, 
-                                                            destroy => 1,
-                                                            });
-
-# holds all registrated clients
-our $known_clients_db;
-#our $known_clients = {};
-#our $shmcl = tie($known_clients, 'IPC::Shareable', undef, {create => 1, 
+#our $known_daemons = {};
+#our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1, 
 #                                                            exclusive => 1, 
 #                                                            mode => 0666, 
 #                                                            destroy => 1,
 #                                                            });
 
+# holds all registrated clients
+our $known_clients_db;
 
 %cfg_defaults =
 ("general" =>
@@ -121,7 +114,7 @@ our $known_clients_db;
     "job_queue_timeout" => [\$job_queue_timeout, undef],
     "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
-    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/kown_server.db'],
+    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/known_server.db'],
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -628,16 +621,16 @@ sub read_from_socket {
 #      RETURNS:  nothing
 #  DESCRIPTION:  creates a dummy entry for hostname in known_daemons
 #===============================================================================
-sub create_known_daemon {
-    my ($hostname) = @_;
-    $shmda->shlock(LOCK_EX);
-    $known_daemons->{$hostname} = {};
-    $known_daemons->{$hostname}->{status} = "none";
-    $known_daemons->{$hostname}->{passwd} = "none";
-    $known_daemons->{$hostname}->{timestamp} = "none";
-    $shmda->shunlock(LOCK_EX); 
-    return;  
-}
+#sub create_known_daemon {
+#    my ($hostname) = @_;
+#    $shmda->shlock(LOCK_EX);
+#    $known_daemons->{$hostname} = {};
+#    $known_daemons->{$hostname}->{status} = "none";
+#    $known_daemons->{$hostname}->{passwd} = "none";
+#    $known_daemons->{$hostname}->{timestamp} = "none";
+#    $shmda->shunlock(LOCK_EX); 
+#    return;  
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -1006,7 +999,9 @@ $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table('known_clients', \@clients_col_names);
 
 # connect to known_server_db
-my @server_col_names = ();
+my @server_col_names = ('hostname', 'status', 'hostkey', 'timestamp');
+$known_server_db = GOSA::DBsqlite->new($known_server_file_name);
+$known_server_db->create_table('known_server', \@server_col_names);
 
 # import all modules
 &import_modules;

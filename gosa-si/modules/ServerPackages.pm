@@ -26,9 +26,7 @@ my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
 
 my %cfg_defaults =
-("general" =>
-    {"known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
-    },
+(
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
     "server_port" => [\$server_port, "20081"],
@@ -83,8 +81,8 @@ if($server_activ eq "on"){
     }
 }
 
-# connect to known_clients_db
-#my $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+# TODO
+# füge den server selbst zu known_server hinzu, msgs können nämlich auch von sich selbst kommen (gosa!!!)
 
 
 # register at bus
@@ -233,17 +231,31 @@ sub open_socket {
 #===============================================================================
 sub register_at_bus {
 
-    # create known_daemons entry
-    &main::create_known_daemon($bus_address);
-    &main::add_content2known_daemons(hostname=>$bus_address, status=>"register_at_bus", passwd=>$bus_passwd);
+    # add bus to known_server_db
+    my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
+                                                    primkey=>'hostname',
+                                                    hostname=>$bus_address,
+                                                    status=>'bus',
+                                                    hostkey=>$bus_passwd,
+                                                    timestamp=>&get_time,
+                                                } );
+#    if ($res == 3) {
+#        my $update_hash = { table=>'known_server' };
+#        $update_hash->{where} = [ { hostname=>[$bus_address] } ];
+#        $update_hash->{update} = [ { 
+#            hostkey=>[$bus_passwd],
+#            timestamp=>[&get_time],
+#        } ];
+#        $res = $main::known_server_db->update_dbentry( $update_hash );
+#    }
 
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
     my $answer = "";
-    $answer = &send_msg_hash2address($msg_hash, $bus_address);
+    $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
     if ($answer == 0) {
         &main::daemon_log("register at bus: $bus_address", 1);
     } else {
-        &main::daemon_log("unable to send 'register'-msg to bus: $bus_address", 1);
+        &main::daemon_log("unable to send 'register'-msg to bus '$bus_address': $answer", 1);
     }
     return;
 }
@@ -266,56 +278,89 @@ sub process_incoming_msg {
     $crypted_msg = $1;
     my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
 
-    # collect addresses from possible incoming clients
-    my @valid_keys;
-    my @host_keys = keys %$main::known_daemons;
-    foreach my $host_key (@host_keys) {    
-        if($host_key =~ "^$host") {
-            push(@valid_keys, $host_key);
-        }
-    }
-    my @client_keys = keys %$main::known_clients;
-    foreach my $client_key (@client_keys) {
-        if($client_key =~ "^$host"){
-            push(@valid_keys, $client_key);
-        }
-    }
-    push(@valid_keys, $server_address);
-    
-    my $l = @valid_keys;
+    my $msg;
     my $msg_hash;
-    my $msg_flag = 0;    
-    my $msg = "";
+    my $host_name;
+    my $host_key;
 
-    # determine the correct passwd for deciphering of the incoming msgs
-    foreach my $host_key (@valid_keys) {
-        eval{
-            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
-            my $key_passwd;
-            if (exists $main::known_daemons->{$host_key}) {
-                $key_passwd = $main::known_daemons->{$host_key}->{passwd};
-            } elsif (exists $main::known_clients->{$host_key}) {
-                $key_passwd = $main::known_clients->{$host_key}->{passwd};
-            } elsif ($host_key eq $server_address) {
-                $key_passwd = $server_passwd;
-            } 
-            &main::daemon_log("ServerPackage: key_passwd: $key_passwd", 7);
-            my $key_cipher = &create_ciphering($key_passwd);
-            $msg = &decrypt_msg($crypted_msg, $key_cipher);
-            &main::daemon_log("ServerPackages: decrypted msg: \n$msg", 7);
-            $msg_hash = $xml->XMLin($msg, ForceArray=>1);
-            #my $tmp = printf Dumper $msg_hash;
-            #&main::daemon_log("DEBUG: ServerPackages: xml hash: $tmp", 7);
-        };
-        if($@) {
-            &main::daemon_log("ServerPackage: key raise error: $@", 7);
-            $msg_flag += 1;
-        } else {
-            last;
-        }
+    # check wether incoming msg is a new msg
+    $host_name = $server_address;
+    $host_key = $server_passwd;
+    &main::daemon_log("ServerPackage: host_name: $host_name", 7);
+    &main::daemon_log("ServerPackage: host_key: $host_key", 7);
+    eval{
+        my $key_cipher = &create_ciphering($host_key);
+        $msg = &decrypt_msg($crypted_msg, $key_cipher);
+        $msg_hash = &transform_msg2hash($msg);
+    };
+    if($@) {
+        &main::daemon_log("ServerPackage: deciphering raise error", 7);
+        &main::daemon_log("$@", 8);
+        $msg = undef;
+        $msg_hash = undef;
+        $host_name = undef;
+        $host_key = undef;
     } 
-    
-    if($msg_flag >= $l)  {
+
+    # check wether incoming msg is from a known_server
+    if( not defined $msg ) {
+        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {  
+            $host_name = $hit->{hostname};
+            if( not $host_name =~ "^$host") {
+                next;
+            }
+            $host_key = $hit->{hostkey};
+            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
+            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
+            eval{
+                my $key_cipher = &create_ciphering($host_key);
+                $msg = &decrypt_msg($crypted_msg, $key_cipher);
+                $msg_hash = &transform_msg2hash($msg);
+            };
+            if($@) {
+                &main::daemon_log("ServerPackage: deciphering raise error", 7);
+                &main::daemon_log("$@", 8);
+                $msg = undef;
+                $msg_hash = undef;
+                $host_name = undef;
+                $host_key = undef;
+            } else {
+                last;
+            }
+        }
+    }
+
+    # check wether incoming msg is from a known_client
+    if( not defined $msg ) {
+        my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+            $host_name = $hit->{hostname};
+            if( not $host_name =~ "^$host") {
+                next;
+            }
+            $host_key = $hit->{hostkey};
+            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
+            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
+            eval{
+                my $key_cipher = &create_ciphering($host_key);
+                $msg = &decrypt_msg($crypted_msg, $key_cipher);
+                $msg_hash = &transform_msg2hash($msg);
+            };
+            if($@) {
+                &main::daemon_log("ServerPackage: deciphering raise error", 7);
+                &main::daemon_log("$@", 8);
+                $msg = undef;
+                $msg_hash = undef;
+                $host_name = undef;
+                $host_key = undef;
+            } else {
+                last;
+            }
+        }
+    }
+
+    if( not defined $msg ) {
         &main::daemon_log("WARNING: ServerPackage do not understand the message:", 5);
         &main::daemon_log("$@", 7);
         return;
@@ -335,16 +380,11 @@ sub process_incoming_msg {
 
     }  elsif ($len_targets == 1){
         # we have only one target symbol
-
         my $target = $targets[0];
         &main::daemon_log("SeverPackages: msg is for: $target", 7);
 
-        # msg is for server
         if ($target eq $server_address) {
-
-            # msg is a event
-
-            # msg is a hard implemented function
+            # msg is for server
             if ($header eq 'new_passwd'){ &new_passwd($msg_hash)}
             elsif ($header eq 'here_i_am') { &here_i_am($msg_hash)}
             elsif ($header eq 'who_has') { &who_has($msg_hash) }
@@ -354,28 +394,40 @@ sub process_incoming_msg {
             elsif ($header eq 'get_load') { &execute_actions($msg_hash)}
             else { &main::daemon_log("ERROR: ServerPackages: no function assigned to this msg", 5) }
 
-        
-       # msg is for all clients
        } elsif ($target eq "*") {
-            my @target_addresses = keys(%$main::known_clients);
-            foreach my $target_address (@target_addresses) {
-                if ($target_address eq $source) { next; }
-                $msg_hash->{target} = [$target_address];
-                &send_msg_hash2address($msg_hash, $target_address);
-            } 
-          
-        # msg is for one host
-        } else {
-            if (exists $main::known_clients->{$target}) {
-                &send_msg_hash2address($msg_hash, $target);
-            } elsif (exists $main::known_daemons->{$target}) {
-                # target is known
-                &send_msg_hash2address($msg_hash, $target);
-            } else {
-                # target is not known
-                &main::daemon_log("ERROR: ServerPackages: target $target is not known neither in known_clients nor in known_daemons", 1);
+            # msg is for all clients
+            my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+            while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                $host_name = $hit->{hostname};
+                $host_key = $hit->{hostkey};
+                $msg_hash->{target} = [$host_name];
+                &send_msg_hash2address($msg_hash, $host_name, $host_key);
             }
+            return;
+         
+        } else {
+            # msg is for one host
+            my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
+            if( 1 == keys %{$query_res} ) {
+                $host_key = $query_res->{1}->{host_key};
+                &send_msg_hash2address($msg_hash, $target, $host_key);
+                return;
+            }
+
+            my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
+            if( 1 == keys %{$query_res} ) {
+                $host_key = $query_res->{1}->{host_key};
+                &send_msg_hash2address($msg_hash, $target, $host_key);
+                return;
+            }
+
+            &main::daemon_log("ERROR: ServerPackages: target '$target' is not known neither in known_clients nor in known_server",1);
+            return;
         }
+
+    } elsif ($len_targets > 1 ) {
+        # we have more than one target 
+        return;
     }
 
     return ;
@@ -414,21 +466,54 @@ sub got_ping {
 sub new_passwd {
     my ($msg_hash) = @_;
 
-    my $source = @{$msg_hash->{source}}[0];
-    my $passwd = @{$msg_hash->{new_passwd}}[0];
+    my $header = @{$msg_hash->{header}}[0];
+    my $source_name = @{$msg_hash->{source}}[0];
+    my $source_key = @{$msg_hash->{new_passwd}}[0];
+    my $query_res;
 
-    if (exists $main::known_daemons->{$source}) {
-        &main::add_content2known_daemons(hostname=>$source, status=>"new_passwd", passwd=>$passwd);
-        my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source);
-        &send_msg_hash2address($hash, $source);
+    # check known_clients_db
+    $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$source_name} );
+    if( 1 == keys %{$query_res} ) {
+        my $update_hash = { table=>'known_clients' };
+        $update_hash->{where} = [ { hostname=>[$source_name] } ];
+        $update_hash->{update} = [ {
+            hostkey=>[$source_key],
+            timestamp=>[&get_time],
+        } ];
+        my $res = $main::known_clients_db->update_dbentry( $update_hash );
 
-    } elsif (exists $main::known_clients->{$source}) {
-        &main::add_content2known_clients(hostname=>$source, status=>"new_passwd", passwd=>$passwd);
-
-    } else {
-        &main::daemon_log("ERROR: $source not known, neither in known_daemons nor in known_clients", 1)   
+        my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
+        &send_msg_hash2address($hash, $source_name, $source_key);
+        return;
     }
 
+    # check known_server_db
+    $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$source_name } );
+    if( 1 == keys %{$query_res} ) {
+        my $update_hash = { table=>'known_server' };
+        $update_hash->{where} = [ { hostname=>[$source_name] } ];
+        $update_hash->{update} = [ {
+            hostkey=>[$source_key],
+                timestamp=>[&get_time],
+        } ];
+        my $res = $main::known_server_db->update_dbentry( $update_hash );
+
+        my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
+        &send_msg_hash2address($hash, $source_name, $source_key);
+        return;
+    }
+
+    &main::daemon_log("ERROR: $source_name not known for '$header'-msg", 1);
+    return;
+}
+
+
+sub send_msg_hash {
+    my ($hash, $host_name, $host_key);
+
+    
+    my $answer = &send_msg_hash2address($hash, $host_name, $host_key);
+    
     return;
 }
 
@@ -473,7 +558,7 @@ sub here_i_am {
     # new client accepted
     my $new_passwd = @{$msg_hash->{new_passwd}}[0];
 
-    # create known_daemons entry
+    # create entry in known_clients
     my $events = @{$msg_hash->{events}}[0];
     
     # add entry to known_clients_db
@@ -486,17 +571,17 @@ sub here_i_am {
                                                 hostkey=>$new_passwd,
                                                 timestamp=>&get_time,
                                                 } );
-    if ($res == 3) {
-        my $update_hash = { table=>'known_clients' };
-        $update_hash->{where} = [ { hostname=>[$source] } ],
-        $update_hash->{update} = [ { events=>[$events],
-                                     macaddress=>[$mac_address],
-                                     status=>['registered'],
-                                     hostkey=>[$new_passwd],
-                                     timestamp=>[&get_time],
-                                    } ];
-        $res = $main::known_clients_db->update_dbentry( $update_hash );
-    } 
+#    if ($res == 3) {
+#        my $update_hash = { table=>'known_clients' };
+#        $update_hash->{where} = [ { hostname=>[$source] } ];
+#        $update_hash->{update} = [ { events=>[$events],
+#                                     macaddress=>[$mac_address],
+#                                     status=>['registered'],
+#                                     hostkey=>[$new_passwd],
+#                                     timestamp=>[&get_time],
+#                                    } ];
+#        $res = $main::known_clients_db->update_dbentry( $update_hash );
+#    } 
     if ($res != 1)  {
         &main::daemon_log("ERROR: cannot add entry to known_clients: $res");
         return;
