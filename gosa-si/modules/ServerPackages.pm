@@ -407,14 +407,15 @@ sub process_incoming_msg {
          
         } else {
             # msg is for one host
-            my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
+            my $query_res;
+            $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
             if( 1 == keys %{$query_res} ) {
                 $host_key = $query_res->{1}->{host_key};
                 &send_msg_hash2address($msg_hash, $target, $host_key);
                 return;
             }
 
-            my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
+            $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
             if( 1 == keys %{$query_res} ) {
                 $host_key = $query_res->{1}->{host_key};
                 &send_msg_hash2address($msg_hash, $target, $host_key);
@@ -571,18 +572,8 @@ sub here_i_am {
                                                 hostkey=>$new_passwd,
                                                 timestamp=>&get_time,
                                                 } );
-#    if ($res == 3) {
-#        my $update_hash = { table=>'known_clients' };
-#        $update_hash->{where} = [ { hostname=>[$source] } ];
-#        $update_hash->{update} = [ { events=>[$events],
-#                                     macaddress=>[$mac_address],
-#                                     status=>['registered'],
-#                                     hostkey=>[$new_passwd],
-#                                     timestamp=>[&get_time],
-#                                    } ];
-#        $res = $main::known_clients_db->update_dbentry( $update_hash );
-#    } 
-    if ($res != 1)  {
+
+    if ($res != 0)  {
         &main::daemon_log("ERROR: cannot add entry to known_clients: $res");
         return;
     }
@@ -593,9 +584,15 @@ sub here_i_am {
 
     # notify registered client to bus
     if( $bus_activ eq "on") {
-        &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
+        # fetch actual bus key
+        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} );
+        my $hostkey = $query_res->{1}->{hostkey};
+        
+        # send update msg to bus
         $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-        &send_msg_hash2address($out_hash, $bus_address);
+        &send_msg_hash2address($out_hash, $bus_address, $hostkey);
+        
+        &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
     }
 
     # give the new client his ldap config
@@ -667,7 +664,6 @@ sub new_ldap_config {
     my $hit_counter = keys %{$res};
     if( not $hit_counter == 1 ) {
         &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
-        my $tmp = print Dumer $res;
     }
 
     my $macaddress = $res->{1}->{macaddress};

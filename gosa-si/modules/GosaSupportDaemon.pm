@@ -69,7 +69,7 @@ sub transform_msg2hash {
 #      RETURNS:  nothing
 #  DESCRIPTION:  ????
 #===============================================================================
-sub send_msg_hash2address {
+sub send_msg_hash2address ($$$){
     my ($msg_hash, $address, $passwd) = @_ ;
 
     # fetch header for logging

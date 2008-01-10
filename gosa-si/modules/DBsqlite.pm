@@ -52,6 +52,11 @@ sub add_dbentry {
     if ( ( defined $primkey ) && ( not $arg->{ $primkey } ) ) {
         return 2;
     }
+     
+    # if timestamp is not provided, add timestamp   
+    if( not exists $arg->{timestamp} ) {
+        $arg->{timestamp} = &get_time;
+    }
 
     # check wether primkey is unique in table, otherwise return errorflag 3
     my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
@@ -93,30 +98,6 @@ sub add_dbentry {
         }
 
     }
-#    # check wether primkey is unique in table, otherwise return errorflag 3
-#    if ( defined $primkey ) {
-#        my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
-#        if ($res != 0) { 
-#            return 3;
-#        }
-#    }
-#  
-#    # fetch column names of table
-#    my $col_names = $obj->get_table_columns($table);
-#    
-#    # assign values to column name variables
-#    my @add_list;
-#    foreach my $col_name (@{$col_names}) {
-#        # use function parameter for column values
-#        if (exists $arg->{$col_name}) {
-#            push(@add_list, $arg->{$col_name});
-#        }
-#    }    
-#
-#    my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
-#    my $db_res = $obj->{dbh}->do($sql_statement);
-#    return 0;
-
 }
 
 
@@ -295,5 +276,19 @@ sub exec_statement {
     my @res = @{$obj->{dbh}->selectall_arrayref($sql_statement)};
     return \@res;
 }
+
+sub get_time {
+    my ($seconds, $minutes, $hours, $monthday, $month,
+            $year, $weekday, $yearday, $sommertime) = localtime(time);
+    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+    $month+=1;
+    $month = $month < 10 ? $month = "0".$month : $month;
+    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+    $year+=1900;
+    return "$year$month$monthday$hours$minutes$seconds";
+}
+
 
 1;

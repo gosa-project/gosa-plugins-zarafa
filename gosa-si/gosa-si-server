@@ -50,7 +50,7 @@ my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
 my ($server, $server_mac_address, $server_events);
 my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name);
-my ($known_daemons, $shmda, $known_clients, $shmcl, $known_modules, $known_clients_file_name, $known_server_file_name, $known_clients_db, $known_server_db);
+my ($known_modules, $known_clients_file_name, $known_server_file_name);
 my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
@@ -94,12 +94,6 @@ our $job_db;
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_server_db;
-#our $known_daemons = {};
-#our $shmda = tie($known_daemons, 'IPC::Shareable', undef, {create => 1, 
-#                                                            exclusive => 1, 
-#                                                            mode => 0666, 
-#                                                            destroy => 1,
-#                                                            });
 
 # holds all registrated clients
 our $known_clients_db;
@@ -642,50 +636,50 @@ sub read_from_socket {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
 #===============================================================================
-sub add_content2known_daemons {
-    my $arg = {
-        hostname => undef, status => undef, passwd => undef,
-        mac_address => undef, events => undef, 
-        @_ };
-    my $hostname = $arg->{hostname};
-    my $status = $arg->{status};
-    my $passwd = $arg->{passwd};
-    my $mac_address = $arg->{mac_address};
-    my $events = $arg->{events};
-
-    if (not defined $hostname) {
-        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-        return;
-    }
-
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
-    
-    $shmda->shlock(LOCK_EX);
-    if (defined $status) {
-        $known_daemons->{$hostname}->{status} = $status;
-    }
-    if (defined $passwd) {
-        $known_daemons->{$hostname}->{passwd} = $passwd;
-    }
-    if (defined $mac_address) {
-        $known_daemons->{$hostname}->{mac_address} = $mac_address;
-    }
-    if (defined $events) {
-        $known_daemons->{$hostname}->{events} = $events;
-    }
-    $known_daemons->{$hostname}->{timestamp} = $t;
-    $shmda->shlock(LOCK_EX);
-    return;
-}
+#sub add_content2known_daemons {
+#    my $arg = {
+#        hostname => undef, status => undef, passwd => undef,
+#        mac_address => undef, events => undef, 
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $passwd = $arg->{passwd};
+#    my $mac_address = $arg->{mac_address};
+#    my $events = $arg->{events};
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $t = "$year$month$monthday$hours$minutes$seconds";
+#    
+#    $shmda->shlock(LOCK_EX);
+#    if (defined $status) {
+#        $known_daemons->{$hostname}->{status} = $status;
+#    }
+#    if (defined $passwd) {
+#        $known_daemons->{$hostname}->{passwd} = $passwd;
+#    }
+#    if (defined $mac_address) {
+#        $known_daemons->{$hostname}->{mac_address} = $mac_address;
+#    }
+#    if (defined $events) {
+#        $known_daemons->{$hostname}->{events} = $events;
+#    }
+#    $known_daemons->{$hostname}->{timestamp} = $t;
+#    $shmda->shlock(LOCK_EX);
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -697,41 +691,41 @@ sub add_content2known_daemons {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
 #===============================================================================
-sub update_known_daemons {
-    my $arg = {
-        hostname => undef, status => undef, passwd => undef,
-        @_ };
-    my $hostname = $arg->{hostname};
-    my $status = $arg->{status};
-    my $passwd = $arg->{passwd};
-
-    if (not defined $hostname) {
-        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-        return;
-    }
-
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
-
-    $shmda->shlock(LOCK_EX);
-    if (defined $status) {
-        $known_daemons->{$hostname}->{status} = $status;
-    }
-    if (defined $passwd) {
-        $known_daemons->{$hostname}->{passwd} = $passwd;
-    }
-    $known_daemons->{$hostname}->{timestamp} = $t;
-    $shmda->shunlock(LOCK_EX);
-    return;
-}
+#sub update_known_daemons {
+#    my $arg = {
+#        hostname => undef, status => undef, passwd => undef,
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $passwd = $arg->{passwd};
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $t = "$year$month$monthday$hours$minutes$seconds";
+#
+#    $shmda->shlock(LOCK_EX);
+#    if (defined $status) {
+#        $known_daemons->{$hostname}->{status} = $status;
+#    }
+#    if (defined $passwd) {
+#        $known_daemons->{$hostname}->{passwd} = $passwd;
+#    }
+#    $known_daemons->{$hostname}->{timestamp} = $t;
+#    $shmda->shunlock(LOCK_EX);
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -789,14 +783,6 @@ sub create_known_client {
         daemon_log("ERROR: cannot add entry to known_clients.db: $res", 1);
     }
 
-#    $shmcl->shlock(LOCK_EX);
-#    $known_clients->{$hostname} = {};
-#    $known_clients->{$hostname}->{status} = "none";
-#    $known_clients->{$hostname}->{passwd} = "none";
-#    $known_clients->{$hostname}->{timestamp} = "none";
-#    $known_clients->{$hostname}->{mac_address} = "none";
-#    $known_clients->{$hostname}->{events} = "none";
-#    $shmcl->shunlock(LOCK_EX); 
     return;  
 }
 
@@ -812,56 +798,45 @@ sub create_known_client {
 #      RETURNS:  nothing
 #  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
 #===============================================================================
-sub update_known_clients {
-    my $arg = {
-        hostname => undef, status => undef, hostkey => undef,
-        macaddress => undef, events => undef, timestamp=>undef,
-        @_ };
-    my $hostname = $arg->{hostname};
-    my $status = $arg->{status};
-    my $hostkey = $arg->{hostkey};
-    my $macaddress = $arg->{macaddress};
-    my $events = $arg->{events};
-    my $timestamp = $arg->{timestamp}; 
-
-    if (not defined $hostname) {
-        daemon_log("ERROR: function add_content2known_clients is not invoked with requiered parameter 'hostname'", 1);
-        return;
-    }
-
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
- 
-    my $change_entry = { table=>'known_clients',
-                        where=>'hostname', 
-                        timestamp=>$t, 
-                        };
-   
-   
-    if (defined $status) {
-        $change_entry->{status} = $status;
-    }
-    if (defined $hostkey) {
-        $change_entry->{hostkey} = $hostkey;
-    }
-    if (defined $macaddress) {
-        $change_entry->{macaddress} = $macaddress;
-    }
-    if (defined $events) {
-        $change_entry->{events} = $events;
-    }
-    
-    $known_clients->change_dbentry($change_entry);
-    return;
-}
+#sub update_known_clients {
+#    my $arg = {
+#        hostname => undef, status => undef, hostkey => undef,
+#        macaddress => undef, events => undef, timestamp=>undef,
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $hostkey = $arg->{hostkey};
+#    my $macaddress = $arg->{macaddress};
+#    my $events = $arg->{events};
+#    my $timestamp = $arg->{timestamp}; 
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_clients is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my $change_entry = { table=>'known_clients',
+#                        where=>'hostname', 
+#                        timestamp=>&get_time, 
+#                        };
+#   
+#   
+#    if (defined $status) {
+#        $change_entry->{status} = $status;
+#    }
+#    if (defined $hostkey) {
+#        $change_entry->{hostkey} = $hostkey;
+#    }
+#    if (defined $macaddress) {
+#        $change_entry->{macaddress} = $macaddress;
+#    }
+#    if (defined $events) {
+#        $change_entry->{events} = $events;
+#    }
+#    
+#    $known_clients->change_dbentry($change_entry);
+#    return;
+#}
  
 
 #===  FUNCTION  ================================================================
@@ -870,23 +845,23 @@ sub update_known_clients {
 #      RETURNS:  
 #  DESCRIPTION:  
 #===============================================================================    
-sub clean_up_known_clients {
-    my ($address) = @_ ;
-    
-    if (not exists $known_clients->{$address}) {
-        daemon_log("cannot prune known_clients from $address, client not known", 5);
-        return;
-    }
-
-    delete $known_clients->{$address};
-
-    # send bus a msg that address was deleted from known_clients
-    my $out_hash = &create_xml_hash('delete_client', $server_address, $bus_address, $address);
-    &send_msg_hash2bus($out_hash);
-
-    daemon_log("client $address deleted from known_clients because of multiple down time", 3);
-    return;
-}
+#sub clean_up_known_clients {
+#    my ($address) = @_ ;
+#    
+#    if (not exists $known_clients->{$address}) {
+#        daemon_log("cannot prune known_clients from $address, client not known", 5);
+#        return;
+#    }
+#
+#    delete $known_clients->{$address};
+#
+#    # send bus a msg that address was deleted from known_clients
+#    my $out_hash = &create_xml_hash('delete_client', $server_address, $bus_address, $address);
+#    &send_msg_hash2bus($out_hash);
+#
+#    daemon_log("client $address deleted from known_clients because of multiple down time", 3);
+#    return;
+#}
 
 
 #===  FUNCTION  ================================================================
