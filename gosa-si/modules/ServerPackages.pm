@@ -594,8 +594,12 @@ sub new_ldap_config {
     }
 
     # Build LDAP connection
-    my $ldap;
-    $ldap= Net::LDAP->new($ldap_uri);
+    my $ldap = Net::LDAP->new($ldap_uri);
+    if( not defined $ldap ) {
+        &main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+        return;
+    } 
+
 
     # Bind to a directory with dn and password
     my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
