@@ -22,7 +22,7 @@ my ($known_clients_file_name);
 my ($server_activ, $server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
-my @network_interfaces;
+my $network_interface;
 my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
