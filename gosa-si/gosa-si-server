@@ -942,7 +942,7 @@ GetOptions("h|help" => \&usage,
 $SIG{CHLD} = 'IGNORE';
 
 # restart daemon log file
-if(-e $log_file ) { unlink $log_file }
+#if(-e $log_file ) { unlink $log_file }
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 

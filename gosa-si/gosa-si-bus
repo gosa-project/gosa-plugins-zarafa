@@ -36,8 +36,6 @@ use Cwd;
 use File::Spec;
 use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;
-#use IPC::Shareable qw( :lock);
-#IPC::Shareable->clean_up_all;
 
 my ($cfg_file, $default_cfg_file, %cfg_defaults, $foreground, $verbose);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port, $bus_address, $bus, $bus_mac_address);
