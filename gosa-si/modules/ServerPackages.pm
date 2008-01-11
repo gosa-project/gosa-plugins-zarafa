@@ -13,12 +13,13 @@ use IO::Socket::INET;
 use XML::Simple;
 use Data::Dumper;
 use Net::LDAP;
+use Socket qw/PF_INET SOCK_DGRAM inet_ntoa sockaddr_in/;
 
 BEGIN{}
 END {}
 
 my ($known_clients_file_name);
-my ($server_activ, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my ($server_activ, $server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $no_bus;
@@ -29,6 +30,8 @@ my %cfg_defaults =
 (
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
+    "server_ip" => [\$server_ip, ""],
+    "server_mac_address" => [\$server_mac_address, ""],
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
@@ -52,7 +55,7 @@ my %cfg_defaults =
 &read_configfile();
 
 # detect own ip and mac address
-my ($server_ip, $server_mac_address) = &get_ip_and_mac(); 
+$server_mac_address= &get_mac(); 
 if (not defined $server_ip) {
     die "EXIT: ip address of $0 could not be detected";
 }
@@ -173,30 +176,68 @@ sub read_configfile {
 
 
 #===  FUNCTION  ================================================================
-#         NAME:  get_ip_and_mac 
-#   PARAMETERS:  nothing
-#      RETURNS:  (ip, mac) 
-#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
-#                of a inet address is returned as well as the mac address in the line
-#                above the inet address
+#         NAME:  get_mac 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (mac address) 
+#  DESCRIPTION:  Uses ioctl to get mac address directly from system.
 #===============================================================================
-sub get_ip_and_mac {
-    my $ip = "0.0.0.0.0"; # Defualt-IP
-    my $mac = "00:00:00:00:00:00";  # Default-MAC
-    my @ifconfig = qx(/sbin/ifconfig);
-    foreach(@ifconfig) {
-        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
-            $mac = "$1:$2:$3:$4:$5:$6";
-            next;
-        }
-        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
-            $ip = "$1.$2.$3.$4";
-            last;
-        }
-    }
-    return ($ip, $mac);
+sub get_mac {
+	my $ifreq= $_;
+    my $result= "";
+    my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+    
+    # A configured MAC Address should always override a guessed value
+    if ($server_mac_address and length($server_mac_address) > 0) {
+		   return $server_mac_address;
+	}
+
+    socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+        or die "socket: $!";
+    
+	ioctl SOCKET, $SIOCGIFHWADDR, $ifreq
+	    or die "ioctl: $!";
+
+	my ($if, $mac)= unpack 'h36 H12', $ifreq;
+	
+	if (length($mac) > 0) {
+		$result = $mac
+	}
+
+	return $result;
 }
 
+#===  FUNCTION  ================================================================
+#         NAME:  get_ip 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (ip address) 
+#  DESCRIPTION:  Uses ioctl to get ip address directly from system.
+#===============================================================================
+sub get_ip {
+	my $ifreq= $_;
+    my $result= "";
+	my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
+    
+    # A configured MAC Address should always override a guessed value
+    if ($server_ip and length($server_ip) > 0) {
+		   return $server_ip;
+	}
+
+    socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+        or die "socket: $!";
+    
+	ioctl SOCKET, $SIOCGIFADDR, $ifreq
+	    or die "ioctl: $!";
+
+	my ($if, $sin)    = unpack 'a16 a16', $ifreq;
+	my ($port, $addr) = sockaddr_in $sin;
+	my $ip            = inet_ntoa $addr;
+	
+	if (length($ip) > 0) {
+		$result = $ip
+	}
+
+	return $result;
+}
 
 #===  FUNCTION  ================================================================
 #         NAME:  open_socket
