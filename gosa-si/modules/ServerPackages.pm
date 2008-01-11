@@ -253,6 +253,8 @@ sub get_mac {
 			my ($if, $mac)= unpack 'h36 H12', $ifreq;
 
 			if (length($mac) > 0) {
+				$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+				$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
 				$result = $mac
 			}
 		}
