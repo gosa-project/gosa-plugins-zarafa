@@ -334,7 +334,7 @@ sub db_res_2_xml {
     my $xml = "<xml>";
 
     while ( my ($hit, $hash) = each %{ $db_res } ) {
-        $xml .= "<$hit>";
+        $xml .= "<answer$hit>";
 
         while ( my ($column_name, $column_value) = each %{$hash} ) {
             $xml .= "<$column_name>";
@@ -346,7 +346,7 @@ sub db_res_2_xml {
             $xml .= "</$column_name>"; 
         }
 
-        $xml .= "</$hit>";
+        $xml .= "</answer$hit>";
     }
 
     $xml .= "</xml>";
@@ -402,7 +402,7 @@ sub delete_jobdb_entry {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><1>$res</1></xml>";
+    my $out_xml = "<xml><answer1>$res</answer1></xml>";
     return $out_xml;
 
 }
@@ -424,7 +424,7 @@ sub clear_jobdb {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><1>$res</1></xml>";
+    my $out_xml = "<xml><answer1>$res</answer1></xml>";
     return $out_xml;
 }
 
@@ -441,7 +441,7 @@ sub update_status_jobdb_entry {
     }
 
     if( not exists $msg_hash->{update}[0]->{status} ) {
-        return "<xml><1>1</1></xml>";
+        return "<xml><answer1>1</answer1></xml>";
     }
     $update_hash->{update} = [ { status=>$msg_hash->{update}[0]->{status} } ];
 
@@ -457,7 +457,7 @@ sub update_status_jobdb_entry {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><1>$res</1></xml>";
+    my $out_xml = "<xml><answer1>$res</answer1></xml>";
     return $out_xml;
 }
 
@@ -474,7 +474,7 @@ sub update_timestamp_jobdb_entry {
     }
 
     if( not exists $msg_hash->{update}[0]->{timestamp} ) {
-        return "<xml><1>1</1></xml>";
+        return "<xml><answer1>1</answer1></xml>";
     }
 
     $update_hash->{update} = [ { timestamp=>$msg_hash->{update}[0]->{timestamp} } ];
@@ -491,7 +491,7 @@ sub update_timestamp_jobdb_entry {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><1>$res</1></xml>";
+    my $out_xml = "<xml><answer1>$res</answer1></xml>";
     return $out_xml;
 
 }
