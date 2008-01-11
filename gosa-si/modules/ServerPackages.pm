@@ -55,8 +55,8 @@ my %cfg_defaults =
 &read_configfile();
 
 # detect interfaces and mac address
-@network_interfaces= &get_interface_for_ip($server_ip);
-$server_mac_address= &get_mac($network_interfaces[0]); 
+$network_interface= &get_interface_for_ip($server_ip);
+$server_mac_address= &get_mac($network_interface); 
 
 &main::daemon_log("server ip address detected: $server_ip", 1);
 &main::daemon_log("server mac address detected: $server_mac_address", 1);
