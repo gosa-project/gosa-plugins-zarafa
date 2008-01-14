@@ -185,7 +185,7 @@ sub get_interface_for_ip {
 	if ($ip && length($ip) > 0) {
 		my @ifs= &get_interfaces();
 		if($ip eq "0.0.0.0") {
-			# TODO
+			$result = "all";
 		} else {
 			foreach (@ifs) {
 				my $if=$_;
@@ -239,23 +239,27 @@ sub get_mac {
 	my $ifreq= shift;
 	my $result;
 	if ($ifreq && length($ifreq) > 0) { 
-		my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+		if($ifreq eq "all") {
+			$result = "00:00:00:00:00:00";
+		} else {
+			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
 
-		# A configured MAC Address should always override a guessed value
-		if ($server_mac_address and length($server_mac_address) > 0) {
-			return $server_mac_address;
-		}
+			# A configured MAC Address should always override a guessed value
+			if ($server_mac_address and length($server_mac_address) > 0) {
+				return $server_mac_address;
+			}
 
-		socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-			or die "socket: $!";
+			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+				or die "socket: $!";
 
-		if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-			my ($if, $mac)= unpack 'h36 H12', $ifreq;
+			if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+				my ($if, $mac)= unpack 'h36 H12', $ifreq;
 
-			if (length($mac) > 0) {
-				$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-				$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-				$result = $mac
+				if (length($mac) > 0) {
+					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+					$result = $mac;
+				}
 			}
 		}
 	}

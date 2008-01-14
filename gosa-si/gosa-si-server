@@ -118,7 +118,7 @@ our $known_clients_db;
     },
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
-    "server_ip" => [\$server_ip, ""],
+    "server_ip" => [\$server_ip, "0.0.0.0"],
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
@@ -293,34 +293,6 @@ sub check_pid {
         exit( -1 );
     }
 }
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  get_ip_and_mac 
-#   PARAMETERS:  nothing
-#      RETURNS:  (ip, mac) 
-#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
-#                of a inet address is returned as well as the mac address in the line
-#                above the inet address
-#===============================================================================
-sub get_ip_and_mac {
-    my $ip = "0.0.0.0.0"; # Defualt-IP
-    my $mac = "00:00:00:00:00:00";  # Default-MAC
-    my @ifconfig = qx(/sbin/ifconfig);
-    foreach(@ifconfig) {
-        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
-            $mac = "$1:$2:$3:$4:$5:$6";
-            next;
-        }
-        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
-            $ip = "$1.$2.$3.$4";
-            last;
-        }
-    }
-    return ($ip, $mac);
-}
-
-
 
 #===  FUNCTION  ================================================================
 #         NAME:  import_modules
