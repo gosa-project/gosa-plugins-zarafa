@@ -1265,11 +1265,7 @@ daemon_log("$0 started!", 1);
 # Just fork, if we"re not in foreground mode
 if( ! $foreground ) {
 	chdir '/'                 or die "Can't chdir to /: $!";
-	open STDIN, '/dev/null'   or die "Can't read /dev/null: $!";
-	open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
-	open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
-	defined($pid = fork)   or die "Can't fork: $!";
-	exit if $pid;
+	$pid = fork;
 	setsid                    or die "Can't start a new session: $!";
 	umask 0;
 }
