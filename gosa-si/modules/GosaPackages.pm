@@ -16,9 +16,9 @@ use MIME::Base64;
 BEGIN{}
 END{}
 
-my ($server_activ, $server_ip, $server_mac, $server_port, $server_passwd, $max_clients, $server_event_dir);
+my ($server_activ, $server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients, $server_event_dir);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
-my ($gosa_activ, $gosa_ip, $gosa_mac, $gosa_port, $gosa_passwd, $network_interface);
+my ($gosa_activ, $gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
