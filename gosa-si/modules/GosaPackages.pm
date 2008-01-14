@@ -42,7 +42,7 @@ my %cfg_defaults =
     },
 "gosa" =>
     {"gosa_activ" => [\$gosa_activ, "on"],
-    "gosa_ip" => [\$gosa_ip, ""],
+    "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
     "gosa_port" => [\$gosa_port, "20082"],
     "gosa_passwd" => [\$gosa_passwd, "none"],
     },

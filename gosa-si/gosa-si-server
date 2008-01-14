@@ -113,7 +113,7 @@ our $known_clients_db;
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
     "bus_passwd" => [\$bus_passwd, ""],
-    "bus_ip" => [\$bus_ip, ""],
+    "bus_ip" => [\$bus_ip, "0.0.0.0"],
     "bus_port" => [\$bus_port, "20080"],
     },
 "server" =>
@@ -129,7 +129,7 @@ our $known_clients_db;
     },
 "gosa" =>
     {"gosa_activ" => [\$gosa_activ, "on"],
-    "gosa_ip" => [\$gosa_ip, ""],
+    "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
     "gosa_port" => [\$gosa_port, "20082"],
     "gosa_passwd" => [\$gosa_passwd, "none"],
     },
@@ -167,10 +167,11 @@ EOF
 sub read_configfile {
     my $cfg;
     if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+        print STDERR ">>>>>>>>>>>>>>><$cfg_file\n";
         if( -r $cfg_file ) {
             $cfg = Config::IniFiles->new( -file => $cfg_file );
         } else {
-            print STDERR "Couldn't read config file!";
+            print STDERR "Couldn't read config file!\n";
         }
     } else {
         $cfg = Config::IniFiles->new() ;
@@ -216,11 +217,10 @@ sub daemon_log {
                 my $name = $0;
                 $name =~ s/\.\///;
 
-                print LOG_HANDLE "$month $monthday $hours:$minutes:$seconds $name $msg\n";
-                if($foreground) { print $msg."\n" }
+                print LOG_HANDLE "\n$month $monthday $hours:$minutes:$seconds $name $msg";
             }
+        close( LOG_HANDLE );
     }
-#    close( LOG_HANDLE );
 #log into syslog
 #    my ($msg, $level, $facility) = @_;
 #    if(not defined $msg) {return}
@@ -491,7 +491,8 @@ sub get_processing_child {
  
                    if (defined $answer) {
                         print $PARENT_wr $answer."\n";
-                        daemon_log("with answer:", 5);
+                        my $len_answer = length $answer;
+                        daemon_log("with answer: length of answer: $len_answer", 5);
                         daemon_log("$answer", 5);
                     } else {
                         print $PARENT_wr "done"."\n";
