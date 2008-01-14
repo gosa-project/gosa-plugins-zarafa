@@ -285,7 +285,7 @@ sub get_mac {
 
                         # A configured MAC Address should always override a guessed value
                         if ($client_mac_address and length($client_mac_address) > 0) {
-                                return $client_mac_address;
+                                $result= $client_mac_address;
                         }
 
                         socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')

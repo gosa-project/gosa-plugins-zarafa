@@ -16,9 +16,9 @@ use MIME::Base64;
 BEGIN{}
 END{}
 
-my ($server_activ, $server_port, $server_passwd, $max_clients, $server_event_dir);
+my ($server_activ, $server_ip, $server_mac, $server_port, $server_passwd, $max_clients, $server_event_dir);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
-my ($gosa_activ, $gosa_ip, $gosa_port, $gosa_passwd);
+my ($gosa_activ, $gosa_ip, $gosa_mac, $gosa_port, $gosa_passwd, $network_interface);
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
@@ -29,6 +29,7 @@ my %cfg_defaults =
     },
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
+    "server_ip" => [\$server_ip, "0.0.0.0"],
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
@@ -37,7 +38,7 @@ my %cfg_defaults =
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
     "bus_passwd" => [\$bus_passwd, ""],
-    "bus_ip" => [\$bus_ip, ""],
+    "bus_ip" => [\$bus_ip, "0.0.0.0"],
     "bus_port" => [\$bus_port, "20080"],
     },
 "gosa" =>
@@ -53,9 +54,8 @@ my %cfg_defaults =
 
 # read configfile and import variables
 &read_configfile();
-
-# detect own ip and mac address
-my ($server_ip, $server_mac_address) = &get_ip_and_mac(); 
+$network_interface= &get_interface_for_ip($server_ip);
+$gosa_mac_address= &get_mac($network_interface);
 
 # complete addresses
 my $server_address = "$server_ip:$server_port";
@@ -128,32 +128,126 @@ sub read_configfile {
     }
 }
 
-
 #===  FUNCTION  ================================================================
-#         NAME:  get_ip_and_mac 
-#   PARAMETERS:  nothing
-#      RETURNS:  (ip, mac) 
-#  DESCRIPTION:  executes /sbin/ifconfig and parses the output, the first occurence 
-#                of a inet address is returned as well as the mac address in the line
-#                above the inet address
+#         NAME:  get_interface_for_ip
+#   PARAMETERS:  ip address (i.e. 192.168.0.1)
+#      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
+#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
 #===============================================================================
-sub get_ip_and_mac {
-    my $ip = "0.0.0.0.0"; # Defualt-IP
-    my $mac = "00:00:00:00:00:00";  # Default-MAC
-    my @ifconfig = qx(/sbin/ifconfig);
-    foreach(@ifconfig) {
-        if (/Hardware Adresse (\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2}):(\S{2})/) {
-            $mac = "$1:$2:$3:$4:$5:$6";
-            next;
-        }
-        if (/inet Adresse:(\d+).(\d+).(\d+).(\d+)/) {
-            $ip = "$1.$2.$3.$4";
-            last;
-        }
-    }
-    return ($ip, $mac);
+sub get_interface_for_ip {
+        my $result;
+        my $ip= shift;
+        if ($ip && length($ip) > 0) {
+                my @ifs= &get_interfaces();
+                if($ip eq "0.0.0.0") {
+                        $result = "all";
+                } else {
+                        foreach (@ifs) {
+                                my $if=$_;
+                                if(get_ip($if) eq $ip) {
+                                        $result = $if;
+                                }
+                        }       
+                }
+        }       
+        return $result;
 }
 
+#===  FUNCTION  ================================================================
+#         NAME:  get_interfaces 
+#   PARAMETERS:  none
+#      RETURNS:  (list of interfaces) 
+#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
+#===============================================================================
+sub get_interfaces {
+        my @result;
+        my $PROC_NET_DEV= ('/proc/net/dev');
+
+        open(PROC_NET_DEV, "<$PROC_NET_DEV")
+                or die "Could not open $PROC_NET_DEV";
+
+        my @ifs = <PROC_NET_DEV>;
+
+        close(PROC_NET_DEV);
+
+        # Eat first two line
+        shift @ifs;
+        shift @ifs;
+
+        chomp @ifs;
+        foreach my $line(@ifs) {
+                my $if= (split /:/, $line)[0];
+                $if =~ s/^\s+//;
+                push @result, $if;
+        }
+
+        return @result;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_mac 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (mac address) 
+#  DESCRIPTION:  Uses ioctl to get mac address directly from system.
+#===============================================================================
+sub get_mac {
+        my $ifreq= shift;
+        my $result;
+        if ($ifreq && length($ifreq) > 0) { 
+                if($ifreq eq "all") {
+                        $result = "00:00:00:00:00:00";
+                } else {
+                        my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+
+                        # A configured MAC Address should always override a guessed value
+                        if ($gosa_mac_address and length($gosa_mac_address) > 0) {
+                                $result= $gosa_mac_address;
+                        }
+
+                        socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+                                or die "socket: $!";
+
+                        if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+                                my ($if, $mac)= unpack 'h36 H12', $ifreq;
+
+                                if (length($mac) > 0) {
+                                        $mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+                                        $mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+                                        $result = $mac;
+                                }
+                        }
+                }
+        }
+        return $result;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_ip 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (ip address) 
+#  DESCRIPTION:  Uses ioctl to get ip address directly from system.
+#===============================================================================
+sub get_ip {
+        my $ifreq= shift;
+        my $result= "";
+        my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
+        my $proto= getprotobyname('ip');
+
+        socket SOCKET, PF_INET, SOCK_DGRAM, $proto
+                or die "socket: $!";
+
+        if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
+                my ($if, $sin)    = unpack 'a16 a16', $ifreq;
+                my ($port, $addr) = sockaddr_in $sin;
+                my $ip            = inet_ntoa $addr;
+
+                if ($ip && length($ip) > 0) {
+                        $result = $ip;
+                }
+        }
+
+        return $result;
+}
 
 #===  FUNCTION  ================================================================
 #         NAME:  open_socket
