@@ -475,12 +475,10 @@ sub get_processing_child {
                     my $answer;
                     my %act_modules = %$known_modules;
                     while( my ($module, $info) = each(%act_modules)) {
-                            &daemon_log("##########", 5);
                             my $tmp = &{ $module."::process_incoming_msg" }($msg);
                             if (defined $tmp) {
                                 $answer = $tmp;
                             }
-                            &daemon_log("##########", 5);
                     }        
 
                     #&print_known_daemons();
@@ -491,11 +489,11 @@ sub get_processing_child {
                    if (defined $answer) {
                         print $PARENT_wr $answer."\n";
                         my $len_answer = length $answer;
-                        daemon_log("with answer: length of answer: $len_answer", 5);
-                        daemon_log("$answer", 5);
+                        daemon_log("with answer: length of answer: $len_answer", 7);
+                        daemon_log("\n$answer", 7);
                     } else {
                         print $PARENT_wr "done"."\n";
-                        daemon_log(" ", 5);
+                        daemon_log(" ", 7);
                     }
                     redo;
                 }
@@ -1080,7 +1078,8 @@ while(1) {
             }
             chomp($in_msg);
 
-            daemon_log("process child read: $in_msg", 5);
+            daemon_log("process child read: $in_msg", 7);
+            daemon_log("\n$in_msg", 7);
             if (not defined $in_msg) { 
                 next; 
             } elsif ($in_msg =~ "done") {

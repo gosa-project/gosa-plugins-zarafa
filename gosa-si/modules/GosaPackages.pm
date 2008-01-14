@@ -338,6 +338,9 @@ sub process_incoming_msg {
         return;
 
     } else {
+
+        &main::daemon_log("antwort von query jobs db:", 1);
+        &main::daemon_log("$out_msg", 1);
         my $out_cipher = &create_ciphering($gosa_passwd);
         $out_msg = &encrypt_msg($out_msg, $out_cipher);
         return $out_msg;
@@ -429,13 +432,15 @@ sub db_res_2_xml {
     my $xml = "<xml>";
 
     while ( my ($hit, $hash) = each %{ $db_res } ) {
-        $xml .= "<answer$hit>";
+        $xml .= "\n<answer$hit>";
 
         while ( my ($column_name, $column_value) = each %{$hash} ) {
             $xml .= "<$column_name>";
-            my $xml_content = $column_value;
-            if( $column_name eq "xml" ) {
+            my $xml_content;
+            if( $column_name eq "xmlmessage" ) {
                 $xml_content = &encode_base64($column_value);
+            } else {
+                $xml_content = $column_value;
             }
             $xml .= $xml_content;
             $xml .= "</$column_name>"; 
