@@ -167,7 +167,6 @@ EOF
 sub read_configfile {
     my $cfg;
     if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
-        print STDERR ">>>>>>>>>>>>>>><$cfg_file\n";
         if( -r $cfg_file ) {
             $cfg = Config::IniFiles->new( -file => $cfg_file );
         } else {
