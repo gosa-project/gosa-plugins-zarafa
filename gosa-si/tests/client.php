@@ -4,7 +4,7 @@
 require_once("../../gosa-core/include/class_socketClient.inc");
 error_reporting(E_ALL);
 
-$sock = new Socket_Client("10.89.1.155","20082",TRUE,1);
+$sock = new Socket_Client("10.89.1.156","20082",TRUE,1);
 #$sock = new Socket_Client("169.254.2.248","9999",TRUE,1);
 $sock->setEncryptionKey("secret-gosa-password");
 

@@ -481,6 +481,9 @@ sub register_at_server {
 
     my ($rout, $wout, $reg_server);
     foreach my $server (@servers) {
+
+# TODO : server abhängige macadress und ipadresse eintragen
+
         # create msg hash
         my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
         &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
@@ -1250,6 +1253,12 @@ GetOptions("h|help" => \&usage,
 &check_cmdline_param ;
 &read_configfile;
 &check_pid;
+
+
+open STDIN, ‘/dev/null’ or die “Can’t read /dev/null: $!”;
+open STDOUT, ‘>>/dev/null’ or die “Can’t write to /dev/null: $!”;
+open STDERR, ‘>>/dev/null’ or die “Can’t write to /dev/null: $!”;
+
 
 # restart daemon log file
 if(-e $log_file ) { unlink $log_file }

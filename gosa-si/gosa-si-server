@@ -204,7 +204,19 @@ sub daemon_log {
             return }
             chomp($msg);
             if($level <= $verbose){
-                print LOG_HANDLE "$level $msg\n";
+                my ($seconds, $minutes, $hours, $monthday, $month,
+                        $year, $weekday, $yearday, $sommertime) = localtime(time);
+                $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+                $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+                $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+                my @monthnames = ("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                $month = $monthnames[$month];
+                $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+                $year+=1900;
+                my $name = $0;
+                $name =~ s/\.\///;
+
+                print LOG_HANDLE "$month $monthday $hours:$minutes:$seconds $name $msg\n";
                 if($foreground) { print $msg."\n" }
             }
     }
@@ -316,18 +328,16 @@ sub import_modules {
         }
         eval { require $file; };
         if ($@) {
-            daemon_log("ERROR: gosa-sd could not load module $file", 1);
+            daemon_log("ERROR: gosa-si-server could not load module $file", 1);
             daemon_log("$@", 5);
-            next;
+        } else {
+            my $mod_name = $1;
+            my $info = eval($mod_name.'::get_module_info()');
+            my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
+            $known_modules->{$mod_name} = $info;
+
+            daemon_log("module $mod_name loaded", 1);
         }
-        my $mod_name = $1;
-        #my $module_tag_hash = eval( $mod_name.'::get_module_tags()' );
-
-        my $info = eval($mod_name.'::get_module_info()');
-        my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
-        $known_modules->{$mod_name} = $info;
-
-        daemon_log("module $mod_name loaded", 1);
     }   
 
     # for debugging
@@ -347,23 +357,8 @@ sub import_modules {
 #===============================================================================
 sub sig_int_handler {
     my ($signal) = @_;
-    if($server){
-        close($server);
-        daemon_log("daemon server closed", 1);
-    }
-    if( -p $arp_fifo_path ) {
-        close $arp_fifo  ;
-        unlink($arp_fifo_path) ;
-        daemon_log("ARP_FIFO closed", 1) ;
-    }
 
-    if($gosa_server){
-        close($gosa_server);
-        daemon_log("gosa server closed", 1);
-    }
-
-    print STDERR "$signal\n";
-    
+    daemon_log("shutting down gosa-si-server", 1);
     exit(1);
 }
 $SIG{INT} = \&sig_int_handler;
@@ -496,8 +491,8 @@ sub get_processing_child {
  
                    if (defined $answer) {
                         print $PARENT_wr $answer."\n";
-                        daemon_log("with answer: $answer", 5);
-                        daemon_log(" ", 5);
+                        daemon_log("with answer:", 5);
+                        daemon_log("$answer", 5);
                     } else {
                         print $PARENT_wr "done"."\n";
                         daemon_log(" ", 5);
@@ -913,11 +908,13 @@ GetOptions("h|help" => \&usage,
 
 $SIG{CHLD} = 'IGNORE';
 
-# restart daemon log file
-daemon_log(" ", 1);
-daemon_log("$0 started!", 1);
+# forward error messages to logfile
+if( ! $foreground ) {
+    open(STDERR, '>>', $log_file);
+    open(STDOUT, '>>', $log_file);
+}
 
-# Just fork, if we"re not in foreground mode
+# Just fork, if we are not in foreground mode
 if( ! $foreground ) { 
     chdir '/'                 or die "Can't chdir to /: $!";
     $pid = fork;
@@ -937,8 +934,12 @@ if( 0 != $pid ) {
     };
 }
 
+daemon_log(" ", 1);
+daemon_log("$0 started!", 1);
+
+
 # connect to gosa-si job queue
-my @job_col_names = ("timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
+my @job_col_names = ("id", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 

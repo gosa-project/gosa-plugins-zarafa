@@ -78,6 +78,7 @@ if($server_activ eq "on"){
             ); 
     if(not defined $server){
         &main::daemon_log("cannot be a tcp server at $server_port : $@");
+        die;
     } else {
         &main::daemon_log("start server: $server_address", 1);
     }

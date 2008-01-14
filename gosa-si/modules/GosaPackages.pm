@@ -76,6 +76,7 @@ if ($gosa_activ eq "on") {
             );
     if (not defined $gosa_server) {
         &main::daemon_log("cannot start tcp server at $gosa_port for communication to gosa: $@", 1);
+        die;
     } else {
         &main::daemon_log("start server for communication to gosa: $gosa_address", 1);
         
@@ -221,8 +222,7 @@ sub process_incoming_msg {
 
     my $header = @{$msg_hash->{header}}[0];
     
-    &main::daemon_log("recieve '$header' at GosaPackages from $host", 1);
-    &main::daemon_log("$msg", 7);
+    &main::daemon_log("GosaPackages: recieve '$header' from $host", 1);
     
     my $out_msg;
     if ($header =~ /^job_/) {
@@ -303,13 +303,14 @@ sub process_job_msg {
 
     my $header = @{$msg_hash->{header}}[0];
     $header =~ s/job_//;
-    &main::daemon_log("GosaPackages: got a job msg $header", 5);
+    &main::daemon_log("GosaPackages: got a job msg for queue: $header", 5);
     
     # check wether mac address is already known in known_daemons or known_clients
-    my $target = 'not known until now';
+    my $target = 'none';
 
     # add job to job queue
     my $func_dic = {table=>$main::job_queue_table_name, 
+                    primkey=>'id',
                     timestamp=>@{$msg_hash->{timestamp}}[0],
                     status=>'waiting', 
                     result=>'none',

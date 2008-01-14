@@ -46,11 +46,27 @@ sub add_dbentry {
     }
 
     # specify primary key in table
+    if (not exists $arg->{primkey}) {
+        return 2;
+    }
     my $primkey = $arg->{primkey};
 
+    # if primkey is id, fetch max id from table and give new job id=  max(id)+1
+    if ($primkey eq 'id') {
+        my $id;
+        my $sql_statement = "SELECT MAX(id) FROM $table";
+        my $max_id = @{ @{ $obj->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+        if( defined $max_id) {
+            $id = $max_id + 1; 
+        } else {
+            $id = 1;
+        }
+        $arg->{id} = $id;
+    }
+
     # check wether value to primary key is specified
-    if ( ( defined $primkey ) && ( not $arg->{ $primkey } ) ) {
-        return 2;
+    if ( not exists $arg->{ $primkey } ) {
+        return 3;
     }
      
     # if timestamp is not provided, add timestamp   
@@ -59,7 +75,8 @@ sub add_dbentry {
     }
 
     # check wether primkey is unique in table, otherwise return errorflag 3
-    my $res = @{ $obj->{dbh}->selectall_arrayref( "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'") };
+    my $sql_statement = "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'";
+    my $res = @{ $obj->{dbh}->selectall_arrayref($sql_statement) };
     if ($res == 0) {
         # fetch column names of table
         my $col_names = $obj->get_table_columns($table);
@@ -261,7 +278,7 @@ sub select_dbentry {
 sub show_table {
     my $obj = shift;
     my $table_name = shift;
-    my @res = @{$obj->{dbh}->selectall_arrayref( "SELECT ROWID, * FROM $table_name")};
+    my @res = @{$obj->{dbh}->selectall_arrayref( "SELECT * FROM $table_name")};
     my @answer;
     foreach my $hit (@res) {
         push(@answer, "hit: ".join(', ', @{$hit}));
