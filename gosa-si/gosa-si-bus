@@ -1262,6 +1262,12 @@ if(-e $log_file ) { unlink $log_file }
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 
+# forward error messages to logfile
+if( ! $foreground ) {
+	open(STDERR, '>>', $log_file);
+	open(STDOUT, '>>', $log_file);
+}
+
 # Just fork, if we"re not in foreground mode
 if( ! $foreground ) {
 	chdir '/'                 or die "Can't chdir to /: $!";
