@@ -31,10 +31,10 @@ if($sock->connected()){
 # clear
 	#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
 
-  $sock->write($data);
-
-	$answer = $sock->read();	
-  echo "$answer\n";
+    $sock->write($data);
+    $answer = "nothing";
+	$answer = $sock->read();
+    echo ">>>$answer<<<\n";
 	$sock->close();	
 }else{
 	echo "... FAILED!\n";

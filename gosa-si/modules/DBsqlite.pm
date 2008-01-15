@@ -5,9 +5,10 @@ use strict;
 use warnings;
 use DBI;
 use Data::Dumper;
+use threads;
+use Time::HiRes qw(usleep);
 
 my $col_names = {};
-my $checking=0;
 
 sub new {
     my $class = shift;
@@ -27,31 +28,33 @@ sub new {
     return($self);
 }
 
-sub lock_exists {
-    while($checking) {
-        sleep 1;
-    }
-    $checking=1;
+sub lock_exists : locked {
     my $self=shift;
     my $funcname=shift;
     my $lock = $self->{db_lock};
     my $result=(-f $lock);
     if($result) {
         print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
-        sleep 2;
+        usleep 100;
     }
-    $checking=0;
     return $result;
 }
 
-sub create_lock {
+sub create_lock : locked {
     my $self=shift;
     my $funcname=shift;
     print STDERR "(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock})."\n";
+
+    my $lock = $self->{db_lock};
+    while( -f $lock ) {
+        print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
+        sleep 1;
+    }
+
     open($self->{db_lock_handle},'>',$self->{db_lock});
 }
 
-sub remove_lock {
+sub remove_lock : locked {
     my $self=shift;
     my $funcname=shift;
     print STDERR "(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}."\n";

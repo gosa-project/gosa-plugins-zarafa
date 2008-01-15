@@ -42,6 +42,7 @@ use Cwd;
 use File::Spec;
 use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;
+use threads;
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -192,7 +193,7 @@ sub read_configfile {
 #      RETURNS:  nothing
 #  DESCRIPTION:  function for logging
 #===============================================================================
-sub daemon_log {
+sub daemon_log : locked {
     # log into log_file
     my( $msg, $level ) = @_;
     if(not defined $msg) { return }
@@ -999,8 +1000,8 @@ while(1) {
                 $free_child{$pid} = $child_hash;
 
                 # give the client a chance to read 
-                sleep(5);
-                close ($act_client);   
+                #sleep(1);
+                #close ($act_client);   
 
             }
         }
