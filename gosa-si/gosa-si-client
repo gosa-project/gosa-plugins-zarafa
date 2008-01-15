@@ -1254,9 +1254,11 @@ GetOptions("h|help" => \&usage,
 &read_configfile;
 &check_pid;
 
-open STDIN, '/dev/null' or die "Can’t read /dev/null: $!";
-open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
-open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
+if ( ! $foreground ) {
+	open STDIN, '/dev/null' or die "Can’t read /dev/null: $!";
+	open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
+	open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
+}
 
 
 # restart daemon log file
