@@ -990,21 +990,17 @@ while(1) {
                 $free_child{$pid} = $child_hash;
 
             } else {
-                print ">>>>>>>>>>>1\n";
                 # send computed answer back to connected client
                 my $act_client = $busy_child{$pid}{client_ref};
                 print $act_client $in_msg."\n";
-                print ">>>>>>>>>>>2\n";
 
                 #my $act_pipe = $busy_child{$pid}{pipe_rd};
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
-                print ">>>>>>>>>>>3\n";
 
                 # give the client a chance to read 
                 sleep(5);
                 close ($act_client);   
-                print ">>>>>>>>>>>4\n";
 
             }
         }

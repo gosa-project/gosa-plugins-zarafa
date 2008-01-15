@@ -287,7 +287,6 @@ sub process_incoming_msg {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
         return;
     }
-    &main::daemon_log("GosaPackages: incoming msg: \n>>>$crypted_msg<<<", 7);
 
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
@@ -340,8 +339,6 @@ sub process_incoming_msg {
 
     } else {
 
-        &main::daemon_log("antwort von query jobs db:", 1);
-        &main::daemon_log("$out_msg", 1);
         my $out_cipher = &create_ciphering($gosa_passwd);
         $out_msg = &encrypt_msg($out_msg, $out_cipher);
         return $out_msg;
