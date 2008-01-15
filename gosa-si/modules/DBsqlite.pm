@@ -90,7 +90,7 @@ sub add_dbentry {
             }
         }    
 
-        my $sql_statement = " INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
+        my $sql_statement = "BEGIN TRANSACTION; INSERT INTO $table VALUES ('".join("', '", @add_list)."'); COMMIT;";
         my $db_res = $obj->{dbh}->do($sql_statement);
         if( $db_res != 1 ) {
             return 1;
@@ -168,7 +168,7 @@ sub update_dbentry {
         $update_statement .= join(', ', @update_list);
     }
 
-    my $sql_statement = "UPDATE $table SET $update_statement $where_statement";
+    my $sql_statement = "BEGIN TRANSACTION; UPDATE $table SET $update_statement $where_statement; COMMIT;";
     my $db_answer = $obj->{dbh}->do($sql_statement);
     return $db_answer;
 }  
@@ -204,7 +204,7 @@ sub del_dbentry {
         $where_statement = "WHERE ".join(' AND ', @del_list);
     }
 
-    my $sql_statement = "DELETE FROM $table $where_statement";
+    my $sql_statement = "BEGIN TRANSACTION; DELETE FROM $table $where_statement; COMMIT;";
     my $db_res = $obj->{dbh}->do($sql_statement);
  
     return $db_res;

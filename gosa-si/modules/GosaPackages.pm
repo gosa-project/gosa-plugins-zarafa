@@ -333,7 +333,7 @@ sub process_incoming_msg {
 
     if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
-        my $sql = "UPDATE '$main::job_queue_table_name' SET status='done', result='$out_msg' WHERE id='$job_id'";
+        my $sql = "BEGIN TRANSATION; UPDATE '$main::job_queue_table_name' SET status='done', result='$out_msg' WHERE id='$job_id'; COMMIT;";
         my $res = $main::job_db->exec_statement($sql);
         return;
 
