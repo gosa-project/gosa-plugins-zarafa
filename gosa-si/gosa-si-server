@@ -9,8 +9,7 @@
 #
 #      OPTIONS:  ---
 # REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl 
-#                libipc-shareable-perl libdata-dumper-simple-perl 
-#                libdbd-sqlite3-perl libnet-ldap-perl
+#                libdata-dumper-simple-perl libdbd-sqlite3-perl libnet-ldap-perl
 #         BUGS:  ---
 #        NOTES:
 #       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
@@ -38,8 +37,6 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
-use IPC::Shareable qw( :lock);
-IPC::Shareable->clean_up_all;
 use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;
 
@@ -216,7 +213,11 @@ sub daemon_log {
                 my $name = $0;
                 $name =~ s/\.\///;
 
-                print LOG_HANDLE "\n$month $monthday $hours:$minutes:$seconds $name $msg";
+                my $log_msg = "\n$month $monthday $hours:$minutes:$seconds $name $msg";
+                print LOG_HANDLE $log_msg;
+                if( $foreground ) { 
+                    print STDERR $log_msg;
+                }
             }
         close( LOG_HANDLE );
     }
@@ -489,8 +490,8 @@ sub get_processing_child {
                    if (defined $answer) {
                         print $PARENT_wr $answer."\n";
                         my $len_answer = length $answer;
-                        daemon_log("with answer: length of answer: $len_answer", 7);
-                        daemon_log("\n$answer", 7);
+#                        daemon_log("with answer: length of answer: $len_answer", 7);
+#                        daemon_log("\n$answer", 7);
                     } else {
                         print $PARENT_wr "done"."\n";
                         daemon_log(" ", 7);
@@ -1078,8 +1079,8 @@ while(1) {
             }
             chomp($in_msg);
 
-            daemon_log("process child read: $in_msg", 7);
-            daemon_log("\n$in_msg", 7);
+#            daemon_log("process child read: $in_msg", 7);
+#            daemon_log("\n$in_msg", 7);
             if (not defined $in_msg) { 
                 next; 
             } elsif ($in_msg =~ "done") {
