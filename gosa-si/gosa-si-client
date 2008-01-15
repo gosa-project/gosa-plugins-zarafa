@@ -35,7 +35,7 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use File::Spec;
 use Cwd;
-use NetAddr::IP::Lite;
+use NetAddr::IP;
 use GOSA::GosaSupportDaemon;
 
 
@@ -363,7 +363,7 @@ sub get_local_mac_for_remote_ip {
 		$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
 		($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
 		$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-		if(new NetAddr::IP::Lite($server_ip)->within(new NetAddr::IP::Lite($destination, $mask))) {
+		if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
 			# destination matches route, save mac and exit
 			$result= &get_mac($Iface);
 			last;
@@ -1254,10 +1254,9 @@ GetOptions("h|help" => \&usage,
 &read_configfile;
 &check_pid;
 
-
-open STDIN, ‘/dev/null’ or die “Can’t read /dev/null: $!”;
-open STDOUT, ‘>>/dev/null’ or die “Can’t write to /dev/null: $!”;
-open STDERR, ‘>>/dev/null’ or die “Can’t write to /dev/null: $!”;
+open STDIN, '/dev/null' or die "Can’t read /dev/null: $!";
+open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
+open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
 
 
 # restart daemon log file
