@@ -6,29 +6,72 @@ use warnings;
 use DBI;
 use Data::Dumper;
 
-
+my $col_names = {};
+my $checking=0;
 
 sub new {
-    my $object = shift;
+    my $class = shift;
     my $db_name = shift;
 
-    my $obj_ref = {};
-    bless($obj_ref,$object);
+    my $lock='/tmp/gosa_si_lock';
+    my $_lock = $db_name;
+    $_lock =~ tr/\//_/;
+    $lock.=$_lock;
+    my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
     my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name");
-    $obj_ref->{dbh} = $dbh;
+    $self->{dbh} = $dbh;
+    $self->{db_name} = $db_name;
+    $self->{db_lock} = $lock;
+    bless($self,$class);
 
-    return($obj_ref);
+    return($self);
 }
 
+sub lock_exists {
+    while($checking) {
+        sleep 1;
+    }
+    $checking=1;
+    my $self=shift;
+    my $funcname=shift;
+    my $lock = $self->{db_lock};
+    my $result=(-f $lock);
+    if($result) {
+        print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
+        sleep 2;
+    }
+    $checking=0;
+    return $result;
+}
+
+sub create_lock {
+    my $self=shift;
+    my $funcname=shift;
+    print STDERR "(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock})."\n";
+    open($self->{db_lock_handle},'>',$self->{db_lock});
+}
+
+sub remove_lock {
+    my $self=shift;
+    my $funcname=shift;
+    print STDERR "(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}."\n";
+    close($self->{db_lock_handle});
+    unlink($self->{db_lock});
+}
 
 sub create_table {
-    my $object = shift;
+    my $self = shift;
     my $table_name = shift;
     my $col_names_ref = shift;
-#    unshift(@{$col_names_ref}, "id INTEGER PRIMARY KEY AUTOINCREMENT");
+    $col_names->{ $table_name } = $col_names_ref;
     my $col_names_string = join(', ', @{$col_names_ref});
+    while(&lock_exists($self,'create_table')) {
+        print STDERR "Lock in create_table\n";
+    }
+    &create_lock($self,'create_table');
     my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
-    $object->{dbh}->do($sql_statement);
+    $self->{dbh}->do($sql_statement);
+    &remove_lock($self,'create_table');
     return 0;
 }
  
@@ -36,17 +79,23 @@ sub create_table {
 
 sub add_dbentry {
 
-    my $obj = shift;
+    my $self = shift;
     my $arg = shift;
 
+    while(&lock_exists($self,'add_dbentry')) {
+        print STDERR "Lock in add_dbentry\n";
+    }
+    &create_lock($self,'add_dbentry');
     # if dbh not specified, return errorflag 1
     my $table = $arg->{table};
     if (not defined $table) { 
+        &remove_lock($self,'add_dbentry');
         return 1; 
     }
 
     # specify primary key in table
     if (not exists $arg->{primkey}) {
+        &remove_lock($self,'add_dbentry');
         return 2;
     }
     my $primkey = $arg->{primkey};
@@ -55,7 +104,7 @@ sub add_dbentry {
     if ($primkey eq 'id') {
         my $id;
         my $sql_statement = "SELECT MAX(id) FROM $table";
-        my $max_id = @{ @{ $obj->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+        my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
         if( defined $max_id) {
             $id = $max_id + 1; 
         } else {
@@ -66,6 +115,7 @@ sub add_dbentry {
 
     # check wether value to primary key is specified
     if ( not exists $arg->{ $primkey } ) {
+        &remove_lock($self,'add_dbentry');
         return 3;
     }
      
@@ -76,10 +126,10 @@ sub add_dbentry {
 
     # check wether primkey is unique in table, otherwise return errorflag 3
     my $sql_statement = "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'";
-    my $res = @{ $obj->{dbh}->selectall_arrayref($sql_statement) };
+    my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
     if ($res == 0) {
         # fetch column names of table
-        my $col_names = $obj->get_table_columns($table);
+        my $col_names = &get_table_columns("",$table);
 
         # assign values to column name variables
         my @add_list;
@@ -91,10 +141,12 @@ sub add_dbentry {
         }    
 
         my $sql_statement = "BEGIN TRANSACTION; INSERT INTO $table VALUES ('".join("', '", @add_list)."'); COMMIT;";
-        my $db_res = $obj->{dbh}->do($sql_statement);
+        my $db_res = $self->{dbh}->do($sql_statement);
         if( $db_res != 1 ) {
+            &remove_lock($self,'add_dbentry');
             return 1;
         } else { 
+            &remove_lock($self,'add_dbentry');
             return 0;
         }
 
@@ -107,14 +159,17 @@ sub add_dbentry {
             if( $pram eq 'primkey' ) { next; }
             $update_hash->{update}[0]->{$pram} = [$val];
         }
-        my $db_res = &update_dbentry( $obj, $update_hash );
+        my $db_res = &update_dbentry( $self, $update_hash );
         if( $db_res != 1 ) {
+            &remove_lock($self,'add_dbentry');
             return 1;
         } else { 
+            &remove_lock($self,'add_dbentry');
             return 0;
         }
 
     }
+    &remove_lock($self,'add_dbentry');
 }
 
 
@@ -125,13 +180,18 @@ sub add_dbentry {
 # 4 column name not known in table
 # 5 no column names to change specified
 sub update_dbentry {
-    my $obj = shift;
+    my $self = shift;
     my $arg = shift;
 
+    while(&lock_exists($self,'update_dbentry')) {
+        print STDERR "Lock in update_dbentry\n";
+    }
+    &create_lock($self,'update_dbentry');
     # check completeness of function parameter
     # extract table statement from arg hash
     my $table = $arg->{table};
     if (not defined $table) {
+        &remove_lock($self,'update_dbentry');
         return 1;
     } else {
         delete $arg->{table};
@@ -169,19 +229,25 @@ sub update_dbentry {
     }
 
     my $sql_statement = "BEGIN TRANSACTION; UPDATE $table SET $update_statement $where_statement; COMMIT;";
-    my $db_answer = $obj->{dbh}->do($sql_statement);
+    my $db_answer = $self->{dbh}->do($sql_statement);
+    &remove_lock($self,'update_dbentry');
     return $db_answer;
 }  
 
 
 sub del_dbentry {
-    my $obj = shift;
+    my $self = shift;
     my $arg = shift;
 
+    while(&lock_exists($self,'del_dbentry')) {
+        print STDERR "Lock in del_dbentry\n";
+    }
+    &create_lock($self,'del_dbentry');
     # check completeness of function parameter
     # extract table statement from arg hash
     my $table = $arg->{table};
     if (not defined $table) {
+        &remove_lock($self,'del_dbentry');
         return 1;
     } else {
         delete $arg->{table};
@@ -205,33 +271,36 @@ sub del_dbentry {
     }
 
     my $sql_statement = "BEGIN TRANSACTION; DELETE FROM $table $where_statement; COMMIT;";
-    my $db_res = $obj->{dbh}->do($sql_statement);
+    my $db_res = $self->{dbh}->do($sql_statement);
  
+    &remove_lock($self,'del_dbentry');
     return $db_res;
 }
 
 
 sub get_table_columns {
-    my $obj = shift;
+    my $self = shift;
     my $table = shift;
 
-    my @columns;
-    my @res = @{$obj->{dbh}->selectall_arrayref("pragma table_info('$table')")};
-    foreach my $column (@res) {
-        push(@columns, @$column[1]);
-    }
+    my @column_names = @{$col_names->{$table}};
+    return \@column_names;
 
-    return \@columns; 
 }
 
 sub select_dbentry {
-    my $obj = shift;
+    my $self = shift;
     my $arg = shift;
 
+    while(&lock_exists($self,'select_dbentry')) {
+        print STDERR "Lock in select_dbentry\n";
+    }
+    &create_lock($self,'select_dbentry');
+    
     # check completeness of function parameter
     # extract table statement from arg hash
     my $table = $arg->{table};
     if (not defined $table) {
+        &remove_lock($self,'select_dbentry');
         return 1;
     } else {
         delete $arg->{table};
@@ -255,10 +324,10 @@ sub select_dbentry {
     }
 
     # query db
-    my $query_answer = $obj->{dbh}->selectall_arrayref($sql_statement);
+    my $query_answer = $self->{dbh}->selectall_arrayref($sql_statement);
 
     # fetch column list of db and create a hash with column_name->column_value of the select query
-    my $column_list = &get_table_columns($obj, $table);    
+    my $column_list = &get_table_columns($self, $table);    
     my $list_len = @{ $column_list } ;
     my $answer = {};
     my $hit_counter = 0;
@@ -271,26 +340,38 @@ sub select_dbentry {
             $answer->{ $hit_counter }->{ @{ $column_list }[$i] } = @{ $hit }[$i];
         }
     }
+
+    &remove_lock($self,'select_dbentry');
     return $answer;  
 }
 
 
 sub show_table {
-    my $obj = shift;
+    my $self = shift;
     my $table_name = shift;
-    my @res = @{$obj->{dbh}->selectall_arrayref( "SELECT * FROM $table_name")};
+    while(&lock_exists($self,'show_table')) {
+        print STDERR "Lock in show_table\n";
+    }
+    &create_lock($self,'show_table');
+    my @res = @{$self->{dbh}->selectall_arrayref( "SELECT * FROM $table_name")};
     my @answer;
     foreach my $hit (@res) {
         push(@answer, "hit: ".join(', ', @{$hit}));
     }
+    &remove_lock($self,'show_table');
     return join("\n", @answer);
 }
 
 
 sub exec_statement {
-    my $obj = shift;
+    my $self = shift;
     my $sql_statement = shift;
-    my @res = @{$obj->{dbh}->selectall_arrayref($sql_statement)};
+    while(&lock_exists($self,'exec_statement')) {
+        print STDERR "Lock in exec_statement\n";
+    }
+    &create_lock($self,'exec_statement');
+    my @res = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+    &remove_locK;
     return \@res;
 }
 
