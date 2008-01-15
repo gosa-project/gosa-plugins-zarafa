@@ -168,9 +168,9 @@ sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
     $msg = "\0"x(16-length($msg)%16).$msg;
-    my $crypted_msg = $my_cipher->encrypt($msg);
-    chomp($crypted_msg = &encode_base64($crypted_msg));
-    return $crypted_msg;
+    $msg = $my_cipher->encrypt($msg);
+    chomp($msg = &encode_base64($msg));
+    return $msg;
 }
 
 
@@ -182,9 +182,11 @@ sub encrypt_msg {
 #  DESCRIPTION:  decrypts the incoming message with the Crypt::Rijndael module
 #===============================================================================
 sub decrypt_msg {
-    my ($crypted_msg, $my_cipher) = @_ ;
-    $crypted_msg = &decode_base64($crypted_msg);
-    my $msg = $my_cipher->decrypt($crypted_msg); 
+    my ($msg, $my_cipher) = @_ ;
+    if(defined $msg && defined $my_cipher) {
+        $msg = &decode_base64($msg);
+    }
+    $msg = $my_cipher->decrypt($msg); 
     $msg =~ s/\0*//g;
     return $msg;
 }

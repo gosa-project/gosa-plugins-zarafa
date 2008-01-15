@@ -29,6 +29,9 @@ use Time::HiRes qw( gettimeofday );
 
 use Fcntl;
 use IO::Socket::INET;
+use IO::Handle;
+use IO::Select;
+use Symbol qw(qualify_to_ref);
 use Crypt::Rijndael;
 use MIME::Base64;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
@@ -213,7 +216,7 @@ sub daemon_log {
                 my $name = $0;
                 $name =~ s/\.\///;
 
-                my $log_msg = "\n$month $monthday $hours:$minutes:$seconds $name $msg";
+                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
                 print LOG_HANDLE $log_msg;
                 if( $foreground ) { 
                     print STDERR $log_msg;
@@ -489,9 +492,10 @@ sub get_processing_child {
  
                    if (defined $answer) {
                         print $PARENT_wr $answer."\n";
+                        print $PARENT_wr "ENDMESSAGE\n";
                         my $len_answer = length $answer;
-#                        daemon_log("with answer: length of answer: $len_answer", 7);
-#                        daemon_log("\n$answer", 7);
+                        daemon_log("with answer: length of answer: $len_answer", 7);
+                        daemon_log("\n$answer", 7);
                     } else {
                         print $PARENT_wr "done"."\n";
                         daemon_log(" ", 7);
@@ -752,141 +756,41 @@ sub create_known_client {
     return;  
 }
 
+sub sysreadline(*;$) {
+    my ($hd, $timeout) = @_;
 
-#===  FUNCTION  ================================================================
-#         NAME:  add_content2known_clients
-#   PARAMETERS:  hostname - string - ip address and port of host (required)
-#                status - string - (optional)
-#                passwd - string - (optional)
-#                mac_address - string - (optional)
-#                events - string - event of client, executable skripts 
-#                under /etc/gosac/events
-#      RETURNS:  nothing
-#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
-#===============================================================================
-#sub update_known_clients {
-#    my $arg = {
-#        hostname => undef, status => undef, hostkey => undef,
-#        macaddress => undef, events => undef, timestamp=>undef,
-#        @_ };
-#    my $hostname = $arg->{hostname};
-#    my $status = $arg->{status};
-#    my $hostkey = $arg->{hostkey};
-#    my $macaddress = $arg->{macaddress};
-#    my $events = $arg->{events};
-#    my $timestamp = $arg->{timestamp}; 
-#
-#    if (not defined $hostname) {
-#        daemon_log("ERROR: function add_content2known_clients is not invoked with requiered parameter 'hostname'", 1);
-#        return;
-#    }
-#
-#    my $change_entry = { table=>'known_clients',
-#                        where=>'hostname', 
-#                        timestamp=>&get_time, 
-#                        };
-#   
-#   
-#    if (defined $status) {
-#        $change_entry->{status} = $status;
-#    }
-#    if (defined $hostkey) {
-#        $change_entry->{hostkey} = $hostkey;
-#    }
-#    if (defined $macaddress) {
-#        $change_entry->{macaddress} = $macaddress;
-#    }
-#    if (defined $events) {
-#        $change_entry->{events} = $events;
-#    }
-#    
-#    $known_clients->change_dbentry($change_entry);
-#    return;
-#}
- 
+    $hd = qualify_to_ref($hd, caller());
+    my $infinitely_patient = (@_ == 1 || $timeout < 0);
+    my $start_time = time();
+    my $selector = IO::Select->new();
+    $selector->add($hd);
+    my $line = "";
 
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:  
-#      RETURNS:  
-#  DESCRIPTION:  
-#===============================================================================    
-#sub clean_up_known_clients {
-#    my ($address) = @_ ;
-#    
-#    if (not exists $known_clients->{$address}) {
-#        daemon_log("cannot prune known_clients from $address, client not known", 5);
-#        return;
-#    }
-#
-#    delete $known_clients->{$address};
-#
-#    # send bus a msg that address was deleted from known_clients
-#    my $out_hash = &create_xml_hash('delete_client', $server_address, $bus_address, $address);
-#    &send_msg_hash2bus($out_hash);
-#
-#    daemon_log("client $address deleted from known_clients because of multiple down time", 3);
-#    return;
-#}
+SLEEP: 
+    until( at_eol($line)) {
+        if (not $infinitely_patient) {
+            return $line if time() > ($start_time + $timeout);
+        }
+        next SLEEP unless $selector->can_read(1.0);
+INPUT_READY:
+        while( $selector->can_read(0.0)) {
+            my $was_blocking = $hd->blocking(0);
+CHAR:       while (sysread($hd, my $nextbyte, 1)) {
+                $line .= $nextbyte;  
+                last CHAR if $nextbyte eq "\n";
 
+            }
+            $hd->blocking($was_blocking);
+            next SLEEP unless at_eol($line);
+            last INPUT_READY;
+        }
+    }
+    return $line;
+}
 
-#===  FUNCTION  ================================================================
-#         NAME:  update_known_clients
-#   PARAMETERS:  hostname - string - ip address and port of host (required)
-#                status - string - (optional)
-#                passwd - string - (optional)
-#                client - string - ip address and port of client (optional)
-#      RETURNS:  nothing
-#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
-#===============================================================================
-#sub update_known_clients {
-#    my $arg = {
-#        hostname => undef, status => undef, passwd => undef,
-#        mac_address => undef, events => undef,
-#        @_ };
-#    my $hostname = $arg->{hostname};
-#    my $status = $arg->{status};
-#    my $passwd = $arg->{passwd};
-#    my $mac_address = $arg->{mac_address};
-#    my $events = $arg->{events};
-#
-#    if (not defined $hostname) {
-#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-#        return;
-#    }
-#
-#    my ($seconds, $minutes, $hours, $monthday, $month,
-#    $year, $weekday, $yearday, $sommertime) = localtime(time);
-#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-#    $month+=1;
-#    $month = $month < 10 ? $month = "0".$month : $month;
-#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-#    $year+=1900;
-#    my $t = "$year$month$monthday$hours$minutes$seconds";
-#
-#    if (defined $status) {
-#        $known_clients->{$hostname}->{status} = $status;
-#    }
-#    if (defined $passwd) {
-#        $known_clients->{$hostname}->{passwd} = $passwd;
-#    }
-#    if (defined $mac_address) {
-#        $known_clients->{$hostname}->{mac_address} = $mac_address; 
-#    }
-#    if (defined $events) {
-#        $known_clients->{$hostname}->{events} = $events;
-#    }
-#    $known_clients_db->{$hostname}->{timestamp} = $t;
-#    return;
-#}
-
-
-
-
-
-
+sub at_eol($) {
+    $_[0] =~ /\n\z/ ;
+}
 
 #==== MAIN = main ==============================================================
 
@@ -1066,39 +970,42 @@ while(1) {
 
         if (vec($rout, fileno $fhd, 1) ) {
             daemon_log("process child $pid is ready to read", 5);
-
-            $fhd->blocking(1);
-            my $in_msg = <$fhd>;
-            $fhd->blocking(0);
-            my $part_in_msg;
-            while ($part_in_msg = <$fhd>) {
-                if (not defined $part_in_msg) {
+ 
+            my $in_msg;
+            while (1) {
+                my $part_in_msg = <$fhd>;
+                if( $part_in_msg eq "ENDMESSAGE\n") {
                     last;
                 }
                 $in_msg .= $part_in_msg;
             }
             chomp($in_msg);
-
-#            daemon_log("process child read: $in_msg", 7);
-#            daemon_log("\n$in_msg", 7);
+            
+            daemon_log("process child read:", 7);
+            daemon_log("\n$in_msg", 7);
             if (not defined $in_msg) { 
                 next; 
             } elsif ($in_msg =~ "done") {
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
- 
+
             } else {
+                print ">>>>>>>>>>>1\n";
                 # send computed answer back to connected client
                 my $act_client = $busy_child{$pid}{client_ref};
                 print $act_client $in_msg."\n";
+                print ">>>>>>>>>>>2\n";
 
                 #my $act_pipe = $busy_child{$pid}{pipe_rd};
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
+                print ">>>>>>>>>>>3\n";
 
                 # give the client a chance to read 
-                sleep(2);
+                sleep(5);
                 close ($act_client);   
+                print ">>>>>>>>>>>4\n";
+
             }
         }
     }

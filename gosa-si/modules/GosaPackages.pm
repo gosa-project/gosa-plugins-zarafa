@@ -283,10 +283,11 @@ sub open_socket {
 #===============================================================================
 sub process_incoming_msg {
     my ($crypted_msg) = @_ ;
-    if(not defined $crypted_msg) {
+    if( (not(defined($crypted_msg))) || (length($crypted_msg) <= 0)) {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
+        return;
     }
-    &main::daemon_log("GosaPackages: incoming msg: \n$crypted_msg", 7);
+    &main::daemon_log("GosaPackages: incoming msg: \n>>>$crypted_msg<<<", 7);
 
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
