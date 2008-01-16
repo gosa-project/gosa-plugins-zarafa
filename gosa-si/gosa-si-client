@@ -46,7 +46,7 @@ my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts, $ldap_enabled);
 my (@events);
 
 # default variables
-my $event_dir = "/etc/gosa-si/client/events";
+my $event_dir = "/usr/lib/gosa-si/client/events";
 $known_hosts = {};
 $foreground = 0 ;
 %cfg_defaults =
@@ -454,14 +454,14 @@ sub register_at_server {
     opendir(DIR, $event_dir) 
         or daemon_log("cannot find directory $event_dir!\ngosa-si-client starts without any accepting events!", 1);
     my $file_name;
-    @events = ();
+    my @events_list = ();
     while(defined($file_name = readdir(DIR))){
         if ($file_name eq "." || $file_name eq "..") {
             next;
         }
-        push(@events, $file_name);
+        push(@events_list, $file_name);
     }
-    my $events = join(",", @events);
+    my $events = join(",", @events_list);
     daemon_log("found events: $events", 1);
 
     # fill in all possible servers
@@ -482,13 +482,13 @@ sub register_at_server {
     my ($rout, $wout, $reg_server);
     foreach my $server (@servers) {
 
-# TODO : server abhängige macadress und ipadresse eintragen
-
         # create msg hash
         my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
         &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
         &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
         &add_content2xml_hash($register_hash, "events", $events);
+
+        my $tmp = print Dumper $register_hash;
 
         # send xml hash to server with general server passwd
         my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);

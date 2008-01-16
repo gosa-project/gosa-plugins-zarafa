@@ -442,7 +442,7 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0]; 
     my $source = @{$msg_hash->{source}}[0];
 
-    &main::daemon_log("receive '$header' at ServerPackages from $host", 1);
+    &main::daemon_log("recieve '$header' at ServerPackages from $host", 1);
     &main::daemon_log("ServerPackages: msg to process: \n$msg", 7);
 
     my @targets = @{$msg_hash->{target}};
