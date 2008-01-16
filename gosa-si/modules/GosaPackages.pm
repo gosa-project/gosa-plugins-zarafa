@@ -427,6 +427,7 @@ sub process_job_msg {
 
 sub db_res_2_xml {
     my ($db_res) = @_ ;
+
     my $xml = "<xml>";
 
     while ( my ($hit, $hash) = each %{ $db_res } ) {

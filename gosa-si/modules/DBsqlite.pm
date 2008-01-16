@@ -310,9 +310,9 @@ sub select_dbentry {
     }
 
     if (@select_list == 0) {
-        $sql_statement = "SELECT ROWID, * FROM '$table'";
+        $sql_statement = "SELECT * FROM '$table'";
     } else {
-        $sql_statement = "SELECT ROWID, * FROM '$table' WHERE ".join(' AND ', @select_list);
+        $sql_statement = "SELECT * FROM '$table' WHERE ".join(' AND ', @select_list);
     }
 
     # query db
@@ -326,10 +326,8 @@ sub select_dbentry {
     my $answer = {};
     my $hit_counter = 0;
 
-    
     foreach my $hit ( @{ $query_answer }) {
         $hit_counter++;
-        $answer->{ $hit_counter }->{ 'ROWID' } = shift @{ $hit };
         for ( my $i = 0; $i < $list_len; $i++) {
             $answer->{ $hit_counter }->{ @{ $column_list }[$i] } = @{ $hit }[$i];
         }
