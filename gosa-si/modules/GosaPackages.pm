@@ -316,7 +316,7 @@ sub process_incoming_msg {
 
     my $header = @{$msg_hash->{header}}[0];
     
-    &main::daemon_log("GosaPackages: recieve '$header' from $host", 1);
+    &main::daemon_log("GosaPackages: receive '$header' from $host", 1);
     
     my $out_msg;
     if ($header =~ /^job_/) {

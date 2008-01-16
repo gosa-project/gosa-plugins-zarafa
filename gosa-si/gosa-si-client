@@ -971,7 +971,7 @@ sub process_incoming_msg {
 
     my $header = @{$msg_hash->{header}}[0];
     
-    daemon_log("recieve '$header' from $host", 1);
+    daemon_log("receive '$header' from $host", 1);
 #    daemon_log("header from msg:", 1);
 #    daemon_log("\t$header", 1);
 #    daemon_log("msg to process:", 7);
