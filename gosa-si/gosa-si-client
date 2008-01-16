@@ -8,7 +8,7 @@
 #  DESCRIPTION:
 #
 #      OPTIONS:  ---
-# REQUIREMENTS:  ---
+# REQUIREMENTS:  libnetaddr-ip-perl
 #         BUGS:  ---
 #        NOTES:
 #       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>

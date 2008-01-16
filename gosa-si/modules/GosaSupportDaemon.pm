@@ -97,7 +97,7 @@ sub send_msg_hash2address ($$$){
     close $socket;
 
     daemon_log("send '$header'-msg to $address", 1);
-    daemon_log("$msg_xml", 5);
+    daemon_log("message:\n$msg_xml", 8);
     return 0;
 }
 
@@ -232,8 +232,7 @@ sub open_socket {
     if(not defined $socket) {
         return;
     }
-    &daemon_log("open_socket:", 7);
-    &daemon_log("\t$PeerAddr", 7);
+    &daemon_log("open_socket: $PeerAddr", 7);
     return $socket;
 }
 

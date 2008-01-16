@@ -485,10 +485,6 @@ sub get_processing_child {
                                 $answer = $tmp;
                             }
                     }        
-
-                    #&print_known_daemons();
-                    #&print_known_clients();
-
                     daemon_log("processing of msg finished", 5);
  
                    if (defined $answer) {
@@ -499,7 +495,7 @@ sub get_processing_child {
                         daemon_log("\n$answer", 7);
                     } else {
                         print $PARENT_wr "done"."\n";
-                        daemon_log(" ", 7);
+                        print $PARENT_wr "ENDMESSAGE\n";
                     }
                     redo;
                 }
@@ -757,41 +753,41 @@ sub create_known_client {
     return;  
 }
 
-sub sysreadline(*;$) {
-    my ($hd, $timeout) = @_;
-
-    $hd = qualify_to_ref($hd, caller());
-    my $infinitely_patient = (@_ == 1 || $timeout < 0);
-    my $start_time = time();
-    my $selector = IO::Select->new();
-    $selector->add($hd);
-    my $line = "";
-
-SLEEP: 
-    until( at_eol($line)) {
-        if (not $infinitely_patient) {
-            return $line if time() > ($start_time + $timeout);
-        }
-        next SLEEP unless $selector->can_read(1.0);
-INPUT_READY:
-        while( $selector->can_read(0.0)) {
-            my $was_blocking = $hd->blocking(0);
-CHAR:       while (sysread($hd, my $nextbyte, 1)) {
-                $line .= $nextbyte;  
-                last CHAR if $nextbyte eq "\n";
-
-            }
-            $hd->blocking($was_blocking);
-            next SLEEP unless at_eol($line);
-            last INPUT_READY;
-        }
-    }
-    return $line;
-}
-
-sub at_eol($) {
-    $_[0] =~ /\n\z/ ;
-}
+#sub sysreadline(*;$) {
+#    my ($hd, $timeout) = @_;
+#
+#    $hd = qualify_to_ref($hd, caller());
+#    my $infinitely_patient = (@_ == 1 || $timeout < 0);
+#    my $start_time = time();
+#    my $selector = IO::Select->new();
+#    $selector->add($hd);
+#    my $line = "";
+#
+#SLEEP: 
+#    until( at_eol($line)) {
+#        if (not $infinitely_patient) {
+#            return $line if time() > ($start_time + $timeout);
+#        }
+#        next SLEEP unless $selector->can_read(1.0);
+#INPUT_READY:
+#        while( $selector->can_read(0.0)) {
+#            my $was_blocking = $hd->blocking(0);
+#CHAR:       while (sysread($hd, my $nextbyte, 1)) {
+#                $line .= $nextbyte;  
+#                last CHAR if $nextbyte eq "\n";
+#
+#            }
+#            $hd->blocking($was_blocking);
+#            next SLEEP unless at_eol($line);
+#            last INPUT_READY;
+#        }
+#    }
+#    return $line;
+#}
+#
+#sub at_eol($) {
+#    $_[0] =~ /\n\z/ ;
+#}
 
 #==== MAIN = main ==============================================================
 
@@ -841,6 +837,8 @@ if( 0 != $pid ) {
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 
+# delete old DBsqlite lock files
+system('rm -f /tmp/gosa_si_lock*');
 
 # connect to gosa-si job queue
 my @job_col_names = ("id", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
@@ -982,26 +980,21 @@ while(1) {
             }
             chomp($in_msg);
             
-            daemon_log("process child read:", 7);
-            daemon_log("\n$in_msg", 7);
             if (not defined $in_msg) { 
                 next; 
             } elsif ($in_msg =~ "done") {
+                daemon_log("process child read: $in_msg", 7);
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
 
             } else {
+                daemon_log("process child read:", 7);
+                daemon_log("\n$in_msg", 8);
                 # send computed answer back to connected client
                 my $act_client = $busy_child{$pid}{client_ref};
                 print $act_client $in_msg."\n";
-
-                #my $act_pipe = $busy_child{$pid}{pipe_rd};
                 delete $busy_child{$pid};
                 $free_child{$pid} = $child_hash;
-
-                # give the client a chance to read 
-                #sleep(1);
-                #close ($act_client);   
 
             }
         }

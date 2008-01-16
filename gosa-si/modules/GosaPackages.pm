@@ -333,7 +333,9 @@ sub process_incoming_msg {
 
     if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
-        my $sql = "BEGIN TRANSATION; UPDATE '$main::job_queue_table_name' SET status='done', result='$out_msg' WHERE id='$job_id'; COMMIT;";
+        my $sql = "BEGIN TRANSATION; UPDATE '".$main::job_queue_table_name.
+            "' SET status='done', result='".$out_msg.
+            "' WHERE id='$job_id'; COMMIT;";
         my $res = $main::job_db->exec_statement($sql);
         return;
 
@@ -350,7 +352,6 @@ sub process_gosa_msg {
     my ($msg, $header) = @_ ;
     my $out_msg;
     $header =~ s/gosa_//;
-    &main::daemon_log("GosaPackages: got a gosa msg $header", 5);
 
     # decide wether msg is a core function or a event handler
     if ( $header eq 'query_jobdb') { $out_msg = &query_jobdb }
@@ -398,7 +399,6 @@ sub process_job_msg {
 
     my $header = @{$msg_hash->{header}}[0];
     $header =~ s/job_//;
-    &main::daemon_log("GosaPackages: got a job msg for queue: $header", 5);
     
     # check wether mac address is already known in known_daemons or known_clients
     my $target = 'none';
