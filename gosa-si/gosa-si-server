@@ -1017,7 +1017,7 @@ while(1) {
 
     while( my ($id, $hit) = each %{$res} ) {         
 
-        my $jobdb_id = $hit->{ROWID};
+        my $jobdb_id = $hit->{id};
         my $macaddress = $hit->{macaddress};
         my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
         my $out_msg_hash = $job_msg_hash;
@@ -1030,7 +1030,7 @@ while(1) {
             &daemon_log("xml message: $hit->{xmlmessage}", 5);
             my $update_hash = { table=>$job_queue_table_name,
                 update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
-                where=> [ { ROWID=>[$jobdb_id] } ],
+                where=> [ { id=>[$jobdb_id] } ],
             };
             my $res = $job_db->update_dbentry($update_hash);
 
@@ -1056,9 +1056,6 @@ while(1) {
         my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
 
         my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
-
-#######################
-# TODO exchange ROWID with jobid, insert column jobid in table jobs befor
 
         if ($error == 0) {
             my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
