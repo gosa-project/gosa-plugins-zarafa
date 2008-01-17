@@ -350,7 +350,7 @@ class workgeneric extends plugin
     $smarty->assign("netconfig", $str);
 
     /* Show main page */
-    return($smarty->fetch (get_template_path('workstation.tpl', TRUE)));
+    return($smarty->fetch (get_template_path('workstation.tpl', TRUE, dirname(__FILE__))));
   }
 
   function remove_from_parent()

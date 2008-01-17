@@ -227,7 +227,7 @@ class terminfo extends plugin
 
         $smarty->assign($val, $this->$val);
       }
-      $display= $smarty->fetch (get_template_path('info.tpl', TRUE));
+      $display= $smarty->fetch (get_template_path('info.tpl', TRUE, dirname(__FILE__)));
 
     return ($display);
   }

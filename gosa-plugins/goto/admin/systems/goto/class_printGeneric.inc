@@ -561,7 +561,7 @@ class printgeneric extends plugin
       $smarty->assign("netconfig", "");
     }
 
-    return($display.$smarty->fetch (get_template_path('printer.tpl', TRUE)));
+    return($display.$smarty->fetch (get_template_path('printer.tpl', TRUE, dirname(__FILE__))));
   }
 
   function remove_from_parent()
