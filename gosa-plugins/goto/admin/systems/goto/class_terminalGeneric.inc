@@ -363,7 +363,7 @@ class termgeneric extends plugin
       return($str);
     }
     $smarty->assign("netconfig", $str);
-    return($smarty->fetch (get_template_path('terminal.tpl', TRUE)));
+    return($smarty->fetch (get_template_path('terminal.tpl', TRUE, dirname(__FILE__))));
   }
 
   function remove_from_parent()
