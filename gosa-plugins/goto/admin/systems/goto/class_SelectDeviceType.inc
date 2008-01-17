@@ -51,7 +51,7 @@ class SelectDeviceType extends plugin
     $smarty->assign("ObjectGroup",$this->ObjectGroup);
     $smarty->assign("SystemType",$this->SystemType);
 
-    $display.= $smarty->fetch(get_template_path('SelectDeviceType.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('SelectDeviceType.tpl', TRUE,dirname(__FILE__)));
     return($display);
   }
 

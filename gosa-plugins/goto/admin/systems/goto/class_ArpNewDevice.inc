@@ -36,7 +36,7 @@ class ArpNewDevice extends plugin
       $this->dialog = FALSE;
     }
 
-    return($smarty->fetch (get_template_path('ArpNewDevice.tpl', TRUE)));
+    return($smarty->fetch (get_template_path('ArpNewDevice.tpl', TRUE,dirname(__FILE__))));
   }
 
   function check()
