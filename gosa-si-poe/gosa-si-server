@@ -50,7 +50,7 @@ use lib "/usr/lib/gosa-si/modules";
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
 my ($server, $server_mac_address, $server_events);
-my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name);
+my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name,$job_queue_loop_delay);
 my ($known_modules, $known_clients_file_name, $known_server_file_name);
 my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
@@ -108,6 +108,7 @@ our $known_clients_db;
     "child_timeout" => [\$child_timeout, 180],
     "job_queue_timeout" => [\$job_queue_timeout, undef],
     "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
     "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
     "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/known_server.db'],
    },
@@ -603,78 +604,19 @@ my $rbits = my $wbits = my $ebits = "";
 #        }
 #    }
 #
-#    # check gosa job queue for jobs with executable timestamp
-#    my ($seconds, $minutes, $hours, $monthday, $month,
-#    $year, $weekday, $yearday, $sommertime) = localtime(time);
-#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-#    $month+=1;
-#    $month = $month < 10 ? $month = "0".$month : $month;
-#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-#    $year+=1900;
-#    my $timestamp = "$year$month$monthday$hours$minutes$seconds";
-#    
-#    
-#    my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
-#
-#    while( my ($id, $hit) = each %{$res} ) {         
-#
-#        my $jobdb_id = $hit->{id};
-#        my $macaddress = $hit->{macaddress};
-#        my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
-#        my $out_msg_hash = $job_msg_hash;
-#        my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
-#        # expect macaddress is unique!!!!!!
-#        my $target = $res_hash->{1}->{hostname};
-#        
-#        if (not defined $target) {
-#            &daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
-#            &daemon_log("xml message: $hit->{xmlmessage}", 5);
-#            my $update_hash = { table=>$job_queue_table_name,
-#                update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
-#                where=> [ { id=>[$jobdb_id] } ],
-#            };
-#            my $res = $job_db->update_dbentry($update_hash);
-#
-#            next;
-#        }
-#
-#        # add target
-#        &add_content2xml_hash($out_msg_hash, "target", $target);
-#
-#        # add new header
-#        my $out_header = $job_msg_hash->{header}[0];
-#        $out_header =~ s/job_/gosa_/;
-#        delete $out_msg_hash->{header};
-#        &add_content2xml_hash($out_msg_hash, "header", $out_header);
-#        
-#        # add sqlite_id 
-#        &add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
-#    
-#        my $out_msg = &create_xml_string($out_msg_hash);
-#
-#        # encrypt msg as a GosaPackage module
-#        my $cipher = &create_ciphering($gosa_passwd);
-#        my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
-#
-#        my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
-#
-#        if ($error == 0) {
-#            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
-#            my $res = $job_db->exec_statement($sql);
-#        } else {
-#            my $update_hash = { table=>$job_queue_table_name, 
-#                                update=> [ { status=>'error' } ],
-#                                where=> [ { id=>$jobdb_id } ],
-#                              };
-#            my $res = $job_db->update_dbentry($update_hash);
-#        }
 #
 #    }  
 #
 #
 #}
+
+POE::Session->create
+(
+	inline_states => {
+		_start => \&trigger_db_loop,
+		watch_for_new_jobs => \&watch_for_new_jobs,
+	}
+);
 
 POE::Component::Server::TCP->new
 (
@@ -707,4 +649,83 @@ sub client_input {
 	} else {
 		$heap->{client}->put("done\n");
 	}
+}
+
+sub trigger_db_loop {
+	my ($kernel) = $_[KERNEL];
+	$kernel->delay_set('watch_for_new_jobs',3);
+}
+
+sub watch_for_new_jobs {
+	my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+	# check gosa job queue for jobs with executable timestamp
+	my ($seconds, $minutes, $hours, $monthday, $month,
+		$year, $weekday, $yearday, $sommertime) = localtime(time);
+	$hours = $hours < 10 ? $hours = "0".$hours : $hours;
+	$minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+	$seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+	$month+=1;
+	$month = $month < 10 ? $month = "0".$month : $month;
+	$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+	$year+=1900;
+	my $timestamp = "$year$month$monthday$hours$minutes$seconds";
+
+	my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
+
+	while( my ($id, $hit) = each %{$res} ) {         
+
+		my $jobdb_id = $hit->{id};
+		my $macaddress = $hit->{macaddress};
+		my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
+		my $out_msg_hash = $job_msg_hash;
+		my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
+		# expect macaddress is unique!!!!!!
+		my $target = $res_hash->{1}->{hostname};
+
+		if (not defined $target) {
+			&daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
+			&daemon_log("xml message: $hit->{xmlmessage}", 5);
+			my $update_hash = { table=>$job_queue_table_name,
+				update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
+				where=> [ { id=>[$jobdb_id] } ],
+			};
+			my $res = $job_db->update_dbentry($update_hash);
+
+			next;
+		}
+
+		# add target
+		&add_content2xml_hash($out_msg_hash, "target", $target);
+
+		# add new header
+		my $out_header = $job_msg_hash->{header}[0];
+		$out_header =~ s/job_/gosa_/;
+		delete $out_msg_hash->{header};
+		&add_content2xml_hash($out_msg_hash, "header", $out_header);
+
+		# add sqlite_id 
+		&add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
+
+		my $out_msg = &create_xml_string($out_msg_hash);
+
+		# encrypt msg as a GosaPackage module
+		my $cipher = &create_ciphering($gosa_passwd);
+		my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
+
+		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
+
+		if ($error == 0) {
+			my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
+			my $res = $job_db->exec_statement($sql);
+		} else {
+			my $update_hash = { table=>$job_queue_table_name, 
+				update=> [ { status=>'error' } ],
+				where=> [ { id=>$jobdb_id } ],
+			};
+			my $res = $job_db->update_dbentry($update_hash);
+		}
+	}
+
+	$kernel->delay_set('watch_for_new_jobs',3);
 }
