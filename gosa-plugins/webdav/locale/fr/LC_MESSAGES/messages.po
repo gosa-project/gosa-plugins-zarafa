@@ -1,0 +1,49 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:156
+msgid "WebDAV account"
+msgstr "Compte WebDAV"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:6
+#: personal/connectivity/webdav/class_webdavAccount.inc:155
+msgid "WebDAV"
+msgstr "WebDAV"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:7
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:83
+#, php-format
+msgid "Removing of user/webDAV account with dn '%s' failed."
+msgstr ""
+"La suppression du compte/webDAV de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:137
+#, php-format
+msgid "Saving of user/webDAV account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte/webDAV de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:156
+msgid "Connectivity addon"
+msgstr "Connectivité"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+msgid "My account"
+msgstr "Mon Compte"

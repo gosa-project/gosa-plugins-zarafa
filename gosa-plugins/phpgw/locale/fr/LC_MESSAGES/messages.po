@@ -1,0 +1,55 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:5
+msgid "PHPGroupware"
+msgstr "PHPGroupware"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:6
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:84
+#, php-format
+msgid "Removing of user/PHPgw account with dn '%s' failed."
+msgstr ""
+"La suppression du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:138
+#, php-format
+msgid "Saving of user/PHPgw account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:156
+msgid "PHP GW"
+msgstr "PHP Groupware"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+msgid "PHP GW account settings"
+msgstr "Préférences de PHPgroupware"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+msgid "Connectivity addon"
+msgstr "Connectivité"
+
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+msgid "My account"
+msgstr "Mon Compte"
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "Compte PHPGroupware"

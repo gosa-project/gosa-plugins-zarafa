@@ -1,0 +1,260 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:84
+#: admin/systems/services/log/class_gosaLogServer.inc:101
+msgid "User"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:85
+msgid "Object type"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr ""
+
+#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:408
+#: addons/logview/class_gosa_logview.inc:6
+msgid "System logs"
+msgstr ""
+
+#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+msgid "This does something"
+msgstr ""
+
+#: addons/logview/class_logview.inc:78
+#: addons/logview/class_gosa_logview.inc:116
+msgid "Warning"
+msgstr ""
+
+#: addons/logview/class_logview.inc:78
+#: addons/logview/class_gosa_logview.inc:116
+#, php-format
+msgid "No %s servers defined!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:82
+#: addons/logview/class_gosa_logview.inc:121
+msgid "Configuration error"
+msgstr ""
+
+#: addons/logview/class_logview.inc:82
+#: addons/logview/class_gosa_logview.inc:121
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:100
+#: addons/logview/class_logview.inc:113 addons/logview/class_logview.inc:136
+#: addons/logview/class_logview.inc:193 addons/logview/class_logview.inc:197
+#: addons/logview/class_gosa_logview.inc:146
+#: addons/logview/class_gosa_logview.inc:153
+#: addons/logview/class_gosa_logview.inc:202
+#: addons/logview/class_gosa_logview.inc:207
+msgid "Error"
+msgstr ""
+
+#: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:193
+#: addons/logview/class_gosa_logview.inc:146
+#: addons/logview/class_gosa_logview.inc:202
+#, php-format
+msgid "Cannot connect to %s database!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:100 addons/logview/class_logview.inc:197
+#: addons/logview/class_gosa_logview.inc:153
+#: addons/logview/class_gosa_logview.inc:207
+#, php-format
+msgid "Cannot select %s database!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:113
+msgid "Cannot obtain host list from syslog database!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:122 addons/logview/class_logview.inc:144
+#: addons/logview/class_gosa_logview.inc:163
+msgid "All"
+msgstr ""
+
+#: addons/logview/class_logview.inc:136
+msgid "Database query failed!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:154
+#: addons/logview/class_gosa_logview.inc:69
+msgid "one hour"
+msgstr ""
+
+#: addons/logview/class_logview.inc:154
+#: addons/logview/class_gosa_logview.inc:69
+msgid "6 hours"
+msgstr ""
+
+#: addons/logview/class_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:70
+msgid "12 hours"
+msgstr ""
+
+#: addons/logview/class_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:70
+msgid "24 hours"
+msgstr ""
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "2 days"
+msgstr ""
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "one week"
+msgstr ""
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "2 weeks"
+msgstr ""
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "one month"
+msgstr ""
+
+#: addons/logview/class_logview.inc:174
+#: addons/logview/class_gosa_logview.inc:182
+msgid "You have insufficient permissions to view syslog entries."
+msgstr ""
+
+#: addons/logview/class_logview.inc:402
+msgid "Log view"
+msgstr ""
+
+#: addons/logview/class_logview.inc:403
+msgid "Log view addon"
+msgstr ""
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr ""
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr ""
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr ""
+
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:1
+msgid "GOsa logging database"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:4
+msgid "Database user"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/log/class_gosaLogServer.inc:102
+msgid "Password"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:20
+#: admin/systems/services/log/class_gosaLogServer.inc:100
+msgid "Database"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:31
+msgid "Save"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:33
+msgid "Cancel"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:27
+#: admin/systems/services/log/class_gosaLogServer.inc:55
+msgid "GOsa MySQL logging service"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:91
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "GOsa logging service"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "Services"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:103
+msgid "Allow view of entries on this server"
+msgstr ""

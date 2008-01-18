@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: polski\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"PO-Revision-Date: 2007-07-14 21:45+0100\n"
+"Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
+"Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: iso-8859-2\n"
+"X-Poedit-Basepath: tedst\n"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
+msgid "FTP"
+msgstr "FTP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:7
+msgid "This does something"
+msgstr "To robi coś"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:138
+#, php-format
+msgid "Removing of user/pureftpd account with dn '%s' failed."
+msgstr "Usuwanie konta pureftpd z dn '%s' nieudane."
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
+msgid "Value specified as 'Upload bandwidth' is not valid."
+msgstr "Wartość podana jako 'Przepustowość wysyłania' jest nieprawidłowa"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+msgid "Value specified as 'Download bandwidth' is not valid."
+msgstr "Wartość podana jako 'Przepustowość ściągania' jest nieprawidłowa."
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
+msgid "Value specified as 'Quota files' is not valid."
+msgstr "Wartość podana jako 'Quota Plików' jest nieprawidłowa"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
+msgid "Value specified as 'Quota size' is not valid."
+msgstr "Wartość podana jako 'Quota rozmiaru' jest nieprawidłowa."
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
+msgid "Value specified as 'Upload ratio' is not valid."
+msgstr "Wartość podana jako 'Skala wysyłania' jest nieprawidłowa"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
+msgid "Value specified as 'Download ratio' is not valid."
+msgstr "Wartość podana jako 'Skala ściągania' jest nieprawidłowa."
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
+#, php-format
+msgid "Saving of user/pureftpd account with dn '%s' failed."
+msgstr "Zapisywanie konta pureftpd z dn '%s' nieudane."
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
+msgid "Ftp"
+msgstr "FTP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+msgid "Pure ftp account"
+msgstr "Konto Pure-ftp"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Konto połączeń"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
+msgid "Quota files"
+msgstr " Quota pliki"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+msgid "Upload ratio"
+msgstr "Przepustowość wysyłania"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+msgid "Quota MBytes"
+msgstr "Quota rozmiaru (MB)"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+msgid "Download ratio"
+msgstr "Skala ściągania"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+msgid "Upload bandwith"
+msgstr "Przepustowość wysyłania"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+msgid "Download bandwith"
+msgstr "Przepustowość ściągania"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+msgid "Status"
+msgstr "Status"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "Konto FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "Przepustowość"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Przepustowość wysyłania"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "kb/s"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Przepustowość ściągania"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Quota"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "Pliko"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "Rozmiar"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "Proporcja"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "Pliki wysłane / ściągnięte"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "Różne"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "Zaznacz aby wyłączyć dostęp do FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "Tymczasowo wyłącz dostęp do FTP"

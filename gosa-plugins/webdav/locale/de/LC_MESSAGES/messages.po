@@ -1,0 +1,53 @@
+# translation of messages.po to Deutsch
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"PO-Revision-Date: 2007-06-18 15:08+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:156
+msgid "WebDAV account"
+msgstr "WebDAV-Konto"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:6
+#: personal/connectivity/webdav/class_webdavAccount.inc:155
+msgid "WebDAV"
+msgstr "WebDAV"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:7
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:83
+#, php-format
+msgid "Removing of user/webDAV account with dn '%s' failed."
+msgstr "Entfernen von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:137
+#, php-format
+msgid "Saving of user/webDAV account with dn '%s' failed."
+msgstr "Speichern von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:156
+msgid "Connectivity addon"
+msgstr "Konnektivitäts-Erweiterung"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+msgid "My account"
+msgstr "Mein Konto"

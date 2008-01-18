@@ -1,0 +1,428 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:42+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
+"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
+"impossible pour GOsa de récupérer vos données."
+
+#: admin/systems/services/dns/servdns.tpl:11
+#: admin/systems/services/dns/servdns.tpl:61
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:18
+#: admin/systems/services/dns/servdnseditzone.tpl:170
+msgid "Cancel"
+msgstr "Annuler"
+
+#: admin/systems/services/dns/servdns.tpl:14
+#, fuzzy
+msgid "Following objects will be taken over"
+msgstr "Les références suivantes seront mises à jour"
+
+#: admin/systems/services/dns/servdns.tpl:27
+#, fuzzy
+msgid "Take over DNS configuration from"
+msgstr "Création du fichier de configuration"
+
+#: admin/systems/services/dns/servdns.tpl:31
+#, fuzzy
+msgid "Take over"
+msgstr "Serveur de temps"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "Zones"
+
+#: admin/systems/services/dns/servdns.tpl:40
+#: admin/systems/services/dns/servdns.tpl:42
+#: admin/systems/services/dns/class_servDNSeditZone.inc:573
+#: admin/systems/services/dns/servdnseditzone.tpl:151
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:454
+msgid "Add"
+msgstr "Ajouter"
+
+#: admin/systems/services/dns/servdns.tpl:59
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:17
+#: admin/systems/services/dns/servdnseditzone.tpl:168
+msgid "Save"
+msgstr "Enregistrer"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr ""
+"Ce dialogue vous permet de configurer tout les composants d'une zone DNS "
+"dans une simple liste."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+"Cette boite de dialogue ne peut pas être tant que la zone n'a pas été sauvée "
+"ou que l'enregistrement existe dans la base de données ldap."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:108
+msgid "New entry"
+msgstr "Nouvelle entrée"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
+msgid "Create a new DNS zone entry"
+msgstr "Créer une nouvelle zone DNS"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:334
+msgid "Up"
+msgstr "Au dessus"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:335
+msgid "Down"
+msgstr "En bas"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:337
+#: admin/systems/services/dns/class_servDNSeditZone.inc:567
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:409
+#, php-format
+msgid "Please choose a valid zone name."
+msgstr "Veuillez choisir un nom de zone valide."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:413
+#, php-format
+msgid "Please choose a valid reverse zone name."
+msgstr "Veuillez choisir une zone reverse valide."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:417
+msgid "Only lowercase strings are allowed as zone name."
+msgstr "Seule les minuscules sont autorisées dans le nom de la zone."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:421
+msgid "Please specify a numeric value for serial number."
+msgstr "Veuillez entrer un nombre comme numéro de série."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:425
+msgid "Please specify a numeric value for refresh."
+msgstr "Veuillez spécifier un nombre pour le délai de rafraîchissement."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:429
+msgid "Please specify a numeric value for ttl."
+msgstr "Veuillez spécifier un nombre pour la durée du ttl."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:433
+msgid "Please specify a numeric value for expire."
+msgstr "Veuillez spécifier un nombre pour la durée d'expiration."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:437
+msgid "Please specify a numeric value for retry."
+msgstr "Veuillez spécifier un nombre pour la durée entre chaque essai."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:443
+#, php-format
+msgid "Only lowercase is allowed, please check your '%ss'."
+msgstr ""
+"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:452
+msgid ""
+"The given network address is not a valid, please specify a valid IP address."
+msgstr ""
+"L'adresse réseau contient une adresse invalide, veuillez spécifier une "
+"adresse valide."
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:459
+#, php-format
+msgid ""
+"The specified network address is not matching with the specified zone class, "
+"try it this way x.0.0.0"
+msgstr ""
+"L'adresse spécifiée ne correspond pas à la l'entrée de la zone inverse, "
+"essayez comme ceci x.0.0.0"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:465
+#, php-format
+msgid ""
+"The specified network address is not matching with the specified zone class, "
+"try it this way x.x.0.0"
+msgstr ""
+"L'adresse spécifiée ne correspond pas à la l'entrée de la zone inverse "
+"sélectionnée, essayez comme ceci x.x.0.0"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:471
+#, php-format
+msgid ""
+"The specified network address is not matching with the specified zone class, "
+"try it this way x.x.x.0"
+msgstr ""
+"L'adresse spécifiée ne correspond pas à la l'entrée de la zone inverse "
+"sélectionnée, essayez comme ceci x.x.x.0"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:475
+#, php-format
+msgid "The given network class '%s' is not valid."
+msgstr "La classe réseau spécifiée est '%s' non valide."
+
+#: admin/systems/services/dns/class_DNS.inc:168
+#: admin/systems/services/dns/class_DNS.inc:173
+#: admin/systems/services/dns/class_DNS.inc:617
+msgid "Error"
+msgstr "Erreur"
+
+#: admin/systems/services/dns/class_DNS.inc:168
+#, fuzzy, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+"Impossible de trouver la zone inverse pour la zone dns '%s'. Arrêt de la "
+"lecture de la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:173
+#, fuzzy, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+"Plus d'un zone inverse existe pour la zone dns '%s'. Arrêt de la lecture de "
+"la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:617
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:1
+msgid "Generic"
+msgstr "Informations"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:7
+#: admin/systems/services/dns/class_servDNS.inc:583
+msgid "Zone name"
+msgstr "Nom de la zone"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:16
+msgid "Network address"
+msgstr "Adresse réseau"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:25
+msgid "Netmask"
+msgstr "Masque réseau"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:41
+#: admin/systems/services/dns/class_servDNS.inc:592
+msgid "Zone records"
+msgstr "Enregistrement de zone"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:44
+msgid "Can't be edited because the zone wasn't saved right now."
+msgstr "Impossible d'éditer la zone car elle est actuellement sauvegardée."
+
+#: admin/systems/services/dns/servdnseditzone.tpl:49
+msgid "Edit"
+msgstr "Editer"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:58
+msgid "SOA record"
+msgstr "Enregistrement SOA"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:64
+msgid "Primary dns server for this zone"
+msgstr "Serveur dns primaire pour cette zone"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:73
+#: admin/systems/services/dns/class_servDNS.inc:586
+msgid "Mail address"
+msgstr "Adresse de messagerie"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:82
+msgid "Serial number (automatically incremented)"
+msgstr "Numéro de série (incrémenté automatiquement)"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:95
+#: admin/systems/services/dns/class_servDNS.inc:588
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:104
+#: admin/systems/services/dns/class_servDNS.inc:589
+msgid "Retry"
+msgstr "Réessayer"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:113
+#: admin/systems/services/dns/class_servDNS.inc:590
+msgid "Expire"
+msgstr "Expirer"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:122
+#: admin/systems/services/dns/class_servDNS.inc:282
+#: admin/systems/services/dns/class_servDNS.inc:591
+msgid "TTL"
+msgstr "TTL"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:140
+msgid "MxRecords"
+msgstr "Enregistrements mx"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:158
+msgid "Global zone records"
+msgstr "Enregistrements pour la zone globale"
+
+#: admin/systems/services/dns/class_servDNS.inc:36
+#: admin/systems/services/dns/class_servDNS.inc:545
+#: admin/systems/services/dns/class_servDNS.inc:574
+#: admin/systems/services/dns/class_servDNS.inc:575
+msgid "DNS service"
+msgstr "Service DNS"
+
+#: admin/systems/services/dns/class_servDNS.inc:156
+#, fuzzy, php-format
+msgid "You are going to migrate the DNS setup from server '%s'."
+msgstr "Vous êtes sur le point de coller l'entrée %s."
+
+#: admin/systems/services/dns/class_servDNS.inc:157
+msgid ""
+"The migration will be startet when you save this system. To cancel this "
+"action, use the cancel button below."
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNS.inc:171
+msgid "Remove DNS service"
+msgstr "Suppression du service DNS"
+
+#: admin/systems/services/dns/class_servDNS.inc:172
+msgid ""
+"This server has DNS features enabled. You can disable them by clicking below."
+msgstr ""
+"Ce serveur à l'option DNS activée. Vous pouvez le désactiver en cliquant sur "
+"le bouton ci-dessous."
+
+#: admin/systems/services/dns/class_servDNS.inc:174
+msgid "Add DNS service"
+msgstr "Ajouter un service DNS"
+
+#: admin/systems/services/dns/class_servDNS.inc:175
+msgid ""
+"This server has DNS features disabled. You can enable them by clicking below."
+msgstr ""
+"Ce serveur à l'option DNS désactivé. Vous pouvez l'activer en cliquant sur "
+"le bouton ci-dessous."
+
+#: admin/systems/services/dns/class_servDNS.inc:281
+#: admin/systems/services/dns/class_servDNS.inc:584
+msgid "Reverse zone"
+msgstr "Zone inverse"
+
+#: admin/systems/services/dns/class_servDNS.inc:283
+msgid "Class"
+msgstr "Classe"
+
+#: admin/systems/services/dns/class_servDNS.inc:347
+#, php-format
+msgid ""
+"Can't delete the selected zone, because it is still in use by these entry/"
+"entries '%s'"
+msgstr ""
+"Vous ne pouvez pas effacer cette zone car elle est encore utilisée par ces "
+"éléments/ éléments '%s'"
+
+#: admin/systems/services/dns/class_servDNS.inc:459
+#, php-format
+msgid "Updating of system server/dns with dn '%s' failed."
+msgstr "La mise à jour du système serveur/dns avec le dn '%s' à échoué."
+
+#: admin/systems/services/dns/class_servDNS.inc:473
+#, php-format
+msgid "Removing of system server/dns with dn '%s' failed."
+msgstr "La suppression du système serveur/dns avec le dn '%s' à échoué."
+
+#: admin/systems/services/dns/class_servDNS.inc:496
+#: admin/systems/services/dns/class_servDNS.inc:505
+#, php-format
+msgid "Saving of system server/dns with dn '%s' failed."
+msgstr "La sauvegarde du système serveur/dns avec le dn '%s' à échoué."
+
+#: admin/systems/services/dns/class_servDNS.inc:536
+#, php-format
+msgid "Set status flag for system server/dns with dn '%s' failed."
+msgstr ""
+"L'activation du statut pour le système serveur/dns avec le dn '%s' à échoué."
+
+#: admin/systems/services/dns/class_servDNS.inc:575
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/dns/class_servDNS.inc:585
+msgid "Primary dns server"
+msgstr "Serveur dns primaire"
+
+#: admin/systems/services/dns/class_servDNS.inc:587
+msgid "Serial"
+msgstr "Série"
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:222
+#, php-format
+msgid ""
+"Can't rename '%s' to '%s' there is already an entry with the same name in "
+"our zone editing dialog."
+msgstr ""
+"Impossible de renommer '%s' en '%s' il y a déjà une entrée avec le même nom "
+"dans la page d'édition de la zone."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:252
+#, php-format
+msgid "Entry name '%s' contains invalid characters."
+msgstr "l'enregistrement '%s' contient des des caractères invalides."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:261
+#, php-format
+msgid "Can not rename '%s' to '%s',the destination name already exists."
+msgstr "Impossible de renommer '%s' en '%s', ce enregistrement existe déjà."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:267
+#, php-format
+msgid "Can not create '%s',the destination name already exists."
+msgstr "Impossible de créer '%s', cet enregistrement existe déjà."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:276
+#, php-format
+msgid "The name '%s' is used more than once."
+msgstr "Le nom '%s' est utilisé plus d'une fois."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:299
+#, php-format
+msgid "The record type '%s' is a unique type and can't be defined twice."
+msgstr ""
+"Le type d'enregistrement '%s' est unique et ne peut être défini deux fois."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:306
+#, php-format
+msgid "There is an empty '%s' for host '%s'."
+msgstr "Il y a un '%s' vide pour l'hôte '%s'."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:314
+#, php-format
+msgid "There is a duplicate entry in '%s' for '%s'."
+msgstr "Il y a deux enregistrements '%s' pour '%s'."
+
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:455
+msgid "Remove"
+msgstr "Supprimer"

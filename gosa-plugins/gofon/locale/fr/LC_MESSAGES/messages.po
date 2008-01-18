@@ -1,0 +1,1944 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:42+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:91
+#: gofon/conference/class_phoneConferenceGeneric.inc:100
+#, php-format
+msgid ""
+"The specified home server '%s' is not available in GOsa server "
+"configuration. Saving this account will create a new entry on the server '%"
+"s'. Use cancel if you do not want to create a new entry while ignoring old "
+"accounts."
+msgstr ""
+"Le serveur primaire spécifié '%s' n'est pas disponible dans la configuration "
+"serveur de GOsa. La sauvegarde de ce compte va créer une nouvelle entrée "
+"dans le serveur '%s'. Utilisez annuler si vous ne voulez pas créer un "
+"nouveau compte en ignorant les anciens comptes."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:121
+msgid "ring all"
+msgstr "Tout faire sonner"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:122
+msgid "round robin"
+msgstr "les un après les autres"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:123
+msgid "least recently called"
+msgstr "le moins appelé "
+
+#: admin/ogroups/gofon/class_phonequeue.inc:124
+msgid "fewest completed calls"
+msgstr "le plus petit nombre d'appel réussi"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:125
+msgid "random"
+msgstr "au hasard"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:126
+msgid "round robin with memory"
+msgstr "les un après les autres avec mémorisation du dernier utilisé"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:147
+#: gofon/conference/class_phoneConferenceGeneric.inc:321
+#: gofon/macro/class_gofonMacro.inc:191
+msgid ""
+"Can't save any changes to asterisk database, there is currently no mysql "
+"extension available in your php setup."
+msgstr ""
+"Impossible de sauver les changement dans votre base de données asterisk, il "
+"n'y a pas d'extension mysql disponible dans votre configuration php."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:158
+#: gofon/conference/class_phoneConferenceGeneric.inc:333
+#: gofon/macro/class_gofonMacro.inc:201
+#, php-format
+msgid ""
+"The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for "
+"mysql error."
+msgstr ""
+"Le serveur MySQL primaire '%s' n'est pas joignable avec l'utilisateur '%s', "
+"veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:165
+#: gofon/conference/class_phoneConferenceGeneric.inc:340
+#: gofon/macro/class_gofonMacro.inc:208
+#, php-format
+msgid "Can't select database '%s' on home server '%s'."
+msgstr ""
+"Impossible de sélectionner la base de données '%s' située sur le serveur '%"
+"s'."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:177
+#: gofon/conference/class_phoneConferenceGeneric.inc:353
+#, php-format
+msgid ""
+"The MySQL initial home server '%s' isn't reachable as user '%s', check GOsa "
+"log for mysql error."
+msgstr ""
+"Le serveur MySQL primaire '%s' n'est pas joignable avec l'utilisateur '%s', "
+"veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:184
+#: gofon/conference/class_phoneConferenceGeneric.inc:360
+#, php-format
+msgid "Can't select database '%s' on initial home server '%s'."
+msgstr ""
+"Impossible de sélectionner la base de données '%s' située sur le serveur "
+"initial '%s'."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:212
+msgid "Remove the phone queue from this Account"
+msgstr "Supprimer la queue téléphonique de ce compte"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:213
+msgid ""
+"Phone queue is enabled for this group. You can disable it by clicking below."
+msgstr ""
+"Une queue téléphonique existe pour ce groupe. Vous pouvez la désactiver en "
+"cliquant sur le bouton ci-dessous."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:215
+msgid "Create phone queue"
+msgstr "Créer une queue téléphonique"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:216
+msgid ""
+"For this group the phone queues are disabled. You can enable them by "
+"clicking below."
+msgstr ""
+"Les queues téléphoniques sont désactivées pour ce groupe. Vous pouvez les "
+"activer en cliquant sur le bouton ci-dessous."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:304
+msgid ""
+"There must be at least one server with an asterisk database to create a "
+"phone queue."
+msgstr ""
+"Il doit y avoir au moins un serveur avec une base de données asterisk pour "
+"créer un queue téléphonique."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:307
+#: gofon/phoneaccount/class_phoneAccount.inc:1173
+#: gofon/phoneaccount/class_phoneAccount.inc:1602
+msgid "Please select a valid goFonHomeServer."
+msgstr ""
+"Veuillez sélectionner un serveur de téléphonique valide (goFonHomeServer)."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:313
+msgid "Timeout must be numeric"
+msgstr "Le délai d'attente doit être un nombre"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:316
+msgid "Retry must be numeric"
+msgstr "Le délai de rappel automatique doit être un nombre"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:319
+msgid "Max queue length must be numeric"
+msgstr "La taille maximale de la queue doit être un nombre"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:322
+msgid "Announce frequency must be numeric"
+msgstr "La fréquence du message d'annonce doit être un nombre"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:325
+msgid "There must be least one queue number defined."
+msgstr "Il doit y avoir au moins un numéro de queue définie."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:348
+#: admin/ogroups/gofon/class_phonequeue.inc:397
+#: gofon/phoneaccount/class_phoneAccount.inc:304
+#: gofon/phoneaccount/class_phoneAccount.inc:903
+#: gofon/conference/class_phoneConferenceGeneric.inc:419
+msgid ""
+"There is currently no asterisk server defined. Possibly you are missing a "
+"server that handles the asterisk management (goFonServer). Your settings "
+"can't be saved to asterisk database."
+msgstr ""
+"Il n'y a pas de serveur asterisk défini. Probablement qu'il vous manque un "
+"serveur qui gère asterisk (goFonServer).Vos préférences ne peuvent pas être "
+"sauvées dans la base de données d'asterisk."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:380
+msgid "Error while removing old queue entries from database."
+msgstr ""
+"Une erreur s'est produite lors de l'effacement des entrées de l'ancienne "
+"queue."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:381
+#: admin/ogroups/gofon/class_phonequeue.inc:440
+#: admin/ogroups/gofon/class_phonequeue.inc:735
+#: gofon/conference/class_phoneConferenceGeneric.inc:458
+#: gofon/conference/class_phoneConferenceGeneric.inc:471
+msgid "Please have a look a the gosa logfiles."
+msgstr "Veuillez regarder les journaux systèmes de GOsa."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:440
+msgid "Could not detect old queue entry, query failed."
+msgstr ""
+"Impossible de détecter les entrées de l'ancienne queue, la requête à échoué."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:526
+#, php-format
+msgid ""
+"More than one entry in queue table found, that uses the name ('%s'). Please "
+"fix this issue manually first."
+msgstr ""
+"Plus d'une entrée dans la table queue utilisent le nom ('%s'). Veuillez "
+"d'abord régler ce problème manuellement."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:735
+msgid "Mysql query failed."
+msgstr "La requête Mysql à échoué."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:767
+#: admin/ogroups/gofon/class_phonequeue.inc:769
+#: gofon/phoneaccount/class_phoneAccount.inc:1444
+#: gofon/phoneaccount/class_phoneAccount.inc:1446
+#: gofon/conference/class_phoneConferenceGeneric.inc:632
+#: gofon/conference/class_phoneConferenceGeneric.inc:634
+#, php-format
+msgid "The specified telephonenumber '%s' is already assigned to '%s'."
+msgstr "Le numéro de téléphone %s est déjà utilisé par '%s'."
+
+#: admin/ogroups/gofon/class_phonequeue.inc:840
+msgid "Saving phone queue failed"
+msgstr "La sauvegarde de la queue téléphonique à échoué"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:893
+msgid "Removing phone queue failed"
+msgstr "La suppression de la queue téléphonique à échoué"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:900
+#: gofon/conference/paste_generic.tpl:15 gofon/conference/generic.tpl:118
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:917
+#: gofon/phoneaccount/class_phoneAccount.inc:6
+#: gofon/phoneaccount/class_phoneAccount.inc:1500
+msgid "Phone"
+msgstr "Téléphone"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:918
+msgid "Phone group"
+msgstr "Groupe téléphonique"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:926
+#: admin/ogroups/gofon/phonequeue.tpl:75
+msgid "Timeout"
+msgstr "Temps d'attente maximum"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:927
+#: admin/ogroups/gofon/phonequeue.tpl:109
+msgid "Max queue length"
+msgstr "Taille maximale de la queue"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:928
+#: admin/ogroups/gofon/phonequeue.tpl:50
+#: gofon/phoneaccount/class_phoneAccount.inc:1513
+#: gofon/phoneaccount/generic.tpl:56
+#: gofon/conference/class_phoneConferenceGeneric.inc:769
+#: gofon/conference/generic.tpl:68
+msgid "Home server"
+msgstr "Serveur Primaire"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:929
+#: admin/ogroups/gofon/phonequeue.tpl:119
+msgid "Announce frequency"
+msgstr "Fréquence du message d'annonce"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:930
+#: admin/ogroups/gofon/phonequeue.tpl:285
+msgid "Allow the called user to transfer his call"
+msgstr "Permettre à l'utilisateur appelé de transférer son appel"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:931
+#: admin/ogroups/gofon/phonequeue.tpl:293
+msgid "Allows calling user to transfer call"
+msgstr "Permettre à l'utilisateur qui appelle de transférer son appel"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:932
+#: admin/ogroups/gofon/phonequeue.tpl:305
+msgid "Allow the called to hangup by pressing *"
+msgstr "Permettre à la personne qui appelle de raccrocher en appuyant sur *"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:933
+#: admin/ogroups/gofon/phonequeue.tpl:321
+msgid "Ring instead of playing background music"
+msgstr "Sonner au lieu de mettre une musique d'ambiance"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:934
+#: admin/ogroups/gofon/phonequeue.tpl:313
+msgid "Allows calling to hangup by pressing *"
+msgstr "Permettre à la personne qui appelle de raccrocher en appuyant sur *"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:936
+#: admin/ogroups/gofon/phonequeue.tpl:149
+msgid "Music on hold"
+msgstr "Musique d'attente"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:937
+msgid "Welcome music"
+msgstr "Musique de bienvenue"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:938
+msgid "Report hold time"
+msgstr "Annonce de la durée de mise en attente"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:939
+msgid "'You are next' sound"
+msgstr "son 'Vous êtes le suivant'"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:940
+msgid "'There are' sound"
+msgstr "son 'Il y a ...'"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:941
+msgid "'Call waiting' sound"
+msgstr "son '... appels en attente'"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:942
+msgid "'Thank you' sound"
+msgstr "son 'Merci'"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:943
+msgid "'Minutes' sound"
+msgstr "'minutes' du fichier son"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:944
+msgid "'Seconds' sound"
+msgstr "'secondes' du fichier son"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:945
+msgid "'Less than' sound"
+msgstr "Fichier son, 'moins de'"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:946
+msgid "Queue phone number"
+msgstr "Numéro de la queue téléphonique"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:947
+#: admin/ogroups/gofon/phonequeue.tpl:62 gofon/conference/generic.tpl:78
+msgid "Language"
+msgstr "Langue"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:948
+msgid "Method"
+msgstr "Méthode"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:949
+#: admin/ogroups/gofon/phonequeue.tpl:277
+msgid "Announce holdtime"
+msgstr "Annonce de la durée de mise en attente"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:950
+msgid "Announce"
+msgstr "Annonce"
+
+#: admin/ogroups/gofon/class_phonequeue.inc:951
+#: admin/ogroups/gofon/phonequeue.tpl:85
+msgid "Retry"
+msgstr "Réessayer"
+
+#: admin/ogroups/gofon/phonequeue.tpl:2
+msgid ""
+"Only users with the same asterisk home server will be included to this queue."
+msgstr ""
+"Seulement les utilisateurs avec le même serveur asterisk seront inclus dans "
+"cette queue."
+
+#: admin/ogroups/gofon/phonequeue.tpl:5
+msgid "Queue Settings"
+msgstr "Préférences des queues"
+
+#: admin/ogroups/gofon/phonequeue.tpl:8 gofon/phoneaccount/paste_generic.tpl:2
+#: gofon/phoneaccount/paste_generic.tpl:6 gofon/phoneaccount/generic.tpl:1
+#: gofon/phoneaccount/generic.tpl:6
+msgid "Phone numbers"
+msgstr "Numéros de téléphones"
+
+#: admin/ogroups/gofon/phonequeue.tpl:12
+#: admin/ogroups/gofon/phonequeue.tpl:135
+msgid "Generic queue Settings"
+msgstr "Paramètres par défaut des queues"
+
+#: admin/ogroups/gofon/phonequeue.tpl:24
+msgid "Up"
+msgstr "Au dessus"
+
+#: admin/ogroups/gofon/phonequeue.tpl:27
+msgid "Down"
+msgstr "En bas"
+
+#: admin/ogroups/gofon/phonequeue.tpl:37
+#: admin/systems/gofon/phonesettings.tpl:207
+#: admin/systems/gofon/phonesettings.tpl:230
+#: gofon/phoneaccount/paste_generic.tpl:18 gofon/phoneaccount/generic.tpl:29
+msgid "Add"
+msgstr "Ajouter"
+
+#: admin/ogroups/gofon/phonequeue.tpl:40
+#: admin/systems/gofon/phonesettings.tpl:210
+#: admin/systems/gofon/phonesettings.tpl:233
+#: gofon/phoneaccount/paste_generic.tpl:19 gofon/phoneaccount/generic.tpl:32
+#: gofon/conference/remove.tpl:15 gofon/conference/remove.tpl:19
+#: gofon/macro/remove.tpl:14 gofon/macro/remove.tpl:18
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/ogroups/gofon/phonequeue.tpl:47 gofon/conference/generic.tpl:139
+msgid "Options"
+msgstr "Options"
+
+#: admin/ogroups/gofon/phonequeue.tpl:95
+msgid "Strategy"
+msgstr "Stratégie"
+
+#: admin/ogroups/gofon/phonequeue.tpl:125
+msgid "(in seconds)"
+msgstr "(en secondes)"
+
+#: admin/ogroups/gofon/phonequeue.tpl:133
+msgid "Queue sound setup"
+msgstr "Configuration de la queue d'attente du son"
+
+#: admin/ogroups/gofon/phonequeue.tpl:138
+msgid "Use music on hold instead of ringing"
+msgstr "Mettre de la musique lorsqu'on est en attente plutôt que la sonnerie"
+
+#: admin/ogroups/gofon/phonequeue.tpl:159
+msgid "Welcome sound file"
+msgstr "Fichier son de bienvenue"
+
+#: admin/ogroups/gofon/phonequeue.tpl:169
+msgid "Announce message"
+msgstr "Message de présentation"
+
+#: admin/ogroups/gofon/phonequeue.tpl:179
+msgid "Sound file for 'You are next ...'"
+msgstr "Fichier son pour 'Vous êtes le suivant ...'"
+
+#: admin/ogroups/gofon/phonequeue.tpl:189
+msgid "'There are ...'"
+msgstr "'Il y a ...'"
+
+#: admin/ogroups/gofon/phonequeue.tpl:199
+msgid "'... calls waiting'"
+msgstr "'... appels en attente'"
+
+#: admin/ogroups/gofon/phonequeue.tpl:209
+msgid "'Thank you' message"
+msgstr "Message 'Merci'"
+
+#: admin/ogroups/gofon/phonequeue.tpl:219
+msgid "'minutes' sound file"
+msgstr "'minutes' du fichier son"
+
+#: admin/ogroups/gofon/phonequeue.tpl:229
+msgid "'seconds' sound file"
+msgstr "'secondes' du fichier son"
+
+#: admin/ogroups/gofon/phonequeue.tpl:239
+msgid "Hold sound file"
+msgstr "Fichier son du message d'attente"
+
+#: admin/ogroups/gofon/phonequeue.tpl:249
+msgid "Less Than sound file"
+msgstr "Fichier son, moins de"
+
+#: admin/ogroups/gofon/phonequeue.tpl:267
+msgid "Phone attributes "
+msgstr "Propriétés du téléphone"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:34
+#: admin/systems/services/gofon/class_goFonServer.inc:163
+msgid "VoIP service"
+msgstr "Service VOIP"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:65
+msgid "VoIP service - Asterisk management"
+msgstr "Service VOIP - Administration d'Asterisk"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:74
+msgid "The attribute DB user is empty or contains invalid characters."
+msgstr ""
+"La valeur utilisateur de la base de données est vide ou contient des "
+"caractères invalides."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:77
+msgid "The attribute password is empty or contains invalid characters."
+msgstr ""
+"Le mot de passe de l'attribut est vide ou contient des caractères invalides."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:80
+msgid ""
+"The attribute local dial prefix is empty or contains invalid characters."
+msgstr ""
+"L'attribut préfixe local est vide ou contient des caractères invalides."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:83
+msgid ""
+"The attribute country dial prefix is empty or contains invalid characters."
+msgstr ""
+"L'attribut préfixe national est vide ou contient des caractères invalides."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:120
+#, php-format
+msgid ""
+"You can't remove the asterisk database extension, it is still in use by "
+"these objects '%s'."
+msgstr ""
+"Impossible d'enlever l'extension de la base de données asterisk ,elle est "
+"utilisé par ce(s) objets '%s'."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:145
+#, fuzzy, php-format
+msgid "Updating gofon home server failed for '%s'."
+msgstr "La mise à jour du système serveur/dns avec le dn '%s' à échoué."
+
+#: admin/systems/services/gofon/class_goFonServer.inc:164
+msgid "VoIP - asterisk management"
+msgstr "VOIP - Gestion d'asterisk"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:164
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:172
+msgid "Start"
+msgstr "Démarrage"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:173
+#: gofon/phoneaccount/class_phoneAccount.inc:1369
+msgid "Stop"
+msgstr "Arrêter"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:174
+msgid "Restart"
+msgstr "Réessayer"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:176
+msgid "Admin"
+msgstr "Administrateur"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:177
+#: admin/systems/services/gofon/goFonServer.tpl:12
+msgid "Password"
+msgstr "Mot de passe"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:178
+msgid "Area code"
+msgstr "Préfixe local"
+
+#: admin/systems/services/gofon/class_goFonServer.inc:179
+msgid "Country code"
+msgstr "Préfixe national"
+
+#: admin/systems/services/gofon/goFonServer.tpl:1
+msgid "VoIP database information"
+msgstr "Information sur la base de données VOIP"
+
+#: admin/systems/services/gofon/goFonServer.tpl:4
+msgid "Asterisk DB user"
+msgstr "Utilisateur de la base de données Asterisk"
+
+#: admin/systems/services/gofon/goFonServer.tpl:20
+msgid "Country dial prefix"
+msgstr "Préfixe du pays"
+
+#: admin/systems/services/gofon/goFonServer.tpl:28
+msgid "Local dial prefix"
+msgstr "Préfixe local"
+
+#: admin/systems/services/gofon/goFonServer.tpl:39
+msgid "Save"
+msgstr "Enregistrer"
+
+#: admin/systems/services/gofon/goFonServer.tpl:41
+#: gofon/phoneaccount/main.inc:107 gofon/conference/remove.tpl:17
+#: gofon/conference/remove.tpl:21
+#: gofon/conference/class_phoneConferenceManagment.inc:378
+#: gofon/macro/remove.tpl:16 gofon/macro/remove.tpl:20
+#: gofon/macro/class_gofonMacroManagement.inc:393
+msgid "Cancel"
+msgstr "Annuler"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:124
+msgid "This 'dn' has no phone features."
+msgstr "Ce 'dn' n'a pas d'extensions téléphoniques."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:235
+#: gofon/macro/class_divListMacros.inc:190
+msgid "yes"
+msgstr "oui"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:235
+#: gofon/macro/class_divListMacros.inc:191
+msgid "no"
+msgstr "non"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:252
+msgid "dynamic"
+msgstr "dynamique"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:252
+msgid "Networksettings"
+msgstr "Configuration réseau"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:272
+#, fuzzy, php-format
+msgid ""
+"Can't delete because there are users which are depending on this phone. One "
+"of them is user '%s'."
+msgstr ""
+"Impossible d'effacer ce téléphone parce que certains utilisateurs "
+"l'utilisent. Un de ces utilisateur est '%s'."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:282
+#, php-format
+msgid "Removing of system phone/generic with dn '%s' failed."
+msgstr ""
+"La suppression du système téléphone/générique avec le dn '%s' à échoué."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:330
+msgid "The required field IP address is empty."
+msgstr "Le champ obligatoire adresse IP n'est pas rempli."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:333
+msgid "The field IP address contains an invalid address."
+msgstr "Le champ adresse IP contient une adresse invalide."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:339
+#, fuzzy
+msgid "Please specify a valid name for this object."
+msgstr "Veuillez spécifier un nom valide pour ce type mime."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:343
+msgid "The required field 'Phone name' is not set."
+msgstr "Le champ obligatoire 'Nom du téléphone' n'est pas rempli."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:346
+msgid "The 'Phone name' '0' is reserved and cannot be used."
+msgstr "Le 'Nom du téléphone' '0' est réservé et ne peut pas être utilisé."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:361
+#, php-format
+msgid "There is already an entry '%s' in the base choosen by you"
+msgstr "Une entrée '%s' existe déjà dans la base sélectionnée"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:443
+#, php-format
+msgid "Saving of system phone/generic with dn '%s' failed."
+msgstr "La sauvegarde du système téléphone/générique avec le dn '%s' à échoué."
+
+#: admin/systems/gofon/class_phoneGeneric.inc:490
+#: gofon/macro/class_gofonMacro.inc:569
+msgid "Generic"
+msgstr "Informations"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:491
+msgid "Phone generic"
+msgstr "Téléphone générique"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:496
+#: gofon/phoneaccount/class_phoneAccount.inc:1515
+msgid "Phone hardware"
+msgstr "Matériel téléphonique"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:499
+#: gofon/conference/class_phoneConferenceGeneric.inc:764
+#: gofon/macro/parameter.tpl:6
+msgid "Name"
+msgstr "Nom"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:500
+#: admin/systems/gofon/phone.tpl:17
+#: gofon/conference/class_phoneConferenceGeneric.inc:765
+#: gofon/conference/generic.tpl:49
+#: gofon/conference/class_divListConferences.inc:132
+#: gofon/macro/class_gofonMacro.inc:580
+#: gofon/macro/class_divListMacros.inc:128 gofon/macro/generic.tpl:27
+msgid "Base"
+msgstr "Base"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:501
+#: admin/systems/gofon/phone.tpl:34
+#: gofon/conference/class_phoneConferenceGeneric.inc:766
+#: gofon/conference/generic.tpl:96 gofon/macro/class_gofonMacro.inc:581
+#: gofon/macro/generic.tpl:49
+msgid "Description"
+msgstr "Description"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:502
+msgid "SIP Mode"
+msgstr "Mode SIP"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:503
+msgid "SIP DTMF mode"
+msgstr "Mode DTMF"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:504
+msgid "SIP Default ip"
+msgstr "SIP Adresse ip par défaut"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:505
+msgid "SIP Qualify"
+msgstr "Qualification SIP"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:506
+msgid "IAX authentication type"
+msgstr "Type d'authentification IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:507
+msgid "IAX secret"
+msgstr "Secret IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:508
+msgid "IAX account code"
+msgstr "Code du compte IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:509
+msgid "IAX trunk lines"
+msgstr "Trunk IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:510
+msgid "IAX permit settings"
+msgstr "Paramètres de permissions IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:511
+msgid "IAX deny settings"
+msgstr "Paramètres d'interdiction IAX"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:512
+msgid "CAPI MSN"
+msgstr "MSN CAPI"
+
+#: admin/systems/gofon/class_phoneGeneric.inc:513
+msgid "Hardware type"
+msgstr "Type de matériel"
+
+#: admin/systems/gofon/phone.tpl:6
+msgid "Phone name"
+msgstr "Nom du téléphone"
+
+#: admin/systems/gofon/phone.tpl:20 gofon/macro/generic.tpl:30
+msgid "Choose subtree to place group in"
+msgstr "Sélectionnez la branche où sera placée le groupe"
+
+#: admin/systems/gofon/phone.tpl:25 gofon/conference/generic.tpl:56
+#: gofon/conference/generic.tpl:62 gofon/macro/generic.tpl:36
+msgid "Select a base"
+msgstr "Sélectionnez une base"
+
+#: admin/systems/gofon/phonesettings.tpl:1
+msgid "Advanced phone settings"
+msgstr "Configuration avancée du téléphone"
+
+#: admin/systems/gofon/phonesettings.tpl:6
+msgid "Phone type"
+msgstr "Type de téléphone"
+
+#: admin/systems/gofon/phonesettings.tpl:8
+#: admin/systems/gofon/phonesettings.tpl:30
+#: admin/systems/gofon/phonesettings.tpl:42
+#: admin/systems/gofon/phonesettings.tpl:58
+#: admin/systems/gofon/phonesettings.tpl:91
+#: admin/systems/gofon/phonesettings.tpl:128
+#: admin/systems/gofon/phonesettings.tpl:181
+msgid "Choose a phone type"
+msgstr "Sélectionnez un type de téléphone"
+
+#: admin/systems/gofon/phonesettings.tpl:13
+msgid "refresh"
+msgstr "Rafraîchir"
+
+#: admin/systems/gofon/phonesettings.tpl:25
+msgid "Mode"
+msgstr "Mode"
+
+#: admin/systems/gofon/phonesettings.tpl:38
+msgid "DTMF mode"
+msgstr "Mode DTMF"
+
+#: admin/systems/gofon/phonesettings.tpl:54
+#: admin/systems/gofon/phonesettings.tpl:99
+msgid "Default IP"
+msgstr "Adresse ip par défaut"
+
+#: admin/systems/gofon/phonesettings.tpl:66
+#: admin/systems/gofon/phonesettings.tpl:109
+msgid "Response timeout"
+msgstr "Temps de réponse maximum"
+
+#: admin/systems/gofon/phonesettings.tpl:87
+msgid "Modus"
+msgstr "Mode"
+
+#: admin/systems/gofon/phonesettings.tpl:124
+msgid "Authtype"
+msgstr "Type d'authentification"
+
+#: admin/systems/gofon/phonesettings.tpl:136
+msgid "Secret"
+msgstr "Secret"
+
+#: admin/systems/gofon/phonesettings.tpl:146
+msgid "GoFonInkeys"
+msgstr ""
+
+#: admin/systems/gofon/phonesettings.tpl:154
+msgid "GoFonOutKeys"
+msgstr ""
+
+#: admin/systems/gofon/phonesettings.tpl:167
+msgid "Account code"
+msgstr "Code du compte téléphonique"
+
+#: admin/systems/gofon/phonesettings.tpl:177
+msgid "Trunk lines"
+msgstr "Regrouper des lignes"
+
+#: admin/systems/gofon/phonesettings.tpl:194
+msgid "Hosts that are allowed to connect"
+msgstr "Machines qui peuvent se connecter"
+
+#: admin/systems/gofon/phonesettings.tpl:197
+#: admin/systems/gofon/phonesettings.tpl:220
+msgid "List of alternative mail addresses"
+msgstr "Liste des adresses de messagerie alternatives"
+
+#: admin/systems/gofon/phonesettings.tpl:217
+msgid "Hosts that are not allowed to connect"
+msgstr "Machines qui ne peuvent pas se connecter"
+
+#: admin/systems/gofon/phonesettings.tpl:247
+msgid "MSN"
+msgstr "MSN"
+
+#: gofon/fonreports/contents.tpl:2
+msgid "Filter"
+msgstr "Filtre"
+
+#: gofon/fonreports/contents.tpl:6
+msgid "Search for"
+msgstr "Recherche de"
+
+#: gofon/fonreports/contents.tpl:7
+msgid "Enter user name to search for"
+msgstr "Entrez le nom recherché"
+
+#: gofon/fonreports/contents.tpl:8 gofon/fonreports/contents.tpl:16
+msgid "in"
+msgstr "dans"
+
+#: gofon/fonreports/contents.tpl:9
+msgid "Select subtree to base search on"
+msgstr "Sélectionnez la branche de l'annuaire où sera effectuée la recherche"
+
+#: gofon/fonreports/contents.tpl:12
+msgid "during"
+msgstr "pendant"
+
+#: gofon/fonreports/contents.tpl:21
+msgid "Search"
+msgstr "Recherche"
+
+#: gofon/fonreports/contents.tpl:30 gofon/fonreports/class_fonreport.inc:404
+msgid "Date"
+msgstr "Date"
+
+#: gofon/fonreports/contents.tpl:31 gofon/fonreports/class_fonreport.inc:405
+msgid "Source"
+msgstr "Emetteur"
+
+#: gofon/fonreports/contents.tpl:32 gofon/fonreports/class_fonreport.inc:406
+msgid "Destination"
+msgstr "Destinataire"
+
+#: gofon/fonreports/contents.tpl:33 gofon/fonreports/class_fonreport.inc:407
+msgid "Channel"
+msgstr "Canal"
+
+#: gofon/fonreports/contents.tpl:34
+msgid "Application"
+msgstr "Applications"
+
+#: gofon/fonreports/contents.tpl:35
+msgid "Status"
+msgstr "Statut"
+
+#: gofon/fonreports/contents.tpl:36 gofon/fonreports/class_fonreport.inc:410
+msgid "Duration"
+msgstr "Durée"
+
+#: gofon/fonreports/contents.tpl:51
+msgid "Search returned no results..."
+msgstr "La recherche n'a renvoyé aucun résultat..."
+
+#: gofon/fonreports/class_fonreport.inc:6
+msgid "Phone Reports"
+msgstr "Rapports téléphoniques"
+
+#: gofon/fonreports/class_fonreport.inc:7
+#: gofon/phoneaccount/class_phoneAccount.inc:7
+#: gofon/macro/class_gofonMacroManagement.inc:25
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: gofon/fonreports/class_fonreport.inc:165
+#: gofon/fonreports/class_fonreport.inc:175
+msgid "Can't connect to phone database, no reports can be shown!"
+msgstr ""
+"Impossible de se connecter à la base de données des téléphones, aucun "
+"rapport ne peut être affiché !"
+
+#: gofon/fonreports/class_fonreport.inc:168
+msgid "There is no mysql extension available, please check your php setup."
+msgstr ""
+"Il n'y a pas d'extension mysql disponible, vérifiez votre configuration php."
+
+#: gofon/fonreports/class_fonreport.inc:179
+msgid "Can't select phone database for report generation!"
+msgstr ""
+"Impossible de sélectionner la base de données des téléphones pour la "
+"génération de rapports !"
+
+#: gofon/fonreports/class_fonreport.inc:197
+msgid "Query for phone database failed!"
+msgstr "La requête sur la base de données des téléphones a échoué !"
+
+#: gofon/fonreports/class_fonreport.inc:209
+msgid "Insufficient permissions to view this attribute"
+msgstr "Permissions insuffisantes, vous ne pouvez pas voir l'attribut"
+
+#: gofon/fonreports/class_fonreport.inc:209
+msgid "Insufficient permissions"
+msgstr "Permission insuffisantes"
+
+#: gofon/fonreports/class_fonreport.inc:228
+msgid "Y-M-D"
+msgstr "A-M-J"
+
+#: gofon/fonreports/class_fonreport.inc:395
+#: gofon/fonreports/class_fonreport.inc:396 gofon/fonreports/main.inc:16
+msgid "Phone reports"
+msgstr "Rapports téléphoniques"
+
+#: gofon/fonreports/class_fonreport.inc:396
+msgid "All entries are readonly"
+msgstr "Tous les champs sont en lecture seule"
+
+#: gofon/fonreports/class_fonreport.inc:408
+msgid "Application called"
+msgstr "Application appelée"
+
+#: gofon/fonreports/class_fonreport.inc:409
+msgid "Disposition"
+msgstr ""
+
+#: gofon/phoneaccount/class_phoneAccount.inc:111
+#, php-format
+msgid ""
+"The specified goFonHomeServer '%s' is not available in GOsa server "
+"configuration. Saving this account will create a new entry on the server '%"
+"s'. Use cancel if you do not want to create a new entry ignoring old "
+"accounts."
+msgstr ""
+"Le serveur goFonHomeServer '%s' n'est pas disponible dans la configuration "
+"serveur de GOsa. La sauvegarde de ce compte va créer une nouvelle entrée "
+"dans le serveur '%s'. Utilisez annuler si vous ne voulez pas créer un "
+"nouveau compte en ignorant les ancien comptes."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:163
+msgid "no macro"
+msgstr "pas de macros"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:181
+msgid "undefined"
+msgstr "non défini"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:254
+msgid "automatic"
+msgstr "automatique"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:312
+msgid ""
+"Can't save any changes to asterisk database, there is no mysql extension "
+"available."
+msgstr ""
+"Impossible de sauvegarde les changements dans votre base de données "
+"asterisk, l'extension mysql n'est pas disponible."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:434
+#, php-format
+msgid ""
+"The MySQL Server '%s' isn't reachable as user '%s'. Abort saving entries to "
+"keep the database consistent, check GOsa log for mysql error."
+msgstr ""
+"Le serveur MySQL '%s' n'est pas joignable avec l'utilisateur '%s'. Abandon "
+"de la sauvegarde des données pour garder la consistance de la base de "
+"données, veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:442
+#: gofon/phoneaccount/class_phoneAccount.inc:469
+#, php-format
+msgid ""
+"Can't select database %s on %s. Abort saving entries to keep the database "
+"consistent, check GOsa log for mysql error."
+msgstr ""
+"Impossible de sélectionner la base de données %s sur %s. Abandon de la "
+"sauvegarde des données pour garder la base de données consistante, veuillez "
+"vérifier les journaux systèmes de GOsa pour les erreurs mysql."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:461
+#, php-format
+msgid ""
+"The old MySQL home server '%s' isn't reachable as user '%s'. Abort saving "
+"entries to keep the database consistent, check GOsa log for mysql error."
+msgstr ""
+"L'ancien serveur MySQL primaire '%s' n'est pas joignable avec l'utilisateur "
+"'%s'. Abandon des sauvegardes pour garder la consistance de la base de "
+"données, veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:784
+msgid "Error while performing query:"
+msgstr "Une erreur s'est produite lors de la requête:"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:847
+#: gofon/phoneaccount/class_phoneAccount.inc:860
+msgid "This account has no phone extensions."
+msgstr "Ce compte n'est pas d'extension téléphoniques."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:871
+msgid "Remove phone account"
+msgstr "Supprimer l'extension téléphonique"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:872
+msgid ""
+"This account has phone features enabled. You can disable them by clicking "
+"below."
+msgstr ""
+"Une extension téléphone existe pour cet utilisateur. Vous pouvez la "
+"supprimer en cliquant sur le bouton ci-dessous."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:875
+#: gofon/phoneaccount/class_phoneAccount.inc:878
+msgid "Create phone account"
+msgstr "Créer un compte téléphone"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:876
+msgid ""
+"This account has phone features disabled. You can't enable them while no uid "
+"is set."
+msgstr ""
+"Aucun extension téléphone n'existe pour cet utilisateur. Vous ne pouvez pas "
+"l'activer lorsque aucun uid n'est indiqué."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:879
+msgid ""
+"This account has phone features disabled. You can enable them by clicking "
+"below."
+msgstr ""
+"Aucun extension téléphone n'existe pour cet utilisateur. Vous pouvez en "
+"créer une en cliquant sur le bouton ci-dessous."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:894
+msgid ""
+"The macro you selected, is no longer available for you, please choose "
+"another one."
+msgstr ""
+"La macro que vous aviez choisi dans le passé n'est plus disponible, veuillez "
+"en choisir une autre."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:913
+msgid "Parameter"
+msgstr "Paramètres"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1008
+msgid "Please enter a valid phone number!"
+msgstr "Veuillez entrer un numéro de téléphone valide !"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1057
+msgid "Choose your private phone"
+msgstr "Choisissez votre téléphone privé"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1169
+#: gofon/phoneaccount/class_phoneAccount.inc:1598
+msgid ""
+"There must be at least one server with an asterisk database to create a "
+"phone account."
+msgstr ""
+"Il doit y avoir au moins un serveur avec une base de données asterisk pour "
+"créer un compte téléphonique."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1177
+#: gofon/phoneaccount/class_phoneAccount.inc:1608
+msgid "Voicemail PIN must be between 1-4 characters."
+msgstr "Le code pin de la boîte vocale doit être entre 1-4 caractères."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1180
+#: gofon/phoneaccount/class_phoneAccount.inc:1611
+msgid ""
+"The specified Voicemail PIN contains invalid characters, only numeric values "
+"are allowed here."
+msgstr ""
+"Le code pin de la boîte vocale contient des caractères invalides, seul les "
+"chiffres sont autorisés."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1185
+#: gofon/phoneaccount/class_phoneAccount.inc:1616
+msgid ""
+"The specified phone PIN contains invalid characters, only aphanumeric values "
+"are allowed here."
+msgstr ""
+"Le code pin du téléphone contient des caractères invalides. Seul les "
+"chiffres et les lettres sont autorisés."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1196
+#, php-format
+msgid "You need to specify at least one phone number!"
+msgstr "Vous devez au moins indiquer un numéro de téléphone !"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1203
+#: gofon/phoneaccount/class_phoneAccount.inc:1623
+#: gofon/macro/class_gofonMacroParameters.inc:343
+#, php-format
+msgid "The parameter %s contains invalid char. '!,#' is used as delimiter"
+msgstr ""
+"Le paramètre %s contient des caractères invalides. '!#' est utilisé comme "
+"séparateur"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1276
+#, php-format
+msgid "Saving of user/phone account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte/téléphonique de l'utilisateur avec le dn '%s' à "
+"échoué."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1326
+#, php-format
+msgid ""
+"The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for mysql "
+"error."
+msgstr ""
+"Le serveur MySQL '%s' n'est pas joignable avec l'utilisateur '%s', veuillez "
+"vérifier les journaux système GOsa pour les erreurs mysql."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1337
+#, php-format
+msgid "Can't select database %s on %s."
+msgstr "Impossible de sélectionner la base de données %s située sur %s."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1374
+msgid ""
+"Can't remove phone account, the mysql extension is not present in php "
+"configuration."
+msgstr ""
+"Impossible de supprimer le compte téléphonique, l'extension mysql n'est pas "
+"présente dans la configuration php."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1407
+#, php-format
+msgid "Removed user '%s' from phone queue '%s'."
+msgstr "L'utilisateur '%s' à été enlevé de la queue '%s'."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1415
+#, php-format
+msgid "Removing of user/phone account with dn '%s' failed."
+msgstr ""
+"La suppression du compte/téléphonique de l'utilisateur avec le dn '%s' à "
+"échoué."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1492
+#, php-format
+msgid ""
+"The previously selected asterisk home server (%s) is no longer available. "
+"Remove aborted."
+msgstr ""
+"Le serveur asterisk primaire précédemment sélectionné n'existe plus (%s). "
+"Effacement interrompu."
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1501
+msgid "Phone account settings"
+msgstr "Paramètres compte téléphonique"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1506
+msgid "GOfon reports"
+msgstr "Rapports téléphoniques"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1512
+#: gofon/conference/class_phoneConferenceGeneric.inc:780
+msgid "Telephone number"
+msgstr "Numéro de téléphone"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1514
+msgid "Macro settings"
+msgstr "Paramètres des macros"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1516
+msgid "Telephone pin"
+msgstr "Code PIN du téléphone"
+
+#: gofon/phoneaccount/class_phoneAccount.inc:1517
+msgid "Voicemail pin"
+msgstr "Code PIN de la boite vocale"
+
+#: gofon/phoneaccount/paste_generic.tpl:1 gofon/phoneaccount/main.inc:123
+msgid "Phone settings"
+msgstr "Configuration du téléphone"
+
+#: gofon/phoneaccount/paste_generic.tpl:27 gofon/phoneaccount/generic.tpl:42
+msgid "Telephone hardware"
+msgstr "Matériel téléphonique"
+
+#: gofon/phoneaccount/paste_generic.tpl:29 gofon/phoneaccount/generic.tpl:44
+#: gofon/phoneaccount/generic.tpl:48
+msgid "Telephone"
+msgstr "Téléphone"
+
+#: gofon/phoneaccount/paste_generic.tpl:32 gofon/phoneaccount/generic.tpl:68
+msgid "Voicemail PIN"
+msgstr "Code PIN de la boite vocale"
+
+#: gofon/phoneaccount/paste_generic.tpl:40 gofon/phoneaccount/generic.tpl:78
+msgid "Phone PIN"
+msgstr "Code PIN du téléphone"
+
+#: gofon/phoneaccount/generic.tpl:60
+msgid "Select the accounts home server"
+msgstr "Sélectionnez le serveur primaire"
+
+#: gofon/phoneaccount/generic.tpl:100 gofon/phoneaccount/generic.tpl:102
+msgid "Phone macro"
+msgstr "Macro téléphoniques"
+
+#: gofon/phoneaccount/generic.tpl:113
+msgid "Refresh"
+msgstr "Rafraîchir"
+
+#: gofon/phoneaccount/main.inc:105
+#: gofon/conference/class_phoneConferenceManagment.inc:372
+#: gofon/macro/class_gofonMacroManagement.inc:387
+msgid "Ok"
+msgstr "Ok"
+
+#: gofon/phoneaccount/main.inc:113
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
+"cette boite de dialogue"
+
+#: gofon/phoneaccount/main.inc:114
+msgid "Edit"
+msgstr "Editer"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:258
+#, php-format
+msgid ""
+"Could not remove the conference entry from database on home server (%s). "
+"Please check your asterisk database configuration."
+msgstr ""
+"Impossible d'effacer la conférence de la base de données primaire sur le "
+"serveur (%s). Veuillez vérifier la configuration de votre base de données "
+"asterisk."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:377
+#, php-format
+msgid ""
+"The previously selected asterisk home server (%s) is no longer available."
+msgstr ""
+"Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
+"disponible."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:382
+msgid "Please enter a PIN."
+msgstr " Veuillez entrer un code pin."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:386
+msgid "Please enter a name for the conference."
+msgstr "Veuillez entrer un nom pour la conférence."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:390
+msgid "Only numeric chars are allowed in Number field."
+msgstr "Seul des chiffres sont permis dans le champ numéro."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:394
+msgid "Only numbers are allowed in Lifetime."
+msgstr "Seul des nombres sont autorisés dans la durée."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:408
+msgid "There is already a conference with this name in the current tree."
+msgstr "Il y a déjà une conférence avec ce nom dans l'annuaire."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:457
+msgid ""
+"Can not check if there are already some entries with given telephone number "
+"and/or cn in the destination home server."
+msgstr ""
+"Impossible de vérifier si il y a déjà des entrées avec ce numéro de "
+"téléphone et/ou cn dans le serveur primaire."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:470
+msgid ""
+"Can not remove entries with some telephone number and/or cn from destination "
+"home server."
+msgstr ""
+"Impossible d'effacer des entrées avec certains numéro de téléphone et/ou cn "
+"dans le serveur primaire."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:590
+msgid ""
+"Can not check if entry exists in old database. Please have a look a the gosa "
+"logfiles."
+msgstr ""
+"Impossible de vérifier si l'entrée existe dans l'ancienne  base de données. "
+"Veuillez vérifier les journaux systèmes GOsa."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:604
+msgid ""
+"Can not remove old entries from initial home server. Please have a look a "
+"the gosa logfiles."
+msgstr ""
+"Impossible d'effacer les anciennes entrées de l'ancien serveur primaire. "
+"Veuillez vérifier les journaux systèmes de GOsa."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:708
+#, php-format
+msgid "Saving of goFonConference/generic with dn '%s' failed."
+msgstr ""
+"La sauvegarde du type goFonConférence/générique avec le dn '%s' à échoué."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:754
+#: gofon/conference/class_divListConferences.inc:144
+#: gofon/conference/class_divListConferences.inc:277
+msgid "Conference"
+msgstr "Conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:755
+msgid "Phone conference management"
+msgstr "Gestion des conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:759
+msgid "Addons"
+msgstr "Extensions"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:760
+msgid "GOfon conference"
+msgstr "Conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:767
+msgid "Conference PIN"
+msgstr "Code Pin de la conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:770
+#: gofon/conference/generic.tpl:155
+msgid "Preset PIN"
+msgstr "Code PIN préselectionné"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:771
+#: gofon/conference/generic.tpl:175
+msgid "Record conference"
+msgstr "Enregistrer la conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:772
+#: gofon/conference/generic.tpl:206
+msgid "Play music on hold"
+msgstr "Musique d'attente"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:773
+msgid "Activate menu"
+msgstr "Activer le menu"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:774
+msgid "Announce user activity"
+msgstr "Annoncer l'activité utilisateur"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:775
+msgid "Count user"
+msgstr "Compter les utilisateurs"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:776
+msgid "Conference type"
+msgstr "Type de conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:778
+msgid "Format"
+msgstr ""
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:779
+msgid "Lifetime"
+msgstr "Durée"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:781
+#: gofon/conference/class_divListConferences.inc:58
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: gofon/conference/headpage.tpl:6
+#: gofon/conference/class_divListConferences.inc:31
+#: gofon/conference/class_divListConferences.inc:32
+msgid "List of conference rooms"
+msgstr "Liste des salles de conférence"
+
+#: gofon/conference/headpage.tpl:20 gofon/macro/headpage.tpl:20
+msgid "Information"
+msgstr "Information"
+
+#: gofon/conference/headpage.tpl:24
+#: gofon/conference/class_divListConferences.inc:36
+msgid ""
+"This menu allows you to create, delete and edit selected phone conferences. "
+"Having a large number of phone conferences, you might prefer the range "
+"selectors on top of the conferences list."
+msgstr ""
+"Ce menu vous permet de d'ajouter, supprimer et éditer les conférences "
+"sélectionnés. Si vous avez un grand nombre de conférences il est conseillé "
+"d'utiliser les filtres."
+
+#: gofon/conference/headpage.tpl:29 gofon/macro/headpage.tpl:29
+msgid "Filters"
+msgstr "Filtres"
+
+#: gofon/conference/headpage.tpl:35
+msgid "Display users matching"
+msgstr "Afficher les utilisateurs correspondants"
+
+#: gofon/conference/headpage.tpl:36
+msgid "Regular expression for        matching user names"
+msgstr "Expression régulière concordant avec les noms des utilisateurs"
+
+#: gofon/conference/remove.tpl:2 gofon/macro/remove.tpl:2
+msgid "Warning"
+msgstr "Avertissement"
+
+#: gofon/conference/remove.tpl:6
+msgid ""
+"This includes 'all' accounts, systems, etc. in this subtree. Please double "
+"check if your really want to do this since there is no way for GOsa to get "
+"your data back."
+msgstr ""
+"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
+"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
+"impossible pour GOsa de récupérer vos données."
+
+#: gofon/conference/remove.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Il est conseillé de sauvegarder l'arbre de votre annuaire LDAP dans un "
+"fichier avant de réaliser cette action. Appuyez sur 'Supprimer' pour "
+"continuer ou 'Annuler' pour abandonner."
+
+#: gofon/conference/paste_generic.tpl:5 gofon/conference/generic.tpl:15
+msgid "Conference name"
+msgstr "Nom de la conférence"
+
+#: gofon/conference/paste_generic.tpl:10 gofon/conference/generic.tpl:21
+msgid "Name of conference to create"
+msgstr "Nom de la conférence à créer"
+
+#: gofon/conference/generic.tpl:5
+msgid "Properties"
+msgstr "Propriétés"
+
+#: gofon/conference/generic.tpl:28
+msgid "Type"
+msgstr "Type"
+
+#: gofon/conference/generic.tpl:35
+msgid "Choose subtree to place conference in"
+msgstr "Sélectionnez la branche où sera enregistrée la conférence"
+
+#: gofon/conference/generic.tpl:81
+#, fuzzy
+msgid "Select language"
+msgstr "Langue du serveur"
+
+#: gofon/conference/generic.tpl:102
+msgid "Descriptive text for department"
+msgstr "Description du département"
+
+#: gofon/conference/generic.tpl:108
+msgid "Lifetime (in days)"
+msgstr "Durée (en jours)"
+
+#: gofon/conference/generic.tpl:163
+#: gofon/conference/class_divListConferences.inc:59
+msgid "PIN"
+msgstr "Code PIN"
+
+#: gofon/conference/generic.tpl:183
+msgid "Sound file format"
+msgstr "Format du fichier son "
+
+#: gofon/conference/generic.tpl:186
+msgid "Choose subtree to place department in"
+msgstr ""
+"Sélectionnez la branche de l'annuaire dans laquelle sera placée le "
+"département"
+
+#: gofon/conference/generic.tpl:214
+msgid "Activate session menu"
+msgstr "Activer le menu de session"
+
+#: gofon/conference/generic.tpl:222
+msgid "Announce users joining or leaving the conference"
+msgstr "Annoncer les nouveaux utilisateurs et ceux qui quittent"
+
+#: gofon/conference/generic.tpl:230
+msgid "Count users"
+msgstr "Compter les utilisateurs"
+
+#: gofon/conference/class_divListConferences.inc:57
+msgid "Name - Number"
+msgstr "Nom - numéro"
+
+#: gofon/conference/class_divListConferences.inc:60
+#: gofon/conference/class_divListConferences.inc:137
+#: gofon/macro/class_divListMacros.inc:59
+#: gofon/macro/class_divListMacros.inc:133
+msgid "Actions"
+msgstr "Actions"
+
+#: gofon/conference/class_divListConferences.inc:63
+#: gofon/macro/class_divListMacros.inc:62
+msgid "Select to search within subtrees"
+msgstr "Sélectionner pour chercher dans le sous arbre"
+
+#: gofon/conference/class_divListConferences.inc:63
+#: gofon/macro/class_divListMacros.inc:62
+msgid "Search in subtrees"
+msgstr "Chercher dans les sous arbre"
+
+#: gofon/conference/class_divListConferences.inc:66
+msgid "Regular expression for matching conference names"
+msgstr "Expression régulière concordant avec les noms des conférences"
+
+#: gofon/conference/class_divListConferences.inc:134
+#: gofon/macro/class_divListMacros.inc:130
+msgid "Submit department"
+msgstr "Soumettre le département"
+
+#: gofon/conference/class_divListConferences.inc:134
+#: gofon/macro/class_divListMacros.inc:130
+msgid "Submit"
+msgstr "Soumettre"
+
+#: gofon/conference/class_divListConferences.inc:139
+#: gofon/macro/class_divListMacros.inc:135
+msgid "Create"
+msgstr "Créer"
+
+#: gofon/conference/class_divListConferences.inc:150
+#: gofon/macro/class_divListMacros.inc:146
+msgid "Remove"
+msgstr "Supprimer"
+
+#: gofon/conference/class_divListConferences.inc:156
+#: gofon/macro/class_divListMacros.inc:152
+#, fuzzy
+msgid "Copy"
+msgstr "copier"
+
+#: gofon/conference/class_divListConferences.inc:158
+#: gofon/macro/class_divListMacros.inc:154
+#, fuzzy
+msgid "Cut"
+msgstr "couper"
+
+#: gofon/conference/class_divListConferences.inc:162
+#: gofon/conference/class_divListConferences.inc:165
+#: gofon/macro/class_divListMacros.inc:158
+#: gofon/macro/class_divListMacros.inc:161
+msgid "Paste"
+msgstr "Coller"
+
+#: gofon/conference/class_divListConferences.inc:213
+#: gofon/macro/class_divListMacros.inc:213
+msgid "cut"
+msgstr "couper"
+
+#: gofon/conference/class_divListConferences.inc:213
+#: gofon/macro/class_divListMacros.inc:213
+msgid "Cut this entry"
+msgstr "Couper cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:215
+#: gofon/macro/class_divListMacros.inc:215
+msgid "copy"
+msgstr "copier"
+
+#: gofon/conference/class_divListConferences.inc:215
+#: gofon/macro/class_divListMacros.inc:215
+msgid "Copy this entry"
+msgstr "Copier cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:220
+#: gofon/macro/class_divListMacros.inc:218
+msgid "edit"
+msgstr "éditer"
+
+#: gofon/conference/class_divListConferences.inc:220
+msgid "Edit this entry"
+msgstr "Editer cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:230
+#: gofon/macro/class_divListMacros.inc:226
+msgid "delete"
+msgstr "supprimer"
+
+#: gofon/conference/class_divListConferences.inc:230
+msgid "Delete this entry"
+msgstr "Supprimer cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:257
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: gofon/conference/class_divListConferences.inc:294
+#, fuzzy
+msgid "Number of listed conferences"
+msgstr "Supprimer les conférences sélectionnées"
+
+#: gofon/conference/class_divListConferences.inc:295
+#: gofon/macro/class_divListMacros.inc:276
+#, fuzzy
+msgid "Number of listed departments"
+msgstr "Nom du département"
+
+#: gofon/conference/main.inc:39 gofon/conference/main.inc:41
+msgid "Conference management"
+msgstr "Gestion des conférences"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:24
+msgid "Phone conferences"
+msgstr "Conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:25
+msgid "Management"
+msgstr "Gestion"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:195
+#: gofon/macro/class_gofonMacroManagement.inc:263
+#, php-format
+msgid "You're about to delete the following user(s) %s"
+msgstr "Vous êtes sur le point de supprimer le(s) utilisateur(s) suivant(s) %s"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:216
+#: gofon/conference/class_phoneConferenceManagment.inc:278
+msgid "You have no permission to remove this department."
+msgstr "Vous n'avez pas les droits nécessaires pour supprimer ce département."
+
+#: gofon/conference/class_phoneConferenceManagment.inc:257
+#, php-format
+msgid "You're about to delete the whole LDAP subtree placed under '%s'."
+msgstr ""
+"Vous êtes sur le point de supprimer la branche complète de l'annuaire LDAP "
+"placé sous '%s'."
+
+#: gofon/conference/class_phoneConferenceManagment.inc:375
+#: gofon/macro/class_gofonMacroManagement.inc:390
+msgid "Apply"
+msgstr "Appliquer"
+
+#: gofon/macro/headpage.tpl:6 gofon/macro/class_divListMacros.inc:31
+#: gofon/macro/class_divListMacros.inc:32
+msgid "List of macros"
+msgstr "Liste des macros"
+
+#: gofon/macro/headpage.tpl:24 gofon/macro/class_divListMacros.inc:36
+msgid ""
+"This menu allows you to add, edit and remove selected macros. You may want "
+"to use the range selector on top of the macro listbox, when working with a "
+"large number of macros."
+msgstr ""
+"Ce menu permet d'ajouter, de modifier ou de supprimer les macros "
+"sélectionnés. Vous pouvez utiliser les différents filtres lorsque vous "
+"travaillez avec un nombre élevé de macros."
+
+#: gofon/macro/headpage.tpl:38
+msgid "Display macros matching"
+msgstr "Afficher les macros correspondantes"
+
+#: gofon/macro/headpage.tpl:38
+msgid "Display macros  matching"
+msgstr "Afficher les macros correspondantes"
+
+#: gofon/macro/headpage.tpl:41 gofon/macro/class_divListMacros.inc:65
+msgid "Regular expression for matching macro names"
+msgstr "Expression régulière correspondant à des noms de macro"
+
+#: gofon/macro/class_gofonMacro.inc:239
+#, php-format
+msgid "Removing macro from '%s' failed. Check GOsa log for mysql error."
+msgstr ""
+"L'effacement de la macro depuis '%s' à échoué. Veuillez vérifier les "
+"journaux système de GOsa pour les erreurs mysql."
+
+#: gofon/macro/class_gofonMacro.inc:307
+#, php-format
+msgid "More than one '(' is currently not supported. Line : '%s'."
+msgstr "Plus d'un '(' n'est actuellement pas supporté. Ligne : '%s'."
+
+#: gofon/macro/class_gofonMacro.inc:310
+#, php-format
+msgid "More than one ')' is currently not supported. Line : '%s'."
+msgstr "Plus d'une ')' n'est actuellement pas supporté, Ligne : '%s'."
+
+#: gofon/macro/class_gofonMacro.inc:314
+#, php-format
+msgid "There is no application given in line : '%s'."
+msgstr "Il y a pas d'application indiquée à la ligne : '%s'."
+
+#: gofon/macro/class_gofonMacro.inc:318
+#, php-format
+msgid "There is no extension type given in line : '%s'."
+msgstr "Il n'y a pas de type d'extension indiquée à la ligne : '%s'."
+
+#: gofon/macro/class_gofonMacro.inc:348
+#, php-format
+msgid "Insert of new macro failed for server '%s'."
+msgstr "L'insertion de la nouvelle macro à échoué pour le serveur '%s'."
+
+#: gofon/macro/class_gofonMacro.inc:408
+msgid ""
+"There must be at least one server with an asterisk database to save this "
+"phone macro."
+msgstr ""
+"Il doit y avoir au moins un serveur avec la base de donnée asterisk pour "
+"sauver cette macro."
+
+#: gofon/macro/class_gofonMacro.inc:422
+#, php-format
+msgid "The given cn '%s' already exists."
+msgstr "Le cn indiqué '%s' existe déjà."
+
+#: gofon/macro/class_gofonMacro.inc:428
+msgid "You must specify the 'Display Name' in order to save this macro"
+msgstr ""
+"Vous devez spécifier le 'Nom d'affichage' pour pouvoir sauver cette macro"
+
+#: gofon/macro/class_gofonMacro.inc:432
+msgid "The given cn is too long, to create a Makro entry, maximum 20 chars."
+msgstr ""
+"Le cn introduit est trop long, pour créer une macro le maximum est de 20 "
+"caractères."
+
+#: gofon/macro/class_gofonMacro.inc:441
+msgid ""
+"This macro is still in use. It is necessary to mark this macro as visible "
+"for users."
+msgstr ""
+"Cette macro est toujours utilisée. Il est nécessaire de marquer cette macro "
+"comme visible pour tout les utilisateurs."
+
+#: gofon/macro/class_gofonMacro.inc:449
+msgid "Makro length must be lower than 100 lines"
+msgstr "La longueur de la macro doit être plus petite que 100 lignes"
+
+#: gofon/macro/class_gofonMacro.inc:454
+msgid "You can't save an empty macro."
+msgstr "Impossible de sauver des macros vides."
+
+#: gofon/macro/class_gofonMacro.inc:471
+msgid ""
+"This macro is still in use. To delete this Macro ensure that nobody has "
+"selected it."
+msgstr ""
+"Cette macro est toujours utilisée. Pour effacer cette macro, assurez vous "
+"que personne ne la sélectionnée."
+
+#: gofon/macro/class_gofonMacro.inc:484
+msgid ""
+"Could not remove the macro entry from asterisk databases. Please check your "
+"asterisk database configurations."
+msgstr ""
+"Impossible d'effacer la macro de la base de données asterisk. Veuillez "
+"vérifier la configuration de la base de donnée asterisk."
+
+#: gofon/macro/class_gofonMacro.inc:491 gofon/macro/class_gofonMacro.inc:500
+#: gofon/macro/class_gofonMacroParameters.inc:403
+#, php-format
+msgid "Removing of goFonMacro/generic account with dn '%s' failed."
+msgstr ""
+"La suppression du compte goFonMacro/générqiue de l'utilisateur avec le dn '%"
+"s' à échoué."
+
+#: gofon/macro/class_gofonMacro.inc:534
+#, php-format
+msgid "Saving of goFonMacro/generic account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte goFonMacro/générique de l'utilisateur avec le dn '%"
+"s' à échoué."
+
+#: gofon/macro/class_gofonMacro.inc:570
+msgid "Asterisk macro management"
+msgstr "Gestion des macros d'Asterisk"
+
+#: gofon/macro/class_gofonMacro.inc:575
+msgid "GOfon macro"
+msgstr ""
+
+#: gofon/macro/class_gofonMacro.inc:579 gofon/macro/class_divListMacros.inc:57
+#: gofon/macro/paste_generic.tpl:4 gofon/macro/paste_generic.tpl:6
+#: gofon/macro/generic.tpl:6 gofon/macro/generic.tpl:9
+msgid "Macro name"
+msgstr "Nom de la macro"
+
+#: gofon/macro/class_gofonMacro.inc:582 gofon/macro/generic.tpl:14
+msgid "Display name"
+msgstr "Nom à afficher"
+
+#: gofon/macro/class_gofonMacro.inc:583
+msgid "Macro content and parameter"
+msgstr "Contenu et paramètre des macros"
+
+#: gofon/macro/class_gofonMacro.inc:584
+msgid "Visibility flag"
+msgstr "Etat de visibilité"
+
+#: gofon/macro/remove.tpl:6
+msgid ""
+"This may be used by several groups. Please double check if your really want "
+"to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"Cela peut être utilisé par plusieurs groupes. Veuillez vérifier que vous "
+"voulez effectuer cette opération étant donné qu'il est impossible pour GOsa "
+"de récupérer vos données."
+
+#: gofon/macro/remove.tpl:9
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
+"'Annuler' pour abandonner."
+
+#: gofon/macro/class_divListMacros.inc:57
+msgid "Department"
+msgstr "Département"
+
+#: gofon/macro/class_divListMacros.inc:58
+msgid "Visible"
+msgstr "Visible"
+
+#: gofon/macro/class_divListMacros.inc:140
+#: gofon/macro/class_divListMacros.inc:189
+msgid "Macro"
+msgstr "Macro"
+
+#: gofon/macro/class_divListMacros.inc:190
+msgid "visible"
+msgstr "visible"
+
+#: gofon/macro/class_divListMacros.inc:191
+msgid "invisible"
+msgstr "invisible"
+
+#: gofon/macro/class_divListMacros.inc:219
+msgid "Edit macro"
+msgstr "Editer une macro"
+
+#: gofon/macro/class_divListMacros.inc:227
+msgid "Delete macro"
+msgstr "Supprimer une macro"
+
+#: gofon/macro/class_divListMacros.inc:275
+#, fuzzy
+msgid "Number of listed macros"
+msgstr "Nombre de pages"
+
+#: gofon/macro/class_gofonMacroParameters.inc:203
+msgid "This 'dn' is no phone macro."
+msgstr "Ce 'dn' n'est pas une macro téléphonique."
+
+#: gofon/macro/class_gofonMacroParameters.inc:259
+msgid "String"
+msgstr "Chaîne de caractère"
+
+#: gofon/macro/class_gofonMacroParameters.inc:260
+msgid "Combobox"
+msgstr "Boite à choix multiple"
+
+#: gofon/macro/class_gofonMacroParameters.inc:261
+msgid "Bool"
+msgstr "Booléen"
+
+#: gofon/macro/class_gofonMacroParameters.inc:267
+msgid "Delete unused"
+msgstr "Supprimer les paramètres inutilisés"
+
+#: gofon/macro/class_gofonMacroParameters.inc:348
+#, php-format
+msgid "The parameter %s has incorrect value for type bool."
+msgstr "Le paramètre %s à des valeurs incorrectes par rapport au type booléen."
+
+#: gofon/macro/class_gofonMacroParameters.inc:377
+#, php-format
+msgid ""
+"Parameter count of the macro changed, you must update each user which are "
+"using this macro '%s'."
+msgstr ""
+"Le nombre de paramètres de la macro à change, vous devez mettre à jour "
+"chaque utilisateur qui utilise la macro '%s'."
+
+#: gofon/macro/generic.tpl:18
+msgid "Macro name to be displayed"
+msgstr "Nom d'affichage de la macro"
+
+#: gofon/macro/generic.tpl:60
+msgid "Visible for user"
+msgstr "Visible pour l'utilisateur"
+
+#: gofon/macro/generic.tpl:70
+msgid "Macro text"
+msgstr "Texte de la macro"
+
+#: gofon/macro/class_gofonMacroManagement.inc:24
+msgid "Phone macros"
+msgstr "Macros téléphoniques"
+
+#: gofon/macro/class_gofonMacroManagement.inc:290
+#: gofon/macro/class_gofonMacroManagement.inc:344
+#: gofon/macro/class_gofonMacroManagement.inc:368
+msgid "You are not allowed to delete this macro!"
+msgstr "Vous n'êtes pas autorisé à supprimer cette macro!"
+
+#: gofon/macro/class_gofonMacroManagement.inc:337
+#, php-format
+msgid "You're about to delete the macro '%s'."
+msgstr "Vous êtes sur le point de supprimer la macro '%s'."
+
+#: gofon/macro/main.inc:43 gofon/macro/main.inc:47
+msgid "Phone macro management"
+msgstr "Administration des macros téléphoniques"
+
+#: gofon/macro/parameter.tpl:4
+msgid "Argument"
+msgstr "Argument"
+
+#: gofon/macro/parameter.tpl:8
+msgid "type"
+msgstr "type"
+
+#: gofon/macro/parameter.tpl:10
+msgid "Default value"
+msgstr "Valeur par défaut"
+
+#: gofon/macro/parameter.tpl:19
+msgid "You are not allowed to view the macro parameter settings"
+msgstr "Vous n'êtes pas autorisé à voir les paramètres de cette macro."

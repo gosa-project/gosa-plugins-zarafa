@@ -1,0 +1,168 @@
+# translation of admin.po to
+# translation of systems.po to
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: admin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:41+0100\n"
+"PO-Revision-Date: 2007-07-24 00:26+0200\n"
+"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
+"Language-Team:  <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+msgid "DFS Managment"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:147
+#, php-format
+msgid "Removing of DFS share with dn '%s' failed."
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:166
+msgid "No DFS entries found"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Go up one dfsshare"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Up"
+msgstr "Arriba"
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Go to dfs root"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Root"
+msgstr "Raíz"
+
+#: addons/godfs/class_dfsManagment.inc:211
+msgid "Create new dfsshare"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Base"
+msgstr "Base"
+
+#: addons/godfs/class_dfsManagment.inc:214
+msgid "Submit department"
+msgstr "Enviar departamento"
+
+#: addons/godfs/class_dfsManagment.inc:214
+msgid "Submit"
+msgstr "Enviar"
+
+#: addons/godfs/class_dfsManagment.inc:243
+msgid "Finish"
+msgstr "Terminar"
+
+#: addons/godfs/class_dfsManagment.inc:245
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: addons/godfs/class_dfsgeneric.inc:102 addons/godfs/class_dfsgeneric.inc:104
+msgid "Dfs share already exists."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:117
+msgid "Required Field \"Name of dfs Share\" is not set."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:120
+msgid "Required Field \"Description\" is not set."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:123
+msgid "Required Field \"Fileserver\" is not set."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:126
+msgid "Required Field \"Share on fileserver\" is not set."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:129
+msgid "Required Field \"Location\" is not set."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:186
+#, php-format
+msgid "Saving dfs/generic with dn '%s' failed."
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:219
+#, php-format
+msgid "Removing dfs/generic with dn '%s' failed."
+msgstr ""
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr ""
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr ""
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Descripción"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr ""
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Localización"
+
+#: addons/godfs/contents.tpl:8
+msgid "DFS Shares"
+msgstr ""
+
+#: addons/godfs/contents.tpl:22
+msgid "Information"
+msgstr ""
+
+#: addons/godfs/contents.tpl:26
+msgid ""
+"This menu allows you to create, delete and edit selected dfs shares. Having "
+"a large numbers of dfs shares, you might prefer the range selectors on top "
+"of the dfs share list."
+msgstr ""
+
+#: addons/godfs/contents.tpl:31
+msgid "Filters"
+msgstr ""
+
+#: addons/godfs/contents.tpl:40
+msgid "Display dfs shares matching"
+msgstr ""
+
+#: addons/godfs/contents.tpl:44
+msgid "Regular expression for matching dfs share names"
+msgstr ""
+
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr ""

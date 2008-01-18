@@ -1,0 +1,152 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:959
+msgid "Open-Xchange"
+msgstr "Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+msgid "Error"
+msgstr "Erreur"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
+#, fuzzy, php-format
+msgid "Cannot connect to %s database!"
+msgstr "Impossible de se connecter au serveur de base de données !"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#, fuzzy
+msgid "Configuration error"
+msgstr "Le fichier de configuration peut être écrit"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#, fuzzy, php-format
+msgid "%s database configuration is missing!"
+msgstr "Configuration de la base de données des fax"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr ""
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:740
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:751
+#, php-format
+msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
+msgstr ""
+"La suppression du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
+#, fuzzy
+msgid "Open-Xchange account name is invalid!"
+msgstr "Compte Open Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
+#, php-format
+msgid "Saving of user/oxchange account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:862
+#, php-format
+msgid "Creating of user/oxchange account with dn '%s' failed."
+msgstr ""
+"La création du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+#, fuzzy
+msgid "Cannot save Open-Xchange account!"
+msgstr "Compte Open Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+#, fuzzy
+msgid "Open-Xchange account settings"
+msgstr "Paramètres du compte Open Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+msgid "Connectivity addon"
+msgstr "Connectivité"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:964
+msgid "My account"
+msgstr "Mon Compte"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
+msgid "OXAppointmentDays"
+msgstr "Rendez vous"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:970
+msgid "OXTaskDays"
+msgstr "Tâches"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:971
+msgid "OXTimeZone"
+msgstr "Fuseau Horaire de l'utilisateur"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid "Open-Xchange Account"
+msgstr "Compte Open-Xchange"
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no Postgresql support detected. Or the specified database can't be "
+"reached"
+msgstr ""
+"désactivé, le support pour Postgresql est manquant. Ou la base de données "
+"spécifiée ne peut pas être contactée"
+
+#: personal/connectivity/openxchange/oxchange.tpl:18
+msgid "Open-Xchange account"
+msgstr "Compte Open Xchange"
+
+#: personal/connectivity/openxchange/oxchange.tpl:29
+msgid "Remember"
+msgstr "Se souvenir"
+
+#: personal/connectivity/openxchange/oxchange.tpl:33
+msgid "Appointment Days"
+msgstr "Rendez vous"
+
+#: personal/connectivity/openxchange/oxchange.tpl:39
+#: personal/connectivity/openxchange/oxchange.tpl:49
+msgid "days"
+msgstr "jours"
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+msgid "Task Days"
+msgstr "Tâches"
+
+#: personal/connectivity/openxchange/oxchange.tpl:61
+msgid "User Information"
+msgstr "Information Utilisateur"
+
+#: personal/connectivity/openxchange/oxchange.tpl:65
+msgid "User Timezone"
+msgstr "Zone Horaire de l'utilisateur"

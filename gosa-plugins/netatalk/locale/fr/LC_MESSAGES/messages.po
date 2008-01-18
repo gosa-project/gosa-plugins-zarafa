@@ -1,0 +1,107 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/netatalk/class_netatalk.inc:36
+#: personal/netatalk/class_netatalk.inc:370
+msgid "Netatalk"
+msgstr ""
+
+#: personal/netatalk/class_netatalk.inc:37
+msgid "Manage netatalk account"
+msgstr "Créer un compte Netatalk"
+
+#: personal/netatalk/class_netatalk.inc:174
+msgid "This account has no netatalk extensions."
+msgstr "Ce compte n'a pas d'extensions netatalk."
+
+#: personal/netatalk/class_netatalk.inc:183
+msgid "Remove netatalk account"
+msgstr "Supprimer le compte netatalk"
+
+#: personal/netatalk/class_netatalk.inc:183
+msgid ""
+"This account has netatalk features enabled. You can disable them by clicking "
+"below."
+msgstr ""
+"L'extension netatalk est activée pour ce compte, vous pouvez la désactiver "
+"en cliquant sur le bouton ci-dessous."
+
+#: personal/netatalk/class_netatalk.inc:194
+#: personal/netatalk/class_netatalk.inc:196
+msgid "Create netatalk account"
+msgstr "Créer un compte netatalk"
+
+#: personal/netatalk/class_netatalk.inc:194
+msgid ""
+"This account has netatalk features disabled. You can enable them by clicking "
+"below."
+msgstr ""
+"L'extension netatalk est désactivée pour ce compte, vous pouvez l'activer en "
+"cliquant sur le bouton ci-dessous."
+
+#: personal/netatalk/class_netatalk.inc:229
+msgid "You must select a share to use."
+msgstr "Vous devez sélectionner un partage à utiliser."
+
+#: personal/netatalk/class_netatalk.inc:294
+#, php-format
+msgid "Saving of user/netatalk account with dn '%s' failed."
+msgstr ""
+"La sauvegarde de l'utilisateur/compte netatalk avec le dn '%s' à échoué."
+
+#: personal/netatalk/class_netatalk.inc:356
+#, php-format
+msgid "Removing of user/netatalk account with dn '%s' failed."
+msgstr ""
+"La suppression du compte utilisateur/netatalk avec le dn '%s' à échoué."
+
+#: personal/netatalk/class_netatalk.inc:374
+msgid "My account"
+msgstr "Mon Compte"
+
+#: personal/netatalk/class_netatalk.inc:379
+msgid "User home path"
+msgstr "Chemin du répertoire personnel"
+
+#: personal/netatalk/class_netatalk.inc:380 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Partage"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Chemin"
+
+#: personal/netatalk/main.inc:96
+msgid "Ok"
+msgstr "Ok"
+
+#: personal/netatalk/main.inc:98
+msgid "Cancel"
+msgstr "Annuler"
+
+#: personal/netatalk/main.inc:103
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
+"cette boite de dialogue"
+
+#: personal/netatalk/main.inc:104
+msgid "Edit"
+msgstr "Editer"
+
+#: personal/netatalk/main.inc:113
+msgid "Netatalk settings"
+msgstr "Configuration Netatalk"

@@ -1,0 +1,188 @@
+# Translation of messages.po to Russian
+# Valia V. Vaneeva <fattie@altlinux.ru>, 2004.
+# $Id: messages.po,v 1.61 2005/04/18 10:37:13 migor-guest Exp $
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:41+0100\n"
+"PO-Revision-Date: 2005-04-18 14:35+0300\n"
+"Last-Translator: Igor Muratov <migor@altlinux.org>\n"
+"Language-Team: ALT Linux Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: poEdit 1.3.1\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+#, fuzzy
+msgid "DFS Managment"
+msgstr "Название"
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: addons/godfs/class_dfsManagment.inc:147
+#, fuzzy, php-format
+msgid "Removing of DFS share with dn '%s' failed."
+msgstr "Удалить сервис DNS"
+
+#: addons/godfs/class_dfsManagment.inc:166
+msgid "No DFS entries found"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+#, fuzzy
+msgid "Go up one dfsshare"
+msgstr "Подразделение"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Up"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Go to dfs root"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:210
+#, fuzzy
+msgid "Root"
+msgstr "Перезагрузить"
+
+#: addons/godfs/class_dfsManagment.inc:211
+#, fuzzy
+msgid "Create new dfsshare"
+msgstr "Создание нового объекта в"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Base"
+msgstr "Ветка"
+
+#: addons/godfs/class_dfsManagment.inc:214
+#, fuzzy
+msgid "Submit department"
+msgstr "Показать подразделения"
+
+#: addons/godfs/class_dfsManagment.inc:214
+msgid "Submit"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:243
+msgid "Finish"
+msgstr "Готово"
+
+#: addons/godfs/class_dfsManagment.inc:245
+msgid "Cancel"
+msgstr "Отмена"
+
+#: addons/godfs/class_dfsgeneric.inc:102 addons/godfs/class_dfsgeneric.inc:104
+#, fuzzy
+msgid "Dfs share already exists."
+msgstr "Подразделение с таким именем уже существует."
+
+#: addons/godfs/class_dfsgeneric.inc:117
+#, fuzzy
+msgid "Required Field \"Name of dfs Share\" is not set."
+msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#: addons/godfs/class_dfsgeneric.inc:120
+#, fuzzy
+msgid "Required Field \"Description\" is not set."
+msgstr "Обязательное поле \"Описание\" не заполнено."
+
+#: addons/godfs/class_dfsgeneric.inc:123
+#, fuzzy
+msgid "Required Field \"Fileserver\" is not set."
+msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#: addons/godfs/class_dfsgeneric.inc:126
+#, fuzzy
+msgid "Required Field \"Share on fileserver\" is not set."
+msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#: addons/godfs/class_dfsgeneric.inc:129
+#, fuzzy
+msgid "Required Field \"Location\" is not set."
+msgstr "Обязательное поле \"Описание\" не заполнено."
+
+#: addons/godfs/class_dfsgeneric.inc:186
+#, fuzzy, php-format
+msgid "Saving dfs/generic with dn '%s' failed."
+msgstr "Показать подразделения"
+
+#: addons/godfs/class_dfsgeneric.inc:219
+#, fuzzy, php-format
+msgid "Removing dfs/generic with dn '%s' failed."
+msgstr "Показать подразделения"
+
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Свойства"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Подразделение"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Описание"
+
+#: addons/godfs/generic.tpl:16
+#, fuzzy
+msgid "Fileserver"
+msgstr "Сервер"
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "Служба печати"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Местоположение"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Местоположение"
+
+#: addons/godfs/contents.tpl:8
+#, fuzzy
+msgid "DFS Shares"
+msgstr "сброс"
+
+#: addons/godfs/contents.tpl:22
+msgid "Information"
+msgstr "Информация"
+
+#: addons/godfs/contents.tpl:26
+#, fuzzy
+msgid ""
+"This menu allows you to create, delete and edit selected dfs shares. Having "
+"a large numbers of dfs shares, you might prefer the range selectors on top "
+"of the dfs share list."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"подразделения. Если у вас достаточно большое количество подразделений, вы "
+"можете использовать групповое выделение."
+
+#: addons/godfs/contents.tpl:31
+msgid "Filters"
+msgstr "Фильтры"
+
+#: addons/godfs/contents.tpl:40
+#, fuzzy
+msgid "Display dfs shares matching"
+msgstr "Показать подходяшие адреса"
+
+#: addons/godfs/contents.tpl:44
+#, fuzzy
+msgid "Regular expression for matching dfs share names"
+msgstr "Регулярное выражение, соответствующее именам систем"
+
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr ""

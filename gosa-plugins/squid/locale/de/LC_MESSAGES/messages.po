@@ -1,0 +1,117 @@
+# translation of messages.po to Deutsch
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"PO-Revision-Date: 2007-06-18 15:08+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/squid/proxy.tpl:37
+#: personal/connectivity/squid/class_proxyAccount.inc:321
+msgid "Proxy account"
+msgstr "Proxy Konto"
+
+#: personal/connectivity/squid/proxy.tpl:48
+msgid "Filter unwanted content (i.e. pornographic or violence related)"
+msgstr ""
+"Filtern von unerwünschten Inhalten (z.B. pornografische oder gewalttätige "
+"Inhalte)"
+
+#: personal/connectivity/squid/proxy.tpl:58
+msgid "Limit proxy access to working time"
+msgstr "Inhaltsfilterung nur während der Arbeitszeit"
+
+#: personal/connectivity/squid/proxy.tpl:100
+#: personal/connectivity/squid/class_proxyAccount.inc:332
+msgid "Restrict proxy usage by quota"
+msgstr "Proxynutzung durch Kontingent einschränken"
+
+#: personal/connectivity/squid/proxy.tpl:115
+msgid "per"
+msgstr "pro"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:5
+#: personal/connectivity/squid/class_proxyAccount.inc:320
+msgid "Proxy"
+msgstr "Proxy"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:6
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "KB"
+msgstr "KB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "GB"
+msgstr "GB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "hour"
+msgstr "Stunde"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "day"
+msgstr "Tag"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "week"
+msgstr "Woche"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "month"
+msgstr "Monat"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:174
+#, php-format
+msgid "Removing of user/proxy account with dn '%s' failed."
+msgstr "Entfernen von Benutzer/Proxy-Konto mit dn '%s' fehlgeschlagen."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:195
+msgid "Numerical value for Quota Setting is empty."
+msgstr "Das numerische Feld der Kontingent-Einstellung ist leer."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:197
+msgid "Numerical value for Quota Setting is not valid."
+msgstr ""
+"Das numerische Feld der Kontingent-Einstellung enthält einen ungültigen Wert."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:300
+#, php-format
+msgid "Saving of user/proxy account with dn '%s' failed."
+msgstr "Speichern von Benutzert/Proxy-Konto mit dn '%s' fehlgeschlagen."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:321
+msgid "Connectivity addon"
+msgstr "Konnektivitäts-Erweiterung"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:325
+msgid "My account"
+msgstr "Mein Konto"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:330
+msgid "Filter unwanted content"
+msgstr "Filtere ungewünschten Inhalt"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:331
+msgid "Limit proxy access"
+msgstr "Beschränke Proxy-Zugriff"

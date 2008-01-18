@@ -1,0 +1,4126 @@
+# Translation of messages.po to Russian
+# Valia V. Vaneeva <fattie@altlinux.ru>, 2004.
+# $Id: messages.po,v 1.61 2005/04/18 10:37:13 migor-guest Exp $
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:43+0100\n"
+"PO-Revision-Date: 2005-04-18 14:35+0300\n"
+"Last-Translator: Igor Muratov <migor@altlinux.org>\n"
+"Language-Team: ALT Linux Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: poEdit 1.3.1\n"
+
+#: personal/environment/selectPrinterDialog.tpl:1
+#, fuzzy
+msgid "Add printer devcies"
+msgstr "Устройство печати"
+
+#: personal/environment/selectPrinterDialog.tpl:5
+#: personal/environment/selectPrinterDialog.tpl:10
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:3
+#, fuzzy
+msgid "Select printer to add"
+msgstr "Выбрать номера для добавления"
+
+#: personal/environment/selectPrinterDialog.tpl:24
+#: personal/environment/hotplugDialog.tpl:24
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:22
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:18
+msgid "Filters"
+msgstr "Фильтры"
+
+#: personal/environment/selectPrinterDialog.tpl:34
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:41
+msgid "Choose the department the search will be based on"
+msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+
+#: personal/environment/selectPrinterDialog.tpl:42
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:31
+#: admin/applications/class_divListApplication.inc:62
+#: admin/mimetypes/class_divListMimeTypes.inc:64
+#: admin/devices/class_divListDevices.inc:56
+#, fuzzy
+msgid "Select to search within subtrees"
+msgstr "Искать в поддеревьях"
+
+#: personal/environment/selectPrinterDialog.tpl:42
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:31
+#: admin/applications/class_divListApplication.inc:62
+#: admin/mimetypes/class_divListMimeTypes.inc:64
+#: admin/devices/class_divListDevices.inc:56
+#, fuzzy
+msgid "Search in subtrees"
+msgstr "Искать в поддеревьях"
+
+#: personal/environment/selectPrinterDialog.tpl:48
+#, fuzzy
+msgid "Display printers matching"
+msgstr "Показать совпадения номеров"
+
+#: personal/environment/selectPrinterDialog.tpl:53
+#, fuzzy
+msgid "Regular expression for matching printer names"
+msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#: personal/environment/selectPrinterDialog.tpl:65
+#: personal/environment/environment.tpl:225
+#: personal/environment/environment.tpl:260
+#: personal/environment/environment.tpl:308
+#: personal/environment/environment.tpl:343
+#: personal/environment/environment.tpl:376
+#: personal/environment/hotplugDialog.tpl:63
+#: admin/ogroups/goto/termgroup.tpl:28 admin/systems/goto/terminal.tpl:127
+#: admin/systems/goto/workstationStartup.tpl:47
+#: admin/systems/goto/workstationStartup.tpl:153
+#: admin/systems/goto/workstationStartup.tpl:186
+#: admin/systems/goto/workstationStartup.tpl:215
+#: admin/systems/goto/workstation.tpl:104
+#: admin/systems/goto/terminalStartup.tpl:45
+#: admin/systems/goto/terminalStartup.tpl:95
+#: admin/systems/goto/terminalStartup.tpl:124
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:67
+#: admin/systems/services/ntp/goNtpServer.tpl:18
+#: admin/systems/services/kiosk/goKioskService.tpl:10
+#: admin/systems/services/shares/goShareServer.tpl:14
+#: admin/systems/services/repository/servRepositorySetup.tpl:47
+#: admin/mimetypes/generic.tpl:108 admin/mimetypes/generic.tpl:127
+#: admin/mimetypes/generic.tpl:187 admin/groups/apps/application.tpl:60
+msgid "Add"
+msgstr "Добавить"
+
+#: personal/environment/selectPrinterDialog.tpl:66
+#: personal/environment/logonManagement.tpl:76
+#: personal/environment/main.inc:104 personal/environment/hotplugDialog.tpl:64
+#: admin/systems/goto/SelectDeviceType.tpl:45
+#: admin/systems/goto/chooser.tpl:18 admin/systems/goto/gencd.tpl:11
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:68
+#: admin/systems/services/ntp/goNtpServer.tpl:31
+#: admin/systems/services/cups/goCupsServer.tpl:7
+#: admin/systems/services/terminal/goTerminalServer.tpl:25
+#: admin/systems/services/nfs/servnfs.tpl:140
+#: admin/systems/services/kiosk/goKioskService.tpl:16
+#: admin/systems/services/syslog/goLogDBServer.tpl:25
+#: admin/systems/services/syslog/goSyslogServer.tpl:7
+#: admin/systems/services/shares/goShareServer.tpl:31
+#: admin/systems/services/repository/servRepository.tpl:8
+#: admin/systems/services/repository/servRepositorySetup.tpl:56
+#: admin/systems/services/ldap/goLdapServer.tpl:11
+#: admin/systems/ppd/remove_ppd.tpl:14
+#: admin/systems/ppd/printerPPDDialog.tpl:23 admin/applications/remove.tpl:16
+#: admin/applications/remove.tpl:20
+#: admin/applications/class_applicationManagement.inc:458
+#: admin/mimetypes/remove.tpl:16 admin/mimetypes/remove.tpl:20
+#: admin/mimetypes/class_mimetypeManagement.inc:458
+#: admin/groups/apps/application_options.tpl:13
+#: admin/devices/class_deviceManagement.inc:393 admin/devices/remove.tpl:16
+#: admin/devices/remove.tpl:20
+msgid "Cancel"
+msgstr "Отмена"
+
+#: personal/environment/environment.tpl:3
+msgid "The environment extension is currently disabled."
+msgstr ""
+
+#: personal/environment/environment.tpl:11
+#, fuzzy
+msgid "Profiles"
+msgstr "Путь к профилю"
+
+#: personal/environment/environment.tpl:14
+#: personal/environment/environment.tpl:196
+#: personal/environment/environment.tpl:277
+#, fuzzy
+msgid "Environment managment settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/environment/environment.tpl:22
+#: personal/environment/environment.tpl:52
+#, fuzzy
+msgid "Use profile managment"
+msgstr "Управление системами"
+
+#: personal/environment/environment.tpl:26
+#: personal/environment/environment.tpl:62
+#, fuzzy
+msgid "Profil path"
+msgstr "Путь к профилю"
+
+#: personal/environment/environment.tpl:33
+#: personal/environment/environment.tpl:89
+msgid "MB"
+msgstr "Мб"
+
+#: personal/environment/environment.tpl:38
+#: personal/environment/environment.tpl:100
+#: personal/environment/class_environment.inc:1755
+msgid "Cache profile localy"
+msgstr ""
+
+#: personal/environment/environment.tpl:44
+#, fuzzy
+msgid "Profile managment"
+msgstr "Управление подразделениями"
+
+#: personal/environment/environment.tpl:59
+#, fuzzy
+msgid "Profile server managment"
+msgstr "Управление подразделениями"
+
+#: personal/environment/environment.tpl:83
+#, fuzzy
+msgid "Profil quota"
+msgstr "Путь к профилю"
+
+#: personal/environment/environment.tpl:113
+#, fuzzy
+msgid "Kiosk profile settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/environment/environment.tpl:117
+#: personal/environment/environment.tpl:149
+#: personal/environment/class_environment.inc:1761
+msgid "Kiosk profile"
+msgstr ""
+
+#: personal/environment/environment.tpl:128
+#: admin/systems/goto/class_SelectDeviceType.inc:34
+#: admin/systems/services/nfs/servnfs.tpl:39
+msgid "Server"
+msgstr "Сервер"
+
+#: personal/environment/environment.tpl:136
+#, fuzzy
+msgid "Profile"
+msgstr "Путь к профилю"
+
+#: personal/environment/environment.tpl:153
+#, fuzzy
+msgid "Manage"
+msgstr "Название"
+
+#: personal/environment/environment.tpl:163
+#: personal/environment/class_environment.inc:1754
+msgid "Resolution changeable during session"
+msgstr ""
+
+#: personal/environment/environment.tpl:172
+#: personal/environment/class_environment.inc:1760
+#: admin/systems/goto/terminalService.tpl:108
+#: admin/systems/goto/workstationService.tpl:122
+msgid "Resolution"
+msgstr "Разрешение"
+
+#: personal/environment/environment.tpl:201
+#: personal/environment/class_environment.inc:1766
+#: admin/systems/goto/workstationStartup.tpl:194
+#: admin/systems/goto/class_terminalStartup.inc:571
+#: admin/systems/goto/terminalStartup.tpl:103
+#: admin/systems/goto/class_workstationStartup.inc:988
+#: admin/systems/services/shares/goShareServer.tpl:1
+#, fuzzy
+msgid "Shares"
+msgstr "сброс"
+
+#: personal/environment/environment.tpl:211
+#, fuzzy
+msgid "User used to connect to the share"
+msgstr "Выберите способ подключения к серверу терминалов"
+
+#: personal/environment/environment.tpl:214
+#, fuzzy
+msgid "Select a share"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: personal/environment/environment.tpl:222
+#, fuzzy
+msgid "Mount path"
+msgstr "Контакт"
+
+#: personal/environment/environment.tpl:227
+#: admin/systems/goto/workstationStartup.tpl:218
+#: admin/systems/goto/printer.tpl:71
+#: admin/systems/goto/terminalStartup.tpl:127
+#: admin/applications/class_applicationParameters.inc:124
+#: admin/applications/class_divListApplication.inc:161
+#: admin/mimetypes/class_divListMimeTypes.inc:182
+#: admin/devices/class_divListDevices.inc:149
+msgid "Remove"
+msgstr "Удалить"
+
+#: personal/environment/environment.tpl:235
+msgid "Logon scripts"
+msgstr ""
+
+#: personal/environment/environment.tpl:237
+#: personal/environment/logonManagement.tpl:1
+#: personal/environment/logonManagement.tpl:5
+#, fuzzy
+msgid "Logon script management"
+msgstr "Управление системами"
+
+#: personal/environment/environment.tpl:246
+#: personal/environment/environment.tpl:292
+#: personal/environment/class_environment.inc:739
+msgid "Used by all users"
+msgstr ""
+
+#: personal/environment/environment.tpl:248
+#: personal/environment/environment.tpl:294
+#: personal/environment/class_environment.inc:742
+msgid "Used by some users"
+msgstr ""
+
+#: personal/environment/environment.tpl:263 personal/environment/main.inc:113
+#: admin/systems/goto/printer.tpl:68
+#: admin/systems/services/shares/goShareServer.tpl:17
+msgid "Edit"
+msgstr "Изменить"
+
+#: personal/environment/environment.tpl:266
+#: personal/environment/environment.tpl:311
+#: personal/environment/environment.tpl:346
+#: personal/environment/environment.tpl:379
+#: personal/environment/class_environment.inc:767
+#: admin/ogroups/goto/termgroup.tpl:33 admin/systems/goto/terminal.tpl:131
+#: admin/systems/goto/workstationStartup.tpl:155
+#: admin/systems/goto/workstationStartup.tpl:189
+#: admin/systems/goto/workstation.tpl:108 admin/systems/goto/printer.tpl:102
+#: admin/systems/goto/printer.tpl:126
+#: admin/systems/goto/terminalStartup.tpl:98
+#: admin/systems/services/ntp/goNtpServer.tpl:21
+#: admin/systems/services/shares/goShareServer.tpl:20
+#: admin/systems/ppd/remove_ppd.tpl:12 admin/applications/remove.tpl:14
+#: admin/applications/remove.tpl:18 admin/mimetypes/remove.tpl:14
+#: admin/mimetypes/remove.tpl:18 admin/devices/remove.tpl:14
+#: admin/devices/remove.tpl:18
+msgid "Delete"
+msgstr "Удалить"
+
+#: personal/environment/environment.tpl:282
+#: personal/environment/class_environment.inc:1765
+#, fuzzy
+msgid "Hotplug devices"
+msgstr "Дисковод"
+
+#: personal/environment/environment.tpl:284
+#, fuzzy
+msgid "Hotplug device settings"
+msgstr "Дисковод"
+
+#: personal/environment/environment.tpl:327
+#: personal/environment/environment.tpl:363
+#: admin/systems/goto/class_printGeneric.inc:903
+msgid "Printer"
+msgstr "Принтер"
+
+#: personal/environment/environment.tpl:331
+msgid ""
+"Using this option will overwrite the complete printer settings for all "
+"currently edited objects!"
+msgstr ""
+
+#: personal/environment/environment.tpl:332
+#: personal/environment/environment.tpl:365
+#, fuzzy
+msgid "Printer settings"
+msgstr "Настройки телефона"
+
+#: personal/environment/environment.tpl:349
+#: personal/environment/environment.tpl:382
+#, fuzzy
+msgid "Toggle admin"
+msgstr "Личная информация"
+
+#: personal/environment/environment.tpl:352
+#: personal/environment/environment.tpl:385
+#, fuzzy
+msgid "Toggle default"
+msgstr "по умолчанию"
+
+#: personal/environment/class_logonManagementDialog.inc:108
+msgid "Specified name should only consist of upper-/lowercase characters."
+msgstr ""
+
+#: personal/environment/class_logonManagementDialog.inc:112
+#, fuzzy
+msgid "Please specify a valid script name."
+msgstr "Введите корректное имя пользователя!"
+
+#: personal/environment/class_logonManagementDialog.inc:116
+#, fuzzy
+msgid "Specified description contains invalid characters."
+msgstr "Неправильное указание таймаута '%s'"
+
+#: personal/environment/class_environment.inc:12
+#: personal/environment/class_environment.inc:1741
+msgid "Environment"
+msgstr "Окружение"
+
+#: personal/environment/class_environment.inc:13
+#: admin/applications/class_applicationManagement.inc:25
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: personal/environment/class_environment.inc:142
+#: personal/environment/class_environment.inc:290
+#: personal/environment/class_environment.inc:335
+#: personal/environment/class_environment.inc:339
+#: admin/ogroups/goto/termgroup.tpl:2 admin/systems/ppd/remove_ppd.tpl:2
+#: admin/applications/remove.tpl:2 admin/mimetypes/remove.tpl:2
+#: admin/devices/remove.tpl:2
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: personal/environment/class_environment.inc:142
+#, php-format
+msgid "Device '%s' is not available anymore. It will be removed!"
+msgstr ""
+
+#: personal/environment/class_environment.inc:215
+#, fuzzy
+msgid "auto"
+msgstr "Отношение"
+
+#: personal/environment/class_environment.inc:237
+#, fuzzy
+msgid "Configuration error"
+msgstr "Настроить"
+
+#: personal/environment/class_environment.inc:237
+#, fuzzy, php-format
+msgid "Cannot open file '%s'!"
+msgstr "Удалить"
+
+#: personal/environment/class_environment.inc:253
+#: personal/environment/class_environment.inc:254
+#: admin/systems/goto/class_terminalGeneric.inc:120
+msgid "disabled"
+msgstr "отключен"
+
+#: personal/environment/class_environment.inc:290
+#, php-format
+msgid ""
+"Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk "
+"profile will be disabled!"
+msgstr ""
+
+#: personal/environment/class_environment.inc:335
+#, php-format
+msgid "Profile server '%s' is not available anymore. Switched to server '%s'."
+msgstr ""
+
+#: personal/environment/class_environment.inc:339
+#, php-format
+msgid ""
+"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgstr ""
+
+#: personal/environment/class_environment.inc:408
+#: personal/environment/class_environment.inc:446
+#, fuzzy
+msgid "Remove environment extension"
+msgstr "Удалить параметры"
+
+#: personal/environment/class_environment.inc:409
+#: personal/environment/class_environment.inc:447
+#, fuzzy
+msgid "Environment extension enabled. You can disable it by clicking below."
+msgstr ""
+"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+"ниже."
+
+#: personal/environment/class_environment.inc:418
+#: personal/environment/class_environment.inc:423
+#: personal/environment/class_environment.inc:452
+#: personal/environment/class_environment.inc:457
+msgid "Add environment extension"
+msgstr ""
+
+#: personal/environment/class_environment.inc:419
+#: personal/environment/class_environment.inc:453
+#, fuzzy
+msgid "Environment extension disabled. You can enable it by clicking below."
+msgstr ""
+"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+"ниже."
+
+#: personal/environment/class_environment.inc:424
+#: personal/environment/class_environment.inc:458
+#, fuzzy
+msgid ""
+"Environment extension disabled. You have to setup a posix account before you "
+"can enable this feature."
+msgstr ""
+"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+"ниже."
+
+#: personal/environment/class_environment.inc:559
+#, fuzzy
+msgid "Permission error"
+msgstr "Права для членов группы"
+
+#: personal/environment/class_environment.inc:559
+#, fuzzy
+msgid "You have no permission to modify logon scripts!"
+msgstr "У вас недостаточно прав для удаления этого стоп-листа."
+
+#: personal/environment/class_environment.inc:567
+#: personal/environment/class_environment.inc:649
+#: personal/environment/class_environment.inc:651
+#: personal/environment/class_environment.inc:653
+#: personal/environment/class_environment.inc:664
+#: personal/environment/class_environment.inc:815
+#: personal/environment/class_environment.inc:866
+#: personal/environment/class_environment.inc:962
+msgid "Error"
+msgstr ""
+
+#: personal/environment/class_environment.inc:649
+#, fuzzy
+msgid "Please select a valid share!"
+msgstr "Введите корректный серийный номер"
+
+#: personal/environment/class_environment.inc:651
+#: personal/environment/class_environment.inc:664
+#, fuzzy
+msgid "Please specify a valid mount point!"
+msgstr "Введите корректное имя пользователя!"
+
+#: personal/environment/class_environment.inc:653
+#, fuzzy
+msgid "You cannot use spaces in the mount path!"
+msgstr "Вам не разрешено менять пароль."
+
+#: personal/environment/class_environment.inc:754
+#: personal/environment/class_environment.inc:755
+#: personal/environment/class_environment.inc:763
+#: personal/environment/class_environment.inc:764
+#, fuzzy
+msgid "Reset password hash"
+msgstr "Изменить пароль"
+
+#: personal/environment/class_environment.inc:768
+#, fuzzy
+msgid "Delete share entry"
+msgstr "Удалить"
+
+#: personal/environment/class_environment.inc:962
+msgid "Cannot set default printer flag for groups!"
+msgstr ""
+
+#: personal/environment/class_environment.inc:1032
+#, fuzzy, php-format
+msgid "Removing of user/environment account with dn '%s' failed."
+msgstr "Удалить параметры"
+
+#: personal/environment/class_environment.inc:1114
+#: personal/environment/class_environment.inc:1686
+#, fuzzy
+msgid "Please set a valid profile quota size."
+msgstr "Пожалуйста, укажите корректную кадровую синхронизацию."
+
+#: personal/environment/class_environment.inc:1121
+msgid ""
+"You need to setup a valid posix extension in order to enable evironment "
+"features."
+msgstr ""
+
+#: personal/environment/class_environment.inc:1289
+#, fuzzy, php-format
+msgid "Saving of user/environment account with dn '%s' failed."
+msgstr "Создать телефонный аккаунт"
+
+#: personal/environment/class_environment.inc:1302
+#, fuzzy
+msgid "group share"
+msgstr "группы"
+
+#: personal/environment/class_environment.inc:1338
+#, fuzzy
+msgid "Administrator"
+msgstr "Администрирование"
+
+#: personal/environment/class_environment.inc:1343
+#: personal/environment/class_environment.inc:1763
+msgid "Default printer"
+msgstr "Принтер по умолчанию"
+
+#: personal/environment/class_environment.inc:1742
+#, fuzzy
+msgid "Environment settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/environment/class_environment.inc:1746
+msgid "My account"
+msgstr "Моя учетная запись"
+
+#: personal/environment/class_environment.inc:1750
+msgid "Command to extend the list of possible screen resolutions"
+msgstr ""
+
+#: personal/environment/class_environment.inc:1757
+#, fuzzy
+msgid "Profile quota"
+msgstr "Путь к профилю"
+
+#: personal/environment/class_environment.inc:1758
+#, fuzzy
+msgid "Profile server"
+msgstr "Сервер для хранения запросов и временных файлов"
+
+#: personal/environment/class_environment.inc:1764
+#: personal/environment/logonManagement.tpl:56
+msgid "Logon script"
+msgstr ""
+
+#: personal/environment/logonManagement.tpl:8
+#, fuzzy
+msgid "Logon script settings"
+msgstr "Атрибуты UNIX"
+
+#: personal/environment/logonManagement.tpl:10
+#, fuzzy
+msgid "Skript name"
+msgstr "Список"
+
+#: personal/environment/logonManagement.tpl:17
+#: admin/systems/goto/printer.tpl:16 admin/systems/goto/ArpNewDevice.tpl:17
+#: admin/systems/goto/class_printGeneric.inc:908
+#: admin/systems/services/nfs/servnfs.tpl:19
+#: admin/systems/services/shares/class_goShareServer.inc:396
+#: admin/applications/class_applicationGeneric.inc:556
+#: admin/applications/generic.tpl:33
+#: admin/mimetypes/class_mimetypeGeneric.inc:724
+#: admin/mimetypes/paste_generic.tpl:21 admin/mimetypes/generic.tpl:34
+#: admin/devices/deviceGeneric.tpl:25
+msgid "Description"
+msgstr "Описание"
+
+#: personal/environment/logonManagement.tpl:24
+#, fuzzy
+msgid "Priority"
+msgstr "Порт"
+
+#: personal/environment/logonManagement.tpl:34
+msgid "Logon script flags"
+msgstr ""
+
+#: personal/environment/logonManagement.tpl:38
+msgid "Last script"
+msgstr ""
+
+#: personal/environment/logonManagement.tpl:44
+msgid "Script can be replaced by user"
+msgstr ""
+
+#: personal/environment/logonManagement.tpl:55
+#: admin/applications/generic.tpl:130
+#, fuzzy
+msgid "Script"
+msgstr "Путь к сценариям"
+
+#: personal/environment/logonManagement.tpl:65
+#: admin/applications/generic.tpl:135
+msgid "Import"
+msgstr "Импортировать"
+
+#: personal/environment/logonManagement.tpl:75
+#: admin/systems/services/repository/servRepositorySetup.tpl:54
+#: admin/systems/ppd/printerPPDDialog.tpl:22
+#: admin/applications/class_applicationManagement.inc:455
+#: admin/mimetypes/class_mimetypeManagement.inc:455
+#: admin/groups/apps/application_options.tpl:11
+#: admin/devices/class_deviceManagement.inc:390
+msgid "Apply"
+msgstr "Применить"
+
+#: personal/environment/class_selectPrinterDialog.inc:110
+#: admin/systems/goto/class_selectUserToPrinterDialog.inc:144
+#, fuzzy
+msgid "Please select a printer or press cancel."
+msgstr "Введите корректный номер телефона!"
+
+#: personal/environment/main.inc:102
+#: admin/applications/class_applicationManagement.inc:452
+#: admin/mimetypes/class_mimetypeManagement.inc:452
+#: admin/devices/class_deviceManagement.inc:387
+msgid "Ok"
+msgstr ""
+
+#: personal/environment/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
+
+#: personal/environment/main.inc:121
+#, fuzzy
+msgid "User environment settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/environment/hotplugDialog.tpl:1
+#, fuzzy
+msgid "Add hotplug devices"
+msgstr "Дисковод"
+
+#: personal/environment/hotplugDialog.tpl:5
+#, fuzzy
+msgid "Hotplug management"
+msgstr "Управление подразделениями"
+
+#: personal/environment/hotplugDialog.tpl:10
+#, fuzzy
+msgid "Select hotplug device to add"
+msgstr "Удалить"
+
+#: personal/environment/hotplugDialog.tpl:34
+#, fuzzy
+msgid "Choose the department the search will be based    on"
+msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+
+#: personal/environment/hotplugDialog.tpl:43
+#: admin/applications/class_divListApplication.inc:65
+msgid "Display users matching"
+msgstr "Фильтр"
+
+#: personal/environment/hotplugDialog.tpl:48
+#, fuzzy
+msgid "Regular expression for        matching hotplugs"
+msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#: admin/ogroups/goto/termgroup.tpl:2
+msgid ""
+"Actions you choose here influence all systems in this object group. "
+"Additionally, all values editable here can be inherited by the clients "
+"assigned to this object group."
+msgstr ""
+
+#: admin/ogroups/goto/termgroup.tpl:6
+#: admin/systems/goto/class_workstationGeneric.inc:621
+#: admin/systems/goto/class_printGeneric.inc:897
+#: admin/applications/class_applicationGeneric.inc:545
+#: admin/mimetypes/class_mimetypeGeneric.inc:713
+#: admin/mimetypes/paste_generic.tpl:4 admin/mimetypes/generic.tpl:4
+#: admin/devices/class_deviceGeneric.inc:240
+msgid "Generic"
+msgstr "Общее"
+
+#: admin/ogroups/goto/termgroup.tpl:14 admin/systems/goto/terminal.tpl:113
+#: admin/systems/goto/workstation.tpl:90
+msgid "NTP server"
+msgstr "Сервер NTP"
+
+#: admin/ogroups/goto/termgroup.tpl:17 admin/systems/goto/terminal.tpl:116
+#: admin/systems/goto/workstation.tpl:93
+msgid "Choose server to use for synchronizing time"
+msgstr "Выберите сервер для синхронизации времени"
+
+#: admin/ogroups/goto/termgroup.tpl:47
+#: admin/ogroups/goto/class_termgroup.inc:395
+#: admin/systems/goto/terminal.tpl:43 admin/systems/goto/workstation.tpl:50
+#: admin/systems/goto/class_terminalGeneric.inc:645
+msgid "Mode"
+msgstr "Режим"
+
+#: admin/ogroups/goto/termgroup.tpl:50 admin/systems/goto/terminal.tpl:46
+#: admin/systems/goto/workstation.tpl:53
+msgid "Select terminal mode"
+msgstr "Выберите режим терминала"
+
+#: admin/ogroups/goto/termgroup.tpl:58
+#: admin/ogroups/goto/class_termgroup.inc:396
+#: admin/systems/goto/terminal.tpl:53 admin/systems/goto/workstation.tpl:60
+#: admin/systems/goto/class_workstationGeneric.inc:634
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+msgid "Syslog server"
+msgstr "Сервер системных журналов"
+
+#: admin/ogroups/goto/termgroup.tpl:61 admin/systems/goto/terminal.tpl:56
+#: admin/systems/goto/workstation.tpl:63
+msgid "Choose server to use for logging"
+msgstr "Выберите сервер для ведения системных журналов"
+
+#: admin/ogroups/goto/termgroup.tpl:88 admin/systems/goto/terminal.tpl:150
+#: admin/systems/goto/workstation.tpl:125
+msgid "Action"
+msgstr "Действие"
+
+#: admin/ogroups/goto/termgroup.tpl:93 admin/systems/goto/terminal.tpl:155
+#: admin/systems/goto/workstation.tpl:130
+msgid "Select action to execute for this terminal"
+msgstr "Выберите действие, которое нужно выполнить на этом терминале"
+
+#: admin/ogroups/goto/termgroup.tpl:101 admin/systems/goto/terminal.tpl:163
+#: admin/systems/goto/workstation.tpl:137
+#: admin/applications/class_applicationGeneric.inc:557
+#: admin/applications/generic.tpl:24
+msgid "Execute"
+msgstr "Выполнить"
+
+#: admin/ogroups/goto/class_termgroup.inc:42
+#: admin/systems/goto/class_workstationGeneric.inc:126
+#, fuzzy
+msgid "Activated"
+msgstr "Личный"
+
+#: admin/ogroups/goto/class_termgroup.inc:43
+#: admin/systems/goto/class_workstationGeneric.inc:127
+msgid "Locked"
+msgstr ""
+
+#: admin/ogroups/goto/class_termgroup.inc:108
+msgid "You have no permissions to create a workstation on this 'Base'."
+msgstr "У вас недостаточно прав для создания рабочей станции в этой ветке."
+
+#: admin/ogroups/goto/class_termgroup.inc:113
+msgid "There must be at least one NTP server selected."
+msgstr ""
+
+#: admin/ogroups/goto/class_termgroup.inc:168
+#, php-format
+msgid "Setting action state (FAIstate) failed for object '%s', value was '%s'."
+msgstr ""
+
+#: admin/ogroups/goto/class_termgroup.inc:204
+#: admin/systems/goto/class_workstationGeneric.inc:186
+#, fuzzy
+msgid "No ACTIONCMD definition found in your gosa.conf"
+msgstr "Определение HALTCMD в вашем файле gosa.conf не найдено"
+
+#: admin/ogroups/goto/class_termgroup.inc:208
+#: admin/systems/goto/class_terminalGeneric.inc:214
+#: admin/systems/goto/class_terminalGeneric.inc:226
+#: admin/systems/goto/class_terminalGeneric.inc:238
+#: admin/systems/goto/class_workstationGeneric.inc:190
+#, php-format
+msgid "Execution of '%s' failed!"
+msgstr "Ошибка при выполнении \"%s\"!"
+
+#: admin/ogroups/goto/class_termgroup.inc:247
+#: admin/systems/goto/class_workstationGeneric.inc:221
+#, fuzzy, php-format
+msgid "Saving of system workstation/generic (FAIstate) with dn '%s' failed."
+msgstr "Шаблон рабочей станции"
+
+#: admin/ogroups/goto/class_termgroup.inc:294
+#: admin/systems/goto/class_terminalGeneric.inc:316
+#: admin/systems/goto/class_workstationGeneric.inc:307
+msgid "Switch off"
+msgstr "Выключить"
+
+#: admin/ogroups/goto/class_termgroup.inc:294
+#: admin/systems/goto/class_terminalGeneric.inc:317
+#: admin/systems/goto/class_workstationGeneric.inc:307
+msgid "Reboot"
+msgstr "Перезагрузить"
+
+#: admin/ogroups/goto/class_termgroup.inc:295
+#: admin/systems/goto/class_workstationGeneric.inc:308
+#, fuzzy
+msgid "Instant update"
+msgstr "Создать телефонный аккаунт"
+
+#: admin/ogroups/goto/class_termgroup.inc:296
+#: admin/systems/goto/class_workstationGeneric.inc:309
+#: admin/systems/goto/class_workstationGeneric.inc:318
+#, fuzzy
+msgid "Scheduled update"
+msgstr "Выберите режим терминала"
+
+#: admin/ogroups/goto/class_termgroup.inc:297
+#: admin/systems/goto/class_workstationGeneric.inc:310
+#: admin/systems/goto/class_workstationGeneric.inc:317
+msgid "Reinstall"
+msgstr ""
+
+#: admin/ogroups/goto/class_termgroup.inc:298
+#: admin/systems/goto/class_workstationGeneric.inc:311
+#, fuzzy
+msgid "Rescan hardware"
+msgstr "Телефонное оборудование"
+
+#: admin/ogroups/goto/class_termgroup.inc:299
+#: admin/systems/goto/class_terminalGeneric.inc:318
+#: admin/systems/goto/class_terminalGeneric.inc:322
+#: admin/systems/goto/class_workstationGeneric.inc:312
+#: admin/systems/goto/class_workstationGeneric.inc:319
+#, fuzzy
+msgid "Memory test"
+msgstr "Память"
+
+#: admin/ogroups/goto/class_termgroup.inc:300
+#: admin/systems/goto/class_terminalGeneric.inc:319
+#: admin/systems/goto/class_terminalGeneric.inc:323
+#: admin/systems/goto/class_workstationGeneric.inc:314
+#: admin/systems/goto/class_workstationGeneric.inc:321
+#, fuzzy
+msgid "System analysis"
+msgstr "Системные журналы"
+
+#: admin/ogroups/goto/class_termgroup.inc:380
+#, fuzzy
+msgid "Saving workstation failed"
+msgstr "Приложение"
+
+#: admin/ogroups/goto/class_termgroup.inc:387
+#, fuzzy
+msgid "System"
+msgstr "Системы"
+
+#: admin/ogroups/goto/class_termgroup.inc:388
+#, fuzzy
+msgid "System group"
+msgstr "Состояние системы"
+
+#: admin/ogroups/goto/class_termgroup.inc:397
+#: admin/systems/goto/class_terminalGeneric.inc:653
+#: admin/systems/goto/class_workstationGeneric.inc:637
+#, fuzzy
+msgid "Action flag"
+msgstr "Действие"
+
+#: admin/ogroups/goto/class_termgroup.inc:398
+#: admin/systems/goto/class_workstationGeneric.inc:635
+#, fuzzy
+msgid "Ntp server"
+msgstr "Сервер NTP"
+
+#: admin/systems/goto/terminal.tpl:1 admin/systems/goto/workstation.tpl:1
+msgid "Properties"
+msgstr "Свойства"
+
+#: admin/systems/goto/terminal.tpl:8
+msgid "Terminal template"
+msgstr "Шаблон терминала"
+
+#: admin/systems/goto/terminal.tpl:10
+msgid "Terminal name"
+msgstr "Терминал"
+
+#: admin/systems/goto/terminal.tpl:19 admin/systems/goto/workstation.tpl:27
+#: admin/systems/goto/printer.tpl:27
+#: admin/systems/goto/class_terminalGeneric.inc:650
+#: admin/systems/goto/class_workstationGeneric.inc:632
+#: admin/systems/goto/class_printGeneric.inc:907
+#: admin/applications/class_applicationGeneric.inc:555
+#: admin/applications/generic.tpl:42
+#: admin/applications/class_divListApplication.inc:143
+#: admin/mimetypes/class_mimetypeGeneric.inc:725
+#: admin/mimetypes/class_divListMimeTypes.inc:164
+#: admin/mimetypes/generic.tpl:44 admin/devices/deviceGeneric.tpl:9
+#: admin/devices/class_divListDevices.inc:131
+msgid "Base"
+msgstr "Ветка"
+
+#: admin/systems/goto/terminal.tpl:23 admin/systems/goto/workstation.tpl:30
+msgid "Choose subtree to place group in"
+msgstr "Выберите ветку для группы"
+
+#: admin/systems/goto/terminal.tpl:28 admin/systems/goto/workstation.tpl:35
+#: admin/systems/goto/printer.tpl:35 admin/applications/generic.tpl:52
+#: admin/mimetypes/generic.tpl:53
+#, fuzzy
+msgid "Select a base"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: admin/systems/goto/terminal.tpl:37 admin/systems/goto/workstation.tpl:44
+#, fuzzy
+msgid "Inherit all"
+msgstr "Отчество"
+
+#: admin/systems/goto/terminal.tpl:72
+#: admin/systems/goto/class_terminalGeneric.inc:646
+msgid "Root server"
+msgstr "Основной сервер"
+
+#: admin/systems/goto/terminal.tpl:75
+msgid "Select NFS root filesystem to use"
+msgstr "Выберите корневую файловую систему NFS"
+
+#: admin/systems/goto/terminal.tpl:82
+#: admin/systems/goto/class_terminalGeneric.inc:647
+msgid "Swap server"
+msgstr "Сервер подкачки"
+
+#: admin/systems/goto/terminal.tpl:85
+msgid "Choose NFS filesystem to place swap files on"
+msgstr "Выберите файловую систему NFS для файлов подкачки"
+
+#: admin/systems/goto/terminal.tpl:105 admin/systems/goto/terminal.tpl:108
+#: admin/systems/goto/workstation.tpl:82 admin/systems/goto/workstation.tpl:85
+msgid "Inherit time server attributes"
+msgstr ""
+
+#: admin/systems/goto/workstationStartup.tpl:4
+#: admin/systems/goto/terminalStartup.tpl:1
+msgid "Boot parameters"
+msgstr "Параметры загрузки"
+
+#: admin/systems/goto/workstationStartup.tpl:8
+#: admin/systems/goto/class_terminalStartup.inc:573
+#: admin/systems/goto/terminalStartup.tpl:8
+#: admin/systems/goto/class_workstationStartup.inc:984
+msgid "Boot kernel"
+msgstr "Ядро для загрузки"
+
+#: admin/systems/goto/workstationStartup.tpl:18
+#: admin/systems/goto/terminalStartup.tpl:19
+msgid "Custom options"
+msgstr "Дополнительные параметры"
+
+#: admin/systems/goto/workstationStartup.tpl:22
+#: admin/systems/goto/terminalStartup.tpl:23
+msgid ""
+"Enter any parameters that should be passed to the kernel as append line "
+"during bootup"
+msgstr ""
+"Введите любые дополнительные параметры, которые должны передаваться ядру во "
+"время загрузки"
+
+#: admin/systems/goto/workstationStartup.tpl:27
+#: admin/systems/goto/terminalStartup.tpl:27
+msgid "LDAP server"
+msgstr "LDAP-сервер"
+
+#: admin/systems/goto/workstationStartup.tpl:32
+#: admin/systems/goto/terminalStartup.tpl:31
+#, fuzzy
+msgid "inherit from group"
+msgstr "Список групп"
+
+#: admin/systems/goto/workstationStartup.tpl:34
+#: admin/systems/goto/terminalStartup.tpl:33
+#, fuzzy
+msgid "Reload"
+msgstr "чтение"
+
+#: admin/systems/goto/workstationStartup.tpl:68
+#: admin/systems/goto/workstationStartup.tpl:104
+#, fuzzy
+msgid "FAI server"
+msgstr "LDAP-сервер"
+
+#: admin/systems/goto/workstationStartup.tpl:72
+#: admin/systems/goto/workstationStartup.tpl:108
+#: admin/systems/services/repository/servRepositorySetup.tpl:19
+#: admin/systems/services/repository/class_divListRepositories.inc:23
+#: admin/groups/apps/class_groupApplication.inc:1242
+#, fuzzy
+msgid "Release"
+msgstr "Набор правил"
+
+#: admin/systems/goto/workstationStartup.tpl:94
+#: admin/systems/goto/workstationStartup.tpl:139
+#, fuzzy
+msgid "Assigned FAI classes"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/goto/workstationStartup.tpl:123
+#, fuzzy
+msgid "set"
+msgstr "сброс"
+
+#: admin/systems/goto/workstationStartup.tpl:160
+msgid ""
+"FAI Object assignment disabled. You can't use this feature until FAI is "
+"activated."
+msgstr ""
+
+#: admin/systems/goto/workstationStartup.tpl:173
+#: admin/systems/goto/terminalStartup.tpl:82
+msgid "Kernel modules (format: name parameters)"
+msgstr "Модули ядра (формат: имя параметры)"
+
+#: admin/systems/goto/workstationStartup.tpl:176
+#: admin/systems/goto/terminalStartup.tpl:85
+msgid "Add additional modules to load on startup"
+msgstr ""
+"Укажите дополнительные модули, которые должны загружаться при запуске системы"
+
+#: admin/systems/goto/workstationStartup.tpl:212
+#: admin/systems/goto/terminalStartup.tpl:121
+#, fuzzy
+msgid "Mountpoint"
+msgstr "Мониторинг"
+
+#: admin/systems/goto/SelectDeviceType.tpl:3
+msgid ""
+"This is a new system which currently has no system type defined. Please "
+"choose a system type for this entry and press the 'continue' button. If this "
+"system should be added to a group of system settings, specify the preferred "
+"object group below."
+msgstr ""
+
+#: admin/systems/goto/SelectDeviceType.tpl:9
+msgid ""
+"Please select a system type and an optional bundle of predefined settings to "
+"be inherited."
+msgstr ""
+
+#: admin/systems/goto/SelectDeviceType.tpl:20
+#, fuzzy
+msgid "System type"
+msgstr "Системы"
+
+#: admin/systems/goto/SelectDeviceType.tpl:21
+#, fuzzy
+msgid "Choose a system type"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/goto/SelectDeviceType.tpl:32
+#, fuzzy
+msgid "Choose an object group as template"
+msgstr "Объект группы"
+
+#: admin/systems/goto/SelectDeviceType.tpl:33
+#, fuzzy
+msgid "Choose an object group"
+msgstr "Объект группы"
+
+#: admin/systems/goto/SelectDeviceType.tpl:44
+msgid "Continue"
+msgstr "Продолжить"
+
+#: admin/systems/goto/chooser.tpl:1
+msgid "Choose the kind of system component you want to create"
+msgstr "Выберите тип системного компонента который желаете создать"
+
+#: admin/systems/goto/chooser.tpl:4
+msgid ""
+"Linux terminals and workstations are autocreated on bootup. For this reason "
+"you're only be able to create templates for a specific tree. Servers are "
+"normally automatically added too, but in some special cases you may need to "
+"create a faked server entry to provide GOsa with some informations. Other "
+"network components may be used for Nagios setups to create component "
+"dependencies."
+msgstr ""
+"Терминалы и рабочие станцие Linux были созданы автоматически. Поэтому вам "
+"необходимо только создать шаблоны для нужного подразделения. Сервера обычно "
+"добавляются тоже, но в отдельных случаях вам может понадобиться "
+"'виртуальный' сервер для описания обязательных сервисов. Прочие сетевые "
+"компоненты могут быть использованы при установке Nagios для создания "
+"межкомпонентных зависимостей."
+
+#: admin/systems/goto/chooser.tpl:7
+msgid "Linux thin client template"
+msgstr "Шаблон тонкого клиента Linux"
+
+#: admin/systems/goto/chooser.tpl:8
+msgid "Linux workstation template"
+msgstr "Шаблон рабочей станции Linux"
+
+#: admin/systems/goto/chooser.tpl:9
+msgid "Linux Server"
+msgstr "Сервер Linux"
+
+#: admin/systems/goto/chooser.tpl:10
+msgid "Windows workstation"
+msgstr "Рабочая станция Windows"
+
+#: admin/systems/goto/chooser.tpl:11
+msgid "Network printer"
+msgstr "Сетевой принтер"
+
+#: admin/systems/goto/chooser.tpl:12
+msgid "Phone"
+msgstr "Телефон"
+
+#: admin/systems/goto/chooser.tpl:13
+msgid "Other network component"
+msgstr "Прочие сетевые компоненты"
+
+#: admin/systems/goto/chooser.tpl:16
+#: admin/applications/class_divListApplication.inc:150
+#: admin/mimetypes/class_divListMimeTypes.inc:171
+#: admin/devices/class_divListDevices.inc:138
+msgid "Create"
+msgstr "Создать"
+
+#: admin/systems/goto/class_terminalStartup.inc:45
+#: admin/systems/goto/class_terminalStartup.inc:154
+#: admin/systems/goto/class_workstationService.inc:198
+#: admin/systems/goto/class_workstationService.inc:201
+#: admin/systems/goto/class_workstationService.inc:204
+#: admin/systems/goto/class_workstationService.inc:207
+#: admin/systems/goto/class_workstationService.inc:210
+#: admin/systems/goto/class_workstationService.inc:213
+#: admin/systems/goto/class_workstationService.inc:216
+#: admin/systems/goto/class_workstationService.inc:227
+#: admin/systems/goto/class_workstationService.inc:228
+#: admin/systems/goto/class_workstationService.inc:229
+#: admin/systems/goto/class_workstationService.inc:230
+#: admin/systems/goto/class_workstationService.inc:231
+#: admin/systems/goto/class_workstationService.inc:232
+#: admin/systems/goto/class_workstationService.inc:233
+#: admin/systems/goto/class_terminalGeneric.inc:137
+#: admin/systems/goto/class_terminalGeneric.inc:335
+#: admin/systems/goto/class_workstationStartup.inc:189
+#: admin/systems/goto/class_workstationStartup.inc:219
+#: admin/systems/goto/class_terminalService.inc:74
+#: admin/systems/goto/class_terminalService.inc:102
+#: admin/systems/goto/class_terminalService.inc:108
+#: admin/systems/goto/class_terminalService.inc:118
+#: admin/systems/goto/class_terminalService.inc:119
+#: admin/systems/goto/class_terminalService.inc:121
+#: admin/systems/goto/class_terminalService.inc:125
+#: admin/systems/goto/class_terminalService.inc:216
+#: admin/systems/goto/class_terminalService.inc:219
+#: admin/systems/goto/class_terminalService.inc:222
+#: admin/systems/goto/class_terminalService.inc:225
+#: admin/systems/goto/class_terminalService.inc:228
+#: admin/systems/goto/class_terminalService.inc:231
+#: admin/systems/goto/class_terminalService.inc:234
+#: admin/systems/goto/class_workstationGeneric.inc:142
+msgid "inherited"
+msgstr ""
+
+#: admin/systems/goto/class_terminalStartup.inc:100
+#: admin/systems/goto/class_workstationStartup.inc:270
+#, fuzzy, php-format
+msgid ""
+"Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to "
+"exist."
+msgstr ""
+"Не удается найти команду \"%s\", указанную в поле POSTCREATE модуля \"%s\"."
+
+#: admin/systems/goto/class_terminalStartup.inc:179
+#: admin/systems/goto/class_terminalInfo.inc:73
+#: admin/systems/goto/class_terminalGeneric.inc:278
+#: admin/systems/goto/class_workstationStartup.inc:335
+#: admin/systems/goto/class_terminalService.inc:264
+msgid "This 'dn' has no terminal features."
+msgstr "Это DN не соответствует терминалу."
+
+#: admin/systems/goto/class_terminalStartup.inc:221
+#: admin/systems/goto/class_workstationStartup.inc:482
+#, fuzzy
+msgid "You must specify a valid mount point."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/systems/goto/class_terminalStartup.inc:484
+#, fuzzy, php-format
+msgid "Saving of system terminal/startup with dn '%s' failed."
+msgstr "Почтовые настройки пользователя"
+
+#: admin/systems/goto/class_terminalStartup.inc:561
+#: admin/systems/goto/class_workstationStartup.inc:974
+msgid "Startup"
+msgstr "Запуск"
+
+#: admin/systems/goto/class_terminalStartup.inc:562
+#, fuzzy
+msgid "Terminal startup"
+msgstr "Шаблон терминала"
+
+#: admin/systems/goto/class_terminalStartup.inc:570
+#: admin/systems/goto/class_workstationStartup.inc:983
+#, fuzzy
+msgid "Ldap server"
+msgstr "Сервер подкачки"
+
+#: admin/systems/goto/class_terminalStartup.inc:572
+#: admin/systems/goto/class_workstationStartup.inc:987
+#, fuzzy
+msgid "Kernel modules"
+msgstr "Изменить параметры"
+
+#: admin/systems/goto/class_terminalStartup.inc:574
+#: admin/systems/goto/class_workstationStartup.inc:985
+#, fuzzy
+msgid "Kernel parameter"
+msgstr "Изменить параметры"
+
+#: admin/systems/goto/workstation.tpl:8
+msgid "Workstation template"
+msgstr "Шаблон рабочей станции"
+
+#: admin/systems/goto/workstation.tpl:10
+#: admin/systems/goto/class_workstationGeneric.inc:630
+msgid "Workstation name"
+msgstr "Имя рабочий станции"
+
+#: admin/systems/goto/workstation.tpl:19
+#: admin/systems/goto/class_workstationGeneric.inc:631
+#: admin/systems/goto/class_printGeneric.inc:909
+msgid "Location"
+msgstr "Местоположение"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:47
+#, fuzzy
+msgid "Please specify a valid dns name."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/systems/goto/class_ArpNewDevice.inc:69
+msgid ""
+"Could not remove arp-alert device after writing dns and dhcp configuration."
+msgstr ""
+
+#: admin/systems/goto/terminalService.tpl:4
+#: admin/systems/goto/workstationService.tpl:4
+msgid "Keyboard"
+msgstr "Клавиатура"
+
+#: admin/systems/goto/terminalService.tpl:7
+#: admin/systems/goto/terminalService.tpl:254
+#: admin/systems/goto/workstationService.tpl:7
+#: admin/systems/ppd/printerPPDDialog.tpl:5
+msgid "Model"
+msgstr "Модель"
+
+#: admin/systems/goto/terminalService.tpl:10
+#: admin/systems/goto/workstationService.tpl:11
+msgid "Choose keyboard model"
+msgstr "Выберите модель клавиатуры"
+
+#: admin/systems/goto/terminalService.tpl:17
+#: admin/systems/goto/workstationService.tpl:19
+msgid "Layout"
+msgstr "Раскладка"
+
+#: admin/systems/goto/terminalService.tpl:20
+#: admin/systems/goto/workstationService.tpl:23
+msgid "Choose keyboard layout"
+msgstr "Выберите раскладку"
+
+#: admin/systems/goto/terminalService.tpl:27
+#: admin/systems/goto/workstationService.tpl:31
+msgid "Variant"
+msgstr "Вариант"
+
+#: admin/systems/goto/terminalService.tpl:30
+#: admin/systems/goto/workstationService.tpl:35
+msgid "Choose keyboard variant"
+msgstr "Выберите вариант раскладки"
+
+#: admin/systems/goto/terminalService.tpl:45
+#: admin/systems/goto/workstationService.tpl:51
+msgid "Mouse"
+msgstr "Мышь"
+
+#: admin/systems/goto/terminalService.tpl:48
+#: admin/systems/goto/terminalService.tpl:138
+#: admin/systems/goto/workstationService.tpl:54
+#: admin/systems/goto/workstationService.tpl:156
+#: admin/systems/services/nfs/servnfs.tpl:56
+#: admin/systems/services/shares/class_goShareServer.inc:397
+msgid "Type"
+msgstr "Тип"
+
+#: admin/systems/goto/terminalService.tpl:51
+#: admin/systems/goto/workstationService.tpl:58
+msgid "Choose mouse type"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/goto/terminalService.tpl:58
+#: admin/systems/goto/workstationService.tpl:66
+msgid "Port"
+msgstr "Порт"
+
+#: admin/systems/goto/terminalService.tpl:61
+#: admin/systems/goto/workstationService.tpl:70
+msgid "Choose mouse port"
+msgstr "Выберите порт мыши"
+
+#: admin/systems/goto/terminalService.tpl:76
+#: admin/systems/goto/class_workstationService.inc:500
+#: admin/systems/goto/workstationService.tpl:86
+#: admin/systems/goto/class_terminalService.inc:521
+msgid "Telephone hardware"
+msgstr "Телефонное оборудование"
+
+#: admin/systems/goto/terminalService.tpl:79
+#: admin/systems/goto/workstationService.tpl:89
+msgid "Telephone"
+msgstr "Телефон"
+
+#: admin/systems/goto/terminalService.tpl:95
+#: admin/systems/goto/workstationService.tpl:107
+#: admin/systems/goto/info.tpl:73
+msgid "Graphic device"
+msgstr "Видеокарта"
+
+#: admin/systems/goto/terminalService.tpl:98 admin/systems/goto/printer.tpl:66
+#: admin/systems/goto/workstationService.tpl:110
+msgid "Driver"
+msgstr "Драйвер"
+
+#: admin/systems/goto/terminalService.tpl:101
+#: admin/systems/goto/workstationService.tpl:114
+msgid "Choose graphic driver that is needed by the installed graphic board"
+msgstr "Выберите подходящий драйвер для установленной видеокарты"
+
+#: admin/systems/goto/terminalService.tpl:111
+#: admin/systems/goto/workstationService.tpl:126
+msgid "Choose screen resolution used in graphic mode"
+msgstr "Выберите подходящее разрешение экрана"
+
+#: admin/systems/goto/terminalService.tpl:118
+#: admin/systems/goto/workstationService.tpl:134
+msgid "Color depth"
+msgstr "Глубина цвета"
+
+#: admin/systems/goto/terminalService.tpl:121
+#: admin/systems/goto/workstationService.tpl:138
+msgid "Choose colordepth used in graphic mode"
+msgstr "Выберите подходящую глубину цвета"
+
+#: admin/systems/goto/terminalService.tpl:135
+#: admin/systems/goto/workstationService.tpl:153
+msgid "Display device"
+msgstr "Устройство отображения"
+
+#: admin/systems/goto/terminalService.tpl:147
+#: admin/systems/goto/workstationService.tpl:167
+msgid "Use DDC for automatic detection"
+msgstr ""
+
+#: admin/systems/goto/terminalService.tpl:150
+#: admin/systems/goto/workstationService.tpl:170
+msgid "HSync"
+msgstr "Строчная синхронизация"
+
+#: admin/systems/goto/terminalService.tpl:154
+#: admin/systems/goto/workstationService.tpl:175
+msgid "Horizontal refresh frequency for installed monitor"
+msgstr "Частота обновления строк для данного монитора"
+
+#: admin/systems/goto/terminalService.tpl:158
+#: admin/systems/goto/workstationService.tpl:181
+msgid "VSync"
+msgstr "Кадровая синхронизация"
+
+#: admin/systems/goto/terminalService.tpl:162
+#: admin/systems/goto/workstationService.tpl:186
+msgid "Vertical refresh frequency for installed monitor"
+msgstr "Частота обновления кадров для данного монитора"
+
+#: admin/systems/goto/terminalService.tpl:173
+#: admin/systems/goto/class_terminalService.inc:504
+msgid "Remote desktop"
+msgstr "Удаленная рабочая станция"
+
+#: admin/systems/goto/terminalService.tpl:177
+msgid "Connect method"
+msgstr "Способ подключения"
+
+#: admin/systems/goto/terminalService.tpl:180
+msgid "Choose method to connect to terminal server"
+msgstr "Выберите способ подключения к серверу терминалов"
+
+#: admin/systems/goto/terminalService.tpl:188
+msgid "Terminal server"
+msgstr "Терминал-сервер"
+
+#: admin/systems/goto/terminalService.tpl:191
+msgid "Select specific terminal server to use"
+msgstr "Выберите сервер терминалов"
+
+#: admin/systems/goto/terminalService.tpl:199
+msgid "Font server"
+msgstr "Сервер шрифтов"
+
+#: admin/systems/goto/terminalService.tpl:202
+msgid "Select specific font server to use"
+msgstr "Выберите сервер шрифтов"
+
+#: admin/systems/goto/terminalService.tpl:219
+msgid "Print device"
+msgstr "Устройство печати"
+
+#: admin/systems/goto/terminalService.tpl:221
+msgid "Select to start IPP based printing service on terminal"
+msgstr "Выберите, чтобы запустить на терминале службу печати по протоколу IPP"
+
+#: admin/systems/goto/terminalService.tpl:223
+msgid "Provide print services"
+msgstr "Предоставлять службу печати"
+
+#: admin/systems/goto/terminalService.tpl:229
+#: admin/systems/goto/class_terminalService.inc:513
+msgid "Spool server"
+msgstr "Сервер для хранения запросов и временных файлов"
+
+#: admin/systems/goto/terminalService.tpl:232
+msgid "Select NFS filesystem to place spool files on"
+msgstr "Выберите файловую систему NFS для хранения временных файлов"
+
+#: admin/systems/goto/terminalService.tpl:245
+#: admin/systems/goto/workstationService.tpl:201
+msgid "Scan device"
+msgstr "Устройство сканирования"
+
+#: admin/systems/goto/terminalService.tpl:247
+#: admin/systems/goto/workstationService.tpl:204
+msgid "Select to start SANE scan service on terminal"
+msgstr "Выберите, чтобы запустить на терминале службу сканирования"
+
+#: admin/systems/goto/terminalService.tpl:249
+#: admin/systems/goto/workstationService.tpl:207
+msgid "Provide scan services"
+msgstr "Предоставлять службу сканирования"
+
+#: admin/systems/goto/terminalService.tpl:257
+msgid "Select scanner driver to use"
+msgstr "Выберите драйвер для используемого сканера"
+
+#: admin/systems/goto/gencd.tpl:2
+msgid "CD-Install-Image generation"
+msgstr ""
+
+#: admin/systems/goto/gencd.tpl:5
+msgid ""
+"This option enables you to generate FAI install CD images for the selected "
+"workstation. The procedure may take about 10 minutes to complete, so please "
+"be patient after pressing the 'Create ISO-Image' button."
+msgstr ""
+
+#: admin/systems/goto/gencd.tpl:9
+#, fuzzy
+msgid "Create ISO-Image"
+msgstr "Создать шаблон"
+
+#: admin/systems/goto/class_terminalInfo.inc:55
+#: admin/systems/goto/class_terminalInfo.inc:210
+msgid "present"
+msgstr "присутствует"
+
+#: admin/systems/goto/class_terminalInfo.inc:80
+#, fuzzy
+msgid "There is no php snmp module installed, can't gather any informations."
+msgstr ""
+"Предупреждение: функция imap_getacl не реализована, и вы не сможете менять "
+"права доступа к общим папкам."
+
+#: admin/systems/goto/class_terminalInfo.inc:86
+#: admin/systems/goto/class_terminalInfo.inc:185
+msgid "unknown status"
+msgstr "состояние неизвестно"
+
+#: admin/systems/goto/class_terminalInfo.inc:95
+msgid "This is a virtual terminal which has no properties to show here."
+msgstr "Это виртуальный терминал без особых свойств."
+
+#: admin/systems/goto/class_terminalInfo.inc:112
+msgid "online"
+msgstr "в сети"
+
+#: admin/systems/goto/class_terminalInfo.inc:174
+msgid "running"
+msgstr "запущен"
+
+#: admin/systems/goto/class_terminalInfo.inc:177
+msgid "not running"
+msgstr "не запущен"
+
+#: admin/systems/goto/class_terminalInfo.inc:180
+msgid "not defined"
+msgstr "не определена"
+
+#: admin/systems/goto/class_terminalInfo.inc:202
+msgid "offline"
+msgstr "не в сети"
+
+#: admin/systems/goto/printer.tpl:5
+#, fuzzy
+msgid "General"
+msgstr "Общее"
+
+#: admin/systems/goto/printer.tpl:8
+msgid "Printer name"
+msgstr "Имя принтера"
+
+#: admin/systems/goto/printer.tpl:30
+msgid "Choose subtree to place user in"
+msgstr "Выберите ветку для пользователя"
+
+#: admin/systems/goto/printer.tpl:43
+msgid "Details"
+msgstr ""
+
+#: admin/systems/goto/printer.tpl:46
+#, fuzzy
+msgid "Printer location"
+msgstr "Настройки телефона"
+
+#: admin/systems/goto/printer.tpl:54
+msgid "Printer URL"
+msgstr "URL принтера"
+
+#: admin/systems/goto/printer.tpl:82
+#: admin/systems/goto/class_printGeneric.inc:912
+#, fuzzy
+msgid "Permissions"
+msgstr "Права для членов группы"
+
+#: admin/systems/goto/printer.tpl:89
+#, fuzzy
+msgid "Users which are allowed to use this printer"
+msgstr "У вас недостаточно прав для удаления этого объекта!"
+
+#: admin/systems/goto/printer.tpl:91
+msgid "Users"
+msgstr "Пользователи"
+
+#: admin/systems/goto/printer.tpl:96 admin/systems/goto/printer.tpl:120
+#, fuzzy
+msgid "Add user"
+msgstr "Пользователи домена"
+
+#: admin/systems/goto/printer.tpl:99 admin/systems/goto/printer.tpl:123
+#, fuzzy
+msgid "Add group"
+msgstr "группы"
+
+#: admin/systems/goto/printer.tpl:113
+#, fuzzy
+msgid "Users which are allowed to administrate this printer"
+msgstr "У вас недостаточно прав для удаления этого объекта!"
+
+#: admin/systems/goto/printer.tpl:115
+#, fuzzy
+msgid "Admins"
+msgstr "DN администратора"
+
+#: admin/systems/goto/class_workstationService.inc:84
+#: admin/systems/goto/class_terminalService.inc:97
+#, php-format
+msgid ""
+"You have specified an external resolution hook which can't be read, please "
+"check the permission of the file '%s'."
+msgstr ""
+
+#: admin/systems/goto/class_workstationService.inc:91
+#: admin/systems/goto/workstationService.tpl:157
+#: admin/systems/goto/class_terminalService.inc:71
+#, fuzzy
+msgid "unknown"
+msgstr "состояние неизвестно"
+
+#: admin/systems/goto/class_workstationService.inc:94
+#: admin/systems/goto/class_workstationService.inc:95
+#: admin/systems/goto/class_workstationService.inc:96
+#: admin/systems/goto/class_workstationService.inc:97
+#: admin/systems/goto/class_terminalService.inc:103
+#: admin/systems/goto/class_terminalService.inc:104
+#: admin/systems/goto/class_terminalService.inc:105
+#: admin/systems/goto/class_terminalService.inc:106
+#, fuzzy
+msgid "bit"
+msgstr "запись"
+
+#: admin/systems/goto/class_workstationService.inc:137
+#: admin/systems/goto/class_terminalService.inc:158
+msgid "show chooser"
+msgstr "показать окно входа в систему"
+
+#: admin/systems/goto/class_workstationService.inc:138
+#: admin/systems/goto/class_terminalService.inc:159
+msgid "direct"
+msgstr "напрямую"
+
+#: admin/systems/goto/class_workstationService.inc:141
+#: admin/systems/goto/class_terminalService.inc:162
+msgid "load balanced"
+msgstr "с выравниваем нагрузки"
+
+#: admin/systems/goto/class_workstationService.inc:144
+#: admin/systems/goto/class_terminalService.inc:165
+msgid "Windows RDP"
+msgstr "Windows RDP"
+
+#: admin/systems/goto/class_workstationService.inc:145
+#: admin/systems/goto/class_terminalService.inc:166
+msgid "ICA client"
+msgstr "Клиент ICA"
+
+#: admin/systems/goto/class_workstationService.inc:179
+#: admin/systems/goto/class_terminalService.inc:194
+msgid "automatic"
+msgstr "автоматически"
+
+#: admin/systems/goto/class_workstationService.inc:201
+#: admin/systems/goto/class_terminalService.inc:219
+#, fuzzy
+msgid "Bit"
+msgstr "запись"
+
+#: admin/systems/goto/class_workstationService.inc:317
+#: admin/systems/goto/class_terminalService.inc:319
+#, fuzzy
+msgid "Choose the phone located at the current terminal"
+msgstr "Выбрать раздел, для хранения объекта"
+
+#: admin/systems/goto/class_workstationService.inc:384
+#: admin/systems/goto/class_workstationService.inc:389
+#: admin/systems/goto/class_terminalService.inc:394
+#: admin/systems/goto/class_terminalService.inc:399
+msgid "Please specify a valid VSync range."
+msgstr "Пожалуйста, укажите корректную кадровую синхронизацию."
+
+#: admin/systems/goto/class_workstationService.inc:399
+#: admin/systems/goto/class_workstationService.inc:404
+#: admin/systems/goto/class_terminalService.inc:408
+#: admin/systems/goto/class_terminalService.inc:413
+msgid "Please specify a valid HSync range."
+msgstr "Пожалуйста, укажите корректную строчную синхронзацию."
+
+#: admin/systems/goto/class_workstationService.inc:448
+#, fuzzy, php-format
+msgid "Saving of system workstation/service with dn '%s' failed."
+msgstr "Дополнительные записи в fstab"
+
+#: admin/systems/goto/class_workstationService.inc:478
+#: admin/systems/goto/class_terminalService.inc:493
+#, fuzzy
+msgid "Service"
+msgstr "Сервисы"
+
+#: admin/systems/goto/class_workstationService.inc:479
+#, fuzzy
+msgid "Workstation service"
+msgstr "Рабочие станции"
+
+#: admin/systems/goto/class_workstationService.inc:487
+#: admin/systems/goto/class_terminalService.inc:502
+#, fuzzy
+msgid "Monitor"
+msgstr "Мониторинг"
+
+#: admin/systems/goto/class_workstationService.inc:488
+#: admin/systems/goto/class_terminalService.inc:506
+#, fuzzy
+msgid "Gfx driver"
+msgstr "Сервер"
+
+#: admin/systems/goto/class_workstationService.inc:489
+#: admin/systems/goto/class_terminalService.inc:507
+#, fuzzy
+msgid "Gfx resolution"
+msgstr "Разрешение"
+
+#: admin/systems/goto/class_workstationService.inc:490
+#: admin/systems/goto/class_terminalService.inc:508
+#, fuzzy
+msgid "Gfx color depth"
+msgstr "Глубина цвета"
+
+#: admin/systems/goto/class_workstationService.inc:491
+#: admin/systems/goto/class_terminalService.inc:509
+#, fuzzy
+msgid "Hsync"
+msgstr "Строчная синхронизация"
+
+#: admin/systems/goto/class_workstationService.inc:492
+#: admin/systems/goto/class_terminalService.inc:510
+#, fuzzy
+msgid "Vsync"
+msgstr "Кадровая синхронизация"
+
+#: admin/systems/goto/class_workstationService.inc:493
+#, fuzzy
+msgid "Use DDC"
+msgstr "Идентификатор пользователя"
+
+#: admin/systems/goto/class_workstationService.inc:494
+#: admin/systems/goto/class_terminalService.inc:514
+#, fuzzy
+msgid "Scanner enabled"
+msgstr "отключен"
+
+#: admin/systems/goto/class_workstationService.inc:495
+#: admin/systems/goto/class_terminalService.inc:516
+#, fuzzy
+msgid "Keyboard model"
+msgstr "Выберите модель клавиатуры"
+
+#: admin/systems/goto/class_workstationService.inc:496
+#: admin/systems/goto/class_terminalService.inc:517
+#, fuzzy
+msgid "Keyboard layout"
+msgstr "Выберите раскладку"
+
+#: admin/systems/goto/class_workstationService.inc:497
+#: admin/systems/goto/class_terminalService.inc:518
+#, fuzzy
+msgid "Keyboard variant"
+msgstr "Выберите вариант раскладки"
+
+#: admin/systems/goto/class_workstationService.inc:498
+#: admin/systems/goto/class_terminalService.inc:519
+#, fuzzy
+msgid "Mouse type"
+msgstr "Тип"
+
+#: admin/systems/goto/class_workstationService.inc:499
+#: admin/systems/goto/class_terminalService.inc:520
+#, fuzzy
+msgid "Mouse port"
+msgstr "Мониторинг"
+
+#: admin/systems/goto/terminalStartup.tpl:59
+msgid "Select if terminal supports graphical startup with progress bar"
+msgstr ""
+"Выберите, должен ли терминал подерживать загрузку в графическом режиме с "
+"показом индикатора состояния"
+
+#: admin/systems/goto/terminalStartup.tpl:61
+msgid "use graphical bootup"
+msgstr "Загружать в графическом режиме"
+
+#: admin/systems/goto/terminalStartup.tpl:64
+msgid "Select if terminal should boot in text mode"
+msgstr "Выберите, должен ли терминал загружаться в текстовом режиме"
+
+#: admin/systems/goto/terminalStartup.tpl:66
+msgid "use standard linux textual bootup"
+msgstr "Загружать в стандартном текстовом режиме"
+
+#: admin/systems/goto/terminalStartup.tpl:69
+msgid "Select to get more verbose output during startup"
+msgstr ""
+"Выберите, нужно ли использовать подробный вывод информации при загрузке"
+
+#: admin/systems/goto/terminalStartup.tpl:71
+msgid "use debug mode for startup"
+msgstr "Используйте отладочный режим"
+
+#: admin/systems/goto/class_terminalGeneric.inc:121
+msgid "text"
+msgstr "текст"
+
+#: admin/systems/goto/class_terminalGeneric.inc:122
+msgid "graphic"
+msgstr "графика"
+
+#: admin/systems/goto/class_terminalGeneric.inc:202
+#, php-format
+msgid "Saving of system terminal/generic (FAIstate) with dn '%s' failed."
+msgstr ""
+
+#: admin/systems/goto/class_terminalGeneric.inc:210
+msgid "No WAKECMD definition found in your gosa.conf"
+msgstr "Определение WAKECMD в вашем файле gosa.conf не найдено"
+
+#: admin/systems/goto/class_terminalGeneric.inc:222
+msgid "No REBOOTCMD definition found in your gosa.conf"
+msgstr "Определение REBOOTCMD в вашем файле gosa.conf не найдено"
+
+#: admin/systems/goto/class_terminalGeneric.inc:234
+msgid "No HALTCMD definition found in your gosa.conf"
+msgstr "Определение HALTCMD в вашем файле gosa.conf не найдено"
+
+#: admin/systems/goto/class_terminalGeneric.inc:321
+#: admin/systems/goto/class_workstationGeneric.inc:316
+msgid "Wake up"
+msgstr "Вернуть в обычный режим"
+
+#: admin/systems/goto/class_terminalGeneric.inc:381
+#, php-format
+msgid "Removing of object system terminal/generic with dn '%s' failed."
+msgstr ""
+
+#: admin/systems/goto/class_terminalGeneric.inc:454
+msgid "The required field 'Terminal name' is not set."
+msgstr "Обязательное поле 'Название терминала' не заполнено."
+
+#: admin/systems/goto/class_terminalGeneric.inc:459
+#: admin/systems/goto/class_workstationGeneric.inc:440
+#, fuzzy
+msgid "Please specify a valid name for this object."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/goto/class_terminalGeneric.inc:478
+#: admin/systems/goto/class_workstationGeneric.inc:458
+#: admin/systems/goto/class_printGeneric.inc:695
+#, php-format
+msgid "There is already an entry '%s' in the base choosen by you"
+msgstr "В выбранной вами ветке уже есть запись \"%s\""
+
+#: admin/systems/goto/class_terminalGeneric.inc:488
+#: admin/systems/goto/class_workstationGeneric.inc:468
+msgid ""
+"There must be at least one NTP server selected, or the inherit mode "
+"activated."
+msgstr ""
+
+#: admin/systems/goto/class_terminalGeneric.inc:574
+#, php-format
+msgid "Saving of object system terminal/generic with dn '%s' failed."
+msgstr ""
+
+#: admin/systems/goto/class_terminalGeneric.inc:636
+#: admin/systems/goto/class_terminalGeneric.inc:642
+#: admin/systems/goto/class_SelectDeviceType.inc:34
+#, fuzzy
+msgid "Terminal"
+msgstr "Терминалы"
+
+#: admin/systems/goto/class_terminalGeneric.inc:637
+#, fuzzy
+msgid "Terminal generic"
+msgstr "Терминальный сервер"
+
+#: admin/systems/goto/class_terminalGeneric.inc:648
+#, fuzzy
+msgid "Syslog server enabled"
+msgstr "Сервер системных журналов"
+
+#: admin/systems/goto/class_terminalGeneric.inc:649
+#, fuzzy
+msgid "Ntp server settings"
+msgstr "Почтовые настройки пользователя"
+
+#: admin/systems/goto/class_terminalGeneric.inc:651
+#: admin/systems/goto/class_printGeneric.inc:906
+#: admin/systems/services/nfs/servnfs.tpl:9
+#: admin/systems/services/shares/class_goShareServer.inc:394
+#: admin/systems/services/repository/class_servRepository.inc:353
+#: admin/applications/class_applicationGeneric.inc:554
+#: admin/applications/class_applicationGeneric.inc:558
+#: admin/mimetypes/class_mimetypeGeneric.inc:722
+#: admin/devices/class_deviceGeneric.inc:249
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/systems/goto/class_terminalGeneric.inc:652
+#: admin/systems/goto/class_workstationGeneric.inc:636
+#, fuzzy
+msgid "Root password"
+msgstr "Изменить пароль"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:8
+#, fuzzy
+msgid "Select entries to add"
+msgstr "Выбрать пользователей для добавления"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:38
+#, fuzzy
+msgid "Display members of department"
+msgstr "Показать номера из подразделения"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:50
+#, fuzzy
+msgid "Display members matching"
+msgstr "Показать совпадения номеров"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:55
+#, fuzzy
+msgid "Regular expression for matching member names"
+msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#: admin/systems/goto/class_SelectDeviceType.inc:29
+msgid "none"
+msgstr "нет"
+
+#: admin/systems/goto/class_SelectDeviceType.inc:34
+#: admin/systems/goto/class_workstationGeneric.inc:627
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+#: admin/systems/goto/class_workstationStartup.inc:242
+#, php-format
+msgid ""
+"The selected FAI mirror '%s' is no longer available, the mirror was set to "
+"'auto'."
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:257
+#, php-format
+msgid ""
+"The selected FAI release '%s' is not available for mirror '%s', the release "
+"was set to '%s'."
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:307
+#, fuzzy
+msgid "Please select a 'FAI server' or remove the 'FAI classes'."
+msgstr "Введите корректный номер телефона!"
+
+#: admin/systems/goto/class_workstationStartup.inc:374
+#, fuzzy
+msgid ""
+"There is already a profile in your selection that contain partition table "
+"configurations."
+msgstr ""
+"Пользователь с таким регистрационным именем в базе данных уже существует."
+
+#: admin/systems/goto/class_workstationStartup.inc:634
+msgid "Not available in current setup"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:896
+#, fuzzy, php-format
+msgid "Saving of system workstation/startup with dn '%s' failed."
+msgstr "Шаблон рабочей станции"
+
+#: admin/systems/goto/class_workstationStartup.inc:975
+#, fuzzy
+msgid "System startup"
+msgstr "Состояние системы"
+
+#: admin/systems/goto/class_workstationStartup.inc:990
+#, fuzzy
+msgid "FAI classes"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/goto/class_workstationStartup.inc:991
+msgid "Debian mirror"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:992
+#, fuzzy
+msgid "Debian release"
+msgstr "Текущий пароль"
+
+#: admin/systems/goto/class_workstationStartup.inc:994
+msgid "FAI status flag"
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1114
+msgid ""
+"Could not load available classes, the fai extension plugin seems not to be "
+"installed."
+msgstr ""
+
+#: admin/systems/goto/class_workstationStartup.inc:1262
+#, fuzzy, php-format
+msgid ""
+"Can't execute specified REPOSITORY_HOOK '%s' please check your gosa.conf."
+msgstr "Не удается подключиться к базе журналов, отчеты показаны не будут!"
+
+#: admin/systems/goto/class_workstationStartup.inc:1264
+#: admin/systems/services/repository/class_servRepositorySetup.inc:203
+#, php-format
+msgid ""
+"The specified REPOSITORY_HOOK '%s', specified in your gosa.conf, returns an "
+"empty string."
+msgstr ""
+
+#: admin/systems/goto/class_terminalService.inc:157
+msgid "default"
+msgstr "по умолчанию"
+
+#: admin/systems/goto/class_terminalService.inc:462
+#, fuzzy, php-format
+msgid "Saving of object system terminal/service with dn '%s' failed."
+msgstr "Информация об организации"
+
+#: admin/systems/goto/class_terminalService.inc:494
+#: admin/systems/services/terminal/goTerminalServer.tpl:1
+#: admin/systems/services/terminal/class_goTerminalServer.inc:30
+#: admin/systems/services/terminal/class_goTerminalServer.inc:59
+#: admin/systems/services/terminal/class_goTerminalServer.inc:124
+#: admin/systems/services/terminal/class_goTerminalServer.inc:125
+#, fuzzy
+msgid "Terminal service"
+msgstr "Терминальный сервер"
+
+#: admin/systems/goto/class_terminalService.inc:503
+#, fuzzy
+msgid "Method"
+msgstr "Почтовые настройки"
+
+#: admin/systems/goto/class_terminalService.inc:505
+#: admin/systems/services/terminal/goTerminalServer.tpl:12
+#: admin/systems/services/terminal/class_goTerminalServer.inc:134
+#, fuzzy
+msgid "Font path"
+msgstr "Контакт"
+
+#: admin/systems/goto/class_terminalService.inc:511
+msgid "Auto-Sync"
+msgstr ""
+
+#: admin/systems/goto/class_terminalService.inc:512
+#, fuzzy
+msgid "Printer service enabled"
+msgstr "Служба печати"
+
+#: admin/systems/goto/class_terminalService.inc:515
+#, fuzzy
+msgid "Scanner model"
+msgstr "отключен"
+
+#: admin/systems/goto/class_workstationGeneric.inc:232
+msgid "This 'dn' has no workstation features."
+msgstr "Это DN не содержит атрибутоов рабочей станции."
+
+#: admin/systems/goto/class_workstationGeneric.inc:313
+#: admin/systems/goto/class_workstationGeneric.inc:320
+msgid "Force localboot"
+msgstr ""
+
+#: admin/systems/goto/class_workstationGeneric.inc:364
+#, fuzzy, php-format
+msgid "Removing of system workstation/generic with dn '%s' failed."
+msgstr "Удалить учетную запись Samba"
+
+#: admin/systems/goto/class_workstationGeneric.inc:435
+msgid "The required field 'Workstation name' is not set."
+msgstr "Обязательное поле 'Название рабочей станции' не заполнено."
+
+#: admin/systems/goto/class_workstationGeneric.inc:536
+#: admin/systems/goto/class_workstationGeneric.inc:561
+#, fuzzy, php-format
+msgid "Saving of system workstation/generic with dn '%s' failed."
+msgstr "Дополнительные записи в fstab"
+
+#: admin/systems/goto/class_workstationGeneric.inc:622
+#, fuzzy
+msgid "Workstation generic"
+msgstr "Имя рабочий станции"
+
+#: admin/systems/goto/class_workstationGeneric.inc:633
+#, fuzzy
+msgid "Goto mode"
+msgstr "в папку"
+
+#: admin/systems/goto/ArpNewDevice.tpl:1
+msgid "Integrating unknown devices"
+msgstr ""
+
+#: admin/systems/goto/ArpNewDevice.tpl:3
+msgid ""
+"The current device has been detected by the ARP monitor used by GOsa. You "
+"can integrate this device into your running DHCP/DNS infrastructure by "
+"submitting this form. The device entry will disapear from the list of the "
+"systems and move to the DNS/DHCP configuration."
+msgstr ""
+
+#: admin/systems/goto/ArpNewDevice.tpl:9
+#, fuzzy
+msgid "DNS name"
+msgstr "Список"
+
+#: admin/systems/goto/gencd_frame.tpl:2
+msgid "Your browser does not supprt iframes."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:109
+#, php-format
+msgid "Can't extract a valid base out of object dn, setting base to '%s'."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:264
+#: admin/systems/goto/class_printGeneric.inc:272
+#: admin/systems/goto/class_printGeneric.inc:277
+#: admin/systems/goto/class_printGeneric.inc:326
+#: admin/systems/goto/class_printGeneric.inc:342
+#: admin/systems/goto/class_printGeneric.inc:345
+msgid "Add printer extension"
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:265
+msgid ""
+"Could not initialize printer tab, parameter parent was missing while "
+"construction."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:273
+msgid "This is a workstation template, printer tab is disabled."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:278
+msgid "This is a terminal template, printer tab is disabled."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:319
+msgid "This 'dn' has no printer features."
+msgstr "Этот DN не имеет свойств принтера."
+
+#: admin/systems/goto/class_printGeneric.inc:327
+#, fuzzy
+msgid ""
+"This object has printer extension disabled. You can't enable it while 'cn' "
+"is not present in entry. Possibly you are currently creating a new terminal "
+"template"
+msgstr ""
+"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+"ниже."
+
+#: admin/systems/goto/class_printGeneric.inc:334
+#: admin/systems/goto/class_printGeneric.inc:337
+#, fuzzy
+msgid "Remove printer extension"
+msgstr "Удалить параметры"
+
+#: admin/systems/goto/class_printGeneric.inc:335
+#, fuzzy
+msgid ""
+"This workstation has printer extension enabled.You can disable it by "
+"clicking below."
+msgstr ""
+"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+"ниже."
+
+#: admin/systems/goto/class_printGeneric.inc:338
+#, fuzzy
+msgid ""
+"This terminal has printer extension enabled. You can disable it by clicking "
+"below."
+msgstr ""
+"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+"ниже."
+
+#: admin/systems/goto/class_printGeneric.inc:343
+#, fuzzy
+msgid ""
+"This workstation has printer extension disabled. You can enable it by "
+"clicking below."
+msgstr ""
+"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+"ниже."
+
+#: admin/systems/goto/class_printGeneric.inc:346
+#, fuzzy
+msgid ""
+"This terminal has printer extension disabled. You can enable it by clicking "
+"below."
+msgstr ""
+"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+"ниже."
+
+#: admin/systems/goto/class_printGeneric.inc:516
+#, php-format
+msgid "Your currently selected PPD file '%s' doesn't exist."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:521
+#, fuzzy
+msgid "Not defined"
+msgstr "не определена"
+
+#: admin/systems/goto/class_printGeneric.inc:524
+#: admin/systems/ppd/class_printerPPDDialog.inc:93
+#, fuzzy
+msgid "Can't get ppd informations."
+msgstr "Общая информация о пользователе"
+
+#: admin/systems/goto/class_printGeneric.inc:537
+#, php-format
+msgid "This printer belongs to terminal %s. You can't rename this printer."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:539
+#, php-format
+msgid "This printer belongs to workstation %s. You can't rename this printer."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:603
+#, fuzzy, php-format
+msgid "Removing of system print/generic with dn '%s' failed."
+msgstr "Показать подразделения"
+
+#: admin/systems/goto/class_printGeneric.inc:671
+#, fuzzy
+msgid "The required field 'Printer name' is not set."
+msgstr "Обязательное поле \"Личное имя\" не заполнено."
+
+#: admin/systems/goto/class_printGeneric.inc:676
+#, fuzzy
+msgid "Invalid character in printer name."
+msgstr "Значение поля \"Имя\" содержит недопустимые символы."
+
+#: admin/systems/goto/class_printGeneric.inc:863
+#, php-format
+msgid "Saving of system print/generic with dn '%s' failed."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:880
+#: admin/systems/goto/class_printGeneric.inc:882
+msgid "Group"
+msgstr "Группа"
+
+#: admin/systems/goto/class_printGeneric.inc:885
+msgid "User"
+msgstr "Пользователь"
+
+#: admin/systems/goto/class_printGeneric.inc:898
+#, fuzzy
+msgid "Print generic"
+msgstr "Служба печати"
+
+#: admin/systems/goto/class_printGeneric.inc:910
+msgid "LabeledURL"
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:911
+#, fuzzy
+msgid "Printer PPD"
+msgstr "Принтер"
+
+#: admin/systems/goto/class_printGeneric.inc:928
+#, php-format
+msgid ""
+"You are not allowed to remove the given object '%s' from the list of members "
+"of printer '%s'."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:945
+#, php-format
+msgid "Illegal printer type while adding '%s' to the list of '%s' printers,"
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:950
+#, php-format
+msgid ""
+"You are not allowed to add the given object '%s' to the list of members of '%"
+"s'."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:985
+#, php-format
+msgid "Can't add '%s' to the list of members, it is already used."
+msgstr ""
+
+#: admin/systems/goto/class_printGeneric.inc:996
+#, php-format
+msgid "Can't add '%s' to list of members, it is not reachable."
+msgstr ""
+
+#: admin/systems/goto/info.tpl:1
+msgid "System information"
+msgstr "Системная информация"
+
+#: admin/systems/goto/info.tpl:7
+msgid "CPU"
+msgstr "Процессор"
+
+#: admin/systems/goto/info.tpl:10
+msgid "Memory"
+msgstr "Память"
+
+#: admin/systems/goto/info.tpl:13
+msgid "Boot MAC"
+msgstr "MAC-адрес"
+
+#: admin/systems/goto/info.tpl:16
+msgid "USB support"
+msgstr "Поддержка USB"
+
+#: admin/systems/goto/info.tpl:19 admin/systems/goto/info.tpl:87
+msgid "System status"
+msgstr "Состояние системы"
+
+#: admin/systems/goto/info.tpl:23
+#, fuzzy
+msgid "Inventory number"
+msgstr "Номер телефона"
+
+#: admin/systems/goto/info.tpl:27
+msgid "Last login"
+msgstr "Последний вход в систему"
+
+#: admin/systems/goto/info.tpl:38
+msgid "Network devices"
+msgstr "Сетевые устройства"
+
+#: admin/systems/goto/info.tpl:47
+msgid "IDE devices"
+msgstr "Устройства IDE"
+
+#: admin/systems/goto/info.tpl:56
+msgid "SCSI devices"
+msgstr "Устройства SCSI"
+
+#: admin/systems/goto/info.tpl:64
+msgid "Floppy device"
+msgstr "Дисковод"
+
+#: admin/systems/goto/info.tpl:68
+msgid "CDROM device"
+msgstr "Привод CDROM"
+
+#: admin/systems/goto/info.tpl:77
+msgid "Audio device"
+msgstr "Звуковая карта"
+
+#: admin/systems/goto/info.tpl:93
+msgid "Up since"
+msgstr "Работает с"
+
+#: admin/systems/goto/info.tpl:96
+msgid "CPU load"
+msgstr "Загрузка процессора"
+
+#: admin/systems/goto/info.tpl:99
+msgid "Memory usage"
+msgstr "Использование памяти"
+
+#: admin/systems/goto/info.tpl:102
+msgid "Swap usage"
+msgstr "Использование подкачки"
+
+#: admin/systems/goto/info.tpl:116
+msgid "SSH service"
+msgstr "Служба SSH"
+
+#: admin/systems/goto/info.tpl:119
+#: admin/systems/services/cups/class_goCupsServer.inc:27
+#: admin/systems/services/cups/class_goCupsServer.inc:48
+#: admin/systems/services/cups/class_goCupsServer.inc:69
+msgid "Print service"
+msgstr "Служба печати"
+
+#: admin/systems/goto/info.tpl:122
+msgid "Scan service"
+msgstr "Сканер"
+
+#: admin/systems/goto/info.tpl:125
+msgid "Sound service"
+msgstr "Звук"
+
+#: admin/systems/goto/info.tpl:128
+msgid "GUI"
+msgstr "Графический интерфейс"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:28
+#: admin/systems/services/ntp/class_goNtpServer.inc:74
+#, fuzzy
+msgid "Time service (NTP)"
+msgstr "Сервисы"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:97
+#, fuzzy, php-format
+msgid "Saving server services/goNtpServer with dn '%s' failed."
+msgstr "Атрибуты UNIX"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:112
+#, fuzzy
+msgid "Time service"
+msgstr "Сервисы"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:113
+#, fuzzy
+msgid "Time service - NTP"
+msgstr "Сервисы"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:113
+#: admin/systems/services/cups/class_goCupsServer.inc:69
+#: admin/systems/services/terminal/class_goTerminalServer.inc:125
+#: admin/systems/services/kiosk/class_goKioskService.inc:233
+#: admin/systems/services/syslog/class_goLogDBServer.inc:89
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/shares/class_goShareServer.inc:386
+#: admin/systems/services/repository/class_servRepository.inc:345
+#: admin/systems/services/ldap/class_goLdapServer.inc:84
+msgid "Services"
+msgstr "Сервисы"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:121
+#, fuzzy
+msgid "Ntp source"
+msgstr "Звук"
+
+#: admin/systems/services/ntp/goNtpServer.tpl:2
+#, fuzzy
+msgid "Time server"
+msgstr "Сервисы"
+
+#: admin/systems/services/ntp/goNtpServer.tpl:29
+#: admin/systems/services/cups/goCupsServer.tpl:5
+#: admin/systems/services/terminal/goTerminalServer.tpl:23
+#: admin/systems/services/nfs/servnfs.tpl:139
+#: admin/systems/services/kiosk/goKioskService.tpl:14
+#: admin/systems/services/syslog/goLogDBServer.tpl:23
+#: admin/systems/services/syslog/goSyslogServer.tpl:5
+#: admin/systems/services/shares/goShareServer.tpl:29
+#: admin/systems/services/repository/servRepository.tpl:6
+#: admin/systems/services/ldap/goLdapServer.tpl:9
+msgid "Save"
+msgstr "Сохранить"
+
+#: admin/systems/services/cups/goCupsServer.tpl:1
+#, fuzzy
+msgid "Print Service"
+msgstr "Служба печати"
+
+#: admin/systems/services/cups/goCupsServer.tpl:1
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "enabled"
+msgstr "отключен"
+
+#: admin/systems/services/cups/class_goCupsServer.inc:68
+#, fuzzy
+msgid "Cups"
+msgstr "группы"
+
+#: admin/systems/services/cups/class_goCupsServer.inc:76
+#: admin/systems/services/syslog/class_goLogDBServer.inc:97
+#: admin/systems/services/repository/class_servRepository.inc:354
+#, fuzzy
+msgid "Start"
+msgstr "Запуск"
+
+#: admin/systems/services/cups/class_goCupsServer.inc:77
+#: admin/systems/services/syslog/class_goLogDBServer.inc:98
+#: admin/systems/services/repository/class_servRepository.inc:355
+msgid "Stop"
+msgstr ""
+
+#: admin/systems/services/cups/class_goCupsServer.inc:78
+#: admin/systems/services/syslog/class_goLogDBServer.inc:99
+#: admin/systems/services/repository/class_servRepository.inc:356
+#, fuzzy
+msgid "Restart"
+msgstr "Повторить"
+
+#: admin/systems/services/terminal/goTerminalServer.tpl:8
+#: admin/systems/services/terminal/class_goTerminalServer.inc:133
+#, fuzzy
+msgid "Temporary disable login"
+msgstr "Временно отключить использование факса"
+
+#: admin/systems/services/terminal/class_goTerminalServer.inc:83
+#, fuzzy, php-format
+msgid "Saving server services/terminalServer with dn '%s' failed."
+msgstr "Атрибуты UNIX"
+
+#: admin/systems/services/terminal/class_goTerminalServer.inc:98
+msgid "Terminal server, must have fontpath specified."
+msgstr ""
+
+#: admin/systems/services/nfs/servnfs.tpl:1
+#, fuzzy
+msgid "Edit share"
+msgstr "Пользователи домена"
+
+#: admin/systems/services/nfs/servnfs.tpl:2
+msgid "NFS setup"
+msgstr ""
+
+#: admin/systems/services/nfs/servnfs.tpl:29
+#: admin/systems/services/shares/class_goShareServer.inc:399
+msgid "Path"
+msgstr ""
+
+#: admin/systems/services/nfs/servnfs.tpl:29
+#: admin/systems/services/shares/class_goShareServer.inc:401
+#, fuzzy
+msgid "Volume"
+msgstr "Имя системы"
+
+#: admin/systems/services/nfs/servnfs.tpl:69
+msgid "Auto-mount share on Apple systems"
+msgstr ""
+
+#: admin/systems/services/nfs/servnfs.tpl:109
+#, fuzzy
+msgid "Codepage"
+msgstr "Домашняя страница"
+
+#: admin/systems/services/nfs/servnfs.tpl:121
+#: admin/systems/services/shares/class_goShareServer.inc:400
+#, fuzzy
+msgid "Option"
+msgstr "Параметры"
+
+#: admin/systems/services/nfs/class_servNfs.inc:47
+#, php-format
+msgid "The file '%s/encodings' does not exist, can't get supported charsets."
+msgstr ""
+
+#: admin/systems/services/nfs/class_servNfs.inc:50
+#, fuzzy, php-format
+msgid "Can't read '%s/encodings', please check permissions."
+msgstr "Удалить"
+
+#: admin/systems/services/nfs/class_servNfs.inc:184
+#, fuzzy
+msgid "Please specify a valid path for your setup."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/nfs/class_servNfs.inc:190
+#, fuzzy
+msgid "Please specify a valid name for your share."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/nfs/class_servNfs.inc:193
+#, fuzzy
+msgid "Please specify a name for your share."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/nfs/class_servNfs.inc:198
+#, fuzzy
+msgid "Description contains invalid characters."
+msgstr "Неправильное указание таймаута '%s'"
+
+#: admin/systems/services/nfs/class_servNfs.inc:202
+#, fuzzy
+msgid "Volume contains invalid characters."
+msgstr "Неправильное указание таймаута '%s'"
+
+#: admin/systems/services/nfs/class_servNfs.inc:206
+#, fuzzy
+msgid "Path contains invalid characters."
+msgstr "Значение поля \"Имя\" содержит недопустимые символы."
+
+#: admin/systems/services/nfs/class_servNfs.inc:210
+#, fuzzy
+msgid "Option contains invalid characters."
+msgstr "Неправильное указание таймаута '%s'"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:25
+#: admin/systems/services/kiosk/class_goKioskService.inc:171
+#, fuzzy
+msgid "Kiosk profile service"
+msgstr "Почтовые настройки пользователя"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:31
+msgid ""
+"There is no KIOSKPATH defined in your gosa.conf. Can't manage kiosk profiles!"
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:62
+#, fuzzy, php-format
+msgid ""
+"Can not remove kiosk profile service, it is currently in use by following "
+"user(s) : %s."
+msgstr "У вас недостаточно прав для удаления этого группового объекта!"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:97
+#, php-format
+msgid ""
+"Can't save new kiosk profiles, possibly permission denied for folder: '%s'."
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:128
+#, fuzzy, php-format
+msgid ""
+"Can't remove kioks profile, it is still in use by the following objects '%s'."
+msgstr "У вас недостаточно прав для удаления этого группового объекта!"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:134
+#, php-format
+msgid "Can't delete '%s'. Error was: permission denied."
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:137
+#, fuzzy, php-format
+msgid "Can't delete '%s'. Error was: file doesn't exist."
+msgstr "Общая информация о пользователе"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:199
+msgid "Can't save new kiosk profiles, possibly permission denied for folder"
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:213
+msgid "Wohl kaum"
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:232
+msgid "Kiosk"
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:233
+#: admin/systems/services/kiosk/goKioskService.tpl:1
+#, fuzzy
+msgid "Kiosk profile management"
+msgstr "Управление системами"
+
+#: admin/systems/services/kiosk/goKioskService.tpl:5
+#, fuzzy
+msgid "Server path"
+msgstr "Имя сервера"
+
+#: admin/systems/services/kiosk/goKioskService.tpl:9
+msgid "Browse"
+msgstr "Просмотр"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:30
+#: admin/systems/services/syslog/class_goLogDBServer.inc:58
+#, fuzzy
+msgid "Syslog service database"
+msgstr "Сервер системных журналов"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:88
+#: admin/systems/services/syslog/class_goLogDBServer.inc:89
+#, fuzzy
+msgid "Logging database"
+msgstr "база пользователя"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:100
+#, fuzzy
+msgid "Admin"
+msgstr "DN администратора"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
+msgid "Password"
+msgstr "Пароль"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
+#, fuzzy
+msgid "Logging database information"
+msgstr "база пользователя"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
+msgid "Logging DB user"
+msgstr ""
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#, fuzzy
+msgid "Logging service"
+msgstr "Служба печати"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#, fuzzy
+msgid "Syslog Service"
+msgstr "Сервер системных журналов"
+
+#: admin/systems/services/shares/class_goShareServer.inc:31
+#, fuzzy
+msgid "File service"
+msgstr "Сервер"
+
+#: admin/systems/services/shares/class_goShareServer.inc:157
+#: admin/systems/services/shares/class_goShareServer.inc:385
+#, fuzzy
+msgid "File service (Shares)"
+msgstr "Сервер"
+
+#: admin/systems/services/shares/class_goShareServer.inc:191
+#, fuzzy, php-format
+msgid "Saving of system server/shares with dn '%s' failed."
+msgstr "Почтовые настройки пользователя"
+
+#: admin/systems/services/shares/class_goShareServer.inc:229
+#, php-format
+msgid "The share can't be removed since it is still used by %d users:"
+msgstr ""
+
+#: admin/systems/services/shares/class_goShareServer.inc:234
+msgid "Please correct the share-/profile settings of these users"
+msgstr ""
+
+#: admin/systems/services/shares/class_goShareServer.inc:262
+#, fuzzy, php-format
+msgid "Creating system server/shares (mount container) with dn '%s' failed."
+msgstr "Объект группы"
+
+#: admin/systems/services/shares/class_goShareServer.inc:276
+#, fuzzy, php-format
+msgid "Removing system server/shares (mount container) with dn '%s' failed."
+msgstr "Удалить настройки эл. почты"
+
+#: admin/systems/services/shares/class_goShareServer.inc:287
+#, fuzzy, php-format
+msgid "Saving system server/shares (mount container) with dn '%s' failed."
+msgstr "Удалить настройки эл. почты"
+
+#: admin/systems/services/shares/class_goShareServer.inc:386
+#, fuzzy
+msgid "File service - Shares"
+msgstr "Сервер"
+
+#: admin/systems/services/shares/class_goShareServer.inc:395
+msgid "Apple mounts"
+msgstr ""
+
+#: admin/systems/services/shares/class_goShareServer.inc:398
+#, fuzzy
+msgid "Charset"
+msgstr "сброс"
+
+#: admin/systems/services/repository/class_servRepository.inc:31
+#: admin/systems/services/repository/class_servRepository.inc:334
+#: admin/systems/services/repository/class_servRepository.inc:345
+#, fuzzy
+msgid "Repository service"
+msgstr "Служба печати"
+
+#: admin/systems/services/repository/class_servRepository.inc:98
+msgid "You can't use this plugin until FAI is activated."
+msgstr ""
+
+#: admin/systems/services/repository/class_servRepository.inc:147
+#, php-format
+msgid ""
+"You can't delete this release, it is still used by these workstations [%s]. "
+"Please solve this dependencies first, to keep data base consistency."
+msgstr ""
+
+#: admin/systems/services/repository/class_servRepository.inc:181
+#, php-format
+msgid ""
+"Be careful editing this release, it is still used by these workstations [%s]."
+msgstr ""
+
+#: admin/systems/services/repository/class_servRepository.inc:207
+#, fuzzy
+msgid "This name is already in use."
+msgstr "Указанное имя уже используется."
+
+#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/systems/services/repository/servRepositorySetup.tpl:1
+#, fuzzy
+msgid "Repository"
+msgstr "Повторить"
+
+#: admin/systems/services/repository/class_servRepository.inc:357
+#, fuzzy
+msgid "Releases"
+msgstr "Набор правил"
+
+#: admin/systems/services/repository/class_servRepository.inc:358
+#: admin/systems/services/repository/servRepositorySetup.tpl:39
+#: admin/systems/services/repository/class_divListRepositories.inc:24
+#: admin/systems/services/repository/class_divListRepositories.inc:64
+#, fuzzy
+msgid "Sections"
+msgstr "Действие"
+
+#: admin/systems/services/repository/class_servRepository.inc:359
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#, fuzzy
+msgid "Parent server"
+msgstr "Служба печати"
+
+#: admin/systems/services/repository/class_servRepository.inc:360
+msgid "Url"
+msgstr ""
+
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+msgid "URL"
+msgstr ""
+
+#: admin/systems/services/repository/class_servRepositorySetup.inc:150
+#, fuzzy
+msgid "Please enter a value for 'release'."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/repository/class_servRepositorySetup.inc:154
+#, fuzzy
+msgid "Please specify a valid value for 'url'."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/repository/class_servRepositorySetup.inc:201
+#, fuzzy, php-format
+msgid ""
+"Can't execute specified REPOSITORY_HOOK '%s'. Please check your gosa.conf."
+msgstr "Не удается подключиться к базе журналов, отчеты показаны не будут!"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:19
+#, fuzzy
+msgid "List of configured repositories."
+msgstr "Список групп"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:20
+msgid "This menu allows you to create, delete and edit repository settings."
+msgstr ""
+
+#: admin/systems/services/repository/class_divListRepositories.inc:25
+#: admin/systems/ppd/printerPPDDialog.tpl:17 admin/applications/generic.tpl:92
+msgid "Options"
+msgstr "Параметры"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:26
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:32
+msgid "Regular expression for matching object names"
+msgstr "Регулярное выражение, соответствующее именам объектов"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:33
+#, fuzzy
+msgid "Add repository"
+msgstr "Повторить"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:27
+#: admin/systems/services/ldap/goLdapServer.tpl:1
+#, fuzzy
+msgid "LDAP service"
+msgstr "LDAP-сервер"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:54
+#, fuzzy
+msgid "LDAP Service"
+msgstr "LDAP-сервер"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:65
+#, fuzzy
+msgid "The given base is empty or contains invalid characters."
+msgstr "Неправильное указание таймаута '%s'"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:83
+#: admin/systems/services/ldap/class_goLdapServer.inc:84
+msgid "Ldap"
+msgstr ""
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:92
+#, fuzzy
+msgid "Ldap base"
+msgstr "Сервер подкачки"
+
+#: admin/systems/services/ldap/goLdapServer.tpl:2
+msgid "LDAP URI"
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:76
+#, fuzzy, php-format
+msgid "You're about to delete the ppd file '%s' at '%s'."
+msgstr "Вы собираетесь удалить приложение \"%s\"."
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:80
+#, fuzzy, php-format
+msgid "Could not found specified ppd file '%s'."
+msgstr "Невозможно выбрать базу данных!"
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:106
+msgid ""
+"Something went wrong while trying to remove the ppd file from server, "
+"possibly we have no write access."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:126
+#, php-format
+msgid "Selected vendor '%s' does not exists in our list of ppds."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:135
+#, fuzzy
+msgid "Printer ppd selection."
+msgstr "Настройки телефона"
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:142
+#: admin/applications/class_divListApplication.inc:256
+#: admin/mimetypes/class_divListMimeTypes.inc:269
+#: admin/devices/class_divListDevices.inc:237
+#, fuzzy
+msgid "delete"
+msgstr "Удалить"
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:153
+#: admin/groups/apps/class_groupApplication.inc:706
+#, fuzzy
+msgid "back"
+msgstr "Назад"
+
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:6
+msgid "Select objects to add"
+msgstr "Выбрать объекты для добавления"
+
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:28
+msgid "Display objects matching"
+msgstr "Показать совпадения объектов"
+
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:44
+#, fuzzy
+msgid "Close"
+msgstr "Выбрать"
+
+#: admin/systems/ppd/remove_ppd.tpl:9
+msgid "The ppd file will be removed from the server and can not be restored."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:68
+#, php-format
+msgid "Can't open '%s', ppd settings resetted."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:105
+#, php-format
+msgid ""
+"The specified path '%s' which results from PPD_PATH in your gosa.conf is "
+"invalid, can't read/write any ppd informations."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:122
+#, fuzzy
+msgid "Please specify a valid ppd file."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:201
+#, php-format
+msgid "Can't select PPD file '%s', the file is not readable"
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:218
+#: admin/systems/ppd/class_printerPPDDialog.inc:305
+#, php-format
+msgid "Can't create folder '%s' for the uploaded ppd file."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:226
+#, fuzzy, php-format
+msgid "Can't create file '%s' to store modifed ppd informations."
+msgstr "Общая информация о пользователе"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:250
+#: admin/systems/ppd/class_printerPPDDialog.inc:291
+#, php-format
+msgid "Can't add new ppd file, the source file '%s' is not accessible."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:268
+#, fuzzy, php-format
+msgid ""
+"The given ppd file '%s' seams to be invalid, can't get any model or vendor "
+"informations."
+msgstr ""
+"Предупреждение: функция imap_getacl не реализована, и вы не сможете менять "
+"права доступа к общим папкам."
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:294
+#, fuzzy
+msgid "Overwrite existing PPD"
+msgstr "Экспорт объекта"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:295
+#, fuzzy
+msgid ""
+"There is already a ppd file for this kind of printer. Do you want to "
+"overwrite it?"
+msgstr ""
+"Пользователь с таким регистрационным именем в базе данных уже существует."
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:315
+#, fuzzy, php-format
+msgid "Can't save file '%s'."
+msgstr "Удалить"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:319
+msgid "Uploaded ppd file is empty, can't create new ppd file."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:441
+#, fuzzy
+msgid "Section"
+msgstr "Действие"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:496
+#: admin/systems/ppd/class_printerPPDDialog.inc:499
+#, fuzzy
+msgid "True"
+msgstr "Улица"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:497
+#: admin/systems/ppd/class_printerPPDDialog.inc:500
+#, fuzzy
+msgid "False"
+msgstr "женский"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:505
+#, php-format
+msgid "Unsupported ppd type '%s' used for '%s' "
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:522
+#, fuzzy, php-format
+msgid "Removing old ppd file '%s' failed."
+msgstr "Показать группы приложений"
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:525
+#, php-format
+msgid "Removing old ppd file '%s' failed. File is not accessible."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:528
+#, php-format
+msgid ""
+"Removing old ppd file '%s' failed. File does not exists or is not accessible."
+msgstr ""
+
+#: admin/systems/ppd/class_printerPPDDialog.inc:541
+msgid ""
+"Please select a valid ppd file or use 'Cancel' to go back to printer "
+"configuration."
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:14
+#: admin/systems/ppd/class_ppdManager.inc:145
+#: admin/systems/ppd/class_ppdManager.inc:147
+#, fuzzy
+msgid "PPD manager error"
+msgstr "Экспорт в LDIF"
+
+#: admin/systems/ppd/class_ppdManager.inc:14
+#, fuzzy, php-format
+msgid "The specified path '%s' does not exist."
+msgstr "Значение поля \"Файлы\" некорректно."
+
+#: admin/systems/ppd/class_ppdManager.inc:145
+#, php-format
+msgid "Specified PPD file '%s' cannot be opened for reading."
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:147
+#, php-format
+msgid "The temporary file '%s' cannot be opened for writing."
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:171
+#: admin/systems/ppd/class_ppdManager.inc:308
+#, php-format
+msgid ""
+"Parsing PPD file %s failed - line too long. Trailing characters have been "
+"ignored"
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:179
+#, fuzzy
+msgid "Nested groups are not supported!"
+msgstr ""
+"(Предупреждение: NFS не поддерживает более 16 групп для одного пользователя!)"
+
+#: admin/systems/ppd/class_ppdManager.inc:183
+#, fuzzy
+msgid "Group name not unique!"
+msgstr "Группа"
+
+#: admin/systems/ppd/class_ppdManager.inc:189
+#: admin/systems/ppd/class_ppdManager.inc:219
+msgid "Symbol values are not supported yet!"
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:213
+msgid "Nested options are not supported!"
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:238
+msgid "PickMany is not supported yet!"
+msgstr ""
+
+#: admin/systems/ppd/class_ppdManager.inc:329
+#, php-format
+msgid "Parsing PPD file %s failed - no information found."
+msgstr ""
+
+#: admin/systems/ppd/printerPPDDialog.tpl:1
+#, fuzzy
+msgid "Printer driver"
+msgstr "Устройство печати"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:6
+#, fuzzy
+msgid "Select"
+msgstr "Удалить"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:9
+#, fuzzy
+msgid "New driver"
+msgstr "Сервер"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:11
+#: admin/applications/generic.tpl:138
+#, fuzzy
+msgid "Upload"
+msgstr "Загрузка процессора"
+
+#: admin/applications/class_applicationGeneric.inc:105
+#, fuzzy
+msgid "no example"
+msgstr "не полный"
+
+#: admin/applications/class_applicationGeneric.inc:136
+msgid "This 'dn' is no application."
+msgstr "Это DN соответствует не приложению."
+
+#: admin/applications/class_applicationGeneric.inc:238
+#, fuzzy, php-format
+msgid "Removing of application with dn '%s' failed."
+msgstr "Показать группы приложений"
+
+#: admin/applications/class_applicationGeneric.inc:250
+#, php-format
+msgid "Removing application from objectgroup '%s' failed"
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:257
+#, fuzzy, php-format
+msgid "Removing application from group '%s' failed"
+msgstr "Показать группы приложений"
+
+#: admin/applications/class_applicationGeneric.inc:308
+msgid "The specified picture has not been uploaded correctly."
+msgstr "Указанное изображение было загружено некорректно."
+
+#: admin/applications/class_applicationGeneric.inc:340
+msgid "Can't access uploaded image."
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:345
+msgid ""
+"Uploaded image could not be resized, possilby the image magick extension is "
+"missing."
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:350
+#, fuzzy
+msgid ""
+"Could not convert image to png, possilby the image magick extension is "
+"missing."
+msgstr "Не удается подключиться к базе журналов, отчеты показаны не будут!"
+
+#: admin/applications/class_applicationGeneric.inc:354
+#, php-format
+msgid "Could not save uploaded image to %s."
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:383
+msgid "Specified execute path must start with '/'."
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:400
+msgid "Required field 'Name' is not filled."
+msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#: admin/applications/class_applicationGeneric.inc:404
+msgid "Invalid character in application name. Only a-z 0-9 are allowed."
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:408
+msgid "Required field 'Execute' is not filled."
+msgstr "Обязательное поле \"Выполнить\" не заполнено."
+
+#: admin/applications/class_applicationGeneric.inc:424
+#: admin/applications/class_applicationGeneric.inc:432
+msgid "There's already an application with this 'Name'."
+msgstr "Приложение с таким именем уже существует."
+
+#: admin/applications/class_applicationGeneric.inc:480
+#, fuzzy, php-format
+msgid "Saving of application with dn '%s' failed."
+msgstr "Приложение"
+
+#: admin/applications/class_applicationGeneric.inc:505
+#, fuzzy
+msgid "Application settings"
+msgstr "Параметры приложения"
+
+#: admin/applications/class_applicationGeneric.inc:509
+#: admin/applications/generic.tpl:7 admin/applications/generic.tpl:10
+#: admin/applications/class_divListApplication.inc:58
+msgid "Application name"
+msgstr "Приложение"
+
+#: admin/applications/class_applicationGeneric.inc:514
+#: admin/applications/generic.tpl:19
+msgid "Application name to be displayed (i.e. below icons)"
+msgstr ""
+"Имя приложения, которое будет показано пользователям (например, под "
+"пиктограммами)"
+
+#: admin/applications/class_applicationGeneric.inc:546
+#, fuzzy
+msgid "Application generic"
+msgstr "Приложение"
+
+#: admin/applications/class_applicationGeneric.inc:551
+#: admin/applications/class_divListApplication.inc:155
+#: admin/applications/class_divListApplication.inc:210
+#: admin/mimetypes/class_mimetypeGeneric.inc:726
+#: admin/groups/apps/class_groupApplication.inc:1241
+msgid "Application"
+msgstr "Приложение"
+
+#: admin/applications/class_applicationGeneric.inc:559
+#: admin/applications/generic.tpl:66
+#: admin/mimetypes/class_mimetypeGeneric.inc:728
+#: admin/mimetypes/generic.tpl:67
+msgid "Icon"
+msgstr "Пиктограмма"
+
+#: admin/applications/class_applicationGeneric.inc:560
+msgid "Flag"
+msgstr ""
+
+#: admin/applications/class_applicationGeneric.inc:561
+#, fuzzy
+msgid "Script content"
+msgstr "Путь к сценариям"
+
+#: admin/applications/class_applicationGeneric.inc:563
+#: admin/applications/generic.tpl:99
+msgid "Only executable for members"
+msgstr "Разрешено для выполнения только членам группы"
+
+#: admin/applications/class_applicationGeneric.inc:564
+#: admin/applications/generic.tpl:110
+msgid "Place icon on members desktop"
+msgstr "Помещать пиктограмму на рабочие столы членов группы"
+
+#: admin/applications/class_applicationGeneric.inc:565
+#: admin/applications/generic.tpl:120
+#, fuzzy
+msgid "Place entry in members launch bar"
+msgstr "Помещать членам группы соответствующий элемент в меню запуска"
+
+#: admin/applications/class_applicationGeneric.inc:566
+#: admin/applications/generic.tpl:115
+msgid "Place entry in members startmenu"
+msgstr "Помещать членам группы соответствующий элемент в меню запуска"
+
+#: admin/applications/class_applicationGeneric.inc:567
+#: admin/applications/generic.tpl:104
+msgid "Replace user configuration on startup"
+msgstr "Заменять настройки пользователя при запуске"
+
+#: admin/applications/class_applicationParameters.inc:54
+msgid "Remove options"
+msgstr "Удалить параметры"
+
+#: admin/applications/class_applicationParameters.inc:55
+msgid "This application has options. You can disable them by clicking below."
+msgstr ""
+"Для этого приложения указаны параметры. Вы можете отключить их "
+"использование, щелкнув ниже."
+
+#: admin/applications/class_applicationParameters.inc:57
+msgid "Create options"
+msgstr "Создать параметры"
+
+#: admin/applications/class_applicationParameters.inc:58
+msgid ""
+"This application has options disabled. You can enable them by clicking below."
+msgstr ""
+"Для этого приложения отключено использование параметров. Вы можете включить "
+"его, щелкнув ниже."
+
+#: admin/applications/class_applicationParameters.inc:98
+msgid "Variable"
+msgstr "Переменная"
+
+#: admin/applications/class_applicationParameters.inc:98
+msgid "Default value"
+msgstr "По умолчанию"
+
+#: admin/applications/class_applicationParameters.inc:130
+msgid "Add option"
+msgstr "Добавить параметр"
+
+#: admin/applications/class_applicationParameters.inc:159
+#, fuzzy, php-format
+msgid "Removing of application parameters with dn '%s' failed."
+msgstr "Изменить дополнительные параметры приложения"
+
+#: admin/applications/class_applicationParameters.inc:190
+#, php-format
+msgid "Value '%s' specified as option name is not valid."
+msgstr "Значение \"%s\", указанное как имя параметра, некорректно."
+
+#: admin/applications/class_applicationParameters.inc:221
+#, fuzzy, php-format
+msgid "Saving of application parameters with dn '%s' failed."
+msgstr "Изменить дополнительные параметры приложения"
+
+#: admin/applications/class_applicationParameters.inc:232
+#, fuzzy
+msgid "Parameter"
+msgstr "Параметры загрузки"
+
+#: admin/applications/class_applicationParameters.inc:233
+#, fuzzy
+msgid "Parameter configuration"
+msgstr "Базы данных"
+
+#: admin/applications/class_applicationParameters.inc:241
+#, fuzzy
+msgid "Application parameter settings"
+msgstr "Приложение"
+
+#: admin/applications/remove.tpl:6 admin/mimetypes/remove.tpl:6
+msgid ""
+"This may be used by several groups. Please double check if your really want "
+"to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"Это приложение может использоваться несколькими группами. Подумайте еще раз, "
+"действительно ли вы хотите удалить его, так как GOsa не сможет отменить "
+"результаты этой операции."
+
+#: admin/applications/remove.tpl:9 admin/mimetypes/remove.tpl:9
+#: admin/devices/remove.tpl:9
+#, fuzzy
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
+"нажмите <i>Отмена</i>."
+
+#: admin/applications/release_select.tpl:3
+#: admin/mimetypes/release_select.tpl:3
+#, fuzzy
+msgid "Branches"
+msgstr "Отмена"
+
+#: admin/applications/release_select.tpl:9
+#: admin/mimetypes/release_select.tpl:9
+#, fuzzy
+msgid "Current release"
+msgstr "Текущий пароль"
+
+#: admin/applications/generic.tpl:15
+msgid "Display name"
+msgstr "Отображаемое имя"
+
+#: admin/applications/generic.tpl:28
+msgid "Path and/or binary name of application"
+msgstr "Путь и/или имя исполняемого файла приложения"
+
+#: admin/applications/generic.tpl:45 admin/mimetypes/generic.tpl:47
+msgid "Choose subtree to place application in"
+msgstr "Выберите ветку, куда нужно поместить приложение"
+
+#: admin/applications/generic.tpl:78 admin/mimetypes/generic.tpl:79
+msgid "Update"
+msgstr "Обновить"
+
+#: admin/applications/generic.tpl:78
+msgid "Reload picture from LDAP"
+msgstr "Обновить изображение с LDAP"
+
+#: admin/applications/generic.tpl:81
+msgid "Remove picture"
+msgstr "Удалить изображение"
+
+#: admin/applications/generic.tpl:81
+#, fuzzy
+msgid "Remove picture from LDAP"
+msgstr "Обновить изображение с LDAP"
+
+#: admin/applications/generic.tpl:140
+#, fuzzy
+msgid "Download"
+msgstr "Домен"
+
+#: admin/applications/class_divListApplication.inc:31
+#, fuzzy
+msgid "List of Applications"
+msgstr "Список приложений"
+
+#: admin/applications/class_divListApplication.inc:32
+#, fuzzy
+msgid "This table displays all applications in the selected tree."
+msgstr "Приложение с таким именем уже существует."
+
+#: admin/applications/class_divListApplication.inc:36
+#, fuzzy
+msgid ""
+"This menu allows you to add, edit and remove selected applications. You may "
+"want to use the range selector on top of the application listbox, when "
+"working with a large number of applications."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"приложения. Если у вас достаточно большое количество приложений, вы можете "
+"использовать групповое выделение."
+
+#: admin/applications/class_divListApplication.inc:58
+#: admin/mimetypes/class_divListMimeTypes.inc:60
+#: admin/devices/class_divListDevices.inc:52
+msgid "Department"
+msgstr "Подразделение"
+
+#: admin/applications/class_divListApplication.inc:59
+#: admin/applications/class_divListApplication.inc:148
+#: admin/mimetypes/class_divListMimeTypes.inc:61
+#: admin/mimetypes/class_divListMimeTypes.inc:169
+#: admin/devices/class_divListDevices.inc:53
+#: admin/devices/class_divListDevices.inc:136
+msgid "Actions"
+msgstr "Действия"
+
+#: admin/applications/class_divListApplication.inc:145
+#: admin/mimetypes/class_divListMimeTypes.inc:166
+#: admin/devices/class_divListDevices.inc:133
+#, fuzzy
+msgid "Submit department"
+msgstr "Показать подразделения"
+
+#: admin/applications/class_divListApplication.inc:145
+#: admin/mimetypes/class_divListMimeTypes.inc:166
+#: admin/devices/class_divListDevices.inc:133
+msgid "Submit"
+msgstr ""
+
+#: admin/applications/class_divListApplication.inc:167
+#: admin/mimetypes/class_divListMimeTypes.inc:188
+#: admin/devices/class_divListDevices.inc:155
+#, fuzzy
+msgid "Copy"
+msgstr "Компания"
+
+#: admin/applications/class_divListApplication.inc:169
+#: admin/mimetypes/class_divListMimeTypes.inc:190
+#: admin/devices/class_divListDevices.inc:157
+#, fuzzy
+msgid "Cut"
+msgstr "Выполнить"
+
+#: admin/applications/class_divListApplication.inc:173
+#: admin/applications/class_divListApplication.inc:176
+#: admin/mimetypes/class_divListMimeTypes.inc:194
+#: admin/mimetypes/class_divListMimeTypes.inc:197
+#: admin/devices/class_divListDevices.inc:161
+#: admin/devices/class_divListDevices.inc:164
+#, fuzzy
+msgid "Paste"
+msgstr "Дата"
+
+#: admin/applications/class_divListApplication.inc:237
+#: admin/mimetypes/class_divListMimeTypes.inc:258
+#: admin/devices/class_divListDevices.inc:226
+#, fuzzy
+msgid "cut"
+msgstr "Выполнить"
+
+#: admin/applications/class_divListApplication.inc:237
+#: admin/mimetypes/class_divListMimeTypes.inc:258
+#: admin/devices/class_divListDevices.inc:226
+#, fuzzy
+msgid "Cut this entry"
+msgstr "Редактиовать объект"
+
+#: admin/applications/class_divListApplication.inc:240
+#: admin/mimetypes/class_divListMimeTypes.inc:260
+#: admin/devices/class_divListDevices.inc:228
+msgid "copy"
+msgstr ""
+
+#: admin/applications/class_divListApplication.inc:240
+#: admin/mimetypes/class_divListMimeTypes.inc:260
+#: admin/devices/class_divListDevices.inc:228
+#, fuzzy
+msgid "Copy this entry"
+msgstr "Редактиовать объект"
+
+#: admin/applications/class_divListApplication.inc:246
+#: admin/mimetypes/class_divListMimeTypes.inc:264
+#: admin/devices/class_divListDevices.inc:232
+#, fuzzy
+msgid "edit"
+msgstr "Изменить"
+
+#: admin/applications/class_divListApplication.inc:246
+#: admin/mimetypes/class_divListMimeTypes.inc:264
+#: admin/devices/class_divListDevices.inc:232
+#, fuzzy
+msgid "Edit this entry"
+msgstr "Редактиовать объект"
+
+#: admin/applications/class_divListApplication.inc:256
+#: admin/mimetypes/class_divListMimeTypes.inc:269
+#: admin/devices/class_divListDevices.inc:237
+#, fuzzy
+msgid "Delete this entry"
+msgstr "Удалить"
+
+#: admin/applications/class_divListApplication.inc:296
+#, fuzzy
+msgid "Number of listed applications"
+msgstr "Используемые приложения"
+
+#: admin/applications/class_divListApplication.inc:297
+#: admin/mimetypes/class_divListMimeTypes.inc:312
+#: admin/devices/class_divListDevices.inc:280
+#, fuzzy
+msgid "Number of listed departments"
+msgstr "Подразделение"
+
+#: admin/applications/main.inc:39 admin/applications/main.inc:41
+msgid "Application management"
+msgstr "Управление приложениями"
+
+#: admin/applications/class_applicationManagement.inc:24
+#: admin/mimetypes/generic.tpl:112 admin/mimetypes/generic.tpl:172
+#: admin/groups/apps/class_groupApplication.inc:1233
+msgid "Applications"
+msgstr "Приложения"
+
+#: admin/applications/class_applicationManagement.inc:308
+#: admin/mimetypes/class_mimetypeManagement.inc:305
+#: admin/devices/class_deviceManagement.inc:242
+#, fuzzy, php-format
+msgid "You're about to delete the following entry %s"
+msgstr "Вы собираетесь удалить объект %s."
+
+#: admin/applications/class_applicationManagement.inc:310
+#: admin/mimetypes/class_mimetypeManagement.inc:307
+#: admin/devices/class_deviceManagement.inc:244
+#, fuzzy, php-format
+msgid "You're about to delete the following entries %s"
+msgstr "Вы собираетесь удалить объект %s."
+
+#: admin/applications/class_applicationManagement.inc:342
+#: admin/applications/class_applicationManagement.inc:396
+#: admin/applications/class_applicationManagement.inc:426
+msgid "You are not allowed to delete this application!"
+msgstr "У вас недостаточно прав для удаления этого приложения!"
+
+#: admin/applications/class_applicationManagement.inc:389
+#, php-format
+msgid "You're about to delete the application '%s'."
+msgstr "Вы собираетесь удалить приложение \"%s\"."
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:498
+#, php-format
+msgid "Saving of mime type/generic with dn '%s' failed."
+msgstr ""
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:508
+#, fuzzy, php-format
+msgid "Removing of mime type/generic with dn '%s' failed."
+msgstr "Показать подразделения"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:521
+#, fuzzy, php-format
+msgid "Removing mime type from objectgroup '%s' failed"
+msgstr "Показать группы приложений"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:531
+#, fuzzy
+msgid "Please specify a valid name for this mime type."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:534
+#, fuzzy
+msgid "Please specify at least one file pattern."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:550
+#, fuzzy
+msgid "There's already a mime type with this 'Name'."
+msgstr "Приложение с таким именем уже существует."
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:558
+#, fuzzy
+msgid "There's already an mime with this 'Name'."
+msgstr "Приложение с таким именем уже существует."
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:714
+#, fuzzy
+msgid "Mime type generic"
+msgstr "Тип"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:719
+#: admin/mimetypes/class_mimetypeManagement.inc:24
+#, fuzzy
+msgid "Mime types"
+msgstr "Тип"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:723
+#: admin/mimetypes/generic.tpl:22
+#, fuzzy
+msgid "Mime group"
+msgstr "Основная группа"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:727
+#, fuzzy
+msgid "Left click action"
+msgstr "Создать приложения"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:729
+#: admin/mimetypes/generic.tpl:99
+#, fuzzy
+msgid "File patterns"
+msgstr "Фильтры"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:730
+#, fuzzy
+msgid "Embedded applications"
+msgstr "Используемые приложения"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:35
+#: admin/mimetypes/class_divListMimeTypes.inc:36
+#, fuzzy
+msgid "List of defined mime types"
+msgstr "Готовые \"черные списки\""
+
+#: admin/mimetypes/class_divListMimeTypes.inc:37
+#, fuzzy
+msgid ""
+"This menu allows you to add, edit and remove selected mime types. You may "
+"want to use the range selector on top of the mime type listbox, when working "
+"with a large number of mime types."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"группы пользователей. Если у вас их достаточно большое количество, вы можете "
+"использовать групповое выделение."
+
+#: admin/mimetypes/class_divListMimeTypes.inc:60
+#, fuzzy
+msgid "Mime type name"
+msgstr "Тип"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:67
+#, fuzzy
+msgid "Display mime types matching"
+msgstr "Показать совпадения номеров"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:176
+#: admin/mimetypes/class_divListMimeTypes.inc:230
+#: admin/mimetypes/paste_generic.tpl:13 admin/mimetypes/generic.tpl:12
+#, fuzzy
+msgid "Mime type"
+msgstr "Тип"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:311
+#, fuzzy
+msgid "Number of listed mimetypes"
+msgstr "Готовые \"черные списки\""
+
+#: admin/mimetypes/class_mimetypeManagement.inc:25
+#, fuzzy
+msgid "Manage mime types"
+msgstr "Системы"
+
+#: admin/mimetypes/class_mimetypeManagement.inc:342
+#: admin/mimetypes/class_mimetypeManagement.inc:397
+#: admin/mimetypes/class_mimetypeManagement.inc:426
+#, fuzzy
+msgid "You are not allowed to delete this mime type!"
+msgstr "У вас недостаточно прав для удаления этого объекта!"
+
+#: admin/mimetypes/class_mimetypeManagement.inc:390
+#, fuzzy, php-format
+msgid "You're about to delete the mime type '%s'."
+msgstr "Вы собираетесь удалить объект %s."
+
+#: admin/mimetypes/paste_generic.tpl:16 admin/mimetypes/generic.tpl:16
+#, fuzzy
+msgid "Please enter a name for the mime type here"
+msgstr "Введите корректный номер телефона!"
+
+#: admin/mimetypes/paste_generic.tpl:24
+#, fuzzy
+msgid "Please specify a description for this mime type here"
+msgstr "Укажите корректный номер телефона."
+
+#: admin/mimetypes/generic.tpl:26
+#, fuzzy
+msgid "Categorize this mime type"
+msgstr "Категория этой ветки"
+
+#: admin/mimetypes/generic.tpl:38
+#, fuzzy
+msgid "Please specify a description"
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/mimetypes/generic.tpl:68
+#, fuzzy
+msgid "Mime icon"
+msgstr "Основная группа"
+
+#: admin/mimetypes/generic.tpl:80
+msgid "Update mime type icon"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:94
+msgid "Left click"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:105
+#, fuzzy
+msgid "Please specify a new file pattern"
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/mimetypes/generic.tpl:108
+msgid "Add a new file pattern"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:124 admin/mimetypes/generic.tpl:184
+#, fuzzy
+msgid "Enter an application name here"
+msgstr "Приложение"
+
+#: admin/mimetypes/generic.tpl:127 admin/mimetypes/generic.tpl:188
+#, fuzzy
+msgid "Add application"
+msgstr "приложения"
+
+#: admin/mimetypes/generic.tpl:138
+msgid "Embedding"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:151
+msgid "Show file in embedded viewer"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:158
+msgid "Show file in external viewer"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:165
+msgid "Ask whether to save to local disk"
+msgstr ""
+
+#: admin/mimetypes/main.inc:42 admin/mimetypes/main.inc:44
+#, fuzzy
+msgid "Mimetype management"
+msgstr "Управление системами"
+
+#: admin/groups/apps/application_options.tpl:2
+msgid "Application options"
+msgstr "Параметры приложения"
+
+#: admin/groups/apps/class_groupApplication.inc:412
+msgid "This 'dn' is no appgroup."
+msgstr "Это DN соответствует не группе приложений."
+
+#: admin/groups/apps/class_groupApplication.inc:420
+msgid "Remove applications"
+msgstr "Удалить приложения"
+
+#: admin/groups/apps/class_groupApplication.inc:421
+msgid ""
+"This group has application features enabled. You can disable them by "
+"clicking below."
+msgstr ""
+"Этой группе доступны приложения. Вы можете запретить доступ к ним, щелкнув "
+"ниже."
+
+#: admin/groups/apps/class_groupApplication.inc:423
+msgid "Create applications"
+msgstr "Создать приложения"
+
+#: admin/groups/apps/class_groupApplication.inc:424
+msgid ""
+"This group has application features disabled. You can enable them by "
+"clicking below."
+msgstr ""
+"Этой группе недоступны приложения. Вы можете разрешить доступ к ним, щелкнув "
+"ниже."
+
+#: admin/groups/apps/class_groupApplication.inc:432
+msgid "ACL"
+msgstr "Доступ"
+
+#: admin/groups/apps/class_groupApplication.inc:433
+#, fuzzy
+msgid "Insufficient permissions"
+msgstr "Права для членов группы"
+
+#: admin/groups/apps/class_groupApplication.inc:435
+msgid ""
+"You do not have permission to query application entries. All your changes "
+"will not be saved."
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:460
+#, fuzzy
+msgid "Invalid character in category name."
+msgstr "Значение поля \"Имя\" содержит недопустимые символы."
+
+#: admin/groups/apps/class_groupApplication.inc:468
+#, fuzzy
+msgid "The specified category already exists."
+msgstr "Подразделение с таким именем уже существует."
+
+#: admin/groups/apps/class_groupApplication.inc:588
+msgid "The selected application name is not uniq. Please check your LDAP."
+msgstr ""
+"Выбранное имя приложения не уникально. Проверьте свою базу данных LDAP."
+
+#: admin/groups/apps/class_groupApplication.inc:626
+msgid "The selected application has no options."
+msgstr "У выбранного приложения нет параметров."
+
+#: admin/groups/apps/class_groupApplication.inc:690
+#: admin/groups/apps/class_groupApplication.inc:759
+msgid "Back"
+msgstr "Назад"
+
+#: admin/groups/apps/class_groupApplication.inc:714
+#, fuzzy
+msgid "department"
+msgstr "подразделения"
+
+#: admin/groups/apps/class_groupApplication.inc:723
+#, fuzzy
+msgid "application"
+msgstr "приложения"
+
+#: admin/groups/apps/class_groupApplication.inc:739
+#: admin/groups/apps/class_groupApplication.inc:781
+#, fuzzy
+msgid "Delete entry"
+msgstr "Удалить"
+
+#: admin/groups/apps/class_groupApplication.inc:741
+#: admin/groups/apps/class_groupApplication.inc:776
+msgid "Move up"
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:744
+#: admin/groups/apps/class_groupApplication.inc:779
+#, fuzzy
+msgid "Move down"
+msgstr "Домен"
+
+#: admin/groups/apps/class_groupApplication.inc:774
+msgid "Insert seperator"
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:789
+msgid "Edit entry"
+msgstr "Редактиовать объект"
+
+#: admin/groups/apps/class_groupApplication.inc:819
+#, fuzzy
+msgid "This application is no longer available."
+msgstr "У выбранного приложения нет параметров."
+
+#: admin/groups/apps/class_groupApplication.inc:822
+#, php-format
+msgid "This application is not available in any release named %s."
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:826
+#, fuzzy
+msgid "Check parameter"
+msgstr "Изменить параметры"
+
+#: admin/groups/apps/class_groupApplication.inc:828
+#, fuzzy
+msgid "This application has changed parameters."
+msgstr "У выбранного приложения нет параметров."
+
+#: admin/groups/apps/class_groupApplication.inc:963
+#, fuzzy, php-format
+msgid "Removing of groups/applications with dn '%s' failed."
+msgstr "Показать группы приложений"
+
+#: admin/groups/apps/class_groupApplication.inc:1027
+#, fuzzy, php-format
+msgid "Saving of groups/applications with dn '%s' failed."
+msgstr "Приложение"
+
+#: admin/groups/apps/class_groupApplication.inc:1078
+#, php-format
+msgid ""
+"Can't resolve the release name '%s', setting release name to '%s'. Possibly "
+"the objects base has changed."
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:1083
+msgid ""
+"There are no releases available. You will not be able to select another "
+"release."
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:1234
+#, fuzzy
+msgid "Group applications"
+msgstr "Показать приложения"
+
+#: admin/groups/apps/class_groupApplication.inc:1243
+#, fuzzy
+msgid "Application parameter"
+msgstr "Приложение"
+
+#: admin/groups/apps/application.tpl:9
+#, fuzzy
+msgid "Modify application settings."
+msgstr "Параметры приложения"
+
+#: admin/groups/apps/application.tpl:15
+#, fuzzy
+msgid "Modify application settings for groups."
+msgstr "Показать группы приложений"
+
+#: admin/groups/apps/application.tpl:23
+#, fuzzy
+msgid "Release focus"
+msgstr "Набор правил"
+
+#: admin/groups/apps/application.tpl:27
+#, fuzzy
+msgid "Select release name"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: admin/groups/apps/application.tpl:41
+msgid "Used applications"
+msgstr "Используемые приложения"
+
+#: admin/groups/apps/application.tpl:48
+#, fuzzy
+msgid "Add category"
+msgstr "Категория"
+
+#: admin/groups/apps/application.tpl:55
+msgid "Available applications"
+msgstr "Доступные приложения"
+
+#: admin/devices/deviceGeneric.tpl:2
+#: admin/devices/class_deviceManagement.inc:7
+#: admin/devices/paste_deviceGeneric.tpl:2
+#: admin/devices/class_deviceGeneric.inc:246
+msgid "Devices"
+msgstr "Устройства"
+
+#: admin/devices/deviceGeneric.tpl:18
+#: admin/devices/class_divListDevices.inc:52
+#: admin/devices/paste_deviceGeneric.tpl:9
+#, fuzzy
+msgid "Device name"
+msgstr "Имя сервера"
+
+#: admin/devices/deviceGeneric.tpl:32
+#, fuzzy
+msgid "Device type"
+msgstr "Имя сервера"
+
+#: admin/devices/deviceGeneric.tpl:35
+#, fuzzy
+msgid "Choose the device type"
+msgstr "Выберите тип мыши"
+
+#: admin/devices/deviceGeneric.tpl:45
+#, fuzzy
+msgid "Serial number"
+msgstr "Терминал"
+
+#: admin/devices/deviceGeneric.tpl:45
+#, fuzzy
+msgid "(iSerial)"
+msgstr "терминалы"
+
+#: admin/devices/deviceGeneric.tpl:53
+#, fuzzy
+msgid "Vendor-ID"
+msgstr "Идентификатор отправителя"
+
+#: admin/devices/deviceGeneric.tpl:53
+#, fuzzy
+msgid "(idVendor)"
+msgstr "Идентификатор отправителя"
+
+#: admin/devices/deviceGeneric.tpl:60
+msgid "Product-ID"
+msgstr ""
+
+#: admin/devices/deviceGeneric.tpl:60
+msgid "(idProduct)"
+msgstr ""
+
+#: admin/devices/class_deviceManagement.inc:8
+#, fuzzy
+msgid "Manage devices"
+msgstr "Устройство сканирования"
+
+#: admin/devices/class_deviceManagement.inc:277
+#, fuzzy
+msgid "You are not allowed to delete this device type!"
+msgstr "У вас недостаточно прав для удаления этого объекта!"
+
+#: admin/devices/class_deviceManagement.inc:325
+#, fuzzy, php-format
+msgid "You're about to delete the device '%s'."
+msgstr "Вы собираетесь удалить группу \"%s\"."
+
+#: admin/devices/class_deviceManagement.inc:332
+#: admin/devices/class_deviceManagement.inc:361
+#, fuzzy
+msgid "You are not allowed to delete this device!"
+msgstr "У вас недостаточно прав для удаления этой группы!"
+
+#: admin/devices/class_divListDevices.inc:33
+#: admin/devices/class_divListDevices.inc:34
+#, fuzzy
+msgid "List of defined devices"
+msgstr "Список пользователей"
+
+#: admin/devices/class_divListDevices.inc:35
+#, fuzzy
+msgid ""
+"This menu allows you to add, edit and remove selected devices. You may want "
+"to use the range selector on top of the device listbox, when working with a "
+"large number of devices."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"группы пользователей. Если у вас их достаточно большое количество, вы можете "
+"использовать групповое выделение."
+
+#: admin/devices/class_divListDevices.inc:59
+#, fuzzy
+msgid "Display devices matching"
+msgstr "Показать подходяшие адреса"
+
+#: admin/devices/class_divListDevices.inc:143
+#: admin/devices/class_divListDevices.inc:198
+#, fuzzy
+msgid "Device"
+msgstr "Устройства"
+
+#: admin/devices/class_divListDevices.inc:279
+#, fuzzy
+msgid "Number of listed devices"
+msgstr "Подразделение"
+
+#: admin/devices/class_deviceGeneric.inc:28
+msgid "Digital camera"
+msgstr ""
+
+#: admin/devices/class_deviceGeneric.inc:29
+#, fuzzy
+msgid "Harddisk"
+msgstr "Сервер"
+
+#: admin/devices/class_deviceGeneric.inc:30
+#, fuzzy
+msgid "USB stick"
+msgstr "Состояние"
+
+#: admin/devices/class_deviceGeneric.inc:31
+msgid "CD/DVD drive"
+msgstr ""
+
+#: admin/devices/class_deviceGeneric.inc:87
+#, fuzzy
+msgid "Please specify a valid name. Only 0-9 a-Z is allowed."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/devices/class_deviceGeneric.inc:90
+#, fuzzy
+msgid "Invalid character in description. Please specify a valid description."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/devices/class_deviceGeneric.inc:95
+#, fuzzy
+msgid "Please specify a valid iSerial."
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/devices/class_deviceGeneric.inc:98
+#, fuzzy
+msgid "Please specify a valid vendor ID. (2 byte hex like '0xFFFF')"
+msgstr "Укажите корректный номер телефона."
+
+#: admin/devices/class_deviceGeneric.inc:101
+#, fuzzy
+msgid "Please specify a valid product ID. (2 byte hex like '0xFFFF')"
+msgstr "Введите корректное имя пользователя!"
+
+#: admin/devices/class_deviceGeneric.inc:109
+#, fuzzy
+msgid "An Entry with this name already exists."
+msgstr "Подразделение с таким именем уже существует."
+
+#: admin/devices/class_deviceGeneric.inc:158
+#, fuzzy, php-format
+msgid "Can't remove the device '%s' it is still in use be this user(s) : %s"
+msgstr "У вас недостаточно прав для удаления этого группового объекта!"
+
+#: admin/devices/class_deviceGeneric.inc:186
+msgid "Device could not be saved."
+msgstr ""
+
+#: admin/devices/class_deviceGeneric.inc:241
+#, fuzzy
+msgid "Device generic"
+msgstr "Имя сервера"
+
+#: admin/devices/remove.tpl:6
+#, fuzzy
+msgid ""
+"This may be used by several users/groups. Please double check if your really "
+"want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"Это приложение может использоваться несколькими группами. Подумайте еще раз, "
+"действительно ли вы хотите удалить его, так как GOsa не сможет отменить "
+"результаты этой операции."
+
+#: admin/devices/main.inc:42 admin/devices/main.inc:44
+#, fuzzy
+msgid "Device management"
+msgstr "Название"

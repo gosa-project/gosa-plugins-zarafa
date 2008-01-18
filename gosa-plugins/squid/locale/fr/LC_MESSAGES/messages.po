@@ -1,0 +1,110 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/squid/proxy.tpl:37
+#: personal/connectivity/squid/class_proxyAccount.inc:321
+msgid "Proxy account"
+msgstr "Compte Proxy"
+
+#: personal/connectivity/squid/proxy.tpl:48
+msgid "Filter unwanted content (i.e. pornographic or violence related)"
+msgstr "Filtrer le contenu non désiré (i.e. pornographique ou violent)"
+
+#: personal/connectivity/squid/proxy.tpl:58
+msgid "Limit proxy access to working time"
+msgstr "Accès au proxy autorisé durant la plage horaire suivante"
+
+#: personal/connectivity/squid/proxy.tpl:100
+#: personal/connectivity/squid/class_proxyAccount.inc:332
+msgid "Restrict proxy usage by quota"
+msgstr "Restreindre la quantité de données téléchargeables"
+
+#: personal/connectivity/squid/proxy.tpl:115
+msgid "per"
+msgstr "par"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:5
+#: personal/connectivity/squid/class_proxyAccount.inc:320
+msgid "Proxy"
+msgstr "Proxy"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:6
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "KB"
+msgstr "KB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:92
+msgid "GB"
+msgstr "GB"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "hour"
+msgstr "heure"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "day"
+msgstr "jour"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "week"
+msgstr "semaine"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:93
+msgid "month"
+msgstr "mois"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:174
+#, php-format
+msgid "Removing of user/proxy account with dn '%s' failed."
+msgstr ""
+"La suppression du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:195
+msgid "Numerical value for Quota Setting is empty."
+msgstr "La valeur pour le quota est vide."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:197
+msgid "Numerical value for Quota Setting is not valid."
+msgstr "La valeur dans le champ 'Paramètres du quota' n'est pas valide."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:300
+#, php-format
+msgid "Saving of user/proxy account with dn '%s' failed."
+msgstr ""
+"La sauvegarde du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
+
+#: personal/connectivity/squid/class_proxyAccount.inc:321
+msgid "Connectivity addon"
+msgstr "Connectivité"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:325
+msgid "My account"
+msgstr "Mon Compte"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:330
+msgid "Filter unwanted content"
+msgstr "Filtrer le contenu non désiré"
+
+#: personal/connectivity/squid/class_proxyAccount.inc:331
+msgid "Limit proxy access"
+msgstr "Accès au proxy autorisé durant la plage horaire suivante"
