@@ -10,6 +10,7 @@
 #      OPTIONS:  ---
 # REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl 
 #                libdata-dumper-simple-perl libdbd-sqlite3-perl libnet-ldap-perl
+#                libpoe-perl
 #         BUGS:  ---
 #        NOTES:
 #       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
@@ -18,7 +19,6 @@
 #      CREATED:  12.09.2007 08:54:41 CEST
 #     REVISION:  ---
 #===============================================================================
-
 
 use strict;
 use warnings;
@@ -369,374 +369,6 @@ $SIG{INT} = \&sig_int_handler;
 
 
 #===  FUNCTION  ================================================================
-#         NAME:  activating_child
-#   PARAMETERS:  msg - string - incoming message
-#                host - string - host from which the incomming message comes
-#      RETURNS:  nothing
-#  DESCRIPTION:  handels the distribution of incoming messages to working childs
-#===============================================================================
-sub activating_child {
-    my ($msg, $host, $client) = @_;
-    my $child = &get_processing_child();
-	if(!$child) {
-		daemon_log("Got no child! Trying again", 5);
-		sleep(1);
-		$child = &get_processing_child();
-		if(!$child) {
-			daemon_log("Got no child at the second try! Trying again", 5);
-		}
-	}
-    my $pipe_wr = $$child{'pipe_wr'};
-    my $pipe_rd = $$child{'pipe_rd'};
-    $$child{client_ref} = $client;
-    
-    daemon_log("activating: childpid:$$child{'pid'}", 5);
-
-    print $pipe_wr $msg.".".$host."\n";
-
-    return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  get_processing_child
-#   PARAMETERS:  nothing
-#      RETURNS:  child - hash - holding the process id and the references to the pipe
-#                               handles pipe_wr and pipe_rd
-#  DESCRIPTION:  handels the forking, reactivating and keeping alive tasks
-#===============================================================================
-sub get_processing_child {
-    my $child;
-
-    while(my ($key, $val) = each(%free_child)) {
-        my $exitus_pid = waitpid($key, WNOHANG);
-        if($exitus_pid != 0) {
-            delete $free_child{$key};
-        }
-        daemon_log("free child:$key", 5);
-    }
-    # check @free_child and @busy_child
-    my $free_len = scalar(keys(%free_child));
-    my $busy_len = scalar(keys(%busy_child));
-    daemon_log("free children $free_len, busy children $busy_len", 5);
-
-    # if there is a free child, let the child work
-    if($free_len > 0){
-        my @keys = keys(%free_child);
-        $child = $free_child{$keys[0]};
-        if(defined $child) {
-            $busy_child{$$child{'pid'}} = $child ;
-            delete $free_child{$$child{'pid'}};
-        }
-        return $child;
-    }
-
-    # no free child, try to fork another one
-    if($free_len + $busy_len < $child_max) {
-
-        daemon_log("not enough children, create a new one", 5);
-
-        # New pipes for communication
-        my( $PARENT_wr, $PARENT_rd );
-        my( $CHILD_wr, $CHILD_rd );
-        pipe( $CHILD_rd,  $PARENT_wr );
-        pipe( $PARENT_rd, $CHILD_wr  );
-        $PARENT_wr->autoflush(1);
-        $CHILD_wr->autoflush(1);
-
-        ############
-        # fork child
-        ############
-        my $child_pid = fork();
-        
-        #CHILD
-        if($child_pid == 0) {
-            # Close unused pipes
-            close( $CHILD_rd );
-            close( $CHILD_wr );
-            while( 1 ) {
-                my $rbits = "";
-                vec( $rbits, fileno $PARENT_rd , 1 ) = 1;
-                my $nf = select($rbits, undef, undef, $child_timeout);
-                if($nf < 0 ) {
-                    die "select(): $!\n";
-                } elsif (! $nf) {
-                    # if already child_min childs are alive, then leave loop
-                    $free_len = scalar(keys(%free_child));
-                    $busy_len = scalar(keys(%busy_child));
-                    if($free_len + $busy_len >= $child_min) {
-                        last;
-                    } else {
-                        redo;
-                    }
-                }
-
-                # a job for a child arise
-                if ( vec $rbits, fileno $PARENT_rd, 1 ) {
-                    # read everything from pipe
-                    my $msg = "";
-                    $PARENT_rd->blocking(0);
-                    while(1) {
-                        my $read = <$PARENT_rd>;
-                        if(not defined $read) { last}
-                        $msg .= $read;
-                    }
-
-                    ######################################
-                    # forward msg to all imported modules 
-                    no strict "refs";
-                    my $answer;
-                    my %act_modules = %$known_modules;
-                    while( my ($module, $info) = each(%act_modules)) {
-                            my $tmp = &{ $module."::process_incoming_msg" }($msg);
-                            if (defined $tmp) {
-                                $answer = $tmp;
-                            }
-                    }        
-                    daemon_log("processing of msg finished", 5);
- 
-                   if (defined $answer) {
-                        print $PARENT_wr $answer."\n";
-                        print $PARENT_wr "ENDMESSAGE\n";
-                        my $len_answer = length $answer;
-                        daemon_log("with answer: length of answer: $len_answer", 7);
-                        daemon_log("\n$answer", 7);
-                    } else {
-                        print $PARENT_wr "done"."\n";
-                        print $PARENT_wr "ENDMESSAGE\n";
-                    }
-                    redo;
-                }
-            }
-            # childs leaving the loop are allowed to die
-            exit(0);
-
-
-        #PARENT
-        } else {
-            # Close unused pipes
-            close( $PARENT_rd );
-            close( $PARENT_wr );
-
-            # add child to child alive hash
-            my %child_hash = (
-                    'pid' => $child_pid,
-                    'pipe_wr' => $CHILD_wr,
-                    'pipe_rd' => $CHILD_rd,
-                    'client_ref' => "",
-                    );
-
-            $child = \%child_hash;
-            $busy_child{$$child{'pid'}} = $child;
-            return $child;
-        }
-    }
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  read_from_socket
-#   PARAMETERS:  socket fh - 
-#      RETURNS:  result string - readed characters from socket
-#  DESCRIPTION:  reads data from socket in 16 byte steps
-#===============================================================================
-sub read_from_socket {
-    my ($socket) = @_;
-    my $result = "";
-
-    $socket->blocking(1);
-    $result = <$socket>;
-
-    $socket->blocking(0);
-    while ( my $char = <$socket> ) {
-        if (not defined $char) { last }
-        $result .= $char;
-    }
-
-    return $result;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  print_known_daemons
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  nomen est omen
-#===============================================================================
-#sub print_known_daemons {
-#    my ($tmp) = @_ ;
-#    print "####################################\n";
-#    print "# status of known_daemons\n";
-#    $shmda->shlock(LOCK_EX);
-#    my @hosts = keys %$known_daemons;
-#    foreach my $host (@hosts) {
-#        my $status = $known_daemons->{$host}->{status} ;
-#        my $passwd = $known_daemons->{$host}->{passwd};
-#        my $timestamp = $known_daemons->{$host}->{timestamp};
-#        print "$host\n";
-#        print "\tstatus:    $status\n";
-#        print "\tpasswd:    $passwd\n";
-#        print "\ttimestamp: $timestamp\n";
-#    }
-#    $shmda->shunlock(LOCK_EX);
-#    print "####################################\n";
-#    return;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_known_daemon
-#   PARAMETERS:  hostname - string - key for the hash known_daemons
-#      RETURNS:  nothing
-#  DESCRIPTION:  creates a dummy entry for hostname in known_daemons
-#===============================================================================
-#sub create_known_daemon {
-#    my ($hostname) = @_;
-#    $shmda->shlock(LOCK_EX);
-#    $known_daemons->{$hostname} = {};
-#    $known_daemons->{$hostname}->{status} = "none";
-#    $known_daemons->{$hostname}->{passwd} = "none";
-#    $known_daemons->{$hostname}->{timestamp} = "none";
-#    $shmda->shunlock(LOCK_EX); 
-#    return;  
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  add_content2known_daemons
-#   PARAMETERS:  hostname - string - ip address and port of host (required)
-#                status - string - (optional)
-#                passwd - string - (optional)
-#                mac_address - string - mac address of host (optional)
-#      RETURNS:  nothing
-#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
-#===============================================================================
-#sub add_content2known_daemons {
-#    my $arg = {
-#        hostname => undef, status => undef, passwd => undef,
-#        mac_address => undef, events => undef, 
-#        @_ };
-#    my $hostname = $arg->{hostname};
-#    my $status = $arg->{status};
-#    my $passwd = $arg->{passwd};
-#    my $mac_address = $arg->{mac_address};
-#    my $events = $arg->{events};
-#
-#    if (not defined $hostname) {
-#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-#        return;
-#    }
-#
-#    my ($seconds, $minutes, $hours, $monthday, $month,
-#    $year, $weekday, $yearday, $sommertime) = localtime(time);
-#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-#    $month+=1;
-#    $month = $month < 10 ? $month = "0".$month : $month;
-#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-#    $year+=1900;
-#    my $t = "$year$month$monthday$hours$minutes$seconds";
-#    
-#    $shmda->shlock(LOCK_EX);
-#    if (defined $status) {
-#        $known_daemons->{$hostname}->{status} = $status;
-#    }
-#    if (defined $passwd) {
-#        $known_daemons->{$hostname}->{passwd} = $passwd;
-#    }
-#    if (defined $mac_address) {
-#        $known_daemons->{$hostname}->{mac_address} = $mac_address;
-#    }
-#    if (defined $events) {
-#        $known_daemons->{$hostname}->{events} = $events;
-#    }
-#    $known_daemons->{$hostname}->{timestamp} = $t;
-#    $shmda->shlock(LOCK_EX);
-#    return;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  update_known_daemons
-#   PARAMETERS:  hostname - string - ip address and port of host (required)
-#                status - string - (optional)
-#                passwd - string - (optional)
-#                client - string - ip address and port of client (optional)
-#      RETURNS:  nothing
-#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
-#===============================================================================
-#sub update_known_daemons {
-#    my $arg = {
-#        hostname => undef, status => undef, passwd => undef,
-#        @_ };
-#    my $hostname = $arg->{hostname};
-#    my $status = $arg->{status};
-#    my $passwd = $arg->{passwd};
-#
-#    if (not defined $hostname) {
-#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
-#        return;
-#    }
-#
-#    my ($seconds, $minutes, $hours, $monthday, $month,
-#    $year, $weekday, $yearday, $sommertime) = localtime(time);
-#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-#    $month+=1;
-#    $month = $month < 10 ? $month = "0".$month : $month;
-#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-#    $year+=1900;
-#    my $t = "$year$month$monthday$hours$minutes$seconds";
-#
-#    $shmda->shlock(LOCK_EX);
-#    if (defined $status) {
-#        $known_daemons->{$hostname}->{status} = $status;
-#    }
-#    if (defined $passwd) {
-#        $known_daemons->{$hostname}->{passwd} = $passwd;
-#    }
-#    $known_daemons->{$hostname}->{timestamp} = $t;
-#    $shmda->shunlock(LOCK_EX);
-#    return;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  print_known_clients 
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  nomen est omen
-#===============================================================================
-#sub print_known_clients {
-#
-#    print "####################################\n";
-#    print "# status of known_clients\n";
-#    $shmcl->shlock(LOCK_EX);
-#    my @hosts = keys %$known_clients;
-#    if (@hosts) {
-#        foreach my $host (@hosts) {
-#            my $status = $known_clients->{$host}->{status} ;
-#            my $passwd = $known_clients->{$host}->{passwd};
-#            my $timestamp = $known_clients->{$host}->{timestamp};
-#            my $mac_address = $known_clients->{$host}->{mac_address};
-#            my $events = $known_clients->{$host}->{events};
-#            print "$host\n";
-#            print "\tstatus:      $status\n";
-#            print "\tpasswd:      $passwd\n";
-#            print "\ttimestamp:   $timestamp\n";
-#            print "\tmac_address: $mac_address\n";
-#            print "\tevents:      $events\n";
-#        }
-#    }
-#    $shmcl->shunlock(LOCK_EX);
-#    print "####################################\n";
-#    return;
-#}
-
-
-#===  FUNCTION  ================================================================
 #         NAME:  create_known_client
 #   PARAMETERS:  hostname - string - key for the hash known_clients
 #      RETURNS:  nothing
@@ -762,7 +394,6 @@ sub create_known_client {
 }
 
 #==== MAIN = main ==============================================================
-
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
 GetOptions("h|help" => \&usage,
@@ -777,7 +408,6 @@ GetOptions("h|help" => \&usage,
 &check_cmdline_param ;
 &read_configfile;
 &check_pid;
-
 
 $SIG{CHLD} = 'IGNORE';
 
@@ -1045,7 +675,7 @@ my $rbits = my $wbits = my $ebits = "";
 #
 #
 #}
-print STDERR "Server Port: $server_port\n";
+
 POE::Component::Server::TCP->new
 (
 	Port => $server_port,
@@ -1057,7 +687,6 @@ exit;
 
 sub client_input {
 	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
-	#print STDERR Dumper($heap);
 	######################################
 	# forward msg to all imported modules 
 	no strict "refs";
@@ -1078,5 +707,4 @@ sub client_input {
 	} else {
 		$heap->{client}->put("done\n");
 	}
-	#redo;
 }

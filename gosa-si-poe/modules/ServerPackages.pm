@@ -358,7 +358,7 @@ sub process_incoming_msg {
     my $host_name;
     my $host_key;
 
-#    # check wether incoming msg is a new msg
+    # check wether incoming msg is a new msg
     $host_name = $server_address;
     $host_key = $server_passwd;
     &main::daemon_log("ServerPackage: host_name: $host_name", 7);
@@ -377,34 +377,34 @@ sub process_incoming_msg {
         $host_key = undef;
     } 
 
-#    # check wether incoming msg is from a known_server
-#    if( not defined $msg ) {
-#        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
-#        while( my ($hit_num, $hit) = each %{ $query_res } ) {  
-#            $host_name = $hit->{hostname};
-#            if( not $host_name =~ "^$host") {
-#                next;
-#            }
-#            $host_key = $hit->{hostkey};
-#            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
-#            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
-#            eval{
-#                my $key_cipher = &create_ciphering($host_key);
-#                $msg = &decrypt_msg($crypted_msg, $key_cipher);
-#                $msg_hash = &transform_msg2hash($msg);
-#            };
-#            if($@) {
-#                &main::daemon_log("ServerPackage: deciphering raise error", 7);
-#                &main::daemon_log("$@", 8);
-#                $msg = undef;
-#                $msg_hash = undef;
-#                $host_name = undef;
-#                $host_key = undef;
-#            } else {
-#                last;
-#            }
-#        }
-#    }
+    # check wether incoming msg is from a known_server
+    if( not defined $msg ) {
+        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {  
+            $host_name = $hit->{hostname};
+            if( not $host_name =~ "^$host") {
+                next;
+            }
+            $host_key = $hit->{hostkey};
+            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
+            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
+            eval{
+                my $key_cipher = &create_ciphering($host_key);
+                $msg = &decrypt_msg($crypted_msg, $key_cipher);
+                $msg_hash = &transform_msg2hash($msg);
+            };
+            if($@) {
+                &main::daemon_log("ServerPackage: deciphering raise error", 7);
+                &main::daemon_log("$@", 8);
+                $msg = undef;
+                $msg_hash = undef;
+                $host_name = undef;
+                $host_key = undef;
+            } else {
+                last;
+            }
+        }
+    }
 
     # check wether incoming msg is from a known_client
     if( not defined $msg ) {
@@ -445,70 +445,70 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0]; 
     my $source = @{$msg_hash->{source}}[0];
 
-#    &main::daemon_log("recieve '$header' at ServerPackages from $host", 1);
+    &main::daemon_log("receive '$header' at ServerPackages from $host", 1);
     &main::daemon_log("ServerPackages: msg to process: \n$msg", 5);
 
-#    my @targets = @{$msg_hash->{target}};
-#    my $len_targets = @targets;
-#    if ($len_targets == 0){     
-#        &main::daemon_log("ERROR: ServerPackages: no target specified for msg $header", 1);
-#
-#    }  elsif ($len_targets == 1){
-#        # we have only one target symbol
-#        my $target = $targets[0];
-#        &main::daemon_log("SeverPackages: msg is for: $target", 7);
-#
-#        # msg is for server
-#        if ($header eq 'new_passwd'){ &new_passwd($msg_hash)}
-#        elsif ($header eq 'here_i_am') { &here_i_am($msg_hash)}
-#        elsif ($header eq 'who_has') { &who_has($msg_hash) }
-#        elsif ($header eq 'who_has_i_do') { &who_has_i_do($msg_hash)}
-#        elsif ($header eq 'update_status') { &update_status($msg_hash) }
-#        elsif ($header eq 'got_ping') { &got_ping($msg_hash)}
-#        elsif ($header eq 'get_load') { &execute_actions($msg_hash)}
-#        else { 
-#            if ($target eq "*") {
-#                # msg is for all clients
-#                my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
-#                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-#                    $host_name = $hit->{hostname};
-#                    $host_key = $hit->{hostkey};
-#                    $msg_hash->{target} = [$host_name];
-#                    &send_msg_hash2address($msg_hash, $host_name, $host_key);
-#                }
-#
-#            } else {
-#                # msg is for one host
-#                my $host_key;
-#
-#
-#                if( not defined $host_key ) {
-#                    my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
-#                    if( 1 == keys %{$query_res} ) {
-#                        $host_key = $query_res->{1}->{host_key};
-#                    }
-#                } 
-#
-#                if( not defined $host_key ) {
-#                    my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
-#                    if( 1 == keys %{$query_res} ) {
-#                        $host_key = $query_res->{1}->{host_key};
-#                    }
-#                }
-#
-#                if( not defined $host_key ) { 
-#                    &main::daemon_log("ERROR: ServerPackages: target '".$target.
-#                            "' is not known neither in known_clients nor in known_server",1);
-#                } else {
-#                    &send_msg_hash2address($msg_hash, $target, $host_key);
-#                }               
-#            }
-#        }
-#
-#    } elsif ($len_targets > 1 ) {
-#        # we have more than one target 
-#        # TODO to be implemented
-#    }
+    my @targets = @{$msg_hash->{target}};
+    my $len_targets = @targets;
+    if ($len_targets == 0){     
+        &main::daemon_log("ERROR: ServerPackages: no target specified for msg $header", 1);
+
+    }  elsif ($len_targets == 1){
+        # we have only one target symbol
+        my $target = $targets[0];
+        &main::daemon_log("SeverPackages: msg is for: $target", 7);
+
+        # msg is for server
+        if ($header eq 'new_passwd'){ &new_passwd($msg_hash)}
+        elsif ($header eq 'here_i_am') { &here_i_am($msg_hash)}
+        elsif ($header eq 'who_has') { &who_has($msg_hash) }
+        elsif ($header eq 'who_has_i_do') { &who_has_i_do($msg_hash)}
+        elsif ($header eq 'update_status') { &update_status($msg_hash) }
+        elsif ($header eq 'got_ping') { &got_ping($msg_hash)}
+        elsif ($header eq 'get_load') { &execute_actions($msg_hash)}
+        else { 
+            if ($target eq "*") {
+                # msg is for all clients
+                my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                    $host_name = $hit->{hostname};
+                    $host_key = $hit->{hostkey};
+                    $msg_hash->{target} = [$host_name];
+                    &send_msg_hash2address($msg_hash, $host_name, $host_key);
+                }
+
+            } else {
+                # msg is for one host
+                my $host_key;
+
+
+                if( not defined $host_key ) {
+                    my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
+                    if( 1 == keys %{$query_res} ) {
+                        $host_key = $query_res->{1}->{host_key};
+                    }
+                } 
+
+                if( not defined $host_key ) {
+                    my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
+                    if( 1 == keys %{$query_res} ) {
+                        $host_key = $query_res->{1}->{host_key};
+                    }
+                }
+
+                if( not defined $host_key ) { 
+                    &main::daemon_log("ERROR: ServerPackages: target '".$target.
+                            "' is not known neither in known_clients nor in known_server",1);
+                } else {
+                    &send_msg_hash2address($msg_hash, $target, $host_key);
+                }               
+            }
+        }
+
+    } elsif ($len_targets > 1 ) {
+        # we have more than one target 
+        # TODO to be implemented
+    }
 
     return ;
 }
