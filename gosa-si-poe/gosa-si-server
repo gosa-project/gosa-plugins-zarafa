@@ -1,0 +1,1082 @@
+#!/usr/bin/perl
+#===============================================================================
+#
+#         FILE:  gosa-sd
+#
+#        USAGE:  ./gosa-sd
+#
+#  DESCRIPTION:
+#
+#      OPTIONS:  ---
+# REQUIREMENTS:  libconfig-inifiles-perl libcrypt-rijndael-perl libxml-simple-perl 
+#                libdata-dumper-simple-perl libdbd-sqlite3-perl libnet-ldap-perl
+#         BUGS:  ---
+#        NOTES:
+#       AUTHOR:   (Andreas Rettenberger), <rettenberger@gonicus.de>
+#      COMPANY:
+#      VERSION:  1.0
+#      CREATED:  12.09.2007 08:54:41 CEST
+#     REVISION:  ---
+#===============================================================================
+
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Config::IniFiles;
+use POSIX;
+use Time::HiRes qw( gettimeofday );
+
+use Fcntl;
+use IO::Socket::INET;
+use IO::Handle;
+use IO::Select;
+use Symbol qw(qualify_to_ref);
+use Crypt::Rijndael;
+use MIME::Base64;
+use Digest::MD5  qw(md5 md5_hex md5_base64);
+use XML::Simple;
+use Data::Dumper;
+use Sys::Syslog qw( :DEFAULT setlogsock);
+use Cwd;
+use File::Spec;
+use GOSA::GosaSupportDaemon;
+use GOSA::DBsqlite;
+use POE qw(Component::Server::TCP);
+
+my $modules_path = "/usr/lib/gosa-si/modules";
+use lib "/usr/lib/gosa-si/modules";
+
+my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
+my ($bus, $msg_to_bus, $bus_cipher);
+my ($server, $server_mac_address, $server_events);
+my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name);
+my ($known_modules, $known_clients_file_name, $known_server_file_name);
+my ($max_clients);
+my ($pid_file, $procid, $pid, $log_file);
+my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
+my ($arp_activ, $arp_fifo, $arp_fifo_path);
+
+# variables declared in config file are always set to 'our'
+our (%cfg_defaults, $log_file, $pid_file, 
+    $bus_activ, $bus_passwd, $bus_ip, $bus_port,
+    $server_activ, $server_ip, $server_port, $server_passwd, $max_clients,
+    $arp_activ, $arp_fifo_path,
+    $gosa_activ, $gosa_passwd, $gosa_ip, $gosa_port, $gosa_timeout,
+);
+
+# additional variable which should be globaly accessable
+our $xml;
+our $server_address;
+our $bus_address;
+our $gosa_address;
+our $no_bus;
+our $no_arp;
+our $verbose;
+our $forground;
+our $cfg_file;
+
+# specifies the verbosity of the daemon_log
+$verbose = 0 ;
+
+# if foreground is not null, script will be not forked to background
+$foreground = 0 ;
+
+# specifies the timeout seconds while checking the online status of a registrating client
+$ping_timeout = 5;
+
+$no_bus = 0;
+
+$no_arp = 0;
+
+# name of table for storing gosa jobs
+our $job_queue_table_name = 'jobs';
+our $job_db;
+
+# holds all other gosa-sd as well as the gosa-sd-bus
+our $known_server_db;
+
+# holds all registrated clients
+our $known_clients_db;
+
+%cfg_defaults =
+("general" =>
+    {"log_file" => [\$log_file, "/var/run/".$0.".log"],
+    "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+    "child_max" => [\$child_max, 10],
+    "child_min" => [\$child_min, 3],
+    "child_timeout" => [\$child_timeout, 180],
+    "job_queue_timeout" => [\$job_queue_timeout, undef],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
+    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/known_server.db'],
+   },
+"bus" =>
+    {"bus_activ" => [\$bus_activ, "on"],
+    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_ip" => [\$bus_ip, "0.0.0.0"],
+    "bus_port" => [\$bus_port, "20080"],
+    },
+"server" =>
+    {"server_activ" => [\$server_activ, "on"],
+    "server_ip" => [\$server_ip, "0.0.0.0"],
+    "server_port" => [\$server_port, "20081"],
+    "server_passwd" => [\$server_passwd, ""],
+    "max_clients" => [\$max_clients, 100],
+    },
+"arp" =>
+    {"arp_activ" => [\$arp_activ, "on"],
+    "arp_fifo_path" => [\$arp_fifo_path, "/var/run/gosa-si/arp-notify"],
+    },
+"gosa" =>
+    {"gosa_activ" => [\$gosa_activ, "on"],
+    "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
+    "gosa_port" => [\$gosa_port, "20082"],
+    "gosa_passwd" => [\$gosa_passwd, "none"],
+    },
+    );
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  usage
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  print out usage text to STDERR
+#===============================================================================
+sub usage {
+    print STDERR << "EOF" ;
+usage: $0 [-hvf] [-c config]
+
+           -h        : this (help) message
+           -c <file> : config file
+           -f        : foreground, process will not be forked to background
+           -v        : be verbose (multiple to increase verbosity)
+           -no-bus   : starts $0 without connection to bus
+           -no-arp   : starts $0 without connection to arp module
+ 
+EOF
+    print "\n" ;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_configfile
+#   PARAMETERS:  cfg_file - string -
+#      RETURNS:  nothing
+#  DESCRIPTION:  read cfg_file and set variables
+#===============================================================================
+sub read_configfile {
+    my $cfg;
+    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+        if( -r $cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!\n";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+        }
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  logging
+#   PARAMETERS:  level - string - default 'info'
+#                msg - string -
+#                facility - string - default 'LOG_DAEMON'
+#      RETURNS:  nothing
+#  DESCRIPTION:  function for logging
+#===============================================================================
+sub daemon_log {
+    # log into log_file
+    my( $msg, $level ) = @_;
+    if(not defined $msg) { return }
+    if(not defined $level) { $level = 1 }
+    if(defined $log_file){
+        open(LOG_HANDLE, ">>$log_file");
+        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
+            print STDERR "cannot open $log_file: $!";
+            return }
+            chomp($msg);
+            if($level <= $verbose){
+                my ($seconds, $minutes, $hours, $monthday, $month,
+                        $year, $weekday, $yearday, $sommertime) = localtime(time);
+                $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+                $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+                $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+                my @monthnames = ("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                $month = $monthnames[$month];
+                $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+                $year+=1900;
+                my $name = $0;
+                $name =~ s/\.\///;
+
+                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+                print LOG_HANDLE $log_msg;
+                if( $foreground ) { 
+                    print STDERR $log_msg;
+                }
+            }
+        close( LOG_HANDLE );
+    }
+#log into syslog
+#    my ($msg, $level, $facility) = @_;
+#    if(not defined $msg) {return}
+#    if(not defined $level) {$level = "info"}
+#    if(not defined $facility) {$facility = "LOG_DAEMON"}
+#    openlog($0, "pid,cons,", $facility);
+#    syslog($level, $msg);
+#    closelog;
+#    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  check_cmdline_param
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  validates commandline parameter
+#===============================================================================
+sub check_cmdline_param () {
+    my $err_config;
+    my $err_counter = 0;
+	if(not defined($cfg_file)) {
+		$cfg_file = "/etc/gosa-si/server.conf";
+		if(! -r $cfg_file) {
+			$err_config = "please specify a config file";
+			$err_counter += 1;
+		}
+    }
+    if( $err_counter > 0 ) {
+        &usage( "", 1 );
+        if( defined( $err_config)) { print STDERR "$err_config\n"}
+        print STDERR "\n";
+        exit( -1 );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  check_pid
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  handels pid processing
+#===============================================================================
+sub check_pid {
+    $pid = -1;
+    # Check, if we are already running
+    if( open(LOCK_FILE, "<$pid_file") ) {
+        $pid = <LOCK_FILE>;
+        if( defined $pid ) {
+            chomp( $pid );
+            if( -f "/proc/$pid/stat" ) {
+                my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
+                if( $0 eq $stat ) {
+                    close( LOCK_FILE );
+                    exit -1;
+                }
+            }
+        }
+        close( LOCK_FILE );
+        unlink( $pid_file );
+    }
+
+    # create a syslog msg if it is not to possible to open PID file
+    if (not sysopen(LOCK_FILE, $pid_file, O_WRONLY|O_CREAT|O_EXCL, 0644)) {
+        my($msg) = "Couldn't obtain lockfile '$pid_file' ";
+        if (open(LOCK_FILE, '<', $pid_file)
+                && ($pid = <LOCK_FILE>))
+        {
+            chomp($pid);
+            $msg .= "(PID $pid)\n";
+        } else {
+            $msg .= "(unable to read PID)\n";
+        }
+        if( ! ($foreground) ) {
+            openlog( $0, "cons,pid", "daemon" );
+            syslog( "warning", $msg );
+            closelog();
+        }
+        else {
+            print( STDERR " $msg " );
+        }
+        exit( -1 );
+    }
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  import_modules
+#   PARAMETERS:  module_path - string - abs. path to the directory the modules 
+#                are stored
+#      RETURNS:  nothing
+#  DESCRIPTION:  each file in module_path which ends with '.pm' is imported by 
+#                "require 'file';"
+#===============================================================================
+sub import_modules {
+    daemon_log(" ", 1);
+
+    if (not -e $modules_path) {
+        daemon_log("ERROR: cannot find directory or directory is not readable: $modules_path", 1);   
+    }
+
+    opendir (DIR, $modules_path) or die "ERROR while loading modules from directory $modules_path : $!\n";
+    while (defined (my $file = readdir (DIR))) {
+        if (not $file =~ /(\S*?).pm$/) {
+            next;
+        }
+        eval { require $file; };
+        if ($@) {
+            daemon_log("ERROR: gosa-si-server could not load module $file", 1);
+            daemon_log("$@", 5);
+        } else {
+            my $mod_name = $1;
+            my $info = eval($mod_name.'::get_module_info()');
+            my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
+            $known_modules->{$mod_name} = $info;
+
+            daemon_log("module $mod_name loaded", 1);
+        }
+    }   
+
+    # for debugging
+    #while ( my ($module, $tag_hash) = each(%$known_modules)) {
+    #    print "\tmodule: $module"."\n";   
+    #    print "\ttags: ".join(", ", keys(%$tag_hash))."\n";
+    #}
+    close (DIR);
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  sig_int_handler
+#   PARAMETERS:  signal - string - signal arose from system
+#      RETURNS:  noting
+#  DESCRIPTION:  handels tasks to be done befor signal becomes active
+#===============================================================================
+sub sig_int_handler {
+    my ($signal) = @_;
+
+    daemon_log("shutting down gosa-si-server", 1);
+    exit(1);
+}
+$SIG{INT} = \&sig_int_handler;
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  activating_child
+#   PARAMETERS:  msg - string - incoming message
+#                host - string - host from which the incomming message comes
+#      RETURNS:  nothing
+#  DESCRIPTION:  handels the distribution of incoming messages to working childs
+#===============================================================================
+sub activating_child {
+    my ($msg, $host, $client) = @_;
+    my $child = &get_processing_child();
+	if(!$child) {
+		daemon_log("Got no child! Trying again", 5);
+		sleep(1);
+		$child = &get_processing_child();
+		if(!$child) {
+			daemon_log("Got no child at the second try! Trying again", 5);
+		}
+	}
+    my $pipe_wr = $$child{'pipe_wr'};
+    my $pipe_rd = $$child{'pipe_rd'};
+    $$child{client_ref} = $client;
+    
+    daemon_log("activating: childpid:$$child{'pid'}", 5);
+
+    print $pipe_wr $msg.".".$host."\n";
+
+    return;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_processing_child
+#   PARAMETERS:  nothing
+#      RETURNS:  child - hash - holding the process id and the references to the pipe
+#                               handles pipe_wr and pipe_rd
+#  DESCRIPTION:  handels the forking, reactivating and keeping alive tasks
+#===============================================================================
+sub get_processing_child {
+    my $child;
+
+    while(my ($key, $val) = each(%free_child)) {
+        my $exitus_pid = waitpid($key, WNOHANG);
+        if($exitus_pid != 0) {
+            delete $free_child{$key};
+        }
+        daemon_log("free child:$key", 5);
+    }
+    # check @free_child and @busy_child
+    my $free_len = scalar(keys(%free_child));
+    my $busy_len = scalar(keys(%busy_child));
+    daemon_log("free children $free_len, busy children $busy_len", 5);
+
+    # if there is a free child, let the child work
+    if($free_len > 0){
+        my @keys = keys(%free_child);
+        $child = $free_child{$keys[0]};
+        if(defined $child) {
+            $busy_child{$$child{'pid'}} = $child ;
+            delete $free_child{$$child{'pid'}};
+        }
+        return $child;
+    }
+
+    # no free child, try to fork another one
+    if($free_len + $busy_len < $child_max) {
+
+        daemon_log("not enough children, create a new one", 5);
+
+        # New pipes for communication
+        my( $PARENT_wr, $PARENT_rd );
+        my( $CHILD_wr, $CHILD_rd );
+        pipe( $CHILD_rd,  $PARENT_wr );
+        pipe( $PARENT_rd, $CHILD_wr  );
+        $PARENT_wr->autoflush(1);
+        $CHILD_wr->autoflush(1);
+
+        ############
+        # fork child
+        ############
+        my $child_pid = fork();
+        
+        #CHILD
+        if($child_pid == 0) {
+            # Close unused pipes
+            close( $CHILD_rd );
+            close( $CHILD_wr );
+            while( 1 ) {
+                my $rbits = "";
+                vec( $rbits, fileno $PARENT_rd , 1 ) = 1;
+                my $nf = select($rbits, undef, undef, $child_timeout);
+                if($nf < 0 ) {
+                    die "select(): $!\n";
+                } elsif (! $nf) {
+                    # if already child_min childs are alive, then leave loop
+                    $free_len = scalar(keys(%free_child));
+                    $busy_len = scalar(keys(%busy_child));
+                    if($free_len + $busy_len >= $child_min) {
+                        last;
+                    } else {
+                        redo;
+                    }
+                }
+
+                # a job for a child arise
+                if ( vec $rbits, fileno $PARENT_rd, 1 ) {
+                    # read everything from pipe
+                    my $msg = "";
+                    $PARENT_rd->blocking(0);
+                    while(1) {
+                        my $read = <$PARENT_rd>;
+                        if(not defined $read) { last}
+                        $msg .= $read;
+                    }
+
+                    ######################################
+                    # forward msg to all imported modules 
+                    no strict "refs";
+                    my $answer;
+                    my %act_modules = %$known_modules;
+                    while( my ($module, $info) = each(%act_modules)) {
+                            my $tmp = &{ $module."::process_incoming_msg" }($msg);
+                            if (defined $tmp) {
+                                $answer = $tmp;
+                            }
+                    }        
+                    daemon_log("processing of msg finished", 5);
+ 
+                   if (defined $answer) {
+                        print $PARENT_wr $answer."\n";
+                        print $PARENT_wr "ENDMESSAGE\n";
+                        my $len_answer = length $answer;
+                        daemon_log("with answer: length of answer: $len_answer", 7);
+                        daemon_log("\n$answer", 7);
+                    } else {
+                        print $PARENT_wr "done"."\n";
+                        print $PARENT_wr "ENDMESSAGE\n";
+                    }
+                    redo;
+                }
+            }
+            # childs leaving the loop are allowed to die
+            exit(0);
+
+
+        #PARENT
+        } else {
+            # Close unused pipes
+            close( $PARENT_rd );
+            close( $PARENT_wr );
+
+            # add child to child alive hash
+            my %child_hash = (
+                    'pid' => $child_pid,
+                    'pipe_wr' => $CHILD_wr,
+                    'pipe_rd' => $CHILD_rd,
+                    'client_ref' => "",
+                    );
+
+            $child = \%child_hash;
+            $busy_child{$$child{'pid'}} = $child;
+            return $child;
+        }
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_from_socket
+#   PARAMETERS:  socket fh - 
+#      RETURNS:  result string - readed characters from socket
+#  DESCRIPTION:  reads data from socket in 16 byte steps
+#===============================================================================
+sub read_from_socket {
+    my ($socket) = @_;
+    my $result = "";
+
+    $socket->blocking(1);
+    $result = <$socket>;
+
+    $socket->blocking(0);
+    while ( my $char = <$socket> ) {
+        if (not defined $char) { last }
+        $result .= $char;
+    }
+
+    return $result;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  print_known_daemons
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  nomen est omen
+#===============================================================================
+#sub print_known_daemons {
+#    my ($tmp) = @_ ;
+#    print "####################################\n";
+#    print "# status of known_daemons\n";
+#    $shmda->shlock(LOCK_EX);
+#    my @hosts = keys %$known_daemons;
+#    foreach my $host (@hosts) {
+#        my $status = $known_daemons->{$host}->{status} ;
+#        my $passwd = $known_daemons->{$host}->{passwd};
+#        my $timestamp = $known_daemons->{$host}->{timestamp};
+#        print "$host\n";
+#        print "\tstatus:    $status\n";
+#        print "\tpasswd:    $passwd\n";
+#        print "\ttimestamp: $timestamp\n";
+#    }
+#    $shmda->shunlock(LOCK_EX);
+#    print "####################################\n";
+#    return;
+#}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_known_daemon
+#   PARAMETERS:  hostname - string - key for the hash known_daemons
+#      RETURNS:  nothing
+#  DESCRIPTION:  creates a dummy entry for hostname in known_daemons
+#===============================================================================
+#sub create_known_daemon {
+#    my ($hostname) = @_;
+#    $shmda->shlock(LOCK_EX);
+#    $known_daemons->{$hostname} = {};
+#    $known_daemons->{$hostname}->{status} = "none";
+#    $known_daemons->{$hostname}->{passwd} = "none";
+#    $known_daemons->{$hostname}->{timestamp} = "none";
+#    $shmda->shunlock(LOCK_EX); 
+#    return;  
+#}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  add_content2known_daemons
+#   PARAMETERS:  hostname - string - ip address and port of host (required)
+#                status - string - (optional)
+#                passwd - string - (optional)
+#                mac_address - string - mac address of host (optional)
+#      RETURNS:  nothing
+#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
+#===============================================================================
+#sub add_content2known_daemons {
+#    my $arg = {
+#        hostname => undef, status => undef, passwd => undef,
+#        mac_address => undef, events => undef, 
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $passwd = $arg->{passwd};
+#    my $mac_address = $arg->{mac_address};
+#    my $events = $arg->{events};
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $t = "$year$month$monthday$hours$minutes$seconds";
+#    
+#    $shmda->shlock(LOCK_EX);
+#    if (defined $status) {
+#        $known_daemons->{$hostname}->{status} = $status;
+#    }
+#    if (defined $passwd) {
+#        $known_daemons->{$hostname}->{passwd} = $passwd;
+#    }
+#    if (defined $mac_address) {
+#        $known_daemons->{$hostname}->{mac_address} = $mac_address;
+#    }
+#    if (defined $events) {
+#        $known_daemons->{$hostname}->{events} = $events;
+#    }
+#    $known_daemons->{$hostname}->{timestamp} = $t;
+#    $shmda->shlock(LOCK_EX);
+#    return;
+#}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  update_known_daemons
+#   PARAMETERS:  hostname - string - ip address and port of host (required)
+#                status - string - (optional)
+#                passwd - string - (optional)
+#                client - string - ip address and port of client (optional)
+#      RETURNS:  nothing
+#  DESCRIPTION:  nome est omen and updates each time the timestamp of hostname
+#===============================================================================
+#sub update_known_daemons {
+#    my $arg = {
+#        hostname => undef, status => undef, passwd => undef,
+#        @_ };
+#    my $hostname = $arg->{hostname};
+#    my $status = $arg->{status};
+#    my $passwd = $arg->{passwd};
+#
+#    if (not defined $hostname) {
+#        daemon_log("ERROR: function add_content2known_daemons is not invoked with requiered parameter 'hostname'", 1);
+#        return;
+#    }
+#
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $t = "$year$month$monthday$hours$minutes$seconds";
+#
+#    $shmda->shlock(LOCK_EX);
+#    if (defined $status) {
+#        $known_daemons->{$hostname}->{status} = $status;
+#    }
+#    if (defined $passwd) {
+#        $known_daemons->{$hostname}->{passwd} = $passwd;
+#    }
+#    $known_daemons->{$hostname}->{timestamp} = $t;
+#    $shmda->shunlock(LOCK_EX);
+#    return;
+#}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  print_known_clients 
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  nomen est omen
+#===============================================================================
+#sub print_known_clients {
+#
+#    print "####################################\n";
+#    print "# status of known_clients\n";
+#    $shmcl->shlock(LOCK_EX);
+#    my @hosts = keys %$known_clients;
+#    if (@hosts) {
+#        foreach my $host (@hosts) {
+#            my $status = $known_clients->{$host}->{status} ;
+#            my $passwd = $known_clients->{$host}->{passwd};
+#            my $timestamp = $known_clients->{$host}->{timestamp};
+#            my $mac_address = $known_clients->{$host}->{mac_address};
+#            my $events = $known_clients->{$host}->{events};
+#            print "$host\n";
+#            print "\tstatus:      $status\n";
+#            print "\tpasswd:      $passwd\n";
+#            print "\ttimestamp:   $timestamp\n";
+#            print "\tmac_address: $mac_address\n";
+#            print "\tevents:      $events\n";
+#        }
+#    }
+#    $shmcl->shunlock(LOCK_EX);
+#    print "####################################\n";
+#    return;
+#}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  create_known_client
+#   PARAMETERS:  hostname - string - key for the hash known_clients
+#      RETURNS:  nothing
+#  DESCRIPTION:  creates a dummy entry for hostname in known_clients
+#===============================================================================
+sub create_known_client {
+    my ($hostname) = @_;
+
+    my $entry = { table=>'known_clients',
+        hostname=>$hostname,
+        status=>'none',
+        hostkey=>'none',
+        timestamp=>'none',
+        macaddress=>'none',
+        events=>'none',
+    };
+    my $res = $known_clients_db->add_dbentry($entry);
+    if ($res > 0) {
+        daemon_log("ERROR: cannot add entry to known_clients.db: $res", 1);
+    }
+
+    return;  
+}
+
+#==== MAIN = main ==============================================================
+
+#  parse commandline options
+Getopt::Long::Configure( "bundling" );
+GetOptions("h|help" => \&usage,
+        "c|config=s" => \$cfg_file,
+        "f|foreground" => \$foreground,
+        "v|verbose+" => \$verbose,
+        "no-bus+" => \$no_bus,
+        "no-arp+" => \$no_arp,
+           );
+
+#  read and set config parameters
+&check_cmdline_param ;
+&read_configfile;
+&check_pid;
+
+
+$SIG{CHLD} = 'IGNORE';
+
+# forward error messages to logfile
+if( ! $foreground ) {
+    open(STDERR, '>>', $log_file);
+    open(STDOUT, '>>', $log_file);
+}
+
+# Just fork, if we are not in foreground mode
+if( ! $foreground ) { 
+    chdir '/'                 or die "Can't chdir to /: $!";
+    $pid = fork;
+    setsid                    or die "Can't start a new session: $!";
+    umask 0;
+} else { 
+    $pid = $$; 
+}
+
+# Do something useful - put our PID into the pid_file
+if( 0 != $pid ) {
+    open( LOCK_FILE, ">$pid_file" );
+    print LOCK_FILE "$pid\n";
+    close( LOCK_FILE );
+    if( !$foreground ) { 
+        exit( 0 ) 
+    };
+}
+
+daemon_log(" ", 1);
+daemon_log("$0 started!", 1);
+
+# delete old DBsqlite lock files
+system('rm -f /tmp/gosa_si_lock*');
+
+# connect to gosa-si job queue
+my @job_col_names = ("id", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
+$job_db = GOSA::DBsqlite->new($job_queue_file_name);
+$job_db->create_table('jobs', \@job_col_names);
+
+# connect to known_clients_db
+my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
+$known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+$known_clients_db->create_table('known_clients', \@clients_col_names);
+
+# connect to known_server_db
+my @server_col_names = ('hostname', 'status', 'hostkey', 'timestamp');
+$known_server_db = GOSA::DBsqlite->new($known_server_file_name);
+$known_server_db->create_table('known_server', \@server_col_names);
+
+# import all modules
+&import_modules;
+
+# check wether all modules are gosa-si valid passwd check
+
+# create reading and writing vectors
+my $rbits = my $wbits = my $ebits = "";
+
+# add all module inputs to listening vector
+# while( my ($mod_name, $info) = each %$known_modules ) {
+#     my ($input_address, $input_key, $input, $input_activ, $input_type) = @{$info};
+#     vec($rbits, fileno $input, 1) = 1;   
+# 
+# }
+
+
+## start arp fifo
+#if ($no_arp > 0) {
+#    $arp_activ = "off";
+#}
+#my $my_fifo;
+#if($arp_activ eq "on") {
+#    daemon_log(" ", 1);
+#    $my_fifo = &open_fifo($arp_fifo_path);
+#    if($my_fifo == 0) { die "fifo file disappeared\n" }
+#    sysopen($arp_fifo, $arp_fifo_path, O_RDWR) or die "can't read from $arp_fifo: $!" ;
+#    
+#    vec($rbits, fileno $arp_fifo, 1) = 1;
+#}
+#
+
+###################################
+##everything ready, okay, lets start
+###################################
+#while(1) {
+#
+#    # add all handles from the childs
+#    while ( my ($pid, $child_hash) = each %busy_child ) {
+#        
+#        # check whether process still exists
+#        my $exitus_pid = waitpid($pid, WNOHANG);
+#        if($exitus_pid != 0) {
+#            delete $busy_child{$pid};
+#            next;
+#        }
+#     
+#        # add child fhd to the listener    
+#        my $fhd = $$child_hash{'pipe_rd'};
+#        vec($rbits, fileno $fhd, 1) = 1;
+#    }
+#
+#    my ($rout, $wout);
+#    my $nf = select($rout=$rbits, $wout=$wbits, undef, $job_queue_timeout);
+#
+#    # error handling
+#    if($nf < 0 ) {
+#    }
+#
+#
+##    if($arp_activ eq "on" && vec($rout, fileno $arp_fifo, 1)) {
+##        my $in_msg = <$arp_fifo>;
+##        chomp($in_msg);
+##        print "arp_activ: msg: $in_msg\n";
+##        my $act_passwd = $known_daemons->{$bus_address}->{passwd};
+##        print "arp_activ: arp_passwd: $act_passwd\n";
+##
+##        my $in_msg_hash = $xml->XMLin($in_msg, ForceArray=>1);
+##
+##        my $target = &get_content_from_xml_hash($in_msg_hash, 'target');
+##
+##        if ($target eq $server_address) { 
+##             print "arp_activ: forward to server\n";
+##            my $arp_cipher = &create_ciphering($act_passwd);
+##            my $crypted_msg = &encrypt_msg($in_msg, $arp_cipher);
+##            &activating_child($crypted_msg, $server_ip);
+##        } else {
+##            print "arp_activ: send to bus\n";
+##            &send_msg_hash2address($in_msg_hash, $bus_address);
+##        }
+##        print "\n";
+##    }
+#
+#
+#    # check input fhd of all modules 
+#    while ( my ($mod_name, $info) = each %$known_modules) {
+#        my $input_fhd = @{$info}[2];    
+#        my $input_activ = @{$info}[3];
+#        if (vec($rout, fileno $input_fhd, 1) && $input_activ eq 'on') {
+#            daemon_log(" ", 1);
+#            my $client = $input_fhd->accept();
+#            my $other_end = getpeername($client);
+#            if(not defined $other_end) {
+#                daemon_log("client cannot be identified: $!");
+#            } else {
+#                my ($port, $iaddr) = unpack_sockaddr_in($other_end);
+#                my $actual_ip = inet_ntoa($iaddr);
+#                daemon_log("accept client at daemon socket from $actual_ip", 5);
+#                my $in_msg = &read_from_socket($client);
+#                if(defined $in_msg){
+#                    chomp($in_msg);
+#                    &activating_child($in_msg, $actual_ip, $client);
+#                } else {
+#                    daemon_log("cannot read from $actual_ip", 5);
+#                }
+#            }
+#        }
+#    }
+#
+#    # check all processing childs whether they are finished ('done') or 
+#    while ( my ($pid, $child_hash) = each %busy_child ) {
+#        my $fhd = $$child_hash{'pipe_rd'};
+#
+#        if (vec($rout, fileno $fhd, 1) ) {
+#            daemon_log("process child $pid is ready to read", 5);
+# 
+#            my $in_msg;
+#            while (1) {
+#                my $part_in_msg = <$fhd>;
+#                if( $part_in_msg eq "ENDMESSAGE\n") {
+#                    last;
+#                }
+#                $in_msg .= $part_in_msg;
+#            }
+#            chomp($in_msg);
+#            
+#            if (not defined $in_msg) { 
+#                next; 
+#            } elsif ($in_msg =~ "done") {
+#                daemon_log("process child read: $in_msg", 7);
+#                delete $busy_child{$pid};
+#                $free_child{$pid} = $child_hash;
+#
+#            } else {
+#                daemon_log("process child read:", 7);
+#                daemon_log("\n$in_msg", 8);
+#                # send computed answer back to connected client
+#                my $act_client = $busy_child{$pid}{client_ref};
+#                print $act_client $in_msg."\n";
+#                delete $busy_child{$pid};
+#                $free_child{$pid} = $child_hash;
+#
+#            }
+#        }
+#    }
+#
+#    # check gosa job queue for jobs with executable timestamp
+#    my ($seconds, $minutes, $hours, $monthday, $month,
+#    $year, $weekday, $yearday, $sommertime) = localtime(time);
+#    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#    $month+=1;
+#    $month = $month < 10 ? $month = "0".$month : $month;
+#    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#    $year+=1900;
+#    my $timestamp = "$year$month$monthday$hours$minutes$seconds";
+#    
+#    
+#    my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
+#
+#    while( my ($id, $hit) = each %{$res} ) {         
+#
+#        my $jobdb_id = $hit->{id};
+#        my $macaddress = $hit->{macaddress};
+#        my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
+#        my $out_msg_hash = $job_msg_hash;
+#        my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
+#        # expect macaddress is unique!!!!!!
+#        my $target = $res_hash->{1}->{hostname};
+#        
+#        if (not defined $target) {
+#            &daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
+#            &daemon_log("xml message: $hit->{xmlmessage}", 5);
+#            my $update_hash = { table=>$job_queue_table_name,
+#                update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
+#                where=> [ { id=>[$jobdb_id] } ],
+#            };
+#            my $res = $job_db->update_dbentry($update_hash);
+#
+#            next;
+#        }
+#
+#        # add target
+#        &add_content2xml_hash($out_msg_hash, "target", $target);
+#
+#        # add new header
+#        my $out_header = $job_msg_hash->{header}[0];
+#        $out_header =~ s/job_/gosa_/;
+#        delete $out_msg_hash->{header};
+#        &add_content2xml_hash($out_msg_hash, "header", $out_header);
+#        
+#        # add sqlite_id 
+#        &add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
+#    
+#        my $out_msg = &create_xml_string($out_msg_hash);
+#
+#        # encrypt msg as a GosaPackage module
+#        my $cipher = &create_ciphering($gosa_passwd);
+#        my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
+#
+#        my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
+#
+#        if ($error == 0) {
+#            my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
+#            my $res = $job_db->exec_statement($sql);
+#        } else {
+#            my $update_hash = { table=>$job_queue_table_name, 
+#                                update=> [ { status=>'error' } ],
+#                                where=> [ { id=>$jobdb_id } ],
+#                              };
+#            my $res = $job_db->update_dbentry($update_hash);
+#        }
+#
+#    }  
+#
+#
+#}
+print STDERR "Server Port: $server_port\n";
+POE::Component::Server::TCP->new
+(
+	Port => $server_port,
+	ClientInput => \&client_input,
+);
+
+POE::Kernel->run();
+exit;
+
+sub client_input {
+	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+	#print STDERR Dumper($heap);
+	######################################
+	# forward msg to all imported modules 
+	no strict "refs";
+	my $answer;
+	my %act_modules = %$known_modules;
+	while( my ($module, $info) = each(%act_modules)) {
+		daemon_log("Processing module ".$module, 3);
+		my $tmp = &{ $module."::process_incoming_msg" }($input.".".$heap->{remote_ip}."\n");
+		if (defined $tmp) {
+			$answer = $tmp;
+		}
+		daemon_log("Got answer from module ".$module.": ".$answer,3);
+	}        
+	daemon_log("processing of msg finished", 5);
+
+	if (defined $answer) {
+		$heap->{client}->put($answer);
+	} else {
+		$heap->{client}->put("done\n");
+	}
+	#redo;
+}

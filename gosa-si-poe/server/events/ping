@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use GosaSupportDaemon;
+
+
+# transform msg to hash
+my $hash = &transform_msg2hash($ARGV[0]);
+
+# extract from hash all what you need
+my $header = @{$hash->{header}}[0];
+my $source = @{$hash->{source}}[0];
+my $target = @{$hash->{target}}[0];
+my $jobdb_id = @{$hash->{jobdb_id}}[0];
+
+# and do what ever you want
+
+
+my $out_hash = &create_xml_hash("got_ping", "10.89.1.155:10001", "10.89.1.155:10000");
+if (defined $jobdb_id) {
+    &add_content2xml_hash($out_hash, 'jobdb_id', $jobdb_id);
+}
+my $out_xml = &create_xml_string($out_hash);
+print $out_xml;
+

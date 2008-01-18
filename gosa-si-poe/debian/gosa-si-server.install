@@ -1,0 +1,7 @@
+gosa-si-server			usr/sbin
+gosa-si-bus			usr/sbin
+server.conf			etc/gosa-si
+bus.conf			etc/gosa-si
+modules/ServerPackages.pm       usr/lib/gosa-si/modules
+modules/GosaPackages.pm         usr/lib/gosa-si/modules
+server/events/ping		usr/lib/gosa-si/server/events

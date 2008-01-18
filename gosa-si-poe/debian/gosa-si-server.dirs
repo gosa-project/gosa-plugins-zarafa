@@ -1,0 +1,4 @@
+usr/sbin
+usr/lib/gosa-si/modules
+usr/lib/gosa-si/server/events
+etc/gosa-si
