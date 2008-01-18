@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[[ $? -ne 1 ]] || exit 1
+
+plugin=$1
+
+cp -a ../gosa-core/locale/* $plugin/locale
+find $plugin/locale -type d -name .svn -exec rm -rf {} \;
+
+pushd .
+cd $plugin
+../update-locale -y
+find -name messages.mo -exec rm {} \;
+for i in $(find -name messages.po | grep LC_MESSAGES); do mv $i $i.orig; msgattrib --no-obsolete $i.orig > $i; rm $i.orig; done
+popd
