@@ -142,13 +142,12 @@ sub daemon_log {
 sub check_cmdline_param () {
     my $err_config;
     my $err_counter = 0;
-    if( not defined( $cfg_file)) {
-        #$err_config = "please specify a config file";
-        #$err_counter += 1;
-        my $cwd = getcwd;
-        my $name = "/etc/gosa-si/client.conf";
-        $cfg_file = File::Spec->catfile( $cwd, $name );
-        print STDERR "no conf file specified\n   try to use default: $cfg_file\n";        
+	if(not defined($cfg_file)) {
+		$cfg_file = "/etc/gosa-si/client.conf";
+		if(! -r $cfg_file) {
+			$err_config = "please specify a config file";
+			$err_counter += 1;
+		}
     }
     if( $err_counter > 0 ) {
         &usage( "", 1 );
