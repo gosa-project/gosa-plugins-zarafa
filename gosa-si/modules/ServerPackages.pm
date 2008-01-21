@@ -58,9 +58,6 @@ my %cfg_defaults =
 $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface); 
 
-&main::daemon_log("server ip address detected: $server_ip", 1);
-&main::daemon_log("server mac address detected: $server_mac_address", 1);
-
 # complete addresses
 my $server_address = "$server_ip:$server_port";
 my $bus_address = "$bus_ip:$bus_port";
@@ -68,31 +65,13 @@ my $bus_address = "$bus_ip:$bus_port";
 # create general settings for this module
 my $xml = new XML::Simple();
 
-## open server socket
-#if($server_activ eq "on"){
-#    &main::daemon_log(" ", 1);
-#    $server = IO::Socket::INET->new(LocalPort => $server_port,
-#            Type => SOCK_STREAM,
-#            Reuse => 1,
-#            Listen => 20,
-#            ); 
-#    if(not defined $server){
-#        &main::daemon_log("cannot be a tcp server at $server_port : $@");
-#        die;
-#    } else {
-#        &main::daemon_log("start server: $server_address", 1);
-#    }
-#}
-#
-#
-## register at bus
-#if ($main::no_bus > 0) {
-#    $bus_activ = "off"
-#}
-#if($bus_activ eq "on") {
-#    &main::daemon_log(" ", 1);
-#    &register_at_bus();
-#}
+# register at bus
+if ($main::no_bus > 0) {
+    $bus_activ = "off"
+}
+if($bus_activ eq "on") {
+    &register_at_bus();
+}
 
 ### functions #################################################################
 
@@ -437,7 +416,7 @@ sub process_incoming_msg {
 
     if( not defined $msg ) {
         &main::daemon_log("WARNING: ServerPackage do not understand the message:", 5);
-        &main::daemon_log("$@", 7);
+        &main::daemon_log("$@", 8);
         return;
     }
 

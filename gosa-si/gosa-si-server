@@ -394,6 +394,111 @@ sub create_known_client {
     return;  
 }
 
+sub client_input {
+	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+	######################################
+	# forward msg to all imported modules 
+	no strict "refs";
+	my $answer;
+	my %act_modules = %$known_modules;
+	while( my ($module, $info) = each(%act_modules)) {
+		daemon_log("Processing module ".$module, 3);
+		my $tmp = &{ $module."::process_incoming_msg" }($input.".".$heap->{remote_ip}."\n");
+		if (defined $tmp) {
+			$answer = $tmp;
+		}
+		daemon_log("Got answer from module ".$module.": ".$answer,8);
+	}        
+	daemon_log("processing of msg finished", 5);
+
+	if (defined $answer) {
+		$heap->{client}->put($answer);
+	} else {
+		$heap->{client}->put("done\n");
+	}
+}
+
+sub trigger_db_loop {
+	my ($kernel) = $_[KERNEL];
+	$kernel->delay_set('watch_for_new_jobs',3);
+}
+
+sub watch_for_new_jobs {
+	my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+	# check gosa job queue for jobs with executable timestamp
+#	my ($seconds, $minutes, $hours, $monthday, $month,
+#		$year, $weekday, $yearday, $sommertime) = localtime(time);
+#	$hours = $hours < 10 ? $hours = "0".$hours : $hours;
+#	$minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+#	$seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+#	$month+=1;
+#	$month = $month < 10 ? $month = "0".$month : $month;
+#	$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+#	$year+=1900;
+#	my $timestamp = "$year$month$monthday$hours$minutes$seconds";
+    my $timestamp = &get_time();
+
+	my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
+
+	while( my ($id, $hit) = each %{$res} ) {         
+
+		my $jobdb_id = $hit->{id};
+		my $macaddress = $hit->{macaddress};
+		my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
+		my $out_msg_hash = $job_msg_hash;
+		my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
+		# expect macaddress is unique!!!!!!
+		my $target = $res_hash->{1}->{hostname};
+
+		if (not defined $target) {
+			&daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
+			&daemon_log("xml message: $hit->{xmlmessage}", 5);
+			my $update_hash = { table=>$job_queue_table_name,
+				update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
+				where=> [ { id=>[$jobdb_id] } ],
+			};
+			my $res = $job_db->update_dbentry($update_hash);
+
+			next;
+		}
+
+		# add target
+		&add_content2xml_hash($out_msg_hash, "target", $target);
+
+		# add new header
+		my $out_header = $job_msg_hash->{header}[0];
+		$out_header =~ s/job_/gosa_/;
+		delete $out_msg_hash->{header};
+		&add_content2xml_hash($out_msg_hash, "header", $out_header);
+
+		# add sqlite_id 
+		&add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
+
+		my $out_msg = &create_xml_string($out_msg_hash);
+
+		# encrypt msg as a GosaPackage module
+		my $cipher = &create_ciphering($gosa_passwd);
+		my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
+
+		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
+
+		if ($error == 0) {
+			my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
+			my $res = $job_db->exec_statement($sql);
+		} else {
+			my $update_hash = { table=>$job_queue_table_name, 
+				update=> [ { status=>'error' } ],
+				where=> [ { id=>$jobdb_id } ],
+			};
+			my $res = $job_db->update_dbentry($update_hash);
+		}
+	}
+
+	$kernel->delay_set('watch_for_new_jobs',3);
+}
+
+
 #==== MAIN = main ==============================================================
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
@@ -464,152 +569,7 @@ $known_server_db->create_table('known_server', \@server_col_names);
 
 # check wether all modules are gosa-si valid passwd check
 
-# create reading and writing vectors
-my $rbits = my $wbits = my $ebits = "";
-
-# add all module inputs to listening vector
-# while( my ($mod_name, $info) = each %$known_modules ) {
-#     my ($input_address, $input_key, $input, $input_activ, $input_type) = @{$info};
-#     vec($rbits, fileno $input, 1) = 1;   
-# 
-# }
-
-
-## start arp fifo
-#if ($no_arp > 0) {
-#    $arp_activ = "off";
-#}
-#my $my_fifo;
-#if($arp_activ eq "on") {
-#    daemon_log(" ", 1);
-#    $my_fifo = &open_fifo($arp_fifo_path);
-#    if($my_fifo == 0) { die "fifo file disappeared\n" }
-#    sysopen($arp_fifo, $arp_fifo_path, O_RDWR) or die "can't read from $arp_fifo: $!" ;
-#    
-#    vec($rbits, fileno $arp_fifo, 1) = 1;
-#}
-#
-
-###################################
-##everything ready, okay, lets start
-###################################
-#while(1) {
-#
-#    # add all handles from the childs
-#    while ( my ($pid, $child_hash) = each %busy_child ) {
-#        
-#        # check whether process still exists
-#        my $exitus_pid = waitpid($pid, WNOHANG);
-#        if($exitus_pid != 0) {
-#            delete $busy_child{$pid};
-#            next;
-#        }
-#     
-#        # add child fhd to the listener    
-#        my $fhd = $$child_hash{'pipe_rd'};
-#        vec($rbits, fileno $fhd, 1) = 1;
-#    }
-#
-#    my ($rout, $wout);
-#    my $nf = select($rout=$rbits, $wout=$wbits, undef, $job_queue_timeout);
-#
-#    # error handling
-#    if($nf < 0 ) {
-#    }
-#
-#
-##    if($arp_activ eq "on" && vec($rout, fileno $arp_fifo, 1)) {
-##        my $in_msg = <$arp_fifo>;
-##        chomp($in_msg);
-##        print "arp_activ: msg: $in_msg\n";
-##        my $act_passwd = $known_daemons->{$bus_address}->{passwd};
-##        print "arp_activ: arp_passwd: $act_passwd\n";
-##
-##        my $in_msg_hash = $xml->XMLin($in_msg, ForceArray=>1);
-##
-##        my $target = &get_content_from_xml_hash($in_msg_hash, 'target');
-##
-##        if ($target eq $server_address) { 
-##             print "arp_activ: forward to server\n";
-##            my $arp_cipher = &create_ciphering($act_passwd);
-##            my $crypted_msg = &encrypt_msg($in_msg, $arp_cipher);
-##            &activating_child($crypted_msg, $server_ip);
-##        } else {
-##            print "arp_activ: send to bus\n";
-##            &send_msg_hash2address($in_msg_hash, $bus_address);
-##        }
-##        print "\n";
-##    }
-#
-#
-#    # check input fhd of all modules 
-#    while ( my ($mod_name, $info) = each %$known_modules) {
-#        my $input_fhd = @{$info}[2];    
-#        my $input_activ = @{$info}[3];
-#        if (vec($rout, fileno $input_fhd, 1) && $input_activ eq 'on') {
-#            daemon_log(" ", 1);
-#            my $client = $input_fhd->accept();
-#            my $other_end = getpeername($client);
-#            if(not defined $other_end) {
-#                daemon_log("client cannot be identified: $!");
-#            } else {
-#                my ($port, $iaddr) = unpack_sockaddr_in($other_end);
-#                my $actual_ip = inet_ntoa($iaddr);
-#                daemon_log("accept client at daemon socket from $actual_ip", 5);
-#                my $in_msg = &read_from_socket($client);
-#                if(defined $in_msg){
-#                    chomp($in_msg);
-#                    &activating_child($in_msg, $actual_ip, $client);
-#                } else {
-#                    daemon_log("cannot read from $actual_ip", 5);
-#                }
-#            }
-#        }
-#    }
-#
-#    # check all processing childs whether they are finished ('done') or 
-#    while ( my ($pid, $child_hash) = each %busy_child ) {
-#        my $fhd = $$child_hash{'pipe_rd'};
-#
-#        if (vec($rout, fileno $fhd, 1) ) {
-#            daemon_log("process child $pid is ready to read", 5);
-# 
-#            my $in_msg;
-#            while (1) {
-#                my $part_in_msg = <$fhd>;
-#                if( $part_in_msg eq "ENDMESSAGE\n") {
-#                    last;
-#                }
-#                $in_msg .= $part_in_msg;
-#            }
-#            chomp($in_msg);
-#            
-#            if (not defined $in_msg) { 
-#                next; 
-#            } elsif ($in_msg =~ "done") {
-#                daemon_log("process child read: $in_msg", 7);
-#                delete $busy_child{$pid};
-#                $free_child{$pid} = $child_hash;
-#
-#            } else {
-#                daemon_log("process child read:", 7);
-#                daemon_log("\n$in_msg", 8);
-#                # send computed answer back to connected client
-#                my $act_client = $busy_child{$pid}{client_ref};
-#                print $act_client $in_msg."\n";
-#                delete $busy_child{$pid};
-#                $free_child{$pid} = $child_hash;
-#
-#            }
-#        }
-#    }
-#
-#
-#    }  
-#
-#
-#}
-
+# create session for repeatedly checking the job queue for jobs
 POE::Session->create
 (
 	inline_states => {
@@ -618,114 +578,15 @@ POE::Session->create
 	}
 );
 
+# create socket for incoming xml messages
 POE::Component::Server::TCP->new
 (
 	Port => $server_port,
 	ClientInput => \&client_input,
 );
+daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 
 POE::Kernel->run();
 exit;
 
-sub client_input {
-	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
-	######################################
-	# forward msg to all imported modules 
-	no strict "refs";
-	my $answer;
-	my %act_modules = %$known_modules;
-	while( my ($module, $info) = each(%act_modules)) {
-		daemon_log("Processing module ".$module, 3);
-		my $tmp = &{ $module."::process_incoming_msg" }($input.".".$heap->{remote_ip}."\n");
-		if (defined $tmp) {
-			$answer = $tmp;
-		}
-		daemon_log("Got answer from module ".$module.": ".$answer,3);
-	}        
-	daemon_log("processing of msg finished", 5);
 
-	if (defined $answer) {
-		$heap->{client}->put($answer);
-	} else {
-		$heap->{client}->put("done\n");
-	}
-}
-
-sub trigger_db_loop {
-	my ($kernel) = $_[KERNEL];
-	$kernel->delay_set('watch_for_new_jobs',3);
-}
-
-sub watch_for_new_jobs {
-	my ($kernel,$heap) = @_[KERNEL, HEAP];
-
-	# check gosa job queue for jobs with executable timestamp
-	my ($seconds, $minutes, $hours, $monthday, $month,
-		$year, $weekday, $yearday, $sommertime) = localtime(time);
-	$hours = $hours < 10 ? $hours = "0".$hours : $hours;
-	$minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-	$seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-	$month+=1;
-	$month = $month < 10 ? $month = "0".$month : $month;
-	$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-	$year+=1900;
-	my $timestamp = "$year$month$monthday$hours$minutes$seconds";
-
-	my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
-
-	while( my ($id, $hit) = each %{$res} ) {         
-
-		my $jobdb_id = $hit->{id};
-		my $macaddress = $hit->{macaddress};
-		my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
-		my $out_msg_hash = $job_msg_hash;
-		my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
-		# expect macaddress is unique!!!!!!
-		my $target = $res_hash->{1}->{hostname};
-
-		if (not defined $target) {
-			&daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
-			&daemon_log("xml message: $hit->{xmlmessage}", 5);
-			my $update_hash = { table=>$job_queue_table_name,
-				update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
-				where=> [ { id=>[$jobdb_id] } ],
-			};
-			my $res = $job_db->update_dbentry($update_hash);
-
-			next;
-		}
-
-		# add target
-		&add_content2xml_hash($out_msg_hash, "target", $target);
-
-		# add new header
-		my $out_header = $job_msg_hash->{header}[0];
-		$out_header =~ s/job_/gosa_/;
-		delete $out_msg_hash->{header};
-		&add_content2xml_hash($out_msg_hash, "header", $out_header);
-
-		# add sqlite_id 
-		&add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
-
-		my $out_msg = &create_xml_string($out_msg_hash);
-
-		# encrypt msg as a GosaPackage module
-		my $cipher = &create_ciphering($gosa_passwd);
-		my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
-
-		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
-
-		if ($error == 0) {
-			my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
-			my $res = $job_db->exec_statement($sql);
-		} else {
-			my $update_hash = { table=>$job_queue_table_name, 
-				update=> [ { status=>'error' } ],
-				where=> [ { id=>$jobdb_id } ],
-			};
-			my $res = $job_db->update_dbentry($update_hash);
-		}
-	}
-
-	$kernel->delay_set('watch_for_new_jobs',3);
-}

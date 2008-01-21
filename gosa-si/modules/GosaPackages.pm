@@ -66,29 +66,6 @@ my $gosa_address = "$gosa_ip:$gosa_port";
 my $gosa_cipher = &create_ciphering($gosa_passwd);
 my $xml = new XML::Simple();
 
-# open gosa socket
-if ($gosa_activ eq "on") {
-    &main::daemon_log(" ",1);
-    $gosa_server = IO::Socket::INET->new(LocalPort => $gosa_port,
-            Type => SOCK_STREAM,
-            Reuse => 1,
-            Listen => 1,
-            );
-    if (not defined $gosa_server) {
-        &main::daemon_log("cannot start tcp server at $gosa_port for communication to gosa: $@", 1);
-        die;
-    } else {
-        &main::daemon_log("start server for communication to gosa: $gosa_address", 1);
-        
-    }
-}
-
-# create gosa job queue as a SQLite DB 
-my $table_name = "jobs";
-my $sqlite = GOSA::DBsqlite->new($job_queue_file_name);
-
-
-
 
 ## FUNCTIONS #################################################################
 
@@ -283,7 +260,7 @@ sub open_socket {
 #===============================================================================
 sub process_incoming_msg {
     my ($crypted_msg) = @_ ;
-	&main::daemon_log("Got message $crypted_msg", 5);
+	&main::daemon_log("Got message $crypted_msg", 8);
 	if( (not(defined($crypted_msg))) || (length($crypted_msg) <= 0)) {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
         return;
@@ -305,7 +282,7 @@ sub process_incoming_msg {
     my $msg_hash;
     eval{
         $msg = &decrypt_msg($crypted_msg, $gosa_cipher);
-        &main::daemon_log("GosaPackages: decrypted_msg: \n$msg", 7);
+        &main::daemon_log("GosaPackages: decrypted_msg: \n$msg", 8);
 
         $msg_hash = $xml->XMLin($msg, ForceArray=>1);
     };
