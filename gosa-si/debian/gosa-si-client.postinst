@@ -13,3 +13,4 @@ esac
 
 [ ! -d /usr/lib/gosa-si/client/events ] && install -d -o root -g root -m 750 /usr/lib/gosa-si/client/events
 
+exit 0
