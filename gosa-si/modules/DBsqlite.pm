@@ -7,7 +7,6 @@ use DBI;
 use Data::Dumper;
 use threads;
 use Time::HiRes qw(usleep);
-use POE qw(Component::EasyDBI);
 
 my $col_names = {};
 
