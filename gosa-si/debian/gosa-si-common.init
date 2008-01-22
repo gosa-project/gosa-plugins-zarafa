@@ -13,10 +13,6 @@
 #                    signaling for all communication partners.
 ### END INIT INFO
 
-# Sanity checks
-test -f /usr/sbin/gosa-si-server || exit 0
-test -f /usr/sbin/gosa-si-bus || exit 0
-
 # Load defaults
 START_BUS=0
 [ -r /etc/default/gosa-si ] && . /etc/default/gosa-si
