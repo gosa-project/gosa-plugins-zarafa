@@ -7,6 +7,7 @@ use DBI;
 use Data::Dumper;
 use threads;
 use Time::HiRes qw(usleep);
+use POE qw(Component::EasyDBI);
 
 my $col_names = {};
 
@@ -96,7 +97,7 @@ sub add_dbentry {
     # if primkey is id, fetch max id from table and give new job id=  max(id)+1
     if ($primkey eq 'id') {
         my $id;
-        my $sql_statement = "SELECT MAX(id) FROM $table";
+        my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
         &create_lock($self,'add_dbentry');
         my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
         &remove_lock($self,'add_dbentry');
