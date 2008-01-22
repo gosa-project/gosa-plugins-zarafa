@@ -1,3 +1,2 @@
 modules/GosaSupportDaemon.pm    usr/share/perl5/GOSA
 modules/DBsqlite.pm             usr/share/perl5/GOSA
-debian/gosa-si			etc/default
