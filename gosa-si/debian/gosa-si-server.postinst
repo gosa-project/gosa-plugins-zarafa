@@ -11,8 +11,6 @@ case "$1" in
         *)                     exit 0;
 esac
 
-[ ! -d /usr/lib/gosa-si/client/events ] && install -d -o root -g root -m 750 /usr/lib/gosa-si/client/events
-
 # Restart daemon
 /etc/init.d/gosa-si restart
 
