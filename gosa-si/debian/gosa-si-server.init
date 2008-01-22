@@ -57,14 +57,16 @@ stop_server() {
 
 case "$1" in
 start)  log_daemon_msg "Starting GOsa support infrastructure"
-	if [ "$START_BUS" == "1" ]; then
-		log_progress_msg "bus"
-		start_bus
-		log_progress_msg "daemon"
-		start_server
-	else
-		log_progress_msg "daemon"
-		start_server --no-bus
+	if [ -x /usr/sbin/gosa-si-server ]; then
+		if [ "$START_BUS" == "1" ]; then
+			log_progress_msg "bus"
+			start_bus
+			log_progress_msg "daemon"
+			start_server
+		else
+			log_progress_msg "daemon"
+			start_server --no-bus
+		fi
 	fi
 	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
 		log_progress_msg "client"
@@ -73,18 +75,20 @@ start)  log_daemon_msg "Starting GOsa support infrastructure"
         log_end_msg $?
 	;;
 stop)   log_daemon_msg "Stopping GOsa support infrastructure"
-	if [ "$START_BUS" == "1" ]; then
-		log_progress_msg "daemon"
-		stop_server
-		log_progress_msg "bus"
-		stop_bus
-	else
-		log_progress_msg "daemon"
-		stop_server
-	fi
 	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
 		log_progress_msg "client"
 		stop_client
+	fi
+	if [ -x /usr/sbin/gosa-si-server ]; then
+		if [ "$START_BUS" == "1" ]; then
+			log_progress_msg "daemon"
+			stop_server
+			log_progress_msg "bus"
+			stop_bus
+		else
+			log_progress_msg "daemon"
+			stop_server
+		fi
 	fi
         log_end_msg $?
         ;;
@@ -92,14 +96,16 @@ reload|force-reload|restart) log_daemon_msg "Restarting GOsa support infrastruct
 	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
 		stop_client
 	fi
-	if [ "$START_BUS" == "1" ]; then
-		stop_server
-		stop_bus
-		start_bus
-		start_server --no-bus
-	else
-		stop_server
-		start_server --no-bus
+	if [ -x /usr/sbin/gosa-si-server ]; then
+		if [ "$START_BUS" == "1" ]; then
+			stop_server
+			stop_bus
+			start_bus
+			start_server --no-bus
+		else
+			stop_server
+			start_server --no-bus
+		fi
 	fi
 	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
 		start_client
