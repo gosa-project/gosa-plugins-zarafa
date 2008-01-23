@@ -91,7 +91,12 @@ class faiTemplateEntry extends plugin
         session::set('binaryfile',basename($this->FAItemplatePath));
       }
     }
-    
+   
+    /* File download requested */
+    if(isset($_GET['getFAItemplate'])){
+      send_binary_content($this->FAItemplateFile,$this->cn.".FAItemplate");
+    }
+ 
     $status= _("no file uploaded yet");
 
     $bStatus = false; // Hide download icon on default 

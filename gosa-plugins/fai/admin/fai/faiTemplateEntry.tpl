@@ -56,7 +56,7 @@
 		<td style="vertical-align:top" class="center">
 			{$status}
 			{if $bStatus}
-			  <a href="getbin.php?rand={$rand}">
+			  <a href="{$plug}&amp;getFAItemplate">
 				<img class="center" alt="{t}Save template{/t}..." title="{t}Save template{/t}..." src="images/save.png" border="0" />
 			  </a>
 			{/if}
