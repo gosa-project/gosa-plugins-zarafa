@@ -123,7 +123,7 @@ class glpiPrinterCartridgesEdit extends plugin
     if($this->edit_type){
       $smarty->assign("PrinterTypes",            $this->parent->handle->getCartridgeTypes());
       $smarty->assign("PrinterTypeKeys",         array_flip($this->parent->handle->getCartridgeTypes()));
-      $display= $smarty->fetch(get_template_path('glpi_edit_cartridge_type.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_cartridge_type.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 

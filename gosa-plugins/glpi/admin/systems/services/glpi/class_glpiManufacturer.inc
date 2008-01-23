@@ -139,14 +139,14 @@ class glpiManufacturer extends plugin
         $smarty->assign($attrs,$this->$attrs);
       }
 
-      $display.= $smarty->fetch(get_template_path('glpiManufacturerAdd.tpl', TRUE));
+      $display.= $smarty->fetch(get_template_path('glpiManufacturerAdd.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
 
     $smarty->assign("Manus",    $this->parent->handle->getEnterprises());
     $smarty->assign("ManuKeys", array_flip($this->parent->handle->getEnterprises()));
-    $display.= $smarty->fetch(get_template_path('glpiManufacturer.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiManufacturer.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

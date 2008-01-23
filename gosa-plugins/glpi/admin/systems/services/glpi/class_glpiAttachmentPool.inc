@@ -71,7 +71,7 @@ class glpiAttachmentPool extends plugin
         /* remove attach from db */
         $this->delAttach = $str;
         $smarty->assign("warning", sprintf(_("You're about to delete the glpi attachment component '%s'."), $attach[$str]['name']));
-        return($smarty->fetch(get_template_path('remove_glpi.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('remove_glpi.tpl',TRUE,dirname(__FILE__))));
       }
  
       /* Start editing entry */ 
@@ -191,7 +191,7 @@ class glpiAttachmentPool extends plugin
         $status = _("Currently no file uploaded.");
       }
       $smarty->assign("status",$status); 
-      return($smarty->fetch(get_template_path('glpiAttachmentEdit.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpiAttachmentEdit.tpl',TRUE,dirname(__FILE__))));
     }
 
     /* Create list with checkboxes to select / deselect some attachents */
@@ -274,7 +274,7 @@ class glpiAttachmentPool extends plugin
     $smarty->assign("alphabet",         generate_alphabet());
     $smarty->assign("attachment_regex", $GlpiAttachmentFilter['filter']);
 
-    $display.= $smarty->fetch(get_template_path('glpiAttachmentPool.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiAttachmentPool.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

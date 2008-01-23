@@ -166,7 +166,7 @@ class glpiPrinterAccount extends plugin
       */
     if(!isset($this->config->data['SERVERS']['GLPI'])){
       print_red(_("There is no server with valid glpi database service."));
-      return($smarty->fetch(get_template_path('glpiPrinter.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpiPrinter.tpl',TRUE,dirname(__FILE__))));
     }
 
     $this->data = $this->config->data['SERVERS']['GLPI'];
@@ -176,7 +176,7 @@ class glpiPrinterAccount extends plugin
      */
     if(!is_callable("mysql_connect")){
       print_red(_("Can't connect to glpi database, the php-mysql extension is missing."));
-      return($smarty->fetch(get_template_path('glpiPrinter.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpiPrinter.tpl',TRUE,dirname(__FILE__))));
     }
 
     $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
@@ -186,7 +186,7 @@ class glpiPrinterAccount extends plugin
      */
     if(!$this->handle->is_connected){
       print_red(_("Can't connect to glpi database, check configuration twice."));
-      return($smarty->fetch(get_template_path('glpiPrinter.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpiPrinter.tpl',TRUE,dirname(__FILE__))));
     } 
 
     /*  All checks are ok
@@ -314,7 +314,7 @@ class glpiPrinterAccount extends plugin
         $smarty->assign("string",$_POST['string']);
       }
 
-      $display= $smarty->fetch(get_template_path('glpi_edit_printer_type.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_printer_type.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }  
 
@@ -325,7 +325,7 @@ class glpiPrinterAccount extends plugin
       $smarty->assign("Method","edit");
       $smarty->assign("PrinterTypes",            $this->handle->getPrinterTypes());
       $smarty->assign("PrinterTypeKeys",         array_flip($this->handle->getPrinterTypes()));
-      $display= $smarty->fetch(get_template_path('glpi_edit_printer_type.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_printer_type.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
@@ -647,7 +647,7 @@ class glpiPrinterAccount extends plugin
       $smarty->assign("typeACL", $this->getacl("type",true));
     }
 
-    $display.= $smarty->fetch(get_template_path('glpiPrinter.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiPrinter.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

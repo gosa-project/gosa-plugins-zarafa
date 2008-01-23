@@ -200,7 +200,7 @@ class glpiSelectUser extends plugin
     $smarty->assign("users_regex", $filter['users_regex']);
 
 
-    $display.= $smarty->fetch(get_template_path('glpiSelectUser.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiSelectUser.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

@@ -95,7 +95,7 @@ class glpiPrinterCartridges extends plugin
         $this->del = $_GET['id'];
         $val = ($this->parent->handle->getCartridgeTypeInformations($_GET['id']));
         $smarty->assign("warning", sprintf(_("You're about to delete the glpi cartridge type '%s'."), $val[$this->del]['name']));
-        return($smarty->fetch(get_template_path('remove_glpi.tpl', TRUE)));
+        return($smarty->fetch(get_template_path('remove_glpi.tpl',TRUE,dirname(__FILE__))));
     }
 
     if(isset($_POST['delete_cancel'])){
@@ -224,7 +224,7 @@ class glpiPrinterCartridges extends plugin
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("cartridge_regex", $filter);
 
-    $display.= $smarty->fetch(get_template_path('glpiPrinterCartridges.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiPrinterCartridges.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

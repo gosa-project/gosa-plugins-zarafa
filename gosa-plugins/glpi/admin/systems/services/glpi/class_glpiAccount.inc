@@ -149,7 +149,7 @@ class glpiAccount extends plugin
       */
     if(!isset($this->config->data['SERVERS']['GLPI'])){
       print_red(_("There is no server with valid glpi database service."));
-      return($smarty->fetch(get_template_path('glpi.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpi.tpl',TRUE,dirname(__FILE__))));
     }
 
     $this->data = $this->config->data['SERVERS']['GLPI'];
@@ -159,7 +159,7 @@ class glpiAccount extends plugin
      */
     if(!is_callable("mysql_connect")){
       print_red(_("Can't connect to glpi database, the php-mysql extension is missing."));
-      return($smarty->fetch(get_template_path('glpi.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpi.tpl',TRUE,dirname(__FILE__))));
     }
 
     $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
@@ -169,7 +169,7 @@ class glpiAccount extends plugin
      */
     if(!$this->handle->is_connected){
       print_red(_("Can't connect to glpi database, check configuration twice."));
-      return($smarty->fetch(get_template_path('glpi.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('glpi.tpl',TRUE,dirname(__FILE__))));
     } 
 
     /*  All checks are ok
@@ -347,7 +347,7 @@ class glpiAccount extends plugin
         $smarty->assign("string",$_POST['string']);
       }
       $smarty->assign("Method","rename");
-      $display= $smarty->fetch(get_template_path('glpi_edit_type.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_type.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
@@ -360,7 +360,7 @@ class glpiAccount extends plugin
       $smarty->assign("Method","edit");
       $smarty->assign("SystemTypes",            $this->handle->getSystemTypes());
       $smarty->assign("SystemTypeKeys",         array_flip($this->handle->getSystemTypes()));
-      $display= $smarty->fetch(get_template_path('glpi_edit_type.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_type.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
@@ -435,7 +435,7 @@ class glpiAccount extends plugin
         $smarty->assign("string",$_POST['string']);
       }
       $smarty->assign("Method","rename");
-      $display= $smarty->fetch(get_template_path('glpi_edit_os.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_os.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
@@ -445,7 +445,7 @@ class glpiAccount extends plugin
       $smarty->assign("Method","edit");
       $smarty->assign("OSs",            $this->handle->getOSTypes());
       $smarty->assign("OSKeys",         array_flip($this->handle->getOSTypes()));
-      $display= $smarty->fetch(get_template_path('glpi_edit_os.tpl', TRUE));
+      $display= $smarty->fetch(get_template_path('glpi_edit_os.tpl',TRUE,dirname(__FILE__)));
       return($display);
     }
 
@@ -613,7 +613,7 @@ class glpiAccount extends plugin
     $divlist = new divSelectBox("glpiAttachmentsList");
     $divlist-> SetHeight(130); 
     $atts = $this->getUsedAttachments(true);
-    $downlink = "<a href='get_attachment.php?id=%s' target='_blank'>%s</a>";
+    $downlink = "<a href='?".$_GET['plug']."&get_attachment.php?id=%s' target='_blank'>%s</a>";
     $del_link = "<input type='image' src='images/edittrash.png' name='delAttachment_%s'>";
     foreach($atts as $id => $attachment){
       $divlist->AddEntry
@@ -659,7 +659,7 @@ class glpiAccount extends plugin
     }
     $smarty->assign("comments",               $this->comments);
 
-    $display.= $smarty->fetch(get_template_path('glpi.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpi.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 

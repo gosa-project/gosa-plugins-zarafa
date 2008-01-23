@@ -117,7 +117,7 @@ class glpiDeviceManagement extends plugin
         print_red(_("Can't detect object name."));
       }
       
-      return($smarty->fetch(get_template_path('remove_glpi.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('remove_glpi.tpl',TRUE,dirname(__FILE__))));
     }
 
     /* Delete entry, but check if this device is in currently in use */
@@ -262,7 +262,7 @@ class glpiDeviceManagement extends plugin
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("device_regex", $filter['device_regex']);
 
-    $display.= $smarty->fetch(get_template_path('glpiDeviceManagement.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('glpiDeviceManagement.tpl',TRUE,dirname(__FILE__)));
     return($display);
   }
 
@@ -420,7 +420,7 @@ class glpiDeviceManagement extends plugin
 
     $smarty->assign("formats",array("Large","Medium","Micro"));
     $smarty->assign("formatKeys",array('Grand','Moyen','Micro'));
-    return($smarty->fetch(get_template_path('glpi_devices.tpl', TRUE)));
+    return($smarty->fetch(get_template_path('glpi_devices.tpl',TRUE,dirname(__FILE__))));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
