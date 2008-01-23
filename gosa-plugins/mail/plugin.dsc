@@ -1,5 +1,6 @@
 [gosa-plugin]
-name = samba
-description = "Plugin for Samba 2/3 integration"
+name = mail
+description = "Mail management base plugin"
 version = 2.6
 author = "Cajus Pollmeier <pollmeier@gonicus.de>"
+depends = systems

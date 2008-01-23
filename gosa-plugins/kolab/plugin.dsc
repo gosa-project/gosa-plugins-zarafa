@@ -1,5 +1,6 @@
 [gosa-plugin]
-name = samba
-description = "Plugin for Samba 2/3 integration"
+name = kolab
+description = "Kolab management plugin"
 version = 2.6
 author = "Cajus Pollmeier <pollmeier@gonicus.de>"
+depends = mail

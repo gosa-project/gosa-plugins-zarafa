@@ -1,5 +1,5 @@
 [gosa-plugin]
-name = samba
-description = "Plugin for Samba 2/3 integration"
+name = ldapmanager
+description = "Simple LDAP backup and insertion tasks"
 version = 2.6
 author = "Cajus Pollmeier <pollmeier@gonicus.de>"

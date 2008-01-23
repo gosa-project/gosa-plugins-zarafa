@@ -1,5 +1,5 @@
 [gosa-plugin]
-name = samba
-description = "Plugin for Samba 2/3 integration"
+name = apache2
+description = "Apache2 vhost management module"
 version = 2.6
 author = "Cajus Pollmeier <pollmeier@gonicus.de>"
