@@ -78,6 +78,22 @@ class goKioskService extends goService{
     $smarty= get_smarty();
     $display= "";
 
+    /* Download kiosk profile 
+     */
+    if(isset($_GET['getkiosk'])){
+      $id = $_GET['getkiosk'];
+      foreach($this->gotoKioskProfiles as $profile){
+        if($profile['name'] == $id){
+          $name = $this->baseDir."/".$id;
+          if(file_exists($name)){
+            $content = file_get_contents($name);    
+            send_binary_content($content,$id);
+          }
+        }
+      }
+    }
+    
+
     /* Add new kiosk profile
      * in profile directory ($this->baseDir);
      */
@@ -148,7 +164,7 @@ class goKioskService extends goService{
     $divlist -> SetHeight (300);
     foreach($this->gotoKioskProfiles as $key => $val ){
       $divlist->AddEntry(array(
-            array("string"=>"<a target='_blank' href='getkiosk.php?id=".$val['name']."'>".$val['name']."</a>"),
+            array("string"=>"<a href='?plug=".$_GET['plug']."&getkiosk=".$val['name']."'>".$val['name']."</a>"),
             array("string"=>"<input type='image' src='images/edittrash.png'
               class='center' alt='delete' name='delkiosk_".$key."'>" ,
               "attach"=>" style='border-right: 0px;width:24px; text-align:center;' ")
@@ -164,6 +180,8 @@ class goKioskService extends goService{
     $smarty->assign("server_path",$this->server_path);
     return($smarty->fetch(get_template_path("goKioskService.tpl",TRUE,dirname(__FILE__))));
   }
+
+
 
   function getListEntry()
   {
