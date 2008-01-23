@@ -358,7 +358,9 @@ sub process_incoming_msg {
 
     # check wether incoming msg is from a known_server
     if( not defined $msg ) {
-        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
+        #my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
+        my $sql_statement= "SELECT * FROM known_server";
+        my $query_res = $main::known_server_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {  
             $host_name = $hit->{hostname};
             if( not $host_name =~ "^$host") {
@@ -387,7 +389,9 @@ sub process_incoming_msg {
 
     # check wether incoming msg is from a known_client
     if( not defined $msg ) {
-        my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+        #my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+        my $sql_statement= "SELECT * FROM known_clients";
+        my $query_res = $main::known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
             $host_name = $hit->{hostname};
             if( not $host_name =~ "^$host") {

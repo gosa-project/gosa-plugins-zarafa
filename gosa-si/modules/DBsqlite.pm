@@ -173,94 +173,67 @@ sub add_dbentry {
 # 3 no restriction value ($restric_val) defined
 # 4 column name not known in table
 # 5 no column names to change specified
+#sub update_dbentry {
+#    my $self = shift;
+#    my $arg = shift;
+#
+#
+#    # check completeness of function parameter
+#    # extract table statement from arg hash
+#    my $table = $arg->{table};
+#    if (not defined $table) {
+#        return 1;
+#    } else {
+#        delete $arg->{table};
+#    }
+#    
+#    # extract where parameter from arg hash
+#    my $where_statement = "";
+#    if( exists $arg->{where} ) {
+#        my $where_hash = @{ $arg->{where} }[0];
+#        if( 0 < keys %{ $where_hash } ) {
+#            my @where_list;    
+#            while( my ($rest_pram, $rest_val) = each %{ $where_hash } ) {
+#                my $statement;
+#                if( $rest_pram eq 'timestamp' ) {
+#                    $statement = "$rest_pram<'@{ $rest_val }[0]'";
+#                } else {
+#                    $statement = "$rest_pram='@{ $rest_val }[0]'";
+#                }
+#                push( @where_list, $statement );
+#            }
+#            $where_statement .= "WHERE ".join('AND ', @where_list);
+#        }
+#    }
+#
+#    # extract update parameter from arg hash
+#    my $update_hash = @{ $arg->{update} }[0];
+#    my $update_statement = "";
+#    if( 0 < keys %{ $update_hash } ) {
+#        my @update_list;    
+#        while( my ($rest_pram, $rest_val) = each %{ $update_hash } ) {
+#            my $statement = "$rest_pram='@{ $rest_val }[0]'";
+#            push( @update_list, $statement );
+#        }
+#        $update_statement .= join(', ', @update_list);
+#    }
+#
+#    my $sql_statement = "UPDATE $table SET $update_statement $where_statement";
+#    &create_lock($self,'update_dbentry');
+#    my $db_answer = $self->{dbh}->do($sql_statement);
+#    &remove_lock($self,'update_dbentry');
+#    return $db_answer;
+#}  
 sub update_dbentry {
-    my $self = shift;
-    my $arg = shift;
-
-
-    # check completeness of function parameter
-    # extract table statement from arg hash
-    my $table = $arg->{table};
-    if (not defined $table) {
-        return 1;
-    } else {
-        delete $arg->{table};
-    }
-    
-    # extract where parameter from arg hash
-    my $where_statement = "";
-    if( exists $arg->{where} ) {
-        my $where_hash = @{ $arg->{where} }[0];
-        if( 0 < keys %{ $where_hash } ) {
-            my @where_list;    
-            while( my ($rest_pram, $rest_val) = each %{ $where_hash } ) {
-                my $statement;
-                if( $rest_pram eq 'timestamp' ) {
-                    $statement = "$rest_pram<'@{ $rest_val }[0]'";
-                } else {
-                    $statement = "$rest_pram='@{ $rest_val }[0]'";
-                }
-                push( @where_list, $statement );
-            }
-            $where_statement .= "WHERE ".join('AND ', @where_list);
-        }
-    }
-
-    # extract update parameter from arg hash
-    my $update_hash = @{ $arg->{update} }[0];
-    my $update_statement = "";
-    if( 0 < keys %{ $update_hash } ) {
-        my @update_list;    
-        while( my ($rest_pram, $rest_val) = each %{ $update_hash } ) {
-            my $statement = "$rest_pram='@{ $rest_val }[0]'";
-            push( @update_list, $statement );
-        }
-        $update_statement .= join(', ', @update_list);
-    }
-
-    my $sql_statement = "UPDATE $table SET $update_statement $where_statement";
-    &create_lock($self,'update_dbentry');
-    my $db_answer = $self->{dbh}->do($sql_statement);
-    &remove_lock($self,'update_dbentry');
+    my ($self, $sql)= @_;
+    my $db_answer= &exec_statement($self, $sql); 
     return $db_answer;
-}  
+}
 
 
 sub del_dbentry {
-    my $self = shift;
-    my $arg = shift;
-
-
-    # check completeness of function parameter
-    # extract table statement from arg hash
-    my $table = $arg->{table};
-    if (not defined $table) {
-        return 1;
-    } else {
-        delete $arg->{table};
-    }
-
-    # collect select statements
-    my @del_list;
-    while (my ($pram, $val) = each %{$arg}) {
-        if ( $pram eq 'timestamp' ) {
-            push(@del_list, "$pram < '$val'");
-        } else {
-            push(@del_list, "$pram = '$val'");
-        }
-    }
-
-    my $where_statement;
-    if( not @del_list ) {
-        $where_statement = "";
-    } else {
-        $where_statement = "WHERE ".join(' AND ', @del_list);
-    }
-
-    my $sql_statement = "DELETE FROM $table $where_statement";
-    &create_lock($self,'del_dbentry');
-    my $db_res = $self->{dbh}->do($sql_statement);
-    &remove_lock($self,'del_dbentry');
+    my ($self, $sql)= @_;;
+    my $db_res= &exec_statement($self, $sql);
     return $db_res;
 }
 
@@ -284,55 +257,26 @@ sub get_table_columns {
 
 }
 
+
 sub select_dbentry {
-    my $self = shift;
-    my $arg = shift;
+    my ($self, $sql)= @_;
 
-    
-    # check completeness of function parameter
-    # extract table statement from arg hash
-    my $table = $arg->{table};
-    if (not defined $table) {
-        return 1;
-    } else {
-        delete $arg->{table};
-    }
-
-    # collect select statements
-    my @select_list;
-    my $sql_statement;
-    while (my ($pram, $val) = each %{$arg}) {
-        if ( $pram eq 'timestamp' ) {
-            push(@select_list, "$pram < '$val'");
-        } else {
-            push(@select_list, "$pram = '$val'");
-        }
-    }
-
-    if (@select_list == 0) {
-        $sql_statement = "SELECT * FROM '$table'";
-    } else {
-        $sql_statement = "SELECT * FROM '$table' WHERE ".join(' AND ', @select_list);
-    }
-
-    # query db
-    &create_lock($self,'select_dbentry');
-    my $query_answer = $self->{dbh}->selectall_arrayref($sql_statement);
-    &remove_lock($self,'select_dbentry');
+    my $db_answer= &exec_statement($self, $sql); 
 
     # fetch column list of db and create a hash with column_name->column_value of the select query
+    $sql =~ /FROM ([\S]*?) /g;
+    my $table = $1;
     my $column_list = &get_table_columns($self, $table);    
     my $list_len = @{ $column_list } ;
     my $answer = {};
     my $hit_counter = 0;
-
-    foreach my $hit ( @{ $query_answer }) {
+    foreach my $hit ( @{ $db_answer }) {
         $hit_counter++;
         for ( my $i = 0; $i < $list_len; $i++) {
             $answer->{ $hit_counter }->{ @{ $column_list }[$i] } = @{ $hit }[$i];
         }
     }
-
+    
     return $answer;  
 }
 
@@ -354,11 +298,14 @@ sub show_table {
 sub exec_statement {
     my $self = shift;
     my $sql_statement = shift;
+
     &create_lock($self,'exec_statement');
-    my @res = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+    my @db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
     &remove_lock($self, 'exec_statement');
-    return \@res;
+
+    return \@db_answer;
 }
+
 
 sub get_time {
     my ($seconds, $minutes, $hours, $monthday, $month,

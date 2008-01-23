@@ -60,20 +60,25 @@ sub transform_msg2hash {
     
     # xml tags without a content are created as an empty hash
     # substitute it with an empty list
-    while( my ($xml_tag, $xml_content) = each %{ $hash } ) {
-        if( 1 == @{ $xml_content } ) {
-            # there is only one element in xml_content list ...
-            my $element = @{ $xml_content }[0];
-            if( ref($element) eq "HASH" ) {
-                # and this element is an hash ...
-                my $len_element = keys %{ $element };
-                if( $len_element == 0 ) {
-                    # and this hash is empty, then substitute the xml_content
-                    # with an empty string in list
-                    $hash->{$xml_tag} = [ "none" ];
+    eval {
+        while( my ($xml_tag, $xml_content) = each %{ $hash } ) {
+            if( 1 == @{ $xml_content } ) {
+                # there is only one element in xml_content list ...
+                my $element = @{ $xml_content }[0];
+                if( ref($element) eq "HASH" ) {
+                    # and this element is an hash ...
+                    my $len_element = keys %{ $element };
+                    if( $len_element == 0 ) {
+                        # and this hash is empty, then substitute the xml_content
+                        # with an empty string in list
+                        $hash->{$xml_tag} = [ "none" ];
+                    }
                 }
             }
         }
+    };
+    if( $@ ) {  
+        $hash = undef;
     }
 
     return $hash;

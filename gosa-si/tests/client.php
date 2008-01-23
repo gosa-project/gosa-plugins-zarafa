@@ -13,23 +13,23 @@ if($sock->connected()){
 
 # add
 #$data = "<xml><header>gosa_ping</header><source>10.89.1.155:20082</source><target>10.89.1.155:20080</target></xml>";
-# $data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000000</timestamp> </xml>";
-# $data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
-# $data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000000</timestamp> </xml>";
+#$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
 # delete
-	#$data = "<xml> <header>gosa_delete_jobdb_entry</header> <where>headertag</where> <headertag>sayHello</headertag> </xml>";
+#$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><status>error</status></phrase></clause></where></xml>";
 
 # update  
-	#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <where> <status>waiting</status> </where> <update> <status>processing</status> </update></xml>";
-	#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <update> <status>waiting</status> </update></xml>";
-	#$data = "<xml> <header>gosa_update_timestamp_jobdb_entry</header> <update> <timestamp>20130123456789</timestamp> </update></xml>";
+#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
 # query
-$data = "<xml><header>gosa_query_jobdb</header><where>status</where><status>error</status></xml>";
+#$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><id>2</id></phrase><phrase><operator>le</operator><id>4</id></phrase></clause></where></xml>";
+#$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><status>waiting</status></phrase></clause></where></xml>";
+
 	
 # clear
-	#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
 
     $sock->write($data);
     $answer = "nothing";

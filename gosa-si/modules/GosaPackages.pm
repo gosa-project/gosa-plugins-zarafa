@@ -13,6 +13,15 @@ use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
 
+my $op_hash = {
+    'eq' => '=',
+    'ne' => '!=',
+    'ge' => '>=',
+    'gt' => '>',
+    'le' => '<=',
+    'lt' => '<',
+};
+
 BEGIN{}
 END{}
 
@@ -304,7 +313,7 @@ sub process_incoming_msg {
     } else {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
     }
-    
+        
     if (not defined $out_msg) {
         return;
     }
@@ -321,6 +330,7 @@ sub process_incoming_msg {
 
         my $out_cipher = &create_ciphering($gosa_passwd);
         $out_msg = &encrypt_msg($out_msg, $out_cipher);
+
         return $out_msg;
 	}
 
@@ -398,7 +408,7 @@ sub process_job_msg {
     }
     
     &main::daemon_log("GosaPackages: $header job successfully added to job queue", 3);
-    return "<xml><1>$res</1></xml>";
+    return "<xml><answer1>$res</answer1></xml>";
 
 }
 
@@ -433,24 +443,105 @@ sub db_res_2_xml {
 
 ## CORE FUNCTIONS ############################################################
 
+sub get_where_statement {
+    my ($msg, $msg_hash)= @_;
+    my $error= 0;
+    
+    my $clause_str= "";
+    if( not exists @{$msg_hash->{'where'}}[0]->{'clause'} ) { $error++; };
+    if( $error == 0 ) {
+        my @clause_l;
+        my @where = @{@{$msg_hash->{'where'}}[0]->{'clause'}};
+        foreach my $clause (@where) {
+            my $connector = $clause->{'connector'}[0];
+            if( not defined $connector ) { $connector = "AND"; }
+            $connector = uc($connector);
+            delete($clause->{'connector'});
+
+            my @phrase_l ;
+            foreach my $phrase (@{$clause->{'phrase'}}) {
+                my $operator = "=";
+                if( exists $phrase->{'operator'} ) {
+                    my $op = $op_hash->{$phrase->{'operator'}[0]};
+                    if( not defined $op ) {
+                        &main::daemon_log("Can not translate operator '$operator' in where ".
+                                "statement to sql valid syntax. Please use 'eq', ".
+                                "'ne', 'ge', 'gt', 'le', 'lt' in xml message\n", 1);
+                        &main::daemon_log($msg, 8);
+                        $op = "=";
+                    }
+                    $operator = $op;
+                    delete($phrase->{'operator'});
+                }
+
+                my @xml_tags = keys %{$phrase};
+                my $tag = $xml_tags[0];
+                my $val = $phrase->{$tag}[0];
+                push(@phrase_l, "$tag$operator'$val'");
+            }
+            my $clause_str .= join(" $connector ", @phrase_l);
+            push(@clause_l, $clause_str);
+        }
+
+        if( not 0 == @clause_l ) {
+            $clause_str = join(" AND ", @clause_l);
+            $clause_str = "WHERE $clause_str ";
+        }
+    }
+
+    return $clause_str;
+}
+
+sub get_select_statement {
+    my ($msg, $msg_hash)= @_;
+    my $select = "*";
+    if( exists $msg_hash->{'select'} ) {
+        my $select_l = \@{$msg_hash->{'select'}};
+        $select = join(' AND ', @{$select_l});
+    }
+    return $select;
+}
+
+
+sub get_update_statement {
+    my ($msg, $msg_hash) = @_;
+    my $error= 0;
+    my $update_str= "";
+    my @update_l; 
+
+    if( not exists $msg_hash->{'update'} ) { $error++; };
+
+    if( $error == 0 ) {
+        my $update= @{$msg_hash->{'update'}}[0];
+        while( my ($tag, $val) = each %{$update} ) {
+            my $val= @{$update->{$tag}}[0];
+            push(@update_l, "$tag='$val'");
+        }
+        if( 0 == @update_l ) { $error++; };   
+    }
+
+    if( $error == 0 ) { 
+        $update_str= join(', ', @update_l);
+        $update_str= "SET $update_str ";
+    }
+
+    return $update_str;
+}
+
 sub query_jobdb {
     my ($msg) = @_;
     my $msg_hash = &transform_msg2hash($msg);
 
     # prepare query sql statement
-    my @where = @{$msg_hash->{where}};
-    my $where_hash = {table=>$main::job_queue_table_name };
-    foreach my $where_pram (@where) {
-        my $where_val = @{$msg_hash->{$where_pram}}[0];
-        if (defined $where_val) {
-            $where_hash->{$where_pram} = $where_val;
-        }
-    }
- 
-    # execute db query   
-    my $res_hash = $main::job_db->select_dbentry($where_hash);
+    my $select= &get_select_statement($msg, $msg_hash);
+    my $table= $main::job_queue_table_name;
+    my $where= &get_where_statement($msg, $msg_hash);
+    my $sql_statement= "SELECT $select FROM $table $where";
 
+    # execute db query   
+    my $res_hash = $main::job_db->select_dbentry($sql_statement);
     my $out_xml = &db_res_2_xml($res_hash);
+    
     return $out_xml;
 }
 
@@ -459,17 +550,12 @@ sub delete_jobdb_entry {
     my $msg_hash = &transform_msg2hash($msg);
     
     # prepare query sql statement
-    my @where = @{$msg_hash->{where}};
-    my $where_hash = {table=>$main::job_queue_table_name };
-    foreach my $where_pram (@where) {
-        my $where_val = @{$msg_hash->{$where_pram}}[0];
-        if (defined $where_val) {
-            $where_hash->{$where_pram} = $where_val;
-        }
-    }
+    my $table= $main::job_queue_table_name;
+    my $where= &get_where_statement($msg, $msg_hash);
+    my $sql_statement = "DELETE FROM $table $where";
     
     # execute db query
-    my $db_res = $main::job_db->del_dbentry($where_hash);
+    my $db_res = $main::job_db->del_dbentry($sql_statement);
 
     my $res;
     if( $db_res > 0 ) { 
@@ -483,95 +569,93 @@ sub delete_jobdb_entry {
     return $out_xml;
 
 }
+
 
 sub clear_jobdb {
     my ($msg) = @_ ;
     my $msg_hash = &transform_msg2hash($msg);
+    my $error= 0;
+    my $out_xml= "<xml><answer1>1</answer1></xml>";
+ 
+    my $table= $main::job_queue_table_name;
     
-    my $where_hash = {table=>$main::job_queue_table_name };
+    my $sql_statement = "DELETE FROM $table";
+    my $db_res = $main::job_db->del_dbentry($sql_statement);
+    if( not $db_res > 0 ) { $error++; };
     
-    # execute db query
-    my $db_res = $main::job_db->del_dbentry($where_hash);
-    print STDERR "db_res=$db_res\n";
-    my $res;
-    if( $db_res eq '0E0' ) { 
-        $res = 0 ;
-    } else {
-        $res = 1;
+    if( $error == 0 ) {
+        $out_xml = "<xml><answer1>0</answer1></xml>";
     }
-
-    # prepare xml answer
-    my $out_xml = "<xml><answer1>$res</answer1></xml>";
+   
     return $out_xml;
 }
+
 
 sub update_status_jobdb_entry {
     my ($msg) = @_ ;
     my $msg_hash = &transform_msg2hash($msg);
+    my $error= 0;
+    my $out_xml= "<xml><answer1>1</answer1></xml>";
+
+    my @len_hash = keys %{$msg_hash};
+    if( 0 == @len_hash) {  $error++; };
     
     # prepare query sql statement
-    my $update_hash = {table=>$main::job_queue_table_name };
-    if( exists $msg_hash->{where} ) {
-        $update_hash->{where} = $msg_hash->{where};
-    } else {
-        $update_hash->{where} = [];
+    if( $error == 0) {
+        my $table= $main::job_queue_table_name;
+        my $where= &get_where_statement($msg, $msg_hash);
+        my $update= &get_update_statement($msg, $msg_hash);
+
+        my $sql_statement = "UPDATE $table $update $where";
+
+        # execute db query
+        my $db_res = $main::job_db->update_dbentry($sql_statement);
+
+        # check success of db update
+        if( not $db_res > 0 ) { $error++; };
     }
 
-    if( not exists $msg_hash->{update}[0]->{status} ) {
-        return "<xml><answer1>1</answer1></xml>";
-    }
-    $update_hash->{update} = [ { status=>$msg_hash->{update}[0]->{status} } ];
-
-    # execute db query
-    my $db_res = $main::job_db->update_dbentry($update_hash);
-
-    # transform db answer to error returnment
-    my $res;
-    if( $db_res > 0 ) { 
-        $res = 0 ;
-    } else {
-        $res = 1;
+    if( $error == 0) {
+        $out_xml = "<xml><answer1>0</answer1></xml>";
     }
 
-    # prepare xml answer
-    my $out_xml = "<xml><answer1>$res</answer1></xml>";
     return $out_xml;
 }
 
-sub update_timestamp_jobdb_entry {
-    my ($msg) = @_ ;
-    my $msg_hash = &transform_msg2hash($msg);
-    
-    # prepare query sql statement
-    my $update_hash = {table=>$main::job_queue_table_name };
-    if( exists $msg_hash->{where} ) {
-        $update_hash->{where} = $msg_hash->{where};
-    } else {
-        $update_hash->{where} = [];
-    }
-
-    if( not exists $msg_hash->{update}[0]->{timestamp} ) {
-        return "<xml><answer1>1</answer1></xml>";
-    }
-
-    $update_hash->{update} = [ { timestamp=>$msg_hash->{update}[0]->{timestamp} } ];
-
-    # execute db query
-    my $db_res = $main::job_db->update_dbentry($update_hash);
-
-    # transform db answer to error returnment
-    my $res;
-    if( $db_res > 0 ) { 
-        $res = 0 ;
-    } else {
-        $res = 1;
-    }
-
-    # prepare xml answer
-    my $out_xml = "<xml><answer1>$res</answer1></xml>";
-    return $out_xml;
-
-}
+#sub update_timestamp_jobdb_entry {
+#    my ($msg) = @_ ;
+#    my $msg_hash = &transform_msg2hash($msg);
+#    
+#    # prepare query sql statement
+#    my $update_hash = {table=>$main::job_queue_table_name };
+#    if( exists $msg_hash->{where} ) {
+#        $update_hash->{where} = $msg_hash->{where};
+#    } else {
+#        $update_hash->{where} = [];
+#    }
+#
+#    if( not exists $msg_hash->{update}[0]->{timestamp} ) {
+#        return "<xml><answer1>1</answer1></xml>";
+#    }
+#
+#    $update_hash->{update} = [ { timestamp=>$msg_hash->{update}[0]->{timestamp} } ];
+#
+#    # execute db query
+#    my $db_res = $main::job_db->update_dbentry($update_hash);
+#
+#    # transform db answer to error returnment
+#    my $res;
+#    if( $db_res > 0 ) { 
+#        $res = 0 ;
+#    } else {
+#        $res = 1;
+#    }
+#
+#    # prepare xml answer
+#    my $out_xml = "<xml><answer1>$res</answer1></xml>";
+#    return $out_xml;
+#
+#}
 
 
 1;

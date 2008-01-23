@@ -406,8 +406,8 @@ sub client_input {
 		my $tmp = &{ $module."::process_incoming_msg" }($input.".".$heap->{remote_ip}."\n");
 		if (defined $tmp) {
 			$answer = $tmp;
+            daemon_log("Got answer from module ".$module.": \n".$answer,8);
 		}
-		daemon_log("Got answer from module ".$module.": ".$answer,8);
 	}        
 	daemon_log("processing of msg finished", 5);
 
@@ -427,19 +427,12 @@ sub watch_for_new_jobs {
 	my ($kernel,$heap) = @_[KERNEL, HEAP];
 
 	# check gosa job queue for jobs with executable timestamp
-#	my ($seconds, $minutes, $hours, $monthday, $month,
-#		$year, $weekday, $yearday, $sommertime) = localtime(time);
-#	$hours = $hours < 10 ? $hours = "0".$hours : $hours;
-#	$minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-#	$seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-#	$month+=1;
-#	$month = $month < 10 ? $month = "0".$month : $month;
-#	$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-#	$year+=1900;
-#	my $timestamp = "$year$month$monthday$hours$minutes$seconds";
     my $timestamp = &get_time();
 
-	my $res = $job_db->select_dbentry( { table=>$job_queue_table_name, status=>'waiting', timestamp=>$timestamp  } );
+    my $sql_statement = "SELECT * FROM ".$job_queue_table_name.
+        " WHERE status='waiting' AND timestamp<'$timestamp'";
+
+	my $res = $job_db->select_dbentry( $sql_statement );
 
 	while( my ($id, $hit) = each %{$res} ) {         
 
@@ -447,19 +440,18 @@ sub watch_for_new_jobs {
 		my $macaddress = $hit->{macaddress};
 		my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
 		my $out_msg_hash = $job_msg_hash;
-		my $res_hash = $known_clients_db->select_dbentry( {table=>'known_clients', macaddress=>$macaddress} );
+        my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$macaddress'";
+		my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
 		# expect macaddress is unique!!!!!!
 		my $target = $res_hash->{1}->{hostname};
 
 		if (not defined $target) {
 			&daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
 			&daemon_log("xml message: $hit->{xmlmessage}", 5);
-			my $update_hash = { table=>$job_queue_table_name,
-				update=> [ { status=>['error'], result=>["no host found for mac address"] } ],
-				where=> [ { id=>[$jobdb_id] } ],
-			};
-			my $res = $job_db->update_dbentry($update_hash);
-
+            my $sql_statement = "UPDATE $job_queue_table_name ".
+                "SET status='error', result='no host found for mac address' ".
+                "WHERE id='$jobdb_id'";
+			my $res = $job_db->update_dbentry($sql_statement);
 			next;
 		}
 
@@ -484,14 +476,15 @@ sub watch_for_new_jobs {
 		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
 
 		if ($error == 0) {
-			my $sql = "UPDATE '$job_queue_table_name' SET status='processing', targettag='$target' WHERE id='$jobdb_id'";
-			my $res = $job_db->exec_statement($sql);
+			my $sql_statement = "UPDATE $job_queue_table_name ".
+                "SET status='processing', targettag='$target' ".
+                "WHERE id='$jobdb_id'";
+			my $res = $job_db->update_dbentry($sql_statement);
 		} else {
-			my $update_hash = { table=>$job_queue_table_name, 
-				update=> [ { status=>'error' } ],
-				where=> [ { id=>$jobdb_id } ],
-			};
-			my $res = $job_db->update_dbentry($update_hash);
+            my $sql_statement = "UPDATE $job_queue_table_name ".
+                "SET status='error' ".
+                "WHERE id='$jobdb_id'";
+			my $res = $job_db->update_dbentry($sql_statement);
 		}
 	}
 
@@ -588,5 +581,4 @@ daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 
 POE::Kernel->run();
 exit;
-
 
