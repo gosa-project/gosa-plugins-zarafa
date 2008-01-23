@@ -176,6 +176,15 @@ class faiTemplate extends plugin
       }
     }
 
+    /* File download requested */
+    if(isset($_GET['getFAItemplate'])){
+      if(isset($this->SubObjects[$_GET['getFAItemplate']])){
+        $obj = $this->SubObjects[$_GET['getFAItemplate']];
+        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        send_binary_content($obj['FAItemplateFile'],$obj['cn'].".FAItemplate");
+      }
+    }
+
     /* Edit entries via GET */
     if(isset($_GET['act']) && isset($_GET['id'])){
       if($_GET['act'] == "edit" && isset($this->SubObjects[$_GET['id']])){
@@ -302,7 +311,7 @@ class faiTemplate extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='getFAIscript.php?is_template&amp;id=".base64_encode($dn)."'>
+        $down = "<a href='?plug=".$_GET['plug']."&getFAItemplate=".$key."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>";
       }

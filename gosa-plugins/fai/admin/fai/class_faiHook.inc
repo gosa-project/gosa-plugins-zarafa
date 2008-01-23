@@ -198,6 +198,15 @@ class faiHook extends plugin
       }
     }
 
+    /* File download requested */
+    if(isset($_GET['getFAIHook'])){
+      if(isset($this->SubObjects[$_GET['getFAIHook']])){
+        $obj = $this->SubObjects[$_GET['getFAIHook']];
+        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        send_binary_content($obj['FAIscript'],$obj['cn'].".FAIhook");
+      }
+    }
+
     /* Edit entries via GET */
     if(isset($_GET['act']) && isset($_GET['id'])){
       if($_GET['act'] == "edit" && isset($this->SubObjects[$_GET['id']])){
@@ -325,7 +334,7 @@ class faiHook extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='getFAIscript.php?id=".base64_encode($name['dn'])."'>
+        $down = "<a href='?plug=".$_GET['plug']."&getFAIHook=".$key."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>";
       }

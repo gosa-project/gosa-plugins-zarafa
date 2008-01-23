@@ -164,6 +164,15 @@ class faiScript extends plugin
       session::set('objectinfo',$this->dn);
     }
 
+    /* File download requested */
+    if(isset($_GET['getFAIscript'])){
+      if(isset($this->SubObjects[$_GET['getFAIscript']])){
+        $obj = $this->SubObjects[$_GET['getFAIscript']];
+        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        send_binary_content($obj['FAIscript'],$obj['cn'].".FAIscript"); 
+      }
+    }
+    
     /* Handle posts */
     $s_action = $s_entry = "";
     foreach($_POST as $name => $value){
@@ -361,7 +370,7 @@ class faiScript extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='getFAIscript.php?id=".base64_encode($name['dn'])."' >
+        $down = "<a href='?plug=".$_GET['plug']."&getFAIscript=".$key."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>"; 
       } 

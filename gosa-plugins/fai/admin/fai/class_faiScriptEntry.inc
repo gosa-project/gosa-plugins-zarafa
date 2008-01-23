@@ -83,10 +83,15 @@ class faiScriptEntry extends plugin
       } 
     }
 
-     /* Create download button*/
+    /* File download requested */
+    if(isset($_GET['getFAIScript'])){
+      send_binary_content($this->FAIscript,$this->cn.".FAIscript");
+    }
+
+    /* Create download button*/
     if($this->dn != "new" && $this->acl_is_readable("FAIscript")){
-      $smarty->assign("DownMe","<a href='getFAIscript.php?id=".base64_encode($this->dn)."'>
-        <input type='button' value='"._("Download")."'>
+      $smarty->assign("DownMe","<a href='?plug=".$_GET['plug']."&getFAIScript'>
+        <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0 class='center'>
         </a>");
     }else{
       $smarty->assign("DownMe","");
