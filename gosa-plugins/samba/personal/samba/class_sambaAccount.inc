@@ -1543,7 +1543,7 @@ class sambaAccount extends plugin
   {
     plugin::PrepareForCopyPaste($source);
 
-    /* Set a new SID and force a new group with new sambaPrimaryGroupSID */
+    /* Set a new SID */
     $this->sambaSID = "";
     print "Eloha : ".($this->gidNumber);
   }
