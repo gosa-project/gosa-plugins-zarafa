@@ -1537,6 +1537,17 @@ class sambaAccount extends plugin
       }
     }
   }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Set a new SID and force a new group with new sambaPrimaryGroupSID */
+    $this->sambaSID = "";
+    print "Eloha : ".($this->gidNumber);
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
