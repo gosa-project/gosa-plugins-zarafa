@@ -172,6 +172,24 @@ class glpiAccount extends plugin
       return($smarty->fetch(get_template_path('glpi.tpl',TRUE,dirname(__FILE__))));
     } 
 
+    /* Download requested of attachment requested.
+     */
+    if(isset($_GET['get_attachment'])){
+      $atts = $this->handle->getAttachments();
+      if(isset($atts[$_GET['get_attachment']])){
+        $att = $atts[$_GET['get_attachment']];
+        $filename = CONFIG_DIR."/glpi/".$att['filename'];
+        if(file_exists($filename) && is_readable($filename)){
+          $str = file_get_contents($filename);
+          send_binary_content($str,$att['filename']);
+        }else{
+          print_red(_("Download of attachment failed. Attachment was not found on server."));
+        }
+      }else{
+        print_red(_("Download of attachment failed. Not a valid attachment id."));
+      }
+    }
+
     /*  All checks are ok
         Lets handle Posts, templates etc below ...
      */
@@ -613,7 +631,7 @@ class glpiAccount extends plugin
     $divlist = new divSelectBox("glpiAttachmentsList");
     $divlist-> SetHeight(130); 
     $atts = $this->getUsedAttachments(true);
-    $downlink = "<a href='?".$_GET['plug']."&get_attachment.php?id=%s' target='_blank'>%s</a>";
+    $downlink = "<a href='?plug=".$_GET['plug']."&get_attachment=%s'>%s</a>";
     $del_link = "<input type='image' src='images/edittrash.png' name='delAttachment_%s'>";
     foreach($atts as $id => $attachment){
       $divlist->AddEntry
