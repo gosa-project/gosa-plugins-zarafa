@@ -201,20 +201,7 @@
 </table>
 
 <table style="width:100%;" summary="">
- <tr><td colspan=3><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
-
  <tr>
-  <td style="width:50%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/printer.png"><LABEL for="gotoLpdEnable"> {t}Print device{/t}</LABEL></h2>
-{render acl=$gotoLpdEnableACL}
-   <input id="gotoLpdEnable" type=checkbox name="gotoLpdEnable" value="1" {$gotoLpdEnable} title="{t}Select to start IPP based printing service on terminal{/t}">
-{/render}
-   {t}Provide print services{/t}
-
-  <td style="border-left:1px solid #A0A0A0">
-   &nbsp;
-  </td>
-
   <td style="vertical-align:top;">
    <h2><img class="center" alt="" align="middle" src="images/scanner.png"> {t}Scan device{/t}</h2>
 {render acl=$gotoScannerEnableACL}
