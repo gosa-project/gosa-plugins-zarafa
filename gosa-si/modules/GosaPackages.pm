@@ -13,14 +13,6 @@ use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
 
-my $op_hash = {
-    'eq' => '=',
-    'ne' => '!=',
-    'ge' => '>=',
-    'gt' => '>',
-    'le' => '<=',
-    'lt' => '<',
-};
 
 BEGIN{}
 END{}
@@ -269,7 +261,6 @@ sub open_socket {
 #===============================================================================
 sub process_incoming_msg {
     my ($crypted_msg) = @_ ;
-	&main::daemon_log("Got message $crypted_msg", 8);
 	if( (not(defined($crypted_msg))) || (length($crypted_msg) <= 0)) {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
         return;
@@ -418,9 +409,11 @@ sub db_res_2_xml {
 
     my $xml = "<xml>";
 
-    while ( my ($hit, $hash) = each %{ $db_res } ) {
-        $xml .= "\n<answer$hit>";
+    my $len_db_res= keys %{$db_res};
 
+    for( my $i= 1; $i<= $len_db_res; $i++ ) {
+        $xml .= "\n<answer$i>";
+        my $hash= $db_res->{$i};
         while ( my ($column_name, $column_value) = each %{$hash} ) {
             $xml .= "<$column_name>";
             my $xml_content;
@@ -432,8 +425,8 @@ sub db_res_2_xml {
             $xml .= $xml_content;
             $xml .= "</$column_name>"; 
         }
+        $xml .= "</answer$i>";
 
-        $xml .= "</answer$hit>";
     }
 
     $xml .= "</xml>";
@@ -442,117 +435,6 @@ sub db_res_2_xml {
 
 
 ## CORE FUNCTIONS ############################################################
-
-sub get_where_statement {
-    my ($msg, $msg_hash)= @_;
-    my $error= 0;
-    
-    my $clause_str= "";
-    if( not exists @{$msg_hash->{'where'}}[0]->{'clause'} ) { $error++; };
-    if( $error == 0 ) {
-        my @clause_l;
-        my @where = @{@{$msg_hash->{'where'}}[0]->{'clause'}};
-        foreach my $clause (@where) {
-            my $connector = $clause->{'connector'}[0];
-            if( not defined $connector ) { $connector = "AND"; }
-            $connector = uc($connector);
-            delete($clause->{'connector'});
-
-            my @phrase_l ;
-            foreach my $phrase (@{$clause->{'phrase'}}) {
-                my $operator = "=";
-                if( exists $phrase->{'operator'} ) {
-                    my $op = $op_hash->{$phrase->{'operator'}[0]};
-                    if( not defined $op ) {
-                        &main::daemon_log("Can not translate operator '$operator' in where ".
-                                "statement to sql valid syntax. Please use 'eq', ".
-                                "'ne', 'ge', 'gt', 'le', 'lt' in xml message\n", 1);
-                        &main::daemon_log($msg, 8);
-                        $op = "=";
-                    }
-                    $operator = $op;
-                    delete($phrase->{'operator'});
-                }
-
-                my @xml_tags = keys %{$phrase};
-                my $tag = $xml_tags[0];
-                my $val = $phrase->{$tag}[0];
-                push(@phrase_l, "$tag$operator'$val'");
-            }
-            my $clause_str .= join(" $connector ", @phrase_l);
-            push(@clause_l, $clause_str);
-        }
-
-        if( not 0 == @clause_l ) {
-            $clause_str = join(" AND ", @clause_l);
-            $clause_str = "WHERE $clause_str ";
-        }
-    }
-
-    return $clause_str;
-}
-
-sub get_select_statement {
-    my ($msg, $msg_hash)= @_;
-    my $select = "*";
-    if( exists $msg_hash->{'select'} ) {
-        my $select_l = \@{$msg_hash->{'select'}};
-        $select = join(' AND ', @{$select_l});
-    }
-    return $select;
-}
-
-
-sub get_update_statement {
-    my ($msg, $msg_hash) = @_;
-    my $error= 0;
-    my $update_str= "";
-    my @update_l; 
-
-    if( not exists $msg_hash->{'update'} ) { $error++; };
-
-    if( $error == 0 ) {
-        my $update= @{$msg_hash->{'update'}}[0];
-        while( my ($tag, $val) = each %{$update} ) {
-            my $val= @{$update->{$tag}}[0];
-            push(@update_l, "$tag='$val'");
-        }
-        if( 0 == @update_l ) { $error++; };   
-    }
-
-    if( $error == 0 ) { 
-        $update_str= join(', ', @update_l);
-        $update_str= "SET $update_str ";
-    }
-
-    return $update_str;
-}
-
-sub get_limit_statement {
-    my ($msg, $msg_hash)= @_; 
-    my $error= 0;
-    my $limit_str = "";
-    my ($from, $to);
-
-    if( not exists $msg_hash->{'limit'} ) { $error++; };
-
-    if( $error == 0 ) {
-        eval {
-            my $limit= @{$msg_hash->{'limit'}}[0];
-            $from= @{$limit->{'from'}}[0];
-            $to= @{$limit->{'to'}}[0];
-        };
-        if( $@ ) {
-            $error++;
-        }
-    }
-
-    if( $error == 0 ) {
-        $limit_str= "LIMIT $from, $to";
-    }   
-    
-    return $limit_str;
-}
 
 sub query_jobdb {
     my ($msg) = @_;
@@ -563,7 +445,10 @@ sub query_jobdb {
     my $table= $main::job_queue_table_name;
     my $where= &get_where_statement($msg, $msg_hash);
     my $limit= &get_limit_statement($msg, $msg_hash);
-    my $sql_statement= "SELECT $select FROM $table $where $limit";
+    my $orderby= &get_orderby_statement($msg, $msg_hash);
+    my $sql_statement= "SELECT $select FROM $table $where $orderby $limit";
+
+print STDERR "\n\n$sql_statement\n\n";
 
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);

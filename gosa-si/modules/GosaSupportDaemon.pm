@@ -2,7 +2,7 @@ package GOSA::GosaSupportDaemon;
 
 use Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(create_xml_hash send_msg_hash2address get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg); 
+@EXPORT = qw(create_xml_hash send_msg_hash2address get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg get_where_statement get_select_statement get_update_statement get_limit_statement get_orderby_statement); 
 
 use strict;
 use warnings;
@@ -12,6 +12,14 @@ use Digest::MD5  qw(md5 md5_hex md5_base64);
 use MIME::Base64;
 use XML::Simple;
 
+my $op_hash = {
+    'eq' => '=',
+    'ne' => '!=',
+    'ge' => '>=',
+    'gt' => '>',
+    'le' => '<=',
+    'lt' => '<',
+};
 
 
 BEGIN {}
@@ -107,7 +115,7 @@ sub send_msg_hash2address ($$$){
     
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
-    
+
     # opensocket
     my $socket = &open_socket($address);
     if(not defined $socket){
@@ -194,6 +202,10 @@ sub encrypt_msg {
     $msg = "\0"x(16-length($msg)%16).$msg;
     $msg = $my_cipher->encrypt($msg);
     chomp($msg = &encode_base64($msg));
+
+    # there are no newlines allowed inside msg
+    $msg=~ s/\n//g;
+
     return $msg;
 }
 
@@ -300,6 +312,142 @@ sub send_msg ($$$$$) {
 	}
 
 	&send_msg_hash2address($out_hash, $to, $hostkey);
+}
+
+
+sub get_where_statement {
+    my ($msg, $msg_hash)= @_;
+    my $error= 0;
+    
+    my $clause_str= "";
+    if( not exists @{$msg_hash->{'where'}}[0]->{'clause'} ) { $error++; };
+    if( $error == 0 ) {
+        my @clause_l;
+        my @where = @{@{$msg_hash->{'where'}}[0]->{'clause'}};
+        foreach my $clause (@where) {
+            my $connector = $clause->{'connector'}[0];
+            if( not defined $connector ) { $connector = "AND"; }
+            $connector = uc($connector);
+            delete($clause->{'connector'});
+
+            my @phrase_l ;
+            foreach my $phrase (@{$clause->{'phrase'}}) {
+                my $operator = "=";
+                if( exists $phrase->{'operator'} ) {
+                    my $op = $op_hash->{$phrase->{'operator'}[0]};
+                    if( not defined $op ) {
+                        &main::daemon_log("Can not translate operator '$operator' in where ".
+                                "statement to sql valid syntax. Please use 'eq', ".
+                                "'ne', 'ge', 'gt', 'le', 'lt' in xml message\n", 1);
+                        &main::daemon_log($msg, 8);
+                        $op = "=";
+                    }
+                    $operator = $op;
+                    delete($phrase->{'operator'});
+                }
+
+                my @xml_tags = keys %{$phrase};
+                my $tag = $xml_tags[0];
+                my $val = $phrase->{$tag}[0];
+                push(@phrase_l, "$tag$operator'$val'");
+            }
+            my $clause_str .= join(" $connector ", @phrase_l);
+            push(@clause_l, $clause_str);
+        }
+
+        if( not 0 == @clause_l ) {
+            $clause_str = join(" AND ", @clause_l);
+            $clause_str = "WHERE $clause_str ";
+        }
+    }
+
+    return $clause_str;
+}
+
+sub get_select_statement {
+    my ($msg, $msg_hash)= @_;
+    my $select = "*";
+    if( exists $msg_hash->{'select'} ) {
+        my $select_l = \@{$msg_hash->{'select'}};
+        $select = join(' AND ', @{$select_l});
+    }
+    return $select;
+}
+
+
+sub get_update_statement {
+    my ($msg, $msg_hash) = @_;
+    my $error= 0;
+    my $update_str= "";
+    my @update_l; 
+
+    if( not exists $msg_hash->{'update'} ) { $error++; };
+
+    if( $error == 0 ) {
+        my $update= @{$msg_hash->{'update'}}[0];
+        while( my ($tag, $val) = each %{$update} ) {
+            my $val= @{$update->{$tag}}[0];
+            push(@update_l, "$tag='$val'");
+        }
+        if( 0 == @update_l ) { $error++; };   
+    }
+
+    if( $error == 0 ) { 
+        $update_str= join(', ', @update_l);
+        $update_str= "SET $update_str ";
+    }
+
+    return $update_str;
+}
+
+sub get_limit_statement {
+    my ($msg, $msg_hash)= @_; 
+    my $error= 0;
+    my $limit_str = "";
+    my ($from, $to);
+
+    if( not exists $msg_hash->{'limit'} ) { $error++; };
+
+    if( $error == 0 ) {
+        eval {
+            my $limit= @{$msg_hash->{'limit'}}[0];
+            $from= @{$limit->{'from'}}[0];
+            $to= @{$limit->{'to'}}[0];
+        };
+        if( $@ ) {
+            $error++;
+        }
+    }
+
+    if( $error == 0 ) {
+        $limit_str= "LIMIT $from, $to";
+    }   
+    
+    return $limit_str;
+}
+
+sub get_orderby_statement {
+    my ($msg, $msg_hash)= @_;
+    my $error= 0;
+    my $order_str= "";
+    my $order;
+    
+    if( not exists $msg_hash->{'orderby'} ) { $error++; };
+
+    if( $error == 0) {
+        eval {
+            $order= @{$msg_hash->{'orderby'}}[0];
+        };
+        if( $@ ) {
+            $error++;
+        }
+    }
+
+    if( $error == 0 ) {
+        $order_str= "ORDER BY $order";   
+    }
+    
+    return $order_str;
 }
 
 1;

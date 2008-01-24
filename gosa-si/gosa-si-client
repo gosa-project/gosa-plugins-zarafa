@@ -487,8 +487,6 @@ sub register_at_server {
         &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
         &add_content2xml_hash($register_hash, "events", $events);
 
-        my $tmp = print Dumper $register_hash;
-
         # send xml hash to server with general server passwd
         my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);
  

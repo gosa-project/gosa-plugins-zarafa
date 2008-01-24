@@ -259,30 +259,6 @@ sub get_ip {
 	return $result;
 }
 
-#===  FUNCTION  ================================================================
-#         NAME:  open_socket
-#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
-#                [PeerPort] string necessary if port not appended by PeerAddr
-#      RETURNS:  socket IO::Socket::INET
-#  DESCRIPTION:  open a socket to PeerAddr
-#===============================================================================
-#sub open_socket {
-#    my ($PeerAddr, $PeerPort) = @_ ;
-#    if(defined($PeerPort)){
-#        $PeerAddr = $PeerAddr.":".$PeerPort;
-#    }
-#    my $socket;
-#    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
-#            Porto => "tcp" ,
-#            Type => SOCK_STREAM,
-#            Timeout => 5,
-#            );
-#    if(not defined $socket) {
-#        return;
-#    }
-#    &main::daemon_log("open_socket to: $PeerAddr", 7);
-#    return $socket;
-#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  register_at_bus
@@ -292,10 +268,6 @@ sub get_ip {
 #===============================================================================
 sub register_at_bus {
 
-
-
-    print STDERR ">>>>>>>>>>>>>>>>>>>>>>>>1\n";    
-
     # add bus to known_server_db
     my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
                                                     primkey=>'hostname',
@@ -304,7 +276,6 @@ sub register_at_bus {
                                                     hostkey=>$bus_passwd,
                                                     timestamp=>&get_time,
                                                 } );
-    print STDERR ">>>>>>>>>>>>>>>>>>>>>>>>2\n";    
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
     my $answer = "";
     $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
@@ -328,12 +299,10 @@ sub process_incoming_msg {
         &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
     }
 
-    &main::daemon_log("ServerPackages: incoming msg: \n$crypted_msg", 8);
-
     $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
     $crypted_msg = $1;
 	my $host="0.0.0.0";
-	if($1 && $2 && $3 && $4) {
+	if(defined $2 && defined $3 && defined $4 && defined $5) {
 		$host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
 	}
 
@@ -363,11 +332,12 @@ sub process_incoming_msg {
 
     # check wether incoming msg is from a known_server
     if( not defined $msg ) {
-        #my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} ); 
         my $sql_statement= "SELECT * FROM known_server";
         my $query_res = $main::known_server_db->select_dbentry( $sql_statement ); 
+
         while( my ($hit_num, $hit) = each %{ $query_res } ) {  
             $host_name = $hit->{hostname};
+
             if( not $host_name =~ "^$host") {
                 next;
             }
@@ -546,13 +516,11 @@ sub new_passwd {
     my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source_name'";
     $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
     if( 1 == keys %{$query_res} ) {
-        my $update_hash = { table=>'known_clients' };
-        $update_hash->{where} = [ { hostname=>[$source_name] } ];
-        $update_hash->{update} = [ {
-            hostkey=>[$source_key],
-            timestamp=>[&get_time],
-        } ];
-        my $res = $main::known_clients_db->update_dbentry( $update_hash );
+        my $act_time = &get_time;
+        my $sql_statement= "UPDATE known_clients ".
+            "SET hostkey='$source_key', timestamp='$act_time' ".
+            "WHERE hostname='$source_name'";
+        my $res = $main::known_clients_db->update_dbentry( $sql_statement );
 
         my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
         &send_msg_hash2address($hash, $source_name, $source_key);
@@ -560,15 +528,14 @@ sub new_passwd {
     }
 
     # check known_server_db
-    $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$source_name } );
+    my $sql_statement = "SELECT * FROM known_server WHERE hostname='$source_name'";
+    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
     if( 1 == keys %{$query_res} ) {
-        my $update_hash = { table=>'known_server' };
-        $update_hash->{where} = [ { hostname=>[$source_name] } ];
-        $update_hash->{update} = [ {
-            hostkey=>[$source_key],
-                timestamp=>[&get_time],
-        } ];
-        my $res = $main::known_server_db->update_dbentry( $update_hash );
+        my $act_time = &get_time;
+        my $sql_statement= "UPDATE known_server ".
+            "SET hostkey='$source_key', timestamp='$act_time' ".
+            "WHERE hostname='$source_name'";
+        my $res = $main::known_server_db->update_dbentry( $sql_statement );
 
         my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
         &send_msg_hash2address($hash, $source_name, $source_key);
@@ -576,16 +543,6 @@ sub new_passwd {
     }
 
     &main::daemon_log("ERROR: $source_name not known for '$header'-msg", 1);
-    return;
-}
-
-
-sub send_msg_hash {
-    my ($hash, $host_name, $host_key);
-
-    
-    my $answer = &send_msg_hash2address($hash, $host_name, $host_key);
-    
     return;
 }
 
@@ -604,10 +561,13 @@ sub here_i_am {
     my $out_hash;
 
     # number of known clients
-    my $nu_clients = keys %{ $main::known_clients_db->select_dbentry( {table=>'known_clients'} ) };
+    my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
 
     # check wether client address or mac address is already known
-    if (exists $main::known_clients->{$source}) {
+    my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$source'";
+    my $db_res= $main::known_clients_db->select_dbentry( $sql_statement );
+    
+    if ( 1 == keys %{$db_res} ) {
         &main::daemon_log("WARNING: $source is already known as a client", 1);
         &main::daemon_log("WARNING: values for $source are being overwritten", 1);   
         $nu_clients --;
@@ -633,6 +593,7 @@ sub here_i_am {
     # create entry in known_clients
     my $events = @{$msg_hash->{events}}[0];
     
+
     # add entry to known_clients_db
     my $res = $main::known_clients_db->add_dbentry( {table=>'known_clients', 
                                                 primkey=>'hostname',
@@ -656,9 +617,10 @@ sub here_i_am {
     # notify registered client to bus
     if( $bus_activ eq "on") {
         # fetch actual bus key
-        my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server'} );
-        my $hostkey = $query_res->{1}->{hostkey};
-        
+        my $sql_statement= "SELECT * FROM known_server WHERE status='bus'";
+        my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+        my $hostkey = $query_res->{1}->{'hostkey'};
+
         # send update msg to bus
         $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
         &send_msg_hash2address($out_hash, $bus_address, $hostkey);
@@ -729,7 +691,8 @@ sub who_has_i_do {
 sub new_ldap_config {
     my ($address) = @_ ;
     
-    my $res = $main::known_clients_db->select_dbentry( { table=>'known_clients', hostname=>$address } );
+    my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+    my $res = $main::known_clients_db->select_dbentry( $sql_statement );
 
     # check hit
     my $hit_counter = keys %{$res};

@@ -8,6 +8,8 @@ use Data::Dumper;
 use threads;
 use Time::HiRes qw(usleep);
 
+
+
 my $col_names = {};
 
 sub new {
@@ -62,6 +64,7 @@ sub remove_lock : locked {
     unlink($self->{db_lock});
 }
 
+
 sub create_table {
     my $self = shift;
     my $table_name = shift;
@@ -74,7 +77,6 @@ sub create_table {
     &remove_lock($self,'create_table');
     return 0;
 }
- 
 
 
 sub add_dbentry {
@@ -99,7 +101,7 @@ sub add_dbentry {
         my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
         &create_lock($self,'add_dbentry');
         my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
-        &remove_lock($self,'add_dbentry');
+            &remove_lock($self,'add_dbentry');
         if( defined $max_id) {
             $id = $max_id + 1; 
         } else {
@@ -108,11 +110,6 @@ sub add_dbentry {
         $arg->{id} = $id;
     }
 
-    # check wether value to primary key is specified
-    if ( not exists $arg->{ $primkey } ) {
-        return 3;
-    }
-     
     # if timestamp is not provided, add timestamp   
     if( not exists $arg->{timestamp} ) {
         $arg->{timestamp} = &get_time;
@@ -124,6 +121,8 @@ sub add_dbentry {
     my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
     &remove_lock($self,'add_dbentry');
     if ($res == 0) {
+        # primekey is unique
+
         # fetch column names of table
         my $col_names = &get_table_columns("",$table);
 
@@ -137,33 +136,35 @@ sub add_dbentry {
         }    
 
         my $sql_statement = "INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
-        print STDERR $sql_statement;
+
+        print STDERR $sql_statement."\n";
+
         &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');
         if( $db_res != 1 ) {
             return 4;
-        } else { 
-            return 0;
-        }
+        } 
 
     } else  {
-        my $update_hash = { table=>$table };
-        $update_hash->{where} = [ { $primkey=>[ $arg->{$primkey} ] } ];
-        $update_hash->{update} = [ {} ];
+        # entry already exists, so update it 
+        my $where_str= " WHERE $primkey='".$arg->{$primkey}."'";
+
+        my @update_l;
         while( my ($pram, $val) = each %{$arg} ) {
             if( $pram eq 'table' ) { next; }
             if( $pram eq 'primkey' ) { next; }
-            $update_hash->{update}[0]->{$pram} = [$val];
+            push(@update_l, "$pram='$val'");
         }
-        my $db_res = &update_dbentry( $self, $update_hash );
-        if( $db_res != 1 ) {
-            return 5;
-        } else { 
-            return 0;
-        }
+        my $update_str= join(", ", @update_l);
+        $update_str= " SET $update_str";
+
+        my $sql_statement= "UPDATE $table $update_str $where_str";
+        my $db_res = &update_dbentry($self, $sql_statement );
 
     }
+
+    return 0;
 }
 
 sub update_dbentry {
@@ -208,7 +209,7 @@ sub select_dbentry {
     my $db_answer= &exec_statement($self, $sql); 
 
     # fetch column list of db and create a hash with column_name->column_value of the select query
-    $sql =~ /FROM ([\S]*?) /g;
+    $sql =~ /FROM ([\S]*?)( |$)/g;
     my $table = $1;
     my $column_list = &get_table_columns($self, $table);    
     my $list_len = @{ $column_list } ;
@@ -227,11 +228,16 @@ sub select_dbentry {
 sub show_table {
     my $self = shift;
     my $table_name = shift;
-    &create_lock($self,'show_table');
-    my @res = @{$self->{dbh}->selectall_arrayref( "SELECT * FROM $table_name")};
-    &remove_lock($self,'show_table');
+    #&create_lock($self,'show_table');
+    #my @res = @{$self->{dbh}->selectall_arrayref( "SELECT * FROM $table_name ORDER BY timestamp")};
+    #&remove_lock($self,'show_table');
+
+    my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
+    print STDERR $sql_statement."\n";
+    my $res= &exec_statement($self, $sql_statement);
+
     my @answer;
-    foreach my $hit (@res) {
+    foreach my $hit (@{$res}) {
         push(@answer, "hit: ".join(', ', @{$hit}));
     }
     return join("\n", @answer);
@@ -249,6 +255,18 @@ sub exec_statement {
     return \@db_answer;
 }
 
+
+sub count_dbentries {
+    my ($self, $table)= @_;
+    my $error= 0;
+    my $answer= -1;
+    
+    my $sql_statement= "SELECT * FROM $table";
+    my $db_answer= &select_dbentry($self, $sql_statement); 
+
+    my $count = keys(%{$db_answer});
+    return $count;
+}
 
 sub get_time {
     my ($seconds, $minutes, $hours, $monthday, $month,

@@ -396,6 +396,9 @@ sub create_known_client {
 
 sub client_input {
 	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+
+    daemon_log("Incoming msg:\n$input\n", 8);
+
 	######################################
 	# forward msg to all imported modules 
 	no strict "refs";
