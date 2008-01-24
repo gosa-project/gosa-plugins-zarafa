@@ -201,6 +201,7 @@
 </table>
 
 <table style="width:100%;" summary="">
+ <tr><td><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
  <tr>
   <td style="vertical-align:top;">
    <h2><img class="center" alt="" align="middle" src="images/scanner.png"> {t}Scan device{/t}</h2>
