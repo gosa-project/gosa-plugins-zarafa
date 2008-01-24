@@ -117,9 +117,8 @@ class termgeneric extends plugin
       }
     }
 
-    $this->modes["disabled"]= _("disabled");
-    $this->modes["text"]= _("text");
-    $this->modes["graphic"]= _("graphic");
+    $this->modes["disabled"]= _("Locked");
+    $this->modes["enabled"]= _("Activated");
 
     /* Set base */
     if ($this->dn == "new"){
