@@ -12,20 +12,23 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 
 # add
-#$data = "<xml><header>gosa_ping</header><source>10.89.1.155:20082</source><target>10.89.1.155:20080</target></xml>";
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000000</timestamp> </xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
-$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
 # delete
-#$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><status>error</status></phrase></clause></where></xml>";
+#$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
 # update  
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
 # query
-#$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><id>2</id></phrase><phrase><operator>le</operator><id>4</id></phrase></clause></where></xml>";
-#$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><status>waiting</status></phrase></clause></where></xml>";
+#$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
+$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>3</to></limit></xml>";
+
+# count
+#$data = "<xml> <header>gosa_count_jobdb</header></xml>";
+
 
 	
 # clear

@@ -292,6 +292,10 @@ sub get_ip {
 #===============================================================================
 sub register_at_bus {
 
+
+
+    print STDERR ">>>>>>>>>>>>>>>>>>>>>>>>1\n";    
+
     # add bus to known_server_db
     my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
                                                     primkey=>'hostname',
@@ -300,6 +304,7 @@ sub register_at_bus {
                                                     hostkey=>$bus_passwd,
                                                     timestamp=>&get_time,
                                                 } );
+    print STDERR ">>>>>>>>>>>>>>>>>>>>>>>>2\n";    
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
     my $answer = "";
     $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
@@ -452,7 +457,8 @@ sub process_incoming_msg {
         else { 
             if ($target eq "*") {
                 # msg is for all clients
-                my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
+                my $sql_statement = "SELECT * FROM known_clients";
+                my $query_res = $main::known_clients_db->select_dbentry( $sql_statement ); 
                 while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                     $host_name = $hit->{hostname};
                     $host_key = $hit->{hostkey};
@@ -465,15 +471,17 @@ sub process_incoming_msg {
                 my $host_key;
 
 
-                if( not defined $host_key ) {
-                    my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$target} );
+                if( not defined $host_key ) { 
+                    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$target'";
+                    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
                     if( 1 == keys %{$query_res} ) {
                         $host_key = $query_res->{1}->{host_key};
                     }
                 } 
 
                 if( not defined $host_key ) {
-                    my $query_res = $main::known_server_db->select_dbentry( {table=>'known_server', hostname=>$target} );
+                    my $sql_statement = "SELECT * FROM known_server WHERE hostname='$target'";
+                    my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
                     if( 1 == keys %{$query_res} ) {
                         $host_key = $query_res->{1}->{host_key};
                     }
@@ -535,7 +543,8 @@ sub new_passwd {
     my $query_res;
 
     # check known_clients_db
-    $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients', hostname=>$source_name} );
+    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source_name'";
+    $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
     if( 1 == keys %{$query_res} ) {
         my $update_hash = { table=>'known_clients' };
         $update_hash->{where} = [ { hostname=>[$source_name] } ];

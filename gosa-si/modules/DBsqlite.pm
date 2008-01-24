@@ -166,64 +166,6 @@ sub add_dbentry {
     }
 }
 
-
-# error-flags
-# 1 no table ($table) defined
-# 2 no restriction parameter ($restric_pram) defined
-# 3 no restriction value ($restric_val) defined
-# 4 column name not known in table
-# 5 no column names to change specified
-#sub update_dbentry {
-#    my $self = shift;
-#    my $arg = shift;
-#
-#
-#    # check completeness of function parameter
-#    # extract table statement from arg hash
-#    my $table = $arg->{table};
-#    if (not defined $table) {
-#        return 1;
-#    } else {
-#        delete $arg->{table};
-#    }
-#    
-#    # extract where parameter from arg hash
-#    my $where_statement = "";
-#    if( exists $arg->{where} ) {
-#        my $where_hash = @{ $arg->{where} }[0];
-#        if( 0 < keys %{ $where_hash } ) {
-#            my @where_list;    
-#            while( my ($rest_pram, $rest_val) = each %{ $where_hash } ) {
-#                my $statement;
-#                if( $rest_pram eq 'timestamp' ) {
-#                    $statement = "$rest_pram<'@{ $rest_val }[0]'";
-#                } else {
-#                    $statement = "$rest_pram='@{ $rest_val }[0]'";
-#                }
-#                push( @where_list, $statement );
-#            }
-#            $where_statement .= "WHERE ".join('AND ', @where_list);
-#        }
-#    }
-#
-#    # extract update parameter from arg hash
-#    my $update_hash = @{ $arg->{update} }[0];
-#    my $update_statement = "";
-#    if( 0 < keys %{ $update_hash } ) {
-#        my @update_list;    
-#        while( my ($rest_pram, $rest_val) = each %{ $update_hash } ) {
-#            my $statement = "$rest_pram='@{ $rest_val }[0]'";
-#            push( @update_list, $statement );
-#        }
-#        $update_statement .= join(', ', @update_list);
-#    }
-#
-#    my $sql_statement = "UPDATE $table SET $update_statement $where_statement";
-#    &create_lock($self,'update_dbentry');
-#    my $db_answer = $self->{dbh}->do($sql_statement);
-#    &remove_lock($self,'update_dbentry');
-#    return $db_answer;
-#}  
 sub update_dbentry {
     my ($self, $sql)= @_;
     my $db_answer= &exec_statement($self, $sql); 
@@ -260,7 +202,9 @@ sub get_table_columns {
 
 sub select_dbentry {
     my ($self, $sql)= @_;
-
+    my $error= 0;
+    my $answer= {};
+    
     my $db_answer= &exec_statement($self, $sql); 
 
     # fetch column list of db and create a hash with column_name->column_value of the select query
@@ -268,7 +212,6 @@ sub select_dbentry {
     my $table = $1;
     my $column_list = &get_table_columns($self, $table);    
     my $list_len = @{ $column_list } ;
-    my $answer = {};
     my $hit_counter = 0;
     foreach my $hit ( @{ $db_answer }) {
         $hit_counter++;

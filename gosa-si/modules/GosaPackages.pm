@@ -346,7 +346,7 @@ sub process_gosa_msg {
     elsif ($header eq 'delete_jobdb_entry') { $out_msg = &delete_jobdb_entry }
     elsif ($header eq 'clear_jobdb') { $out_msg = &clear_jobdb }
     elsif ($header eq 'update_status_jobdb_entry' ) { $out_msg = &update_status_jobdb_entry }
-    elsif ($header eq 'update_timestamp_jobdb_entry' ) { $out_msg = &update_timestamp_jobdb_entry }
+    elsif ($header eq 'count_jobdb' ) { $out_msg = &count_jobdb }
     else {
         # msg could not be assigned to core function
         # fetch all available eventhandler under $server_event_dir
@@ -528,6 +528,32 @@ sub get_update_statement {
     return $update_str;
 }
 
+sub get_limit_statement {
+    my ($msg, $msg_hash)= @_; 
+    my $error= 0;
+    my $limit_str = "";
+    my ($from, $to);
+
+    if( not exists $msg_hash->{'limit'} ) { $error++; };
+
+    if( $error == 0 ) {
+        eval {
+            my $limit= @{$msg_hash->{'limit'}}[0];
+            $from= @{$limit->{'from'}}[0];
+            $to= @{$limit->{'to'}}[0];
+        };
+        if( $@ ) {
+            $error++;
+        }
+    }
+
+    if( $error == 0 ) {
+        $limit_str= "LIMIT $from, $to";
+    }   
+    
+    return $limit_str;
+}
+
 sub query_jobdb {
     my ($msg) = @_;
     my $msg_hash = &transform_msg2hash($msg);
@@ -536,14 +562,34 @@ sub query_jobdb {
     my $select= &get_select_statement($msg, $msg_hash);
     my $table= $main::job_queue_table_name;
     my $where= &get_where_statement($msg, $msg_hash);
-    my $sql_statement= "SELECT $select FROM $table $where";
+    my $limit= &get_limit_statement($msg, $msg_hash);
+    my $sql_statement= "SELECT $select FROM $table $where $limit";
 
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
     my $out_xml = &db_res_2_xml($res_hash);
-    
+
     return $out_xml;
 }
+
+
+sub count_jobdb {
+    my ($msg)= @_;
+    my $out_xml= "<xml><count>error</count></xml>";
+
+    # prepare query sql statement
+    my $table= $main::job_queue_table_name;
+    my $sql_statement= "SELECT * FROM $table ";
+    
+    # execute db query
+    my $res_hash = $main::job_db->select_dbentry($sql_statement);
+
+    my $count = keys(%{$res_hash});
+    $out_xml= "<xml><count>$count</count></xml>";
+
+    return $out_xml;
+}
+
 
 sub delete_jobdb_entry {
     my ($msg) = @_ ;
