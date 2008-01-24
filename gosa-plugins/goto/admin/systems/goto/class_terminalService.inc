@@ -47,7 +47,6 @@ class termservice extends plugin
   var $XKbVariants= array ();
   var $MouseTypes= array();
   var $MousePorts= array();
-  var $gotoScannerModels= array();
   var $hardware_list= array();
   var $used_hardware= array();
 
@@ -145,23 +144,10 @@ class termservice extends plugin
       }
     }
 
-    /* Load scanner models */
-    $fcontents = file (CONFIG_DIR."/scanner-list");
-    while (list ($line_num, $line) = each ($fcontents)) {
-      preg_match('/^(\w+) "([^"]+)" "([^"]+)" "([^"]+)"/', "$line", $matches);
-      $this->gotoScannerModels[$matches[2]." - ".$matches[3]]= $matches[1]."|".$matches[4];
-    }
-    ksort ($this->gotoScannerModels);
-
     /* Initialize methods */
     $this->XMethods["default"]= _("default");
-    $this->XMethods["indirect"]= _("show chooser");
-    $this->XMethods["query"]= _("direct");
-#$this->XMethods["squery"]= _("direct via ssh");
-#$this->XMethods["nquery"]= _("direct via nx");
-    $this->XMethods["load"]= _("load balanced");
-#$this->XMethods["sload"]= _("load balanced via ssh");
-#$this->XMethods["nload"]= _("load balanced via nx");
+    $this->XMethods["xdmcp"]= _("XDMCP");
+    $this->XMethods["ldm"]= _("LDM");
     $this->XMethods["rdp"]= _("Windows RDP");
     $this->XMethods["citrix"]= _("ICA client");
 
@@ -277,7 +263,7 @@ class termservice extends plugin
 
     /* Arrays */ 
     foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
-          "gotoScannerModels", "XKbModels","XKbVariants",
+          "XKbModels","XKbVariants",
           "MouseTypes", "MousePorts") as $val){
       $smarty->assign("$val", $this->$val);
     }
@@ -290,9 +276,9 @@ class termservice extends plugin
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
 
     /* Variables - select */
-    foreach(array("gotoXMethod", "gotoXdmcpServer", "gotoFontPath", 
+    foreach(array("gotoXMethod", "gotoXdmcpServer", 
           "gotoXDriver", "gotoXResolution", "gotoXColordepth", 
-          "gotoLpdServer", "gotoScannerModel", "gotoXKbModel", "gotoXKbLayout",
+          "gotoLpdServer", "gotoXKbModel", "gotoXKbLayout",
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
       $smarty->assign($val."_select", $this->$val);
@@ -437,9 +423,9 @@ class termservice extends plugin
     plugin::save();
 
     /* Strip out 'default' values */
-    foreach(array("gotoXMethod", "gotoXdmcpServer", "gotoFontPath",
+    foreach(array("gotoXMethod", "gotoXdmcpServer",
           "gotoXDriver", "gotoXResolution", "gotoXColordepth",
-          "gotoLpdServer", "gotoScannerModel", "gotoXKbModel", "gotoXKbLayout",
+          "gotoLpdServer", "gotoXKbModel", "gotoXKbLayout",
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
       if ($this->attrs[$val] == "default"){
@@ -502,7 +488,6 @@ class termservice extends plugin
             "gotoXMonitor"            => _("Monitor"),
             "gotoXMethod"             => _("Method"),
             "gotoXdmcpServer"         => _("Remote desktop"),
-            "gotoFontPath"            => _("Font path"),
             "gotoXDriver"             => _("Gfx driver"),
             "gotoXResolution"         => _("Gfx resolution"),
             "gotoXColordepth"         => _("Gfx color depth"),
@@ -512,7 +497,6 @@ class termservice extends plugin
             "gotoLpdEnable"           => _("Printer service enabled"),
             "gotoLpdServer"           => _("Spool server"),
             "gotoScannerEnable"       => _("Scanner enabled"),
-            "gotoScannerModel"        => _("Scanner model"),
             "gotoXKbModel"            => _("Keyboard model"),
             "gotoXKbLayout"           => _("Keyboard layout"),
             "gotoXKbVariant"          => _("Keyboard variant"),

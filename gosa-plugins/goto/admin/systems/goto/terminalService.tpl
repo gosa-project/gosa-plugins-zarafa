@@ -194,17 +194,6 @@
 {/render}
      </td>
     </tr>
-    <tr>
-     <td></td>
-     <td><LABEL for="gotoFontPath">{t}Font server{/t}</LABEL></td>
-     <td>
-{render acl=$gotoFontPathACL}
-      <select name="gotoFontPath" id="gotoFontPath" title="{t}Select specific font server to use{/t}" >
-       {html_options values=$fontservers output=$fontservers selected=$gotoFontPath_select}
-      </select>
-{/render}
-     </td>
-    </tr>
    </table>
    
   </td>
@@ -221,21 +210,6 @@
    <input id="gotoLpdEnable" type=checkbox name="gotoLpdEnable" value="1" {$gotoLpdEnable} title="{t}Select to start IPP based printing service on terminal{/t}">
 {/render}
    {t}Provide print services{/t}
-   <br>
-
-   <table summary="">
-   <tr>
-     <td><div style="width:20px;"></div></td>
-     <td><LABEL for="gotoLpdServer">{t}Spool server{/t}</LABEL></td>
-     <td>
-{render acl=$gotoLpdServerACL}
-      <select name="gotoLpdServer" id="gotoLpdServer" title="{t}Select NFS filesystem to place spool files on{/t}" >
-       {html_options values=$nfsservers output=$nfsservers selected=$gotoLpdServer_select}
-      </select>
-{/render}
-     </td>
-    </tr>
-  </table>
 
   <td style="border-left:1px solid #A0A0A0">
    &nbsp;
@@ -247,21 +221,6 @@
    <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} >
 {/render}
    {t}Provide scan services{/t}
-   <br>
-   <table summary="">
-    <tr>
-     <td><div style="width:20px;"></div></td>
-     <td><LABEL for="gotoScannerModel">{t}Model{/t}</LABEL></td>
-     <td>
-{render acl=$gotoScannerEnableACL}
-      <select name="gotoScannerModel" id="gotoScannerModel" title="{t}Select scanner driver to use{/t}" >
-       {html_options values=$gotoScannerModels output=$gotoScannerModels selected=$gotoScannerModel_select}
-      </select>
-{/render}
-     </td>
-    </tr>
-  </table>
-
   </td>
  </tr>
 </table>
