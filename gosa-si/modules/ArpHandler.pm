@@ -16,62 +16,20 @@ use Net::LDAP::Entry;
 use Net::DNS;
 use Switch;
 use Data::Dumper;
+use Socket qw/PF_INET SOCK_DGRAM inet_ntoa sockaddr_in/;
 use POE qw(Component::Pcap Component::ArpWatch);
 
 BEGIN{}
 END{}
 
-my ($verbose, $cfg_file, $log_file, $pid_file, $foreground); 
 my ($timeout, $mailto, $mailfrom, $user, $group);
-my ($procid, $pid, $loglevel);
-my ($fifo_path, $max_process_timeout, $max_process );
 my %daemon_children;
-my ($ldap, $bind_phrase, $password, $ldap_base) ;
+my ($ldap, $bind_phrase, $password, $ldap_base, $interface) ;
 my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
 
-$procid = -1 ;
-$foreground = 0 ;
-$verbose = 0 ;
-$max_process = 2 ;
-$max_process_timeout = 1 ;
 $ldap_base = "dc=gonicus,dc=de" ;
-#$ldap_path = "/var/run/gosa-support-daemon.socket";
-#$log_path = "/var/log/gosa-support-daemon.log";
-#$pid_path = "/var/run/gosa-support-daemon/gosa-support-daemon.pid";
-
-#---------------------------------------------------------------------------
-#  parse commandline options
-#---------------------------------------------------------------------------
-#Getopt::Long::Configure( "bundling" );
-#GetOptions( "v|verbose+" => \$verbose,
-#        "c|config=s" => \$cfg_file,
-#        "h|help" => \&usage,
-#        "l|logfile=s" => \$log_file,
-#        "p|pid=s" => \$pid_file,
-#        "f|foreground" => \$foreground);
-#
-#---------------------------------------------------------------------------
-#  read and set config parameters
-#---------------------------------------------------------------------------
-#my %cfg_defaults =
-#("Allgemein" =>
-# {"timeout"  => [ \$timeout, 1000 ],
-# "mailto"   => [ \$mailto, 'root@localhost' ],
-# "mailfrom" => [ \$mailfrom, 'sps-daemon@localhost' ],
-# "user"     => [ \$user, "nobody" ],
-# "group"    => [ \$group, "nogroup" ],
-# "fifo_path" => [ \$fifo_path, "/home/rettenbe/gonicus/gosa-support/tmp/fifo" ],
-# "log_file"  => [ \$log_file, "/home/rettenbe/gonicus/gosa-support/tmp/gosa-support.log" ],
-# "pid_file"  => [ \$pid_file, "/home/rettenbe/gonicus/gosa-support/tmp/gosa-support.pid" ],
-# "loglevel"     => [ \$loglevel, 1]
-# },
-#"LDAP"  =>
-#    {"bind" => [ \$bind_phrase, "cn=ldapadmin,dc=gonicus,dc=de" ],
-#     "password" => [ \$password, "tester" ],
-#    }
-# );
-#&read_configfile;
+$interface = "all";
 
 sub get_module_info {
 	my @info = (undef,
@@ -81,20 +39,39 @@ sub get_module_info {
 		"socket",
 	);
 
-	my $device = 'eth0';
 	$ldap = Net::LDAP->new("ldap.intranet.gonicus.de") or die "$@";
 
-	POE::Session->create( 
-		inline_states => {
-			_start => \&start,
-			_stop => sub {
-				$_[KERNEL]->post( arp_watch => 'shutdown' )
+	if ((!defined($interface)) || $interface eq 'all') {
+		foreach my $device(&get_interfaces) {
+			if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
+				&main::daemon_log("Starting ArpWatch on $device", 1);
+				POE::Session->create( 
+					inline_states => {
+						_start => sub {
+							&start(@_,$device);
+						},
+						_stop => sub {
+							$_[KERNEL]->post( eval("arp_watch_$device") => 'shutdown' )
+						},
+						got_packet => \&got_packet,
+					},
+				);
+			}
+		}
+	} else {
+		&main::daemon_log("Starting ArpWatch on $interface", 1);
+		POE::Session->create( 
+			inline_states => {
+				_start => \&start,
+				_stop => sub {
+					$_[KERNEL]->post( arp_watch => 'shutdown' )
+				},
+				got_packet => \&got_packet,
 			},
-			got_packet => \&got_packet,
-		},
-	);
+		);
+	}
 
-    return \@info;
+	return \@info;
 }
 
 sub process_incoming_msg {
@@ -102,8 +79,9 @@ sub process_incoming_msg {
 }
 
 sub start {
+	my $device = $_[ARG0] || 'eth0';
 	POE::Component::ArpWatch->spawn( 
-		Alias => 'arp_watch',
+		Alias => eval("arp_watch_$device"),
 		Device => 'eth0', 
 		Dispatch => 'got_packet',
 		Session => $_[SESSION],
@@ -131,7 +109,10 @@ sub got_packet {
 				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}=$packet->{source_ipaddr};
 			} else {
 				if(!($ldap_result->{ipHostNumber} eq $packet->{source_ipaddr})) {
-					&main::daemon_log("Current IP Address ".$packet->{source_ipaddr}." of host ".$ldap_result->{dnsname}." differs from LDAP (".$ldap_result->{ipHostNumber}.")", 4);
+					&main::daemon_log(
+						"Current IP Address ".$packet->{source_ipaddr}.
+						" of host ".$ldap_result->{dnsname}.
+						" differs from LDAP (".$ldap_result->{ipHostNumber}.")", 4);
 				}
 			}
 			$hosts_database->{$packet->{source_haddr}}->{dnsname}=$dnsname;
@@ -143,11 +124,17 @@ sub got_packet {
 				dnsname => $dnsname,
 			};
 			&main::daemon_log("Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
-			&main::daemon_log("New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}."/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
+			&main::daemon_log(
+				"New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).
+				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
+				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
 		}
 	} else {
 		if(!($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
-			&main::daemon_log("IP Address change of MAC ".$packet->{source_haddr}.": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}."->".$packet->{source_ipaddr}, 4);
+			&main::daemon_log(
+				"IP Address change of MAC ".$packet->{source_haddr}.
+				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
+				"->".$packet->{source_ipaddr}, 4);
 			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
 		}
 		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
@@ -190,6 +177,68 @@ sub get_host_from_ldap {
 	return $result;
 }
 
+#===  FUNCTION  ================================================================
+#         NAME:  get_interfaces 
+#   PARAMETERS:  none
+#      RETURNS:  (list of interfaces) 
+#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
+#===============================================================================
+sub get_interfaces {
+	my @result;
+	my $PROC_NET_DEV= ('/proc/net/dev');
+
+	open(PROC_NET_DEV, "<$PROC_NET_DEV")
+		or die "Could not open $PROC_NET_DEV";
+
+	my @ifs = <PROC_NET_DEV>;
+
+	close(PROC_NET_DEV);
+
+	# Eat first two line
+	shift @ifs;
+	shift @ifs;
+
+	chomp @ifs;
+	foreach my $line(@ifs) {
+		my $if= (split /:/, $line)[0];
+		$if =~ s/^\s+//;
+		push @result, $if;
+	}
+
+	return @result;
+}
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_mac 
+#   PARAMETERS:  interface name (i.e. eth0)
+#      RETURNS:  (mac address) 
+#  DESCRIPTION:  Uses ioctl to get mac address directly from system.
+#===============================================================================
+sub get_mac {
+	my $ifreq= shift;
+	my $result;
+	if ($ifreq && length($ifreq) > 0) { 
+		if($ifreq eq "all") {
+			$result = "00:00:00:00:00:00";
+		} else {
+			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+
+			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+				or die "socket: $!";
+
+			if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+				my ($if, $mac)= unpack 'h36 H12', $ifreq;
+
+				if (length($mac) > 0) {
+					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+					$result = $mac;
+				}
+			}
+		}
+	}
+	return $result;
+}
 
 #===  FUNCTION  ================================================================
 #         NAME:  add_ldap_entry
