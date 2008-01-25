@@ -115,28 +115,42 @@ sub start {
 sub got_packet {
 	my $packet = $_[ARG0];
 
-	if($packet->{source_haddr} eq "00:00:00:00:00:00" || 
+	if(	$packet->{source_haddr} eq "00:00:00:00:00:00" || 
 		$packet->{source_haddr} eq "ff:ff:ff:ff:ff:ff" || 
 		$packet->{source_ipaddr} eq "0.0.0.0") {
 		return;
 	}
 
 	if(!exists($hosts_database->{$packet->{source_haddr}})) {
+		my $dnsresult= $resolver->search($packet->{source_ipaddr});
+		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$packet->{source_ipaddr};
 		my $ldap_result=&get_host_from_ldap($packet->{source_haddr});
 		if(exists($ldap_result->{dn})) {
 			$hosts_database->{$packet->{source_haddr}}=$ldap_result;
-			$hosts_database->{$packet->{source_haddr}}->{dnsname}=($resolver->search($packet->{source_ipaddr}))->{answer}[0]->{ptrdname};
-			print STDERR "Host was found in LDAP as ".$ldap_result->{dn}."\n";
+			if(!exists($ldap_result->{ipHostNumber})) {
+				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}=$packet->{source_ipaddr};
+			} else {
+				if(!($ldap_result->{ipHostNumber} eq $packet->{source_ipaddr})) {
+					&main::daemon_log("Current IP Address ".$packet->{source_ipaddr}." of host ".$ldap_result->{dnsname}." differs from LDAP (".$ldap_result->{ipHostNumber}.")", 4);
+				}
+			}
+			$hosts_database->{$packet->{source_haddr}}->{dnsname}=$dnsname;
+			&main::daemon_log("Host was found in LDAP as ".$ldap_result->{dn}, 6);
 		} else {
 			$hosts_database->{$packet->{source_haddr}}={
 				macAddress => $packet->{source_haddr},
 				ipHostNumber => $packet->{source_ipaddr},
-				dnsname => ($resolver->search($packet->{source_ipaddr}))->{answer}[0]->{ptrdname},
+				dnsname => $dnsname,
 			};
-			print STDERR "Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")\n";
+			&main::daemon_log("Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
+			&main::daemon_log("New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}."/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
 		}
 	} else {
-		print STDERR "Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")\n";
+		if(!($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
+			&main::daemon_log("IP Address change of MAC ".$packet->{source_haddr}.": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}."->".$packet->{source_ipaddr}, 4);
+			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
+		}
+		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
 	}
 } 
 
