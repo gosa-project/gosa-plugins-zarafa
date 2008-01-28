@@ -234,23 +234,23 @@ sub get_ip {
 #      RETURNS:  socket IO::Socket::INET
 #  DESCRIPTION:  open a socket to PeerAddr
 #===============================================================================
-sub open_socket {
-    my ($PeerAddr, $PeerPort) = @_ ;
-    if(defined($PeerPort)){
-        $PeerAddr = $PeerAddr.":".$PeerPort;
-    }
-    my $socket;
-    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
-            Porto => "tcp" ,
-            Type => SOCK_STREAM,
-            Timeout => 5,
-            );
-    if(not defined $socket) {
-        return;
-    }
-    &main::daemon_log("open_socket to: $PeerAddr", 7);
-    return $socket;
-}
+#sub open_socket {
+#    my ($PeerAddr, $PeerPort) = @_ ;
+#    if(defined($PeerPort)){
+#        $PeerAddr = $PeerAddr.":".$PeerPort;
+#    }
+#    my $socket;
+#    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
+#            Porto => "tcp" ,
+#            Type => SOCK_STREAM,
+#            Timeout => 5,
+#            );
+#    if(not defined $socket) {
+#        return;
+#    }
+#    &main::daemon_log("open_socket to: $PeerAddr", 7);
+#    return $socket;
+#}
 
 
 #===  FUNCTION  ================================================================

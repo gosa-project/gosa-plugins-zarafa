@@ -44,6 +44,10 @@ sub get_module_info {
 	# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
 	if ((!defined($interface)) || $interface eq 'all') {
 		foreach my $device(&get_interfaces) {
+			# TODO: Need a better workaround for IPv4-to-IPv6 bridges
+			if($device =~ m/^sit.$/) {
+				next;
+			}
 
 			# If device has a valid mac address
 			if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
