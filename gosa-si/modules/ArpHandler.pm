@@ -66,16 +66,20 @@ sub get_module_info {
 			}
 		}
 	} else {
-		&main::daemon_log("Starting ArpWatch on $interface", 1);
-		POE::Session->create( 
-			inline_states => {
-				_start => \&start,
-				_stop => sub {
-					$_[KERNEL]->post( sprintf("arp_watch_$interface") => 'shutdown' )
+		foreach my $device(split(/[\s,]+/, $interface)) {
+			&main::daemon_log("Starting ArpWatch on $device", 1);
+			POE::Session->create( 
+				inline_states => {
+					_start => sub {
+						&start(@_,$device);
+					},
+					_stop => sub {
+						$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
+					},
+					got_packet => \&got_packet,
 				},
-				got_packet => \&got_packet,
-			},
-		);
+			);
+		}
 	}
 
 	return \@info;
