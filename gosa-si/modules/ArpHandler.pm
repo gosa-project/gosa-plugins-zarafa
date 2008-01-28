@@ -41,8 +41,11 @@ sub get_module_info {
 
 	$ldap = Net::LDAP->new("ldap.intranet.gonicus.de") or die "$@";
 
+	# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
 	if ((!defined($interface)) || $interface eq 'all') {
 		foreach my $device(&get_interfaces) {
+
+			# If device has a valid mac address
 			if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
 				&main::daemon_log("Starting ArpWatch on $device", 1);
 				POE::Session->create( 
@@ -51,7 +54,7 @@ sub get_module_info {
 							&start(@_,$device);
 						},
 						_stop => sub {
-							$_[KERNEL]->post( eval("arp_watch_$device") => 'shutdown' )
+							$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
 						},
 						got_packet => \&got_packet,
 					},
@@ -64,7 +67,7 @@ sub get_module_info {
 			inline_states => {
 				_start => \&start,
 				_stop => sub {
-					$_[KERNEL]->post( arp_watch => 'shutdown' )
+					$_[KERNEL]->post( sprintf("arp_watch_$interface") => 'shutdown' )
 				},
 				got_packet => \&got_packet,
 			},
@@ -75,19 +78,19 @@ sub get_module_info {
 }
 
 sub process_incoming_msg {
-	return 0;
+	return 1;
 }
 
 sub start {
-	my $device = $_[ARG0] || 'eth0';
+	my $device = (exists($_[ARG0])?$_[ARG0]:'eth0');
 	POE::Component::ArpWatch->spawn( 
-		Alias => eval("arp_watch_$device"),
-		Device => 'eth0', 
+		Alias => sprintf("arp_watch_$device"),
+		Device => $device, 
 		Dispatch => 'got_packet',
 		Session => $_[SESSION],
 	);
 
-	$_[KERNEL]->post( arp_watch => 'run' );
+	$_[KERNEL]->post( sprintf("arp_watch_$device") => 'run' );
 }
 
 sub got_packet {
