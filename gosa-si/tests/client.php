@@ -30,7 +30,8 @@ if($sock->connected()){
 # query
 #$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>3</to></limit></xml>";
-$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
+#$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
+$data= "<xml><header>gosa_query_jobdb</header></xml>";
 
 
 # count

@@ -320,7 +320,7 @@ sub get_where_statement {
     my $error= 0;
     
     my $clause_str= "";
-    if( not exists @{$msg_hash->{'where'}}[0]->{'clause'} ) { $error++; };
+    if( (not exists $msg_hash->{'where'}) || (not exists @{$msg_hash->{'where'}}[0]->{'clause'}) ) { $error++; };
     if( $error == 0 ) {
         my @clause_l;
         my @where = @{@{$msg_hash->{'where'}}[0]->{'clause'}};

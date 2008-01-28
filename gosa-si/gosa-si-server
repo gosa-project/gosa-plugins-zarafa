@@ -414,8 +414,6 @@ sub client_input {
 	}        
 	daemon_log("processing of msg finished", 5);
 
-    sleep(10);
-
 	if (defined $answer) {
 		$heap->{client}->put($answer);
 	} else {

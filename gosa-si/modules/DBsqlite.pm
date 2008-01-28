@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use DBI;
 use Data::Dumper;
+use GOSA::GosaSupportDaemon;
 use threads;
 use Time::HiRes qw(usleep);
 
@@ -36,7 +37,7 @@ sub lock_exists : locked {
     my $lock = $self->{db_lock};
     my $result=(-f $lock);
     if($result) {
-        #print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
+        &main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden", 6);
         usleep 100;
     }
     return $result;
@@ -45,11 +46,11 @@ sub lock_exists : locked {
 sub create_lock : locked {
     my $self=shift;
     my $funcname=shift;
-    #print STDERR "(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock})."\n";
+    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock}),6);
 
     my $lock = $self->{db_lock};
     while( -f $lock ) {
-        #print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
+        print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
         sleep 1;
     }
 
@@ -59,7 +60,7 @@ sub create_lock : locked {
 sub remove_lock : locked {
     my $self=shift;
     my $funcname=shift;
-    #print STDERR "(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}."\n";
+    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}, 6);
     close($self->{db_lock_handle});
     unlink($self->{db_lock});
 }
@@ -231,7 +232,9 @@ sub show_table {
     #&remove_lock($self,'show_table');
 
     my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
+    &create_lock($self,'show_table');
     my $res= &exec_statement($self, $sql_statement);
+    &remove_lock($self,'show_table');
 
     my @answer;
     foreach my $hit (@{$res}) {
@@ -259,24 +262,12 @@ sub count_dbentries {
     my $answer= -1;
     
     my $sql_statement= "SELECT * FROM $table";
+    &create_lock($self,'count_dbentries');
     my $db_answer= &select_dbentry($self, $sql_statement); 
+    &remove_lock($self, 'count_dbentries');
 
     my $count = keys(%{$db_answer});
     return $count;
 }
-
-sub get_time {
-    my ($seconds, $minutes, $hours, $monthday, $month,
-            $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    return "$year$month$monthday$hours$minutes$seconds";
-}
-
 
 1;
