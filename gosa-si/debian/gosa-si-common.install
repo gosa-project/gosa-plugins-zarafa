@@ -1,2 +1,3 @@
 modules/GosaSupportDaemon.pm    usr/share/perl5/GOSA
 modules/DBsqlite.pm             usr/share/perl5/GOSA
+modules/ArpWatch.pm							usr/share/perl5/POE/Component
