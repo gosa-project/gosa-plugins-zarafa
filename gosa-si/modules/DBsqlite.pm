@@ -102,7 +102,7 @@ sub add_dbentry {
         my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
         &create_lock($self,'add_dbentry');
         my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
-            &remove_lock($self,'add_dbentry');
+        &remove_lock($self,'add_dbentry');
         if( defined $max_id) {
             $id = $max_id + 1; 
         } else {
@@ -227,14 +227,9 @@ sub select_dbentry {
 sub show_table {
     my $self = shift;
     my $table_name = shift;
-    #&create_lock($self,'show_table');
-    #my @res = @{$self->{dbh}->selectall_arrayref( "SELECT * FROM $table_name ORDER BY timestamp")};
-    #&remove_lock($self,'show_table');
 
     my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
-    &create_lock($self,'show_table');
     my $res= &exec_statement($self, $sql_statement);
-    &remove_lock($self,'show_table');
 
     my @answer;
     foreach my $hit (@{$res}) {
@@ -262,9 +257,7 @@ sub count_dbentries {
     my $answer= -1;
     
     my $sql_statement= "SELECT * FROM $table";
-    &create_lock($self,'count_dbentries');
     my $db_answer= &select_dbentry($self, $sql_statement); 
-    &remove_lock($self, 'count_dbentries');
 
     my $count = keys(%{$db_answer});
     return $count;

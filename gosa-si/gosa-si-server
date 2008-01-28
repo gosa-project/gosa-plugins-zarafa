@@ -572,8 +572,7 @@ $known_server_db->create_table('known_server', \@server_col_names);
 # check wether all modules are gosa-si valid passwd check
 
 # create session for repeatedly checking the job queue for jobs
-POE::Session->create
-(
+POE::Session->create(
 	inline_states => {
 		_start => \&trigger_db_loop,
 		watch_for_new_jobs => \&watch_for_new_jobs,
@@ -581,11 +580,9 @@ POE::Session->create
 );
 
 # create socket for incoming xml messages
-POE::Component::Server::TCP->new
-(
+POE::Component::Server::TCP->new(
 	Port => $server_port,
 	ClientInput => \&client_input,
-    Concurrency => 10,
 );
 daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 
