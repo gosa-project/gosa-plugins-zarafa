@@ -5,7 +5,7 @@ use strict;
 
 use POE;
 
-use Pcap;
+use POE::Component::Pcap;
 
 use NetPacket::Ethernet qw( :types );
 use NetPacket::ARP qw( :opcodes );
