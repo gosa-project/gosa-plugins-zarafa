@@ -1,7 +1,7 @@
-<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Terminal service{/t}</h2>
 <table summary="">
     <tr>
      <td colspan=2>
+		<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Terminal service{/t}</h2>
 {render acl=$goXdmcpIsEnabledACL}
       <input type="checkbox" value="true" name="goXdmcpIsEnabled" id="Temporariid" {if $goXdmcpIsEnabled} checked {/if}>
 {/render}
@@ -9,11 +9,12 @@
      </td>
     </tr>
     <tr>
-     <td>{t}Font path{/t}</td>
-     <td> 
-{render acl=$goXdmcpIsEnabledACL}
-      <input type="text" value="{$goFontPath}" name="goFontPath" id="FontPathId">
-{/render}
+     <td colspan=2>
+		<h2>{t}Supported session types{/t}</h2>
+			{foreach from=$gotoSessionTypes item=item key=key}
+				<input class="center" type="checkbox" name="gotoSessionType_{$key}" 
+					{if $item} checked {/if}>&nbsp;{$key} <br>
+			{/foreach}
      </td>
     </tr>
    </table>

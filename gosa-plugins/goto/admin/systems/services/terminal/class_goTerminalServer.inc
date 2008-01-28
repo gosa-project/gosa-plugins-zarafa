@@ -8,9 +8,9 @@ class goTerminalServer extends goService{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goTerminalServer");
-  var $attributes       = array("goXdmcpIsEnabled", "goFontPath");
+  var $attributes       = array("goXdmcpIsEnabled","gotoSessionType");
   var $StatusFlag       = "goTerminalServerStatus";
- 
+
   /* This class can't be assigned twice so it conflicts with itsself */
   var $conflicts        = array("goTerminalServer");
 
@@ -20,14 +20,23 @@ class goTerminalServer extends goService{
   var $cn                      = "";
   var $goTerminalServerStatus  = "";
   var $goXdmcpIsEnabled        = false;  
-  var $goFontPath              = "";
-  var $view_logged  =FALSE;
+  var $view_logged             = FALSE;
 
+  var $gotoSessionType         = array();
 
   function goTerminalServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Terminal service");
+
+    $tmp = array();
+    if(isset($this->attrs['gotoSessionType'])){
+      for($i =0; $i < $this->attrs['gotoSessionType']['count'] ; $i++){
+        $tmp[] = $this->attrs['gotoSessionType'][$i];
+      }
+    }
+    $this->gotoSessionType = $tmp;
+    $this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
   }
 
 
@@ -49,6 +58,17 @@ class goTerminalServer extends goService{
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    $tmp = array();
+    foreach($this->gotoSessionTypes as $type){
+      if(in_array($type,$this->gotoSessionType)){
+        $tmp[$type] = TRUE;
+      }else{
+        $tmp[$type] = FALSE;
+      }
+    }
+    $smarty->assign("gotoSessionTypes",$tmp);
+
     return($smarty->fetch(get_template_path("goTerminalServer.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -69,6 +89,8 @@ class goTerminalServer extends goService{
     if(!$this->goXdmcpIsEnabled){
       $this->attrs['goXdmcpIsEnabled'] = "0";
     }
+
+    $this->attrs['gotoSessionType'] = array_values($this->gotoSessionType);
 
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
@@ -94,10 +116,6 @@ class goTerminalServer extends goService{
   function check()
   { 
     $message = plugin::check();
-    if(empty($this->goFontPath)){
-      $message[]=_("Terminal server, must have fontpath specified.");
-    }
-
     return($message);
   }
 
@@ -106,6 +124,14 @@ class goTerminalServer extends goService{
   {
     if(isset($_POST['goTerminalServerPosted'])){
       plugin::save_object();
+
+      $this->gotoSessionType = array();
+      foreach($this->gotoSessionTypes as $attr){
+        if(isset($_POST['gotoSessionType_'.$attr])){
+          $this->gotoSessionType[] = $attr;
+        }
+      }
+
       if($this->acl_is_writeable("goXdmcpIsEnabled")){
         if(isset($_POST['goXdmcpIsEnabled'])){
           $this->goXdmcpIsEnabled = true;
@@ -115,6 +141,20 @@ class goTerminalServer extends goService{
       }
     }
   } 
+
+
+  function PrepareForCopyPaste($obj)
+  {
+    plugin::PrepareForCopyPaste($obj);
+    $tmp = array();
+    if(isset($obj['gotoSessionType'])){
+      for($i =0; $i < $obj['gotoSessionType']['count'] ; $i++){
+        $tmp[] = $obj['gotoSessionType'][$i];
+      }
+    }
+    $this->gotoSessionType = $tmp;
+    $this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
+  }
 
 
   /* Return plugin informations for acl handling */
@@ -130,8 +170,7 @@ class goTerminalServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "goXdmcpIsEnabled"  => _("Temporary disable login"),
-            "goFontPath"        => _("Font path"))
+            "goXdmcpIsEnabled"  => _("Temporary disable login"))
           ));
   }
 
