@@ -331,6 +331,12 @@ sub import_modules {
         if (not $file =~ /(\S*?).pm$/) {
             next;
         }
+
+        if( $no_arp > 0 ) {
+            if( $file =~ /ArpHandler.pm/ ) {
+                next;
+            }
+        } 
         eval { require $file; };
         if ($@) {
             daemon_log("ERROR: gosa-si-server could not load module $file", 1);

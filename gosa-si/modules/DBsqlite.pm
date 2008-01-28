@@ -37,7 +37,7 @@ sub lock_exists : locked {
     my $lock = $self->{db_lock};
     my $result=(-f $lock);
     if($result) {
-        &main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden", 6);
+        &main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden", 8);
         usleep 100;
     }
     return $result;
@@ -46,7 +46,7 @@ sub lock_exists : locked {
 sub create_lock : locked {
     my $self=shift;
     my $funcname=shift;
-    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock}),6);
+    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Erzeuge Lock (PID ".$$.") ".($self->{db_lock}),8);
 
     my $lock = $self->{db_lock};
     while( -f $lock ) {
@@ -60,7 +60,7 @@ sub create_lock : locked {
 sub remove_lock : locked {
     my $self=shift;
     my $funcname=shift;
-    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}, 6);
+    &main::daemon_log("(".((defined $funcname)?$funcname:"").") Entferne Lock (PID ".$$.") ".$self->{db_lock}, 8);
     close($self->{db_lock_handle});
     unlink($self->{db_lock});
 }
