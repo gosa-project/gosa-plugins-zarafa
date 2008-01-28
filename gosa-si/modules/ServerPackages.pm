@@ -528,7 +528,7 @@ sub new_passwd {
     }
 
     # check known_server_db
-    my $sql_statement = "SELECT * FROM known_server WHERE hostname='$source_name'";
+    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source_name'";
     $query_res = $main::known_server_db->select_dbentry( $sql_statement );
     if( 1 == keys %{$query_res} ) {
         my $act_time = &get_time;

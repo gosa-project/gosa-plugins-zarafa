@@ -414,6 +414,8 @@ sub client_input {
 	}        
 	daemon_log("processing of msg finished", 5);
 
+    sleep(10);
+
 	if (defined $answer) {
 		$heap->{client}->put($answer);
 	} else {
@@ -579,6 +581,7 @@ POE::Component::Server::TCP->new
 (
 	Port => $server_port,
 	ClientInput => \&client_input,
+    Concurrency => 10,
 );
 daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 

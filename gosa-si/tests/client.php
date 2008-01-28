@@ -4,6 +4,11 @@
 require_once("../../gosa-core/include/class_socketClient.inc");
 error_reporting(E_ALL);
 
+$zahl= 1;
+
+for($count = 1; $count <= $zahl; $count++)
+{
+
 $sock = new Socket_Client("127.0.0.1","20081",TRUE,1);
 #$sock = new Socket_Client("169.254.2.248","9999",TRUE,1);
 $sock->setEncryptionKey("secret-gosa-password");
@@ -25,7 +30,7 @@ if($sock->connected()){
 # query
 #$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>3</to></limit></xml>";
-$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>9</to></limit><orderby>timestamp</orderby></xml>";
+$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
 
 
 # count
@@ -39,10 +44,11 @@ $data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>
     $sock->write($data);
     $answer = "nothing";
 	$answer = $sock->read();
-    echo ">>>$answer<<<\n";
+    
+    echo "$count: $answer\n";
 	$sock->close();	
 }else{
 	echo "... FAILED!\n";
 }
-
+}
 ?>

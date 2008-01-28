@@ -321,7 +321,6 @@ sub process_incoming_msg {
 
         my $out_cipher = &create_ciphering($gosa_passwd);
         $out_msg = &encrypt_msg($out_msg, $out_cipher);
-
         return $out_msg;
 	}
 
@@ -447,8 +446,6 @@ sub query_jobdb {
     my $limit= &get_limit_statement($msg, $msg_hash);
     my $orderby= &get_orderby_statement($msg, $msg_hash);
     my $sql_statement= "SELECT $select FROM $table $where $orderby $limit";
-
-print STDERR "\n\n$sql_statement\n\n";
 
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);

@@ -137,8 +137,6 @@ sub add_dbentry {
 
         my $sql_statement = "INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
 
-        print STDERR $sql_statement."\n";
-
         &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');
@@ -233,7 +231,6 @@ sub show_table {
     #&remove_lock($self,'show_table');
 
     my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
-    print STDERR $sql_statement."\n";
     my $res= &exec_statement($self, $sql_statement);
 
     my @answer;
