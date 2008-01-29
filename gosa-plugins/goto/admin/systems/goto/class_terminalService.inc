@@ -10,7 +10,7 @@ class termservice extends plugin
   /* Generic terminal attributes */
   var $gotoLpdEnable= FALSE;
   var $gotoXMonitor= "";
-  var $gotoXMethod= "";
+  var $gotoXMethod= "default";
   var $gotoXdmcpServer= "";
   var $gotoXDriver= "";
   var $gotoXResolution= "";
@@ -61,6 +61,9 @@ class termservice extends plugin
 
   var $is_ogroup        = FALSE;
   var $is_ogroup_member = FALSE;
+
+  var $selected_xdmcp_servers = array();
+  var $inherited_xdmcp_servers = array();
 
   function termservice (&$config, $dn= NULL, $parent= NULL)
   {
@@ -169,6 +172,14 @@ class termservice extends plugin
     $this->XMethods["rdp"]    = _("Windows RDP");
     $this->XMethods["citrix"] = _("ICA client");
 
+    /* Get selected gotoXdmcpServer 
+     */
+    $this->selected_xdmcp_servers = array();
+    if(isset($this->attrs['gotoXdmcpServer'])){
+      for($i = 0 ; $i < $this->attrs['gotoXdmcpServer']['count'] ; $i++){
+        $this->selected_xdmcp_servers[] = $this->attrs['gotoXdmcpServer'][$i];
+      }
+    }
 
     /* Load phone hardware list 
      */
@@ -211,6 +222,7 @@ class termservice extends plugin
         "gotoXKbModel", 
         "gotoXKbLayout",
 #        "gotoXDriver",
+        "gotoXdmcpServer",
         "gotoXKbVariant",
         "gotoXMouseType", 
         "gotoXMethod",
@@ -229,6 +241,11 @@ class termservice extends plugin
 #           break;
           case 'gotoXMethod': 
             $this->XMethods = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XMethods;
+            if(isset($attrs['gotoXdmcpServer'])){
+              for($i = 0 ; $i < $attrs['gotoXdmcpServer']['count'] ; $i++){
+                $this->inherited_xdmcp_servers[] = $attrs['gotoXdmcpServer'][$i];
+              }
+            }
             break;
           case 'gotoXResolution':
             $this->XResolutions= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XResolutions;
@@ -294,22 +311,47 @@ class termservice extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
+    if(isset($_POST['gotoXdmcpServer_add']) && isset($_POST['XdmcpAddServer'])){
+      if(!in_array($_POST['gotoXdmcpServer_add'],$this->selected_xdmcp_servers)){
+        $this->selected_xdmcp_servers[] = $_POST['gotoXdmcpServer_add'];
+      }
+    }
+
+    if(isset($_POST['selected_xdmcp_servers']) && isset($_POST['XdmcpDelServer'])){
+      $tmp = array();
+      foreach($this->selected_xdmcp_servers as $name){
+        if(!in_array($name,$_POST['selected_xdmcp_servers'])){
+          $tmp[] =  $name;
+        }
+      }
+      $this->selected_xdmcp_servers = $tmp;
+    }
 
     /* Arrays */ 
     foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
-          "XKbModels","XKbVariants",
-          "MouseTypes", "MousePorts") as $val){
+          "XKbModels","XKbVariants","MouseTypes", "MousePorts") as $val){
       $smarty->assign("$val", $this->$val);
     }
     $smarty->assign("XKbLayouts",   $this->XKbLayouts);
     $smarty->assign("XKbLayoutKeys",array_flip($this->XKbLayouts));
-  
-    $smarty->assign("xdmcpservers", $this->config->data['SERVERS']['TERMINAL']);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
+  
+     
+    $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
+    $available_servers = array();
+    if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
+      $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
+    }
+    $tmp = array();
+    foreach($this->selected_xdmcp_servers as $server){
+        $tmp[] = $server;
+    }
+    $smarty->assign("selected_xdmcp_servers", $tmp);
+    $smarty->assign("inherited_xdmcp_servers", $this->inherited_xdmcp_servers);
+    $smarty->assign("available_xdmcp_servers", $available_servers);
 
     /* Variables - select */
-    foreach(array("gotoXMethod", "gotoXdmcpServer", 
-          "gotoXDriver", "gotoXResolution", "gotoXColordepth", 
+    foreach(array("gotoXMethod","gotoXDriver", "gotoXResolution", "gotoXColordepth", 
           "gotoLpdServer", "gotoXKbModel", "gotoXKbLayout",
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
@@ -452,21 +494,16 @@ class termservice extends plugin
     /* Convert to string */
     $this->gotoLpdEnable= $this->gotoLpdEnable?"Yes":"No";
 
-    if(isset($this->parent->by_object['ogroup'])){
+    if($this->is_ogroup){
       $this->objectclasses = array("gotoWorkstationTemplate");
-    }elseif(isset($this->parent->by_object['terminalgeneric'])){
-      $this->objectclasses = array("GOhard");
     }else{
-      print "Object Type Configuration : unknown";
-      exit();
+      $this->objectclasses = array("GOhard");
     }
-
 
     plugin::save();
 
     /* Strip out 'default' values */
-    foreach(array("gotoXMethod", "gotoXdmcpServer",
-          "gotoXDriver", "gotoXResolution", "gotoXColordepth",
+    foreach(array("gotoXMethod","gotoXDriver", "gotoXResolution", "gotoXColordepth",
           "gotoLpdServer", "gotoXKbModel", "gotoXKbLayout",
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
@@ -474,6 +511,14 @@ class termservice extends plugin
         $this->attrs[$val]= array();
       }
     }
+
+    if($this->gotoXMethod == "default"){
+      $this->attrs['gotoXdmcpServer'] = array();
+      $this->attrs['gotoXMethod'] = array();
+    }else{
+      $this->attrs['gotoXdmcpServer'] = array_values($this->selected_xdmcp_servers);
+    }
+
 
     if($this->AutoSync){
       $this->attrs['gotoXHsync'] = "30+55";

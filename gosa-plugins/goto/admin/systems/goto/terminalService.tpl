@@ -187,13 +187,32 @@
     </tr>
     <tr>
      <td></td>
-     <td><LABEL for="gotoXdmcpServer">{t}Terminal server{/t}</LABEL></td>
-     <td>
+     <td colspan=2>
+     <LABEL for="gotoXdmcpServer">{t}Terminal server{/t}</LABEL><br>
 {render acl=$gotoXdmcpServerACL}
-      <select id="gotoXdmcpServer" name="gotoXdmcpServer" title="{t}Select specific terminal server to use{/t}">
-       {html_options values=$xdmcpservers output=$xdmcpservers selected=$gotoXdmcpServer_select}
+      <select name="selected_xdmcp_servers[]" multiple style="width:280px; height:60px;" {if $gotoXMethod_select == "default"} disabled {/if}>
+		{if $gotoXMethod_select == "default"}
+			{html_options values=$inherited_xdmcp_servers output=$inherited_xdmcp_servers}
+		{else}
+       		{html_options values=$selected_xdmcp_servers output=$selected_xdmcp_servers}
+		{/if}
+      </select><br>
+{/render}
+{render acl=$gotoXdmcpServerACL}
+      <select name="gotoXdmcpServer_add" title="{t}Select specific terminal server to use{/t}" 
+		{if $gotoXMethod_select == "default"} disabled {/if}  >
+	     {html_options values=$available_xdmcp_servers output=$available_xdmcp_servers}
       </select>
 {/render}
+{render acl=$gotoXdmcpServerACL}
+	<input type="submit" name="XdmcpAddServer" value="{t}Add{/t}" title="{t}Add selected server{/t}"
+		{if $gotoXMethod_select == "default"} disabled {/if}>
+{/render}
+{render acl=$gotoXdmcpServerACL}
+	<input type="submit" name="XdmcpDelServer" value="{t}Remove{/t}" title="{t}Remove selected server{/t}"
+		{if $gotoXMethod_select == "default"} disabled {/if}>
+{/render}
+
      </td>
     </tr>
    </table>
