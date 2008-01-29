@@ -194,7 +194,7 @@
 		{if $gotoXMethod_select == "default"}
 			{html_options values=$inherited_xdmcp_servers output=$inherited_xdmcp_servers}
 		{else}
-       		{html_options values=$selected_xdmcp_servers output=$selected_xdmcp_servers}
+       		{html_options options=$selected_xdmcp_servers}
 		{/if}
       </select><br>
 {/render}

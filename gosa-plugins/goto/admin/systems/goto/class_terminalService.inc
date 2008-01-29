@@ -336,16 +336,35 @@ class termservice extends plugin
     $smarty->assign("XKbLayoutKeys",array_flip($this->XKbLayouts));
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
   
-     
+    
+    /* Create a list of useable servers for the currently selected 
+     *  connection type.
+     */ 
     $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
     $available_servers = array();
     if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
       $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
     }
+
+    /* Append additional information to invalid server selections.
+     */
     $tmp = array();
     foreach($this->selected_xdmcp_servers as $server){
-        $tmp[] = $server;
+      if(in_array($server,$available_servers)){
+        $tmp[$server] = $server;
+      }else{
+        $tmp[$server] = $server."&nbsp;-&nbsp;"._("Unsupported");
+      }
     }
+
+    /* Remove already selected servers from available list. 
+     */
+    foreach($available_servers as $key => $server){
+      if(isset($tmp[$server])){
+        unset($available_servers[$key]);
+      }
+    }
+
     $smarty->assign("selected_xdmcp_servers", $tmp);
     $smarty->assign("inherited_xdmcp_servers", $this->inherited_xdmcp_servers);
     $smarty->assign("available_xdmcp_servers", $available_servers);
@@ -484,6 +503,19 @@ class termservice extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
+
+    $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
+    $available_servers = array();
+    if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
+      $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
+    }
+    foreach($this->selected_xdmcp_servers as $server){
+      if(!in_array($server,$available_servers)){
+        $message[] = _("Remote desktop settings contains servers that do not support the selected connection method.");
+        break;
+      }
+    }
+
     return ($message);
   }
 
