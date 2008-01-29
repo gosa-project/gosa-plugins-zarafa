@@ -571,7 +571,7 @@ class termservice extends plugin
 
   function getListOfXDrivers()
   {
-    $drivers = array("unknown" => "["._("unknown")."]");
+    $drivers = array("default" => "["._("unknown")."]");
 
     /* Generate a list of xdrivers from CONFIG_DIR/xdrivers */
     if (file_exists(CONFIG_DIR.'/xdrivers')){
