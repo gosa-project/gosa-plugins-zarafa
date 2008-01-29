@@ -12,7 +12,6 @@ class termservice extends plugin
   var $gotoXMonitor= "";
   var $gotoXMethod= "";
   var $gotoXdmcpServer= "";
-  var $gotoFontPath= "";
   var $gotoXDriver= "";
   var $gotoXResolution= "";
   var $gotoXColordepth= "";
@@ -53,35 +52,53 @@ class termservice extends plugin
 
   /* attribute list for save action */
   var $attributes= array("cn", "gotoLpdEnable", "gotoXMonitor", "gotoXMethod", "gotoXdmcpServer",
-      "gotoFontPath", "gotoXDriver", "gotoXResolution", "gotoXColordepth",
+      "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync", "gotoLpdEnable", "gotoLpdServer",
       "gotoScannerEnable", "gotoScannerModel", "gotoScannerClients",
       "gotoScannerBackend", "gotoXKbModel", "gotoXKbLayout", "gotoXKbVariant",
       "gotoXMouseType", "gotoXMouseport", "goFonHardware");
   var $objectclasses= array("GOhard");
 
+  var $is_ogroup        = FALSE;
+  var $is_ogroup_member = FALSE;
 
   function termservice (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-   
+    $this->orig_dn= $this->dn;
+
+    /* Check if we are a part of an ogroup.
+     * In this case, we have to hide all the inherit stuff.
+     */ 
+    if(isset($parent) && get_class($parent) == "ogroup"){
+      $this->is_ogroup = TRUE;
+    }
+
+    /* Check if we are member of an object group.
+     */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
+    if($ldap->count()){
+      $this->is_ogroup_member = TRUE;
+    }
+
     /* Get list of available xdrivers */
     $this->XDrivers = $this->getListOfXDrivers();
-    array_unshift($this->XDrivers, "["._("unknown")."]");
-    
+
+    /* Create a list of available resolutions.
+     */     
     $this->XResolutions= array(
-        "default"   =>  "["._("inherited")."]"  ,
-        "640x480"   =>  "640x480",
-        "800x600"   =>  "800x600",
-        "1024x768"  =>  "1024x768",
-        "1152x864"  =>  "1152x864",
-        "1280x1024" =>  "1280x1024",
-        "1400x1050" =>  "1400x1050",
-        "1600x1200" =>  "1600x1200");
+          "640x480"   =>  "640x480",
+          "800x600"   =>  "800x600",
+          "1024x768"  =>  "1024x768",
+          "1152x864"  =>  "1152x864",
+          "1280x1024" =>  "1280x1024",
+          "1400x1050" =>  "1400x1050",
+          "1600x1200" =>  "1600x1200");
 
     if(isset($this->config->data['MAIN']['RESOLUTION_HOOK'])){
       $file = $this->config->data['MAIN']['RESOLUTION_HOOK'];
-
       if(is_readable($file)){
         $str = file_get_contents($file);
         $lines = split("\n",$str);
@@ -91,20 +108,23 @@ class termservice extends plugin
             $this->XResolutions[$line]=$line;
           }
         }
-        //natcasesort($this->gotoXResolutions);
       }else{
         print_red(sprintf(_("You have specified an external resolution hook which can't be read, please check the permission of the file '%s'."),$file));
       }
     }
 
+    /* Create a set of selectable color depths
+     */
     $this->XColordepths= array(
-        "default"  => "["._("inherited")."]",
         "8"        => "8 " ._("bit"),
         "15"       => "15 "._("bit"),
         "16"       => "16 "._("bit"),
         "24"       => "24 "._("bit"));
 
-    $this->XKbModels['default']= "["._("inherited")."]";
+    
+    /* Create a set of selectable keyboard models
+     */
+    $this->XKbModels = array();
     foreach(array ("btc9000", "chicony", "compaq", "dell", "dell101", "everex",
           "flexpro", "geniuscomfy", "hp", "itouch", "jp106", "logicordless",
           "logiinetnav", "logiinternet", "macintosh", "microsoft",
@@ -114,19 +134,16 @@ class termservice extends plugin
     }
 
     /* Additional values will be extracted from CONFIG_DIR.keyboardLayouts */
-    $this->XKbLayouts= array ("default"=>"["._("inherited")."]","de"=> "de","intl" =>"intl","us" =>"us");
-    $this->XKbVariants= array ("default"=>"["._("inherited")."]", "nodeadkeys"=>"nodeadkeys", "basic"=>"basic");
-
-    $this->MouseTypes= array( "AUTO"      =>  "["._("inherited")."]" ,  "ImPS/2"      => "ImPS/2", 
-                              "PS/2"      =>  "PS/2"                 ,  "Microsoft"   => "Microsoft", 
-                              "Logitech"  =>  "Logitech");
-
-    $this->MousePorts= array("AUTO"             =>"["._("inherited")."]"   , "/dev/ttyS0"  => "/dev/ttyS0", 
-                             "/dev/ttyS1"       => "/dev/ttyS1"            , "/dev/psaux"  => "/dev/psaux", 
-                             "/dev/input/mice"  =>"/dev/input/mice");
+    $this->XKbLayouts = array("de"=> "de","intl" =>"intl","us" =>"us");
+    $this->XKbVariants= array("nodeadkeys"=>"nodeadkeys", "basic"=>"basic");
+    $this->MouseTypes = array("ImPS/2"=>"ImPS/2","PS/2"=>"PS/2",
+                              "Microsoft"=>"Microsoft","Logitech"=>"Logitech");
+    $this->MousePorts = array("/dev/ttyS0"=>"/dev/ttyS0",
+                              "/dev/ttyS1"=>"/dev/ttyS1","/dev/psaux"=>"/dev/psaux", 
+                              "/dev/input/mice"=>"/dev/input/mice");
  
 
-    /* try to read additional keyboard layouts
+    /* Try to read additional keyboard layouts
      */
     if(file_exists(CONFIG_DIR."/keyboardLayouts")){
       if(is_readable(CONFIG_DIR."/keyboardLayouts")){
@@ -144,16 +161,17 @@ class termservice extends plugin
       }
     }
 
-    /* Initialize methods */
+    /* Terminal server methods 
+     */
     $this->XMethods["default"]= _("default");
-    $this->XMethods["xdmcp"]= _("XDMCP");
-    $this->XMethods["ldm"]= _("LDM");
-    $this->XMethods["rdp"]= _("Windows RDP");
-    $this->XMethods["citrix"]= _("ICA client");
+    $this->XMethods["xdmcp"]  = _("XDMCP");
+    $this->XMethods["ldm"]    = _("LDM");
+    $this->XMethods["rdp"]    = _("Windows RDP");
+    $this->XMethods["citrix"] = _("ICA client");
 
-    $this->orig_dn= $this->dn;
 
-    /* Load hardware list */
+    /* Load phone hardware list 
+     */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(objectClass=goFonHardware)", array('cn', 'description'));
@@ -176,58 +194,74 @@ class termservice extends plugin
           $this->used_hardware[$cn]= $cn;
         }
     }
-
     $this->hardware_list["automatic"]= _("automatic");
     ksort($this->hardware_list);
 
-    /* Convert gotoLpdEnable */
+    /* Convert gotoLpdEnable 
+     */
     $this->gotoLpdEnable= preg_match("/yes/i",$this->gotoLpdEnable);
+
 
     /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
+    $map= array(
+        "gotoXResolution", 
+        "gotoXColordepth", 
+        "gotoXKbModel", 
+        "gotoXKbLayout",
+#        "gotoXDriver",
+        "gotoXKbVariant",
+        "gotoXMouseType", 
+        "gotoXMethod",
+        "gotoXMouseport");
+    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))",$map);
     if ($ldap->count() == 1){
-      $map= array("gotoXResolution", "gotoXColordepth", "gotoXKbModel", "gotoXKbLayout",
-                  "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport");
       $attrs= $ldap->fetch();
-
       foreach ($map as $name){
         if (!isset($attrs[$name][0])){
           continue;
         }
 
         switch ($name){
+#         case 'gotoXDriver': 
+#           $this->XDrivers = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XDrivers;
+#           break;
+          case 'gotoXMethod': 
+            $this->XMethods = array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XMethods;
+            break;
           case 'gotoXResolution':
-            $this->XResolutions['default'] = _("inherited").' ['.$attrs[$name][0].']' ;
+            $this->XResolutions= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XResolutions;
             break;
           case 'gotoXColordepth':
-            $this->XColordepths['default'] =  _("inherited").' ['.$attrs[$name][0].' '._('Bit').']';
+            $this->XColordepths= array('default' => _("inherited").' ['.$attrs[$name][0].' '._('Bit').']') + $this->XColordepths;
             break;
           case 'gotoXKbModel':
-            $this->XKbModels['default'] =  _("inherited").' ['.$attrs[$name][0].']';
+            $this->XKbModels= array('default' => _("inherited").' ['.$attrs[$name][0].']') + $this->XKbModels;
             break;
           case 'gotoXKbLayout':
-            $this->XKbLayouts['default'] =  _("inherited").' ['.$attrs[$name][0].']';
+            $this->XKbLayouts= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XKbLayouts;
             break;
           case 'gotoXKbVariant':
-            $this->XKbVariants['default'] = _("inherited").' ['.$attrs[$name][0].']' ;
+            $this->XKbVariants= array('default' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->XKbVariants;
             break;
           case 'gotoXMouseType':
-            $this->MouseTypes['AUTO'] = _("inherited").' ['.$attrs[$name][0].']' ;
+            $this->MouseTypes= array('AUTO' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MouseTypes;
             break;
           case 'gotoXMouseport':
-            $this->MousePorts['AUTO'] = _("inherited").' ['.$attrs[$name][0].']' ;
+            $this->MousePorts= array('AUTO' => _("inherited").' ['.$attrs[$name][0].']' ) + $this->MousePorts;
             break;
         }
       }
     }
+
     if(preg_match("/\+/",$this->gotoXHsync)){
       $this->AutoSync = true;
       $this->gotoXHsync = preg_replace("/\+/","-",$this->gotoXHsync);
       $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
     }
   }
+
 
   function execute()
   {
@@ -271,8 +305,6 @@ class termservice extends plugin
     $smarty->assign("XKbLayoutKeys",array_flip($this->XKbLayouts));
   
     $smarty->assign("xdmcpservers", $this->config->data['SERVERS']['TERMINAL']);
-    $smarty->assign("fontservers", $this->config->data['SERVERS']['FONT']);
-    $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
 
     /* Variables - select */
@@ -420,6 +452,16 @@ class termservice extends plugin
     /* Convert to string */
     $this->gotoLpdEnable= $this->gotoLpdEnable?"Yes":"No";
 
+    if(isset($this->parent->by_object['ogroup'])){
+      $this->objectclasses = array("gotoWorkstationTemplate");
+    }elseif(isset($this->parent->by_object['terminalgeneric'])){
+      $this->objectclasses = array("GOhard");
+    }else{
+      print "Object Type Configuration : unknown";
+      exit();
+    }
+
+
     plugin::save();
 
     /* Strip out 'default' values */
@@ -452,7 +494,7 @@ class termservice extends plugin
 
   function getListOfXDrivers()
   {
-    $drivers = array();
+    $drivers = array("unknown" => "["._("unknown")."]");
 
     /* Generate a list of xdrivers from CONFIG_DIR/xdrivers */
     if (file_exists(CONFIG_DIR.'/xdrivers')){
@@ -463,10 +505,13 @@ class termservice extends plugin
         }
       }
     } else {
-      $drivers = array("ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
+      foreach( array(
+          "ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
           "i128", "i740", "i810", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
           "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
-          "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware");
+          "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware") as $driver){
+        $drivers[] = $driver;
+      }
     }
     return($drivers);
   }

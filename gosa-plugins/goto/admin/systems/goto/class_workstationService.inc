@@ -277,7 +277,6 @@ class workservice extends plugin
     $smarty->assign("XKbLayoutKeys" ,array_flip($this->XKbLayouts));
 
     $smarty->assign("xdmcpservers", $this->config->data['SERVERS']['TERMINAL']);
-    $smarty->assign("fontservers", $this->config->data['SERVERS']['FONT']);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
 

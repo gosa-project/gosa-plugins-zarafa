@@ -177,9 +177,11 @@
      <td><LABEL for="gotoXMethod">{t}Connect method{/t}</LABEL></td>
      <td>
 {render acl=$gotoXMethodACL}
-      <select name="gotoXMethod" id="gotoXMethod" title="{t}Choose method to connect to terminal server{/t}" >
+      <select name="gotoXMethod" id="gotoXMethod" title="{t}Choose method to connect to terminal server{/t}" 
+			onChange="document.mainform.submit();">
        {html_options options=$XMethods selected=$gotoXMethod_select}
       </select>
+	  <input type="image" src="images/list_reload.png" alt="{t}Reload{/t}" title="{t}Reload{/t}" class="center">
 {/render}
      </td>
     </tr>
@@ -188,7 +190,7 @@
      <td><LABEL for="gotoXdmcpServer">{t}Terminal server{/t}</LABEL></td>
      <td>
 {render acl=$gotoXdmcpServerACL}
-      <select id="gotoXdmcpServer" name="gotoXdmcpServer" title="{t}Select specific terminal server to use{/t}" >
+      <select id="gotoXdmcpServer" name="gotoXdmcpServer" title="{t}Select specific terminal server to use{/t}">
        {html_options values=$xdmcpservers output=$xdmcpservers selected=$gotoXdmcpServer_select}
       </select>
 {/render}
