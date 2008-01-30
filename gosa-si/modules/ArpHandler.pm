@@ -35,7 +35,7 @@ my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
 
 $ldap_base = "dc=gonicus,dc=de" ;
-$interface = "eth1";
+$interface = "all";
 
 sub get_module_info {
 	my @info = (undef,
