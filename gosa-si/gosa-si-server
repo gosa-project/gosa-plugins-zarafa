@@ -345,6 +345,7 @@ sub import_modules {
         if (not $file =~ /(\S*?).pm$/) {
             next;
         }
+		my $mod_name = $1;
 
         if( $file =~ /ArpHandler.pm/ ) {
             if( $no_arp > 0 ) {
@@ -356,9 +357,7 @@ sub import_modules {
         if ($@) {
             daemon_log("ERROR: gosa-si-server could not load module $file", 1);
             daemon_log("$@", 5);
-		} 
-        else {
-			my $mod_name = $1;
+		} else {
 			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
 			if(defined($info)) {
