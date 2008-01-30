@@ -17,7 +17,7 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 
 # add
-#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
+$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
@@ -31,7 +31,7 @@ if($sock->connected()){
 #$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>3</to></limit></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
-$data= "<xml><header>gosa_query_jobdb</header></xml>";
+#$data= "<xml><header>gosa_query_jobdb</header></xml>";
 
 
 # count

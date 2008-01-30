@@ -199,7 +199,10 @@ sub create_xml_string {
 sub encrypt_msg {
     my ($msg, $my_cipher) = @_;
     if(not defined $my_cipher) { print "no cipher object\n"; }
-    $msg = "\0"x(16-length($msg)%16).$msg;
+    {
+      use bytes;
+      $msg = "\0"x(16-length($msg)%16).$msg;
+    }
     $msg = $my_cipher->encrypt($msg);
     chomp($msg = &encode_base64($msg));
 
