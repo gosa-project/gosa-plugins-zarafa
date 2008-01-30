@@ -2,13 +2,17 @@
 package POE::Component::ArpWatch;
 
 use strict;
+use warnings;
 
-use POE;
+BEGIN{
+	eval('use POE');
+	eval('use POE::Component::Pcap');
+	eval('use NetPacket::Ethernet qw( :types )');
+	eval('use NetPacket::ARP qw( :opcodes )');
+}
 
-use POE::Component::Pcap;
-
-use NetPacket::Ethernet qw( :types );
-use NetPacket::ARP qw( :opcodes );
+END{
+}
 
 ## Map arp opcode #'s to strings
 my %arp_opcodes = (
