@@ -502,7 +502,7 @@ class phoneAccount extends plugin
           foreach($query_a as $qry){
 	          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$qry, "Database query");
             if(!mysql_query($qry,$old_connection)){
-              echo mysql_error($old_connection);
+              trigger_error(mysql_error($old_connection));
             } 
           }
         }
@@ -695,7 +695,7 @@ class phoneAccount extends plugin
       foreach($query as $qry){
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$qry, "Database query");
         if(!mysql_query($qry,$new_connection)){
-          echo mysql_error($new_connection);
+          trigger_error(mysql_error($new_connection));
         } 
       }
  
