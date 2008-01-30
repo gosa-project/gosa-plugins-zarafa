@@ -475,6 +475,12 @@ class workgeneric extends plugin
   /* Save to LDAP */
   function save()
   {
+    /* Detect mode changes */
+    $activate= (isset($this->saved_attributes['gotoMode']) &&
+        $this->gotoMode != $this->saved_attributes['gotoMode'] &&
+        $this->gotoMode == "active" &&
+        tests::is_ip($this->netConfigDNS->ipHostNumber));
+
     plugin::save();
 
     /* Strip out 'default' values */
@@ -559,6 +565,10 @@ class workgeneric extends plugin
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
+
+    if ($activate){
+      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->ipHostNumber);
+    }
   }
 
 

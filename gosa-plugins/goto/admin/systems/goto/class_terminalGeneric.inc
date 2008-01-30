@@ -8,7 +8,7 @@ class termgeneric extends plugin
   var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
   /* Generic terminal attributes */
-  var $gotoMode= "disabled";
+  var $gotoMode= "locked";
   var $gotoTerminalPath= "";
   var $gotoSwapServer= "";
   var $gotoSyslogServer= "";
@@ -117,8 +117,8 @@ class termgeneric extends plugin
       }
     }
 
-    $this->modes["disabled"]= _("Locked");
-    $this->modes["enabled"]= _("Activated");
+    $this->modes["locked"]= _("Locked");
+    $this->modes["active"]= _("Activated");
 
     /* Set base */
     if ($this->dn == "new"){
@@ -500,6 +500,12 @@ class termgeneric extends plugin
       $this->move($this->orig_dn, $this->dn);
     }
 
+    /* Detect mode changes */
+    $activate= (isset($this->saved_attributes['gotoMode']) &&
+        $this->gotoMode != $this->saved_attributes['gotoMode'] &&
+        $this->gotoMode == "enabled" &&
+        tests::is_ip($this->netConfigDNS->ipHostNumber));
+
     plugin::save();
 
     /* Strip out 'default' values */
@@ -571,10 +577,11 @@ class termgeneric extends plugin
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/generic with dn '%s' failed."),$this->dn));
+
+    if ($activate){
+      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->ipHostNumber);
+    }
   }
-
-
-
 
 
   /* Display generic part for server copy & paste */
