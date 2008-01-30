@@ -1157,17 +1157,25 @@ sub new_ldap_config {
     close (file1);
     daemon_log("wrote $pam_config", 5);
 
-    # Create goto.secrets if told so
+    # Create goto.secrets if told so - for compatibility reasons
     if (defined $goto_admin){
 	    open(file1, "> /etc/goto/secret");
 	    close(file1);
 	    chown(0,0, "/etc/goto/secret");
 	    chmod(0600, "/etc/goto/secret");
 	    open(file1, "> /etc/goto/secret");
-	    print file1 $goto_admin.":".$goto_secret."\n";
+	    print file1 "GOTOADMIN=\"$goto_admin\"\nGOTOSECRET=\"$goto_secret\"\n";
 	    close(file1);
 	    daemon_log("wrote /etc/goto/secret", 5);
     }
+
+
+    # TODO: write these values to /etc/ldap/ldap-shell.conf
+    # LDAP_BASE=
+    # ADMIN_BASE=
+    # DEPARTMENT=
+    # UNIT_TAG=
+    # UNIT_TAG_FILTER=
 
     return;
 
