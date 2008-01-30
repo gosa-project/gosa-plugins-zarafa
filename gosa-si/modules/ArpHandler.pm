@@ -83,68 +83,68 @@ sub get_module_info {
 
 	&read_configfile();
 	# Don't start if some of the modules are missing
-	#if(($arp_activ eq 'on') && $start_service) {
-	#	eval {
-	#		$ldap = Net::LDAP->new($ldap_uri);
-	#	};
-	#	if (!$ldap) {
-	#		&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
-	#	} else {
-	#		eval {
-	#			$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
-	#		};
-	#		if($@) {
-	#			&main::daemon_log("LDAP bind as $ldap_admin_dn failed! Trying anonymous bind", 1);
-	#			$ldap->bind();
-	#		}
-	#	}
+	if(($arp_activ eq 'on') && $start_service) {
+		eval {
+			$ldap = Net::LDAP->new($ldap_uri);
+		};
+		if (!$ldap) {
+			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
+		} else {
+			eval {
+				$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+			};
+			if($@) {
+				&main::daemon_log("LDAP bind as $ldap_admin_dn failed! Trying anonymous bind", 1);
+				$ldap->bind();
+			}
+		}
 
-	#	# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
-	#	if ((!defined($arp_interface)) || $arp_interface eq 'all') {
-	#		foreach my $device(&get_interfaces) {
-	#			# TODO: Need a better workaround for IPv4-to-IPv6 bridges
-	#			if($device =~ m/^sit\d+$/) {
-	#				next;
-	#			}
+		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
+		if ((!defined($arp_interface)) || $arp_interface eq 'all') {
+			foreach my $device(&get_interfaces) {
+				# TODO: Need a better workaround for IPv4-to-IPv6 bridges
+				if($device =~ m/^sit\d+$/) {
+					next;
+				}
 
-	#			# If device has a valid mac address
-	#			# TODO: Check if this should be the right way
-	#			if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
-	#				&main::daemon_log("Starting ArpWatch on $device", 1);
-	#				POE::Session->create( 
-	#					inline_states => {
-	#						_start => sub {
-	#							&start(@_,$device);
-	#						},
-	#						_stop => sub {
-	#							$ldap->unbind if (defined($ldap));
-	#							$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
-	#						},
-	#						got_packet => \&got_packet,
-	#					},
-	#				);
-	#			}
-	#		}
-	#	} else {
-	#		foreach my $device(split(/[\s,]+/, $arp_interface)) {
-	#			&main::daemon_log("Starting ArpWatch on $device", 1);
-	#			POE::Session->create( 
-	#				inline_states => {
-	#					_start => sub {
-	#						&start(@_,$device);
-	#					},
-	#					_stop => sub {
-	#						$ldap->unbind if (defined($ldap));
-	#						$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
-	#					},
-	#					got_packet => \&got_packet,
-	#				},
-	#			);
-	#		}
-	#	}
-	#} else {
-	#	&main::daemon_log("ArpHandler disabled. Not starting any capture processes");
-	#}
+				# If device has a valid mac address
+				# TODO: Check if this should be the right way
+				if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
+					&main::daemon_log("Starting ArpWatch on $device", 1);
+					POE::Session->create( 
+						inline_states => {
+							_start => sub {
+								&start(@_,$device);
+							},
+							_stop => sub {
+								$ldap->unbind if (defined($ldap));
+								$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
+							},
+							got_packet => \&got_packet,
+						},
+					);
+				}
+			}
+		} else {
+			foreach my $device(split(/[\s,]+/, $arp_interface)) {
+				&main::daemon_log("Starting ArpWatch on $device", 1);
+				POE::Session->create( 
+					inline_states => {
+						_start => sub {
+							&start(@_,$device);
+						},
+						_stop => sub {
+							$ldap->unbind if (defined($ldap));
+							$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
+						},
+						got_packet => \&got_packet,
+					},
+				);
+			}
+		}
+	} else {
+		&main::daemon_log("ArpHandler disabled. Not starting any capture processes");
+	}
 	return \@info;
 }
 
@@ -198,19 +198,20 @@ sub got_packet {
 				macAddress => $packet->{source_haddr},
 				ipHostNumber => $packet->{source_ipaddr},
 				dnsname => $dnsname,
+				cn => ($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\./,
 			};
 			&main::daemon_log("Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
 			&main::daemon_log(
 				"New Host ".($hosts_database->{$packet->{source_haddr}}->{dnsname}).
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
 				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
-#			&add_ldap_entry(
-#				$ldap, 
-#				$ldap_base, 
-#				$hosts_database->{$packet->{source_haddr}}->{macAddress},
-#				'new-system',
-#				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber});
-#				#,
+			&add_ldap_entry(
+				$ldap, 
+				$ldap_base, 
+				$hosts_database->{$packet->{source_haddr}}->{macAddress},
+				'new-system',
+				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber});
+				#,
 #				#$hosts_database->{$packet->{source_haddr}}->{dnsName});	
 #
 #            case 8 {&add_ldap_entry($ldap, $ldap_base, 
@@ -341,7 +342,7 @@ sub get_mac {
 #===============================================================================
 sub add_ldap_entry {
     my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip, $interface, $desc) = @_;
-    my $dn = "cn=$mac,ou=incoming,$ldap_base";
+    my $dn = "cn=".$hosts_database->{$mac}->{cn}.",ou=incoming,$ldap_base";
     my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
     my $c_res = (defined($s_res))?$s_res->count:0;
     if($c_res == 1) {
@@ -356,7 +357,7 @@ sub add_ldap_entry {
     my $entry = Net::LDAP::Entry->new( $dn );
     $entry->dn($dn);
     $entry->add("objectClass" => "goHard");
-    $entry->add("cn" => $mac);
+    $entry->add("cn" => $hosts_database->{$mac}->{cn});
     $entry->add("macAddress" => $mac);
     if(defined $gotoSysStatus) {$entry->add("gotoSysStatus" => $gotoSysStatus)}
     if(defined $ip) {$entry->add("ipHostNumber" => $ip) }
