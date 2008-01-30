@@ -40,7 +40,6 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
-use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;
 use POE qw(Component::Server::TCP);
 
@@ -56,17 +55,17 @@ my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
 my ($arp_activ, $arp_fifo, $arp_fifo_path);
+my ($xml);
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $bus_activ, $bus_passwd, $bus_ip, $bus_port,
-    $server_activ, $server_ip, $server_port, $server_passwd, $max_clients,
+    $server_activ, $server_ip, $server_port, $SIPackages_key, $max_clients,
     $arp_activ, $arp_fifo_path,
-    $gosa_activ, $gosa_passwd, $gosa_ip, $gosa_port, $gosa_timeout,
+    $gosa_activ, $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
 );
 
 # additional variable which should be globaly accessable
-our $xml;
 our $server_address;
 our $bus_address;
 our $gosa_address;
@@ -122,7 +121,7 @@ our $known_clients_db;
     {"server_activ" => [\$server_activ, "on"],
     "server_ip" => [\$server_ip, "0.0.0.0"],
     "server_port" => [\$server_port, "20081"],
-    "server_passwd" => [\$server_passwd, ""],
+    "SIPackages_key" => [\$SIPackages_key, "none"],
     "max_clients" => [\$max_clients, 100],
     },
 "arp" =>
@@ -133,7 +132,7 @@ our $known_clients_db;
     {"gosa_activ" => [\$gosa_activ, "on"],
     "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
     "gosa_port" => [\$gosa_port, "20082"],
-    "gosa_passwd" => [\$gosa_passwd, "none"],
+    "GosaPackages_key" => [\$GosaPackages_key, "none"],
     },
     );
 
@@ -238,6 +237,21 @@ sub daemon_log {
 }
 
 
+sub get_time {
+    my ($seconds, $minutes, $hours, $monthday, $month,
+            $year, $weekday, $yearday, $sommertime) = localtime(time);
+    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+    $month+=1;
+    $month = $month < 10 ? $month = "0".$month : $month;
+    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+    $year+=1900;
+    return "$year$month$monthday$hours$minutes$seconds";
+
+}
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  check_cmdline_param
 #   PARAMETERS:  nothing
@@ -316,8 +330,8 @@ sub check_pid {
 #   PARAMETERS:  module_path - string - abs. path to the directory the modules 
 #                are stored
 #      RETURNS:  nothing
-#  DESCRIPTION:  each file in module_path which ends with '.pm' is imported by 
-#                "require 'file';"
+#  DESCRIPTION:  each file in module_path which ends with '.pm' and activation 
+#                state is on is imported by "require 'file';"
 #===============================================================================
 sub import_modules {
     daemon_log(" ", 1);
@@ -332,19 +346,20 @@ sub import_modules {
             next;
         }
 
-		if( $no_arp > 0 ) {
-			if( $file =~ /ArpHandler.pm/ ) {
-				next;
-			}
-		} 
+        if( $file =~ /ArpHandler.pm/ ) {
+            if( $no_arp > 0 ) {
+                next;
+            }
+        }
+        
         eval { require $file; };
         if ($@) {
             daemon_log("ERROR: gosa-si-server could not load module $file", 1);
             daemon_log("$@", 5);
-		} else {
+		} 
+        else {
 			my $mod_name = $1;
 			my $info = eval($mod_name.'::get_module_info()');
-
 			# Only load module if get_module_info() returns a non-null object
 			if(defined($info)) {
 				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
@@ -353,12 +368,6 @@ sub import_modules {
 			}
 		}
     }   
-
-    # for debugging
-    #while ( my ($module, $tag_hash) = each(%$known_modules)) {
-    #    print "\tmodule: $module"."\n";   
-    #    print "\ttags: ".join(", ", keys(%$tag_hash))."\n";
-    #}
     close (DIR);
 }
 
@@ -378,62 +387,408 @@ sub sig_int_handler {
 $SIG{INT} = \&sig_int_handler;
 
 
-#===  FUNCTION  ================================================================
-#         NAME:  create_known_client
-#   PARAMETERS:  hostname - string - key for the hash known_clients
-#      RETURNS:  nothing
-#  DESCRIPTION:  creates a dummy entry for hostname in known_clients
-#===============================================================================
-sub create_known_client {
-    my ($hostname) = @_;
 
-    my $entry = { table=>'known_clients',
-        hostname=>$hostname,
-        status=>'none',
-        hostkey=>'none',
-        timestamp=>'none',
-        macaddress=>'none',
-        events=>'none',
+sub check_key_and_xml_validity {
+    my ($crypted_msg, $module_key) = @_;
+#print STDERR "crypted_msg:$crypted_msg\n";
+#print STDERR "modul:$module\n";
+#print STDERR "modul_key:$module_key\n";
+
+    my $msg;
+    my $msg_hash;
+    eval{
+        $msg = &decrypt_msg($crypted_msg, $module_key);
+        &main::daemon_log("decrypted_msg: \n$msg", 8);
+
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die'header error';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header error';
+        }
+
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die'source error';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source error';
+        }
+
+        # check target
+        my $target_l = $msg_hash->{'target'};
+        if( 1 != @{$target_l} ) {
+            die'target error';
+        }
+        my $target = @{$target_l}[0];
+        if( 0 == length $target) {
+            die 'target error';
+        }
+
     };
-    my $res = $known_clients_db->add_dbentry($entry);
-    if ($res > 0) {
-        daemon_log("ERROR: cannot add entry to known_clients.db: $res", 1);
+    if($@) {
+        &main::daemon_log("WARNING: do not understand the message:", 5);
+        &main::daemon_log("$@", 8);
     }
 
-    return;  
+    return ($msg, $msg_hash);
 }
 
+
+sub input_from_known_server {
+    my ($input, $remote_ip) = @_ ;  
+    my ($msg, $msg_hash, $module);
+
+    
+    my $sql_statement= "SELECT * FROM known_server";
+    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+        my $host_name = $hit->{hostname};
+        if( not $host_name =~ "^$remote_ip") {
+            next;
+        }
+        my $host_key = $hit->{hostkey};
+        daemon_log("ServerPackages: host_name: $host_name", 7);
+        daemon_log("ServerPackages: host_key: $host_key", 7);
+
+        # check if module can open msg envelope with module key
+        my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        if( (!$msg) || (!$msg_hash) ) {
+            daemon_log("ServerPackages: deciphering raise error", 7);
+            daemon_log("$@", 8);
+            next;
+        }
+        else {
+            $module = "ServerPackages";
+            last;
+        }
+    }
+
+    if( (!$msg) || (!$msg_hash) || (!$module) ) {
+        daemon_log("Incoming message is not from a known server", 3);
+    }
+  
+    return ($msg, $msg_hash, $module);
+}
+
+
+sub input_from_known_client {
+    my ($input, $remote_ip) = @_ ;  
+    my ($msg, $msg_hash, $module);
+
+    my $sql_statement= "SELECT * FROM known_clients";
+    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+        my $host_name = $hit->{hostname};
+        if( not $host_name =~ "^$remote_ip") {
+            next;
+        }
+        my $host_key = $hit->{hostkey};
+        daemon_log("ServerPackages: host_name: $host_name", 7);
+        daemon_log("ServerPackages: host_key: $host_key", 7);
+
+        # check if module can open msg envelope with module key
+        my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        if( (!$msg) || (!$msg_hash) ) {
+            daemon_log("ServerPackages: deciphering raise error", 7);
+            daemon_log("$@", 8);
+            next;
+        }
+        else {
+            $module = "ServerPackages";
+            last;
+        }
+    }
+
+    if( (!$msg) || (!$msg_hash) || (!$module) ) {
+        daemon_log("Incoming message is not from a known client", 3);
+    }
+
+    return ($msg, $msg_hash, $module);
+}
+
+
+sub input_from_unknown_host {
+    no strict "refs";
+    my ($input) = @_ ;
+    my ($msg, $msg_hash, $module);
+    
+	my %act_modules = %$known_modules;
+
+	while( my ($mod, $info) = each(%act_modules)) {
+        # check a key exists for this module
+        my $module_key = ${$mod."_key"};
+        if( ! $module_key ) {
+            daemon_log("ERROR: no key specified in config file for $mod", 1);
+            next;
+        }
+        daemon_log("$mod: $module_key", 5);
+
+        # check if module can open msg envelope with module key
+        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key);
+        if( (!$msg) || (!$msg_hash) ) {
+            daemon_log("$mod: deciphering failed", 5);
+            next;
+        }
+        else {
+            $module = $mod;
+            last;
+        }
+    }
+
+    if( (!$msg) || (!$msg_hash) || (!$module)) {
+        daemon_log("Incoming message is not from a unknown host", 3);
+    }
+
+    return ($msg, $msg_hash, $module);
+}
+
+sub create_ciphering {
+    my ($passwd) = @_;
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
+    return $my_cipher;
+}
+
+
+sub encrypt_msg {
+    my ($msg, $key) = @_;
+    my $my_cipher = &create_ciphering($key);
+    $msg = "\0"x(16-length($msg)%16).$msg;
+    $msg = $my_cipher->encrypt($msg);
+    chomp($msg = &encode_base64($msg));
+    # there are no newlines allowed inside msg
+    $msg=~ s/\n//g;
+    return $msg;
+}
+
+
+sub decrypt_msg {
+    my ($msg, $key) = @_ ;
+    $msg = &decode_base64($msg);
+    my $my_cipher = &create_ciphering($key);
+    $msg = $my_cipher->decrypt($msg); 
+    $msg =~ s/\0*//g;
+    return $msg;
+}
+
+
+sub get_encrypt_key {
+    my ($target) = @_ ;
+    my $encrypt_key;
+    my $error = 0;
+
+    # target can be in known_server
+    if( !$encrypt_key ) {
+        my $sql_statement= "SELECT * FROM known_server";
+        my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+            my $host_name = $hit->{hostname};
+            if( $host_name ne $target ) {
+                next;
+            }
+            my $host_key = $hit->{hostkey};
+            last;
+        }
+    }
+   
+
+    # target can be in known_client
+    if( !$encrypt_key ) {
+        my $sql_statement= "SELECT * FROM known_clients";
+        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+            my $host_name = $hit->{hostname};
+            if( $host_name ne $target ) {
+                next;
+            }
+            $encrypt_key = $hit->{hostkey};
+            last;
+        }
+    }
+
+    return $encrypt_key;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  open_socket
+#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
+#                [PeerPort] string necessary if port not appended by PeerAddr
+#      RETURNS:  socket IO::Socket::INET
+#  DESCRIPTION:  open a socket to PeerAddr
+#===============================================================================
+sub open_socket {
+    my ($PeerAddr, $PeerPort) = @_ ;
+    if(defined($PeerPort)){
+        $PeerAddr = $PeerAddr.":".$PeerPort;
+    }
+    my $socket;
+    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
+            Porto => "tcp",
+            Type => SOCK_STREAM,
+            Timeout => 5,
+            );
+    if(not defined $socket) {
+        return;
+    }
+    &daemon_log("open_socket: $PeerAddr", 7);
+    return $socket;
+}
+
+
+sub send_msg_to_target {
+    my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
+    my $error = 0;
+
+    if( !$msg_header ) {
+        $msg_header = "";
+    }
+
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
+
+    # opensocket
+    my $socket = &open_socket($address);
+    if(not defined $socket){
+        daemon_log("cannot send $msg_header msg to $address , host not reachable", 1);
+        $error++;
+    }
+    
+    if( $error == 0 ) {
+
+        # send xml msg
+        print $socket $crypted_msg."\n";
+
+        close $socket;
+
+        daemon_log("send msg to $address", 1);
+        daemon_log("message:\n$msg", 8);
+
+    }
+
+    return;
+}
+
+
 sub client_input {
-	my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+    no strict "refs";
+    my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+    my ($msg, $msg_hash, $module);
+    my $error = 0;
+    my $answer_l;
+    my ($answer_header, @answer_target_l, $answer_source);
+    my $client_answer;
 
     daemon_log("Incoming msg:\n$input\n", 8);
 
-	######################################
-	# forward msg to all imported modules 
-	no strict "refs";
-	my $answer;
-	my %act_modules = %$known_modules;
-	while( my ($module, $info) = each(%act_modules)) {
-		daemon_log("Processing module ".$module, 3);
-		my $tmp = &{ $module."::process_incoming_msg" }($input.".".$heap->{remote_ip}."\n");
-		if (defined $tmp) {
-			$answer = $tmp;
-            daemon_log("Got answer from module ".$module.": \n".$answer,8);
-		}
-	}        
-	daemon_log("processing of msg finished", 5);
+    # msg is from a new client or gosa
+    ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
 
-	if (defined $answer) {
-		$heap->{client}->put($answer);
-	} else {
-		$heap->{client}->put("done\n");
-	}
+    # msg is from a gosa-si-server or gosa-si-bus
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
+    }
+
+    # msg is from a gosa-si-client
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        ($msg, $msg_hash, $module) = &input_from_known_client($input);
+    }
+
+    # an error occurred
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        $error++;
+    }
+
+    ######################
+    # process incoming msg
+    if( $error == 0) {
+        daemon_log("Processing module ".$module, 3);
+        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash);
+
+        if ( 0 > @{$answer_l} ) {
+            my $answer_str = join("\n", @{$answer_l});
+            daemon_log("$module: Got answer from module: \n".$answer_str,8);
+        }
+    }
+    if( !$answer_l ) { $error++ };
+
+    # for each answer in answer list
+    foreach my $answer ( @{$answer_l} ) {
+
+        # check answer if gosa-si envelope conform
+        if( $error == 0 ) {
+            my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
+            $answer_header = @{$answer_hash->{'header'}}[0];
+            @answer_target_l = @{$answer_hash->{'target'}};
+            $answer_source = @{$answer_hash->{'source'}}[0];
+            if( !$answer_header ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+                $error++;
+            }
+            if( 0 == length @answer_target_l ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+                $error++;
+            }
+            if( !$answer_source ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+                $error++;
+            }
+        }
+
+        # deliver msg to all targets 
+        foreach my $answer_target ( @answer_target_l ) {
+            if( $answer_target eq "*" ) {
+                # answer is for all clients
+                my $sql_statement= "SELECT * FROM known_clients";
+                my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                    my $host_name = $hit->{hostname};
+                    my $host_key = $hit->{hostkey};
+                    &send_msg_to_target($answer, $host_name, $host_key);
+                }
+            }
+            elsif( $answer_target eq "GOSA" ) {
+                # answer is for GOSA and has to returned to connected client
+                my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+                $client_answer = $gosa_answer;
+            }
+            else {
+                # answer is for one specific host
+                # get encrypt_key
+                my $encrypt_key = &get_encrypt_key($answer_target);
+                if( !$encrypt_key ) {
+                    daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                    next;
+                }
+                # send_msg
+                &send_msg_to_target($answer, $answer_target, $encrypt_key);
+            }
+        }
+    }
+
+    if( $client_answer ) {
+        $heap->{client}->put($client_answer);
+    }
+
+    return;
 }
+
 
 sub trigger_db_loop {
 	my ($kernel) = $_[KERNEL];
 	$kernel->delay_set('watch_for_new_jobs',3);
 }
+
 
 sub watch_for_new_jobs {
 	my ($kernel,$heap) = @_[KERNEL, HEAP];
@@ -482,10 +837,10 @@ sub watch_for_new_jobs {
 		my $out_msg = &create_xml_string($out_msg_hash);
 
 		# encrypt msg as a GosaPackage module
-		my $cipher = &create_ciphering($gosa_passwd);
+		my $cipher = &create_ciphering($GosaPackages_key);
 		my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
 
-		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $gosa_passwd);
+		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $GosaPackages_key);
 
 		if ($error == 0) {
 			my $sql_statement = "UPDATE $job_queue_table_name ".
@@ -573,6 +928,9 @@ $known_server_db->create_table('known_server', \@server_col_names);
 &import_modules;
 
 # check wether all modules are gosa-si valid passwd check
+
+# create xml object used for en/decrypting
+$xml = new XML::Simple();
 
 # create session for repeatedly checking the job queue for jobs
 POE::Session->create(

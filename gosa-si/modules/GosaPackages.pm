@@ -64,7 +64,7 @@ my $bus_address = "$bus_ip:$bus_port";
 my $gosa_address = "$gosa_ip:$gosa_port";
 
 # create general settings for this module
-my $gosa_cipher = &create_ciphering($gosa_passwd);
+#y $gosa_cipher = &create_ciphering($gosa_passwd);
 my $xml = new XML::Simple();
 
 
@@ -227,31 +227,6 @@ sub get_ip {
         return $result;
 }
 
-#===  FUNCTION  ================================================================
-#         NAME:  open_socket
-#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
-#                [PeerPort] string necessary if port not appended by PeerAddr
-#      RETURNS:  socket IO::Socket::INET
-#  DESCRIPTION:  open a socket to PeerAddr
-#===============================================================================
-#sub open_socket {
-#    my ($PeerAddr, $PeerPort) = @_ ;
-#    if(defined($PeerPort)){
-#        $PeerAddr = $PeerAddr.":".$PeerPort;
-#    }
-#    my $socket;
-#    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
-#            Porto => "tcp" ,
-#            Type => SOCK_STREAM,
-#            Timeout => 5,
-#            );
-#    if(not defined $socket) {
-#        return;
-#    }
-#    &main::daemon_log("open_socket to: $PeerAddr", 7);
-#    return $socket;
-#}
-
 
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
@@ -260,71 +235,36 @@ sub get_ip {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($crypted_msg) = @_ ;
-	if( (not(defined($crypted_msg))) || (length($crypted_msg) <= 0)) {
-        &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
-        return;
-    }
-
-    $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
-    $crypted_msg = $1;
-	my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
- 
-    # collect addresses from possible incoming clients
-    # only gosa is allowd as incoming client
-    &main::daemon_log("GosaPackages: host_key: $host", 7);
-    &main::daemon_log("GosaPackages: key_passwd: $gosa_passwd", 7);
-
-    $gosa_cipher = &create_ciphering($gosa_passwd);
-
-    # determine the correct passwd for deciphering of the incoming msgs
-    my $msg = "";
-    my $msg_hash;
-    eval{
-        $msg = &decrypt_msg($crypted_msg, $gosa_cipher);
-        &main::daemon_log("GosaPackages: decrypted_msg: \n$msg", 8);
-
-        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
-    };
-    if($@) {
-        &main::daemon_log("WARNING: GosaPackages do not understand the message:", 5);
-        &main::daemon_log("$@", 7);
-        return;
-    }
-
+    my ($msg, $msg_hash) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
-    
-    &main::daemon_log("GosaPackages: receive '$header' from $host", 1);
-    
     my $out_msg;
+    
+    &main::daemon_log("GosaPackages: receive '$header'", 1);
+    
     if ($header =~ /^job_/) {
         $out_msg = &process_job_msg($msg, $msg_hash);
-    } elsif ($header =~ /^gosa_/) {
+    } 
+    elsif ($header =~ /^gosa_/) {
         $out_msg = &process_gosa_msg($msg, $header);
-    } else {
+    } 
+    else {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
     }
-        
-    if (not defined $out_msg) {
-        return;
-    }
-
+    
+    # keep job queue uptodate and save result and status    
     if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
         my $sql = "UPDATE '".$main::job_queue_table_name.
             "' SET status='done', result='".$out_msg.
             "' WHERE id='$job_id'";
         my $res = $main::job_db->exec_statement($sql);
-        return;
+    } 
 
-    } else {
-
-        my $out_cipher = &create_ciphering($gosa_passwd);
-        $out_msg = &encrypt_msg($out_msg, $out_cipher);
-        return $out_msg;
-	}
-
+    my @out_msg_l;
+    push(@out_msg_l, $out_msg);
+    return \@out_msg_l;
 }
+
 
 sub process_gosa_msg {
     my ($msg, $header) = @_ ;
@@ -348,7 +288,7 @@ sub process_gosa_msg {
             # try to deliver incoming msg to eventhandler
             my $cmd = File::Spec->join($server_event_dir, $header)." '$msg'";
             &main::daemon_log("GosaPackages: execute event_handler $header", 3);
-            &main::daemon_log("GosaPackages: cmd: $cmd", 7);
+            &main::daemon_log("GosaPackages: cmd: $cmd", 8);
 
             $out_msg = "";
             open(PIPE, "$cmd 2>&1 |");

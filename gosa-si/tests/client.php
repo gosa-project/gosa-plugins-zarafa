@@ -33,14 +33,15 @@ $data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header></xml>";
 
-
 # count
 #$data = "<xml> <header>gosa_count_jobdb</header></xml>";
 
-
-	
 # clear
 #$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+
+# set gosa-si-client to 'activated'
+$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>127.0.0.1:20083</target> <source>127.0.0.1:20081</source> </xml>";
+
 
     $sock->write($data);
     $answer = "nothing";

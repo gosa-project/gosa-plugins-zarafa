@@ -313,17 +313,20 @@ sub send_msg ($$$$$) {
 			&add_content2xml_hash($out_hash, $key, $value);
 		}
 	}
-
-	&send_msg_hash2address($out_hash, $to, $hostkey);
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
 }
 
 
 sub get_where_statement {
-    my ($msg, $msg_hash)= @_;
+    my ($msg, $msg_hash) = @_;
     my $error= 0;
     
     my $clause_str= "";
-    if( (not exists $msg_hash->{'where'}) || (not exists @{$msg_hash->{'where'}}[0]->{'clause'}) ) { $error++; };
+    if( (not exists $msg_hash->{'where'}) || (not exists @{$msg_hash->{'where'}}[0]->{'clause'}) ) { 
+        $error++; 
+    }
+
     if( $error == 0 ) {
         my @clause_l;
         my @where = @{@{$msg_hash->{'where'}}[0]->{'clause'}};

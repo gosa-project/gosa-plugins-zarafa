@@ -970,10 +970,6 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0];
     
     daemon_log("receive '$header' from $host", 1);
-#    daemon_log("header from msg:", 1);
-#    daemon_log("\t$header", 1);
-#    daemon_log("msg to process:", 7);
-#    daemon_log("\t$msg", 7);
 
     #check whether msg to process is a event 
     opendir(DIR, $event_dir) 
@@ -1325,6 +1321,11 @@ daemon_log("client mac address detected: $client_mac_address", 1);
 # prepare variables
 if (defined $server_ip && defined $server_port) {
     $server_address = $server_ip.":".$server_port;
+}
+
+# this is necessary that gosa-si-server knowns to which ip-address he can send msgs
+if( $client_ip eq "0.0.0.0" ) {
+    $client_ip = "127.0.0.1";
 }
 $client_address = $client_ip.":".$client_port;
 

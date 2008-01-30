@@ -1,4 +1,4 @@
-package ServerPackages;
+package SIPackages;
 
 use Exporter;
 @ISA = ("Exporter");
@@ -59,6 +59,9 @@ $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface); 
 
 # complete addresses
+if( $server_ip eq "0.0.0.0" ) {
+    $server_ip = "127.0.0.1";
+}
 my $server_address = "$server_ip:$server_port";
 my $bus_address = "$bus_ip:$bus_port";
 
@@ -287,6 +290,7 @@ sub register_at_bus {
     return;
 }
 
+
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
 #   PARAMETERS:  crypted_msg - string - incoming crypted message
@@ -294,184 +298,48 @@ sub register_at_bus {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($crypted_msg) = @_ ;
-    if(not defined $crypted_msg) {
-        &main::daemon_log("function 'process_incoming_msg': got no msg", 7);
-    }
-
-    $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
-    $crypted_msg = $1;
-	my $host="0.0.0.0";
-	if(defined $2 && defined $3 && defined $4 && defined $5) {
-		$host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
-	}
-
-    my $msg;
-    my $msg_hash;
+    my ($msg, $msg_hash) = @_ ;
+    my $error = 0;
     my $host_name;
     my $host_key;
-
-    # check wether incoming msg is a new msg
-    $host_name = $server_address;
-    $host_key = $server_passwd;
-    &main::daemon_log("ServerPackage: host_name: $host_name", 7);
-    &main::daemon_log("ServerPackage: host_key: $host_key", 7);
-    eval{
-        my $key_cipher = &create_ciphering($host_key);
-		$msg = &decrypt_msg($crypted_msg, $key_cipher);
-        $msg_hash = &transform_msg2hash($msg);
-    };
-    if($@) {
-        &main::daemon_log("ServerPackage: deciphering raise error", 7);
-        &main::daemon_log("$@", 8);
-        $msg = undef;
-        $msg_hash = undef;
-        $host_name = undef;
-        $host_key = undef;
-    } 
-
-    # check wether incoming msg is from a known_server
-    if( not defined $msg ) {
-        my $sql_statement= "SELECT * FROM known_server";
-        my $query_res = $main::known_server_db->select_dbentry( $sql_statement ); 
-
-        while( my ($hit_num, $hit) = each %{ $query_res } ) {  
-            $host_name = $hit->{hostname};
-
-            if( not $host_name =~ "^$host") {
-                next;
-            }
-            $host_key = $hit->{hostkey};
-            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
-            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
-            eval{
-                my $key_cipher = &create_ciphering($host_key);
-                $msg = &decrypt_msg($crypted_msg, $key_cipher);
-                $msg_hash = &transform_msg2hash($msg);
-            };
-            if($@) {
-                &main::daemon_log("ServerPackage: deciphering raise error", 7);
-                &main::daemon_log("$@", 8);
-                $msg = undef;
-                $msg_hash = undef;
-                $host_name = undef;
-                $host_key = undef;
-            } else {
-                last;
-            }
-        }
-    }
-
-    # check wether incoming msg is from a known_client
-    if( not defined $msg ) {
-        #my $query_res = $main::known_clients_db->select_dbentry( {table=>'known_clients'} ); 
-        my $sql_statement= "SELECT * FROM known_clients";
-        my $query_res = $main::known_clients_db->select_dbentry( $sql_statement ); 
-        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-            $host_name = $hit->{hostname};
-            if( not $host_name =~ "^$host") {
-                next;
-            }
-            $host_key = $hit->{hostkey};
-            &main::daemon_log("ServerPackage: host_name: $host_name", 7);
-            &main::daemon_log("ServerPackage: host_key: $host_key", 7);
-            eval{
-                my $key_cipher = &create_ciphering($host_key);
-                $msg = &decrypt_msg($crypted_msg, $key_cipher);
-                $msg_hash = &transform_msg2hash($msg);
-            };
-            if($@) {
-                &main::daemon_log("ServerPackage: deciphering raise error", 7);
-                &main::daemon_log("$@", 8);
-                $msg = undef;
-                $msg_hash = undef;
-                $host_name = undef;
-                $host_key = undef;
-            } else {
-                last;
-            }
-        }
-    }
-
-    if( not defined $msg ) {
-        &main::daemon_log("WARNING: ServerPackage do not understand the message:", 5);
-        &main::daemon_log("$@", 8);
-        return;
-    }
+    my @out_msg_l;
 
     # process incoming msg
     my $header = @{$msg_hash->{header}}[0]; 
     my $source = @{$msg_hash->{source}}[0];
+    my @target_l = @{$msg_hash->{target}};
 
-    &main::daemon_log("receive '$header' at ServerPackages from $host", 1);
-    &main::daemon_log("ServerPackages: msg to process: \n$msg", 5);
+    &main::daemon_log("SIPackages: msg to process: $header", 3);
+    &main::daemon_log("$msg", 8);
 
-    my @targets = @{$msg_hash->{target}};
-    my $len_targets = @targets;
-    if ($len_targets == 0){     
-        &main::daemon_log("ERROR: ServerPackages: no target specified for msg $header", 1);
-
-    }  elsif ($len_targets == 1){
-        # we have only one target symbol
-        my $target = $targets[0];
-        &main::daemon_log("SeverPackages: msg is for: $target", 7);
-
-        # msg is for server
-        if ($header eq 'new_passwd'){ &new_passwd($msg_hash)}
-        elsif ($header eq 'here_i_am') { &here_i_am($msg_hash)}
-        elsif ($header eq 'who_has') { &who_has($msg_hash) }
-        elsif ($header eq 'who_has_i_do') { &who_has_i_do($msg_hash)}
-        elsif ($header eq 'update_status') { &update_status($msg_hash) }
-        elsif ($header eq 'got_ping') { &got_ping($msg_hash)}
-        elsif ($header eq 'get_load') { &execute_actions($msg_hash)}
-        else { 
-            if ($target eq "*") {
-                # msg is for all clients
-                my $sql_statement = "SELECT * FROM known_clients";
-                my $query_res = $main::known_clients_db->select_dbentry( $sql_statement ); 
-                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                    $host_name = $hit->{hostname};
-                    $host_key = $hit->{hostkey};
-                    $msg_hash->{target} = [$host_name];
-                    &send_msg_hash2address($msg_hash, $host_name, $host_key);
-                }
-
-            } else {
-                # msg is for one host
-                my $host_key;
-
-
-                if( not defined $host_key ) { 
-                    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$target'";
-                    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
-                    if( 1 == keys %{$query_res} ) {
-                        $host_key = $query_res->{1}->{host_key};
-                    }
-                } 
-
-                if( not defined $host_key ) {
-                    my $sql_statement = "SELECT * FROM known_server WHERE hostname='$target'";
-                    my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-                    if( 1 == keys %{$query_res} ) {
-                        $host_key = $query_res->{1}->{host_key};
-                    }
-                }
-
-                if( not defined $host_key ) { 
-                    &main::daemon_log("ERROR: ServerPackages: target '".$target.
-                            "' is not known neither in known_clients nor in known_server",1);
-                } else {
-                    &send_msg_hash2address($msg_hash, $target, $host_key);
-                }               
-            }
-        }
-
-    } elsif ($len_targets > 1 ) {
-        # we have more than one target 
-        # TODO to be implemented
+    if( 0 == length @target_l){     
+        &main::daemon_log("ERROR: no target specified for msg $header", 1);
+        $error++;
     }
 
-    return ;
+    if( 1 == length @target_l) {
+        my $target = $target_l[0];
+        if( $target eq $server_address ) {  
+            if ($header eq 'new_passwd') { @out_msg_l = &new_passwd($msg_hash) }
+            elsif ($header eq 'here_i_am') { @out_msg_l = &here_i_am($msg_hash) }
+            elsif ($header eq 'who_has') { @out_msg_l = &who_has($msg_hash) }
+            elsif ($header eq 'who_has_i_do') { @out_msg_l = &who_has_i_do($msg_hash) }
+            elsif ($header eq 'got_ping') { @out_msg_l = &got_ping($msg_hash)}
+            elsif ($header eq 'get_load') { @out_msg_l = &execute_actions($msg_hash)}
+            else {
+                &main::daemon_log("ERROR: $header is an unknown core funktion", 1);
+                $error++;
+            }
+        }
+    }
+    
+    if( $error == 0) {
+        if( 0 == @out_msg_l ) {
+            push(@out_msg_l, $msg);
+        }
+    }
+    
+    return \@out_msg_l;
 }
 
 
@@ -506,7 +374,8 @@ sub got_ping {
 #===============================================================================
 sub new_passwd {
     my ($msg_hash) = @_;
-
+    my @out_msg_l;
+    
     my $header = @{$msg_hash->{header}}[0];
     my $source_name = @{$msg_hash->{source}}[0];
     my $source_key = @{$msg_hash->{new_passwd}}[0];
@@ -523,27 +392,29 @@ sub new_passwd {
         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
 
         my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
-        &send_msg_hash2address($hash, $source_name, $source_key);
-        return;
+        my $out_msg = &create_xml_string($hash);
+        push(@out_msg_l, $out_msg);
     }
 
-    # check known_server_db
-    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source_name'";
-    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-    if( 1 == keys %{$query_res} ) {
-        my $act_time = &get_time;
-        my $sql_statement= "UPDATE known_server ".
-            "SET hostkey='$source_key', timestamp='$act_time' ".
-            "WHERE hostname='$source_name'";
-        my $res = $main::known_server_db->update_dbentry( $sql_statement );
+    # only do if host still not found
+    if( 0 == @out_msg_l ) {
+        # check known_server_db
+        $sql_statement = "SELECT * FROM known_server WHERE hostname='$source_name'";
+        $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+        if( 1 == keys %{$query_res} ) {
+            my $act_time = &get_time;
+            my $sql_statement= "UPDATE known_server ".
+                "SET hostkey='$source_key', timestamp='$act_time' ".
+                "WHERE hostname='$source_name'";
+            my $res = $main::known_server_db->update_dbentry( $sql_statement );
 
-        my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
-        &send_msg_hash2address($hash, $source_name, $source_key);
-        return;
+            my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
+            my $out_msg = &create_xml_string($hash);
+            push(@out_msg_l, $out_msg);
+        }
     }
 
-    &main::daemon_log("ERROR: $source_name not known for '$header'-msg", 1);
-    return;
+    return @out_msg_l;
 }
 
 
@@ -555,10 +426,11 @@ sub new_passwd {
 #===============================================================================
 sub here_i_am {
     my ($msg_hash) = @_;
+    my @out_msg_l;
+    my $out_hash;
 
     my $source = @{$msg_hash->{source}}[0];
     my $mac_address = @{$msg_hash->{mac_address}}[0];
-    my $out_hash;
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
@@ -612,7 +484,8 @@ sub here_i_am {
     
     # return acknowledgement to client
     $out_hash = &create_xml_hash("registered", $server_address, $source);
-    &send_msg_hash2address($out_hash, $source, $new_passwd);
+    my $register_out = &create_xml_string($out_hash);
+    push(@out_msg_l, $register_out);
 
     # notify registered client to bus
     if( $bus_activ eq "on") {
@@ -623,15 +496,19 @@ sub here_i_am {
 
         # send update msg to bus
         $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-        &send_msg_hash2address($out_hash, $bus_address, $hostkey);
-        
+        my $new_client_out = &create_xml_string($out_hash);
+        push(@out_msg_l, $new_client_out);
         &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
     }
 
     # give the new client his ldap config
-    &new_ldap_config($source);
+    my $new_ldap_config_out = &new_ldap_config($source);
+    if( $new_ldap_config_out ) {
+        push(@out_msg_l, $new_ldap_config_out);
+    }
 
-    return;
+
+    return @out_msg_l;
 }
 
 
@@ -744,7 +621,7 @@ sub new_ldap_config {
     my $base;
 
     # Do we need to look at an object class?
-    if (length(@servers) < 1){
+    if ($#servers < 1){
 	    $mesg = $ldap->search( base   => $ldap_base,
 			    scope  => 'sub',
 			    attrs => ['dn', 'gotoLdapServer'],
