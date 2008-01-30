@@ -35,7 +35,7 @@ my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
 
 $ldap_base = "dc=gonicus,dc=de" ;
-$interface = "all";
+$interface = "eth1";
 
 sub get_module_info {
 	my @info = (undef,
@@ -63,6 +63,7 @@ sub get_module_info {
 				}
 
 				# If device has a valid mac address
+				# TODO: Check if this should be the right way
 				if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
 					&main::daemon_log("Starting ArpWatch on $device", 1);
 					POE::Session->create( 
@@ -115,13 +116,15 @@ sub start {
 }
 
 sub got_packet {
-	my $packet = $_[ARG0];
+	my ($kernel, $heap, $sender, $packet) = @_[KERNEL, HEAP, SENDER, ARG0];
 
 	if(	$packet->{source_haddr} eq "00:00:00:00:00:00" || 
 		$packet->{source_haddr} eq "ff:ff:ff:ff:ff:ff" || 
 		$packet->{source_ipaddr} eq "0.0.0.0") {
 		return;
 	}
+	
+	my $capture_device = sprintf "%s", $kernel->alias_list($sender) =~ /^arp_watch_(.*)$/;
 
 	if(!exists($hosts_database->{$packet->{source_haddr}})) {
 		my $dnsresult= $resolver->search($packet->{source_ipaddr});
@@ -153,6 +156,7 @@ sub got_packet {
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
 				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
 		}
+		$hosts_database->{$packet->{source_haddr}}->{device}= $capture_device;
 	} else {
 		if(!($hosts_database->{$packet->{source_haddr}}->{ipHostNumber} eq $packet->{source_ipaddr})) {
 			&main::daemon_log(
@@ -161,7 +165,7 @@ sub got_packet {
 				"->".$packet->{source_ipaddr}, 4);
 			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
 		}
-		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
+		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{device})."->".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
 	}
 } 
 
@@ -175,7 +179,7 @@ sub get_host_from_ldap {
 		"(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))"
 	);
 
-	if($ldap_result->count==1) {
+	if(defined($ldap_result) && $ldap_result->count==1) {
 		if(exists($ldap_result->{entries}[0]) && 
 			exists($ldap_result->{entries}[0]->{asn}->{objectName}) && 
 			exists($ldap_result->{entries}[0]->{asn}->{attributes})) {
@@ -368,18 +372,20 @@ sub get_mac {
 #     SEE ALSO:  n/a
 #===============================================================================
 sub search_ldap_entry {
-    my ($ldap_tree, $sub_tree, $search_string) = @_;
-    my $msg = $ldap_tree->search( # perform a search
-                        base   => $sub_tree,
-                        filter => $search_string,
-                      ) or daemon_log("cannot perform search at ldap: $@", 1);
+	my ($ldap_tree, $sub_tree, $search_string) = @_;
+	my $msg;
+	if(defined($ldap_tree)) {
+		my $msg = $ldap_tree->search( # perform a search
+			base   => $sub_tree,
+			filter => $search_string,
+		) or daemon_log("cannot perform search at ldap: $@", 1);
 #    if(defined $msg) {
 #        print $sub_tree."\t".$search_string."\t";
 #        print $msg->count."\n";
 #        foreach my $entry ($msg->entries) { $entry->dump; };
 #    }
-
-    return $msg;
+	}
+	return $msg;
 }
 
 

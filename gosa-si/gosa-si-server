@@ -332,23 +332,26 @@ sub import_modules {
             next;
         }
 
-        if( $no_arp > 0 ) {
-            if( $file =~ /ArpHandler.pm/ ) {
-                next;
-            }
-        } 
+		if( $no_arp > 0 ) {
+			if( $file =~ /ArpHandler.pm/ ) {
+				next;
+			}
+		} 
         eval { require $file; };
         if ($@) {
             daemon_log("ERROR: gosa-si-server could not load module $file", 1);
             daemon_log("$@", 5);
-        } else {
-            my $mod_name = $1;
-            my $info = eval($mod_name.'::get_module_info()');
-            my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
-            $known_modules->{$mod_name} = $info;
+		} else {
+			my $mod_name = $1;
+			my $info = eval($mod_name.'::get_module_info()');
 
-            daemon_log("module $mod_name loaded", 1);
-        }
+			# Only load module if get_module_info() returns a non-null object
+			if(defined($info)) {
+				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
+				$known_modules->{$mod_name} = $info;
+				daemon_log("module $mod_name loaded", 1);
+			}
+		}
     }   
 
     # for debugging
