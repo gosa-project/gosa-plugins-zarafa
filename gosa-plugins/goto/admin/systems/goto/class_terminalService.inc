@@ -504,15 +504,17 @@ class termservice extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
-    $available_servers = array();
-    if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
-      $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
-    }
-    foreach($this->selected_xdmcp_servers as $server){
-      if(!in_array($server,$available_servers)){
-        $message[] = _("Remote desktop settings contains servers that do not support the selected connection method.");
-        break;
+    if($this->gotoXMethod != "default"){
+      $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
+      $available_servers = array();
+      if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
+        $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
+      }
+      foreach($this->selected_xdmcp_servers as $server){
+        if(!in_array($server,$available_servers)){
+          $message[] = _("Remote desktop settings contains servers that do not support the selected connection method.");
+          break;
+        }
       }
     }
 
