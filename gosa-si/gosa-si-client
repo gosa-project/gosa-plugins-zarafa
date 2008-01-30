@@ -1078,6 +1078,9 @@ sub new_ldap_config {
     my @nss_options;
     my $goto_admin;
     my $goto_secret;
+    my $admin_base= "";
+    my $department= "";
+    my $unit_tag= "";
 
     # Transform input into array
     while ( my ($key, $value) = each(%$msg_hash) ) {
@@ -1114,7 +1117,26 @@ sub new_ldap_config {
 			push (@nss_options, "$element");
 			next;
 		}
+		if ($key =~ /^admin_base$/) {
+			$admin_base= $element;
+			next;
+		}
+		if ($key =~ /^department$/) {
+			$department= $element;
+			next;
+		}
+		if ($key =~ /^unit_tag$/) {
+			$unit_tag= $element;
+			next;
+		}
 	}
+    }
+
+    # Unit tagging enabled?
+    if ($unit_tag != ""){
+	    push (@pam_options, "pam_filter gosaUnitTag=$unit_tag");
+	    push (@nss_options, "nss_base_passwd  $admin_base?sub?gosaUnitTag=$unit_tag");
+	    push (@nss_options, "nss_base_group   $admin_base?sub?gosaUnitTag=$unit_tag");
     }
 
     # Setup ldap.conf
@@ -1169,13 +1191,14 @@ sub new_ldap_config {
 	    daemon_log("wrote /etc/goto/secret", 5);
     }
 
-
-    # TODO: write these values to /etc/ldap/ldap-shell.conf
-    # LDAP_BASE=
-    # ADMIN_BASE=
-    # DEPARTMENT=
-    # UNIT_TAG=
-    # UNIT_TAG_FILTER=
+    # Write shell based config
+    open(file1, "> /etc/ldap/ldap-shell.conf");
+    print file1 "LDAP_BASE=\"$ldap_base\"\n";
+    print file1 "ADMIN_BASE=\"$admin_base\"\n";
+    print file1 "DEPARTMENT=\"$department\"\n";
+    print file1 "UNIT_TAG=\"$unit_tag\"\n";
+    print file1 "UNIT_TAG_FILTER=\"".($unit_tag!="" ? "(gosaUnitTag=$unit_tag)" : "")."\"\n";
+    close(file1);
 
     return;
 
