@@ -118,7 +118,7 @@ class glpiDB{
 			asort($ret);
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -133,11 +133,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("UPDATE glpi_type_computers SET name='".$name."' WHERE ID=".$id.";"));	
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -150,13 +150,13 @@ class glpiDB{
 		if($this->is_connected){
 			$tmp = $this->query("SELECT * FROM glpi_type_computers WHERE name='".$name."';");
 			if(isset($tmp[0])){
-				echo "such an entry already exists";
+				trigger_error("such an entry already exists");
 				return(false);
 			}else{	
 				return($this->query("INSERT INTO glpi_type_computers (name) VALUES ('".$name."');"));
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -171,11 +171,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("DELETE FROM glpi_type_computers WHERE ID=".$id.";"));	
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -191,7 +191,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -211,7 +211,7 @@ class glpiDB{
 			
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -226,7 +226,7 @@ class glpiDB{
 			$tmp = $this->query("SELECT * FROM glpi_enterprises WHERE ID=".$id.";");
 			return($tmp);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -237,7 +237,7 @@ class glpiDB{
 	function updateEnterprise($array,$id)
 	{
 		if(!is_array($array)){
-			echo "updateEnterprisesType: first paraeter must be an array";
+			trigger_error("updateEnterprisesType: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$tmp = $this->query("SELECT * FROM glpi_enterprises WHERE ID='".$id."';");
 			if(isset($tmp[0])){
@@ -250,18 +250,18 @@ class glpiDB{
 					}
 				}
 				if(empty($v)){
-					echo "updateEnterprisesType: no attributes given ";
+					trigger_error("updateEnterprisesType: no attributes given ");
 					return(false);
 				}else{
 					$v = preg_replace("/, $/","",$v);
 					return($this->query("UPDATE glpi_enterprises SET ".$v." WHERE ID='".$id."';"));	
 				}
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -272,7 +272,7 @@ class glpiDB{
 	function addEnterprise($array)
 	{
 		if(!is_array($array)){
-			echo "addUser: first paraeter must be an array";
+			trigger_error("addUser: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$atr = array("ID","name","type","address","website","phonenumber","comments","deleted","fax","email");
 			$v = "";
@@ -284,7 +284,7 @@ class glpiDB{
 				}
 			}
 			if(empty($v)){
-				echo "addUser: no attributes given ";
+				trigger_error("addUser: no attributes given ");
 				return(false);
 			}else{
 				$a = preg_replace("/, $/","",$a);
@@ -293,7 +293,7 @@ class glpiDB{
 			}
 		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -309,11 +309,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("DELETE FROM glpi_enterprises WHERE ID=".$id.";"));
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -339,7 +339,7 @@ class glpiDB{
 			return($ret);
 
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -355,7 +355,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -369,13 +369,13 @@ class glpiDB{
         if($this->is_connected){
             $tmp = $this->query("SELECT * FROM glpi_dropdown_os WHERE name='".$name."';");
             if(isset($tmp[0])){
-                echo "such an entry already exists";
+                trigger_error("such an entry already exists");
                 return(false);
             }else{
                 return($this->query("INSERT INTO glpi_dropdown_os (name) VALUES ('".$name."');"));
             }
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
     }
@@ -390,11 +390,11 @@ class glpiDB{
             if(is_array($tmp[0])){
                 return($this->query("DELETE FROM glpi_dropdown_os WHERE ID=".$id.";"));
             }else{
-                echo "can't remove not existing entry";
+                trigger_error("can't remove not existing entry");
                 return(false);
             }
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
     }
@@ -409,11 +409,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("UPDATE glpi_dropdown_os SET name='".$name."' WHERE ID=".$id.";"));	
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -431,7 +431,7 @@ class glpiDB{
 			return($ret);
 
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -441,7 +441,7 @@ class glpiDB{
 	function addUser($array,$dn)
 	{
 		if(!is_array($array)){
-			echo "addUser: first paraeter must be an array";
+			trigger_error("addUser: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$array['name']=$dn;
 			$atr = array("name","phone","email");
@@ -454,7 +454,7 @@ class glpiDB{
 				}
 			}
 			if(empty($v)){
-				echo "addUser: no attributes given ";
+				trigger_error("addUser: no attributes given ");
 				return(false);
 			}else{
 				$a = preg_replace("/, $/","",$a);
@@ -463,7 +463,7 @@ class glpiDB{
 			}
 		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -475,7 +475,7 @@ class glpiDB{
 	function updateUser($array,$dn)
 	{
 		if(!is_array($array)){
-            echo "updateUser: first paraeter must be an array";
+            trigger_error("updateUser: first paraeter must be an array");
         }elseif($this->is_connected){
             $tmp = $this->query("SELECT * FROM  glpi_users WHERE name='".$dn."';");
             if(isset($tmp[0])){
@@ -488,18 +488,18 @@ class glpiDB{
                     }
                 }
                 if(empty($v)){
-                    echo "UpdateUser: no attributes given ";
+                    trigger_error("UpdateUser: no attributes given ");
                     return(false);
                 }else{
                     $v = preg_replace("/, $/","",$v);
                     return($this->query("UPDATE glpi_users SET ".$v." WHERE name='".$dn."';"));
                 }
             }else{
-                echo "can't update not existing entry";
+                trigger_error("can't update not existing entry");
                 return(false);
             }
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 
@@ -514,7 +514,7 @@ class glpiDB{
 			$ret = $this->query("SELECT * FROM glpi_computers WHERE name='".$name."';");
 			return($ret);		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -524,7 +524,7 @@ class glpiDB{
 	function updateComputerInformations($array,$name)
 	{
 		if(!is_array($array)){
-			echo "updateComputerInformations: first paraeter must be an array";
+			trigger_error("updateComputerInformations: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$tmp = $this->query("SELECT * FROM  glpi_computers WHERE name='".$name."';");
 			if(isset($tmp[0])){
@@ -539,18 +539,18 @@ class glpiDB{
 					}
 				}
 				if(empty($v)){
-					echo "updateComputerInformations: no attributes given ";
+					trigger_error("updateComputerInformations: no attributes given ");
 					return(false);
 				}else{
 					$v = preg_replace("/, $/","",$v);
 					return($this->query("UPDATE glpi_computers SET ".$v." WHERE name='".$name."';"));
 				}
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -561,7 +561,7 @@ class glpiDB{
 	function addComputerInformations($array)
 	{
 		if(!is_array($array)){
-			echo "updateComputerInformations: first paraeter must be an array";
+			trigger_error("updateComputerInformations: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$atr = array(	"ID","name","serial","otherserial","contact","contact_num",
 					"tech_num","comments","date_mod","os","location","domain","network",
@@ -575,7 +575,7 @@ class glpiDB{
 				}
 			}
 			if(empty($v)){
-				echo "updateComputerInformations: no attributes given ";
+				trigger_error("updateComputerInformations: no attributes given ");
 				return(false);
 			}else{
 				$a = preg_replace("/, $/","",$a);
@@ -584,7 +584,7 @@ class glpiDB{
 			}
 		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -610,7 +610,7 @@ class glpiDB{
 				}
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -645,7 +645,7 @@ class glpiDB{
 
 			return($ret);//count($this->query($str)));
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 			
@@ -668,7 +668,7 @@ class glpiDB{
 
 			$this->query("DELETE FROM ".$tbl_name." WHERE ID=".$attr['ID'].";");	
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -694,7 +694,7 @@ class glpiDB{
 			$str .= " WHERE ID=".$attr['ID'].";";
 			$this->query($str);	
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -712,7 +712,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -730,7 +730,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -748,7 +748,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -773,7 +773,7 @@ class glpiDB{
             	$v .= "'".$value."', ";
             }
             if(empty($v)){
-                echo "addDevice: no attributes given ";
+                trigger_error("addDevice: no attributes given ");
                 return(false);
             }else{
                 $a = preg_replace("/, $/","",$a);
@@ -782,7 +782,7 @@ class glpiDB{
             }
 
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -811,7 +811,7 @@ class glpiDB{
 			}
 			return($res);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -858,7 +858,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -893,7 +893,7 @@ class glpiDB{
 		
 
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -909,11 +909,11 @@ class glpiDB{
 				$this->query("DELETE FROM glpi_computer_device WHERE FK_computers=".$id.";");
 				return($this->query("DELETE FROM glpi_computers WHERE ID=".$id.";"));
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -939,7 +939,7 @@ class glpiDB{
 				$this->query($str);
 			}
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -952,7 +952,7 @@ class glpiDB{
 			$ret = $this->query($qry);
 			return($ret);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -963,7 +963,7 @@ class glpiDB{
 			$qry = "DELETE FROM glpi_docs WHERE ID=".$id."";
 			$this->query($qry);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -981,7 +981,7 @@ class glpiDB{
 
 			return($ret);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1032,7 +1032,7 @@ class glpiDB{
 				$this->query($str);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1052,7 +1052,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1067,7 +1067,7 @@ class glpiDB{
 			return($this->query($qry));	
 		
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1079,7 +1079,7 @@ class glpiDB{
 //			return($this->query($qry));	
 		
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1091,7 +1091,7 @@ class glpiDB{
 //			return($this->query($qry));	
 		
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1102,7 +1102,7 @@ class glpiDB{
 			$qry= "DELETE FROM glpi_monitors WHERE ID=".$id.";";
 			$this->query($qry);	
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1114,7 +1114,7 @@ class glpiDB{
 			return($this->query($qry));	
 		
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1126,7 +1126,7 @@ class glpiDB{
 			return($this->query($qry));	
 		
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1137,7 +1137,7 @@ class glpiDB{
 			$qry= "SELECT * FROM glpi_dropdown_state;";
 			return($this->query($qry));	
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1159,7 +1159,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1192,7 +1192,7 @@ class glpiDB{
 			$ret = $this->query("SELECT * FROM glpi_printers WHERE name='".$name."';");
 			return($ret);		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1207,7 +1207,7 @@ class glpiDB{
 			$ret = $this->query($qry);
 			return($ret);
 		}else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1225,7 +1225,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1238,13 +1238,13 @@ class glpiDB{
 		if($this->is_connected){
 			$tmp = $this->query("SELECT * FROM glpi_type_printers WHERE name='".$name."';");
 			if(isset($tmp[0])){
-				//echo "such an entry already exists";
+				//trigger_error("such an entry already exists");
 				return(false);
 			}else{	
 				return($this->query("INSERT INTO glpi_type_printers (name) VALUES ('".$name."');"));
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1259,11 +1259,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("DELETE FROM glpi_type_printers WHERE ID=".$id.";"));	
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1279,11 +1279,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("UPDATE glpi_type_printers SET name='".$name."' WHERE ID=".$id.";"));	
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1294,7 +1294,7 @@ class glpiDB{
 	function updatePrinterInformations($array,$name)
 	{
 		if(!is_array($array)){
-			echo "updatePrinterInformations: first paraeter must be an array";
+			trigger_error("updatePrinterInformations: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$tmp = $this->query("SELECT * FROM  glpi_printers WHERE name='".$name."';");
 			if(isset($tmp[0])){
@@ -1309,18 +1309,18 @@ class glpiDB{
 					}
 				}
 				if(empty($v)){
-					echo "updateSystemInformations: no attributes given ";
+					trigger_error("updateSystemInformations: no attributes given ");
 					return(false);
 				}else{
 					$v = preg_replace("/, $/","",$v);
 					return($this->query("UPDATE glpi_printers SET ".$v." WHERE name='".$name."';"));
 				}
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 
@@ -1331,7 +1331,7 @@ class glpiDB{
 	function addPrinterInformations($array)
 	{
 		if(!is_array($array)){
-			echo "updateComputerInformations: first paraeter must be an array";
+			trigger_error("updateComputerInformations: first paraeter must be an array");
 		}elseif($this->is_connected){
 			$atr = array(	"ID","name","serial","otherserial","contact","contact_num",
 					"tech_num","comments","date_mod","os","location","domain","network","ramSize","flags_serial","flags_par","flags_usb",
@@ -1345,7 +1345,7 @@ class glpiDB{
 				}
 			}
 			if(empty($v)){
-				echo "updateComputerInformations: no attributes given ";
+				trigger_error("updateComputerInformations: no attributes given ");
 				return(false);
 			}else{
 				$a = preg_replace("/, $/","",$a);
@@ -1354,7 +1354,7 @@ class glpiDB{
 			}
 		
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1376,7 +1376,7 @@ class glpiDB{
 				$this->query($str);
 			}
         }else{
-            echo "not connected";
+            trigger_error("not connected");
             return(false);
         }
 	}
@@ -1391,11 +1391,11 @@ class glpiDB{
 				$this->query("DELETE FROM glpi_doc_device WHERE FK_device=".$id." AND device_type=3;");
 				return($this->query("DELETE FROM glpi_printers WHERE ID=".$id.";"));
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1428,7 +1428,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1462,7 +1462,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1473,7 +1473,7 @@ class glpiDB{
 			$qry = "DELETE FROM glpi_cartridges WHERE ID=".$cartridgeID.";";
 			return($this->query($qry));
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1487,7 +1487,7 @@ class glpiDB{
 						(".$cartridgeID.",".$printerID.",'".date("Y-m-d")."','".date("Y-m-d")."');";	
 			return($this->query($qry));
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1502,7 +1502,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1523,7 +1523,7 @@ class glpiDB{
 			return($ret);
 
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1539,7 +1539,7 @@ class glpiDB{
 			return($ret);
 
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1575,7 +1575,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1586,7 +1586,7 @@ class glpiDB{
 	function Add_UpdateCatrigdeType($array,$array_printer_types)
 	{
 		if(!is_array($array)){
-			echo "Add_UpdateCatrigdeType: first paraeter must be an array";
+			trigger_error("Add_UpdateCatrigdeType: first paraeter must be an array");
 		}elseif($this->is_connected){
 
 
@@ -1603,7 +1603,7 @@ class glpiDB{
 					}
 				}
 				if(empty($v)){
-					echo "Add_UpdateCatrigdeType: no attributes given ";
+					trigger_error("Add_UpdateCatrigdeType: no attributes given ");
 					return(false);
 				}else{
 					$v = preg_replace("/, $/","",$v);
@@ -1635,7 +1635,7 @@ class glpiDB{
 				$this->query($str);	
 				$IDs = $this->query("SELECT ID FROM glpi_cartridges_type WHERE name='".$array['name']."';");
 				if(count($IDs) > 1){
-					echo "internal db error";
+					trigger_error("internal db error");
 					return;
 				}
 				$array['ID'] = $IDs[0]['ID'];
@@ -1650,7 +1650,7 @@ class glpiDB{
 				$this->query($qry);
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1667,7 +1667,7 @@ class glpiDB{
 			}
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1679,7 +1679,7 @@ class glpiDB{
 			$qry = "DELETE FROM glpi_cartridges_type WHERE ID=".$id.";";
 			return($this->query($qry));	
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1691,7 +1691,7 @@ class glpiDB{
 			$ret  = $this->query($qry);
 			return($ret);
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1705,13 +1705,13 @@ class glpiDB{
 		if($this->is_connected){
 			$tmp = $this->query("SELECT * FROM glpi_dropdown_cartridge_type WHERE name='".$name."';");
 			if(isset($tmp[0])){
-				//echo "such an entry already exists";
+				//trigger_error("such an entry already exists");
 				return(false);
 			}else{	
 				return($this->query("INSERT INTO glpi_dropdown_cartridge_type (name) VALUES ('".$name."');"));
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1726,11 +1726,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("DELETE FROM glpi_dropdown_cartridge_type WHERE ID=".$id.";"));	
 			}else{
-				echo "can't remove not existing entry";
+				trigger_error("can't remove not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1746,11 +1746,11 @@ class glpiDB{
 			if(isset($tmp[0])){
 				return($this->query("UPDATE glpi_dropdown_cartridge_type SET name='".$name."' WHERE ID=".$id.";"));	
 			}else{
-				echo "can't update not existing entry";
+				trigger_error("can't update not existing entry");
 				return(false);	
 			}
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
@@ -1765,7 +1765,7 @@ class glpiDB{
 			}
 			return($this->query($qry));
 		}else{
-			echo "not connected";
+			trigger_error("not connected");
 			return(false);
 		}
 	}
