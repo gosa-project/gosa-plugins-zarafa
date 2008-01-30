@@ -28,14 +28,48 @@ BEGIN{
 
 END{}
 
-my ($timeout, $mailto, $mailfrom, $user, $group);
-my %daemon_children;
-my ($ldap, $bind_phrase, $password, $ldap_base, $interface) ;
+#my ($timeout, $mailto, $mailfrom, $user, $group);
+my ($arp_activ, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
+my $ldap;
 
-$ldap_base = "dc=gonicus,dc=de" ;
-$interface = "all";
+my %cfg_defaults =
+(
+"arp" => {
+	"arp_activ"           => [\$arp_activ,         "on"],
+	"arp_interface"       => [\$arp_interface,    "all"],
+    "ldap_uri"            => [\$ldap_uri,            ""],
+    "ldap_base"           => [\$ldap_base,           ""],
+    "ldap_admin_dn"       => [\$ldap_admin_dn,       ""],
+    "ldap_admin_password" => [\$ldap_admin_password, ""],
+    },
+);
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_configfile
+#   PARAMETERS:  cfg_file - string -
+#      RETURNS:  nothing
+#  DESCRIPTION:  read cfg_file and set variables
+#===============================================================================
+sub read_configfile {
+    my $cfg;
+    if( defined( $main::cfg_file) && ( length($main::cfg_file) > 0 )) {
+        if( -r $main::cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $main::cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
+        }
+    }
+}
 
 sub get_module_info {
 	my @info = (undef,
@@ -45,8 +79,9 @@ sub get_module_info {
 		"socket",
 	);
 
+	&read_configfile();
 	# Don't start if some of the modules are missing
-	if($start_service) {
+	if(($arp_activ eq 'on') && $start_service) {
 		eval {
 			$ldap = Net::LDAP->new("ldap.intranet.gonicus.de");
 		};
@@ -55,7 +90,7 @@ sub get_module_info {
 		}
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
-		if ((!defined($interface)) || $interface eq 'all') {
+		if ((!defined($arp_interface)) || $arp_interface eq 'all') {
 			foreach my $device(&get_interfaces) {
 				# TODO: Need a better workaround for IPv4-to-IPv6 bridges
 				if($device =~ m/^sit\d+$/) {
@@ -80,7 +115,7 @@ sub get_module_info {
 				}
 			}
 		} else {
-			foreach my $device(split(/[\s,]+/, $interface)) {
+			foreach my $device(split(/[\s,]+/, $arp_interface)) {
 				&main::daemon_log("Starting ArpWatch on $device", 1);
 				POE::Session->create( 
 					inline_states => {
@@ -95,6 +130,8 @@ sub get_module_info {
 				);
 			}
 		}
+	} else {
+		&main::daemon_log("ArpHandler disabled. Not starting any capture processes");
 	}
 	return \@info;
 }
