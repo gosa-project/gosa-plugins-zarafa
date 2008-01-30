@@ -744,8 +744,7 @@ sub new_ldap_config {
     my $base;
 
     # Do we need to look at an object class?
-    my $cnt= @servers;
-    if ($cnt < 1){
+    if (length(@servers) < 1){
 	    $mesg = $ldap->search( base   => $ldap_base,
 			    scope  => 'sub',
 			    attrs => ['dn', 'gotoLdapServer'],
