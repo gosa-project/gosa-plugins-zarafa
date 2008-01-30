@@ -6,8 +6,6 @@ use Exporter;
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
-use Getopt::Long;
-use Config::IniFiles;
 use POSIX;
 use Fcntl;
 use Net::LDAP;
@@ -16,10 +14,18 @@ use Net::LDAP::Entry;
 use Net::DNS;
 use Switch;
 use Data::Dumper;
-use Socket qw/PF_INET SOCK_DGRAM inet_ntoa sockaddr_in/;
-use POE qw(Component::Pcap Component::ArpWatch);
 
-BEGIN{}
+# Don't start if some of the modules are missing
+my $start_service=1;
+BEGIN{
+	unless(eval('use Socket qw(PF_INET SOCK_DGRAM inet_ntoa sockaddr_in)')) {
+		$start_service=0;
+	}
+	unless(eval('use POE qw(Component::Pcap Component::ArpWatch)')) {
+		$start_service=0;
+	}
+}
+
 END{}
 
 my ($timeout, $mailto, $mailfrom, $user, $group);
@@ -39,18 +45,44 @@ sub get_module_info {
 		"socket",
 	);
 
-	$ldap = Net::LDAP->new("ldap.intranet.gonicus.de") or die "$@";
+	# Don't start if some of the modules are missing
+	if($start_service) {
+		eval {
+			$ldap = Net::LDAP->new("ldap.intranet.gonicus.de");
+		};
+		if ($@) {
+			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
+		} else {
+			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
 
-	# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
-	if ((!defined($interface)) || $interface eq 'all') {
-		foreach my $device(&get_interfaces) {
-			# TODO: Need a better workaround for IPv4-to-IPv6 bridges
-			if($device =~ m/^sit.$/) {
-				next;
+		}
+
+		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
+		if ((!defined($interface)) || $interface eq 'all') {
+			foreach my $device(&get_interfaces) {
+				# TODO: Need a better workaround for IPv4-to-IPv6 bridges
+				if($device =~ m/^sit\d+$/) {
+					next;
+				}
+
+				# If device has a valid mac address
+				if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
+					&main::daemon_log("Starting ArpWatch on $device", 1);
+					POE::Session->create( 
+						inline_states => {
+							_start => sub {
+								&start(@_,$device);
+							},
+							_stop => sub {
+								$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
+							},
+							got_packet => \&got_packet,
+						},
+					);
+				}
 			}
-
-			# If device has a valid mac address
-			if(not(&get_mac($device) eq "00:00:00:00:00:00")) {
+		} else {
+			foreach my $device(split(/[\s,]+/, $interface)) {
 				&main::daemon_log("Starting ArpWatch on $device", 1);
 				POE::Session->create( 
 					inline_states => {
@@ -65,23 +97,7 @@ sub get_module_info {
 				);
 			}
 		}
-	} else {
-		foreach my $device(split(/[\s,]+/, $interface)) {
-			&main::daemon_log("Starting ArpWatch on $device", 1);
-			POE::Session->create( 
-				inline_states => {
-					_start => sub {
-						&start(@_,$device);
-					},
-					_stop => sub {
-						$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
-					},
-					got_packet => \&got_packet,
-				},
-			);
-		}
 	}
-
 	return \@info;
 }
 
