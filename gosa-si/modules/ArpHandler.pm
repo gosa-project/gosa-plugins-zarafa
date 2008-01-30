@@ -55,22 +55,22 @@ my %cfg_defaults =
 #  DESCRIPTION:  read cfg_file and set variables
 #===============================================================================
 sub read_configfile {
-    my $cfg;
-    if( defined( $main::cfg_file) && ( length($main::cfg_file) > 0 )) {
-        if( -r $main::cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $main::cfg_file );
-        } else {
-            print STDERR "Couldn't read config file!";
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-        }
-    }
+	my $cfg;
+	if( defined( $main::cfg_file) && ( length($main::cfg_file) > 0 )) {
+		if( -r $main::cfg_file ) {
+			$cfg = Config::IniFiles->new( -file => $main::cfg_file );
+		} else {
+			print STDERR "Couldn't read config file!";
+		}
+	} else {
+		$cfg = Config::IniFiles->new() ;
+	}
+	foreach my $section (keys %cfg_defaults) {
+		foreach my $param (keys %{$cfg_defaults{ $section }}) {
+			my $pinfo = $cfg_defaults{ $section }{ $param };
+			${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
+		}
+	}
 }
 
 sub get_module_info {
