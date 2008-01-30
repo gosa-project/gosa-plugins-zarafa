@@ -50,11 +50,8 @@ sub get_module_info {
 		eval {
 			$ldap = Net::LDAP->new("ldap.intranet.gonicus.de");
 		};
-		if ($@) {
+		if (!$ldap) {
 			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
-		} else {
-			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
-
 		}
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
