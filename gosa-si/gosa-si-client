@@ -1265,7 +1265,7 @@ sub new_passwd {
     return; 
 }
 
-sub genereate_hw_digest {
+sub generate_hw_digest {
 	my $hw_data;
 	foreach my $line (split /\n/, `cat /proc/bus/pci/devices`) {
 		$hw_data.= sprintf "%s", $line =~ /[^\s]+\s([^\s]+)\s.*/;
