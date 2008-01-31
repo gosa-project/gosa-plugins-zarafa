@@ -393,10 +393,10 @@ sub change_ldap_entry {
     my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
     my $c_res = (defined $s_res)?$s_res->count:0;
     if($c_res == 0) {
-        daemon_log("WARNING: macAddress $mac not in LDAP", 1);
+        &main::daemon_log("WARNING: macAddress $mac not in LDAP", 1);
         return;
     } elsif($c_res > 1) {
-        daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
+        &main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
         return;
     }
 
@@ -411,13 +411,12 @@ sub change_ldap_entry {
     my $result = $ldap->modify( $dn, replace => $replace );
 
     # for $result->code constants please look at Net::LDAP::Constant
-    my $log_time = localtime( time );
     if($result->code == 32) {   # entry doesnt exists 
         &add_ldap_entry($mac, $gotoSysStatus);
     } elsif($result->code == 0) {   # everything went fine
-        daemon_log("$log_time: entry $dn changed successful", 1);
+        &main::daemon_log("entry $dn changed successful", 1);
     } else {  # if any other error occur
-        daemon_log("ERROR: $log_time: $dn, ".$result->code.", ".$result->error, 1);
+        &main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
     }
 
     return;
@@ -442,7 +441,7 @@ sub search_ldap_entry {
 		$msg = $ldap_tree->search( # perform a search
 			base   => $sub_tree,
 			filter => $search_string,
-		) or daemon_log("cannot perform search at ldap: $@", 1);
+		) or &main::daemon_log("cannot perform search at ldap: $@", 1);
 		#if(defined $msg) {
     	#    print $sub_tree."\t".$search_string."\t";
     	#    print $msg->count."\n";
