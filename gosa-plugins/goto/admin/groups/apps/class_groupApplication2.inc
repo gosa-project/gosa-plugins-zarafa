@@ -16,7 +16,8 @@ class appgroup2 extends plugin
   var $a_Releases = array();
   var $a_Entries  = array();
   var $a_Folders  = array();
-  var $menu_pointer = NULL;
+
+
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -32,8 +33,6 @@ class appgroup2 extends plugin
     $this->a_Releases   = array();
     $this->a_Entries    = array();
     $this->a_Folders    = array();
-
-    $this->menu_pointer = &$this->a_Structure;
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
@@ -68,7 +67,8 @@ class appgroup2 extends plugin
           $data['NAME']     = $name;
           $data['TYPE']     = $type;
           $data['PRIORITY'] = $priority;
-          $date['ENTRIES']  = array();
+          $data['ENTRIES']  = array();
+          $data['UNIQID']   = uniqid();
           $cur[$name]       = $data;
 
           switch($type){
@@ -87,11 +87,80 @@ class appgroup2 extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $this->__construct($this->config, $this->dn,NULL);
+
+#    $this->__construct($this->config, $this->dn,NULL);
     $smarty = get_smarty();
     $smarty->assign("entries",$this->_get_all_entries());
     $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
+  }
+
+
+  function _remove_entry_id($id,$start = NULL)
+  {
+    if($start == NULL){
+      $start = &$this->a_Structure;
+    }
+    foreach($start as $name => $entry){
+      if($entry['UNIQID'] == $id){
+        unset($start[$name]);
+        return(TRUE);
+      }
+      if(isset($entry['ENTRIES']) && count($start[$name]['ENTRIES'])){
+        if($this->_remove_entry_id($id,&$start[$name]['ENTRIES'])){
+          return(TRUE);
+        }
+      }
+    }
+    return(FALSE);
+  }
+
+
+  
+  function save_object()
+  {
+    foreach($_POST as $name => $value){
+      if(preg_match("/del_/",$name)){
+        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/_(x|y)$/","",$id);
+        $this->_remove_entry_id($id);
+        break;
+      }
+      if(preg_match("/edit_/",$name)){
+        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/_(x|y)$/","",$id);
+        $this->_edit_entry_edit($id);
+        break;
+      }
+      if(preg_match("/up_/",$name)){
+        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/_(x|y)$/","",$id);
+        $this->_move_entry_up($id);
+        break;
+      }
+      if(preg_match("/down_/",$name)){
+        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/_(x|y)$/","",$id);
+        $this->_move_entry_down($id);
+        break;
+      }
+    }
+  }
+
+  
+  function _edit_entry_edit($id)
+  {
+    echo "Editing: ".$id;
+  }
+
+  function _move_entry_up($id)
+  {
+    echo "Up: ".$id;
+  }
+
+  function _move_entry_down($id)
+  {
+    echo "Down: ".$id;
   }
 
 
@@ -109,7 +178,7 @@ class appgroup2 extends plugin
         unset($tmp['ENTRIES']);
       }
       $ret[] = $tmp;
-      if(isset($entry['ENTRIES'])){
+      if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
         $ret = array_merge($ret,$this->_get_all_entries(&$entry['ENTRIES'],$depth));
       }
     }
