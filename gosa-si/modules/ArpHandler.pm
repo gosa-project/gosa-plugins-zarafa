@@ -84,19 +84,11 @@ sub get_module_info {
 	&read_configfile();
 	# Don't start if some of the modules are missing
 	if(($arp_activ eq 'on') && $start_service) {
-		eval {
-			$ldap = Net::LDAP->new($ldap_uri);
-		};
+		$ldap = Net::LDAP->new($ldap_uri);
 		if (!$ldap) {
-			&main::daemon_log("Could not connect to LDAP Server!\n$@", 1);
+			&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
 		} else {
-			eval {
-				$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
-			};
-			if($@) {
-				&main::daemon_log("LDAP bind as $ldap_admin_dn failed! Trying anonymous bind", 1);
-				$ldap->bind();
-			}
+			$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 		}
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
@@ -118,6 +110,7 @@ sub get_module_info {
 							},
 							_stop => sub {
 								$ldap->unbind if (defined($ldap));
+								$ldap->disconnect if (defined($ldap));
 								$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
 							},
 							got_packet => \&got_packet,
@@ -135,6 +128,7 @@ sub get_module_info {
 						},
 						_stop => sub {
 							$ldap->unbind if (defined($ldap));
+							$ldap->disconnect if (defined($ldap));
 							$_[KERNEL]->post( sprintf("arp_watch_$device") => 'shutdown' )
 						},
 						got_packet => \&got_packet,
@@ -211,12 +205,7 @@ sub got_packet {
 				$hosts_database->{$packet->{source_haddr}}->{macAddress},
 				'new-system',
 				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber});
-				#,
-#				#$hosts_database->{$packet->{source_haddr}}->{dnsName});	
-#
-#            case 8 {&add_ldap_entry($ldap, $ldap_base, 
-#                                   $mac, $ip, "new-system",
-#                                   )}
+				# TODO add mac vendor as description
 		}
 		$hosts_database->{$packet->{source_haddr}}->{device}= $capture_device;
 	} else {
@@ -226,6 +215,14 @@ sub got_packet {
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
 				"->".$packet->{source_ipaddr}, 4);
 			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
+			&change_ldap_entry(
+				$ldap, 
+				$ldap_base, 
+				$hosts_database->{$packet->{source_haddr}}->{macAddress},
+				'ip-changed',
+				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber},
+			);
+
 		}
 		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{device})."->".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
 	}
@@ -235,7 +232,7 @@ sub get_host_from_ldap {
 	my $mac=shift;
 	my $result={};
 		
-	my $ldap_result= search_ldap_entry(
+	my $ldap_result= &search_ldap_entry(
 		$ldap,
 		$ldap_base,
 		"(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))"
@@ -368,13 +365,12 @@ sub add_ldap_entry {
     my $result = $entry->update ($ldap_tree); 
         
     # for $result->code constants please look at Net::LDAP::Constant
-    my $log_time = localtime( time );
     if($result->code == 68) {   # entry already exists 
-        &main::daemon_log("WARNING: $log_time: $dn ".$result->error, 3);
+        &main::daemon_log("WARNING: $dn ".$result->error, 3);
     } elsif($result->code == 0) {   # everything went fine
-        &main::daemon_log("$log_time: add entry $dn to ldap", 1);
+        &main::daemon_log("add entry $dn to ldap", 1);
     } else {  # if any other error occur
-        &main::daemon_log("ERROR: $log_time: $dn, ".$result->code.", ".$result->error, 1);
+        &main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
     }
     return;
 }
@@ -391,11 +387,11 @@ sub add_ldap_entry {
 #     SEE ALSO:  n/a
 #===============================================================================
 sub change_ldap_entry {
-    my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus ) = @_;
+    my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip) = @_;
     
     # check if ldap_entry exists or not
     my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
-    my $c_res = $s_res->count;
+    my $c_res = (defined $s_res)?$s_res->count:0;
     if($c_res == 0) {
         daemon_log("WARNING: macAddress $mac not in LDAP", 1);
         return;
@@ -406,7 +402,13 @@ sub change_ldap_entry {
 
     my $s_res_entry = $s_res->pop_entry();
     my $dn = $s_res_entry->dn();
-    my $result = $ldap->modify( $dn, replace => {'gotoSysStatus' => $gotoSysStatus } );
+	my $replace = {
+		'gotoSysStatus' => $gotoSysStatus,
+	};
+	if (defined($ip)) {
+		$replace->{'ip'} = $ip;
+	}
+    my $result = $ldap->modify( $dn, replace => $replace );
 
     # for $result->code constants please look at Net::LDAP::Constant
     my $log_time = localtime( time );
@@ -437,15 +439,15 @@ sub search_ldap_entry {
 	my ($ldap_tree, $sub_tree, $search_string) = @_;
 	my $msg;
 	if(defined($ldap_tree)) {
-		my $msg = $ldap_tree->search( # perform a search
+		$msg = $ldap_tree->search( # perform a search
 			base   => $sub_tree,
 			filter => $search_string,
 		) or daemon_log("cannot perform search at ldap: $@", 1);
-#    if(defined $msg) {
-#        print $sub_tree."\t".$search_string."\t";
-#        print $msg->count."\n";
-#        foreach my $entry ($msg->entries) { $entry->dump; };
-#    }
+		#if(defined $msg) {
+    	#    print $sub_tree."\t".$search_string."\t";
+    	#    print $msg->count."\n";
+    	#    foreach my $entry ($msg->entries) { $entry->dump; };
+    	#}
 	}
 	return $msg;
 }
