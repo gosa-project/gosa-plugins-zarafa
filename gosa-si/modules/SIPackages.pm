@@ -331,11 +331,15 @@ sub process_incoming_msg {
                 $error++;
             }
         }
+		else {
+			&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
+			push(@out_msg_l, $msg);
+		}
     }
-    
+
     if( $error == 0) {
         if( 0 == @out_msg_l ) {
-            push(@out_msg_l, $msg);
+			push(@out_msg_l, $msg);
         }
     }
     
