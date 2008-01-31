@@ -13,26 +13,27 @@ class appgroup2 extends plugin
    */
   var $a_Structure= array();
 
-  var $a_Releases = array();
-  var $a_Entries  = array();
-  var $a_Folders  = array();
+#  var $a_Releases = array();
+#  var $a_Entries  = array();
+#  var $a_Folders  = array();
 
-
+  var $a_Structure_on_load = array();
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin($config,$dn,$parent);
     $this->dn = $dn; 
     $this->_load_menu_structure();
+    $this->a_Structure_on_load = $this->a_Structure;
   }
 
 
   function _load_menu_structure()
   {
     $this->a_Structure  = array();
-    $this->a_Releases   = array();
-    $this->a_Entries    = array();
-    $this->a_Folders    = array();
+#    $this->a_Releases   = array();
+#    $this->a_Entries    = array();
+#    $this->a_Folders    = array();
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
@@ -72,9 +73,9 @@ class appgroup2 extends plugin
           $cur[$name]       = $data;
 
           switch($type){
-            case 'RELEASE': $this->a_Releases[$name] = &$cur[$name];break;
-            case 'ENTRY':   $this->a_Entries[$name] = &$cur[$name];break;
-            case 'FOLDER':  $this->a_Folders[$name] = &$cur[$name];break;
+#            case 'RELEASE': $this->a_Releases[$name] = &$cur[$name];break;
+#            case 'ENTRY':   $this->a_Entries[$name] = &$cur[$name];break;
+#            case 'FOLDER':  $this->a_Folders[$name] = &$cur[$name];break;
           }
         }
       }
@@ -169,7 +170,7 @@ class appgroup2 extends plugin
     $ret = array();
     $depth ++;
     if($cur == NULL){
-      $cur = &$this->a_Structure;
+      $cur = $this->a_Structure;
     }
     $ret[] = array("TYPE" => "OPEN");
     foreach($cur as $entry){
