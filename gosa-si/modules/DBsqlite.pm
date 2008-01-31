@@ -50,7 +50,7 @@ sub create_lock : locked {
 
     my $lock = $self->{db_lock};
     while( -f $lock ) {
-        print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
+        #print STDERR "(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock gefunden\n";
         sleep 1;
     }
 
