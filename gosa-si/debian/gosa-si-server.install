@@ -5,4 +5,5 @@ bus.conf			etc/gosa-si
 modules/SIPackages.pm       usr/lib/gosa-si/modules
 modules/GosaPackages.pm         usr/lib/gosa-si/modules
 modules/ArpHandler.pm         usr/lib/gosa-si/modules
+modules/oui.txt			usr/lib/gosa-si/modules
 server/events/ping		usr/lib/gosa-si/server/events

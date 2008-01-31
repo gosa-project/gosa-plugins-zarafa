@@ -17,12 +17,16 @@ use Data::Dumper;
 
 # Don't start if some of the modules are missing
 my $start_service=1;
+my $lookup_vendor=1;
 BEGIN{
 	unless(eval('use Socket qw(PF_INET SOCK_DGRAM inet_ntoa sockaddr_in)')) {
 		$start_service=0;
 	}
 	unless(eval('use POE qw(Component::Pcap Component::ArpWatch)')) {
 		$start_service=0;
+	}
+	unless(eval('use Net::MAC::Vendor')) {
+		$lookup_vendor=0;
 	}
 }
 
@@ -33,6 +37,15 @@ my ($arp_activ, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_adm
 my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
 my $ldap;
+if($lookup_vendor) {
+	eval("Net::MAC::Vendor::load_cache('file:///usr/lib/gosa-si/modules/oui.txt')");
+	if($@) {
+		&main::daemon_log("Loading OUI cache file failed! MAC Vendor lookup disabled", 1);
+		$lookup_vendor=0;
+	} else {
+		&main::daemon_log("Loading OUI cache file suceeded!", 6);
+	}
+}
 
 my %cfg_defaults =
 (
@@ -192,7 +205,8 @@ sub got_packet {
 				macAddress => $packet->{source_haddr},
 				ipHostNumber => $packet->{source_ipaddr},
 				dnsname => $dnsname,
-				cn => ($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\./,
+				cn => (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\./),
+				macVendor => (($lookup_vendor) ? &get_vendor_for_mac($packet->{source_haddr}) : "Unknown Vendor"),
 			};
 			&main::daemon_log("Host was not found in LDAP (".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
 			&main::daemon_log(
@@ -204,8 +218,9 @@ sub got_packet {
 				$ldap_base, 
 				$hosts_database->{$packet->{source_haddr}}->{macAddress},
 				'new-system',
-				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber});
-				# TODO add mac vendor as description
+				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber},
+				'interface',
+				$hosts_database->{$packet->{source_haddr}}->{macVendor});
 		}
 		$hosts_database->{$packet->{source_haddr}}->{device}= $capture_device;
 	} else {
@@ -327,6 +342,21 @@ sub get_mac {
 	return $result;
 }
 
+sub get_vendor_for_mac {
+	my $mac=shift;
+	my $result="Unknown Vendor";
+
+	if(defined($mac)) {
+		my $vendor= Net::MAC::Vendor::fetch_oui_from_cache(Net::MAC::Vendor::normalize_mac($mac));
+		if(length($vendor) > 0) {
+			$result= @{$vendor}[0];
+		}
+		&main::daemon_log("Looking up Vendor for MAC ".$mac.": $result", 4);
+	}
+
+	return $result;
+}
+
 #===  FUNCTION  ================================================================
 #         NAME:  add_ldap_entry
 #      PURPOSE:  adds an element to ldap-tree
@@ -362,7 +392,7 @@ sub add_ldap_entry {
     if(defined $desc) {$entry->add("description" => $desc) }
     
     # submit entry to LDAP
-    my $result = $entry->update ($ldap_tree); 
+	my $result = $entry->update ($ldap_tree); 
         
     # for $result->code constants please look at Net::LDAP::Constant
     if($result->code == 68) {   # entry already exists 
