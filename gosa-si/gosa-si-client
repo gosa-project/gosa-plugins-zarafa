@@ -1265,7 +1265,13 @@ sub new_passwd {
     return; 
 }
 
-
+sub genereate_hw_digest {
+	my $hw_data;
+	foreach my $line (split /\n/, `cat /proc/bus/pci/devices`) {
+		$hw_data.= sprintf "%s", $line =~ /[^\s]+\s([^\s]+)\s.*/;
+	}
+	return(md5_base64($hw_data));
+}
 
 
 #==== MAIN = main ==============================================================
