@@ -250,8 +250,8 @@ sub process_incoming_msg {
     else {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
     }
-    
-    # keep job queue uptodate and save result and status    
+
+    # keep job queue uptodate and save result and status
     if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
         my $sql = "UPDATE '".$main::job_queue_table_name.
@@ -272,12 +272,17 @@ sub process_gosa_msg {
     $header =~ s/gosa_//;
 
     # decide wether msg is a core function or a event handler
-    if ( $header eq 'query_jobdb') { $out_msg = &query_jobdb }
-    elsif ($header eq 'delete_jobdb_entry') { $out_msg = &delete_jobdb_entry }
-    elsif ($header eq 'clear_jobdb') { $out_msg = &clear_jobdb }
-    elsif ($header eq 'update_status_jobdb_entry' ) { $out_msg = &update_status_jobdb_entry }
-    elsif ($header eq 'count_jobdb' ) { $out_msg = &count_jobdb }
-    else {
+    if ( $header eq 'query_jobdb') {
+	$out_msg = &query_jobdb
+    } elsif ($header eq 'delete_jobdb_entry') {
+        $out_msg = &delete_jobdb_entry
+    } elsif ($header eq 'clear_jobdb') {
+	$out_msg = &clear_jobdb
+    } elsif ($header eq 'update_status_jobdb_entry' ) {
+	$out_msg = &update_status_jobdb_entry
+    } elsif ($header eq 'count_jobdb' ) {
+        $out_msg = &count_jobdb
+    } else {
         # msg could not be assigned to core function
         # fetch all available eventhandler under $server_event_dir
         opendir (DIR, $server_event_dir) or &main::daemon_log("ERROR cannot open $server_event_dir: $!\n", 1) and return;
