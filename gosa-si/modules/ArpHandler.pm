@@ -436,7 +436,7 @@ sub change_ldap_entry {
 		'gotoSysStatus' => $gotoSysStatus,
 	};
 	if (defined($ip)) {
-		$replace->{'ip'} = $ip;
+		$replace->{'ipHostNumber'} = $ip;
 	}
     my $result = $ldap->modify( $dn, replace => $replace );
 
