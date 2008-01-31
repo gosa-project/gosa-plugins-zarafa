@@ -603,23 +603,24 @@ sub new_ldap_config {
     # Perform search
     $mesg = $ldap->search( base   => $ldap_base,
 		    scope  => 'sub',
-		    attrs => ['dn', 'gotoLdapServer'],
+		    attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag'],
 		    filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
     $mesg->code && die $mesg->error;
 
     # Sanity check
     if ($mesg->count != 1) {
 	    &main::daemon_log("WARNING: client mac address $macaddress not found/not unique in ldap search", 1);
-        &main::daemon_log("\tbase: $ldap_base", 1);
-        &main::daemon_log("\tscope: sub", 1);
-        &main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
-        &main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
+	    &main::daemon_log("\tbase: $ldap_base", 1);
+	    &main::daemon_log("\tscope: sub", 1);
+	    &main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
+	    &main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
 	    return;
     }
 
     my $entry= $mesg->entry(0);
     my $dn= $entry->dn;
     my @servers= $entry->get_value("gotoLdapServer");
+    my $unit_tag= $entry->get_value("gosaUnitTag");
     my @ldap_uris;
     my $server;
     my $base;
@@ -652,9 +653,6 @@ sub new_ldap_config {
 	    push (@ldap_uris, $server);
     }
 
-    # Unbind
-    $mesg = $ldap->unbind;
-
     # Assemble data package
     my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
 	             'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
@@ -664,6 +662,33 @@ sub new_ldap_config {
 	    $data{'goto_admin'}= $goto_admin;
 	    $data{'goto_secret'}= $goto_secret;
     }
+
+    # Append unit tag if needed
+    if (defined $unit_tag){
+           
+            # Find admin base and department name
+	    $mesg = $ldap->search( base   => $ldap_base,
+			    scope  => 'sub',
+			    attrs => ['dn', 'ou'],
+			    filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
+	    $mesg->code && die $mesg->error;
+
+            # Sanity check
+	    if ($mesg->count != 1) {
+		    &main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
+		    return;
+	    }
+
+	    $entry= $mesg->entry(0);
+	    $data{'admin_base'}= $entry->dn;
+	    $data{'department'}= $entry->get_value("ou");
+
+	    # Append unit Tag
+	    $data{'unit_tag'}= $unit_tag;
+    }
+
+    # Unbind
+    $mesg = $ldap->unbind;
 
     # Send information
     return send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
