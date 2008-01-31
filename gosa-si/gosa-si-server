@@ -562,7 +562,10 @@ sub create_ciphering {
 sub encrypt_msg {
     my ($msg, $key) = @_;
     my $my_cipher = &create_ciphering($key);
-    $msg = "\0"x(16-length($msg)%16).$msg;
+    {
+      use bytes;
+      $msg = "\0"x(16-length($msg)%16).$msg;
+    }
     $msg = $my_cipher->encrypt($msg);
     chomp($msg = &encode_base64($msg));
     # there are no newlines allowed inside msg

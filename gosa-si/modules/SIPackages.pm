@@ -625,7 +625,7 @@ sub new_ldap_config {
     my $base;
 
     # Do we need to look at an object class?
-    if ($#servers < 1){
+    if (length(@servers) < 1){
 	    $mesg = $ldap->search( base   => $ldap_base,
 			    scope  => 'sub',
 			    attrs => ['dn', 'gotoLdapServer'],
@@ -666,9 +666,7 @@ sub new_ldap_config {
     }
 
     # Send information
-    send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
-
-    return;
+    return send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
 }
 
 
