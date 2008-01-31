@@ -48,10 +48,8 @@ class termgeneric extends plugin
   var $objectclasses= array("top", "gotoTerminal", "GOhard");
 
   var $mapActions   = array("reboot"          => "",
-                            "instant_update"  => "softupdate",
-                            "update"          => "sceduledupdate",
-                            "reinstall"       => "install",
                             "rescan"          => "",
+                            "wake"            => "",
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
@@ -168,77 +166,8 @@ class termgeneric extends plugin
       $this->is_account= !$this->is_account;
     }
 
-    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
-
-      /* Set FAIstate */
-      if($this->fai_activated && $this->dn != "new"){
-        $ldap = $this->config->get_ldap_link();
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->cat($this->dn,array("objectClass"));
-        $res = $ldap->fetch();
-
-        $attrs = array();
-        $attrs['FAIstate'] = "";
-        if(isset($this->mapActions[$_POST['saction']])){
-          $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-        }
-
-        for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-          $attrs['objectClass'][] = $res['objectClass'][$i];
-        }
-
-        if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-          $attrs['objectClass'][] = "FAIobject";
-        }
-
-        if($attrs['FAIstate'] == ""){
-#FIXME we should check if FAIobject is used anymore
-          $attrs['FAIstate'] = array();
-        }
-
-        $ldap->cd($this->dn);
-        $ldap->modify($attrs);
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of system terminal/generic (FAIstate) with dn '%s' failed."),$this->dn));
-      }
-
-      switch($_POST['saction']){
-        case 'wake':
-          $cmd= $this->config->search("termgeneric", "WAKECMD",array('tabs'));
-
-          if ($cmd == ""){
-            print_red(_("No WAKECMD definition found in your gosa.conf"));
-          } else {
-            exec ($cmd." ".$this->netConfigDNS->macAddress, $dummy, $retval);
-            if ($retval != 0){
-              print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-            }
-          }
-          break;
-
-        case 'reboot':
-          $cmd= $this->config->search("termgeneric", "REBOOTCMD",array('tabs'));
-          if ($cmd == ""){
-            print_red(_("No REBOOTCMD definition found in your gosa.conf"));
-          } else {
-            exec ($cmd." ".$this->cn, $dummy, $retval);
-            if ($retval != 0){
-              print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-            }
-          }
-          break;
-
-        case 'halt':
-          $cmd= $this->config->search("termgeneric", "HALTCMD",array('tabs'));
-          if ($cmd == ""){
-            print_red(_("No HALTCMD definition found in your gosa.conf"));
-          } else {
-            exec ($cmd." ".$this->cn, $dummy, $retval);
-            if ($retval != 0){
-              print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-            }
-          }
-          break;
-      }
+    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate") && isset($this->mapActions[$_POST['saction']])){
+	    gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $this->netConfigDNS->ipHostNumber, array("macAddress" => $this->netConfigDNS->macAddress));
     }
 
     /* Base select dialog */

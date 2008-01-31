@@ -58,6 +58,7 @@ class workgeneric extends plugin
                             "update"          => "scheduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
+                            "wake"            => "",
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
@@ -180,15 +181,10 @@ class workgeneric extends plugin
       }
     }
 
-    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate"))){
-      $cmd= $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
-      if ($cmd == ""){
-        print_red(_("No ACTIONCMD definition found in your gosa.conf"));
-      } else {
-        exec ($cmd." ".$this->netConfigDNS->macAddress." ".escapeshellarg($_POST['saction']), $dummy, $retval);
-        if ($retval != 0){
-          print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-        } elseif ($_POST['saction'] != "wake") {
+    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
+	gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $this->netConfigDNS->ipHostNumber, array("macAddress" => $this->netConfigDNS->macAddress));
+
+        if ($_POST['saction'] != "wake") {
 
           /* Set FAIstate */
           if($this->fai_activated && $this->dn != "new"){
@@ -212,7 +208,7 @@ class workgeneric extends plugin
             }
 
             if($attrs['FAIstate'] == ""){
-#FIXME we should check if FAIobject is not used anymore
+	      #FIXME we should check if FAIobject is not used anymore
               $attrs['FAIstate'] = array();
             }
 
@@ -223,7 +219,6 @@ class workgeneric extends plugin
           }
           $this->didAction= TRUE;
         }
-      }
     }
 
     /* Do we represent a valid terminal? */
