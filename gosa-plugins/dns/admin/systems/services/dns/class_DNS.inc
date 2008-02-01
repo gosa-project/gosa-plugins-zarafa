@@ -175,8 +175,8 @@ class DNS
         unset($Zones[$zoneName]);
       }else{
         $tmp = $ldap->fetch();
-        $Zones[$zoneName]['ReverseZone']        = FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
-        $Zones[$zoneName]['InitialReverseZone'] = FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
+        $Zones[$zoneName]['ReverseZone']        = DNS::FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
+        $Zones[$zoneName]['InitialReverseZone'] = DNS::FlipIp(str_replace(".in-addr.arpa","",$tmp['zoneName'][0]));
       }
     }
     return($Zones);
@@ -191,7 +191,7 @@ class DNS
    */
   static function getDNSZoneEntriesDiff($config,$newZones,$HostDn)
   {
-    $oldZones = getDNSZoneEntries($config,$HostDn,true);
+    $oldZones = DNS::getDNSZoneEntries($config,$HostDn,true);
 
     $sOAattributes =  array("sOAprimary","sOAmail","sOAserial","sOArefresh","sOAretry","sOAexpire","sOAttl");
 
@@ -256,9 +256,9 @@ class DNS
       if(!empty($zone['InitialReverseZone'])){
         if($zone['InitialReverseZone'] != $zone['ReverseZone']){
           $base = "zoneName=".$zone['zoneName'].",".$HostDn;
-          $oldRDn = "zoneName=". FlipIp($zone['InitialReverseZone']).".in-addr.arpa,".$base; 
-          $newRDn = "zoneName=". FlipIp($zone['ReverseZone']).".in-addr.arpa,".$base;
-          $PrePareZoneEntries[FlipIp($zone['InitialReverseZone']).".in-addr.arpa"] = FlipIp($zone['ReverseZone']).".in-addr.arpa";
+          $oldRDn = "zoneName=". DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa,".$base; 
+          $newRDn = "zoneName=". DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa,".$base;
+          $PrePareZoneEntries[DNS::FlipIp($zone['InitialReverseZone']).".in-addr.arpa"] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa";
           $move [$oldRDn] = $newRDn;
         }
       }
@@ -289,7 +289,7 @@ class DNS
       /* Create Reverse Entry 
        * And append it to our add queue
        */
-      $zone['ReverseZone'] = FlipIp($zone['ReverseZone']).".in-addr.arpa";
+      $zone['ReverseZone'] = DNS::FlipIp($zone['ReverseZone']).".in-addr.arpa";
       $base = "zoneName=".$zone['zoneName'].",".$HostDn;
       $newRDn = "zoneName=".$zone['ReverseZone'].",".$base;
       $rObj = $obj;
@@ -434,7 +434,7 @@ class DNS
   {
     global $RecordTypes;
 
-    $oldEntry = getDNSHostEntries($config,$oldName);
+    $oldEntry = DNS::getDNSHostEntries($config,$oldName);
 
     $add    = array();
     $del    = array();

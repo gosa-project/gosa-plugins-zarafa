@@ -354,7 +354,7 @@ class servdnseditZone extends plugin
     $smarty->assign("NetworkClasses",  array("A"=>"255.0.0.0 (Class A)","B"=>"255.255.0.0 (Class B)","C"=>"255.255.255.0 (Class C)"));
 
     /* Display tempalte */
-    $display.= $smarty->fetch(get_template_path('servdnseditzone.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servdnseditzone.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
