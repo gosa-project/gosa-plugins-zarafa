@@ -108,7 +108,7 @@ class servdhcp extends goService
         print_red($warning);
         $this->display_warning = FALSE;
       }
-      return($smarty->fetch(get_template_path('servdhcp.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('servdhcp.tpl', TRUE, dirname(__FILE__))));
     }
 
     
@@ -253,7 +253,7 @@ class servdhcp extends goService
           $this->current_object= $dn;
           $this->dialog= 1;
           $smarty->assign("warning", sprintf(_("You're about to delete the DHCP section '%s'."), $dn));
-          return($smarty->fetch(get_template_path('remove_dhcp.tpl', TRUE)));
+          return($smarty->fetch(get_template_path('remove_dhcp.tpl', TRUE, dirname(__FILE__))));
         }
       }
 
@@ -362,7 +362,7 @@ class servdhcp extends goService
 
     /* Display tempalte */
     $smarty->assign("DhcpList",$DhcpList->DrawList());
-    $display.= $smarty->fetch(get_template_path('servdhcp.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servdhcp.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 

@@ -74,7 +74,7 @@ class dhcpService extends dhcpPlugin
     }
 
     /* Show main page */
-    $display= $smarty->fetch(get_template_path('dhcp_service.tpl', TRUE)).$this->network->execute();
+    $display= $smarty->fetch(get_template_path('dhcp_service.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 
     /* Merge arrays for advanced view */
     $this->fix_options();
