@@ -710,36 +710,36 @@ sub check_key_and_xml_validity {
         # check header
         my $header_l = $msg_hash->{'header'};
         if( 1 != @{$header_l} ) {
-            die'header error';
+            die 'no or more headers specified';
         }
         my $header = @{$header_l}[0];
         if( 0 == length $header) {
-            die 'header error';
+            die 'header has length 0';
         }
 
         # check source
         my $source_l = $msg_hash->{'source'};
         if( 1 != @{$source_l} ) {
-            die'source error';
+            die 'no or more sources specified';
         }
         my $source = @{$source_l}[0];
         if( 0 == length $source) {
-            die 'source error';
+            die 'source has length 0';
         }
 
         # check target
         my $target_l = $msg_hash->{'target'};
         if( 1 != @{$target_l} ) {
-            die'target error';
+            die 'no or more targets specified ';
         }
         my $target = @{$target_l}[0];
         if( 0 == length $target) {
-            die 'target error';
+            die 'target has length 0 ';
         }
 
     };
     if($@) {
-        &main::daemon_log("WARNING: do not understand the message:", 5);
+        &main::daemon_log("WARNING: do not understand the message or msg is not gosa-si envelope conform:", 5);
         &main::daemon_log("$@", 8);
     }
 
@@ -748,6 +748,7 @@ sub check_key_and_xml_validity {
 
 
 sub import_events {
+
     if (not -e $event_dir) {
         daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
     }
@@ -791,8 +792,9 @@ sub server_input {
         my $header = @{$msg_hash->{header}}[0];
         my $source = @{$msg_hash->{source}}[0];
 
-        if( $event_hash->{$header} ) {
+        if( exists $event_hash->{$header} ) {
             # a event exists with the header as name
+            daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
             no strict 'refs';
             $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
             if( $header eq "registered") {

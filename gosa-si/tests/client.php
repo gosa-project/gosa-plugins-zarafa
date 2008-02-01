@@ -36,10 +36,10 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_count_jobdb</header></xml>";
 
 # clear
-$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
 
 # set gosa-si-client to 'activated'
-#$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>127.0.0.1:20083</target> <source>127.0.0.1:20081</source> </xml>";
+$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>127.0.0.1:20081</source> </xml>";
 
 
     $sock->write($data);

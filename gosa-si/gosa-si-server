@@ -771,7 +771,7 @@ sub client_input {
                         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                             my $host_name = $hit->{hostname};
                             my $host_key = $hit->{hostkey};
-                            &send_msg_to_target($answer, $host_name, $host_key);
+                            &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                         }
                     }
                     elsif( $answer_target eq "GOSA" ) {
@@ -787,7 +787,7 @@ sub client_input {
                             my $host_name = $hit->{hostname};
                             my $host_key = $hit->{hostkey};
                             $answer =~ s/KNOWN_SERVER/$host_name/g;
-                            &send_msg_to_target($answer, $host_name, $host_key);
+                            &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                         }
                     }
                     else {
