@@ -1,49 +1,44 @@
 <?php
 
-
-/* All available record types 
- */
-$RecordTypes['aRecord']       = "aRecord";           
-$RecordTypes['mDRecord']      = "mDRecord";         
-$RecordTypes['mXRecord']      = "mXRecord";         
-$RecordTypes['nSRecord']      = "nSRecord";          
-$RecordTypes['pTRRecord']     = "relativeDomainName";
-$RecordTypes['hInfoRecord']   = "hInfoRecord";      
-$RecordTypes['mInfoRecord']   = "mInfoRecord";       
-$RecordTypes['cNAMERecord']   = "relativeDomainName";
-$RecordTypes['tXTRecord']     = "tXTRecord";         
-$RecordTypes['aFSDBRecord']   = "aFSDBRecord";       
-$RecordTypes['SigRecord']     = "SigRecord";         
-$RecordTypes['KeyRecord']     = "KeyRecord";         
-$RecordTypes['aAAARecord']    = "aAAARecord";        
-$RecordTypes['LocRecord']     = "LocRecord";         
-$RecordTypes['nXTRecord']     = "nXTRecord";        
-$RecordTypes['sRVRecord']     = "sRVRecord";         
-$RecordTypes['nAPTRRecord']   = "nAPTRRecord";       
-$RecordTypes['kXRecord']      = "kXRecord";          
-$RecordTypes['certRecord']    = "certRecord";        
-$RecordTypes['a6Record']      = "a6Record";          
-$RecordTypes['dSRecord']      = "dSRecord";          
-$RecordTypes['sSHFPRecord']   = "sSHFPRecord";       
-$RecordTypes['rRSIGRecord']   = "rRSIGRecord";      
-$RecordTypes['nSECRecord']    = "nSECRecord";       
-
 class DNS
 {
-
+  static $RecordTypes= array('aRecord' => "aRecord",
+                    'mDRecord'      => "mDRecord",         
+                    'mXRecord'      => "mXRecord",         
+                    'nSRecord'      => "nSRecord",          
+                    'pTRRecord'     => "relativeDomainName",
+                    'hInfoRecord'   => "hInfoRecord",      
+                    'mInfoRecord'   => "mInfoRecord",       
+                    'cNAMERecord'   => "relativeDomainName",
+                    'tXTRecord'     => "tXTRecord",         
+                    'aFSDBRecord'   => "aFSDBRecord",       
+                    'SigRecord'     => "SigRecord",         
+                    'KeyRecord'     => "KeyRecord",         
+                    'aAAARecord'    => "aAAARecord",        
+                    'LocRecord'     => "LocRecord",         
+                    'nXTRecord'     => "nXTRecord",        
+                    'sRVRecord'     => "sRVRecord",         
+                    'nAPTRRecord'   => "nAPTRRecord",       
+                    'kXRecord'      => "kXRecord",          
+                    'certRecord'    => "certRecord",        
+                    'a6Record'      => "a6Record",          
+                    'dSRecord'      => "dSRecord",          
+                    'sSHFPRecord'   => "sSHFPRecord",       
+                    'rRSIGRecord'   => "rRSIGRecord",      
+                    'nSECRecord'    => "nSECRecord");
+  /* All available record types */
   /* Return all record types 
    */
   static function getDnsRecordTypes($ForZones = false)
   {
-    global $RecordTypes;
     if($ForZones){
-      $tmp = $RecordTypes;
+      $tmp = DNS::$RecordTypes;
       unset($tmp['cNAMERecord']);
       unset($tmp['pTRRecord']);
       unset($tmp['tXTRecord']);
       return($tmp);
     }else{
-      return($RecordTypes);
+      return(DNS::$RecordTypes);
     }
   }
 
@@ -68,8 +63,6 @@ class DNS
    */
   static function getDNSZoneEntries($config,$HostDn,$silent = false)
   {
-    global $RecordTypes;
-
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']); 
 
@@ -141,7 +134,7 @@ class DNS
 
       /* Get record attributes 
        */
-      foreach($RecordTypes as $name => $value){
+      foreach(DNS::$RecordTypes as $name => $value){
 
         /* Skip some attributes 
          */
@@ -337,8 +330,6 @@ class DNS
    */
   static function getDNSHostEntries($config,$name,$silent = false)
   {
-    global $RecordTypes;
-
     $types = array();
     $ret = array();
     $ret['RECORDS']   = array();
@@ -405,7 +396,7 @@ class DNS
       }
 
       /* Create list with all used records */
-      foreach($RecordTypes as $name => $value){
+      foreach(DNS::$RecordTypes as $name => $value){
 
         /* If there is a record attribute  */
         if(isset($attrs[$name])){
@@ -432,8 +423,6 @@ class DNS
    */
   static function getDNSHostEntriesDiff($config,$oldName,$newEntry,$newName)
   {
-    global $RecordTypes;
-
     $oldEntry = DNS::getDNSHostEntries($config,$oldName);
 
     $add    = array();
