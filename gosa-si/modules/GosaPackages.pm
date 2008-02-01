@@ -285,7 +285,9 @@ sub process_gosa_msg {
         $out_msg = &count_jobdb
     } elsif ($header eq 'trigger_action_wake' ) {
 	# Forward messages to all known servers as "trigger_wake"
-	$out_msg = "<xml>";
+	my $in_hash= &transform_msg2hash($msg);
+	my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
+	$out_msg = &send_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
         # fetch all available eventhandler under $server_event_dir

@@ -398,8 +398,7 @@ sub process_incoming_msg {
             } elsif ($header eq 'detected_hardware') {
 		@out_msg_l = &process_detected_hardware($msg_hash)
 	    } elsif ($header eq 'trigger_wake') {
-		my $in_hash= &transform_msg2hash($msg);
-		foreach (@{$in_hash->{macAddress}}){
+		foreach (@{$msg_hash->{macAddress}}){
 	            &main::daemon_log("SIPackages: trigger wake for $_", 1);
 		    do_wake($_);
 		}
