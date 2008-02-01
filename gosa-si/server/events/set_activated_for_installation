@@ -1,0 +1,39 @@
+#!/usr/bin/perl 
+#===============================================================================
+#
+#         FILE:  set_activated_for_installation.pl
+#
+#        USAGE:  ./set_activated_for_installation.pl 
+#
+#  DESCRIPTION:  
+#
+#      OPTIONS:  ---
+# REQUIREMENTS:  ---
+#         BUGS:  ---
+#        NOTES:  ---
+#       AUTHOR:   (), <>
+#      COMPANY:  
+#      VERSION:  1.0
+#      CREATED:  28.01.2008 17:31:37 CET
+#     REVISION:  ---
+#===============================================================================
+
+use strict;
+use warnings;
+
+use GOSA::GosaSupportDaemon;
+
+
+# transform msg to hash
+my $hash = &transform_msg2hash($ARGV[0]);
+
+# extract from hash all what you need
+my $header = @{$hash->{header}}[0];
+my $source = @{$hash->{source}}[0];
+my $target = @{$hash->{target}}[0];
+
+#my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
+my $out_hash = &create_xml_hash("set_activated_for_installation", $source, "*");
+&add_content2xml_hash($out_hash, 'target', "GOSA");
+my $out_msg = &create_xml_string($out_hash);
+print $out_msg;
