@@ -13,7 +13,6 @@ use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
 
-
 BEGIN{}
 END{}
 
@@ -252,7 +251,7 @@ sub process_incoming_msg {
     }
 
     # keep job queue uptodate and save result and status
-    if ($out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
+    if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
         my $job_id = $1;
         my $sql = "UPDATE '".$main::job_queue_table_name.
             "' SET status='done', result='".$out_msg.
@@ -261,7 +260,9 @@ sub process_incoming_msg {
     } 
 
     my @out_msg_l;
-    push(@out_msg_l, $out_msg);
+    if (defined $out_msg){
+        push(@out_msg_l, $out_msg);
+    }
     return \@out_msg_l;
 }
 
@@ -282,6 +283,9 @@ sub process_gosa_msg {
 	$out_msg = &update_status_jobdb_entry
     } elsif ($header eq 'count_jobdb' ) {
         $out_msg = &count_jobdb
+    } elsif ($header eq 'trigger_action_wake' ) {
+	# Forward messages to all known servers as "trigger_wake"
+	
     } else {
         # msg could not be assigned to core function
         # fetch all available eventhandler under $server_event_dir

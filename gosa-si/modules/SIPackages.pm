@@ -13,7 +13,8 @@ use IO::Socket::INET;
 use XML::Simple;
 use Data::Dumper;
 use Net::LDAP;
-use Socket qw/PF_INET SOCK_DGRAM inet_ntoa sockaddr_in/;
+use Socket;
+use Net::hostent;
 
 BEGIN{}
 END {}
@@ -87,6 +88,55 @@ sub get_module_info {
                 "socket",
                 );
     return \@info;
+}
+
+
+
+sub do_wake {
+        my $host    = shift;
+        my $ipaddr  = shift || '255.255.255.255';
+        my $port    = getservbyname('discard', 'udp');
+
+        my ($raddr, $them, $proto);
+        my ($hwaddr, $hwaddr_re, $pkt);
+
+        # get the hardware address (ethernet address)
+
+        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
+        if ($host =~ m/^$hwaddr_re$/) {
+                $hwaddr = $host;
+        } else {
+                # $host is not a hardware address, try to resolve it
+                my $ip_re = join('\.', ('([0-9]|[1-9][0-9]|1[0-9]{2}|2([0-4][0-9]|5[0-5]))') x 4);
+                my $ip_addr;
+                if ($host =~ m/^$ip_re$/) {
+                        $ip_addr = $host;
+                } else {
+                        my $h;
+                        unless ($h = gethost($host)) {
+                                return undef;
+                        }
+                        $ip_addr = inet_ntoa($h->addr);
+                }
+        }
+
+        # Generate magic sequence
+        foreach (split /:/, $hwaddr) {
+                $pkt .= chr(hex($_));
+        }
+        $pkt = chr(0xFF) x 6 . $pkt x 16;
+
+        # Allocate socket and send packet
+
+        $raddr = gethostbyname($ipaddr)->addr;
+        $them = pack_sockaddr_in($port, $raddr);
+        $proto = getprotobyname('udp');
+
+        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
+        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
+
+        send(S, $pkt, 0, $them) or die "send : $!";
+        close S;
 }
 
 
@@ -320,14 +370,28 @@ sub process_incoming_msg {
     if( 1 == length @target_l) {
         my $target = $target_l[0];
         if( $target eq $server_address ) {  
-            if ($header eq 'new_passwd') { @out_msg_l = &new_passwd($msg_hash) }
-            elsif ($header eq 'here_i_am') { @out_msg_l = &here_i_am($msg_hash) }
-            elsif ($header eq 'who_has') { @out_msg_l = &who_has($msg_hash) }
-            elsif ($header eq 'who_has_i_do') { @out_msg_l = &who_has_i_do($msg_hash) }
-            elsif ($header eq 'got_ping') { @out_msg_l = &got_ping($msg_hash)}
-            elsif ($header eq 'get_load') { @out_msg_l = &execute_actions($msg_hash)}
-            elsif ($header eq 'detected_hardware') { @out_msg_l = &process_detected_hardware($msg_hash)}
-            else {
+            if ($header eq 'new_passwd') {
+		@out_msg_l = &new_passwd($msg_hash)
+	    } elsif ($header eq 'here_i_am') {
+		@out_msg_l = &here_i_am($msg_hash)
+	    } elsif ($header eq 'who_has') {
+		@out_msg_l = &who_has($msg_hash)
+	    } elsif ($header eq 'who_has_i_do') {
+		@out_msg_l = &who_has_i_do($msg_hash)
+	    } elsif ($header eq 'got_ping') {
+		@out_msg_l = &got_ping($msg_hash)
+	    } elsif ($header eq 'get_load') {
+		@out_msg_l = &execute_actions($msg_hash)
+            } elsif ($header eq 'detected_hardware') {
+		@out_msg_l = &process_detected_hardware($msg_hash)
+	    } elsif ($header eq 'trigger_wake') {
+		my $in_hash= &transform_msg2hash($msg);
+		foreach (@{$in_hash->{macAddress}}){
+	            &main::daemon_log("SIPackages: trigger wake for $_", 1);
+		    do_wake($_);
+		}
+
+            } else {
                 &main::daemon_log("ERROR: $header is an unknown core function", 1);
                 $error++;
             }
