@@ -192,7 +192,8 @@ class termgroup extends plugin
         $macaddresses[]= $macAddress;
       }
 
-      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
+      print_red("trigger action is missing");
+      #gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
 
       /* Update members fai state */
       $this->update_term_member_FAIstate(trim($_POST['saction']));
