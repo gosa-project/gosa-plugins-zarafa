@@ -326,8 +326,9 @@ sub process_incoming_msg {
             elsif ($header eq 'who_has_i_do') { @out_msg_l = &who_has_i_do($msg_hash) }
             elsif ($header eq 'got_ping') { @out_msg_l = &got_ping($msg_hash)}
             elsif ($header eq 'get_load') { @out_msg_l = &execute_actions($msg_hash)}
+            elsif ($header eq 'detected_hardware') { @out_msg_l = &process_detected_hardware($msg_hash)}
             else {
-                &main::daemon_log("ERROR: $header is an unknown core funktion", 1);
+                &main::daemon_log("ERROR: $header is an unknown core function", 1);
                 $error++;
             }
         }
@@ -435,6 +436,7 @@ sub here_i_am {
 
     my $source = @{$msg_hash->{source}}[0];
     my $mac_address = @{$msg_hash->{mac_address}}[0];
+	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
@@ -511,6 +513,10 @@ sub here_i_am {
         push(@out_msg_l, $new_ldap_config_out);
     }
 
+	my $hardware_config_out = &hardware_config($source, $gotoHardwareChecksum);
+	if( $hardware_config_out ) {
+		push(@out_msg_l, $hardware_config_out);
+	}
 
     return @out_msg_l;
 }
@@ -562,7 +568,6 @@ sub who_has_i_do {
     print "\ngot msg $header:\nserver $source has client with $search_param $search_value\n";
 }
 
-
 #===  FUNCTION  ================================================================
 #         NAME:  new_ldap_config
 #   PARAMETERS:  address - string - ip address and port of a host
@@ -570,7 +575,156 @@ sub who_has_i_do {
 #  DESCRIPTION:  send to address the ldap configuration found for dn gotoLdapServer
 #===============================================================================
 sub new_ldap_config {
-    my ($address) = @_ ;
+	my ($address) = @_ ;
+
+	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
+
+	# check hit
+	my $hit_counter = keys %{$res};
+	if( not $hit_counter == 1 ) {
+		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+	}
+
+	my $macaddress = $res->{1}->{macaddress};
+	my $hostkey = $res->{1}->{hostkey};
+
+	if (not defined $macaddress) {
+		&main::daemon_log("ERROR: no mac address found for client $address", 1);
+		return;
+	}
+
+	# Build LDAP connection
+	my $ldap = Net::LDAP->new($ldap_uri);
+	if( not defined $ldap ) {
+		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+		return;
+	} 
+
+
+	# Bind to a directory with dn and password
+	my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
+
+	# Perform search
+	$mesg = $ldap->search( base   => $ldap_base,
+		scope  => 'sub',
+		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag'],
+		filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
+	#$mesg->code && die $mesg->error;
+	if($mesg->code) {
+		&main::daemon_log($mesg->error, 1);
+		return;
+	}
+
+	# Sanity check
+	if ($mesg->count != 1) {
+		&main::daemon_log("WARNING: client mac address $macaddress not found/not unique in ldap search", 1);
+		&main::daemon_log("\tbase: $ldap_base", 1);
+		&main::daemon_log("\tscope: sub", 1);
+		&main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
+		&main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
+		return;
+	}
+
+	my $entry= $mesg->entry(0);
+	my $dn= $entry->dn;
+	my @servers= $entry->get_value("gotoLdapServer");
+	my $unit_tag= $entry->get_value("gosaUnitTag");
+	my @ldap_uris;
+	my $server;
+	my $base;
+
+	# Do we need to look at an object class?
+	if (length(@servers) < 1){
+		$mesg = $ldap->search( base   => $ldap_base,
+			scope  => 'sub',
+			attrs => ['dn', 'gotoLdapServer'],
+			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+		#$mesg->code && die $mesg->error;
+		if($mesg->code) {
+			&main::daemon_log($mesg->error, 1);
+			return;
+		}
+
+		# Sanity check
+		if ($mesg->count != 1) {
+			&main::daemon_log("WARNING: no LDAP information found for client mac $macaddress", 1);
+			return;
+		}
+
+		$entry= $mesg->entry(0);
+		$dn= $entry->dn;
+		@servers= $entry->get_value("gotoLdapServer");
+	}
+
+	@servers= sort (@servers);
+
+	foreach $server (@servers){
+		$base= $server;
+		$server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;
+		$base =~ s%^[^:]+:[^:]+:ldap.*://[^/]+/(.*)$%$1%;
+		push (@ldap_uris, $server);
+	}
+
+	# Assemble data package
+	my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
+		'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
+
+	# Need to append GOto settings?
+	if (defined $goto_admin and defined $goto_secret){
+		$data{'goto_admin'}= $goto_admin;
+		$data{'goto_secret'}= $goto_secret;
+	}
+
+	# Append unit tag if needed
+	if (defined $unit_tag){
+
+		# Find admin base and department name
+		$mesg = $ldap->search( base   => $ldap_base,
+			scope  => 'sub',
+			attrs => ['dn', 'ou'],
+			filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
+		#$mesg->code && die $mesg->error;
+		if($mesg->code) {
+			&main::daemon_log($mesg->error, 1);
+			return;
+		}
+
+		# Sanity check
+		if ($mesg->count != 1) {
+			&main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
+			return;
+		}
+
+		$entry= $mesg->entry(0);
+		$data{'admin_base'}= $entry->dn;
+		$data{'department'}= $entry->get_value("ou");
+
+		# Append unit Tag
+		$data{'unit_tag'}= $unit_tag;
+	}
+
+	# Unbind
+	$mesg = $ldap->unbind;
+
+	# Send information
+	return send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
+}
+
+sub process_detected_hardware {
+	my $msg_hash = shift;
+
+
+	return;
+}
+#===  FUNCTION  ================================================================
+#         NAME:  hardware_config
+#   PARAMETERS:  address - string - ip address and port of a host
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub hardware_config {
+    my ($address, $gotoHardwareChecksum, $detectedHardware) = @_ ;
     
     my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
     my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -603,59 +757,16 @@ sub new_ldap_config {
     # Perform search
     $mesg = $ldap->search( base   => $ldap_base,
 		    scope  => 'sub',
-		    attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag'],
+		    attrs => ['dn', 'gotoHardwareChecksum'],
 		    filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
-    $mesg->code && die $mesg->error;
+		#$mesg->code && die $mesg->error;
 
-    # Sanity check
-    if ($mesg->count != 1) {
-	    &main::daemon_log("WARNING: client mac address $macaddress not found/not unique in ldap search", 1);
-	    &main::daemon_log("\tbase: $ldap_base", 1);
-	    &main::daemon_log("\tscope: sub", 1);
-	    &main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
-	    &main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
-	    return;
-    }
-
-    my $entry= $mesg->entry(0);
-    my $dn= $entry->dn;
-    my @servers= $entry->get_value("gotoLdapServer");
-    my $unit_tag= $entry->get_value("gosaUnitTag");
-    my @ldap_uris;
-    my $server;
-    my $base;
-
-    # Do we need to look at an object class?
-    if (length(@servers) < 1){
-	    $mesg = $ldap->search( base   => $ldap_base,
-			    scope  => 'sub',
-			    attrs => ['dn', 'gotoLdapServer'],
-			    filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
-	    $mesg->code && die $mesg->error;
-
-            # Sanity check
-	    if ($mesg->count != 1) {
-		    &main::daemon_log("WARNING: no LDAP information found for client mac $macaddress", 1);
-		    return;
-	    }
-
-	    $entry= $mesg->entry(0);
-	    $dn= $entry->dn;
-	    @servers= $entry->get_value("gotoLdapServer");
-    }
-
-    @servers= sort (@servers);
-
-    foreach $server (@servers){
-	    $base= $server;
-	    $server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;
-	    $base =~ s%^[^:]+:[^:]+:ldap.*://[^/]+/(.*)$%$1%;
-	    push (@ldap_uris, $server);
-    }
+    	#my $entry= $mesg->entry(0);
+    	#my $dn= $entry->dn;
+    	#my @servers= $entry->get_value("gotoHardwareChecksum");
 
     # Assemble data package
-    my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
-	             'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
+    my %data = ();
 
     # Need to append GOto settings?
     if (defined $goto_admin and defined $goto_secret){
@@ -663,35 +774,12 @@ sub new_ldap_config {
 	    $data{'goto_secret'}= $goto_secret;
     }
 
-    # Append unit tag if needed
-    if (defined $unit_tag){
-           
-            # Find admin base and department name
-	    $mesg = $ldap->search( base   => $ldap_base,
-			    scope  => 'sub',
-			    attrs => ['dn', 'ou'],
-			    filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
-	    $mesg->code && die $mesg->error;
-
-            # Sanity check
-	    if ($mesg->count != 1) {
-		    &main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
-		    return;
-	    }
-
-	    $entry= $mesg->entry(0);
-	    $data{'admin_base'}= $entry->dn;
-	    $data{'department'}= $entry->get_value("ou");
-
-	    # Append unit Tag
-	    $data{'unit_tag'}= $unit_tag;
-    }
-
     # Unbind
     $mesg = $ldap->unbind;
 
+	&main::daemon_log("Send detect_hardware message to $address", 4);
     # Send information
-    return send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
+    return send_msg("detect_hardware", $server_address, $address, \%data, $hostkey);
 }
 
 

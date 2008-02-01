@@ -1003,6 +1003,7 @@ sub process_incoming_msg {
     elsif ($header eq 'ping') { &got_ping($msg_hash) }
     elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
     elsif ($header eq 'new_passwd') { &new_passwd()}
+	elsif ($header eq 'detect_hardware') { &detect_hardware()}
     else { daemon_log("ERROR: no function assigned to msg $header", 5) }
 
     return;
@@ -1279,8 +1280,8 @@ sub detect_hardware {
 	chomp $hwinfo;
 
 	if (!(defined($hwinfo) && length($hwinfo) > 0)) {
-		print "ERROR: hwinfo was not found in \$PATH!\n";
-		exit(1);
+		&main::daemon_log("ERROR: hwinfo was not found in \$PATH! Hardware detection will not work!", 1);
+		return;
 	}
 
 	my $result= {
@@ -1303,6 +1304,7 @@ sub detect_hardware {
 		ghScsiDev       => [],
 	};
 
+	&main::daemon_log("Starting hardware detection", 4);
 	my $gfxcard= `$hwinfo --gfxcard`;
 	my $primary_adapter= $1 if $gfxcard =~ /^Primary display adapter:\s#(\d+)\n/m;
 	if(defined($primary_adapter)) {
@@ -1379,7 +1381,13 @@ sub detect_hardware {
 		push (@{$result->{ghScsiDev}}, "$1 $2");
 	}
 
-	return $result;
+	&main::daemon_log("Hardware detection done!", 4);
+
+    return &send_msg_hash2address(
+		&create_xml_hash("detected_hardware", $client_address, $server_address, $result),
+		$server_address, 
+		$server_passwd
+	);
 }
 
 #==== MAIN = main ==============================================================

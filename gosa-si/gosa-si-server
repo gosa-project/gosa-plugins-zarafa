@@ -454,18 +454,18 @@ sub input_from_known_server {
             next;
         }
         my $host_key = $hit->{hostkey};
-        daemon_log("ServerPackages: host_name: $host_name", 7);
-        daemon_log("ServerPackages: host_key: $host_key", 7);
+        daemon_log("SIPackages: host_name: $host_name", 7);
+        daemon_log("SIPackages: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
         my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
         if( (!$msg) || (!$msg_hash) ) {
-            daemon_log("ServerPackages: deciphering raise error", 7);
+            daemon_log("SIPackages: deciphering raise error", 7);
             daemon_log("$@", 8);
             next;
         }
         else {
-            $module = "ServerPackages";
+            $module = "SIPackages";
             last;
         }
     }
@@ -486,28 +486,29 @@ sub input_from_known_client {
     my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
         my $host_name = $hit->{hostname};
-        if( not $host_name =~ "^$remote_ip") {
+        if( not $host_name =~ /^$remote_ip:\d*$/) {
             next;
-        }
+		}
         my $host_key = $hit->{hostkey};
-        daemon_log("ServerPackages: host_name: $host_name", 7);
-        daemon_log("ServerPackages: host_key: $host_key", 7);
+        &daemon_log("SIPackages: host_name: $host_name", 7);
+        &daemon_log("SIPackages: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
-        my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
+
         if( (!$msg) || (!$msg_hash) ) {
-            daemon_log("ServerPackages: deciphering raise error", 7);
-            daemon_log("$@", 8);
+            &daemon_log("SIPackages: deciphering raise error", 7);
+            &daemon_log("$@", 8);
             next;
         }
         else {
-            $module = "ServerPackages";
+            $module = "SIPackages";
             last;
         }
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        daemon_log("Incoming message is not from a known client", 3);
+        &daemon_log("Incoming message is not from a known client", 3);
     }
 
     return ($msg, $msg_hash, $module);
@@ -703,7 +704,7 @@ sub client_input {
 
     # msg is from a gosa-si-client
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_client($input);
+        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
     }
 
     # an error occurred
