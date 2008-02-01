@@ -17,7 +17,7 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 
 # add
-$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
+#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
