@@ -188,13 +188,14 @@ sub got_packet {
 		my $ldap_result=&get_host_from_ldap($packet->{source_haddr});
 		if(exists($ldap_result->{dn})) {
 			$hosts_database->{$packet->{source_haddr}}=$ldap_result;
+			$hosts_database->{$packet->{source_haddr}}->{dnsname}= $dnsname;
 			if(!exists($ldap_result->{ipHostNumber})) {
 				$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}=$packet->{source_ipaddr};
 			} else {
 				if(!($ldap_result->{ipHostNumber} eq $packet->{source_ipaddr})) {
 					&main::daemon_log(
 						"Current IP Address ".$packet->{source_ipaddr}.
-						" of host ".$ldap_result->{dnsname}.
+						" of host ".$hosts_database->{$packet->{source_haddr}}->{dnsname}.
 						" differs from LDAP (".$ldap_result->{ipHostNumber}.")", 4);
 				}
 			}
