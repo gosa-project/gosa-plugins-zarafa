@@ -157,7 +157,7 @@ class servdns extends goService
       $warning2 = _("The migration will be startet when you save this system. To cancel this action, use the cancel button below.");
       $smarty->assign("warning",$warning);
       $smarty->assign("warning2",$warning2);
-      return($smarty->fetch(get_template_path('servdns.tpl', TRUE)));
+      return($smarty->fetch(get_template_path('servdns.tpl', TRUE, dirname(__FILE__))));
     }
 
 
@@ -288,7 +288,7 @@ class servdns extends goService
     /* Display tempalte 
      */
     $smarty->assign("ZoneList",$ZoneList->DrawList());
-    $display.= $smarty->fetch(get_template_path('servdns.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servdns.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
