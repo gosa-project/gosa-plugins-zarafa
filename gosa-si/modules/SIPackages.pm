@@ -772,7 +772,7 @@ sub new_ldap_config {
 	$mesg = $ldap->unbind;
 
 	# Send information
-	return send_msg("new_ldap_config", $server_address, $address, \%data, $hostkey);
+	return send_msg("new_ldap_config", $server_address, $address, \%data);
 }
 
 sub process_detected_hardware {
@@ -843,7 +843,7 @@ sub hardware_config {
 
 	&main::daemon_log("Send detect_hardware message to $address", 4);
     # Send information
-    return send_msg("detect_hardware", $server_address, $address, \%data, $hostkey);
+    return send_msg("detect_hardware", $server_address, $address, \%data);
 }
 
 
