@@ -927,47 +927,47 @@ sub hardware_config {
 			&main::daemon_log("gotoHardwareChecksum $gotoHardwareChecksum was added to LDAP", 4);
 		}
 
-		# Look if there another host with this checksum to use the hardware config
-		$mesg = $ldap->search(
-			base   => $ldap_base,
-			scope  => 'sub',
-			filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
-		);
+		## Look if there another host with this checksum to use the hardware config
+		#$mesg = $ldap->search(
+		#	base   => $ldap_base,
+		#	scope  => 'sub',
+		#	filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
+		#);
 
-		if($mesg->count>1) {
-			my $clone_entry= $mesg->entry(0);
-			$entry->changetype("modify");
-			foreach my $attribute (
-				"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
-				"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
-				"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
-				my $value= $clone_entry->get_value($attribute);
-				if(defined($value)) {
-					if(defined($entry->get_value($attribute))) {
-						$entry->delete($attribute);
-					}
-					&main::daemon_log("Adding attribute $attribute with value $value",1);
-					$entry->add($attribute => $value);
-				}
-			}
-			foreach my $attribute (
-				"gotoModules", "ghScsiDev", "ghIdeDev") {
-				my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
-				if(defined($array))	{
-					if(defined($entry->get_value($attribute))) {
-						$entry->delete($attribute);
-					}
-					foreach my $array_entry (@{$array}) {
-						$entry->add($attribute => $array_entry);
-					}
-				}
+		#if($mesg->count>1) {
+		#	my $clone_entry= $mesg->entry(0);
+		#	$entry->changetype("modify");
+		#	foreach my $attribute (
+		#		"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
+		#		"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
+		#		"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
+		#		my $value= $clone_entry->get_value($attribute);
+		#		if(defined($value)) {
+		#			if(defined($entry->get_value($attribute))) {
+		#				$entry->delete($attribute);
+		#			}
+		#			&main::daemon_log("Adding attribute $attribute with value $value",1);
+		#			$entry->add($attribute => $value);
+		#		}
+		#	}
+		#	foreach my $attribute (
+		#		"gotoModules", "ghScsiDev", "ghIdeDev") {
+		#		my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
+		#		if(defined($array))	{
+		#			if(defined($entry->get_value($attribute))) {
+		#				$entry->delete($attribute);
+		#			}
+		#			foreach my $array_entry (@{$array}) {
+		#				$entry->add($attribute => $array_entry);
+		#			}
+		#		}
 
-			}
-			if($entry->update($ldap)) {
-				&main::daemon_log("Added Hardware configuration to LDAP", 4);
-			}
+		#	}
+		#	if($entry->update($ldap)) {
+		#		&main::daemon_log("Added Hardware configuration to LDAP", 4);
+		#	}
 
-		}
+		#}
 
 	}
 
