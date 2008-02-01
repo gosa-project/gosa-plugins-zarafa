@@ -26,7 +26,7 @@ sub registered {
    
     if( $header eq "registered" ) {
         my $source = @{$msg_hash->{'source'}}[0];
-        &main::daemon_log("Registration at $source",1);
+        &main::daemon_log("registration at $source",1);
     }
     
     # set registration_flag to true 
