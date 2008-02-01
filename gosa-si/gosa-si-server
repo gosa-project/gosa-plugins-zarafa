@@ -444,7 +444,6 @@ sub input_from_known_server {
     my ($input, $remote_ip) = @_ ;  
     my ($msg, $msg_hash, $module);
 
-    
     my $sql_statement= "SELECT * FROM known_server";
     my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -688,6 +687,12 @@ sub send_msg_to_target {
 }
 
 
+sub _start {
+    my ($kernel) = $_[KERNEL];
+    &trigger_db_loop($kernel);
+}
+
+
 sub client_input {
     no strict "refs";
     my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
@@ -812,11 +817,6 @@ sub client_input {
     return;
 }
 
-sub _start {
-    my ($kernel) = $_[KERNEL];
-    &trigger_db_loop($kernel);
-    #&register_at_gosa_si_bus();
-}
 
 
 sub trigger_db_loop {
