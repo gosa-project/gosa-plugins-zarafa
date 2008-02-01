@@ -682,7 +682,7 @@ sub new_ldap_config {
 
 
 	# Bind to a directory with dn and password
-	my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
+	my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 
 	# Perform search
 	$mesg = $ldap->search( base   => $ldap_base,
@@ -803,7 +803,7 @@ sub process_detected_hardware {
 #  DESCRIPTION:  
 #===============================================================================
 sub hardware_config {
-    my ($address, $gotoHardwareChecksum, $detectedHardware) = @_ ;
+    my ($address, $gotoHardwareChecksum) = @_ ;
     
     my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
     my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -829,20 +829,37 @@ sub hardware_config {
         return;
     } 
 
-
     # Bind to a directory with dn and password
-    my $mesg= $ldap->bind($ldap_admin_dn, $ldap_admin_password);
+    my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 
     # Perform search
-    $mesg = $ldap->search( base   => $ldap_base,
-		    scope  => 'sub',
-		    attrs => ['dn', 'gotoHardwareChecksum'],
-		    filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
-		#$mesg->code && die $mesg->error;
+	$mesg = $ldap->search(
+		base   => $ldap_base,
+		scope  => 'sub',
+		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
+	);
+	
+	if($mesg->count() == 0) {
+		&main::daemon_log("Host was not found in LDAP!", 1);
+		return;
+	}
 
-    	#my $entry= $mesg->entry(0);
-    	#my $dn= $entry->dn;
-    	#my @servers= $entry->get_value("gotoHardwareChecksum");
+	my $entry= $mesg->entry(0);
+	my $dn= $entry->dn;
+	if(defined($entry->get_value("gotoHardwareChecksum"))) {
+		return;
+	} else {
+		# need to fill it to LDAP
+		$entry->add(gotoHardwareChecksum => $gotoHardwareChecksum);
+		&main::daemon_log(Dumper($entry->update($ldap)),1);
+
+		# Look if there another host with this checksum to use the hardware config
+		$mesg = $ldap->search(
+			base   => $ldap_base,
+			scope  => 'sub',
+			filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
+		);
+	}
 
     # Assemble data package
     my %data = ();
