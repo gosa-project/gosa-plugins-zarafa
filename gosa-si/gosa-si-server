@@ -106,10 +106,10 @@ our $known_clients_db;
     "child_min" => [\$child_min, 3],
     "child_timeout" => [\$child_timeout, 180],
     "job_queue_timeout" => [\$job_queue_timeout, undef],
-    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/gosa-si-server_jobs.db'],
     "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
-    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/known_clients.db' ],
-    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/known_server.db'],
+    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/gosa-si-server_known_clients.db' ],
+    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/gosa-si-server_known_server.db'],
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -360,7 +360,7 @@ sub import_modules {
 		} else {
 			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
-			if(defined($info)) {
+			if( $info ) {
 				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
 				$known_modules->{$mod_name} = $info;
 				daemon_log("module $mod_name loaded", 1);
@@ -390,7 +390,6 @@ $SIG{INT} = \&sig_int_handler;
 sub check_key_and_xml_validity {
     my ($crypted_msg, $module_key) = @_;
 #print STDERR "crypted_msg:$crypted_msg\n";
-#print STDERR "modul:$module\n";
 #print STDERR "modul_key:$module_key\n";
 
     my $msg;
@@ -653,7 +652,10 @@ sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
     my $error = 0;
 
-    if( !$msg_header ) {
+    if( $msg_header ) {
+        $msg_header = "'$msg_header'-";
+    }
+    else {
         $msg_header = "";
     }
 
@@ -662,8 +664,8 @@ sub send_msg_to_target {
 
     # opensocket
     my $socket = &open_socket($address);
-    if(not defined $socket){
-        daemon_log("cannot send $msg_header msg to $address , host not reachable", 1);
+    if( !$socket ) {
+        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
         $error++;
     }
     
@@ -672,11 +674,14 @@ sub send_msg_to_target {
         # send xml msg
         print $socket $crypted_msg."\n";
 
-        close $socket;
-
-        daemon_log("send msg to $address", 1);
+        daemon_log("send ".$msg_header."msg to $address", 1);
         daemon_log("message:\n$msg", 8);
 
+    }
+
+    # close socket in any case
+    if( $socket ) {
+        close $socket;
     }
 
     return;
@@ -725,56 +730,73 @@ sub client_input {
     }
     if( !$answer_l ) { $error++ };
 
-    # for each answer in answer list
-    foreach my $answer ( @{$answer_l} ) {
+    if( $error == 0 ) {
 
-        # check answer if gosa-si envelope conform
-        if( $error == 0 ) {
-            my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
-            $answer_header = @{$answer_hash->{'header'}}[0];
-            @answer_target_l = @{$answer_hash->{'target'}};
-            $answer_source = @{$answer_hash->{'source'}}[0];
-            if( !$answer_header ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
-                $error++;
-            }
-            if( 0 == length @answer_target_l ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
-                $error++;
-            }
-            if( !$answer_source ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
-                $error++;
-            }
-        }
+        # for each answer in answer list
+        foreach my $answer ( @{$answer_l} ) {
 
-        # deliver msg to all targets 
-        foreach my $answer_target ( @answer_target_l ) {
-            if( $answer_target eq "*" ) {
-                # answer is for all clients
-                my $sql_statement= "SELECT * FROM known_clients";
-                my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                    my $host_name = $hit->{hostname};
-                    my $host_key = $hit->{hostkey};
-                    &send_msg_to_target($answer, $host_name, $host_key);
+            # check answer if gosa-si envelope conform
+            if( $error == 0 ) {
+                my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
+                $answer_header = @{$answer_hash->{'header'}}[0];
+                @answer_target_l = @{$answer_hash->{'target'}};
+                $answer_source = @{$answer_hash->{'source'}}[0];
+                if( !$answer_header ) {
+                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+                    $error++;
                 }
-            }
-            elsif( $answer_target eq "GOSA" ) {
-                # answer is for GOSA and has to returned to connected client
-                my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                $client_answer = $gosa_answer;
-            }
-            else {
-                # answer is for one specific host
-                # get encrypt_key
-                my $encrypt_key = &get_encrypt_key($answer_target);
-                if( !$encrypt_key ) {
-                    daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                if( 0 == length @answer_target_l ) {
+                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+                    $error++;
+                }
+                if( !$answer_source ) {
+                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+                    $error++;
+                }
+
+                if( $error != 0 ) {
                     next;
                 }
-                # send_msg
-                &send_msg_to_target($answer, $answer_target, $encrypt_key);
+
+                # deliver msg to all targets 
+                foreach my $answer_target ( @answer_target_l ) {
+                    if( $answer_target eq "*" ) {
+                        # answer is for all clients
+                        my $sql_statement= "SELECT * FROM known_clients";
+                        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                            my $host_name = $hit->{hostname};
+                            my $host_key = $hit->{hostkey};
+                            &send_msg_to_target($answer, $host_name, $host_key);
+                        }
+                    }
+                    elsif( $answer_target eq "GOSA" ) {
+                        # answer is for GOSA and has to returned to connected client
+                        my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+                        $client_answer = $gosa_answer;
+                    }
+                    elsif( $answer_target eq "KNOWN_SERVER" ) {
+                        # answer is for all server in known_server
+                        my $sql_statement= "SELECT * FROM known_server";
+                        my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                            my $host_name = $hit->{hostname};
+                            my $host_key = $hit->{hostkey};
+                            &send_msg_to_target($answer, $host_name, $host_key);
+                        }
+                    }
+                    else {
+                        # answer is for one specific host
+                        # get encrypt_key
+                        my $encrypt_key = &get_encrypt_key($answer_target);
+                        if( !$encrypt_key ) {
+                            daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                            next;
+                        }
+                        # send_msg
+                        &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+                    }
+                }
             }
         }
     }
@@ -786,9 +808,16 @@ sub client_input {
     return;
 }
 
+sub _start {
+    my ($kernel) = $_[KERNEL];
+    &trigger_db_loop($kernel);
+    #&register_at_gosa_si_bus();
+}
+
 
 sub trigger_db_loop {
-	my ($kernel) = $_[KERNEL];
+#	my ($kernel) = $_[KERNEL];
+	my ($kernel) = @_ ;
 	$kernel->delay_set('watch_for_new_jobs',3);
 }
 
@@ -910,7 +939,7 @@ daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 
 # delete old DBsqlite lock files
-system('rm -f /tmp/gosa_si_lock*');
+system('rm -f /tmp/gosa_si_lock*gosa-si-server*');
 
 # connect to gosa-si job queue
 my @job_col_names = ("id", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
@@ -935,13 +964,6 @@ $known_server_db->create_table('known_server', \@server_col_names);
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
 
-# create session for repeatedly checking the job queue for jobs
-POE::Session->create(
-	inline_states => {
-		_start => \&trigger_db_loop,
-		watch_for_new_jobs => \&watch_for_new_jobs,
-	}
-);
 
 # create socket for incoming xml messages
 POE::Component::Server::TCP->new(
@@ -949,6 +971,14 @@ POE::Component::Server::TCP->new(
 	ClientInput => \&client_input,
 );
 daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
+
+# create session for repeatedly checking the job queue for jobs
+POE::Session->create(
+	inline_states => {
+		_start => \&_start,
+		watch_for_new_jobs => \&watch_for_new_jobs,
+	}
+);
 
 POE::Kernel->run();
 exit;
