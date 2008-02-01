@@ -10,7 +10,6 @@ for($count = 1; $count <= $zahl; $count++)
 {
 
 $sock = new Socket_Client("127.0.0.1","20081",TRUE,1);
-#$sock = new Socket_Client("169.254.2.248","9999",TRUE,1);
 $sock->setEncryptionKey("secret-gosa-password");
 
 if($sock->connected()){
@@ -19,7 +18,7 @@ if($sock->connected()){
 # add
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
-#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source> <target>10.89.1.155:20081</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
 # delete
 #$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><id>3</id></phrase></clause></where></xml>";
@@ -37,10 +36,10 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_count_jobdb</header></xml>";
 
 # clear
-#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
 
 # set gosa-si-client to 'activated'
-$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>127.0.0.1:20083</target> <source>127.0.0.1:20081</source> </xml>";
+#$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>127.0.0.1:20083</target> <source>127.0.0.1:20081</source> </xml>";
 
 
     $sock->write($data);

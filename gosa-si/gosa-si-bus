@@ -53,7 +53,7 @@ $foreground = 0 ;
     "child_max" => [\$child_max, 10],
     "child_min" => [\$child_min, 3],
     "child_timeout" => [\$child_timeout, 180],
-    "bus_known_server_file_name" => [\$bus_known_server_file_name, "/var/lib/gosa-si/bus_known_server.db"]
+    "bus_known_server_file_name" => [\$bus_known_server_file_name, "/var/lib/gosa-si/gosa-si-bus_known_server.db"]
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],

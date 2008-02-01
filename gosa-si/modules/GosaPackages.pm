@@ -349,7 +349,7 @@ sub process_job_msg {
     }
     
     &main::daemon_log("GosaPackages: $header job successfully added to job queue", 3);
-    return "<xml><answer1>$res</answer1></xml>";
+    return "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
 
 }
 
@@ -357,7 +357,7 @@ sub process_job_msg {
 sub db_res_2_xml {
     my ($db_res) = @_ ;
 
-    my $xml = "<xml>";
+    my $xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target>";
 
     my $len_db_res= keys %{$db_res};
 
@@ -418,7 +418,7 @@ sub count_jobdb {
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
 
     my $count = keys(%{$res_hash});
-    $out_xml= "<xml><count>$count</count></xml>";
+    $out_xml= "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><count>$count</count></xml>";
 
     return $out_xml;
 }
@@ -444,7 +444,7 @@ sub delete_jobdb_entry {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><answer1>$res</answer1></xml>";
+    my $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
     return $out_xml;
 
 }
@@ -463,7 +463,7 @@ sub clear_jobdb {
     if( not $db_res > 0 ) { $error++; };
     
     if( $error == 0 ) {
-        $out_xml = "<xml><answer1>0</answer1></xml>";
+        $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
     }
    
     return $out_xml;
@@ -474,7 +474,7 @@ sub update_status_jobdb_entry {
     my ($msg) = @_ ;
     my $msg_hash = &transform_msg2hash($msg);
     my $error= 0;
-    my $out_xml= "<xml><answer1>1</answer1></xml>";
+    my $out_xml= "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>1</answer1></xml>";
 
     my @len_hash = keys %{$msg_hash};
     if( 0 == @len_hash) {  $error++; };
@@ -495,46 +495,11 @@ sub update_status_jobdb_entry {
     }
 
     if( $error == 0) {
-        $out_xml = "<xml><answer1>0</answer1></xml>";
+        $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
     }
 
     return $out_xml;
 }
-
-#sub update_timestamp_jobdb_entry {
-#    my ($msg) = @_ ;
-#    my $msg_hash = &transform_msg2hash($msg);
-#    
-#    # prepare query sql statement
-#    my $update_hash = {table=>$main::job_queue_table_name };
-#    if( exists $msg_hash->{where} ) {
-#        $update_hash->{where} = $msg_hash->{where};
-#    } else {
-#        $update_hash->{where} = [];
-#    }
-#
-#    if( not exists $msg_hash->{update}[0]->{timestamp} ) {
-#        return "<xml><answer1>1</answer1></xml>";
-#    }
-#
-#    $update_hash->{update} = [ { timestamp=>$msg_hash->{update}[0]->{timestamp} } ];
-#
-#    # execute db query
-#    my $db_res = $main::job_db->update_dbentry($update_hash);
-#
-#    # transform db answer to error returnment
-#    my $res;
-#    if( $db_res > 0 ) { 
-#        $res = 0 ;
-#    } else {
-#        $res = 1;
-#    }
-#
-#    # prepare xml answer
-#    my $out_xml = "<xml><answer1>$res</answer1></xml>";
-#    return $out_xml;
-#
-#}
 
 
 1;

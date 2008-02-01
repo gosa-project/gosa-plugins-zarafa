@@ -669,7 +669,6 @@ sub send_msg_to_target {
     }
     
     if( $error == 0 ) {
-
         # send xml msg
         print $socket $crypted_msg."\n";
 
@@ -786,13 +785,10 @@ sub client_input {
                         my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
                         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                             my $host_name = $hit->{hostname};
-			    my $host_key = $hit->{hostkey};
-			    $answer =~ s/KNOWN_SERVER/$host_name/g;
+                            my $host_key = $hit->{hostkey};
+                            $answer =~ s/KNOWN_SERVER/$host_name/g;
                             &send_msg_to_target($answer, $host_name, $host_key);
                         }
-			
-			print STDERR $answer_target."\n";
-
                     }
                     else {
                         # answer is for one specific host

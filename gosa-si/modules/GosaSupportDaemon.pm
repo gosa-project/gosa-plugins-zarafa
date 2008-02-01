@@ -30,10 +30,6 @@ END {}
 
 my $xml = new XML::Simple();
 
-sub process_incoming_msg {
-    return;
-}
-
 sub daemon_log {
     my ($msg, $level) = @_ ;
     &main::daemon_log($msg, $level);
@@ -101,37 +97,37 @@ sub transform_msg2hash {
 #      RETURNS:  nothing
 #  DESCRIPTION:  ????
 #===============================================================================
-sub send_msg_hash2address ($$$){
-    my ($msg_hash, $address, $passwd) = @_ ;
-
-    # fetch header for logging
-    my $header = @{$msg_hash->{header}}[0];  
-
-    # generate xml string
-    my $msg_xml = &create_xml_string($msg_hash);
-    
-    # create ciphering object
-    my $act_cipher = &create_ciphering($passwd);
-    
-    # encrypt xml msg
-    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
-
-    # opensocket
-    my $socket = &open_socket($address);
-    if(not defined $socket){
-        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
-        return 1;
-    }
-    
-    # send xml msg
-    print $socket $crypted_msg."\n";
-    
-    close $socket;
-
-    daemon_log("send '$header'-msg to $address", 1);
-    daemon_log("message:\n$msg_xml", 8);
-    return 0;
-}
+#sub send_msg_hash2address ($$$){
+#    my ($msg_hash, $address, $passwd) = @_ ;
+#
+#    # fetch header for logging
+#    my $header = @{$msg_hash->{header}}[0];  
+#
+#    # generate xml string
+#    my $msg_xml = &create_xml_string($msg_hash);
+#    
+#    # create ciphering object
+#    my $act_cipher = &create_ciphering($passwd);
+#    
+#    # encrypt xml msg
+#    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
+#
+#    # opensocket
+#    my $socket = &open_socket($address);
+#    if(not defined $socket){
+#        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
+#        return 1;
+#    }
+#    
+#    # send xml msg
+#    print $socket $crypted_msg."\n";
+#    
+#    close $socket;
+#
+#    daemon_log("send '$header'-msg to $address", 1);
+#    daemon_log("message:\n$msg_xml", 8);
+#    return 0;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -142,15 +138,15 @@ sub send_msg_hash2address ($$$){
 #                value - list - for all other keys in xml hash
 #  DESCRIPTION:
 #===============================================================================
-sub get_content_from_xml_hash {
-    my ($xml_ref, $element) = @_ ;
-    #my $result = $main::xml_ref->{$element};
-    #if( $element eq "header" || $element eq "target" || $element eq "source") {
-    #    return @$result[0];
-    #}
-    my @result = $xml_ref->{$element};
-    return \@result;
-}
+#sub get_content_from_xml_hash {
+#    my ($xml_ref, $element) = @_ ;
+#    #my $result = $main::xml_ref->{$element};
+#    #if( $element eq "header" || $element eq "target" || $element eq "source") {
+#    #    return @$result[0];
+#    #}
+#    my @result = $xml_ref->{$element};
+#    return \@result;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -197,19 +193,31 @@ sub create_xml_string {
 #  DESCRIPTION:  crypts the incoming message with the Crypt::Rijndael module
 #===============================================================================
 sub encrypt_msg {
-    my ($msg, $my_cipher) = @_;
-    if(not defined $my_cipher) { print "no cipher object\n"; }
+#    my ($msg, $my_cipher) = @_;
+#    if(not defined $my_cipher) { print "no cipher object\n"; }
+#    {
+#      use bytes;
+#      $msg = "\0"x(16-length($msg)%16).$msg;
+#    }
+#    $msg = $my_cipher->encrypt($msg);
+#    chomp($msg = &encode_base64($msg));
+#
+#    # there are no newlines allowed inside msg
+#    $msg=~ s/\n//g;
+#
+#    return $msg;
+    my ($msg, $key) = @_;
+    my $my_cipher = &create_ciphering($key);
     {
       use bytes;
       $msg = "\0"x(16-length($msg)%16).$msg;
     }
     $msg = $my_cipher->encrypt($msg);
     chomp($msg = &encode_base64($msg));
-
     # there are no newlines allowed inside msg
     $msg=~ s/\n//g;
-
     return $msg;
+
 }
 
 
@@ -221,10 +229,17 @@ sub encrypt_msg {
 #  DESCRIPTION:  decrypts the incoming message with the Crypt::Rijndael module
 #===============================================================================
 sub decrypt_msg {
-    my ($msg, $my_cipher) = @_ ;
-    if(defined $msg && defined $my_cipher) {
-        $msg = &decode_base64($msg);
-    }
+#    my ($msg, $my_cipher) = @_ ;
+#    
+#    if(defined $msg && defined $my_cipher) {
+#        $msg = &decode_base64($msg);
+#    }
+#    $msg = $my_cipher->decrypt($msg); 
+#    $msg =~ s/\0*//g;
+#    return $msg;
+    my ($msg, $key) = @_ ;
+    $msg = &decode_base64($msg);
+    my $my_cipher = &create_ciphering($key);
     $msg = $my_cipher->decrypt($msg); 
     $msg =~ s/\0*//g;
     return $msg;
@@ -257,23 +272,23 @@ sub create_ciphering {
 #      RETURNS:  socket IO::Socket::INET
 #  DESCRIPTION:  open a socket to PeerAddr
 #===============================================================================
-sub open_socket {
-    my ($PeerAddr, $PeerPort) = @_ ;
-    if(defined($PeerPort)){
-        $PeerAddr = $PeerAddr.":".$PeerPort;
-    }
-    my $socket;
-    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
-            Porto => "tcp",
-            Type => SOCK_STREAM,
-            Timeout => 5,
-            );
-    if(not defined $socket) {
-        return;
-    }
-    &daemon_log("open_socket: $PeerAddr", 7);
-    return $socket;
-}
+#sub open_socket {
+#    my ($PeerAddr, $PeerPort) = @_ ;
+#    if(defined($PeerPort)){
+#        $PeerAddr = $PeerAddr.":".$PeerPort;
+#    }
+#    my $socket;
+#    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
+#            Porto => "tcp",
+#            Type => SOCK_STREAM,
+#            Timeout => 5,
+#            );
+#    if(not defined $socket) {
+#        return;
+#    }
+#    &daemon_log("open_socket: $PeerAddr", 7);
+#    return $socket;
+#}
 
 
 sub get_time {
