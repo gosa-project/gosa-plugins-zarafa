@@ -19,6 +19,7 @@ class termgroup extends plugin
                             "update"          => "sceduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
+                            "wake"            => "",
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
@@ -185,69 +186,56 @@ class termgroup extends plugin
      ***************/
 
     /* Watch for events */
-    if (isset($_POST['action'])){
-      $macaddresses="";
-      $names="";
+    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
+      $macaddresses= array();
       foreach ($this->members as $cn => $macAddress){
-        $macaddresses.= "$macAddress ";
-        $names.= "$cn ";
+        $macaddresses[]= $macAddress;
       }
 
-      if (isset($_POST['action'])){
-  
-        /* Update members fai state */
-        $this->update_term_member_FAIstate(trim($_POST['saction']));
+      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
 
-        $cmd = $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
+      /* Update members fai state */
+      $this->update_term_member_FAIstate(trim($_POST['saction']));
 
-        if ($cmd == ""){
-          print_red(_("No ACTIONCMD definition found in your gosa.conf"));
-        } else {
-          exec ($cmd." ".$macaddresses." ".escapeshellarg($_POST['saction']), $dummy, $retval);
-          if ($retval != 0){
-            print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-          } else {
-            $this->didAction= TRUE;
+      $this->didAction= TRUE;
 
-            /* Get dns from member objects. Create ldap object  */
-            $member = $this->parent->by_object['ogroup']->member;
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd($this->config->current['BASE']);
+      /* Get dns from member objects. Create ldap object  */
+      $member = $this->parent->by_object['ogroup']->member;
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
 
-            /* walk trough members and add FAIstate */ 
-            foreach($member as $dn =>  $object){
+      /* walk trough members and add FAIstate */ 
+      if ($_POST['saction'] != "wake"){
+        foreach($member as $dn =>  $object){
 
-              /* Get object */
-              $ldap->cat($dn,array("objectClass"));
-              $res                = $ldap->fetch();
-              $attrs              = array();
+	      /* Get object */
+	      $ldap->cat($dn,array("objectClass"));
+	      $res                = $ldap->fetch();
+	      $attrs              = array();
 
-              /* Add FAI state */
-              $attrs['FAIstate']  = "";
-              if(isset($this->mapActions[$_POST['saction']])){
-                $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-              }
+	      /* Add FAI state */
+	      $attrs['FAIstate']  = "";
+	      if(isset($this->mapActions[$_POST['saction']])){
+		      $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+	      }
 
-              /* Fix objectClass index */
-              for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-                $attrs['objectClass'][] = $res['objectClass'][$i];
-              }
+	      /* Fix objectClass index */
+	      for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
+		      $attrs['objectClass'][] = $res['objectClass'][$i];
+	      }
 
-              /* Check if we must add the objectClass */
-              if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-                $attrs['objectClass'][] = "FAIobject";
-              }
+	      /* Check if we must add the objectClass */
+	      if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+		      $attrs['objectClass'][] = "FAIobject";
+	      }
 
-              if($attrs['FAIstate'] == ""){
-                $attrs['FAIstate'] = array();
-              }
+	      if($attrs['FAIstate'] == ""){
+		      $attrs['FAIstate'] = array();
+	      }
 
-              $ldap->cd($dn);
-              $ldap->modify($attrs);
-              show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$dn));
-            }
-            $this->didAction= TRUE;
-          }
+	      $ldap->cd($dn);
+	      $ldap->modify($attrs);
+	      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$dn));
         }
       }
     }
@@ -294,6 +282,7 @@ class termgroup extends plugin
     $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
           "instant_update" => _("Instant update"),
           "update" => _("Scheduled update"),
+          "wake" => _("Wake"),
           "reinstall" => _("Reinstall"),
           "rescan" => _("Rescan hardware"),
           "memcheck" => _("Memory test"),
