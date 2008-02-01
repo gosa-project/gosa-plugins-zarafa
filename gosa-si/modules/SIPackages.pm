@@ -791,19 +791,8 @@ sub new_ldap_config {
 
 sub process_detected_hardware {
 	my $msg_hash = shift;
+	my $address = $msg_hash->{source}[0];
 
-
-	return;
-}
-#===  FUNCTION  ================================================================
-#         NAME:  hardware_config
-#   PARAMETERS:  address - string - ip address and port of a host
-#      RETURNS:  
-#  DESCRIPTION:  
-#===============================================================================
-sub hardware_config {
-    my ($address, $gotoHardwareChecksum) = @_ ;
-    
     my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
     my $res = $main::known_clients_db->select_dbentry( $sql_statement );
 
@@ -820,7 +809,6 @@ sub hardware_config {
         &main::daemon_log("ERROR: no mac address found for client $address", 1);
         return;
     }
-
     # Build LDAP connection
     my $ldap = Net::LDAP->new($ldap_uri);
     if( not defined $ldap ) {
@@ -837,7 +825,84 @@ sub hardware_config {
 		scope  => 'sub',
 		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
 	);
-	
+
+	if($mesg->count == 1) {
+		my $entry= $mesg->entry(0);
+		$entry->changetype("modify");
+		foreach my $attribute (
+			"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
+			"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
+			"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
+			if(defined($msg_hash->{detected_hardware}[0]->{$attribute})) {
+				if(defined($entry->get_value($attribute))) {
+					$entry->delete($attribute);
+				}
+				&main::daemon_log("Adding attribute $attribute with value ".$msg_hash->{detected_hardware}[0]->{$attribute},1);
+				$entry->add($attribute => $msg_hash->{detected_hardware}[0]->{$attribute});	
+			}
+		}
+		foreach my $attribute (
+			"gotoModules", "ghScsiDev", "ghIdeDev") {
+			if(defined($msg_hash->{detected_hardware}[0]->{$attribute})) {
+				if(defined($entry->get_value($attribute))) {
+					$entry->delete($attribute);
+				}
+				foreach my $array_entry (@{$msg_hash->{detected_hardware}[0]->{$attribute}}) {
+					$entry->add($attribute => $array_entry);
+				}
+			}
+
+		}
+		if($entry->update($ldap)) {
+			&main::daemon_log("Added Hardware configuration to LDAP", 4);
+		}
+
+	}
+	return;
+}
+#===  FUNCTION  ================================================================
+#         NAME:  hardware_config
+#   PARAMETERS:  address - string - ip address and port of a host
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub hardware_config {
+	my ($address, $gotoHardwareChecksum) = @_ ;
+
+	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
+
+	# check hit
+	my $hit_counter = keys %{$res};
+	if( not $hit_counter == 1 ) {
+		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+	}
+
+	my $macaddress = $res->{1}->{macaddress};
+	my $hostkey = $res->{1}->{hostkey};
+
+	if (not defined $macaddress) {
+		&main::daemon_log("ERROR: no mac address found for client $address", 1);
+		return;
+	}
+
+	# Build LDAP connection
+	my $ldap = Net::LDAP->new($ldap_uri);
+	if( not defined $ldap ) {
+		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+		return;
+	} 
+
+	# Bind to a directory with dn and password
+	my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+
+	# Perform search
+	$mesg = $ldap->search(
+		base   => $ldap_base,
+		scope  => 'sub',
+		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
+	);
+
 	if($mesg->count() == 0) {
 		&main::daemon_log("Host was not found in LDAP!", 1);
 		return;
@@ -846,11 +911,21 @@ sub hardware_config {
 	my $entry= $mesg->entry(0);
 	my $dn= $entry->dn;
 	if(defined($entry->get_value("gotoHardwareChecksum"))) {
-		return;
+		if(! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
+			$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
+			if($entry->update($ldap)) {
+				&main::daemon_log("Hardware changed! Detection triggered.", 4);
+			}
+		} else {
+			# Nothing to do
+			return;
+		}
 	} else {
 		# need to fill it to LDAP
 		$entry->add(gotoHardwareChecksum => $gotoHardwareChecksum);
-		&main::daemon_log(Dumper($entry->update($ldap)),1);
+		if($entry->update($ldap)) {
+			&main::daemon_log("gotoHardwareChecksum $gotoHardwareChecksum was added to LDAP", 4);
+		}
 
 		# Look if there another host with this checksum to use the hardware config
 		$mesg = $ldap->search(
@@ -858,23 +933,60 @@ sub hardware_config {
 			scope  => 'sub',
 			filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
 		);
+
+		if($mesg->count>1) {
+			my $clone_entry= $mesg->entry(0);
+			$entry->changetype("modify");
+			foreach my $attribute (
+				"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
+				"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
+				"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
+				my $value= $clone_entry->get_value($attribute);
+				if(defined($value)) {
+					if(defined($entry->get_value($attribute))) {
+						$entry->delete($attribute);
+					}
+					&main::daemon_log("Adding attribute $attribute with value $value",1);
+					$entry->add($attribute => $value);
+				}
+			}
+			foreach my $attribute (
+				"gotoModules", "ghScsiDev", "ghIdeDev") {
+				my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
+				if(defined($array))	{
+					if(defined($entry->get_value($attribute))) {
+						$entry->delete($attribute);
+					}
+					foreach my $array_entry (@{$array}) {
+						$entry->add($attribute => $array_entry);
+					}
+				}
+
+			}
+			if($entry->update($ldap)) {
+				&main::daemon_log("Added Hardware configuration to LDAP", 4);
+			}
+
+		}
+
 	}
 
-    # Assemble data package
-    my %data = ();
+	# Assemble data package
+	my %data = ();
 
-    # Need to append GOto settings?
-    if (defined $goto_admin and defined $goto_secret){
-	    $data{'goto_admin'}= $goto_admin;
-	    $data{'goto_secret'}= $goto_secret;
-    }
+	# Need to append GOto settings?
+	if (defined $goto_admin and defined $goto_secret){
+		$data{'goto_admin'}= $goto_admin;
+		$data{'goto_secret'}= $goto_secret;
+	}
 
-    # Unbind
-    $mesg = $ldap->unbind;
+	# Unbind
+	$mesg = $ldap->unbind;
 
 	&main::daemon_log("Send detect_hardware message to $address", 4);
-    # Send information
-    return send_msg("detect_hardware", $server_address, $address, \%data);
+	
+	# Send information
+	return send_msg("detect_hardware", $server_address, $address, \%data);
 }
 
 

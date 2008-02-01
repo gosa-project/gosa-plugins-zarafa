@@ -58,6 +58,7 @@ $foreground = 0 ;
 "client" => 
     {"client_port" => [\$client_port, "20083"],
      "client_ip" => [\$client_ip, "0.0.0.0"],
+	 "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00"],
      "ldap" => [\$ldap_enabled, 1],
      "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
@@ -271,38 +272,39 @@ sub get_interfaces {
 #  DESCRIPTION:  Uses ioctl to get mac address directly from system.
 #===============================================================================
 sub get_mac {
-        my $ifreq= shift;
-        my $result;
-        if ($ifreq && length($ifreq) > 0) { 
-                if($ifreq eq "all") {
+	my $ifreq= shift;
+	my $result;
+	
+	if ($ifreq && length($ifreq) > 0) { 
+		if($ifreq eq "all") {
 			if(defined($server_ip)) {
 				$result = &get_local_mac_for_remote_ip($server_ip);
+			} elsif ($client_mac_address && length($client_mac_address) > 0) {
+				$result = $client_mac_address;
 			} else {
 				$result = "00:00:00:00:00:00";
 			}
-                } else {
-                        my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+		} else {
+			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
 
-                        # A configured MAC Address should always override a guessed value
-                        if ($client_mac_address and length($client_mac_address) > 0) {
-                                $result= $client_mac_address;
-                        }
+			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+				or die "socket: $!";
+			
+			# A configured MAC Address should always override a guessed value
+			if ($client_mac_address and length($client_mac_address) > 0) {
+				$result = $client_mac_address;
+			} elsif(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+				my ($if, $mac)= unpack 'h36 H12', $ifreq;
 
-                        socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-                                or die "socket: $!";
-
-                        if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-                                my ($if, $mac)= unpack 'h36 H12', $ifreq;
-
-                                if (length($mac) > 0) {
-                                        $mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-                                        $mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-                                        $result = $mac;
-                                }
-                        }
-                }
-        }
-        return $result;
+				if (length($mac) > 0) {
+					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+					$result = $mac;
+				}
+			}
+		}
+	}
+	return $result;
 }
 
 #===  FUNCTION  ================================================================
@@ -1285,6 +1287,8 @@ sub detect_hardware {
 	}
 
 	my $result= {
+		macAddress      => $client_mac_address,
+		gotoXMonitor    => "",
 		gotoXDriver     => "",
 		gotoXMouseType  => "",
 		gotoXMouseport  => "",
@@ -1314,8 +1318,8 @@ sub detect_hardware {
 	my $monitor= `$hwinfo --monitor`;
 	my $primary_monitor= $1 if $monitor =~ /^(\d*):.*/m;
 	if(defined($primary_monitor)) {
-		($result->{gotoXResolution}, $result->{gotoXVsync}, $result->{gotoXHsync})= ($1,$2,$3) if 
-		$monitor =~ /$primary_monitor:\s.*?Max\.\sResolution:\s([0-9x]*).*?Vert\.\sSync\sRange:\s([\d\-]*)\sHz.*?Hor\.\sSync\sRange:\s([\d\-]*)\skHz.*/s;
+		($result->{gotoXMonitor}, $result->{gotoXResolution}, $result->{gotoXVsync}, $result->{gotoXHsync})= ($1,$2,$3,$4) if 
+		$monitor =~ /$primary_monitor:\s.*?Model:\s\"(.*?)\".*?Max\.\sResolution:\s([0-9x]*).*?Vert\.\sSync\sRange:\s([\d\-]*)\sHz.*?Hor\.\sSync\sRange:\s([\d\-]*)\skHz.*/s;
 	}
 
 	if(length($result->{gotoXHsync}) == 0) {
@@ -1369,16 +1373,12 @@ sub detect_hardware {
 
 	$result->{ghUsbSupport} = (-d "/proc/bus/usb")?"true":"false";
 	
-	#TODO Ide detection
-#$result->{ghIdeDev} = $@ if ``
-#opendir(IDE, "/proc/ide");
-#for my $model(grep /ide\d\/hd\w\/model/, readdir(DIR)) {
-#	print "$model\n";
-#}
-#close(IDE);
+	foreach my $device(`hwinfo --ide` =~ /^.*?Model:\s\"(.*?)\".*$/mg) {
+		push @{$result->{ghIdeDev}}, $device;
+	}
 
-	while ( `cat /proc/scsi/scsi` =~ /^.*?Vendor:\s(.*?)\s+Model:\s(.*?)\s+.*$/mg ) {
-		push (@{$result->{ghScsiDev}}, "$1 $2");
+	foreach my $device(`hwinfo --scsi` =~ /^.*?Model:\s\"(.*?)\".*$/mg) {
+		push @{$result->{ghScsiDev}}, $device;
 	}
 
 	&main::daemon_log("Hardware detection done!", 4);
