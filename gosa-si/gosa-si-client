@@ -42,7 +42,7 @@ use GOSA::GosaSupportDaemon;
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
 my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
-my ($client_address, $client_ip, $client_port, $client_mac_address, $network_interface, $ldap_config, $pam_config, $nss_config);
+my ($client_address, $client_ip, $client_port, $client_mac_address, $network_interface, $ldap_config, $pam_config, $nss_config, $gotoHardwareChecksum);
 my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts, $ldap_enabled);
 my (@events);
 
@@ -487,6 +487,7 @@ sub register_at_server {
         &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
         &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
         &add_content2xml_hash($register_hash, "events", $events);
+        &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
         # send xml hash to server with general server passwd
         my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);
@@ -1273,6 +1274,113 @@ sub generate_hw_digest {
 	return(md5_base64($hw_data));
 }
 
+sub detect_hardware {
+	my $hwinfo= `which hwinfo`;
+	chomp $hwinfo;
+
+	if (!(defined($hwinfo) && length($hwinfo) > 0)) {
+		print "ERROR: hwinfo was not found in \$PATH!\n";
+		exit(1);
+	}
+
+	my $result= {
+		gotoXDriver     => "",
+		gotoXMouseType  => "",
+		gotoXMouseport  => "",
+		gotoXkbModel    => "",
+		gotoXHsync      => "",
+		gotoXVsync      => "",
+		gotoXResolution => "",
+		ghUsbSupport    => "",
+		gotoSndModule   => "",
+		ghGfxAdapter    => "",
+		ghNetNic        => "",
+		ghSoundAdapter  => "",
+		ghMemSize       => "",
+		ghCpuType       => "",
+		gotoModules     => [],
+		ghIdeDev        => [],
+		ghScsiDev       => [],
+	};
+
+	my $gfxcard= `$hwinfo --gfxcard`;
+	my $primary_adapter= $1 if $gfxcard =~ /^Primary display adapter:\s#(\d+)\n/m;
+	if(defined($primary_adapter)) {
+		($result->{ghGfxAdapter}, $result->{gotoXDriver}) = ($1,$2) if 
+			$gfxcard =~ /$primary_adapter:.*?Model:\s\"([^\"]*)\".*?Server Module:\s(\w*).*?\n\n/s;
+	}
+	my $monitor= `$hwinfo --monitor`;
+	my $primary_monitor= $1 if $monitor =~ /^(\d*):.*/m;
+	if(defined($primary_monitor)) {
+		($result->{gotoXResolution}, $result->{gotoXVsync}, $result->{gotoXHsync})= ($1,$2,$3) if 
+		$monitor =~ /$primary_monitor:\s.*?Max\.\sResolution:\s([0-9x]*).*?Vert\.\sSync\sRange:\s([\d\-]*)\sHz.*?Hor\.\sSync\sRange:\s([\d\-]*)\skHz.*/s;
+	}
+
+	if(length($result->{gotoXHsync}) == 0) {
+		# set default values
+		$result->{gotoXHsync} = "30+50";
+		$result->{gotoXVsync} = "30+90";
+	}
+
+	my $mouse= `$hwinfo --mouse`;
+	my $primary_mouse= $1 if $mouse =~ /^(\d*):.*/m;
+	if(defined($primary_mouse)) {
+		($result->{gotoXMouseport}, $result->{gotoXMouseType}) = ($1,$2) if
+		$mouse =~ /$primary_mouse:\s.*?Device\sFile:\s(.*?)\s.*?XFree86\sProtocol:\s(.*?)\n.*?/s;
+	}
+
+	my $sound= `$hwinfo --sound`;
+	my $primary_sound= $1 if $sound =~ /^(\d*):.*/m;
+	if(defined($primary_sound)) {
+		($result->{ghSoundAdapter}, $result->{gotoSndModule})= ($1,$2) if 
+		$sound =~ /$primary_sound:\s.*?Model:\s\"(.*?)\".*?Driver\sModules:\s\"(.*?)\".*/s;
+	}
+
+	my $netcard= `hwinfo --netcard`;
+	my $primary_netcard= $1 if $netcard =~ /^(\d*):.*/m;
+	if(defined($primary_netcard)) {
+		$result->{ghNetNic}= $1 if $netcard =~ /$primary_netcard:\s.*?Model:\s\"(.*?)\".*/s;
+	}
+
+	my $keyboard= `hwinfo --keyboard`;
+	my $primary_keyboard= $1 if $keyboard =~ /^(\d*):.*/m;
+	if(defined($primary_keyboard)) {
+		$result->{gotoXkbModel}= $1 if $keyboard =~ /$primary_keyboard:\s.*?XkbModel:\s(.*?)\n.*/s;
+	}
+
+	$result->{ghCpuType}= sprintf "%s / %s - %s", 
+	`cat /proc/cpuinfo` =~ /.*?vendor_id\s+:\s(.*?)\n.*?model\sname\s+:\s(.*?)\n.*?cpu\sMHz\s+:\s(.*?)\n.*/s;
+	$result->{ghMemSize}= $1 if `cat /proc/meminfo` =~ /^MemTotal:\s+(.*?)\skB.*/s;
+
+	my @gotoModules=();
+	for my $line(`lsmod`) {
+		if (($line =~ /^Module.*$/) or ($line =~ /^snd.*$/)) {
+			next;
+		} else {
+			push @gotoModules, $1 if $line =~ /^(\w*).*$/
+		}
+	}
+	my %seen = ();
+	
+	# Remove duplicates and save
+	push @{$result->{gotoModules}}, grep { ! $seen{$_} ++ } @gotoModules;
+
+	$result->{ghUsbSupport} = (-d "/proc/bus/usb")?"true":"false";
+	
+	#TODO Ide detection
+#$result->{ghIdeDev} = $@ if ``
+#opendir(IDE, "/proc/ide");
+#for my $model(grep /ide\d\/hd\w\/model/, readdir(DIR)) {
+#	print "$model\n";
+#}
+#close(IDE);
+
+	while ( `cat /proc/scsi/scsi` =~ /^.*?Vendor:\s(.*?)\s+Model:\s(.*?)\s+.*$/mg ) {
+		push (@{$result->{ghScsiDev}}, "$1 $2");
+	}
+
+	return $result;
+}
 
 #==== MAIN = main ==============================================================
 
@@ -1337,6 +1445,9 @@ $client_address = $client_ip.":".$client_port;
 
 # setup xml parser
 $xml = new XML::Simple();
+
+# compute hardware checksum
+$gotoHardwareChecksum= &generate_hw_digest();
 
 # create input socket
 daemon_log(" ", 1);
