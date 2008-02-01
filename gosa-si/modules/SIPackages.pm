@@ -20,7 +20,7 @@ BEGIN{}
 END {}
 
 my ($known_clients_file_name);
-my ($server_activ, $server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my ($server_activ, $server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
@@ -35,7 +35,7 @@ my %cfg_defaults =
     "server_ip" => [\$server_ip, "0.0.0.0"],
     "server_mac_address" => [\$server_mac_address, ""],
     "server_port" => [\$server_port, "20081"],
-    "server_passwd" => [\$server_passwd, ""],
+    "SIPackages_key" => [\$SIPackages_key, ""],
     "max_clients" => [\$max_clients, 100],
     "ldap_uri" => [\$ldap_uri, ""],
     "ldap_base" => [\$ldap_base, ""],
@@ -77,12 +77,23 @@ if($bus_activ eq "on") {
     &register_at_bus();
 }
 
+# add myself to known_server_db
+my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
+        primkey=>'hostname',
+        hostname=>$server_address,
+        status=>'myself',
+        hostkey=>$SIPackages_key,
+        timestamp=>&get_time,
+        } );
+
+
+
 ### functions #################################################################
 
 
 sub get_module_info {
     my @info = ($server_address,
-                $server_passwd,
+                $SIPackages_key,
                 $server,
                 $server_activ,
                 "socket",
@@ -330,14 +341,16 @@ sub register_at_bus {
                                                     timestamp=>&get_time,
                                                 } );
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
-    my $answer = "";
-    $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
-    if ($answer == 0) {
-        &main::daemon_log("register at bus: $bus_address", 1);
-    } else {
-        &main::daemon_log("unable to send 'register'-msg to bus '$bus_address': $answer", 1);
-    }
-    return;
+    my $msg = &create_xml_string($msg_hash);
+    return $msg;
+#    my $answer = "";
+#    $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
+#    if ($answer == 0) {
+#        &main::daemon_log("register at bus: $bus_address", 1);
+#    } else {
+#        &main::daemon_log("unable to send 'register'-msg to bus '$bus_address': $answer", 1);
+#    }
+#    return;
 }
 
 
@@ -594,6 +607,7 @@ sub here_i_am {
 #===============================================================================
 sub who_has {
     my ($msg_hash) = @_ ;
+    my @out_msg_l;
     
     # what is your search pattern
     my $search_pattern = @{$msg_hash->{who_has}}[0];
@@ -615,11 +629,12 @@ sub who_has {
     # search was successful
     if (defined $host_address) {
         my $source = @{$msg_hash->{source}}[0];
-        my $out_msg = &create_xml_hash("who_has_i_do", $server_address, $source, "mac_address");
-        &add_content2xml_hash($out_msg, "mac_address", $search_element);
-        &send_msg_hash2address($out_msg, $bus_address);
+        my $out_hash = &create_xml_hash("who_has_i_do", $server_address, $source, "mac_address");
+        &add_content2xml_hash($out_hash, "mac_address", $search_element);
+        my $out_msg = &create_xml_string($out_hash);
+        push(@out_msg_l, $out_msg);
     }
-    return;
+    return @out_msg_l;
 }
 
 
