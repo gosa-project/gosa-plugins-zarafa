@@ -41,13 +41,10 @@ use XML::Simple;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-
-
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
 my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain);
 my ($client_ip, $client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 
-# default variables
 my $server_address;
 my @servers;
 my $client_address;
@@ -55,6 +52,9 @@ my $client_mac_address;
 my $xml;
 my $default_server_key;
 my $event_hash;
+
+# default variables
+our $REGISTERED_FLAG = 1;
 
 %cfg_defaults = (
 "general" =>
@@ -567,57 +567,45 @@ sub open_socket {
 #  DESCRIPTION:  
 #===============================================================================
 sub register_at_gosa_si_server {
+    my ($kernel) = $_[KERNEL];
 
-    # create new passwd and ciphering object for client-server communication
-    $server_key = &create_passwd();
+    if( $REGISTERED_FLAG == 1 ) {
 
-#    # detect all client accepted events
-#    opendir(DIR, $event_dir) 
-#        or daemon_log("cannot find directory $event_dir!\ngosa-si-client starts without any accepting events!", 1);
-#    my $file_name;
-#    my @events_list = ();
-#    my $events;
-#    while(defined($file_name = readdir(DIR))){
-#        if ($file_name eq "." || $file_name eq "..") {
-#            next;
-#        }
-#        push(@events_list, $file_name);
-#    }
-#    if( 0 == @events_list ) {
-#        $events = "none";
-#    }
-#    else {  
-#        $events = join(",", @events_list);
-#    }
-#    daemon_log("events found for gosa-si-client: $events", 1);
-    my $events = join( ", ", keys %{$event_hash} );
+        # create new passwd and ciphering object for client-server communication
+        $server_key = &create_passwd();
 
-    
-    while(1) {
+        my $events = join( ", ", keys %{$event_hash} );
 
-        # fetch first gosa-si-server from @servers
-        my $server = shift(@servers);
+        while(1) {
 
-        if( !$server ) {
-            daemon_log("no gosa-si-server left in list of servers", 1);
-            exit(1)
+            # fetch first gosa-si-server from @servers
+            my $server = shift(@servers);
+
+            if( !$server ) {
+                daemon_log("no gosa-si-server left in list of servers", 1);
+                daemon_log("unable to register at a gosa-si-server, force shutdown", 1);
+                exit(1);
+            }
+
+            # create registration msg
+            my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
+            &add_content2xml_hash($register_hash, "new_passwd", $server_key);
+            &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
+            &add_content2xml_hash($register_hash, "events", $events);
+
+            # send xml hash to server with general server passwd
+            my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
+#            if( $res == 1 ) {
+#                next;
+#            }
+#
+            last;
         }
-
-        # create registration msg
-        my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
-        &add_content2xml_hash($register_hash, "new_passwd", $server_key);
-        &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
-        &add_content2xml_hash($register_hash, "events", $events);
-
-        # send xml hash to server with general server passwd
-        my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
-        if( $res == 1 ) {
-            next;
-        }
-
-        last;
+        daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
+        $kernel->delay_set('register_at_gosa_si_server',2);
     }
-    
+    return;
+}
     
 
 #    my ($rout, $wout, $reg_server);
@@ -699,8 +687,10 @@ sub register_at_gosa_si_server {
 #    $server_address = $reg_server;
 #    $server_passwd = $new_server_passwd;
 #    $server_cipher = $new_server_cipher;
-    return;
-}
+
+
+#    return;
+#}
 
 
 
@@ -777,7 +767,6 @@ sub import_events {
         my $event_module = $1;
         my $events_l = eval( $1."::get_events()") ;
         foreach my $event_name (@{$events_l}) {
-            print "$event_name\n";
             $event_hash->{$event_name} = $event_module;
         }
 
@@ -788,6 +777,7 @@ sub import_events {
 sub server_input {
     my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
     my $error = 0;
+    my $answer;
     
     daemon_log("Incoming msg:\n$input\n", 8);
 
@@ -798,20 +788,29 @@ sub server_input {
     }
 
     if( $error == 0 ) {
-        #print STDERR "msg:\n$msg\n";
-        #print STDERR Dumper($msg_hash);
-
         my $header = @{$msg_hash->{header}}[0];
         my $source = @{$msg_hash->{source}}[0];
-        if ($header eq 'new_ldap_config') { if ($ldap_enabled == 1) {&new_ldap_config($msg_hash)}}
-        elsif ($header eq 'ping') { &got_ping($msg_hash) }
-        elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
-        elsif ($header eq 'new_passwd') { &new_passwd()}
-        elsif ($header eq 'compute_hardware') { &compute_hardware() }
-        elsif ($header eq 'registered') { daemon_log("gosa-si-client registerd at $source", 1) }
-        else { daemon_log("ERROR: no function assigned to msg $header", 5) }
 
+        if( $event_hash->{$header} ) {
+            # a event exists with the header as name
+            no strict 'refs';
+            $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
+            if( $header eq "registered") {
+                $REGISTERED_FLAG = $answer;
+            } 
+        }
+        else {
+            # maybe header is a core function
+            daemon_log("WARNING: no event assigned to msg $header", 5);
+            if ($header eq 'new_ldap_config') { if ($ldap_enabled == 1) {&new_ldap_config($msg_hash)}}
+            elsif ($header eq 'ping') { &got_ping($msg_hash) }
+            elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
+            elsif ($header eq 'new_passwd') { &new_passwd()}
+            elsif ($header eq 'compute_hardware') { &compute_hardware() }
+            else { daemon_log("ERROR: no core function assigned to msg $header", 5) }
+        }
     }
+
     return;
 }
 
@@ -878,7 +877,6 @@ daemon_log("gosa-si-client mac address detected: $client_mac_address", 1);
 
 # import events
 &import_events();
-#eval($event_hash->{'print_hello'}."::print_hello");
 
 
 # create socket for incoming xml messages
@@ -916,6 +914,7 @@ daemon_log("found servers in configuration file and via DNS: $servers_string", 5
 POE::Session->create(
 	inline_states => {
 		_start => \&register_at_gosa_si_server ,
+        register_at_gosa_si_server => \&register_at_gosa_si_server,
 	}
 );
 
