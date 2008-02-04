@@ -24,116 +24,72 @@ use Getopt::Long;
 use Config::IniFiles;
 use POSIX;
 use Time::HiRes qw( gettimeofday );
-use File::Basename;
 
-use Fcntl;
+use POE qw(Component::Server::TCP);
 use IO::Socket::INET;
-use Crypt::Rijndael;
-use MIME::Base64;
-use Digest::MD5  qw(md5 md5_hex md5_base64);
-use XML::Simple;
-use Data::Dumper;
-use Sys::Syslog qw( :DEFAULT setlogsock);
-use File::Spec;
-use Cwd;
 use NetAddr::IP;
+use Data::Dumper;
+use Crypt::Rijndael;
 use GOSA::GosaSupportDaemon;
+use Digest::MD5  qw(md5_hex md5 md5_base64);
+use MIME::Base64;
+use XML::Simple;
 
+
+#use Fcntl;
+#use Sys::Syslog qw( :DEFAULT setlogsock);
+#use File::Spec;
+#use Cwd;
+
+
+
+my $event_dir = "/usr/lib/gosa-si/client/events";
+use lib "/usr/lib/gosa-si/client/events";
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
-my ($server_address, $server_ip, $server_port, $server_domain, $server_passwd, $server_cipher, $server_timeout);
-my ($client_address, $client_ip, $client_port, $client_mac_address, $network_interface, $ldap_config, $pam_config, $nss_config, $gotoHardwareChecksum);
-my ($input_socket, $rbits, $wbits, $ebits, $xml, $known_hosts, $ldap_enabled);
-my (@events);
+my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain);
+my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
+my $xml;
+my $default_server_key;
+my $event_hash;
+my @servers;
+my $gotoHardwareChecksum;
+
+# globalise variables which are used in imported events
+our $cfg_file;
+our $server_address;
+our $client_address;
+our $server_key;
 
 # default variables
-my $event_dir = "/usr/lib/gosa-si/client/events";
-$known_hosts = {};
-$foreground = 0 ;
-%cfg_defaults =
-("general" =>
+our $REGISTERED_FLAG = 1;
+
+%cfg_defaults = (
+"general" =>
     {"log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
     },
 "client" => 
     {"client_port" => [\$client_port, "20083"],
      "client_ip" => [\$client_ip, "0.0.0.0"],
-	 "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00"],
+     "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00:00"],
      "ldap" => [\$ldap_enabled, 1],
      "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
      "nss_config" => [\$nss_config, "/etc/libnss_ldap.conf"],
     },
 "server" =>
-    {"server_ip" => [\$server_ip, ""],
+    {"server_ip" => [\$server_ip, "127.0.0.1"],
     "server_port" => [\$server_port, "20081"],
-    "server_passwd" => [\$server_passwd, ""],
+    "server_key" => [\$server_key, ""],
     "server_timeout" => [\$server_timeout, 10],
     "server_domain" => [\$server_domain, ""],
     },
-    );
+
+);
 
 
-#===  FUNCTION  ================================================================
-#         NAME:  read_configfile
-#   PARAMETERS:  cfg_file - string - 
-#      RETURNS:  
-#  DESCRIPTION: 
-#===============================================================================
-sub read_configfile {
-    my $cfg;
-    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
-        if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
-        } else {
-            print STDERR "Couldn't read config file!";
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
-        }
-    }
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  logging
-#   PARAMETERS:  level - string - default 'info' 
-#                msg - string - 
-#                facility - string - default 'LOG_DAEMON' 
-#      RETURNS:  
-#  DESCRIPTION: 
-#===============================================================================
-sub daemon_log {
-    my( $msg, $level ) = @_;
-    if(not defined $msg) { return }
-    if(not defined $level) { $level = 1 }
-    if(defined $log_file){
-        open(LOG_HANDLE, ">>$log_file");
-        if(not defined open( LOG_HANDLE, ">>$log_file" )) { 
-            print STDERR "cannot open $log_file: $!";
-            return }
-        chomp($msg);
-        if($level <= $verbose){
-            print LOG_HANDLE $msg."\n";
-            if(defined $foreground) { print $msg."\n" }
-        }
-    }
-    close( LOG_HANDLE );
-#    my ($msg, $level, $facility) = @_;
-#    if(not defined $msg) {return}
-#    if(not defined $level) {$level = "info"}
-#    if(not defined $facility) {$facility = "LOG_DAEMON"}
-#    openlog($0, "pid,cons,", $facility);
-#    syslog($level, $msg);
-#    closelog;
-#    return;
-}
-
+#=== FUNCTIONS = functions =====================================================
 
 #===  FUNCTION  ================================================================
 #         NAME: check_cmdline_param
@@ -156,6 +112,33 @@ sub check_cmdline_param () {
         if( defined( $err_config)) { print STDERR "$err_config\n"}
         print STDERR "\n";
         exit( -1 );
+    }
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  read_configfile
+#   PARAMETERS:  cfg_file - string - 
+#      RETURNS:  
+#  DESCRIPTION: 
+#===============================================================================
+sub read_configfile {
+    my ($cfg_file, %cfg_defaults) = @_ ;
+    my $cfg;
+    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+        if( -r $cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+        }
     }
 }
 
@@ -208,31 +191,58 @@ sub check_pid {
     }
 }
 
+
 #===  FUNCTION  ================================================================
-#         NAME:  get_interface_for_ip
-#   PARAMETERS:  ip address (i.e. 192.168.0.1)
-#      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
+#         NAME:  logging
+#   PARAMETERS:  level - string - default 'info' 
+#                msg - string - 
+#                facility - string - default 'LOG_DAEMON' 
+#      RETURNS:  
+#  DESCRIPTION: 
 #===============================================================================
-sub get_interface_for_ip {
-        my $result;
-        my $ip= shift;
-        if ($ip && length($ip) > 0) {
-                my @ifs= &get_interfaces();
-                if($ip eq "0.0.0.0") {
-                        $result = "all";
-                } else {
-                        foreach (@ifs) {
-                                my $if=$_;
-                                if(get_ip($if) eq $ip) {
-                                        $result = $if;
-					last;
-                                }
-                        }       
+sub daemon_log {
+    # log into log_file
+    my( $msg, $level ) = @_;
+    if(not defined $msg) { return }
+    if(not defined $level) { $level = 1 }
+    if(defined $log_file){
+        open(LOG_HANDLE, ">>$log_file");
+        if(not defined open( LOG_HANDLE, ">>$log_file" )) {
+            print STDERR "cannot open $log_file: $!";
+            return }
+            chomp($msg);
+            if($level <= $verbose){
+                my ($seconds, $minutes, $hours, $monthday, $month,
+                        $year, $weekday, $yearday, $sommertime) = localtime(time);
+                $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+                $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+                $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+                my @monthnames = ("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                $month = $monthnames[$month];
+                $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+                $year+=1900;
+                my $name = $0;
+                $name =~ s/\.\///;
+
+                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+                print LOG_HANDLE $log_msg;
+                if( $foreground ) { 
+                    print STDERR $log_msg;
                 }
-        }       
-        return $result;
+            }
+        close( LOG_HANDLE );
+    }
+#log into syslog
+#    my ($msg, $level, $facility) = @_;
+#    if(not defined $msg) {return}
+#    if(not defined $level) {$level = "info"}
+#    if(not defined $facility) {$facility = "LOG_DAEMON"}
+#    openlog($0, "pid,cons,", $facility);
+#    syslog($level, $msg);
+#    closelog;
+#    return;
 }
+
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_interfaces 
@@ -241,28 +251,28 @@ sub get_interface_for_ip {
 #  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
 #===============================================================================
 sub get_interfaces {
-        my @result;
-        my $PROC_NET_DEV= ('/proc/net/dev');
+    my @result;
+    my $PROC_NET_DEV= ('/proc/net/dev');
 
-        open(PROC_NET_DEV, "<$PROC_NET_DEV")
-                or die "Could not open $PROC_NET_DEV";
+    open(PROC_NET_DEV, "<$PROC_NET_DEV")
+        or die "Could not open $PROC_NET_DEV";
 
-        my @ifs = <PROC_NET_DEV>;
+    my @ifs = <PROC_NET_DEV>;
 
-        close(PROC_NET_DEV);
+    close(PROC_NET_DEV);
 
-        # Eat first two line
-        shift @ifs;
-        shift @ifs;
+    # Eat first two line
+    shift @ifs;
+    shift @ifs;
 
-        chomp @ifs;
-        foreach my $line(@ifs) {
-                my $if= (split /:/, $line)[0];
-                $if =~ s/^\s+//;
-                push @result, $if;
-        }
+    chomp @ifs;
+    foreach my $line(@ifs) {
+        my $if= (split /:/, $line)[0];
+        $if =~ s/^\s+//;
+        push @result, $if;
+    }
 
-        return @result;
+    return @result;
 }
 
 #===  FUNCTION  ================================================================
@@ -274,38 +284,70 @@ sub get_interfaces {
 sub get_mac {
 	my $ifreq= shift;
 	my $result;
-	
 	if ($ifreq && length($ifreq) > 0) { 
 		if($ifreq eq "all") {
 			if(defined($server_ip)) {
 				$result = &get_local_mac_for_remote_ip($server_ip);
-			} elsif ($client_mac_address && length($client_mac_address) > 0) {
-				$result = $client_mac_address;
-			} else {
+			} 
+			elsif ($client_mac_address && length($client_mac_address) > 0){
+				$result = &client_mac_address;
+			} 
+			else {
 				$result = "00:00:00:00:00:00";
 			}
 		} else {
 			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
 
-			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
-				or die "socket: $!";
-			
 			# A configured MAC Address should always override a guessed value
 			if ($client_mac_address and length($client_mac_address) > 0) {
-				$result = $client_mac_address;
-			} elsif(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
-				my ($if, $mac)= unpack 'h36 H12', $ifreq;
+				$result= $client_mac_address;
+			}
+			else {
+				socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+					or die "socket: $!";
 
-				if (length($mac) > 0) {
-					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
-					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
-					$result = $mac;
+				if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+					my ($if, $mac)= unpack 'h36 H12', $ifreq;
+
+					if (length($mac) > 0) {
+						$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+						$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+						$result = $mac;
+					}
 				}
 			}
 		}
 	}
 	return $result;
 }
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  get_interface_for_ip
+#   PARAMETERS:  ip address (i.e. 192.168.0.1)
+#      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
+#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
+#===============================================================================
+sub get_interface_for_ip {
+    my $result;
+    my $ip= shift;
+    if ($ip && length($ip) > 0) {
+        my @ifs= &get_interfaces();
+        if($ip eq "0.0.0.0") {
+            $result = "all";
+        } else {
+            foreach (@ifs) {
+                my $if=$_;
+                if(get_ip($if) eq $ip) {
+                    $result = $if;
+                    last;
+                }
+            }       
+        }
+    }       
+    return $result;
+}
+
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_ip 
@@ -314,26 +356,27 @@ sub get_mac {
 #  DESCRIPTION:  Uses ioctl to get ip address directly from system.
 #===============================================================================
 sub get_ip {
-        my $ifreq= shift;
-        my $result= "";
-        my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
+    my $ifreq= shift;
+    my $result= "";
+    my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
         my $proto= getprotobyname('ip');
 
-        socket SOCKET, PF_INET, SOCK_DGRAM, $proto
-                or die "socket: $!";
+    socket SOCKET, PF_INET, SOCK_DGRAM, $proto
+        or die "socket: $!";
 
-        if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
-                my ($if, $sin)    = unpack 'a16 a16', $ifreq;
-                my ($port, $addr) = sockaddr_in $sin;
-                my $ip            = inet_ntoa $addr;
+    if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
+        my ($if, $sin)    = unpack 'a16 a16', $ifreq;
+        my ($port, $addr) = sockaddr_in $sin;
+        my $ip            = inet_ntoa $addr;
 
-                if ($ip && length($ip) > 0) {
-                        $result = $ip;
-                }
+        if ($ip && length($ip) > 0) {
+            $result = $ip;
         }
+    }
 
-        return $result;
+    return $result;
 }
+
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_local_mac_for_remote_ip
@@ -343,729 +386,37 @@ sub get_ip {
 #                matches (defaultroute last).
 #===============================================================================
 sub get_local_mac_for_remote_ip {
-        my $ifreq= shift;
-        my $result= "00:00:00:00:00:00";
-        my $PROC_NET_ROUTE= ('/proc/net/route');
+    my $ifreq= shift;
+    my $result= "00:00:00:00:00:00";
+    my $PROC_NET_ROUTE= ('/proc/net/route');
 
-        open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
-                or die "Could not open $PROC_NET_ROUTE";
+    open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+        or die "Could not open $PROC_NET_ROUTE";
 
-        my @ifs = <PROC_NET_ROUTE>;
+    my @ifs = <PROC_NET_ROUTE>;
 
-        close(PROC_NET_ROUTE);
+    close(PROC_NET_ROUTE);
 
-	# Eat header line
-	shift @ifs;
-	chomp @ifs;
-	foreach my $line(@ifs) {
-		my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
-		my $destination;
-		my $mask;
-		my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
-		$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-		($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
-		$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-		if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
-			# destination matches route, save mac and exit
-			$result= &get_mac($Iface);
-			last;
-		}
-	}
-
-
-        return $result;
-}
-
-#===  FUNCTION  ================================================================
-#         NAME:  usage
-#   PARAMETERS: 
-#      RETURNS:  
-#  DESCRIPTION: 
-#===============================================================================
-sub usage {
-        my( $text, $help ) = @_;
-        $text = undef if( "h" eq $text );
-        (defined $text) && print STDERR "\n$text\n";
-        if( (defined $help && $help) || (!defined $help && !defined $text) ) {
-                print STDERR << "EOF" ;
-usage: $0 [-hvf] [-c config]
-
-    -h        : this (help) message
-    -c <file> : config file
-    -f        : foreground, process will not be forked to background
-    -v        : be verbose (multiple to increase verbosity)
-EOF
-        }
-        print "\n" ;
-}
-
-#===  FUNCTION  ================================================================
-#         NAME:  get_server_addresses
-#   PARAMETERS:  
-#      RETURNS:  
-#  DESCRIPTION:  
-#===============================================================================
-sub get_server_addresses {
-    my $domain= shift;
-    my @result;
-    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
-
-    my $output= `$dig_cmd 2>&1`;
-    open (PIPE, "$dig_cmd 2>&1 |");
-    while(<PIPE>) {
-        chomp $_;
-        # If it's not a comment
-        if($_ =~ m/^[^;]/) {
-            my @matches= split /\s+/;
-
-            # Push hostname with port
-            if($matches[3] eq 'SRV') {
-                push @result, $matches[7].':'.$matches[6];
-            } elsif ($matches[3] eq 'A') {
-                my $i=0;
-
-                # Substitute the hostname with the ip address of the matching A record
-                foreach my $host (@result) {
-                    if ((split /\:/, $host)[0] eq $matches[0]) {
-                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
-                    }
-                    $i++;
-                }
-            }
+    # Eat header line
+    shift @ifs;
+    chomp @ifs;
+    foreach my $line(@ifs) {
+        my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+        my $destination;
+        my $mask;
+        my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+        $destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+        ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+        $mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+        if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
+            # destination matches route, save mac and exit
+            $result= &get_mac($Iface);
+            last;
         }
     }
-    close(PIPE);
-    return @result;
-}
 
 
-#===  FUNCTION  ================================================================
-#         NAME:  register_at_server
-#   PARAMETERS:  
-#      RETURNS:  
-#  DESCRIPTION:  
-#===============================================================================
-sub register_at_server {
-    my ($tmp) = @_;
-
-    # create new passwd and ciphering object for client-server communication
-    my $new_server_passwd = &create_passwd();
-    my $new_server_cipher;
-
-    # detect all client accepted events
-    opendir(DIR, $event_dir) 
-        or daemon_log("cannot find directory $event_dir!\ngosa-si-client starts without any accepting events!", 1);
-    my $file_name;
-    my @events_list = ();
-    while(defined($file_name = readdir(DIR))){
-        if ($file_name eq "." || $file_name eq "..") {
-            next;
-        }
-        push(@events_list, $file_name);
-    }
-    my $events = join(",", @events_list);
-    daemon_log("found events: $events", 1);
-
-    # fill in all possible servers
-    my @servers;
-    if (defined $server_domain) {
-        my @tmp_servers = &get_server_addresses($server_domain);
-        foreach my $server (@tmp_servers) { unshift(@servers, $server); }
-    }
-    # add server address from config file at first position of server list
-    if (defined $server_address) {
-        unshift(@servers, $server_address);
-    }
-    daemon_log("found servers in configuration file and via DNS:", 5);
-    foreach my $server (@servers) {
-        daemon_log("\t$server", 5);
-    }
-
-    my ($rout, $wout, $reg_server);
-    foreach my $server (@servers) {
-
-        # create msg hash
-        my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
-        &add_content2xml_hash($register_hash, "new_passwd", $new_server_passwd);
-        &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
-        &add_content2xml_hash($register_hash, "events", $events);
-        &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
-
-        # send xml hash to server with general server passwd
-        my $answer = &send_msg_hash2address($register_hash, $server, $server_passwd);
- 
-        if ($answer != 0) { next; }
-       
-        # waiting for response
-        daemon_log("waiting for response...\n", 5);
-        my $nf = select($rout=$rbits, $wout=$wbits, undef, $server_timeout);
-
-        # something is coming in
-        if(vec $rout, fileno $input_socket, 1) {
-            my $crypted_msg;
-            my $client = $input_socket->accept();
-            my $other_end = getpeername($client);
-            if(not defined $other_end) {
-                daemon_log("client cannot be identified: $!\n");
-            } else {
-                my ($port, $iaddr) = unpack_sockaddr_in($other_end);
-                my $actual_ip = inet_ntoa($iaddr);
-                daemon_log("\naccept client from $actual_ip\n", 5);
-                my $in_msg = &read_from_socket($client);
-                if(defined $in_msg){
-                    chomp($in_msg);
-                    $crypted_msg = $in_msg;
-                } else {
-                    daemon_log("cannot read from $actual_ip\n", 5);
-                }
-            }
-            close($client);
-            
-            # validate acknowledge msg from server
-            $new_server_cipher = &create_ciphering($new_server_passwd);
-            my $msg_hash;
-            eval {
-                my $decrypted_msg = &decrypt_msg($crypted_msg, $new_server_cipher);
-                daemon_log("decrypted register msg: $decrypted_msg", 5);
-                $msg_hash = $xml->XMLin($decrypted_msg, ForceArray=>1);
-            };
-            if($@) {
-                daemon_log("ERROR: do not understand the incoming message:" , 5);  
-                daemon_log("$@", 7); 
-            } else {
-                my $header = @{$msg_hash->{header}}[0];
-                if($header eq "registered") {
-                    $reg_server = $server;
-                    last;
-                } elsif($header eq "denied") {
-                    my $reason = (&get_content_from_xml_hash($msg_hash, "denied"))[0];
-                    daemon_log("registration at $server denied: $reason", 1);
-                } else {
-                    daemon_log("cannot register at $server", 1);
-                }
-            }
-        }
-        # if no answer arrive, try next server in list
-
-    }
-    
-    if(defined $reg_server) {
-        daemon_log("registered at $reg_server", 1);
-    } else {
-        daemon_log("cannot register at any server", 1);
-        daemon_log("exiting!!!", 1);
-        exit(1);
-    }
-
-    # update the global available variables
-    $server_address = $reg_server;
-    $server_passwd = $new_server_passwd;
-    $server_cipher = $new_server_cipher;
-    return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_xml_hash
-#   PARAMETERS:  
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-#sub create_xml_hash {
-#    my ($header, $source, $target, $header_value) = @_;
-#    my $hash = {
-#            header => [$header],
-#            source => [$source],
-#            target => [$target],
-#            $header => [$header_value],
-#    };
-#    daemon_log("create_xml_hash:", 7),
-#    chomp(my $tmp = Dumper $hash);
-#    daemon_log("\t$tmp\n", 7);
-#    return $hash
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_xml_string
-#   PARAMETERS:  
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-#sub create_xml_string {
-#    my ($xml_hash) = @_ ;
-#    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-#    $xml_string =~ s/[\n]+//g;
-#    daemon_log("create_xml_string:\n\t$xml_string\n", 7);
-#    return $xml_string;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  add_content2xml_hash
-#   PARAMETERS:  
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-#sub add_content2xml_hash {
-#    my ($xml_ref, $element, $content) = @_;
-#    if(not exists $$xml_ref{$element} ) {
-#        $$xml_ref{$element} = [];
-#    }
-#    my $tmp = $$xml_ref{$element};
-#    push(@$tmp, $content);
-#    return;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  get_content_from_xml_hash
-#   PARAMETERS:  ref : reference to the xml hash
-#                string: key of the value you want
-#      RETURNS:  STRING AND ARRAY
-#  DESCRIPTION:  if key of the hash is either 'header', 'target' or 'source' the 
-#                function returns a string cause it is expected that these keys
-#                do just have one value, all other keys returns an array!!!
-#===============================================================================
-#sub get_content_from_xml_hash {
-#    my ($xml_ref, $element) = @_;
-#    my $result = $xml_ref->{$element};
-#    if( $element eq "header" || $element eq "target" || $element eq "source") {
-#        return @$result[0];
-#    }
-#    return @$result;
-#}
-
-#    my ($xml_ref, $element) = @_;
-#    if (exists $xml_ref->{$element}) {
-#        my $result = $xml_ref->{$element};
-#        if( $element eq "header" || $element eq "target" || $element eq "source") {
-#            return @$result[0];
-#        } else {
-#            return @$result;
-#        }
-#        
-#    } else {
-#        my $result = ();
-#        return @$result;
-#    }
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  encrypt_msg
-#   PARAMETERS:
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-#sub encrypt_msg {
-#    my ($msg, $my_cipher) = @_;
-#    if(not defined $my_cipher) { print "no cipher object\n"; }
-#    $msg = "\0"x(16-length($msg)%16).$msg;
-#    my $crypted_msg = $my_cipher->encrypt($msg);
-#    chomp($crypted_msg = &encode_base64($crypted_msg));
-#    return $crypted_msg;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  decrypt_msg
-#   PARAMETERS:
-#      RETURNS:
-#  DESCRIPTION:
-#===============================================================================
-#sub decrypt_msg {
-#    my ($crypted_msg, $my_cipher) = @_ ;
-#    $crypted_msg = &decode_base64($crypted_msg);
-#    my $msg = $my_cipher->decrypt($crypted_msg); 
-#    $msg =~ s/\0*//g;
-#    return $msg;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_ciphering
-#   PARAMETERS:  
-#      RETURNS:  cipher object
-#  DESCRIPTION:  
-#===============================================================================
-#sub create_ciphering {
-#    my ($passwd) = @_;
-#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-#
-#    #daemon_log("iv: $iv", 7);
-#    #daemon_log("key: $passwd", 7);
-#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-#    $my_cipher->set_iv($iv);
-#    return $my_cipher;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_passwd
-#   PARAMETERS:
-#      RETURNS:  cipher object
-#  DESCRIPTION:
-#===============================================================================
-sub create_passwd {
-    my $new_passwd = "";
-    for(my $i=0; $i<31; $i++) {
-        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
-    }
-
-    return $new_passwd;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  send_msg_hash2address
-#   PARAMETERS:  msg string - xml message
-#                PeerAddr string - socket address to send msg
-#                PeerPort string - socket port, if not included in socket address
-#      RETURNS:  nothing
-#  DESCRIPTION:  ????
-#===============================================================================
-#sub send_msg_hash2address {
-#    my ($msg_hash, $address, $passwd) = @_ ;
-#
-#    # fetch header for logging
-#    my $header = @{$msg_hash->{header}}[0];
-#
-#    # generiere xml string
-#    my $msg_xml = &create_xml_string($msg_hash);
-#
-#    # hole das entsprechende passwd aus dem hash
-#    if(not defined $passwd) {
-#        if(exists $known_hosts->{$address}) {
-#            $passwd = $known_hosts->{$address}->{passwd};
-#        } elsif ($address eq $server_address) {
-#            $passwd = $server_passwd;
-#        } else {
-#            daemon_log("$address not known, neither as server nor as client", 1);
-#            return "failed";
-#        }
-#    }
-#
-#    # erzeuge ein ciphering object
-#    my $act_cipher = &create_ciphering($passwd);
-#
-#    # encrypt xml msg
-#    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
-#
-#    # öffne socket
-#    my $socket = &open_socket($address);
-#    if(not defined $socket){
-#        daemon_log("cannot open socket to $address, server not reachable", 1);
-#        daemon_log("cannot send '$header'-msg", 1);
-#        return "failed";
-#    }
-#
-#    # versende xml msg
-#    print $socket $crypted_msg."\n";
-#
-#    # schließe socket
-#    close $socket;
-#
-#    daemon_log("send '$header'-msg to $address", 5);
-#    daemon_log("crypted_msg:\n\t$crypted_msg", 7);
-#
-#    return "done";
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  open_socket
-#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
-#                [PeerPort] string necessary if port not appended by PeerAddr
-#      RETURNS:  socket IO::Socket::INET
-#  DESCRIPTION:
-#===============================================================================
-sub open_socket {
-    my ($PeerAddr, $PeerPort) = @_ ;
-    if(defined($PeerPort)){
-        $PeerAddr = $PeerAddr.":".$PeerPort;
-    }
-    my $socket;
-    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr ,
-            Porto => "tcp" ,
-            Type => SOCK_STREAM,
-            Timeout => 5,
-            );
-    if(not defined $socket) {
-        #daemon_log("cannot connect to socket at $PeerAddr, $@\n");
-        return;
-    }
-    daemon_log("open_socket:\n\t$PeerAddr", 7);
-    return $socket;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  read_from_socket
-#   PARAMETERS:  socket fh - 
-#      RETURNS:  result string - readed characters from socket
-#  DESCRIPTION:  reads data from socket in 16 byte steps
-#===============================================================================
-sub read_from_socket {
-    my ($socket) = @_;
-    my $result = "";
-
-    $socket->blocking(1);
-    $result = <$socket>;
-
-    $socket->blocking(0);
-    while ( my $char = <$socket> ) {
-        if (not defined $char) { last }
-        $result .= $char;
-    }
     return $result;
-
-
-
-#    my ($socket) = @_;
-#    my $result = "";
-#    my $len = 16;
-#    while($len == 16){
-#        my $char;
-#        $len = sysread($socket, $char, 16);
-#        if($len != 16) { last }
-#        if($len != 16) { last }
-#        $result .= $char;
-#    }
-#    return $result;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  print_known_hosts_hash
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub print_known_hosts_hash {
-    my ($tmp) = @_;
-    print "####################################\n";
-    print "# status of known_hosts\n";
-    my $hosts;
-    my $host_hash;
-    my @hosts = keys %$known_hosts;
-    foreach my $host (@hosts) {
-        #my @elements = keys %$known_hosts->{$host};
-        my $status = $known_hosts->{$host}->{status} ;
-        my $passwd = $known_hosts->{$host}->{passwd};
-        my $timestamp = $known_hosts->{$host}->{timestamp};
-        print "$host\n";
-        print "\t$status\n";
-        print "\t$passwd\n";
-        print "\t$timestamp\n";
-    }
-    print "####################################\n";
-    return;
-}
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub create_known_hosts_entry {
-    my ($hostname) = @_;
-    $known_hosts->{$hostname} = {};
-    $known_hosts->{$hostname}->{status} = "none";
-    $known_hosts->{$hostname}->{passwd} = "none";
-    $known_hosts->{$hostname}->{timestamp} = "none";
-    return;  
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub update_known_hosts_entry {
-    my ($hostname, $status, $passwd, $timestamp) = @_;
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
-
-    if($status) {
-        $known_hosts->{$hostname}->{status} = $status;
-    }
-    if($passwd) {
-        $known_hosts->{$hostname}->{passwd} = $passwd;
-    }
-    if($timestamp) {
-        $t = $timestamp;
-    }
-    $known_hosts->{$hostname}->{timestamp} = $t;
-    return;  
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub add_content2known_hosts {
-    my ($hostname, $element, $content) = @_;
-    my ($seconds, $minutes, $hours, $monthday, $month,
-    $year, $weekday, $yearday, $sommertime) = localtime(time);
-    $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-    $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-    $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-    $month+=1;
-    $month = $month < 10 ? $month = "0".$month : $month;
-    $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-    $year+=1900;
-    my $t = "$year$month$monthday$hours$minutes$seconds";
-    
-    $known_hosts->{$hostname}->{$element} = $content;
-    $known_hosts->{$hostname}->{timestamp} = $t;
-    return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub process_incoming_msg {
-    my ($crypted_msg) = @_;
-    if(not defined $crypted_msg) {
-        daemon_log("function 'process_incoming_msg': got no msg", 7);
-    }
-    $crypted_msg =~ /^([\s\S]*?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)\.(\d{1,3}?)$/;
-    $crypted_msg = $1;
-    my $host = sprintf("%s.%s.%s.%s", $2, $3, $4, $5);
-    daemon_log("msg from host:", 1);
-    daemon_log("\t$host", 1);
-    daemon_log("crypted msg:", 7);
-    daemon_log("\t$crypted_msg", 7);
-
-    my $act_cipher = &create_ciphering($server_passwd);
-
-    # try to decrypt incoming msg
-    my ($msg, $msg_hash);
-    eval{
-        $msg = &decrypt_msg($crypted_msg, $act_cipher);
-        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
-    };
-    if($@) {
-        daemon_log("ERROR: incoming msg cannot be decrypted with server passwd", 1);
-        return;
-    } 
-
-    my $header = @{$msg_hash->{header}}[0];
-    
-    daemon_log("receive '$header' from $host", 1);
-
-    #check whether msg to process is a event 
-    opendir(DIR, $event_dir) 
-        or daemon_log("cannot find directory $event_dir, no events specified", 5);
-    my $file_name;
-    while(defined($file_name = readdir(DIR))){
-        if ($file_name eq "." || $file_name eq "..") {
-            next;
-        }
-        if ($file_name eq $header) {
-            my $cmd = "$event_dir/$file_name '$msg'";
-            my $result_xml = "";
-            open(PIPE, "$cmd 2>&1 |");
-            while(<PIPE>) {
-                $result_xml.=$_;
-                last;
-            }
-            close(PIPE);
-            my $res_hash = &transform_msg2hash($result_xml);
-            my $res_target = @{$res_hash->{target}}[0];
-            &send_msg_hash2address($res_hash, $server_address);
-            
-            return;
-        }
-    }
-    close(DIR);
-    daemon_log("could not assign the msg $header to an event", 5);
-    
-    if ($header eq 'new_ldap_config') { if ($ldap_enabled == 1) {&new_ldap_config($msg_hash)}}
-    elsif ($header eq 'ping') { &got_ping($msg_hash) }
-    elsif ($header eq 'wake_up') { &execute_event($msg_hash)}
-    elsif ($header eq 'new_passwd') { &new_passwd()}
-	elsif ($header eq 'detect_hardware') { &detect_hardware()}
-    else { daemon_log("ERROR: no function assigned to msg $header", 5) }
-
-    return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub update_status { 
-    my ($new_status) = @_ ;
-    my $out_hash = &create_xml_hash("update_status", $client_address, $server_address);      
-    &add_content2xml_hash($out_hash, "update_status", $new_status);
-    &send_msg_hash2address($out_hash, $server_address);
-    return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  
-#   PARAMETERS:
-#      RETURNS: 
-#  DESCRIPTION: 
-#===============================================================================
-sub server_leaving {
-    my ($msg_hash) = @_ ;
-    my $source = &get_content_from_xml_hash("source");
-    my $header = &get_content_from_xml_hash("header");
-    
-    daemon_log("gosa daemon $source is going down, cause registration procedure", 1);
-    my $server_address = "none";
-    my $server_passwd = "none";
-    my $server_cipher = "none";
-
-    # reinitialization of default values in config file
-    &read_configfile;
-    
-    # registrated at new daemon
-    &register_at_server();
-       
-    return;   
-}
-
-
-sub got_ping {
-    my ($msg_hash) = @_ ;
-
-    my $source = &get_content_from_xml_hash($msg_hash, 'source');
-    my $target = &get_content_from_xml_hash($msg_hash, 'target');
-    my $header = &get_content_from_xml_hash($msg_hash, 'header');    
-    
-    &add_content2known_hosts(hostname=>$target, status=>$header);
-    
-    my $out_hash = &create_xml_hash("got_ping", $target, $source);
-    &send_msg_hash2address($out_hash, $source, $server_passwd);
-
-    return;
 }
 
 
@@ -1210,65 +561,6 @@ sub new_ldap_config {
 }
 
 
-sub execute_event {
-    my ($msg_hash)= @_;
-    my $configdir= '/etc/gosa-si/client/events/';
-    my $result;
-
-    my $header = &get_content_from_xml_hash($msg_hash, 'header');
-    my $source = &get_content_from_xml_hash($msg_hash, 'source');
-    my $target = &get_content_from_xml_hash($msg_hash, 'target');
-
-
-    if((not defined $source)
-            && (not defined $target)
-            && (not defined $header)) {
-        daemon_log("ERROR: Entries missing in XML msg for gosa events under $configdir");
-    } else {
-        my $parameters="";
-        my @params = &get_content_from_xml_hash($msg_hash, $header);
-        my $params = join(", ", @params);
-        daemon_log("execute_event: got parameters: $params", 5);
-
-        if (@params) {
-            foreach my $param (@params) {
-                my $param_value = (&get_content_from_xml_hash($msg_hash, $param))[0];
-                daemon_log("execute_event: parameter -> value: $param -> $param_value", 7);
-                $parameters.= " ".$param_value;
-            }
-        }
-
-        my $cmd= $configdir.$header."$parameters";
-        daemon_log("execute_event: executing cmd: $cmd", 7);
-        $result= "";
-        open(PIPE, "$cmd 2>&1 |");
-        while(<PIPE>) {
-            $result.=$_;
-        }
-        close(PIPE);
-    }
-
-    # process the event result
-
-
-    return;
-}
-
-
-sub new_passwd {
-    # my ($msg_hash) = @_ ;
-    my $new_server_passwd = &create_passwd();
-    my $new_server_cipher = &create_ciphering($new_server_passwd);
-
-    my $out_hash = &create_xml_hash("new_passwd", $client_address, $server_address, $new_server_passwd);
-    
-    &send_msg_hash2address($out_hash, $server_address, $server_passwd);
-
-    $server_passwd = $new_server_passwd;
-    $server_cipher = $new_server_cipher;
-    return; 
-}
-
 sub generate_hw_digest {
 	my $hw_data;
 	foreach my $line (split /\n/, `cat /proc/bus/pci/devices`) {
@@ -1277,121 +569,369 @@ sub generate_hw_digest {
 	return(md5_base64($hw_data));
 }
 
-sub detect_hardware {
-	my $hwinfo= `which hwinfo`;
-	chomp $hwinfo;
 
-	if (!(defined($hwinfo) && length($hwinfo) > 0)) {
-		&main::daemon_log("ERROR: hwinfo was not found in \$PATH! Hardware detection will not work!", 1);
-		return;
-	}
+sub create_passwd {
+    my $new_passwd = "";
+    for(my $i=0; $i<31; $i++) {
+        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
+    }
 
-	my $result= {
-		macAddress      => $client_mac_address,
-		gotoXMonitor    => "",
-		gotoXDriver     => "",
-		gotoXMouseType  => "",
-		gotoXMouseport  => "",
-		gotoXkbModel    => "",
-		gotoXHsync      => "",
-		gotoXVsync      => "",
-		gotoXResolution => "",
-		ghUsbSupport    => "",
-		gotoSndModule   => "",
-		ghGfxAdapter    => "",
-		ghNetNic        => "",
-		ghSoundAdapter  => "",
-		ghMemSize       => "",
-		ghCpuType       => "",
-		gotoModules     => [],
-		ghIdeDev        => [],
-		ghScsiDev       => [],
-	};
+    return $new_passwd;
+}
 
-	&main::daemon_log("Starting hardware detection", 4);
-	my $gfxcard= `$hwinfo --gfxcard`;
-	my $primary_adapter= $1 if $gfxcard =~ /^Primary display adapter:\s#(\d+)\n/m;
-	if(defined($primary_adapter)) {
-		($result->{ghGfxAdapter}, $result->{gotoXDriver}) = ($1,$2) if 
-			$gfxcard =~ /$primary_adapter:.*?Model:\s\"([^\"]*)\".*?Server Module:\s(\w*).*?\n\n/s;
-	}
-	my $monitor= `$hwinfo --monitor`;
-	my $primary_monitor= $1 if $monitor =~ /^(\d*):.*/m;
-	if(defined($primary_monitor)) {
-		($result->{gotoXMonitor}, $result->{gotoXResolution}, $result->{gotoXVsync}, $result->{gotoXHsync})= ($1,$2,$3,$4) if 
-		$monitor =~ /$primary_monitor:\s.*?Model:\s\"(.*?)\".*?Max\.\sResolution:\s([0-9x]*).*?Vert\.\sSync\sRange:\s([\d\-]*)\sHz.*?Hor\.\sSync\sRange:\s([\d\-]*)\skHz.*/s;
-	}
 
-	if(length($result->{gotoXHsync}) == 0) {
-		# set default values
-		$result->{gotoXHsync} = "30+50";
-		$result->{gotoXVsync} = "30+90";
-	}
+sub get_server_addresses {
+    my $domain= shift;
+    my @result;
+    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
 
-	my $mouse= `$hwinfo --mouse`;
-	my $primary_mouse= $1 if $mouse =~ /^(\d*):.*/m;
-	if(defined($primary_mouse)) {
-		($result->{gotoXMouseport}, $result->{gotoXMouseType}) = ($1,$2) if
-		$mouse =~ /$primary_mouse:\s.*?Device\sFile:\s(.*?)\s.*?XFree86\sProtocol:\s(.*?)\n.*?/s;
-	}
+    my $output= `$dig_cmd 2>&1`;
+    open (PIPE, "$dig_cmd 2>&1 |");
+    while(<PIPE>) {
+        chomp $_;
+        # If it's not a comment
+        if($_ =~ m/^[^;]/) {
+            my @matches= split /\s+/;
 
-	my $sound= `$hwinfo --sound`;
-	my $primary_sound= $1 if $sound =~ /^(\d*):.*/m;
-	if(defined($primary_sound)) {
-		($result->{ghSoundAdapter}, $result->{gotoSndModule})= ($1,$2) if 
-		$sound =~ /$primary_sound:\s.*?Model:\s\"(.*?)\".*?Driver\sModules:\s\"(.*?)\".*/s;
-	}
+            # Push hostname with port
+            if($matches[3] eq 'SRV') {
+                push @result, $matches[7].':'.$matches[6];
+            } elsif ($matches[3] eq 'A') {
+                my $i=0;
 
-	my $netcard= `hwinfo --netcard`;
-	my $primary_netcard= $1 if $netcard =~ /^(\d*):.*/m;
-	if(defined($primary_netcard)) {
-		$result->{ghNetNic}= $1 if $netcard =~ /$primary_netcard:\s.*?Model:\s\"(.*?)\".*/s;
-	}
+                # Substitute the hostname with the ip address of the matching A record
+                foreach my $host (@result) {
+                    if ((split /\:/, $host)[0] eq $matches[0]) {
+                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
+                    }
+                    $i++;
+                }
+            }
+        }
+    }
+    close(PIPE);
+    return @result;
+}
 
-	my $keyboard= `hwinfo --keyboard`;
-	my $primary_keyboard= $1 if $keyboard =~ /^(\d*):.*/m;
-	if(defined($primary_keyboard)) {
-		$result->{gotoXkbModel}= $1 if $keyboard =~ /$primary_keyboard:\s.*?XkbModel:\s(.*?)\n.*/s;
-	}
 
-	$result->{ghCpuType}= sprintf "%s / %s - %s", 
-	`cat /proc/cpuinfo` =~ /.*?vendor_id\s+:\s(.*?)\n.*?model\sname\s+:\s(.*?)\n.*?cpu\sMHz\s+:\s(.*?)\n.*/s;
-	$result->{ghMemSize}= $1 if `cat /proc/meminfo` =~ /^MemTotal:\s+(.*?)\skB.*/s;
+##===  FUNCTION  ================================================================
+##         NAME:  create_ciphering
+##   PARAMETERS:  passwd - string - used to create ciphering
+##      RETURNS:  cipher - object
+##  DESCRIPTION:  creates a Crypt::Rijndael::MODE_CBC object with passwd as key
+##===============================================================================
+#sub create_ciphering {
+#    my ($passwd) = @_;
+#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+#
+#    #daemon_log("iv: $iv", 7);
+#    #daemon_log("key: $passwd", 7);
+#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+#    $my_cipher->set_iv($iv);
+#    return $my_cipher;
+#}
+#
+#
+#sub create_ciphering {
+#    my ($passwd) = @_;
+#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+#    $my_cipher->set_iv($iv);
+#    return $my_cipher;
+#}
+#
+#
+#sub encrypt_msg {
+#    my ($msg, $key) = @_;
+#    my $my_cipher = &create_ciphering($key);
+#    {
+#      use bytes;
+#      $msg = "\0"x(16-length($msg)%16).$msg;
+#    }
+#    $msg = $my_cipher->encrypt($msg);
+#    chomp($msg = &encode_base64($msg));
+#    # there are no newlines allowed inside msg
+#    $msg=~ s/\n//g;
+#    return $msg;
+#}
+#
+#
+#sub decrypt_msg {
+#    my ($msg, $key) = @_ ;
+#    $msg = &decode_base64($msg);
+#    my $my_cipher = &create_ciphering($key);
+#    $msg = $my_cipher->decrypt($msg); 
+#    $msg =~ s/\0*//g;
+#    return $msg;
+#}
 
-	my @gotoModules=();
-	for my $line(`lsmod`) {
-		if (($line =~ /^Module.*$/) or ($line =~ /^snd.*$/)) {
-			next;
-		} else {
-			push @gotoModules, $1 if $line =~ /^(\w*).*$/
-		}
-	}
-	my %seen = ();
-	
-	# Remove duplicates and save
-	push @{$result->{gotoModules}}, grep { ! $seen{$_} ++ } @gotoModules;
 
-	$result->{ghUsbSupport} = (-d "/proc/bus/usb")?"true":"false";
-	
-	foreach my $device(`hwinfo --ide` =~ /^.*?Model:\s\"(.*?)\".*$/mg) {
-		push @{$result->{ghIdeDev}}, $device;
-	}
+#===  FUNCTION  ================================================================
+#         NAME:  send_msg_hash2address
+#   PARAMETERS:  msg_hash - hash - xml_hash created with function create_xml_hash
+#                PeerAddr string - socket address to send msg
+#                PeerPort string - socket port, if not included in socket address
+#      RETURNS:  nothing
+#  DESCRIPTION:  ????
+#===============================================================================
+sub send_msg_hash2address {
+    my ($msg_hash, $address, $passwd) = @_ ;
 
-	foreach my $device(`hwinfo --scsi` =~ /^.*?Model:\s\"(.*?)\".*$/mg) {
-		push @{$result->{ghScsiDev}}, $device;
-	}
+    # fetch header for logging
+    my $header = @{$msg_hash->{header}}[0];  
 
-	&main::daemon_log("Hardware detection done!", 4);
+    # generate xml string
+    my $msg_xml = &create_xml_string($msg_hash);
+    
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg_xml, $passwd);
 
-    return &send_msg_hash2address(
-		&create_xml_hash("detected_hardware", $client_address, $server_address, $result),
-		$server_address, 
-		$server_passwd
-	);
+    # opensocket
+    my $socket = &open_socket($address);
+    if(not defined $socket){
+        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
+        return 1;
+    }
+    
+    # send xml msg
+    print $socket $crypted_msg."\n";
+    
+    close $socket;
+
+    daemon_log("send '$header'-msg to $address", 1);
+    daemon_log("message:\n$msg_xml", 8);
+    return 0;
+}
+
+
+sub send_msg_to_target {
+    my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
+    my $error = 0;
+
+    if( $msg_header ) {
+        $msg_header = "'$msg_header'-";
+    }
+    else {
+        $msg_header = "";
+    }
+
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
+
+    # opensocket
+    my $socket = &open_socket($address);
+    if( !$socket ) {
+        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        $error++;
+    }
+    
+    if( $error == 0 ) {
+        # send xml msg
+        print $socket $crypted_msg."\n";
+
+        daemon_log("send ".$msg_header."msg to $address", 1);
+        daemon_log("message:\n$msg", 8);
+
+    }
+
+    # close socket in any case
+    if( $socket ) {
+        close $socket;
+    }
+
+    return;
+}
+
+
+sub open_socket {
+    my ($PeerAddr, $PeerPort) = @_ ;
+    if(defined($PeerPort)){
+        $PeerAddr = $PeerAddr.":".$PeerPort;
+    }
+    my $socket;
+    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
+            Porto => "tcp",
+            Type => SOCK_STREAM,
+            Timeout => 5,
+            );
+    if(not defined $socket) {
+        return;
+    }
+    &daemon_log("open_socket: $PeerAddr", 7);
+    return $socket;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  register_at_server
+#   PARAMETERS:  
+#      RETURNS:  
+#  DESCRIPTION:  
+#===============================================================================
+sub register_at_gosa_si_server {
+    my ($kernel) = $_[KERNEL];
+
+    if( $REGISTERED_FLAG == 1 ) {
+
+        # create new passwd and ciphering object for client-server communication
+        $server_key = &create_passwd();
+
+        my $events = join( ", ", keys %{$event_hash} );
+
+        while(1) {
+
+            # fetch first gosa-si-server from @servers
+            my $server = shift(@servers);
+
+            if( !$server ) {
+                daemon_log("no gosa-si-server left in list of servers", 1);
+                daemon_log("unable to register at a gosa-si-server, force shutdown", 1);
+                exit(1);
+            }
+
+            # create registration msg
+            my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
+            &add_content2xml_hash($register_hash, "new_passwd", $server_key);
+            &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
+            &add_content2xml_hash($register_hash, "events", $events);
+            &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+
+            # send xml hash to server with general server passwd
+            my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
+            last;
+        }
+        daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
+        $kernel->delay_set('register_at_gosa_si_server',2);
+    }
+    return;
+}
+    
+
+sub check_key_and_xml_validity {
+    my ($crypted_msg, $module_key) = @_;
+#print STDERR "crypted_msg:$crypted_msg\n";
+#print STDERR "modul_key:$module_key\n";
+
+    my $msg;
+    my $msg_hash;
+    eval{
+        $msg = &decrypt_msg($crypted_msg, $module_key);
+        &main::daemon_log("decrypted_msg: \n$msg", 8);
+
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die 'no or more headers specified';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header has length 0';
+        }
+
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die 'no or more sources specified';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source has length 0';
+        }
+
+        # check target
+        my $target_l = $msg_hash->{'target'};
+        if( 1 != @{$target_l} ) {
+            die 'no or more targets specified ';
+        }
+        my $target = @{$target_l}[0];
+        if( 0 == length $target) {
+            die 'target has length 0 ';
+        }
+
+    };
+    if($@) {
+        &main::daemon_log("WARNING: do not understand the message or msg is not gosa-si envelope conform:", 5);
+        &main::daemon_log("$@", 8);
+    }
+
+    return ($msg, $msg_hash);
+}
+
+
+sub import_events {
+
+    if (not -e $event_dir) {
+        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+    }
+    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+
+    while (defined (my $event = readdir (DIR))) {
+        if( $event eq "." || $event eq ".." ) { next; }    
+
+        eval{ require $event; };
+        if( $@ ) {
+            daemon_log("import of event module '$event' failed", 1);
+            daemon_log("$@", 8);
+            next;
+        }
+
+        $event =~ /(\S*?).pm$/;
+        my $event_module = $1;
+        my $events_l = eval( $1."::get_events()") ;
+        foreach my $event_name (@{$events_l}) {
+            $event_hash->{$event_name} = $event_module;
+        }
+
+    }
+}
+
+
+sub server_input {
+    my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+    my $error = 0;
+    my $answer;
+    
+    daemon_log("Incoming msg:\n$input\n", 8);
+
+    my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
+    if( (!$msg) || (!$msg_hash) ) {
+        daemon_log("Deciphering of incoming msg failed", 5);
+        $error++;
+    }
+
+    ######################
+    # process incoming msg
+    if( $error == 0 ) {
+        my $header = @{$msg_hash->{header}}[0];
+        my $source = @{$msg_hash->{source}}[0];
+
+        if( exists $event_hash->{$header} ) {
+            # a event exists with the header as name
+            daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+            no strict 'refs';
+            $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
+         }
+    }
+
+    ########
+    # answer
+    if( $answer ) {
+        if( $answer =~ "<header>registered</header>") {
+            $REGISTERED_FLAG = 0;
+        } 
+        else {
+        &send_msg_to_address($answer, $server_address, $server_key);
+        }
+    }
+
+    return;
 }
 
 #==== MAIN = main ==============================================================
-
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
 GetOptions("h|help" => \&usage,
@@ -1402,121 +942,104 @@ GetOptions("h|help" => \&usage,
 
 #  read and set config parameters
 &check_cmdline_param ;
-&read_configfile;
+&read_configfile($cfg_file, %cfg_defaults);
 &check_pid;
 
+
+# forward error messages to logfile
 if ( ! $foreground ) {
 	open STDIN, '/dev/null' or die "Can’t read /dev/null: $!";
 	open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
 	open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
 }
 
-
-# restart daemon log file
-if(-e $log_file ) { unlink $log_file }
-daemon_log(" ", 1);
-daemon_log("$0 started!", 1);
-
-# Just fork, if we"re not in foreground mode
-if( ! $foreground ) { $pid = fork(); }
-else { $pid = $$; }
+# Just fork, if we are not in foreground mode
+if( ! $foreground ) { 
+    chdir '/'                 or die "Can't chdir to /: $!";
+    $pid = fork;
+    setsid                    or die "Can't start a new session: $!";
+    umask 0;
+} 
+else { 
+    $pid = $$; 
+}
 
 # Do something useful - put our PID into the pid_file
 if( 0 != $pid ) {
     open( LOCK_FILE, ">$pid_file" );
     print LOCK_FILE "$pid\n";
     close( LOCK_FILE );
-    if( !$foreground ) { exit( 0 ) };
+    if( !$foreground ) { 
+        exit( 0 ) 
+    };
 }
 
-# detect own ip and mac address
-$network_interface= &get_interface_for_ip($client_ip);
-$client_mac_address= &get_mac($network_interface);
+daemon_log(" ", 1);
+daemon_log("$0 started!", 1);
 
-# ($client_ip, $client_mac_address) = &get_ip_and_mac(); 
-#if (not defined $client_ip) {
-#    die "EXIT: ip address of $0 could not be detected";
-#}
-daemon_log("client ip address detected: $client_ip", 1);
-daemon_log("client mac address detected: $client_mac_address", 1);
+# delete old DBsqlite lock files
+system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
+
+
+# complete client_address
+$client_address = $client_ip.":".$client_port;
+
+
+# detect own ip and mac address
+my $network_interface= &get_interface_for_ip($client_ip);
+$client_mac_address= &get_mac($network_interface);
+daemon_log("gosa-si-client ip address detected: $client_ip", 1);
+daemon_log("gosa-si-client mac address detected: $client_mac_address", 1);
+
+
+# import events
+&import_events();
+
+
+# compute hardware checksum
+$gotoHardwareChecksum= &generate_hw_digest();
+daemon_log("gosa-si-client gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
+
+
+# create socket for incoming xml messages
+POE::Component::Server::TCP->new(
+    Alias => 'gosa-si-client',
+	Port => $client_port,
+	ClientInput => \&server_input,
+);
+daemon_log("start socket for incoming xml messages at port '$client_port' ", 1);
+
 
 # prepare variables
 if (defined $server_ip && defined $server_port) {
     $server_address = $server_ip.":".$server_port;
 }
-
-# this is necessary that gosa-si-server knowns to which ip-address he can send msgs
-if( $client_ip eq "0.0.0.0" ) {
-    $client_ip = "127.0.0.1";
-}
-$client_address = $client_ip.":".$client_port;
-
-# setup xml parser
 $xml = new XML::Simple();
-
-# compute hardware checksum
-$gotoHardwareChecksum= &generate_hw_digest();
-
-# create input socket
-daemon_log(" ", 1);
-$rbits = $wbits = $ebits = "";
-$input_socket = IO::Socket::INET->new(LocalPort => $client_port,
-        Type => SOCK_STREAM,
-        Reuse => 1,
-        Listen => 20,
-        ); 
-if(not defined $input_socket){
-    daemon_log("cannot be a tcp server at $client_port : $@\n");
-} else {
-    daemon_log("start client at $client_address",1) ;
-    vec($rbits, fileno $input_socket, 1) = 1;
-    vec($wbits, fileno $input_socket, 1) = 1;
-}
-
-# register at server
-daemon_log(" ", 1);
-&register_at_server();
+$default_server_key = $server_key;
 
 
-##############
-# Debugging
-#############
-#sleep(2);
-#&update_status("ich_bin_ein_neuer_status");
-
-###################################
-#everything ready, okay, lets start
-###################################
-while(1) {
-    my ($rout, $wout);
-    my $nf = select($rout=$rbits, $wout=$wbits, undef, undef);
-
-    # error handling
-    if($nf < 0 ) {
-    }
-
-    # something is coming in
-    if(vec $rout, fileno $input_socket, 1) {
-        my $client = $input_socket->accept();
-        my $other_end = getpeername($client);
-        
-        if(not defined $other_end) {
-            daemon_log("client cannot be identified: $!");
-        } else {
-            my ($port, $iaddr) = unpack_sockaddr_in($other_end);
-            my $actual_ip = inet_ntoa($iaddr);
-            daemon_log("accept client from $actual_ip", 5);
-            my $in_msg = &read_from_socket($client);
-            if(defined $in_msg){
-                chomp($in_msg);
-                $in_msg = $in_msg.".".$actual_ip;
-                &process_incoming_msg($in_msg);
-
-            }
-        }
+# find all possible gosa-si-servers in DNS
+if (defined $server_domain) {
+    my @tmp_servers = &get_server_addresses($server_domain);
+    foreach my $server (@tmp_servers) { 
+        unshift(@servers, $server); 
     }
 }
- 
+# add gosa-si-server address from config file at first position of server list
+if (defined $server_address) {
+    unshift(@servers, $server_address);
+}
+my $servers_string = join(", ", @servers);
+daemon_log("found servers in configuration file and via DNS: $servers_string", 5);
 
 
+POE::Session->create(
+	inline_states => {
+		_start => \&register_at_gosa_si_server ,
+        register_at_gosa_si_server => \&register_at_gosa_si_server,
+	}
+);
+
+POE::Kernel->run();
+exit;
 
