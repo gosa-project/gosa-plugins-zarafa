@@ -13,6 +13,9 @@ use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
 
+my $event_dir = "/usr/lib/gosa-si/server/events";
+use lib "/usr/lib/gosa-si/server/events";
+
 BEGIN{}
 END{}
 
@@ -22,6 +25,7 @@ my ($gosa_activ, $gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
+my $event_hash;
 
 my %cfg_defaults = 
 ("general" =>
@@ -33,7 +37,6 @@ my %cfg_defaults =
     "server_port" => [\$server_port, "20081"],
     "server_passwd" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
-    "server_event_dir" => [\$server_event_dir, '/usr/lib/gosa-si/server/events'],
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
@@ -66,6 +69,9 @@ my $gosa_address = "$gosa_ip:$gosa_port";
 #y $gosa_cipher = &create_ciphering($gosa_passwd);
 my $xml = new XML::Simple();
 
+
+# import events
+&import_events();
 
 ## FUNCTIONS #################################################################
 
@@ -227,6 +233,33 @@ sub get_ip {
 }
 
 
+sub import_events {
+    if (not -e $event_dir) {
+        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+    }
+    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+
+    while (defined (my $event = readdir (DIR))) {
+        if( $event eq "." || $event eq ".." ) { next; }    
+
+        eval{ require $event; };
+        if( $@ ) {
+            daemon_log("import of event module '$event' failed", 1);
+            daemon_log("$@", 8);
+            next;
+        }
+
+        $event =~ /(\S*?).pm$/;
+        my $event_module = $1;
+        my $events_l = eval( $1."::get_events()") ;
+        foreach my $event_name (@{$events_l}) {
+            $event_hash->{$event_name} = $event_module;
+        }
+
+    }
+}
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
 #   PARAMETERS:  crypted_msg - string - incoming crypted message
@@ -244,7 +277,7 @@ sub process_incoming_msg {
         $out_msg = &process_job_msg($msg, $msg_hash);
     } 
     elsif ($header =~ /^gosa_/) {
-        $out_msg = &process_gosa_msg($msg, $header);
+        $out_msg = &process_gosa_msg($msg, $msg_hash);
     } 
     else {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
@@ -268,8 +301,10 @@ sub process_incoming_msg {
 
 
 sub process_gosa_msg {
-    my ($msg, $header) = @_ ;
+    my ($msg, $msg_hash) = @_ ;
     my $out_msg;
+
+    my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/gosa_//;
 
     # decide wether msg is a core function or a event handler
@@ -290,26 +325,33 @@ sub process_gosa_msg {
 	$out_msg = &send_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
-        # fetch all available eventhandler under $server_event_dir
-        opendir (DIR, $server_event_dir) or &main::daemon_log("ERROR cannot open $server_event_dir: $!\n", 1) and return;
-        while (defined (my $file = readdir (DIR))) {
-            if (not $file eq $header) {
-                next;
-            }
-            # try to deliver incoming msg to eventhandler
-            my $cmd = File::Spec->join($server_event_dir, $header)." '$msg'";
-            &main::daemon_log("GosaPackages: execute event_handler $header", 3);
-            &main::daemon_log("GosaPackages: cmd: $cmd", 8);
+        # maybe it is an eventa
+        if( exists $event_hash->{$header} ) {
+            # a event exists with the header as name
+            &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+            no strict 'refs';
+            $out_msg = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
+         }
 
-            $out_msg = "";
-            open(PIPE, "$cmd 2>&1 |");
-            while(<PIPE>) {
-                $out_msg.=$_;
-            }
-            close(PIPE);
-            &main::daemon_log("GosaPackages: answer of cmd: $out_msg", 5);
-            last;
-        }
+#        opendir (DIR, $server_event_dir) or &main::daemon_log("ERROR cannot open $server_event_dir: $!\n", 1) and return;
+#        while (defined (my $file = readdir (DIR))) {
+#            if (not $file eq $header) {
+#                next;
+#            }
+#            # try to deliver incoming msg to eventhandler
+#            my $cmd = File::Spec->join($server_event_dir, $header)." '$msg'";
+#            &main::daemon_log("GosaPackages: execute event_handler $header", 3);
+#            &main::daemon_log("GosaPackages: cmd: $cmd", 8);
+#
+#            $out_msg = "";
+#            open(PIPE, "$cmd 2>&1 |");
+#            while(<PIPE>) {
+#                $out_msg.=$_;
+#            }
+#            close(PIPE);
+#            &main::daemon_log("GosaPackages: answer of cmd: $out_msg", 5);
+#            last;
+#        }
     }
 
     # if delivery not possible raise error and return 
