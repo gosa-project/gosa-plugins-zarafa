@@ -1071,8 +1071,6 @@ $client_address = $client_ip.":".$client_port;
 
 # detect own ip and mac address
 my $network_interface= &get_interface_for_ip($client_ip);
-daemon_log("Mac address at this point: $client_mac_address", 1);
-daemon_log("Interface at this point: $network_interface", 1);
 $client_mac_address= &get_mac($network_interface);
 daemon_log("gosa-si-client ip address detected: $client_ip", 1);
 daemon_log("gosa-si-client mac address detected: $client_mac_address", 1);
