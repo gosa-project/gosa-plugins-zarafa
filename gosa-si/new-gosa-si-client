@@ -278,6 +278,8 @@ sub get_mac {
         if($ifreq eq "all") {
             if(defined($server_ip)) {
                 $result = &get_local_mac_for_remote_ip($server_ip);
+			} elsif {
+				$result = &client_mac_address;
             } else {
                 $result = "00:00:00:00:00:00";
             }
