@@ -734,6 +734,8 @@ sub client_input {
     }
     if( !$answer_l ) { $error++ };
 
+    ########
+    # answer
     if( $error == 0 ) {
 
         # for each answer in answer list

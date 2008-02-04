@@ -38,6 +38,9 @@ sub registered {
 
 sub set_activated_for_installation {
     my ($msg, $msg_hash) = @_ ;
+ my $header = @{$msg_hash->{'header'}}[0];
+ my $target = @{$msg_hash->{'target'}}[0];
+ my $source = @{$msg_hash->{'source'}}[0];
 
     my $Datei = "/tmp/set_activated_for_installation";
     open(DATEI, ">$Datei");
