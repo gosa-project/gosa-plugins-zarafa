@@ -65,7 +65,7 @@ our $REGISTERED_FLAG = 1;
 "client" => 
     {"client_port" => [\$client_port, "20083"],
      "client_ip" => [\$client_ip, "0.0.0.0"],
-     "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00:00"],
+     "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00"],
      "ldap" => [\$ldap_enabled, 1],
      "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
@@ -282,7 +282,7 @@ sub get_mac {
 			if(defined($server_ip)) {
 				$result = &get_local_mac_for_remote_ip($server_ip);
 			} 
-			elsif ($client_mac_address && length($client_mac_address) > 0){
+			elsif ($client_mac_address && length($client_mac_address) > 0 && !($client_mac_address eq "00:00:00:00:00:00")){
 				$result = &client_mac_address;
 			} 
 			else {
@@ -292,7 +292,7 @@ sub get_mac {
 			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
 
 			# A configured MAC Address should always override a guessed value
-			if ($client_mac_address and length($client_mac_address) > 0) {
+			if ($client_mac_address and length($client_mac_address) > 0 and not($client_mac_address eq "00:00:00:00:00:00")) {
 				$result= $client_mac_address;
 			}
 			else {
@@ -379,7 +379,7 @@ sub get_ip {
 #                matches (defaultroute last).
 #===============================================================================
 sub get_local_mac_for_remote_ip {
-    my $ifreq= shift;
+    my $server_ip= shift;
     my $result= "00:00:00:00:00:00";
     my $PROC_NET_ROUTE= ('/proc/net/route');
 
@@ -407,7 +407,6 @@ sub get_local_mac_for_remote_ip {
             last;
         }
     }
-
 
     return $result;
 }
@@ -816,7 +815,7 @@ sub register_at_gosa_si_server {
             # create registration msg
             my $register_hash = &create_xml_hash("here_i_am", $client_address, $server);
             &add_content2xml_hash($register_hash, "new_passwd", $server_key);
-            &add_content2xml_hash($register_hash, "mac_address", $client_mac_address);
+			&add_content2xml_hash($register_hash, "mac_address", &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/)));
             &add_content2xml_hash($register_hash, "events", $events);
             &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 

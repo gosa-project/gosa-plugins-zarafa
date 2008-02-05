@@ -244,8 +244,8 @@ sub import_events {
 
         eval{ require $event; };
         if( $@ ) {
-            daemon_log("import of event module '$event' failed", 1);
-            daemon_log("$@", 8);
+            &main::daemon_log("import of event module '$event' failed", 1);
+            &main::daemon_log("$@", 8);
             next;
         }
 
