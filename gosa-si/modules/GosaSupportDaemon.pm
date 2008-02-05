@@ -2,7 +2,7 @@ package GOSA::GosaSupportDaemon;
 
 use Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(create_xml_hash send_msg_hash2address get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg get_where_statement get_select_statement get_update_statement get_limit_statement get_orderby_statement); 
+@EXPORT = qw(create_xml_hash get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg get_where_statement get_select_statement get_update_statement get_limit_statement get_orderby_statement); 
 
 use strict;
 use warnings;

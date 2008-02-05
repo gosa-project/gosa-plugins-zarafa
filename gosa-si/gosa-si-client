@@ -40,7 +40,7 @@ my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
 my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
-my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain);
+my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
 my $default_server_key;
@@ -77,6 +77,7 @@ our $REGISTERED_FLAG = 1;
     "server_key" => [\$server_key, ""],
     "server_timeout" => [\$server_timeout, 10],
     "server_domain" => [\$server_domain, ""],
+    "server_key_lifetime" => [\$server_key_lifetime, 600], 
     },
 
 );
@@ -869,6 +870,8 @@ sub register_at_gosa_si_server {
         }
         daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
         $kernel->delay_set('register_at_gosa_si_server',2);
+        # clear old settings and set it again
+        $kernel->delay_set('trigger_new_key', $server_key_lifetime);
     }
     return;
 }
@@ -954,9 +957,26 @@ sub import_events {
     }
 }
 
+sub trigger_new_key {
+    my ($kernel) = $_[KERNEL] ;   
+
+    my $msg = "<xml><header>new_key</header><source>$client_address</source><target>$client_address</target></xml>";
+    &send_msg_to_target($msg, $client_address, $server_key, 'new_key');
+
+    $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+
+}
+
+
+sub _start {
+    my ($kernel) = $_[KERNEL];
+    $kernel->alias_set('client_session');
+    $kernel->yield('register_at_gosa_si_server');
+}
+
 
 sub server_input {
-    my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+    my ($kernel, $heap, $input, $wheel) = @_[KERNEL, HEAP, ARG0, ARG1];
     my $error = 0;
     my $answer;
     
@@ -985,11 +1005,20 @@ sub server_input {
     ########
     # answer
     if( $answer ) {
+        # preprocessing
         if( $answer =~ "<header>registered</header>") {
+            # set registered flag to true to stop sending further registered msgs
             $REGISTERED_FLAG = 0;
         } 
         else {
-        &send_msg_to_address($answer, $server_address, $server_key);
+            &send_msg_to_target($answer, $server_address, $server_key);
+        }
+        # postprocessing
+        if( $answer =~ "<header>new_key</header>") {
+            # set new key to global variable
+            $answer =~ /<new_key>(\S*?)<\/new_key>/;
+            my $new_key = $1;
+            $server_key = $new_key;
         }
     }
 
@@ -1100,8 +1129,9 @@ daemon_log("found servers in configuration file and via DNS: $servers_string", 5
 
 POE::Session->create(
 	inline_states => {
-		_start => \&register_at_gosa_si_server ,
+		_start => \&_start, 
         register_at_gosa_si_server => \&register_at_gosa_si_server,
+        trigger_new_key => \&trigger_new_key,
 	}
 );
 

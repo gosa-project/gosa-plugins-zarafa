@@ -724,7 +724,7 @@ sub client_input {
     # process incoming msg
     if( $error == 0) {
         daemon_log("Processing module ".$module, 3);
-        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash);
+        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $heap->{'remote_ip'});
 
         if ( 0 > @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});

@@ -35,7 +35,6 @@ END {}
 
 my $server_address = $main::server_address;
 my $server_key = $main::server_key;
-my $client_address = $main::client_address;
 my $client_mac_address = $main::client_mac_address;
 
 sub get_events {
@@ -52,13 +51,13 @@ sub daemon_log {
 
 sub registered {
     my ($msg, $msg_hash) = @_ ;
+
     my $header = @{$msg_hash->{'header'}}[0];
-   
     if( $header eq "registered" ) {
         my $source = @{$msg_hash->{'source'}}[0];
         &main::daemon_log("registration at $source",1);
     }
-    
+
     # set registration_flag to true 
     my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
     my $out_msg = &create_xml_string($out_hash);
@@ -248,12 +247,10 @@ sub new_ldap_config {
 
 sub new_key {
     # my ($msg_hash) = @_ ;
-    my $new_server_key = &create_passwd();
+    my $new_server_key = &main::create_passwd();
 
-    my $out_hash = &create_xml_hash("new_passwd", $client_address, $server_address, $new_server_key);    
+    my $out_hash = &create_xml_hash("new_key", $main::client_address, $main::server_address, $new_server_key);    
     my $out_msg = &create_xml_string($out_hash);
-    #&send_msg_hash2address($out_hash, $server_address, $main::server_key);
-    $main::server_key = $new_server_key;
     return $out_msg; 
 }
 
@@ -366,7 +363,7 @@ sub detect_hardware {
 	&main::daemon_log("Hardware detection done!", 4);
 
     return &send_msg_hash2address(
-		&create_xml_hash("detected_hardware", $client_address, $server_address, $result),
+		&create_xml_hash("detected_hardware", $main::client_address, $server_address, $result),
 		$server_address, 
 		$server_key,
 	);

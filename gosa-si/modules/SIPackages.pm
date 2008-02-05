@@ -361,7 +361,7 @@ sub register_at_bus {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash) = @_ ;
+    my ($msg, $msg_hash, $remote_ip) = @_ ;
     my $error = 0;
     my $host_name;
     my $host_key;
@@ -369,7 +369,6 @@ sub process_incoming_msg {
 
     # process incoming msg
     my $header = @{$msg_hash->{header}}[0]; 
-    my $source = @{$msg_hash->{source}}[0];
     my @target_l = @{$msg_hash->{target}};
 
     &main::daemon_log("SIPackages: msg to process: $header", 3);
@@ -383,25 +382,25 @@ sub process_incoming_msg {
     if( 1 == length @target_l) {
         my $target = $target_l[0];
         if( $target eq $server_address ) {  
-            if ($header eq 'new_passwd') {
-		@out_msg_l = &new_passwd($msg_hash)
-	    } elsif ($header eq 'here_i_am') {
-		@out_msg_l = &here_i_am($msg_hash)
-	    } elsif ($header eq 'who_has') {
-		@out_msg_l = &who_has($msg_hash)
-	    } elsif ($header eq 'who_has_i_do') {
-		@out_msg_l = &who_has_i_do($msg_hash)
-	    } elsif ($header eq 'got_ping') {
-		@out_msg_l = &got_ping($msg_hash)
-	    } elsif ($header eq 'get_load') {
-		@out_msg_l = &execute_actions($msg_hash)
+            if ($header eq 'new_key') {
+                @out_msg_l = &new_key($msg_hash)
+            } elsif ($header eq 'here_i_am') {
+                @out_msg_l = &here_i_am($msg_hash)
+            } elsif ($header eq 'who_has') {
+                @out_msg_l = &who_has($msg_hash)
+            } elsif ($header eq 'who_has_i_do') {
+                @out_msg_l = &who_has_i_do($msg_hash)
+            } elsif ($header eq 'got_ping') {
+                @out_msg_l = &got_ping($msg_hash)
+            } elsif ($header eq 'get_load') {
+                @out_msg_l = &execute_actions($msg_hash)
             } elsif ($header eq 'detected_hardware') {
-		@out_msg_l = &process_detected_hardware($msg_hash)
-	    } elsif ($header eq 'trigger_wake') {
-		foreach (@{$msg_hash->{macAddress}}){
-	            &main::daemon_log("SIPackages: trigger wake for $_", 1);
-		    do_wake($_);
-		}
+                @out_msg_l = &process_detected_hardware($msg_hash)
+            } elsif ($header eq 'trigger_wake') {
+                foreach (@{$msg_hash->{macAddress}}){
+                    &main::daemon_log("SIPackages: trigger wake for $_", 1);
+                    do_wake($_);
+                }
 
             } else {
                 &main::daemon_log("ERROR: $header is an unknown core function", 1);
@@ -453,13 +452,13 @@ sub got_ping {
 #      RETURNS:  nothing
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
-sub new_passwd {
+sub new_key {
     my ($msg_hash) = @_;
     my @out_msg_l;
     
     my $header = @{$msg_hash->{header}}[0];
     my $source_name = @{$msg_hash->{source}}[0];
-    my $source_key = @{$msg_hash->{new_passwd}}[0];
+    my $source_key = @{$msg_hash->{new_key}}[0];
     my $query_res;
 
     # check known_clients_db
