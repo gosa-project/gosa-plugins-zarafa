@@ -30,7 +30,7 @@ Description: GOsa support infrastructure server
 
 Package: gosa-si-client
 Architecture: any
-Depends: gosa-si-common
+Depends: gosa-si-common, hwinfo
 Suggests: gosa
 Description: GOsa support infrastructure client
  This package lets you join to a GOsa support infrastructure as a

@@ -318,6 +318,9 @@ sub process_gosa_msg {
 	$out_msg = &update_status_jobdb_entry
     } elsif ($header eq 'count_jobdb' ) {
         $out_msg = &count_jobdb
+    } elsif ($header eq 'trigger_action_reboot' ) {
+	print STDERR "trigger_action_reboot\n";
+	print STDERR Dumper($msg);
     } elsif ($header eq 'trigger_action_wake' ) {
 	# Forward messages to all known servers as "trigger_wake"
 	my $in_hash= &transform_msg2hash($msg);
