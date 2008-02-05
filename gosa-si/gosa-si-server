@@ -25,7 +25,6 @@ use warnings;
 use Getopt::Long;
 use Config::IniFiles;
 use POSIX;
-use Time::HiRes qw( gettimeofday );
 
 use Fcntl;
 use IO::Socket::INET;
@@ -210,7 +209,7 @@ sub daemon_log {
                 $hours = $hours < 10 ? $hours = "0".$hours : $hours;
                 $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
                 $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-                my @monthnames = ("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
                 $month = $monthnames[$month];
                 $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
                 $year+=1900;
