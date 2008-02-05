@@ -470,7 +470,6 @@ sub new_key {
             "SET hostkey='$source_key', timestamp='$act_time' ".
             "WHERE hostname='$source_name'";
         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
-
         my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
         my $out_msg = &create_xml_string($hash);
         push(@out_msg_l, $out_msg);

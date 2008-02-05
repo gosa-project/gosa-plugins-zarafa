@@ -88,6 +88,10 @@ sub registered {
         &main::daemon_log("registration at $source",1);
     }
 
+    # set globaly variable client_address
+    my $target =  @{$msg_hash->{'target'}}[0];
+    $main::client_address = $target;
+
     # set registration_flag to true 
     my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
     my $out_msg = &create_xml_string($out_hash);

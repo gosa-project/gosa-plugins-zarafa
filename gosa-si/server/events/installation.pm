@@ -1,7 +1,7 @@
 package installation;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events set_activated_for_installation reboot halt softupdate reinstall);
+my @events = qw(get_events set_activated_for_installation reboot halt softupdate reinstall new_key_for_client);
 @EXPORT = @events;
 
 use strict;
@@ -64,5 +64,15 @@ sub softupdate {
 
     return $msg;
 }
+
+
+sub new_key_for_client {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_new_key_for_client<\/header>/<header>new_key<\/header>/;
+
+    return $msg;
+}
+
+
 
 1;

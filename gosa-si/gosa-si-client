@@ -1015,10 +1015,13 @@ sub server_input {
         }
         # postprocessing
         if( $answer =~ "<header>new_key</header>") {
+print STDERR "old key: $server_key\n";
             # set new key to global variable
             $answer =~ /<new_key>(\S*?)<\/new_key>/;
             my $new_key = $1;
             $server_key = $new_key;
+print STDERR "new key: $new_key\n";
+
         }
     }
 
