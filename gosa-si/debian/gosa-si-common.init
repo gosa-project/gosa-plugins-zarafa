@@ -22,17 +22,17 @@ START_BUS=0
 
 
 start_client() {
-	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-client.pid --name gosa-si-client --startas /usr/sbin/gosa-si-client
+	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-client.pid --name gosa-si-client --startas /usr/sbin/gosa-si-client -vvv
 }
 
 
 start_bus() {
-	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-bus.pid --name gosa-si-bus --startas /usr/sbin/gosa-si-bus
+	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-bus.pid --name gosa-si-bus --startas /usr/sbin/gosa-si-bus -vvv
 }
 
 
 start_server() {
-	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-server.pid --name gosa-si-server --startas /usr/sbin/gosa-si-server -- $1
+	start-stop-daemon --start --quiet --pidfile /var/run/gosa-si-server.pid --name gosa-si-server --startas /usr/sbin/gosa-si-server -- $1 -vvv
 }
 
 
