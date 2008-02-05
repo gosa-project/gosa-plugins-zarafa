@@ -34,14 +34,7 @@ use GOSA::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
-
-
-#use Fcntl;
-#use Sys::Syslog qw( :DEFAULT setlogsock);
-#use File::Spec;
-#use Cwd;
-
-
+use Net::DNS;
 
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
@@ -583,33 +576,62 @@ sub create_passwd {
 sub get_server_addresses {
     my $domain= shift;
     my @result;
-    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
+ 
+    my $error = 0;
+    my $res   = Net::DNS::Resolver->new;
+    my $query = $res->send("_gosad._tcp.".$domain, "SRV");
+    my @hits;
 
-    my $output= `$dig_cmd 2>&1`;
-    open (PIPE, "$dig_cmd 2>&1 |");
-    while(<PIPE>) {
-        chomp $_;
-        # If it's not a comment
-        if($_ =~ m/^[^;]/) {
-            my @matches= split /\s+/;
+    if ($query) {
+        foreach my $rr ($query->answer) {
+            push(@hits, $rr->target.":".$rr->port);
+        }
+    }
+    else {
+        #warn "query failed: ", $res->errorstring, "\n";
+        $error++;
+    }
 
-            # Push hostname with port
-            if($matches[3] eq 'SRV') {
-                push @result, $matches[7].':'.$matches[6];
-            } elsif ($matches[3] eq 'A') {
-                my $i=0;
+    if( $error == 0 ) {
+        foreach my $hit (@hits) {
+            my ($hit_name, $hit_port) = split(/:/, $hit);
 
-                # Substitute the hostname with the ip address of the matching A record
-                foreach my $host (@result) {
-                    if ((split /\:/, $host)[0] eq $matches[0]) {
-                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
-                    }
-                    $i++;
+            my $address_query = $res->send($hit_name);
+            if( 1 == length($address_query->answer) ) {
+                foreach my $rr ($address_query->answer) {
+                    push(@result, $rr->address.":".$hit_port);
                 }
             }
         }
     }
-    close(PIPE);
+
+#    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
+#
+#    my $output= `$dig_cmd 2>&1`;
+#    open (PIPE, "$dig_cmd 2>&1 |");
+#    while(<PIPE>) {
+#        chomp $_;
+#        # If it's not a comment
+#        if($_ =~ m/^[^;]/) {
+#            my @matches= split /\s+/;
+#
+#            # Push hostname with port
+#            if($matches[3] eq 'SRV') {
+#                push @result, $matches[7].':'.$matches[6];
+#            } elsif ($matches[3] eq 'A') {
+#                my $i=0;
+#
+#                # Substitute the hostname with the ip address of the matching A record
+#                foreach my $host (@result) {
+#                    if ((split /\:/, $host)[0] eq $matches[0]) {
+#                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
+#                    }
+#                    $i++;
+#                }
+#            }
+#        }
+#    }
+#    close(PIPE);
     return @result;
 }
 
