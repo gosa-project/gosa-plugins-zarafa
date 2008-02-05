@@ -1,7 +1,7 @@
 package installation;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events set_activated_for_installation );
+my @events = qw(get_events set_activated_for_installation reboot halt softupdate reinstall);
 @EXPORT = @events;
 
 use strict;
@@ -33,3 +33,36 @@ sub set_activated_for_installation {
 
     return $out_msg;
 }
+
+sub reboot {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_reboot<\/header>/<header>reboot<\/header>/;
+
+    return $msg;
+}
+
+
+sub halt {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_halt<\/header>/<header>halt<\/header>/;
+
+    return $msg;
+}
+
+
+sub reinstall {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_reinstall<\/header>/<header>reinstall<\/header>/;
+
+    return $msg;
+}
+
+
+sub softupdate {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_softupdate<\/header>/<header>softupdate<\/header>/;
+
+    return $msg;
+}
+
+1;

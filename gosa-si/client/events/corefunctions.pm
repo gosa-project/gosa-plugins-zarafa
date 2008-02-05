@@ -1,7 +1,7 @@
 package corefunctions;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events registered set_activated_for_installation new_ldap_config new_key generate_hw_digest detect_hardware);
+my @events = qw(get_events registered set_activated_for_installation new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate);
 @EXPORT = @events;
 
 use strict;
@@ -47,6 +47,36 @@ sub daemon_log {
     return;
 }
 
+
+sub reboot {
+    my ($msg, $msg_hash) = @_ ;
+    &main::daemon_log("got reboot-msg: $msg", 5);
+    return;
+}
+
+
+sub halt {
+    my ($msg, $msg_hash) = @_ ;
+
+    &main::daemon_log("got halt-msg: $msg", 5);
+    return;
+}
+
+
+sub reinstall {
+    my ($msg, $msg_hash) = @_ ;
+    &main::daemon_log("got reinstall-msg: $msg", 5);
+
+    return;
+}
+
+
+sub softupdate {
+    my ($msg, $msg_hash) = @_ ;
+    &main::daemon_log("got softupdate-msg: $msg", 5);
+
+    return;
+}
 
 
 sub registered {
