@@ -21,7 +21,7 @@ END {}
 
 my ($known_clients_file_name);
 my ($server_activ, $server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
-my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
+my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
 my $no_bus;
@@ -44,7 +44,7 @@ my %cfg_defaults =
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_passwd" => [\$bus_key, ""],
     "bus_ip" => [\$bus_ip, ""],
     "bus_port" => [\$bus_port, "20080"],
     },
@@ -337,11 +337,17 @@ sub register_at_bus {
                                                     primkey=>'hostname',
                                                     hostname=>$bus_address,
                                                     status=>'bus',
-                                                    hostkey=>$bus_passwd,
+                                                    hostkey=>$bus_key,
                                                     timestamp=>&get_time,
                                                 } );
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
     my $msg = &create_xml_string($msg_hash);
+
+print STDERR "bus_key:$bus_key\n";
+print STDERR "msg:$msg\n";
+
+
+    &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
     return $msg;
 #    my $answer = "";
 #    $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);

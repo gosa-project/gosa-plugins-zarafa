@@ -38,7 +38,7 @@ use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;
 
 my ($cfg_file, $default_cfg_file, %cfg_defaults, $foreground, $verbose);
-my ($bus_activ, $bus_passwd, $bus_ip, $bus_port, $bus_address, $bus, $bus_mac_address, $network_interface);
+my ($bus_activ, $bus_key, $bus_ip, $bus_port, $bus_address, $bus, $bus_mac_address, $network_interface);
 my ($pid_file, $procid, $pid, $log_file, $my_own_address);
 my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
 my ($bus_known_server_db, $bus_known_server_file_name);
@@ -57,7 +57,7 @@ $foreground = 0 ;
     },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_passwd" => [\$bus_key, ""],
     "bus_ip" => [\$bus_ip, "0.0.0.0"],
     "bus_port" => [\$bus_port, "20080"],
     }
@@ -507,6 +507,80 @@ sub get_processing_child {
     }
 }
 
+#===  FUNCTION  ================================================================
+#         NAME:  open_socket
+#   PARAMETERS:  PeerAddr string something like 192.168.1.1 or 192.168.1.1:10000
+#                [PeerPort] string necessary if port not appended by PeerAddr
+#      RETURNS:  socket IO::Socket::INET
+#  DESCRIPTION:  open a socket to PeerAddr
+#===============================================================================
+sub open_socket {
+    my ($PeerAddr, $PeerPort) = @_ ;
+    if(defined($PeerPort)){
+        $PeerAddr = $PeerAddr.":".$PeerPort;
+    }
+    my $socket;
+    $socket = new IO::Socket::INET(PeerAddr => $PeerAddr,
+            Porto => "tcp",
+            Type => SOCK_STREAM,
+            Timeout => 5,
+            );
+    if(not defined $socket) {
+        return;
+    }
+    &daemon_log("open_socket: $PeerAddr", 7);
+    return $socket;
+}
+
+
+sub send_msg_hash2address {
+    my ($msg_hash, $address, $encrypt_key) = @_ ;
+    my $msg = &create_xml_string($msg_hash);
+    my $header = @{$msg_hash->{'header'}}[0];
+    &send_msg_to_target($msg, $address, $encrypt_key, $header);
+    
+    return;
+}
+
+
+sub send_msg_to_target {
+    my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
+    my $error = 0;
+
+    if( $msg_header ) {
+        $msg_header = "'$msg_header'-";
+    }
+    else {
+        $msg_header = "";
+    }
+
+    # encrypt xml msg
+    my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
+
+    # opensocket
+    my $socket = &open_socket($address);
+    if( !$socket ) {
+        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        $error++;
+    }
+    
+    if( $error == 0 ) {
+        # send xml msg
+        print $socket $crypted_msg."\n";
+
+        daemon_log("send ".$msg_header."msg to $address", 1);
+        daemon_log("message:\n$msg", 8);
+
+    }
+
+    # close socket in any case
+    if( $socket ) {
+        close $socket;
+    }
+
+    return;
+}
+
 
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
@@ -531,12 +605,11 @@ sub process_incoming_msg {
 
     # check wether incoming msg is a new msg
     $host_name = $bus_address;
-    $host_key = $bus_passwd;
+    $host_key = $bus_key;
     daemon_log("process_incoming_msg: host_name: $host_name", 7);
     daemon_log("process_incoming_msg: host_key: $host_key", 7);
     eval{
-        my $key_cipher = &create_ciphering($host_key);
-        $msg = &decrypt_msg($crypted_msg, $key_cipher);
+        $msg = &decrypt_msg($crypted_msg, $host_key);
         $msg_hash = &transform_msg2hash($msg);
     };
     if($@) {
@@ -561,8 +634,7 @@ sub process_incoming_msg {
             daemon_log("process_incoming_msg: host_name: $host_name", 7);
             daemon_log("process_incoming_msg: host_key: $host_key", 7);
             eval{
-                my $key_cipher = &create_ciphering($host_key);
-                $msg = &decrypt_msg($crypted_msg, $key_cipher);
+                $msg = &decrypt_msg($crypted_msg, $host_key);
                 $msg_hash = &transform_msg2hash($msg);
             };
             if($@) {
@@ -679,6 +751,12 @@ sub create_passwd {
 }
 
 
+
+
+
+
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  read_from_socket
 #   PARAMETERS:  socket - fh - filehandel to read from  
@@ -728,14 +806,14 @@ sub here_i_am {
         primkey=>"hostname",
         hostname=>$source,
         status=>"registered",
-        hostkey=>$bus_passwd,
+        hostkey=>$bus_key,
         clients=>"",
     };
     $bus_known_server_db->add_dbentry($add_hash);
 
     # create outgoing msg
-    my $out_hash = &create_xml_hash("new_passwd", $bus_address, $source, $new_key);
-    &send_msg_hash2address($out_hash, $source, $bus_passwd);
+    my $out_hash = &create_xml_hash("new_key", $bus_address, $source, $new_key);
+    &send_msg_hash2address($out_hash, $source, $bus_key);
 
     # change hostkey, reason
     my $where_str= " WHERE hostname='$source'";
@@ -905,7 +983,7 @@ $bus_address = "$bus_ip:$bus_port";
 $xml = new XML::Simple();
 
 # create cipher object
-$bus_cipher = &create_ciphering($bus_passwd);
+$bus_cipher = &create_ciphering($bus_key);
 $bus_address = "$bus_ip:$bus_port";
 
 # create reading and writing vectors
@@ -927,7 +1005,7 @@ if($bus_activ eq "on") {
 # add bus to known_daemons 
 
 #&create_known_daemons_entry($bus_address);
-#&update_known_daemons_entry(hostname=>$bus_address, status=>"bus", passwd=>$bus_passwd);
+#&update_known_daemons_entry(hostname=>$bus_address, status=>"bus", passwd=>$bus_key);
 
 
 while(1) {

@@ -58,7 +58,7 @@ my ($xml);
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
-    $bus_activ, $bus_passwd, $bus_ip, $bus_port,
+    $bus_activ, $bus_key, $bus_ip, $bus_port,
     $server_activ, $server_ip, $server_port, $SIPackages_key, $max_clients,
     $arp_activ, $arp_fifo_path,
     $gosa_activ, $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
@@ -112,7 +112,7 @@ our $known_clients_db;
    },
 "bus" =>
     {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, ""],
+    "bus_passwd" => [\$bus_key, ""],
     "bus_ip" => [\$bus_ip, "0.0.0.0"],
     "bus_port" => [\$bus_port, "20080"],
     },
@@ -445,23 +445,26 @@ sub input_from_known_server {
 
     my $sql_statement= "SELECT * FROM known_server";
     my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+
     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
         my $host_name = $hit->{hostname};
         if( not $host_name =~ "^$remote_ip") {
             next;
         }
         my $host_key = $hit->{hostkey};
-        daemon_log("SIPackages: host_name: $host_name", 7);
-        daemon_log("SIPackages: host_key: $host_key", 7);
+        daemon_log("SIPackages: known_server host_name: $host_name", 7);
+        daemon_log("SIPackages: known_server host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
-        my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
-        if( (!$msg) || (!$msg_hash) ) {
+        my ($tmp_msg, $tmp_msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        if( (!$tmp_msg) || (!$tmp_msg_hash) ) {
             daemon_log("SIPackages: deciphering raise error", 7);
             daemon_log("$@", 8);
             next;
         }
         else {
+            $msg = $tmp_msg;
+            $msg_hash = $tmp_msg_hash;
             $module = "SIPackages";
             last;
         }
@@ -487,8 +490,8 @@ sub input_from_known_client {
             next;
 		}
         my $host_key = $hit->{hostkey};
-        &daemon_log("SIPackages: host_name: $host_name", 7);
-        &daemon_log("SIPackages: host_key: $host_key", 7);
+        &daemon_log("SIPackages: known_client host_name: $host_name", 7);
+        &daemon_log("SIPackages: known_client host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
@@ -589,14 +592,14 @@ sub get_encrypt_key {
 
     # target can be in known_server
     if( !$encrypt_key ) {
-        my $sql_statement= "SELECT * FROM known_server";
+        my $sql_statement= "SELECT * FROM known_server WHERE hostname='$target'";
         my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
             my $host_name = $hit->{hostname};
             if( $host_name ne $target ) {
                 next;
             }
-            my $host_key = $hit->{hostkey};
+            $encrypt_key = $hit->{hostkey};
             last;
         }
     }
@@ -604,7 +607,7 @@ sub get_encrypt_key {
 
     # target can be in known_client
     if( !$encrypt_key ) {
-        my $sql_statement= "SELECT * FROM known_clients";
+        my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$target'";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
             my $host_name = $hit->{hostname};
@@ -700,7 +703,8 @@ sub client_input {
     my ($answer_header, @answer_target_l, $answer_source);
     my $client_answer;
 
-    daemon_log("Incoming msg:\n$input\n", 8);
+    daemon_log("Incoming msg from '".$heap->{'remote_ip'}."'", 7);
+    daemon_log("\n$input", 8);
 
     # msg is from a new client or gosa
     ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
@@ -748,14 +752,17 @@ sub client_input {
                 $answer_source = @{$answer_hash->{'source'}}[0];
                 if( !$answer_header ) {
                     daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+                    daemon_log("\n$answer", 8);
                     $error++;
                 }
                 if( 0 == length @answer_target_l ) {
                     daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+                    daemon_log("\n$answer", 8);
                     $error++;
                 }
                 if( !$answer_source ) {
                     daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+                    daemon_log("\n$answer", 8);
                     $error++;
                 }
 
@@ -797,6 +804,7 @@ sub client_input {
                         my $encrypt_key = &get_encrypt_key($answer_target);
                         if( !$encrypt_key ) {
                             daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                            daemon_log("\n$answer", 8);
                             next;
                         }
                         # send_msg
@@ -957,14 +965,8 @@ my @server_col_names = ('hostname', 'status', 'hostkey', 'timestamp');
 $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
 $known_server_db->create_table('known_server', \@server_col_names);
 
-# import all modules
-&import_modules;
-
-# check wether all modules are gosa-si valid passwd check
-
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
-
 
 # create socket for incoming xml messages
 POE::Component::Server::TCP->new(
@@ -980,6 +982,12 @@ POE::Session->create(
 		watch_for_new_jobs => \&watch_for_new_jobs,
 	}
 );
+
+
+# import all modules
+&import_modules;
+
+# check wether all modules are gosa-si valid passwd check
 
 POE::Kernel->run();
 exit;

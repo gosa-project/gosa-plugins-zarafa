@@ -81,7 +81,7 @@ if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;
 #    my $table_name = $1;
-    my $table_name = "known_server";
+    my $table_name = "bus_known_server";
     print "$db_name\n";
     print "$table_name\n";
     my $sqlite = GOSA::DBsqlite->new($db_name);
