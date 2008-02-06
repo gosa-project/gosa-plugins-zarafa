@@ -866,7 +866,7 @@ sub register_at_gosa_si_server {
 
             # send xml hash to server with general server passwd
             my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
-			if($res) {
+			if($res == 0) {
 				last;
 			} else {
 				next;
