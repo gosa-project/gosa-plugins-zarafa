@@ -866,10 +866,14 @@ sub register_at_gosa_si_server {
 
             # send xml hash to server with general server passwd
             my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
-            last;
+			if($res) {
+				last;
+			} else {
+				next;
+			}
         }
         daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
-        $kernel->delay_set('register_at_gosa_si_server',2);
+        $kernel->delay_set('register_at_gosa_si_server',180);
         # clear old settings and set it again
         $kernel->delay_set('trigger_new_key', $server_key_lifetime);
     }
