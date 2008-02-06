@@ -108,7 +108,7 @@ sub daemon_log {
         chomp($msg);
         if($level && $verbose && $level <= $verbose){
             print LOG_HANDLE $msg."\n";
-            if(defined $foreground) { print $msg."\n" }
+            if(defined $foreground) { print STDERR $msg."\n" }
         }
     }
     close( LOG_HANDLE );
@@ -903,12 +903,18 @@ sub new_client {
     my $clients = $res->{1}->{clients};
 
     # if host has alread more clients, than just append
-    if( length($clients) != 0 ) {
-        $clients .= ",$new_client";
-    } else {
-        $clients = $new_client;
+    my @clients_l = split(',', $clients);
+    my @new_clients_l;
+    foreach my $act_client (@clients_l) {
+        if( $new_client eq $act_client ) {
+            # do nothing
+            next;
+        }
+        push(@new_clients_l, $act_client);
     }
-
+    push(@new_clients_l, $new_client);
+    $clients = join(",", @new_clients_l);
+    
     $sql_statement= "UPDATE bus_known_server SET clients='$clients' WHERE hostname='$source'";
     $bus_known_server_db->update_dbentry( $sql_statement );
     return;

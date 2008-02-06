@@ -744,72 +744,75 @@ sub client_input {
         # for each answer in answer list
         foreach my $answer ( @{$answer_l} ) {
 
+
+            
+
+
+            my $error = 0;
             # check answer if gosa-si envelope conform
-            if( $error == 0 ) {
-                my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
-                $answer_header = @{$answer_hash->{'header'}}[0];
-                @answer_target_l = @{$answer_hash->{'target'}};
-                $answer_source = @{$answer_hash->{'source'}}[0];
-                if( !$answer_header ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
-                if( 0 == length @answer_target_l ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
-                if( !$answer_source ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
+            my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
+            $answer_header = @{$answer_hash->{'header'}}[0];
+            @answer_target_l = @{$answer_hash->{'target'}};
+            $answer_source = @{$answer_hash->{'source'}}[0];
+            if( !$answer_header ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+                daemon_log("\n$answer", 8);
+                $error++;
+            }
+            if( 0 == length @answer_target_l ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+                daemon_log("\n$answer", 8);
+                $error++;
+            }
+            if( !$answer_source ) {
+                daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+                daemon_log("\n$answer", 8);
+                $error++;
+            }
 
-                if( $error != 0 ) {
-                    next;
-                }
+            if( $error != 0 ) {
+                next;
+            }
 
-                # deliver msg to all targets 
-                foreach my $answer_target ( @answer_target_l ) {
-                    if( $answer_target eq "*" ) {
-                        # answer is for all clients
-                        my $sql_statement= "SELECT * FROM known_clients";
-                        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                            my $host_name = $hit->{hostname};
-                            my $host_key = $hit->{hostkey};
-                            &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        }
+            # deliver msg to all targets 
+            foreach my $answer_target ( @answer_target_l ) {
+                if( $answer_target eq "*" ) {
+                    # answer is for all clients
+                    my $sql_statement= "SELECT * FROM known_clients";
+                    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
-                    elsif( $answer_target eq "GOSA" ) {
-                        # answer is for GOSA and has to returned to connected client
-                        my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                        $client_answer = $gosa_answer;
+                }
+                elsif( $answer_target eq "GOSA" ) {
+                    # answer is for GOSA and has to returned to connected client
+                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+                    $client_answer = $gosa_answer;
+                }
+                elsif( $answer_target eq "KNOWN_SERVER" ) {
+                    # answer is for all server in known_server
+                    my $sql_statement= "SELECT * FROM known_server";
+                    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        $answer =~ s/KNOWN_SERVER/$host_name/g;
+                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
-                    elsif( $answer_target eq "KNOWN_SERVER" ) {
-                        # answer is for all server in known_server
-                        my $sql_statement= "SELECT * FROM known_server";
-                        my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
-                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                            my $host_name = $hit->{hostname};
-                            my $host_key = $hit->{hostkey};
-                            $answer =~ s/KNOWN_SERVER/$host_name/g;
-                            &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        }
+                }
+                else {
+                    # answer is for one specific host
+                    # get encrypt_key
+                    my $encrypt_key = &get_encrypt_key($answer_target);
+                    if( !$encrypt_key ) {
+                        daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                        daemon_log("\n$answer", 8);
+                        next;
                     }
-                    else {
-                        # answer is for one specific host
-                        # get encrypt_key
-                        my $encrypt_key = &get_encrypt_key($answer_target);
-                        if( !$encrypt_key ) {
-                            daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
-                            daemon_log("\n$answer", 8);
-                            next;
-                        }
-                        # send_msg
-                        &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
-                    }
+                    # send_msg
+                    &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
                 }
             }
         }
