@@ -744,10 +744,6 @@ sub client_input {
         # for each answer in answer list
         foreach my $answer ( @{$answer_l} ) {
 
-
-            
-
-
             my $error = 0;
             # check answer if gosa-si envelope conform
             my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
@@ -802,12 +798,29 @@ sub client_input {
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
                 }
+                elsif( $answer_target =~ /([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})/ ) {
+                    daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
+                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
+                    my $query_res = $known_clients_db->select_dbentry( $sql_statement );
+                    my $found_ip_flag = 0;
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        $answer =~ s/$answer_target/$host_name/g;
+                        daemon_log("found host '$host_name', assoziated to '$answer_target'", 3);
+                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        $found_ip_flag++ ;
+                    }   
+                    if( $found_ip_flag == 0) {
+                        daemon_log("ERROR: no host found in known_clients with mac address '$answer_target', answer could not be send", 1);
+                    }
+                }
                 else {
                     # answer is for one specific host
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);
                     if( !$encrypt_key ) {
-                        daemon_log("ERROR: no encrypt key found for answer target '$answer_target'", 1);
+                        daemon_log("ERROR: no encrypt key found in known_clients or known_server for target '$answer_target'", 1);
                         daemon_log("\n$answer", 8);
                         next;
                     }
