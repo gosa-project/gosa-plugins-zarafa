@@ -396,10 +396,10 @@ sub detect_hardware {
 
 	&main::daemon_log("Hardware detection done!", 4);
 
-    return &send_msg_hash2address(
-		&create_xml_hash("detected_hardware", $main::client_address, $server_address, $result),
-		$server_address, 
-		$server_key,
+    return &main::send_msg_hash2address(
+		&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
+		$main::server_address, 
+		$main::server_key,
 	);
 }
 
@@ -411,8 +411,8 @@ sub ping {
     my $target = @{$msg_hash->{'target'}}[0];
    
     # switch target and source and send msg back
-    my $out_hash = &create_xml_hash("got_ping", $target, $source);
-    my $out_msg = &create_xml_string($out_hash);
+    my $out_hash = &main::create_xml_hash("got_ping", $target, $source);
+    my $out_msg = &main::create_xml_string($out_hash);
     return $out_msg;
 
 }
