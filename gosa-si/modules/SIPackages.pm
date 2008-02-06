@@ -15,6 +15,7 @@ use Data::Dumper;
 use Net::LDAP;
 use Socket;
 use Net::hostent;
+use Net::DNS;
 
 BEGIN{}
 END {}
@@ -796,6 +797,7 @@ sub new_ldap_config {
 sub process_detected_hardware {
 	my $msg_hash = shift;
 	my $address = $msg_hash->{source}[0];
+	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
 
     my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
     my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -804,6 +806,7 @@ sub process_detected_hardware {
     my $hit_counter = keys %{$res};
     if( not $hit_counter == 1 ) {
         &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+		return;
     }
 
     my $macaddress = $res->{1}->{macaddress};
@@ -830,13 +833,43 @@ sub process_detected_hardware {
 		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
 	);
 
+	# We need to create a base entry first (if not done from ArpHandler)
+	if($mesg->count == 0) {
+		&main::daemon_log("Need to create a new LDAP Entry for client $address", 1);
+		my $resolver=Net::DNS::Resolver->new;
+		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
+		my $dnsresult= $resolver->search($ipaddress);
+		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
+		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
+		my $dn = "cn=$cn,ou=incoming,$ldap_base";
+		&main::daemon_log("Creating entry for $dn",6);
+		my $entry= Net::LDAP::Entry->new( $dn );
+		$entry->dn($dn);
+		$entry->add("objectClass" => "goHard");
+		$entry->add("cn" => $cn);
+		$entry->add("macAddress" => $macaddress);
+		$entry->add("gotoSysStatus" => "new-system");
+		$entry->add("ipHostNumber" => $ipaddress);
+		if(my $res=$entry->update($ldap)) {
+			# Fill $mesg again
+			$mesg = $ldap->search(
+				base   => $ldap_base,
+				scope  => 'sub',
+				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
+			);
+		} else {
+			&main::daemon_log("There was a problem adding the entry", 1);
+		}
+
+	}
+	
 	if($mesg->count == 1) {
 		my $entry= $mesg->entry(0);
 		$entry->changetype("modify");
 		foreach my $attribute (
 			"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
 			"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
-			"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
+			"gotoXDriver", "gotoXVsync", "gotoXMonitor", "gotoHardwareChecksum") {
 			if(defined($msg_hash->{detected_hardware}[0]->{$attribute})) {
 				if(defined($entry->get_value($attribute))) {
 					$entry->delete($attribute);
@@ -857,6 +890,7 @@ sub process_detected_hardware {
 			}
 
 		}
+
 		if($entry->update($ldap)) {
 			&main::daemon_log("Added Hardware configuration to LDAP", 4);
 		}
@@ -909,71 +943,69 @@ sub hardware_config {
 
 	if($mesg->count() == 0) {
 		&main::daemon_log("Host was not found in LDAP!", 1);
-		return;
-	}
-
-	my $entry= $mesg->entry(0);
-	my $dn= $entry->dn;
-	if(defined($entry->get_value("gotoHardwareChecksum"))) {
-		if(! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
-			$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
-			if($entry->update($ldap)) {
-				&main::daemon_log("Hardware changed! Detection triggered.", 4);
-			}
-		} else {
-			# Nothing to do
-			return;
-		}
 	} else {
-		# need to fill it to LDAP
-		$entry->add(gotoHardwareChecksum => $gotoHardwareChecksum);
-		if($entry->update($ldap)) {
-			&main::daemon_log("gotoHardwareChecksum $gotoHardwareChecksum was added to LDAP", 4);
+		my $entry= $mesg->entry(0);
+		my $dn= $entry->dn;
+		if(defined($entry->get_value("gotoHardwareChecksum"))) {
+			if(! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
+				$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
+				if($entry->update($ldap)) {
+					&main::daemon_log("Hardware changed! Detection triggered.", 4);
+				}
+			} else {
+				# Nothing to do
+				return;
+			}
 		}
+	} 
+	# need to fill it to LDAP
+	#$entry->add(gotoHardwareChecksum => $gotoHardwareChecksum);
+	#if($entry->update($ldap)) {
+	#		&main::daemon_log("gotoHardwareChecksum $gotoHardwareChecksum was added to LDAP", 4);
+	#}
 
-		## Look if there another host with this checksum to use the hardware config
-		#$mesg = $ldap->search(
-		#	base   => $ldap_base,
-		#	scope  => 'sub',
-		#	filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
-		#);
+	## Look if there another host with this checksum to use the hardware config
+	#$mesg = $ldap->search(
+	#	base   => $ldap_base,
+	#	scope  => 'sub',
+	#	filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
+	#);
 
-		#if($mesg->count>1) {
-		#	my $clone_entry= $mesg->entry(0);
-		#	$entry->changetype("modify");
-		#	foreach my $attribute (
-		#		"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
-		#		"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
-		#		"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
-		#		my $value= $clone_entry->get_value($attribute);
-		#		if(defined($value)) {
-		#			if(defined($entry->get_value($attribute))) {
-		#				$entry->delete($attribute);
-		#			}
-		#			&main::daemon_log("Adding attribute $attribute with value $value",1);
-		#			$entry->add($attribute => $value);
-		#		}
-		#	}
-		#	foreach my $attribute (
-		#		"gotoModules", "ghScsiDev", "ghIdeDev") {
-		#		my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
-		#		if(defined($array))	{
-		#			if(defined($entry->get_value($attribute))) {
-		#				$entry->delete($attribute);
-		#			}
-		#			foreach my $array_entry (@{$array}) {
-		#				$entry->add($attribute => $array_entry);
-		#			}
-		#		}
+	#if($mesg->count>1) {
+	#	my $clone_entry= $mesg->entry(0);
+	#	$entry->changetype("modify");
+	#	foreach my $attribute (
+	#		"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
+	#		"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
+	#		"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
+	#		my $value= $clone_entry->get_value($attribute);
+	#		if(defined($value)) {
+	#			if(defined($entry->get_value($attribute))) {
+	#				$entry->delete($attribute);
+	#			}
+	#			&main::daemon_log("Adding attribute $attribute with value $value",1);
+	#			$entry->add($attribute => $value);
+	#		}
+	#	}
+	#	foreach my $attribute (
+	#		"gotoModules", "ghScsiDev", "ghIdeDev") {
+	#		my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
+	#		if(defined($array))	{
+	#			if(defined($entry->get_value($attribute))) {
+	#				$entry->delete($attribute);
+	#			}
+	#			foreach my $array_entry (@{$array}) {
+	#				$entry->add($attribute => $array_entry);
+	#			}
+	#		}
 
-		#	}
-		#	if($entry->update($ldap)) {
-		#		&main::daemon_log("Added Hardware configuration to LDAP", 4);
-		#	}
+	#	}
+	#	if($entry->update($ldap)) {
+	#		&main::daemon_log("Added Hardware configuration to LDAP", 4);
+	#	}
 
-		#}
+	#}
 
-	}
 
 	# Assemble data package
 	my %data = ();
@@ -988,7 +1020,7 @@ sub hardware_config {
 	$mesg = $ldap->unbind;
 
 	&main::daemon_log("Send detect_hardware message to $address", 4);
-	
+
 	# Send information
 	return send_msg("detect_hardware", $server_address, $address, \%data);
 }

@@ -300,6 +300,7 @@ sub detect_hardware {
 	}
 
 	my $result= {
+		gotoHardwareChecksum => &main::generate_hw_digest(),
 		macAddress      => $client_mac_address,
 		gotoXMonitor    => "",
 		gotoXDriver     => "",
