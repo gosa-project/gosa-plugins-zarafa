@@ -12,11 +12,6 @@ class appgroup2 extends plugin
   /* Contains the menu structure in an array.
    */
   var $a_Structure= array();
-
-#  var $a_Releases = array();
-#  var $a_Entries  = array();
-#  var $a_Folders  = array();
-
   var $a_Structure_on_load = array();
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
@@ -31,13 +26,11 @@ class appgroup2 extends plugin
   function _load_menu_structure()
   {
     $this->a_Structure  = array();
-#    $this->a_Releases   = array();
-#    $this->a_Entries    = array();
-#    $this->a_Folders    = array();
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->search("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",array("*"));
+    $parent_id = 0;
     while($attrs = $ldap->fetch()){
       $cur = &$this->a_Structure;
       $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
@@ -45,14 +38,24 @@ class appgroup2 extends plugin
 
       for($i = (count($sub_dn_array)-1) ; $i >= 0 ; $i--){
         
-        $name = preg_replace("/^ou=/","",$sub_dn_array[$i]);
+        $name = preg_replace("/^[^=]*+=/","",$sub_dn_array[$i]);
+
+
         if($i != 0){
-          $cur = &$cur[$name]['ENTRIES'];
+          foreach($cur as $key => $entry){
+            if($entry['NAME'] == $name){
+              $cur = &$cur[$key]['ENTRIES'];
+              $parent_id = $entry['UNIQID'];
+            }
+          }
         }else{
 
           $priority = -1;
           if(isset($attrs['gosaApplicationPriority'])){
             $priority= $attrs['gosaApplicationPriority'][0];
+          }
+          while(isset($cur[$priority])){
+            $priority ++;
           }
 
           if(in_array("gotoSubmenuEntry",$attrs['objectClass'])){
@@ -70,13 +73,9 @@ class appgroup2 extends plugin
           $data['PRIORITY'] = $priority;
           $data['ENTRIES']  = array();
           $data['UNIQID']   = uniqid();
-          $cur[$name]       = $data;
-
-          switch($type){
-#            case 'RELEASE': $this->a_Releases[$name] = &$cur[$name];break;
-#            case 'ENTRY':   $this->a_Entries[$name] = &$cur[$name];break;
-#            case 'FOLDER':  $this->a_Folders[$name] = &$cur[$name];break;
-          }
+          $data['PARENT']   = $parent_id;
+          $cur[$priority]   = $data;
+          ksort($cur);
         }
       }
     }
@@ -88,10 +87,11 @@ class appgroup2 extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if(isset($_GET['r']))
+    $this->__construct($this->config,$this->dn);
 
-#    $this->__construct($this->config, $this->dn,NULL);
     $smarty = get_smarty();
-    $smarty->assign("entries",$this->_get_all_entries());
+    $smarty->assign("entries",$this->_get_all_entries(TRUE));
     $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
@@ -117,6 +117,7 @@ class appgroup2 extends plugin
   }
 
 
+
   
   function save_object()
   {
@@ -128,19 +129,19 @@ class appgroup2 extends plugin
         break;
       }
       if(preg_match("/edit_/",$name)){
-        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/^edit_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
         $this->_edit_entry_edit($id);
         break;
       }
       if(preg_match("/up_/",$name)){
-        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/^up_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
         $this->_move_entry_up($id);
         break;
       }
       if(preg_match("/down_/",$name)){
-        $id = preg_replace("/^del_/","",$name);
+        $id = preg_replace("/^down_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
         $this->_move_entry_down($id);
         break;
@@ -151,42 +152,160 @@ class appgroup2 extends plugin
   
   function _edit_entry_edit($id)
   {
-    echo "Editing: ".$id;
   }
+
+
+  function __switch_entries($from,$type,$to)
+  {
+    $all = $this->_get_all_entries();
+
+    $o_to   = &$all[$to];
+    $o_from = &$all[$from];
+
+    /* Move into next folder */
+    if(in_array($o_to['TYPE'],array("FOLDER","RELEASE"))){
+
+      /* Check if we are already in this folder */
+      if($to == $o_from['PARENT']){
+ 
+        /* Check if there if we are a subfolder */
+        $o_to_sub = &$all[$o_to['PARENT']]; 
+        if(in_array($o_to_sub['TYPE'],array("FOLDER","RELEASE"))){
+
+          /* Removing old */
+          $tmp = array();
+          foreach($o_to['ENTRIES'] as $key => $entry){
+            if($entry['UNIQID'] == $from){
+              $this->_remove_entry_id($from);
+            }
+          }
+
+          /* Adding new */
+          $tmp2 = array();
+          foreach($o_to_sub['ENTRIES'] as $key => $entry){
+
+            if($type == "up"){
+              if($entry['UNIQID'] == $to){
+                $o_from['PARENT'] = $o_to_sub['UNIQID'];
+                $tmp2[] = &$o_from;
+              }
+              $tmp2[] = &$o_to_sub['ENTRIES'][$key];
+            }else{
+
+              $tmp2[] = &$o_to_sub['ENTRIES'][$key];
+              if($entry['UNIQID'] == $to){
+                $o_from['PARENT'] = $o_to_sub['UNIQID'];
+                $tmp2[] = &$o_from;
+              }
+            }
+          }
+      
+          $all[$o_to_sub['UNIQID']]['ENTRIES'] = $tmp2;
+        } 
+      }else{
+
+        /* Check if we want to move into ourselfs */
+        if($to == $from && $o_from['TYPE'] == "FOLDER"){
+        }else{
+
+          /* Removing old */
+          $o_to   = &$all[$to];
+          $o_from = &$all[$from];
+          $tmp = array();
+          $this->_remove_entry_id($from);
+          $o_from['PARENT'] = $to;
+          $o_to['ENTRIES'][]   = $o_from;
+          
+        }
+      }
+    }else{
+      $o_to   = &$all[$to];
+      $o_from = &$all[$from];
+
+      if($o_to['PARENT'] == $o_from['PARENT']){
+        $tmp = $all[$to];
+        $all[$to]   = $o_from;
+        $all[$from] = $tmp;
+      }
+    }
+  }
+
 
   function _move_entry_up($id)
   {
-    echo "Up: ".$id;
+    $all = $this->_get_all_entries(TRUE);
+    $parent = FALSE;
+    foreach($all as $entry){
+      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
+        if($parent != FALSE){
+          $this->__switch_entries($id,"up",$parent);
+          return;
+        }
+      }else{
+        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
+          $parent = $entry['PARENT'];
+        }else{
+          $parent = $entry['UNIQID'];
+        }
+      }
+    }
   }
+
 
   function _move_entry_down($id)
   {
-    echo "Down: ".$id;
+    $all = $this->_get_all_entries(TRUE);
+    $found = FALSE;
+    foreach($all as $entry){
+      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
+        $found = TRUE;
+        continue;
+      }else{
+        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
+          $parent = $entry['PARENT'];
+        }else{
+          $parent = $entry['UNIQID'];
+        }
+        if($found){
+          $this->__switch_entries($id,"down",$parent);
+          return;
+        }
+      }
+    }
   }
 
 
-  function _get_all_entries($cur = NULL,$depth = 0)
+   
+  function _get_all_entries($add_tags = FALSE,$cur = NULL,$depth = 0)
   {
     $ret = array();
     $depth ++;
     if($cur == NULL){
-      $cur = $this->a_Structure;
+      $cur = &$this->a_Structure;
     }
-    $ret[] = array("TYPE" => "OPEN");
-    foreach($cur as $entry){
+    foreach($cur as $key => $entry){
+
       $tmp = $entry;
+      if(!$add_tags){
+        $ret[$tmp['UNIQID']] = &$cur[$key];
+        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES'],$depth));
+        }
+      }else{
       if(isset($tmp['ENTRIES'])){
         unset($tmp['ENTRIES']);
       }
-      $ret[] = $tmp;
-      if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-        $ret = array_merge($ret,$this->_get_all_entries(&$entry['ENTRIES'],$depth));
+        $ret[] = $tmp;
+        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
+          $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES'],$depth));
+          $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+        }
       }
     }
-    $ret[] = array("TYPE" => "CLOSE");
     return($ret);
-  } 
- 
+  }
+
 
   function remove_from_parent()
   {
