@@ -812,7 +812,16 @@ sub client_input {
                         $found_ip_flag++ ;
                     }   
                     if( $found_ip_flag == 0) {
-                        daemon_log("ERROR: no host found in known_clients with mac address '$answer_target', answer could not be send", 1);
+                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target', forward msg to bus", 1);
+                        my $sql_statement = "SELECT * FROM known_server WHERE status='bus'";
+                        my $query_res = $known_server_db->select_dbentry( $sql_statement );
+                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                            my $bus_address = $hit->{hostname};
+                            my $bus_key = $hit->{hostkey};
+                            &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                            last;
+                        }
+
                     }
                 }
                 else {

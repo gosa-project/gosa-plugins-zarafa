@@ -550,6 +550,7 @@ sub here_i_am {
     
 
     # add entry to known_clients_db
+    my $act_timestamp = &get_time;
     my $res = $main::known_clients_db->add_dbentry( {table=>'known_clients', 
                                                 primkey=>'hostname',
                                                 hostname=>$source,
@@ -557,7 +558,7 @@ sub here_i_am {
                                                 macaddress=>$mac_address,
                                                 status=>'registered',
                                                 hostkey=>$new_passwd,
-                                                timestamp=>&get_time,
+                                                timestamp=>$act_timestamp,
                                                 } );
 
     if ($res != 0)  {
@@ -579,6 +580,8 @@ sub here_i_am {
 
         # send update msg to bus
         $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
+        &add_content2xml_hash($out_hash, "macaddress", $mac_address);
+        &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
         my $new_client_out = &create_xml_string($out_hash);
         push(@out_msg_l, $new_client_out);
         &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
