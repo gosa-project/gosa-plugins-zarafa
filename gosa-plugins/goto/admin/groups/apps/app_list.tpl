@@ -1,4 +1,17 @@
-<table style='width:400px' cellpadding=0 cellspacing=0>
+<table style="width:100%;">
+	<tr>
+		<td>
+			<select name="FAIrelease" onChange="document.mainform.submit();">
+			{foreach from=$releases item=item key=key}
+				<option value="{$item}" {if $item == $FAIrelease} selected {/if}>{$item}</option>
+			{/foreach}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%; vertical-align:top;">
+			
+<table style='width:100%' cellpadding=0 cellspacing=0>
 {foreach from=$entries item=item key=key}
 	{if $item.TYPE == "OPEN"}
 		<tr>
@@ -67,3 +80,10 @@
 	{/if}
 {/foreach}
 </table>
+		</td>
+		<td style="vertical-align:top">
+			{$app_list}
+		</td>
+	</tr>
+</table>
+	

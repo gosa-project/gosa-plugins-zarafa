@@ -8,11 +8,15 @@ class appgroup2 extends plugin
 
 
   var $config;
+  var $curbase;
 
   /* Contains the menu structure in an array.
    */
   var $a_Structure= array();
   var $a_Structure_on_load = array();
+  var $Releases;
+  var $FAIrelease = "/";
+  var $apps = array();
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -20,6 +24,84 @@ class appgroup2 extends plugin
     $this->dn = $dn; 
     $this->_load_menu_structure();
     $this->a_Structure_on_load = $this->a_Structure;
+
+    /* Check if we have relase mangement enabled and prepare group application for release management */
+    $tmp = $config->search("faiManagement", "CLASS",array('menu','tabs'));
+    if(!empty($tmp)){
+      $this->enableReleaseManagement = true;
+    }
+
+    /* Get required release informations */
+    if($this->enableReleaseManagement){
+      $this->Releases   = $this->getReleases();
+      $this->FAIrelease = "/";
+    }
+    $this->curbase = $this->config->current['BASE'];
+    $this->reload();
+  }
+
+
+  function reload()
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->curbase);
+    $ldap->search("ou=apps",array("dn"));
+    $app_deps = array();
+    while($attrs = $ldap->fetch()){
+      $app_deps[] = $attrs['dn'];
+    }
+
+    foreach($app_deps as $dep){
+    #  $list = get_list("(objectClass=gosaApplication)","application",$dep,array("*"));
+    }
+
+  }
+
+
+  function getReleases()
+  {
+    /* Only display those releases that we are able to read */
+    $dn     = $this->config->current['BASE'];
+    $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
+    $res    = get_list($filter,"application", $dn, array("ou"), GL_SUBSEARCH);
+
+    $ret =array();
+    foreach($res as $attrs){
+      if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
+        $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
+        $parts  = array_reverse(split("ou=",$bb));
+
+        $str ="";
+        foreach($parts as $part){
+          if(empty($part)) {
+            continue;
+          }
+          $str .= str_replace(",","",$part)."/";
+        }
+        $name = preg_replace("/\/$/","",$str);
+        if(empty($name)) {
+          $name ="/";
+        }
+        $ret[$attrs['dn']] = $name;
+      }
+    }
+    natcasesort($ret);
+    return($ret);
+  }
+
+
+  function getReleases2()
+  {
+    $ret = array();
+    $ret['/'] = array("UNIQID" => 0, "NAME" => "/");
+    $tmp = $this->_get_all_entries();
+    foreach($tmp as $entry){
+      if($entry['TYPE'] == "RELEASE"){
+        unset($entry['ENTRIES']);
+        $ret[] = $entry;
+      }  
+    }
+    return($ret);
   }
 
 
@@ -86,33 +168,94 @@ class appgroup2 extends plugin
     $this->__construct($this->config,$this->dn);
 
     $smarty = get_smarty();
-    $smarty->assign("entries",$this->_get_all_entries(TRUE));
+
+
+    /* Create application list */
+    $div = new divSelectBox("appgroup");
+    $div->SetHeight(300);
+    $departments = array();
+    $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
+    foreach($res as $value){
+      $fdn = $value['dn'];
+      $fdn = preg_replace("/".normalizePreg($this->curbase)."/","",$fdn);
+      $fdn= @LDAP::fix($fdn);
+      if($value["description"][0]!=".."){
+        $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
+      }else{
+        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
+      }
+    }
+
+    /* Create 'open' and 'add' links */
+    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
+      $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
+    }else{
+      $linkadd = "%s";
+    }
+    $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
+
+    /* Create base back entry */
+    $base_back = preg_replace("/^[^,]+,/","",$this->curbase);
+    if((strlen($base_back)>= strlen($this->config->current['BASE']))&&($this->curbase!=$this->config->current['BASE'])){
+      $div->AddEntry(array(
+            array("string"=>sprintf($linkopen,base64_encode($base_back),".. ["._("back")."]"),
+              "attach"=>"style='border:0px;'")
+            ));
+    }
+
+    /* Append departments for current base */
+    foreach($departments as $key => $app){
+      $div->AddEntry(array(
+            array("string"=>"<img class='center' src='images/folder.png' alt='"._("department")."'>&nbsp;".sprintf($linkopen,
+                base64_encode($key),$app),
+              "attach"=>"style='border:0px;'")
+            ));
+    }
+
+    /* Add applications found on this base */
+    foreach($apps as $key => $app){
+      $div->AddEntry(array(
+            array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
+              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".sprintf($linkadd,$key,$app),
+              "attach"=>"style='border:0px;'")
+            ));
+    }
+
+    
+    $entries = $this->_get_all_entries();
+    $smarty->assign("FAIrelease",$this->FAIrelease);
+    $smarty->assign("app_list",$div->DrawList());
+    $smarty->assign("releases",$this->Releases);
+
+    if($this->FAIrelease == "/"){
+      $tmp = $entries;
+    }else{
+      $tmp = $entries[$this->FAIrelease];
+    }
+
+    $smarty->assign("entries",$this->_get_all_entries(TRUE,$tmp['ENTRIES']));
     $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
-
-  /* !\brief Remove the given id from the menu structure.
-      @param  String  ID to of the entry we want to remove.
-      @return Boolean TRUE on success
-   */
-  function _remove_entry_id($id,$start = NULL)
+  
+  function _edit_entry_edit($id)
   {
-    if($start == NULL){
-      $start = &$this->a_Structure;
-    }
-    foreach($start as $name => $entry){
-      if($entry['UNIQID'] == $id){
-        unset($start[$name]);
-        return(TRUE);
-      }
-      if(isset($entry['ENTRIES']) && count($start[$name]['ENTRIES'])){
-        if($this->_remove_entry_id($id,&$start[$name]['ENTRIES'])){
-          return(TRUE);
-        }
-      }
-    }
-    return(FALSE);
+  }
+
+
+  function remove_from_parent()
+  {
+  }
+
+
+  function save()
+  {
+  }
+
+
+  function check()
+  {
   }
 
 
@@ -147,11 +290,123 @@ class appgroup2 extends plugin
         break;
       }
     }
+    if(isset($_POST['FAIrelease'])){
+      $this->FAIrelease = $_POST['FAIrelease'];
+    }
+    if(isset($_GET['act']) && $_GET['act'] == 'depopen'){
+      $this->curbase = base64_decode($_GET['depid']);
+    }
+    $this->reload();
   }
 
-  
-  function _edit_entry_edit($id)
+
+  /* !\brief Remove the given id from the menu structure.
+      @param  String  ID to of the entry we want to remove.
+      @return Boolean TRUE on success
+   */
+  function _remove_entry_id($id,$start = NULL)
   {
+    if($start == NULL){
+      $start = &$this->a_Structure;
+    }
+    foreach($start as $name => $entry){
+      if($entry['UNIQID'] == $id){
+        unset($start[$name]);
+        return(TRUE);
+      }
+      if(isset($entry['ENTRIES']) && count($start[$name]['ENTRIES'])){
+        if($this->_remove_entry_id($id,&$start[$name]['ENTRIES'])){
+          return(TRUE);
+        }
+      }
+    }
+    return(FALSE);
+  }
+
+
+  /*! \brief move the object identified by the given ID one position up.
+      @param  String  The ID of the entry to be moved.
+      @return Boolean TRUE on success, else FALSE;
+   */
+  function _move_entry_up($id)
+  {
+    $all = $this->_get_all_entries(TRUE);
+    $parent = FALSE;
+    foreach($all as $entry){
+      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
+        if($parent != FALSE){
+          return($this->__switch_entries($id,"up",$parent));
+        }
+      }else{
+        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
+          $parent = $entry['PARENT'];
+        }else{
+          $parent = $entry['UNIQID'];
+        }
+      }
+    }
+    return(FALSE);
+  }
+
+
+  /*! \brief move the object identified by the given ID one position down.
+      @param  String  The ID of the entry to be moved.
+      @return Boolean TRUE on success, else FALSE;
+   */
+  function _move_entry_down($id)
+  {
+    $all = $this->_get_all_entries(TRUE);
+    $found = FALSE;
+    foreach($all as $entry){
+      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
+        $found = TRUE;
+        continue;
+      }else{
+        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
+          $parent = $entry['PARENT'];
+        }else{
+          $parent = $entry['UNIQID'];
+        }
+        if($found){
+          return($this->__switch_entries($id,"down",$parent));
+        }
+      }
+    }
+    return(FALSE);
+  }
+
+
+  /*! \brief  Return all entries linear. 
+      @param  Boolean   $add_tags  If TRUE, OPEN/CLOSE Tags will be appended.
+      @param  &Array    Start here, Pointer to an array.
+   */ 
+  function _get_all_entries($add_tags = FALSE,$cur = NULL)
+  {
+    $ret = array();
+    if($cur == NULL){
+      $cur = &$this->a_Structure;
+    }
+    foreach($cur as $key => $entry){
+
+      $tmp = $entry;
+      if(!$add_tags){
+        $ret[$tmp['UNIQID']] = &$cur[$key];
+        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES']));
+        }
+      }else{
+      if(isset($tmp['ENTRIES'])){
+        unset($tmp['ENTRIES']);
+      }
+        $ret[] = $tmp;
+        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
+          $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES']));
+          $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+        }
+      }
+    }
+    return($ret);
   }
 
 
@@ -262,103 +517,6 @@ class appgroup2 extends plugin
   }
 
 
-  function _move_entry_up($id)
-  {
-    $all = $this->_get_all_entries(TRUE);
-    $parent = FALSE;
-    foreach($all as $entry){
-      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
-        if($parent != FALSE){
-          $this->__switch_entries($id,"up",$parent);
-          return;
-        }
-      }else{
-        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
-          $parent = $entry['PARENT'];
-        }else{
-          $parent = $entry['UNIQID'];
-        }
-      }
-    }
-  }
-
-
-  function _move_entry_down($id)
-  {
-    $all = $this->_get_all_entries(TRUE);
-    $found = FALSE;
-    foreach($all as $entry){
-      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
-        $found = TRUE;
-        continue;
-      }else{
-        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
-          $parent = $entry['PARENT'];
-        }else{
-          $parent = $entry['UNIQID'];
-        }
-        if($found){
-          $this->__switch_entries($id,"down",$parent);
-          return;
-        }
-      }
-    }
-  }
-
-
-   
-  function _get_all_entries($add_tags = FALSE,$cur = NULL,$depth = 0)
-  {
-    $ret = array();
-    $depth ++;
-    if($cur == NULL){
-      $cur = &$this->a_Structure;
-    }
-    foreach($cur as $key => $entry){
-
-      $tmp = $entry;
-      if(!$add_tags){
-        $ret[$tmp['UNIQID']] = &$cur[$key];
-        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES'],$depth));
-        }
-      }else{
-      if(isset($tmp['ENTRIES'])){
-        unset($tmp['ENTRIES']);
-      }
-        $ret[] = $tmp;
-        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-          $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES'],$depth));
-          $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
-        }
-      }
-    }
-    return($ret);
-  }
-
-
-  function remove_from_parent()
-  {
-  }
-
-
-  function save()
-  {
-  }
-
-
-  function check()
-  {
-  }
-
-
-
-  function PrepareForCopyPaste($source)
-  {
-  }
-
-
   /* Return plugin informations for acl handling  */ 
   static function plInfo()
   {
@@ -378,6 +536,11 @@ class appgroup2 extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+  }
+
+
   function multiple_save_object()
   {
     if(isset($_POST['group_apps_multi'])){
@@ -393,15 +556,6 @@ class appgroup2 extends plugin
     }
   }
   
-  function multiple_execute()
-  {
-    return($this->execute());
-  }
-
-  function init_multiple_support($attrs,$all)
-  {
-    // Do nothing here
-  }
 
   function get_multi_edit_values()
   {
