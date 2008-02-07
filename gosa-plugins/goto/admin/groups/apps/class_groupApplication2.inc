@@ -26,7 +26,6 @@ class appgroup2 extends plugin
   function _load_menu_structure()
   {
     $this->a_Structure  = array();
-
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->search("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",array("*"));
@@ -35,12 +34,8 @@ class appgroup2 extends plugin
       $cur = &$this->a_Structure;
       $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
       $sub_dn_array = split("\,",$sub_dn);
-
       for($i = (count($sub_dn_array)-1) ; $i >= 0 ; $i--){
-        
         $name = preg_replace("/^[^=]*+=/","",$sub_dn_array[$i]);
-
-
         if($i != 0){
           foreach($cur as $key => $entry){
             if($entry['NAME'] == $name){
@@ -97,6 +92,10 @@ class appgroup2 extends plugin
   }
 
 
+  /* !\brief Remove the given id from the menu structure.
+      @param  String  ID to of the entry we want to remove.
+      @return Boolean TRUE on success
+   */
   function _remove_entry_id($id,$start = NULL)
   {
     if($start == NULL){
@@ -118,7 +117,8 @@ class appgroup2 extends plugin
 
 
 
-  
+  /* !\brief Handle ui POSTS, like sort up/down/delete
+   */ 
   function save_object()
   {
     foreach($_POST as $name => $value){
@@ -155,6 +155,12 @@ class appgroup2 extends plugin
   }
 
 
+  /* !\brief Switch one entry with another 
+     @param  String  from  The source ID.
+     @param  String  type  "up"/"down" type switched.
+     @param  String  to    The destination ID.
+     return  Boolean TRUE on success 
+   */
   function __switch_entries($from,$type,$to)
   {
     $all = $this->_get_all_entries();
@@ -162,13 +168,29 @@ class appgroup2 extends plugin
     $o_to   = &$all[$to];
     $o_from = &$all[$from];
 
-    /* Move into next folder */
+    /***********************
+     * Source == Destination 
+     * Move into next parent. 
+     ************************/
+    if($to == $from){
+      $to = $o_to['PARENT'];
+      $o_to   = &$all[$to];
+    }
+
+    /***********************
+     * Target is container 
+     ************************/
     if(in_array($o_to['TYPE'],array("FOLDER","RELEASE"))){
 
-      /* Check if we are already in this folder */
+      /***********************
+       * Move into parent folder  
+       *   + Target 
+       *   |-> Source
+       ************************/
       if($to == $o_from['PARENT']){
  
-        /* Check if there if we are a subfolder */
+        /* Check if source is a folder object 
+         */
         $o_to_sub = &$all[$o_to['PARENT']]; 
         if(in_array($o_to_sub['TYPE'],array("FOLDER","RELEASE"))){
 
@@ -176,7 +198,9 @@ class appgroup2 extends plugin
           $tmp = array();
           foreach($o_to['ENTRIES'] as $key => $entry){
             if($entry['UNIQID'] == $from){
-              $this->_remove_entry_id($from);
+              if(!$this->_remove_entry_id($from)){
+                return(FALSE);
+              }
             }
           }
 
@@ -199,26 +223,33 @@ class appgroup2 extends plugin
               }
             }
           }
-      
           $all[$o_to_sub['UNIQID']]['ENTRIES'] = $tmp2;
         } 
       }else{
 
-        /* Check if we want to move into ourselfs */
-        if($to == $from && $o_from['TYPE'] == "FOLDER"){
-        }else{
+        /***********************
+         * Target is NOT parent container
+         *  + Parent Folder
+         *  |-> Source 
+         *  + Destination
+         ************************/
 
-          /* Removing old */
-          $o_to   = &$all[$to];
-          $o_from = &$all[$from];
-          $tmp = array();
-          $this->_remove_entry_id($from);
-          $o_from['PARENT'] = $to;
-          $o_to['ENTRIES'][]   = $o_from;
-          
-        }
+        /* Removing old */
+        $o_to   = &$all[$to];
+        $o_from = &$all[$from];
+        $this->_remove_entry_id($from);
+        $o_from['PARENT']     = $to;
+        $o_to['ENTRIES'][]    = $o_from;
+
       }
     }else{
+
+      /***********************
+       * Source and Destination in some Folder.
+       *  + Parent folder
+       *  |-> Source
+       *  |-> Destination
+       ************************/
       $o_to   = &$all[$to];
       $o_from = &$all[$from];
 
