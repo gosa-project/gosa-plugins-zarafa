@@ -867,6 +867,9 @@ sub register_at_gosa_si_server {
             # send xml hash to server with general server passwd
             my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
 			if($res == 0) {
+				# Set fixed client address
+				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+				$client_address= "$client_ip:$client_port";
 				last;
 			} else {
 				next;
