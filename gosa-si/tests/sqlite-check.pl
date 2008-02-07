@@ -91,6 +91,19 @@ if (-e $db_name) {
     print $answer."\n";
 }
 
-
+$db_name = "/var/lib/gosa-si/gosa-si-bus_known_clients.db";
+if (-e $db_name) {
+    print "\n############################################################\n";
+#    $db_name =~ /\/([^\/]*?)\.db$/;
+#    my $table_name = $1;
+    my $table_name = "bus_known_clients";
+    print "$db_name\n";
+    print "$table_name\n";
+    my $sqlite = GOSA::DBsqlite->new($db_name);
+    my $col_names = $sqlite->get_table_columns($table_name);
+    print join(', ', @{ $col_names } )."\n" ;
+    my $answer = $sqlite->show_table($table_name);
+    print $answer."\n";
+}
 
 print "\nFINISH\n";

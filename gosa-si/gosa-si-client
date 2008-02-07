@@ -1095,12 +1095,8 @@ daemon_log("$0 started!", 1);
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
-
-# complete client_address
+# detect ip and mac address and complete host address
 $client_address = $client_ip.":".$client_port;
-
-
-# detect own ip and mac address
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);
 daemon_log("gosa-si-client ip address detected: $client_ip", 1);
