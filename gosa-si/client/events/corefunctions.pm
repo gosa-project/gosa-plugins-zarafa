@@ -12,10 +12,13 @@ use GOSA::GosaSupportDaemon;
 use File::Basename;
 
 
-my ($ldap_enabled, $ldap_config, $pam_config, $nss_config);
+my ($ldap_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
 
 my %cfg_defaults = (
+    "general" => {
+        "fai_logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
+    },
     "client" => {
         "ldap" => [\$ldap_enabled, 1],
         "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
@@ -36,6 +39,32 @@ END {}
 my $server_address = $main::server_address;
 my $server_key = $main::server_key;
 my $client_mac_address = $main::client_mac_address;
+
+sub write_to_file {
+    my ($string, $file) = @_;
+    my $error = 0;
+
+    if( not defined $file || not -f $file ) {
+        &main::daemon_log("ERROR: $0: check '-f file' failed: $file", 1);
+        $error++;
+    }
+    if( not defined $string || 0 == length($string)) {
+        &main::daemon_log("ERROR: $0: empty string to write to file '$file'", 1);
+        $error++;
+    }
+    
+    if( $error == 0 ) {
+
+        chomp($string);
+    
+        open(FILE, ">> $file");
+        print FILE $string."\n";
+        close(FILE);
+    }
+
+    return;    
+}
+
 
 sub get_events {
     return \@events;
@@ -291,6 +320,10 @@ sub new_key {
 
 
 sub detect_hardware {
+
+
+    &write_to_file('goto-hardware-detection-start', $fai_logpath);
+
 	my $hwinfo= `which hwinfo`;
 	chomp $hwinfo;
 
@@ -397,6 +430,8 @@ sub detect_hardware {
 
 	&main::daemon_log("Hardware detection done!", 4);
 
+    &write_to_file('goto-hardware-detection-stop', $fai_logpath);
+   
     return &main::send_msg_hash2address(
 		&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
 		$main::server_address, 

@@ -39,7 +39,7 @@ use Net::DNS;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file);
+my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
@@ -59,24 +59,25 @@ our $REGISTERED_FLAG = 1;
 
 %cfg_defaults = (
 "general" =>
-    {"log_file" => [\$log_file, "/var/run/".$0.".log"],
-    "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+    {"log_file"           => [\$log_file, "/var/run/".$0.".log"],
+    "pid_file"            => [\$pid_file, "/var/run/".$0.".pid"],
+    "fai_logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
     },
 "client" => 
-    {"client_port" => [\$client_port, "20083"],
-     "client_ip" => [\$client_ip, "0.0.0.0"],
+    {"client_port"        => [\$client_port, "20083"],
+     "client_ip"          => [\$client_ip, "0.0.0.0"],
      "client_mac_address" => [\$client_mac_address, "00:00:00:00:00:00"],
-     "ldap" => [\$ldap_enabled, 1],
-     "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
-     "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
-     "nss_config" => [\$nss_config, "/etc/libnss_ldap.conf"],
+     "ldap"               => [\$ldap_enabled, 1],
+     "ldap_config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
+     "pam_config"         => [\$pam_config, "/etc/pam_ldap.conf"],
+     "nss_config"         => [\$nss_config, "/etc/libnss_ldap.conf"],
     },
 "server" =>
-    {"server_ip" => [\$server_ip, "127.0.0.1"],
-    "server_port" => [\$server_port, "20081"],
-    "server_key" => [\$server_key, ""],
-    "server_timeout" => [\$server_timeout, 10],
-    "server_domain" => [\$server_domain, ""],
+    {"server_ip"          => [\$server_ip, "127.0.0.1"],
+    "server_port"         => [\$server_port, "20081"],
+    "server_key"          => [\$server_key, ""],
+    "server_timeout"      => [\$server_timeout, 10],
+    "server_domain"       => [\$server_domain, ""],
     "server_key_lifetime" => [\$server_key_lifetime, 600], 
     },
 
@@ -949,7 +950,7 @@ sub import_events {
 
         eval{ require $event; };
         if( $@ ) {
-            daemon_log("import of event module '$event' failed", 1);
+            daemon_log("ERROR: import of event module '$event' failed", 1);
             daemon_log("$@", 8);
             next;
         }
@@ -1006,7 +1007,10 @@ sub server_input {
             daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
             no strict 'refs';
             $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
-         }
+        }
+        else {
+            daemon_log("WARNING: no event '$header' found in event modules under $event_dir", 1);
+        }
     }
 
     ########

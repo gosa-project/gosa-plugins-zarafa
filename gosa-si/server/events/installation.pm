@@ -1,7 +1,7 @@
 package installation;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events set_activated_for_installation reboot halt softupdate reinstall new_key_for_client);
+my @events = qw(get_events set_activated_for_installation reboot halt softupdate reinstall new_key_for_client detect_hardware);
 @EXPORT = @events;
 
 use strict;
@@ -20,6 +20,21 @@ END {}
 sub get_events {
     return \@events;
 }
+
+
+sub detect_hardware {
+    my ($msg, $msg_hash) = @_ ;
+    # just forward msg to client, but dont forget to split off 'gosa_' in header
+    my $header = @{$msg_hash->{header}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+
+    my $out_hash = &create_xml_hash("detect_hardware", $source, $target);
+    my $out_msg = &create_xml_string($out_hash);
+
+    return $out_msg;
+}
+
 
 sub set_activated_for_installation {
     my ($msg, $msg_hash) = @_;

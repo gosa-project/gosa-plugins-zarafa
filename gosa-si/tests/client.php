@@ -41,11 +41,12 @@ if($sock->connected()){
 # set gosa-si-client to 'activated'
 #$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>127.0.0.1:20081</source> </xml>";
 
+$data = "<xml> <header>gosa_detect_hardware</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_reboot</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_reinstall</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_softupdate</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_halt</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
-$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
+#$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
 
 
     $sock->write($data);

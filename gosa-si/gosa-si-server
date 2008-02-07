@@ -544,7 +544,7 @@ sub input_from_unknown_host {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("Incoming message is not from a unknown host", 3);
+        daemon_log("Incoming message is not from a unknown host", 5);
     }
 
     return ($msg, $msg_hash, $module);
@@ -727,7 +727,7 @@ sub client_input {
     ######################
     # process incoming msg
     if( $error == 0) {
-        daemon_log("Processing module ".$module, 3);
+        daemon_log("Processing module ".$module, 5);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $heap->{'remote_ip'});
 
         if ( 0 > @{$answer_l} ) {

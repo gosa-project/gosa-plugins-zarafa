@@ -344,10 +344,6 @@ sub register_at_bus {
     my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
     my $msg = &create_xml_string($msg_hash);
 
-print STDERR "bus_key:$bus_key\n";
-print STDERR "msg:$msg\n";
-
-
     &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
     return $msg;
 #    my $answer = "";
@@ -420,11 +416,11 @@ sub process_incoming_msg {
 		}
     }
 
-    if( $error == 0) {
-        if( 0 == @out_msg_l ) {
-			push(@out_msg_l, $msg);
-        }
-    }
+#    if( $error == 0) {
+#        if( 0 == @out_msg_l ) {
+#			push(@out_msg_l, $msg);
+#        }
+#    }
     
     return \@out_msg_l;
 }
