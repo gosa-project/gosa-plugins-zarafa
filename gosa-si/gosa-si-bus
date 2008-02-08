@@ -677,33 +677,74 @@ sub bus_input {
         my $source = @{$msg_hash->{'source'}}[0];
         my $header = @{$msg_hash->{header}}[0];
 
+        my $target_string = join(",", @target_l);
+        daemon_log("got msg '$header' with target '$target_string' from ".$heap->{'remote_ip'}, 3);
+
         if( 1 == length(@target_l) && $target_l[0] eq $bus_address ) {
             # msg is for bus
+#print STDERR "msg is for bus\n";
             $kernel->post('gosa_si_bus_session', $header, $msg, $msg_hash);
         }
         else {
             # msg is for someone else, deliver it
 
-            print STDERR "msg is for someone else\n";
+#print STDERR "msg is for someone else\n";
             foreach my $target (@target_l) {
-                print STDERR "target: $target\n";
-                if( $target =~ /(\d{3}\.\d{3}\.\d{3}\.\d{3}:\d+)/ ) {
+                if( $target =~ /(\d{0,3}\.\d{0,3}\.\d{0,3}\.\d{0,3}:\d+)/ ) {
                     # target is a ip address
+                    my ($sql_statement, $query_res);
 
-                    my $sql_statement = "SELECT * FROM bus_known_server WHERE hostname='$target'";
-                    my $sql_statement = "SELECT * FROM bus_known_clients WHERE hostname='$target'";
+                    $sql_statement = "SELECT * FROM bus_known_server WHERE hostname='$target'";
+                    $query_res = $bus_known_server_db->select_dbentry( $sql_statement );
+                    if( 1 == keys(%$query_res) ) {
+                        my $host_name = $query_res->{1}->{'hostname'};
+                        my $host_key = $query_res->{1}->{'hostkey'};
+                        &send_msg_to_target($msg, $host_name, $host_key, $header);
+                        next;
+                    } 
+
+                    $sql_statement = "SELECT * FROM bus_known_clients WHERE hostname='$target'";
+                    $query_res = $bus_known_clients_db->select_dbentry( $sql_statement );
+                    if( 1 == keys(%$query_res) ) {
+                        my $host_name = $query_res->{1}->{'hostname'};
+                        my $server_name = $query_res->{1}->{'registered'};
+                        # fetch correct key for server
+                        my $sql_statement = "SELECT * FROM bus_known_server WHERE hostname='$server_name'";
+                        my $query_res = $bus_known_server_db->select_dbentry( $sql_statement );
+                        my $server_key = $query_res->{1}->{'hostkey'};
+                        &send_msg_to_target($msg, $server_name, $server_key, $header);
+                        next;
+                    } 
+
+                    daemon_log("ERROR:unknown host, can not process message '$header'", 1);
                 }
                 elsif( $target =~ /([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})/ ) {
                     # target is a mac address
-
-                    my $sql_statement = "SELECT registerd FROM bus_known_clients WHERE macaddress='$target'";
+                    my $sql_statement = "SELECT * FROM bus_known_clients WHERE macaddress='$target'";
                     my $query_res = $bus_known_clients_db->select_dbentry( $sql_statement );
-                    print Dumper $query_res;
+                    if( 1 > keys(%{$query_res})) {
+                        daemon_log("ERROR: there are more than one hosts in bus_known_clients_db with mac address '$target'", 1);
+                    }
+                    elsif( 0 == keys(%{$query_res})) {
+                        daemon_log("WARNING: no host found in bus_known_clients_db with mac address '$target'", 3);
+                    }
+                    else {
+                        my $host_name = $query_res->{1}->{'hostname'};
+                        my $server_name = $query_res->{1}->{'registered'};
+                        my $out_msg = $msg;
+                        $out_msg =~ s/<target>$target<\/target>/<target>$host_name<\/target>/;
 
-                    
+                        # fetch correct key for server
+                        my $sql_statement = "SELECT * FROM bus_known_server WHERE hostname='$server_name'";
+                        my $query_res = $bus_known_server_db->select_dbentry( $sql_statement );
+                        my $server_key = $query_res->{1}->{'hostkey'};
+
+                        &send_msg_to_target($out_msg, $server_name, $server_key, $header);
+                    }
                 }
                 else {
-
+                    daemon_log("ERROR: target address '$target' does not match neiter ".
+                        "to ip address nor to mac address, can not process msg", 1);
                 }
 
             }
@@ -766,6 +807,7 @@ sub new_client {
         timestamp=>$act_timestamp,
     };
     $bus_known_clients_db->add_dbentry($add_hash);
+    daemon_log("add new client '$new_client' to bus_known_clients_db", 3);
 }
 
 

@@ -831,8 +831,13 @@ sub client_input {
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);
                     if( !$encrypt_key ) {
-                        daemon_log("ERROR: no encrypt key found in known_clients or known_server for target '$answer_target'", 1);
-                        daemon_log("\n$answer", 8);
+                        # unknown target, forward msg to bus
+                        daemon_log("WARNING: unknown target '$answer_target', forward msg to bus", 3);
+                        my $sql_statement = "SELECT * FROM known_server WHERE status='bus'";
+                        my $query_res = $known_server_db->select_dbentry( $sql_statement );
+                        my $bus_address = $query_res->{1}->{hostname};
+                        my $bus_key = $query_res->{1}->{hostkey};
+                        &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
                         next;
                     }
                     # send_msg
