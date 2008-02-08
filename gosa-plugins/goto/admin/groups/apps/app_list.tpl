@@ -3,7 +3,7 @@
 		<td>
 			<select name="FAIrelease" onChange="document.mainform.submit();">
 			{foreach from=$releases item=item key=key}
-				<option value="{$item}" {if $item == $FAIrelease} selected {/if}>{$item}</option>
+				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name}</option>
 			{/foreach}
 			</select>
 		</td>

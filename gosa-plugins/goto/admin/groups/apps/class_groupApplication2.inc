@@ -15,7 +15,7 @@ class appgroup2 extends plugin
   var $a_Structure= array();
   var $a_Structure_on_load = array();
   var $Releases;
-  var $FAIrelease = "/";
+  var $FAIrelease = 0;
   var $apps = array();
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
@@ -34,7 +34,7 @@ class appgroup2 extends plugin
     /* Get required release informations */
     if($this->enableReleaseManagement){
       $this->Releases   = $this->getReleases();
-      $this->FAIrelease = "/";
+      $this->FAIrelease = 0;
     }
     $this->curbase = $this->config->current['BASE'];
     $this->reload();
@@ -65,27 +65,29 @@ class appgroup2 extends plugin
     $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
     $res    = get_list($filter,"application", $dn, array("ou"), GL_SUBSEARCH);
 
-    $ret =array();
+    $ret =array(array("name" => "/" , "parts" => array()));
     foreach($res as $attrs){
       if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
         $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
         $parts  = array_reverse(split("ou=",$bb));
 
         $str ="";
-        foreach($parts as $part){
+        foreach($parts as $key => $part){
           if(empty($part)) {
+            unset($parts[$key]);
             continue;
           }
-          $str .= str_replace(",","",$part)."/";
+          $part = str_replace(",","",$part);
+          $str .= $part."/";
+          $parts[$key] = $part;
         }
         $name = preg_replace("/\/$/","",$str);
         if(empty($name)) {
           $name ="/";
         }
-        $ret[$attrs['dn']] = $name;
+        $ret[] = array("name" => $name , "dn" => $attrs['dn'], "parts" => $parts);
       }
     }
-    natcasesort($ret);
     return($ret);
   }
 
@@ -127,7 +129,7 @@ class appgroup2 extends plugin
           }
         }else{
 
-          $priority = -1;
+          $priority = 1;
           if(isset($attrs['gosaApplicationPriority'])){
             $priority= $attrs['gosaApplicationPriority'][0];
           }
@@ -169,7 +171,6 @@ class appgroup2 extends plugin
 
     $smarty = get_smarty();
 
-
     /* Create application list */
     $div = new divSelectBox("appgroup");
     $div->SetHeight(300);
@@ -187,11 +188,11 @@ class appgroup2 extends plugin
     }
 
     /* Create 'open' and 'add' links */
-    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
+#    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
-    }else{
-      $linkadd = "%s";
-    }
+ #   }else{
+  #    $linkadd = "%s";
+   # }
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
 
     /* Create base back entry */
@@ -213,6 +214,7 @@ class appgroup2 extends plugin
     }
 
     /* Add applications found on this base */
+    $apps = array();
     foreach($apps as $key => $app){
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
@@ -222,23 +224,40 @@ class appgroup2 extends plugin
     }
 
     
-    $entries = $this->_get_all_entries();
     $smarty->assign("FAIrelease",$this->FAIrelease);
     $smarty->assign("app_list",$div->DrawList());
     $smarty->assign("releases",$this->Releases);
-
-    if($this->FAIrelease == "/"){
-      $tmp = $entries;
-    }else{
-      $tmp = $entries[$this->FAIrelease];
-    }
-
-    $smarty->assign("entries",$this->_get_all_entries(TRUE,$tmp['ENTRIES']));
+    $entries = $this->_get_entries_for_release($this->FAIrelease);
+    $smarty->assign("entries",$entries);
     $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
   
+  function _get_entries_for_release($release,$cur = NULL)
+  {
+    $release_info = $this->Releases[$release];
+    $cur = &$this->a_Structure;
+
+    $found = FALSE; 
+    foreach($release_info['parts'] as $name){
+      foreach($cur as $key => $obj){
+        if($obj['TYPE'] == "RELEASE" && $obj['NAME'] == $name){
+          $cur = &$cur[$key]['ENTRIES'];
+          $found = TRUE;
+          break;
+        }
+        $found = FALSE;
+      }
+    }
+    if($found){
+      return($this->_get_all_entries(TRUE,TRUE,$cur));
+    }else{
+      return(array());
+    }
+  }
+
+
   function _edit_entry_edit($id)
   {
   }
@@ -380,7 +399,7 @@ class appgroup2 extends plugin
       @param  Boolean   $add_tags  If TRUE, OPEN/CLOSE Tags will be appended.
       @param  &Array    Start here, Pointer to an array.
    */ 
-  function _get_all_entries($add_tags = FALSE,$cur = NULL)
+  function _get_all_entries($add_tags = FALSE, $skip_release = FALSE, $cur = NULL)
   {
     $ret = array();
     if($cur == NULL){
@@ -388,11 +407,15 @@ class appgroup2 extends plugin
     }
     foreach($cur as $key => $entry){
 
+      if($skip_release && $entry['TYPE'] == "RELEASE"){
+        continue;
+      }    
+
       $tmp = $entry;
       if(!$add_tags){
         $ret[$tmp['UNIQID']] = &$cur[$key];
         if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES']));
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
         }
       }else{
       if(isset($tmp['ENTRIES'])){
@@ -401,7 +424,7 @@ class appgroup2 extends plugin
         $ret[] = $tmp;
         if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
           $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,&$cur[$key]['ENTRIES']));
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
           $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
         }
       }
