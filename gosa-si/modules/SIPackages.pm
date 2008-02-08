@@ -784,7 +784,7 @@ sub new_ldap_config {
 
 		# Fill release if available
 		my $ou= $entry->get_value("ou");
-		if (defined $ou && $ou ~= /^.* :([A-Za-z0-9/.]+).*$/){
+		if (defined $ou && $ou =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
 			$data{'release'}= $1;
 		}
 
