@@ -1,6 +1,7 @@
 <table style="width:100%;">
 	<tr>
 		<td>
+			{t}Release{/t}
 			<select name="FAIrelease" onChange="document.mainform.submit();">
 			{foreach from=$releases item=item key=key}
 				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name}</option>
@@ -10,6 +11,10 @@
 	</tr>
 	<tr>
 		<td style="width:50%; vertical-align:top;">
+		<div style="height:290px; overflow:auto; 
+					border-top: solid 2px #999999;
+					border-left: solid 2px #999999;
+					padding:5px; background-color: #EEEEEE;">
 			
 <table style='width:100%' cellpadding=0 cellspacing=0>
 {foreach from=$entries item=item key=key}
@@ -42,7 +47,7 @@
 	{elseif $item.TYPE == "FOLDER"}
 		<tr>
 			<td style='width:20px; padding-top:5px;padding-bottom:5px;'>
-				<img src='images/folder.png' alt='{t}Folder{/t}'>
+				<img class="center" src='images/folder.png' alt='{t}Folder{/t}'>
 			</td>
 			<td>
 				{$item.NAME}
@@ -64,7 +69,7 @@
 				<img src='images/select_application.png' alt='{t}Entry{/t}'>
 			</td>
 			<td>
-				{$item.NAME}
+				{$item.NAME} {$item.INFO}
 			</td>
 			<td style='width:100px;text-align:right'>
 				<input title="{t}Move up{/t}" 	class="center" type='image' 
@@ -80,9 +85,23 @@
 	{/if}
 {/foreach}
 </table>
+		</div>
+			<input type="text" name="menu_folder_name" value="">
+			<select name="menu_folder">
+			{foreach from=$folders item=item key=key}
+				<option value="{$key}">{$item}</option>
+			{/foreach}
+			</select>
+			<input type="submit" name="add_menu_to_folder" value="{t}Add{/t}" title="{t}Add selected applications to this folder.{/t}">
 		</td>
 		<td style="vertical-align:top">
 			{$app_list}
+			<select name="folder">
+			{foreach from=$folders item=item key=key}
+				<option value="{$key}">{$item}</option>
+			{/foreach}
+			</select>
+			<input type="submit" name="add_to_folder" value="{t}Add{/t}" title="{t}Add selected applications to this folder.{/t}">
 		</td>
 	</tr>
 </table>

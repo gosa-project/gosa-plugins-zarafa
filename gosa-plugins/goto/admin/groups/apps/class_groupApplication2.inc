@@ -35,9 +35,9 @@ class appgroup2 extends plugin
     /* Get required release informations */
     if($this->enableReleaseManagement){
       $this->Releases   = $this->getReleases();
-      $this->FAIrelease = 0;
+#      $this->FAIrelease = 0;
     }
-    $this->curbase = $this->config->current['BASE'];
+#    $this->curbase = $this->config->current['BASE'];
     $this->reload();
   }
 
@@ -110,21 +110,6 @@ class appgroup2 extends plugin
   }
 
 
-  function getReleases2()
-  {
-    $ret = array();
-    $ret['/'] = array("UNIQID" => 0, "NAME" => "/");
-    $tmp = $this->_get_all_entries();
-    foreach($tmp as $entry){
-      if($entry['TYPE'] == "RELEASE"){
-        unset($entry['ENTRIES']);
-        $ret[] = $entry;
-      }  
-    }
-    return($ret);
-  }
-
-
   function _load_menu_structure()
   {
     $this->a_Structure  = array();
@@ -155,15 +140,16 @@ class appgroup2 extends plugin
             $priority ++;
           }
 
+          $data = array();
           if(in_array("gotoSubmenuEntry",$attrs['objectClass'])){
             $type = "FOLDER";
           }elseif(in_array("gotoMenuEntry",$attrs['objectClass'])){
             $type = "ENTRY";
           }elseif(in_array("FAIbranch",$attrs['objectClass'])){
             $type = "RELEASE";
+            $data['FAIstate'] = $attrs['FAIstate'][0];
           }
 
-          $data = array();
           $data['DN']       = $attrs['dn'];
           $data['NAME']     = $name;
           $data['TYPE']     = $type;
@@ -171,6 +157,7 @@ class appgroup2 extends plugin
           $data['ENTRIES']  = array();
           $data['UNIQID']   = uniqid();
           $data['PARENT']   = $parent_id;
+          $data['STATUS']   = "LOADED";
           $cur[$priority]   = $data;
           ksort($cur);
         }
@@ -257,10 +244,24 @@ class appgroup2 extends plugin
     $smarty->assign("FAIrelease",$this->FAIrelease);
     $smarty->assign("app_list",$div->DrawList());
     $smarty->assign("releases",$this->Releases);
+    $smarty->assign("folders" , $this->_get_folder_names());
     $entries = $this->_get_entries_for_release($this->FAIrelease);
     $smarty->assign("entries",$entries);
     $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
+  }
+
+    
+  function _get_folder_names()
+  {
+    $data = $this->_get_entries_for_release($this->FAIrelease);
+    $ret = array();
+    foreach($data as $entry){
+      if($entry['TYPE'] == "FOLDER"){
+        $ret[$entry['UNIQID']] = $entry['NAME'];
+      }
+    }
+    return($ret);
   }
 
  
@@ -312,6 +313,84 @@ class appgroup2 extends plugin
 
   function save()
   {
+    $ldap = $this->config->get_ldap_link();
+    $all = $this->_get_all_entries();
+    $prio = 0;
+    foreach($all as $entry){
+      $prio ++;
+      $cur = $entry;
+      $dn = "";
+
+      do{  
+        if($cur['TYPE'] == "ENTRY"){
+          $dn.= "cn=".$cur['NAME'].",";
+        }elseif($cur['TYPE'] == "FOLDER"){
+          $dn.= "cn=".$cur['NAME'].",";
+        }elseif($cur['TYPE'] == "RELEASE"){
+          $dn.= "ou=".$cur['NAME'].",";
+        }
+        $cur = $all[$cur['PARENT']];
+        if(!isset($cur['PARENT'])){
+          $cur = NULL;
+        }
+      }while(is_array($cur));
+      $cur_dn = $dn.$this->dn;
+
+      $attrs = array();
+      switch($entry['TYPE']){
+        case "ENTRY"    :
+        { 
+          $attrs['objectClass'] = "gotoMenuEntry";
+          $attrs['cn']          = $entry['NAME'];
+          $attrs['gosaApplicationPriority'] = $prio;
+        }
+        break;
+        case "FOLDER"   : 
+        { 
+          $attrs['objectClass'] = "gotoSubmenuEntry";
+          $attrs['cn']          = $entry['NAME'];
+          $attrs['gosaApplicationPriority'] = $prio;
+        }
+        break;
+        case "RELEASE"  : 
+        { 
+          $attrs['ou']            = $entry['NAME'];
+          $attrs['objectClass']   = array();
+          $attrs['objectClass'][] = "top";
+          $attrs['objectClass'][] = "organizationalUnit";
+          $attrs['objectClass'][] = "FAIbranch";
+          $attrs['FAIstate']      = $entry['FAIstate'];
+        }
+        break;
+      }
+  
+      echo $entry['STATUS']." ---> ".$cur_dn."<br>";
+      if($entry['STATUS'] == "LOADED"){
+        continue;
+      }
+      if($entry['STATUS'] == "REMOVED"){
+        echo "REMOVE<br>";
+        $ldap->rmdir_recursive($cur_dn);
+        echo $ldap->get_error();
+      }
+      if($entry['STATUS'] == "EDITED"){
+        echo "EDITED<br>";
+        $ldap->cd($cur_dn);
+        $ldap->modify($attrs);
+        echo $ldap->get_error();
+        print_a($attrs);
+      }
+      if($entry['STATUS'] == "ADDED"){
+        echo "ADDED<br>";
+        $ldap->cd($cur_dn);
+        $ldap->add($attrs);
+        echo $ldap->get_error();
+        print_a($attrs);
+      }
+    }
+    print_a($this->a_Structure);
+    exit();
+
   }
 
 
@@ -357,7 +436,37 @@ class appgroup2 extends plugin
     if(isset($_GET['act']) && $_GET['act'] == 'depopen'){
       $this->curbase = base64_decode($_GET['depid']);
     }
+    if(isset($_POST['add_to_folder']) && isset($_POST['folder'])){
+      $folder = $_POST['folder'];
+      foreach($_POST as $name => $value){
+        if(preg_match("/^AddApp_[0-9]*$/",$name)){
+          $this->_add_app_id($folder,preg_replace("/^AddApp_/","",$name));   
+        }
+      }
+    }
+    if(isset($_POST['add_menu_to_folder']) && isset($_POST['menu_folder'])){
+      $folder = $_POST['menu_folder'];
+      $name = $_POST['menu_folder_name'];
+      if(strlen($name) > 0 && preg_match("/[a-z ]/i",$name)){
+        $this->_add_sub_folder($folder,$name);
+      }
+    }
     $this->reload();
+  }
+
+  
+  function _add_sub_folder($folder,$name)
+  {
+    $all = $this->_get_all_entries();
+    if(isset($all[$folder])){
+      $a_folder = array();
+      $a_folder['STATUS'] = "ADDED";
+      $a_folder['NAME']   = $name;
+      $a_folder['UNIQID'] = uniqid();
+      $a_folder['PARENT'] = $folder;      
+      $a_folder['TYPE']   = "FOLDER";
+      $all[$folder]['ENTRIES'][] = $a_folder;
+    }
   }
 
 
@@ -365,23 +474,72 @@ class appgroup2 extends plugin
       @param  String  ID to of the entry we want to remove.
       @return Boolean TRUE on success
    */
-  function _remove_entry_id($id,$start = NULL)
+  function _remove_entry_id($id)
   {
-    if($start == NULL){
-      $start = &$this->a_Structure;
-    }
-    foreach($start as $name => $entry){
-      if($entry['UNIQID'] == $id){
-        unset($start[$name]);
-        return(TRUE);
-      }
-      if(isset($entry['ENTRIES']) && count($start[$name]['ENTRIES'])){
-        if($this->_remove_entry_id($id,&$start[$name]['ENTRIES'])){
-          return(TRUE);
-        }
-      }
+    $all = $this->_get_all_entries();
+    if(isset($all[$id])){
+      $all[$id]['STATUS'] = "REMOVED";
+      return(TRUE);
     }
     return(FALSE);
+  }
+
+  
+  /* !\brief Remove the given id from the menu structure.
+      @param  String  ID to of the entry we want to remove.
+      @return Boolean TRUE on success
+   */
+  function _add_entry($folder_id,$entry,$pos = 0)
+  {
+    $all = $this->_get_all_entries();
+    if(isset($all[$folder_id])){
+
+      $folder  = $all[$folder_id];
+      $entries = $entry['ENTRIES'];
+
+      $entry['UNIQID'] = uniqid();     
+      $entry['PARENT'] = $folder_id;
+      $entry['ENTRIES']= array();
+      $entry['STATUS'] = "ADDED";
+      
+      $cnt = 0; 
+      $new = array();
+      $added =FALSE;
+      foreach($folder['ENTRIES'] as $key => $obj){
+        if($pos == $cnt){
+          $new[] = $entry;
+          $added = TRUE;
+          $cnt ++;
+        }
+        $obj['ENTRIES'] = array();
+        $new[] = $obj;
+      }
+      if(!$added){
+        $new[] = $entry;
+      }
+      $all[$folder_id]['ENTRIES'] = $new;
+      foreach($entries as $sub){
+        $this->_add_entry($entry['UNIQID'],$sub);
+      }
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
+  
+  function _add_app_id($folder_id,$app_id)
+  {
+    $all = $this->_get_all_entries();
+    if(isset($all[$folder_id]) && isset($this->apps[$app_id])){
+
+      $new = array();
+      $new['TYPE']  = "ENTRY";
+      $new['NAME']  = $this->apps[$app_id]['cn'][0];
+      $new['UNIQID']= uniqid(); 
+      $new['PARENT']= $folder_id;
+      $new['STATUS']= "ADDED";
+      $all[$folder_id]['ENTRIES'][] = $new;
+    }
   }
 
 
@@ -452,6 +610,22 @@ class appgroup2 extends plugin
       if($skip_release && $entry['TYPE'] == "RELEASE"){
         continue;
       }    
+      if($entry['TYPE'] == "ENTRY"){
+        $found = FALSE;
+        foreach($this->apps as $app){
+          if($app['cn'][0] == $entry['NAME']){
+            $found = TRUE;
+            if(isset($app['description'][0])){
+              $entry['INFO'] = "[".$app['description'][0]."]";
+            }
+            break;
+          }
+        } 
+        if(!$found){
+          $entry['INFO'] = "<font color='red'>"._("Not available in release.")."</font>";
+        }
+      }
+      
 
       $tmp = $entry;
       if(!$add_tags){
@@ -460,14 +634,18 @@ class appgroup2 extends plugin
           $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
         }
       }else{
-      if(isset($tmp['ENTRIES'])){
-        unset($tmp['ENTRIES']);
-      }
-        $ret[] = $tmp;
-        if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-          $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
-          $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+      
+        if(isset($tmp['ENTRIES'])){
+          unset($tmp['ENTRIES']);
+        }
+
+        if($tmp['STATUS'] != "REMOVED"){
+          $ret[] = $tmp;
+          if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
+            $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
+            $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
+            $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+          }
         }
       }
     }
@@ -508,11 +686,28 @@ class appgroup2 extends plugin
        *   |-> Source
        ************************/
       if($to == $o_from['PARENT']){
+
  
         /* Check if source is a folder object 
          */
         $o_to_sub = &$all[$o_to['PARENT']]; 
         if(in_array($o_to_sub['TYPE'],array("FOLDER","RELEASE"))){
+
+          $o_from['STATUS'] = "ADDED";
+
+          /* Adding new */
+          $tmp2 = array();  
+          $cnt = 0; 
+          foreach($o_to_sub['ENTRIES'] as $key => $entry){
+            $cnt ++;
+            if($entry['UNIQID'] == $to){
+              break;
+            }
+          }
+          if($type == "up"){
+            $cnt --;
+          }
+          $this->_add_entry($o_to_sub['UNIQID'],$o_from,$cnt);
 
           /* Removing old */
           $tmp = array();
@@ -523,27 +718,8 @@ class appgroup2 extends plugin
               }
             }
           }
-
-          /* Adding new */
-          $tmp2 = array();
-          foreach($o_to_sub['ENTRIES'] as $key => $entry){
-
-            if($type == "up"){
-              if($entry['UNIQID'] == $to){
-                $o_from['PARENT'] = $o_to_sub['UNIQID'];
-                $tmp2[] = &$o_from;
-              }
-              $tmp2[] = &$o_to_sub['ENTRIES'][$key];
-            }else{
-
-              $tmp2[] = &$o_to_sub['ENTRIES'][$key];
-              if($entry['UNIQID'] == $to){
-                $o_from['PARENT'] = $o_to_sub['UNIQID'];
-                $tmp2[] = &$o_from;
-              }
-            }
-          }
-          $all[$o_to_sub['UNIQID']]['ENTRIES'] = $tmp2;
+        
+          $o_from['UNIQID'] = uniqid();
         } 
       }else{
 
@@ -554,13 +730,13 @@ class appgroup2 extends plugin
          *  + Destination
          ************************/
 
+        echo "Hier";
+  
         /* Removing old */
-        $o_to   = &$all[$to];
-        $o_from = &$all[$from];
+        $o_to   = $all[$to];
+        $o_from = $all[$from];
+        $this->_add_entry($to,$o_from);
         $this->_remove_entry_id($from);
-        $o_from['PARENT']     = $to;
-        $o_to['ENTRIES'][]    = $o_from;
-
       }
     }else{
 
@@ -572,11 +748,17 @@ class appgroup2 extends plugin
        ************************/
       $o_to   = &$all[$to];
       $o_from = &$all[$from];
+      $parent = &$all[$o_to['PARENT']];
 
       if($o_to['PARENT'] == $o_from['PARENT']){
         $tmp = $all[$to];
         $all[$to]   = $o_from;
         $all[$from] = $tmp;
+  
+        /* Ensure that the app priority is updated */
+        foreach($parent['ENTRIES'] as $key => $entry){
+          $parent['ENTRIES'][$key]['STATUS'] = "EDITED";
+        }
       }
     }
   }
