@@ -1,7 +1,7 @@
 package corefunctions;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events registered set_activated_for_installation new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate);
+my @events = qw(get_events registered set_activated_for_installation new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate confirm_new_key);
 @EXPORT = @events;
 
 use strict;
@@ -323,6 +323,17 @@ sub new_key {
     return $out_msg; 
 }
 
+
+sub confirm_new_key {
+    my ($msg, $msg_hash) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+
+    &main::daemon_log("confirm new key from $source", 5);
+    return;
+
+}
 
 
 sub detect_hardware {

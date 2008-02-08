@@ -431,7 +431,7 @@ sub check_key_and_xml_validity {
 
     };
     if($@) {
-        &main::daemon_log("WARNING: do not understand the message:", 5);
+        &main::daemon_log("WARNING: do not understand the message", 5);
         &main::daemon_log("$@", 8);
     }
 
@@ -534,7 +534,7 @@ sub input_from_unknown_host {
         # check if module can open msg envelope with module key
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key);
         if( (!$msg) || (!$msg_hash) ) {
-            daemon_log("$mod: deciphering failed", 5);
+            #daemon_log("$mod: deciphering failed", 5);
             next;
         }
         else {
@@ -652,12 +652,16 @@ sub open_socket {
 sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
     my $error = 0;
-
+    my $header;
+    my $new_status;
+    my $act_status;
+    my ($sql_statement, $res);
+  
     if( $msg_header ) {
-        $msg_header = "'$msg_header'-";
+        $header = "'$msg_header'-";
     }
     else {
-        $msg_header = "";
+        $header = "";
     }
 
     # encrypt xml msg
@@ -666,7 +670,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        daemon_log("cannot send ".$header."msg to $address , host not reachable", 1);
         $error++;
     }
     
@@ -674,9 +678,9 @@ sub send_msg_to_target {
         # send xml msg
         print $socket $crypted_msg."\n";
 
-        daemon_log("send ".$msg_header."msg to $address", 1);
+        daemon_log("send ".$header."msg to $address", 1);
         daemon_log("message:\n$msg", 8);
-
+        
     }
 
     # close socket in any case
@@ -684,7 +688,55 @@ sub send_msg_to_target {
         close $socket;
     }
 
-    return;
+    if( $error > 0 ) { $new_status = "down"; }
+    else { $new_status = $msg_header; }
+
+
+    # known_clients
+    $sql_statement = "SELECT * FROM known_clients WHERE hostname='$address'";
+    $res = $known_clients_db->select_dbentry($sql_statement);
+    if( keys(%$res) > 0) {
+        $act_status = $res->{1}->{'status'};
+        if( $act_status eq "down" ) {
+            $sql_statement = "DELETE FROM known_clients WHERE hostname='$address'";
+            $res = $known_clients_db->del_dbentry($sql_statement);
+            daemon_log("WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
+        } 
+        else { 
+            $sql_statement = "UPDATE known_clients SET status='$new_status' WHERE hostname='$address'";
+            $res = $known_clients_db->update_dbentry($sql_statement);
+            if($new_status eq "down"){
+                daemon_log("WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
+            }
+            else {
+                daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+            }
+        }
+    }
+
+    # known_server
+    $sql_statement = "SELECT * FROM known_server WHERE hostname='$address'";
+    $res = $known_server_db->select_dbentry($sql_statement);
+    if( keys(%$res) > 0 ) {
+        $act_status = $res->{1}->{'status'};
+        if( $act_status eq "down" ) {
+            $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
+            $res = $known_clients_db->del_dbentry($sql_statement);
+            daemon_log("WARNING: failed 2x to a send msg to host '$address', delete host from known_server", 3);
+        } 
+        else { 
+            $sql_statement = "UPDATE known_server SET status='$new_status' WHERE hostname='$address'";
+            $res = $known_server_db->update_dbentry($sql_statement);
+            if($new_status eq "down"){
+                daemon_log("WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
+            }
+            else {
+                daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+            }
+        }
+    }
+
+    return; 
 }
 
 
@@ -782,7 +834,7 @@ sub client_input {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                    }
+                     }
                 }
                 elsif( $answer_target eq "GOSA" ) {
                     # answer is for GOSA and has to returned to connected client
@@ -815,7 +867,7 @@ sub client_input {
                     }   
                     if( $found_ip_flag == 0) {
                         daemon_log("WARNING: no host found in known_clients with mac address '$answer_target', forward msg to bus", 1);
-                        my $sql_statement = "SELECT * FROM known_server WHERE status='bus'";
+                        my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
                         my $query_res = $known_server_db->select_dbentry( $sql_statement );
                         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                             my $bus_address = $hit->{hostname};
@@ -833,9 +885,8 @@ sub client_input {
                     if( !$encrypt_key ) {
                         # unknown target, forward msg to bus
                         daemon_log("WARNING: unknown target '$answer_target', forward msg to bus", 3);
-                        my $sql_statement = "SELECT * FROM known_server WHERE status='bus'";
+                        my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
                         my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                        my $bus_address = $query_res->{1}->{hostname};
                         my $bus_key = $query_res->{1}->{hostkey};
                         &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
                         next;

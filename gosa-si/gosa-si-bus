@@ -470,12 +470,16 @@ sub send_msg_hash2address {
 sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
     my $error = 0;
+    my $header;
+    my $new_status;
+    my $act_status;
+    my ($sql_statement, $res);
 
     if( $msg_header ) {
-        $msg_header = "'$msg_header'-";
+        $header = "'$msg_header'-";
     }
     else {
-        $msg_header = "";
+        $header = "";
     }
 
     # encrypt xml msg
@@ -484,7 +488,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        daemon_log("cannot send ".$header."msg to $address , host not reachable", 1);
         $error++;
     }
     
@@ -492,7 +496,7 @@ sub send_msg_to_target {
         # send xml msg
         print $socket $crypted_msg."\n";
 
-        daemon_log("send ".$msg_header."msg to $address", 1);
+        daemon_log("send ".$header."msg to $address", 1);
         daemon_log("message:\n$msg", 8);
 
     }
@@ -500,6 +504,44 @@ sub send_msg_to_target {
     # close socket in any case
     if( $socket ) {
         close $socket;
+    }
+
+    if( $error > 0 ) { $new_status = "down"; }
+    else { $new_status = $msg_header; }
+
+
+    # known_clients
+    $sql_statement = "SELECT * FROM bus_known_clients WHERE hostname='$address'";
+    $res = $bus_known_clients_db->select_dbentry($sql_statement);
+    if( keys(%$res) > 0 ) {
+        $act_status = $res->{1}->{'status'};
+        if( $act_status eq "down" ) {
+            $sql_statement = "DELETE FROM bus_known_clients WHERE hostname='$address'";
+            $res = $bus_known_clients_db->del_dbentry($sql_statement);
+            daemon_log("WARNING: failed 2x to send msg to host '$address', delete host from bus_known_clients", 3);
+        } 
+        else { 
+            $sql_statement = "UPDATE bus_known_clients SET status='$new_status' WHERE hostname='$address'";
+            $res = $bus_known_clients_db->update_dbentry($sql_statement);
+            daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+        }
+    }
+
+    # known_server
+    $sql_statement = "SELECT * FROM bus_known_server WHERE hostname='$address'";
+    $res = $bus_known_server_db->select_dbentry($sql_statement);
+    if( keys(%$res) > 0) {
+        $act_status = $res->{1}->{'status'};
+        if( $act_status eq "down" ) {
+            $sql_statement = "DELETE FROM bus_known_clients WHERE hostname='$address'";
+            $res = $bus_known_clients_db->del_dbentry($sql_statement);
+            daemon_log("WARNING: failed 2x to a send msg to host '$address', delete host from bus_known_server", 3);
+        } 
+        else { 
+            $sql_statement = "UPDATE bus_known_server SET status='$new_status' WHERE hostname='$address'";
+            $res = $bus_known_server_db->update_dbentry($sql_statement);
+            daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5)
+        }
     }
 
     return;
@@ -900,7 +942,7 @@ POE::Session->create(
 		_start => \&_start, 
         _default => \&_default,
         here_i_am => \&here_i_am,
-        confirm_new_passwd => \&confirm_new_key,
+        confirm_new_key => \&confirm_new_key,
         new_client => \&new_client,
 	}
 );

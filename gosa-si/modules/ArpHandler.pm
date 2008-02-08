@@ -200,7 +200,7 @@ sub got_packet {
 				}
 			}
 			$hosts_database->{$packet->{source_haddr}}->{dnsname}=$dnsname;
-			&main::daemon_log("Host was found in LDAP as ".$ldap_result->{dn}, 6);
+			&main::daemon_log("Host was found in LDAP as ".$ldap_result->{dn}, 8);
 		} else {
 			$hosts_database->{$packet->{source_haddr}}={
 				macAddress => $packet->{source_haddr},
@@ -240,7 +240,7 @@ sub got_packet {
 			);
 
 		}
-		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{device})."->".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",6);
+		&main::daemon_log("Host already in cache (".($hosts_database->{$packet->{source_haddr}}->{device})."->".($hosts_database->{$packet->{source_haddr}}->{dnsname}).")",8);
 	}
 } 
 

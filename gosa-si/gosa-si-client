@@ -848,7 +848,6 @@ sub register_at_gosa_si_server {
 
     if( $REGISTERED_FLAG == 1 ) {
 
-
         # create new passwd and ciphering object for client-server communication
         $server_key = &create_passwd();
 
@@ -858,7 +857,12 @@ sub register_at_gosa_si_server {
 
             # fetch first gosa-si-server from @servers
             my $server = shift(@servers);
-			
+            if( !$server ) {
+                daemon_log("no gosa-si-server left in list of servers", 1);
+                daemon_log("unable to register at a gosa-si-server, force shutdown", 1);
+                exit(1);
+            }
+		
 			# Check if our ip is resolvable - if not: don't try to register
 			my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 			my $resolver= Net::DNS::Resolver->new;
@@ -868,16 +872,12 @@ sub register_at_gosa_si_server {
 				exit(1);
 			}
 
-            if( !$server ) {
-                daemon_log("no gosa-si-server left in list of servers", 1);
-                daemon_log("unable to register at a gosa-si-server, force shutdown", 1);
-                exit(1);
-            }
-
             # create registration msg
-            my $register_hash = &create_xml_hash("here_i_am", &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/)).":".$client_port, $server);
+            my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+            my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+            my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
             &add_content2xml_hash($register_hash, "new_passwd", $server_key);
-			&add_content2xml_hash($register_hash, "mac_address", &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/)));
+			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
             &add_content2xml_hash($register_hash, "events", $events);
             &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
@@ -893,7 +893,8 @@ sub register_at_gosa_si_server {
 			}
         }
         daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
-        $kernel->delay_set('register_at_gosa_si_server',180);
+#        $kernel->delay_set('register_at_gosa_si_server', 180);
+        $kernel->delay_set('register_at_gosa_si_server', 5);
         # clear old settings and set it again
         $kernel->delay_set('trigger_new_key', $server_key_lifetime);
     }
@@ -1011,6 +1012,7 @@ sub server_input {
         daemon_log("Deciphering of incoming msg failed", 5);
         $error++;
     }
+
 
     ######################
     # process incoming msg

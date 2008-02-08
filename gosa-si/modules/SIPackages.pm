@@ -12,6 +12,7 @@ use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use XML::Simple;
 use Data::Dumper;
+use NetAddr::IP;
 use Net::LDAP;
 use Socket;
 use Net::hostent;
@@ -21,7 +22,7 @@ BEGIN{}
 END {}
 
 my ($known_clients_file_name);
-my ($server_activ, $server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my ($server_activ, $server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
@@ -34,7 +35,7 @@ my %cfg_defaults =
 "server" =>
     {"server_activ" => [\$server_activ, "on"],
     "server_ip" => [\$server_ip, "0.0.0.0"],
-    "server_mac_address" => [\$server_mac_address, ""],
+    "server_mac_address" => [\$server_mac_address, "00:00:00:00:00"],
     "server_port" => [\$server_port, "20081"],
     "SIPackages_key" => [\$SIPackages_key, ""],
     "max_clients" => [\$max_clients, 100],
@@ -56,16 +57,19 @@ my %cfg_defaults =
 # read configfile and import variables
 &read_configfile();
 
-# detect interfaces and mac address
+$server_ip = &get_local_ip_for_remote_ip($server_ip);
+
 $network_interface= &get_interface_for_ip($server_ip);
-$server_mac_address= &get_mac($network_interface); 
+$server_mac_address= &get_mac($network_interface);
 
 # complete addresses
 if( $server_ip eq "0.0.0.0" ) {
     $server_ip = "127.0.0.1";
 }
 my $server_address = "$server_ip:$server_port";
+$main::server_address = $server_address;
 my $bus_address = "$bus_ip:$bus_port";
+$main::bus_address = $bus_address;
 
 # create general settings for this module
 my $xml = new XML::Simple();
@@ -325,6 +329,48 @@ sub get_ip {
 }
 
 
+sub get_local_ip_for_remote_ip {
+	my $server_ip= shift;
+	my $result="0.0.0.0";
+
+	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
+		if($server_ip eq "127.0.0.1") {
+			$result="127.0.0.1";
+		} else {
+			my $PROC_NET_ROUTE= ('/proc/net/route');
+
+			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+				or die "Could not open $PROC_NET_ROUTE";
+
+			my @ifs = <PROC_NET_ROUTE>;
+
+			close(PROC_NET_ROUTE);
+
+			# Eat header line
+			shift @ifs;
+			chomp @ifs;
+			foreach my $line(@ifs) {
+				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+				my $destination;
+				my $mask;
+				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
+					# destination matches route, save mac and exit
+					$result= &get_ip($Iface);
+					last;
+				}
+			}
+		}
+	} else {
+		daemon_log("get_local_ip_for_remote_ip was called with a non-ip parameter: $server_ip", 1);
+	}
+	return $result;
+}
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  register_at_bus
 #   PARAMETERS:  nothing
@@ -346,14 +392,6 @@ sub register_at_bus {
 
     &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
     return $msg;
-#    my $answer = "";
-#    $answer = &send_msg_hash2address($msg_hash, $bus_address, $bus_passwd);
-#    if ($answer == 0) {
-#        &main::daemon_log("register at bus: $bus_address", 1);
-#    } else {
-#        &main::daemon_log("unable to send 'register'-msg to bus '$bus_address': $answer", 1);
-#    }
-#    return;
 }
 
 
@@ -473,7 +511,7 @@ sub new_key {
             "SET hostkey='$source_key', timestamp='$act_time' ".
             "WHERE hostname='$source_name'";
         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
-        my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
+        my $hash = &create_xml_hash("confirm_new_key", $server_address, $source_name);
         my $out_msg = &create_xml_string($hash);
         push(@out_msg_l, $out_msg);
     }
@@ -490,7 +528,7 @@ sub new_key {
                 "WHERE hostname='$source_name'";
             my $res = $main::known_server_db->update_dbentry( $sql_statement );
 
-            my $hash = &create_xml_hash("confirm_new_passwd", $server_address, $source_name);
+            my $hash = &create_xml_hash("confirm_new_key", $server_address, $source_name);
             my $out_msg = &create_xml_string($hash);
             push(@out_msg_l, $out_msg);
         }
@@ -864,7 +902,7 @@ sub process_detected_hardware {
 				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
 			);
 		} else {
-			&main::daemon_log("There was a problem adding the entry", 1);
+			&main::daemon_log("ERROR: There was a problem adding the entry", 1);
 		}
 
 	}
