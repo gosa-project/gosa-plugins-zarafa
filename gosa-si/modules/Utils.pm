@@ -123,7 +123,9 @@ sub process_input($)
     %result = ( 'status' => 0, 'percent' => 16, 'task' => "task_instsoft",
                 'action' => gettext("Gathering information for package lists"));
   } elsif ( $line =~ /([0-9]+) packages upgraded, ([0-9]+) newly installed/ ) {
-    $pkg_step= 69.0 / ($1 + $2) / 3.0;
+    if (($1 + $2) != 0){
+      $pkg_step= 69.0 / ($1 + $2) / 3.0;
+    }
     $percent= 16.0;
   } elsif ( $line =~ /Get:[0-9]+ [^ ]+ [^ ]+ ([^ ]+)/ ) {
     $percent+= $pkg_step;

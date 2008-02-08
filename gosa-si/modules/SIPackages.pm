@@ -764,7 +764,7 @@ sub new_ldap_config {
 		# Find admin base and department name
 		$mesg = $ldap->search( base   => $ldap_base,
 			scope  => 'sub',
-			attrs => ['dn', 'ou'],
+			attrs => ['dn', 'ou', 'FAIclass'],
 			filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
@@ -781,6 +781,12 @@ sub new_ldap_config {
 		$entry= $mesg->entry(0);
 		$data{'admin_base'}= $entry->dn;
 		$data{'department'}= $entry->get_value("ou");
+
+		# Fill release if available
+		my $ou= $entry->get_value("ou");
+		if (defined $ou && $ou ~= /^.* :([A-Za-z0-9/.]+).*$/){
+			$data{'release'}= $1;
+		}
 
 		# Append unit Tag
 		$data{'unit_tag'}= $unit_tag;
@@ -847,6 +853,7 @@ sub process_detected_hardware {
 		$entry->add("objectClass" => "goHard");
 		$entry->add("cn" => $cn);
 		$entry->add("macAddress" => $macaddress);
+		$entry->add("gotomode" => "locked");
 		$entry->add("gotoSysStatus" => "new-system");
 		$entry->add("ipHostNumber" => $ipaddress);
 		if(my $res=$entry->update($ldap)) {
