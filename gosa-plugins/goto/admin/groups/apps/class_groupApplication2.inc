@@ -47,7 +47,7 @@ class appgroup2 extends plugin
     $ret = array();
     $release_info = $this->Releases[$this->FAIrelease];
 
-    if(!isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
+    if(1 | !isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
 
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->curbase);
@@ -494,7 +494,7 @@ class appgroup2 extends plugin
     $all = $this->_get_all_entries();
     if(isset($all[$folder_id])){
 
-      $folder  = $all[$folder_id];
+      $folder  = &$all[$folder_id];
       $entries = $entry['ENTRIES'];
 
       $entry['UNIQID'] = uniqid();     
@@ -511,7 +511,6 @@ class appgroup2 extends plugin
           $added = TRUE;
           $cnt ++;
         }
-        $obj['ENTRIES'] = array();
         $new[] = $obj;
       }
       if(!$added){
@@ -706,20 +705,15 @@ class appgroup2 extends plugin
           }
           if($type == "up"){
             $cnt --;
-          }
-          $this->_add_entry($o_to_sub['UNIQID'],$o_from,$cnt);
+ 
+         }
+         $this->_add_entry($o_to_sub['UNIQID'],$o_from,$cnt);
 
           /* Removing old */
           $tmp = array();
-          foreach($o_to['ENTRIES'] as $key => $entry){
-            if($entry['UNIQID'] == $from){
-              if(!$this->_remove_entry_id($from)){
-                return(FALSE);
-              }
-            }
+          if(!$this->_remove_entry_id($from)){
+            return(FALSE);
           }
-        
-          $o_from['UNIQID'] = uniqid();
         } 
       }else{
 
@@ -730,8 +724,6 @@ class appgroup2 extends plugin
          *  + Destination
          ************************/
 
-        echo "Hier";
-  
         /* Removing old */
         $o_to   = $all[$to];
         $o_from = $all[$from];
