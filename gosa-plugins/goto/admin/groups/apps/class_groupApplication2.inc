@@ -353,7 +353,6 @@ class appgroup2 extends plugin
         $release['STATUS']   = "ADDED";
         $release['FAIstate'] =  $release_info['FAIstate'];
         $cur[] = $release;
-        print_a($release);
         $i --;
       }
     }
