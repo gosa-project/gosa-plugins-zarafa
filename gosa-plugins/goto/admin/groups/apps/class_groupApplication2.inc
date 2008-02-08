@@ -50,7 +50,7 @@ class appgroup2 extends plugin
     if(1 | !isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
 
       $ldap = $this->config->get_ldap_link();
-      $ldap->cd($this->curbase);
+      $ldap->cd($this->config->current['BASE']);
       $ldap->search("ou=apps",array("dn"));
       $app_deps = array();
       while($attrs = $ldap->fetch()){
@@ -304,6 +304,7 @@ class appgroup2 extends plugin
     $ldap = $this->config->get_ldap_link();
     $all = $this->_get_all_entries();
     $prio = 0;
+    $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
     foreach($all as $entry){
       $prio ++;
       $cur = $entry;
@@ -352,33 +353,43 @@ class appgroup2 extends plugin
         break;
       }
   
-      echo $entry['STATUS']." ---> ".$cur_dn."<br>";
       if($entry['STATUS'] == "LOADED"){
         continue;
       }
       if($entry['STATUS'] == "REMOVED"){
-        echo "REMOVE<br>";
-        $ldap->rmdir_recursive($cur_dn);
-        echo $ldap->get_error();
+        $Actions['Remove'][$cur_dn] = $cur_dn;
       }
       if($entry['STATUS'] == "EDITED"){
-        echo "EDITED<br>";
-        $ldap->cd($cur_dn);
-        $ldap->modify($attrs);
-        echo $ldap->get_error();
-        print_a($attrs);
+        $Actions['Edit'][$cur_dn] = $attrs;
       }
       if($entry['STATUS'] == "ADDED"){
-        echo "ADDED<br>";
-        $ldap->cd($cur_dn);
-        $ldap->add($attrs);
-        echo $ldap->get_error();
-        print_a($attrs);
+        $Actions['Add'][$cur_dn] = $attrs;
       }
     }
-    print_a($this->a_Structure);
-    exit();
 
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    foreach($Actions['Remove'] as $dn){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $ldap->rmdir_recursive($dn);
+      }
+    }
+    foreach($Actions['Add'] as $dn => $data){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if(!$ldap->count()){
+        $ldap->add($data);
+      }
+    }
+    foreach($Actions['Edit'] as $dn => $data){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $ldap->modify($data);
+      }
+    }
   }
 
 
