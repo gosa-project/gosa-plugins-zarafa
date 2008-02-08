@@ -1129,19 +1129,26 @@ $xml = new XML::Simple();
 $default_server_key = $server_key;
 
 
-# find all possible gosa-si-servers in DNS
-if (defined $server_domain) {
+# add gosa-si-server address from config file at first position of server list
+if (defined $server_address) {
+    unshift(@servers, $server_address);
+    my $servers_string = join(", ", @servers);
+    daemon_log("found servers in configuration file: $servers_string", 5);
+} 
+else {
+    if ( !$server_domain) {
+        daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+        exit( 1 );
+    }
     my @tmp_servers = &get_server_addresses($server_domain);
     foreach my $server (@tmp_servers) { 
         unshift(@servers, $server); 
     }
+    my $servers_string = join(", ", @servers);
+    daemon_log("found servers in DNS: $servers_string", 5);
 }
-# add gosa-si-server address from config file at first position of server list
-if (defined $server_address) {
-    unshift(@servers, $server_address);
-}
-my $servers_string = join(", ", @servers);
-daemon_log("found servers in configuration file and via DNS: $servers_string", 5);
+
+
 
 
 POE::Session->create(
