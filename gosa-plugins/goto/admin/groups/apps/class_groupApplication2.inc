@@ -255,7 +255,7 @@ class appgroup2 extends plugin
   function _get_folder_names()
   {
     $data = $this->_get_entries_for_release($this->FAIrelease);
-    $ret = array();
+    $ret = array("BASE" => ".");
     foreach($data as $entry){
       if($entry['TYPE'] == "FOLDER"){
         $ret[$entry['UNIQID']] = $entry['NAME'];
@@ -276,28 +276,16 @@ class appgroup2 extends plugin
     }
     return($ret);
   }
+
  
   function _get_entries_for_release($release,$cur = NULL)
   {
-    $release_info = $this->Releases[$release];
-    $cur = &$this->a_Structure;
-
-    $found = FALSE; 
-    foreach($release_info['parts'] as $name){
-      foreach($cur as $key => $obj){
-        if($obj['TYPE'] == "RELEASE" && $obj['NAME'] == $name){
-          $cur = &$cur[$key]['ENTRIES'];
-          $found = TRUE;
-          break;
-        }
-        $found = FALSE;
-      }
-    }
-    if($found){
-      return($this->_get_all_entries(TRUE,TRUE,$cur));
-    }else{
-      return(array());
-    }
+    $all = $this->_get_all_entries();
+    $key = $this->_get_release_key($release);
+    if(isset($all[$key])){
+      return($this->_get_all_entries(TRUE,TRUE,&$all[$key]['ENTRIES']));
+    } 
+    return(array());
   }
 
 
@@ -455,9 +443,37 @@ class appgroup2 extends plugin
   }
 
   
+  function _get_release_key($release)
+  {
+    $release_info = $this->Releases[$release];
+    $cur = &$this->a_Structure;
+    $s_key = "";
+    $found = FALSE;
+    foreach($release_info['parts'] as $name){
+      foreach($cur as $key => $obj){
+        if($obj['TYPE'] == "RELEASE" && $obj['NAME'] == $name){
+          $s_key = $cur[$key]['UNIQID'];
+          $cur = &$cur[$key]['ENTRIES'];
+          $found = TRUE;
+          break;
+        }
+        $found = FALSE;
+      }
+    }
+    if($found){
+      return($s_key);  
+    }  
+    return(FALSE);
+  }
+
+  
   function _add_sub_folder($folder,$name)
   {
     $all = $this->_get_all_entries();
+    if($folder == "BASE"){
+      $folder = $this->_get_release_key($this->FAIrelease);
+    }
+    
     if(isset($all[$folder])){
       $a_folder = array();
       $a_folder['STATUS'] = "ADDED";
@@ -492,6 +508,7 @@ class appgroup2 extends plugin
   function _add_entry($folder_id,$entry,$pos = 0)
   {
     $all = $this->_get_all_entries();
+
     if(isset($all[$folder_id])){
 
       $folder  = &$all[$folder_id];
@@ -529,6 +546,9 @@ class appgroup2 extends plugin
   function _add_app_id($folder_id,$app_id)
   {
     $all = $this->_get_all_entries();
+    if($folder_id == "BASE"){
+      $folder_id = $this->_get_release_key($this->FAIrelease);
+    }
     if(isset($all[$folder_id]) && isset($this->apps[$app_id])){
 
       $new = array();
