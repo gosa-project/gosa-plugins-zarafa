@@ -47,7 +47,7 @@ class appgroup2 extends plugin
     $ret = array();
     $release_info = $this->Releases[$this->FAIrelease];
 
-    if(1 | !isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
+    if(!isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
 
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
@@ -81,7 +81,7 @@ class appgroup2 extends plugin
     /* Only display those releases that we are able to read */
     $dn     = $this->config->current['BASE'];
     $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
-    $res    = get_list($filter,"application", $dn, array("ou"), GL_SUBSEARCH);
+    $res    = get_list($filter,"application", $dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
     $ret =array(array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
     foreach($res as $attrs){
@@ -103,7 +103,15 @@ class appgroup2 extends plugin
         if(empty($name)) {
           $name ="/";
         }
-        $ret[] = array("name" => $name , "dn" => $attrs['dn'], "parts" => $parts,"suffix" => $bb.get_ou('applicationou'));
+        $FAIstate = "";
+        if(isset($attrs['FAIstate'])){
+          $FAIstate = $attrs['FAIstate'][0];
+        }
+        
+        $ret[] = array("name"     => $name, 
+                       "FAIstate" => $FAIstate,
+                       "dn"       => $attrs['dn'], 
+                       "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
       }
     }
     return($ret);
@@ -116,14 +124,27 @@ class appgroup2 extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->search("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",array("*"));
-    $parent_id = 0;
+
+    $base =  array();
+    $base['UNIQID'] = uniqid();
+    $base['PARENT'] = 0; 
+    $base['NAME']   = "";
+    $base['TYPE']   = "BASE";
+    $base['ENTRIES']= array();
+    $base['STATUS'] = "LOADED";
+    
+    $this->a_Structure[0] = $base;
+
     while($attrs = $ldap->fetch()){
-      $cur = &$this->a_Structure;
+      $cur = &$this->a_Structure[0]['ENTRIES'];
+      $parent_id    = $base['UNIQID'];
       $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
       $sub_dn_array = split("\,",$sub_dn);
+
+
       for($i = (count($sub_dn_array)-1) ; $i >= 0 ; $i--){
         $name = preg_replace("/^[^=]*+=/","",$sub_dn_array[$i]);
-        if($i != 0){
+        if($i > 0){
           foreach($cur as $key => $entry){
             if($entry['NAME'] == $name){
               $cur = &$cur[$key]['ENTRIES'];
@@ -147,7 +168,11 @@ class appgroup2 extends plugin
             $type = "ENTRY";
           }elseif(in_array("FAIbranch",$attrs['objectClass'])){
             $type = "RELEASE";
-            $data['FAIstate'] = $attrs['FAIstate'][0];
+            if(isset($attrs['FAIstate'][0])){
+              $data['FAIstate'] = $attrs['FAIstate'][0];
+            }else{
+              $data['FAIstate'] = "";
+            }
           }
 
           $data['DN']       = $attrs['dn'];
@@ -192,12 +217,6 @@ class appgroup2 extends plugin
       }
     }
 
-    /* Create 'open' and 'add' links */
-#    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
-      $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
- #   }else{
-  #    $linkadd = "%s";
-   # }
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
 
     /* Create base back entry */
@@ -235,7 +254,7 @@ class appgroup2 extends plugin
       }
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
-              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".sprintf($linkadd,$key,$name),
+              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".$name,
               "attach"=>"style='border:0px;'")
             ));
     }
@@ -282,8 +301,9 @@ class appgroup2 extends plugin
   {
     $all = $this->_get_all_entries();
     $key = $this->_get_release_key($release);
-    if(isset($all[$key])){
-      return($this->_get_all_entries(TRUE,TRUE,&$all[$key]['ENTRIES']));
+    if(isset($all[$key]) && count($all[$key]['ENTRIES'])){
+      $res = $this->_get_all_entries(TRUE,TRUE,&$all[$key]['ENTRIES']);
+      return($res);
     } 
     return(array());
   }
@@ -299,104 +319,45 @@ class appgroup2 extends plugin
   }
 
 
-  function save()
-  {
-    $ldap = $this->config->get_ldap_link();
-    $all = $this->_get_all_entries();
-    $prio = 0;
-    $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
-    foreach($all as $entry){
-      $prio ++;
-      $cur = $entry;
-      $dn = "";
-
-      do{  
-        if($cur['TYPE'] == "ENTRY"){
-          $dn.= "cn=".$cur['NAME'].",";
-        }elseif($cur['TYPE'] == "FOLDER"){
-          $dn.= "cn=".$cur['NAME'].",";
-        }elseif($cur['TYPE'] == "RELEASE"){
-          $dn.= "ou=".$cur['NAME'].",";
-        }
-        $cur = $all[$cur['PARENT']];
-        if(!isset($cur['PARENT'])){
-          $cur = NULL;
-        }
-      }while(is_array($cur));
-      $cur_dn = $dn.$this->dn;
-
-      $attrs = array();
-      switch($entry['TYPE']){
-        case "ENTRY"    :
-        { 
-          $attrs['objectClass'] = "gotoMenuEntry";
-          $attrs['cn']          = $entry['NAME'];
-          $attrs['gosaApplicationPriority'] = $prio;
-        }
-        break;
-        case "FOLDER"   : 
-        { 
-          $attrs['objectClass'] = "gotoSubmenuEntry";
-          $attrs['cn']          = $entry['NAME'];
-          $attrs['gosaApplicationPriority'] = $prio;
-        }
-        break;
-        case "RELEASE"  : 
-        { 
-          $attrs['ou']            = $entry['NAME'];
-          $attrs['objectClass']   = array();
-          $attrs['objectClass'][] = "top";
-          $attrs['objectClass'][] = "organizationalUnit";
-          $attrs['objectClass'][] = "FAIbranch";
-          $attrs['FAIstate']      = $entry['FAIstate'];
-        }
-        break;
-      }
-  
-      if($entry['STATUS'] == "LOADED"){
-        continue;
-      }
-      if($entry['STATUS'] == "REMOVED"){
-        $Actions['Remove'][$cur_dn] = $cur_dn;
-      }
-      if($entry['STATUS'] == "EDITED"){
-        $Actions['Edit'][$cur_dn] = $attrs;
-      }
-      if($entry['STATUS'] == "ADDED"){
-        $Actions['Add'][$cur_dn] = $attrs;
-      }
-    }
-
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    foreach($Actions['Remove'] as $dn){
-      $ldap->cd($dn);
-      $ldap->cat($dn);
-      if($ldap->count()){
-        $ldap->rmdir_recursive($dn);
-      }
-    }
-    foreach($Actions['Add'] as $dn => $data){
-      $ldap->cd($dn);
-      $ldap->cat($dn);
-      if(!$ldap->count()){
-        $ldap->add($data);
-      }
-    }
-    foreach($Actions['Edit'] as $dn => $data){
-      $ldap->cd($dn);
-      $ldap->cat($dn);
-      if($ldap->count()){
-        $ldap->modify($data);
-      }
-    }
-  }
-
 
   function check()
   {
   }
 
+
+  function _check_missing_release($release)
+  {
+    $release_info = $this->Releases[$release];
+
+    $parent_id = $this->a_Structure[0]['UNIQID'];
+    $cur = &$this->a_Structure[0]['ENTRIES'];
+    for($i = 0 ; $i < count($release_info['parts']) ; $i ++){
+      $part = $release_info['parts'][$i];
+      $found = FALSE;
+      foreach($cur as $key => $name){
+        if($name['NAME'] == $part){
+          $parent_id = $cur[$key]['UNIQID'];
+          $cur = &$cur[$key]['ENTRIES'];
+          
+          $found =TRUE;
+          break;
+        }
+      }
+      if(!$found){
+        $release           =  array();
+        $release['UNIQID'] = uniqid();
+        $release['PARENT'] = $parent_id;
+        $release['NAME']   = $part;
+        $release['TYPE']   = "RELEASE";
+        $release['ENTRIES']= array();
+        $release['STATUS']   = "ADDED";
+        $release['FAIstate'] =  $release_info['FAIstate'];
+        $cur[] = $release;
+        print_a($release);
+        $i --;
+      }
+    }
+  }
 
 
   /* !\brief Handle ui POSTS, like sort up/down/delete
@@ -431,6 +392,7 @@ class appgroup2 extends plugin
     }
     if(isset($_POST['FAIrelease'])){
       $this->FAIrelease = $_POST['FAIrelease'];
+      $this->_check_missing_release($this->FAIrelease);
     }
     if(isset($_GET['act']) && $_GET['act'] == 'depopen'){
       $this->curbase = base64_decode($_GET['depid']);
@@ -454,10 +416,15 @@ class appgroup2 extends plugin
   }
 
   
-  function _get_release_key($release)
+  function _get_release_key($release,$add_if_missing = FALSE)
   {
     $release_info = $this->Releases[$release];
-    $cur = &$this->a_Structure;
+
+    if($release_info['name'] == "/"){
+      return($this->a_Structure['0']['UNIQID']);
+    }
+
+    $cur = &$this->a_Structure[0]['ENTRIES'];
     $s_key = "";
     $found = FALSE;
     foreach($release_info['parts'] as $name){
@@ -482,7 +449,7 @@ class appgroup2 extends plugin
   {
     $all = $this->_get_all_entries();
     if($folder == "BASE"){
-      $folder = $this->_get_release_key($this->FAIrelease);
+      $folder = $this->_get_release_key($this->FAIrelease,TRUE);
     }
     
     if(isset($all[$folder])){
@@ -782,6 +749,106 @@ class appgroup2 extends plugin
         foreach($parent['ENTRIES'] as $key => $entry){
           $parent['ENTRIES'][$key]['STATUS'] = "EDITED";
         }
+      }
+    }
+  }
+
+
+  function save()
+  {
+    $ldap = $this->config->get_ldap_link();
+    $all = $this->_get_all_entries();
+    $prio = 0;
+    $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
+
+    foreach($all as $entry){
+      $prio ++;
+      $cur = $entry;
+      $dn = "";
+
+      do{  
+        if($cur['TYPE'] == "ENTRY"){
+          $dn.= "cn=".$cur['NAME'].",";
+        }elseif($cur['TYPE'] == "FOLDER"){
+          $dn.= "cn=".$cur['NAME'].",";
+        }elseif($cur['TYPE'] == "RELEASE"){
+          $dn.= "ou=".$cur['NAME'].",";
+        }elseif($cur['TYPE'] == "BASE"){
+        }
+        if(!isset($all[$cur['PARENT']])){
+          $cur = NULL;
+        }else{
+          $cur = $all[$cur['PARENT']];
+        }
+      }while(is_array($cur));
+
+      $cur_dn = $dn.$this->dn;
+
+      $attrs = array();
+      switch($entry['TYPE']){
+        case "ENTRY"    :
+        { 
+          $attrs['objectClass'] = "gotoMenuEntry";
+          $attrs['cn']          = $entry['NAME'];
+          $attrs['gosaApplicationPriority'] = $prio;
+        }
+        break;
+        case "FOLDER"   : 
+        { 
+          $attrs['objectClass'] = "gotoSubmenuEntry";
+          $attrs['cn']          = $entry['NAME'];
+          $attrs['gosaApplicationPriority'] = $prio;
+        }
+        break;
+        case "RELEASE"  : 
+        { 
+          $attrs['ou']            = $entry['NAME'];
+          $attrs['objectClass']   = array();
+          $attrs['objectClass'][] = "top";
+          $attrs['objectClass'][] = "organizationalUnit";
+          $attrs['objectClass'][] = "FAIbranch";
+          if(!empty($entry['FAIstate'])){
+            $attrs['FAIstate']      = $entry['FAIstate'];
+          }
+        }
+        break;
+      }
+  
+      if($entry['STATUS'] == "LOADED"){
+        continue;
+      }
+      if($entry['STATUS'] == "REMOVED"){
+        $Actions['Remove'][$cur_dn] = $cur_dn;
+      }
+      if($entry['STATUS'] == "EDITED"){
+        $Actions['Edit'][$cur_dn] = $attrs;
+      }
+      if($entry['STATUS'] == "ADDED"){
+        $Actions['Add'][$cur_dn] = $attrs;
+      }
+    }
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    foreach($Actions['Remove'] as $dn){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $ldap->rmdir_recursive($dn);
+      }
+    }
+    foreach($Actions['Add'] as $dn => $data){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if(!$ldap->count()){
+        $ldap->add($data);
+      }
+    }
+    foreach($Actions['Edit'] as $dn => $data){
+      $ldap->cd($dn);
+      $ldap->cat($dn);
+      if($ldap->count()){
+        $ldap->modify($data);
       }
     }
   }
