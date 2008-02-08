@@ -182,7 +182,7 @@ class workgeneric extends plugin
     }
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
-	gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $this->netConfigDNS->ipHostNumber, array("macAddress" => $this->netConfigDNS->macAddress));
+	gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $this->netConfigDNS->macAddress, array("macAddress" => $this->netConfigDNS->macAddress));
 
         if ($_POST['saction'] != "wake") {
 
