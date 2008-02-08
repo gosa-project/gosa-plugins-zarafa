@@ -744,31 +744,33 @@ sub client_input {
         # for each answer in answer list
         foreach my $answer ( @{$answer_l} ) {
 
-            my $error = 0;
-            # check answer if gosa-si envelope conform
-            my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
-            $answer_header = @{$answer_hash->{'header'}}[0];
-            @answer_target_l = @{$answer_hash->{'target'}};
-            $answer_source = @{$answer_hash->{'source'}}[0];
-            if( !$answer_header ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
-                daemon_log("\n$answer", 8);
-                $error++;
-            }
-            if( 0 == length @answer_target_l ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
-                daemon_log("\n$answer", 8);
-                $error++;
-            }
-            if( !$answer_source ) {
-                daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
-                daemon_log("\n$answer", 8);
-                $error++;
-            }
+			my $error = 0;
+			# check answer if gosa-si envelope conform
+			if(defined($answer)) {
+				my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
+				$answer_header = @{$answer_hash->{'header'}}[0];
+				@answer_target_l = @{$answer_hash->{'target'}};
+				$answer_source = @{$answer_hash->{'source'}}[0];
+				if( !$answer_header ) {
+					daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+					daemon_log("\n$answer", 8);
+					$error++;
+				}
+				if( 0 == length @answer_target_l ) {
+					daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+					daemon_log("\n$answer", 8);
+					$error++;
+				}
+				if( !$answer_source ) {
+					daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+					daemon_log("\n$answer", 8);
+					$error++;
+				}
 
-            if( $error != 0 ) {
-                next;
-            }
+				if( $error != 0 ) {
+					next;
+				}
+			}
 
             # deliver msg to all targets 
             foreach my $answer_target ( @answer_target_l ) {
