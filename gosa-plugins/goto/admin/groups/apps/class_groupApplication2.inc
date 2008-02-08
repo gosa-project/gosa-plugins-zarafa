@@ -17,6 +17,7 @@ class appgroup2 extends plugin
   var $Releases;
   var $FAIrelease = 0;
   var $apps = array();
+  var $_cache = array();
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -43,18 +44,35 @@ class appgroup2 extends plugin
 
   function reload()
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->curbase);
-    $ldap->search("ou=apps",array("dn"));
-    $app_deps = array();
-    while($attrs = $ldap->fetch()){
-      $app_deps[] = $attrs['dn'];
-    }
+    $ret = array();
+    $release_info = $this->Releases[$this->FAIrelease];
 
-    foreach($app_deps as $dep){
-    #  $list = get_list("(objectClass=gosaApplication)","application",$dep,array("*"));
-    }
+    if(!isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
 
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->curbase);
+      $ldap->search("ou=apps",array("dn"));
+      $app_deps = array();
+      while($attrs = $ldap->fetch()){
+        $app_deps[] = $attrs['dn'];
+      }
+
+      foreach($app_deps as $dep){
+        $ldap->cd($dep);
+        $ldap->search("objectClass=FAIbranch",array("dn"));
+        while($attrs = $ldap->fetch()){
+          $app_deps[] = $attrs['dn'];
+        }
+      }
+
+      foreach($app_deps as $dep){
+        if(preg_match("/^".normalizePreg($release_info['suffix'])."/",$dep)){
+          $ret = array_merge($ret,get_list("(objectClass=gosaApplication)","application",$dep,array("*"),GL_NONE));
+        }
+      }
+      $this->_cache['ReleaseApps'][$release_info['suffix']] = $ret;
+    } 
+    $this->apps = $this->_cache['ReleaseApps'][$release_info['suffix']];
   }
 
 
@@ -65,7 +83,7 @@ class appgroup2 extends plugin
     $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
     $res    = get_list($filter,"application", $dn, array("ou"), GL_SUBSEARCH);
 
-    $ret =array(array("name" => "/" , "parts" => array()));
+    $ret =array(array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
     foreach($res as $attrs){
       if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
         $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
@@ -85,7 +103,7 @@ class appgroup2 extends plugin
         if(empty($name)) {
           $name ="/";
         }
-        $ret[] = array("name" => $name , "dn" => $attrs['dn'], "parts" => $parts);
+        $ret[] = array("name" => $name , "dn" => $attrs['dn'], "parts" => $parts,"suffix" => $bb.get_ou('applicationou'));
       }
     }
     return($ret);
@@ -213,12 +231,24 @@ class appgroup2 extends plugin
             ));
     }
 
+  
     /* Add applications found on this base */
-    $apps = array();
-    foreach($apps as $key => $app){
+    $used_apps = $this->_get_used_entry_name();
+    foreach($this->apps as $key => $app){
+      if(in_array($app['cn'][0],$used_apps)){
+        continue;
+      }
+      if(!preg_match("/".get_ou('applicationou').normalizePreg($this->curbase)."$/",$app['dn'])){
+        continue;
+      }
+
+      $name = $app['cn'][0];
+      if(isset($app['description'])){
+        $name .= "&nbsp;[".$app['description'][0]."]";
+      }
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
-              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".sprintf($linkadd,$key,$app),
+              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".sprintf($linkadd,$key,$name),
               "attach"=>"style='border:0px;'")
             ));
     }
@@ -233,7 +263,19 @@ class appgroup2 extends plugin
     return($display);
   }
 
-  
+ 
+  function _get_used_entry_name()
+  {
+    $data = $this->_get_entries_for_release($this->FAIrelease);
+    $ret = array();
+    foreach($data as $entry){
+      if($entry['TYPE'] == "ENTRY"){
+        $ret[] = $entry['NAME'];
+      }
+    }
+    return($ret);
+  }
+ 
   function _get_entries_for_release($release,$cur = NULL)
   {
     $release_info = $this->Releases[$release];
