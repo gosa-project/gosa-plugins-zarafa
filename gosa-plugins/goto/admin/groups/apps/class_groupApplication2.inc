@@ -19,6 +19,9 @@ class appgroup2 extends plugin
   var $apps = array();
   var $_cache = array();
 
+  var $app_parameter = array();
+  var $edit_entry    = array();
+
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin($config,$dn,$parent);
@@ -74,6 +77,9 @@ class appgroup2 extends plugin
     } 
     $this->apps = $this->_cache['ReleaseApps'][$release_info['suffix']];
   }
+
+  
+  
 
 
   function getReleases()
@@ -164,8 +170,21 @@ class appgroup2 extends plugin
           $data = array();
           if(in_array("gotoSubmenuEntry",$attrs['objectClass'])){
             $type = "FOLDER";
+
+            $data['ICON'] = "";
+            if(isset($attrs['gosaApplicationIcon'])){
+              $data['ICON'] = $ldap->get_attribute($attrs['dn'],"gosaApplicationIcon");
+            }
+
           }elseif(in_array("gotoMenuEntry",$attrs['objectClass'])){
             $type = "ENTRY";
+            $data['PARAMETER'] = array();
+            if(isset($attrs['gosaApplicationParameter'])){
+              for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
+                $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
+                $data['PARAMETER'][$tmp[0]] = $tmp[1];
+              }
+            }
           }elseif(in_array("FAIbranch",$attrs['objectClass'])){
             $type = "RELEASE";
             if(isset($attrs['FAIstate'][0])){
@@ -198,6 +217,30 @@ class appgroup2 extends plugin
 
     if(isset($_GET['r']))
     $this->__construct($this->config,$this->dn);
+
+    if(count($this->edit_entry)){
+      if($this->edit_entry['TYPE'] == "ENTRY"){
+        $smarty = get_smarty();
+        $smarty->assign("type", "ENTRY");
+        $smarty->assign("entry",$this->edit_entry);
+        $smarty->assign("paras",$this->app_parameter);
+        $display= $smarty->fetch (get_template_path('edit_entry.tpl', TRUE, dirname(__FILE__)));
+        return($display);
+      }
+      if($this->edit_entry['TYPE'] == "FOLDER"){
+        $smarty = get_smarty();
+
+        session::set("binarytype" , "image/jpeg");
+        session::set("binary" , $this->edit_entry['ICON']);
+  
+        $smarty->assign("rand", microtime(TRUE));
+        $smarty->assign("image_set" , strlen($this->edit_entry['ICON']) > 0); 
+        $smarty->assign("type", "FOLDER");
+        $smarty->assign("entry",$this->edit_entry);
+        $display= $smarty->fetch (get_template_path('edit_entry.tpl', TRUE, dirname(__FILE__)));
+        return($display);
+      }
+    }
 
     $smarty = get_smarty();
 
@@ -309,8 +352,65 @@ class appgroup2 extends plugin
   }
 
 
+  function _save_entry_edit()
+  {
+    $all    = $this->_get_all_entries();
+    $entry  = $this->edit_entry;
+    $r_entry= &$all[$entry['UNIQID']];
+
+    if($entry['TYPE'] == "ENTRY"){
+      $r_entry['PARAMETER'] = $this->app_parameter;
+      $r_entry['STATUS'] = "EDITED";
+    }
+    if($entry['TYPE'] == "FOLDER"){
+      $r_entry['ICON']   = $this->edit_entry['ICON'];
+      $r_entry['STATUS'] = "EDITED";
+    }
+    $this->dialog = FALSE;
+    $this->edit_entry = array();
+  }
+
+
   function _edit_entry_edit($id)
   {
+    $all   = $this->_get_all_entries();
+    $entry = $all[$id];
+
+    $this->app_parameter = array();
+    if($entry['TYPE'] == "ENTRY"){
+      $found = FALSE;
+      foreach($this->apps as $id => $app){
+
+        if($app['cn'][0] == $entry['NAME']){
+          $found = TRUE;
+          break;
+        }
+      }
+      if($found){
+      
+        /* Create a list of editable parameter */
+        if(isset($app['gosaApplicationParameter'])){
+          for($i = 0 ; $i < $app['gosaApplicationParameter']['count'] ; $i++) {
+            $para = $app['gosaApplicationParameter'][$i];
+            $tmp  = split(":",$para);
+            $this->app_parameter[$tmp[0]] = $tmp[1];
+          }
+        }
+
+        /* Overwrite parameters with entry parameters */
+        foreach($entry['PARAMETER'] as $name => $value){
+          $this->app_parameter[$name] = $value;
+        }
+        
+        $this->dialog = TRUE;
+        $this->edit_entry = $entry;
+      }
+    }
+
+    if($entry['TYPE'] == "FOLDER"){
+      $this->dialog = TRUE;
+      $this->edit_entry = $entry;
+    }
   }
 
 
@@ -370,8 +470,8 @@ class appgroup2 extends plugin
         $this->_remove_entry_id($id);
         break;
       }
-      if(preg_match("/edit_/",$name)){
-        $id = preg_replace("/^edit_/","",$name);
+      if(preg_match("/app_entry_edit/",$name)){
+        $id = preg_replace("/^app_entry_edit/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
         $this->_edit_entry_edit($id);
         break;
@@ -387,6 +487,11 @@ class appgroup2 extends plugin
         $id = preg_replace("/_(x|y)$/","",$id);
         $this->_move_entry_down($id);
         break;
+      }
+      if(preg_match("/^parameter_/",$name) && 
+        count($this->edit_entry) && $this->edit_entry['TYPE'] == "ENTRY"){
+        $name = preg_replace("/^parameter_/","",$name);
+        $this->app_parameter[$name] = $value;
       }
     }
     if(isset($_POST['FAIrelease'])){
@@ -410,6 +515,20 @@ class appgroup2 extends plugin
       if(strlen($name) > 0 && preg_match("/[a-z ]/i",$name)){
         $this->_add_sub_folder($folder,$name);
       }
+    }
+    if(isset($_POST['app_entry_save'])){ 
+      $this->_save_entry_edit();
+    }
+
+    if(isset($_FILES['folder_image']) && isset($_POST['folder_image_upload'])){
+      if($_FILES['folder_image']['error'] == 0 && $_FILES['folder_image']['size'] > 0){
+        $this->edit_entry['ICON'] = file_get_contents($_FILES['folder_image']['tmp_name']);
+      }
+    }
+
+    if(isset($_POST['app_entry_cancel'])){
+      $this->edit_entry = array();
+      $this->dialog = FALSE;
     }
     $this->reload();
   }
@@ -634,13 +753,22 @@ class appgroup2 extends plugin
         if(isset($tmp['ENTRIES'])){
           unset($tmp['ENTRIES']);
         }
-
         if($tmp['STATUS'] != "REMOVED"){
           $ret[] = $tmp;
           if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-            $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
-            $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
-            $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+            $add = false;
+            foreach($entry['ENTRIES'] as $entry){
+              if($entry['STATUS'] != "REMOVED"){
+                $add = TRUE;
+                break;
+              }
+            }
+
+            if($add){
+              $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
+              $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
+              $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+            }
           }
         }
       }
@@ -662,6 +790,8 @@ class appgroup2 extends plugin
     $o_to   = &$all[$to];
     $o_from = &$all[$from];
 
+    print_a($o_to,$o_from);
+  
     /***********************
      * Source == Destination 
      * Move into next parent. 
@@ -790,6 +920,11 @@ class appgroup2 extends plugin
           $attrs['objectClass'] = "gotoMenuEntry";
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
+          $attrs['gosaApplicationParameter'] = array(); 
+     
+          foreach($entry['PARAMETER'] as $name => $value){
+            $attrs['gosaApplicationParameter'][] = $name.":".$value; 
+          }
         }
         break;
         case "FOLDER"   : 
@@ -797,6 +932,7 @@ class appgroup2 extends plugin
           $attrs['objectClass'] = "gotoSubmenuEntry";
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
+          $attrs['gosaApplicationIcon']     = $entry['ICON'];
         }
         break;
         case "RELEASE"  : 

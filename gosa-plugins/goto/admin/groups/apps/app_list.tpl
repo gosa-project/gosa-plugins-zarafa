@@ -53,14 +53,16 @@
 				{$item.NAME}
 			</td>
 			<td style='width:100px;text-align:right'>
+<!--
 				<input title="{t}Move up{/t}" 	class="center" type='image' 
 					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
 				<input title="{t}Move down{/t}" class="center" type='image' 
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
+-->
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
 					name='del_{$item.UNIQID}' src='images/edittrash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
-					name='edit_{$item.UNIQID}' src='images/edit.png'>
+					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
 			</td>
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
@@ -72,14 +74,16 @@
 				{$item.NAME} {$item.INFO}
 			</td>
 			<td style='width:100px;text-align:right'>
+<!--
 				<input title="{t}Move up{/t}" 	class="center" type='image' 
 					name='up_{$item.UNIQID}' src='images/move_object_up.png'>
 				<input title="{t}Move down{/t}" class="center" type='image' 
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
+-->
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
 					name='del_{$item.UNIQID}' src='images/edittrash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
-					name='edit_{$item.UNIQID}' src='images/edit.png'>
+					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
 			</td>
 		</tr>
 	{/if}
