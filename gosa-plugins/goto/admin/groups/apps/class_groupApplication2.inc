@@ -496,6 +496,97 @@ class appgroup2 extends plugin
   }
 
 
+
+  function _move_entry($id,$dir)
+  {
+    $all   = $this->_get_all_entries();
+    if($dir == "down"){
+      $to = $this->_get_next($id);
+    } 
+    if($dir == "up"){
+      $to = $this->_get_last($id);
+    }
+
+    if(!$to){
+      echo "Fehler";
+      return;
+    }
+
+    $o_to   = $all[$to];
+    $o_from = $all[$id];
+ 
+ 
+    /* Target is ENTRY && same BASE, just switch */
+    if($o_to['PARENT'] == $o_from['PARENT'] ){
+      $parent = $all[$o_to['PARENT']];
+      $pos = 0;
+      foreach($parent['ENTRIES'] as $entry){
+        $pos ++;
+        if($entry['UNIQID'] == $to){
+          break;
+        }
+      }
+      if($dir == "up" && $pos > 0){
+        $pos --;
+      }
+      $this->_add_entry($parent['UNIQID'],$o_from,$pos);
+      $this->_remove_entry_id($id);
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
+
+ 
+  function _get_last($id)
+  {
+    $all_l = array_reverse($this->_get_entries_for_release($this->FAIrelease));
+    for($i = 0 ; $i < count($all_l) ; $i ++){
+      if(isset($all_l[$i]['UNIQID']) && $all_l[$i]['UNIQID'] == $id){
+        $i++;
+        break;
+      }
+    }
+    while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER","CLOSE","OPEN")) && $i < count($all_l)){
+      $i++;
+    }
+
+    if(!isset($all_l[$i])){
+      return(FALSE);
+    }
+
+    if(in_array($all_l[$i]['TYPE'],array("CLOSE","OPEN"))){
+      return($all_l[$i]['PARENT']);
+    }     
+
+    return($all_l[$i]['UNIQID']);
+  }
+
+ 
+  function _get_next($id)
+  {
+    $all_l = $this->_get_entries_for_release($this->FAIrelease);
+    for($i = 0 ; $i < count($all_l) ; $i ++){
+      if(isset($all_l[$i]['UNIQID']) && $all_l[$i]['UNIQID'] == $id){
+        $i++;
+        break;
+      }
+    }
+    while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER")) && $i < count($all_l)){
+      $i++;
+    }
+    if(!isset($all_l[$i])){
+      return(FALSE);
+    }
+    if(in_array($all_l[$i]['TYPE'],array("CLOSE","OPEN"))){
+      return($all_l[$i]['PARENT']);
+    }
+    return($all_l[$i]['UNIQID']);
+  }
+
+
+
+
   /* !\brief Handle ui POSTS, like sort up/down/delete
    */ 
   function save_object()
@@ -516,13 +607,15 @@ class appgroup2 extends plugin
       if(preg_match("/up_/",$name)){
         $id = preg_replace("/^up_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
-        $this->_move_entry_up($id);
+#        $this->_move_entry_up($id);
+        $this->_move_entry($id,"up");
         break;
       }
       if(preg_match("/down_/",$name)){
         $id = preg_replace("/^down_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
-        $this->_move_entry_down($id);
+#        $this->_move_entry_down($id);
+        $this->_move_entry($id,"down");
         break;
       }
       if(preg_match("/^parameter_/",$name) && 
@@ -622,6 +715,7 @@ class appgroup2 extends plugin
       $a_folder['STATUS'] = "ADDED";
       $a_folder['NAME']   = $name;
       $a_folder['UNIQID'] = uniqid();
+      $a_folder['ENTRIES']= array();
       $a_folder['PARENT'] = $folder;      
       $a_folder['TYPE']   = "FOLDER";
       $a_folder['ICON']   = "";
@@ -670,11 +764,12 @@ class appgroup2 extends plugin
         if($pos == $cnt){
           $new[] = $entry;
           $added = TRUE;
-          $cnt ++;
         }
+        $cnt ++;
         $new[] = $obj;
       }
       if(!$added){
+        echo "hmkk";
         $new[] = $entry;
       }
       $all[$folder_id]['ENTRIES'] = $new;
@@ -722,13 +817,21 @@ class appgroup2 extends plugin
    */
   function _move_entry_up($id)
   {
-    $all = $this->_get_all_entries(TRUE);
+
+    $all = $this->_get_entries_for_release($this->FAIrelease);
+    $all2 = $this->_get_all_entries();
     $parent = FALSE;
+
     foreach($all as $entry){
+      if(isset($entry['STATUS']) && $entry['STATUS'] == "REMOVED"){
+        continue;
+      }
       if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
         if($parent != FALSE){
           return($this->__switch_entries($id,"up",$parent));
         }
+        trigger_error("Unknown ID ".$id);
+        return(FALSE);
       }else{
         if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
           $parent = $entry['PARENT'];
@@ -747,9 +850,14 @@ class appgroup2 extends plugin
    */
   function _move_entry_down($id)
   {
-    $all = $this->_get_all_entries(TRUE);
+    $all = $this->_get_entries_for_release($this->FAIrelease);
     $found = FALSE;
     foreach($all as $entry){
+
+      if(isset($entry['STATUS']) && $entry['STATUS'] == "REMOVED"){
+        continue;
+      }
+
       if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
         $found = TRUE;
         continue;
@@ -760,6 +868,24 @@ class appgroup2 extends plugin
           $parent = $entry['UNIQID'];
         }
         if($found){
+
+    
+          if($id == $parent && $entry['TYPE'] == "OPEN"){
+  
+            for($i = 0 ; $i < count($all) ; $i ++){
+              $sub = $all[$i];
+              if($sub['TYPE'] == "CLOSE" && $sub['PARENT'] == $entry['PARENT']){
+                $i++;
+                while($all[$i]['TYPE'] == "ENTRY" && count($all) < $i){
+                  $i++;
+                }
+                if(isset($all[$i])){
+                  $parent = $all[$i]['UNIQID'];
+                }
+              }
+            }
+          }
+
           return($this->__switch_entries($id,"down",$parent));
         }
       }
@@ -823,9 +949,9 @@ class appgroup2 extends plugin
             }
 
             if($add){
-              $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['UNIQID']);
+              $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['PARENT']);
               $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
-              $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['UNIQID']);
+              $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['PARENT']);
             }
           }
         }
@@ -848,8 +974,24 @@ class appgroup2 extends plugin
     $o_to   = &$all[$to];
     $o_from = &$all[$from];
 
-    print_a($o_to,$o_from);
+    if($o_to['TYPE'] == "ENTRY" && $o_from['TYPE'] == "FOLDER"){
+      echo "FEHLER 1";
+      return;
+    }
+
+
+    if($type == "down"){
+      $this->_add_entry($o_to['UNIQID'],$o_from);
+      $this->_remove_entry_id($from);
+    }
+
+
+
+
+
+    print_a(array($o_to,$o_from));
   
+    return;
     /***********************
      * Source == Destination 
      * Move into next parent. 
