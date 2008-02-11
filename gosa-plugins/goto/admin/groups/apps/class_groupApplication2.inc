@@ -508,7 +508,6 @@ class appgroup2 extends plugin
     }
 
     if(!$to){
-      echo "Fehler";
       return;
     }
 
@@ -618,14 +617,12 @@ class appgroup2 extends plugin
       if(preg_match("/up_/",$name)){
         $id = preg_replace("/^up_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
-#        $this->_move_entry_up($id);
         $this->_move_entry($id,"up");
         break;
       }
       if(preg_match("/down_/",$name)){
         $id = preg_replace("/^down_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
-#        $this->_move_entry_down($id);
         $this->_move_entry($id,"down");
         break;
       }
@@ -785,12 +782,12 @@ class appgroup2 extends plugin
         $new[] = $obj;
       }
       if(!$added){
-        echo "hmkk";
         $new[] = $entry;
       }
+  
       $all[$folder_id]['ENTRIES'] = $new;
       foreach($entries as $sub){
-        $this->_add_entry($entry['UNIQID'],$sub);
+        $this->_add_entry($entry['UNIQID'],$sub,-1);
       }
       return(TRUE);
     }
@@ -824,89 +821,6 @@ class appgroup2 extends plugin
       $new['STATUS']= "ADDED";
       $all[$folder_id]['ENTRIES'][] = $new;
     }
-  }
-
-
-  /*! \brief move the object identified by the given ID one position up.
-      @param  String  The ID of the entry to be moved.
-      @return Boolean TRUE on success, else FALSE;
-   */
-  function _move_entry_up($id)
-  {
-
-    $all = $this->_get_entries_for_release($this->FAIrelease);
-    $all2 = $this->_get_all_entries();
-    $parent = FALSE;
-
-    foreach($all as $entry){
-      if(isset($entry['STATUS']) && $entry['STATUS'] == "REMOVED"){
-        continue;
-      }
-      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
-        if($parent != FALSE){
-          return($this->__switch_entries($id,"up",$parent));
-        }
-        trigger_error("Unknown ID ".$id);
-        return(FALSE);
-      }else{
-        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
-          $parent = $entry['PARENT'];
-        }else{
-          $parent = $entry['UNIQID'];
-        }
-      }
-    }
-    return(FALSE);
-  }
-
-
-  /*! \brief move the object identified by the given ID one position down.
-      @param  String  The ID of the entry to be moved.
-      @return Boolean TRUE on success, else FALSE;
-   */
-  function _move_entry_down($id)
-  {
-    $all = $this->_get_entries_for_release($this->FAIrelease);
-    $found = FALSE;
-    foreach($all as $entry){
-
-      if(isset($entry['STATUS']) && $entry['STATUS'] == "REMOVED"){
-        continue;
-      }
-
-      if(isset($entry['UNIQID']) && $entry['UNIQID'] == $id){
-        $found = TRUE;
-        continue;
-      }else{
-        if(in_array($entry['TYPE'],array("CLOSE","OPEN"))){
-          $parent = $entry['PARENT'];
-        }else{
-          $parent = $entry['UNIQID'];
-        }
-        if($found){
-
-    
-          if($id == $parent && $entry['TYPE'] == "OPEN"){
-  
-            for($i = 0 ; $i < count($all) ; $i ++){
-              $sub = $all[$i];
-              if($sub['TYPE'] == "CLOSE" && $sub['PARENT'] == $entry['PARENT']){
-                $i++;
-                while($all[$i]['TYPE'] == "ENTRY" && count($all) < $i){
-                  $i++;
-                }
-                if(isset($all[$i])){
-                  $parent = $all[$i]['UNIQID'];
-                }
-              }
-            }
-          }
-
-          return($this->__switch_entries($id,"down",$parent));
-        }
-      }
-    }
-    return(FALSE);
   }
 
 
@@ -974,128 +888,6 @@ class appgroup2 extends plugin
       }
     }
     return($ret);
-  }
-
-
-  /* !\brief Switch one entry with another 
-     @param  String  from  The source ID.
-     @param  String  type  "up"/"down" type switched.
-     @param  String  to    The destination ID.
-     return  Boolean TRUE on success 
-   */
-  function __switch_entries($from,$type,$to)
-  {
-    $all = $this->_get_all_entries();
-
-    $o_to   = &$all[$to];
-    $o_from = &$all[$from];
-
-    if($o_to['TYPE'] == "ENTRY" && $o_from['TYPE'] == "FOLDER"){
-      echo "FEHLER 1";
-      return;
-    }
-
-
-    if($type == "down"){
-      $this->_add_entry($o_to['UNIQID'],$o_from);
-      $this->_remove_entry_id($from);
-    }
-
-
-
-
-
-    print_a(array($o_to,$o_from));
-  
-    return;
-    /***********************
-     * Source == Destination 
-     * Move into next parent. 
-     ************************/
-    if($to == $from){
-      $to = $o_to['PARENT'];
-      $o_to   = &$all[$to];
-    }
-
-    /***********************
-     * Target is container 
-     ************************/
-    if(in_array($o_to['TYPE'],array("FOLDER","RELEASE"))){
-
-      /***********************
-       * Move into parent folder  
-       *   + Target 
-       *   |-> Source
-       ************************/
-      if($to == $o_from['PARENT']){
-
- 
-        /* Check if source is a folder object 
-         */
-        $o_to_sub = &$all[$o_to['PARENT']]; 
-        if(in_array($o_to_sub['TYPE'],array("FOLDER","RELEASE"))){
-
-          $o_from['STATUS'] = "ADDED";
-
-          /* Adding new */
-          $tmp2 = array();  
-          $cnt = 0; 
-          foreach($o_to_sub['ENTRIES'] as $key => $entry){
-            $cnt ++;
-            if($entry['UNIQID'] == $to){
-              break;
-            }
-          }
-          if($type == "up"){
-            $cnt --;
- 
-         }
-         $this->_add_entry($o_to_sub['UNIQID'],$o_from,$cnt);
-
-          /* Removing old */
-          $tmp = array();
-          if(!$this->_remove_entry_id($from)){
-            return(FALSE);
-          }
-        } 
-      }else{
-
-        /***********************
-         * Target is NOT parent container
-         *  + Parent Folder
-         *  |-> Source 
-         *  + Destination
-         ************************/
-
-        /* Removing old */
-        $o_to   = $all[$to];
-        $o_from = $all[$from];
-        $this->_add_entry($to,$o_from);
-        $this->_remove_entry_id($from);
-      }
-    }else{
-
-      /***********************
-       * Source and Destination in some Folder.
-       *  + Parent folder
-       *  |-> Source
-       *  |-> Destination
-       ************************/
-      $o_to   = &$all[$to];
-      $o_from = &$all[$from];
-      $parent = &$all[$o_to['PARENT']];
-
-      if($o_to['PARENT'] == $o_from['PARENT']){
-        $tmp = $all[$to];
-        $all[$to]   = $o_from;
-        $all[$from] = $tmp;
-  
-        /* Ensure that the app priority is updated */
-        foreach($parent['ENTRIES'] as $key => $entry){
-          $parent['ENTRIES'][$key]['STATUS'] = "EDITED";
-        }
-      }
-    }
   }
 
 
