@@ -186,6 +186,7 @@ class appgroup2 extends plugin
 
           }elseif(in_array("gotoMenuEntry",$attrs['objectClass'])){
             $type = "ENTRY";
+            $data['INFO'] = "";
             $data['PARAMETER'] = array();
             if(isset($attrs['gosaApplicationParameter'])){
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
@@ -703,6 +704,12 @@ class appgroup2 extends plugin
       $new['NAME']  = $this->apps[$app_id]['cn'][0];
       $new['UNIQID']= uniqid(); 
       $new['PARENT']= $folder_id;
+      $new['PARAMETER']= array();
+      if(isset($this->apps[$app_id]['description'][0])){
+        $new['INFO']  = $this->apps[$app_id]['description'][0];
+      }else{
+        $new['INFO']  = "";
+      }
       $new['STATUS']= "ADDED";
       $all[$folder_id]['ENTRIES'][] = $new;
     }
@@ -972,10 +979,14 @@ class appgroup2 extends plugin
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
           $attrs['gosaApplicationParameter'] = array(); 
-     
+          
+          
           foreach($entry['PARAMETER'] as $name => $value){
             $attrs['gosaApplicationParameter'][] = $name.":".$value; 
           }
+          if($entry['STATUS'] == "ADDED" && !count($attrs['gosaApplicationParameter'])){
+            unset($attrs['gosaApplicationParameter']);
+          } 
         }
         break;
         case "FOLDER"   : 
