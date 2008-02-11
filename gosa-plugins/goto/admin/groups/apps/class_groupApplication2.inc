@@ -514,6 +514,11 @@ class appgroup2 extends plugin
 
     $o_to   = $all[$to];
     $o_from = $all[$id];
+
+    if($o_to['PARENT'] == $o_from['UNIQID'] && $dir == "down"){
+      $to    = $this->_get_next($to,$o_from['PARENT']); 
+      $o_to  = $all[$to]; 
+    }
  
  
     /* Target is ENTRY && same BASE, just switch */
@@ -563,7 +568,7 @@ class appgroup2 extends plugin
   }
 
  
-  function _get_next($id)
+  function _get_next($id,$parent = 0)
   {
     $all_l = $this->_get_entries_for_release($this->FAIrelease);
     for($i = 0 ; $i < count($all_l) ; $i ++){
@@ -572,8 +577,14 @@ class appgroup2 extends plugin
         break;
       }
     }
-    while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER")) && $i < count($all_l)){
-      $i++;
+    if($parent != 0){
+      while(isset($all_l[$i]) && $all_l[$i]['PARENT'] != $parent){
+        $i++;
+      }
+    }else{
+      while(isset($all_l[$i]) && !in_array($all_l[$i]['TYPE'],array("ENTRY","FOLDER")) && $i < count($all_l)){
+        $i++;
+      }
     }
     if(!isset($all_l[$i])){
       return(FALSE);
