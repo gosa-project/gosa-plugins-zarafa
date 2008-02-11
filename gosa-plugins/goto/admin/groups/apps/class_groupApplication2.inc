@@ -758,6 +758,11 @@ class appgroup2 extends plugin
   {
     $all = $this->_get_all_entries();
 
+    /* Do not add removed */
+    if($entry['STATUS'] == "REMOVED"){
+      return;
+    }
+
     if(isset($all[$folder_id])){
 
       $folder  = &$all[$folder_id];
