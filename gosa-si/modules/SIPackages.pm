@@ -57,15 +57,13 @@ my %cfg_defaults =
 # read configfile and import variables
 &read_configfile();
 
-$server_ip = &get_local_ip_for_remote_ip($server_ip);
-
 $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface);
 
 # complete addresses
-if( $server_ip eq "0.0.0.0" ) {
-    $server_ip = "127.0.0.1";
-}
+#if( $server_ip eq "0.0.0.0" ) {
+#    $server_ip = "127.0.0.1";
+#}
 my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
 my $bus_address = "$bus_ip:$bus_port";
@@ -329,48 +327,6 @@ sub get_ip {
 }
 
 
-sub get_local_ip_for_remote_ip {
-	my $server_ip= shift;
-	my $result="0.0.0.0";
-
-	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
-		if($server_ip eq "127.0.0.1") {
-			$result="127.0.0.1";
-		} else {
-			my $PROC_NET_ROUTE= ('/proc/net/route');
-
-			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
-				or die "Could not open $PROC_NET_ROUTE";
-
-			my @ifs = <PROC_NET_ROUTE>;
-
-			close(PROC_NET_ROUTE);
-
-			# Eat header line
-			shift @ifs;
-			chomp @ifs;
-			foreach my $line(@ifs) {
-				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
-				my $destination;
-				my $mask;
-				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
-				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
-				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				if(new NetAddr::IP($server_ip)->within(new NetAddr::IP($destination, $mask))) {
-					# destination matches route, save mac and exit
-					$result= &get_ip($Iface);
-					last;
-				}
-			}
-		}
-	} else {
-		daemon_log("get_local_ip_for_remote_ip was called with a non-ip parameter: $server_ip", 1);
-	}
-	return $result;
-}
-
-
 #===  FUNCTION  ================================================================
 #         NAME:  register_at_bus
 #   PARAMETERS:  nothing
@@ -422,7 +378,7 @@ sub process_incoming_msg {
 
     if( 1 == length @target_l) {
         my $target = $target_l[0];
-        if( $target eq $server_address ) {  
+		if(&server_matches($target)) {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
@@ -1067,6 +1023,51 @@ sub hardware_config {
 
 	# Send information
 	return send_msg("detect_hardware", $server_address, $address, \%data);
+}
+
+sub server_matches {
+	my $target = shift;
+	my $target_ip = sprintf("%s", $target =~ /^([0-9\.]*?):.*$/);
+	my $result = 0;
+
+	if($server_ip eq $target_ip) {
+		$result= 1;
+	} elsif ($server_ip eq "0.0.0.0") {	
+		if ($target_ip eq "127.0.0.1") {
+			$result= 1;
+		} else {
+			my $PROC_NET_ROUTE= ('/proc/net/route');
+
+			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+				or die "Could not open $PROC_NET_ROUTE";
+
+			my @ifs = <PROC_NET_ROUTE>;
+
+			close(PROC_NET_ROUTE);
+
+			# Eat header line
+			shift @ifs;
+			chomp @ifs;
+			foreach my $line(@ifs) {
+				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+				my $destination;
+				my $mask;
+				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				if(new NetAddr::IP($target_ip)->within(new NetAddr::IP($destination, $mask))) {
+					# destination matches route, save mac and exit
+					$result= 1;
+					last;
+				}
+			}
+		}
+	} else {
+		&main::daemon_log("Target ip $target_ip does not match Server ip $server_ip",1);
+	}
+
+	return $result;
 }
 
 
