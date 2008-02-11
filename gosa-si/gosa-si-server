@@ -552,6 +552,9 @@ sub input_from_unknown_host {
 
 sub create_ciphering {
     my ($passwd) = @_;
+	if((!defined($passwd)) || length($passwd)==0) {
+		$passwd = "";
+	}
     $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
     my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
     my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
