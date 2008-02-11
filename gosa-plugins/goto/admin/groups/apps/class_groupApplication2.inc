@@ -21,6 +21,7 @@ class appgroup2 extends plugin
 
   var $app_parameter = array();
   var $edit_entry    = array();
+  var $enableReleaseManagement = FALSE;
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -35,11 +36,8 @@ class appgroup2 extends plugin
       $this->enableReleaseManagement = true;
     }
 
-    /* Get required release informations */
-    if($this->enableReleaseManagement){
-      $this->Releases   = $this->getReleases();
-      $this->FAIrelease = 0;
-    }
+    $this->FAIrelease = 0;
+    $this->Releases   = $this->getReleases();
     $this->curbase = $this->config->current['BASE'];
     $this->reload();
   }
@@ -88,40 +86,43 @@ class appgroup2 extends plugin
     */
   function getReleases()
   {
-    /* Only display those releases that we are able to read */
-    $dn     = $this->config->current['BASE'];
-    $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
-    $res    = get_list($filter,"application", $dn, array("ou","FAIstate"), GL_SUBSEARCH);
-
     $ret =array(array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
-    foreach($res as $attrs){
-      if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
-        $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
-        $parts  = array_reverse(split("ou=",$bb));
+    if($this->enableReleaseManagement){
 
-        $str ="";
-        foreach($parts as $key => $part){
-          if(empty($part)) {
-            unset($parts[$key]);
-            continue;
+      /* Only display those releases that we are able to read */
+      $dn     = $this->config->current['BASE'];
+      $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
+      $res    = get_list($filter,"application", $dn, array("ou","FAIstate"), GL_SUBSEARCH);
+
+      foreach($res as $attrs){
+        if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
+          $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
+          $parts  = array_reverse(split("ou=",$bb));
+
+          $str ="";
+          foreach($parts as $key => $part){
+            if(empty($part)) {
+              unset($parts[$key]);
+              continue;
+            }
+            $part = str_replace(",","",$part);
+            $str .= $part."/";
+            $parts[$key] = $part;
           }
-          $part = str_replace(",","",$part);
-          $str .= $part."/";
-          $parts[$key] = $part;
+          $name = preg_replace("/\/$/","",$str);
+          if(empty($name)) {
+            $name ="/";
+          }
+          $FAIstate = "";
+          if(isset($attrs['FAIstate'])){
+            $FAIstate = $attrs['FAIstate'][0];
+          }
+
+          $ret[$name] = array("name"     => $name, 
+              "FAIstate" => $FAIstate,
+              "dn"       => $attrs['dn'], 
+              "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
         }
-        $name = preg_replace("/\/$/","",$str);
-        if(empty($name)) {
-          $name ="/";
-        }
-        $FAIstate = "";
-        if(isset($attrs['FAIstate'])){
-          $FAIstate = $attrs['FAIstate'][0];
-        }
-        
-        $ret[$name] = array("name"     => $name, 
-                       "FAIstate" => $FAIstate,
-                       "dn"       => $attrs['dn'], 
-                       "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
       }
     }
     ksort($ret);
@@ -193,6 +194,7 @@ class appgroup2 extends plugin
               }
             }
           }elseif(in_array("FAIbranch",$attrs['objectClass'])){
+
             $type = "RELEASE";
             if(isset($attrs['FAIstate'][0])){
               $data['FAIstate'] = $attrs['FAIstate'][0];
@@ -320,6 +322,7 @@ class appgroup2 extends plugin
     }
 
     
+    $smarty->assign("enableReleaseManagement",$this->enableReleaseManagement);
     $smarty->assign("FAIrelease",$this->FAIrelease);
     $smarty->assign("app_list",$div->DrawList());
     $smarty->assign("releases",$this->Releases);

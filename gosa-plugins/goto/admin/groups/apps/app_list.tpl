@@ -1,4 +1,5 @@
 <table style="width:100%;">
+	{if $enableReleaseManagement}
 	<tr>
 		<td>
 			{t}Release{/t}
@@ -9,6 +10,7 @@
 			</select>
 		</td>
 	</tr>
+	{/if}
 	<tr>
 		<td style="width:50%; vertical-align:top;">
 		<div style="height:290px; overflow:auto; 
