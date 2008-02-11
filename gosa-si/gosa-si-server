@@ -667,6 +667,10 @@ sub send_msg_to_target {
         $header = "";
     }
 
+	# Patch the source ip
+	my $remote_ip = sprintf("%s", $address =~ /^([0-9\.]*?):.*$/);
+	$msg =~ s/<source>(0\.0\.0\.0):(\d*?)<\/source>/<source>$remote_ip:\2<\/source>/s;
+
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
 
