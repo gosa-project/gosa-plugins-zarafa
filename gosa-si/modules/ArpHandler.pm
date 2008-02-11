@@ -50,14 +50,14 @@ if($lookup_vendor) {
 my %cfg_defaults =
 (
 	"arp" => {
-		"arp_enabled"           => [\$arp_activ,         "true"],
-		"arp_interface"       => [\$arp_interface,    "all"],
+		"arp-enabled"           => [\$arp_activ,         "true"],
+		"arp-interface"       => [\$arp_interface,    "all"],
 	},
 	"server" => {
-		"ldap_uri"            => [\$ldap_uri,            ""],
-		"ldap_base"           => [\$ldap_base,           ""],
-		"ldap_admin_dn"       => [\$ldap_admin_dn,       ""],
-		"ldap_admin_password" => [\$ldap_admin_password, ""],
+		"ldap-uri"            => [\$ldap_uri,            ""],
+		"ldap-base"           => [\$ldap_base,           ""],
+		"ldap-admin_dn"       => [\$ldap_admin_dn,       ""],
+		"ldap-admin_password" => [\$ldap_admin_password, ""],
 	},
 );
 

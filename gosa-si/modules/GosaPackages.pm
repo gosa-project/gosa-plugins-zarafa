@@ -31,13 +31,13 @@ my %cfg_defaults = (
     "ip" => [\$server_ip, "0.0.0.0"],
     "port" => [\$server_port, "20081"],
     "key" => [\$server_passwd, ""],
-    "max_clients" => [\$max_clients, 100],
+    "max-clients" => [\$max_clients, 100],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
     "port" => [\$gosa_port, "20082"],
     "key" => [\$gosa_passwd, "none"],
-    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     },
 );
  
