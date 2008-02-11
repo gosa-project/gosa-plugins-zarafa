@@ -748,15 +748,16 @@ sub new_ldap_config {
 		$data{'admin_base'}= $entry->dn;
 		$data{'department'}= $entry->get_value("ou");
 
-		# Fill release if available
-		my $ou= $entry->get_value("ou");
-		if (defined $ou && $ou =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
-			$data{'release'}= $1;
-		}
-
 		# Append unit Tag
 		$data{'unit_tag'}= $unit_tag;
 	}
+
+	# Fill release if available
+	my $FAIclass= $entry->get_value("FAIclass");
+	if (defined $FAIclass && $FAIclass =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
+		$data{'release'}= $1;
+	}
+
 
 	# Unbind
 	$mesg = $ldap->unbind;
