@@ -102,13 +102,13 @@ our $known_clients_db;
 "server" => {
 #    "ip" => [\$server_ip, "0.0.0.0"],
     "port" => [\$server_port, "20081"],
-    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/gosa-si-server_known_clients.db' ],
-    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/gosa-si-server_known_server.db'],
+    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
+    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
     "port" => [\$gosa_port, "20082"],
-    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/gosa-si-server_jobs.db'],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
     },
