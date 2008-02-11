@@ -298,34 +298,6 @@ sub get_mac {
 	return $result;
 }
 
-#===  FUNCTION  ================================================================
-#         NAME:  get_ip 
-#   PARAMETERS:  interface name (i.e. eth0)
-#      RETURNS:  (ip address) 
-#  DESCRIPTION:  Uses ioctl to get ip address directly from system.
-#===============================================================================
-sub get_ip {
-	my $ifreq= shift;
-	my $result= "";
-	my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
-	my $proto= getprotobyname('ip');
-
-	socket SOCKET, PF_INET, SOCK_DGRAM, $proto
-		or die "socket: $!";
-
-	if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
-		my ($if, $sin)    = unpack 'a16 a16', $ifreq;
-		my ($port, $addr) = sockaddr_in $sin;
-		my $ip            = inet_ntoa $addr;
-
-		if ($ip && length($ip) > 0) {
-			$result = $ip;
-		}
-	}
-
-	return $result;
-}
-
 
 #===  FUNCTION  ================================================================
 #         NAME:  register_at_bus
