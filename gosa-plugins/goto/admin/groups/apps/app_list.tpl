@@ -51,11 +51,11 @@
 			<td style='width:22px; padding-top:5px;padding-bottom:5px;'>
 				{if $item.ICON != ""}
 					<div style="height:20px;width:20px; overflow:hidden">
-					<img class="center" src='?plug={$plug_id}&amp;send={$item.UNIQID}' alt='{t}Folder{/t}' class="center">
+					<img class="center" src='?plug={$plug_id}&amp;send={$item.UNIQID}' alt='{t}Folder{/t}'>
 					</div>
 				{else}
 					<div style="height:20px;width:20px; overflow:hidden">
-					<img class="center" src='images/folder.png' alt='{t}Folder{/t}' class="center">
+					<img class="center" src='images/folder.png' alt='{t}Folder{/t}'>
 					</div>
 				{/if}
 			</td>
