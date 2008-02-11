@@ -742,40 +742,20 @@ sub get_server_addresses {
 
 
 #===  FUNCTION  ================================================================
-#         NAME:  send_msg_hash2address
+#         NAME:  send_msg_hash_to_target
 #   PARAMETERS:  msg_hash - hash - xml_hash created with function create_xml_hash
 #                PeerAddr string - socket address to send msg
 #                PeerPort string - socket port, if not included in socket address
 #      RETURNS:  nothing
 #  DESCRIPTION:  ????
 #===============================================================================
-sub send_msg_hash2address {
-    my ($msg_hash, $address, $passwd) = @_ ;
-
-    # fetch header for logging
-    my $header = @{$msg_hash->{header}}[0];  
-
-    # generate xml string
-    my $msg_xml = &create_xml_string($msg_hash);
+sub send_msg_hash_to_target {
+    my ($msg_hash, $address, $encrypt_key) = @_ ;
+    my $msg = &create_xml_string($msg_hash);
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $error = &send_msg_to_target($msg, $address, $encrypt_key, $header);
     
-    # encrypt xml msg
-    my $crypted_msg = &encrypt_msg($msg_xml, $passwd);
-
-    # opensocket
-    my $socket = &open_socket($address);
-    if(not defined $socket){
-        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
-        return 1;
-    }
-    
-    # send xml msg
-    print $socket $crypted_msg."\n";
-    
-    close $socket;
-
-    daemon_log("send '$header'-msg to $address", 1);
-    daemon_log("message:\n$msg_xml", 8);
-    return 0;
+    return $error;
 }
 
 
@@ -814,7 +794,7 @@ sub send_msg_to_target {
         close $socket;
     }
 
-    return;
+    return $error;
 }
 
 
@@ -882,7 +862,7 @@ sub register_at_gosa_si_server {
             &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
             # send xml hash to server with general server passwd
-            my $res = &send_msg_hash2address($register_hash, $server, $default_server_key);
+            my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
 			if($res == 0) {
 				# Set fixed client address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
