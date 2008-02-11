@@ -1112,7 +1112,7 @@ daemon_log("$0 started!", 1);
 system('rm -f /tmp/gosa_si_lock*gosa-si-server*');
 
 # connect to gosa-si job queue
-my @job_col_names = ("id", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
+my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 
