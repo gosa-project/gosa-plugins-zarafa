@@ -55,7 +55,7 @@ our $client_address;
 our $server_key;
 
 # default variables
-our $REGISTERED_FLAG = 1;
+our $REGISTERED = 0;
 
 %cfg_defaults = (
 "general" =>
@@ -826,7 +826,7 @@ sub open_socket {
 sub register_at_gosa_si_server {
     my ($kernel) = $_[KERNEL];
 
-    if( $REGISTERED_FLAG == 1 ) {
+    if( $REGISTERED ) {
 
         # create new passwd and ciphering object for client-server communication
         $server_key = &create_passwd();
@@ -1017,7 +1017,7 @@ sub server_input {
         # preprocessing
         if( $answer =~ "<header>registered</header>") {
             # set registered flag to true to stop sending further registered msgs
-            $REGISTERED_FLAG = 0;
+            $REGISTERED = 1;
         } 
         else {
             &send_msg_to_target($answer, $server_address, $server_key);
