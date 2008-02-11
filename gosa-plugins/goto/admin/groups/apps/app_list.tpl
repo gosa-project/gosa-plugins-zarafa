@@ -46,11 +46,19 @@
 		</tr>
 	{elseif $item.TYPE == "FOLDER"}
 		<tr>
-			<td style='width:20px; padding-top:5px;padding-bottom:5px;'>
-				<img class="center" src='images/folder.png' alt='{t}Folder{/t}'>
+			<td style='width:22px; padding-top:5px;padding-bottom:5px;'>
+				{if $item.ICON != ""}
+					<div style="height:20px;width:20px; overflow:hidden">
+					<img class="center" src='?plug={$plug_id}&amp;send={$item.UNIQID}' alt='{t}Folder{/t}' class="center">
+					</div>
+				{else}
+					<div style="height:20px;width:20px; overflow:hidden">
+					<img class="center" src='images/folder.png' alt='{t}Folder{/t}' class="center">
+					</div>
+				{/if}
 			</td>
 			<td>
-				{$item.NAME}
+				<b>{$item.NAME}</b>
 			</td>
 			<td style='width:100px;text-align:right'>
 <!--
@@ -67,8 +75,10 @@
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
 		<tr>
-			<td style='width:20px; padding-top:5px;padding-bottom:5px;'>
-				<img src='images/select_application.png' alt='{t}Entry{/t}'>
+			<td style='width:22px; padding-top:5px;padding-bottom:5px;'>
+				<div style="width:20px; overflow:hidden; text-align:center;">
+					<img src='images/select_application.png' alt='{t}Entry{/t}' class="center">
+				</div>
 			</td>
 			<td>
 				{$item.NAME} {$item.INFO}

@@ -215,6 +215,15 @@ class appgroup2 extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if(isset($_GET['send'])){
+      $id = $_GET['send'];
+      $all = $this->_get_all_entries();
+      if(isset($all[$id])){
+        send_binary_content($all[$id]['ICON'],$id.".jpg","image/jpeg");
+        exit;
+      }
+    }
+
     if(isset($_GET['r']))
     $this->__construct($this->config,$this->dn);
 
@@ -243,6 +252,7 @@ class appgroup2 extends plugin
     }
 
     $smarty = get_smarty();
+    $smarty->assign("plug_id" , $_GET['plug']);
 
     /* Create application list */
     $div = new divSelectBox("appgroup");
