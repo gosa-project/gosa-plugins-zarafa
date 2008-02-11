@@ -96,20 +96,20 @@ our $known_clients_db;
 
 %cfg_defaults = (
 "general" => {
-    "log_file" => [\$log_file, "/var/run/".$0.".log"],
-    "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+    "log-file" => [\$log_file, "/var/run/".$0.".log"],
+    "pid-file" => [\$pid_file, "/var/run/".$0.".pid"],
     },
 "server" => {
 #    "ip" => [\$server_ip, "0.0.0.0"],
     "port" => [\$server_port, "20081"],
-    "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
-    "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
+    "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
+    "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
     "port" => [\$gosa_port, "20082"],
-    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
-    "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
+    "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
+    "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
     },
 "SIPackages" => {

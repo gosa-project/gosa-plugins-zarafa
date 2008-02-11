@@ -59,26 +59,26 @@ our $REGISTERED_FLAG = 1;
 
 %cfg_defaults = (
 "general" =>
-    {"log_file"           => [\$log_file, "/var/run/".$0.".log"],
-    "pid_file"            => [\$pid_file, "/var/run/".$0.".pid"],
-    "fai_logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
+    {"log-file"           => [\$log_file, "/var/run/".$0.".log"],
+    "pid-file"            => [\$pid_file, "/var/run/".$0.".pid"],
+    "fai-logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
     },
 "client" => 
     {"port"        => [\$client_port, "20083"],
      "ip"          => [\$client_ip, "0.0.0.0"],
-     "mac_address" => [\$client_mac_address, "00:00:00:00:00:00"],
-     "server_domain"       => [\$server_domain, ""],
+     "mac-address" => [\$client_mac_address, "00:00:00:00:00:00"],
+     "server-domain"       => [\$server_domain, ""],
      "ldap"               => [\$ldap_enabled, 1],
-     "ldap_config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
-     "pam_config"         => [\$pam_config, "/etc/pam_ldap.conf"],
-     "nss_config"         => [\$nss_config, "/etc/libnss_ldap.conf"],
+     "ldap-config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
+     "pam-config"         => [\$pam_config, "/etc/pam_ldap.conf"],
+     "nss-config"         => [\$nss_config, "/etc/libnss_ldap.conf"],
     },
 "server" => {
     "ip"          => [\$server_ip, "127.0.0.1"],
     "port"         => [\$server_port, "20081"],
     "key"          => [\$server_key, ""],
     "timeout"      => [\$server_timeout, 10],
-    "key_lifetime" => [\$server_key_lifetime, 600], 
+    "key-lifetime" => [\$server_key_lifetime, 600], 
     },
 
 );
