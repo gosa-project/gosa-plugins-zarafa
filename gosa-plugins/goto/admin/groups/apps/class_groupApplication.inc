@@ -774,6 +774,9 @@ class appgroup extends plugin
       $new = array();
       $added =FALSE;
       foreach($folder['ENTRIES'] as $key => $obj){
+        if($obj['STATUS'] == "LOADED"){
+          $obj['STATUS'] = "EDITED";
+        }
         if($pos == $cnt){
           $new[] = $entry;
           $added = TRUE;
