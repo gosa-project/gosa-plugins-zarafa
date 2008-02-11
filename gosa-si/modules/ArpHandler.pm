@@ -89,9 +89,6 @@ sub read_configfile {
 sub get_module_info {
 	my @info = (undef,
 		undef,
-		undef,
-		undef,
-		"socket",
 	);
 
 	&read_configfile();

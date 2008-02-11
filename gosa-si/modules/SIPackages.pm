@@ -21,8 +21,7 @@ use Net::DNS;
 BEGIN{}
 END {}
 
-my ($known_clients_file_name);
-my ($server_activ, $server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
+my ($server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
@@ -30,25 +29,25 @@ my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
 
-my %cfg_defaults =
-(
-"server" =>
-    {"server_activ" => [\$server_activ, "on"],
-    "server_ip" => [\$server_ip, "0.0.0.0"],
-    "server_mac_address" => [\$server_mac_address, "00:00:00:00:00"],
-    "server_port" => [\$server_port, "20081"],
-    "SIPackages_key" => [\$SIPackages_key, ""],
-    "max_clients" => [\$max_clients, 100],
+my %cfg_defaults = (
+"bus" => {
+    "activ" => [\$bus_activ, "on"],
+    "key" => [\$bus_key, ""],
+    "ip" => [\$bus_ip, ""],
+    "port" => [\$bus_port, "20080"],
+    },
+"server" => {
+    "ip" => [\$server_ip, "0.0.0.0"],
+    "mac_address" => [\$server_mac_address, "00:00:00:00:00"],
+    "port" => [\$server_port, "20081"],
     "ldap_uri" => [\$ldap_uri, ""],
     "ldap_base" => [\$ldap_base, ""],
     "ldap_admin_dn" => [\$ldap_admin_dn, ""],
     "ldap_admin_password" => [\$ldap_admin_password, ""],
+    "max_clients" => [\$max_clients, 100],
     },
-"bus" =>
-    {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_key, ""],
-    "bus_ip" => [\$bus_ip, ""],
-    "bus_port" => [\$bus_port, "20080"],
+"SIPackages" => {
+    "key" => [\$SIPackages_key, ""],
     },
 );
 
@@ -97,13 +96,9 @@ my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
 sub get_module_info {
     my @info = ($server_address,
                 $SIPackages_key,
-                $server,
-                $server_activ,
-                "socket",
                 );
     return \@info;
 }
-
 
 
 sub do_wake {

@@ -19,36 +19,25 @@ use lib "/usr/lib/gosa-si/server/events";
 BEGIN{}
 END{}
 
-my ($server_activ, $server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients, $server_event_dir);
-my ($bus_activ, $bus_passwd, $bus_ip, $bus_port);
-my ($gosa_activ, $gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
+my ($server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients);
+my ($gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
 my ($job_queue_timeout, $job_queue_file_name);
 
 my $gosa_server;
 my $event_hash;
 
-my %cfg_defaults = 
-("general" =>
-    {"job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
-    },
-"server" =>
-    {"server_activ" => [\$server_activ, "on"],
-    "server_ip" => [\$server_ip, "0.0.0.0"],
-    "server_port" => [\$server_port, "20081"],
-    "server_passwd" => [\$server_passwd, ""],
+my %cfg_defaults = (
+"server" => {
+    "ip" => [\$server_ip, "0.0.0.0"],
+    "port" => [\$server_port, "20081"],
+    "key" => [\$server_passwd, ""],
     "max_clients" => [\$max_clients, 100],
     },
-"bus" =>
-    {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_passwd, ""],
-    "bus_ip" => [\$bus_ip, "0.0.0.0"],
-    "bus_port" => [\$bus_port, "20080"],
-    },
-"gosa" =>
-    {"gosa_activ" => [\$gosa_activ, "on"],
-    "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
-    "gosa_port" => [\$gosa_port, "20082"],
-    "gosa_passwd" => [\$gosa_passwd, "none"],
+"GOsaPackages" => {
+    "ip" => [\$gosa_ip, "0.0.0.0"],
+    "port" => [\$gosa_port, "20082"],
+    "key" => [\$gosa_passwd, "none"],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     },
 );
  
@@ -62,7 +51,6 @@ $gosa_mac_address= &get_mac($network_interface);
 
 # complete addresses
 my $server_address = "$server_ip:$server_port";
-my $bus_address = "$bus_ip:$bus_port";
 my $gosa_address = "$gosa_ip:$gosa_port";
 
 # create general settings for this module
@@ -78,9 +66,6 @@ my $xml = new XML::Simple();
 sub get_module_info {
     my @info = ($gosa_address,
                 $gosa_passwd,
-                $gosa_server,
-                $gosa_activ,
-                "socket",
                 );
     return \@info;
 }

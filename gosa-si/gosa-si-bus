@@ -47,14 +47,14 @@ $foreground = 0 ;
 "general" => {
     "log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
-    "bus_known_server_file_name" => [\$bus_known_server_file_name, "/var/lib/gosa-si/gosa-si-bus_known_server.db"],
-    "bus_known_clients_file_name" => [\$bus_known_clients_file_name, "/var/lib/gosa-si/gosa-si-bus_known_clients.db"],
     },
-"GOsa-si-bus" => {
+"bus" => {
     "key"  => [\$bus_key, "secret-bus-password"],
     "ip"   => [\$bus_ip, "0.0.0.0"],
     "port" => [\$bus_port, "20080"],
-    }, 
+    "bus_known_server_file_name" => [\$bus_known_server_file_name, "/var/lib/gosa-si/gosa-si-bus_known_server.db"],
+    "bus_known_clients_file_name" => [\$bus_known_clients_file_name, "/var/lib/gosa-si/gosa-si-bus_known_clients.db"],
+   }, 
 );
 
 #=== FUNCTIONS = functions =====================================================

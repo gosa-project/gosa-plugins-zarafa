@@ -47,21 +47,18 @@ use lib "/usr/lib/gosa-si/modules";
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus, $msg_to_bus, $bus_cipher);
-my ($server, $server_mac_address, $server_events);
+my ($server, $server_mac_address);
 my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name,$job_queue_loop_delay);
 my ($known_modules, $known_clients_file_name, $known_server_file_name);
-my ($max_clients);
 my ($pid_file, $procid, $pid, $log_file);
-my (%free_child, %busy_child, $child_max, $child_min, %child_alive_time, $child_timeout);
-my ($arp_activ, $arp_fifo, $arp_fifo_path);
+my ($arp_activ, $arp_fifo);
 my ($xml);
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
-    $bus_activ, $bus_key, $bus_ip, $bus_port,
-    $server_activ, $server_ip, $server_port, $SIPackages_key, $max_clients,
-    $arp_activ, $arp_fifo_path,
-    $gosa_activ, $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
+    $server_ip, $server_port, $SIPackages_key, 
+    $arp_activ, 
+    $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
 );
 
 # additional variable which should be globaly accessable
@@ -97,43 +94,28 @@ our $known_server_db;
 # holds all registrated clients
 our $known_clients_db;
 
-%cfg_defaults =
-("general" =>
-    {"log_file" => [\$log_file, "/var/run/".$0.".log"],
+%cfg_defaults = (
+"general" => {
+    "log_file" => [\$log_file, "/var/run/".$0.".log"],
     "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
-    "child_max" => [\$child_max, 10],
-    "child_min" => [\$child_min, 3],
-    "child_timeout" => [\$child_timeout, 180],
-    "job_queue_timeout" => [\$job_queue_timeout, undef],
-    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/gosa-si-server_jobs.db'],
-    "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
+    },
+"server" => {
+#    "ip" => [\$server_ip, "0.0.0.0"],
+    "port" => [\$server_port, "20081"],
     "known_clients_file_name" => [\$known_clients_file_name, '/var/lib/gosa-si/gosa-si-server_known_clients.db' ],
     "known_server_file_name" => [\$known_server_file_name, '/var/lib/gosa-si/gosa-si-server_known_server.db'],
-   },
-"bus" =>
-    {"bus_activ" => [\$bus_activ, "on"],
-    "bus_passwd" => [\$bus_key, ""],
-    "bus_ip" => [\$bus_ip, "0.0.0.0"],
-    "bus_port" => [\$bus_port, "20080"],
     },
-"server" =>
-    {"server_activ" => [\$server_activ, "on"],
-    "server_ip" => [\$server_ip, "0.0.0.0"],
-    "server_port" => [\$server_port, "20081"],
-    "SIPackages_key" => [\$SIPackages_key, "none"],
-    "max_clients" => [\$max_clients, 100],
+"GOsaPackages" => {
+    "ip" => [\$gosa_ip, "0.0.0.0"],
+    "port" => [\$gosa_port, "20082"],
+    "job_queue_file_name" => [\$job_queue_file_name, '/var/lib/gosa-si/gosa-si-server_jobs.db'],
+    "job_queue_loop_delay" => [\$job_queue_loop_delay, 3],
+    "key" => [\$GosaPackages_key, "none"],
     },
-"arp" =>
-    {"arp_activ" => [\$arp_activ, "on"],
-    "arp_fifo_path" => [\$arp_fifo_path, "/var/run/gosa-si/arp-notify"],
+"SIPackages" => {
+    "key" => [\$SIPackages_key, "none"],
     },
-"gosa" =>
-    {"gosa_activ" => [\$gosa_activ, "on"],
-    "gosa_ip" => [\$gosa_ip, "0.0.0.0"],
-    "gosa_port" => [\$gosa_port, "20082"],
-    "GosaPackages_key" => [\$GosaPackages_key, "none"],
-    },
-    );
+);
 
 
 #===  FUNCTION  ================================================================
@@ -524,6 +506,11 @@ sub input_from_unknown_host {
 
 	while( my ($mod, $info) = each(%act_modules)) {
         # check a key exists for this module
+
+
+print STDERR "SIPackages_key:$SIPackages_key\n";
+
+
         my $module_key = ${$mod."_key"};
         if( ! $module_key ) {
             daemon_log("ERROR: no key specified in config file for $mod", 1);
@@ -988,7 +975,7 @@ sub client_input {
 sub trigger_db_loop {
 #	my ($kernel) = $_[KERNEL];
 	my ($kernel) = @_ ;
-	$kernel->delay_set('watch_for_new_jobs',3);
+	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 }
 
 

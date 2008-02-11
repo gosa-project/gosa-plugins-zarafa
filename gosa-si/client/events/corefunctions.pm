@@ -16,14 +16,12 @@ my ($ldap_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
 
 my %cfg_defaults = (
-    "general" => {
-        "fai_logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
-    },
     "client" => {
         "ldap" => [\$ldap_enabled, 1],
         "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
         "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
         "nss_config" => [\$nss_config, "/etc/libnss_ldap.conf"],
+        "fai_logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
     },
 );
 
@@ -449,7 +447,7 @@ sub detect_hardware {
 
     &write_to_file('goto-hardware-detection-stop', $fai_logpath);
    
-    return &main::send_msg_hash2address(
+    return &main::send_msg_hash_to_target(
 		&main::create_xml_hash("detected_hardware", $main::client_address, $main::server_address, $result),
 		$main::server_address, 
 		$main::server_key,
