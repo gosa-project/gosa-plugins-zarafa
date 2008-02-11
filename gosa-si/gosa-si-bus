@@ -758,7 +758,7 @@ sub bus_input {
                         next;
                     } 
 
-                    daemon_log("ERROR:unknown host, can not process message '$header'", 1);
+                    daemon_log("ERROR:unknown host, can not send message '$header' to target '$target'", 1);
                 }
                 elsif( $target =~ /([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})/ ) {
                     # target is a mac address
@@ -786,7 +786,7 @@ sub bus_input {
                 }
                 else {
                     daemon_log("ERROR: target address '$target' does not match neiter ".
-                        "to ip address nor to mac address, can not process msg", 1);
+                        "to ip address nor to mac address, can not send msg", 1);
                 }
 
             }
