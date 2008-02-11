@@ -38,13 +38,15 @@ class appgroup2 extends plugin
     /* Get required release informations */
     if($this->enableReleaseManagement){
       $this->Releases   = $this->getReleases();
-#      $this->FAIrelease = 0;
+      $this->FAIrelease = 0;
     }
-#    $this->curbase = $this->config->current['BASE'];
+    $this->curbase = $this->config->current['BASE'];
     $this->reload();
   }
 
 
+  /*! \brief Reload the list of applications for the currently selected release 
+   */
   function reload()
   {
     $ret = array();
@@ -80,8 +82,10 @@ class appgroup2 extends plugin
 
   
   
-
-
+  
+  /*! \brief generate a list of available releases
+      @return return an array with all available releases.
+    */
   function getReleases()
   {
     /* Only display those releases that we are able to read */
@@ -114,16 +118,19 @@ class appgroup2 extends plugin
           $FAIstate = $attrs['FAIstate'][0];
         }
         
-        $ret[] = array("name"     => $name, 
+        $ret[$name] = array("name"     => $name, 
                        "FAIstate" => $FAIstate,
                        "dn"       => $attrs['dn'], 
                        "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
       }
     }
+    ksort($ret);
     return($ret);
   }
 
 
+  /*! \brief Load the menu structure from ldap and create a multi dimensional array
+   */
   function _load_menu_structure()
   {
     $this->a_Structure  = array();
@@ -323,7 +330,10 @@ class appgroup2 extends plugin
     return($display);
   }
 
-    
+   
+  /*! \brief Returns all used folder names 
+      @return Array  All used folder names.
+   */ 
   function _get_folder_names()
   {
     $data = $this->_get_entries_for_release($this->FAIrelease);
@@ -336,7 +346,10 @@ class appgroup2 extends plugin
     return($ret);
   }
 
- 
+
+  /*! \brief return all used applications 
+      @return Array  All used applications.
+   */ 
   function _get_used_entry_name()
   {
     $data = $this->_get_entries_for_release($this->FAIrelease);
@@ -349,7 +362,10 @@ class appgroup2 extends plugin
     return($ret);
   }
 
- 
+
+  /*! \brief Returns all folder an entries for the selected release 
+      @return Array  Returns the complete menu structure for the given array.
+   */ 
   function _get_entries_for_release($release,$cur = NULL)
   {
     $all = $this->_get_all_entries();
@@ -362,6 +378,7 @@ class appgroup2 extends plugin
   }
 
 
+  /*! \brief Save the currently edited entry */
   function _save_entry_edit()
   {
     $all    = $this->_get_all_entries();
@@ -381,6 +398,8 @@ class appgroup2 extends plugin
   }
 
 
+  /*! \brief prepare the entry with the given ID, to be edited.
+   */
   function _edit_entry_edit($id)
   {
     $all   = $this->_get_all_entries();
@@ -435,6 +454,10 @@ class appgroup2 extends plugin
   }
 
 
+  /*! \brief Create missing releases, if there is a release selected \
+              that is currently not part of the menu structure \
+              then create this entry
+   */
   function _check_missing_release($release)
   {
     $release_info = $this->Releases[$release];
@@ -547,7 +570,9 @@ class appgroup2 extends plugin
     $this->reload();
   }
 
-  
+ 
+  /*! \brief Returns the UNIQID of the currently selected release 
+   */ 
   function _get_release_key($release,$add_if_missing = FALSE)
   {
     $release_info = $this->Releases[$release];
@@ -576,7 +601,11 @@ class appgroup2 extends plugin
     return(FALSE);
   }
 
-  
+ 
+  /*! \brief Add a new folder folder to the specified folder id
+      @param  String $folder The folder id in where we want to add the new folder.
+      @param  String $name   The name of the new folder.
+   */ 
   function _add_sub_folder($folder,$name)
   {
     $all = $this->_get_all_entries();
@@ -652,7 +681,11 @@ class appgroup2 extends plugin
     return(FALSE);
   }
 
-  
+ 
+  /*! \brief Add the application identified by $app_id to folder $folder_id 
+      @param  String  folder_id The UNIQID of the folder where we want to add the new folder.
+      @param  Integer app_id    The ID of the application which should be added.
+   */ 
   function _add_app_id($folder_id,$app_id)
   {
     $all = $this->_get_all_entries();
