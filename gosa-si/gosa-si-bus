@@ -466,41 +466,6 @@ sub create_passwd {
 }
 
 
-sub create_ciphering {
-    my ($passwd) = @_;
-    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-    $my_cipher->set_iv($iv);
-    return $my_cipher;
-}
-
-
-sub encrypt_msg {
-    my ($msg, $key) = @_;
-    my $my_cipher = &create_ciphering($key);
-    {
-      use bytes;
-      $msg = "\0"x(16-length($msg)%16).$msg;
-    }
-    $msg = $my_cipher->encrypt($msg);
-    chomp($msg = &encode_base64($msg));
-    # there are no newlines allowed inside msg
-    $msg=~ s/\n//g;
-    return $msg;
-}
-
-
-sub decrypt_msg {
-    my ($msg, $key) = @_ ;
-    $msg = &decode_base64($msg);
-    my $my_cipher = &create_ciphering($key);
-    $msg = $my_cipher->decrypt($msg); 
-    $msg =~ s/\0*//g;
-    return $msg;
-}
-
-
 sub send_msg_hash2address {
     my ($msg_hash, $address, $encrypt_key) = @_ ;
     my $msg = &create_xml_string($msg_hash);
