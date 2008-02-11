@@ -406,6 +406,50 @@ sub get_local_mac_for_remote_ip {
 	return $result;
 }
 
+sub bus_matches {
+	my $target = shift;
+	my $target_ip = sprintf("%s", $target =~ /^([0-9\.]*?):.*$/);
+	my $result = 0;
+
+	if($bus_ip eq $target_ip) {
+		$result= 1;
+	} elsif ($bus_ip eq "0.0.0.0") {	
+		if ($target_ip eq "127.0.0.1") {
+			$result= 1;
+		} else {
+			my $PROC_NET_ROUTE= ('/proc/net/route');
+
+			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+				or die "Could not open $PROC_NET_ROUTE";
+
+			my @ifs = <PROC_NET_ROUTE>;
+
+			close(PROC_NET_ROUTE);
+
+			# Eat header line
+			shift @ifs;
+			chomp @ifs;
+			foreach my $line(@ifs) {
+				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+				my $destination;
+				my $mask;
+				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				if(new NetAddr::IP($target_ip)->within(new NetAddr::IP($destination, $mask))) {
+					# destination matches route, save mac and exit
+					$result= 1;
+					last;
+				}
+			}
+		}
+	} else {
+		&main::daemon_log("Target ip $target_ip does not match bus ip $bus_ip",1);
+	}
+
+	return $result;
+}
 
 #===  FUNCTION  ================================================================
 #         NAME:  create_passwd
@@ -722,7 +766,7 @@ sub bus_input {
         my $target_string = join(",", @target_l);
         daemon_log("got msg '$header' with target '$target_string' from ".$heap->{'remote_ip'}, 3);
 
-        if( 1 == length(@target_l) && $target_l[0] eq $bus_address ) {
+        if( 1 == length(@target_l) && &bus_matches($target_l[0]) ) {
             # msg is for bus
 #print STDERR "msg is for bus\n";
             $kernel->post('gosa_si_bus_session', $header, $msg, $msg_hash);
