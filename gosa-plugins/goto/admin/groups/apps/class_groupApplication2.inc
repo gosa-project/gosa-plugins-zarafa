@@ -536,6 +536,10 @@ class appgroup2 extends plugin
       }
     }
 
+    if(isset($_POST['edit_reset_image'])){
+      $this->edit_entry['ICON'] = "";
+    }
+
     if(isset($_POST['app_entry_cancel'])){
       $this->edit_entry = array();
       $this->dialog = FALSE;
