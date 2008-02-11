@@ -623,6 +623,7 @@ class appgroup2 extends plugin
       $a_folder['UNIQID'] = uniqid();
       $a_folder['PARENT'] = $folder;      
       $a_folder['TYPE']   = "FOLDER";
+      $a_folder['ICON']   = "";
       $all[$folder]['ENTRIES'][] = $a_folder;
     }
   }
@@ -982,7 +983,13 @@ class appgroup2 extends plugin
           $attrs['objectClass'] = "gotoSubmenuEntry";
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
-          $attrs['gosaApplicationIcon']     = $entry['ICON'];
+          if($entry['STATUS'] != "ADDED"){
+            $attrs['gosaApplicationIcon'] = array();
+          }
+          
+          if(!empty($entry['ICON'])){
+            $attrs['gosaApplicationIcon']     = $entry['ICON'];
+          }
         }
         break;
         case "RELEASE"  : 
@@ -1020,6 +1027,7 @@ class appgroup2 extends plugin
       $ldap->cat($dn);
       if($ldap->count()){
         $ldap->rmdir_recursive($dn);
+        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
       }
     }
     foreach($Actions['Add'] as $dn => $data){
@@ -1027,6 +1035,7 @@ class appgroup2 extends plugin
       $ldap->cat($dn);
       if(!$ldap->count()){
         $ldap->add($data);
+        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
       }
     }
     foreach($Actions['Edit'] as $dn => $data){
@@ -1034,8 +1043,10 @@ class appgroup2 extends plugin
       $ldap->cat($dn);
       if($ldap->count()){
         $ldap->modify($data);
+        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
       }
     }
+    $this->_load_menu_structure();
   }
 
 
