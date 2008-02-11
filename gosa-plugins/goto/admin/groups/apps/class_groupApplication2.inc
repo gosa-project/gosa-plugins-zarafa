@@ -36,8 +36,8 @@ class appgroup2 extends plugin
       $this->enableReleaseManagement = true;
     }
 
-    $this->FAIrelease = 0;
     $this->Releases   = $this->getReleases();
+    $this->FAIrelease = "/";
     $this->curbase = $this->config->current['BASE'];
     $this->reload();
   }
@@ -86,7 +86,7 @@ class appgroup2 extends plugin
     */
   function getReleases()
   {
-    $ret =array(array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
+    $ret =array("/" => array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
     if($this->enableReleaseManagement){
 
       /* Only display those releases that we are able to read */
