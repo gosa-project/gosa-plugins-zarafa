@@ -826,7 +826,7 @@ sub open_socket {
 sub register_at_gosa_si_server {
     my ($kernel) = $_[KERNEL];
 
-    if( $REGISTERED ) {
+    if( not $REGISTERED ) {
 
         # create new passwd and ciphering object for client-server communication
         $server_key = &create_passwd();
