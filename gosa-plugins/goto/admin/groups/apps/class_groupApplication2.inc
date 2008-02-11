@@ -1,5 +1,5 @@
 <?php
-class appgroup2 extends plugin
+class appgroup extends plugin
 {
   /* CLI vars */
   var $cli_summary= "Manage application groups";
