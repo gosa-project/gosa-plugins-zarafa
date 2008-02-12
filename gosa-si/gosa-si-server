@@ -427,6 +427,68 @@ sub check_key_and_xml_validity {
 }
 
 
+sub check_outgoing_xml_validity {
+    my ($msg) = @_;
+
+    my $msg_hash;
+    eval{
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        ##############
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die 'no or more than one headers specified';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header has length 0';
+        }
+
+        ##############
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die 'no or more than 1 sources specified';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source has length 0';
+        }
+        unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ||
+                $source =~ /^GOSA$/i ) {
+            die "source '$source' is neither a complete ip-address with port nor 'GOSA'";
+        }
+        
+        ##############
+        # check target  
+        my $target_l = $msg_hash->{'target'};
+        if( 0 == @{$target_l} ) {
+            die "no targets specified";
+        }
+        foreach my $target (@$target_l) {
+            if( 0 == length $target) {
+                die "target has length 0";
+            }
+            unless( $target =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ||
+                    $target =~ /^GOSA$/i ||
+                    $target =~ /^\*$/ ||
+                    $target =~ /KNOWN_SERVER/i ||
+                    $target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ){
+                die "target '$target' is not a complete ip-address with port or a valid target name or a mac-address";
+            }
+        }
+    };
+    if($@) {
+        daemon_log("WARNING: outgoing msg is not gosa-si envelope conform", 5);
+        daemon_log("$@ $msg", 8);
+        $msg_hash = undef;
+    }
+
+    return ($msg_hash);
+}
+
+
 sub input_from_known_server {
     my ($input, $remote_ip) = @_ ;  
     my ($msg, $msg_hash, $module);
@@ -515,6 +577,9 @@ sub input_from_unknown_host {
         # check a key exists for this module
         my $module_key = ${$mod."_key"};
         if( ! $module_key ) {
+            if( $mod eq 'ArpHandler' ) {
+                next;
+            }
             daemon_log("ERROR: no key specified in config file for $mod", 1);
             next;
         }
@@ -826,17 +891,14 @@ sub client_input {
 
     # msg is from a new client or gosa
     ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
-
     # msg is from a gosa-si-server or gosa-si-bus
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
     }
-
     # msg is from a gosa-si-client
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
     }
-
     # an error occurred
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         $error++;
@@ -859,36 +921,18 @@ sub client_input {
     # answer
     if( $error == 0 ) {
 
-        # for each answer in answer list
         foreach my $answer ( @{$answer_l} ) {
-
-            my $error = 0;
-            # check answer if gosa-si envelope conform
-            if(defined($answer)) {
-                my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
-                $answer_header = @{$answer_hash->{'header'}}[0];
-                @answer_target_l = @{$answer_hash->{'target'}};
-                $answer_source = @{$answer_hash->{'source'}}[0];
-                if( !$answer_header ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
-                if( 0 == length @answer_target_l ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
-                if( !$answer_source ) {
-                    daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
-                    daemon_log("\n$answer", 8);
-                    $error++;
-                }
-
-                if( $error != 0 ) {
-                    next;
-                }
+            # for each answer in answer list
+            
+            # check outgoing msg to xml validity
+            my $answer_hash = &check_outgoing_xml_validity($answer);
+            if( not defined $answer_hash ) {
+                next;
             }
+            
+            $answer_header = @{$answer_hash->{'header'}}[0];
+            @answer_target_l = @{$answer_hash->{'target'}};
+            $answer_source = @{$answer_hash->{'source'}}[0];
 
             # deliver msg to all targets 
             foreach my $answer_target ( @answer_target_l ) {

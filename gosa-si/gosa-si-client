@@ -958,6 +958,7 @@ sub check_key_and_xml_validity {
 
         $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
+        ##############
         # check header
         my $header_l = $msg_hash->{'header'};
         if( 1 != @{$header_l} ) {
@@ -968,33 +969,99 @@ sub check_key_and_xml_validity {
             die 'header has length 0';
         }
 
+        ##############
         # check source
         my $source_l = $msg_hash->{'source'};
         if( 1 != @{$source_l} ) {
-            die 'no or more sources specified';
+            die 'no or more than 1 sources specified';
         }
         my $source = @{$source_l}[0];
         if( 0 == length $source) {
             die 'source has length 0';
         }
-
-        # check target
+        unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ) {
+            die "source '$source' is neither a complete ip-address with port nor 'GOSA'";
+        }
+        
+        ##############
+        # check target  
         my $target_l = $msg_hash->{'target'};
         if( 1 != @{$target_l} ) {
-            die 'no or more targets specified ';
+            die 'no or more than 1 targets specified ';
         }
         my $target = @{$target_l}[0];
         if( 0 == length $target) {
             die 'target has length 0 ';
         }
-
+        unless( $target =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ){
+            die "source is neither a complete ip-address with port nor 'GOSA'";
+        }
     };
     if($@) {
         &main::daemon_log("WARNING: do not understand the message or msg is not gosa-si envelope conform:", 5);
         &main::daemon_log("$@", 8);
+        $msg = undef;
+        $msg_hash = undef;
     }
 
     return ($msg, $msg_hash);
+}
+
+
+sub check_outgoing_xml_validity {
+    my ($msg) = @_;
+
+    my $msg_hash;
+    eval{
+        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+
+        ##############
+        # check header
+        my $header_l = $msg_hash->{'header'};
+        if( 1 != @{$header_l} ) {
+            die 'no or more than one headers specified';
+        }
+        my $header = @{$header_l}[0];
+        if( 0 == length $header) {
+            die 'header has length 0';
+        }
+
+        ##############
+        # check source
+        my $source_l = $msg_hash->{'source'};
+        if( 1 != @{$source_l} ) {
+            die 'no or more than 1 sources specified';
+        }
+        my $source = @{$source_l}[0];
+        if( 0 == length $source) {
+            die 'source has length 0';
+        }
+        unless( $source =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ||
+                $source =~ /^GOSA$/i ) {
+            die "source '$source' is neither a complete ip-address with port";
+        }
+        
+        ##############
+        # check target  
+        my $target_l = $msg_hash->{'target'};
+        if( 1 != @{$target_l} ) {
+            die "no or more than one targets specified";
+        }
+        foreach my $target (@$target_l) {
+            if( 0 == length $target) {
+                die "target has length 0";
+            }
+            unless( $target =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/ ) {
+                die "target '$target' is not a complete ip-address with port or a valid target name";
+            }
+        }
+    };
+    if($@) {
+        daemon_log("WARNING: outgoing msg is not gosa-si envelope conform", 5);
+        daemon_log("$@ $msg", 8);
+        $msg_hash = undef;
+    }
+    return ($msg_hash);
 }
 
 
@@ -1077,21 +1144,31 @@ sub server_input {
     ########
     # answer
     if( $answer ) {
-        # preprocessing
-        if( $answer =~ "<header>registered</header>") {
-            # set registered flag to true to stop sending further registered msgs
-            $REGISTERED = 1;
-        } 
-        else {
-            &send_msg_to_target($answer, $server_address, $server_key);
+
+        #check gosa-si envelope validity
+        my $answer_hash = &check_outgoing_xml_validity($answer);
+
+        if( $answer_hash ) {
+            # answer is valid            
+
+            # preprocessing
+            if( $answer =~ "<header>registered</header>") {
+                # set registered flag to true to stop sending further registered msgs
+                $REGISTERED = 1;
+            } 
+            else {
+                &send_msg_to_target($answer, $server_address, $server_key);
+            }
+
+            # postprocessing
+            if( $answer =~ "<header>new_key</header>") {
+                # set new key to global variable
+                $answer =~ /<new_key>(\S*?)<\/new_key>/;
+                my $new_key = $1;
+                $server_key = $new_key;
+            }
         }
-        # postprocessing
-        if( $answer =~ "<header>new_key</header>") {
-            # set new key to global variable
-            $answer =~ /<new_key>(\S*?)<\/new_key>/;
-            my $new_key = $1;
-            $server_key = $new_key;
-        }
+
     }
 
     return;
