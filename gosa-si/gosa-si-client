@@ -39,7 +39,7 @@ use Net::DNS;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
+my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $opts_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
@@ -63,6 +63,7 @@ my $try_to_register = 0;
 "general" =>
     {"log-file"           => [\$log_file, "/var/run/".$0.".log"],
     "pid-file"            => [\$pid_file, "/var/run/".$0.".pid"],
+    "opts-file"            => [\$opts_file, "/var/run/".$0.".opts"],
     },
 "client" => 
     {"port"        => [\$client_port, "20083"],
@@ -897,6 +898,15 @@ sub register_at_gosa_si_server {
 				# Set fixed client address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 				$client_address= "$client_ip:$client_port";
+
+				# Write the MAC address to file
+				if(stat($opts_file)) {
+					unlink($opts_file);
+				}
+				my $opts_file_FH;
+				open($opts_file_FH, ">$opts_file");
+				print $opts_file_FH "MAC=\"$local_mac\"";
+				close($opts_file_FH);
 				last;
 			} else {
                 # wait 1 sec until trying to register again
