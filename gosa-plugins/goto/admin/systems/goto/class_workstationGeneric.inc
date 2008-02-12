@@ -562,7 +562,7 @@ class workgeneric extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
 
     if ($activate){
-      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->ipHostNumber);
+      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->macAddress);
     }
   }
 
