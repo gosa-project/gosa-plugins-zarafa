@@ -377,40 +377,41 @@ sub check_key_and_xml_validity {
     my $msg_hash;
     eval{
         $msg = &decrypt_msg($crypted_msg, $module_key);
-        &main::daemon_log("decrypted_msg: \n$msg", 8);
 
-        $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+	if ($msg =~ /<xml>/i){
+		&main::daemon_log("decrypted_msg: \n$msg", 8);
+		$msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
-        # check header
-        my $header_l = $msg_hash->{'header'};
-        if( 1 != @{$header_l} ) {
-            die'header error';
-        }
-        my $header = @{$header_l}[0];
-        if( 0 == length $header) {
-            die 'header error';
-        }
+		# check header
+		my $header_l = $msg_hash->{'header'};
+		if( 1 != @{$header_l} ) {
+		    die 'header error';
+		}
+		my $header = @{$header_l}[0];
+		if( 0 == length $header) {
+		    die 'header error';
+		}
 
-        # check source
-        my $source_l = $msg_hash->{'source'};
-        if( 1 != @{$source_l} ) {
-            die'source error';
-        }
-        my $source = @{$source_l}[0];
-        if( 0 == length $source) {
-            die 'source error';
-        }
+		# check source
+		my $source_l = $msg_hash->{'source'};
+		if( not defined @{$source_l} or 1 != @{$source_l} ) {
+		    die 'source error';
+		}
+		my $source = @{$source_l}[0];
+		if( 0 == length $source) {
+		    die 'source error';
+		}
 
-        # check target
-        my $target_l = $msg_hash->{'target'};
-        if( 1 != @{$target_l} ) {
-            die'target error';
-        }
-        my $target = @{$target_l}[0];
-        if( 0 == length $target) {
-            die 'target error';
-        }
-
+		# check target
+		my $target_l = $msg_hash->{'target'};
+		if( 1 != @{$target_l} ) {
+		    die'target error';
+		}
+		my $target = @{$target_l}[0];
+		if( 0 == length $target) {
+		    die 'target error';
+		}
+	}
     };
     if($@) {
         &main::daemon_log("WARNING: do not understand the message", 5);
@@ -505,12 +506,8 @@ sub input_from_unknown_host {
 	my %act_modules = %$known_modules;
 
 	while( my ($mod, $info) = each(%act_modules)) {
+
         # check a key exists for this module
-
-
-print STDERR "SIPackages_key:$SIPackages_key\n";
-
-
         my $module_key = ${$mod."_key"};
         if( ! $module_key ) {
             daemon_log("ERROR: no key specified in config file for $mod", 1);
@@ -581,7 +578,7 @@ sub get_encrypt_key {
     my $error = 0;
 
     # target can be in known_server
-    if( !$encrypt_key ) {
+    if( not defined $encrypt_key ) {
         my $sql_statement= "SELECT * FROM known_server WHERE hostname='$target'";
         my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -596,7 +593,7 @@ sub get_encrypt_key {
    
 
     # target can be in known_client
-    if( !$encrypt_key ) {
+    if( not defined $encrypt_key ) {
         my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$target'";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
