@@ -857,110 +857,110 @@ sub client_input {
         # for each answer in answer list
         foreach my $answer ( @{$answer_l} ) {
 
-			my $error = 0;
-			# check answer if gosa-si envelope conform
-			if(defined($answer)) {
-				my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
-				$answer_header = @{$answer_hash->{'header'}}[0];
-				@answer_target_l = @{$answer_hash->{'target'}};
-				$answer_source = @{$answer_hash->{'source'}}[0];
-				if( !$answer_header ) {
-					daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
-					daemon_log("\n$answer", 8);
-					$error++;
-				}
-				if( 0 == length @answer_target_l ) {
-					daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
-					daemon_log("\n$answer", 8);
-					$error++;
-				}
-				if( !$answer_source ) {
-					daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
-					daemon_log("\n$answer", 8);
-					$error++;
-				}
-
-				if( $error != 0 ) {
-					next;
-				}
+		my $error = 0;
+		# check answer if gosa-si envelope conform
+		if(defined($answer)) {
+			my $answer_hash = $xml->XMLin($answer, ForceArray=>1);
+			$answer_header = @{$answer_hash->{'header'}}[0];
+			@answer_target_l = @{$answer_hash->{'target'}};
+			$answer_source = @{$answer_hash->{'source'}}[0];
+			if( !$answer_header ) {
+				daemon_log('ERROR: module answer is not gosa-si envelope conform: no header', 1);
+				daemon_log("\n$answer", 8);
+				$error++;
+			}
+			if( 0 == length @answer_target_l ) {
+				daemon_log('ERROR: module answer is not gosa-si envelope conform: no targets', 1);
+				daemon_log("\n$answer", 8);
+				$error++;
+			}
+			if( !$answer_source ) {
+				daemon_log('ERROR: module answer is not gosa-si envelope conform: no source', 1);
+				daemon_log("\n$answer", 8);
+				$error++;
 			}
 
-            # deliver msg to all targets 
-            foreach my $answer_target ( @answer_target_l ) {
-                if( $answer_target eq "*" ) {
-                    # answer is for all clients
-                    my $sql_statement= "SELECT * FROM known_clients";
-                    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                     }
-                }
-                elsif( $answer_target eq "GOSA" ) {
-                    # answer is for GOSA and has to returned to connected client
-                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                    $client_answer = $gosa_answer;
-                }
-                elsif( $answer_target eq "KNOWN_SERVER" ) {
-                    # answer is for all server in known_server
-                    my $sql_statement= "SELECT * FROM known_server";
-                    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        $answer =~ s/KNOWN_SERVER/$host_name/g;
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                    }
-                }
-                elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
-                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
-                    my $query_res = $known_clients_db->select_dbentry( $sql_statement );
-                    my $found_ip_flag = 0;
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        $answer =~ s/$answer_target/$host_name/g;
-                        daemon_log("found host '$host_name', assoziated to '$answer_target'", 3);
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        $found_ip_flag++ ;
-                    }   
-                    if( $found_ip_flag == 0) {
-                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target', forward msg to bus", 1);
-                        my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                        my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                            my $bus_address = $hit->{hostname};
-                            my $bus_key = $hit->{hostkey};
-                            &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
-                            last;
-                        }
+			if( $error != 0 ) {
+				next;
+			}
+		}
 
-                    }
-                }
-                else {
-                    # answer is for one specific host
-                    # get encrypt_key
-                    my $encrypt_key = &get_encrypt_key($answer_target);
-                    if( not defined $encrypt_key ) {
-                        # unknown target, forward msg to bus
-                        daemon_log("WARNING: unknown target '$answer_target', forward msg to bus", 3);
-                        my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                        my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                        my $bus_key = $query_res->{1}->{hostkey};
-                        &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
-                        next;
-                    }
-                    # send_msg
-                    &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
-                }
-            }
-        }
+		# deliver msg to all targets 
+		foreach my $answer_target ( @answer_target_l ) {
+			if( $answer_target eq "*" ) {
+				# answer is for all clients
+				my $sql_statement= "SELECT * FROM known_clients";
+				my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+				while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+					my $host_name = $hit->{hostname};
+					my $host_key = $hit->{hostkey};
+					&send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+				}
+			}
+			elsif( $answer_target eq "GOSA" ) {
+				# answer is for GOSA and has to returned to connected client
+				my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+				$client_answer = $gosa_answer;
+			}
+			elsif( $answer_target eq "KNOWN_SERVER" ) {
+				# answer is for all server in known_server
+				my $sql_statement= "SELECT * FROM known_server";
+				my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+				while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+					my $host_name = $hit->{hostname};
+					my $host_key = $hit->{hostkey};
+					$answer =~ s/KNOWN_SERVER/$host_name/g;
+					&send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+				}
+			}
+			elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
+				daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
+				my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
+				my $query_res = $known_clients_db->select_dbentry( $sql_statement );
+				my $found_ip_flag = 0;
+				while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+					my $host_name = $hit->{hostname};
+					my $host_key = $hit->{hostkey};
+					$answer =~ s/$answer_target/$host_name/g;
+					daemon_log("found host '$host_name', assoziated to '$answer_target'", 3);
+					&send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+					$found_ip_flag++ ;
+				}   
+				if( $found_ip_flag == 0) {
+					daemon_log("WARNING: no host found in known_clients with mac address '$answer_target', forward msg to bus", 1);
+					my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+					my $query_res = $known_server_db->select_dbentry( $sql_statement );
+					while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+						my $bus_address = $hit->{hostname};
+						my $bus_key = $hit->{hostkey};
+						&send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+						last;
+					}
+
+				}
+			} else {
+				# ... answer is for one specific host
+
+				# get encrypt_key
+				my $encrypt_key = &get_encrypt_key($answer_target);
+				if( not defined $encrypt_key ) {
+					# unknown target, forward msg to bus
+					daemon_log("WARNING: unknown target '$answer_target', forward msg to bus", 3);
+					my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+					my $query_res = $known_server_db->select_dbentry( $sql_statement );
+					my $bus_key = $query_res->{1}->{hostkey};
+					&send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+					next;
+				}
+				# send_msg
+				&send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+			}
+		}
+	}
     }
 
     if( $client_answer ) {
-        $heap->{client}->put($client_answer);
+	    $heap->{client}->put($client_answer);
     }
 
     return;

@@ -47,6 +47,7 @@ my $default_server_key;
 my $event_hash;
 my @servers;
 my $gotoHardwareChecksum;
+$verbose= 1;
 
 # globalise variables which are used in imported events
 our $cfg_file;

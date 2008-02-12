@@ -59,7 +59,7 @@ if (-e $db_name) {
 }
 
 
-$db_name = "/var/lib/gosa-si/server.db";
+$db_name = "/var/lib/gosa-si/servers.db";
 if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;
