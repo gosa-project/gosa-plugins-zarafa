@@ -1092,7 +1092,7 @@ daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 
 # delete old DBsqlite lock files
-unlink('/tmp/gosa_si_lock*');
+#unlink('/tmp/gosa_si_lock*');
 
 # connect to gosa-si job queue
 my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
