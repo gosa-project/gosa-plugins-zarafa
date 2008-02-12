@@ -590,7 +590,6 @@ sub get_encrypt_key {
             last;
         }
     }
-   
 
     # target can be in known_client
     if( not defined $encrypt_key ) {
@@ -944,7 +943,7 @@ sub client_input {
                     # answer is for one specific host
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);
-                    if( !$encrypt_key ) {
+                    if( not defined $encrypt_key ) {
                         # unknown target, forward msg to bus
                         daemon_log("WARNING: unknown target '$answer_target', forward msg to bus", 3);
                         my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
