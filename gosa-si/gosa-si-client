@@ -57,7 +57,10 @@ our $server_key;
 
 # default variables
 our $REGISTERED = 0;
-my $try_to_register = 0;
+
+# in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
+# not successful until now
+my $delay_set_time = 5;
 
 %cfg_defaults = (
 "general" =>
@@ -854,24 +857,24 @@ sub open_socket {
 #===============================================================================
 sub register_at_gosa_si_server {
     my ($kernel) = $_[KERNEL];
+    my $try_to_register = 0;
 
     if( not $REGISTERED ) {
-        $try_to_register++;
-        if( $try_to_register > 1 ) {
-            &write_to_file("gosa-si-no-server-available", $fai_logpath);
-        } 
-
         # create new passwd and ciphering object for client-server communication
         $server_key = &create_passwd();
 
         my $events = join( ", ", keys %{$event_hash} );
-
         while(1) {
+
+            if( $try_to_register >= @servers )  {
+                last;
+            }
 
             # fetch first gosa-si-server from @servers
             my $server = shift(@servers);
 
-            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop
+            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
+            # a registration never occured
             push( @servers, $server );
 		
 			# Check if our ip is resolvable - if not: don't try to register
@@ -898,6 +901,9 @@ sub register_at_gosa_si_server {
             # send xml hash to server with general server passwd
             my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
 			if($res == 0) {
+                # reset try_to_register
+                $try_to_register = 0;
+    
 				# Set fixed client address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 				$client_address= "$client_ip:$client_port";
@@ -914,19 +920,23 @@ sub register_at_gosa_si_server {
 				close($opts_file_FH);
 				last;
 			} else {
+                $try_to_register++;
                 # wait 1 sec until trying to register again
                 sleep(1);
 				next;
 			}
         }
 
-        
-
-        daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
-#        $kernel->delay_set('register_at_gosa_si_server', 180);
-        $kernel->delay_set('register_at_gosa_si_server', 5);
-        # clear old settings and set it again
-        $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+        if( $try_to_register >= @servers )  {
+            &write_to_file("gosa-si-no-server-available", $fai_logpath);
+             $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+        } 
+        else {
+            daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
+            $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+            # clear old settings and set it again
+            $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+        }
     }
     return;
 }
