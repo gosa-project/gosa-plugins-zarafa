@@ -232,7 +232,55 @@ class application extends plugin
 
   function remove_from_parent()
   {
+    restore_error_handler();
+
+    /* Parse release out of object dn */
+    $release = preg_replace("/".get_ou("applicationou").normalizePreg($this->base)."$/","",$this->dn);
+    $release = preg_replace("/^cn=[^,]+,/","",$release);
+
+    /* Get a list of all groups 
+     */
+    $groups = array();
     $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(objectClass=posixGroup)",array("dn"));
+    while($attrs = $ldap->fetch()){
+      $groups[$attrs['dn']] = array();
+    }
+    
+    /* Check if there are groups, useing this application 
+     */
+    $found = array();
+    foreach($groups as $group => $data){
+      $ldap->cd($release.$group);
+      $ldap->search("(objectClass=gotoMenuEntry)",array("dn"));
+      while($attrs = $ldap->fetch()){
+        $info = preg_replace("/".normalizePreg($release.$group)."$/","",$attrs['dn']); 
+        if(preg_match("/^cn=".$this->cn."/",$info) && !preg_match("/ou=[^,]+,/",$info)){
+          $found[] = $attrs['dn'];
+        }
+      }
+    }
+
+    /* Create an error message an skip remove, if 
+        this application is still in use. 
+     */
+    if(count($found)){
+      $objs = "";
+      $cnt = 3;
+      for($i = 0 ; $i < $cnt ; $i++ ){
+        if(isset($found[$i])){
+          $objs .= "&nbsp;".$found[$i].",";
+        }
+      }
+      if(count($found) > $cnt){
+        $objs .= "... ";
+      }
+      $objs = trim($objs,", ");
+      print_red(sprintf(_("Can not remove application, it is still in use by these objects: %s."),$objs));
+      return(FALSE);
+    }
+
     $ldap->rmDir($this->dn);
     new log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of application with dn '%s' failed."),$this->dn));
@@ -249,14 +297,6 @@ class application extends plugin
       $og->save ();
       show_ldap_error($ldap->get_error(), sprintf(_("Removing application from objectgroup '%s' failed"), $og->dn));
     }
-    $ldap->search ("(&(objectClass=posixGroup)(gosaMemberApplication=".$this->cn."))", array("cn"));
-    while ($attrs= $ldap->fetch()){
-      $ag= new appgroup($this->config, $ldap->getDN());
-      $ag->removeApp($this->cn);
-      $ag->save ();
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing application from group '%s' failed"), $ag->dn));
-    }
-
   }
 
 
