@@ -49,15 +49,15 @@ if($lookup_vendor) {
 
 my %cfg_defaults =
 (
-	"arp" => {
-		"arp-enabled"           => [\$arp_activ,         "true"],
-		"arp-interface"       => [\$arp_interface,    "all"],
+	"ArpHandler" => {
+		"activ"           => [\$arp_activ,         "on"],
+		"interface"       => [\$arp_interface,    "all"],
 	},
 	"server" => {
-		"ldap-uri"            => [\$ldap_uri,            ""],
-		"ldap-base"           => [\$ldap_base,           ""],
-		"ldap-admin_dn"       => [\$ldap_admin_dn,       ""],
-		"ldap-admin_password" => [\$ldap_admin_password, ""],
+		"ldap_uri"            => [\$ldap_uri,            ""],
+		"ldap_base"           => [\$ldap_base,           ""],
+		"ldap_admin_dn"       => [\$ldap_admin_dn,       ""],
+		"ldap_admin_password" => [\$ldap_admin_password, ""],
 	},
 );
 
@@ -93,7 +93,7 @@ sub get_module_info {
 
 	&read_configfile();
 	# Don't start if some of the modules are missing
-	if(($arp_activ eq 'true') && $start_service) {
+	if(($arp_activ eq 'on') && $start_service) {
 		$ldap = Net::LDAP->new($ldap_uri);
 		if (!$ldap) {
 			&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
