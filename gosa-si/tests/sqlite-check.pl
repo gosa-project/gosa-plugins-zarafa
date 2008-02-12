@@ -28,7 +28,7 @@ my $res;
 my $db_name;
 
     
-$db_name = "/var/lib/gosa-si/gosa-si-server_jobs.db";
+$db_name = "/var/lib/gosa-si/jobs.db";
 if (-e $db_name) {
     print "\n############################################################\n";
     my $table_name = "jobs";
@@ -42,7 +42,7 @@ if (-e $db_name) {
 }
 
 
-$db_name = "/var/lib/gosa-si/gosa-si-server_known_clients.db";
+$db_name = "/var/lib/gosa-si/clients.db";
 if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;
@@ -59,7 +59,7 @@ if (-e $db_name) {
 }
 
 
-$db_name = "/var/lib/gosa-si/gosa-si-server_known_server.db";
+$db_name = "/var/lib/gosa-si/server.db";
 if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;
@@ -76,7 +76,7 @@ if (-e $db_name) {
 }
 
 
-$db_name = "/var/lib/gosa-si/gosa-si-bus_known_server.db";
+$db_name = "/var/lib/gosa-si/bus-server.db";
 if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;
@@ -91,7 +91,7 @@ if (-e $db_name) {
     print $answer."\n";
 }
 
-$db_name = "/var/lib/gosa-si/gosa-si-bus_known_clients.db";
+$db_name = "/var/lib/gosa-si/bus-clients.db";
 if (-e $db_name) {
     print "\n############################################################\n";
 #    $db_name =~ /\/([^\/]*?)\.db$/;

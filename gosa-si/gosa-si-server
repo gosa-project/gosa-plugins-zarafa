@@ -917,7 +917,7 @@ sub client_input {
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
                 }
-                elsif( $answer_target =~ /([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})/ ) {
+                elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
                     daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
