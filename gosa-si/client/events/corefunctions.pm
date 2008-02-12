@@ -1,7 +1,7 @@
 package corefunctions;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events registered set_activated_for_installation new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate confirm_new_key);
+my @events = qw(get_events registered new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate confirm_new_key);
 @EXPORT = @events;
 
 use strict;
@@ -124,21 +124,6 @@ sub registered {
     my $out_msg = &create_xml_string($out_hash);
     return $out_msg;
 
-}
-
-
-sub set_activated_for_installation {
-    my ($msg, $msg_hash) = @_ ;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-
-    my $Datei = "/var/run/gosa-si.activated";
-    open(DATEI, ">$Datei");
-    print DATEI "activated\n";
-    close DATEI;
-    
-    return;
 }
 
 
