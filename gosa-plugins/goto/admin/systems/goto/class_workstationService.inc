@@ -105,7 +105,7 @@ class workservice extends plugin
     }
 
     $this->MouseTypes= array("ImPS/2" => "ImPS/2", "PS/2" => "PS/2", "Microsoft" => "Microsoft", 
-                              "Logitech" => "Logitech");
+                              "Logitech" => "Logitech","explorerps/2"=>"explorerps/2",);
 
     $this->MousePorts= array("/dev/ttyS0"  =>"/dev/ttyS0", 
                              "/dev/ttyS1"       => "/dev/ttyS1",          "/dev/psaux"  =>"/dev/psaux", 
