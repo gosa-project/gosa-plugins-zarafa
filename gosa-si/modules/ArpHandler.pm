@@ -54,10 +54,10 @@ my %cfg_defaults =
 		"interface"       => [\$arp_interface,    "all"],
 	},
 	"server" => {
-		"ldap_uri"            => [\$ldap_uri,            ""],
-		"ldap_base"           => [\$ldap_base,           ""],
-		"ldap_admin_dn"       => [\$ldap_admin_dn,       ""],
-		"ldap_admin_password" => [\$ldap_admin_password, ""],
+		"ldap-uri"            => [\$ldap_uri,            ""],
+		"ldap-base"           => [\$ldap_base,           ""],
+		"ldap-admin-dn"       => [\$ldap_admin_dn,       ""],
+		"ldap-admin-password" => [\$ldap_admin_password, ""],
 	},
 );
 

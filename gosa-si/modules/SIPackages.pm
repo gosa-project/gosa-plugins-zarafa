@@ -38,12 +38,12 @@ my %cfg_defaults = (
     },
 "server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
-    "mac_address" => [\$server_mac_address, "00:00:00:00:00"],
+    "mac-address" => [\$server_mac_address, "00:00:00:00:00"],
     "port" => [\$server_port, "20081"],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
-    "ldap-admin_dn" => [\$ldap_admin_dn, ""],
-    "ldap-admin_password" => [\$ldap_admin_password, ""],
+    "ldap-admin-dn" => [\$ldap_admin_dn, ""],
+    "ldap-admin-password" => [\$ldap_admin_password, ""],
     "max-clients" => [\$max_clients, 100],
     },
 "SIPackages" => {
