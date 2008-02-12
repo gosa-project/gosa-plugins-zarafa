@@ -5,7 +5,11 @@
 			{t}Release{/t}
 			<select name="FAIrelease" onChange="document.mainform.submit();">
 			{foreach from=$releases item=item key=key}
-				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name}</option>
+				{if $item.found}
+				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name} </option>
+				{else}
+				<option style="color: #999999;" value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name} </option>
+				{/if}
 			{/foreach}
 			</select>
 		</td>

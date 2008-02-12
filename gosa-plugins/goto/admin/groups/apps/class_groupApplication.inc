@@ -93,7 +93,7 @@ class appgroup extends plugin
     */
   function getReleases()
   {
-    $ret =array("/" => array("name" => "/" , "parts" => array(),"suffix" => get_ou('applicationou')));
+    $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou('applicationou')));
     if($this->enableReleaseManagement){
 
       /* Only display those releases that we are able to read */
@@ -125,7 +125,18 @@ class appgroup extends plugin
             $FAIstate = $attrs['FAIstate'][0];
           }
 
+          $all = $this->_get_all_entries();
+          $found = FALSE;
+          foreach($all as $entry){
+            if(isset($entry['DN']) && preg_match("/^".normalizePreg($bb)."/",$entry['DN'])){
+              $found =TRUE;
+              break;
+            }
+          }
+
+          $cnt = 0;
           $ret[$name] = array("name"     => $name, 
+              "found"    => $found,
               "FAIstate" => $FAIstate,
               "dn"       => $attrs['dn'], 
               "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
