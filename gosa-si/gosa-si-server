@@ -382,40 +382,40 @@ sub check_key_and_xml_validity {
     eval{
         $msg = &decrypt_msg($crypted_msg, $module_key);
 
-	if ($msg =~ /<xml>/i){
-		&main::daemon_log("decrypted_msg: \n$msg", 8);
-		$msg_hash = $xml->XMLin($msg, ForceArray=>1);
+        if ($msg =~ /<xml>/i){
+            &main::daemon_log("decrypted_msg: \n$msg", 8);
+            $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
-		# check header
-		my $header_l = $msg_hash->{'header'};
-		if( 1 != @{$header_l} ) {
-		    die 'header error';
-		}
-		my $header = @{$header_l}[0];
-		if( 0 == length $header) {
-		    die 'header error';
-		}
+            # check header
+            my $header_l = $msg_hash->{'header'};
+            if( 1 != @{$header_l} ) {
+                die 'header error';
+            }
+            my $header = @{$header_l}[0];
+            if( 0 == length $header) {
+                die 'header error';
+            }
 
-		# check source
-		my $source_l = $msg_hash->{'source'};
-		if( not defined @{$source_l} or 1 != @{$source_l} ) {
-		    die 'source error';
-		}
-		my $source = @{$source_l}[0];
-		if( 0 == length $source) {
-		    die 'source error';
-		}
+            # check source
+            my $source_l = $msg_hash->{'source'};
+            if( not defined @{$source_l} or 1 != @{$source_l} ) {
+                die 'source error';
+            }
+            my $source = @{$source_l}[0];
+            if( 0 == length $source) {
+                die 'source error';
+            }
 
-		# check target
-		my $target_l = $msg_hash->{'target'};
-		if( 1 != @{$target_l} ) {
-		    die'target error';
-		}
-		my $target = @{$target_l}[0];
-		if( 0 == length $target) {
-		    die 'target error';
-		}
-	}
+            # check target
+            my $target_l = $msg_hash->{'target'};
+            if( 1 != @{$target_l} ) {
+                die'target error';
+            }
+            my $target = @{$target_l}[0];
+            if( 0 == length $target) {
+                die 'target error';
+            }
+        }
     };
     if($@) {
         &main::daemon_log("WARNING: do not understand the message", 5);
@@ -786,7 +786,7 @@ sub send_msg_to_target {
         $act_status = $res->{1}->{'status'};
         if( $act_status eq "down" ) {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
-            $res = $known_clients_db->del_dbentry($sql_statement);
+            $res = $known_server_db->del_dbentry($sql_statement);
             daemon_log("WARNING: failed 2x to a send msg to host '$address', delete host from known_server", 3);
         } 
         else { 
@@ -957,8 +957,16 @@ sub client_input {
                             daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
                             my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
                             my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                            my $bus_key = $query_res->{1}->{hostkey};
-                            &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                            my $res_length = keys( %{$query_res} );
+                            if( $res_length == 0 ){
+                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, no bus found in known_server", 3);
+                            }
+                            else {
+                                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                                    my $bus_key = $hit->{hostkey};
+                                    &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                }
+                            }
                         }
                         next;
                     }
