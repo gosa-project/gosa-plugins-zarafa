@@ -133,9 +133,9 @@ sub set_activated_for_installation {
     my $target = @{$msg_hash->{'target'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
 
-    my $Datei = "/tmp/set_activated_for_installation";
+    my $Datei = "/var/run/gosa-si.activated";
     open(DATEI, ">$Datei");
-    print DATEI "set_activated_for_installation\n";
+    print DATEI "activated\n";
     close DATEI;
     
     return;
