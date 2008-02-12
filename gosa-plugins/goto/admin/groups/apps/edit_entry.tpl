@@ -9,7 +9,7 @@
 		</td>
 		<td>
 			{if $image_set}
-				<img src="getbin.php?{$rand}">
+				<img src="getbin.php?{$rand}" alt='{t}Could not load image.{/t}'>
 			{else}
 				<i>{t}None{/t}</i>
 			{/if}

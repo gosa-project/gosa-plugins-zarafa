@@ -22,6 +22,7 @@ class appgroup extends plugin
   var $app_parameter = array();
   var $edit_entry    = array();
   var $enableReleaseManagement = FALSE;
+  
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -40,6 +41,12 @@ class appgroup extends plugin
     $this->FAIrelease = "/";
     $this->curbase = $this->config->current['BASE'];
     $this->reload();
+  
+    $this->is_account = FALSE;
+    if(count($this->_get_all_entries()) > 1){
+      $this->is_account= TRUE;
+    }   
+    $this->initially_was_account = $this->is_account;
   }
 
 
@@ -225,6 +232,21 @@ class appgroup extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if (isset($_POST['modify_state'])){
+      $this->is_account = !$this->is_account;
+    }
+
+    /* Do we represent a valid account? */
+    if (!$this->is_account){
+      $display= $this->show_enable_header(_("Add application extension"),
+          _("Application extension disabled. You can enable it by clicking below."));
+      return ($display);
+    }
+
+    $display =  $this->show_enable_header(_("Remove application extension"),
+          _("Application extension enabled. You can disable it by clicking below."));
+
+
     if(isset($_GET['send'])){
       $id = $_GET['send'];
       $all = $this->_get_all_entries();
@@ -330,7 +352,7 @@ class appgroup extends plugin
     $smarty->assign("folders" , $this->_get_folder_names());
     $entries = $this->_get_entries_for_release($this->FAIrelease);
     $smarty->assign("entries",$entries);
-    $display= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
+    $display.= $smarty->fetch (get_template_path('app_list.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
@@ -449,8 +471,21 @@ class appgroup extends plugin
 
   function remove_from_parent()
   {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->ls("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",$this->dn,array("*"));
+    $a_remove = array();
+    while($attrs = $ldap->fetch()){
+      $a_remove[] = $attrs['dn'];
+    }
+    foreach($a_remove as $remove){
+      $ldap->rmdir_recursive($remove);
+      show_ldap_error($ldap->get_error(),
+          sprintf(_("Removing of group/application account with dn '%s' failed, could not remove '%s'."),
+            $this->dn,$remove));
+    }
+    $this->_load_menu_structure();
   }
-
 
 
   function check()
