@@ -880,7 +880,7 @@ sub register_at_gosa_si_server {
 			my $dnsresult= $resolver->search($ip);
 			my $dnsname="";
 			if(!defined($dnsresult)) {
-				&write_to_file("goto-error-dns:Could not resolve hostname for ip $ip", $fai_logpath);
+				&write_to_file("goto-error-dns:$ip", $fai_logpath);
 				exit(1);
 			} else {
 				$dnsname=$dnsresult->{answer}[0]->{ptrdname};
