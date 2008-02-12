@@ -80,7 +80,18 @@ class appgroup extends plugin
           $ret = array_merge($ret,get_list("(objectClass=gosaApplication)","application",$dep,array("*"),GL_NONE));
         }
       }
-      $this->_cache['ReleaseApps'][$release_info['suffix']] = $ret;
+
+      $tmp = array();
+      foreach($ret as $key => $app){
+        $tmp[$key] = $app['cn'][0];
+      }
+      natcasesort($tmp);
+      $res = array();
+      foreach($tmp as $key => $app){
+        $res[] = $ret[$key];
+      }
+
+      $this->_cache['ReleaseApps'][$release_info['suffix']] = $res;
     } 
     $this->apps = $this->_cache['ReleaseApps'][$release_info['suffix']];
   }
