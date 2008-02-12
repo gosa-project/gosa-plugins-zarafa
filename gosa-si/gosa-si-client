@@ -913,10 +913,13 @@ sub register_at_gosa_si_server {
 					unlink($opts_file);
 				}
 				my $opts_file_FH;
+				my $hostname= $dnsname;
+				$hostname =~ s/\..*$//;
 				open($opts_file_FH, ">$opts_file");
 				print $opts_file_FH "MAC=\"$local_mac\"\n";
 				print $opts_file_FH "IPADDRESS=\"$client_ip\"\n";
-				print $opts_file_FH "HOSTNAME=\"$dnsname\"\n";
+				print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
+				print $opts_file_FH "FQDN=\"$dnsname\"\n";
 				close($opts_file_FH);
 				last;
 			} else {
