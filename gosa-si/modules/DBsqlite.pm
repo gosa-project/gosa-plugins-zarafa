@@ -17,7 +17,7 @@ sub new {
     my $class = shift;
     my $db_name = shift;
 
-    my $lock = $db_name.".gosa_lock";
+    my $lock = $db_name.".lock";
 	# delete existing lock - instance should be running only once
 	if(stat($lock)) {
 		unlink($lock);

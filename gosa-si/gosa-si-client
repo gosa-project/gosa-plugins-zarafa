@@ -35,6 +35,7 @@ use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
 use Net::DNS;
+use File::Basename;
 
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
@@ -61,12 +62,13 @@ our $REGISTERED = 0;
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
 # not successful until now
 my $delay_set_time = 5;
+our $prg= basename($0);
 
 %cfg_defaults = (
 "general" =>
-    {"log-file"           => [\$log_file, "/var/run/".$0.".log"],
-    "pid-file"            => [\$pid_file, "/var/run/".$0.".pid"],
-    "opts-file"            => [\$opts_file, "/var/run/".$0.".opts"],
+    {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
+    "pid-file"            => [\$pid_file, "/var/run/".$prg.".pid"],
+    "opts-file"            => [\$opts_file, "/var/run/".$prg.".opts"],
     },
 "client" => 
     {"port"        => [\$client_port, "20083"],
@@ -222,10 +224,8 @@ sub daemon_log {
                 $month = $monthnames[$month];
                 $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
                 $year+=1900;
-                my $name = $0;
-                $name =~ s/\.\///;
 
-                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+                my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
                 print LOG_HANDLE $log_msg;
                 if( $foreground ) { 
                     print STDERR $log_msg;
@@ -809,11 +809,11 @@ sub write_to_file {
     my $error = 0;
 
     if( not defined $file || not -f $file ) {
-        &main::daemon_log("ERROR: $0: check '-f file' failed: $file", 1);
+        &main::daemon_log("ERROR: $prg: check '-f file' failed: $file", 1);
         $error++;
     }
     if( not defined $string || 0 == length($string)) {
-        &main::daemon_log("ERROR: $0: empty string to write to file '$file'", 1);
+        &main::daemon_log("ERROR: $prg: empty string to write to file '$file'", 1);
         $error++;
     }
     
@@ -1138,7 +1138,7 @@ if( 0 != $pid ) {
 }
 
 daemon_log(" ", 1);
-daemon_log("$0 started!", 1);
+daemon_log("$prg started!", 1);
 
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');

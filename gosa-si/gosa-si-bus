@@ -34,6 +34,7 @@ use IO::Socket::INET;
 use NetAddr::IP;
 use XML::Simple;
 use MIME::Base64;
+use File::Basename;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 
 
@@ -41,12 +42,13 @@ my ($cfg_file, $default_cfg_file, %cfg_defaults, $foreground, $verbose, $pid_fil
 my ($bus_address, $bus_key, $bus_ip, $bus_port, $bus_mac_address);
 my ($bus_known_server_db, $bus_known_server_file_name, $bus_known_clients_db, $bus_known_clients_file_name);
 my $xml;
+our $prg= basename($0);
 
 $foreground = 0 ;
 %cfg_defaults = (
 "general" => {
-    "log_file" => [\$log_file, "/var/run/".$0.".log"],
-    "pid_file" => [\$pid_file, "/var/run/".$0.".pid"],
+    "log_file" => [\$log_file, "/var/run/".$prg.".log"],
+    "pid_file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
 "bus" => {
     "key"  => [\$bus_key, "secret-bus-password"],
@@ -173,7 +175,7 @@ sub check_pid {
 #===============================================================================
 sub usage {
     print STDERR << "EOF" ;
-usage: $0 [-hvf] [-c config]
+usage: $prg [-hvf] [-c config]
 
     -h        : this (help) message
     -c <file> : config file
@@ -213,10 +215,8 @@ sub daemon_log {
                 $month = $monthnames[$month];
                 $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
                 $year+=1900;
-                my $name = $0;
-                $name =~ s/\.\///;
 
-                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+                my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
                 print LOG_HANDLE $log_msg;
                 if( $foreground ) { 
                     print STDERR $log_msg;

@@ -39,6 +39,7 @@ use Data::Dumper;
 use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
+use File::Basename;
 use GOSA::DBsqlite;
 use POE qw(Component::Server::TCP);
 
@@ -94,11 +95,12 @@ our $known_server_db;
 
 # holds all registrated clients
 our $known_clients_db;
+our $prg= basename($0);
 
 %cfg_defaults = (
 "general" => {
-    "log-file" => [\$log_file, "/var/run/".$0.".log"],
-    "pid-file" => [\$pid_file, "/var/run/".$0.".pid"],
+    "log-file" => [\$log_file, "/var/run/".$prg.".log"],
+    "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
 "bus" => {
     "activ" => [\$bus_activ, "true"],
@@ -130,14 +132,14 @@ our $known_clients_db;
 #===============================================================================
 sub usage {
     print STDERR << "EOF" ;
-usage: $0 [-hvf] [-c config]
+usage: $prg [-hvf] [-c config]
 
            -h        : this (help) message
            -c <file> : config file
            -f        : foreground, process will not be forked to background
            -v        : be verbose (multiple to increase verbosity)
-           -no-bus   : starts $0 without connection to bus
-           -no-arp   : starts $0 without connection to arp module
+           -no-bus   : starts $prg without connection to bus
+           -no-arp   : starts $prg without connection to arp module
  
 EOF
     print "\n" ;
@@ -199,8 +201,7 @@ sub daemon_log {
                 $month = $monthnames[$month];
                 $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
                 $year+=1900;
-                my $name = $0;
-                $name =~ s/\.\///;
+                my $name = $prg;
 
                 my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
                 print LOG_HANDLE $log_msg;
