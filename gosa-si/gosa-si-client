@@ -878,9 +878,12 @@ sub register_at_gosa_si_server {
 			my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 			my $resolver= Net::DNS::Resolver->new;
 			my $dnsresult= $resolver->search($ip);
+			my $dnsname="";
 			if(!defined($dnsresult)) {
 				&write_to_file("goto-dns-error:Could not resolve hostname for ip $ip", $fai_logpath);
 				exit(1);
+			} else {
+				$dnsname=$dnsresult->{answer}[0]->{ptrdname};
 			}
 
             # create registration msg
@@ -905,7 +908,9 @@ sub register_at_gosa_si_server {
 				}
 				my $opts_file_FH;
 				open($opts_file_FH, ">$opts_file");
-				print $opts_file_FH "MAC=\"$local_mac\"";
+				print $opts_file_FH "MAC=\"$local_mac\"\n";
+				print $opts_file_FH "IPADDRESS=\"$client_ip\"\n";
+				print $opts_file_FH "HOSTNAME=\"$dnsname\"\n";
 				close($opts_file_FH);
 				last;
 			} else {
