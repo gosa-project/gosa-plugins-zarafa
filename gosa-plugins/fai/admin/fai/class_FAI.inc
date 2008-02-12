@@ -696,15 +696,17 @@ class FAI
   }
 
 
-  static function copy_FAI_group_releases($source_release , $destination_name, $type )
+  static function copy_FAI_group_releases($source_release , $destination_name, $type ="" )
   {
     global $config;
     $start = microtime(TRUE);
+    $source_release = trim($source_release,"/");
 
     echo "<h2>".sprintf(_("Creating group application release for %s"),$destination_name)."</h2>";
 
     $sub_releases = array();
     $source_dn = "";
+    
     $tmp = split("\/",$source_release);
     foreach($tmp as $part){
       if(empty($part)){
@@ -825,7 +827,7 @@ class FAI
         $to_copy[$attrs['dn']] = $destination;
       }
     }
-    
+   
     /* At least create the menu objects object */
     $plug = new plugin($config);
     foreach($to_copy as $source => $destination){
