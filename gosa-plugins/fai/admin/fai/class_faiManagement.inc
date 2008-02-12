@@ -592,6 +592,10 @@ class faiManagement extends plugin
 
         new log("create","fai/".get_class($this),$NewReleaseName,array(),"New $type created");
 
+        /* Duplicate group application releases 
+         */
+        FAI::copy_FAI_group_releases($CurrentReleases[$this->DivListFai->selectedBranch],$name,$type);
+
         /* Duplicate applications 
          */
         $ldap->cat($appsrc,array("dn")) ;

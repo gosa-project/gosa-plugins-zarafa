@@ -696,6 +696,154 @@ class FAI
   }
 
 
+  static function copy_FAI_group_releases($source_release , $destination_name, $type )
+  {
+    global $config;
+    $start = microtime(TRUE);
+
+    echo "<h2>".sprintf(_("Creating group application release for %s"),$destination_name)."</h2>";
+
+    $sub_releases = array();
+    $source_dn = "";
+    $tmp = split("\/",$source_release);
+    foreach($tmp as $part){
+      if(empty($part)){
+        continue;
+      }
+      $source_dn            = "ou=".$part.",".$source_dn;
+      $sub_releases[$part]  = $source_dn;
+    }
+
+    /* Get all groups */
+    $ldap =$config->get_ldap_link();
+    $ldap->cd($config->current['BASE']);
+    $ldap->search("(objectClass=posixGroup)",array("dn"));
+    $groups = array();
+    while($attrs = $ldap->fetch()){
+      $groups[$attrs['dn']] = $attrs;
+    }
+
+    /* Get all FAI releases, to be able to create missing group application releases 
+        with the correct type of release (FAIstate=freeze/branch).
+     */
+    $f_releases = array();
+    $ldap->cd ($config->current['BASE']);
+    $ldap->search("(objectClass=FAIbranch)",array("ou","FAIstate"));
+    while($attrs = $ldap->fetch()){
+      foreach($sub_releases as $sub_rel){
+        if(preg_match("/^".normalizePreg($sub_rel.get_ou('faiou'))."/",$attrs['dn'])){
+          $f_releases[$sub_rel.get_ou('faiou')] = $attrs;
+        }
+      }
+    }
+
+    /* Get all group releases */
+    $g_releases = array();
+    foreach($groups as $dn => $data){
+      $ldap->cd($dn);
+      $ldap->search("(objectClass=FAIbranch)",array("ou","FAIstate"));
+      while($attrs = $ldap->fetch()){
+        $g_releases[$attrs['dn']] = $attrs;
+      }
+    }
+
+    /* Check if base releases exists.
+       If they do not exist, create them and adapt FAIstate attribute from FAI releases. 
+     */
+    foreach($sub_releases as $name => $sub_rel){
+
+      $FAIstate = "";
+      if(isset($f_releases[$sub_rel.get_ou('faiou')]) && isset($f_releases[$sub_rel.get_ou('faiou')]['FAIstate'])){
+        $FAIstate = $f_releases[$sub_rel.get_ou('faiou')]['FAIstate'][0];
+      }
+
+      foreach($groups as $dn => $data){
+        if(!isset($g_releases[$sub_rel.$dn])){
+          $ldap->cd($dn);
+          $r_data = array();
+          $r_data['ou'] = $name;
+          $r_data['objectClass'] = array("top","organizationalUnit","FAIbranch");
+          if(!empty($FAIstate)) {
+            $r_data['FAIstate'] = $FAIstate;
+          }
+ 
+          $ldap->cd($sub_rel.$dn) ;
+          $ldap->add($r_data);
+          echo "&nbsp;<b>"._("Object").":</b> ";
+          echo sprintf(_("Adding missing group application release container %s."),substr(LDAP::fix($sub_rel.$dn),0,96))."<br>";
+          flush();
+        }
+      }
+    } 
+ 
+    /* Create new release container in each group.
+     */
+    $n_data = array();
+    $n_data = array();
+    $n_data['ou'] = $destination_name;
+    $n_data['objectClass'] = array("top","organizationalUnit","FAIbranch");
+    if(!empty($type)){
+      $n_data['FAIstate'] = $type;
+    }
+
+    foreach($groups as $dn => $att){
+      $n_dn = "ou=".$destination_name.",".$source_dn.$dn;
+      if(!isset($g_releases[$n_dn])){
+        $ldap->cd ($n_dn);
+        $ldap->add($n_data);
+        echo "&nbsp;<b>"._("Object").":</b> ";
+        echo sprintf(_("Adding group application release container %s."),substr(LDAP::fix($n_dn),0,96))."<br>";
+        flush();
+      }
+    }
+
+    /* If the source release is empty, then create a new release by copying 
+        all group application menus into a new ou=$destination_name release container.
+      
+       If the source release is not empty. 
+         We detect all releases which match the source release dn and copy the contents.
+     */
+    if(empty($source_release)){
+      $source_dns = $groups;
+    }else{
+      $source_dns = array();
+      foreach($g_releases as $dn => $data){
+        if(preg_match("/^".normalizePreg($source_dn)."/",$dn)){
+          $source_dns[$dn] = $data; 
+        }
+      }
+    }
+
+    /* Detect all menu object we have to copy 
+     */
+    $to_copy = array();
+    foreach($source_dns as $dn => $attrs){
+      $ldap->cd($dn);
+      $ldap->ls("(objectClass=gotoSubmenuEntry)(objectClass=gotoMenuEntry)",$dn,array("dn"));
+      while($attrs = $ldap->fetch()){
+        $destination = preg_replace("/".normalizePreg($dn)."$/","ou=".$destination_name.",".$dn,$attrs['dn']);
+        $to_copy[$attrs['dn']] = $destination;
+      }
+    }
+    
+    /* At least create the menu objects object */
+    $plug = new plugin($config);
+    foreach($to_copy as $source => $destination){
+      $ldap->cat($destination);
+      if($ldap->count()){
+        echo "&nbsp;<b>"._("Object").":</b> ";
+        echo sprintf(_("Could not create menu entry %s. (Already exists)."),substr(LDAP::fix($destination),0,96))."<br>";
+        flush();
+      }else{
+        $plug->copy($source,$destination);
+        echo "&nbsp;<b>"._("Object").":</b> ";
+        echo sprintf(_("Created group application menu entry for %s."),substr(LDAP::fix($destination),0,96))."<br>";
+        flush();
+      }
+    }
+  }
+
+
   /*! \brief Create a new FAI branch.
    *  @param $sourcedn          String  The source release dn
    *  @param $destinationdn     String  The destination dn
