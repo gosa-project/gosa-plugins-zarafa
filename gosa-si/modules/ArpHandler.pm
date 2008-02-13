@@ -33,24 +33,15 @@ BEGIN{
 END{}
 
 my ($timeout, $mailto, $mailfrom, $user, $group);
-my ($arp_activ, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my ($arp_enabled, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $hosts_database={};
 my $resolver=Net::DNS::Resolver->new;
 my $ldap;
-if($lookup_vendor) {
-	eval("Net::MAC::Vendor::load_cache('file:///usr/lib/gosa-si/modules/oui.txt')");
-	if($@) {
-		&main::daemon_log("Loading OUI cache file failed! MAC Vendor lookup disabled", 1);
-		$lookup_vendor=0;
-	} else {
-		&main::daemon_log("Loading OUI cache file suceeded!", 6);
-	}
-}
 
 my %cfg_defaults =
 (
 	"ArpHandler" => {
-		"activ"           => [\$arp_activ,         "on"],
+		"enabled"           => [\$arp_enabled,         "true"],
 		"interface"       => [\$arp_interface,    "all"],
 	},
 	"server" => {
@@ -93,12 +84,25 @@ sub get_module_info {
 
 	&read_configfile();
 	# Don't start if some of the modules are missing
-	if(($arp_activ eq 'on') && $start_service) {
-		$ldap = Net::LDAP->new($ldap_uri);
-		if (!$ldap) {
-			&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
+	if(($arp_enabled eq 'true') && $start_service) {
+		if($lookup_vendor) {
+			eval("Net::MAC::Vendor::load_cache('file:///usr/lib/gosa-si/modules/oui.txt')");
+			if($@) {
+				&main::daemon_log("Loading OUI cache file failed! MAC Vendor lookup disabled", 1);
+				$lookup_vendor=0;
+			} else {
+				&main::daemon_log("Loading OUI cache file suceeded!", 6);
+			}
+		}
+		if(defined($ldap_uri) && length($ldap_uri)>0) {
+			$ldap = Net::LDAP->new($ldap_uri);
+			if (!$ldap) {
+				&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
+			} else {
+				$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+			}
 		} else {
-			$ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+			$ldap=undef;
 		}
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
@@ -245,33 +249,35 @@ sub get_host_from_ldap {
 	my $mac=shift;
 	my $result={};
 		
-	my $ldap_result= &search_ldap_entry(
-		$ldap,
-		$ldap_base,
-		"(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))"
-	);
+	if(defined($ldap)) {
+		my $ldap_result= &search_ldap_entry(
+			$ldap,
+			$ldap_base,
+			"(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))"
+		);
 
-	if(defined($ldap_result) && $ldap_result->count==1) {
-		if(exists($ldap_result->{entries}[0]) && 
-			exists($ldap_result->{entries}[0]->{asn}->{objectName}) && 
-			exists($ldap_result->{entries}[0]->{asn}->{attributes})) {
+		if(defined($ldap_result) && $ldap_result->count==1) {
+			if(exists($ldap_result->{entries}[0]) && 
+				exists($ldap_result->{entries}[0]->{asn}->{objectName}) && 
+				exists($ldap_result->{entries}[0]->{asn}->{attributes})) {
 
-			for my $attribute(@{$ldap_result->{entries}[0]->{asn}->{attributes}}) {
-				if($attribute->{type} eq 'cn') {
-					$result->{cn} = $attribute->{vals}[0];
-				}
-				if($attribute->{type} eq 'macAddress') {
-					$result->{macAddress} = $attribute->{vals}[0];
-				}
-				if($attribute->{type} eq 'dhcpHWAddress') {
-					$result->{dhcpHWAddress} = $attribute->{vals}[0];
-				}
-				if($attribute->{type} eq 'ipHostNumber') {
-					$result->{ipHostNumber} = $attribute->{vals}[0];
+				for my $attribute(@{$ldap_result->{entries}[0]->{asn}->{attributes}}) {
+					if($attribute->{type} eq 'cn') {
+						$result->{cn} = $attribute->{vals}[0];
+					}
+					if($attribute->{type} eq 'macAddress') {
+						$result->{macAddress} = $attribute->{vals}[0];
+					}
+					if($attribute->{type} eq 'dhcpHWAddress') {
+						$result->{dhcpHWAddress} = $attribute->{vals}[0];
+					}
+					if($attribute->{type} eq 'ipHostNumber') {
+						$result->{ipHostNumber} = $attribute->{vals}[0];
+					}
 				}
 			}
+			$result->{dn} = $ldap_result->{entries}[0]->{asn}->{objectName};
 		}
-		$result->{dn} = $ldap_result->{entries}[0]->{asn}->{objectName};
 	}
 
 	return $result;
@@ -366,41 +372,45 @@ sub get_vendor_for_mac {
 #     SEE ALSO:  n/a/bin
 #===============================================================================
 sub add_ldap_entry {
-    my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip, $interface, $desc) = @_;
-    my $dn = "cn=".$hosts_database->{$mac}->{cn}.",ou=incoming,$ldap_base";
-    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
-    my $c_res = (defined($s_res))?$s_res->count:0;
-    if($c_res == 1) {
-        &main::daemon_log("WARNING: macAddress $mac already in LDAP", 1);
-        return;
-    } elsif($c_res > 0) {
-        &main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
-        return;
-    }
+	my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip, $interface, $desc) = @_;
+	if(defined($ldap_tree)) {
+		my $dn = "cn=".$hosts_database->{$mac}->{cn}.",ou=incoming,$ldap_base";
+		my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
+		my $c_res = (defined($s_res))?$s_res->count:0;
+		if($c_res == 1) {
+			&main::daemon_log("WARNING: macAddress $mac already in LDAP", 1);
+			return;
+		} elsif($c_res > 0) {
+			&main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
+			return;
+		}
 
-    # create LDAP entry 
-    my $entry = Net::LDAP::Entry->new( $dn );
-    $entry->dn($dn);
-    $entry->add("objectClass" => "goHard");
-    $entry->add("cn" => $hosts_database->{$mac}->{cn});
-    $entry->add("macAddress" => $mac);
-    if(defined $gotoSysStatus) {$entry->add("gotoSysStatus" => $gotoSysStatus)}
-    if(defined $ip) {$entry->add("ipHostNumber" => $ip) }
-    #if(defined $interface) { }
-    if(defined $desc) {$entry->add("description" => $desc) }
-    
-    # submit entry to LDAP
-	my $result = $entry->update ($ldap_tree); 
-        
-    # for $result->code constants please look at Net::LDAP::Constant
-    if($result->code == 68) {   # entry already exists 
-        &main::daemon_log("WARNING: $dn ".$result->error, 3);
-    } elsif($result->code == 0) {   # everything went fine
-        &main::daemon_log("add entry $dn to ldap", 1);
-    } else {  # if any other error occur
-        &main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
-    }
-    return;
+		# create LDAP entry 
+		my $entry = Net::LDAP::Entry->new( $dn );
+		$entry->dn($dn);
+		$entry->add("objectClass" => "goHard");
+		$entry->add("cn" => $hosts_database->{$mac}->{cn});
+		$entry->add("macAddress" => $mac);
+		if(defined $gotoSysStatus) {$entry->add("gotoSysStatus" => $gotoSysStatus)}
+		if(defined $ip) {$entry->add("ipHostNumber" => $ip) }
+		#if(defined $interface) { }
+		if(defined $desc) {$entry->add("description" => $desc) }
+
+		# submit entry to LDAP
+		my $result = $entry->update ($ldap_tree); 
+
+		# for $result->code constants please look at Net::LDAP::Constant
+		if($result->code == 68) {   # entry already exists 
+			&main::daemon_log("WARNING: $dn ".$result->error, 3);
+		} elsif($result->code == 0) {   # everything went fine
+			&main::daemon_log("add entry $dn to ldap", 1);
+		} else {  # if any other error occur
+			&main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
+		}
+	} else {
+		&main::daemon_log("Not adding new Entry: LDAP disabled", 6);
+	}
+	return;
 }
 
 
@@ -415,39 +425,43 @@ sub add_ldap_entry {
 #     SEE ALSO:  n/a
 #===============================================================================
 sub change_ldap_entry {
-    my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip) = @_;
-    
-    # check if ldap_entry exists or not
-    my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
-    my $c_res = (defined $s_res)?$s_res->count:0;
-    if($c_res == 0) {
-        &main::daemon_log("WARNING: macAddress $mac not in LDAP", 1);
-        return;
-    } elsif($c_res > 1) {
-        &main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
-        return;
-    }
+	my ($ldap_tree, $ldap_base, $mac, $gotoSysStatus, $ip) = @_;
 
-    my $s_res_entry = $s_res->pop_entry();
-    my $dn = $s_res_entry->dn();
-	my $replace = {
-		'gotoSysStatus' => $gotoSysStatus,
-	};
-	if (defined($ip)) {
-		$replace->{'ipHostNumber'} = $ip;
+	if(defined($ldap_tree)) {
+		# check if ldap_entry exists or not
+		my $s_res = &search_ldap_entry($ldap_tree, $ldap_base, "(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))");
+		my $c_res = (defined $s_res)?$s_res->count:0;
+		if($c_res == 0) {
+			&main::daemon_log("WARNING: macAddress $mac not in LDAP", 1);
+			return;
+		} elsif($c_res > 1) {
+			&main::daemon_log("ERROR: macAddress $mac exists $c_res times in LDAP", 1);
+			return;
+		}
+
+		my $s_res_entry = $s_res->pop_entry();
+		my $dn = $s_res_entry->dn();
+		my $replace = {
+			'gotoSysStatus' => $gotoSysStatus,
+		};
+		if (defined($ip)) {
+			$replace->{'ipHostNumber'} = $ip;
+		}
+		my $result = $ldap->modify( $dn, replace => $replace );
+
+		# for $result->code constants please look at Net::LDAP::Constant
+		if($result->code == 32) {   # entry doesnt exists 
+			&add_ldap_entry($mac, $gotoSysStatus);
+		} elsif($result->code == 0) {   # everything went fine
+			&main::daemon_log("entry $dn changed successful", 1);
+		} else {  # if any other error occur
+			&main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
+		}
+	} else {
+		&main::daemon_log("Not changing Entry: LDAP disabled", 6);
 	}
-    my $result = $ldap->modify( $dn, replace => $replace );
 
-    # for $result->code constants please look at Net::LDAP::Constant
-    if($result->code == 32) {   # entry doesnt exists 
-        &add_ldap_entry($mac, $gotoSysStatus);
-    } elsif($result->code == 0) {   # everything went fine
-        &main::daemon_log("entry $dn changed successful", 1);
-    } else {  # if any other error occur
-        &main::daemon_log("ERROR: $dn, ".$result->code.", ".$result->error, 1);
-    }
-
-    return;
+	return;
 }
 
 #===  FUNCTION  ================================================================
