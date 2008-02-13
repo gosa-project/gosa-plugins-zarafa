@@ -26,7 +26,7 @@ my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
 my $no_bus;
-my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
+my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret, $gosa_unit_tag);
 
 
 my %cfg_defaults = (
@@ -45,6 +45,7 @@ my %cfg_defaults = (
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
     "ldap-admin-password" => [\$ldap_admin_password, ""],
     "max-clients" => [\$max_clients, 100],
+	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 "SIPackages" => {
     "key" => [\$SIPackages_key, ""],
@@ -58,6 +59,32 @@ my %cfg_defaults = (
 
 $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface);
+
+# Unit tag can be defined in config
+if(not defined($gosa_unit_tag) || length($gosa_unit_tag)==0) {
+	# Read gosaUnitTag from LDAP
+	my $tmp_ldap= Net::LDAP->new($ldap_uri);
+	if(defined($tmp_ldap)) {
+		my $mesg= $tmp_ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+		# Perform search for Unit Tag
+		$mesg = $tmp_ldap->search(
+			base   => $ldap_base,
+			scope  => 'sub',
+			attrs  => ['gosaUnitTag'],
+			filter => "(macaddress=$server_mac_address)"
+		);
+
+		if ($mesg->count == 1) {
+			my $entry= $mesg->entry(0);
+			my $unit_tag= $entry->get_value("gosaUnitTag");
+			if(defined($unit_tag) && length($unit_tag) > 0) {
+				&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+				$gosa_unit_tag= $unit_tag;
+			}
+			$mesg = $tmp_ldap->unbind;
+		}
+	}
+}
 
 # complete addresses
 #if( $server_ip eq "0.0.0.0" ) {
@@ -818,6 +845,10 @@ sub process_detected_hardware {
 		$entry->add("gotomode" => "locked");
 		$entry->add("gotoSysStatus" => "new-system");
 		$entry->add("ipHostNumber" => $ipaddress);
+		if(defined($gosa_unit_tag) && length($gosa_unit_tag) > 0) {
+			$entry->add("objectClass" => "gosaAdministrativeUnit");
+			$entry->add("gosaUnitTag" => $gosa_unit_tag);
+		}
 		if(my $res=$entry->update($ldap)) {
 			# Fill $mesg again
 			$mesg = $ldap->search(
