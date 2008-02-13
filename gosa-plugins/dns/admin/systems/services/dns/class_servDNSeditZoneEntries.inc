@@ -78,7 +78,7 @@ class servDNSeditZoneEntries extends plugin
 
     $smarty->assign("disableDialog",$this->disableDialog);
     $smarty->assign("table",$table);;
-    $display.= $smarty->fetch(get_template_path('servDNSeditZoneEntries.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servDNSeditZoneEntries.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
