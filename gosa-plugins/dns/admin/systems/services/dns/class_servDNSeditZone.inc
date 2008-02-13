@@ -44,6 +44,7 @@ class servdnseditZone extends plugin
   var $isNew                    = true;
 
   var $ZoneObject               = array();
+  var $Zone_is_used             = FALSE;
 
   function servdnseditZone (&$config, $dn= NULL,$attrs = array())
   {
@@ -114,6 +115,13 @@ class servdnseditZone extends plugin
         $this->sOAserial = $this->sOAserial + 1;
       }else{
         $this->sOAserial = date("Ymd")."01";
+      }
+
+      /* Check if this used, in this case disable forward and reverse configuration */
+      $tmp = $this->getUsedZoneNames();
+      $this->Zone_is_used = FALSE;
+      if(isset($tmp[DNS::FlipIp($this->InitialReverseZone).".in-addr.arpa"])){
+        $this->Zone_is_used = TRUE;
       }
     }
 
@@ -204,10 +212,9 @@ class servdnseditZone extends plugin
     /* Call parent execute */
     plugin::execute();
 
-
-
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("Zone_is_used",$this->Zone_is_used);
     $ui = get_userinfo();
 
     $smarty->assign("ACLs",$this->parent->getacl(""));
@@ -367,6 +374,11 @@ class servdnseditZone extends plugin
   {
     //plugin::save_object();
     foreach($this->attributes as $attr){
+
+      if($this->Zone_is_used && in_array($attr,array("ReverseZone","zoneName"))){
+        continue;
+      }
+
       if(isset($_POST[$attr])){
         $this->$attr = $_POST[$attr];
       }
@@ -381,7 +393,7 @@ class servdnseditZone extends plugin
       }
     }
 
-     if(isset($_POST['NetworkClass'])){
+     if(isset($_POST['NetworkClass']) && !$this->Zone_is_used){
        $this->NetworkClass = $_POST['NetworkClass'];
      }
 
@@ -478,25 +490,21 @@ class servdnseditZone extends plugin
     return ($message);
   }
 
-  /* This funtion returns all used Zonenames */
+
+  /* This funtion returns all used Zonenames
+   */
   function getUsedZoneNames()
   {
     $ret = array();
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=dNSZone)(relativeDomainName=@)(zoneName=*))",array("zoneName","tXTRecord"));
+    $ldap->search("(&(objectClass=dNSZone)(!(relativeDomainName=@))(zoneName=*))",array("zoneName","relativeDomainName"));
     while($attr = $ldap->fetch()){
-      if(preg_match("/in-addr\.arpa/",$attr['zoneName'][0])){
-        if(isset($attr['tXTRecord'][0])){
-          $zn = preg_replace("/zoneName\=/","",$attr['tXTRecord'][0]);
-          $ret[$zn] =DNS::FlipIp(preg_replace("/\.in-addr\.arpa/","",$attr['zoneName'][0]));
-        }
-      }else{
-        $ret[$attr['zoneName'][0]]="";
-      }
+      $ret[$attr['zoneName'][0]][] = $attr['dn'];
     }
     return($ret);
   }
+
 
   /* Save to LDAP */
   function save()
@@ -597,7 +605,8 @@ class servdnseditZone extends plugin
     $str.="</select>";
     return($str);
   }
-}
 
+
+}
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

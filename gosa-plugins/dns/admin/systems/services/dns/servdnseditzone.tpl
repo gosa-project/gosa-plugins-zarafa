@@ -4,20 +4,20 @@
 		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
 			<table summary="">
 				<tr>
-					<td>{t}Zone name{/t}{$must}
+					<td style='vertical-align:top'>{t}Zone name{/t}{$must}
 					</td>
 					<td>
 {render acl=$ACLs}					
-						<input type="text" name="zoneName" value="{$zoneName}" {if $NotNew} disabled {/if}>
+						<input type="text" name="zoneName" value="{$zoneName}" {if $NotNew | $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Network address{/t}{$must}
+					<td style='vertical-align:top'>{t}Network address{/t}{$must}
 					</td>
 					<td>
 {render acl=$ACLs}					
-						<input type="text" name="ReverseZone" value="{$ReverseZone}" {if $NotNew} disabled {/if}>
+						<input type="text" name="ReverseZone" value="{$ReverseZone}" {if $NotNew | $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
 				</tr>
@@ -26,12 +26,19 @@
 					</td>
 					<td>
 {render acl=$ACLs}					
-						<select name="NetworkClass" {if $NotNew} disabled {/if}>
+						<select name="dummy3" {if $NotNew | $Zone_is_used} disabled {/if}>
 							{html_options options=$NetworkClasses selected=$NetworkClass }
 						</select>
 {/render}
 					</td>
 				</tr>
+				{if $Zone_is_used}
+				<tr>
+					<td colspan="2">
+						<i>{t}Zone is in use, network settings can't be modified.{/t}</i>
+					</td>
+				</tr>
+				{/if}
 			</table>
 		</td>
 		<td style="vertical-align:top;">
