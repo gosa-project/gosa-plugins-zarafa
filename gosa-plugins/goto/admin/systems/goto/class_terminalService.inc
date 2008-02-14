@@ -51,7 +51,7 @@ class termservice extends plugin
 
 
   /* attribute list for save action */
-  var $attributes= array("cn", "gotoLpdEnable", "gotoXMonitor", "gotoXMethod", "gotoXdmcpServer",
+  var $attributes= array("gotoLpdEnable", "gotoXMonitor", "gotoXMethod", "gotoXdmcpServer",
       "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync", "gotoLpdEnable", "gotoLpdServer",
       "gotoScannerEnable", "gotoScannerModel", "gotoScannerClients",
@@ -432,6 +432,12 @@ class termservice extends plugin
   {
     new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     $this->handle_post_events("remove");
+
+    plugin::remove_from_parent();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->modify($this->attrs);
+    show_ldap_error($ldap->get_error(),_("Could not remove terminal service."));
   }
 
 
