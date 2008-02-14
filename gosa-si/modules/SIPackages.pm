@@ -61,7 +61,7 @@ $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface);
 
 # Unit tag can be defined in config
-if(not defined($gosa_unit_tag) || length($gosa_unit_tag)==0) {
+if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
 	my $tmp_ldap= Net::LDAP->new($ldap_uri);
 	if(defined($tmp_ldap)) {
@@ -82,8 +82,12 @@ if(not defined($gosa_unit_tag) || length($gosa_unit_tag)==0) {
 				$gosa_unit_tag= $unit_tag;
 			}
 			$mesg = $tmp_ldap->unbind;
+		} else {
+			&main::daemon_log("Not using gosaUnitTag",8);
 		}
 	}
+} else {
+	&main::daemon_log("Using gosaUnitTag from config-file: $gosa_unit_tag",6);
 }
 
 # complete addresses
