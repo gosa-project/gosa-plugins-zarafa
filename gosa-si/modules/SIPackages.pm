@@ -85,6 +85,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 		} else {
 			# Perform another search for Unit Tag
 			my $hostname= `hostname -f`;
+			&main::daemon_log("Searching for servers gosaUnitTag with hostname $hostname",6);
 			$mesg = $tmp_ldap->search(
 				base   => $ldap_base,
 				scope  => 'sub',
@@ -101,6 +102,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 			} else {
 				# Perform another search for Unit Tag
 				$hostname= `hostname -s`;
+				&main::daemon_log("Searching for servers gosaUnitTag with hostname $hostname",6);
 				$mesg = $tmp_ldap->search(
 					base   => $ldap_base,
 					scope  => 'sub',
