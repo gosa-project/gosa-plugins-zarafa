@@ -65,6 +65,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
 	my $tmp_ldap= Net::LDAP->new($ldap_uri);
 	if(defined($tmp_ldap)) {
+		&main::daemon_log("Searching for servers gosaUnitTag with mac address $server_mac_address",6);
 		my $mesg= $tmp_ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 		# Perform search for Unit Tag
 		$mesg = $tmp_ldap->search(
@@ -81,13 +82,47 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 				&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
 				$gosa_unit_tag= $unit_tag;
 			}
-			$mesg = $tmp_ldap->unbind;
 		} else {
-			&main::daemon_log("Not using gosaUnitTag",8);
+			# Perform another search for Unit Tag
+			my $hostname= `hostname -f`;
+			$mesg = $tmp_ldap->search(
+				base   => $ldap_base,
+				scope  => 'sub',
+				attrs  => ['gosaUnitTag'],
+				filter => "(&(cn=$hostname)(objectClass=goServer))"
+			);
+			if ($mesg->count == 1) {
+				my $entry= $mesg->entry(0);
+				my $unit_tag= $entry->get_value("gosaUnitTag");
+				if(defined($unit_tag) && length($unit_tag) > 0) {
+					&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+					$gosa_unit_tag= $unit_tag;
+				}
+			} else {
+				# Perform another search for Unit Tag
+				$hostname= `hostname -s`;
+				$mesg = $tmp_ldap->search(
+					base   => $ldap_base,
+					scope  => 'sub',
+					attrs  => ['gosaUnitTag'],
+					filter => "(&(cn=$hostname)(objectClass=goServer))"
+				);
+				if ($mesg->count == 1) {
+					my $entry= $mesg->entry(0);
+					my $unit_tag= $entry->get_value("gosaUnitTag");
+					if(defined($unit_tag) && length($unit_tag) > 0) {
+						&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+						$gosa_unit_tag= $unit_tag;
+					}
+				} else {
+					&main::daemon_log("Not using gosaUnitTag", 6);
+				}
+			}
 		}
+	} else {
+		&main::daemon_log("Using gosaUnitTag from config-file: $gosa_unit_tag",6);
 	}
-} else {
-	&main::daemon_log("Using gosaUnitTag from config-file: $gosa_unit_tag",6);
+	$tmp_ldap->unbind;
 }
 
 # complete addresses
