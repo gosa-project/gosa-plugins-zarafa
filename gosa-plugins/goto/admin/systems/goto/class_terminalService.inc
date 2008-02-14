@@ -342,8 +342,10 @@ class termservice extends plugin
      */ 
     $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
     $available_servers = array();
-    if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
-      $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
+    foreach($xdmcp_types as $servername =>$supported_types){
+      if(in_array(strtoupper($this->gotoXMethod),$supported_types)){
+        $available_servers[]  = $servername;
+      }
     }
 
     /* Append additional information to invalid server selections.
@@ -430,7 +432,12 @@ class termservice extends plugin
   {
     new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     $this->handle_post_events("remove");
-  }
+    plugin::remove_from_parent();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->modify($this->attrs);
+    print_a($this->attrs);
+}
 
 
   /* Save data to object */
@@ -507,8 +514,10 @@ class termservice extends plugin
     if($this->gotoXMethod != "default"){
       $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
       $available_servers = array();
-      if(isset($xdmcp_types[strtoupper($this->gotoXMethod)])){
-        $available_servers = $xdmcp_types[strtoupper($this->gotoXMethod)];
+      foreach($xdmcp_types as $servername =>$supported_types){
+        if(in_array(strtoupper($this->gotoXMethod),$supported_types)){
+          $available_servers[]  = $servername;
+        }
       }
       foreach($this->selected_xdmcp_servers as $server){
         if(!in_array($server,$available_servers)){
