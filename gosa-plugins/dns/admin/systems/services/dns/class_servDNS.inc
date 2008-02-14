@@ -435,8 +435,6 @@ class servdns extends goService
       $old_dn = $this->dn;
     }
 
-    $tmp = DNS::getDNSZoneEntriesDiff($this->config,$this->Zones,$old_dn);
-
     /* Update dns to current object dn */ 
     $tmp = DNS::getDNSZoneEntriesDiff($this->config,$this->Zones,$old_dn);
     $tmp2 = array();
