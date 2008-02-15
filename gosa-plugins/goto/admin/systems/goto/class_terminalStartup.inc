@@ -7,7 +7,6 @@ class termstartup extends plugin
   var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
   /* Generic terminal attributes */
-  var $bootmode= "G";
   var $goLdapServerList= array();
   var $gotoBootKernel= "default";
   var $gotoKernelParameters= "";
@@ -58,16 +57,6 @@ class termstartup extends plugin
       $this->$val= array_unique($this->$val);
     }
 
-    /* Parse Kernel Parameters to decide what boot mode is enabled */
-    if (preg_match("/ splash=silent/", $this->gotoKernelParameters)){
-      $this->bootmode= "G";
-    } elseif (preg_match("/ debug/", $this->gotoKernelParameters)){
-      $this->bootmode= "D";
-    } elseif ($this->gotoKernelParameters == "") {
-      $this->bootmode= "G";
-    } else {
-      $this->bootmode= "T";
-    }
     if (preg_match("/ o /", $this->gotoKernelParameters)){
       $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
     } else {
@@ -328,23 +317,6 @@ class termstartup extends plugin
       $smarty->assign($val, $this->$val);
     }
 
-    /* Radio button group */
-    if (preg_match("/G/", $this->bootmode)) {
-      $smarty->assign("graphicalbootup", "checked");
-    } else {
-      $smarty->assign("graphicalbootup", "");
-    }
-    if (preg_match("/T/", $this->bootmode)) {
-      $smarty->assign("textbootup", "checked");
-    } else {
-      $smarty->assign("textbootup", "");
-    }
-    if (preg_match("/D/", $this->bootmode)) {
-      $smarty->assign("debugbootup", "checked");
-    } else {
-      $smarty->assign("debugbootup", "");
-    }
-
     /* Show main page */
     return($smarty->fetch (get_template_path('terminalStartup.tpl', TRUE,dirname(__FILE__))));
   }
@@ -368,11 +340,6 @@ class termstartup extends plugin
         $this->gotoLdap_inherit = TRUE;
       }else{
         $this->gotoLdap_inherit = FALSE;
-      }
-
-      /* Save group radio buttons */
-      if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
-        $this->bootmode= $_POST["bootmode"];
       }
 
       /* Save kernel parameters */
@@ -423,14 +390,6 @@ class termstartup extends plugin
       ",ro,hard,nolock,fg,rsize=8192 ".
       "ip=::::::dhcp ldap=".base64_encode($this->gotoLdapServer);
 
-    switch ($this->bootmode){
-      case "D":
-        $this->gotoKernelParameters.= " debug";
-      break;
-      case "G":
-        $this->gotoKernelParameters.= " splash=silent";
-      break;
-    }
     if ($this->customParameters != ""){
       $this->gotoKernelParameters.= " o ".$this->customParameters;
     }
@@ -531,7 +490,7 @@ class termstartup extends plugin
 
     $source_o = new termstartup ($this->config, $source['dn']);
 
-    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","customParameters","bootmode","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
+    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","customParameters","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
