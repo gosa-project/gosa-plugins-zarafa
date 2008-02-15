@@ -297,23 +297,20 @@ sub process_gosa_msg {
 
     # decide wether msg is a core function or a event handler
     if ( $header eq 'query_jobdb') {
-	$out_msg = &query_jobdb
+        $out_msg = &query_jobdb
     } elsif ($header eq 'delete_jobdb_entry') {
         $out_msg = &delete_jobdb_entry
     } elsif ($header eq 'clear_jobdb') {
-	$out_msg = &clear_jobdb
+        $out_msg = &clear_jobdb
     } elsif ($header eq 'update_status_jobdb_entry' ) {
-	$out_msg = &update_status_jobdb_entry
+        $out_msg = &update_status_jobdb_entry
     } elsif ($header eq 'count_jobdb' ) {
         $out_msg = &count_jobdb
-    } elsif ($header eq 'trigger_action_reboot' ) {
-	print STDERR "trigger_action_reboot\n";
-	print STDERR Dumper($msg);
     } elsif ($header eq 'trigger_action_wake' ) {
-	# Forward messages to all known servers as "trigger_wake"
-	my $in_hash= &transform_msg2hash($msg);
-	my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
-	$out_msg = &send_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
+        # Forward messages to all known servers as "trigger_wake"
+        my $in_hash= &transform_msg2hash($msg);
+        my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
+        $out_msg = &send_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
         # maybe it is an eventa

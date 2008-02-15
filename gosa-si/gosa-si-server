@@ -889,6 +889,8 @@ sub client_input {
     daemon_log("Incoming msg from '".$heap->{'remote_ip'}."'", 7);
     daemon_log("\n$input", 8);
 
+    ####################
+    # check incoming msg
     # msg is from a new client or gosa
     ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
     # msg is from a gosa-si-server or gosa-si-bus

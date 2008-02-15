@@ -1,7 +1,7 @@
 package corefunctions;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events registered new_ldap_config new_key generate_hw_digest detect_hardware reboot halt reinstall softupdate confirm_new_key);
+my @events = qw(get_events registered new_ldap_config new_key generate_hw_digest detect_hardware confirm_new_key ping import_events);
 @EXPORT = @events;
 
 use strict;
@@ -54,8 +54,12 @@ sub write_to_file {
     if( $error == 0 ) {
 
         chomp($string);
-    
-        open(FILE, ">> $file");
+            
+        if( not -f $file ) {
+            open (FILE, "$file");
+            close(FILE);
+        }
+        open(FILE, ">> $file") or &main::daemon_log("ERROR in corefunctions.pm: can not open '$file' to write '$string'", 1);;
         print FILE $string."\n";
         close(FILE);
     }
@@ -71,37 +75,6 @@ sub get_events {
 sub daemon_log {
     my ($msg, $level) = @_ ;
     &main::daemon_log($msg, $level);
-    return;
-}
-
-
-sub reboot {
-    my ($msg, $msg_hash) = @_ ;
-    &main::daemon_log("got reboot-msg: $msg", 5);
-    return;
-}
-
-
-sub halt {
-    my ($msg, $msg_hash) = @_ ;
-
-    &main::daemon_log("got halt-msg: $msg", 5);
-    return;
-}
-
-
-sub reinstall {
-    my ($msg, $msg_hash) = @_ ;
-    &main::daemon_log("got reinstall-msg: $msg", 5);
-
-    return;
-}
-
-
-sub softupdate {
-    my ($msg, $msg_hash) = @_ ;
-    &main::daemon_log("got softupdate-msg: $msg", 5);
-
     return;
 }
 
@@ -452,6 +425,5 @@ sub ping {
     return $out_msg;
 
 }
-
 
 1;

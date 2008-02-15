@@ -1096,6 +1096,11 @@ sub import_events {
         }
 
     }
+
+    my @all_events = keys %$event_hash;
+    my $all_events_string = join(", ", @all_events);
+    
+    daemon_log("INFO: imported events: $all_events_string", 5);
 }
 
 sub trigger_new_key {
