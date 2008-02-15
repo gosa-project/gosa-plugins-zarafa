@@ -172,8 +172,7 @@ class termgeneric extends plugin
         if ($action == "reinstall" || $action == "softupdate"){
                 $method= "job";
         }
-        gosaSupportDaemon::send("${method}_trigger_action_".$action, $this->netConfigDNS->macAddress, array("macAddress" => $t
-his->netConfigDNS->macAddress));
+        gosaSupportDaemon::send("${method}_trigger_action_".$action, $this->netConfigDNS->macAddress, array("macAddress" => $this->netConfigDNS->macAddress));
     }
 
     /* Base select dialog */
