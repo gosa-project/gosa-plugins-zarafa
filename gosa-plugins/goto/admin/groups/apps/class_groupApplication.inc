@@ -184,18 +184,25 @@ class appgroup extends plugin
       $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
       $sub_dn_array = split("\,",$sub_dn);
 
-
+      $found = true;
       for($i = (count($sub_dn_array)-1) ; $i >= 0 ; $i--){
         $name = preg_replace("/^[^=]*+=/","",$sub_dn_array[$i]);
+        
         if($i > 0){
+          $found =FALSE;
           foreach($cur as $key => $entry){
             if($entry['NAME'] == $name){
               $cur = &$cur[$key]['ENTRIES'];
               $parent_id = $entry['UNIQID'];
+              $found =true;
+              break;
             }
           }
         }else{
-
+          
+          if(!$found){
+            break;
+          }
           $priority = 1;
           if(isset($attrs['gosaApplicationPriority'])){
             $priority= $attrs['gosaApplicationPriority'][0];
