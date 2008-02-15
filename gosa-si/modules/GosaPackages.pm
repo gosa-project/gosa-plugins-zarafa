@@ -50,7 +50,7 @@ $network_interface= &get_interface_for_ip($server_ip);
 $gosa_mac_address= &get_mac($network_interface);
 
 # complete addresses
-my $server_address = "$server_ip:$server_port";
+our $server_address = "$server_ip:$server_port";
 my $gosa_address = "$gosa_ip:$gosa_port";
 
 # create general settings for this module
@@ -277,6 +277,9 @@ sub process_incoming_msg {
         my $res = $main::job_db->exec_statement($sql);
     } 
 
+    # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
+    $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
+
     my @out_msg_l;
     if (defined $out_msg){
         push(@out_msg_l, $out_msg);
@@ -320,26 +323,6 @@ sub process_gosa_msg {
             no strict 'refs';
             $out_msg = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
          }
-
-#        opendir (DIR, $server_event_dir) or &main::daemon_log("ERROR cannot open $server_event_dir: $!\n", 1) and return;
-#        while (defined (my $file = readdir (DIR))) {
-#            if (not $file eq $header) {
-#                next;
-#            }
-#            # try to deliver incoming msg to eventhandler
-#            my $cmd = File::Spec->join($server_event_dir, $header)." '$msg'";
-#            &main::daemon_log("GosaPackages: execute event_handler $header", 3);
-#            &main::daemon_log("GosaPackages: cmd: $cmd", 8);
-#
-#            $out_msg = "";
-#            open(PIPE, "$cmd 2>&1 |");
-#            while(<PIPE>) {
-#                $out_msg.=$_;
-#            }
-#            close(PIPE);
-#            &main::daemon_log("GosaPackages: answer of cmd: $out_msg", 5);
-#            last;
-#        }
     }
 
     # if delivery not possible raise error and return 
