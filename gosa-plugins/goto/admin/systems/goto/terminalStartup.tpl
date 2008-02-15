@@ -2,27 +2,7 @@
 <table summary="" style="width:100%;">
  <tr>
   <td style="width:50%; vertical-align:top;">
-
-   <table summary="" style="width:100%">
-    <tr>
-     <td style="width:30%"><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
-     <td>
-{render acl=$gotoBootKernelACL}
-	<select id="gotoBootKernel" name="gotoBootKernel">
-	{html_options options=$gotoBootKernels  selected=$gotoBootKernel}
-	<option disabled>&nbsp;</option>
-	</select>
-{/render}
-     </td>
-    </tr>
-    <tr>
-     <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
-     <td>
-{render acl=$gotoKernelParametersACL}
-      <input name="customParameters" id="customParameters"  size=25 maxlength=500
-                value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
-{/render}
-    </tr>
+	<table>
     <tr>
      <td colspan="2" style='vertical-align:top;padding-top:3px;width:100%'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
 {render acl=$gotoLdapServerACL}
@@ -46,29 +26,35 @@
 {/render}
      </td>
     </tr>
-   </table>
-
+	</table>	
   </td>
-
   <td style="border-left:1px solid #A0A0A0">
      &nbsp;
   </td>
-  
   <td style="vertical-align:top;">
-{render acl=$gotoKernelParametersACL}
-    <input type="radio" name="bootmode" value="G" title="{t}Select if terminal supports graphical startup with progress bar{/t}" {$graphicalbootup}>
+
+   <table summary="" style="width:100%">
+    <tr>
+     <td style="width:30%"><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
+     <td>
+{render acl=$gotoBootKernelACL}
+	<select id="gotoBootKernel" name="gotoBootKernel">
+	{html_options options=$gotoBootKernels  selected=$gotoBootKernel}
+	<option disabled>&nbsp;</option>
+	</select>
 {/render}
-    {t}use graphical bootup{/t}
-    <br>
+     </td>
+    </tr>
+    <tr>
+     <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
+     <td>
 {render acl=$gotoKernelParametersACL}
-    <input type="radio" name="bootmode" value="T" title="{t}Select if terminal should boot in text mode{/t}" {$textbootup}>
+      <input name="customParameters" id="customParameters"  size=25 maxlength=500
+                value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
 {/render}
-    {t}use standard linux textual bootup{/t}
-    <br>
-{render acl=$gotoKernelParametersACL}
-    <input type="radio" name="bootmode" value="D" title="{t}Select to get more verbose output during startup{/t}" {$debugbootup}>
-{/render}
-    {t}use debug mode for startup{/t}
+    </tr>
+   </table>
+
   </td>
  </tr>
 </table>
