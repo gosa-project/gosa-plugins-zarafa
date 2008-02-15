@@ -58,11 +58,7 @@
         $this->fileserver = preg_replace("/msdfs:/", "", $tmp[0]);
         $this->share = preg_replace("/\\\/", "", $tmp[1]);
       
-        #var_dump($this->dn);
-        #echo "<BR>\n";
-
         /* Fill array */
-        #$this->reload();
         $smarty->assign("sambasharename", $this->sambasharename);
         $smarty->assign("sharedescription", $this->sharedescription);
         $smarty->assign("fileserver", $this->fileserver);
@@ -73,7 +69,6 @@
 
       /* Show main page */
       return ($smarty->fetch (get_template_path('generic.tpl', TRUE)));
-      #, dirname(__FILE__))));
     }
 
     function check() 
@@ -155,7 +150,6 @@
       $ldap = $this->config->get_ldap_link();
 
       if ($this->dn == "new" || $this->dn == "") {
-        echo "new<br>\n";
         $base = get_base_from_people($this->ui->dn);
         $ou = get_ou("DFS");
         $this->basedn = "sambaShareName=$this->sambasharename,ou=$this->loc,$ou$base";
@@ -187,15 +181,10 @@
       }
     }
 
-    function save_object() {
-      #if (isset($_POST['base'])) {
-        plugin::save_object();
-        #echo "base = ".$_POST['base']."<br>\n";
-      #}
-#      if (chkacl($this->acl, "create") == "") {
-        $this->base = $_POST['base'];
-#      }
-    }
+	function save_object() {
+		plugin::save_object();
+		$this->base = $_POST['base'];
+	}
 
     function delete() {
     
@@ -211,7 +200,6 @@
       $base = get_base_from_people($this->ui->dn);
       $ou = get_ou("DFS");
       $this->basedn = "sambaShareName=$this->sambasharename,ou=$this->loc,$ou$base";
-      echo "BASEDN: $this->basedn<br>\n";
 
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->basedn);
