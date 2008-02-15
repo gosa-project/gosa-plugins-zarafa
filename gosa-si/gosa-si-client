@@ -25,7 +25,7 @@ use Config::IniFiles;
 use POSIX;
 use Time::HiRes qw( gettimeofday );
 
-use POE qw(Component::Server::TCP);
+use POE qw(Component::Server::TCP Wheel::FollowTail);
 use IO::Socket::INET;
 use NetAddr::IP;
 use Data::Dumper;
@@ -48,6 +48,8 @@ my $default_server_key;
 my $event_hash;
 my @servers;
 my $gotoHardwareChecksum;
+my $gosa_si_client_fifo;
+my %files_to_watch;
 $verbose= 1;
 
 # globalise variables which are used in imported events
@@ -58,6 +60,10 @@ our $server_key;
 
 # default variables
 our $REGISTERED = 0;
+
+# path to fifo for non-gosa-si-client messages to gosa-si-server
+$gosa_si_client_fifo = "/tmp/gosa-si-client-fifo";
+%files_to_watch = (fifo => $gosa_si_client_fifo); 
 
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
 # not successful until now
@@ -1103,10 +1109,56 @@ sub trigger_new_key {
 }
 
 
+sub generic_file_reset {
+    my ( $heap, $wheel_id ) = @_[ HEAP, ARG0 ];
+
+    my $service = $heap->{services}->{$wheel_id};
+    daemon_log("INFO: '$service' watching reset", 5);
+    return;
+}
+
+sub generic_file_error {
+    my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
+      @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
+
+    my $service = $heap->{services}->{$wheel_id};
+    daemon_log("ERROR: '$service' watcher $operation error $errno: $error_string", 1);
+    daemon_log("ERROR: shutting down '$service' file watcher", 1);
+
+    delete $heap->{services}->{$wheel_id};
+    delete $heap->{watchers}->{$wheel_id};
+    return;
+}
+
+sub fifo_got_record {
+    my $file_record = $_[ARG0];
+    print STDERR "$file_record\n";
+
+    my $clmsg_hash = &create_xml_hash("CLMSG_$file_record", $client_address, $server_address);
+    my $clmsg = &create_xml_string($clmsg_hash);
+    &send_msg_to_target($clmsg, $server_address, $server_key);
+    return;
+}
+
+
 sub _start {
-    my ($kernel) = $_[KERNEL];
+    my ($kernel, $heap) = @_[KERNEL, HEAP];
     $kernel->alias_set('client_session');
+    
+    # force a registration at a gosa-si-server
     $kernel->yield('register_at_gosa_si_server');
+    
+    # install all file watcher defined
+    while( my($file_name, $file) = each %files_to_watch ) {
+        my $file_watcher = POE::Wheel::FollowTail->new(
+            Filename   => $file,
+            InputEvent => $file_name."_record",
+            ResetEvent => "file_reset",
+            ErrorEvent => "file_error",
+            );
+        $heap->{services}->{ $file_watcher->ID } = $file_name;
+        $heap->{watchers}->{ $file_watcher->ID } = $file_watcher;
+    }
 }
 
 
@@ -1277,6 +1329,8 @@ else {
 }
 
 
+# open fifo for non-gosa-si-client-msgs to gosa-si-server
+POSIX::mkfifo("$gosa_si_client_fifo", "0600");
 
 
 POE::Session->create(
@@ -1284,6 +1338,13 @@ POE::Session->create(
 		_start => \&_start, 
         register_at_gosa_si_server => \&register_at_gosa_si_server,
         trigger_new_key => \&trigger_new_key,
+        
+        # handle records from each defined file differently
+        fifo_record => \&fifo_got_record,
+
+        # handle file resets and errors the same way for each file
+        file_reset => \&generic_file_reset,
+        file_error => \&generic_file_error,
 	}
 );
 

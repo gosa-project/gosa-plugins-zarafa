@@ -58,6 +58,22 @@ sub create_xml_hash {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME:  create_xml_string
+#   PARAMETERS:  xml_hash - hash - hash from function create_xml_hash
+#      RETURNS:  xml_string - string - xml string representation of the hash
+#  DESCRIPTION:  transform the hash to a string using XML::Simple module
+#===============================================================================
+sub create_xml_string {
+    my ($xml_hash) = @_ ;
+    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
+    #$xml_string =~ s/[\n]+//g;
+    #daemon_log("create_xml_string:",7);
+    #daemon_log("$xml_string\n", 7);
+    return $xml_string;
+}
+
+
 sub transform_msg2hash {
     my ($msg) = @_ ;
     my $hash = $xml->XMLin($msg, ForceArray=>1);
@@ -90,66 +106,6 @@ sub transform_msg2hash {
 
 
 #===  FUNCTION  ================================================================
-#         NAME:  send_msg_hash2address
-#   PARAMETERS:  msg_hash - hash - xml_hash created with function create_xml_hash
-#                PeerAddr string - socket address to send msg
-#                PeerPort string - socket port, if not included in socket address
-#      RETURNS:  nothing
-#  DESCRIPTION:  ????
-#===============================================================================
-#sub send_msg_hash2address ($$$){
-#    my ($msg_hash, $address, $passwd) = @_ ;
-#
-#    # fetch header for logging
-#    my $header = @{$msg_hash->{header}}[0];  
-#
-#    # generate xml string
-#    my $msg_xml = &create_xml_string($msg_hash);
-#    
-#    # create ciphering object
-#    my $act_cipher = &create_ciphering($passwd);
-#    
-#    # encrypt xml msg
-#    my $crypted_msg = &encrypt_msg($msg_xml, $act_cipher);
-#
-#    # opensocket
-#    my $socket = &open_socket($address);
-#    if(not defined $socket){
-#        daemon_log("cannot send '$header'-msg to $address , server not reachable", 5);
-#        return 1;
-#    }
-#    
-#    # send xml msg
-#    print $socket $crypted_msg."\n";
-#    
-#    close $socket;
-#
-#    daemon_log("send '$header'-msg to $address", 1);
-#    daemon_log("message:\n$msg_xml", 8);
-#    return 0;
-#}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  get_content_from_xml_hash
-#   PARAMETERS:  xml_ref - ref - reference of the xml hash
-#                element - string - key of the value you want
-#      RETURNS:  value - string - if key is either header, target or source
-#                value - list - for all other keys in xml hash
-#  DESCRIPTION:
-#===============================================================================
-#sub get_content_from_xml_hash {
-#    my ($xml_ref, $element) = @_ ;
-#    #my $result = $main::xml_ref->{$element};
-#    #if( $element eq "header" || $element eq "target" || $element eq "source") {
-#    #    return @$result[0];
-#    #}
-#    my @result = $xml_ref->{$element};
-#    return \@result;
-#}
-
-
-#===  FUNCTION  ================================================================
 #         NAME:  add_content2xml_hash
 #   PARAMETERS:  xml_ref - ref - reference to a hash from function create_xml_hash
 #                element - string - key for the hash
@@ -166,22 +122,6 @@ sub add_content2xml_hash {
     my $tmp = $$xml_ref{$element};
     push(@$tmp, $content);
     return;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  create_xml_string
-#   PARAMETERS:  xml_hash - hash - hash from function create_xml_hash
-#      RETURNS:  xml_string - string - xml string representation of the hash
-#  DESCRIPTION:  transform the hash to a string using XML::Simple module
-#===============================================================================
-sub create_xml_string {
-    my ($xml_hash) = @_ ;
-    my $xml_string = $xml->XMLout($xml_hash, RootName => 'xml');
-    #$xml_string =~ s/[\n]+//g;
-    #daemon_log("create_xml_string:",7);
-    #daemon_log("$xml_string\n", 7);
-    return $xml_string;
 }
 
 
