@@ -166,7 +166,9 @@ class termservice extends plugin
 
     /* Terminal server methods 
      */
-    $this->XMethods["default"]= _("default");
+    if($this->is_ogroup_member){
+      $this->XMethods["default"]= _("inherited");
+    }
     $this->XMethods["xdmcp"]  = _("XDMCP");
     $this->XMethods["ldm"]    = _("LDM");
     $this->XMethods["rdp"]    = _("Windows RDP");

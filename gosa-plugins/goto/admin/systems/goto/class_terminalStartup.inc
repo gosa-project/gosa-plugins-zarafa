@@ -9,7 +9,7 @@ class termstartup extends plugin
   /* Generic terminal attributes */
   var $bootmode= "G";
   var $goLdapServerList= array();
-  var $gotoBootKernel= "default-inherit";
+  var $gotoBootKernel= "default";
   var $gotoKernelParameters= "";
   var $gotoLdapServer= "";
   var $gotoModules= array();
@@ -42,7 +42,7 @@ class termstartup extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
 
-    $this->gotoBootKernels = array("default-inherit"=>"["._("inherited")."]");
+    $this->gotoBootKernels = array("default"=> ("default"));
 
     /* Get arrays */
     foreach (array("gotoModules") as $val){
@@ -141,15 +141,17 @@ class termstartup extends plugin
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
     if ($ldap->count() == 1){
-      $map= array("gotoLdapServer");
+      $map= array("gotoLdapServer","gotoBootKernel");
       $attrs= $ldap->fetch();
 
       foreach ($map as $name){
         if (!isset($attrs[$name][0])){
           continue;
         }
-
         switch ($name){
+          case 'gotoBootKernel':
+            $this->gotoBootKernels["default"] = "["._("inherited")."]"; 
+          break;
           case 'gotoLdapServer':
             $this->goLdapServerList= array_merge(array('default-inherit' => _("inherited").' ['.$attrs[$name][0].']' ), $this->goLdapServerList);
             break;
@@ -458,7 +460,7 @@ class termstartup extends plugin
 
     /* Strip out 'default' values */
     foreach(array("gotoBootKernel") as $value){
-      if (!isset($this->attrs[$value]) || $this->attrs[$value] == "default-inherit"){
+      if (!isset($this->attrs[$value]) || $this->attrs[$value] == "default"){
         $this->attrs[$value] = array();
       } 
     }
