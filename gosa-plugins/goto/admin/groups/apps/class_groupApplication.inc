@@ -817,6 +817,7 @@ class appgroup extends plugin
     $all = $this->_get_all_entries();
     if(isset($all[$id])){
       $all[$id]['STATUS'] = "REMOVED";
+      $all[$id]['ENTRIES'] = array();
       return(TRUE);
     }
     return(FALSE);
@@ -838,8 +839,13 @@ class appgroup extends plugin
 
     if(isset($all[$folder_id])){
 
+      if(!isset($entry['ENTRIES'])){
+        $entries = array();
+      }else{
+        $entries = $entry['ENTRIES'];
+      }
+
       $folder  = &$all[$folder_id];
-      $entries = $entry['ENTRIES'];
 
       $entry['UNIQID'] = uniqid();     
       $entry['PARENT'] = $folder_id;
