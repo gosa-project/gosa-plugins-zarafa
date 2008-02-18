@@ -377,6 +377,7 @@ class appgroup extends plugin
     $smarty->assign("enableReleaseManagement",$this->enableReleaseManagement);
     $smarty->assign("FAIrelease",$this->FAIrelease);
     $smarty->assign("app_list",$div->DrawList());
+    $smarty->assign("i",0);
     $smarty->assign("releases",$this->Releases);
     $smarty->assign("folders" , $this->_get_folder_names());
     $entries = $this->_get_entries_for_release($this->FAIrelease);
@@ -392,10 +393,21 @@ class appgroup extends plugin
   function _get_folder_names()
   {
     $data = $this->_get_entries_for_release($this->FAIrelease);
+    $all    = $this->_get_all_entries();
     $ret = array("BASE" => ".");
     foreach($data as $entry){
+
       if($entry['TYPE'] == "FOLDER"){
-        $ret[$entry['UNIQID']] = $entry['NAME'];
+        $str = $entry['NAME'];
+        $parent = $entry['PARENT'];
+        $i = 10;
+        while(isset($all[$parent]) && $i){  
+          $i --;
+          $parent_o = $all[$parent];
+          $str      = $parent_o['NAME']."/".$str;
+          $parent   = $all[$parent_o['UNIQID']]['PARENT'];
+        }        
+        $ret[$entry['UNIQID']] = $str;
       }
     }
     return($ret);
