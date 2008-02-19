@@ -28,9 +28,11 @@ class termgeneric extends plugin
   var $ghSoundAdapter= "-";
   var $gotoLastUser= "-";
   var $netConfigDNS;
+  
   /* Needed values and lists */
   var $base= "";
   var $cn= "";
+  var $description= "";
   var $orig_dn= "";
 
   var $inheritTimeServer = true;
@@ -43,7 +45,7 @@ class termgeneric extends plugin
   var $attributes= array("gotoMode", "gotoTerminalPath", 
       "gotoSwapServer", "gotoSyslogServer", "gotoNtpServer",
       "gotoFloppyEnable", "gotoCdromEnable", "cn", "gotoSndModule",
-      "ghCpuType", "ghMemSize","ghUsbSupport",
+      "ghCpuType", "ghMemSize","ghUsbSupport", "description",
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser");
   var $objectclasses= array("top", "gotoTerminal", "GOhard");
 
@@ -233,6 +235,7 @@ class termgeneric extends plugin
     }
 
     $smarty->assign("cn", $this->cn);
+    $smarty->assign("description", $this->description);
     $smarty->assign("staticAddress", "");
 
     $smarty->assign("bases", $this->get_allowed_bases());
@@ -589,6 +592,7 @@ class termgeneric extends plugin
             "gotoNtpServer"       => _("Ntp server settings"),
             "base"                => _("Base"),
             "cn"                  => _("Name"),
+            "description"         => _("Description"),
             "gotoRootPasswd"      => _("Root password"),
             "FAIstate"            => _("Action flag"))
           ));

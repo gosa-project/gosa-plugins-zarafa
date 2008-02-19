@@ -16,6 +16,14 @@
      {/if}
     </tr>
     <tr>
+     <td><LABEL for="description">{t}Description{/t}</LABEL></td>
+     <td>
+{render acl=$descriptionACL}
+      <input name="description" id="description" size=18 maxlength=60 value="{$description}">
+{/render}
+     </td>
+    </tr>
+    <tr>
      <td><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
      <td>
 

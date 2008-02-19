@@ -287,6 +287,7 @@ class workgeneric extends plugin
     }
 
     $smarty->assign("cn", $this->cn);
+    $smarty->assign("description", $this->description);
     $smarty->assign("l", $this->l);
     $smarty->assign("bases", $this->get_allowed_bases());
     $smarty->assign("staticAddress", "");
