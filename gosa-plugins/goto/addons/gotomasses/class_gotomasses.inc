@@ -18,7 +18,7 @@ class gotomasses extends plugin
 
   var $sort_by  = "Schedule";
   var $sort_dir = "down";
-
+  var $entries  = array();
   var $range    = 25;
   var $start    = 0;
 
@@ -40,10 +40,13 @@ class gotomasses extends plugin
     
     $s_entry = $s_action = "";
     $arr = array( 
-        "/^stop_/"      => "stop",
-        "/^stop_all/"  => "stop_all",
-        "/^start_/"      => "start",
-        "/^start_all/"  => "start_all",
+        "/^stop_/"        => "stop",
+        "/^stop_all/"     => "stop_all",
+        "/^start_/"       => "start",
+        "/^start_all/"    => "start_all",
+
+        "/^prio_up_/"     => "prio_up",
+        "/^prio_down_/"   => "prio_down",
 
         "/^edit_task_/"             =>  "edit",
         "/^remove_task_/"           =>  "remove",
@@ -69,6 +72,19 @@ class gotomasses extends plugin
 
     /************
      * Handle Priority modifications  
+     ************/
+
+    if(preg_match("/^prio_/",$s_action)){
+
+      switch($s_action){
+
+        case 'prio_down'  : $this->update_priority($s_entry,"down");break;
+        case 'prio_up'    : $this->update_priority($s_entry,"up");break;
+      }
+    }
+
+    /************
+     * Handle start/stop modifications  
      ************/
 
     if(preg_match("/^start/",$s_action) || preg_match("/^stop/",$s_action)){
@@ -245,11 +261,15 @@ class gotomasses extends plugin
                                       "attach"=>"style='border-right:0px;width:120px;'"));
 
 
-    $entries = $this->get_queued_entries();
+    /* Reload the list of entries */
+    $this->reload();
 
-    foreach($entries as $key => $task){
+    foreach($this->entries as $key => $task){
 
-      $prio_actions = "<input class='center' type='image' src='images/status_stop_all.png' name='stop_".$task['ID']."'>&nbsp;";
+
+      $prio_actions = "<input class='center' type='image' src='images/prio_increase.png' name='prio_up_".$task['ID']."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_down_".$task['ID']."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/status_stop_all.png' name='stop_".$task['ID']."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/status_start_all.png' name='start_".$task['ID']."'>&nbsp;";
 
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$task['ID']."' 
@@ -297,6 +317,40 @@ class gotomasses extends plugin
   }
 
 
+  /*! \brief  Move an entry up or down in the queue, by updating its execution timestamp  
+      @param  $id     Integer  The ID of the entry which should be updated.
+      @param  $type   String   "up" / "down"
+      @return boolean TRUE in case of success else FALSE
+  */
+  public function update_priority($id,$type = "up")
+  {
+    if($type == "up"){
+      $tmp = $this->o_queue->get_queued_entries(-1,-1,"timestamp DESC");
+    }else{
+      $tmp = $this->o_queue->get_queued_entries(-1,-1,"timestamp ASC");
+    }
+    $last = array();
+    foreach($tmp as $entry){
+      if($entry['ID'] == $id){
+        if(count($last)){
+          $time = strtotime($last['TIMESTAMP']);
+          if($type == "up"){
+            $time ++;
+          }else{
+            $time --;
+          }
+          $time_str = date("YmdHis",$time); 
+          return($this->o_queue->update_entries(array($id),array("timestamp" => $time_str)));
+        }else{
+          return(FALSE);
+        }
+      }
+      $last = $entry;
+    }
+    return(FALSE);
+  }
+
+
   /*! \brief  Force queue job to be done as far as possible.
    *  @return Boolean TRUE in case of success, else FALSE. 
    */
@@ -337,7 +391,7 @@ class gotomasses extends plugin
   /*! \brief  Request list of queued jobs.
    *  @return Returns an array of all queued jobs.
    */
-  function get_queued_entries()
+  function reload()
   {
     $map = array(
         "QueuePosition" => "id",
@@ -359,20 +413,19 @@ class gotomasses extends plugin
       
     $start  = $this->start; 
     $stop   = $this->range;
+
     $entries = $this->o_queue->get_queued_entries($start,$stop,$sort);
-    if(!is_array($entries) || !isset($entries['XML']) || !is_array($entries['XML'])){
+    if(!is_array($entries)){
       if ($this->o_queue->get_error()){
         msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
       }
       return(array());
     }
 
-    $ret = array();
-    foreach($entries['XML'] as $entry){
-      $task = $entry['ID']; 
-      $ret[]= $entry;
+    $this->entries = array();
+    foreach($entries as $entry){
+      $this->entries[]= $entry;
     }
-    return($ret);
   }
 
 
