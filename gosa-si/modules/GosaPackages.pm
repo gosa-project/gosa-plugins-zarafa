@@ -303,20 +303,20 @@ sub process_gosa_msg {
 
     # decide wether msg is a core function or a event handler
     if ( $header eq 'query_jobdb') {
-        $out_msg = &query_jobdb
+        @out_msg_l = &query_jobdb
     } elsif ($header eq 'delete_jobdb_entry') {
-        $out_msg = &delete_jobdb_entry
+        @out_msg_l = &delete_jobdb_entry
     } elsif ($header eq 'clear_jobdb') {
-        $out_msg = &clear_jobdb
+        @out_msg_l = &clear_jobdb
     } elsif ($header eq 'update_status_jobdb_entry' ) {
-        $out_msg = &update_status_jobdb_entry
+        @out_msg_l = &update_status_jobdb_entry
     } elsif ($header eq 'count_jobdb' ) {
-        $out_msg = &count_jobdb
-    } elsif ($header eq 'trigger_action_wake' ) {
-        # Forward messages to all known servers as "trigger_wake"
-        my $in_hash= &transform_msg2hash($msg);
-        my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
-        $out_msg = &build_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
+        @out_msg_l = &count_jobdb
+#    } elsif ($header eq 'trigger_action_wake' ) {
+#        # Forward messages to all known servers as "trigger_wake"
+#        my $in_hash= &transform_msg2hash($msg);
+#        my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
+#        @out_msg_l = &build_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
         # maybe it is an eventa
@@ -333,19 +333,15 @@ sub process_gosa_msg {
         &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for $header", 1);
     } elsif( 0 == @out_msg_l) {
         &main::daemon_log("ERROR: GosaPackages got not answer from event_handler $header", 1);
-    } elsif( $out_msg ) {
-       push(@out_msg_l, $out_msg); 
-    }
+    } 
 
     return @out_msg_l;
-    
 }
 
 
 sub process_job_msg {
     my ($msg, $msg_hash)= @_ ;    
     my $out_msg;
-    my @out_msg_l;
 
     my $header = @{$msg_hash->{header}}[0];
     $header =~ s/job_//;
@@ -367,26 +363,21 @@ sub process_job_msg {
     my $res = $main::job_db->add_dbentry($func_dic);
     if (not $res == 0) {
         &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
-    }
-    else {
+    } else {
         &main::daemon_log("INFO: GosaPackages: $header job successfully added to job queue", 5);
     }
     
     $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
-    push( @out_msg_l, $out_msg );
-
+    my @out_msg_l = ( $out_msg );
     return @out_msg_l;
-
 }
 
 
 sub db_res_2_xml {
     my ($db_res) = @_ ;
-
     my $xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target>";
 
     my $len_db_res= keys %{$db_res};
-
     for( my $i= 1; $i<= $len_db_res; $i++ ) {
         $xml .= "\n<answer$i>";
         my $hash= $db_res->{$i};
@@ -427,8 +418,8 @@ sub query_jobdb {
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
     my $out_xml = &db_res_2_xml($res_hash);
-
-    return $out_xml;
+    my @out_msg_l = ( $out_xml );
+    return @out_msg_l;
 }
 
 
@@ -445,8 +436,8 @@ sub count_jobdb {
 
     my $count = keys(%{$res_hash});
     $out_xml= "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><count>$count</count></xml>";
-
-    return $out_xml;
+    my @out_msg_l = ( $out_xml );
+    return @out_msg_l;
 }
 
 
@@ -471,7 +462,8 @@ sub delete_jobdb_entry {
 
     # prepare xml answer
     my $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
-    return $out_xml;
+    my @out_msg_l = ( $out_xml );
+    return @out_msg_l;
 
 }
 
@@ -491,8 +483,8 @@ sub clear_jobdb {
     if( $error == 0 ) {
         $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
     }
-   
-    return $out_xml;
+    my @out_msg_l = ( $out_xml );
+    return @out_msg_l;
 }
 
 
@@ -523,8 +515,8 @@ sub update_status_jobdb_entry {
     if( $error == 0) {
         $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
     }
-
-    return $out_xml;
+    my @out_msg_l = ( $out_xml );
+    return @out_msg_l;
 }
 
 

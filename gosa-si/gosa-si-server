@@ -950,11 +950,17 @@ sub client_input {
                     }
                 }
                 elsif( $answer_target eq "GOSA" ) {
-                    $answer =~ /<session_id>(\d)<\/session_id>/;
+                    $answer =~ /<session_id>(\d+)<\/session_id>/;
+                    my $session_id = $1;
+                    my $add_on = "";
 
+                    if( defined $session_id ) {
+                        $add_on = ".session_id=$session_id";
+                    }
+            
                     # answer is for GOSA and has to returned to connected client
                     my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                    $client_answer = $gosa_answer."session_id=$1";
+                    $client_answer = $gosa_answer.$add_on;
                 }
                 elsif( $answer_target eq "KNOWN_SERVER" ) {
                     # answer is for all server in known_server
@@ -1028,17 +1034,14 @@ sub client_input {
     }
 
     if( $client_answer ) {
-
-        if( $client_answer =~ /session_id=(\d+)/ ) {
+        if( $client_answer =~ s/session_id=(\d+)$// ) {
             my $session_id = $1;
-            my $session_reference = $kernel->ID_id_to_session($1);
-            my $session_heap = $session_reference->get_heap();
-            $session_heap->{client}->put( $client_answer );
+            if( defined $session_id ) {
+                my $session_reference = $kernel->ID_id_to_session($session_id);
+                $heap = $session_reference->get_heap();
+            }     
         }
-        else {
-            $heap->{client}->put($client_answer);
-        }
-
+        $heap->{client}->put($client_answer);
     }
 
     return;
