@@ -35,6 +35,8 @@ class DaemonEvent
   protected $time_select_used = FALSE; // Indicates that we have used the timestamp select boxes.
   protected $target_list_used = FALSE; // Indicates that the target list was used.
 
+  protected $target_divlist = FALSE; // The divlist used by the target add dialog
+
   public function __construct($config,$data = array())
   {
     $this->data   = $data;
@@ -141,6 +143,16 @@ class DaemonEvent
   {
     $this->target_list_used = TRUE;
     $smarty = get_smarty();
+ 
+    if(!$this->target_divlist){ 
+      $this->target_divlist = new MultiSelectWindow($this->config,"EventTargets","gotomasses");
+      $this->target_divlist->SetSummary(_("Targets"));
+      $this->target_divlist->SetInformation(_("This dialog shows all available targets for your event, check the targets you want to add and use the 'Use' button to accept."));
+      $this->target_divlist->EnableCloseButton(FALSE); 
+      $this->target_divlist->EnableSaveButton(FALSE); 
+    }
+    
+    $smarty->assign("divlist",$this->target_divlist->Draw());
 
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
@@ -150,13 +162,18 @@ class DaemonEvent
     if(isset($_POST['open_target_list'])){
       $this->target_list_used =TRUE;
     }
+    if($this->target_divlist){
+      $this->target_divlist->save_object();
+    }
     if($this->target_list_used){
       if(isset($_POST['abort_target_dialog'])){
         $this->target_list_used =FALSE;
+        $this->target_divlist = FALSE;
       }
       if(isset($_POST['save_target_dialog'])){
         $this->target_list_used =FALSE;
         echo "Targets auslesen";
+        $this->target_divlist = FALSE;
       }
     }
 
