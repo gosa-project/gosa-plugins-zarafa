@@ -41,6 +41,7 @@ class worktabs extends tabs
 
     /* Assign current cn */
     $baseobject= $this->by_object['workgeneric'];
+    $baseobject->netConfigDNS->cn= $baseobject->cn;
     foreach ($this->by_object as $key => $obj){
       $this->by_object[$key]->cn= $baseobject->cn;
     }

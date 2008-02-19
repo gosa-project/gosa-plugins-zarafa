@@ -44,6 +44,7 @@ class termtabs extends tabs
     }
     
     $base_obj = $this->by_object['termgeneric'];
+    $baseobject->netConfigDNS->cn= $baseobject->cn;
     foreach($this->by_object as $name => $plug){
       $this->by_object[$name]->cn = $base_obj->cn;
     }

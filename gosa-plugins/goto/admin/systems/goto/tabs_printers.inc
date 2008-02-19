@@ -38,6 +38,10 @@ class printtabs extends tabs
   function save_object($save_current= FALSE)
   {
     tabs::save_object($save_current);
+
+    /* Assign current cn */
+    $baseobject= $this->by_object['printgeneric'];
+    $baseobject->netConfigDNS->cn= $baseobject->cn;
   }
 
 
