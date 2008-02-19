@@ -914,7 +914,7 @@ sub process_detected_hardware {
 			$entry->add("objectClass" => "gosaAdministrativeUnit");
 			$entry->add("gosaUnitTag" => $gosa_unit_tag);
 		}
-		if(my $res=$entry->update($ldap)) {
+		if($entry->update($ldap)) {
 			# Fill $mesg again
 			$mesg = $ldap->search(
 				base   => $ldap_base,
