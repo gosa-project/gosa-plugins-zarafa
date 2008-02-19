@@ -244,11 +244,7 @@ class termgeneric extends plugin
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
 
     /* Check if terminal is online */
-    $query= "fping -q -r 1 -t 500 ".$this->cn;
-    exec ($query, $dummy, $retval);
-
-    /* Offline */
-    if ($retval == 0){
+    if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array( "halt" => _("Switch off"), 
                                         "reboot" => _("Reboot"),
                                         "memcheck" => _("Memory test"),

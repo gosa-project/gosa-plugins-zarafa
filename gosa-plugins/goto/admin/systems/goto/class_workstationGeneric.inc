@@ -301,11 +301,7 @@ class workgeneric extends plugin
     $smarty->assign("gotoNtpServers",$tmp);
         
     /* Check if workstation is online */
-    $query= "fping -q -r 1 -t 500 ".$this->cn;
-    exec ($query, $dummy, $retval);
-
-    /* Offline */
-    if ($retval == 0){
+    if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
                                        "instant_update" => _("Instant update"),
                                        "update" => _("Scheduled update"),

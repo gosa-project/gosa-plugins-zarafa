@@ -104,10 +104,7 @@ class terminfo extends plugin
         $smarty->assign("swap", progressbar(0,100,15,true));
 
         /* Check if terminal is online */
-        $query= "fping -q -r 1 -t 500 ".$this->cn;
-        exec ($query, $dummy, $retval);
-
-        if ($retval == 0){
+        if (gosaSupportDaemon::ping($this->macAddress)){
           $smarty->assign("status", _("online"));
           $smarty->assign("active", "true");
 
@@ -116,7 +113,7 @@ class terminfo extends plugin
 
           /* Use 'goto' as snmp community or the configured value from the config */
           $community= 'goto';
-          $str = search_config($this->config->data['TABS'],"terminfo","SNMPCOMMUNITY");
+	  $str= $this->config->search("terminfo", "SNMPCOMMUNITY", array('tabs'));
           if(!empty($str)){
             $community = $str;
           }
