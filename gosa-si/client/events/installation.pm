@@ -26,7 +26,7 @@ sub set_activated_for_installation {
     my $target = @{$msg_hash->{'target'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
 
-    my $Datei = "/var/run/gosa-si.activated";
+    my $Datei = "/var/run/gosa-si-client.activated";
     open(DATEI, ">$Datei");
     print DATEI "$msg\n";
     close DATEI;
