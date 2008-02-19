@@ -937,7 +937,8 @@ sub process_detected_hardware {
 			"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
 			"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
 			"gotoXDriver", "gotoXVsync", "gotoXMonitor", "gotoHardwareChecksum") {
-			if(defined($msg_hash->{detected_hardware}[0]->{$attribute})) {
+			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
+				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
 				if(defined($entry->get_value($attribute))) {
 					$entry->delete($attribute);
 				}
@@ -947,7 +948,8 @@ sub process_detected_hardware {
 		}
 		foreach my $attribute (
 			"gotoModules", "ghScsiDev", "ghIdeDev") {
-			if(defined($msg_hash->{detected_hardware}[0]->{$attribute})) {
+			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
+				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
 				if(defined($entry->get_value($attribute))) {
 					$entry->delete($attribute);
 				}
