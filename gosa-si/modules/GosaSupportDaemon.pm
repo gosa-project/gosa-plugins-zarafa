@@ -2,8 +2,24 @@ package GOSA::GosaSupportDaemon;
 
 use Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(create_xml_hash get_content_from_xml_hash add_content2xml_hash create_xml_string encrypt_msg decrypt_msg create_ciphering transform_msg2hash get_time send_msg get_where_statement get_select_statement get_update_statement get_limit_statement get_orderby_statement); 
-
+my @functions = (
+    "create_xml_hash",
+    "get_content_from_xml_hash",
+    "add_content2xml_hash",
+    "create_xml_string",
+    "encrypt_msg",
+    "decrypt_msg",
+    "create_ciphering",
+    "transform_msg2hash",
+    "get_time",
+    "build_msg",
+    "get_where_statement",
+    "get_select_statement",
+    "get_update_statement",
+    "get_limit_statement",
+    "get_orderby_statement",
+    ); 
+@EXPORT = @functions;
 use strict;
 use warnings;
 use IO::Socket::INET;
@@ -247,7 +263,7 @@ sub get_time {
 
 
 #===  FUNCTION  ================================================================
-#         NAME: send_msg
+#         NAME: build_msg
 #  DESCRIPTION: Send a message to a destination
 #   PARAMETERS: [header] Name of the header
 #               [from]   sender ip
@@ -256,7 +272,7 @@ sub get_time {
 #                        package
 #      RETURNS:  nothing
 #===============================================================================
-sub send_msg ($$$$) {
+sub build_msg ($$$$) {
 	my ($header, $from, $to, $data) = @_;
 
 	my $out_hash = &create_xml_hash($header, $from, $to);

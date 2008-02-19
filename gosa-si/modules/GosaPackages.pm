@@ -316,7 +316,7 @@ sub process_gosa_msg {
         # Forward messages to all known servers as "trigger_wake"
         my $in_hash= &transform_msg2hash($msg);
         my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
-        $out_msg = &send_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
+        $out_msg = &build_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
         # maybe it is an eventa
