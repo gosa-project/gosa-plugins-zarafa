@@ -433,16 +433,14 @@ sub process_incoming_msg {
                     &main::daemon_log("SIPackages: trigger wake for $_", 1);
                     do_wake($_);
                 }
-
             } else {
                 &main::daemon_log("ERROR: $header is an unknown core function", 1);
                 $error++;
             }
-        }
-		else {
-			&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
-			push(@out_msg_l, $msg);
-		}
+        } else {
+		&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
+		push(@out_msg_l, $msg);
+	}
     }
 
     return \@out_msg_l;
@@ -1195,4 +1193,5 @@ sub execute_actions {
 }
 
 
+#vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 1;

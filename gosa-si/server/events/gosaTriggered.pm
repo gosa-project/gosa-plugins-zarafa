@@ -4,6 +4,7 @@ use Exporter;
 my @events = (
     "get_events", 
     "ping",
+    "network_completition",
     "set_activated_for_installation",
     "new_key_for_client",
     "detect_hardware",
@@ -22,6 +23,9 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
+use Net::ARP;
+use Net::Ping;
+use Socket;
 
 
 BEGIN {}
@@ -43,6 +47,32 @@ sub ping {
      my $out_hash =  &create_xml_hash("ping", $source, $target);
      &add_content2xml_hash($out_hash, "session_id", $session_id);
      my $out_msg = &create_xml_string($out_hash);
+    
+     return ( $out_msg );
+}
+
+sub network_completition {
+     my ($msg, $msg_hash, $session_id) = @_ ;
+     my $source = @{$msg_hash->{source}}[0];
+     my $target = @{$msg_hash->{target}}[0];
+     my $name = @{$msg_hash->{hostname}}[0];
+
+     # Can we resolv the name?
+     my %data;
+     if (inet_aton($name)){
+	     my $address = inet_ntoa(inet_aton($name));
+	     my $p = Net::Ping->new('tcp');
+	     my $mac= "";
+	     if ($p->ping($address, 1)){
+	       $mac = Net::ARP::arp_lookup("", $address);
+	     }
+
+	     %data= ('ip' => $address, 'mac' => $mac);
+     } else {
+	     %data= ('ip' => '', 'mac' => '');
+     }
+
+     my $out_msg = &build_msg("network_completition", $target, 'GOSA', \%data );
     
      return ( $out_msg );
 }

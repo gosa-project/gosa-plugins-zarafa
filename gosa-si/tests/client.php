@@ -16,7 +16,7 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 
 # add
-$data = "<xml> <header>gosa_ping</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target> </xml>";
+$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source> <target>10.89.1.155:20081</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
