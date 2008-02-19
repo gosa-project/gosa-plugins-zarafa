@@ -378,8 +378,8 @@ class gotomasses extends plugin
     if(!count($ids)){
       return;
     }
-    $data = array("timestamp" => "20490101010101",
-                  "status"    => "Stoppped");
+    $data = array("timestamp" => date("YmdHis",(time() + (60*60*24*365))),
+                  "status"    => _("Stoppped"));
     if(!$this->o_queue->update_entries($ids,$data)){
       msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
       return(FALSE);
