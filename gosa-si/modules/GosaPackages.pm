@@ -220,7 +220,7 @@ sub get_ip {
 
 sub import_events {
     if (not -e $event_dir) {
-        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+        &main::daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
     }
     opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
 
