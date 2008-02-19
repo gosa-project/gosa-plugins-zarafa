@@ -914,17 +914,20 @@ sub process_detected_hardware {
 			$entry->add("objectClass" => "gosaAdministrativeUnit");
 			$entry->add("gosaUnitTag" => $gosa_unit_tag);
 		}
-		if($entry->update($ldap)) {
+		my $res=$entry->update($ldap);
+		if(defined($res->{'errorMessage'}) &&
+			length($res->{'errorMessage'}) >0) {
+			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
+			&main::daemon_log($res->{'errorMessage'}, 1);
+			return;
+		} else {
 			# Fill $mesg again
 			$mesg = $ldap->search(
 				base   => $ldap_base,
 				scope  => 'sub',
 				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
 			);
-		} else {
-			&main::daemon_log("ERROR: There was a problem adding the entry", 1);
 		}
-
 	}
 	
 	if($mesg->count == 1) {
@@ -952,10 +955,14 @@ sub process_detected_hardware {
 					$entry->add($attribute => $array_entry);
 				}
 			}
-
 		}
 
-		if($entry->update($ldap)) {
+		my $res=$entry->update($ldap);
+		if(defined($res->{'errorMessage'}) &&
+			length($res->{'errorMessage'}) >0) {
+			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
+			&main::daemon_log($res->{'errorMessage'}, 1);
+		} else {
 			&main::daemon_log("Added Hardware configuration to LDAP", 4);
 		}
 
