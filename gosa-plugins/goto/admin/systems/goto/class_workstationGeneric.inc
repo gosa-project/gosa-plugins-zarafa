@@ -16,6 +16,7 @@ class workgeneric extends plugin
   var $gotoSndModule= "";
   var $gotoFloppyEnable= "";
   var $gotoCdromEnable= "";
+  var $description= "";
   var $ghCpuType= "-";
   var $ghMemSize= "-";
   var $ghUsbSupport= "-";
@@ -47,7 +48,7 @@ class workgeneric extends plugin
   var $ignore_account= TRUE;
   var $attributes= array("gotoMode", "gotoSyslogServer", "gotoNtpServer",
       "gotoFloppyEnable", "gotoCdromEnable", "cn", "gotoSndModule",
-      "ghCpuType", "ghMemSize", "ghUsbSupport",
+      "ghCpuType", "ghMemSize", "ghUsbSupport", "description",
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser", "l","FAIscript");
   var $objectclasses= array("top", "gotoWorkstation", "GOhard");
 
@@ -638,6 +639,7 @@ class workgeneric extends plugin
                                                           "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
             "cn"                  => _("Workstation name"),
+            "description"         => _("Description") ,
             "l"                   => _("Location") ,
             "base"                => _("Base") ,
             "gotoMode"            => _("Goto mode"), 
