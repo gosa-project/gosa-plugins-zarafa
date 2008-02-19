@@ -418,9 +418,12 @@ sub ping {
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
+
    
     # switch target and source and send msg back
     my $out_hash = &main::create_xml_hash("got_ping", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
     my $out_msg = &main::create_xml_string($out_hash);
     return $out_msg;
 

@@ -6,4 +6,4 @@ modules/SIPackages.pm		usr/lib/gosa-si/modules
 modules/GosaPackages.pm         usr/lib/gosa-si/modules
 modules/ArpHandler.pm		usr/lib/gosa-si/modules
 modules/oui.txt			usr/lib/gosa-si/modules
-server/events/installation.pm		usr/lib/gosa-si/server/events
+server/events/gosaTriggered.pm		usr/lib/gosa-si/server/events

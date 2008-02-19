@@ -445,12 +445,6 @@ sub process_incoming_msg {
 		}
     }
 
-#    if( $error == 0) {
-#        if( 0 == @out_msg_l ) {
-#			push(@out_msg_l, $msg);
-#        }
-#    }
-    
     return \@out_msg_l;
 }
 
@@ -463,20 +457,43 @@ sub process_incoming_msg {
 #===============================================================================
 sub got_ping {
     my ($msg_hash) = @_;
-    
+
     my $source = @{$msg_hash->{source}}[0];
     my $target = @{$msg_hash->{target}}[0];
     my $header = @{$msg_hash->{header}}[0];
-    
-    if(exists $main::known_daemons->{$source}) {
-        &main::add_content2known_daemons(hostname=>$source, status=>$header);
-    } else {
-        &main::add_content2known_clients(hostname=>$source, status=>$header);
-    }
-    
-    return;
-}
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $act_time = &get_time;
+    my @out_msg_l;
+    my $out_msg;
 
+    # check known_clients_db
+    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
+    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
+    if( 1 == keys %{$query_res} ) {
+         my $sql_statement= "UPDATE known_clients ".
+            "SET status='$header', timestamp='$act_time' ".
+            "WHERE hostname='$source'";
+         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
+    } 
+    
+    # check known_server_db
+    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source'";
+    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+    if( 1 == keys %{$query_res} ) {
+         my $sql_statement= "UPDATE known_server ".
+            "SET status='$header', timestamp='$act_time' ".
+            "WHERE hostname='$source'";
+         my $res = $main::known_server_db->update_dbentry( $sql_statement );
+    } 
+
+    # create out_msg
+    my $out_hash = &create_xml_hash($header, $source, "GOSA");
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+    $out_msg = &create_xml_string($out_hash);
+    push(@out_msg_l, $out_msg);
+    
+    return @out_msg_l;
+}
 
 #===  FUNCTION  ================================================================
 #         NAME:  new_passwd
@@ -771,12 +788,12 @@ sub new_ldap_config {
 	@servers= sort (@servers);
 
 	foreach $server (@servers){
-                # Conversation for backward compatibility
-                if ($server !=~ /^ldap[^:]+:\/\// ) {
-                        if ($server =~ /^([^:]+):(.*)$/ ) {
-                                $server= "1:dummy:ldap://$1/$2";
-                        }
-                }
+        # Conversation for backward compatibility
+        if ($server !=~ /^ldap[^:]+:\/\// ) {
+            if ($server =~ /^([^:]+):(.*)$/ ) {
+                $server= "1:dummy:ldap://$1/$2";
+            }
+        }
 
 		$base= $server;
 		$server =~ s%^[^:]+:[^:]+:(ldap.*://[^/]+)/.*$%$1%;

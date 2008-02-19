@@ -16,7 +16,7 @@ if($sock->connected()){
 	/* Prepare a hunge bunch of data to be send */
 
 # add
-#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>19700101000001</timestamp> </xml>";
+$data = "<xml> <header>gosa_ping</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target> </xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 #$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source> <target>10.89.1.155:20081</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
 
@@ -53,7 +53,7 @@ if($sock->connected()){
 
 
 #$data = "<xml> <header>gosa_import_events</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
-$data = "<xml> <header>gosa_trigger_action_localboot</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> <timeout>-1</timeout></xml>";
+#$data = "<xml> <header>gosa_trigger_action_localboot</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> <timeout>-1</timeout></xml>";
 
 
 

@@ -879,7 +879,8 @@ sub _start {
 
 sub client_input {
     no strict "refs";
-    my ($heap,$input,$wheel) = @_[HEAP, ARG0, ARG1];
+    my ($kernel, $session, $heap,$input,$wheel) = @_[KERNEL, SESSION, HEAP, ARG0, ARG1];
+    my $session_id = $session->ID;
     my ($msg, $msg_hash, $module);
     my $error = 0;
     my $answer_l;
@@ -910,7 +911,7 @@ sub client_input {
     # process incoming msg
     if( $error == 0) {
         daemon_log("Processing module ".$module, 5);
-        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $heap->{'remote_ip'});
+        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 > @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
@@ -949,9 +950,11 @@ sub client_input {
                     }
                 }
                 elsif( $answer_target eq "GOSA" ) {
+                    $answer =~ /<session_id>(\d)<\/session_id>/;
+
                     # answer is for GOSA and has to returned to connected client
                     my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                    $client_answer = $gosa_answer;
+                    $client_answer = $gosa_answer."session_id=$1";
                 }
                 elsif( $answer_target eq "KNOWN_SERVER" ) {
                     # answer is for all server in known_server
@@ -1025,7 +1028,17 @@ sub client_input {
     }
 
     if( $client_answer ) {
-	    $heap->{client}->put($client_answer);
+
+        if( $client_answer =~ /session_id=(\d+)/ ) {
+            my $session_id = $1;
+            my $session_reference = $kernel->ID_id_to_session($1);
+            my $session_heap = $session_reference->get_heap();
+            $session_heap->{client}->put( $client_answer );
+        }
+        else {
+            $heap->{client}->put($client_answer);
+        }
+
     }
 
     return;

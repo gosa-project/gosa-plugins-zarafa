@@ -252,46 +252,52 @@ sub import_events {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash) = @_ ;
+    my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
-    my $out_msg;
-    
+    my @msg_l;
+    my @out_msg_l;
+
     &main::daemon_log("GosaPackages: receive '$header'", 1);
     
     if ($header =~ /^job_/) {
-        $out_msg = &process_job_msg($msg, $msg_hash);
+        @msg_l = &process_job_msg($msg, $msg_hash, $session_id);
     } 
     elsif ($header =~ /^gosa_/) {
-        $out_msg = &process_gosa_msg($msg, $msg_hash);
+        @msg_l = &process_gosa_msg($msg, $msg_hash, $session_id);
     } 
     else {
         &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
     }
 
-    # keep job queue uptodate and save result and status
-    if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
-        my $job_id = $1;
-        my $sql = "UPDATE '".$main::job_queue_table_name.
-            "' SET status='done', result='".$out_msg.
-            "' WHERE id='$job_id'";
-        my $res = $main::job_db->exec_statement($sql);
-    } 
+    foreach my $out_msg ( @msg_l ) {
 
-    # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
-    $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
+        # keep job queue uptodate and save result and status
+        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
+            my $job_id = $1;
+            my $sql = "UPDATE '".$main::job_queue_table_name.
+                "' SET status='done', result='".$out_msg.
+                "' WHERE id='$job_id'";
+            my $res = $main::job_db->exec_statement($sql);
+        } 
 
-    my @out_msg_l;
-    if (defined $out_msg){
-        push(@out_msg_l, $out_msg);
+        # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
+        $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
+
+        if (defined $out_msg){
+            push(@out_msg_l, $out_msg);
+        }
+
     }
+
     return \@out_msg_l;
 }
 
 
 sub process_gosa_msg {
-    my ($msg, $msg_hash) = @_ ;
+    my ($msg, $msg_hash, $session_id) = @_ ;
     my $out_msg;
-
+    my @out_msg_l;
+    
     my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/gosa_//;
 
@@ -318,23 +324,28 @@ sub process_gosa_msg {
             # a event exists with the header as name
             &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
             no strict 'refs';
-            $out_msg = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
+            @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
          }
     }
 
     # if delivery not possible raise error and return 
-    if (not defined $out_msg) {
+    if( not @out_msg_l ) {
         &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for $header", 1);
-    } elsif ($out_msg eq "") {
+    } elsif( 0 == @out_msg_l) {
         &main::daemon_log("ERROR: GosaPackages got not answer from event_handler $header", 1);
+    } elsif( $out_msg ) {
+       push(@out_msg_l, $out_msg); 
     }
-    return $out_msg;
+
+    return @out_msg_l;
     
 }
 
 
 sub process_job_msg {
     my ($msg, $msg_hash)= @_ ;    
+    my $out_msg;
+    my @out_msg_l;
 
     my $header = @{$msg_hash->{header}}[0];
     $header =~ s/job_//;
@@ -357,9 +368,14 @@ sub process_job_msg {
     if (not $res == 0) {
         &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
     }
+    else {
+        &main::daemon_log("INFO: GosaPackages: $header job successfully added to job queue", 5);
+    }
     
-    &main::daemon_log("GosaPackages: $header job successfully added to job queue", 3);
-    return "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
+    $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
+    push( @out_msg_l, $out_msg );
+
+    return @out_msg_l;
 
 }
 
