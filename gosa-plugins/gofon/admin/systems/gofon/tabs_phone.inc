@@ -14,6 +14,9 @@ class phonetabs extends tabs
   function save_object($save_current= FALSE)
   {
     tabs::save_object($save_current);
+
+    $base_obj = $this->by_object['phoneGeneric'];
+    $baseobject->netConfigDNS->cn= $baseobject->cn;
   }
 
 
