@@ -71,8 +71,15 @@ sub create_table {
     my $self = shift;
     my $table_name = shift;
     my $col_names_ref = shift;
+    my @col_names;
+    foreach my $col_name (@$col_names_ref) {
+        my @t = split(" ", $col_name);
+        $col_name = $t[0];
+        push(@col_names, $col_name);
+    }
+
     $col_names->{ $table_name } = $col_names_ref;
-    my $col_names_string = join(', ', @{$col_names_ref});
+    my $col_names_string = join(', ', @col_names);
     my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
     &create_lock($self,'create_table');
     $self->{dbh}->do($sql_statement);
@@ -126,19 +133,19 @@ sub add_dbentry {
         # primekey is unique
 
         # fetch column names of table
-        my $col_names = &get_table_columns("",$table);
+        my $col_names = &get_table_columns($self, $table);
 
         # assign values to column name variables
         my @add_list;
         foreach my $col_name (@{$col_names}) {
-        # use function parameter for column values
+            # use function parameter for column values
+    
             if (exists $arg->{$col_name}) {
                 push(@add_list, $arg->{$col_name});
             }
         }    
 
         my $sql_statement = "INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
-
         &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');
@@ -192,6 +199,7 @@ sub get_table_columns {
         &create_lock($self,'get_table_columns');
         my @res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
         &remove_lock($self,'get_table_columns');
+
         foreach my $column (@res) {
             push(@column_names, @$column[1]);
         }
