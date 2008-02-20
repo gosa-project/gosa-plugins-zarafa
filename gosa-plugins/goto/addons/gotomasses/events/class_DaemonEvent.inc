@@ -190,113 +190,28 @@ class DaemonEvent
   public function get_target_add_list()
   {
     $this->target_add_list_used = TRUE;
-    $smarty = get_smarty();
  
-    if($this->target_divlist == NULL){ 
-      $this->target_divlist = new MultiSelectWindow($this->config,"EventAddTargedtList","gotomasses");
-      $this->target_divlist->SetSummary(_("Targets"));
-      $this->target_divlist->SetInformation(_("This dialog shows all available targets for your event, check the targets you want to add and use the 'Use' button to accept."));
-      $this->target_divlist->EnableCloseButton(FALSE); 
-      $this->target_divlist->EnableSaveButton(FALSE);
-
-
-      /* Toggle all selected / deselected */
-      $chk = "<input type='checkbox' id='select_all' name='select_all'
-        onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
-
-      $this->target_divlist->EnableAplhabet(TRUE);
-  
-      /* set Page header */
-      $this->target_divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-      $this->target_divlist->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
-      $this->target_divlist->AddHeader(array("string"=>_("System / Department")));
-
-      //$name,$string,$value,$conn,$image="images/search.png") 
-      $this->target_divlist->AddRegex("regex" ,"regex"  ,"*"                , TRUE);
-      $this->target_divlist->AddRegex("ipfrom","ipfrom" ,"0.0.0.0"          , FALSE);
-      $this->target_divlist->AddRegex("ipto"  ,"ipto"   ,"255.255.255.255"  , FALSE);
-
-      $this->target_divlist->display_server       = TRUE;
-      $this->target_divlist->display_workstation  = TRUE;
-      $this->target_divlist->display_ogroup       = TRUE;
-      $this->target_divlist->filter_iprange       = FALSE;
-      $this->target_divlist->AddCheckBox("display_server","1"     ,_("Display server"),TRUE);
-      $this->target_divlist->AddCheckBox("display_workstation","1",_("Display workstation"),TRUE);
-      $this->target_divlist->AddCheckBox("display_ogroup","1"     ,_("Display object groups"),TRUE);
-      $this->target_divlist->AddCheckBox("filter_iprange","1"     ,_("Filter by IP range"),FALSE);
-
+    if(1 | $this->target_divlist == NULL){ 
+      $this->target_divlist = new EventTargetAddList($this->config,$this);
     }
-    $this->target_divlist->ClearElementsList();
-
-    $modules = array("server","workstation");
-
-    /* Add base */
-    $tmp = array();
-    $base = $this->config->current['BASE'];
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $modules, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
-
-    $deps = array();
-    foreach($tmp as $tm){
-      $deps[$tm['dn']] = $tm['dn'];
-    }
-
-    $department = $departments = array();
-    $ui= get_userinfo();
-    $d = $ui->get_module_departments($modules);
-    foreach($d as $department){
-      $departments[$department] = $department;
-    }
-  
-     /* Load possible departments */
-    $ids = $this->config->idepartments;
-    $first = "";
-    $found = FALSE;
-    $options = array();
-    foreach($ids as $dep => $name){
-      if(isset($deps[$dep]) && in_array_ics($dep, $departments)){
-
-        /* Keep first base dn in mind, we could need this
-         *  info if no valid base was found
-         */
-        if(empty($first)) {
-          $first = $dep['dn'];
-        }
-
-        $value = $ids[$dep];
-        if ($this->target_divlist->selectedBase == $dep){
-          $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
-        } else {
-          $options.= "<option value='".$dep."'>$value</option>";
-        }
-      }
-    }
-
-    $listhead = $this->target_divlist->get_default_header();
-
-    /* Add base selection */
-    $listhead .= _("Base")."&nbsp; <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle'
-      title='"._("Submit department")."' name='submit_department' alt='". _("Submit")."'>&nbsp;";
-
-    $this->target_divlist->SetListHeader($listhead);
-    $this->target_divlist->AddDepartments($this->target_divlist->selectedBase,2,1);
+    $this->target_divlist->execute();
 
     $_target_list = array();
     if($this->target_divlist->display_server){
-      $_target_list = array_merge($_target_list,get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=goServer))",
+      $_target_list = array_merge($_target_list,
+            get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=goServer))",
             "server",get_ou("serverou").$this->target_divlist->selectedBase,
             array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
     }
     if($this->target_divlist->display_workstation){
-      $_target_list = array_merge($_target_list,get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=gotoWorkstation))",
+      $_target_list = array_merge($_target_list,
+            get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=gotoWorkstation))",
             "workstation",get_ou("workstationou").$this->target_divlist->selectedBase,
             array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
     }
     if($this->target_divlist->display_ogroup){
-      $_target_list = array_merge($_target_list,get_list("(&(cn=".$this->target_divlist->regex.")(member=*)(objectClass=gosaGroupOfNames))",
+      $_target_list = array_merge($_target_list,
+            get_list("(&(cn=".$this->target_divlist->regex.")(member=*)(objectClass=gosaGroupOfNames))",
             "ogroups",get_ou("ogroupou").$this->target_divlist->selectedBase,
             array("cn","objectClass","description","member"),GL_NONE));
     }
@@ -307,58 +222,18 @@ class DaemonEvent
       $tmp[$key] = $object['cn'][0];
     }
     natcasesort($tmp);
-
-    foreach($tmp as $key => $dummy){
-
-      $obj = $this->_target_list[$key];
-
-      $name = $obj['cn'][0];
-      if(isset($obj['description'])){
-        $name .= "&nbsp;[".$obj['description'][0]."]";
-      }
-      if(isset($obj['macAddress'])){
-        $name .= "&nbsp;- ".$obj['macAddress'][0]."";
-      }
-      if(isset($obj['ipHostNumber'])){
-        $name .= "&nbsp;- ".$obj['ipHostNumber'][0]."";
-      }
-
-      $img ="";
-      if(in_array("goServer",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_server.png" alt="S" title="'._("Server").'">'; 
-
-        if($this->target_divlist->filter_iprange){
-          if(!isset($obj['ipHostNumber']) || !tests::is_in_ip_range($this->target_divlist->ipfrom,$this->target_divlist->ipto,$obj['ipHostNumber'][0])) {
-            continue;
-          }
-        }        
-        if(!isset($this->server_list[$obj['dn']])){
-          continue;
-        }
-      }elseif(in_array("gotoWorkstation",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_workstation.png" alt="W" title="'._("Workstation").'">'; 
-        if($this->target_divlist->filter_iprange){
-          if(!isset($obj['ipHostNumber']) || !tests::is_in_ip_range($this->target_divlist->ipfrom,$this->target_divlist->ipto,              $obj['ipHostNumber'][0])) {
-            continue;
-          }
-        }
-        if(!isset($this->workstation_list[$obj['dn']])){
-          continue;
-        }
-      }elseif(in_array("gosaGroupOfNames",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_ogroup.png" alt="O" title="'._("Object group").'">'; 
-      }
-
-      $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>");
-      $field2 = array("string" => $img);
-      $field3 = array("string" => $name , "attach" => "title='".$obj['dn']."'");
-      $this->target_divlist->AddElement(array($field1,$field2,$field3));
+    $tmp2 = array();
+    foreach($tmp as $key => $sort){
+      $tmp2[] = $this->_target_list[$key];
     }
 
-    $smarty->assign("divlist",$this->target_divlist->Draw());
+    $this->target_divlist->setEntries($tmp2);
 
+    $smarty = get_smarty();
+    $smarty->assign("divlist",$this->target_divlist->Draw());
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
+
  
   public function save_object()
   {
