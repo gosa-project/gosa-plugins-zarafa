@@ -273,12 +273,12 @@ sub process_incoming_msg {
 
     foreach my $out_msg ( @msg_l ) {
 
-        # keep job queue uptodate and save result and status
-        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d*?)<\/jobdb_id>/) {
+        # keep job queue up-to-date and save result and status
+        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
             my $job_id = $1;
-            my $sql = "UPDATE '".$main::job_queue_table_name.
-                "' SET status='done', result='".$out_msg.
-                "' WHERE id='$job_id'";
+            my $sql = "UPDATE '".$main::job_queue_table_name."'".
+                " SET status='done'".
+                " WHERE id='$job_id'";
             my $res = $main::job_db->exec_statement($sql);
         } 
 
@@ -337,34 +337,59 @@ sub process_gosa_msg {
 
 
 sub process_job_msg {
-    my ($msg, $msg_hash)= @_ ;    
+    my ($msg, $msg_hash, $session_id)= @_ ;    
     my $out_msg;
+    my $error = 0;
 
-    my $header = @{$msg_hash->{header}}[0];
+    my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/job_//;
+    
+    # if no timestamp is specified, use 19700101000000
+    my $timestamp = "19700101000000";
+    if( exists $msg_hash->{'timestamp'} ) {
+        $timestamp = @{$msg_hash->{'timestamp'}}[0];
+    }
+
+    #if no macaddress is specified, raise error 
+    my $macaddress;
+    if( exists $msg_hash->{'macaddress'} ) {
+        $macaddress = @{$msg_hash->{'macaddress'}}[0];
+    } else {
+        $error ++;
+        $out_msg = "<xml>".
+            "<header>answer</header>".
+            "<source>$server_address</source>".
+            "<target>GOSA</target>".
+            "<answer1>1</answer1>".
+            "<error_string>no mac address specified</error_string>".
+            "</xml>";
+    }
     
     # check wether mac address is already known in known_daemons or known_clients
     my $target = 'none';
 
-    # add job to job queue
-    my $func_dic = {table=>$main::job_queue_table_name, 
-                    primkey=>'id',
-                    timestamp=>@{$msg_hash->{timestamp}}[0],
-                    status=>'waiting', 
-                    result=>'none',
-                    headertag=>$header, 
-                    targettag=>$target,
-                    xmlmessage=>$msg,
-                    macaddress=>@{$msg_hash->{mac}}[0],
-                    };
-    my $res = $main::job_db->add_dbentry($func_dic);
-    if (not $res == 0) {
-        &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
-    } else {
-        &main::daemon_log("INFO: GosaPackages: $header job successfully added to job queue", 5);
+    if( $error == 0 ) {
+        # add job to job queue
+        my $func_dic = {table=>$main::job_queue_table_name, 
+            primkey=>'id',
+            timestamp=>$timestamp,
+            status=>'waiting', 
+            result=>'none',
+            headertag=>$header, 
+            targettag=>$target,
+            xmlmessage=>$msg,
+            macaddress=>$macaddress,
+        };
+
+        my $res = $main::job_db->add_dbentry($func_dic);
+        if (not $res == 0) {
+            &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
+        } else {
+            &main::daemon_log("INFO: GosaPackages: $header job successfully added to job queue", 5);
+        }
+        $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
     }
     
-    $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }

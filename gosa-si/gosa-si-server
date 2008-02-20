@@ -362,9 +362,9 @@ $SIG{INT} = \&sig_int_handler;
 
 sub check_key_and_xml_validity {
     my ($crypted_msg, $module_key) = @_;
-
     my $msg;
     my $msg_hash;
+    my $error_string;
     eval{
         $msg = &decrypt_msg($crypted_msg, $module_key);
 
@@ -372,40 +372,36 @@ sub check_key_and_xml_validity {
             &main::daemon_log("decrypted_msg: \n$msg", 8);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
+            ##############
             # check header
+            if( not exists $msg_hash->{'header'} ) { die "no header specified"; }
             my $header_l = $msg_hash->{'header'};
-            if( 1 != @{$header_l} ) {
-                die 'header error';
-            }
+            if( 1 > @{$header_l} ) { die 'empty header tag'; }
+            if( 1 < @{$header_l} ) { die 'more than one header specified'; }
             my $header = @{$header_l}[0];
-            if( 0 == length $header) {
-                die 'header error';
-            }
+            if( 0 == length $header) { die 'empty string in header tag'; }
 
+            ##############
             # check source
+            if( not exists $msg_hash->{'source'} ) { die "no source specified"; }
             my $source_l = $msg_hash->{'source'};
-            if( not defined @{$source_l} or 1 != @{$source_l} ) {
-                die 'source error';
-            }
+            if( 1 > @{$source_l} ) { die 'empty source tag'; }
+            if( 1 < @{$source_l} ) { die 'more than one source specified'; }
             my $source = @{$source_l}[0];
-            if( 0 == length $source) {
-                die 'source error';
-            }
+            if( 0 == length $source) { die 'source error'; }
 
+            ##############
             # check target
+            if( not exists $msg_hash->{'target'} ) { die "no target specified"; }
             my $target_l = $msg_hash->{'target'};
-            if( 1 != @{$target_l} ) {
-                die'target error';
-            }
-            my $target = @{$target_l}[0];
-            if( 0 == length $target) {
-                die 'target error';
-            }
+            if( 1 > @{$target_l} ) { die 'empty target tag'; }
         }
     };
     if($@) {
         &main::daemon_log("WARNING: do not understand the message", 5);
         &main::daemon_log("$@", 8);
+        $msg = undef;
+        $msg_hash = undef;
     }
 
     return ($msg, $msg_hash);
@@ -555,6 +551,7 @@ sub input_from_unknown_host {
     no strict "refs";
     my ($input) = @_ ;
     my ($msg, $msg_hash, $module);
+    my $error_string;
     
 	my %act_modules = %$known_modules;
 
@@ -562,7 +559,7 @@ sub input_from_unknown_host {
 
         # check a key exists for this module
         my $module_key = ${$mod."_key"};
-        if( ! $module_key ) {
+        if( not defined $module_key ) {
             if( $mod eq 'ArpHandler' ) {
                 next;
             }
@@ -573,8 +570,7 @@ sub input_from_unknown_host {
 
         # check if module can open msg envelope with module key
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key);
-        if( (!$msg) || (!$msg_hash) ) {
-            #daemon_log("$mod: deciphering failed", 5);
+        if( (not defined $msg) || (not defined $msg_hash) ) {
             next;
         }
         else {
@@ -1063,26 +1059,23 @@ sub watch_for_new_jobs {
 
 	# check gosa job queue for jobs with executable timestamp
     my $timestamp = &get_time();
-
     my $sql_statement = "SELECT * FROM ".$job_queue_table_name.
         " WHERE status='waiting' AND timestamp<'$timestamp'";
-
 	my $res = $job_db->select_dbentry( $sql_statement );
 
 	while( my ($id, $hit) = each %{$res} ) {         
-
 		my $jobdb_id = $hit->{id};
-		my $macaddress = $hit->{macaddress};
-		my $job_msg_hash = &transform_msg2hash($hit->{xmlmessage});
-		my $out_msg_hash = $job_msg_hash;
+		my $macaddress = $hit->{'macaddress'};
+        my $job_msg = $hit->{'xmlmessage'};
+        my $header = $hit->{'headertag'};
         my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$macaddress'";
 		my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
 		# expect macaddress is unique!!!!!!
 		my $target = $res_hash->{1}->{hostname};
 
 		if (not defined $target) {
-			&daemon_log("ERROR: no host found for mac address: $job_msg_hash->{mac}[0]", 1);
-			&daemon_log("xml message: $hit->{xmlmessage}", 5);
+			&daemon_log("ERROR: no host found for mac address: $macaddress", 1);
+			&daemon_log("$hit->{xmlmessage}", 8);
             my $sql_statement = "UPDATE $job_queue_table_name ".
                 "SET status='error', result='no host found for mac address' ".
                 "WHERE id='$jobdb_id'";
@@ -1090,37 +1083,29 @@ sub watch_for_new_jobs {
 			next;
 		}
 
-		# add target
-		&add_content2xml_hash($out_msg_hash, "target", $target);
-
-		# add new header
-		my $out_header = $job_msg_hash->{header}[0];
-		$out_header =~ s/job_/gosa_/;
-		delete $out_msg_hash->{header};
-		&add_content2xml_hash($out_msg_hash, "header", $out_header);
+		# change header
+        $job_msg =~ s/<header>job_/<header>gosa_/;
 
 		# add sqlite_id 
-		&add_content2xml_hash($out_msg_hash, "jobdb_id", $jobdb_id); 
+        $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
-		my $out_msg = &create_xml_string($out_msg_hash);
 
-		# encrypt msg as a GosaPackage module
-		my $cipher = &create_ciphering($GosaPackages_key);
-		my $crypted_out_msg = &encrypt_msg($out_msg, $cipher);
+print STDERR "=======================================================\n$job_msg\n";
 
-		my $error = &send_msg_hash2address($out_msg_hash, "$gosa_ip:$gosa_port", $GosaPackages_key);
+		&send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
 
-		if ($error == 0) {
-			my $sql_statement = "UPDATE $job_queue_table_name ".
-                "SET status='processing', targettag='$target' ".
-                "WHERE id='$jobdb_id'";
-			my $res = $job_db->update_dbentry($sql_statement);
-		} else {
-            my $sql_statement = "UPDATE $job_queue_table_name ".
-                "SET status='error' ".
-                "WHERE id='$jobdb_id'";
-			my $res = $job_db->update_dbentry($sql_statement);
-		}
+#        my $error = 1;
+#		if ($error == 0) {
+#			my $sql_statement = "UPDATE $job_queue_table_name ".
+#                "SET status='done', targettag='$target' ".
+#                "WHERE id='$jobdb_id'";
+#			my $res = $job_db->update_dbentry($sql_statement);
+#		} else {
+#            my $sql_statement = "UPDATE $job_queue_table_name ".
+#                "SET status='error' ".
+#                "WHERE id='$jobdb_id'";
+#			my $res = $job_db->update_dbentry($sql_statement);
+#		}
 	}
 
 	$kernel->delay_set('watch_for_new_jobs',3);
