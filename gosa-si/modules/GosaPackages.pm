@@ -225,7 +225,8 @@ sub import_events {
     opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
 
     while (defined (my $event = readdir (DIR))) {
-        if( $event eq "." || $event eq ".." ) { next; }    
+        if( $event eq "." || $event eq ".." ) { next; }   
+        if( $event eq "siTriggered.pm" ) { next; }      # only SI specific events
 
         eval{ require $event; };
         if( $@ ) {
@@ -240,7 +241,8 @@ sub import_events {
         foreach my $event_name (@{$events_l}) {
             $event_hash->{$event_name} = $event_module;
         }
-
+        my $events_string = join( ", ", @{$events_l});
+        &main::daemon_log("INFO: GosaPackages imported events $events_string", 5);
     }
 }
 
@@ -312,11 +314,6 @@ sub process_gosa_msg {
         @out_msg_l = &update_status_jobdb_entry
     } elsif ($header eq 'count_jobdb' ) {
         @out_msg_l = &count_jobdb
-#    } elsif ($header eq 'trigger_action_wake' ) {
-#        # Forward messages to all known servers as "trigger_wake"
-#        my $in_hash= &transform_msg2hash($msg);
-#        my %data = ( 'macAddress'  => \@{$in_hash->{macAddress}} );
-#        @out_msg_l = &build_msg("trigger_wake", $server_address, "KNOWN_SERVER", \%data);
     } else {
         # msg could not be assigned to core function
         # maybe it is an eventa

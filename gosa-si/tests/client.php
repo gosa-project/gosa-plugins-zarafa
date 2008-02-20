@@ -50,9 +50,9 @@ $data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><
 #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:0c:29:bd:7b:e7</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_new_key_for_client</header> <target>10.89.1.12:1234</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_new_key_for_client</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
+#$data = "<xml> <header>gosa_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
 
 
-#$data = "<xml> <header>gosa_import_events</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_trigger_action_localboot</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> <timeout>-1</timeout></xml>";
 
 

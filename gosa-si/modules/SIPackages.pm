@@ -18,12 +18,16 @@ use Socket;
 use Net::hostent;
 use Net::DNS;
 
+my $event_dir = "/usr/lib/gosa-si/server/events";
+use lib "/usr/lib/gosa-si/server/events";
+
 BEGIN{}
 END {}
 
 my ($server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
+my $event_hash;
 my $network_interface;
 my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret, $gosa_unit_tag);
@@ -59,6 +63,8 @@ my %cfg_defaults = (
 
 $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface);
+
+&import_events();
 
 # Unit tag can be defined in config
 if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
@@ -169,52 +175,59 @@ sub get_module_info {
 }
 
 
-sub do_wake {
-        my $host    = shift;
-        my $ipaddr  = shift || '255.255.255.255';
-        my $port    = getservbyname('discard', 'udp');
+#sub daemon_log {
+#    my ($msg, $level) = @_ ;
+#    &main::daemon_log($msg, $level);
+#    return;
+#}
+#
 
-        my ($raddr, $them, $proto);
-        my ($hwaddr, $hwaddr_re, $pkt);
-
-        # get the hardware address (ethernet address)
-
-        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
-        if ($host =~ m/^$hwaddr_re$/) {
-                $hwaddr = $host;
-        } else {
-                # $host is not a hardware address, try to resolve it
-                my $ip_re = join('\.', ('([0-9]|[1-9][0-9]|1[0-9]{2}|2([0-4][0-9]|5[0-5]))') x 4);
-                my $ip_addr;
-                if ($host =~ m/^$ip_re$/) {
-                        $ip_addr = $host;
-                } else {
-                        my $h;
-                        unless ($h = gethost($host)) {
-                                return undef;
-                        }
-                        $ip_addr = inet_ntoa($h->addr);
-                }
-        }
-
-        # Generate magic sequence
-        foreach (split /:/, $hwaddr) {
-                $pkt .= chr(hex($_));
-        }
-        $pkt = chr(0xFF) x 6 . $pkt x 16;
-
-        # Allocate socket and send packet
-
-        $raddr = gethostbyname($ipaddr)->addr;
-        $them = pack_sockaddr_in($port, $raddr);
-        $proto = getprotobyname('udp');
-
-        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
-        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
-
-        send(S, $pkt, 0, $them) or die "send : $!";
-        close S;
-}
+#sub do_wake {
+#        my $host    = shift;
+#        my $ipaddr  = shift || '255.255.255.255';
+#        my $port    = getservbyname('discard', 'udp');
+#
+#        my ($raddr, $them, $proto);
+#        my ($hwaddr, $hwaddr_re, $pkt);
+#
+#        # get the hardware address (ethernet address)
+#
+#        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
+#        if ($host =~ m/^$hwaddr_re$/) {
+#                $hwaddr = $host;
+#        } else {
+#                # $host is not a hardware address, try to resolve it
+#                my $ip_re = join('\.', ('([0-9]|[1-9][0-9]|1[0-9]{2}|2([0-4][0-9]|5[0-5]))') x 4);
+#                my $ip_addr;
+#                if ($host =~ m/^$ip_re$/) {
+#                        $ip_addr = $host;
+#                } else {
+#                        my $h;
+#                        unless ($h = gethost($host)) {
+#                                return undef;
+#                        }
+#                        $ip_addr = inet_ntoa($h->addr);
+#                }
+#        }
+#
+#        # Generate magic sequence
+#        foreach (split /:/, $hwaddr) {
+#                $pkt .= chr(hex($_));
+#        }
+#        $pkt = chr(0xFF) x 6 . $pkt x 16;
+#
+#        # Allocate socket and send packet
+#
+#        $raddr = gethostbyname($ipaddr)->addr;
+#        $them = pack_sockaddr_in($port, $raddr);
+#        $proto = getprotobyname('udp');
+#
+#        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
+#        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
+#
+#        send(S, $pkt, 0, $them) or die "send : $!";
+#        close S;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -386,6 +399,35 @@ sub register_at_bus {
 }
 
 
+sub import_events {
+    if (not -e $event_dir) {
+        &main::daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+    }
+    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+
+    while (defined (my $event = readdir (DIR))) {
+        if( $event eq "." || $event eq ".." ) { next; }  
+        if( $event eq "gosaTriggered.pm" ) { next; }    # only GOsa specific events
+
+        eval{ require $event; };
+        if( $@ ) {
+            &main::daemon_log("import of event module '$event' failed", 1);
+            &main::daemon_log("$@", 8);
+            next;
+        }
+
+        $event =~ /(\S*?).pm$/;
+        my $event_module = $1;
+        my $events_l = eval( $1."::get_events()") ;
+        foreach my $event_name (@{$events_l}) {
+            $event_hash->{$event_name} = $event_module;
+        }
+        my $events_string = join( ", ", @{$events_l});
+        &main::daemon_log("INFO: SIPackages imported events $events_string", 5);
+    }
+}
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
 #   PARAMETERS:  crypted_msg - string - incoming crypted message
@@ -393,11 +435,11 @@ sub register_at_bus {
 #  DESCRIPTION:  handels the proceeded distribution to the appropriated functions
 #===============================================================================
 sub process_incoming_msg {
-    my ($msg, $msg_hash, $remote_ip) = @_ ;
+    my ($msg, $msg_hash, $session_id) = @_ ;
     my $error = 0;
     my $host_name;
     my $host_key;
-    my @out_msg_l;
+    my @out_msg_l = ();
 
     # process incoming msg
     my $header = @{$msg_hash->{header}}[0]; 
@@ -414,33 +456,32 @@ sub process_incoming_msg {
     if( 1 == length @target_l) {
         my $target = $target_l[0];
 		if(&server_matches($target)) {
+
+
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
                 @out_msg_l = &here_i_am($msg_hash)
-            } elsif ($header eq 'who_has') {
-                @out_msg_l = &who_has($msg_hash)
-            } elsif ($header eq 'who_has_i_do') {
-                @out_msg_l = &who_has_i_do($msg_hash)
-            } elsif ($header eq 'got_ping') {
-                @out_msg_l = &got_ping($msg_hash)
-            } elsif ($header eq 'get_load') {
-                @out_msg_l = &execute_actions($msg_hash)
-            } elsif ($header eq 'detected_hardware') {
-                @out_msg_l = &process_detected_hardware($msg_hash)
-            } elsif ($header eq 'trigger_wake') {
-                foreach (@{$msg_hash->{macAddress}}){
-                    &main::daemon_log("SIPackages: trigger wake for $_", 1);
-                    do_wake($_);
-                }
             } else {
-                &main::daemon_log("ERROR: $header is an unknown core function", 1);
-                $error++;
+                if( exists $event_hash->{$header} ) {
+                    # a event exists with the header as name
+                    &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+                    no strict 'refs';
+                    @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+                }
             }
-        } else {
-		&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
-		push(@out_msg_l, $msg);
-	}
+
+            # if delivery not possible raise error and return 
+            if( not @out_msg_l ) {
+                &main::daemon_log("WARNING: SIPackages got not answer from event handler '$header'", 3);
+            } elsif( 0 == @out_msg_l) {
+                &main::daemon_log("ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
+            } 
+        }
+		else {
+			&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
+			push(@out_msg_l, $msg);
+		}
     }
 
     return \@out_msg_l;
@@ -453,45 +494,45 @@ sub process_incoming_msg {
 #      RETURNS:  nothing
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
-sub got_ping {
-    my ($msg_hash) = @_;
-
-    my $source = @{$msg_hash->{source}}[0];
-    my $target = @{$msg_hash->{target}}[0];
-    my $header = @{$msg_hash->{header}}[0];
-    my $session_id = @{$msg_hash->{'session_id'}}[0];
-    my $act_time = &get_time;
-    my @out_msg_l;
-    my $out_msg;
-
-    # check known_clients_db
-    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
-    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
-    if( 1 == keys %{$query_res} ) {
-         my $sql_statement= "UPDATE known_clients ".
-            "SET status='$header', timestamp='$act_time' ".
-            "WHERE hostname='$source'";
-         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
-    } 
-    
-    # check known_server_db
-    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source'";
-    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-    if( 1 == keys %{$query_res} ) {
-         my $sql_statement= "UPDATE known_server ".
-            "SET status='$header', timestamp='$act_time' ".
-            "WHERE hostname='$source'";
-         my $res = $main::known_server_db->update_dbentry( $sql_statement );
-    } 
-
-    # create out_msg
-    my $out_hash = &create_xml_hash($header, $source, "GOSA");
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
-    $out_msg = &create_xml_string($out_hash);
-    push(@out_msg_l, $out_msg);
-    
-    return @out_msg_l;
-}
+#sub got_ping {
+#    my ($msg_hash) = @_;
+#
+#    my $source = @{$msg_hash->{source}}[0];
+#    my $target = @{$msg_hash->{target}}[0];
+#    my $header = @{$msg_hash->{header}}[0];
+#    my $session_id = @{$msg_hash->{'session_id'}}[0];
+#    my $act_time = &get_time;
+#    my @out_msg_l;
+#    my $out_msg;
+#
+#    # check known_clients_db
+#    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
+#    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
+#    if( 1 == keys %{$query_res} ) {
+#         my $sql_statement= "UPDATE known_clients ".
+#            "SET status='$header', timestamp='$act_time' ".
+#            "WHERE hostname='$source'";
+#         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
+#    } 
+#    
+#    # check known_server_db
+#    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source'";
+#    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+#    if( 1 == keys %{$query_res} ) {
+#         my $sql_statement= "UPDATE known_server ".
+#            "SET status='$header', timestamp='$act_time' ".
+#            "WHERE hostname='$source'";
+#         my $res = $main::known_server_db->update_dbentry( $sql_statement );
+#    } 
+#
+#    # create out_msg
+#    my $out_hash = &create_xml_hash($header, $source, "GOSA");
+#    &add_content2xml_hash($out_hash, "session_id", $session_id);
+#    $out_msg = &create_xml_string($out_hash);
+#    push(@out_msg_l, $out_msg);
+#    
+#    return @out_msg_l;
+#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  new_passwd
@@ -851,124 +892,124 @@ sub new_ldap_config {
 	return &build_msg("new_ldap_config", $server_address, $address, \%data);
 }
 
-sub process_detected_hardware {
-	my $msg_hash = shift;
-	my $address = $msg_hash->{source}[0];
-	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
-
-    my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
-    my $res = $main::known_clients_db->select_dbentry( $sql_statement );
-
-    # check hit
-    my $hit_counter = keys %{$res};
-    if( not $hit_counter == 1 ) {
-        &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
-		return;
-    }
-
-    my $macaddress = $res->{1}->{macaddress};
-    my $hostkey = $res->{1}->{hostkey};
-
-    if (not defined $macaddress) {
-        &main::daemon_log("ERROR: no mac address found for client $address", 1);
-        return;
-    }
-    # Build LDAP connection
-    my $ldap = Net::LDAP->new($ldap_uri);
-    if( not defined $ldap ) {
-        &main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
-        return;
-    } 
-
-    # Bind to a directory with dn and password
-    my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
-
-    # Perform search
-	$mesg = $ldap->search(
-		base   => $ldap_base,
-		scope  => 'sub',
-		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
-	);
-
-	# We need to create a base entry first (if not done from ArpHandler)
-	if($mesg->count == 0) {
-		&main::daemon_log("Need to create a new LDAP Entry for client $address", 1);
-		my $resolver=Net::DNS::Resolver->new;
-		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
-		my $dnsresult= $resolver->search($ipaddress);
-		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
-		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
-		my $dn = "cn=$cn,ou=incoming,$ldap_base";
-		&main::daemon_log("Creating entry for $dn",6);
-		my $entry= Net::LDAP::Entry->new( $dn );
-		$entry->dn($dn);
-		$entry->add("objectClass" => "goHard");
-		$entry->add("cn" => $cn);
-		$entry->add("macAddress" => $macaddress);
-		$entry->add("gotomode" => "locked");
-		$entry->add("gotoSysStatus" => "new-system");
-		$entry->add("ipHostNumber" => $ipaddress);
-		if(defined($gosa_unit_tag) && length($gosa_unit_tag) > 0) {
-			$entry->add("objectClass" => "gosaAdministrativeUnit");
-			$entry->add("gosaUnitTag" => $gosa_unit_tag);
-		}
-		my $res=$entry->update($ldap);
-		if(defined($res->{'errorMessage'}) &&
-			length($res->{'errorMessage'}) >0) {
-			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
-			&main::daemon_log($res->{'errorMessage'}, 1);
-			return;
-		} else {
-			# Fill $mesg again
-			$mesg = $ldap->search(
-				base   => $ldap_base,
-				scope  => 'sub',
-				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
-			);
-		}
-	}
-	
-	if($mesg->count == 1) {
-		my $entry= $mesg->entry(0);
-		$entry->changetype("modify");
-		foreach my $attribute (
-			"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
-			"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
-			"gotoXDriver", "gotoXVsync", "gotoXMonitor", "gotoHardwareChecksum") {
-			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
-				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
-				if(defined($entry->get_value($attribute))) {
-					$entry->delete($attribute);
-				}
-				&main::daemon_log("Adding attribute $attribute with value ".$msg_hash->{detected_hardware}[0]->{$attribute},1);
-				$entry->add($attribute => $msg_hash->{detected_hardware}[0]->{$attribute});	
-			}
-		}
-		foreach my $attribute (
-			"gotoModules", "ghScsiDev", "ghIdeDev") {
-			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
-				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
-				if(defined($entry->get_value($attribute))) {
-					$entry->delete($attribute);
-				}
-				foreach my $array_entry (@{$msg_hash->{detected_hardware}[0]->{$attribute}}) {
-					$entry->add($attribute => $array_entry);
-				}
-			}
-		}
-
-		my $res=$entry->update($ldap);
-		if(defined($res->{'errorMessage'}) &&
-			length($res->{'errorMessage'}) >0) {
-			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
-			&main::daemon_log($res->{'errorMessage'}, 1);
-		} else {
-			&main::daemon_log("Added Hardware configuration to LDAP", 4);
-		}
-
-	}
-	return;
-}
+#sub process_detected_hardware {
+#	my $msg_hash = shift;
+#	my $address = $msg_hash->{source}[0];
+#	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
+#
+#    my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+#    my $res = $main::known_clients_db->select_dbentry( $sql_statement );
+#
+#    # check hit
+#    my $hit_counter = keys %{$res};
+#    if( not $hit_counter == 1 ) {
+#        &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+#		return;
+#    }
+#
+#    my $macaddress = $res->{1}->{macaddress};
+#    my $hostkey = $res->{1}->{hostkey};
+#
+#    if (not defined $macaddress) {
+#        &main::daemon_log("ERROR: no mac address found for client $address", 1);
+#        return;
+#    }
+#    # Build LDAP connection
+#    my $ldap = Net::LDAP->new($ldap_uri);
+#    if( not defined $ldap ) {
+#        &main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+#        return;
+#    } 
+#
+#    # Bind to a directory with dn and password
+#    my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+#
+#    # Perform search
+#	$mesg = $ldap->search(
+#		base   => $ldap_base,
+#		scope  => 'sub',
+#		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
+#	);
+#
+#	# We need to create a base entry first (if not done from ArpHandler)
+#	if($mesg->count == 0) {
+#		&main::daemon_log("Need to create a new LDAP Entry for client $address", 1);
+#		my $resolver=Net::DNS::Resolver->new;
+#		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
+#		my $dnsresult= $resolver->search($ipaddress);
+#		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
+#		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
+#		my $dn = "cn=$cn,ou=incoming,$ldap_base";
+#		&main::daemon_log("Creating entry for $dn",6);
+#		my $entry= Net::LDAP::Entry->new( $dn );
+#		$entry->dn($dn);
+#		$entry->add("objectClass" => "goHard");
+#		$entry->add("cn" => $cn);
+#		$entry->add("macAddress" => $macaddress);
+#		$entry->add("gotomode" => "locked");
+#		$entry->add("gotoSysStatus" => "new-system");
+#		$entry->add("ipHostNumber" => $ipaddress);
+#		if(defined($gosa_unit_tag) && length($gosa_unit_tag) > 0) {
+#			$entry->add("objectClass" => "gosaAdministrativeUnit");
+#			$entry->add("gosaUnitTag" => $gosa_unit_tag);
+#		}
+#		my $res=$entry->update($ldap);
+#		if(defined($res->{'errorMessage'}) &&
+#			length($res->{'errorMessage'}) >0) {
+#			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
+#			&main::daemon_log($res->{'errorMessage'}, 1);
+#			return;
+#		} else {
+#			# Fill $mesg again
+#			$mesg = $ldap->search(
+#				base   => $ldap_base,
+#				scope  => 'sub',
+#				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
+#			);
+#		}
+#	}
+#	
+#	if($mesg->count == 1) {
+#		my $entry= $mesg->entry(0);
+#		$entry->changetype("modify");
+#		foreach my $attribute (
+#			"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
+#			"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
+#			"gotoXDriver", "gotoXVsync", "gotoXMonitor", "gotoHardwareChecksum") {
+#			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
+#				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
+#				if(defined($entry->get_value($attribute))) {
+#					$entry->delete($attribute);
+#				}
+#				&main::daemon_log("Adding attribute $attribute with value ".$msg_hash->{detected_hardware}[0]->{$attribute},1);
+#				$entry->add($attribute => $msg_hash->{detected_hardware}[0]->{$attribute});	
+#			}
+#		}
+#		foreach my $attribute (
+#			"gotoModules", "ghScsiDev", "ghIdeDev") {
+#			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
+#				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
+#				if(defined($entry->get_value($attribute))) {
+#					$entry->delete($attribute);
+#				}
+#				foreach my $array_entry (@{$msg_hash->{detected_hardware}[0]->{$attribute}}) {
+#					$entry->add($attribute => $array_entry);
+#				}
+#			}
+#		}
+#
+#		my $res=$entry->update($ldap);
+#		if(defined($res->{'errorMessage'}) &&
+#			length($res->{'errorMessage'}) >0) {
+#			&main::daemon_log("There was a problem adding the entries to LDAP:", 1);
+#			&main::daemon_log($res->{'errorMessage'}, 1);
+#		} else {
+#			&main::daemon_log("Added Hardware configuration to LDAP", 4);
+#		}
+#
+#	}
+#	return;
+#}
 #===  FUNCTION  ================================================================
 #         NAME:  hardware_config
 #   PARAMETERS:  address - string - ip address and port of a host
@@ -1142,56 +1183,55 @@ sub server_matches {
 }
 
 
-#===  FUNCTION  ================================================================
-#         NAME:  execute_actions
-#   PARAMETERS:  msg_hash - hash - hash from function create_xml_hash
-#      RETURNS:  nothing
-#  DESCRIPTION:  invokes the script specified in msg_hash which is located under
-#                /etc/gosad/actions
-#===============================================================================
-sub execute_actions {
-    my ($msg_hash) = @_ ;
-    my $configdir= '/etc/gosad/actions/';
-    my $result;
+##===  FUNCTION  ================================================================
+##         NAME:  execute_actions
+##   PARAMETERS:  msg_hash - hash - hash from function create_xml_hash
+##      RETURNS:  nothing
+##  DESCRIPTION:  invokes the script specified in msg_hash which is located under
+##                /etc/gosad/actions
+##===============================================================================
+#sub execute_actions {
+#    my ($msg_hash) = @_ ;
+#    my $configdir= '/etc/gosad/actions/';
+#    my $result;
+#
+#    my $header = @{$msg_hash->{header}}[0];
+#    my $source = @{$msg_hash->{source}}[0];
+#    my $target = @{$msg_hash->{target}}[0];
+# 
+#    if((not defined $source)
+#            && (not defined $target)
+#            && (not defined $header)) {
+#        &main::daemon_log("ERROR: Entries missing in XML msg for gosad actions under /etc/gosad/actions");
+#    } else {
+#        my $parameters="";
+#        my @params = @{$msg_hash->{$header}};
+#        my $params = join(", ", @params);
+#        &main::daemon_log("execute_actions: got parameters: $params", 5);
+#
+#        if (@params) {
+#            foreach my $param (@params) {
+#                my $param_value = (&get_content_from_xml_hash($msg_hash, $param))[0];
+#                &main::daemon_log("execute_actions: parameter -> value: $param -> $param_value", 7);
+#                $parameters.= " ".$param_value;
+#            }
+#        }
+#
+#        my $cmd= $configdir.$header."$parameters";
+#        &main::daemon_log("execute_actions: executing cmd: $cmd", 7);
+#        $result= "";
+#        open(PIPE, "$cmd 2>&1 |");
+#        while(<PIPE>) {
+#            $result.=$_;
+#        }
+#        close(PIPE);
+#    }
+#
+#    # process the event result
+#
+#
+#    return;
+#}
+#
 
-    my $header = @{$msg_hash->{header}}[0];
-    my $source = @{$msg_hash->{source}}[0];
-    my $target = @{$msg_hash->{target}}[0];
- 
-    if((not defined $source)
-            && (not defined $target)
-            && (not defined $header)) {
-        &main::daemon_log("ERROR: Entries missing in XML msg for gosad actions under /etc/gosad/actions");
-    } else {
-        my $parameters="";
-        my @params = @{$msg_hash->{$header}};
-        my $params = join(", ", @params);
-        &main::daemon_log("execute_actions: got parameters: $params", 5);
-
-        if (@params) {
-            foreach my $param (@params) {
-                my $param_value = (&get_content_from_xml_hash($msg_hash, $param))[0];
-                &main::daemon_log("execute_actions: parameter -> value: $param -> $param_value", 7);
-                $parameters.= " ".$param_value;
-            }
-        }
-
-        my $cmd= $configdir.$header."$parameters";
-        &main::daemon_log("execute_actions: executing cmd: $cmd", 7);
-        $result= "";
-        open(PIPE, "$cmd 2>&1 |");
-        while(<PIPE>) {
-            $result.=$_;
-        }
-        close(PIPE);
-    }
-
-    # process the event result
-
-
-    return;
-}
-
-
-#vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 1;

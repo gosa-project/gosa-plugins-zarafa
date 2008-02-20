@@ -17,6 +17,7 @@ my @events = (
     "trigger_action_sysinfo",
     "trigger_action_instant_update",
     "trigger_action_rescan",
+    "trigger_action_wake",
     );
 @EXPORT = @events;
 
@@ -48,7 +49,8 @@ sub ping {
      &add_content2xml_hash($out_hash, "session_id", $session_id);
      my $out_msg = &create_xml_string($out_hash);
     
-     return ( $out_msg );
+     my @out_msg_l = ( $out_msg );
+     return @out_msg_l;
 }
 
 sub network_completition {
@@ -87,7 +89,9 @@ sub detect_hardware {
     my $out_hash = &create_xml_hash("detect_hardware", $source, $target);
     my $out_msg = &create_xml_string($out_hash);
 
-    return ( $out_msg );
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+
 }
 
 
@@ -101,62 +105,70 @@ sub set_activated_for_installation {
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
     my $out_msg = &create_xml_string($out_hash);
 
-    return ( $out_msg );
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
 }
 
 sub trigger_action_localboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
-
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_halt<\/header>/<header>trigger_action_halt<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reboot<\/header>/<header>trigger_action_reboot<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_memcheck {
     my ($msg, $msg_hash) = @_ ;
     $msg =~ s/<header>gosa_trigger_action_memcheck<\/header>/<header>trigger_action_memcheck<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_reinstall {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reinstall<\/header>/<header>trigger_action_reinstall<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_update<\/header>/<header>trigger_action_update<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_instant_update<\/header>/<header>trigger_action_instant_update<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
 sub trigger_action_sysinfo {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_sysinfo<\/header>/<header>trigger_action_sysinfo<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 
@@ -164,13 +176,24 @@ sub trigger_action_sysinfo {
 sub new_key_for_client {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_new_key_for_client<\/header>/<header>new_key<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
 }
 
 sub trigger_action_rescan {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_rescan<\/header>/<header>trigger_action_rescan<\/header>/;
-    return ( $msg );
+    my @out_msg_l = ($msg);  
+    return @out_msg_l;
+}
+
+
+sub trigger_action_wake {
+    my ($msg, $msg_hash) = @_;
+    my %data = ( 'macAddress'  => \@{$msg_hash->{macAddress}} );
+    my $out_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    my @out_msg_l = ($out_msg);  
+    return @out_msg_l;
 }
 
 1;

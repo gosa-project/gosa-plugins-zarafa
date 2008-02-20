@@ -888,7 +888,7 @@ sub client_input {
     my $client_answer;
 
     daemon_log("Incoming msg from '".$heap->{'remote_ip'}."'", 7);
-    daemon_log("\n$input", 8);
+    daemon_log("message:\n$input", 8);
 
     ####################
     # check incoming msg

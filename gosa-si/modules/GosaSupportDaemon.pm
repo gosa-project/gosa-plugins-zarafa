@@ -53,6 +53,8 @@ sub daemon_log {
 }
 
 
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  create_xml_hash
 #   PARAMETERS:  header - string - message header (required)
