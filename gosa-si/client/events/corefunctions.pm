@@ -18,10 +18,10 @@ my ($ldap_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 my %cfg_defaults = (
     "client" => {
         "ldap" => [\$ldap_enabled, 1],
-        "ldap_config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
-        "pam_config" => [\$pam_config, "/etc/pam_ldap.conf"],
-        "nss_config" => [\$nss_config, "/etc/libnss_ldap.conf"],
-        "fai_logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
+        "ldap-config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
+        "pam-config" => [\$pam_config, "/etc/pam_ldap.conf"],
+        "nss-config" => [\$nss_config, "/etc/libnss_ldap.conf"],
+        "fai-logpath" => [\$fai_logpath, "/var/log/fai/fai.log"],
     },
 );
 
