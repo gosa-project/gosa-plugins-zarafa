@@ -7,7 +7,7 @@ Build-Depends: debhelper(>= 4.2.32), dpatch
 
 Package: gosa-si-common
 Architecture: any
-Depends: libconfig-inifiles-perl, libcrypt-rijndael-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl
+Depends: libconfig-inifiles-perl, libcrypt-rijndael-perl, libxml-simple-perl, libdata-dumper-simple-perl, libmime-perl, libdbd-sqlite3-perl, libnet-ldap-perl, libnetaddr-ip-perl, libpoe-perl, libnet-dns-perl, libnet-pcap-perl, libconvert-asn1-perl, libdigest-hmac-perl, libnet-ip-perl, libdigest-sha1-perl, libnet-mac-vendor-perl, libpoe-component-pcap-perl, libnet-arp-perl
 Suggests: gosa-si-server, gosa-si-client
 Description: GOsa support infrastructure
  This package provides common library functionality used by the
