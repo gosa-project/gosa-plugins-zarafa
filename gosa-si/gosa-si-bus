@@ -28,8 +28,6 @@ use Time::HiRes qw( gettimeofday );
 use POE qw(Component::Server::TCP);
 use Data::Dumper;
 use Crypt::Rijndael;
-use GOSA::DBsqlite;
-use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
 use NetAddr::IP;
 use XML::Simple;
@@ -37,6 +35,8 @@ use MIME::Base64;
 use File::Basename;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 
+use GOSA::GosaSupportDaemon;
+use GOSA::DBsqlite;
 
 my ($cfg_file, $default_cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file,);
 my ($bus_address, $bus_key, $bus_ip, $bus_port, $bus_mac_address);
@@ -463,6 +463,45 @@ sub create_passwd {
         $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
     }
     return $new_passwd;
+}
+
+
+sub create_ciphering {
+    my ($passwd) = @_;
+	if((!defined($passwd)) || length($passwd)==0) {
+		$passwd = "";
+	}
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
+    return $my_cipher;
+}
+
+
+sub encrypt_msg {
+    my ($msg, $key) = @_;
+    my $my_cipher = &create_ciphering($key);
+    {
+      use bytes;
+      $msg = "\0"x(16-length($msg)%16).$msg;
+    }
+    $msg = $my_cipher->encrypt($msg);
+    chomp($msg = &encode_base64($msg));
+    # there are no newlines allowed inside msg
+    $msg=~ s/\n//g;
+    return $msg;
+}
+
+
+sub decrypt_msg {
+
+    my ($msg, $key) = @_ ;
+    $msg = &decode_base64($msg);
+    my $my_cipher = &create_ciphering($key);
+    $msg = $my_cipher->decrypt($msg); 
+    $msg =~ s/\0*//g;
+    return $msg;
 }
 
 

@@ -7,9 +7,6 @@ my @functions = (
     "get_content_from_xml_hash",
     "add_content2xml_hash",
     "create_xml_string",
-    "encrypt_msg",
-    "decrypt_msg",
-    "create_ciphering",
     "transform_msg2hash",
     "get_time",
     "build_msg",
@@ -150,33 +147,19 @@ sub add_content2xml_hash {
 #      RETURNS:  crypted_msg - string - crypted message
 #  DESCRIPTION:  crypts the incoming message with the Crypt::Rijndael module
 #===============================================================================
-sub encrypt_msg {
-#    my ($msg, $my_cipher) = @_;
-#    if(not defined $my_cipher) { print "no cipher object\n"; }
+#sub encrypt_msg {
+#    my ($msg, $key) = @_;
+#    my $my_cipher = &create_ciphering($key);
 #    {
 #      use bytes;
 #      $msg = "\0"x(16-length($msg)%16).$msg;
 #    }
 #    $msg = $my_cipher->encrypt($msg);
 #    chomp($msg = &encode_base64($msg));
-#
 #    # there are no newlines allowed inside msg
 #    $msg=~ s/\n//g;
-#
 #    return $msg;
-    my ($msg, $key) = @_;
-    my $my_cipher = &create_ciphering($key);
-    {
-      use bytes;
-      $msg = "\0"x(16-length($msg)%16).$msg;
-    }
-    $msg = $my_cipher->encrypt($msg);
-    chomp($msg = &encode_base64($msg));
-    # there are no newlines allowed inside msg
-    $msg=~ s/\n//g;
-    return $msg;
-
-}
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -186,7 +169,7 @@ sub encrypt_msg {
 #      RETURNS:  msg - string - decrypted message
 #  DESCRIPTION:  decrypts the incoming message with the Crypt::Rijndael module
 #===============================================================================
-sub decrypt_msg {
+#sub decrypt_msg {
 #    my ($msg, $my_cipher) = @_ ;
 #    
 #    if(defined $msg && defined $my_cipher) {
@@ -195,13 +178,13 @@ sub decrypt_msg {
 #    $msg = $my_cipher->decrypt($msg); 
 #    $msg =~ s/\0*//g;
 #    return $msg;
-    my ($msg, $key) = @_ ;
-    $msg = &decode_base64($msg);
-    my $my_cipher = &create_ciphering($key);
-    $msg = $my_cipher->decrypt($msg); 
-    $msg =~ s/\0*//g;
-    return $msg;
-}
+#    my ($msg, $key) = @_ ;
+#    $msg = &decode_base64($msg);
+#    my $my_cipher = &create_ciphering($key);
+#    $msg = $my_cipher->decrypt($msg); 
+#    $msg =~ s/\0*//g;
+#    return $msg;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -210,17 +193,17 @@ sub decrypt_msg {
 #      RETURNS:  cipher - object
 #  DESCRIPTION:  creates a Crypt::Rijndael::MODE_CBC object with passwd as key
 #===============================================================================
-sub create_ciphering {
-    my ($passwd) = @_;
-    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-
-    #daemon_log("iv: $iv", 7);
-    #daemon_log("key: $passwd", 7);
-    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-    $my_cipher->set_iv($iv);
-    return $my_cipher;
-}
+#sub create_ciphering {
+#    my ($passwd) = @_;
+#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+#
+#    #daemon_log("iv: $iv", 7);
+#    #daemon_log("key: $passwd", 7);
+#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+#    $my_cipher->set_iv($iv);
+#    return $my_cipher;
+#}
 
 
 #===  FUNCTION  ================================================================

@@ -636,6 +636,45 @@ sub create_passwd {
 }
 
 
+sub create_ciphering {
+    my ($passwd) = @_;
+	if((!defined($passwd)) || length($passwd)==0) {
+		$passwd = "";
+	}
+    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
+    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
+    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
+    $my_cipher->set_iv($iv);
+    return $my_cipher;
+}
+
+
+sub encrypt_msg {
+    my ($msg, $key) = @_;
+    my $my_cipher = &create_ciphering($key);
+    {
+      use bytes;
+      $msg = "\0"x(16-length($msg)%16).$msg;
+    }
+    $msg = $my_cipher->encrypt($msg);
+    chomp($msg = &encode_base64($msg));
+    # there are no newlines allowed inside msg
+    $msg=~ s/\n//g;
+    return $msg;
+}
+
+
+sub decrypt_msg {
+
+    my ($msg, $key) = @_ ;
+    $msg = &decode_base64($msg);
+    my $my_cipher = &create_ciphering($key);
+    $msg = $my_cipher->decrypt($msg); 
+    $msg =~ s/\0*//g;
+    return $msg;
+}
+
+
 sub get_server_addresses {
     my $domain= shift;
     my @result;
@@ -1137,9 +1176,21 @@ sub generic_file_error {
 
 sub fifo_got_record {
     my $file_record = $_[ARG0];
-    print STDERR "$file_record\n";
+    my $header;
+    my $content = "";
 
-    my $clmsg_hash = &create_xml_hash("CLMSG_$file_record", $client_address, $server_address);
+    $file_record =~ /^(\S+)[ ]?([\s\S]+)?$/;
+    if( defined $1 ) {
+        $header = $1;
+    } else {
+        return;
+    }
+
+    if( defined $2 ) {
+        $content = $2;
+    }
+
+    my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
     my $clmsg = &create_xml_string($clmsg_hash);
     &send_msg_to_target($clmsg, $server_address, $server_key);
     return;
