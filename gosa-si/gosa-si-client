@@ -1191,6 +1191,7 @@ sub fifo_got_record {
     }
 
     my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
+    &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
     my $clmsg = &create_xml_string($clmsg_hash);
     &send_msg_to_target($clmsg, $server_address, $server_key);
     return;

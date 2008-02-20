@@ -87,9 +87,9 @@ $bus_activ = "true";
 
 $no_arp = 0;
 
-# name of table for storing gosa jobs
-our $job_queue_table_name = 'jobs';
+# holds all gosa jobs
 our $job_db;
+our $job_queue_table_name = 'jobs';
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_server_db;
@@ -459,6 +459,7 @@ sub check_outgoing_xml_validity {
                     $target =~ /^GOSA$/i ||
                     $target =~ /^\*$/ ||
                     $target =~ /KNOWN_SERVER/i ||
+                    $target =~ /JOBDB/i ||
                     $target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ){
                 die "target '$target' is not a complete ip-address with port or a valid target name or a mac-address";
             }
@@ -926,6 +927,8 @@ sub client_input {
 
             # deliver msg to all targets 
             foreach my $answer_target ( @answer_target_l ) {
+
+                # targets of msg are all gosa-si-clients in known_clients_db
                 if( $answer_target eq "*" ) {
                     # answer is for all clients
                     my $sql_statement= "SELECT * FROM known_clients";
@@ -936,19 +939,8 @@ sub client_input {
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
                 }
-                elsif( $answer_target eq "GOSA" ) {
-                    $answer =~ /<session_id>(\d+)<\/session_id>/;
-                    my $session_id = $1;
-                    my $add_on = "";
 
-                    if( defined $session_id ) {
-                        $add_on = ".session_id=$session_id";
-                    }
-            
-                    # answer is for GOSA and has to returned to connected client
-                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                    $client_answer = $gosa_answer.$add_on;
-                }
+                # targets of msg are all gosa-si-server in known_server_db
                 elsif( $answer_target eq "KNOWN_SERVER" ) {
                     # answer is for all server in known_server
                     my $sql_statement= "SELECT * FROM known_server";
@@ -960,6 +952,29 @@ sub client_input {
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                     }
                 }
+
+                # target of msg is GOsa
+                elsif( $answer_target eq "GOSA" ) {
+                    $answer =~ /<session_id>(\d+)<\/session_id>/;
+                    my $session_id = $1;
+                    my $add_on = "";
+                    if( defined $session_id ) {
+                        $add_on = ".session_id=$session_id";
+                    }
+                    # answer is for GOSA and has to returned to connected client
+                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+                    $client_answer = $gosa_answer.$add_on;
+                }
+
+                # target of msg is job queue at this host
+                elsif( $answer_target eq "JOBDB") {
+                    $answer =~ /<header>(\S+)<\/header>/;   
+                    my $header;
+                    if( defined $1 ) { $header = $1; }
+                    &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+                }
+
+                # target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
                     daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
@@ -988,9 +1003,9 @@ sub client_input {
                         }
 
                     }
-                } else {
-                    # ... answer is for one specific host
 
+                #  answer is for one specific host   
+                } else {
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);
                     if( not defined $encrypt_key ) {

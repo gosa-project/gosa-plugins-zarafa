@@ -513,6 +513,9 @@ sub update_status_jobdb_entry {
         $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
     }
     my @out_msg_l = ( $out_xml );
+
+print STDERR $out_xml."\n";
+
     return @out_msg_l;
 }
 

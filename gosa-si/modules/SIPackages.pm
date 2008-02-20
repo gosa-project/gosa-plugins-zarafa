@@ -445,6 +445,9 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0]; 
     my @target_l = @{$msg_hash->{target}};
 
+    # skip PREFIX
+    $header =~ s/^CLMSG_//;
+
     &main::daemon_log("SIPackages: msg to process: $header", 3);
     &main::daemon_log("$msg", 8);
 
