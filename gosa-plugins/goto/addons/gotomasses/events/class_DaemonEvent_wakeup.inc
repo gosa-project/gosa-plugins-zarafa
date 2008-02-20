@@ -19,10 +19,11 @@ class DaemonEvent_wakeup extends DaemonEvent
 
     /* Check if target add dialog is open */
     if($this->is_target_list_open()){
-      $display .= $this->get_target_list();
+      $display .= $this->get_target_add_list();
     }else{
       $smarty = get_smarty();
-      $smarty->assign("timestamp",$this->get_time_select());
+      $smarty->assign("target_list" , $this->get_target_list());
+      $smarty->assign("timestamp"   , $this->get_time_select());
       $display.= $smarty->fetch(get_template_path('DaemonEvent_wakeup.tpl', TRUE, dirname(__FILE__)));
     }   
  
