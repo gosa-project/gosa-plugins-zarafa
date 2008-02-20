@@ -24,7 +24,6 @@ my $ldap_uri;
 my $ldap_base;
 my $ldap_admin_dn;
 my $ldap_admin_password;
-my $gosa_unit_tag;
 
 my %cfg_defaults = (
 "server" => {
@@ -32,7 +31,6 @@ my %cfg_defaults = (
     "ldap-base" => [\$ldap_base, ""],
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
     "ldap-admin-password" => [\$ldap_admin_password, ""],
-	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 );
 &read_configfile($main::cfg_file, %cfg_defaults);
@@ -163,9 +161,9 @@ sub detected_hardware {
 		$entry->add("gotomode" => "locked");
 		$entry->add("gotoSysStatus" => "new-system");
 		$entry->add("ipHostNumber" => $ipaddress);
-		if(defined($gosa_unit_tag) && length($gosa_unit_tag) > 0) {
+		if(defined($main::gosa_unit_tag) && length($main::gosa_unit_tag) > 0) {
 			$entry->add("objectClass" => "gosaAdministrativeUnit");
-			$entry->add("gosaUnitTag" => $gosa_unit_tag);
+			$entry->add("gosaUnitTag" => $main::gosa_unit_tag);
 		}
 		my $res=$entry->update($ldap);
 		if(defined($res->{'errorMessage'}) &&

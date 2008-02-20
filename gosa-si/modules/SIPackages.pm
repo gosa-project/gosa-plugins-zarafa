@@ -30,8 +30,7 @@ my $server;
 my $event_hash;
 my $network_interface;
 my $no_bus;
-my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret, $gosa_unit_tag);
-
+my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 
 my %cfg_defaults = (
 "bus" => {
@@ -49,7 +48,6 @@ my %cfg_defaults = (
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
     "ldap-admin-password" => [\$ldap_admin_password, ""],
     "max-clients" => [\$max_clients, 100],
-	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 "SIPackages" => {
     "key" => [\$SIPackages_key, ""],
@@ -67,7 +65,7 @@ $server_mac_address= &get_mac($network_interface);
 &import_events();
 
 # Unit tag can be defined in config
-if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
+if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
 	my $tmp_ldap= Net::LDAP->new($ldap_uri);
 	if(defined($tmp_ldap)) {
@@ -86,7 +84,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 			my $unit_tag= $entry->get_value("gosaUnitTag");
 			if(defined($unit_tag) && length($unit_tag) > 0) {
 				&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
-				$gosa_unit_tag= $unit_tag;
+				$main::gosa_unit_tag= $unit_tag;
 			}
 		} else {
 			# Perform another search for Unit Tag
@@ -104,7 +102,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 				my $unit_tag= $entry->get_value("gosaUnitTag");
 				if(defined($unit_tag) && length($unit_tag) > 0) {
 					&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
-					$gosa_unit_tag= $unit_tag;
+					$main::gosa_unit_tag= $unit_tag;
 				}
 			} else {
 				# Perform another search for Unit Tag
@@ -122,7 +120,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 					my $unit_tag= $entry->get_value("gosaUnitTag");
 					if(defined($unit_tag) && length($unit_tag) > 0) {
 						&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
-						$gosa_unit_tag= $unit_tag;
+						$main::gosa_unit_tag= $unit_tag;
 					}
 				} else {
 					&main::daemon_log("Not using gosaUnitTag", 6);
@@ -130,7 +128,7 @@ if((not defined($gosa_unit_tag)) || length($gosa_unit_tag) == 0) {
 			}
 		}
 	} else {
-		&main::daemon_log("Using gosaUnitTag from config-file: $gosa_unit_tag",6);
+		&main::daemon_log("Using gosaUnitTag from config-file: $main::gosa_unit_tag",6);
 	}
 	$tmp_ldap->unbind;
 }
@@ -951,9 +949,9 @@ sub new_ldap_config {
 #		$entry->add("gotomode" => "locked");
 #		$entry->add("gotoSysStatus" => "new-system");
 #		$entry->add("ipHostNumber" => $ipaddress);
-#		if(defined($gosa_unit_tag) && length($gosa_unit_tag) > 0) {
+#		if(defined($main::gosa_unit_tag) && length($main::gosa_unit_tag) > 0) {
 #			$entry->add("objectClass" => "gosaAdministrativeUnit");
-#			$entry->add("gosaUnitTag" => $gosa_unit_tag);
+#			$entry->add("gosaUnitTag" => $main::gosa_unit_tag);
 #		}
 #		my $res=$entry->update($ldap);
 #		if(defined($res->{'errorMessage'}) &&

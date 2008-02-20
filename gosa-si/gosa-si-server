@@ -59,7 +59,7 @@ my ($xml);
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $SIPackages_key, 
-    $arp_activ, 
+    $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
 );
 
@@ -111,6 +111,7 @@ our $prg= basename($0);
     "port" => [\$server_port, "20081"],
     "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
+	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
