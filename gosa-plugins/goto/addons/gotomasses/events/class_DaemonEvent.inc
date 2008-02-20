@@ -43,6 +43,9 @@ class DaemonEvent
   protected $is_new       = TRUE;     // Is TRUE if this is a new event
   protected $_target_list = array();  // Object Cache of those objects displayed in the target add dialog
 
+  protected $workstation_list = array();
+  protected $server_list      = array();
+
   public function __construct($config,$data = array())
   {
     $this->data   = $data;
@@ -53,6 +56,24 @@ class DaemonEvent
     /* Load values from given data */
     if(count($data)){
       $this->is_new = FALSE;
+    }
+
+    /* Create a list of servers 
+     */
+    $tmp = get_sub_list("(&(macAddress=*)(objectClass=goServer))",
+          "server",get_ou("serverou"),$config->current['BASE'],
+          array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
+    foreach($tmp as $server){
+      $this->server_list[$server['dn']] = $server;
+    }
+  
+    /* Create a list of workstations 
+     */
+    $tmp = get_sub_list("(&(macAddress=*)(objectClass=gotoWorkstation))",
+          "server",get_ou("workstationou"),$config->current['BASE'],
+          array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
+    foreach($tmp as $server){
+      $this->workstation_list[$server['dn']] = $server;
     }
   }
 
@@ -275,9 +296,9 @@ class DaemonEvent
             array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
     }
     if($this->target_divlist->display_ogroup){
-      $_target_list = array_merge($_target_list,get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=gosaGroupOfNames))",
+      $_target_list = array_merge($_target_list,get_list("(&(cn=".$this->target_divlist->regex.")(member=*)(objectClass=gosaGroupOfNames))",
             "ogroups",get_ou("ogroupou").$this->target_divlist->selectedBase,
-            array("cn","objectClass","description"),GL_NONE));
+            array("cn","objectClass","description","member"),GL_NONE));
     }
     $this->_target_list = $_target_list;
 
@@ -290,6 +311,7 @@ class DaemonEvent
     foreach($tmp as $key => $dummy){
 
       $obj = $this->_target_list[$key];
+
       $name = $obj['cn'][0];
       if(isset($obj['description'])){
         $name .= "&nbsp;[".$obj['description'][0]."]";
@@ -310,7 +332,9 @@ class DaemonEvent
             continue;
           }
         }        
-
+        if(!isset($this->server_list[$obj['dn']])){
+          continue;
+        }
       }elseif(in_array("gotoWorkstation",$obj['objectClass'])){
         $img = '<img class="center" src="images/select_workstation.png" alt="W" title="'._("Workstation").'">'; 
         if($this->target_divlist->filter_iprange){
@@ -318,7 +342,9 @@ class DaemonEvent
             continue;
           }
         }
-
+        if(!isset($this->workstation_list[$obj['dn']])){
+          continue;
+        }
       }elseif(in_array("gosaGroupOfNames",$obj['objectClass'])){
         $img = '<img class="center" src="images/select_ogroup.png" alt="O" title="'._("Object group").'">'; 
       }
@@ -350,10 +376,19 @@ class DaemonEvent
       if(isset($_POST['save_target_dialog'])){
         $this->target_add_list_used =FALSE;
         foreach($this->list_get_selected_items() as $id){
-          if(isset($this->_target_list[$id]['macAddress'][0])){
-            $this->a_targets[] = $this->_target_list[$id]['macAddress'][0];
+          if(in_array("gosaGroupOfNames",$this->_target_list[$id]['objectClass'])){
+            foreach($this->_target_list[$id]['member'] as $mem_dn){
+              if(isset($this->workstation_list[$mem_dn])){
+                $this->a_targets[] = $this->workstation_list[$mem_dn]['macAddress'][0];  
+              }
+              if(isset($this->server_list[$mem_dn])){
+                $this->a_targets[] = $this->server_list[$mem_dn]['macAddress'][0];  
+              }
+            } 
           }else{
-            $this->a_targets[] = $this->_target_list[$id]['cn'][0];
+            if(isset($this->_target_list[$id]['macAddress'][0])){
+              $this->a_targets[] = $this->_target_list[$id]['macAddress'][0];
+            }
           }
         }
         $this->target_divlist = NULL;
