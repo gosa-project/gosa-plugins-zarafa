@@ -82,6 +82,7 @@ class EventTargetAddList extends MultiSelectWindow
   {
     $this->ClearElementsList();
     $this->AddDepartments($this->selectedBase,2,1);
+    $this->setEntries();
     $this->GenHeader();
   }
 
@@ -146,10 +147,8 @@ class EventTargetAddList extends MultiSelectWindow
   }
 
 
-  function setEntries($list)
+  function setEntries()
   {
-
-
     $_target_list = array();
     if($this->display_server){
       $_target_list = array_merge($_target_list,

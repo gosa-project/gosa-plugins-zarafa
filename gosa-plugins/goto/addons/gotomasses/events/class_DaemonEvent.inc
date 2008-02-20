@@ -57,24 +57,6 @@ class DaemonEvent
     if(count($data)){
       $this->is_new = FALSE;
     }
-
-    /* Create a list of servers 
-     */
-    $tmp = get_sub_list("(&(macAddress=*)(objectClass=goServer))",
-          "server",get_ou("serverou"),$config->current['BASE'],
-          array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
-    foreach($tmp as $server){
-      $this->server_list[$server['dn']] = $server;
-    }
-  
-    /* Create a list of workstations 
-     */
-    $tmp = get_sub_list("(&(macAddress=*)(objectClass=gotoWorkstation))",
-          "server",get_ou("workstationou"),$config->current['BASE'],
-          array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
-    foreach($tmp as $server){
-      $this->workstation_list[$server['dn']] = $server;
-    }
   }
 
   public function execute()
@@ -93,6 +75,9 @@ class DaemonEvent
  
   public function get_header()
   {
+    if($this->target_add_list_used){
+      return("");
+    }
     $str = "<h2>"._("Daemon event")."&nbsp;-&nbsp;".$this->s_Event_Name."</h2>";
     return($str);
   }
@@ -187,47 +172,15 @@ class DaemonEvent
     return($divlist->DrawList().$list_footer);
   }
 
+
   public function get_target_add_list()
   {
     $this->target_add_list_used = TRUE;
  
-    if(1 | $this->target_divlist == NULL){ 
+    if($this->target_divlist == NULL){ 
       $this->target_divlist = new EventTargetAddList($this->config,$this);
     }
     $this->target_divlist->execute();
-
-    $_target_list = array();
-    if($this->target_divlist->display_server){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=goServer))",
-            "server",get_ou("serverou").$this->target_divlist->selectedBase,
-            array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
-    }
-    if($this->target_divlist->display_workstation){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->target_divlist->regex.")(objectClass=gotoWorkstation))",
-            "workstation",get_ou("workstationou").$this->target_divlist->selectedBase,
-            array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
-    }
-    if($this->target_divlist->display_ogroup){
-      $_target_list = array_merge($_target_list,
-            get_list("(&(cn=".$this->target_divlist->regex.")(member=*)(objectClass=gosaGroupOfNames))",
-            "ogroups",get_ou("ogroupou").$this->target_divlist->selectedBase,
-            array("cn","objectClass","description","member"),GL_NONE));
-    }
-    $this->_target_list = $_target_list;
-
-    $tmp = array();
-    foreach($this->_target_list as $key => $object){
-      $tmp[$key] = $object['cn'][0];
-    }
-    natcasesort($tmp);
-    $tmp2 = array();
-    foreach($tmp as $key => $sort){
-      $tmp2[] = $this->_target_list[$key];
-    }
-
-    $this->target_divlist->setEntries($tmp2);
 
     $smarty = get_smarty();
     $smarty->assign("divlist",$this->target_divlist->Draw());
@@ -251,18 +204,18 @@ class DaemonEvent
       if(isset($_POST['save_target_dialog'])){
         $this->target_add_list_used =FALSE;
         foreach($this->list_get_selected_items() as $id){
-          if(in_array("gosaGroupOfNames",$this->_target_list[$id]['objectClass'])){
-            foreach($this->_target_list[$id]['member'] as $mem_dn){
-              if(isset($this->workstation_list[$mem_dn])){
-                $this->a_targets[] = $this->workstation_list[$mem_dn]['macAddress'][0];  
+          if(in_array("gosaGroupOfNames",$this->target_divlist->_target_list[$id]['objectClass'])){
+            foreach($this->target_divlist->_target_list[$id]['member'] as $mem_dn){
+              if(isset($this->target_divlist->workstation_list[$mem_dn])){
+                $this->a_targets[] = $this->target_divlist->workstation_list[$mem_dn]['macAddress'][0];  
               }
-              if(isset($this->server_list[$mem_dn])){
-                $this->a_targets[] = $this->server_list[$mem_dn]['macAddress'][0];  
+              if(isset($this->target_divlist->server_list[$mem_dn])){
+                $this->a_targets[] = $this->target_divlist->server_list[$mem_dn]['macAddress'][0];  
               }
             } 
           }else{
-            if(isset($this->_target_list[$id]['macAddress'][0])){
-              $this->a_targets[] = $this->_target_list[$id]['macAddress'][0];
+            if(isset($this->target_divlist->_target_list[$id]['macAddress'][0])){
+              $this->a_targets[] = $this->target_divlist->_target_list[$id]['macAddress'][0];
             }
           }
         }

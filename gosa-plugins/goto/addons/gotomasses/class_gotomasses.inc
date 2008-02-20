@@ -120,18 +120,11 @@ class gotomasses extends plugin
         $this->dialog = new $e_data['NAME']($this->config);
       }
     }
-   
-    /************
-     * ADD/EDIT Dialog Handling
-     ************/
- 
 
     /************
      * REMOVE 
      ************/
 
-    echo $s_action;
-    
     /* Remove multiple */
     if($s_action == "remove_multiple" || $s_action == "remove"){
 
@@ -173,25 +166,9 @@ class gotomasses extends plugin
     }
 
 
-#   /************
-#    * EDIT 
-#    ************/
-#
-#   /* Edit selected entry */
-#   if($s_action == "edit"){
-#     $entry = $this->o_queue->get_entry_by_id($s_entry);
-#     if($entry){
-#       $this->dialog = new goto_task($this->config,$this,$entry);
-#       $this->current = $s_entry;
-#     }
-#   }
-#
-#   /* New entry */
-#   if($s_action== "new_task" && $this->acl_is_createable()){
-#     $this->dialog = new goto_task($this->config,$this);
-#     $this->current = -1;
-#   }
-#
+    /************
+     * EDIT 
+     ************/
 
     /* Close dialog */
     if(isset($_POST['save_event_dialog'])){
@@ -219,39 +196,7 @@ class gotomasses extends plugin
       $this->dialog = FALSE;
       $this->current = -1;
     }
-#
-#   /* Close dialog */
-#   if((isset($_POST['save_goto_task']) || isset($_POST['apply_goto_task'])) && is_object($this->dialog) ){
-#     $this->dialog->save_object();
-#     $msgs = $this->dialog->check();
-#     if(count($msgs)){
-#       foreach($msgs as $msg){
-#         msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
-#       }
-#     }else{  
-#
-#       if($this->o_queue->id_exists($this->current)){
-#         $this->o_queue->update_entries(array($this->current),$this->dialog->save());
-#       }else{
-#         $tmp = $this->dialog->save();
-#         $tmp2= array();
-#         $targets =$tmp['Target'];
-#         foreach($targets as $target){
-#           $tmp['Target'] = array($target);
-#           $tmp2[] = $tmp;
-#         }
-#         if(!$this->o_queue->add_multiple($tmp2)){
-#           msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
-#         }
-#       }
-#       if(!isset($_POST['apply_goto_task'])){
-#         $this->dialog = FALSE;
-#         $this->current = -1;
-#       }
-#       $this->save();
-#     }
-#   }
-#
+
     /* Display dialogs if currently opened */
     if(is_object($this->dialog)){
       $this->dialog->save_object();
