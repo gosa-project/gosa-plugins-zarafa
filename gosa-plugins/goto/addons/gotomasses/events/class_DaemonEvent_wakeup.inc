@@ -7,7 +7,7 @@ class DaemonEvent_wakeup extends DaemonEvent
     DaemonEvent::__construct($config,$data);
     $this->s_Menu_Name  = _("Wake up"); 
     $this->s_Event_Name = _("Wake up"); 
-    $this->s_action     = "trigger_action_wake";
+    $this->s_action     = "job_trigger_action_wake";
     $this->s_Menu_Image = "images/status_running.png";
   }
 

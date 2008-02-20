@@ -67,7 +67,7 @@ class gotomasses extends plugin
     }
 
     /* Menu actions */
-    if(isset($_POST['menu_action'])){
+    if(isset($_POST['menu_action']) && !empty($_POST['menu_action'])){
       $s_action = $_POST['menu_action'];
     }
     
@@ -130,6 +130,8 @@ class gotomasses extends plugin
      * REMOVE 
      ************/
 
+    echo $s_action;
+    
     /* Remove multiple */
     if($s_action == "remove_multiple" || $s_action == "remove"){
 
@@ -190,11 +192,33 @@ class gotomasses extends plugin
 #     $this->current = -1;
 #   }
 #
-   /* Close dialog */
-   if(isset($_POST['abort_event_dialog'])){
-     $this->dialog = FALSE;
-     $this->current = -1;
-   }
+
+    /* Close dialog */
+    if(isset($_POST['save_event_dialog'])){
+
+      if($this->dialog->is_new()){
+        $header     = $this->dialog->get_header_tag();
+        $targets    = $this->dialog->get_targets();
+        $data       = $this->dialog->save();
+        $data['TIMESTAMP'] = $this->dialog->get_timestamp(); 
+
+        foreach($targets as $target){
+          if(!$this->o_queue->send($header,$target,$data)){
+            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                  $this->o_queue->get_error()),ERROR_DIALOG);
+          }  
+        }
+        $this->dialog = FALSE; 
+        $this->current = -1;
+      }
+    }
+
+
+    /* Close dialog */
+    if(isset($_POST['abort_event_dialog'])){
+      $this->dialog = FALSE;
+      $this->current = -1;
+    }
 #
 #   /* Close dialog */
 #   if((isset($_POST['save_goto_task']) || isset($_POST['apply_goto_task'])) && is_object($this->dialog) ){
@@ -447,11 +471,9 @@ class gotomasses extends plugin
     $stop   = $this->range;
 
     $entries = $this->o_queue->get_queued_entries($start,$stop,$sort);
-    if(!is_array($entries)){
-      if ($this->o_queue->get_error()){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
-      }
-      return(array());
+    if ($this->o_queue->is_error()){
+
+      msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
     }
 
     $this->entries = array();
@@ -531,17 +553,6 @@ class gotomasses extends plugin
       }
     }
     return($ids);
-  }
-
-
-  function get_actions()
-  {
-    /* Prepare list of available actions */
-    $actions = array(      
-        "gosa_ping"       => _("GOsa ping"),
-        "ping"            => _("Ping"),
-        "sayHello"        => _("Say hello"));
-    return($actions);
   }
 
 

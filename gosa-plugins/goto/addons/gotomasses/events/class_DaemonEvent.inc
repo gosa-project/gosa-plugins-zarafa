@@ -467,6 +467,31 @@ class DaemonEvent
   }
 
 
+  public function is_new()
+  {
+    return($this->is_new);
+  }
+
+  public function get_header_tag()
+  {
+    return($this->s_action);
+  }
+ 
+  public function save()
+  {
+    return(array());
+  }
+ 
+  public function get_targets()
+  {
+    return($this->a_targets);
+  }
+
+  public function get_timestamp()
+  {
+    return($this->_timestamp_to_event($this->timestamp));
+  }
+
   protected  function list_get_selected_items()
   {
     $ids = array();
