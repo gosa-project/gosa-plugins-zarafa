@@ -24,7 +24,10 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
 # smbhash
-$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
+#$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
+
+# Reload ldap config
+$data = "<xml> <header>gosa_reload_ldap_config</header> <source>GOSA</source><target>00:1B:77:04:8A:6C</target></xml>";
 
 # update  
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";

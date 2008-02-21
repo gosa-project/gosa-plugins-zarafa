@@ -4,6 +4,7 @@ use Exporter;
 my @events = (
     "get_events", 
     "gen_smb_hash",
+    "reload_ldap_config",
     "ping",
     "network_completition",
     "set_activated_for_installation",
@@ -98,7 +99,6 @@ sub network_completition {
 sub detect_hardware {
     my ($msg, $msg_hash) = @_ ;
     # just forward msg to client, but dont forget to split off 'gosa_' in header
-    my $header = @{$msg_hash->{header}}[0];
     my $source = @{$msg_hash->{source}}[0];
     my $target = @{$msg_hash->{target}}[0];
 
@@ -108,6 +108,16 @@ sub detect_hardware {
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 
+}
+
+
+sub reload_ldap_config {
+    my ($msg, $msg_hash) = @_ ;
+    my $target = @{$msg_hash->{target}}[0];
+
+    my @out_msg_l;
+    push(@out_msg_l, &new_ldap_config($target));
+    return @out_msg_l;
 }
 
 
