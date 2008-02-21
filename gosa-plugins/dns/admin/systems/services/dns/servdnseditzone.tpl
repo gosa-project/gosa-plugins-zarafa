@@ -26,7 +26,7 @@
 					</td>
 					<td>
 {render acl=$ACLs}					
-						<select name="dummy3" {if $NotNew | $Zone_is_used} disabled {/if}>
+						<select name="NetworkClass" {if $NotNew | $Zone_is_used} disabled {/if}>
 							{html_options options=$NetworkClasses selected=$NetworkClass }
 						</select>
 {/render}
