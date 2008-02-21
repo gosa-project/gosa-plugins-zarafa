@@ -531,25 +531,29 @@ sub update_status_jobdb_entry {
 
         # conditions
         # no timestamp update if status eq waiting
-        
+        my $res_hash = $main::job_db->select_dbentry("SELECT * FROM $table $where AND status='processing' ");
+        if( (0 != keys(%$res_hash)) && ($update =~ /timestamp/i) ) {
+            $error ++;
+            $out_xml = "<answer1>1</answer1><error_string>there is no timestamp update allowed while status is 'processing'</error_string>";
+        }
 
-        my $sql_statement = "UPDATE $table $update $where";
-print STDERR "================================================\n";
-print STDERR "$sql_statement\n";
-        # execute db query
-        my $db_res = $main::job_db->update_dbentry($sql_statement);
+        if( $error == 0 ) {
+            my $sql_statement = "UPDATE $table $update $where";
+            # execute db query
+            my $db_res = $main::job_db->update_dbentry($sql_statement);
 
-        # check success of db update
-        if( not $db_res > 0 ) { $error++; };
+            # check success of db update
+            if( not $db_res > 0 ) { $error++; };
+
+        }
     }
 
     if( $error == 0) {
-        $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
+        $out_xml = "<answer1>0</answer1>";
     }
-    my @out_msg_l = ( $out_xml );
-
-print STDERR $out_xml."\n";
-
+    
+    my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>GOSA</target>%s</xml>", $server_address, $out_xml);
+    my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }
 

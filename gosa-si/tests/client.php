@@ -30,6 +30,7 @@ if($sock->connected()){
 $data = "<xml> <header>gosa_reload_ldap_config</header> <source>GOSA</source><target>00:1B:77:04:8A:6C</target></xml>";
 
 # update  
+$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><timestamp>23450101000000</timestamp><result>XXXXXXXXXXXXXXx</result></update></xml>";
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
 # query
@@ -60,7 +61,7 @@ $data = "<xml> <header>gosa_reload_ldap_config</header> <source>GOSA</source><ta
 
 
 #$data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source><target>00:01:6c:9d:b9:fa</target><macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>20130101000000</timestamp></xml>";
-#$data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source><target>00:01:6c:9d:b9:fa</target><macaddress>00:01:6c:9d:b9:fa</macaddress></xml>";
+#$data = "<xml><header>job_trigger_action_reinstall</header><source>GOSA</source><target>00:01:6c:9d:b9:fa</target><macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>98760101000000</timestamp></xml>";
 
 
     $sock->write($data);
