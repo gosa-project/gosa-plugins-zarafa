@@ -257,8 +257,8 @@ class phoneGeneric extends plugin
       return($str);
     }
     $smarty->assign("netconfig", $str);
-    $smarty->assign("phonesettings", dirname(__FILE__)."/phonesettings.tpl");
-    return($smarty->fetch (get_template_path('phone.tpl', TRUE)));
+    $smarty->assign("phonesettings", get_template_path("phonesettings.tpl",TRUE,dirname(__FILE__)));
+    return($smarty->fetch (get_template_path('phone.tpl', TRUE,dirname(__FILE__))));
   }
 
   function remove_from_parent()
@@ -451,7 +451,7 @@ class phoneGeneric extends plugin
     $smarty = get_smarty();
     $smarty->assign("cn" ,$this->cn);
     $smarty->assign("object","phone");
-    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));
     $ret = array();
     $ret['string'] = $str;
     $ret['status'] = "";
