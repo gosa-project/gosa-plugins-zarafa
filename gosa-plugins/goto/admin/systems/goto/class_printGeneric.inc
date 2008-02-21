@@ -741,12 +741,12 @@ class printgeneric extends plugin
         $this->PPDdialogToSave = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
         $this->PPDdialogToSave->cn = $this->cn;
         $this->PPDdialogToSave->generateProperties();
-        $this->PPDdialogToSave->update_ppd_url();
+        $this->gotoPrinterPPD = $this->PPDdialogToSave->update_ppd_url();
       }
     }
 
     /* Remove previously selected ppd file.*/
-    if($this->initial_PPD != $this->gotoPrinterPPD){
+    if($this->initial_PPD != $this->gotoPrinterPPD && $this->initially_was_account){
       if(!empty($this->initial_PPD)){
         $tmp = new printerPPDDialog($this->config, $this->dn,$this->initial_PPD);
         $tmp->removeModifiedPPD();
@@ -760,7 +760,7 @@ class printgeneric extends plugin
     }
 
     /* If no ppd is selected, remove this attribute */
-    if(!empty($this->gotoPrinterPPD)) {
+    if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
       $this->gotoPrinterPPD = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
     }else{
       $this->gotoPrinterPPD = array();
