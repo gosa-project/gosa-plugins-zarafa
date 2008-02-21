@@ -638,35 +638,45 @@ class DNS
   static function getAvailableZones($config)
   {
     $ret = array();
-    $ldap = $config->get_ldap_link();
-    $ldap->cd ($config->current['BASE']);
 
     /* Search for zones ...
      */
-    $ldap->search("(&(objectClass=dNSZone)(sOARecord=*))",array("zoneName"));
+    $ou = preg_replace("/,.*$/","",get_ou("serverou"));
+    $deps  = array();
+    $ldap = $config->get_ldap_link();
+    $ldap->cd ($config->current['BASE']);
+    $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
+    while($attrs = $ldap->fetch()){
+      $deps[] = $attrs['dn'];
+    }
 
     $ForwardZones = array();
     $ReverseZones = array();
     $zones = array();
+    foreach($deps as $dep){
+      $ldap->cd($dep);
+      $ldap->search("(&(objectClass=dNSZone)(sOARecord=*))",array("zoneName"));
 
-    while($at = $ldap->fetch()){
-      if(preg_match("/\.in\-addr\.arpa/",$at['zoneName'][0])){
-        $ReverseZones[$at['dn']] = $at;
-      }else{
-        $ForwardZones[$at['dn']] = $at;
-      }
-    }
 
-    foreach($ForwardZones as $dn => $obj){
-
-      /* try to find reverse
-       */  
-      foreach($ReverseZones as $Rdn => $Robj ){
-        if(preg_match("/".$dn."/",$Rdn)){
-          $zones[strtoupper($ldap->getCn($dn))."/".$Robj['zoneName'][0]] =  
-            strtoupper($ldap->getCn($dn))."/".$obj['zoneName'][0];
+      while($at = $ldap->fetch()){
+        if(preg_match("/\.in\-addr\.arpa/",$at['zoneName'][0])){
+          $ReverseZones[$at['dn']] = $at;
+        }else{
+          $ForwardZones[$at['dn']] = $at;
         }
-      }   
+      }
+
+      foreach($ForwardZones as $dn => $obj){
+
+        /* try to find reverse
+         */  
+        foreach($ReverseZones as $Rdn => $Robj ){
+          if(preg_match("/".$dn."/",$Rdn)){
+            $zones[strtoupper($ldap->getCn($dn))."/".$Robj['zoneName'][0]] =  
+              strtoupper($ldap->getCn($dn))."/".$obj['zoneName'][0];
+          }
+        }   
+      }
     }
     return($zones);
   }
