@@ -417,6 +417,9 @@ class termstartup extends plugin
       }
     }
 
+    /* Check if LDAP server has changed */
+    $ldap_changed= ($this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']);
+
     /* Strip out 'default' values */
     foreach(array("gotoBootKernel") as $value){
       if (!isset($this->attrs[$value]) || $this->attrs[$value] == "default"){
@@ -444,6 +447,10 @@ class termstartup extends plugin
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system terminal/startup with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");
+
+    if ($ldap_changed){
+        gosaSupportDaemon::send("gosa_reload_ldap_config", $this->parent->by_object['termgeneric']->netConfigDNS->macAddress);
+    }
   }
 
   /* Add value to array, check if unique */

@@ -853,6 +853,9 @@ class workstartup extends plugin
       }
     }
 
+    /* Check if LDAP server has changed */
+    $ldap_changed= ($this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']);
+
     if (($this->attrs['gotoBootKernel'] == "default-inherited") || ($this->attrs['gotoBootKernel'] == "%default%")){
       $this->attrs['gotoBootKernel']= array();
     }
@@ -895,6 +898,12 @@ class workstartup extends plugin
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/startup with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");
+
+    /* Check if LDAP server has changed */
+    if ($ldap_changed){
+	gosaSupportDaemon::send("gosa_reload_ldap_config", $this->parent->by_object['workgeneric']->netConfigDNS->macAddress);
+    }
+
   }
 
 
