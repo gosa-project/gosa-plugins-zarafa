@@ -43,10 +43,10 @@ class termtabs extends tabs
       $this->by_object['termstartup']->gotoTerminalPath= $this->by_object['termgeneric']->gotoTerminalPath;
     }
     
-    $base_obj = $this->by_object['termgeneric'];
+    $baseobject = $this->by_object['termgeneric'];
     $baseobject->netConfigDNS->cn= $baseobject->cn;
     foreach($this->by_object as $name => $plug){
-      $this->by_object[$name]->cn = $base_obj->cn;
+      $this->by_object[$name]->cn = $baseobject->cn;
     }
   }
 

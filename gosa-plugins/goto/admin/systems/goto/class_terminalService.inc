@@ -198,16 +198,40 @@ class termservice extends plugin
       $this->hardware_list[$cn]= "$cn$description";
     }
 
+
+
+
+
     /* Eventually colorize phones */
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(goFonHardware=*)",array('cn','dn','goFonHardware'));
-    while($attrs = $ldap->fetch()){
+
+    $deps = array();
+    $ou = preg_replace("/,.*$/","",get_ou("phoneou"));
+
+    if(!empty($ou)){
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
+      while($attrs = $ldap->fetch()){
+        $deps[] = $attrs['dn'];
+      }
+    }else{
+
+      /* Phone ou seems to be empty, fall back to overall base .
+       */
+      $deps[] = $this->config->current['BASE'];
+    }
+
+    foreach($deps as $dep){
+      $ldap->cd($dep);
+      $ldap->search("(goFonHardware=*)",array('cn','dn','goFonHardware'));
+      while($attrs = $ldap->fetch()){
         $cn = $attrs['goFonHardware'][0];
         if(isset($this->hardware_list[$cn])){
           $this->used_hardware[$cn]= $cn;
         }
+      }
     }
     $this->hardware_list["automatic"]= _("automatic");
+
     ksort($this->hardware_list);
 
     /* Convert gotoLpdEnable 
