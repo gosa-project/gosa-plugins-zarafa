@@ -580,7 +580,7 @@ sub input_from_unknown_host {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("Incoming message is not from a unknown host", 5);
+        daemon_log("Incoming message is not from an unknown host", 5);
     }
 
     return ($msg, $msg_hash, $module);
@@ -980,7 +980,7 @@ sub client_input {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/$answer_target/$host_name/g;
-                        daemon_log("found host '$host_name', assoziated to '$answer_target'", 3);
+                        daemon_log("found host '$host_name', associated to '$answer_target'", 3);
                         &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
                         $found_ip_flag++ ;
                     }   
