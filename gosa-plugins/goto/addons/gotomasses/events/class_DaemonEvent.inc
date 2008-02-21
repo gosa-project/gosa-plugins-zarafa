@@ -295,31 +295,55 @@ class DaemonEvent
   }
 
 
+  /*! \brief  Returns TRUE if this event is new. (Not edited)
+      @return Boolean TRUE if new, else FALSE.
+   */
   public function is_new()
   {
     return($this->is_new);
   }
 
+
+  /*! \brief  Returns the event tag e.g. 'job_trigger_action_wake' 
+      @param  Returns the event e.g. 'job_trigger_action_wake'
+   */
   public function get_header_tag()
   {
     return($this->s_action);
   }
- 
+
+
+  /*! brief  Returns an array containig all attributes \
+             That should be written.
+      @return Array e.g. 'status' => 'bla blub'  
+   */ 
   public function save()
   {
     return(array());
   }
- 
+
+
+  /*! \brief  Returns the event targets
+      @return Array  All selected targets.
+   */ 
   public function get_targets()
   {
     return($this->a_targets);
   }
 
+
+  /*! \brief  Returns the event timestamp in GOsa daemon format. 
+      @return Returns the event timestamp (20081231120000)
+   */
   public function get_timestamp()
   {
     return($this->_timestamp_to_event($this->timestamp));
   }
 
+
+  /*! \brief  Returns a set of elements selected in a MultiSelectWindow
+      @return Array[integer]=integer
+   */
   protected  function list_get_selected_items()
   {
     $ids = array();

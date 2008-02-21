@@ -177,10 +177,12 @@ class gotomasses extends plugin
         $header     = $this->dialog->get_header_tag();
         $targets    = $this->dialog->get_targets();
         $data       = $this->dialog->save();
-        $data['TIMESTAMP'] = $this->dialog->get_timestamp(); 
+        $data['timestamp'] = $this->dialog->get_timestamp(); 
+        
 
         foreach($targets as $target){
-          if(!$this->o_queue->send($header,$target,$data)){
+          $data['mac'] =  $target;
+          if(!$this->o_queue->send($header,$target,$data,TRUE)){
             msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                   $this->o_queue->get_error()),ERROR_DIALOG);
           }  
@@ -266,7 +268,6 @@ class gotomasses extends plugin
     $this->reload();
 
     foreach($this->entries as $key => $task){
-
 
       $prio_actions = "<input class='center' type='image' src='images/prio_increase.png' name='prio_up_".$task['ID']."'>&nbsp;";
       $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_down_".$task['ID']."'>&nbsp;";
