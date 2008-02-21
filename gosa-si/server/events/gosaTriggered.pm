@@ -3,6 +3,7 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     "get_events", 
+    "gen_smb_hash",
     "ping",
     "network_completition",
     "set_activated_for_installation",
@@ -24,6 +25,7 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
+use Crypt::SmbHash;
 use Net::ARP;
 use Net::Ping;
 use Socket;
@@ -41,6 +43,7 @@ sub get_events {
     return \@events;
 }
 
+
 sub ping {
      my ($msg, $msg_hash, $session_id) = @_ ;
      my $source = @{$msg_hash->{source}}[0];
@@ -52,6 +55,18 @@ sub ping {
      my @out_msg_l = ( $out_msg );
      return @out_msg_l;
 }
+
+
+sub gen_smb_hash {
+     my ($msg, $msg_hash, $session_id) = @_ ;
+     my $source = @{$msg_hash->{source}}[0];
+     my $target = @{$msg_hash->{target}}[0];
+     my $password = @{$msg_hash->{password}}[0];
+
+     my %data= ('hash' => join(q[:], ntlmgen $password));
+     my $out_msg = &build_msg("gen_smb_hash", $target, 'GOSA', \%data );
+}
+
 
 sub network_completition {
      my ($msg, $msg_hash, $session_id) = @_ ;
@@ -78,6 +93,7 @@ sub network_completition {
     
      return ( $out_msg );
 }
+
 
 sub detect_hardware {
     my ($msg, $msg_hash) = @_ ;
@@ -109,12 +125,14 @@ sub set_activated_for_installation {
     return @out_msg_l;
 }
 
+
 sub trigger_action_localboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
+
 
 sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
@@ -172,13 +190,13 @@ sub trigger_action_sysinfo {
 }
 
 
-
 sub new_key_for_client {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_new_key_for_client<\/header>/<header>new_key<\/header>/;
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
+
 
 sub trigger_action_rescan {
     my ($msg, $msg_hash) = @_;
