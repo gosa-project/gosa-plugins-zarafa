@@ -532,6 +532,7 @@ class printerPPDDialog extends plugin
   function update_ppd_url()
   {
     $this->SelectPPD("modified/".$this->selectedPPD['link']);
+    return("modified/".$this->selectedPPD['link']);
   }
   
   function check()
