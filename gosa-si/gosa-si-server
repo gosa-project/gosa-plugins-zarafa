@@ -851,7 +851,7 @@ sub send_msg_to_target {
         }
     }
 
-    return; 
+    return $error; 
 }
 
 
@@ -1089,21 +1089,31 @@ sub watch_for_new_jobs {
 		# add sqlite_id 
         $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
-		&send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
+		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
 
-#        my $error = 1;
-#		if ($error == 0) {
-#			my $sql_statement = "UPDATE $job_queue_table_name ".
+#        if ( $func_error ) {
+#print STDERR "========================================\n";
+#print STDERR "func_error: $func_error\n";
+#
+#           my $sql_statement = "UPDATE $job_queue_table_name ".
+#                "SET status='error', targettag='$target' ".
+#                "WHERE id='$jobdb_id'";
+#print STDERR "sql: $sql_statement\n";
+#            my $res = $job_db->update_dbentry($sql_statement);
+#print STDERR "res: ".Dumper($res);            
+#
+#        } else {
+#print STDERR "========================================\n";
+#print STDERR "func_error: $func_error\n";
+#
+#           my $sql_statement = "UPDATE $job_queue_table_name ".
 #                "SET status='done', targettag='$target' ".
 #                "WHERE id='$jobdb_id'";
-#			my $res = $job_db->update_dbentry($sql_statement);
-#		} else {
-#            my $sql_statement = "UPDATE $job_queue_table_name ".
-#                "SET status='error' ".
-#                "WHERE id='$jobdb_id'";
-#			my $res = $job_db->update_dbentry($sql_statement);
-#		}
-	}
+#print STDERR "sql: $sql_statement\n";
+#            my $res = $job_db->update_dbentry($sql_statement);
+#print STDERR "res: ".Dumper($res);
+#        }
+    }
 
 	$kernel->delay_set('watch_for_new_jobs',3);
 }
@@ -1166,7 +1176,7 @@ if ($no_bus > 0) {
 #unlink('/tmp/gosa_si_lock*');
 
 # connect to gosa-si job queue
-my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "headertag", "targettag", "xmlmessage", "macaddress");
+my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "progress", "headertag", "targettag", "xmlmessage", "macaddress");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 

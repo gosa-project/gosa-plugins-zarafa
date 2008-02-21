@@ -378,6 +378,7 @@ sub process_job_msg {
             timestamp=>$timestamp,
             status=>'waiting', 
             result=>'none',
+            progress=>'none',
             headertag=>$header, 
             targettag=>$target,
             xmlmessage=>$msg,
