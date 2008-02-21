@@ -62,7 +62,7 @@ our $server_key;
 our $REGISTERED = 0;
 
 # path to fifo for non-gosa-si-client messages to gosa-si-server
-$gosa_si_client_fifo = "/tmp/gosa-si-client-fifo";
+$gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
 %files_to_watch = (fifo => $gosa_si_client_fifo); 
 
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 

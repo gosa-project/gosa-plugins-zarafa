@@ -534,6 +534,8 @@ sub update_status_jobdb_entry {
         
 
         my $sql_statement = "UPDATE $table $update $where";
+print STDERR "================================================\n";
+print STDERR "$sql_statement\n";
         # execute db query
         my $db_res = $main::job_db->update_dbentry($sql_statement);
 
