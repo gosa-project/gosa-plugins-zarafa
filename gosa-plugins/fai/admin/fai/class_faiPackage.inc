@@ -336,6 +336,7 @@ class faiPackage extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
 
+    $faifilter = session::get('faifilter');
     $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $this->dn);
     if($faifilter['branch'] == "main"){
       $use_dn = $this->dn;

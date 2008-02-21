@@ -84,7 +84,7 @@ class faiManagement extends plugin
 		$s_entry 	= "";
     
     /* If an entry was locked, these vars will be stored in a session to allow direct edit */
-    session::set('LOCK_VARS_TO_USE',array("/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/"));
+    session::set('LOCK_VARS_TO_USE',array("/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/","/^menu_action/"));
 
 
     /****************
@@ -232,29 +232,43 @@ class faiManagement extends plugin
 
       if(count($ids)){
 
+        $errors = "";
         foreach($ids as $id){
           $dn = $this->objects[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
+          $cn = $this->objects[$id]['cn'];
+          if($this->objects[$id]['FAIstate'] != "freeze"){
+            $this->dns[$id] = $dn;
+          }else{
+            $errors .= $cn.", ";
           }
-          $this->dns[$id] = $dn;
+        }
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
         }
 
-        $dns_names = "<br><pre>";
-        foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
-          $dns_names .= $dn."\n";
+        if($errors != ""){
+          msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
+            "<br><br>".trim($errors,", ")),INFO_DIALOG);
         }
-        $dns_names .="</pre>";
 
-        /* Lock the current entry, so nobody will edit it during deletion */
-        if (count($this->dns) == 1){
-          $smarty->assign("warning",     sprintf(_("You're about to delete the following entry %s"), @LDAP::fix($dns_names)));
-        } else {
-          $smarty->assign("warning",     sprintf(_("You're about to delete the following entries %s"), @LDAP::fix($dns_names)));
+        if(count($this->dns)){
+
+          $dns_names = "<br><pre>";
+          foreach($this->dns as $dn){
+            add_lock ($dn, $this->ui->dn);
+            $dns_names .= $dn."\n";
+          }
+          $dns_names .="</pre>";
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          if (count($this->dns) == 1){
+            $smarty->assign("warning",     sprintf(_("You're about to delete the following entry %s"), @LDAP::fix($dns_names)));
+          } else {
+            $smarty->assign("warning",     sprintf(_("You're about to delete the following entries %s"), @LDAP::fix($dns_names)));
+          }
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
 

@@ -54,7 +54,7 @@ class divListFai extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 80;
+    $action_col_size = 120;
 #   if($this->parent->snapshotEnabled()){
 #     $action_col_size += 32;
 #   }
@@ -279,7 +279,7 @@ class divListFai extends MultiSelectWindow
     $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 80;
+    $action_col_size = 120;
 #   if($this->parent->snapshotEnabled()){
 #     $action_col_size += 32;
 #   }
@@ -329,17 +329,12 @@ class divListFai extends MultiSelectWindow
        }
 
        if($value['FAIstate'] == "freeze"){
-         $action.=  "<img src='images/closedlock.png' alt='F' class='center'><img src='images/empty.png' width='38' height='2' class='center' alt=''>";
-         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
-           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+         $action.=  "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+                      name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+         $action.=  "<img src='images/closedlock.png' alt='F' class='center'>";
        }else{
          $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-
-#        if(preg_match("/(c)/",$value['acl']) && preg_match("/(w)/",$value['acl'])){
-#          $action.= $this->GetSnapShotActions($value['dn']);;
-#        }
-
          if(preg_match("/d/",$value['acl'])){
            $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
              name='entry_delete_%KEY%' title='"._("Delete class")."'>";
