@@ -1333,6 +1333,11 @@ daemon_log("$prg started!", 1);
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
 # detect ip and mac address and complete host address
+#if( inet_aton($client_ip) ){ 
+#print STDERR "ip: $client_ip\n";
+#    $client_ip = inet_ntoa(inet_aton($client_ip)); 
+#print STDERR "ip: $client_ip\n";
+#} 
 $client_address = $client_ip.":".$client_port;
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);
@@ -1359,6 +1364,11 @@ daemon_log("start socket for incoming xml messages at port '$client_port' ", 1);
 
 
 # prepare variables
+if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
+############################################################
+# to change
+if( $server_ip eq "127.0.1.1" ) { $server_ip = "127.0.0.1" } 
+############################################################
 if (defined $server_ip && defined $server_port) {
     $server_address = $server_ip.":".$server_port;
 }

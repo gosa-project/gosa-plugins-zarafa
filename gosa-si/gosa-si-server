@@ -107,7 +107,7 @@ our $prg= basename($0);
     "activ" => [\$bus_activ, "true"],
     },
 "server" => {
-#    "ip" => [\$server_ip, "0.0.0.0"],
+#    "ip" => [\$server_ip, "0.0.0.0"],  
     "port" => [\$server_port, "20081"],
     "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
@@ -519,7 +519,7 @@ sub input_from_known_client {
     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
         my $host_name = $hit->{hostname};
         if( not $host_name =~ /^$remote_ip:\d*$/) {
-            next;
+                next;
 		}
         my $host_key = $hit->{hostkey};
         &daemon_log("SIPackages: known_client host_name: $host_name", 7);
@@ -1088,9 +1088,6 @@ sub watch_for_new_jobs {
 
 		# add sqlite_id 
         $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
-
-
-print STDERR "=======================================================\n$job_msg\n";
 
 		&send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
 

@@ -59,6 +59,9 @@ my %cfg_defaults = (
 # read configfile and import variables
 &read_configfile();
 
+
+# if server_ip is not an ip address but a name
+if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); } 
 $network_interface= &get_interface_for_ip($server_ip);
 $server_mac_address= &get_mac($network_interface);
 
@@ -137,8 +140,16 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 #if( $server_ip eq "0.0.0.0" ) {
 #    $server_ip = "127.0.0.1";
 #}
+
 my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
+
+
+if( inet_aton($bus_ip) ){ $bus_ip = inet_ntoa(inet_aton($bus_ip)); } 
+######################################################
+# to change
+if( $bus_ip eq "127.0.1.1" ) { $bus_ip = "127.0.0.1" }
+######################################################
 my $bus_address = "$bus_ip:$bus_port";
 $main::bus_address = $bus_address;
 

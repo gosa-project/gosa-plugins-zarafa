@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use IO::Socket::INET;
+use Socket;
 use XML::Simple;
 use File::Spec;
 use Data::Dumper;
@@ -50,7 +51,9 @@ $network_interface= &get_interface_for_ip($server_ip);
 $gosa_mac_address= &get_mac($network_interface);
 
 # complete addresses
+if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); } 
 our $server_address = "$server_ip:$server_port";
+if( inet_aton($gosa_ip) ){ $gosa_ip = inet_ntoa(inet_aton($gosa_ip)); }
 my $gosa_address = "$gosa_ip:$gosa_port";
 
 # create general settings for this module
@@ -277,7 +280,7 @@ sub process_incoming_msg {
         if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
             my $job_id = $1;
             my $sql = "UPDATE '".$main::job_queue_table_name."'".
-                " SET status='done'".
+                " SET status='processing'".
                 " WHERE id='$job_id'";
             my $res = $main::job_db->exec_statement($sql);
         } 
@@ -525,8 +528,11 @@ sub update_status_jobdb_entry {
         my $where= &get_where_statement($msg, $msg_hash);
         my $update= &get_update_statement($msg, $msg_hash);
 
-        my $sql_statement = "UPDATE $table $update $where";
+        # conditions
+        # no timestamp update if status eq waiting
+        
 
+        my $sql_statement = "UPDATE $table $update $where";
         # execute db query
         my $db_res = $main::job_db->update_dbentry($sql_statement);
 
