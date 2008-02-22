@@ -681,7 +681,7 @@ sub get_server_addresses {
  
     my $error = 0;
     my $res   = Net::DNS::Resolver->new;
-    my $query = $res->send("_gosad._tcp.".$domain, "SRV");
+    my $query = $res->send("_gosa-si._tcp.".$domain, "SRV");
     my @hits;
 
     if ($query) {
@@ -707,7 +707,7 @@ sub get_server_addresses {
         }
     }
 
-#    my $dig_cmd= 'dig +nocomments srv _gosad._tcp.'.$domain;
+#    my $dig_cmd= 'dig +nocomments srv _gosa-si._tcp.'.$domain;
 #
 #    my $output= `$dig_cmd 2>&1`;
 #    open (PIPE, "$dig_cmd 2>&1 |");
