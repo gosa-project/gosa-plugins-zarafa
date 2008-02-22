@@ -15,6 +15,7 @@ my @functions = (
     "get_update_statement",
     "get_limit_statement",
     "get_orderby_statement",
+    "get_dns_domains",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -410,6 +411,30 @@ sub get_orderby_statement {
     }
     
     return $order_str;
+}
+
+sub get_dns_domains() {
+        my $line;
+        my @searches;
+        open(RESOLV, "</etc/resolv.conf") or return @searches;
+        while(<RESOLV>){
+                $line= $_;
+                chomp $line;
+                $line =~ s/^\s+//;
+                $line =~ s/\s+$//;
+                $line =~ s/\s+/ /;
+                if ($line =~ /^domain (.*)$/ ){
+                        push(@searches, $1);
+                } elsif ($line =~ /^search (.*)$/ ){
+                        push(@searches, split(/ /, $1));
+                }
+        }
+        close(RESOLV);
+
+        my %tmp = map { $_ => 1 } @searches;
+        @searches = sort keys %tmp;
+
+        return @searches;
 }
 
 1;
