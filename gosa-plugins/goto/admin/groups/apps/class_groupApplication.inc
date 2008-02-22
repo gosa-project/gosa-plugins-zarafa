@@ -110,7 +110,8 @@ class appgroup extends plugin
       /* Only display those releases that we are able to read */
       $dn     = $this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
-      $res    = get_list($filter,"application", $dn, array("ou","FAIstate"), GL_SUBSEARCH);
+      $res    = get_sub_list($filter,array("application","fai"), array(get_ou("applicationou"),get_ou("faiou")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
+
 
       foreach($res as $attrs){
         if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
