@@ -139,17 +139,40 @@ class phoneAccount extends plugin
     /* Get available phone hardware  
      * Search for all available phone hardware  
      */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(objectClass=goFonHardware)", array('cn', 'description'));
-    while ($attrs= $ldap->fetch()){
+    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneou")),
+                  $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
+    foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
+      $description= "";
       if (isset($attrs['description'])){
         $description= " - ".$attrs['description'][0];
-      } else {
-        $description= "";
       }
       $this->hardware_list[$cn]= "$cn$description";
+    }
+    $this->hardware_list["automatic"]= _("automatic");
+    ksort($this->hardware_list);
+
+
+     /* Collect all usd phones 
+        goFonHardware set.
+     */
+    $deps_a = array(
+        get_people_ou(),
+        get_ou("ogroupou"),
+        get_ou("serverou"),
+        get_ou("terminalou"),
+        get_ou("workstationou"),
+        get_ou("printerou"),
+        get_ou("componentou"),
+        get_ou("phoneou"));
+
+    $tmp = get_sub_list("(goFonHardware=*)","",$deps_a,$this->config->current['BASE'],
+        array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);
+    foreach($tmp as $attrs){
+      $cn = $attrs['goFonHardware'][0];
+      if(isset($this->hardware_list[$cn])){
+        $this->used_hardware[$cn]= $cn;
+      }
     }
 
 
@@ -157,14 +180,16 @@ class phoneAccount extends plugin
      * Search for all Marcos that are visible and create 
      *  an array with name and parameters 
      */
-    $ldap->search("(&(objectClass=goFonMacro)(goFonMacroVisible=1))", array("*"));
+    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","",array(get_ou("macroou")),
+                  $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn"), GL_NONE);
+    
 
     /* Add none for no macro*/
     $this->macros['none']=_("no macro");    
     $this->macro ="none";
 
     /* Fetch all Macros*/
-    while ($attrs= $ldap->fetch()){
+    foreach($tmp as $attrs){
 
       /* unset Count, we don't need that here */
       unset($attrs['displayName']['count']);
@@ -239,20 +264,6 @@ class phoneAccount extends plugin
     }
 
 
-    /* Colorize phones 
-     * Used phones will be colored in grey, 
-     *  so we must detect which phones are currently in use.
-     */
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(goFonHardware=*)",array('cn','dn','goFonHardware'));
-    while($attrs = $ldap->fetch()){
-        $cn = $attrs['goFonHardware'][0];
-        if(isset($this->hardware_list[$cn])){
-          $this->used_hardware[$cn]= $cn;
-        }
-    }
-    $this->hardware_list["automatic"]= _("automatic");
-    ksort($this->hardware_list);
     $this->a_old_telenums = $this->phoneNumbers;
 
     /* Get voicemail PIN from MySQL DB 
@@ -350,6 +361,7 @@ class phoneAccount extends plugin
     restore_error_handler();
 
     /* Prepare some basic attributes */
+    $oldnums = array();
     foreach($this->a_old_telenums as $tele){
       $oldnums[]= preg_replace("/[^0-9]/","",$tele);
     }
