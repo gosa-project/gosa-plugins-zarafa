@@ -903,7 +903,7 @@ class workstartup extends plugin
 
     /* Check if LDAP server has changed */
     if ($ldap_changed){
-	gosaSupportDaemon::send("gosa_reload_ldap_config", $this->parent->by_object['workgeneric']->netConfigDNS->macAddress);
+      gosaSupportDaemon::send("gosa_reload_ldap_config", $this->parent->by_object['workgeneric']->netConfigDNS->macAddress);
     }
 
   }
