@@ -84,11 +84,13 @@ class selectPrinterDialog extends plugin
       $this->regex=preg_replace("/\*\*/","*",$this->regex);
     }
 
+    $printer_list = $this->getPrinter(); 
+
     $smarty->assign("regexPrinter"    ,$this->regex);
     $smarty->assign("deplistPrinter"  ,$this->deplist);
     $smarty->assign("depselectPrinter",$this->depselect);
-    $smarty->assign("gotoPrinters",$this->getPrinter());
-    $smarty->assign("gotoPrinterKeys",array_flip($this->getPrinter()));
+    $smarty->assign("gotoPrinters",$printer_list);
+    $smarty->assign("gotoPrinterKeys",array_flip($printer_list));
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("subtrees", $this->subtreesearch?"checked":"");
@@ -135,7 +137,7 @@ class selectPrinterDialog extends plugin
       $res    = get_list($filter,$module,$base,$attrs, GL_SIZELIMIT | GL_SUBSEARCH);
     } else {
       $base= get_ou('printerou').$base;
-      $res    = get_list($filter,$module,$base,$attrs, GL_SIZELIMIT);
+      $res    = get_list($filter,$module,$base,$attrs, GL_SIZELIMIT );
     }
 
     foreach($res as $printer)  {
