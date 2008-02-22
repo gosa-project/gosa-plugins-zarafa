@@ -1381,7 +1381,9 @@ $default_server_key = $server_key;
 
 
 # add gosa-si-server address from config file at first position of server list
-if (defined $server_address) {
+my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
+my $server_check = $server_check_cfg->val( "server", "ip");
+if( defined $server_check ) {
     unshift(@servers, $server_address);
     my $servers_string = join(", ", @servers);
     daemon_log("found servers in configuration file: $servers_string", 5);
