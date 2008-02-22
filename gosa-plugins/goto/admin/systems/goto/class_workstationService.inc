@@ -165,6 +165,7 @@ class workservice extends plugin
         goFonHardware set.
      */
     $deps_a = array(
+        get_people_ou(),
         get_ou("ogroupou"),
         get_ou("serverou"),
         get_ou("terminalou"),
