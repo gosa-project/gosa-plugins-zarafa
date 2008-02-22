@@ -243,8 +243,6 @@ class environment extends plugin
     $this->gotoAvailableShares= $config->getShareList(false);  
 
     $this->update_kiosk_profiles();
-  
-    $this->gotoKioskProfile= preg_replace("/^.*\//i","",$this->gotoKioskProfile);
   }
 
 
@@ -258,7 +256,7 @@ class environment extends plugin
     $cnt = 0;
     while($attrs = $ldap->fetch()){
       for($i = 0 ; $i < $attrs['gotoKioskProfile']['count'] ; $i ++){
-        $name = preg_replace("/^.*kiosk\//","",$attrs['gotoKioskProfile'][$i]);
+        $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
         $tmp1[$attrs['cn'][0]][] = $name;
       }
       $tmp2[$attrs['cn'][0]]= $attrs['cn'][0];
@@ -280,6 +278,7 @@ class environment extends plugin
       $this->gotoKioskProfile_Server = key($this->gotoKioskProfiles['SERVERS']);
       $error = true;
     }
+  
     if(!in_array($this->gotoKioskProfile_Profile, $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
       $this->gotoKioskProfile_Profile = $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server][0];
       $error = true;
