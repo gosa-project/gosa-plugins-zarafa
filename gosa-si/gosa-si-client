@@ -603,7 +603,7 @@ sub new_ldap_config {
 
     # Get first LDAP server
     my $ldap_server= $ldap_uris[0];
-    $ldap_server=~ s/^ldap:\/\/([^:]+).*$/\1/;
+    $ldap_server=~ s/^ldap:\/\/([^:]+).*$/$1/;
 
     open(file1, "> $cfg_name");
     print file1 "LDAP_BASE=\"$ldap_base\"\n";
