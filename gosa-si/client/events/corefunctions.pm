@@ -130,7 +130,12 @@ sub server_leaving {
 
 
 sub new_ldap_config {
-    my ($msg_hash) = @_ ;
+    my ($msg, $msg_hash) = @_ ;
+
+    if( $ldap_enabled != 1 ) {
+	    return;
+    }
+
     my $element;
     my @ldap_uris;
     my $ldap_base;
