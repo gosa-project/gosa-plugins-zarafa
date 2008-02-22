@@ -71,7 +71,7 @@ $server_mac_address= &get_mac($network_interface);
 if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
 	my $tmp_ldap= Net::LDAP->new($ldap_uri);
-	if(defined($tmp_ldap)) {
+	if( defined($tmp_ldap) ) {
 		&main::daemon_log("Searching for servers gosaUnitTag with mac address $server_mac_address",6);
 		my $mesg= $tmp_ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 		# Perform search for Unit Tag
@@ -130,16 +130,12 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 				}
 			}
 		}
+        $tmp_ldap->unbind;
 	} else {
 		&main::daemon_log("Using gosaUnitTag from config-file: $main::gosa_unit_tag",6);
 	}
-	$tmp_ldap->unbind;
 }
 
-# complete addresses
-#if( $server_ip eq "0.0.0.0" ) {
-#    $server_ip = "127.0.0.1";
-#}
 
 my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
@@ -902,6 +898,10 @@ sub new_ldap_config {
 
 	# Unbind
 	$mesg = $ldap->unbind;
+	if($mesg->code) {
+		&main::daemon_log($mesg->error, 1);
+		return;
+	}
 
 	# Send information
 	return &build_msg("new_ldap_config", $server_address, $address, \%data);
