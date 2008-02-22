@@ -1018,9 +1018,10 @@ class workstartup extends plugin
     if($force || !isset($this->cache['SERVERS'])){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
-      $ldap->search("(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",array("FAIrepository"));
-      $this->cache['SERVERS'] = array();
 
+      $server_list = get_sub_list("(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",
+                      "",get_ou("serverou"),$this->config->current['BASE'],array("FAIrepository"),GL_NO_ACL_CHECK);
+     
       /* Only add inherit option, if we are part in an object group
        */
       if($this->member_of_ogroup){
@@ -1032,7 +1033,7 @@ class workstartup extends plugin
       $this->cache['SERVERS']['auto'] = array();
       $sort_by = array("auto");
       $server_tmp = array("auto"=>array());
-      while($attr = $ldap->fetch()){
+      foreach($server_list as $attr){
         if(isset($attr['FAIrepository'])){
           for($i = 0 ; $i < $attr['FAIrepository']['count'] ; $i ++ ){
             $rep = $attr['FAIrepository'][$i];
@@ -1091,10 +1092,11 @@ class workstartup extends plugin
       if($force || !isset($this->cache['RELEASE_DNS'])){
         $this->cache['RELEASE_DNS'] = array();
         $fai_ou_parts = preg_replace("/\/.*$/","",$this->FAIrelease);
-        $ldap = $this->config->get_ldap_link();
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->search("(objectClass=FAIbranch)",array("ou"));
-        while($attrs = $ldap->fetch()){
+
+        $tmp = get_sub_list("(objectClass=FAIbranch)","",get_ou("faiou"),
+                $this->config->current['BASE'],array("ou"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
+
+        foreach($tmp as $attrs){
           if(preg_match("/".normalizePreg(get_ou("faiou"))."/",$attrs['dn'])){
             $this->cache['RELEASE_DNS'][$attrs['dn']] = $this->dn_to_release_name($attrs['dn']);
           }
