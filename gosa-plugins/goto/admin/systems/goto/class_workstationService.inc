@@ -146,86 +146,41 @@ class workservice extends plugin
 
     $this->orig_dn= $this->dn;
 
-
-
-
-
-
-
-
-
-
     /* Load phone hardware list
      */
-    $ldap= $this->config->get_ldap_link();
-    $deps = array();
-    $ou = preg_replace("/,.*$/","",get_ou("phoneou"));
-    if(!empty($ou)){
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
-      while($attrs = $ldap->fetch()){
-        $deps[] = $attrs['dn'];
+    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneou")),
+                  $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
+    foreach($tmp as $attrs){
+      $cn= $attrs['cn'][0];
+      $description= "";
+      if (isset($attrs['description'])){
+        $description= " - ".$attrs['description'][0];
       }
-    }else{
-
-      /* Phone ou seems to be empty, fall back to overall base .
-       */
-      $deps[] = $this->config->current['BASE'];
-    }
-    foreach($deps as $dep){
-      $ldap->cd($dep);
-      $ldap->search("(objectClass=goFonHardware)", array('cn', 'description'));
-      while ($attrs= $ldap->fetch()){
-        $cn= $attrs['cn'][0];
-        if (isset($attrs['description'])){
-          $description= " - ".$attrs['description'][0];
-        } else {
-          $description= "";
-        }
-        $this->hardware_list[$cn]= "$cn$description";
-      }
-    }
-
-
-
-    /* Eventually colorize phones */
-    $deps = array();
-    $ou = preg_replace("/,.*$/","",get_ou("systemsou"));
-    $deps_a = array(get_ou("ogroupou"),
-                    get_ou("serverou"),
-                    get_ou("terminalou"),
-                    get_ou("workstationou"),
-                    get_ou("printerou"),
-                    get_ou("componentou"),
-                    get_ou("phoneou"));
-    if(!empty($ou)){
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
-      while($attrs = $ldap->fetch()){
-        foreach($deps_a as $allowed){
-            $to_add = preg_replace("/".get_ou('systemsou')."$/","",$allowed);
-            $deps[] = $to_add.$attrs['dn'];
-        }
-      }
-    }else{
-
-      /* Phone ou seems to be empty, fall back to overall base .
-       */
-      $deps[] = $this->config->current['BASE'];
-    }
-
-    foreach($deps as $dep){
-      $ldap->cd($dep);
-      $ldap->search("(goFonHardware=*)",array('cn','dn','goFonHardware'));
-      while($attrs = $ldap->fetch()){
-        $cn = $attrs['goFonHardware'][0];
-        if(isset($this->hardware_list[$cn])){
-          $this->used_hardware[$cn]= $cn;
-        }
-      }
+      $this->hardware_list[$cn]= "$cn$description";
     }
     $this->hardware_list["automatic"]= _("automatic");
     ksort($this->hardware_list);
+
+    /* These departments may contain objects that have
+        goFonHardware set.
+     */
+    $deps_a = array(
+        get_ou("ogroupou"),
+        get_ou("serverou"),
+        get_ou("terminalou"),
+        get_ou("workstationou"),
+        get_ou("printerou"),
+        get_ou("componentou"),
+        get_ou("phoneou"));
+
+    $tmp = get_sub_list("(goFonHardware=*)","",$deps_a,$this->config->current['BASE'],
+        array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);
+    foreach($tmp as $attrs){
+      $cn = $attrs['goFonHardware'][0];
+      if(isset($this->hardware_list[$cn])){
+        $this->used_hardware[$cn]= $cn;
+      }
+    }
 
     if(preg_match("/\+/",$this->gotoXHsync)){
       $this->AutoSync = true;
