@@ -444,12 +444,6 @@ class macro extends plugin
       }
     }
 
-    /* Macro content must be smaller than 100 lines */
-    if(count(split("\n",$this->goFonMacroContent))>100){
-      $message[] = _("Makro length must be lower than 100 lines");
-    }
-
-    /* Macro content must be smaller than 100 lines */
     if(empty($this->goFonMacroContent)){
       $message[] = _("You can't save an empty macro.");
     }
