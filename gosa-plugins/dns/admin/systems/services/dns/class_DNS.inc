@@ -637,28 +637,15 @@ class DNS
    */
   static function getAvailableZones($config)
   {
-    $ret = array();
+    $runtime_cache = session::get("runtime_cache");
+    if(!isset($runtime_cache['DNS']['getAvailableZones'])){
+    
+      $ret = array();
+      $ldap = $config->get_ldap_link();
+      $tmp = get_sub_list("(&(objectClass=dNSZone)(sOARecord=*))","",get_ou("serverou"),
+          $config->current['BASE'],array("zoneName"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
 
-    /* Search for zones ...
-     */
-    $ou = preg_replace("/,.*$/","",get_ou("serverou"));
-    $deps  = array();
-    $ldap = $config->get_ldap_link();
-    $ldap->cd ($config->current['BASE']);
-    $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
-    while($attrs = $ldap->fetch()){
-      $deps[] = $attrs['dn'];
-    }
-
-    $ForwardZones = array();
-    $ReverseZones = array();
-    $zones = array();
-    foreach($deps as $dep){
-      $ldap->cd($dep);
-      $ldap->search("(&(objectClass=dNSZone)(sOARecord=*))",array("zoneName"));
-
-
-      while($at = $ldap->fetch()){
+      foreach($tmp as $at){
         if(preg_match("/\.in\-addr\.arpa/",$at['zoneName'][0])){
           $ReverseZones[$at['dn']] = $at;
         }else{
@@ -677,8 +664,10 @@ class DNS
           }
         }   
       }
+      $runtime_cache['DNS']['getAvailableZones'] = $zones;
+      session::set("runtime_cache",$runtime_cache);
     }
-    return($zones);
+    return($runtime_cache['DNS']['getAvailableZones']);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
