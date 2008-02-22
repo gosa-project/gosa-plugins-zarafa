@@ -4,7 +4,7 @@ use Exporter;
 my @events = (
     "get_events", 
     "gen_smb_hash",
-    "reload_ldap_config",
+    "trigger_reload_ldap_config",
     "ping",
     "network_completition",
     "set_activated_for_installation",
@@ -111,12 +111,14 @@ sub detect_hardware {
 }
 
 
-sub reload_ldap_config {
+sub trigger_reload_ldap_config {
     my ($msg, $msg_hash) = @_ ;
     my $target = @{$msg_hash->{target}}[0];
 
+    my $out_hash = &create_xml_hash("reload_ldap_config", $main::server_address, $main::server_address, $target);
+    my $out_msg = &create_xml_string($out_hash);
     my @out_msg_l;
-    push(@out_msg_l, &new_ldap_config($target));
+    push(@out_msg_l, $out_msg);
     return @out_msg_l;
 }
 

@@ -5,6 +5,7 @@ my @events = (
     "got_ping",
     "detected_hardware",
     "trigger_wake",
+    "reload_ldap_config",
     );
 @EXPORT = @events;
 
@@ -61,6 +62,18 @@ sub read_configfile {
         }
     }
 }
+
+
+sub reload_ldap_config {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{$header}}[0];
+
+    my $out_msg = &SIPackages::new_ldap_config($target);
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+}
+
 
 sub got_ping {
     my ($msg, $msg_hash, $session_id) = @_;

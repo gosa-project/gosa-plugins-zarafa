@@ -758,7 +758,7 @@ sub who_has_i_do {
 sub new_ldap_config {
 	my ($address) = @_ ;
 
-	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress='$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
 
 	# check hit
@@ -767,6 +767,7 @@ sub new_ldap_config {
 		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
 	}
 
+    $address = $res->{1}->{hostname};
 	my $macaddress = $res->{1}->{macaddress};
 	my $hostkey = $res->{1}->{hostkey};
 

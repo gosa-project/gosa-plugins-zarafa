@@ -785,7 +785,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("cannot send ".$header."msg to $address , host not reachable", 1);
+        daemon_log("ERROR: cannot send ".$header."msg to $address , host not reachable", 1);
         $error++;
     }
     
@@ -793,7 +793,7 @@ sub send_msg_to_target {
         # send xml msg
         print $socket $crypted_msg."\n";
 
-        daemon_log("send ".$header."msg to $address", 1);
+        daemon_log("INFO: send ".$header."msg to $address", 5);
         daemon_log("message:\n$msg", 8);
         
     }
@@ -850,7 +850,6 @@ sub send_msg_to_target {
             }
         }
     }
-
     return $error; 
 }
 

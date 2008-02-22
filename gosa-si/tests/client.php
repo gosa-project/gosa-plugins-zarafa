@@ -27,10 +27,10 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
 
 # Reload ldap config
-$data = "<xml> <header>gosa_reload_ldap_config</header> <source>GOSA</source><target>00:1B:77:04:8A:6C</target></xml>";
+$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target></xml>";
 
 # update  
-$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><timestamp>23450101000000</timestamp><result>XXXXXXXXXXXXXXx</result></update></xml>";
+#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><timestamp>23450101000000</timestamp><result>XXXXXXXXXXXXXXx</result></update></xml>";
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
 # query

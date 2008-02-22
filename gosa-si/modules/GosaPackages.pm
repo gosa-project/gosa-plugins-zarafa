@@ -229,12 +229,13 @@ sub import_events {
 
     while (defined (my $event = readdir (DIR))) {
         if( $event eq "." || $event eq ".." ) { next; }   
-        if( $event eq "siTriggered.pm" ) { next; }      # only SI specific events
+        if( $event eq "siTriggered.pm" ) { next; }      # SI specific events not needed in GosaPackages.pm
+        if( $event eq "clMessages.pm" ) { next; }                    # SI specific events not needed in GosaPackages.pm
 
         eval{ require $event; };
         if( $@ ) {
-            &main::daemon_log("import of event module '$event' failed", 1);
-            &main::daemon_log("$@", 8);
+            &main::daemon_log("ERROR: import of event module '$event' failed", 1);
+            &main::daemon_log("$@", 1);
             next;
         }
 

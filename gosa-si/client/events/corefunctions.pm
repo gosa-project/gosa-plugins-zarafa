@@ -1,7 +1,17 @@
 package corefunctions;
 use Exporter;
 @ISA = qw(Exporter);
-my @events = qw(get_events registered new_ldap_config new_key generate_hw_digest detect_hardware confirm_new_key ping import_events);
+my @events = (
+    "get_events",
+    "registered",
+    "new_ldap_config",
+    "new_key",
+    "generate_hw_digest",
+    "detect_hardware",
+    "confirm_new_key",
+    "ping",
+    "import_events",
+    );
 @EXPORT = @events;
 
 use strict;
@@ -269,6 +279,7 @@ sub new_ldap_config {
 	return;
 
 }
+
 
 sub new_key {
     # my ($msg_hash) = @_ ;
