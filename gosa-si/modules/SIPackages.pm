@@ -72,7 +72,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
 	my $tmp_ldap= Net::LDAP->new($ldap_uri);
 	if( defined($tmp_ldap) ) {
-		&main::daemon_log("Searching for servers gosaUnitTag with mac address $server_mac_address",6);
+		&main::daemon_log("INFO: Searching for servers gosaUnitTag with mac address $server_mac_address",5);
 		my $mesg= $tmp_ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 		# Perform search for Unit Tag
 		$mesg = $tmp_ldap->search(
@@ -86,14 +86,14 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 			my $entry= $mesg->entry(0);
 			my $unit_tag= $entry->get_value("gosaUnitTag");
 			if(defined($unit_tag) && length($unit_tag) > 0) {
-				&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+				&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 				$main::gosa_unit_tag= $unit_tag;
 			}
 		} else {
 			# Perform another search for Unit Tag
 			my $hostname= `hostname -f`;
 			chomp($hostname);
-			&main::daemon_log("Searching for servers gosaUnitTag with hostname $hostname",6);
+			&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
 			$mesg = $tmp_ldap->search(
 				base   => $ldap_base,
 				scope  => 'sub',
@@ -104,14 +104,14 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 				my $entry= $mesg->entry(0);
 				my $unit_tag= $entry->get_value("gosaUnitTag");
 				if(defined($unit_tag) && length($unit_tag) > 0) {
-					&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+					&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 					$main::gosa_unit_tag= $unit_tag;
 				}
 			} else {
 				# Perform another search for Unit Tag
 				$hostname= `hostname -s`;
 				chomp($hostname);
-				&main::daemon_log("Searching for servers gosaUnitTag with hostname $hostname",6);
+				&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
 				$mesg = $tmp_ldap->search(
 					base   => $ldap_base,
 					scope  => 'sub',
@@ -122,17 +122,17 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 					my $entry= $mesg->entry(0);
 					my $unit_tag= $entry->get_value("gosaUnitTag");
 					if(defined($unit_tag) && length($unit_tag) > 0) {
-						&main::daemon_log("Detected gosaUnitTag $unit_tag for creating entries", 4);
+						&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 						$main::gosa_unit_tag= $unit_tag;
 					}
 				} else {
-					&main::daemon_log("Not using gosaUnitTag", 6);
+					&main::daemon_log("WARNING: No gosaUnitTag detected. Not using gosaUnitTag", 3);
 				}
 			}
 		}
         $tmp_ldap->unbind;
 	} else {
-		&main::daemon_log("Using gosaUnitTag from config-file: $main::gosa_unit_tag",6);
+		&main::daemon_log("INFO: Using gosaUnitTag from config-file: $main::gosa_unit_tag",5);
 	}
 }
 
@@ -455,7 +455,7 @@ sub process_incoming_msg {
     # skip PREFIX
     $header =~ s/^CLMSG_//;
 
-    &main::daemon_log("SIPackages: msg to process: $header", 3);
+    &main::daemon_log("DEBUG: SIPackages: msg to process: $header", 7);
     &main::daemon_log("$msg", 8);
 
     if( 0 == length @target_l){     
@@ -475,7 +475,7 @@ sub process_incoming_msg {
             } else {
                 if( exists $event_hash->{$header} ) {
                     # a event exists with the header as name
-                    &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+                    &main::daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
                     no strict 'refs';
                     @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
                 }
@@ -489,7 +489,7 @@ sub process_incoming_msg {
             } 
         }
 		else {
-			&main::daemon_log("msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
+			&main::daemon_log("INFO: msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
 			push(@out_msg_l, $msg);
 		}
     }
@@ -626,8 +626,8 @@ sub here_i_am {
     # number of actual activ clients
     my $act_nu_clients = $nu_clients;
 
-    &main::daemon_log("number of actual activ clients: $act_nu_clients", 5);
-    &main::daemon_log("number of maximal allowed clients: $max_clients", 5);
+    &main::daemon_log("INFO: number of actual activ clients: $act_nu_clients", 5);
+    &main::daemon_log("INFO: number of maximal allowed clients: $max_clients", 5);
 
     if($max_clients <= $act_nu_clients) {
         my $out_hash = &create_xml_hash("denied", $server_address, $source);
@@ -679,7 +679,7 @@ sub here_i_am {
         &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
         my $new_client_out = &create_xml_string($out_hash);
         push(@out_msg_l, $new_client_out);
-        &main::daemon_log("send bus msg that client '$source' has registerd at server '$server_address'", 3);
+        &main::daemon_log("INFO: send bus msg that client '$source' has registerd at server '$server_address'", 5);
     }
 
     # give the new client his ldap config
@@ -839,9 +839,9 @@ sub new_ldap_config {
 
 	foreach $server (@servers){
 		# Conversation for backward compatibility
-		if ($server !=~ /^ldap[^:]+:\/\// ) {
+		if (not $server =~ /^ldap[^:]+:\/\// ) {
 		    if ($server =~ /^([^:]+):(.*)$/ ) {
-			$server= "1:dummy:ldap://$1/$2";
+                $server= "1:dummy:ldap://$1/$2";
 		    }
 		}
 

@@ -336,7 +336,7 @@ sub import_modules {
 			if( $info ) {
 				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
 				$known_modules->{$mod_name} = $info;
-				daemon_log("module $mod_name loaded", 1);
+				daemon_log("INFO: module $mod_name loaded", 5);
 			}
 		}
     }   
@@ -484,13 +484,13 @@ sub input_from_known_server {
             next;
         }
         my $host_key = $hit->{hostkey};
-        daemon_log("SIPackages: known_server host_name: $host_name", 7);
-        daemon_log("SIPackages: known_server host_key: $host_key", 7);
+        daemon_log("DEBUG: input_from_known_server: host_name: $host_name", 7);
+        daemon_log("DEBUG: input_from_known_server: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
         my ($tmp_msg, $tmp_msg_hash) = &check_key_and_xml_validity($input, $host_key);
         if( (!$tmp_msg) || (!$tmp_msg_hash) ) {
-            daemon_log("SIPackages: deciphering raise error", 7);
+            daemon_log("DEBUG: input_from_known_server: deciphering raise error", 7);
             daemon_log("$@", 8);
             next;
         }
@@ -503,7 +503,7 @@ sub input_from_known_server {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        daemon_log("Incoming message is not from a known server", 3);
+        daemon_log("INFO: Incoming message is not from a known server", 5);
     }
   
     return ($msg, $msg_hash, $module);
@@ -522,14 +522,14 @@ sub input_from_known_client {
                 next;
 		}
         my $host_key = $hit->{hostkey};
-        &daemon_log("SIPackages: known_client host_name: $host_name", 7);
-        &daemon_log("SIPackages: known_client host_key: $host_key", 7);
+        &daemon_log("DEBUG: input_from_known_client: host_name: $host_name", 7);
+        &daemon_log("DEBUG: input_from_known_client: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
 
         if( (!$msg) || (!$msg_hash) ) {
-            &daemon_log("SIPackages: deciphering raise error", 7);
+            &daemon_log("DEGUG: input_from_known_client: deciphering raise error", 7);
             &daemon_log("$@", 8);
             next;
         }
@@ -540,7 +540,7 @@ sub input_from_known_client {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        &daemon_log("Incoming message is not from a known client", 3);
+        &daemon_log("INFO: Incoming message is not from a known client", 5);
     }
 
     return ($msg, $msg_hash, $module);
@@ -566,7 +566,7 @@ sub input_from_unknown_host {
             daemon_log("ERROR: no key specified in config file for $mod", 1);
             next;
         }
-        daemon_log("$mod: $module_key", 5);
+        daemon_log("DEBUG: $mod: $module_key", 7);
 
         # check if module can open msg envelope with module key
         ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key);
@@ -580,7 +580,7 @@ sub input_from_unknown_host {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("Incoming message is not from an unknown host", 5);
+        daemon_log("INFO: Incoming message is not from an unknown host", 5);
     }
 
     return ($msg, $msg_hash, $module);
@@ -684,7 +684,7 @@ sub open_socket {
     if(not defined $socket) {
         return;
     }
-    &daemon_log("open_socket: $PeerAddr", 7);
+#    &daemon_log("DEBUG: open_socket: $PeerAddr", 7);
     return $socket;
 }
 
@@ -870,8 +870,8 @@ sub client_input {
     my ($answer_header, @answer_target_l, $answer_source);
     my $client_answer;
 
-    daemon_log("Incoming msg from '".$heap->{'remote_ip'}."'", 7);
-    daemon_log("message:\n$input", 8);
+    daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
+    daemon_log("DEBUG: Incoming message:\n$input", 8);
 
     ####################
     # check incoming msg
@@ -893,12 +893,12 @@ sub client_input {
     ######################
     # process incoming msg
     if( $error == 0) {
-        daemon_log("Processing module ".$module, 5);
+        daemon_log("DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 > @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
-            daemon_log("$module: Got answer from module: \n".$answer_str,8);
+            daemon_log("DEGUB: $module: Got answer from module: \n".$answer_str,8);
         }
     }
     if( !$answer_l ) { $error++ };
