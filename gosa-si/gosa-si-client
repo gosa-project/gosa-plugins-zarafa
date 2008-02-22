@@ -201,6 +201,15 @@ sub check_pid {
 }
 
 
+sub sig_int_handler {
+    my ($signal) = @_;
+
+    daemon_log("shutting down gosa-si-server", 1);
+    exit(1);
+}
+$SIG{INT} = \&sig_int_handler;
+
+
 #===  FUNCTION  ================================================================
 #         NAME:  logging
 #   PARAMETERS:  level - string - default 'info' 
@@ -1391,9 +1400,15 @@ if( defined $server_check ) {
 else {
     if ( !$server_domain) {
         daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-        exit( 1 );
+        kill 2, $$;
     }
     my @tmp_servers = &get_server_addresses($server_domain);
+    if( 0 == @tmp_servers ) {
+        daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
+        daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+        kill 2, $$;
+    } 
+
     foreach my $server (@tmp_servers) { 
         unshift(@servers, $server); 
     }
