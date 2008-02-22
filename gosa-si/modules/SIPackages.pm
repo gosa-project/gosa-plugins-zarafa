@@ -786,7 +786,7 @@ sub new_ldap_config {
 	# Perform search
 	$mesg = $ldap->search( base   => $ldap_base,
 		scope  => 'sub',
-		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag'],
+		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
 		filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
 	#$mesg->code && die $mesg->error;
 	if($mesg->code) {
@@ -811,12 +811,19 @@ sub new_ldap_config {
 	my @ldap_uris;
 	my $server;
 	my $base;
+	my $release;
+
+	# Fill release if available
+	my $FAIclass= $entry->get_value("FAIclass");
+	if (defined $FAIclass && $FAIclass =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
+		$release= $1;
+	}
 
 	# Do we need to look at an object class?
 	if (length(@servers) < 1){
 		$mesg = $ldap->search( base   => $ldap_base,
 			scope  => 'sub',
-			attrs => ['dn', 'gotoLdapServer'],
+			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
@@ -833,6 +840,13 @@ sub new_ldap_config {
 		$entry= $mesg->entry(0);
 		$dn= $entry->dn;
 		@servers= $entry->get_value("gotoLdapServer");
+
+		if (not defined $release){
+			$FAIclass= $entry->get_value("FAIclass");
+			if (defined $FAIclass && $FAIclass =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
+				$release= $1;
+			}
+		}
 	}
 
 	@servers= sort (@servers);
@@ -854,6 +868,9 @@ sub new_ldap_config {
 	# Assemble data package
 	my %data = ( 'ldap_uri'  => \@ldap_uris, 'ldap_base' => $base,
 		'ldap_cfg' => \@ldap_cfg, 'pam_cfg' => \@pam_cfg,'nss_cfg' => \@nss_cfg );
+	if (defined $release){
+		$data{'release'}= $release;
+	}
 
 	# Need to append GOto settings?
 	if (defined $goto_admin and defined $goto_secret){
@@ -867,7 +884,7 @@ sub new_ldap_config {
 		# Find admin base and department name
 		$mesg = $ldap->search( base   => $ldap_base,
 			scope  => 'sub',
-			attrs => ['dn', 'ou', 'FAIclass'],
+			attrs => ['dn', 'ou'],
 			filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
@@ -887,12 +904,6 @@ sub new_ldap_config {
 
 		# Append unit Tag
 		$data{'unit_tag'}= $unit_tag;
-	}
-
-	# Fill release if available
-	my $FAIclass= $entry->get_value("FAIclass");
-	if (defined $FAIclass && $FAIclass =~ /^.* :([A-Za-z0-9\/.]+).*$/) {
-		$data{'release'}= $1;
 	}
 
 
