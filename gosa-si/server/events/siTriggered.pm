@@ -175,7 +175,7 @@ sub detected_hardware {
 		$entry->add("gotoSysStatus" => "new-system");
 		$entry->add("ipHostNumber" => $ipaddress);
 		if(defined($main::gosa_unit_tag) && length($main::gosa_unit_tag) > 0) {
-			$entry->add("objectClass" => "gosaAdministrativeUnit");
+			$entry->add("objectClass" => "gosaAdministrativeUnitTag");
 			$entry->add("gosaUnitTag" => $main::gosa_unit_tag);
 		}
 		my $res=$entry->update($ldap);
