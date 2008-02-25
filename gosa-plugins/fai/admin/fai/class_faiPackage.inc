@@ -524,7 +524,7 @@ class faiPackage extends plugin
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
 
 	/* Tag object */
-	$this->tag_attrs(&$pkgattrs, $pkgdn, $this->gosaUnitTag);
+	$this->tag_attrs($pkgattrs, $pkgdn, $this->gosaUnitTag);
 
         if(in_array($pkgattrs['FAIvariableType'],array("boolean","multiselect","password","select","string","text"))){
           FAI::prepare_to_save_FAI_object($pkgdn,$pkgattrs);

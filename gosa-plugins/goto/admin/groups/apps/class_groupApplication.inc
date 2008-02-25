@@ -439,7 +439,7 @@ class appgroup extends plugin
     $all = $this->_get_all_entries();
     $key = $this->_get_release_key($release);
     if(isset($all[$key]) && count($all[$key]['ENTRIES'])){
-      $res = $this->_get_all_entries(TRUE,TRUE,&$all[$key]['ENTRIES']);
+      $res = $this->_get_all_entries(TRUE,TRUE,$all[$key]['ENTRIES']);
       return($res);
     } 
     return(array());
@@ -914,7 +914,7 @@ class appgroup extends plugin
       @param  Boolean   $add_tags  If TRUE, OPEN/CLOSE Tags will be appended.
       @param  &Array    Start here, Pointer to an array.
    */ 
-  function _get_all_entries($add_tags = FALSE, $skip_release = FALSE, $cur = NULL)
+  function _get_all_entries($add_tags = FALSE, $skip_release = FALSE, &$cur = NULL)
   {
     $ret = array();
     if($cur == NULL){
@@ -946,7 +946,7 @@ class appgroup extends plugin
       if(!$add_tags){
         $ret[$tmp['UNIQID']] = &$cur[$key];
         if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
-          $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
+          $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,$cur[$key]['ENTRIES']));
         }
       }else{
       
@@ -966,7 +966,7 @@ class appgroup extends plugin
 
             if($add){
               $ret[] = array("TYPE" => "OPEN", "PARENT" => $entry['PARENT']);
-              $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,&$cur[$key]['ENTRIES']));
+              $ret = array_merge($ret,$this->_get_all_entries($add_tags,$skip_release,$cur[$key]['ENTRIES']));
               $ret[] = array("TYPE" => "CLOSE" , "PARENT" => $entry['PARENT']);
             }
           }

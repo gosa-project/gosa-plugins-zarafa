@@ -451,7 +451,7 @@ class faiPartitionTable extends plugin
       }
 
       /* Tag object */
-      $this->tag_attrs(&$disk_attrs, $disk_dn, $this->gosaUnitTag);
+      $this->tag_attrs($disk_attrs, $disk_dn, $this->gosaUnitTag);
 
       if($disk['status'] == "delete"){
         FAI::prepare_to_save_FAI_object($disk_dn,array(),true);
@@ -496,7 +496,7 @@ class faiPartitionTable extends plugin
         }
 
 	/* Tag object */
-	$this->tag_attrs(&$partition_attrs, $partition_dn, $this->gosaUnitTag);
+	$this->tag_attrs($partition_attrs, $partition_dn, $this->gosaUnitTag);
 
         if($partition['status'] == "delete"){
           FAI::prepare_to_save_FAI_object($partition_dn,array(),true);

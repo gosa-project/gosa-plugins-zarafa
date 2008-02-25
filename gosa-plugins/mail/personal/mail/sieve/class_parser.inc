@@ -189,7 +189,7 @@ class Parser
 
 	function arguments_($parent_id, &$semantics)
 	{
-		while ($this->argument_($parent_id, &$semantics))
+		while ($this->argument_($parent_id, $semantics))
 			;
 
 		if ($this->status_ == true)
@@ -215,14 +215,14 @@ class Parser
 			return $this->success_();
 		}
 
-		return $this->stringlist_($parent_id, &$semantics);
+		return $this->stringlist_($parent_id, $semantics);
 	}
 
 	function stringlist_($parent_id, &$semantics)
 	{
 		if (!$this->scanner_->nextTokenIs('left-bracket'))
 		{
-			return $this->string_($parent_id, &$semantics);
+			return $this->string_($parent_id, $semantics);
 		}
 
 		$token = $this->scanner_->nextToken();
@@ -234,7 +234,7 @@ class Parser
 
 		while ($token['class'] != 'right-bracket')
 		{
-			if (!$this->string_($parent_id, &$semantics))
+			if (!$this->string_($parent_id, $semantics))
 			{
 				return $this->status_;
 			}

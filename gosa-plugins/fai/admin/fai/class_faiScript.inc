@@ -582,7 +582,7 @@ class faiScript extends plugin
       }
 
       /* Tag object */
-      $this->tag_attrs(&$tmp, $sub_dn, $this->gosaUnitTag);
+      $this->tag_attrs($tmp, $sub_dn, $this->gosaUnitTag);
 
       if($obj['status'] == "delete"){
         FAI::prepare_to_save_FAI_object($sub_dn,array(),true);
