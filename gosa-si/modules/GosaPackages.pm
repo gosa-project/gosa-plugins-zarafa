@@ -421,6 +421,7 @@ sub query_jobdb {
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
     my $out_xml = &db_res2si_msg($res_hash, "query_jobdb", $target, $source);
+
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }

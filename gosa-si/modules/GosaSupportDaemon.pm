@@ -284,7 +284,7 @@ sub db_res2xml {
 
     my $len_db_res= keys %{$db_res};
     for( my $i= 1; $i<= $len_db_res; $i++ ) {
-        $xml .= "<answer$i>";
+        $xml .= "\n<answer$i>";
         my $hash= $db_res->{$i};
         while ( my ($column_name, $column_value) = each %{$hash} ) {
             $xml .= "<$column_name>";
