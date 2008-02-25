@@ -858,8 +858,6 @@ sub register_at_gosa_si_server {
 
 sub check_key_and_xml_validity {
     my ($crypted_msg, $module_key) = @_;
-#print STDERR "crypted_msg:$crypted_msg\n";
-#print STDERR "modul_key:$module_key\n";
 
     my $msg;
     my $msg_hash;
@@ -1272,7 +1270,7 @@ my $server_check = $server_check_cfg->val( "server", "ip");
 if( defined $server_check ) {
 	unshift(@servers, $server_address);
 	my $servers_string = join(", ", @servers);
-	daemon_log("found servers in configuration file: $servers_string", 5);
+	daemon_log("INFO: found servers in configuration file: $servers_string", 5);
 } else {
 	my @tmp_servers;
 	if ( !$server_domain) {
@@ -1299,11 +1297,11 @@ if( defined $server_check ) {
 		} 
 	}
 
-	foreach my $server (@tmp_servers) { 
-		unshift(@servers, $server); 
-	}
-	my $servers_string = join(", ", @servers);
-	daemon_log("found servers in DNS: $servers_string", 5);
+    foreach my $server (@tmp_servers) { 
+        unshift(@servers, $server); 
+    }
+    my $servers_string = join(", ", @servers);
+    daemon_log("INFO: found servers in DNS: $servers_string", 5);
 }
 
 

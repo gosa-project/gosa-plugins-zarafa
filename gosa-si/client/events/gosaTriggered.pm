@@ -5,6 +5,7 @@ my @events = (
     "get_events",
     "trigger_action_localboot",
     "trigger_action_halt",
+    "trigger_action_faireboot",
     "trigger_action_reboot",
     "trigger_action_memcheck",
     "trigger_action_reinstall",
@@ -64,6 +65,13 @@ sub trigger_action_localboot {
         # TODO do something, error handling, logging
     }
 
+    return;
+}
+
+
+sub trigger_action_faireboot {
+    my ($msg, $msg_hash) = @_;
+    system("/usr/sbin/faireboot");
     return;
 }
 

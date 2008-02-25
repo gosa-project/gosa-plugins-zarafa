@@ -11,6 +11,7 @@ my @events = (
     "new_key_for_client",
     "detect_hardware",
     "trigger_action_localboot",
+    "trigger_action_faireboot",
     "trigger_action_reboot",
     "trigger_action_halt",
     "trigger_action_update", 
@@ -134,6 +135,14 @@ sub set_activated_for_installation {
     my $out_msg = &create_xml_string($out_hash);
 
     my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+}
+
+
+sub trigger_action_faireboot {
+    my ($msg, $msg_hash) = @_;
+    $msg =~ s/<header>gosa_trigger_action_faireboot<\/header>/<header>trigger_action_faireboot<\/header>/;
+    my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
 

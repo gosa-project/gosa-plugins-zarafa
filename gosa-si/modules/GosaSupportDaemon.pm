@@ -25,6 +25,7 @@ use Crypt::Rijndael;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 use MIME::Base64;
 use XML::Simple;
+use utf8;
 
 my $op_hash = {
     'eq' => '=',
