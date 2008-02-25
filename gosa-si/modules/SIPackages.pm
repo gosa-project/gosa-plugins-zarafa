@@ -17,6 +17,7 @@ use Net::LDAP;
 use Socket;
 use Net::hostent;
 use Net::DNS;
+use utf8;
 
 my $event_dir = "/usr/lib/gosa-si/server/events";
 use lib "/usr/lib/gosa-si/server/events";

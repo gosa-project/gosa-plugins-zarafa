@@ -3,6 +3,7 @@ package POE::Component::ArpWatch;
 
 use strict;
 use warnings;
+use utf8;
 
 BEGIN{
 	eval('use POE');

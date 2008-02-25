@@ -14,6 +14,7 @@ use Net::LDAP::Entry;
 use Net::DNS;
 use Switch;
 use Data::Dumper;
+use utf8;
 
 # Don't start if some of the modules are missing
 my $start_service=1;

@@ -8,7 +8,7 @@ use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use threads;
 use Time::HiRes qw(usleep);
-
+use utf8;
 
 
 my $col_names = {};

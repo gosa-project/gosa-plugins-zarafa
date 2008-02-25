@@ -13,6 +13,7 @@ use File::Spec;
 use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
+use utf8;
 
 my $event_dir = "/usr/lib/gosa-si/server/events";
 use lib "/usr/lib/gosa-si/server/events";
