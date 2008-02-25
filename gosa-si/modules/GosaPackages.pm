@@ -264,7 +264,7 @@ sub process_incoming_msg {
     my @msg_l;
     my @out_msg_l;
 
-    &main::daemon_log("GosaPackages: receive '$header'", 1);
+    &main::daemon_log("DEBUG: GosaPackages: receive '$header'", 8);
     
     if ($header =~ /^job_/) {
         @msg_l = &process_job_msg($msg, $msg_hash, $session_id);
@@ -273,7 +273,7 @@ sub process_incoming_msg {
         @msg_l = &process_gosa_msg($msg, $msg_hash, $session_id);
     } 
     else {
-        &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix");
+        &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix", 1);
     }
 
     foreach my $out_msg ( @msg_l ) {
@@ -407,10 +407,12 @@ sub process_job_msg {
 sub query_jobdb {
     my ($msg) = @_;
     my $msg_hash = &transform_msg2hash($msg);
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
 
     # prepare query sql statement
     my $select= &get_select_statement($msg, $msg_hash);
-    my $table= $main::job_queue_table_name;
+    my $table= $main::job_queue_tn;
     my $where= &get_where_statement($msg, $msg_hash);
     my $limit= &get_limit_statement($msg, $msg_hash);
     my $orderby= &get_orderby_statement($msg, $msg_hash);
@@ -418,7 +420,7 @@ sub query_jobdb {
 
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
-    my $out_xml = &db_res2xml($res_hash);
+    my $out_xml = &db_res2si_msg($res_hash, "query_jobdb", $target, $source);
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }

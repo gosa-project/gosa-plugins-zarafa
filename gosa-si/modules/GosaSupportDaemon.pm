@@ -11,6 +11,7 @@ my @functions = (
     "get_time",
     "build_msg",
     "db_res2xml",
+    "db_res2si_msg",
     "get_where_statement",
     "get_select_statement",
     "get_update_statement",
@@ -301,6 +302,18 @@ sub db_res2xml {
     }
 
     return $xml;
+}
+
+
+sub db_res2si_msg {
+    my ($db_res, $header, $target, $source) = @_;
+
+    my $si_msg = "<xml>";
+    $si_msg .= "<header>$header</header>";
+    $si_msg .= "<source>$source</source>";
+    $si_msg .= "<target>$target</target>";
+    $si_msg .= &db_res2xml;
+    $si_msg .= "</xml>";
 }
 
 
