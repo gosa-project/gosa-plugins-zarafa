@@ -19,6 +19,7 @@ class target_list extends MultiSelectWindow
   var $ogroups        ;
   var $servers        ;
   var $workstations   ;
+  var $incoming       ;
 
 
   /* Subsearch checkbox */
@@ -30,7 +31,7 @@ class target_list extends MultiSelectWindow
  
   function target_list(&$config,$Targets_used)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "Targetselection", array("ogroup","gotomasses"));
+    MultiSelectWindow::MultiSelectWindow($config, "Targetselection", array("ogroup","server","incoming","workstation","gotomasses"));
 
     $this->Targets_used = $Targets_used;
     
@@ -51,6 +52,7 @@ class target_list extends MultiSelectWindow
     $this->AddCheckBox("ogroups",       _("Select to see object groups"),  _("Show object groups"), true);
     $this->AddCheckBox("servers",       _("Select to see servers")  ,   _("Show servers"), true);
     $this->AddCheckBox("workstations",  _("Select to see workstations"),_("Show workstations"), true);
+    $this->AddCheckBox("incoming",      _("Select to see incoming objects")  , _("Show new objects"), true);
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
@@ -239,6 +241,7 @@ class target_list extends MultiSelectWindow
     $chk = array(
         "ogroups"       => "(&(objectClass=gosaGroupOfNames)(|(gosaGroupObjects=*S*)(gosaGroupObjects=*W*)))" ,
         "servers"       => "(objectClass=goServer)" ,
+        "incoming"      => "(objectClass=GOhard)" ,
         "workstations"  => "(objectClass=gotoWorkstation)");
 
     /* Create filter */
@@ -259,6 +262,15 @@ class target_list extends MultiSelectWindow
             array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
       $res= array_merge($res,get_list($filter, "server", get_ou('serverou').$base, 
             array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
+
+      $deps_a = array(
+          get_ou("workstationou"),
+          get_ou("incominou"),
+          get_ou("serverou"),
+          get_ou("ogroupou"));
+
+      $res = get_sub_list($filter,array("server","incoming","workstation","ogroup"), 
+                  $deps_a,get_ou("systemsou").$base,array("cn","objectClass","ipHostNumber","description"),GL_SIZELIMIT);
     }
 
     $this->list= $res;
