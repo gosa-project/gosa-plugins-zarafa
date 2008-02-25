@@ -118,38 +118,38 @@ sub got_ping {
 
 
 sub detected_hardware {
-    my ($msg, $msg_hash, $session_id) = @_ ;
+	my ($msg, $msg_hash, $session_id) = @_ ;
 	my $address = $msg_hash->{source}[0];
 	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
 
-    my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
-    my $res = $main::known_clients_db->select_dbentry( $sql_statement );
+	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
+	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
 
-    # check hit
-    my $hit_counter = keys %{$res};
-    if( not $hit_counter == 1 ) {
-        &main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+	# check hit
+	my $hit_counter = keys %{$res};
+	if( not $hit_counter == 1 ) {
+		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
 		return;
-    }
+	}
 
-    my $macaddress = $res->{1}->{macaddress};
-    my $hostkey = $res->{1}->{hostkey};
+	my $macaddress = $res->{1}->{macaddress};
+	my $hostkey = $res->{1}->{hostkey};
 
-    if (not defined $macaddress) {
-        &main::daemon_log("ERROR: no mac address found for client $address", 1);
-        return;
-    }
-    # Build LDAP connection
-    my $ldap = Net::LDAP->new($ldap_uri);
-    if( not defined $ldap ) {
-        &main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
-        return;
-    } 
+	if (not defined $macaddress) {
+		&main::daemon_log("ERROR: no mac address found for client $address", 1);
+		return;
+	}
+	# Build LDAP connection
+	my $ldap = Net::LDAP->new($ldap_uri);
+	if( not defined $ldap ) {
+		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+		return;
+	} 
 
-    # Bind to a directory with dn and password
-    my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
+	# Bind to a directory with dn and password
+	my $mesg= $ldap->bind($ldap_admin_dn, password => $ldap_admin_password);
 
-    # Perform search
+	# Perform search
 	$mesg = $ldap->search(
 		base   => $ldap_base,
 		scope  => 'sub',
@@ -164,9 +164,9 @@ sub detected_hardware {
 		my $dnsresult= $resolver->search($ipaddress);
 		my $dnsname= (
 			defined($dnsresult) && 
-			defined($dnsresult->{answer} &&
-			defined($dnsresult->{answer}[0] &&
-			defined($dnsresult->{answer}[0]->{ptrdname}
+			defined($dnsresult->{answer}) &&
+			defined($dnsresult->{answer}[0]) &&
+			defined($dnsresult->{answer}[0]->{ptrdname})
 		)?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
 		my $dn = "cn=$cn,ou=incoming,$ldap_base";
@@ -197,7 +197,7 @@ sub detected_hardware {
 			);
 		}
 	}
-	
+
 	if($mesg->count == 1) {
 		my $entry= $mesg->entry(0);
 		$entry->changetype("modify");
