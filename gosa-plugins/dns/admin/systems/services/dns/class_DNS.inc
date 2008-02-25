@@ -637,6 +637,7 @@ class DNS
    */
   static function getAvailableZones($config)
   {
+    $ReverseZones = $ForwardZones = $zones = array();
     $runtime_cache = session::get("runtime_cache");
     if(!isset($runtime_cache['DNS']['getAvailableZones'])){
     
