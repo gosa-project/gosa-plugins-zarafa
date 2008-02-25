@@ -162,7 +162,12 @@ sub detected_hardware {
 		my $resolver=Net::DNS::Resolver->new;
 		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
 		my $dnsresult= $resolver->search($ipaddress);
-		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
+		my $dnsname= (
+			defined($dnsresult) && 
+			defined($dnsresult->{answer} &&
+			defined($dnsresult->{answer}[0] &&
+			defined($dnsresult->{answer}[0]->{ptrdname}
+		)?$dnsresult->{answer}[0]->{ptrdname}:$ipaddress;
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
 		my $dn = "cn=$cn,ou=incoming,$ldap_base";
 		&main::daemon_log("INFO: Creating entry for $dn",5);
