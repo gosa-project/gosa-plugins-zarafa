@@ -1090,29 +1090,6 @@ sub watch_for_new_jobs {
         $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
 		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
-
-#        if ( $func_error ) {
-#print STDERR "========================================\n";
-#print STDERR "func_error: $func_error\n";
-#
-#           my $sql_statement = "UPDATE $job_queue_table_name ".
-#                "SET status='error', targettag='$target' ".
-#                "WHERE id='$jobdb_id'";
-#print STDERR "sql: $sql_statement\n";
-#            my $res = $job_db->update_dbentry($sql_statement);
-#print STDERR "res: ".Dumper($res);            
-#
-#        } else {
-#print STDERR "========================================\n";
-#print STDERR "func_error: $func_error\n";
-#
-#           my $sql_statement = "UPDATE $job_queue_table_name ".
-#                "SET status='done', targettag='$target' ".
-#                "WHERE id='$jobdb_id'";
-#print STDERR "sql: $sql_statement\n";
-#            my $res = $job_db->update_dbentry($sql_statement);
-#print STDERR "res: ".Dumper($res);
-#        }
     }
 
 	$kernel->delay_set('watch_for_new_jobs',3);
@@ -1181,7 +1158,7 @@ $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 
 # connect to known_clients_db
-my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
+my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events', 'login');
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table('known_clients', \@clients_col_names);
 

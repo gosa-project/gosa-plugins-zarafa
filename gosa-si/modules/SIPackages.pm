@@ -654,6 +654,7 @@ sub here_i_am {
                                                 status=>'registered',
                                                 hostkey=>$new_passwd,
                                                 timestamp=>$act_timestamp,
+                                                login=>"nobody",
                                                 } );
 
     if ($res != 0)  {
