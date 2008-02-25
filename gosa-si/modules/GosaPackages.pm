@@ -401,33 +401,6 @@ sub process_job_msg {
 }
 
 
-sub db_res_2_xml {
-    my ($db_res) = @_ ;
-    my $xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target>";
-
-    my $len_db_res= keys %{$db_res};
-    for( my $i= 1; $i<= $len_db_res; $i++ ) {
-        $xml .= "\n<answer$i>";
-        my $hash= $db_res->{$i};
-        while ( my ($column_name, $column_value) = each %{$hash} ) {
-            $xml .= "<$column_name>";
-            my $xml_content;
-            if( $column_name eq "xmlmessage" ) {
-                $xml_content = &encode_base64($column_value);
-            } else {
-                $xml_content = $column_value;
-            }
-            $xml .= $xml_content;
-            $xml .= "</$column_name>"; 
-        }
-        $xml .= "</answer$i>";
-
-    }
-
-    $xml .= "</xml>";
-    return $xml;
-}
-
 
 ## CORE FUNCTIONS ############################################################
 
@@ -445,7 +418,7 @@ sub query_jobdb {
 
     # execute db query   
     my $res_hash = $main::job_db->select_dbentry($sql_statement);
-    my $out_xml = &db_res_2_xml($res_hash);
+    my $out_xml = &db_res2xml($res_hash);
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }

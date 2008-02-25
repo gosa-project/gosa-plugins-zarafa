@@ -10,6 +10,7 @@ my @functions = (
     "transform_msg2hash",
     "get_time",
     "build_msg",
+    "db_res2xml",
     "get_where_statement",
     "get_select_statement",
     "get_update_statement",
@@ -273,6 +274,33 @@ sub build_msg ($$$$) {
 	}
     my $out_msg = &create_xml_string($out_hash);
     return $out_msg;
+}
+
+
+sub db_res2xml {
+    my ($db_res) = @_ ;
+    my $xml = "";
+
+    my $len_db_res= keys %{$db_res};
+    for( my $i= 1; $i<= $len_db_res; $i++ ) {
+        $xml .= "<answer$i>";
+        my $hash= $db_res->{$i};
+        while ( my ($column_name, $column_value) = each %{$hash} ) {
+            $xml .= "<$column_name>";
+            my $xml_content;
+            if( $column_name eq "xmlmessage" ) {
+                $xml_content = &encode_base64($column_value);
+            } else {
+                $xml_content = $column_value;
+            }
+            $xml .= $xml_content;
+            $xml .= "</$column_name>"; 
+        }
+        $xml .= "</answer$i>";
+
+    }
+
+    return $xml;
 }
 
 

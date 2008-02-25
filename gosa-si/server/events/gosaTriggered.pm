@@ -3,6 +3,8 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     "get_events", 
+    "get_login_usr_for_client",
+    "get_client_for_login_usr",
     "gen_smb_hash",
     "trigger_reload_ldap_config",
     "ping",
@@ -10,6 +12,8 @@ my @events = (
     "set_activated_for_installation",
     "new_key_for_client",
     "detect_hardware",
+    "get_login_usr",
+    "get_login_client",
     "trigger_action_localboot",
     "trigger_action_faireboot",
     "trigger_action_reboot",
@@ -27,6 +31,7 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
+use Data::Dumper;
 use Crypt::SmbHash;
 use Net::ARP;
 use Net::Ping;
@@ -43,6 +48,46 @@ END {}
 
 sub get_events {
     return \@events;
+}
+
+
+sub get_login_usr_for_client {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $client = @{$msg_hash->{'client'}}[0];
+
+    $header =~ s/^gosa_//;
+
+    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$client' OR macaddress='$client'";
+    my $res = $main::known_clients_db->select_dbentry($sql_statement);
+
+    my $out_msg = "<xml><header>$header</header><source>$target</source><target>$source</target>";
+    $out_msg .= &db_res2xml($res);
+    $out_msg .= "</xml>";
+
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+}
+
+
+sub get_client_for_login_usr {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $usr = @{$msg_hash->{'usr'}}[0];
+
+    my $sql_statement = "SELECT * FROM known_clients WHERE login LIKE '%$usr%'";
+    my $res = $main::known_clients_db->select_dbentry($sql_statement);
+
+    my $out_msg = "<xml><header>$header</header><source>$target</source><target>$source</target>";
+    $out_msg .= &db_res2xml($res);
+    $out_msg .= "</xml>";
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+
 }
 
 
