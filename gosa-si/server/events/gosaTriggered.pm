@@ -36,7 +36,7 @@ use Crypt::SmbHash;
 use Net::ARP;
 use Net::Ping;
 use Socket;
-
+use utf8;
 
 BEGIN {}
 

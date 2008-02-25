@@ -18,6 +18,7 @@ my @events = (
 
 use strict;
 use warnings;
+use utf8;
 
 
 BEGIN {}
