@@ -561,6 +561,8 @@ sub get_server_addresses {
     if( $error == 0 ) {
         foreach my $hit (@hits) {
             my ($hit_name, $hit_port) = split(/:/, $hit);
+			chomp($hit_name);
+			chomp($hit_port);
 
             my $address_query = $res->send($hit_name);
             if( 1 == length($address_query->answer) ) {
@@ -1147,6 +1149,30 @@ sub server_input {
     return;
 }
 
+sub get_dns_domains() {
+        my $line;
+        my @searches;
+        open(RESOLV, "</etc/resolv.conf");
+        while(<RESOLV>){
+                $line= $_;
+                chomp $line;
+                $line =~ s/^\s+//;
+                $line =~ s/\s+$//;
+                $line =~ s/\s+/ /;
+                if ($line =~ /^domain (.*)$/ ){
+                        push(@searches, $1);
+                } elsif ($line =~ /^search (.*)$/ ){
+                        push(@searches, split(/ /, $1));
+                }
+        }
+        close(RESOLV);
+
+        my %tmp = map { $_ => 1 } @searches;
+        @searches = sort keys %tmp;
+
+        return @searches;
+}
+
 #==== MAIN = main ==============================================================
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
@@ -1244,27 +1270,40 @@ $default_server_key = $server_key;
 my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
 my $server_check = $server_check_cfg->val( "server", "ip");
 if( defined $server_check ) {
-    unshift(@servers, $server_address);
-    my $servers_string = join(", ", @servers);
-    daemon_log("found servers in configuration file: $servers_string", 5);
-} 
-else {
-    if ( !$server_domain) {
-        daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-        kill 2, $$;
-    }
-    my @tmp_servers = &get_server_addresses($server_domain);
-    if( 0 == @tmp_servers ) {
-        daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
-        daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
-        kill 2, $$;
-    } 
+	unshift(@servers, $server_address);
+	my $servers_string = join(", ", @servers);
+	daemon_log("found servers in configuration file: $servers_string", 5);
+} else {
+	my @tmp_servers;
+	if ( !$server_domain) {
+		# Try our DNS Searchlist
+		for my $domain(get_dns_domains()) {
+			chomp($domain);
+			my @tmp_domains= &get_server_addresses($domain);
+			if(@tmp_domains) {
+				for my $tmp_server(@tmp_domains) {
+					push @tmp_servers, $tmp_server;
+				}
+			}
+		}
+		if(@tmp_servers && length(@tmp_servers)==0) {
+			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+			kill 2, $$;
+		}
+	} else {
+		@tmp_servers = &get_server_addresses($server_domain);
+		if( 0 == @tmp_servers ) {
+			daemon_log("ERROR: no gosa-si-server found in DNS for domain '$server_domain'",1);
+			daemon_log("ERROR: please specify a gosa-si-server address or a domain in config file", 1);
+			kill 2, $$;
+		} 
+	}
 
-    foreach my $server (@tmp_servers) { 
-        unshift(@servers, $server); 
-    }
-    my $servers_string = join(", ", @servers);
-    daemon_log("found servers in DNS: $servers_string", 5);
+	foreach my $server (@tmp_servers) { 
+		unshift(@servers, $server); 
+	}
+	my $servers_string = join(", ", @servers);
+	daemon_log("found servers in DNS: $servers_string", 5);
 }
 
 
