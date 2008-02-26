@@ -104,7 +104,7 @@ sub add_dbentry {
     }
     my $primkeys = $arg->{'primkey'};
     my $prim_statement;
-    if( 0 != length(@$primkeys) ) { 
+    if( 0 != @$primkeys ) { 
         my @prim_list;
         foreach my $primkey (@$primkeys) {
             if($primkey eq 'id') {
