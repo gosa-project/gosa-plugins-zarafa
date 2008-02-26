@@ -1,53 +1,66 @@
 <?php
 
-
 /*
+   This code is part of GOsa (http://www.gosa-project.org)
+   Copyright (C) 2008 Fabian Hickert
 
-trigger_action_wake
-ping
-set_activated_for_installation
-new_key_for_client
-detect_hardware
-trigger_action_localboot
-trigger_action_reboot
-trigger_action_halt
-trigger_action_update
-trigger_action_reinstall
-trigger_action_memcheck
-trigger_action_sysinfo
-trigger_action_instant_update
-trigger_action_rescan
-*/
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 
+/*! \brief    This is the event base class 
+  \author   Fabian Hickert <hickert@gonicus.de>
+  \version  1.00
+  \date     26.02.2008
+
+  This is the base class for all new daemon events.
+  It implements most of the required functionality.
+ */
 class DaemonEvent 
 {
   /* Menu Strings */
   protected $s_Menu_Name  = "s_Menu_Name not set";  // Diplayed in the ActionsMenu->CreateNew
   protected $s_Event_Name = "s_Event_Name not set"; // Will be displayed in the Management list.
-  protected $s_Menu_Image = "images/empty.png";     // The deamon command name.
-  protected $s_List_Image = "";     // The deamon command name.
+  protected $s_Menu_Image = "images/empty.png";     // Image displayed in Actions->New
+  protected $s_List_Image = "";                     // Image displayed in event listing
 
-  protected $target_add_list_used = FALSE; // Indicates that the target add list was used.
-  protected $time_select_used     = FALSE; // Indicates that we have used the timestamp select boxes.
-  protected $target_list_used     = FALSE; // Target list was diaplayed?
-  protected $target_divlist       = NULL; // The divlist used by the target add dialog
+  protected $config;          // GOsa configuration object 
+  protected $data;            // The event data, when edited
 
-  protected $config;          // GOsa configuration file 
-  protected $data;            // The event data 
-
-  protected $s_New_Action = "";       // The deamon command name.
-  protected $s_Edit_Action= "";       // The deamon command name.
-  protected $a_targets    = array();  // The list of assigned Targets 
+  protected $a_targets    = array();  // The list of assigned Targets (When newly created)
+  protected $s_New_Action = "";       // The deamon command name when newly created. (e.g. job_trigger_action_halt)
+  protected $s_Edit_Action= "";       // The deamon command name when edited. (e.g. trigger_action_halt)
   protected $timestamp    = 0;        // Event execution time; 
   protected $id           = -1;       // The Table ID
   protected $status       = "unknown";// The current event status
   protected $is_new       = TRUE;     // Is TRUE if this is a new event
-  protected $_target_list = array();  // Object Cache of those objects displayed in the target add dialog
 
-  protected $workstation_list = array();
-  protected $server_list      = array();
+  /* Sub dialog hanlding */
+  protected $target_divlist       = NULL;     // The divlist used by the target add dialog
+  protected $target_add_list_used = FALSE;    // Indicates that the target add list was used.
+  protected $time_select_used     = FALSE;    // Indicates that we have used the timestamp select boxes.
+  protected $target_list_used     = FALSE;    // Target list was diaplayed?
+  protected $_target_list         = array();  // Object Cache of those objects displayed in the target add dialog
+  protected $workstation_list     = array();  // Used as cache in the target list.
+  protected $server_list          = array();  // Used as cache in the target list.
 
+
+  /*! \brief  Class contructor.
+    @param  Array   GOsa configuration object.
+    @param  Array   Event data, only given when edited.
+   */
   public function __construct($config,$data = array())
   {
     $this->data   = $data;
@@ -58,7 +71,7 @@ class DaemonEvent
     /* Load values from given data */
     if(count($data)){
       $this->is_new = FALSE;
-  
+
       $attrs = array("id" => "ID");
       foreach($attrs as $to => $from){
         $this->$to = $data[$from];
@@ -66,6 +79,10 @@ class DaemonEvent
     }
   }
 
+
+  /*! \brief  Create the HTML output for the plugin. 
+    @return String  The generated HTML output.
+   */
   public function execute()
   {
     $this->time_select_used = FALSE;
@@ -74,12 +91,14 @@ class DaemonEvent
     $str = "<h2>"._("This event has no template.")."</h2>";
     $str.= "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:100%;padding:3px;'>
-              <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
-            </div>";
+      <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
+      </div>";
     return($str);
   }
 
- 
+  /*! \brief  Returns the plugin header, displayed in the template.
+    @return String  HTML header part.
+   */
   public function get_header()
   {
     if($this->target_add_list_used){
@@ -90,6 +109,9 @@ class DaemonEvent
   }
 
 
+  /*! \brief  Returns the plugin footer (save cancel), displayed in the template.
+    @return String  HTML footer part.
+   */
   public function get_footer()
   {
     if($this->target_add_list_used){
@@ -97,13 +119,16 @@ class DaemonEvent
     }
     $str = "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:100%;padding:5px;'>
-              <input type='submit' name='save_event_dialog' value='"._("Save")."'>&nbsp;
-              <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
-            </div>";
+      <input type='submit' name='save_event_dialog' value='"._("Save")."'>&nbsp;
+    <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
+      </div>";
     return($str);
   }
- 
 
+
+  /*! \brief  Returns HTML representation of a timestamp using <select> boxes. 
+    @return Returns HTML content.
+   */
   public function get_time_select()
   {
     $this->time_select_used = TRUE;
@@ -164,6 +189,9 @@ class DaemonEvent
   } 
 
 
+  /*! \brief  HTML representation of all currently assigned targets using (divSelectBox).
+    @return String Returns a listbox with all used targets.
+   */
   public function get_target_list()
   {
     $this->target_list_used = TRUE;
@@ -180,10 +208,13 @@ class DaemonEvent
   }
 
 
+  /*! \brief  Returns HTML content, displaying a dialog which allows to add new targets.
+    @return String HTML content. (EventTargetAddList)
+   */
   public function get_target_add_list()
   {
     $this->target_add_list_used = TRUE;
- 
+
     if($this->target_divlist == NULL){ 
       $this->target_divlist = new EventTargetAddList($this->config,$this);
     }
@@ -194,7 +225,9 @@ class DaemonEvent
     return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
   }
 
- 
+
+  /*! \brief  Handles all posted HTML data, including target add,remove...
+   */
   public function save_object()
   {
     if(isset($_POST['open_target_list'])){
@@ -256,20 +289,35 @@ class DaemonEvent
           break; 
         }
       }
-    }
+    } 
   }
- 
+
+
+  /*! \brief  Converts a daemon timestamp into an unix timestamp. \
+    e.g.  20080101125959 -> 1199188799 
+    @param  A daemon timestamp  YYYYddmmHHiiss
+    @return Integer  A unix timestamp.
+   */
   public function _event_to_timestamp($str)
   {
     return(strtotime($str));
   }
 
+
+  /*! \brief  Converts a unix timestamp in to a gosa-si timestamp. \
+    e.g.  1199188799 -> 20080101125959
+    @param  A unix timestamp (e.g. 1199188799)
+    @return Integer  A daemon timestamp (e.g. 20080101125959).
+   */
   public function _timestamp_to_event($stamp)
   {
     return(date("YmdHis",$stamp));
   }
 
 
+  /*! \brief  Returns event information, like menu strings, images ... 
+    @return   Array Event informations.
+   */
   public function get_event_info()
   {
     $data =array();
@@ -279,17 +327,23 @@ class DaemonEvent
     }
     $data['MenuImage']    = "<img src='".$this->s_Menu_Image."' alt='".$this->s_Menu_Name."' border='0' class='center'>";
     $data['ListImage']    = "<img src='".$this->s_List_Image."' title='".$this->s_Event_Name."' 
-                                alt='".$this->s_Event_Name."' border='0' class='center'>";
+      alt='".$this->s_Event_Name."' border='0' class='center'>";
     return($data);
   }
 
 
+  /*! \brief  Check if we have opened the target add dialog. 
+    @return   Boolean TRUE if we have opened the target add dialog else FALSE.
+   */
   protected function is_target_list_open()
   {
     return($this->target_add_list_used);
   }
 
-  
+
+  /*! \brief  Returns a complete list of all available events.
+    @return   Array   Containing $this->get_event_info() for all available events.
+   */
   static function get_event_types()
   {
     global $class_mapping,$config;
@@ -298,7 +352,7 @@ class DaemonEvent
       if(preg_match("/^DaemonEvent_/",$name)){
         $tmp  = new $name($config);
         $evt  = $tmp->get_event_info();
-    
+
         $list['BY_CLASS'][$name]                      = $evt;
         $list['BY_EDIT_ACTION'][$evt['s_Edit_Action']]= $evt;
         $list['BY_NEW_ACTION'] [$evt['s_New_Action']] = $evt;
@@ -309,7 +363,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns TRUE if this event is new. (Not edited)
-      @return Boolean TRUE if new, else FALSE.
+    @return Boolean TRUE if new, else FALSE.
    */
   public function is_new()
   {
@@ -318,7 +372,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns the event tag e.g. 'job_trigger_action_wake' 
-      @param  Returns the event e.g. 'job_trigger_action_wake'
+    @param  Returns the event e.g. 'job_trigger_action_wake'
    */
   public function get_header_tag()
   {
@@ -327,8 +381,8 @@ class DaemonEvent
 
 
   /*! brief  Returns an array containig all attributes \
-             That should be written.
-      @return Array e.g. 'status' => 'bla blub'  
+    That should be written.
+    @return Array e.g. 'status' => 'bla blub'  
    */ 
   public function save()
   {
@@ -337,7 +391,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns the event targets
-      @return Array  All selected targets.
+    @return Array  All selected targets.
    */ 
   public function get_targets()
   {
@@ -346,7 +400,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns the event timestamp in GOsa daemon format. 
-      @return Returns the event timestamp (20081231120000)
+    @return Returns the event timestamp (20081231120000)
    */
   public function get_timestamp()
   {
@@ -355,7 +409,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns the event ID
-      @return Returns the event ID
+    @return Returns the event ID
    */
   public function get_id()
   {
@@ -368,7 +422,7 @@ class DaemonEvent
 
 
   /*! \brief  Returns a set of elements selected in a MultiSelectWindow
-      @return Array[integer]=integer
+    @return Array[integer]=integer
    */
   protected  function list_get_selected_items()
   {
