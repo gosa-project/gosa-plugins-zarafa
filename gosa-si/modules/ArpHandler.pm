@@ -485,82 +485,8 @@ sub search_ldap_entry {
 			base   => $sub_tree,
 			filter => $search_string,
 		) or &main::daemon_log("cannot perform search at ldap: $@", 1);
-		#if(defined $msg) {
-    	#    print $sub_tree."\t".$search_string."\t";
-    	#    print $msg->count."\n";
-    	#    foreach my $entry ($msg->entries) { $entry->dump; };
-    	#}
 	}
 	return $msg;
 }
-#        $ldap = Net::LDAP->new( "localhost" ) or die "$@";
-#        $ldap->bind($bind_phrase,
-#                    password => $password,
-#                    ) ;
-#        
-#        switch($arp_sig) {
-#            case 0 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "ip-changed",
-#                                      )} 
-#            case 1 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "mac-not-whitelisted",
-#                                      )}
-#            case 2 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "mac-in-blacklist",
-#                                      )}
-#            case 3 {&add_ldap_entry($ldap, $ldap_base, 
-#                                   $mac, "new-mac-address", $ip, 
-#                                   $interface, $desc, 
-#                                   )}
-#            case 4 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "unauthorized-arp-request",
-#                                      )}
-#            case 5 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "abusive-number-of-arp-requests",
-#                                      )}
-#            case 6 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "ether-and-arp-mac-differs",
-#                                      )}
-#            case 7 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "flood-detected",
-#                                      )}
-#            case 8 {&add_ldap_entry($ldap, $ldap_base, 
-#                                   $mac, $ip, "new-system",
-#                                   )}
-#            case 9 {&change_ldap_entry($ldap, $ldap_base, 
-#                                      $mac, "mac-changed",
-#                                      )}
-#        }
-#
-#
-        # ldap search
-#        my $base_phrase = "dc=gonicus,dc=de";
-#        my $filter_phrase = "cn=keinesorge";
-#        my $attrs_phrase = "cn macAdress";
-#        my $msg_search = $ldap->search( base   => $base_phrase,
-#                                        filter => $filter_phrase,
-#                                        attrs => $attrs_phrase,
-#                                        );
-#        $msg_search->code && die $msg_search->error;
-#        
-#        my @entries = $msg_search->entries;
-#        my $max = $msg_search->count;
-#        print "anzahl der entries: $max\n";
-#        my $i;
-#        for ( $i = 0 ; $i < $max ; $i++ ) {
-#            my $entry = $msg_search->entry ( $i );
-#            foreach my $attr ( $entry->attributes ) {
-#                if( not $attr eq "cn") {
-#                    next;
-#                }
-#                print join( "\n ", $attr, $entry->get_value( $attr ) ), "\n\n";
-#            }
-#        }
-		#
-		#        # ldap add
-		#       
-		#        
-		#        $ldap->unbind;
-		#        exit;
 
 1;

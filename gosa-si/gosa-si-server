@@ -214,15 +214,6 @@ sub daemon_log {
             }
         close( LOG_HANDLE );
     }
-#log into syslog
-#    my ($msg, $level, $facility) = @_;
-#    if(not defined $msg) {return}
-#    if(not defined $level) {$level = "info"}
-#    if(not defined $facility) {$facility = "LOG_DAEMON"}
-#    openlog($0, "pid,cons,", $facility);
-#    syslog($level, $msg);
-#    closelog;
-#    return;
 }
 
 

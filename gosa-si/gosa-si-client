@@ -249,15 +249,6 @@ sub daemon_log {
             }
         close( LOG_HANDLE );
     }
-#log into syslog
-#    my ($msg, $level, $facility) = @_;
-#    if(not defined $msg) {return}
-#    if(not defined $level) {$level = "info"}
-#    if(not defined $facility) {$facility = "LOG_DAEMON"}
-#    openlog($0, "pid,cons,", $facility);
-#    syslog($level, $msg);
-#    closelog;
-#    return;
 }
 
 
@@ -575,89 +566,8 @@ sub get_server_addresses {
         }
     }
 
-#    my $dig_cmd= 'dig +nocomments srv _gosa-si._tcp.'.$domain;
-#
-#    my $output= `$dig_cmd 2>&1`;
-#    open (PIPE, "$dig_cmd 2>&1 |");
-#    while(<PIPE>) {
-#        chomp $_;
-#        # If it's not a comment
-#        if($_ =~ m/^[^;]/) {
-#            my @matches= split /\s+/;
-#
-#            # Push hostname with port
-#            if($matches[3] eq 'SRV') {
-#                push @result, $matches[7].':'.$matches[6];
-#            } elsif ($matches[3] eq 'A') {
-#                my $i=0;
-#
-#                # Substitute the hostname with the ip address of the matching A record
-#                foreach my $host (@result) {
-#                    if ((split /\:/, $host)[0] eq $matches[0]) {
-#                        $result[$i]= $matches[4].':'.(split /\:/, $host)[1];
-#                    }
-#                    $i++;
-#                }
-#            }
-#        }
-#    }
-#    close(PIPE);
     return @result;
 }
-
-
-##===  FUNCTION  ================================================================
-##         NAME:  create_ciphering
-##   PARAMETERS:  passwd - string - used to create ciphering
-##      RETURNS:  cipher - object
-##  DESCRIPTION:  creates a Crypt::Rijndael::MODE_CBC object with passwd as key
-##===============================================================================
-#sub create_ciphering {
-#    my ($passwd) = @_;
-#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-#
-#    #daemon_log("iv: $iv", 7);
-#    #daemon_log("key: $passwd", 7);
-#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-#    $my_cipher->set_iv($iv);
-#    return $my_cipher;
-#}
-#
-#
-#sub create_ciphering {
-#    my ($passwd) = @_;
-#    $passwd = substr(md5_hex("$passwd") x 32, 0, 32);
-#    my $iv = substr(md5_hex('GONICUS GmbH'),0, 16);
-#    my $my_cipher = Crypt::Rijndael->new($passwd , Crypt::Rijndael::MODE_CBC());
-#    $my_cipher->set_iv($iv);
-#    return $my_cipher;
-#}
-#
-#
-#sub encrypt_msg {
-#    my ($msg, $key) = @_;
-#    my $my_cipher = &create_ciphering($key);
-#    {
-#      use bytes;
-#      $msg = "\0"x(16-length($msg)%16).$msg;
-#    }
-#    $msg = $my_cipher->encrypt($msg);
-#    chomp($msg = &encode_base64($msg));
-#    # there are no newlines allowed inside msg
-#    $msg=~ s/\n//g;
-#    return $msg;
-#}
-#
-#
-#sub decrypt_msg {
-#    my ($msg, $key) = @_ ;
-#    $msg = &decode_base64($msg);
-#    my $my_cipher = &create_ciphering($key);
-#    $msg = $my_cipher->decrypt($msg); 
-#    $msg =~ s/\0*//g;
-#    return $msg;
-#}
 
 
 #===  FUNCTION  ================================================================
@@ -1200,11 +1110,6 @@ daemon_log("$prg started!", 1);
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 
 # detect ip and mac address and complete host address
-#if( inet_aton($client_ip) ){ 
-#print STDERR "ip: $client_ip\n";
-#    $client_ip = inet_ntoa(inet_aton($client_ip)); 
-#print STDERR "ip: $client_ip\n";
-#} 
 $client_address = $client_ip.":".$client_port;
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);

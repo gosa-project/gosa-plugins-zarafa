@@ -183,61 +183,6 @@ sub get_module_info {
 }
 
 
-#sub daemon_log {
-#    my ($msg, $level) = @_ ;
-#    &main::daemon_log($msg, $level);
-#    return;
-#}
-#
-
-#sub do_wake {
-#        my $host    = shift;
-#        my $ipaddr  = shift || '255.255.255.255';
-#        my $port    = getservbyname('discard', 'udp');
-#
-#        my ($raddr, $them, $proto);
-#        my ($hwaddr, $hwaddr_re, $pkt);
-#
-#        # get the hardware address (ethernet address)
-#
-#        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
-#        if ($host =~ m/^$hwaddr_re$/) {
-#                $hwaddr = $host;
-#        } else {
-#                # $host is not a hardware address, try to resolve it
-#                my $ip_re = join('\.', ('([0-9]|[1-9][0-9]|1[0-9]{2}|2([0-4][0-9]|5[0-5]))') x 4);
-#                my $ip_addr;
-#                if ($host =~ m/^$ip_re$/) {
-#                        $ip_addr = $host;
-#                } else {
-#                        my $h;
-#                        unless ($h = gethost($host)) {
-#                                return undef;
-#                        }
-#                        $ip_addr = inet_ntoa($h->addr);
-#                }
-#        }
-#
-#        # Generate magic sequence
-#        foreach (split /:/, $hwaddr) {
-#                $pkt .= chr(hex($_));
-#        }
-#        $pkt = chr(0xFF) x 6 . $pkt x 16;
-#
-#        # Allocate socket and send packet
-#
-#        $raddr = gethostbyname($ipaddr)->addr;
-#        $them = pack_sockaddr_in($port, $raddr);
-#        $proto = getprotobyname('udp');
-#
-#        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
-#        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
-#
-#        send(S, $pkt, 0, $them) or die "send : $!";
-#        close S;
-#}
-
-
 #===  FUNCTION  ================================================================
 #         NAME:  read_configfile
 #   PARAMETERS:  cfg_file - string -
@@ -498,52 +443,6 @@ sub process_incoming_msg {
     return \@out_msg_l;
 }
 
-
-#===  FUNCTION  ================================================================
-#         NAME:  got_ping
-#   PARAMETERS:  msg_hash - hash - hash from function create_xml_hash
-#      RETURNS:  nothing
-#  DESCRIPTION:  process this incoming message
-#===============================================================================
-#sub got_ping {
-#    my ($msg_hash) = @_;
-#
-#    my $source = @{$msg_hash->{source}}[0];
-#    my $target = @{$msg_hash->{target}}[0];
-#    my $header = @{$msg_hash->{header}}[0];
-#    my $session_id = @{$msg_hash->{'session_id'}}[0];
-#    my $act_time = &get_time;
-#    my @out_msg_l;
-#    my $out_msg;
-#
-#    # check known_clients_db
-#    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
-#    my $query_res = $main::known_clients_db->select_dbentry( $sql_statement );
-#    if( 1 == keys %{$query_res} ) {
-#         my $sql_statement= "UPDATE known_clients ".
-#            "SET status='$header', timestamp='$act_time' ".
-#            "WHERE hostname='$source'";
-#         my $res = $main::known_clients_db->update_dbentry( $sql_statement );
-#    } 
-#    
-#    # check known_server_db
-#    $sql_statement = "SELECT * FROM known_server WHERE hostname='$source'";
-#    $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-#    if( 1 == keys %{$query_res} ) {
-#         my $sql_statement= "UPDATE known_server ".
-#            "SET status='$header', timestamp='$act_time' ".
-#            "WHERE hostname='$source'";
-#         my $res = $main::known_server_db->update_dbentry( $sql_statement );
-#    } 
-#
-#    # create out_msg
-#    my $out_hash = &create_xml_hash($header, $source, "GOSA");
-#    &add_content2xml_hash($out_hash, "session_id", $session_id);
-#    $out_msg = &create_xml_string($out_hash);
-#    push(@out_msg_l, $out_msg);
-#    
-#    return @out_msg_l;
-#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  new_passwd
@@ -981,54 +880,6 @@ sub hardware_config {
 			}
 		}
 	} 
-	# need to fill it to LDAP
-	#$entry->add(gotoHardwareChecksum => $gotoHardwareChecksum);
-	#if($entry->update($ldap)) {
-	#		&main::daemon_log("gotoHardwareChecksum $gotoHardwareChecksum was added to LDAP", 4);
-	#}
-
-	## Look if there another host with this checksum to use the hardware config
-	#$mesg = $ldap->search(
-	#	base   => $ldap_base,
-	#	scope  => 'sub',
-	#	filter => "(&(objectClass=GOhard)(gotoHardwareChecksum=$gotoHardwareChecksum))"
-	#);
-
-	#if($mesg->count>1) {
-	#	my $clone_entry= $mesg->entry(0);
-	#	$entry->changetype("modify");
-	#	foreach my $attribute (
-	#		"gotoSndModule", "ghNetNic", "gotoXResolution", "ghSoundAdapter", "ghCpuType", "gotoXkbModel", 
-	#		"ghGfxAdapter", "gotoXMousePort", "ghMemSize", "gotoXMouseType", "ghUsbSupport", "gotoXHsync", 
-	#		"gotoXDriver", "gotoXVsync", "gotoXMonitor") {
-	#		my $value= $clone_entry->get_value($attribute);
-	#		if(defined($value)) {
-	#			if(defined($entry->get_value($attribute))) {
-	#				$entry->delete($attribute);
-	#			}
-	#			&main::daemon_log("Adding attribute $attribute with value $value",1);
-	#			$entry->add($attribute => $value);
-	#		}
-	#	}
-	#	foreach my $attribute (
-	#		"gotoModules", "ghScsiDev", "ghIdeDev") {
-	#		my $array= $clone_entry->get_value($attribute, 'as_ref' => 1);
-	#		if(defined($array))	{
-	#			if(defined($entry->get_value($attribute))) {
-	#				$entry->delete($attribute);
-	#			}
-	#			foreach my $array_entry (@{$array}) {
-	#				$entry->add($attribute => $array_entry);
-	#			}
-	#		}
-
-	#	}
-	#	if($entry->update($ldap)) {
-	#		&main::daemon_log("Added Hardware configuration to LDAP", 4);
-	#	}
-
-	#}
-
 
 	# Assemble data package
 	my %data = ();
@@ -1092,57 +943,5 @@ sub server_matches {
 
 	return $result;
 }
-
-
-##===  FUNCTION  ================================================================
-##         NAME:  execute_actions
-##   PARAMETERS:  msg_hash - hash - hash from function create_xml_hash
-##      RETURNS:  nothing
-##  DESCRIPTION:  invokes the script specified in msg_hash which is located under
-##                /etc/gosad/actions
-##===============================================================================
-#sub execute_actions {
-#    my ($msg_hash) = @_ ;
-#    my $configdir= '/etc/gosad/actions/';
-#    my $result;
-#
-#    my $header = @{$msg_hash->{header}}[0];
-#    my $source = @{$msg_hash->{source}}[0];
-#    my $target = @{$msg_hash->{target}}[0];
-# 
-#    if((not defined $source)
-#            && (not defined $target)
-#            && (not defined $header)) {
-#        &main::daemon_log("ERROR: Entries missing in XML msg for gosad actions under /etc/gosad/actions");
-#    } else {
-#        my $parameters="";
-#        my @params = @{$msg_hash->{$header}};
-#        my $params = join(", ", @params);
-#        &main::daemon_log("execute_actions: got parameters: $params", 5);
-#
-#        if (@params) {
-#            foreach my $param (@params) {
-#                my $param_value = (&get_content_from_xml_hash($msg_hash, $param))[0];
-#                &main::daemon_log("execute_actions: parameter -> value: $param -> $param_value", 7);
-#                $parameters.= " ".$param_value;
-#            }
-#        }
-#
-#        my $cmd= $configdir.$header."$parameters";
-#        &main::daemon_log("execute_actions: executing cmd: $cmd", 7);
-#        $result= "";
-#        open(PIPE, "$cmd 2>&1 |");
-#        while(<PIPE>) {
-#            $result.=$_;
-#        }
-#        close(PIPE);
-#    }
-#
-#    # process the event result
-#
-#
-#    return;
-#}
-#
 
 1;
