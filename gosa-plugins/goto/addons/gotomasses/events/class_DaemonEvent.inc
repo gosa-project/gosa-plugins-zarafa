@@ -26,6 +26,7 @@ class DaemonEvent
   protected $s_Menu_Name  = "s_Menu_Name not set";  // Diplayed in the ActionsMenu->CreateNew
   protected $s_Event_Name = "s_Event_Name not set"; // Will be displayed in the Management list.
   protected $s_Menu_Image = "images/empty.png";     // The deamon command name.
+  protected $s_List_Image = "";     // The deamon command name.
 
   protected $target_add_list_used = FALSE; // Indicates that the target add list was used.
   protected $time_select_used     = FALSE; // Indicates that we have used the timestamp select boxes.
@@ -35,7 +36,8 @@ class DaemonEvent
   protected $config;          // GOsa configuration file 
   protected $data;            // The event data 
 
-  protected $s_action     = "";       // The deamon command name.
+  protected $s_New_Action = "";       // The deamon command name.
+  protected $s_Edit_Action= "";       // The deamon command name.
   protected $a_targets    = array();  // The list of assigned Targets 
   protected $timestamp    = 0;        // Event execution time; 
   protected $id           = -1;       // The Table ID
@@ -266,11 +268,13 @@ class DaemonEvent
   public function get_event_info()
   {
     $data =array();
-    $data['NAME']         = get_class($this);
-    $data['MenuName']     = $this->s_Menu_Name;
-    $data['EventName']    = $this->s_Event_Name;
-    $data['Action']       = $this->s_action;
+    $data['CLASS_NAME']         = get_class($this);
+    foreach(array("s_Menu_Name","s_Event_Name","s_New_Action","s_Edit_Action") as $attr){
+      $data[$attr]  = $this->$attr;
+    }
     $data['MenuImage']    = "<img src='".$this->s_Menu_Image."' alt='".$this->s_Menu_Name."' border='0' class='center'>";
+    $data['ListImage']    = "<img src='".$this->s_List_Image."' title='".$this->s_Event_Name."' 
+                                alt='".$this->s_Event_Name."' border='0' class='center'>";
     return($data);
   }
 
@@ -288,7 +292,11 @@ class DaemonEvent
     foreach($class_mapping as $name => $path){
       if(preg_match("/^DaemonEvent_/",$name)){
         $tmp  = new $name($config);
-        $list[$name] = $tmp->get_event_info();
+        $evt  = $tmp->get_event_info();
+    
+        $list['BY_CLASS'][$name]                      = $evt;
+        $list['BY_EDIT_ACTION'][$evt['s_Edit_Action']]= $evt;
+        $list['BY_NEW_ACTION'] [$evt['s_New_Action']] = $evt;
       }
     }
     return($list);
@@ -309,7 +317,7 @@ class DaemonEvent
    */
   public function get_header_tag()
   {
-    return($this->s_action);
+    return($this->s_New_Action);
   }
 
 

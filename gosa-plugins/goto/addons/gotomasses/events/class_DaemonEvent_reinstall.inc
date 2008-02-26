@@ -7,7 +7,7 @@ class DaemonEvent_reinstall extends DaemonEvent
     DaemonEvent::__construct($config,$data);
     $this->s_Menu_Name  = _("Reinstall"); 
     $this->s_Event_Name = _("Reinstall");
-    $this->s_action     = "trigger_action_reinstall"; 
+    $this->s_New_Action     = "trigger_action_reinstall"; 
     $this->s_Menu_Image = "images/fai_small.png";
   }
 

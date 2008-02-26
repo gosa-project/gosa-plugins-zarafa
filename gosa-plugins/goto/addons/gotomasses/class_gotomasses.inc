@@ -122,6 +122,22 @@ class gotomasses extends plugin
     }
 
     /************
+     * EDIT
+     ************/
+
+    if($s_action == "edit"){  
+      $id =  $s_entry;
+      $type = FALSE;
+      if(isset($this->entries[$id])){
+        $event = $this->entries[$s_entry];
+        if(isset($this->events['BY_EDIT_ACTION'][$event['HEADERTAG']])){
+          $type = $this->events['BY_EDIT_ACTION'][$event['HEADERTAG']];
+          $this->dialog = new $type['CLASS_NAME']($this->config,$event);
+        }
+      }
+    }
+
+    /************
      * REMOVE 
      ************/
 
@@ -217,8 +233,8 @@ class gotomasses extends plugin
     $divlist->SetHeadpageMode();
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
-    foreach($this->events as $name =>  $event){
-      $s.= "...|".$event['MenuImage']."&nbsp;".$event['MenuName']."|add_event_".$name."\n";
+    foreach($this->events['BY_CLASS'] as $name =>  $event){
+      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
     }
 
     $divlist->SetDropDownHeaderMenu($s);
@@ -254,8 +270,9 @@ class gotomasses extends plugin
 
     /* set Page header */
     $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>&nbsp;/&nbsp;".
-                                     "<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>"));
+    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>"));
+    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
+                                      "attach"=>"style='width:80px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
                                       "attach"=>"style='width:100px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
@@ -286,21 +303,26 @@ class gotomasses extends plugin
       $display = $task['MACADDRESS'];
       $display2= $task['HEADERTAG'];
 
+      if( isset($this->events['BY_EDIT_ACTION'][$display2]['ListImage']) && 
+         !empty($this->events['BY_EDIT_ACTION'][$display2]['ListImage'])){
+        $display2 = $this->events['BY_EDIT_ACTION'][$display2]['ListImage'];
+      }
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$task['ID']."'>" ,
                       "attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => $display,
                       "attach" => "style='".$color."'");
       $field1a= array("string" => $display2,
-                      "attach" => "style='".$color.";width:80px;'");
+                      "attach" => "style='".$color.";width:80px; text-align:right;'");
       $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:100px;'");
       $field3 = array("string" => $task['STATUS'],"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
     }
 
-
     $smarty = get_smarty();
+    $smarty->assign("events",$this->events);
     $smarty->assign("start",$this->start);
     $smarty->assign("start_real", ($this->start + 1));
     $smarty->assign("ranges", array("10" => "10",
