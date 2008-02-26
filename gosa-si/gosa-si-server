@@ -44,6 +44,8 @@ use File::Basename;
 use GOSA::DBsqlite;
 use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP);
+use Net::LDAP;
+use Net::LDAP::Util qw(:escape);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -56,6 +58,7 @@ my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
 my ($arp_activ, $arp_fifo);
 my ($xml);
+my ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
@@ -136,7 +139,11 @@ my @fai_server_col_names = ('timestamp', 'server', 'release', 'tag');
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
     "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
     "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai.db'],
-	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
+    "ldap-uri" => [\$ldap_uri, ""],
+    "ldap-base" => [\$ldap_base, ""],
+    "ldap-admin-dn" => [\$ldap_admin_dn, ""],
+    "ldap-admin-password" => [\$ldap_admin_password, ""],
+    "gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
@@ -1113,6 +1120,42 @@ sub watch_for_new_jobs {
 }
 
 
+sub get_ldap_handle {
+  my $mesg;
+
+  # Get an ldap handle, if we don't have one
+  if( ! defined $ldap_handle ){
+	  $ldap_handle = Net::LDAP->new( $ldap_uri );
+  }
+  # Still not defined?
+  if( ! defined $ldap_handle ) {
+	  daemon_log( "ch $$: Net::LDAP constructor failed: $!\n" );
+	  return 0;
+  }
+
+  # Bind to ldap server - eventually authenticate
+  if( defined $ldap_admin_dn ) {
+    if( defined $ldap_admin_password ) {
+      $mesg = $ldap_handle->bind( $ldap_admin_dn, password => $ldap_admin_password );
+    } else {
+      $mesg = $ldap_handle->bind( $ldap_admin_dn );#
+    }
+  }
+  else {
+    $mesg = $ldap_handle->bind();
+  }
+
+  if( 0 != $mesg->code ) {
+    undef( $ldap_handle ) if( 81 == $mesg->code );
+    daemon_log( "ch $$: LDAP bind: error ("
+          . $mesg->code . ') - ' . $mesg->error . "\n" );
+    return 0;
+  }
+  #HIER IST EIN FEHLER.....
+  return 1;
+}
+
+
 sub create_fai_server_db {
     
 #####################################################################
@@ -1132,7 +1175,6 @@ sub create_fai_server_db {
             } );
     return;
 }
-
 
 
 #==== MAIN = main ==============================================================
