@@ -115,9 +115,9 @@ class gotomasses extends plugin
   
     if(preg_match("/^add_event_/",$s_action)){
       $type = preg_replace("/^add_event_/","",$s_action);
-      if(isset($this->events[$type])){
-        $e_data = $this->events[$type];
-        $this->dialog = new $e_data['NAME']($this->config);
+      if(isset($this->events['BY_CLASS'][$type])){
+        $e_data = $this->events['BY_CLASS'][$type];
+        $this->dialog = new $e_data['CLASS_NAME']($this->config);
       }
     }
 
@@ -283,7 +283,7 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TargetName'>"._("Target").$sort_img_1."</a>"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
-                                      "attach"=>"style='width:80px;'"));
+                                      "attach"=>"style='width:120px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
                                       "attach"=>"style='width:100px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
@@ -313,19 +313,25 @@ class gotomasses extends plugin
       $color = "";
       $display = $task['MACADDRESS'];
       $display2= $task['HEADERTAG'];
-
-      if( isset($this->events['BY_EDIT_ACTION'][$display2]['ListImage']) && 
-         !empty($this->events['BY_EDIT_ACTION'][$display2]['ListImage'])){
-        $display2 = $this->events['BY_EDIT_ACTION'][$display2]['ListImage'];
-      }
+     
+      /* Check if this event exists as Daemon class 
+       * In this case, display a more accurate entry.
+       */ 
+      if(isset($this->events['BY_EDIT_ACTION'][$task['HEADERTAG']]['s_Menu_Name'])){
+        $event_type = $this->events['BY_EDIT_ACTION'][$task['HEADERTAG']];
+        $display2= $event_type['s_Menu_Name'];
+        if(isset($event_type['ListImage']) && !empty($event_type['ListImage'])){
+          $display2 = $event_type['ListImage']."&nbsp;".$display2;
+        }
+      } 
 
       /* Create each field */
-      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => $display,
                       "attach" => "style='".$color."'");
       $field1a= array("string" => $display2,
-                      "attach" => "style='".$color.";width:80px; text-align:right;'");
+                      "attach" => "style='".$color.";width:120px;'");
       $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:100px;'");
       $field3 = array("string" => $task['STATUS'],"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
@@ -457,7 +463,7 @@ class gotomasses extends plugin
 
     $this->entries = array();
     foreach($entries as $entry){
-      $this->entries[]= $entry;
+      $this->entries[$entry['ID']]= $entry;
     }
   }
 
