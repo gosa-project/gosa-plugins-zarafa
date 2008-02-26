@@ -58,6 +58,11 @@ class DaemonEvent
     /* Load values from given data */
     if(count($data)){
       $this->is_new = FALSE;
+  
+      $attrs = array("id" => "ID");
+      foreach($attrs as $to => $from){
+        $this->$to = $data[$from];
+      }
     }
   }
 
@@ -346,6 +351,19 @@ class DaemonEvent
   public function get_timestamp()
   {
     return($this->_timestamp_to_event($this->timestamp));
+  }
+
+
+  /*! \brief  Returns the event ID
+      @return Returns the event ID
+   */
+  public function get_id()
+  {
+    if($this->is_new){
+      return(-1);
+    }else{
+      return($this->data['ID']);
+    }
   }
 
 

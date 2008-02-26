@@ -189,22 +189,33 @@ class gotomasses extends plugin
     /* Close dialog */
     if(isset($_POST['save_event_dialog'])){
 
-      if($this->dialog->is_new()){
-        $header     = $this->dialog->get_header_tag();
-        $targets    = $this->dialog->get_targets();
-        $data       = $this->dialog->save();
-        $data['timestamp'] = $this->dialog->get_timestamp(); 
-        
+      if(is_object($this->dialog)){
 
-        foreach($targets as $target){
-          $data['mac'] =  $target;
-          if(!$this->o_queue->send($header,$target,$data,TRUE)){
-            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                  $this->o_queue->get_error()),ERROR_DIALOG);
-          }  
+        if($this->dialog->is_new()){
+          $header     = $this->dialog->get_header_tag();
+          $targets    = $this->dialog->get_targets();
+          $data       = $this->dialog->save();
+          $data['timestamp'] = $this->dialog->get_timestamp(); 
+
+
+          foreach($targets as $target){
+            $data['mac'] =  $target;
+            if(!$this->o_queue->send($header,$target,$data,TRUE)){
+              msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                    $this->o_queue->get_error()),ERROR_DIALOG);
+            }  
+          }
+          $this->dialog = FALSE; 
+          $this->current = -1;
+        }else{
+          $id                 = $this->dialog->get_id();
+          $data               = $this->dialog->save();
+          $data['timestamp']  = $this->dialog->get_timestamp();
+          if($this->o_queue->update_entries(array($id),$data)){
+            $this->dialog = FALSE;
+            $this->current = -1;
+          }
         }
-        $this->dialog = FALSE; 
-        $this->current = -1;
       }
     }
 
@@ -286,16 +297,16 @@ class gotomasses extends plugin
 
     foreach($this->entries as $key => $task){
 
-      $prio_actions = "<input class='center' type='image' src='images/prio_increase.png' name='prio_up_".$task['ID']."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_down_".$task['ID']."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/status_stop_all.png' name='stop_".$task['ID']."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/status_start_all.png' name='start_".$task['ID']."'>&nbsp;";
+      $prio_actions = "<input class='center' type='image' src='images/prio_increase.png' name='prio_up_".$key."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_down_".$key."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/status_stop_all.png' name='stop_".$key."'>&nbsp;";
+      $prio_actions.= "<input class='center' type='image' src='images/status_start_all.png' name='start_".$key."'>&nbsp;";
 
-      $action = "<input type='image' src='images/edit.png' name='edit_task_".$task['ID']."' 
+      $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' 
         class='center' alt='"._("Edit")."'>";
 
       if($this->acl_is_removeable()){
-        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$task['ID']."' 
+        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
           class='center' alt='"._("Reomve")."'>";
       }
 
@@ -309,7 +320,7 @@ class gotomasses extends plugin
       }
 
       /* Create each field */
-      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$task['ID']."'>" ,
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => $display,
                       "attach" => "style='".$color."'");
