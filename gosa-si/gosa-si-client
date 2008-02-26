@@ -1149,29 +1149,6 @@ sub server_input {
     return;
 }
 
-sub get_dns_domains() {
-        my $line;
-        my @searches;
-        open(RESOLV, "</etc/resolv.conf");
-        while(<RESOLV>){
-                $line= $_;
-                chomp $line;
-                $line =~ s/^\s+//;
-                $line =~ s/\s+$//;
-                $line =~ s/\s+/ /;
-                if ($line =~ /^domain (.*)$/ ){
-                        push(@searches, $1);
-                } elsif ($line =~ /^search (.*)$/ ){
-                        push(@searches, split(/ /, $1));
-                }
-        }
-        close(RESOLV);
-
-        my %tmp = map { $_ => 1 } @searches;
-        @searches = sort keys %tmp;
-
-        return @searches;
-}
 
 #==== MAIN = main ==============================================================
 #  parse commandline options
