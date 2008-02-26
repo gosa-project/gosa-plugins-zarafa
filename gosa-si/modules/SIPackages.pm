@@ -163,7 +163,7 @@ if($bus_activ eq "on") {
 
 # add myself to known_server_db
 my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
-        primkey=>'hostname',
+        primkey=>['hostname'],
         hostname=>$server_address,
         status=>'myself',
         hostkey=>$SIPackages_key,
@@ -338,7 +338,7 @@ sub register_at_bus {
 
     # add bus to known_server_db
     my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
-                                                    primkey=>'hostname',
+                                                    primkey=>['hostname'],
                                                     hostname=>$bus_address,
                                                     status=>'bus',
                                                     hostkey=>$bus_key,
@@ -547,14 +547,13 @@ sub here_i_am {
     # add entry to known_clients_db
     my $act_timestamp = &get_time;
     my $res = $main::known_clients_db->add_dbentry( {table=>'known_clients', 
-                                                primkey=>'hostname',
+                                                primkey=>['hostname'],
                                                 hostname=>$source,
                                                 events=>$events,
                                                 macaddress=>$mac_address,
                                                 status=>'registered',
                                                 hostkey=>$new_passwd,
                                                 timestamp=>$act_timestamp,
-                                                login=>"nobody",
                                                 } );
 
     if ($res != 0)  {

@@ -100,35 +100,46 @@ sub add_dbentry {
 
     # specify primary key in table
     if (not exists $arg->{primkey}) {
-        return 2;
+        return (2, "a hash key 'primkey' with at least an empty list as value is necessary for add_dbentry");
     }
-    my $primkey = $arg->{primkey};
-
-    # if primkey is id, fetch max id from table and give new job id=  max(id)+1
-    if ($primkey eq 'id') {
-        my $id;
-        my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
-        &create_lock($self,'add_dbentry');
-        my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
-        &remove_lock($self,'add_dbentry');
-        if( defined $max_id) {
-            $id = $max_id + 1; 
-        } else {
-            $id = 1;
+    my $primkeys = $arg->{'primkey'};
+    my $prim_statement;
+    if( 0 != length(@$primkeys) ) { 
+        my @prim_list;
+        foreach my $primkey (@$primkeys) {
+            if($primkey eq 'id') {
+                # if primkey is id, fetch max id from table and give new job id=  max(id)+1
+                my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
+                &create_lock($self,'add_dbentry');
+                my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+                &remove_lock($self,'add_dbentry');
+                my $id;
+                if( defined $max_id) {
+                    $id = $max_id + 1; 
+                } else {
+                    $id = 1;
+                }
+                $arg->{id} = $id;
+            }
+            if( not exists $arg->{$primkey} ) {
+                return (3, "primkey '$primkey' has no value for add_dbentry");
+            }
+           push(@prim_list, "$primkey='".$arg->{$primkey}."'");
         }
-        $arg->{id} = $id;
+        $prim_statement = "WHERE ".join(" AND ", @prim_list);
     }
-
+ 
     # if timestamp is not provided, add timestamp   
     if( not exists $arg->{timestamp} ) {
         $arg->{timestamp} = &get_time;
     }
 
     # check wether primkey is unique in table, otherwise return errorflag
-    my $sql_statement = "SELECT * FROM $table WHERE $primkey='$arg->{$primkey}'";
+    my $sql_statement = "SELECT * FROM $table $prim_statement";
     &create_lock($self,'add_dbentry');
     my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
     &remove_lock($self,'add_dbentry');
+
     if ($res == 0) {
         # primekey is unique
 
@@ -139,7 +150,6 @@ sub add_dbentry {
         my @add_list;
         foreach my $col_name (@{$col_names}) {
             # use function parameter for column values
-    
             if (exists $arg->{$col_name}) {
                 push(@add_list, $arg->{$col_name});
             }
@@ -150,13 +160,11 @@ sub add_dbentry {
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');
         if( $db_res != 1 ) {
-            return 4;
+            return (4, $sql_statement);
         } 
 
     } else  {
         # entry already exists, so update it 
-        my $where_str= " WHERE $primkey='".$arg->{$primkey}."'";
-
         my @update_l;
         while( my ($pram, $val) = each %{$arg} ) {
             if( $pram eq 'table' ) { next; }
@@ -166,7 +174,7 @@ sub add_dbentry {
         my $update_str= join(", ", @update_l);
         $update_str= " SET $update_str";
 
-        my $sql_statement= "UPDATE $table $update_str $where_str";
+        my $sql_statement= "UPDATE $table $update_str $prim_statement";
         my $db_res = &update_dbentry($self, $sql_statement );
 
     }

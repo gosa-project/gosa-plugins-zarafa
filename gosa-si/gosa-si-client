@@ -686,7 +686,7 @@ sub register_at_gosa_si_server {
         # create new passwd and ciphering object for client-server communication
         $server_key = &create_passwd();
 
-        my $events = join( ", ", keys %{$event_hash} );
+        my $events = join( ",", keys %{$event_hash} );
         while(1) {
 
             if( $try_to_register >= @servers )  {
@@ -727,9 +727,10 @@ sub register_at_gosa_si_server {
                 # reset try_to_register
                 $try_to_register = 0;
     
-				# Set fixed client address
+				# Set fixed client address and mac address
 				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
 				$client_address= "$client_ip:$client_port";
+                $client_mac_address = $local_mac;
 
 				# Write the MAC address to file
 				if(stat($opts_file)) {
@@ -758,7 +759,7 @@ sub register_at_gosa_si_server {
              $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
         } 
         else {
-            daemon_log("waiting for msg 'register_at_gosa_si_server'",1);
+            daemon_log("INFO: waiting for msg 'register_at_gosa_si_server'",5);
             $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
             # clear old settings and set it again
             $kernel->delay_set('trigger_new_key', $server_key_lifetime);

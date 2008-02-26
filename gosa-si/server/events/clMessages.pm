@@ -62,31 +62,18 @@ sub LOGIN {
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
 
-    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
-    my $res = $main::known_clients_db->select_dbentry($sql_statement);
-    if( 1 != keys(%$res) ) {
-        &main::daemon_log("DEBUG: clMessages.pm: LOGIN: no or more hits found in known_clients_db for host '$source'");
+    my %add_hash = ( table=>$main::login_users_tn, 
+        primkey=> ['client', 'user'],
+        client=>$source,
+        user=>$login,
+        timestamp=>&get_time,
+    ); 
+    my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
+    if ($res != 0)  {
+        &main::daemon_log("ERROR: cannot add entry to known_clients: $error_str");
         return;
     }
 
-    my $act_login = $res->{'1'}->{'login'};
-    if( $act_login eq "nobody" ) {
-        $act_login = "";
-    }
-
-    $act_login =~ s/$login,?//gi;
-    my @act_login = split(",", $act_login);
-    unshift(@act_login, $login);
-    $act_login = join(",", @act_login);
-
-#print STDERR "source: $source\n";
-#print STDERR "login: $login\n";
-#print STDERR "act_login: $act_login\n";
-#print STDERR "dbres: ".Dumper($res)."\n";
-    $sql_statement = "UPDATE known_clients ".
-                "SET login='$act_login' ".
-                "WHERE hostname='$source'";
-    $res = $main::known_clients_db->update_dbentry($sql_statement);
     return;   
 }
 

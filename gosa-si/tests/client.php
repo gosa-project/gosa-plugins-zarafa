@@ -31,13 +31,13 @@ if($sock->connected()){
 
 # jobdb update  
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><timestamp>23450101000000</timestamp><result>XXXXXXXXXXXXXXx</result></update></xml>";
-#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
+$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
 # jobdb query
 #$data = "<xml><header>gosa_query_jobdb</header><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
 #$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>3</to></limit></xml>";
-#$data= "<xml><header>gosa_query_jobdb</header><where><clause><phrase><headertag>ping</headertag></phrase></clause></where><limit><from>0</from><to>5</to></limit><orderby>timestamp</orderby></xml>";
-#$data= "<xml><header>gosa_query_jobdb</header></xml>";
+#$data= "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target><where><clause><phrase><HEADERTAG>trigger_action_reinstall</HEADERTAG></phrase></clause></where><limit><from>0</from><to>25</to></limit><orderby>timestamp DESC</orderby></xml>";
+#$data= "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target></xml>";
 
 # jobdb count
 #$data = "<xml> <header>gosa_count_jobdb</header></xml>";
@@ -74,10 +74,10 @@ if($sock->connected()){
 #    "trigger_action_wake",
 
 # get_login_usr_for_client
-$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
+#$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
 
 # get_client_for_login_usr
-$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>harald</usr></xml>";
+#$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>harald</usr></xml>";
 
 
 

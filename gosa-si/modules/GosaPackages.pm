@@ -281,7 +281,7 @@ sub process_incoming_msg {
         # keep job queue up-to-date and save result and status
         if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
             my $job_id = $1;
-            my $sql = "UPDATE '".$main::job_queue_table_name."'".
+            my $sql = "UPDATE '".$main::job_queue_tn."'".
                 " SET status='processing'".
                 " WHERE id='$job_id'";
             my $res = $main::job_db->exec_statement($sql);
@@ -375,8 +375,8 @@ sub process_job_msg {
 
     if( $error == 0 ) {
         # add job to job queue
-        my $func_dic = {table=>$main::job_queue_table_name, 
-            primkey=>'id',
+        my $func_dic = {table=>$main::job_queue_tn, 
+            primkey=>['id'],
             timestamp=>$timestamp,
             status=>'waiting', 
             result=>'none',
@@ -432,7 +432,7 @@ sub count_jobdb {
     my $out_xml= "<xml><count>error</count></xml>";
 
     # prepare query sql statement
-    my $table= $main::job_queue_table_name;
+    my $table= $main::job_queue_tn;
     my $sql_statement= "SELECT * FROM $table ";
     
     # execute db query
@@ -450,7 +450,7 @@ sub delete_jobdb_entry {
     my $msg_hash = &transform_msg2hash($msg);
     
     # prepare query sql statement
-    my $table= $main::job_queue_table_name;
+    my $table= $main::job_queue_tn;
     my $where= &get_where_statement($msg, $msg_hash);
     my $sql_statement = "DELETE FROM $table $where";
     
@@ -478,7 +478,7 @@ sub clear_jobdb {
     my $error= 0;
     my $out_xml= "<xml><answer1>1</answer1></xml>";
  
-    my $table= $main::job_queue_table_name;
+    my $table= $main::job_queue_tn;
     
     my $sql_statement = "DELETE FROM $table";
     my $db_res = $main::job_db->del_dbentry($sql_statement);
@@ -503,7 +503,7 @@ sub update_status_jobdb_entry {
     
     # prepare query sql statement
     if( $error == 0) {
-        my $table= $main::job_queue_table_name;
+        my $table= $main::job_queue_tn;
         my $where= &get_where_statement($msg, $msg_hash);
         my $update= &get_update_statement($msg, $msg_hash);
 

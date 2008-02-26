@@ -51,8 +51,8 @@ use lib "/usr/lib/gosa-si/modules";
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
 my ($server, $server_mac_address);
-my ($gosa_server, $job_queue_timeout, $job_queue_table_name, $job_queue_file_name,$job_queue_loop_delay);
-my ($known_modules, $known_clients_file_name, $known_server_file_name);
+my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
+my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
 my ($arp_activ, $arp_fifo);
 my ($xml);
@@ -88,16 +88,27 @@ $bus_activ = "true";
 
 $no_arp = 0;
 
+our $prg= basename($0);
+
 # holds all gosa jobs
+my $job_queue_file_name;
 our $job_db;
-our $job_queue_table_name = 'jobs';
+our $job_queue_tn = 'jobs';
 
 # holds all other gosa-sd as well as the gosa-sd-bus
+my $known_server_file_name;
 our $known_server_db;
+our $known_server_tn = "known_server";
 
 # holds all registrated clients
+my $known_clients_file_name;
 our $known_clients_db;
-our $prg= basename($0);
+our $known_clients_tn = "known_clients";
+
+# holds all logged in user at each client 
+my $login_users_file_name;
+our $login_users_db;
+our $login_users_tn = "login_users";
 
 %cfg_defaults = (
 "general" => {
@@ -112,6 +123,7 @@ our $prg= basename($0);
     "port" => [\$server_port, "20081"],
     "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
+    "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
 	"gosa-unit-tag" => [\$gosa_unit_tag, ""],
     },
 "GOsaPackages" => {
@@ -1052,7 +1064,7 @@ sub watch_for_new_jobs {
 
 	# check gosa job queue for jobs with executable timestamp
     my $timestamp = &get_time();
-    my $sql_statement = "SELECT * FROM ".$job_queue_table_name.
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn.
         " WHERE status='waiting' AND timestamp<'$timestamp'";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
@@ -1069,7 +1081,7 @@ sub watch_for_new_jobs {
 		if (not defined $target) {
 			&daemon_log("ERROR: no host found for mac address: $macaddress", 1);
 			&daemon_log("$hit->{xmlmessage}", 8);
-            my $sql_statement = "UPDATE $job_queue_table_name ".
+            my $sql_statement = "UPDATE $job_queue_tn ".
                 "SET status='error', result='no host found for mac address' ".
                 "WHERE id='$jobdb_id'";
 			my $res = $job_db->update_dbentry($sql_statement);
@@ -1151,7 +1163,7 @@ $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 
 # connect to known_clients_db
-my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events', 'login');
+my @clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table('known_clients', \@clients_col_names);
 
@@ -1159,6 +1171,11 @@ $known_clients_db->create_table('known_clients', \@clients_col_names);
 my @server_col_names = ('hostname', 'status', 'hostkey', 'timestamp');
 $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
 $known_server_db->create_table('known_server', \@server_col_names);
+
+# connect to login_usr_db
+my @login_users_col_names = ('client', 'user', 'timestamp');
+$login_users_db = GOSA::DBsqlite->new($login_users_file_name);
+$login_users_db->create_table("login_users", \@login_users_col_names);
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();

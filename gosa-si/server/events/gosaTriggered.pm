@@ -78,6 +78,7 @@ sub get_client_for_login_usr {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $usr = @{$msg_hash->{'usr'}}[0];
+    $header =~ s/^gosa_//;
 
     my $sql_statement = "SELECT * FROM known_clients WHERE login LIKE '%$usr%'";
     my $res = $main::known_clients_db->select_dbentry($sql_statement);
