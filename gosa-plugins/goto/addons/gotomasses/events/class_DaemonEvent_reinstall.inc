@@ -9,7 +9,7 @@ class DaemonEvent_reinstall extends DaemonEvent
     $this->s_Event_Name = _("Reinstall");
     $this->s_New_Action = "job_trigger_action_reinstall";
     $this->s_Edit_Action= "trigger_action_reinstall";
-    $this->s_Menu_Image = "images/fai_small.png"_small;
+    $this->s_Menu_Image = "images/fai_small.png";
     $this->s_List_Image = "images/fai_small.png";
   }
 
