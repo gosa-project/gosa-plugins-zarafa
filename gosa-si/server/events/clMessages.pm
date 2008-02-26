@@ -28,12 +28,26 @@ END {}
 
 ### Start ######################################################################
 
-#&read_configfile($main::cfg_file, %cfg_defaults);
+my $ldap_uri;
+my $ldap_base;
+my $ldap_admin_dn;
+my $ldap_admin_password;
+
+my %cfg_defaults = (
+"server" => {
+   "ldap-uri" => [\$ldap_uri, ""],
+   "ldap-base" => [\$ldap_base, ""],
+   "ldap-admin-dn" => [\$ldap_admin_dn, ""],
+   "ldap-admin-password" => [\$ldap_admin_password, ""],
+   },
+);
+&read_configfile($main::cfg_file, %cfg_defaults);
 
 
 sub get_events {
     return \@events;
 }
+
 
 sub read_configfile {
     my ($cfg_file, %cfg_defaults) = @_;
@@ -55,6 +69,7 @@ sub read_configfile {
         }
     }
 }
+
 
 sub LOGIN {
     my ($msg, $msg_hash, $session_id) = @_;
@@ -105,8 +120,6 @@ sub LOGOUT {
 }
 
 
-
-# echo "GOTOACTIVATION" > /var/run/gosa-si-client.socket
 sub GOTOACTIVATION {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_result_update_msg($msg_hash);
@@ -115,7 +128,6 @@ sub GOTOACTIVATION {
 }
 
 
-# echo "PROGRESS 15" > /var/run/gosa-si-client.socket
 sub PROGRESS {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_progress_update_msg($msg_hash);
@@ -123,7 +135,7 @@ sub PROGRESS {
     return @out_msg_l; 
 }
 
-# echo "FAIREBOOT" > /tmp/gosa-si-client-fifo
+
 sub FAIREBOOT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
@@ -131,7 +143,7 @@ sub FAIREBOOT {
     return @out_msg_l; 
 }
 
-# echo "TASKSKIP hallo welt" > /tmp/gosa-si-client-fifo
+
 sub TASKSKIP {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
@@ -140,33 +152,52 @@ sub TASKSKIP {
 }
 
 
-# echo "TASKBEGIN hallo welt" > /tmp/gosa-si-client-fifo
+
 sub TASKBEGIN {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
     my @out_msg_l = ($out_msg);  
+
+# -----------------------> Update hier
+#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
+#  <header>CLMSG_TASKBEGIN</header>
+# macaddress auslesen, Client im LDAP lokalisieren
+# FAIstate auf "localboot" setzen, wenn FAIstate "install" oder "softupdate" war
+
     return @out_msg_l; 
 }
 
-# echo "TASKEND hallo welt" > /tmp/gosa-si-client-fifo
+
 sub TASKEND {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
     my @out_msg_l = ($out_msg);  
+
+# -----------------------> Update hier
+#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
+#  <header>CLMSG_TASKBEGIN</header>
+# macaddress auslesen, Client im LDAP lokalisieren
+# FAIstate auf "error" setzen
+
     return @out_msg_l; 
 }
 
 
-# echo "TASKERROR hallo welt" > /tmp/gosa-si-client-fifo
 sub TASKERROR {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
     my @out_msg_l = ($out_msg);  
+
+# -----------------------> Update hier
+#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
+#  <header>CLMSG_TASKBEGIN</header>
+# macaddress auslesen, Client im LDAP lokalisieren
+# FAIstate auf "error" setzen
+
     return @out_msg_l; 
 }
 
 
-# echo "HOOK hallo welt" > /tmp/gosa-si-client-fifo
 sub HOOK {
     my ($msg, $msg_hash, $session_id) = @_;
     my $out_msg = &build_status_result_update_msg($msg_hash);
