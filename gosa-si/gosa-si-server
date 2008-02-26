@@ -1158,7 +1158,7 @@ if ($no_bus > 0) {
 #unlink('/tmp/gosa_si_lock*');
 
 # connect to gosa-si job queue
-my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "progress", "headertag", "targettag", "xmlmessage", "macaddress");
+my @job_col_names = ("id INTEGER", "timestamp", "status", "result", "progress INTEGER", "headertag", "targettag", "xmlmessage", "macaddress");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table('jobs', \@job_col_names);
 
