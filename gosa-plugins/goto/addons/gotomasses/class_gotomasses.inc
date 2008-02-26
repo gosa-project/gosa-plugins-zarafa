@@ -44,17 +44,15 @@ class gotomasses extends plugin
     $s_entry = $s_action = "";
     $arr = array( 
         "/^stop_/"        => "stop",
-        "/^stop_all/"     => "stop_all",
         "/^start_/"       => "start",
-        "/^start_all/"    => "start_all",
 
         "/^prio_up_/"     => "prio_up",
         "/^prio_down_/"   => "prio_down",
 
         "/^edit_task_/"             =>  "edit",
         "/^remove_task_/"           =>  "remove",
-        "/^new_task_/"              =>  "new_task",
-        "/^remove_multiple_task_/"  => "remove_multiple");
+        "/^new_task_/"              =>  "new_task");;
+
 
     foreach($arr as $regex => $action){
       foreach($_POST as $name => $value){
@@ -247,6 +245,15 @@ class gotomasses extends plugin
     foreach($this->events['BY_CLASS'] as $name =>  $event){
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
     }
+    if($this->acl_is_removeable()){
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
+    }
+    if(preg_match("/w/",$this->getacl(""))){
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/status_start_all.png' alt='' border='0' class='center'>&nbsp;"._("Start all")."|start_all\n";
+      $s.= "..|<img src='images/status_stop_all.png' alt='' border='0' class='center'>&nbsp;"._("Stop all")."|stop_all\n";
+    }
 
     $divlist->SetDropDownHeaderMenu($s);
 
@@ -261,19 +268,8 @@ class gotomasses extends plugin
     if($this->sort_by == "Schedule"){ $sort_img_3 = $sort_img; } else { $sort_img_3 = "" ;}
     if($this->sort_by == "Action"){ $sort_img_4 = $sort_img; } else { $sort_img_4 = "" ;}
 
-    /* Display add button if allowed */
-    $header = "<div style='padding:5px'>";
-    if($this->acl_is_removeable()){
-      $header .= "<input type='image' src='images/edittrash.png' name='remove_multiple_task' class='center'>&nbsp;";
-    }
-    if(preg_match("/w/",$this->getacl(""))){
-      $header .= "<input type='image' src='images/status_stop_all.png' name='stop_all' class='center'>&nbsp;";
-      $header .= "<input type='image' src='images/status_start_all.png' name='start_all' class='center'>&nbsp;";
-    }
-    $header .= "</div>";
-
     /* Create divlist */
-    $divlist->SetListHeader($header);
+    $divlist->SetListHeader("<input type='image' src='images/list_reload.png' title='"._("Reload")."'>");
 
     $plug  = $_GET['plug'];
     $chk = "<input type='checkbox' id='select_all' name='select_all'
@@ -505,20 +501,6 @@ class gotomasses extends plugin
   }
 
 
-  /* Return list of object groups */
-  function get_object_groups()
-  {
-    $ret = array();
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("cn"));
-    while($attrs = $ldap->fetch()){
-      $ret[$attrs['cn'][0]] = $attrs['cn'][0];
-    }
-    return($ret); 
-  }
-
-
   function save()
   {
     // We do not save anything here.
@@ -552,13 +534,6 @@ class gotomasses extends plugin
           "plSection"     => array("addon"),
           "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System mass deployment"))),
           "plProvidedAcls" => array("Comment"   => _("Description"), 
-            "Action"    => _("Action"),
-            "Day"       => _("Day"),
-            "Minute"    => _("Minute"),
-            "Hour"      => _("Hour"),
-            "Month"     => _("Month"),
-            "Weekday"   => _("Week day"),
-            "Target"    => _("Target"))
           ));
   }
 }
