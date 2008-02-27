@@ -7,7 +7,7 @@ class DaemonEvent_halt extends DaemonEvent
     $this->s_Menu_Name  = _("Shutdown");
     $this->s_Event_Name = _("Shutdown");
     $this->s_Schedule_Action = "job_trigger_action_halt";
-    $this->s_Trigger_Action= "gosa_trigger_action_halt";
+    $this->s_Trigger_Action= "job_trigger_action_halt";
     $this->s_Queued_Action= "trigger_action_halt";
     $this->s_Menu_Image = "images/status_stopped.png";
     $this->s_List_Image = "images/status_stopped.png";
