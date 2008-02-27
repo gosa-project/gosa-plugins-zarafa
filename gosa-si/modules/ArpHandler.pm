@@ -14,6 +14,7 @@ use Net::LDAP::Entry;
 use Net::DNS;
 use Switch;
 use Data::Dumper;
+use Socket;
 use utf8;
 
 # Don't start if some of the modules are missing
@@ -36,7 +37,6 @@ END{}
 my ($timeout, $mailto, $mailfrom, $user, $group);
 my ($arp_enabled, $arp_interface, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $hosts_database={};
-my $resolver=Net::DNS::Resolver->new;
 my $ldap;
 
 my %cfg_defaults =
@@ -179,8 +179,7 @@ sub got_packet {
 	my $capture_device = sprintf "%s", $kernel->alias_list($sender) =~ /^arp_watch_(.*)$/;
 
 	if(!exists($hosts_database->{$packet->{source_haddr}})) {
-		my $dnsresult= $resolver->search($packet->{source_ipaddr});
-		my $dnsname= (defined($dnsresult))?$dnsresult->{answer}[0]->{ptrdname}:$packet->{source_ipaddr};
+		my $dnsname= gethostbyaddr(inet_aton($packet->{source_ipaddr}), AF_INET) || $packet->{source_ipaddr};
 		my $ldap_result=&get_host_from_ldap($packet->{source_haddr});
 		if(exists($ldap_result->{dn})) {
 			$hosts_database->{$packet->{source_haddr}}=$ldap_result;
