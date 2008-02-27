@@ -103,7 +103,7 @@ sub add_dbentry {
         return (2, "a hash key 'primkey' with at least an empty list as value is necessary for add_dbentry");
     }
     my $primkeys = $arg->{'primkey'};
-    my $prim_statement;
+    my $prim_statement="";
     if( 0 != @$primkeys ) { 
         my @prim_list;
         foreach my $primkey (@$primkeys) {
