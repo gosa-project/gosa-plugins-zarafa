@@ -644,10 +644,11 @@ sub who_has_i_do {
     print "\ngot msg $header:\nserver $source has client with $search_param $search_value\n";
 }
 
+
 #===  FUNCTION  ================================================================
 #         NAME:  new_ldap_config
 #   PARAMETERS:  address - string - ip address and port of a host
-#      RETURNS:  nothing
+#      RETURNS:  gosa-si conform message
 #  DESCRIPTION:  send to address the ldap configuration found for dn gotoLdapServer
 #===============================================================================
 sub new_ldap_config {
@@ -682,7 +683,7 @@ sub new_ldap_config {
 	$mesg = $main::ldap_handle->search( base   => $ldap_base,
 		scope  => 'sub',
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
-		filter => "(&(objectClass=GOhard)(macaddress=$macaddress))");
+		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoMode=active))");
 	#$mesg->code && die $mesg->error;
 	if($mesg->code) {
 		&main::daemon_log($mesg->error, 1);
@@ -691,7 +692,7 @@ sub new_ldap_config {
 
 	# Sanity check
 	if ($mesg->count != 1) {
-		&main::daemon_log("WARNING: client mac address $macaddress not found/not unique in ldap search", 1);
+		&main::daemon_log("WARNING: client with mac address $macaddress not found/unique/active - not sending ldap config", 1);
 		&main::daemon_log("\tbase: $ldap_base", 1);
 		&main::daemon_log("\tscope: sub", 1);
 		&main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
