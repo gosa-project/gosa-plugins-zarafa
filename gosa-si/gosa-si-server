@@ -123,7 +123,7 @@ my @login_users_col_names = ('client', 'user', 'timestamp');
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
 my $fai_server_file_name;
-my @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
+our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
 
 %cfg_defaults = (
 "general" => {
@@ -422,8 +422,7 @@ sub check_key_and_xml_validity {
         }
     };
     if($@) {
-        &main::daemon_log("WARNING: do not understand the message", 5);
-        &main::daemon_log("$@", 8);
+        &main::daemon_log("WARNING: do not understand the message: $@", 5);
         $msg = undef;
         $msg_hash = undef;
     }
@@ -1156,6 +1155,7 @@ sub refresh_ldap_handle {
 
 
 sub create_fai_server_db {
+    my ($table_name) = @_;
     
 #####################################################################
 #
@@ -1163,14 +1163,14 @@ sub create_fai_server_db {
 #
 # ###################################################################
     
-  $fai_server_db->add_dbentry( { 
-      table => $fai_server_tn,
-      primkey => [],
-      server => "dummyserver",
-      release => "kleinkind",
-      tag => "imwachstum",
-      } );
-  return;
+    $fai_server_db->add_dbentry( { 
+            table => $table_name,
+            primkey => [],
+            server => "dummyserver",
+            release => "kleinkind",
+            tag => "imwachstum",
+            } );
+    return;
 }
 
 
@@ -1250,7 +1250,7 @@ $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 # connect to fai_server_db
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
-&create_fai_server_db;
+&create_fai_server_db($fai_server_tn);
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
