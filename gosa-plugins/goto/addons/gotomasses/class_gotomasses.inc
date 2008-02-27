@@ -158,10 +158,15 @@ class gotomasses extends plugin
 
           $tmp = "";
           foreach($ret as $task){
-            $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+            if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']])){
+              $evt = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
+              $tmp.= "\n".$task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
+            }else{
+              $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+            }
           }
           $smarty->assign("multiple", TRUE); 
-          $smarty->assign("info",sprintf(_("Your are about to delete the following tasks: %s"),"<pre>".$tmp."</pre>"));
+          $smarty->assign("info",sprintf(_("You are about to remove the following actions from the GOsa support Daemon: %s"),"<pre>".$tmp."</pre>"));
           $this->current = $s_entry;
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
@@ -236,7 +241,7 @@ class gotomasses extends plugin
 
     $divlist = new MultiSelectWindow($this->config,"gotoMasses",array("gotomasses"));
     $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa deamon tasks."));
-    $divlist->SetSummary(_("List of queued deamon jobs."));
+    $divlist->SetSummary(_("List of queued deamon jobs"));
     $divlist->EnableCloseButton(FALSE);
     $divlist->EnableSaveButton(FALSE);
     $divlist->SetHeadpageMode();
