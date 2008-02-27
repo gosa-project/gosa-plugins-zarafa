@@ -64,7 +64,7 @@ class DaemonEvent_reinstall extends DaemonEvent
   {
     $ret = DaemonEvent::save();
     foreach(array("progress","status") as $attr){
-      $ret[$attr] = $this->$attr;
+#      $ret[$attr] = $this->$attr;
     }
     return($ret);
   } 
