@@ -679,93 +679,91 @@ sub open_socket {
 #  DESCRIPTION:  
 #===============================================================================
 sub register_at_gosa_si_server {
-    my ($kernel) = $_[KERNEL];
-    my $try_to_register = 0;
+  my ($kernel) = $_[KERNEL];
+  my $try_to_register = 0;
 
-    if( not $REGISTERED ) {
-        # create new passwd and ciphering object for client-server communication
-        $server_key = &create_passwd();
+  if( not $REGISTERED ) {
+    # create new passwd and ciphering object for client-server communication
+    $server_key = &create_passwd();
 
-        my $events = join( ",", keys %{$event_hash} );
-        while(1) {
+    my $events = join( ",", keys %{$event_hash} );
+    while(1) {
 
-            if( $try_to_register >= @servers )  {
-                last;
-            }
+      if( $try_to_register >= @servers )  {
+        last;
+      }
 
-            # fetch first gosa-si-server from @servers
-            my $server = shift(@servers);
+      # fetch first gosa-si-server from @servers
+      my $server = shift(@servers);
 
-            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
-            # a registration never occured
-            push( @servers, $server );
-		
-			# Check if our ip is resolvable - if not: don't try to register
-			my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-			my $resolver= Net::DNS::Resolver->new;
-			my $dnsresult= $resolver->search($ip);
-			my $dnsname="";
-			if(!defined($dnsresult)) {
-				&write_to_file("goto-error-dns:$ip", $fai_logpath);
-				exit(1);
-			} else {
-				$dnsname=$dnsresult->{answer}[0]->{ptrdname};
-			}
+      # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
+      # a registration never occured
+      push( @servers, $server );
 
-            # create registration msg
-            my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-            my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-            my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
-            &add_content2xml_hash($register_hash, "new_passwd", $server_key);
-			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
-            &add_content2xml_hash($register_hash, "events", $events);
-            &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+      # Check if our ip is resolvable - if not: don't try to register
+      my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+      my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
+      if(!defined($dnsname)) {
+        &write_to_file("goto-error-dns:$ip", $fai_logpath);
+        exit(1);
+      }
 
-            # send xml hash to server with general server passwd
-            my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
-			if($res == 0) {
-                # reset try_to_register
-                $try_to_register = 0;
-    
-				# Set fixed client address and mac address
-				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-				$client_address= "$client_ip:$client_port";
-                $client_mac_address = $local_mac;
+      # create registration msg
+      my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+      my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+      my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
+      &add_content2xml_hash($register_hash, "new_passwd", $server_key);
+      &add_content2xml_hash($register_hash, "mac_address", $local_mac);
+      &add_content2xml_hash($register_hash, "events", $events);
+      &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
-				# Write the MAC address to file
-				if(stat($opts_file)) {
-					unlink($opts_file);
-				}
-				my $opts_file_FH;
-				my $hostname= $dnsname;
-				$hostname =~ s/\..*$//;
-				open($opts_file_FH, ">$opts_file");
-				print $opts_file_FH "MAC=\"$local_mac\"\n";
-				print $opts_file_FH "IPADDRESS=\"$client_ip\"\n";
-				print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
-				print $opts_file_FH "FQDN=\"$dnsname\"\n";
-				close($opts_file_FH);
-				last;
-			} else {
-                $try_to_register++;
-                # wait 1 sec until trying to register again
-                sleep(1);
-				next;
-			}
+      # send xml hash to server with general server passwd
+      my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
+      if($res == 0) {
+        # reset try_to_register
+        $try_to_register = 0;
+
+        # Set fixed client address and mac address
+        $client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+        $client_address= "$client_ip:$client_port";
+        $client_mac_address = $local_mac;
+
+        # Write the MAC address to file
+        if(stat($opts_file)) {
+          unlink($opts_file);
         }
 
-        if( $try_to_register >= @servers )  {
-            &write_to_file("gosa-si-no-server-available", $fai_logpath);
-             $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
-        } 
-        else {
-            daemon_log("INFO: waiting for msg 'register_at_gosa_si_server'",5);
-            $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
-            # clear old settings and set it again
-            $kernel->delay_set('trigger_new_key', $server_key_lifetime);
-        }
+        my $opts_file_FH;
+        my $hostname= $dnsname;
+        $hostname =~ s/\..*$//;
+        open($opts_file_FH, ">$opts_file");
+        print $opts_file_FH "MAC=\"$local_mac\"\n";
+        print $opts_file_FH "IPADDRESS=\"$client_ip\"\n";
+        print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
+        print $opts_file_FH "FQDN=\"$dnsname\"\n";
+        close($opts_file_FH);
+        last;
+      } else {
+        $try_to_register++;
+
+        # wait 1 sec until trying to register again
+        sleep(1);
+        next;
+      }
     }
-    return;
+
+    if( $try_to_register >= @servers )  {
+      &write_to_file("gosa-si-no-server-available", $fai_logpath);
+      $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+    } 
+    else {
+      daemon_log("INFO: waiting for msg 'register_at_gosa_si_server'",5);
+      $kernel->delay_set('register_at_gosa_si_server', $delay_set_time);
+      # clear old settings and set it again
+      $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+    }
+  }
+  return;
 }
     
 
