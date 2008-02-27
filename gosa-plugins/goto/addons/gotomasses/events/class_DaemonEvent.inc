@@ -399,7 +399,7 @@ class DaemonEvent
    */ 
   public function save()
   {
-    return(array());
+    return(array("timestamp" => $this->_timestamp_to_event($this->timestamp)));
   }
 
 

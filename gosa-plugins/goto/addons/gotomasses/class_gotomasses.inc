@@ -197,22 +197,21 @@ class gotomasses extends plugin
           $header     = $this->dialog->get_schedule_action();
           $targets    = $this->dialog->get_targets();
           $data       = $this->dialog->save();
-          $data['timestamp'] = $this->dialog->get_timestamp(); 
-
 
           foreach($targets as $target){
-            $data['mac'] =  $target;
-            if(!$this->o_queue->send_data($header,$target,$data,TRUE)){
+            $data['macaddress'] =  $target;
+            $this->o_queue->send_data($header,$target,$data,TRUE);
+            if($this->o_queue->is_error()){
               msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                     $this->o_queue->get_error()),ERROR_DIALOG);
-            }  
+            }else{
+              $this->dialog = FALSE; 
+              $this->current = -1;
+            } 
           }
-          $this->dialog = FALSE; 
-          $this->current = -1;
         }else{
           $id                 = $this->dialog->get_id();
           $data               = $this->dialog->save();
-          $data['timestamp']  = $this->dialog->get_timestamp();
           if($this->o_queue->update_entries(array($id),$data)){
             $this->dialog = FALSE;
             $this->current = -1;
