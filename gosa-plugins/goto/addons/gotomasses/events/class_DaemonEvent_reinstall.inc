@@ -40,8 +40,8 @@ class DaemonEvent_reinstall extends DaemonEvent
     }
 
     $smarty = get_smarty();
-    $smarty->assign("status"        , $this->status);
-    $smarty->assign("progress"        , $this->progress);
+    $smarty->assign("status"      , $this->status);
+    $smarty->assign("progress"    , $this->progress);
     $smarty->assign("data"        , $this->data);
     $smarty->assign("target_list" , $this->get_target_list());
     $smarty->assign("is_new"      , $this->is_new);
@@ -51,22 +51,9 @@ class DaemonEvent_reinstall extends DaemonEvent
     return($display);
   }
 
-  public function save_object()
-  {
-    $ret = DaemonEvent::save_object();
-    foreach(array("progress","status") as $attr){
-      if(isset($_POST[$attr])){
-        $this->$attr = get_post($attr);
-      }
-    }
-  } 
-
   public function save()
   {
     $ret = DaemonEvent::save();
-    foreach(array("progress","status") as $attr){
-      $ret[$attr] = $this->$attr;
-    }
     return($ret);
   } 
 } 
