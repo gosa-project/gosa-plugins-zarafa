@@ -749,8 +749,11 @@ sub new_ldap_config {
 	foreach $server (@servers){
                 # Conversation for backward compatibility
                 if (not $server =~ /^\d+:[^:]+:ldap[^:]*:\/\// ) {
-                    if ($server =~ /^([^:]+):(.*)$/ ) {
+                    if ($server =~ /^([^:]+):([^:]+)$/ ) {
                       $server= "1:dummy:ldap://$1/$2";
+                    }
+                    if ($server =~ /^(\d+):([^:]+):(.*)$/ ) {
+                      $server= "$1:dummy:ldap://$2/$3";
                     }
                 }
 
