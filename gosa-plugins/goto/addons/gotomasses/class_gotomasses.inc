@@ -327,6 +327,17 @@ class gotomasses extends plugin
         }
       } 
 
+      $status = $task['STATUS'];
+
+      /* Special handling for all entries that have 
+          STATUS == "processing" && PROGRESS == NUMERIC
+       */
+      if($status == "processing" && isset($task['PROGRESS'])){
+        $percent = $task['PROGRESS'];
+        $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
+      }
+
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;".$color."'");
@@ -335,7 +346,7 @@ class gotomasses extends plugin
       $field1a= array("string" => $display2,
                       "attach" => "style='".$color.";width:120px;'");
       $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:100px;'");
-      $field3 = array("string" => $task['STATUS'],"attach" => "style='".$color.";width:80px;'");
+      $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
     }
