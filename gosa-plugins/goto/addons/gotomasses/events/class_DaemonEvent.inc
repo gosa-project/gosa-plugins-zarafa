@@ -77,6 +77,9 @@ class DaemonEvent
       foreach($attrs as $to => $from){
         $this->$to = $data[$from];
       }
+      if(isset($data['TIMESTAMP'])){
+        $this->timestamp = $this->_event_to_timestamp($data['TIMESTAMP']);
+      }
     }
   }
 

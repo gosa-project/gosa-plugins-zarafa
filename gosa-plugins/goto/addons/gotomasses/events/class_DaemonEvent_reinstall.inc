@@ -2,8 +2,8 @@
 
 class DaemonEvent_reinstall extends DaemonEvent
 {
-  var $progress = -1;  
-  var $status   = "none";  
+  var $progress = 0;  
+  var $status   = "";  
 
   public function __construct($config,$data = array())
   {
@@ -21,7 +21,7 @@ class DaemonEvent_reinstall extends DaemonEvent
         $this->progress = $data['PROGRESS'];
       }
       if(isset($data['STATUS'])){
-        $this->progress = $data['STATUS'];
+        $this->status = $data['STATUS'];
       }
     }
   }
@@ -65,7 +65,7 @@ class DaemonEvent_reinstall extends DaemonEvent
   {
     $ret = DaemonEvent::save();
     foreach(array("progress","status") as $attr){
-#      $ret[$attr] = $this->$attr;
+      $ret[$attr] = $this->$attr;
     }
     return($ret);
   } 
