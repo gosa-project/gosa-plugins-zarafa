@@ -3,7 +3,7 @@
 /*
    This code is part of GOsa (http://www.gosa-project.org)
    Copyright (C) 2008 Fabian Hickert
-
+G
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
@@ -36,7 +36,7 @@ class DaemonEvent
   protected $s_Menu_Image = "images/empty.png";     // Image displayed in Actions->New
   protected $s_List_Image = "";                     // Image displayed in event listing
 
-  protected $config;          // GOsa configuration object 
+  public $config;          // GOsa configuration object 
   protected $data;            // The event data, when edited
 
   protected $a_targets    = array();  // The list of assigned Targets (When newly created)
@@ -436,6 +436,15 @@ class DaemonEvent
     return($ids);
   }
 
+  /*! \brief Add a target MAC address 
+      @param Array A List of all target that should be added.
+   */
+  public function add_targets($targets) 
+  {
+    foreach($targets as $target){
+      $this->a_targets[] = $target;
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

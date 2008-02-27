@@ -36,12 +36,8 @@
 					<td>{$data.ID}</td>
 				</tr>
 				<tr>
-					<td>{t}Progress{/t}</td>
-					<td><input type="text" name="progress" value="{$progress}"></td>
-				</tr>
-				<tr>
 					<td>{t}Status{/t}</td>
-					<td><input type="text" name="status" value="{$status}"></td>
+					<td>{$data.STATUS}</td>
 				</tr>
 				<tr>
 					<td>{t}Result{/t}</td>

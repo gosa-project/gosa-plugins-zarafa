@@ -533,7 +533,7 @@ class gotomasses extends plugin
           "plPriority"    => 0,
           "plSection"     => array("addon"),
           "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System mass deployment"))),
-          "plProvidedAcls" => array("Comment"   => _("Description"), 
+          "plProvidedAcls" => array("Comment"   => _("Description")) 
           ));
   }
 }

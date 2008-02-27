@@ -2,6 +2,9 @@
 
 class DaemonEvent_reinstall extends DaemonEvent
 {
+  var $progress = -1;  
+  var $status   = "none";  
+
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
@@ -11,6 +14,15 @@ class DaemonEvent_reinstall extends DaemonEvent
     $this->s_Edit_Action= "trigger_action_reinstall";
     $this->s_Menu_Image = "images/fai_small.png";
     $this->s_List_Image = "images/fai_small.png";
+  
+    if(!$this->is_new()){
+      if(isset($data['PROGRESS'])){
+        $this->progress = $data['PROGRESS'];
+      }
+      if(isset($data['STATUS'])){
+        $this->progress = $data['STATUS'];
+      }
+    }
   }
 
   public function execute()
@@ -27,6 +39,8 @@ class DaemonEvent_reinstall extends DaemonEvent
     }
 
     $smarty = get_smarty();
+    $smarty->assign("status"        , $this->status);
+    $smarty->assign("progress"        , $this->progress);
     $smarty->assign("data"        , $this->data);
     $smarty->assign("target_list" , $this->get_target_list());
     $smarty->assign("is_new"      , $this->is_new);
@@ -38,8 +52,22 @@ class DaemonEvent_reinstall extends DaemonEvent
 
   public function save_object()
   {
-    DaemonEvent::save_object();
-  }
+    $ret = DaemonEvent::save_object();
+    foreach(array("progress","status") as $attr){
+      if(isset($_POST[$attr])){
+        $this->$attr = get_post($attr);
+      }
+    }
+  } 
+
+  public function save()
+  {
+    $ret = DaemonEvent::save();
+    foreach(array("progress","status") as $attr){
+      $ret[$attr] = $this->$attr;
+    }
+    return($ret);
+  } 
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
