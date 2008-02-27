@@ -128,8 +128,8 @@ class gotomasses extends plugin
       $type = FALSE;
       if(isset($this->entries[$id])){
         $event = $this->entries[$s_entry];
-        if(isset($this->events['BY_EDIT_ACTION'][$event['HEADERTAG']])){
-          $type = $this->events['BY_EDIT_ACTION'][$event['HEADERTAG']];
+        if(isset($this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']])){
+          $type = $this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']];
           $this->dialog = new $type['CLASS_NAME']($this->config,$event);
         }
       }
@@ -313,8 +313,8 @@ class gotomasses extends plugin
       /* Check if this event exists as Daemon class 
        * In this case, display a more accurate entry.
        */ 
-      if(isset($this->events['BY_EDIT_ACTION'][$task['HEADERTAG']]['s_Menu_Name'])){
-        $event_type = $this->events['BY_EDIT_ACTION'][$task['HEADERTAG']];
+      if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']]['s_Menu_Name'])){
+        $event_type = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
         $display2= $event_type['s_Menu_Name'];
         if(isset($event_type['ListImage']) && !empty($event_type['ListImage'])){
           $display2 = $event_type['ListImage']."&nbsp;".$display2;

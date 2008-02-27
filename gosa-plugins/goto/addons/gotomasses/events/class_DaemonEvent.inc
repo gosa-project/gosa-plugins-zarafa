@@ -42,6 +42,7 @@ class DaemonEvent
   protected $a_targets    = array();  // The list of assigned Targets (When newly created)
   protected $s_Schedule_Action = "";       // The deamon command name when newly created. (e.g. job_trigger_action_halt)
   protected $s_Trigger_Action= "";       // The deamon command name when edited. (e.g. trigger_action_halt)
+  protected $s_Queued_Action= "";       // The deamon command name when edited. (e.g. trigger_action_halt)
   protected $timestamp    = 0;        // Event execution time; 
   protected $id           = -1;       // The Table ID
   protected $status       = "unknown";// The current event status
@@ -322,7 +323,7 @@ class DaemonEvent
   {
     $data =array();
     $data['CLASS_NAME']         = get_class($this);
-    foreach(array("s_Menu_Name","s_Event_Name","s_Schedule_Action","s_Trigger_Action") as $attr){
+    foreach(array("s_Menu_Name","s_Event_Name","s_Queued_Action","s_Schedule_Action","s_Trigger_Action") as $attr){
       $data[$attr]  = $this->$attr;
     }
     $data['MenuImage']    = "<img src='".$this->s_Menu_Image."' alt='".$this->s_Menu_Name."' border='0' class='center'>";
@@ -354,8 +355,9 @@ class DaemonEvent
         $evt  = $tmp->get_event_info();
 
         $list['BY_CLASS'][$name]                      = $evt;
-        $list['BY_EDIT_ACTION'][$evt['s_Trigger_Action']]= $evt;
-        $list['BY_NEW_ACTION'] [$evt['s_Schedule_Action']] = $evt;
+        $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
+        $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
+        $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
       }
     }
     return($list);

@@ -10,6 +10,7 @@ class DaemonEvent_update extends DaemonEvent
     $this->s_Event_Name = _("software update");
     $this->s_Schedule_Action = "job_trigger_action_update";
     $this->s_Trigger_Action= "gosa_trigger_action_update";
+    $this->s_Queued_Action= "trigger_action_update";
     $this->s_Menu_Image = "images/time.png";
     $this->s_List_Image = "images/time.png";
   }
