@@ -303,7 +303,7 @@ sub process_incoming_msg {
 sub process_gosa_msg {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $out_msg;
-    my @out_msg_l;
+    my @out_msg_l = ();
     
     my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/gosa_//;
@@ -332,9 +332,9 @@ sub process_gosa_msg {
 
     # if delivery not possible raise error and return 
     if( not @out_msg_l ) {
-        &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for $header", 1);
+        &main::daemon_log("WARNING: GosaPackages got not answer from event handler '$header'", 3);
     } elsif( 0 == @out_msg_l) {
-        &main::daemon_log("ERROR: GosaPackages got not answer from event_handler $header", 1);
+        &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
     } 
 
     return @out_msg_l;

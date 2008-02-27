@@ -282,5 +282,18 @@ sub count_dbentries {
 
 
 
+sub move_table {
+    my ($self, $from, $to) = @_;
+
+    my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
+    my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
+    &create_lock($self,'move_table');
+    my $db_res = $self->{dbh}->do($sql_statement_drop);
+    $db_res = $self->{dbh}->do($sql_statement_alter);
+    &remove_lock($self,'move_table');
+
+    return;
+} 
+
 
 1;

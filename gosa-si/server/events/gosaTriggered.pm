@@ -25,6 +25,7 @@ my @events = (
     "trigger_action_instant_update",
     "trigger_action_rescan",
     "trigger_action_wake",
+    "recreate_fai_server_db",
     );
 @EXPORT = @events;
 
@@ -48,6 +49,17 @@ END {}
 
 sub get_events {
     return \@events;
+}
+
+
+sub recreate_fai_server_db {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+ 
+    $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
+    &main::create_fai_server_db("new_fai_server");
+    $main::fai_server_db->move_table("new_fai_server", $main::fai_server_tn);
+
+    return;
 }
 
 
@@ -113,6 +125,7 @@ sub gen_smb_hash {
 
      my %data= ('hash' => join(q[:], ntlmgen $password));
      my $out_msg = &build_msg("gen_smb_hash", $target, 'GOSA', \%data );
+     return;
 }
 
 
