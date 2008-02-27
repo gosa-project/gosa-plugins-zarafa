@@ -7,8 +7,8 @@ class DaemonEvent_reboot extends DaemonEvent
     DaemonEvent::__construct($config,$data);
     $this->s_Menu_Name  = _("Reboot"); 
     $this->s_Event_Name = _("Reboot a system"); 
-    $this->s_New_Action = "job_trigger_action_reboot";
-    $this->s_Edit_Action= "trigger_action_reboot";
+    $this->s_Schedule_Action = "job_trigger_action_reboot";
+    $this->s_Trigger_Action= "trigger_action_reboot";
     $this->s_Menu_Image = "images/list_reload.png";
     $this->s_List_Image = "images/list_reload.png";
   }

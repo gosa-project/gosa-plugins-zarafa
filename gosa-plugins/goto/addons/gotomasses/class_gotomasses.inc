@@ -190,7 +190,7 @@ class gotomasses extends plugin
       if(is_object($this->dialog)){
 
         if($this->dialog->is_new()){
-          $header     = $this->dialog->get_header_tag();
+          $header     = $this->dialog->get_schedule_action();
           $targets    = $this->dialog->get_targets();
           $data       = $this->dialog->save();
           $data['timestamp'] = $this->dialog->get_timestamp(); 
