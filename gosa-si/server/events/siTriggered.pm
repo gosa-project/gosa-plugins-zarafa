@@ -157,7 +157,6 @@ sub detected_hardware {
 	# We need to create a base entry first (if not done from ArpHandler)
 	if($mesg->count == 0) {
 		&main::daemon_log("INFO: Need to create a new LDAP Entry for client $address", 6);
-		my $resolver=Net::DNS::Resolver->new;
 		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
 		my $dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
