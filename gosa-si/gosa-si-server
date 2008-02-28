@@ -61,7 +61,7 @@ my ($arp_activ, $arp_fifo);
 my ($xml);
 my ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $sources_list;
-
+my $max_clients;
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $SIPackages_key, 
@@ -156,6 +156,7 @@ my $arch = "i386";
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
     "ldap-admin-password" => [\$ldap_admin_password, ""],
     "gosa-unit-tag" => [\$gosa_unit_tag, ""],
+    "max-clients" => [\$max_clients, 10],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
@@ -893,8 +894,8 @@ sub send_msg_to_target {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-    $kernel->yield('create_fai_server_db', $fai_server_tn );
-    $kernel->yield('create_packages_list_db', $sources_list );
+    #$kernel->yield('create_fai_server_db', $fai_server_tn );
+    #$kernel->yield('create_packages_list_db', $sources_list );
 }
 
 
@@ -1168,7 +1169,7 @@ sub refresh_ldap_handle {
 
 
 sub create_fai_server_db {
-    my ($table_name) = @_[ARG0];
+    my ($table_name) = $_[ARG0];
     
 #####################################################################
 #
@@ -1188,7 +1189,7 @@ sub create_fai_server_db {
 
 
 sub create_packages_list_db {
-    my ($sources_file) = @_[ARG0] ;
+    my ($sources_file) = $_[ARG0] ;
     my $line;
 
     open(CONFIG, "<$sources_file") or do {
@@ -1324,7 +1325,19 @@ sub parse_package {
 #  $repo_files{ "${srvdir}${path}/$file" } = \%fileinfo;
 #}
 
+sub next_task {
+    my ($heap) = $_[HEAP];
 
+    if( keys(%{$heap->{task}}) < $max_clients ) {
+        
+    }
+    
+    #$heap->{task}->{$task->ID} = $task;
+}
+
+sub task_result {
+
+}
 
 #==== MAIN = main ==============================================================
 #  parse commandline options
@@ -1421,6 +1434,8 @@ daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 POE::Session->create(
 	inline_states => {
 		_start => \&_start,
+        next_task => \&next_task,
+        task_result => \&task_result,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         create_packages_list_db => \&create_packages_list_db,
         create_fai_server_db => \&create_fai_server_db,
