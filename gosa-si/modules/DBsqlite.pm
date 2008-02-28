@@ -52,7 +52,7 @@ sub create_lock : locked {
     my $lock = $self->{db_lock};
     while( -f $lock ) {
 		#&main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found",8);
-        sleep 1;
+        usleep 100;
     }
 
     open($self->{db_lock_handle},'>',$self->{db_lock});
@@ -267,6 +267,20 @@ sub exec_statement {
     return \@db_answer;
 }
 
+
+sub exec_statementlist {
+    my $self = shift;
+    my $sql_list = shift;
+    my @db_answer;
+
+    &create_lock($self,'exec_statement');
+    foreach my $sql (@$sql_list) {
+        @db_answer = @{$self->{dbh}->selectall_arrayref($sql)};
+    }
+    &remove_lock($self, 'exec_statement');
+
+    return \@db_answer;
+}
 
 sub count_dbentries {
     my ($self, $table)= @_;

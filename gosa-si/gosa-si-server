@@ -41,6 +41,7 @@ use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
 use File::Basename;
+use File::Path;
 use GOSA::DBsqlite;
 use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP);
@@ -59,6 +60,7 @@ my ($pid_file, $procid, $pid, $log_file);
 my ($arp_activ, $arp_fifo);
 my ($xml);
 my ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
+my $sources_list;
 
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
@@ -125,6 +127,14 @@ our $fai_server_tn = "fai_server";
 my $fai_server_file_name;
 our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
 
+# holds all packages available from different repositories
+our $packages_list_db;
+our $packages_list_tn = "packages_list";
+my $packages_list_file_name;
+our @packages_list_col_names = ('distribution', 'package', 'version', 'section', 'description', 'template', 'timestamp');
+my $outdir = "/tmp/packages_list_db";
+my $arch = "i386"; 
+
 %cfg_defaults = (
 "general" => {
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
@@ -134,12 +144,13 @@ our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag');
     "activ" => [\$bus_activ, "true"],
     },
 "server" => {
-#    "ip" => [\$server_ip, "0.0.0.0"],  
     "port" => [\$server_port, "20081"],
     "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
     "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
     "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai.db'],
+    "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
+    "source-list" => [\$sources_list, '/etc/apt/sources.list'],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
@@ -882,6 +893,8 @@ sub send_msg_to_target {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
+    $kernel->yield('create_fai_server_db', $fai_server_tn );
+    $kernel->yield('create_packages_list_db', $sources_list );
 }
 
 
@@ -1155,7 +1168,7 @@ sub refresh_ldap_handle {
 
 
 sub create_fai_server_db {
-    my ($table_name) = @_;
+    my ($table_name) = @_[ARG0];
     
 #####################################################################
 #
@@ -1166,12 +1179,151 @@ sub create_fai_server_db {
     $fai_server_db->add_dbentry( { 
             table => $table_name,
             primkey => [],
-            server => "dummyserver",
-            release => "kleinkind",
-            tag => "imwachstum",
+            server => "dummyserver",        # neuer fai-server 
+            release => "kleinkind",         # neuer release
+            tag => "imwachstum",            # neues tag
             } );
     return;
 }
+
+
+sub create_packages_list_db {
+    my ($sources_file) = @_[ARG0] ;
+    my $line;
+
+    open(CONFIG, "<$sources_file") or do {
+        daemon_log( "ERROR: Failed to open '$sources_file', creating packages.db stopped", 1);
+        return;
+    };
+    
+    # Read lines
+    while ($line = <CONFIG>){
+        # Unify
+        chop($line);
+        $line =~ s/^\s+//;
+        $line =~ s/^\s+/ /;
+
+        # Strip comments
+        $line =~ s/#.*$//g;
+
+        # Skip empty lines
+        if ($line =~ /^\s*$/){
+            next;
+        }
+
+        # Interpret deb line
+        if ($line =~ /^deb [^\s]+\s[^\s]+\s[^\s]+/){
+            my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
+            my $section;
+            foreach $section (split(' ', $sections)){
+                &parse_package_info( $baseurl, $dist, $section );
+            }
+        }
+    }
+
+    close (CONFIG);
+
+
+    return;
+}
+sub parse_package_info {
+  my ($baseurl, $dist, $section)= @_;
+  my ($package);
+
+  my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
+
+  foreach $package ("Packages.gz"){
+    print "getting $baseurl , $dist , $section... \n";
+    get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section" );
+    print "done\n";
+    print "parsing packages... \n"; 
+    parse_package( "$outdir/$dist/$section", $dist, $path );
+    print "done\n";
+    last;
+  }
+}
+sub get_package {
+  my ($url, $dest)= @_;
+
+  my $tpath = dirname($dest);
+  -d "$tpath" || mkpath "$tpath";
+
+  # This is ugly, but I've no time to take a look at "how it works in perl"
+  if( system("wget '$url' -O '$dest' 2>/dev/null") ) {
+    system("gzip -cd '$dest' > '$dest.in'");
+    system("rm -f '$dest'");
+  }
+
+  return 0;
+}
+sub parse_package {
+    my ($path, $dist, $srv_path )= @_;
+    my ($package, $version, $section, $description);
+    my @sql_list;
+
+    open(PACKAGES, "<$path.in") or return;
+
+    # Read lines
+    while (my $line = <PACKAGES>){
+        # Unify
+        chop($line);
+
+        # Use empty lines as a trigger
+        if ($line =~ /^\s*$/){
+            my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', 'xxx', 'none', '0')";
+            push(@sql_list, $sql);
+            $package = "none";
+            $version = "none";
+            $section = "none";
+            $description = "none"; 
+            next;
+        }
+
+        # Trigger for package name
+        if ($line =~ /^Package:\s/){
+            ($package)= ($line =~ /^Package: (.*)$/);
+            next;
+        }
+
+        # Trigger for version
+        if ($line =~ /^Version:\s/){
+            ($version)= ($line =~ /^Version: (.*)$/);
+            next;
+        }
+
+        # Trigger for description
+        if ($line =~ /^Description:\s/){
+            ($description)= ($line =~ /^Description: (.*)$/);
+            next;
+        }
+
+        # Trigger for section
+        if ($line =~ /^Section:\s/){
+            ($section)= ($line =~ /^Section: (.*)$/);
+            next;
+        }
+
+    }
+
+    close( PACKAGES );
+    unlink( "$path.in" );
+    
+    $packages_list_db->exec_statementlist(\@sql_list);
+}
+
+#
+#sub store_fileinfo {
+#  my( $package, $file, $dist, $path, $vers ) = @_;
+#
+#  my %fileinfo = (
+#    'package' => $package,
+#    'dist' => $dist,
+#    'version' => $vers
+#  );
+#
+#  $repo_files{ "${srvdir}${path}/$file" } = \%fileinfo;
+#}
+
 
 
 #==== MAIN = main ==============================================================
@@ -1246,11 +1398,14 @@ $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 
-
 # connect to fai_server_db
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
-&create_fai_server_db($fai_server_tn);
+
+# connect to packages_list_db
+unlink($packages_list_file_name);
+$packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
+$packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
@@ -1267,6 +1422,8 @@ POE::Session->create(
 	inline_states => {
 		_start => \&_start,
 		watch_for_new_jobs => \&watch_for_new_jobs,
+        create_packages_list_db => \&create_packages_list_db,
+        create_fai_server_db => \&create_fai_server_db,
 	}
 );
 

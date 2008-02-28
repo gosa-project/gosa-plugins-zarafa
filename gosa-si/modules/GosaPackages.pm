@@ -308,26 +308,11 @@ sub process_gosa_msg {
     my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/gosa_//;
 
-    # decide wether msg is a core function or a event handler
-    if ( $header eq 'query_jobdb') {
-        @out_msg_l = &query_jobdb
-    } elsif ($header eq 'delete_jobdb_entry') {
-        @out_msg_l = &delete_jobdb_entry
-    } elsif ($header eq 'clear_jobdb') {
-        @out_msg_l = &clear_jobdb
-    } elsif ($header eq 'update_status_jobdb_entry' ) {
-        @out_msg_l = &update_status_jobdb_entry
-    } elsif ($header eq 'count_jobdb' ) {
-        @out_msg_l = &count_jobdb
-    } else {
-        # msg could not be assigned to core function
-        # maybe it is an eventa
-        if( exists $event_hash->{$header} ) {
-            # a event exists with the header as name
-            &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
-            no strict 'refs';
-            @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
-         }
+    if( exists $event_hash->{$header} ) {
+        # a event exists with the header as name
+        &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+        no strict 'refs';
+        @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
 
     # if delivery not possible raise error and return 
@@ -399,142 +384,6 @@ sub process_job_msg {
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }
-
-
-
-## CORE FUNCTIONS ############################################################
-
-sub query_jobdb {
-    my ($msg) = @_;
-    my $msg_hash = &transform_msg2hash($msg);
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-
-    # prepare query sql statement
-    my $select= &get_select_statement($msg, $msg_hash);
-    my $table= $main::job_queue_tn;
-    my $where= &get_where_statement($msg, $msg_hash);
-    my $limit= &get_limit_statement($msg, $msg_hash);
-    my $orderby= &get_orderby_statement($msg, $msg_hash);
-    my $sql_statement= "SELECT $select FROM $table $where $orderby $limit";
-
-    # execute db query   
-    my $res_hash = $main::job_db->select_dbentry($sql_statement);
-    my $out_xml = &db_res2si_msg($res_hash, "query_jobdb", $target, $source);
-
-    my @out_msg_l = ( $out_xml );
-    return @out_msg_l;
-}
-
-
-sub count_jobdb {
-    my ($msg)= @_;
-    my $out_xml= "<xml><count>error</count></xml>";
-
-    # prepare query sql statement
-    my $table= $main::job_queue_tn;
-    my $sql_statement= "SELECT * FROM $table ";
-    
-    # execute db query
-    my $res_hash = $main::job_db->select_dbentry($sql_statement);
-
-    my $count = keys(%{$res_hash});
-    $out_xml= "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><count>$count</count></xml>";
-    my @out_msg_l = ( $out_xml );
-    return @out_msg_l;
-}
-
-
-sub delete_jobdb_entry {
-    my ($msg) = @_ ;
-    my $msg_hash = &transform_msg2hash($msg);
-    
-    # prepare query sql statement
-    my $table= $main::job_queue_tn;
-    my $where= &get_where_statement($msg, $msg_hash);
-    my $sql_statement = "DELETE FROM $table $where";
-    
-    # execute db query
-    my $db_res = $main::job_db->del_dbentry($sql_statement);
-
-    my $res;
-    if( $db_res > 0 ) { 
-        $res = 0 ;
-    } else {
-        $res = 1;
-    }
-
-    # prepare xml answer
-    my $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
-    my @out_msg_l = ( $out_xml );
-    return @out_msg_l;
-
-}
-
-
-sub clear_jobdb {
-    my ($msg) = @_ ;
-    my $msg_hash = &transform_msg2hash($msg);
-    my $error= 0;
-    my $out_xml= "<xml><answer1>1</answer1></xml>";
- 
-    my $table= $main::job_queue_tn;
-    
-    my $sql_statement = "DELETE FROM $table";
-    my $db_res = $main::job_db->del_dbentry($sql_statement);
-    if( not $db_res > 0 ) { $error++; };
-    
-    if( $error == 0 ) {
-        $out_xml = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>0</answer1></xml>";
-    }
-    my @out_msg_l = ( $out_xml );
-    return @out_msg_l;
-}
-
-
-sub update_status_jobdb_entry {
-    my ($msg) = @_ ;
-    my $msg_hash = &transform_msg2hash($msg);
-    my $error= 0;
-    my $out_xml= "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>1</answer1></xml>";
-
-    my @len_hash = keys %{$msg_hash};
-    if( 0 == @len_hash) {  $error++; };
-    
-    # prepare query sql statement
-    if( $error == 0) {
-        my $table= $main::job_queue_tn;
-        my $where= &get_where_statement($msg, $msg_hash);
-        my $update= &get_update_statement($msg, $msg_hash);
-
-        # conditions
-        # no timestamp update if status eq waiting
-        my $res_hash = $main::job_db->select_dbentry("SELECT * FROM $table $where AND status='processing' ");
-        if( (0 != keys(%$res_hash)) && ($update =~ /timestamp/i) ) {
-            $error ++;
-            $out_xml = "<answer1>1</answer1><error_string>there is no timestamp update allowed while status is 'processing'</error_string>";
-        }
-
-        if( $error == 0 ) {
-            my $sql_statement = "UPDATE $table $update $where";
-            # execute db query
-            my $db_res = $main::job_db->update_dbentry($sql_statement);
-
-            # check success of db update
-            if( not $db_res > 0 ) { $error++; };
-
-        }
-    }
-
-    if( $error == 0) {
-        $out_xml = "<answer1>0</answer1>";
-    }
-    
-    my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>GOSA</target>%s</xml>", $server_address, $out_xml);
-    my @out_msg_l = ( $out_msg );
-    return @out_msg_l;
-}
-
 
 1;
 
