@@ -22,7 +22,8 @@ class gosa_logview extends plugin
   var $fields         = array("action","timestamp","user","objecttype","object","result","repeated");
   var $range          = 25;
   var $view_logged    = FALSE;
-
+  var $location         = "";
+  var $location_id      = -1;
   var $timezone_offset  = 0;
 
   var $uid_map = array();
@@ -33,6 +34,7 @@ class gosa_logview extends plugin
     /* Include config object */
     $this->config= &$config;
     $this->ui = get_userinfo();
+    $this->location = $this->config->current['BASE'];
 
     /* Restore last filter settings */
     $logview = session::get('logview');
@@ -148,20 +150,36 @@ class gosa_logview extends plugin
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
-    /* check of log database is available */
+    /* check if log database is available */
     if (! @mysql_select_db($cfg['DB'])){
       msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOsa LOG"), ERROR_DIALOG);
       new log("debug","logview","",array(),@mysql_error());
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
-    
+
+    /****
+     * Get location_id.
+     ****/
+
+    if($this->location_id == -1){
+      $actions = array("!ALL" => _("All"));
+      $query = "SELECT id FROM gosa_locations WHERE location='".mysql_escape_string($this->location)."';";
+      $res = @mysql_query($query);
+      if($res){
+        $attrs = @mysql_fetch_assoc($res);
+        if(isset($attrs['id'])){
+          $this->location_id = $attrs['id'];
+        }
+      } 
+    }
+   
     /****
      * Get all action types 
      ****/
 
     $actions = array("!ALL" => _("All"));
-    $query = "SELECT distinct(action) FROM gosa_log;";
+    $query = "SELECT distinct(action) FROM gosa_log WHERE location_id='".$this->location_id."'; ";
     $res = @mysql_query($query);
     while($attrs = @mysql_fetch_assoc($res)){
       $actions[$attrs['action']] = $attrs['action'];
@@ -236,6 +254,9 @@ class gosa_logview extends plugin
         if($sql_regex != "%%"){
           $query_base .=" AND ( result like '".$sql_regex."' OR user like '".$sql_regex."') ";
         }
+
+        /* Appen location */
+        $query_base .= " AND location_id='".$this->location_id."' ";
 
         /* Get number of entries */
         $query= "SELECT COUNT(`user`) ".$query_base.";";
