@@ -100,12 +100,12 @@ class servdhcp extends goService
       $this->dialog = FALSE;
       $id = $this->take_over_id;
       $smarty->assign("dns_take_over",TRUE);
-      $warning = sprintf(_("You are going to migrate the DHCP setup from server '%s'."),
+      $warning = sprintf(_("You have requested a migration of the DHCP setup from server '%s' to the current one."),
         $this->dhcp_server_list['ENTRIES'][$id]['cn'][0]);
-      $warning.= "&nbsp;"._("The migration will be started when you save this system. To cancel this action, use the cancel button below.");
+      $warning.= "&nbsp;"._("The migration will be started when you save this system.");
 
       if($this->display_warning){
-        print_red($warning);
+        msg_dialog::display(_("Warning"), $warning, WARNING_DIALOG);
         $this->display_warning = FALSE;
       }
       return($smarty->fetch(get_template_path('servdhcp.tpl', TRUE, dirname(__FILE__))));
@@ -218,7 +218,7 @@ class servdhcp extends goService
           }
         }
       } else {
-        print_red(_("You're not allowed to remove DHCP sections!"));
+        msg_dialog::display(_("Permission error"), _("You have no permission to remove DHCP sections!"), ERROR_DIALOG);
       }
       $this->dialog= FALSE;
     }
@@ -671,7 +671,7 @@ class servdhcp extends goService
 
     /* That should not happen... */
     if ($type == ""){
-      print_red(_("DHCP configuration set is unknown. Please contact your system administrator."));
+      msg_dialog::display(_("Error"), _("The DHCP configuration set is unkown. Please contact your system administrator."), ERROR_DIALOG);
     }
     
     return ($type);

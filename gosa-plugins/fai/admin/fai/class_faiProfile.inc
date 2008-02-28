@@ -2,11 +2,6 @@
 
 class faiProfile extends plugin
 {
-  /* CLI vars */
-  var $cli_summary      = "Manage server basic objects";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = TRUE;
 
@@ -267,7 +262,7 @@ class faiProfile extends plugin
       $this->dialog->save_object();
       $msgs= $this->dialog->check();
       if(count($msgs)){
-        print_red($msgs);
+        msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
       }else{
         $ret = $this->dialog->save();
         foreach($ret as $class){
@@ -396,11 +391,11 @@ class faiProfile extends plugin
     $message= plugin::check();
 
     if(count($this->FAIclasses) == 0){
-      $message[]=_("Please assign at least one class to this  profile.");
+      $message[]=_("No class specified for this profile!");
     }
 
     if(empty($this->cn)){
-      $message[]=_("Please enter a valid name.");
+      $message[]=_("'Name' is not valid!");
     }
 
     $ldap = $this->config->get_ldap_link();
@@ -419,7 +414,7 @@ class faiProfile extends plugin
     }
 
     if($ldap->count() || isset($this->FAIAllclasses[$this->cn])){
-      $message[]=_("There is already a FAI object with this class name defined.");
+      $message[]=_("Name is already in use!");
     }
 
     return ($message);

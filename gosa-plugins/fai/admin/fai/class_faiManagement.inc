@@ -25,12 +25,6 @@ class faiManagement extends plugin
 	var $plHeadline			= "FAI";
 	var $plDescription		= "Fully Automatic Installation - management";
 
-	/* CLI vars */
-	var $cli_summary		  = "Handling of FAI entries";
-	var $cli_description	= "This plugin represents a management tool\n
-		which allows us to manage all needed attributes for fully automatic installations (FAI)";
-	var $cli_parameters		= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
 	/* Headpage attributes */
   var $lock_type    = "";    // should be branch/freeze
   var $lock_name    = "";
@@ -215,9 +209,8 @@ class faiManagement extends plugin
 				return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
 			} else {
 
-				/* Obviously the user isn't allowed to delete. Show message and
-				   clean session. */
-				print_red (_("You are not allowed to delete this component!"));
+				/* Obviously the user isn't allowed to delete. Show message and clean session. */
+        msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
 			}
 		}
 
@@ -309,7 +302,7 @@ class faiManagement extends plugin
 
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          print_red (_("You are not allowed to delete this component!"));
+          msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
@@ -380,12 +373,12 @@ class faiManagement extends plugin
 
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          print_red (_("You are not allowed to delete this component!"));
+          msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
       }else{
-        print_red(sprintf(_("Object could not be deleted '%s', object does not exist."),$this->dn));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot delete '%s': object does not exist!"), $this->dn) , ERROR_DIALOG);
       }
       /* Remove lock file after successfull deletion */
       del_lock ($this->dn);
@@ -442,7 +435,7 @@ class faiManagement extends plugin
           $smarty->assign("info", sprintf(_("You're about to delete a fai branch / freeze  '%s'."), $this->DivListFai->selectedBranch));
           return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
         } else {
-          print_red (_("You are not allowed to delete this release!"));
+          msg_dialog::display(_("Permission error"), _("You have no permission to delete this release!"), ERROR_DIALOG);
         }
       }
     }
@@ -507,16 +500,16 @@ class faiManagement extends plugin
       /* Check used characters */
       if(preg_match("/[^0-9a-z \ö\ä\ü\.-_:,]/i",$name)){
         if($type == "branch"){
-          print_red(_("Specified branch name is invalid."));
+          msg_dialog::display(_("Error"), _("Branch name is not valid!"), ERROR_DIALOG);
         }else{
-          print_red(_("Specified freeze name is invalid."));
+          msg_dialog::display(_("Error"), _("Freeze name is not valid!"), ERROR_DIALOG);
         }
         $is_ok = false;
       }
 
       /* Check if this name is already in use */
       if(!$this->CheckNewBranchName($_POST['BranchName'],$this->DivListFai->selectedBranch)){
-        print_red(_("This name is already in use."));
+        msg_dialog::display(_("Error"), _("Name is already in use!"), ERROR_DIALOG);
         $is_ok = false;
       }
 
@@ -545,7 +538,7 @@ class faiManagement extends plugin
     if(isset($_GET['PerformBranch'])){
     
       if(!$this->acl_is_createable()){
-        print_red(_("You are not allowed to create a new branch."));
+        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
       }else{
 
         /* Create it know */
@@ -679,7 +672,7 @@ class faiManagement extends plugin
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
         if(!$this->acl_is_createable()){
-          print_red(_("You are not allowed to create a new branch."));
+        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
         }else{
           $this->dispNewBranch=true;
           $smarty->assign("iframe",false);
@@ -700,7 +693,7 @@ class faiManagement extends plugin
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
         if(!$this->acl_is_createable()){
-          print_red(_("You are not allowed to create a new branch."));
+        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
         }else{
           $this->dispNewFreeze = true;
           $smarty->assign("iframe",false);
@@ -721,13 +714,19 @@ class faiManagement extends plugin
                     "new_variable"      =>  "FAIvariable",
                     "new_template"      =>  "FAItemplate",
                     "new_package"       =>  "FAIpackageList");
+    $types_i18n = array( "new_partition"     =>  _("partition table"),
+                    "new_script"        =>  _("script"),
+                    "new_hook"          =>  _("hook"),
+                    "new_variable"      =>  _("variable"),
+                    "new_template"      =>  _("template"),
+                    "new_package"       =>  _("package list"));
 
     if(isset($types[$s_action])){
       $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/".$type_acl_mapping[$types[$s_action]]);
       if(preg_match("/c/",$acl)){
         $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
       }else{
-        print_red(sprintf(_("You are not allowed to create a new '%s' object."),$types[$s_action]));
+        msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), $types_i18n[$s_action]), ERROR_DIALOG);
       }
     }
 
@@ -743,7 +742,7 @@ class faiManagement extends plugin
 
         $this->is_dialog = false;
       }else{
-        print_red(sprintf(_("You are not allowed to create a new '%s' object."),"FAIprofile"));
+        msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), _("profile")), ERROR_DIALOG);
       }
     }
 
@@ -756,7 +755,7 @@ class faiManagement extends plugin
       $this->dialog->save_object();
       if(count($this->dialog->check())!=0){
         foreach($this->dialog->check() as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }		
       }elseif(isset($this->dialog->objectClass)){
         $this->dn = "new" ;
@@ -799,7 +798,7 @@ class faiManagement extends plugin
       $msgs= $this->dialog->check();
 			if(count($msgs)!=0){
 				foreach($msgs as $msg){
-					print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
 				}
 			}else{
 				$this->dialog->save();

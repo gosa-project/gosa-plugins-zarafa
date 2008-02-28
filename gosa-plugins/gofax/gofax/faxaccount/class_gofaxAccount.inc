@@ -6,12 +6,6 @@ class gofaxAccount extends plugin
   var $plHeadline= "FAX";
   var $plDescription= "This does something";
 
-  /* CLI vars */
-  var $cli_summary= "Manage users fax account";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
-
   /* Department list shown in the divSelectList*/
   var $departments;
 
@@ -244,7 +238,7 @@ class gofaxAccount extends plugin
     /* Add number to blocklist (dialog) */
     if (isset($_POST['add_blocklist_number']) && $_POST['block_number'] != ""){
       if (!tests::is_phone_nr($_POST['block_number'])){
-        print_red (_("You're trying to add an invalid phone number."));
+        msg_dialog::display(_("Error"), _("Phone number is not valid!"), ERROR_DIALOG);
       } else {
         array_push($this->current_blocklist, $_POST['block_number']);
         $this->current_blocklist= array_unique($this->current_blocklist);
@@ -675,11 +669,11 @@ class gofaxAccount extends plugin
 
     /* must: facsimileTelephoneNumber */
     if ($this->facsimileTelephoneNumber == ""){
-      $message[]= _("The required field 'Fax' is not set.");
+      $message[]= _("Fax is empty!");
     }
 
     if (!tests::is_phone_nr($this->facsimileTelephoneNumber)){
-      $message[]= _("Please enter a valid telephone number in the 'Fax' field.");
+      $message[]= _("Fax number is not valid!");
     }
 
     /* IF mail is specified (which is only the case if there's no mail account
@@ -687,15 +681,15 @@ class gofaxAccount extends plugin
     if (@isset($this->parent->by_object['mailAccount']) &&
         $this->goFaxDeliveryMode & 32){
       if ($this->mail == ""){
-        $message[]= _("Mail delivery is checked, but no address has been specified.");
+        $message[]= _("Mail delivery is requested without target address!");
       } elseif (!tests::is_email($this->mail)){
-        $message[]= _("The mail address you've entered is invalid.");
+        $message[]= _("Mail address is invalid!");
       }
     }
 
     // IE Fix, IE lets you choose disabled option, stupid browser ... 
     if((empty($this->goFaxPrinter))&&($this->goFaxDeliveryMode & 64)){
-      $message[]= _("Deliver fax to printer, is only possible if valid printer is given. Please correct your choice.");
+      $message[]= _("Printing is requested without a target printer!");
     }
 
     return ($message);

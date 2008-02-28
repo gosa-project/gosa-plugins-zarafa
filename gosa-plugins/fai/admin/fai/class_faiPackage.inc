@@ -2,11 +2,6 @@
 
 class faiPackage extends plugin
 {
-  /* CLI vars */
-  var $cli_summary      = "Manage server basic objects";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = TRUE;
 
@@ -243,7 +238,7 @@ class faiPackage extends plugin
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msgs){
-            print_red($msgs);
+            msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
           }
         }else{
           $use = $this->dialog->save();
@@ -376,11 +371,11 @@ class faiPackage extends plugin
     $message= plugin::check();
 
     if(count($this->usedPackages)==0){
-      $message[]=_("Please select a least one Package.");
+      $message[]=_("Please select a least one package!");
     }
 
     if((empty($this->FAIdebianRelease))||(empty($this->FAIdebianSection))){
-      $message[]=_("Please choose a valid combination for your repository setup.");
+      $message[]=_("Please choose a valid release/section combination for your repository setup!");
     }
 
     return ($message);
@@ -436,7 +431,7 @@ class faiPackage extends plugin
         $strID= CONFIG_DIR."/fai/".$this->FAIdebianRelease."/".$sec;
 
         if(!is_file($strID)){
-          print_red(sprintf(_("Package file '%s' does not exist."),$strID));
+          msg_dialog::display(_("Error"), sprintf(_("Package file '%s' does not exist!"), $strID), ERROR_DIALOG);
           unset($this->buffer);
           return(array());
         }

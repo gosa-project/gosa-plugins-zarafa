@@ -84,7 +84,7 @@ class faiSummaryTab extends plugin{
       }elseif(isset($this->parent->by_object['servgeneric'])){
         $this->base    = $this->parent->by_object['servgeneric']->base;
       }else{
-        print_red(_("Unknown type of FAI source information. This is not a profile, workstation nor a ogroup."));
+        msg_dialog::display(_("Error"), _("Unkonwn FAI information source!"), ERROR_DIALOG);
       }
       
       /* Append workstation class && LAST */

@@ -2,11 +2,6 @@
 
 class faiPackageEntry extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account= TRUE;
   var $attributes   = array();
@@ -37,8 +32,8 @@ class faiPackageEntry extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
@@ -125,7 +120,7 @@ $CHKS = "<input type='hidden' value='chkchange' name='chkchange'><table summary=
     $cnt = 0; 
     foreach($pkgs as $pkg){
       if($cnt > 200) {
-        print_red(sprintf(_("Your specified search string '%s' returned too many results. Only the first 200 entries are shown, to keep the memory usage low."),$this->searchStrPKG));
+        msg_dialog::display(_("Error"), _("Search returned too many reults - showing the first 200 matches, only!"), ERROR_DIALOG);
         break;
       }
       if((preg_match("/^".$search_str."/i",$pkg[0]))||

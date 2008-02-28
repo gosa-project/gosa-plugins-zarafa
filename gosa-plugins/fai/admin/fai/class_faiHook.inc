@@ -2,11 +2,6 @@
 
 class faiHook extends plugin
 {
-  /* CLI vars */
-  var $cli_summary      = "Manage server basic objects";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = TRUE;
 
@@ -248,7 +243,7 @@ class faiHook extends plugin
       /* print errors */
       if(count($msgs)>0){
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
 
@@ -321,11 +316,11 @@ class faiHook extends plugin
 
       /* Check if this object is freezed, in this case hide the delete icon */
       if($this->FAIstate == "freeze"){
-        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
       }else{
-        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
         if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("Delete")."' alt='"._("Delete")."'>";
         }
       }
 

@@ -112,26 +112,26 @@ class faxreport extends plugin
 
     /* Some checks */
     if(!isset($this->config->data['SERVERS']['FAX'])){
-      print_red(_("No fax extension defined in your server configuration, no reports can be shown!"));
+      msg_dialog::display(_("Error"), _("No fax server found!"), ERROR_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }elseif(!is_callable("mysql_connect")){
-      print_red(_("There is no mysql extension available, please check your php setup."));
+      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }else{
       /* Connecting, selecting database */
       $cfg	= $this->config->data['SERVERS']['FAX'];
       $link 	= @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
       if ($link === FALSE){
-        print_red(_("Can't connect to fax database, no reports can be shown!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfax"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
       if (! @mysql_select_db("gofax")){
-        print_red(_("Can't select fax database for report generation!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfax"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
       if (! mysql_query("SELECT * FROM faxlog;")){
-        print_red(_("Can't query fax table 'faxlog' for report generation!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
     }		
@@ -154,7 +154,7 @@ class faxreport extends plugin
       /* Check if everything went ok*/
       $result = @mysql_query($query);
       if ($result === false){
-        print_red(_("Query for fax database failed!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query failed");
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
@@ -163,7 +163,7 @@ class faxreport extends plugin
       mysql_close($link);
 
       if (!preg_match ("/'".$line["uid"]."'/", $this->userfilter)){
-        print_red (_("You have no permission to retrieve informations about this fax id!"));
+        msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
@@ -173,7 +173,7 @@ class faxreport extends plugin
       $dn = $fax_uids[$uid];
       $acls = $this->ui->get_permissions($dn,"faxreport/faxreport");
       if(!preg_match("/r/",$acls)){
-        print_red (_("You have no permission to retrieve informations about this fax id!"));
+        msg_dialog::display(_("Permission error"), _("You have no permission to view this fax id!"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
@@ -278,7 +278,7 @@ class faxreport extends plugin
         "queuing_time >= $start ORDER BY ".$this->fields[$this->sort]." $desc;";
 
       if(!is_callable("mysql_connect")){
-        print_red("There is no mysql extension configured in your php setup.");
+        msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
@@ -294,7 +294,7 @@ class faxreport extends plugin
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
       $result = @mysql_query($query);
       if ($result === false){
-        print_red(_("Query for fax database failed!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfax"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 

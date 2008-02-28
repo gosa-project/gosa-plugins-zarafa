@@ -244,7 +244,7 @@ class blocklist extends plugin
           $this->dialog->delete();
           $this->dialog = NULL;
         } else {
-          print_red (sprintf(_("You are not allowed to delete the blocklist '%s'!"),$dn));
+          msg_dialog::display(_("Permission error"), sprintf(_("You have not permission to delete '%s'!"), $dn), ERROR_DIALOG);
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -302,7 +302,7 @@ class blocklist extends plugin
         $this->dialog = NULL;
         del_lock ($this->dn);
       } else {
-        print_red (_("You have no permission to remove this blocklist."));
+        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
       }
     }
 

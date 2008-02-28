@@ -2,11 +2,6 @@
 
 class faiVariable extends plugin
 {
-  /* CLI vars */
-  var $cli_summary      = "Manage server basic objects";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = TRUE;
 
@@ -167,7 +162,7 @@ class faiVariable extends plugin
       $msgs = $this->dialog->check();
       if(count($msgs)>0){
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $obj = $this->dialog->save();

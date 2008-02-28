@@ -2,11 +2,6 @@
 
 class faiPartitionTable extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = TRUE;
   var $attributes       = array("cn","description");
@@ -202,7 +197,7 @@ class faiPartitionTable extends plugin
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msg){
-            print_red($msg);
+            msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
           }
         }else{
           $disk = $this->dialog->save();

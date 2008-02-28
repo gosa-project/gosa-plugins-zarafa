@@ -50,7 +50,7 @@ class dhcpAdvanced extends plugin
     if (isset($_POST['delete_statement']) && isset($_POST['dhcpstatements'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpstatements'));
       if (in_array($key, $this->autoStatements)){
-        print_red(_("Can't delete automatic statements. Please use the fields above."));
+	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
         unset($this->statements[$key]);	
       }
@@ -63,7 +63,7 @@ class dhcpAdvanced extends plugin
     if (isset($_POST['delete_option']) && isset($_POST['dhcpoptions'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpoptions'));
       if (in_array($key, $this->autoOptions)){
-        print_red(_("Can't delete automatic options. Please use the fields above."));
+	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
       } else {
         unset($this->options[$key]);	
       }

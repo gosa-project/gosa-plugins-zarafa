@@ -2,10 +2,6 @@
 
 class faiHookEntry extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
   /* attribute list for save action */
   var $ignore_account= TRUE;
@@ -59,8 +55,8 @@ class faiHookEntry extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
@@ -68,10 +64,10 @@ class faiHookEntry extends plugin
         
     if(isset($_POST['ImportUpload'])){
       if(($_FILES['ImportFile']['error']!=0)){
-        print_red(_("Please select a valid file."));
+        msg_dialog::display(_("Error"), _("Upload failed!"), ERROR_DIALOG);
       }else
       if(($_FILES['ImportFile']['size']==0)){
-        print_red(_("Selected file is empty."));
+        msg_dialog::display(_("Error"), _("Uploaded file is empty!"), ERROR_DIALOG);
       }else{
         $str = utf8_encode(file_get_contents($_FILES['ImportFile']['tmp_name']));
         $this->FAIscript = $str;
@@ -153,15 +149,15 @@ class faiHookEntry extends plugin
     $message= plugin::check();
 
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
-      $message[] =_("There is already a hook with the given name.");
+      $message[] =_("Name is already in use!");
     }
 
     if(empty($this->FAIscript)) {
-      $message[]=_("Please enter a value for script.");
+      $message[]=_("Please enter a script!");
     }
 
     if(empty($this->cn)){
-      $message[] = _("Please enter a name.");
+      $message[] = _("Name is empty!");
     }
 
     return ($message);

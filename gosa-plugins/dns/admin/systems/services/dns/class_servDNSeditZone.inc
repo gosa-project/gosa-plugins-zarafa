@@ -2,11 +2,6 @@
 
 class servdnseditZone extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account= TRUE;
   var $attributes     = array("zoneName","ReverseZone","dNSClass",
@@ -242,7 +237,7 @@ class servdnseditZone extends plugin
       if(count($this->dialog->check())){
         $msgs = $this->dialog->check();
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg , ERROR_DIALOG);
         }
       }else{
         $this->zoneEditor = clone $this->dialog;
@@ -418,41 +413,41 @@ class servdnseditZone extends plugin
     }
 
     if(empty($this->zoneName)){
-      $message[] =sprintf(_("Please choose a valid zone name."));
+      $message[] =sprintf(_("The zone name is not valid!"));
     }
 
     if(empty($this->ReverseZone)){
-      $message[] =sprintf(_("Please choose a valid reverse zone name."));
+      $message[] =sprintf(_("The reverse zone is not valid!"));
     }
 
     if($this->zoneName != strtolower($this->zoneName)){
-      $message[] = _("Only lowercase strings are allowed as zone name.");
+      $message[] = _("Only lowercase characters are allowed in zone names!");
     }
 
     if(!is_numeric($this->sOAserial)){
-      $message[] = _("Please specify a numeric value for serial number.");
+      $message[] = sprintf(_("'%s' is not numeric!"), _("Serial"));
     }
 
     if(!is_numeric($this->sOArefresh)){
-      $message[] = _("Please specify a numeric value for refresh.");
+      $message[] = sprintf(_("'%s' is not numeric!"), _("Refresh"));
     }
 
     if(!is_numeric($this->sOAttl)){
-      $message[] = _("Please specify a numeric value for ttl.");
+      $message[] = sprintf(_("'%s' is not numeric!"), _("TTL"));
     }
 
     if(!is_numeric($this->sOAexpire)){
-      $message[] = _("Please specify a numeric value for expire.");
+      $message[] = sprintf(_("'%s' is not numeric!"), _("Expire"));
     }
 
     if(!is_numeric($this->sOAretry)){
-      $message[] = _("Please specify a numeric value for retry.");
+      $message[] = sprintf(_("'%s' is not numeric!"), _("Retry"));
     }
 
     foreach($this->Records as $name => $values){
       /* only lower-case is allowed in record entries ... */
       if($values['value'] != strtolower($values['value'])){
-        $message[] = sprintf(_("Only lowercase is allowed, please check your '%ss'."),$values['type']);
+        $message[] = sprintf(_("Only lowercase records are allowed for '%s'!"),$values['type']);
       }
     }
 
@@ -461,30 +456,30 @@ class servdnseditZone extends plugin
   
     /* Check for valid&complete IP address */
     if(!tests::is_ip($addr)){
-      $message[] = _("The given network address is not a valid, please specify a valid IP address.");
+      $message[] = _("Network address is not valid!");
     }
  
     /* Check if given address matches selected network class */
     switch($this->NetworkClass){
       case 'A': { 
                   if(!preg_match("/^[0-9]*\.0\.0\.0$/",$addr)){
-                    $message[] = sprintf(_("The specified network address is not matching with the specified zone class, try it this way x.0.0.0"));
+                    $message[] = sprintf(_("The specified network address and the network class (%s/%s) do not match!"), $this->NetworkClass, "255.0.0.0");
                   }
                 }
                 break;
       case 'B': {
                   if(!preg_match("/^[0-9]*\.[0-9]*\.0\.0$/",$addr)){
-                    $message[] = sprintf(_("The specified network address is not matching with the specified zone class, try it this way x.x.0.0"));
+                    $message[] = sprintf(_("The specified network address and the network class (%s/%s) do not match!"), $this->NetworkClass, "255.255.0.0");
                   }
                 }
                 break;
       case 'C': {
                   if(!preg_match("/^[0-9]*\.[0-9]*\.[0-9]*\.0$/",$addr)){
-                    $message[] = sprintf(_("The specified network address is not matching with the specified zone class, try it this way x.x.x.0"));
+                    $message[] = sprintf(_("The specified network address and the network class (%s/%s) do not match!"), $this->NetworkClass, "255.255.255.0");
                   }
                 }
                 break;
-      default : $message[] =sprintf(_("The given network class '%s' is not valid."),$this->NetworkClass);
+      default : $message[] =sprintf(_("The network class '%s' is not valid!"),$this->NetworkClass);
     }
 
     return ($message);

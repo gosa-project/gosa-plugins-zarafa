@@ -119,7 +119,7 @@ class blocklistGeneric extends plugin
       if (tests::is_phone_nr($_POST['number']) || preg_match ("/^[\/0-9 ()\^\.\$+*-]+$/",$_POST['number'])){
         $this->addNumber ($_POST['number']);
       } else {
-        print_red (_("Please specify a valid phone number."));
+        msg_dialog::display(_("Error"), _("Phone number is not valid!"), ERROR_DIALOG);
       }
     }
 
@@ -202,17 +202,17 @@ class blocklistGeneric extends plugin
 
     /* check syntax: must cn */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not set.");
+      $message[]= _("Name is empty!");
     } else {
       if (!tests::is_uid($this->cn)){
-        $message[]= _("Required field 'Name' contains invalid characters");
+        $message[]= _("Name contains invalid characters!");
       }
       if ($this->dn == 'new'){
         $ldap= $this->config->get_ldap_link();
         $ldap->cd (get_ou('blocklistou').$this->config->current["BASE"]);
         $ldap->search ("(&(|(objectClass=goFaxSBlock)(objectClass=goFaxRBlock))(cn=".$this->cn."))", array("cn"));
         if ($ldap->count() != 0){
-          $message[]= _("Specified name is already used.");
+          $message[]= _("Name is already in use!");
         }
       }
     }

@@ -35,7 +35,7 @@ class tabsProfile extends tabs
 		$cnt1 = count(split(",",$this->dn));
 		$cnt2 = count(split(",",$new_dn));
 		if((strstr($new_dn,$this->dn))&&($cnt1<$cnt2)){
-			print_red(_("Try to move tree failed. Destination tree is subtree of source tree."));
+			msg_dialog::display(_("Error"), _("Moving the tree failed. Destination tree is subtree of source tree."), ERROR_DIALOG);
 		}else{
 //			$baseobject->recursive_move($this->dn, $new_dn);
 		}

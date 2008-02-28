@@ -2,11 +2,6 @@
 
 class servdns extends goService
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account   = FALSE;
   var $attributes       = array(); 
@@ -186,7 +181,7 @@ class servdns extends goService
        */
       if(count($this->dialog->check())){
         foreach($this->dialog->check() as $msgs){
-          print_red($msgs); 
+          msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
         }
       }else{
         /* add new/edited zone 
@@ -344,7 +339,7 @@ class servdns extends goService
       if(count($used)> 2) {
         $str .=" ... ";
       }
-      print_red(sprintf(_("Can't delete the selected zone, because it is still in use by these entry/entries '%s'"),trim($str)));
+      msg_dialog::display(_("Error"), sprintf(_("Cannot delete the selected zone. It is still in use by '%s'"), trim($str)), ERROR_DIALOG);
       return(false);
     }else{
       unset($this->Zones[$id]);

@@ -2,11 +2,6 @@
 
 class servDNSeditZoneEntries extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server basic objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account     = TRUE;
   var $attributes         = array();
@@ -20,6 +15,7 @@ class servDNSeditZoneEntries extends plugin
   var $RecordTypes        = array();  // Possible record type.
 
   var $disableDialog      = false; // Dialog will be disabled, if this zone is new 
+
 
   function servDNSeditZoneEntries (&$config,$dn, &$zoneObject)
   {
@@ -219,7 +215,7 @@ class servDNSeditZoneEntries extends plugin
         if((isset($this->Devices[$Name])) && ($Name != $value)){
     
           if(isset($this->Devices[$value])){
-            print_red(sprintf(_("Can't rename '%s' to '%s' there is already an entry with the same name in our zone editing dialog."),$Name,$value));
+            msg_dialog::display(_("Error"), sprintf(_("Cannot rename '%s' to '%s'. Name is already in use!"), $Name, $value), ERROR_DIALOG);
           }else{
             $this->Devices[$value] = $this->Devices[$Name];
             unset($this->Devices[$Name]);
@@ -249,7 +245,7 @@ class servDNSeditZoneEntries extends plugin
       /* Checking entry name
        */
       if(!preg_match("/^[a-z0-9_\.-]+$/i", $DevName) || (empty($DevName))){
-        $message[] = sprintf(_("Entry name '%s' contains invalid characters."), $DevName);
+        $message[] = _("Entry name contains invalid characters.");
       }      
 
       /* Renaming check for existing devices 
@@ -258,13 +254,13 @@ class servDNSeditZoneEntries extends plugin
         $ldap->cd($this->config->current['BASE']);
         $ldap->search("(relativeDomainName=".$DevName.")",array("relativeDomainName"));
         if($ldap->count()){
-          $message[] = sprintf(_("Can not rename '%s' to '%s',the destination name already exists."),$device['OrigCn'],$DevName);
+          $message[] = sprintf(_("Cannot rename '%s' to '%s'. Entry is already in use."),$device['OrigCn'],$DevName);
         }
       }elseif(!isset($device['OrigCn'])){
         $ldap->cd($this->config->current['BASE']);
         $ldap->search("(relativeDomainName=".$DevName.")",array("relativeDomainName"));
         if($ldap->count()){
-          $message[] = sprintf(_("Can not create '%s',the destination name already exists."),$DevName);
+          $message[] = sprintf(_("Cannot create '%s'. Entry is already in use."),$DevName);
         }
       }
 
@@ -273,7 +269,7 @@ class servDNSeditZoneEntries extends plugin
       if(!isset($names[$DevName])){
         $names[$DevName] = "";
       }else{
-        $message[] = sprintf(_("The name '%s' is used more than once."),$DevName);
+        $message[] = sprintf(_("Entry '%s' is used more than once."),$DevName);
       }
 
       /* Names should be written in lowercase
@@ -296,14 +292,14 @@ class servDNSeditZoneEntries extends plugin
           if(!isset($tmp[$Rec['type']])){
             $tmp[$Rec['type']] = "";
           }else{
-            $message[] = sprintf(_("The record type '%s' is a unique type and can't be defined twice."),$Rec['type']);
+            $message[] = sprintf(_("%s records cannot be used more than once."),$Rec['type']);
           }
         }
 
         /* Check for empty / duplicate entries in record array 
          */
         if(empty($Rec['value'])){
-          $message[] = sprintf(_("There is an empty '%s' for host '%s'."),$Rec['type'],$DevName);
+          $message[] = sprintf(_("Please fix the empty %s record for entry '%s'."),$Rec['type'],$DevName);
         }
 
         /* Check for duplicate record entries 
@@ -311,12 +307,13 @@ class servDNSeditZoneEntries extends plugin
         if(!isset($tmp[$Rec['type']][$Rec['value']])){
           $tmp[$Rec['type']][$Rec['value']] = "";
         }else{
-          $message[] = sprintf(_("There is a duplicate entry in '%s' for '%s'."),$Rec['type'],$DevName); 
+          $message[] = sprintf(_("Please fix the duplicate %s record for entry '%s'."),$Rec['type'],$DevName); 
         }
       }
     }
     return ($message);
   }
+
 
   function save()
   {
