@@ -43,9 +43,11 @@ class gotomasses extends plugin
     
     $s_entry = $s_action = "";
     $arr = array( 
+
         "/^pause_/"           => "pause",
         "/^resume_/"          => "resume",
         "/^execute_process_/" => "execute_process",
+        "/^abort_process_/"   => "abort_process",
 
         "/^prio_up_/"     => "prio_up",
         "/^prio_down_/"   => "prio_down",
@@ -96,13 +98,21 @@ class gotomasses extends plugin
 
     if(preg_match("/^resume/",$s_action) || 
        preg_match("/^pause/",$s_action) || 
+       preg_match("/^abort_process/",$s_action) || 
        preg_match("/^execute_process/",$s_action)){
 
       switch($s_action){
-        case 'resume'         : $this->resume_queue_entries(array($s_entry));break; 
-        case 'pause'          : $this->pause_queue_entries (array($s_entry));break; 
-        case 'execute_process': $this->execute_queue_entries (array($s_entry));break; 
-        default : trigger_error("Undefined priority setting used.");
+        case 'resume'         : $this->resume_queue_entries   (array($s_entry));break; 
+        case 'pause'          : $this->pause_queue_entries    (array($s_entry));break; 
+        case 'execute_process': $this->execute_queue_entries  (array($s_entry));break; 
+        case 'abort_process'  : $this->abort_queue_entries    (array($s_entry));break; 
+
+        case 'resume_all'         : $this->resume_queue_entries   ($this->list_get_selected_items());break; 
+        case 'pause_all'          : $this->pause_queue_entries    ($this->list_get_selected_items());break; 
+        case 'execute_process_all': $this->execute_queue_entries  ($this->list_get_selected_items());break; 
+        case 'abort_process_all'  : $this->abort_queue_entries    ($this->list_get_selected_items());break; 
+
+        default : trigger_error("Undefined action setting used (".$s_action.").");
       }
       if($this->o_queue->is_error()){
         msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
@@ -259,8 +269,10 @@ class gotomasses extends plugin
     }
     if(preg_match("/w/",$this->getacl(""))){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume all")."|resume_all_\n";
-      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause all")."|pause_all_\n";
+      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume all")."|resume_all\n";
+      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause all")."|pause_all\n";
+      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Aboer all")."|abort_process_all\n";
+      $s.= "..|<img src='images/rocket.png'       alt='' border='0' class='center'>&nbsp;"._("Execute all")."|execute_process_all\n";
     }
 
     $divlist->SetDropDownHeaderMenu($s);
@@ -463,6 +475,19 @@ class gotomasses extends plugin
       msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
       return(FALSE);
     }
+    return(TRUE);
+  }
+
+
+  /*! \brief  Force queue job to be done as far as possible.
+   *  @return Boolean TRUE in case of success, else FALSE.
+   */
+  private function abort_queue_entries($ids)
+  {
+    if(!count($ids)){
+      return;
+    }
+    print_red(_("Not implemented."));
     return(TRUE);
   }
 
