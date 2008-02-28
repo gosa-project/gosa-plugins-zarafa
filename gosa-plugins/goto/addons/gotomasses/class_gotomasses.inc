@@ -84,9 +84,7 @@ class gotomasses extends plugin
      ************/
 
     if(preg_match("/^prio_/",$s_action)){
-
       switch($s_action){
-
         case 'prio_down'  : $this->update_priority($s_entry,"down");break;
         case 'prio_up'    : $this->update_priority($s_entry,"up");break;
       }
@@ -106,7 +104,6 @@ class gotomasses extends plugin
         case 'pause'          : $this->pause_queue_entries    (array($s_entry));break; 
         case 'execute_process': $this->execute_queue_entries  (array($s_entry));break; 
         case 'abort_process'  : $this->abort_queue_entries    (array($s_entry));break; 
-
         case 'resume_all'         : $this->resume_queue_entries   ($this->list_get_selected_items());break; 
         case 'pause_all'          : $this->pause_queue_entries    ($this->list_get_selected_items());break; 
         case 'execute_process_all': $this->execute_queue_entries  ($this->list_get_selected_items());break; 
@@ -163,18 +160,23 @@ class gotomasses extends plugin
         }else{
           $ids = $this->list_get_selected_items();
         }
+
         if(count($ids)){
-          $this->ids_to_remove = $ids;
-          $ret = $this->o_queue->ids_exist($this->ids_to_remove);
+          $ret = $this->o_queue->ids_exist($ids);
           $ret = $this->o_queue->get_entries_by_id($ret);
 
           $tmp = "";
           foreach($ret as $task){
-            if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']])){
-              $evt = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
-              $tmp.= "\n".$task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
-            }else{
-              $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+
+            /* Only remove WAITING or ERROR entries */
+            if(in_array($task['STATUS'],array("waiting","error"))){
+              $this->ids_to_remove[] = $task['ID'];
+              if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']])){
+                $evt = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
+                $tmp.= "\n".$task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
+              }else{
+                $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+              }
             }
           }
           $smarty->assign("multiple", TRUE); 
@@ -271,7 +273,7 @@ class gotomasses extends plugin
       $s.= "..|---|\n";
       $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume all")."|resume_all\n";
       $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause all")."|pause_all\n";
-      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Aboer all")."|abort_process_all\n";
+      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Abort all")."|abort_process_all\n";
       $s.= "..|<img src='images/rocket.png'       alt='' border='0' class='center'>&nbsp;"._("Execute all")."|execute_process_all\n";
     }
 
@@ -314,39 +316,57 @@ class gotomasses extends plugin
     foreach($this->entries as $key => $task){
 
       $prio_actions="";
-      if(isset($task['STATUS']) && preg_match("/waiting/",$task['STATUS'])){
+      $action = "";
+
+      /* If WAITING add priority action
+       */  
+      if(in_array($task['STATUS'],array("waiting"))){
         $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' 
           title='"._("Move up in execution queue")."' name='prio_up_".$key."'>&nbsp;";
         $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' 
           title='"._("Move down in execution queue")."' name='prio_down_".$key."'>&nbsp;";
       }
-     
-      if(isset($task['STATUS']) && preg_match("/waiting/",$task['STATUS'])){
+    
+      /* If WAITING add pause action
+       */  
+      if(in_array($task['STATUS'],array("waiting"))){
         $prio_actions.= "<input class='center' type='image' src='images/status_pause.png' 
           title='"._("Pause job")."' name='pause_".$key."'>&nbsp;";
       }
-      if(isset($task['STATUS']) && preg_match("/paused/",$task['STATUS'])){
+
+      /* If PAUSED add resume action
+       */  
+      if(in_array($task['STATUS'],array("paused"))){
         $prio_actions.= "<input class='center' type='image' src='images/status_start.png' 
           title='"._("Resume job")."' name='resume_".$key."'>&nbsp;";
       }
 
-      if(isset($task['STATUS']) && preg_match("/processing/",$task['STATUS'])){
+      /* If PROCESSING add abort action
+       */  
+      if(in_array($task['STATUS'],array("processing"))){
         $prio_actions.= "<input class='center' type='image' src='images/small_error.png' 
-          title='"._("Abort execution")."' name='abort_process_".$key."'>&nbsp;";
+          title='"._("Abort execution")."' name='abort_process_".$key."'>";
       }
 
-      if(isset($task['STATUS']) && 
-          (preg_match("/paused/",$task['STATUS']) || preg_match("/waiting/",$task['STATUS']))){
+      /* If PAUSED or WAITING add execution action
+       */  
+      if(in_array($task['STATUS'],array("paused","waiting"))){
         $prio_actions.= "<input class='center' type='image' src='images/rocket.png' 
           title='"._("Force execution now!")."' name='execute_process_".$key."'>&nbsp;";
       }
 
-      $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' 
-        class='center' alt='"._("Edit")."'>";
+      /* If PAUSED or WAITING add edit action
+       */  
+      if(in_array($task['STATUS'],array("waiting"))){
+        $action.= "<input type='image' src='images/edit.png' name='edit_task_".$key."' 
+          class='center' alt='"._("Edit")."'>";
+      }
 
-      if($this->acl_is_removeable()){
+      /* If WAITING or ERROR add remove action
+       */  
+      if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error"))){
         $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
-          class='center' alt='"._("Reomve")."'>";
+          class='center' alt='"._("Remove")."'>";
       }
 
       $color = "";
@@ -450,11 +470,29 @@ class gotomasses extends plugin
     if(!count($ids)){
       return;
     }
-  
+
+    /* Entries are resumed by setting the status to 
+     *  'waiting'
+     */
     $data = array("status"    => "waiting");
-    if(!$this->o_queue->update_entries($ids,$data)){
-      msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
-      return(FALSE);
+  
+    /* Check if given ids are valid and check if the status
+     *  allows resuming.
+     */
+    $update_ids = array();
+    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+      if(isset($entry['STATUS']) && preg_match("/paused/",$entry['STATUS'])){
+        $update_ids[] = $entry['ID'];
+      }
+    }
+
+    /* Tell the daemon that we have entries to update.
+     */
+    if(count($update_ids)){
+      if(!$this->o_queue->update_entries($update_ids,$data)){
+        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        return(FALSE);
+      }
     }
     return(TRUE);
   }
@@ -469,11 +507,28 @@ class gotomasses extends plugin
       return;
     }
 
+    /* Execution is forced by updating the status to 
+     *  waiting and setting the timestamp to current time.
+     */
     $data = array(  "timestamp" => date("YmdHis",time()), 
                     "status"    => "waiting");
-    if(!$this->o_queue->update_entries($ids,$data)){
-      msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
-      return(FALSE);
+
+    /* Only allow execution of paused or waiting entries 
+     */
+    $update_ids = array();
+    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+      if(in_array($entry['STATUS'],array("paused","waiting"))){
+        $update_ids[] = $entry['ID'];
+      }
+    }
+
+    /* Tell the daemon that we want to update some entries
+     */
+    if(count($update_ids)){
+      if(!$this->o_queue->update_entries($update_ids,$data)){
+        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entries.")) , ERROR_DIALOG);
+        return(FALSE);
+      }
     }
     return(TRUE);
   }
@@ -487,7 +542,7 @@ class gotomasses extends plugin
     if(!count($ids)){
       return;
     }
-    print_red(_("Not implemented."));
+    print_red(_("Not implemented, currently."));
     return(TRUE);
   }
 
@@ -500,10 +555,30 @@ class gotomasses extends plugin
     if(!count($ids)){
       return;
     }
+
+    /* Entries are paused by setting the status to 
+     *  something different from 'waiting'.
+     * We simply use 'paused'.
+     */   
     $data = array("status"    => "paused");
-    if(!$this->o_queue->update_entries($ids,$data)){
-      msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
-      return(FALSE);
+
+    /* Detect if the ids we got are valid and
+     *  check if the status allows pausing.
+     */ 
+    $update_ids = array();
+    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+      if(isset($entry['STATUS']) && preg_match("/waiting/",$entry['STATUS'])){
+        $update_ids[] = $entry['ID'];
+      }
+    }
+
+    /* Tell the daemon that we want to update some entries
+     */
+    if(count($update_ids)){
+      if(!$this->o_queue->update_entries($update_ids,$data)){
+        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        return(FALSE);
+      }
     }
     return(TRUE);
   }
@@ -514,6 +589,9 @@ class gotomasses extends plugin
    */
   function reload()
   {
+
+    /* Sort map   html-post-name => daemon-col-name
+     */
     $map = array(
         "QueuePosition" => "id",
         "Action"        => "status",
@@ -521,6 +599,8 @@ class gotomasses extends plugin
         "TargetName"    => "macaddress",
         "Schedule"      => "timestamp");
 
+    /* Create sort header 
+     */
     if(!isset($map[$this->sort_by])){
       $sort = "id DESC";
     }else{
@@ -531,16 +611,17 @@ class gotomasses extends plugin
         $sort.= " DESC";
       }
     }
-      
+     
+    /* Get entries. */ 
     $start  = $this->start; 
     $stop   = $this->range;
-
     $entries = $this->o_queue->get_queued_entries($start,$stop,$sort);
     if ($this->o_queue->is_error()){
-
       msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
     }
 
+    /* Assign entries by id.
+     */
     $this->entries = array();
     foreach($entries as $entry){
       $this->entries[$entry['ID']]= $entry;
@@ -552,6 +633,8 @@ class gotomasses extends plugin
    */
   function save_object()
   {
+    /* Check for sorting changes 
+     */
     $sort_vals = array("Action","QueuePosition","TargetName","Schedule","TaskID");
     if(isset($_GET['sort']) && in_array($_GET['sort'],$sort_vals)){
       $sort = $_GET['sort'];
@@ -564,9 +647,13 @@ class gotomasses extends plugin
       }
       $this->sort_by = $sort;
     }
+
+    /* Range selection used? */
     if(isset($_POST['range']) && is_numeric($_POST['range'])){
       $this->range = $_POST['range'];
     }
+    
+    /* Page changed. */
     if(isset($_GET['start'])){
       $start = $_GET['start'];
       if(is_numeric($start) || $start == 0){
