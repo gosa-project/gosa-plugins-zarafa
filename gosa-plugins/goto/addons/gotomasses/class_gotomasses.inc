@@ -257,8 +257,8 @@ class gotomasses extends plugin
      ************/
 
     $divlist = new MultiSelectWindow($this->config,"gotoMasses",array("gotomasses"));
-    $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa deamon tasks."));
-    $divlist->SetSummary(_("List of queued deamon jobs"));
+    $divlist->SetInformation(_("This menu allows you to remove and change the properties of GOsa tasks."));
+    $divlist->SetSummary(_("List of queued jobs"));
     $divlist->EnableCloseButton(FALSE);
     $divlist->EnableSaveButton(FALSE);
     $divlist->SetHeadpageMode();
