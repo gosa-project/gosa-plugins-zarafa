@@ -137,7 +137,9 @@ class gotomasses extends plugin
       $type = FALSE;
       if(isset($this->entries[$id])){
         $event = $this->entries[$s_entry];
-        if(isset($this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']])){
+      
+        
+        if($event['STATUS'] == "waiting" && isset($this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']])){
           $type = $this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']];
           $this->dialog = new $type['CLASS_NAME']($this->config,$event);
         }
