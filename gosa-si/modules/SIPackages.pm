@@ -751,8 +751,7 @@ sub new_ldap_config {
                 if (not $server =~ /^\d+:[^:]+:ldap[^:]*:\/\// ) {
                     if ($server =~ /^([^:]+):([^:]+)$/ ) {
                       $server= "1:dummy:ldap://$1/$2";
-                    }
-                    if ($server =~ /^(\d+):([^:]+):(.*)$/ ) {
+                    } elsif ($server =~ /^(\d+):([^:]+):(.*)$/ ) {
                       $server= "$1:dummy:ldap://$2/$3";
                     }
                 }
