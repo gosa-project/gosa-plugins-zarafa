@@ -43,8 +43,9 @@ class gotomasses extends plugin
     
     $s_entry = $s_action = "";
     $arr = array( 
-        "/^stop_/"        => "stop",
-        "/^start_/"       => "start",
+        "/^pause_/"           => "pause",
+        "/^resume_/"          => "resume",
+        "/^execute_process_/" => "execute_process",
 
         "/^prio_up_/"     => "prio_up",
         "/^prio_down_/"   => "prio_down",
@@ -90,16 +91,17 @@ class gotomasses extends plugin
     }
 
     /************
-     * Handle start/stop modifications  
+     * Handle pause/resume/execute modifications  
      ************/
 
-    if(preg_match("/^start/",$s_action) || preg_match("/^stop/",$s_action)){
+    if(preg_match("/^resume/",$s_action) || 
+       preg_match("/^pause/",$s_action) || 
+       preg_match("/^execute_process/",$s_action)){
 
       switch($s_action){
-        case 'start_all'   : $this->start_queue_entries($this->list_get_selected_items());break;
-        case 'start'       : $this->start_queue_entries(array($s_entry));break; 
-        case 'stop_all'    : $this->stop_queue_entries ($this->list_get_selected_items());break;
-        case 'stop'        : $this->stop_queue_entries (array($s_entry));break; 
+        case 'resume'         : $this->resume_queue_entries(array($s_entry));break; 
+        case 'pause'          : $this->pause_queue_entries (array($s_entry));break; 
+        case 'execute_process': $this->execute_queue_entries (array($s_entry));break; 
         default : trigger_error("Undefined priority setting used.");
       }
       if($this->o_queue->is_error()){
@@ -257,8 +259,8 @@ class gotomasses extends plugin
     }
     if(preg_match("/w/",$this->getacl(""))){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/status_start_all.png' alt='' border='0' class='center'>&nbsp;"._("Start all")."|start_all\n";
-      $s.= "..|<img src='images/status_stop_all.png' alt='' border='0' class='center'>&nbsp;"._("Stop all")."|stop_all\n";
+      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume all")."|resume_all_\n";
+      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause all")."|pause_all_\n";
     }
 
     $divlist->SetDropDownHeaderMenu($s);
@@ -299,10 +301,33 @@ class gotomasses extends plugin
 
     foreach($this->entries as $key => $task){
 
-      $prio_actions = "<input class='center' type='image' src='images/prio_increase.png' name='prio_up_".$key."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' name='prio_down_".$key."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/status_stop_all.png' name='stop_".$key."'>&nbsp;";
-      $prio_actions.= "<input class='center' type='image' src='images/status_start_all.png' name='start_".$key."'>&nbsp;";
+      $prio_actions="";
+      if(isset($task['STATUS']) && preg_match("/waiting/",$task['STATUS'])){
+        $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' 
+          title='"._("Move up in execution queue")."' name='prio_up_".$key."'>&nbsp;";
+        $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' 
+          title='"._("Move down in execution queue")."' name='prio_down_".$key."'>&nbsp;";
+      }
+     
+      if(isset($task['STATUS']) && preg_match("/waiting/",$task['STATUS'])){
+        $prio_actions.= "<input class='center' type='image' src='images/status_pause.png' 
+          title='"._("Pause job")."' name='pause_".$key."'>&nbsp;";
+      }
+      if(isset($task['STATUS']) && preg_match("/paused/",$task['STATUS'])){
+        $prio_actions.= "<input class='center' type='image' src='images/status_start.png' 
+          title='"._("Resume job")."' name='resume_".$key."'>&nbsp;";
+      }
+
+      if(isset($task['STATUS']) && preg_match("/processing/",$task['STATUS'])){
+        $prio_actions.= "<input class='center' type='image' src='images/small_error.png' 
+          title='"._("Abort execution")."' name='abort_process_".$key."'>&nbsp;";
+      }
+
+      if(isset($task['STATUS']) && 
+          (preg_match("/paused/",$task['STATUS']) || preg_match("/waiting/",$task['STATUS']))){
+        $prio_actions.= "<input class='center' type='image' src='images/rocket.png' 
+          title='"._("Force execution now!")."' name='execute_process_".$key."'>&nbsp;";
+      }
 
       $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' 
         class='center' alt='"._("Edit")."'>";
@@ -405,17 +430,16 @@ class gotomasses extends plugin
   }
 
 
-  /*! \brief  Force queue job to be done as far as possible.
+  /*! \brief  Resumes to status 'waiting'.
    *  @return Boolean TRUE in case of success, else FALSE. 
    */
-  private function start_queue_entries($ids)
+  private function resume_queue_entries($ids)
   {
     if(!count($ids)){
       return;
     }
   
-    $data = array("timestamp" => date("YmdHis"),
-                  "status"    => "-");
+    $data = array("status"    => "waiting");
     if(!$this->o_queue->update_entries($ids,$data)){
       msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
       return(FALSE);
@@ -424,16 +448,34 @@ class gotomasses extends plugin
   }
 
 
-  /*! \brief Stops the specified queue entry from execution.
-   *  @return Boolean TRUE in case of success, else FALSE. 
+  /*! \brief  Force queue job to be done as far as possible.
+   *  @return Boolean TRUE in case of success, else FALSE.
    */
-  private function stop_queue_entries($ids)
+  private function execute_queue_entries($ids)
   {
     if(!count($ids)){
       return;
     }
-    $data = array("timestamp" => date("YmdHis",(time() + (60*60*24*365))),
-                  "status"    => _("Stoppped"));
+
+    $data = array(  "timestamp" => date("YmdHis",time()), 
+                    "status"    => "waiting");
+    if(!$this->o_queue->update_entries($ids,$data)){
+      msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+      return(FALSE);
+    }
+    return(TRUE);
+  }
+
+
+  /*! \brief Pauses the specified queue entry from execution.
+   *  @return Boolean TRUE in case of success, else FALSE. 
+   */
+  private function pause_queue_entries($ids)
+  {
+    if(!count($ids)){
+      return;
+    }
+    $data = array("status"    => "paused");
     if(!$this->o_queue->update_entries($ids,$data)){
       msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
       return(FALSE);
