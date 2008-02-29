@@ -64,6 +64,9 @@ class goLdapServer extends goService{
     if(empty($this->goLdapBase)){
       $message[] = _("The given base is empty or contains invalid characters.");
     }
+    if(!preg_match("/^ldap[si]?:\/\/[^\/]+\/.+$/", $this->goLdapBase)){
+      $message[] = _("Not in URI format.");
+    }
     return($message);
   }
 
