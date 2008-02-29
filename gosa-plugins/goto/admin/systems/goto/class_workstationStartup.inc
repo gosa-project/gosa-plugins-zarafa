@@ -909,7 +909,7 @@ class workstartup extends plugin
         $evt = $events['BY_CLASS']['DaemonEvent_reload_ldap_config'];
         $tmp = new $evt['CLASS_NAME']($this->config);
         $tmp->set_type(TRIGGERED_EVENT);
-        $tmp->add_targets(array($this->netConfigDNS->macAddress));
+        $tmp->add_targets(array($this->parent->by_object['workgeneric']->netConfigDNS->macAddress));
         if(!$o_queue->append($tmp)){
           msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                 $o_queue->get_error()),ERROR_DIALOG);
