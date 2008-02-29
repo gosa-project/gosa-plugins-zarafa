@@ -3,7 +3,7 @@
 /*
    This code is part of GOsa (http://www.gosa-project.org)
    Copyright (C) 2008 Fabian Hickert
-G
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
@@ -19,6 +19,8 @@ G
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+define("SCHEDULED_EVENT",1);
+define("TRIGGERED_EVENT",2);
 
 /*! \brief    This is the event base class 
   \author   Fabian Hickert <hickert@gonicus.de>
@@ -48,6 +50,8 @@ class DaemonEvent
   protected $status       = "unknown";// The current event status
   protected $is_new       = TRUE;     // Is TRUE if this is a new event
 
+  protected $mode         = SCHEDULED_EVENT; // Default action is sheduled.
+
   /* Sub dialog hanlding */
   protected $target_divlist       = NULL;     // The divlist used by the target add dialog
   protected $target_add_list_used = FALSE;    // Indicates that the target add list was used.
@@ -57,6 +61,17 @@ class DaemonEvent
   protected $workstation_list     = array();  // Used as cache in the target list.
   protected $server_list          = array();  // Used as cache in the target list.
 
+ 
+  function set_type($type)
+  {
+    $this->mode = $type;
+  }
+
+
+  function get_type()
+  {
+    return($this->mode);
+  }
 
   /*! \brief  Class contructor.
     @param  Array   GOsa configuration object.
