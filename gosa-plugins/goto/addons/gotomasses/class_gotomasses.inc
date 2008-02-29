@@ -209,33 +209,13 @@ class gotomasses extends plugin
     if(isset($_POST['save_event_dialog'])){
       if(is_object($this->dialog)){
         $this->dialog->save_object();
-        if($this->dialog->is_new()){
-          $header     = $this->dialog->get_schedule_action();
-          $targets    = $this->dialog->get_targets();
-          $data       = $this->dialog->save();
-
-          foreach($targets as $target){
-            $data['macaddress'] =  $target;
-            $this->o_queue->send_data($header,$target,$data,TRUE);
-            if($this->o_queue->is_error()){
-              msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                    $this->o_queue->get_error()),ERROR_DIALOG);
-            }else{
-              $this->dialog = FALSE; 
-              $this->current = -1;
-            } 
-          }
+        if(!$this->o_queue->append($this->dialog)){
+          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                $this->o_queue->get_error()),ERROR_DIALOG);
         }else{
-          $id                 = $this->dialog->get_id();
-          $data               = $this->dialog->save();
-          if($this->o_queue->update_entries(array($id),$data)){
-            $this->dialog = FALSE;
-            $this->current = -1;
-          }else{
-            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-              $this->o_queue->get_error()),ERROR_DIALOG);
-          }
-        }
+          $this->dialog = FALSE; 
+          $this->current = -1;
+        } 
       }
     }
 
