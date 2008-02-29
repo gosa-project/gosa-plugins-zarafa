@@ -5,8 +5,8 @@ class DaemonEvent_memcheck extends DaemonEvent
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Memory check"); 
-    $this->s_Event_Name = _("Memory check"); 
+    $this->s_Menu_Name  = _("Memory test"); 
+    $this->s_Event_Name = _("Memory test"); 
     $this->s_Schedule_Action= "job_trigger_action_memcheck";
     $this->s_Trigger_Action = "job_trigger_action_memcheck";
     $this->s_Queued_Action  = "trigger_action_memcheck";

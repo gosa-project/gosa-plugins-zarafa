@@ -4,8 +4,8 @@ class DaemonEvent_halt extends DaemonEvent
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Shutdown");
-    $this->s_Event_Name = _("Shutdown");
+    $this->s_Menu_Name  = _("Switch off");
+    $this->s_Event_Name = _("Switch off");
     $this->s_Schedule_Action = "job_trigger_action_halt";
     $this->s_Trigger_Action= "job_trigger_action_halt";
     $this->s_Queued_Action= "trigger_action_halt";

@@ -5,8 +5,8 @@ class DaemonEvent_sysinfo extends DaemonEvent
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Sysinfo"); 
-    $this->s_Event_Name = _("Sysinfo"); 
+    $this->s_Menu_Name  = _("System analysis"); 
+    $this->s_Event_Name = _("System analysis"); 
     $this->s_Schedule_Action= "job_trigger_action_sysinfo";
     $this->s_Trigger_Action = "job_trigger_action_sysinfo";
     $this->s_Queued_Action  = "trigger_action_sysinfo";
