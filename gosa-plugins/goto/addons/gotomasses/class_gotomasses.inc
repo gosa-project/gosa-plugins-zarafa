@@ -361,12 +361,24 @@ class gotomasses extends plugin
       if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']]['s_Menu_Name'])){
         $event_type = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
         $display2= $event_type['s_Menu_Name'];
+
+        if(strlen($display2) > 20){
+          $display2 = substr($display2,0,18)."...";
+        }
+
         if(isset($event_type['ListImage']) && !empty($event_type['ListImage'])){
           $display2 = $event_type['ListImage']."&nbsp;".$display2;
         }
       } 
 
       $status = $task['STATUS'];
+  
+      if($status == "waiting"){
+        $status = "<img class='center' src='images/clock.png' alt=''>&nbsp;"._("Waiting");
+      }
+      if($status == "error"){
+        $status = "<img class='center' src='images/false.png' alt=''>&nbsp;"._("Error");
+      }
 
       /* Special handling for all entries that have 
           STATUS == "processing" && PROGRESS == NUMERIC
