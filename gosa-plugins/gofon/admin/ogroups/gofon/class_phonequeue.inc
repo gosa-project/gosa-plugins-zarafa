@@ -88,7 +88,7 @@ class phonequeue extends plugin
 
       /* get config */
       if(!isset($this->goFonHomeServers[$this->goFonHomeServer])){
-        print_red(sprintf(_("The specified home server '%s' is not available in GOsa server configuration. Saving this account will create a new entry on the server '%s'. Use cancel if you do not want to create a new entry while ignoring old accounts."), preg_replace("/,/",", ",$this->goFonHomeServer), preg_replace("/,/",", ",$this->goFonHomeServers[0]['DN'])));
+        msg_dialog::display(_("Obsolete entry"), sprintf(_("The current home server is not available anymore. It will be moved to '%s' if you save this entry!"), preg_replace("/,/",", ",$this->goFonHomeServers[0]['DN'])), ERROR_DIALOG);
         $this->goFonHomeServer = $this->goFonHomeServers[0]['DN'];
         $this->init_HomeServer = $this->goFonHomeServers[0]['DN'];
       }
@@ -144,7 +144,7 @@ class phonequeue extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(_("Can't save any changes to asterisk database, there is currently no mysql extension available in your php setup."));
+      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
     }
 
     /********************
@@ -155,14 +155,13 @@ class phonequeue extends plugin
     $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     if(!$r_current){
       new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
-      return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-            $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
+      return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
       new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
-      return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
+      return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
     }
 
     /********************
@@ -174,14 +173,13 @@ class phonequeue extends plugin
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
-        return(sprintf(_("The MySQL initial home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-              $cfg_Init['SERVER'],$cfg_Init['LOGIN']));
+        return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
-        return( sprintf(_("Can't select database '%s' on initial home server '%s'."),$cfg_Init['DB'],$cfg_Init['SERVER']));
+        return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
       }
     }
   }
@@ -345,7 +343,7 @@ class phonequeue extends plugin
 
       /* Check if there is at least on server configuration */
       if(!count($this->goFonHomeServers)){
-        return( _("There is currently no asterisk server defined. Possibly you are missing a server that handles the asterisk management (goFonServer). Your settings can't be saved to asterisk database."));
+        return( _("There is currently no asterisk server defined!"));
       }
 
       /********************
@@ -377,8 +375,7 @@ class phonequeue extends plugin
           $res = @mysql_query($sql,$res_cur);
           if(!$res){
             new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
-            return(_("Error while removing old queue entries from database.").
-                "&nbsp;"._("Please have a look a the gosa logfiles."));
+            return(_("Cannot remove queue entries from database!"));
           }
         }
       }
@@ -394,7 +391,7 @@ class phonequeue extends plugin
   {
     /* Check if there is at least on server configuration */
     if(!count($this->goFonHomeServers)){
-      return( _("There is currently no asterisk server defined. Possibly you are missing a server that handles the asterisk management (goFonServer). Your settings can't be saved to asterisk database."));
+      return( _("There is currently no asterisk server defined!"));
     }
 
     /********************
@@ -437,7 +434,7 @@ class phonequeue extends plugin
       $res   = mysql_query($query,$res_cur);
       if(!$res){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($res_cur));
-        return(_("Could not detect old queue entry, query failed.")."&nbsp;"._("Please have a look a the gosa logfiles."));
+        return(_("Cannot find old queue entry!"));
       }
       $cnt = mysql_affected_rows($res_cur);
 
@@ -523,7 +520,7 @@ class phonequeue extends plugin
           $SQL[] = $query;
         }
       }else{
-        return(sprintf(_("More than one entry in queue table found, that uses the name ('%s'). Please fix this issue manually first."),$this->cn));
+        return(sprintf(_("Found more than one entry named '%s' in queue table. Please inform your system administrator!"),$this->cn));
       }
 
 
@@ -823,7 +820,7 @@ class phonequeue extends plugin
     /* Add database entry, display error and abort if this fails */
     $str = $this->add_to_database(true);
     if(!empty($str)){
-      print_red($str);
+      msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
     }
 
     /* Save data to LDAP */
@@ -863,7 +860,7 @@ class phonequeue extends plugin
      */
     $str = $this->remove_from_database(true);
     if(!empty($str)){
-      print_red($str);
+      msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
       return false;
     }
   

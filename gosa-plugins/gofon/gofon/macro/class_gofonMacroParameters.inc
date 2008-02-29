@@ -340,12 +340,12 @@ class macroParameter extends plugin
 
     foreach($this->goFonMacroParameter as $key=>$val){
       if((strstr($val['default'],"!"))||(strstr($val['default'],"#"))) {
-        $message[] = sprintf(_("The parameter %s contains invalid char. '!,#' is used as delimiter"),$val['name']);
+        $message[] = sprintf(_("Parameter %s contains invalid character. '!,#' is used as delimiter!"),$val['name']);
       }
       switch($val['type']){
         case 'bool'   :   $possible = array("","0","1");
                           if(!in_array($val['default'],$possible)) {
-                            $message[] = sprintf(_("The parameter %s has incorrect value for type bool."),$val['name']);
+                            $message[] = sprintf(_("Parameter %s is invalid!"),$val['name']);
                           };break;
         case 'string' :
         case 'combo'  : 
@@ -374,7 +374,7 @@ class macroParameter extends plugin
     }
 
     if($this->para_count != count($this->attrs['goFonMacroParameter'])){
-      print_red(_("Parameter count of the macro changed, you must update each user which are using this macro '%s'."),$this->dn);
+      msg_dialog::display(_("Information"), _("Number of parameters for this macro has changed. Please update all users using it!"), INFO_DIALOG);
     }
 
     unset($this->attrs['base']);

@@ -97,7 +97,7 @@ class conference extends plugin
 
       /* get config */
       if(!isset($this->goFonHomeServers[$this->goFonHomeServer])){
-        print_red(sprintf(_("The specified home server '%s' is not available in GOsa server configuration. Saving this account will create a new entry on the server '%s'. Use cancel if you do not want to create a new entry while ignoring old accounts."),$this->goFonHomeServer, $this->goFonHomeServers[0]['DN']));
+        msg_dialog::display(_("Obsolete entry"), sprintf(_("The current home server is not available anymore. It will be moved to '%s' if you save this entry!"), preg_replace("/,/",", ",$this->goFonHomeServers[0]['DN'])), ERROR_DIALOG);
 
         $this->goFonHomeServer = $this->goFonHomeServers[0]['DN'];
         $this->init_HomeServer = $this->goFonHomeServers[0]['DN'];
@@ -251,11 +251,11 @@ class conference extends plugin
     if(isset($this->goFonHomeServers[$this->goFonHomeServer])){
       $str = $this->SQL_remove_me(true); 
       if($str){
-        print_red($str);
+        msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
         return false;
       }
     }else{
-      print_red(_("Could not remove the conference entry from database on home server (%s). Please check your asterisk database configuration."));
+      msg_dialog::display(_("Error"), sprintf(_("Cannot delete entry from server '%s' because it seems to be removed!"), preg_replace("/,/",", ",$this->goFonHomeServer), ERROR_DIALOG);
       return false;
     }
 
@@ -318,7 +318,7 @@ class conference extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(_("Can't save any changes to asterisk database, there is currently no mysql extension available in your php setup."));
+      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
     }
 
     /********************
@@ -330,14 +330,13 @@ class conference extends plugin
     if(!$r_current){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
 
-      return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-            $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
+      return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
-      return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
+      return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
     }
 
     /********************
@@ -349,15 +348,13 @@ class conference extends plugin
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-
-        return(sprintf(_("The MySQL initial home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-              $cfg_Init['SERVER'],$cfg_Init['LOGIN']));
+        return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
-        return( sprintf(_("Can't select database '%s' on initial home server '%s'."),$cfg_Init['DB'],$cfg_Init['SERVER']));
+        return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
       }
     }
   }
@@ -374,24 +371,24 @@ class conference extends plugin
 
     /* Check if previously selected server is still available */
     if($this->initially_was_account && !isset($this->goFonHomeServers[$this->goFonHomeServer])){
-      $message[]= sprintf(_("The previously selected asterisk home server (%s) is no longer available."),preg_replace("/,/",", ",$this->goFonHomeServer));
+      $message[]= sprintf(_("The previously selected asterisk home server '%s' is no longer available!"),preg_replace("/,/",", ",$this->goFonHomeServer));
       return($message);
     }
 
     if((empty($this->goFonPIN))&&($this->goFonConferenceOption_P=="P")&&($this->goFonConferenceOption_D=="D")){
-      $message[]= _("Please enter a PIN.");
+      $message[]= _("PIN is not set!");
     }
 
     if(empty($this->cn)){
-      $message[] =_("Please enter a name for the conference.");
+      $message[] =_("Name is not set!");
     }
 
     if(!is_numeric($this->telephoneNumber)){
-      $message[] =_("Only numeric chars are allowed in Number field.");
+      $message[] =_("Number is not valid!");
     }
 
     if(!((is_numeric($this->goFonConferenceOptionLifetime))||(empty($this->goFonConferenceOptionLifetime)))){
-      $message[] =_("Only numbers are allowed in Lifetime.");
+      $message[] =_("Lifetime is not valid!");
     }
 
     /* Check if add could be successful */    
@@ -405,7 +402,7 @@ class conference extends plugin
       $ldap->cd(get_ou('conferenceou').$this->base);
       $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
       if($ldap->count()){
-        $message[] =_("There is already a conference with this name in the current tree.");
+        $message[] =_("Name is already in use!");
       }
     }
     return $message;
@@ -416,7 +413,7 @@ class conference extends plugin
   {
     /* Check if there is at least on server configuration */
     if(!count($this->goFonHomeServers)){
-      return( _("There is currently no asterisk server defined. Possibly you are missing a server that handles the asterisk management (goFonServer). Your settings can't be saved to asterisk database."));
+      return( _("There is currently no asterisk server defined!"));
     }
   
     /********************
@@ -454,8 +451,7 @@ class conference extends plugin
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
-        return(_("Can not check if there are already some entries with given telephone number and/or cn in the destination home server.").
-            "&nbsp;"._("Please have a look a the gosa logfiles."));
+        return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
       }
       if($save && mysql_affected_rows($res_cur)) {
         $SQL = "DELETE FROM ".$cfg_Current['EXT_TABLE']." 
@@ -467,8 +463,7 @@ class conference extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
         if(!$res){
           new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
-          return(_("Can not remove entries with some telephone number and/or cn from destination home server.").
-              "&nbsp;"._("Please have a look a the gosa logfiles."));
+          return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
         }
       }
     }
@@ -587,7 +582,7 @@ class conference extends plugin
     @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
     if(!$res){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-      return(_("Can not check if entry exists in old database. Please have a look a the gosa logfiles."));
+      return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
     }
    
     /* There are entries using this cn and/or phone number */
@@ -601,7 +596,7 @@ class conference extends plugin
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-        return(_("Can not remove old entries from initial home server. Please have a look a the gosa logfiles."));
+        return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
       }
 
     }//ENDE  old num availiable ...
@@ -629,9 +624,9 @@ class conference extends plugin
     $num = $this->telephoneNumber;
     if((isset($numbers[$num]))&&(($numbers[$num]['cn'][0]!=$this->old_cn))){
       if(isset($numbers[$num]['uid'][0])){
-        return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['uid'][0]);
+        return sprintf(_("'%s' is already assigned to '%s'!"),$num,$numbers[$num]['uid'][0]);
       }else{
-        return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['cn'][0]);
+        return sprintf(_("'%s' is already assigned to '%s'!"),$num,$numbers[$num]['cn'][0]);
       }
     }
   }
@@ -705,7 +700,7 @@ class conference extends plugin
       new log("create","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonConference/generic with dn '%s' failed."),$this->dn));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonConference/generic with dn '%s' failed!"),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->postcreate();

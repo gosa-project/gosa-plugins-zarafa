@@ -269,8 +269,7 @@ class phoneGeneric extends plugin
 
       $ldap->search ("(&(objectClass=goFonAccount)(goFonHardware=".$this->cn."))", array("uid","cn"));
       while ($attr =  $ldap->fetch()){
-        print_red(sprintf(_("Can't delete because there are users which are depending on this phone. One of them is user '%s'."),
-              ($attr['uid'][0]." - ".$attr['cn'][0])));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot delete entry because it is still in use by '%s'!"), $attr['cn'][0]), ERROR_DIALOG);
         return;
       }
 
@@ -279,7 +278,7 @@ class phoneGeneric extends plugin
   
       new log("remove","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system phone/generic with dn '%s' failed."),$this->dn));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system phone/generic with dn '%s' failed!"),$this->dn));
       $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
       /* Delete references to object groups */
@@ -327,23 +326,23 @@ class phoneGeneric extends plugin
 
     /* To check for valid ip*/
     if($this->netConfigDNS->ipHostNumber == ""){
-       $message[]= _("The required field IP address is empty.");
+       $message[]= _("IP address is not set!");
     } else {
       if (!tests::is_ip($this->netConfigDNS->ipHostNumber)){
-        $message[]= _("The field IP address contains an invalid address.");
+        $message[]= _("IP address is not valid!");
       }
     }
 
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn) ){
-      $message[] = _("Please specify a valid name for this object.");
+      $message[] = _("Name is not valid!");
     }
 
     if ($this->cn == ""){
-      $message[]= _("The required field 'Phone name' is not set.");
+      $message[]= _("Name is not set!");
     }
     if ($this->cn == "0"){ 
-      $message[]= _("The 'Phone name' '0' is reserved and cannot be used.");
+      $message[]= _("'0' is a reserved name and cannot be used!");
     }
 
     if ($this->orig_dn != $this->dn){
@@ -358,7 +357,7 @@ class phoneGeneric extends plugin
           }
   
           if ($attrs['dn'] != $this->orig_dn){
-            $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+            $message[]= _("Name is already in use!");
             break;
           }
         }
@@ -440,7 +439,7 @@ class phoneGeneric extends plugin
     }
     $this->netConfigDNS->cn = $this->cn;    
     $this->netConfigDNS->save();
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system phone/generic with dn '%s' failed."),$this->dn));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of phone/generic with dn '%s' failed!"),$this->dn));
   }
 
 

@@ -162,21 +162,21 @@ class fonreport extends plugin
 
     /* Connecting, selecting database */
     if (!isset($this->config->data['SERVERS']['FON'][0])){
-      print_red(_("Can't connect to phone database, no reports can be shown!"));
+      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }elseif(!is_callable("mysql_connect")){
-      print_red(_("There is no mysql extension available, please check your php setup."));
+      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }else{
 
       $cfg= $this->config->data['SERVERS']['FON'][0];
       $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
       if ($link === FALSE){
-        print_red(_("Can't connect to phone database, no reports can be shown!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfon"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
       if (! @mysql_select_db("gophone")){
-        print_red(_("Can't select phone database for report generation!"));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfon"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
     }
@@ -194,7 +194,7 @@ class fonreport extends plugin
 
     $result = @mysql_query($query);
     if ($result === false){
-      print_red(_("Query for phone database failed!"));
+      msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }
 

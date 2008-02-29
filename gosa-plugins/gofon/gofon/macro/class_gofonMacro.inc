@@ -188,7 +188,7 @@ class macro extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(_("Can't save any changes to asterisk database, there is currently no mysql extension available in your php setup."));
+      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
     }
 
     /********************
@@ -198,14 +198,13 @@ class macro extends plugin
       $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
       if(!$r_current){
         new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
-        return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-              $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
+        return (sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
       }
       $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
       if(!$db_current){
         new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         mysql_close($r_current);
-        return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
+        return (sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
       }
     }
   }
@@ -236,7 +235,7 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
-          return(sprintf(_("Removing macro from '%s' failed. Check GOsa log for mysql error."),$Server['SERVER']));
+          return(sprintf(_("Cannot remove macro from '%s'!"),$Server['SERVER']));
         }
         @mysql_close($r_current);
       }
@@ -304,18 +303,18 @@ class macro extends plugin
 #      }
       /* Multiple () are not supproted currently ... */  
       if(substr_count($s_linestr,"(") >1 ){
-        return(sprintf(_("More than one '(' is currently not supported. Line : '%s'."),$i_linenum));
+        return(sprintf(_("Not supported multiple brace in line %s!"),$i_linenum));
       }
       if(substr_count($s_linestr,")") >1 ){
-        return(sprintf(_("More than one ')' is currently not supported. Line : '%s'."),$i_linenum));
+        return(sprintf(_("Not supported multiple brace in line %s!"),$i_linenum));
       }
       /* Check if there is an application given */
       if(empty($tmp[1])){
-        return(sprintf(_("There is no application given in line : '%s'."),$i_linenum));
+        return(sprintf(_("Application missing in line %s!"),$i_linenum));
       } 
       /* Check if there is an extension given */
       if(empty($tmp[0])){
-        return(sprintf(_("There is no extension type given in line : '%s'."),$i_linenum));
+        return(sprintf(_("Extension missing in line %s!"),$i_linenum));
       } 
 
       /* Create extension entry for current line 
@@ -345,7 +344,7 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
-          return(sprintf(_("Insert of new macro failed for server '%s'."),$cfg['SERVER']));
+          return(sprintf(_("Cannot insert new macro on server '%s'!"),$cfg['SERVER']));
         }
         @mysql_close($r_con);
       }
@@ -405,7 +404,7 @@ class macro extends plugin
     $message= plugin::check();
 
     if(!count($this->goFonHomeServers)){
-      $message[] = _("There must be at least one server with an asterisk database to save this phone macro.");
+      $message[] = _("There is currently no asterisk server defined!");
     }
 
     /* Check if insert/replace is possible and all servers are available */
@@ -419,17 +418,17 @@ class macro extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->search("(&(objectClass=goFonMacro)(cn=".$this->cn."))",array("cn"));
       if($ldap->count()>0){
-        $message[]=sprintf(_("The given cn '%s' already exists."),$this->cn);
+        $message[]= _("Name is already in use!");
       }
     }
   
     /* Check if display name is set */
     if(empty($this->displayName)){
-      $message[] = _("You must specify the 'Display Name' in order to save this macro");
+      $message[] = _("Display name is not set!");
     }  
     /* CN is restricted to 20 chars */
     if(strlen("Makro-".$this->cn)>20 ){
-      $message[]=_("The given cn is too long, to create a Makro entry, maximum 20 chars.");
+      $message[]=_("Name can be 20 characters at maximum!");
     }
   
     /* If this macro is still in use we should not change the visible for user flag to invisible */
@@ -438,14 +437,14 @@ class macro extends plugin
       $res = $ldap->search("(&(objectClass=goFonAccount)(objectClass=gosaAccount)(goFonMacro=*))", array("goFonMacro"));
       while ($val = $ldap->fetch()){
         if(strstr($val['goFonMacro'][0],$this->dn)){
-          $message[] = _("This macro is still in use. It is necessary to mark this macro as visible for users.");
+          $message[] = _("Macro is still in use!");
           return($message);
         }
       }
     }
 
     if(empty($this->goFonMacroContent)){
-      $message[] = _("You can't save an empty macro.");
+      $message[] = _("Macro is empty!");
     }
     return $message;
   }
@@ -459,10 +458,10 @@ class macro extends plugin
     $ldap= $this->config->get_ldap_link();
 
     /* Skip remove if this macro is still in use */
-    $res = $ldap->search("(&(objectClass=goFonAccount)(objectClass=gosaAccount)(goFonMacro=*))", array("goFonMacro"));
+    $res = $ldap->search("(&(objectClass=goFonAccount)(objectClass=gosaAccount)(goFonMacro=*))", array("goFonMacro", "cn"));
     while ($val = $ldap->fetch()){ 
       if(strstr($val['goFonMacro'][0],$this->dn)){ 
-        print_red(_("This macro is still in use. To delete this Macro ensure that nobody has selected it."));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot delete entry because it is still in use by '%s'!"), $val['cn'][0]), ERROR_DIALOG);
         return false;
       }
     }
@@ -471,18 +470,18 @@ class macro extends plugin
     if(count($this->goFonHomeServers)){
       $str = $this->remove_from_database(true);
       if($str){ 
-        print_red($str);
+        msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
         return false;
       }
     }else{
-      print_red(_("Could not remove the macro entry from asterisk databases. Please check your asterisk database configurations."));
+      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
       return false;
     }
 
     /* Remove phone macro */ 
     $ldap->rmDir($this->dn);
     new log("remove","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed!"),$this->dn));
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -491,7 +490,7 @@ class macro extends plugin
       $og= new ogroup($this->config, $ldap->getDN());
       unset($og->member[$this->dn]);
       $og->save ();
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed!"),$this->dn));
     }
   }
 
@@ -505,7 +504,7 @@ class macro extends plugin
     /* Try to add entries to databases */
     $str = $this->add_to_database(true);
     if($str){
-      print_red($str);
+      msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
     }else{
       /* Write back to ldap */
       $ldap= $this->config->get_ldap_link();

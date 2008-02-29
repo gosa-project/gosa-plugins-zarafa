@@ -260,7 +260,7 @@ class goFonMacro extends plugin
         $dns_names .="</pre>";
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("intro",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("intro",     sprintf(_("You're about to delete the following macro(s) %s"), @LDAP::fix($dns_names)));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
@@ -287,7 +287,7 @@ class goFonMacro extends plugin
           $this->macrotabs= NULL;
 
         } else {
-          print_red (_("You are not allowed to delete this macro!"));
+          msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
         }
 
         /* Remove lock file after successfull deletion */
@@ -341,7 +341,7 @@ class goFonMacro extends plugin
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        print_red (_("You are not allowed to delete this macro!"));
+        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
       }
     }
 
@@ -365,7 +365,7 @@ class goFonMacro extends plugin
       } else {
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red (_("You are not allowed to delete this macro!"));
+        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
         new log("security","gofonmacro/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
       }
       /* Remove lock file after successfull deletion */

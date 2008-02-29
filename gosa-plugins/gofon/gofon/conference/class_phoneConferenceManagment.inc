@@ -213,7 +213,7 @@ class phoneConferenceManagment extends plugin
         if(preg_match("/d/",$acl)){
           $this->remove_from_parent();
         } else {
-          print_red (_("You have no permission to remove this department."));
+          msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -275,7 +275,7 @@ class phoneConferenceManagment extends plugin
       if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
       } else {
-        print_red (_("You have no permission to remove this department."));
+        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
       }
     }
 
