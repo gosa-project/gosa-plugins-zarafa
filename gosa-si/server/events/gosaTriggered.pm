@@ -125,7 +125,7 @@ sub gen_smb_hash {
 
      my %data= ('hash' => join(q[:], ntlmgen $password));
      my $out_msg = &build_msg("gen_smb_hash", $target, 'GOSA', \%data );
-     return;
+     return ( $out_msg );
 }
 
 
