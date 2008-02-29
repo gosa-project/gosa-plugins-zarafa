@@ -41,7 +41,7 @@ use File::Basename;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
-my ($cfg_file, %cfg_defaults, $foreground, $verbose, $pid_file, $opts_file, $procid, $pid, $log_file, $fai_logpath);
+my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
 my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
@@ -55,8 +55,12 @@ $verbose= 1;
 
 # globalise variables which are used in imported events
 our $cfg_file;
+our $opts_file;
 our $server_address;
 our $client_address;
+our $client_ip;
+our $client_mac_address;
+our $client_dnsname;
 our $server_key;
 
 # default variables
@@ -727,21 +731,8 @@ sub register_at_gosa_si_server {
         $client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
         $client_address= "$client_ip:$client_port";
         $client_mac_address = $local_mac;
+		$client_dnsname = $dnsname;
 
-        # Write the MAC address to file
-        if(stat($opts_file)) {
-          unlink($opts_file);
-        }
-
-        my $opts_file_FH;
-        my $hostname= $dnsname;
-        $hostname =~ s/\..*$//;
-        open($opts_file_FH, ">$opts_file");
-        print $opts_file_FH "MAC=\"$local_mac\"\n";
-        print $opts_file_FH "IPADDRESS=\"$client_ip\"\n";
-        print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
-        print $opts_file_FH "FQDN=\"$dnsname\"\n";
-        close($opts_file_FH);
         last;
       } else {
         $try_to_register++;

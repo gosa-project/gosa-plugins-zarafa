@@ -90,7 +90,6 @@ sub daemon_log {
     return;
 }
 
-
 sub registered {
     my ($msg, $msg_hash) = @_ ;
 
@@ -106,11 +105,29 @@ sub registered {
 
     # set registration_flag to true 
     my $out_hash = &create_xml_hash("registered", $main::client_address, $main::server_address);
+     # Write the MAC address to file
+    if(stat($main::opts_file)) { 
+            unlink($main::opts_file);
+    }
+
+    &main::daemon_log(Dumper($msg_hash),1);
+    my $opts_file_FH;
+    my $hostname= $main::client_dnsname;
+    $hostname =~ s/\..*$//;
+    open($opts_file_FH, ">$main::opts_file");
+    print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
+    print $opts_file_FH "IPADDRESS=\"$main::client_ip\"\n";
+    print $opts_file_FH "HOSTNAME=\"$hostname\"\n";
+    print $opts_file_FH "FQDN=\"$main::client_dnsname\"\n";
+    if(defined(@{$msg_hash->{'ldap_available'}}) &&
+	           @{$msg_hash->{'ldap_available'}}[0] eq "true") {
+    	print $opts_file_FH "LDAP_AVAILABLE=\"true\"\n";
+	}
+    close($opts_file_FH);
+     
     my $out_msg = &create_xml_string($out_hash);
     return $out_msg;
-
 }
-
 
 sub server_leaving {
     my ($msg_hash) = @_ ;

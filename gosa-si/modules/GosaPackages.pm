@@ -317,7 +317,7 @@ sub process_gosa_msg {
 
     # if delivery not possible raise error and return 
     if( not @out_msg_l ) {
-        &main::daemon_log("WARNING: GosaPackages got not answer from event handler '$header'", 3);
+        &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
     } elsif( 0 == @out_msg_l) {
         &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
     } 

@@ -427,7 +427,7 @@ sub process_incoming_msg {
 
             # if delivery not possible raise error and return 
             if( not @out_msg_l ) {
-                &main::daemon_log("WARNING: SIPackages got not answer from event handler '$header'", 3);
+                &main::daemon_log("WARNING: SIPackages got no answer from event handler '$header'", 3);
             } elsif( 0 == @out_msg_l) {
                 &main::daemon_log("ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
             } 
@@ -561,8 +561,6 @@ sub here_i_am {
     
     # return acknowledgement to client
     $out_hash = &create_xml_hash("registered", $server_address, $source);
-    my $register_out = &create_xml_string($out_hash);
-    push(@out_msg_l, $register_out);
 
     # notify registered client to bus
     if( $bus_activ eq "on") {
@@ -581,9 +579,17 @@ sub here_i_am {
     }
 
     # give the new client his ldap config
+    # Workaround: Send within the registration response, if the client will get an ldap config later
     my $new_ldap_config_out = &new_ldap_config($source);
     if( $new_ldap_config_out ) {
-        push(@out_msg_l, $new_ldap_config_out);
+            &add_content2xml_hash($out_hash, "ldap_available", "true");
+    }
+    my $register_out = &create_xml_string($out_hash);
+    push(@out_msg_l, $register_out);
+
+    # Really send the ldap config
+    if( $new_ldap_config_out ) {
+            push(@out_msg_l, $new_ldap_config_out);
     }
 
 	my $hardware_config_out = &hardware_config($source, $gotoHardwareChecksum);
@@ -682,7 +688,7 @@ sub new_ldap_config {
 	$mesg = $main::ldap_handle->search( base   => $ldap_base,
 		scope  => 'sub',
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
-		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoMode=active))");
+		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))");
 	#$mesg->code && die $mesg->error;
 	if($mesg->code) {
 		&main::daemon_log($mesg->error, 1);
@@ -695,7 +701,7 @@ sub new_ldap_config {
 		&main::daemon_log("\tbase: $ldap_base", 1);
 		&main::daemon_log("\tscope: sub", 1);
 		&main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
-		&main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress))", 1);
+		&main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))", 1);
 		return;
 	}
 
