@@ -4,8 +4,8 @@ class DaemonEvent_notify extends DaemonEvent
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Notify");
-    $this->s_Event_Name = _("Notify");
+    $this->s_Menu_Name  = _("Send message");
+    $this->s_Event_Name = _("Send message");
     $this->s_Schedule_Action = "job_trigger_action_notify";
     $this->s_Trigger_Action= "job_trigger_action_notify";
     $this->s_Queued_Action= "trigger_action_notify";
