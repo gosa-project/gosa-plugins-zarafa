@@ -1549,7 +1549,6 @@ class sambaAccount extends plugin
 
     /* Set a new SID */
     $this->sambaSID = "";
-    print "Eloha : ".($this->gidNumber);
   }
 
 }
