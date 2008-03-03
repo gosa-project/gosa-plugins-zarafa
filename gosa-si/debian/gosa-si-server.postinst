@@ -12,6 +12,6 @@ case "$1" in
 esac
 
 # Restart daemon
-/etc/init.d/gosa-si restart
+invoke-rc.d gosa-si restart
 
 exit 0
