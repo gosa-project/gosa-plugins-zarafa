@@ -156,9 +156,18 @@ sub detected_hardware {
 
 	# We need to create a base entry first (if not done from ArpHandler)
 	if($mesg->count == 0) {
-		&main::daemon_log("INFO: Need to create a new LDAP Entry for client $address", 6);
+		&main::daemon_log("INFO: Need to create a new LDAP Entry for client $address", 4);
 		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
-		my $dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
+		my $dnsname;
+		if (defined($msg_hash->{'force-hostname'}) && 
+			defined($msg_hash->{'force-hostname'}[0]) &&
+			length($msg_hash->{'force-hostname'}[0]) > 0){
+			$dnsname= $msg_hash->{'force-hostname'}[0];
+			&main::daemon_log("INFO: Using forced hostname $dnsname for client $address", 4);
+		} else {
+			gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
+		}
+
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
 		my $dn = "cn=$cn,ou=incoming,$ldap_base";
 		&main::daemon_log("INFO: Creating entry for $dn",5);

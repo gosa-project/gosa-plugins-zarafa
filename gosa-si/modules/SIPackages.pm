@@ -575,7 +575,7 @@ sub here_i_am {
         &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
         my $new_client_out = &create_xml_string($out_hash);
         push(@out_msg_l, $new_client_out);
-        &main::daemon_log("INFO: send bus msg that client '$source' has registerd at server '$server_address'", 5);
+        &main::daemon_log("INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
     }
 
     # give the new client his ldap config

@@ -61,6 +61,7 @@ our $client_address;
 our $client_ip;
 our $client_mac_address;
 our $client_dnsname;
+our $client_force_hostname;
 our $server_key;
 
 # default variables
@@ -91,6 +92,7 @@ our $prg= basename($0);
      "pam-config"         => [\$pam_config, "/etc/pam_ldap.conf"],
      "nss-config"         => [\$nss_config, "/etc/libnss_ldap.conf"],
      "fai-logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
+	 "force-hostname"		=> [\$client_force_hostname, "false"],
     },
 "server" => {
     "ip"          => [\$server_ip, "127.0.0.1"],
@@ -720,6 +722,17 @@ sub register_at_gosa_si_server {
       &add_content2xml_hash($register_hash, "mac_address", $local_mac);
       &add_content2xml_hash($register_hash, "events", $events);
       &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+
+	  # Add $HOSTNAME from ENV if force-hostname is set
+	  if( defined($client_force_hostname) && 
+		  $client_force_hostname eq "true") {
+		  if(defined($ENV{HOSTNAME}) &&
+			  length($ENV{HOSTNAME}) >0 ) {
+			  &add_content2xml_hash($register_hash, "force-hostname", $ENV{HOSTNAME});
+		  } else {
+			  &main::daemon_log("force-hostname was set to true, but no \$HOSTNAME was found in Environment!",0);
+		  }
+	  }
 
       # send xml hash to server with general server passwd
       my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
