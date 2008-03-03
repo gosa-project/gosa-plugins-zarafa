@@ -536,8 +536,39 @@ class gotomasses extends plugin
     if(!count($ids)){
       return;
     }
-    print_red(_("Not implemented, currently."));
-    return(TRUE);
+
+    /* Entries are paused by setting the status to
+     *  something different from 'waiting'.
+     * We simply use 'paused'.
+     */
+    $data = array("status"    => "paused");
+
+    /* Detect if the ids we got are valid and
+     *  check if the status allows pausing.
+     */
+    $update_ids = array();
+    foreach($this->o_queue->get_entries_by_id($ids) as $entry){
+      if(isset($entry['STATUS']) && preg_match("/processing/",$entry['STATUS'])){
+        if(isset($entry['MACADDRESS'])){
+          $update_ids[] = $entry['MACADDRESS'];
+        }else{
+          trigger_error("No mac address found in event.");
+        }
+      }
+    }
+
+    if(class_available("DaemonEvent_faireboot")){
+      $tmp = new DaemonEvent_faireboot($this->config);
+      $tmp->add_targets($update_ids);
+      if(!$this->o_queue->append($tmp)){
+        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        return(FALSE);
+      }
+    }else{
+      msg_dialog::display(_("Error"),
+          sprintf(_("The Job could not be aborted, the '%s' event class was not found."),
+            "DaemonEvent_faireboot") , ERROR_DIALOG);
+    }
   }
 
 
