@@ -9,8 +9,8 @@ class DaemonEvent_notify extends DaemonEvent
     $this->s_Schedule_Action = "job_trigger_action_notify";
     $this->s_Trigger_Action= "job_trigger_action_notify";
     $this->s_Queued_Action= "trigger_action_notify";
-    $this->s_Menu_Image = "images/status_stopped.png";
-    $this->s_List_Image = "images/status_stopped.png";
+    $this->s_Menu_Image = "images/mailto.png";
+    $this->s_List_Image = "images/mailto.png";
   }
 
   public function execute()
