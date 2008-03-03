@@ -59,7 +59,6 @@ my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
 my ($arp_activ, $arp_fifo);
 my ($xml);
-my ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password);
 my $sources_list;
 my $max_clients;
 # variables declared in config file are always set to 'our'
@@ -78,7 +77,8 @@ our $no_arp;
 our $verbose;
 our $forground;
 our $cfg_file;
-our $ldap_handle;
+our ($ldap_handle, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password );
+
 
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
