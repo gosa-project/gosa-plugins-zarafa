@@ -255,7 +255,7 @@ class conference extends plugin
         return false;
       }
     }else{
-      msg_dialog::display(_("Error"), sprintf(_("Cannot delete entry from server '%s' because it seems to be removed!"), preg_replace("/,/",", ",$this->goFonHomeServer), ERROR_DIALOG);
+      msg_dialog::display(_("Error"), sprintf(_("Cannot delete entry from server '%s' because it seems to be removed!"), preg_replace("/,/",", ",$this->goFonHomeServer)), ERROR_DIALOG);
       return false;
     }
 
