@@ -303,14 +303,14 @@ sub process_incoming_msg {
 sub process_gosa_msg {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $out_msg;
-    my @out_msg_l = ();
+    my @out_msg_l = ('nohandler');
     
     my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/gosa_//;
 
     if( exists $event_hash->{$header} ) {
         # a event exists with the header as name
-        &main::daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+        &main::daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
@@ -318,8 +318,9 @@ sub process_gosa_msg {
     # if delivery not possible raise error and return 
     if( not @out_msg_l ) {
         &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
-    } elsif( 0 == @out_msg_l) {
+    } elsif( $out_msg_l[0] eq 'nohandler') {
         &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
+        @out_msg_l = ();
     } 
 
     return @out_msg_l;
