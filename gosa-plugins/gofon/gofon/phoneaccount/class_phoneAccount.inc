@@ -108,7 +108,7 @@ class phoneAccount extends plugin
 
         /* Get config */
         if(!isset($this->goFonHomeServers[$this->goFonHomeServer])){
-          print_red(sprintf(_("The specified goFonHomeServer '%s' is not available in GOsa server configuration. Saving this account will create a new entry on the server '%s'. Use cancel if you do not want to create a new entry ignoring old accounts."),$this->goFonHomeServer, $this->goFonHomeServers[0]['DN']));
+          msg_dialog::display(_("Obsolete entry"), sprintf(_("The current home server is not available anymore. It will be moved to '%s' if you save this entry!"), preg_replace("/,/",", ",$this->goFonHomeServers[0]['DN'])), ERROR_DIALOG);
 
           $this->goFonHomeServer = $this->goFonHomeServers[0]['DN'];
           $this->init_HomeServer = $this->goFonHomeServers[0]['DN'];
@@ -117,13 +117,10 @@ class phoneAccount extends plugin
 
         $r_con =  @mysql_pconnect($cur_cfg['SERVER'],$cur_cfg['LOGIN'],$cur_cfg['PASSWORD']);
         if(!$r_con){
-#          print_red( sprintf(_("The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-#                $cur_cfg['SERVER'],$cur_cfg['LOGIN']));
           new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         }
         $db  =  @mysql_select_db($cur_cfg['DB'],$r_con);
         if(!$db){
-#          print_red(sprintf(_("Can't select database %s on %s."),$cur_cfg['DB'],$cur_cfg['SERVER']));
           new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         }
 
@@ -312,15 +309,16 @@ class phoneAccount extends plugin
      */
     if(!count($this->goFonHomeServers)){
       if($save){
-        print_red(_("There is currently no asterisk server defined. Possibly you are missing a server that handles the asterisk management (goFonServer). Your settings can't be saved to asterisk database."));
+        msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
       }
       return(true);
     }
 
     /* Check if Mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      if($save)
-      print_red(_("Can't save any changes to asterisk database, there is no mysql extension available."));
+      if($save){
+        msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+      }
       return(true);
     }
  
@@ -793,7 +791,7 @@ class phoneAccount extends plugin
         foreach($SQL_query_array as $query){
           @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
           if(!@mysql_query($query,$new_connection)){
-            print_red(_("Error while performing query:")." ".mysql_error());
+            msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
             return false;
           }
         }
@@ -903,7 +901,7 @@ class phoneAccount extends plugin
 
     /* tell user that the selected plugin is no longer available */
     if((!$this->macrostillavailable)&&($this->macro!="none")){
-      print_red(_("The macro you selected, is no longer available for you, please choose another one."));
+      msg_dialog::display(_("Error"), _("Selected macro is not available anymore!"), ERROR_DIALOG);
     }
 
     /* Assing macroselectbox values  */
@@ -912,7 +910,7 @@ class phoneAccount extends plugin
 
     /* check if there is a FON server created */
     if(!count($this->goFonHomeServer)){
-      print_red(_("There is currently no asterisk server defined. Possibly you are missing a server that handles the asterisk management (goFonServer). Your settings can't be saved to asterisk database."));
+      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
     }
 
     /* Create html parameter table for selected macro parameters 
@@ -1017,7 +1015,7 @@ class phoneAccount extends plugin
         $this->phoneNumbers[$number]= $number;
         $this->is_modified= TRUE;
       } else {
-        print_red(_("Please enter a valid phone number!"));
+        msg_dialog::display(_("Error"), _("Phone number is invalid!"), ERROR_DIALOG);
       }
     }
 
@@ -1259,7 +1257,7 @@ class phoneAccount extends plugin
     if ($this->initially_was_account != $this->is_account || $this->is_modified){
       $str = $this->generate_mysql_entension_entries(true);
       if(empty($str)){
-        print_red($str);
+        msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
       }
     }
 
@@ -1335,8 +1333,7 @@ class phoneAccount extends plugin
 
       // Check if we are  connected correctly
       if(!$r_con){
-        print_red(sprintf(_("The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
-                    $a_SETUP['SERVER'],$a_SETUP['LOGIN']));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfon"), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1346,7 +1343,7 @@ class phoneAccount extends plugin
 
       // Test if we have the database selected correctly
       if(!$db){
-        print_red(sprintf(_("Can't select database %s on %s."),$a_SETUP['DB'],$a_SETUP['SERVER']));
+        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfon"), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1378,12 +1375,12 @@ class phoneAccount extends plugin
       foreach($SQL as $query){
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!@mysql_query($query,$r_con)){
-          print_red(_("Stop".mysql_error()));
+          msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
           return false;
         }
       }
     }else{
-      print_red(_("Can't remove phone account, the mysql extension is not present in php configuration."));
+      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
       return false;
     }
 
@@ -1416,7 +1413,7 @@ class phoneAccount extends plugin
         unset($new->by_object['ogroup']->memberList[$this->dn]);
         unset($new->by_object['ogroup']->member[$this->dn]);
         $new->save();
-        print_red(sprintf(_("Removed user '%s' from phone queue '%s'."),$this->uid,$new->by_object['ogroup']->cn));
+        msg_dialog::display(_("Information"), sprintf(_("User '%s' has been removed from phone queue '%s'."), $this->cn, $new->by_object['ogroup']->cn), INFO_DIALOG);
       }
     }
     $ldap->cd($this->dn);
@@ -1607,25 +1604,25 @@ class phoneAccount extends plugin
     $message = plugin::multiple_check();
 
     if(!count($this->goFonHomeServers) && in_array("goFonHomeServers",$this->multi_boxes)){
-      $message[] = _("There must be at least one server with an asterisk database to create a phone account.");
+      $message[] = _("There is currently no asterisk server defined!");
     }
 
     if(empty($this->goFonHomeServer) && in_array("goFonHomeServers",$this->multi_boxes)){
-      $message[] = _("Please select a valid goFonHomeServer.");
+      $message[] = _("Asterisk server is invalid!");
     }
 
     if(in_array("goFonVoicemailPIN",$this->multi_boxes) && 
         ( (strlen($this->goFonVoicemailPIN)==0)||
           (strlen($this->goFonVoicemailPIN)>4))){
-      $message[]=(_("Voicemail PIN must be between 1-4 characters."));
+      $message[]=(_("Voicemail PIN must be 4 characters long!"));
     }else{
       if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN) && in_array("goFonVoicemailPIN",$this->multi_boxes) ){
-        $message[]=(_("The specified Voicemail PIN contains invalid characters, only numeric values are allowed here."));
+        $message[]=(_("Voicemail PIN contains invalid characters!"));
       }
     }
 
     if(preg_match("/[^0-9a-z]/i",$this->goFonPIN) && in_array("goFonPIN",$this->multi_boxes)){
-      $message[]=(_("The specified phone PIN contains invalid characters, only aphanumeric values are allowed here."));
+      $message[]=(_("Phone pin contains invalid characters!"));
     }
 
     /* check for ! in any parameter setting*/
