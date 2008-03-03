@@ -269,7 +269,7 @@ sub get_where_statement {
 
         if( not 0 == @clause_l ) {
             $clause_str = join(" AND ", @clause_l);
-            $clause_str = "WHERE $clause_str ";
+            $clause_str = "WHERE ($clause_str) ";
         }
     }
 
