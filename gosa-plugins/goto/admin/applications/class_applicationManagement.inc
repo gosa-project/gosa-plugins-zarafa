@@ -587,11 +587,9 @@ class applicationManagement extends plugin
     /* Return C&P dialog */
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
-      /* Load entry from queue and set base */
-      $this->CopyPasteHandler->load_entry_from_queue();
-      $this->CopyPasteHandler->SetVar("base",$this->DivListApplication->selectedBase);
 
       /* Get dialog */
+      $this->CopyPasteHandler->SetVar("base",$this->DivListApplication->selectedBase);
       $data = $this->CopyPasteHandler->execute();
 
       /* Return dialog data */
