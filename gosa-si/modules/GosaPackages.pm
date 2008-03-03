@@ -314,10 +314,14 @@ sub process_gosa_msg {
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
+print STDERR "===============================\n"; 
+print STDERR Dumper(@out_msg_l);
+
 
     # if delivery not possible raise error and return 
-    if( not @out_msg_l ) {
+    if( not defined @out_msg_l[0] ) {
         &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
+        @out_msg_l = ();
     } elsif( $out_msg_l[0] eq 'nohandler') {
         &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
         @out_msg_l = ();
