@@ -185,23 +185,24 @@ class pureftpdAccount extends plugin
     if ($this->is_account){
 
       if($this->acl_is_writeable("FTPUploadBandwidth") && !tests::is_id($this->FTPUploadBandwidth)){
-        $message[]= _("Value specified as 'Upload bandwidth' is not valid.");
+        $message[]= msgPool::invalid(_("Upload bandwidth"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPDownloadBandwidth") && !tests::is_id($this->FTPDownloadBandwidth)){
-        $message[]= _("Value specified as 'Download bandwidth' is not valid.");
+        $message[]= msgPool::invalid(_("Download bandwidth"), $this->uid, "/^[0-9]+$/");
       }
 
       if($this->acl_is_writeable("FTPQuotaFiles") && !tests::is_id($this->FTPQuotaFiles)){
-        $message[]= _("Value specified as 'Quota files' is not valid.");
+        $message[]= msgPool::invalid(_("Quota file"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPQuotaMBytes") && !tests::is_id($this->FTPQuotaMBytes)){
-        $message[]= _("Value specified as 'Quota size' is not valid.");
+        $message[]= msgPool::invalid(_("Quota size"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPUploadRatio") && !tests::is_id($this->FTPUploadRatio)){
         $message[]= _("Value specified as 'Upload ratio' is not valid.");
+        $message[]= msgPool::invalid(_("Upload ratio"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPDownloadRatio") && !tests::is_id($this->FTPDownloadRatio)){
-        $message[]= _("Value specified as 'Download ratio' is not valid.");
+        $message[]= msgPool::invalid(_("Download ratio"), $this->uid, "/^[0-9]+$/");
       }
     }
 
