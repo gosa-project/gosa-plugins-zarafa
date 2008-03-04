@@ -897,11 +897,11 @@ class workstartup extends plugin
     $this->handle_post_events("modify");
 
     /* Check if LDAP server has changed */
-    if ($ldap_changed){
-      $events = DaemonEvent::get_event_types(SYSETEM_EVENT);
+    if ($ldap_changed && class_available("DaemonEvent")){
+      $events = DaemonEvent::get_event_types(SYSETEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
-      if(isset($events['BY_CLASS']['DaemonEvent_reload_ldap_config'])){
-        $evt = $events['BY_CLASS']['DaemonEvent_reload_ldap_config'];
+      if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
+        $evt = $events['TRIGGERED']['DaemonEvent_reload_ldap_config'];
         $tmp = new $evt['CLASS_NAME']($this->config);
         $tmp->set_type(TRIGGERED_EVENT);
         $tmp->add_targets(array($this->parent->by_object['workgeneric']->netConfigDNS->macAddress));
