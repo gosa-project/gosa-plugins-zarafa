@@ -17,6 +17,7 @@ class gotomasses extends plugin
   var $divlist        = NULL;
 
   var $events         = array();
+  var $event_tags     = array();
 
   var $sort_by  = "Schedule";
   var $sort_dir = "down";
@@ -30,6 +31,13 @@ class gotomasses extends plugin
     $this->config= &$config;
     $this->o_queue = new gosaSupportDaemon(TRUE,10);
     $this->events  = DaemonEvent::get_event_types( USER_EVENT | SYSTEM_EVENT);
+
+    /* Get tags that will be used in queue searches */
+    foreach($this->events['BY_CLASS'] as $evt){
+      if(isset($evt['s_Queued_Action'])){
+        $this->event_tags[] = $evt['s_Queued_Action'];
+      }
+    }
   }
 
 
@@ -430,9 +438,9 @@ class gotomasses extends plugin
   public function update_priority($id,$type = "up")
   {
     if($type == "up"){
-      $tmp = $this->o_queue->get_queued_entries(-1,-1,"timestamp DESC");
+      $tmp = $this->o_queue->get_queued_entries($this->event_tags,-1,-1,"timestamp DESC");
     }else{
-      $tmp = $this->o_queue->get_queued_entries(-1,-1,"timestamp ASC");
+      $tmp = $this->o_queue->get_queued_entries($this->event_tags,-1,-1,"timestamp ASC");
     }
     $last = array();
     foreach($tmp as $entry){
@@ -640,7 +648,7 @@ class gotomasses extends plugin
     /* Get entries. */ 
     $start  = $this->start; 
     $stop   = $this->range;
-    $entries = $this->o_queue->get_queued_entries($start,$stop,$sort);
+    $entries = $this->o_queue->get_queued_entries($this->event_tags,$start,$stop,$sort);
     if ($this->o_queue->is_error()){
       msg_dialog::display(_("Error"), sprintf(_("Cannot load queue entries: %s"), "<br><br>".$this->o_queue->get_error()), ERROR_DIALOG);
     }
