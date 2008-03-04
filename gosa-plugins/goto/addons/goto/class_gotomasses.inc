@@ -273,7 +273,8 @@ class gotomasses extends plugin
     $divlist->SetHeadpageMode();
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
-    foreach($this->events['BY_CLASS'] as $name =>  $event){
+    foreach($this->events['BY_SCHEDULED_ACTION'] as $name =>  $event){
+      $name = $event['CLASS_NAME'];
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
     }
     if($this->acl_is_removeable()){

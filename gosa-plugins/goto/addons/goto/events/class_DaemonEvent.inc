@@ -23,9 +23,9 @@
 define("SCHEDULED_EVENT",1);
 define("TRIGGERED_EVENT",2);
 
-define("HIDDEN_EVENT",0);
-define("SYSTEM_EVENT",1);
-define("USER_EVENT"  ,2);
+define("HIDDEN_EVENT",1);
+define("SYSTEM_EVENT",2);
+define("USER_EVENT"  ,4);
 
 
 /*! \brief    This is the event base class 
@@ -347,9 +347,13 @@ class DaemonEvent
   public function get_event_info()
   {
     $data =array();
-    $data['CLASS_NAME']         = get_class($this);
-    foreach(array("s_Menu_Name","s_Event_Name","s_Queued_Action","s_Schedule_Action","s_Trigger_Action") as $attr){
-      $data[$attr]  = $this->$attr;
+    $data['CLASS_NAME']   = get_class($this);
+    $data['s_Menu_Name']  = $this->s_Menu_Name;
+    $data['s_Event_Name'] = $this->s_Event_Name;
+    foreach(array("s_Queued_Action","s_Schedule_Action","s_Trigger_Action") as $attr){
+      if(!empty($this->$attr)){
+        $data[$attr]  = $this->$attr;
+      }
     }
     $data['MenuImage']    = "<img src='".$this->s_Menu_Image."' alt='".$this->s_Menu_Name."' border='0' class='center'>";
     $data['ListImage']    = "<img src='".$this->s_List_Image."' title='".$this->s_Event_Name."' 
@@ -382,14 +386,18 @@ class DaemonEvent
     foreach($class_mapping as $name => $path){
       if(preg_match("/^DaemonEvent_/",$name)){
         $tmp  = new $name($config);
-
         if($tmp->visible_for & $type){
           $evt  = $tmp->get_event_info();
-
           $list['BY_CLASS'][$name]                      = $evt;
-          $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
-          $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
-          $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
+          if(isset($evt['s_Trigger_Action'])){
+            $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
+          }
+          if(isset($evt['s_Schedule_Action'])){
+            $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
+          }
+          if(isset($evt['s_Queued_Action'])){
+            $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
+          }
         }
       }
     }
