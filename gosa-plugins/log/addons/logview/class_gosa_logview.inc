@@ -237,7 +237,7 @@ class gosa_logview extends plugin
         /* Check for required tables
          */
         $query = "SHOW TABLES;";
-        $res    = @mysql_query($query,$con);
+        $res    = @mysql_query($query,$link);
         $tables = array();
         while($attrs  = @mysql_fetch_row($res)){
           $tables[] = $attrs[0];
