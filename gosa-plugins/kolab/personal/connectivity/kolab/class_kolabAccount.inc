@@ -162,7 +162,7 @@ class kolabAccount extends plugin
         $valid= FALSE;
         if (!tests::is_email($address)){
           if (!tests::is_email($address, TRUE)){
-              msg_dialog::display(_("Error"), _("Cannot add invalid mail address!"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::invalid(_("Mail address"), "","", "example@your-domain.com"));
           }
         } else {
 
@@ -170,7 +170,7 @@ class kolabAccount extends plugin
           $ldap->cd ($this->config->current['BASE']);
           $ldap->search('(mail='.$address.')',array("mail"));
           if ($ldap->count() == 0){
-            msg_dialog::display(_("Error"), _("Primary mail address already in use by another user!"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::duplicated(_("Primary mail address")));
           } else {
             $valid= TRUE;
           }
@@ -339,13 +339,19 @@ class kolabAccount extends plugin
     $message= plugin::check();
 
     /* FBFuture is in days... */
-    if ($this->kolabFreeBusyFuture != "" && !preg_match('/^[0-9]+$/', $this->kolabFreeBusyFuture)){
-      $message[]= _("The value specified as Free Busy future needs to be an integer.");
+    if ($this->kolabFreeBusyFuture != ""){
+      $message[]= msgPool::required(_("Free Busy future"));
+    }
+    if(!preg_match('/^[0-9]+$/', $this->kolabFreeBusyFuture)){
+      $message[]= msgPool::invalid(_("Free Busy future"), $this->kolabFreeBusyFuture, "/^[0-9]+$/");
     }
 
     /* Check for URL scheme... */
-    if(!empty($this->calFBURL) && !preg_match("/http+(s)*:\/\//",$this->calFBURL)){
-      $message[]= _("The value specified as Free Busy Information URL is invalid.");
+    if(!empty($this->calFBURL)){
+      $message[]= msgPool::required(_("Free Busy url"));
+    }
+    if(!preg_match("/^http+(s)*:\/\//",$this->calFBURL)){
+      $message[]= msgPool::invalid(_("Free Busy url"), $this->calFBURL, "/^http+(s)*:\/\//");
     }
 
     /* Check invitation policy for existing mail addresses */
