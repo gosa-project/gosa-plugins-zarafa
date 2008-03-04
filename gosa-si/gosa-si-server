@@ -1086,11 +1086,26 @@ sub client_input {
 
 
 sub trigger_db_loop {
-#	my ($kernel) = $_[KERNEL];
 	my ($kernel) = @_ ;
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
+    $kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
 }
 
+sub watch_for_done_jobs {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn.
+        " WHERE status='done'";
+	my $res = $job_db->select_dbentry( $sql_statement );
+
+    while( my ($id, $hit) = each %{$res} ) {
+        my $jobdb_id = $hit->{id};
+        my $sql_statement = "DELETE FROM $job_queue_tn WHERE id='$jobdb_id'"; 
+        my $res = $job_db->del_dbentry($sql_statement);
+    }
+
+    $kernel->delay_set('watch_for_done_jobs',$job_queue_loop_delay);
+}
 
 sub watch_for_new_jobs {
 	my ($kernel,$heap) = @_[KERNEL, HEAP];
@@ -1130,7 +1145,7 @@ sub watch_for_new_jobs {
 		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
     }
 
-	$kernel->delay_set('watch_for_new_jobs',3);
+	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 }
 
 
@@ -1437,6 +1452,7 @@ POE::Session->create(
         next_task => \&next_task,
         task_result => \&task_result,
 		watch_for_new_jobs => \&watch_for_new_jobs,
+        watch_for_done_jobs => \&watch_for_done_jobs,
         create_packages_list_db => \&create_packages_list_db,
         create_fai_server_db => \&create_fai_server_db,
 	}
