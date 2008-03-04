@@ -36,10 +36,6 @@ class netatalk extends plugin {
   var $plHeadline = "Netatalk";
   var $plDescription = "Manage netatalk account";
 
-  /* CLI vars */
-  var $cli_summary = "Manage netatalk account";
-  var $cli_description = "Manage Account \nfor netatalk";
-  var $cli_parameters = array ("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
   var $view_logged = FALSE;
 
   /* Plugin specific values */

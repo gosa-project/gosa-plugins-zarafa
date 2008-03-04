@@ -1,11 +1,7 @@
 <?php
 class mimetype extends plugin
 {
-	/* CLI vars */
-	var $cli_summary		  = "This tab allows you to modify, add or remove mime types in the selected department.";
-	var $cli_description	= "Management dialog to handle mime types";
 	var $ignore_account 	= true;	// This is always a valid account
-	var $cli_parameters		= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 	var $objectclasses		= array("top","gotoMimeType");
 	var $attributes			  = array("cn","gotoMimeApplication","gotoMimeLeftClickAction","gotoMimeIcon",
 									"description","gotoMimeFilePattern","gotoMimeEmbeddedApplication",
