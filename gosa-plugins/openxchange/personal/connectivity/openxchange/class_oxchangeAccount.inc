@@ -813,7 +813,7 @@ class oxchangeAccount extends plugin
     preg_match("/^(\w+(?=\=))=((\w|\s|\.)+(?=\,)),.*/",$this->dn,$uidarray);
     $uid=$uidarray[2];
     if (trim($uid) == "") {
-      msg_dialog::display(_("Error"), _("Open-Xchange account name is invalid!"), ERROR_DIALOG);
+      msg_dialog::display(_("Error"), msgPool::invalid(_("Open-Xchange account name")), ERROR_DIALOG);
       return;
     }
 	
