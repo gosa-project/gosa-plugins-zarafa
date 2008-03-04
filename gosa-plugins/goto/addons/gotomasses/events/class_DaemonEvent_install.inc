@@ -5,6 +5,7 @@ class DaemonEvent_install extends DaemonEvent
   var $progress = 0;  
   var $status   = "";  
 
+  var $visible_for = SYSTEM_EVENT;
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);

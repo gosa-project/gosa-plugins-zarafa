@@ -1,6 +1,7 @@
 <?php
 class DaemonEvent_notify extends DaemonEvent
 {
+  var $visible_for = USER_EVENT;
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);

@@ -1,6 +1,9 @@
 <?php
 class DaemonEvent_halt extends DaemonEvent
 {
+
+  var $visible_for = SYSTEM_EVENT;
+
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);

@@ -4,6 +4,7 @@ class DaemonEvent_reinstall extends DaemonEvent
 {
   var $progress = 0;  
   var $status   = "";  
+  var $visible_for = SYSTEM_EVENT;
 
   public function __construct($config,$data = array())
   {

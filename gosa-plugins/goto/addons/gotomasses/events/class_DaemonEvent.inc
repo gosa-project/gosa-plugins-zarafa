@@ -22,6 +22,11 @@
 define("SCHEDULED_EVENT",1);
 define("TRIGGERED_EVENT",2);
 
+define("HIDDEN_EVENT",0);
+define("SYSTEM_EVENT",1);
+define("USER_EVENT"  ,2);
+
+
 /*! \brief    This is the event base class 
   \author   Fabian Hickert <hickert@gonicus.de>
   \version  1.00
@@ -61,6 +66,7 @@ class DaemonEvent
   protected $workstation_list     = array();  // Used as cache in the target list.
   protected $server_list          = array();  // Used as cache in the target list.
 
+  protected $visible_for          = HIDDEN_EVENT;
  
   function set_type($type)
   {
@@ -363,19 +369,27 @@ class DaemonEvent
   /*! \brief  Returns a complete list of all available events.
     @return   Array   Containing $this->get_event_info() for all available events.
    */
-  static function get_event_types()
+  static function get_event_types($type)
   {
     global $class_mapping,$config;
     $list = array();
+    $list['BY_CLASS'] = array();
+    $list['BY_TRIGGERED_ACTION'] = array();
+    $list['BY_SCHEDULED_ACTION'] = array();
+    $list['BY_QUEUED_ACTION'] = array();
+
     foreach($class_mapping as $name => $path){
       if(preg_match("/^DaemonEvent_/",$name)){
         $tmp  = new $name($config);
-        $evt  = $tmp->get_event_info();
 
-        $list['BY_CLASS'][$name]                      = $evt;
-        $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
-        $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
-        $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
+        if($tmp->visible_for & $type){
+          $evt  = $tmp->get_event_info();
+
+          $list['BY_CLASS'][$name]                      = $evt;
+          $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
+          $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
+          $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
+        }
       }
     }
     return($list);

@@ -29,7 +29,7 @@ class gotomasses extends plugin
     /* Include config object */
     $this->config= &$config;
     $this->o_queue = new gosaSupportDaemon(TRUE,10);
-    $this->events  = DaemonEvent::get_event_types();
+    $this->events  = DaemonEvent::get_event_types( USER_EVENT | SYSTEM_EVENT);
   }
 
 
