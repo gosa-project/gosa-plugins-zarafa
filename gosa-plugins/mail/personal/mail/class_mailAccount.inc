@@ -355,14 +355,14 @@ class mailAccount extends plugin
             if ($this->is_template){
               $valid= TRUE;
             } else {
-              msg_dialog::display(_("Error"), _("Cannot add invalid mail address!"), ERROR_DIALOG);
+              msg_dialog::display(_("Error"), 
+                  msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+                  ERROR_DIALOG);
             }
           }
         } elseif ($address == $this->mail
             || in_array($address, $this->gosaMailAlternateAddress)) {
-
           msg_dialog::display(_("Error"),_("Cannot add your primary address to the list of forwarders.") , ERROR_DIALOG);
-
         } else {
           $valid= TRUE;
         }
@@ -391,12 +391,17 @@ class mailAccount extends plugin
       if (!tests::is_email($_POST['alternate_address'])){
         if ($this->is_template){
           if (!(tests::is_email($_POST['alternate_address'], TRUE))){
-            msg_dialog::display(_("Error"), _("Cannot add invalid mail address!"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), 
+                msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+                ERROR_DIALOG);
+
           } else {
             $valid= TRUE;
           }
         } else {
-          msg_dialog::display(_("Error"), _("Cannot add invalid mail address!"), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), 
+              msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+              ERROR_DIALOG);
         }
 
       } else {
@@ -406,7 +411,8 @@ class mailAccount extends plugin
       if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
         $ui= get_userinfo();
         if ($user != $ui->username){
-          msg_dialog::display(_("Error"), sprintf(_("Cannot add mail address: it is already used by user '%s'."), $user), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
+            sprintf(_("Already used by user '%s'."), $user), ERROR_DIALOG);
         }
       }
     }
@@ -915,27 +921,27 @@ class mailAccount extends plugin
 
     /* must: mail */
     if ($this->mail == ""){
-      $message[]= _("The required field 'Primary address' is not set.");
+      $message[]= msgPool::required(_("Primary address"));
     }
     if ($this->is_template){
       if (!tests::is_email($this->mail, TRUE)){
-        $message[]= _("Please enter a valid email address in 'Primary address' field.");
+        $message[]= msgPool::invalid(_("Mail address"),"","","%givenName.%sn@your-domain.com");
       }
     } else {
       if (!tests::is_email($this->mail)){
-        $message[]= _("Please enter a valid email address in 'Primary address' field.");
+        $message[]= msgPool::invalid(_("Mail address"),"","","example@your-domain.com");
       }
     }
     $ldap->cd($this->config->current['BASE']);
     $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=".$this->mail.")(gosaMailAlternateAddress=".$this->mail."))(!(uid=".$this->uid."))(!(cn=".$this->uid.")))", array("uid"));
     if ($ldap->count() != 0){
-      $message[]= _("The primary address you've entered is already in use.");
+      $message[]= msgPool::duplicated(_("Mail address"));
     }
 
     /* Check quota */
     if ($this->gosaMailQuota != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailQuota)) {
-        $message[]= _("Value in 'Quota size' is not valid.");
+        $message[]= msgPool::invalid(_("Quota size"),$this->gosaMailQuota,"/^[0-9]*/");
       } else {
         $this->gosaMailQuota= (int) $this->gosaMailQuota;
       }
@@ -944,25 +950,23 @@ class mailAccount extends plugin
     /* Check rejectsize for integer */
     if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailMaxSize")){
       if (!is_numeric($this->gosaMailMaxSize)){
-        $message[]= _("Please specify a vaild mail size for mails to be rejected.");
+        $message[]= msgPool::invalid(_("Mail reject size"),$this->gosaMailMaxSize,"/^[0-9]*/");
       } else {
         $this->gosaMailMaxSize= (int) $this->gosaMailMaxSize;
       }
     }
 
     /* Need gosaMailMaxSize if use_mailsize_limit is checked */
-    if (is_integer(strpos($this->gosaMailDeliveryMode, "R")) && 
-        $this->gosaMailMaxSize == ""){
-
-      $message[]= _("You need to set the maximum mail size in order to reject anything.");
+    if (is_integer(strpos($this->gosaMailDeliveryMode, "R")) && $this->gosaMailMaxSize == ""){
+      $message[]= msgPool::required(_("Mail reject size"));
     }
 
     if((preg_match("/S/", $this->gosaMailDeliveryMode))&&(empty($this->gosaSpamMailbox))) {
-      $message[]= _("You specified Spam settings, but there is no Folder specified.");
+      $message[]= msgPool::required(_("Spam folder"));
     }
 
-    if (preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
-      $message[]= _("Time interval to show vacation message is not valid.");
+    if (preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart >= $this->gosaVacationStop){
+      $message[]= msgPool::invalid(_("Vacation interval"));
     }
 
     return ($message);
