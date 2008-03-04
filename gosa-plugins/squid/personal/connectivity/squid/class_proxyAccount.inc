@@ -188,14 +188,12 @@ class proxyAccount extends plugin
     $message= plugin::check();
     
     /* We've got only one value to check for positive integer or emtpy field */
-    if ($this->is_account){
-      if($this->acl_is_writeable("gosaProxyQuota")){
-        if (isset($_POST["quota_size"])){
-          if ($_POST["quota_size"] == "gosaProxyQuota"){
-            $message[]= _("Numerical value for Quota Setting is empty.");
-          }elseif ($_POST["quota_size"] <= 0){
-            $message[]= _("Numerical value for Quota Setting is not valid.");
-          }
+    if ($this->is_account && $this->acl_is_writeable("gosaProxyQuota")){
+      if (isset($_POST["quota_size"])){
+        if ($_POST["quota_size"] == "gosaProxyQuota"){
+          $message[]= msgPool::invalid(_("Quota Setting"));
+        }elseif ($_POST["quota_size"] <= 0){
+          $message[]= msgPool::invalid(_("Quota Setting"),$_POST["quota_size"],"/^[0-9]/");
         }
       }
     }
