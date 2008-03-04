@@ -278,45 +278,42 @@ class gosa_logview extends plugin
         $result = @mysql_query($query);
         if(!$result){
           new log("debug","logview","",array(),@mysql_error());
-        }
+          msg_dialog::display(_("Error"), _("Can not query log database."), ERROR_DIALOG);
+        }else{
 
-        /* Display results */
-        $mod= 0;
+          /* Display results */
+          $mod= 0;
 
-        /* Add entries to result str */
-        while ($line = mysql_fetch_array($result, MYSQL_ASSOC)){
+          /* Add entries to result str */
+          while ($line = mysql_fetch_array($result, MYSQL_ASSOC)){
 
-          /* Toggle background color */
-          if ( ($mod++) & 1){
-            $col= "background-color: #ECECEC;";
-          } else {
-            $col= "background-color: #F5F5F5;";
+            /* Toggle background color */
+            if ( ($mod++) & 1){
+              $col= "background-color: #ECECEC;";
+            } else {
+              $col= "background-color: #F5F5F5;";
+            }
+
+            $base = ", ".substr($this->config->current['BASE'],0,5)."...";
+
+            if(isset($this->uid_map[$line['user']])){
+              $user = $this->uid_map[$line['user']];
+            }else{
+              $user = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['user']);
+            }
+            $object = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['object']);
+
+            $res.=" <tr style=\"$col\">\n";
+            $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
+            $res.="   <td>".date("H:i:s d.m.Y",($line['timestamp'] + $this->timezone_offset))."</td>";
+            $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
+            $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
+            $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
+            $res.="   <td>".$line['result']."</td>";
+            $res.=" </tr>\n";
           }
-
-          $base = ", ".substr($this->config->current['BASE'],0,5)."...";
-  
-          if(isset($this->uid_map[$line['user']])){
-            $user = $this->uid_map[$line['user']];
-          }else{
-            $user = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['user']);
-          }
-          $object = preg_replace("/,".normalizePreg($this->config->current['BASE'])."/",$base,$line['object']);
-
-          $res.=" <tr style=\"$col\">\n";
-          $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
-          $res.="   <td>".date("H:i:s d.m.Y",($line['timestamp'] + $this->timezone_offset))."</td>";
-          $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
-          $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
-          $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
-          $res.="   <td>".$line['result']."</td>";
-#         if($line['repeated'] == 1){
-#           $res.="   <td>-</td>";
-#         }else{
-#           $res.="   <td>".($line['repeated']-1)."</td>";
-#         }
-          $res.=" </tr>\n";
         }
-        mysql_close($link);
+        @mysql_close($link);
         $smarty->assign("mode".$this->sort, $sort_sign);
         $smarty->assign("search_result", $res);
       }
