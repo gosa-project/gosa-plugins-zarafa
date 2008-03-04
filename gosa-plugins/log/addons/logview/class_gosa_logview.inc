@@ -302,6 +302,7 @@ class gosa_logview extends plugin
           $mod= 0;
 
           /* Add entries to result str */
+          $res = "";
           while ($line = mysql_fetch_array($result, MYSQL_ASSOC)){
 
             /* Toggle background color */
