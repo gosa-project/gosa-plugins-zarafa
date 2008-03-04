@@ -513,7 +513,7 @@ class gotomasses extends plugin
      */
     if(count($update_ids)){
       if(!$this->o_queue->update_entries($update_ids,$data)){
-        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
       }
     }
@@ -549,7 +549,7 @@ class gotomasses extends plugin
      */
     if(count($update_ids)){
       if(!$this->o_queue->update_entries($update_ids,$data)){
-        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entries.")) , ERROR_DIALOG);
+        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entries.")) , ERROR_DIALOG);
         return(FALSE);
       }
     }
@@ -590,7 +590,7 @@ class gotomasses extends plugin
       $tmp = new DaemonEvent_faireboot($this->config);
       $tmp->add_targets($update_ids);
       if(!$this->o_queue->append($tmp)){
-        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
       }
     }else{
@@ -630,7 +630,7 @@ class gotomasses extends plugin
      */
     if(count($update_ids)){
       if(!$this->o_queue->update_entries($update_ids,$data)){
-        msg_dialog::display(_("Error"), sprintf(_("Could not update queue entry: %s"),$id) , ERROR_DIALOG);
+        msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
       }
     }
