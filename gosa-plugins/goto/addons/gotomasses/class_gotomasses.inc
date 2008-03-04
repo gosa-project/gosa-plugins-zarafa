@@ -33,6 +33,7 @@ class gotomasses extends plugin
     $this->events  = DaemonEvent::get_event_types( USER_EVENT | SYSTEM_EVENT);
 
     /* Get tags that will be used in queue searches */
+    $this->event_tags = array("none");
     foreach($this->events['BY_CLASS'] as $evt){
       if(isset($evt['s_Queued_Action'])){
         $this->event_tags[] = $evt['s_Queued_Action'];
