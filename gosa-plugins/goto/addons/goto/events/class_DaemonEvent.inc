@@ -378,10 +378,10 @@ class DaemonEvent
   {
     global $class_mapping,$config;
     $list = array();
-    $list['BY_CLASS'] = array();
-    $list['BY_TRIGGERED_ACTION'] = array();
-    $list['BY_SCHEDULED_ACTION'] = array();
-    $list['BY_QUEUED_ACTION'] = array();
+    $list['BY_CLASS']  = array();
+    $list['TRIGGERED'] = array();
+    $list['SCHEDULED'] = array();
+    $list['QUEUED']    = array();
 
     foreach($class_mapping as $name => $path){
       if(preg_match("/^DaemonEvent_/",$name)){
@@ -390,13 +390,15 @@ class DaemonEvent
           $evt  = $tmp->get_event_info();
           $list['BY_CLASS'][$name]                      = $evt;
           if(isset($evt['s_Trigger_Action'])){
-            $list['BY_TRIGGERED_ACTION'][$evt['s_Trigger_Action']]  = $evt;
+            $list['TRIGGERED'][$name] = $evt;
+            $list['QUEUED'][$evt['s_Trigger_Action']] = $name;
           }
           if(isset($evt['s_Schedule_Action'])){
-            $list['BY_SCHEDULED_ACTION'][$evt['s_Schedule_Action']] = $evt;
+            $list['SCHEDULED'][$name] = $evt;
+            $list['QUEUED'][$evt['s_Schedule_Action']] = $name;
           }
           if(isset($evt['s_Queued_Action'])){
-            $list['BY_QUEUED_ACTION']   [$evt['s_Queued_Action']]   = $evt;
+            $list['QUEUED'][$evt['s_Queued_Action']] = $name;
           }
         }
       }

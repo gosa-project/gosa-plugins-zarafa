@@ -166,10 +166,9 @@ class gotomasses extends plugin
       $type = FALSE;
       if(isset($this->entries[$id])){
         $event = $this->entries[$s_entry];
-      
-        
-        if($event['STATUS'] == "waiting" && isset($this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']])){
-          $type = $this->events['BY_QUEUED_ACTION'][$event['HEADERTAG']];
+        if($event['STATUS'] == "waiting" && isset($this->events['QUEUED'][$event['HEADERTAG']])){
+          $evt_name = $this->events['QUEUED'][$event['HEADERTAG']];
+          $type = $this->events['BY_CLASS'][$evt_name];
           $this->dialog = new $type['CLASS_NAME']($this->config,$event);
         }
       }
@@ -202,8 +201,9 @@ class gotomasses extends plugin
             /* Only remove WAITING or ERROR entries */
             if(in_array($task['STATUS'],array("waiting","error"))){
               $this->ids_to_remove[] = $task['ID'];
-              if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']])){
-                $evt = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
+              if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
+                $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
+                $evt = $this->events['BY_CLASS'][$evt_name];
                 $tmp.= "\n".$task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
               }else{
                 $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
@@ -273,8 +273,8 @@ class gotomasses extends plugin
     $divlist->SetHeadpageMode();
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
-    foreach($this->events['BY_SCHEDULED_ACTION'] as $name =>  $event){
-      $name = $event['CLASS_NAME'];
+
+    foreach($this->events['SCHEDULED'] as $name =>  $event){
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
     }
     if($this->acl_is_removeable()){
@@ -388,9 +388,10 @@ class gotomasses extends plugin
       /* Check if this event exists as Daemon class 
        * In this case, display a more accurate entry.
        */ 
-      if(isset($this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']]['s_Menu_Name'])){
-        $event_type = $this->events['BY_QUEUED_ACTION'][$task['HEADERTAG']];
-        $display2= $event_type['s_Menu_Name'];
+      if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
+        $evt_name   = $this->events['QUEUED'][$task['HEADERTAG']];
+        $event_type = $this->events['BY_CLASS'][$evt_name];
+        $display2   = $event_type['s_Menu_Name'];
 
         if(strlen($display2) > 20){
           $display2 = substr($display2,0,18)."...";
