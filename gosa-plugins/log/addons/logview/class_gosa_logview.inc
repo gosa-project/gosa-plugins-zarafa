@@ -278,7 +278,7 @@ class gosa_logview extends plugin
         $result = @mysql_query($query);
         if(!$result){
           new log("debug","logview","",array(),@mysql_error());
-          msg_dialog::display(_("Error"), _("Can not query log database."), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOsa LOG"), ERROR_DIALOG);
         }else{
 
           /* Display results */
