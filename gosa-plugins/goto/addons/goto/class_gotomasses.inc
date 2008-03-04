@@ -49,15 +49,13 @@ class gotomasses extends plugin
   {
     /* Include config object */
     $this->config= &$config;
-    $this->o_queue = new gosaSupportDaemon(TRUE,10);
+    $this->o_queue = new gosaSupportDaemon(TRUE,5);
     $this->events  = DaemonEvent::get_event_types( SYSTEM_EVENT);
 
     /* Get tags that will be used in queue searches */
     $this->event_tags = array("none");
-    foreach($this->events['BY_CLASS'] as $evt){
-      if(isset($evt['s_Queued_Action'])){
-        $this->event_tags[] = $evt['s_Queued_Action'];
-      }
+    foreach($this->events['SCHEDULED'] as $evt){
+      $this->event_tags[] = $evt['s_Queued_Action'];
     }
   }
 
