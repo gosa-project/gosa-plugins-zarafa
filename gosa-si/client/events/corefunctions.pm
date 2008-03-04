@@ -97,6 +97,7 @@ sub registered {
     if( $header eq "registered" ) {
         my $source = @{$msg_hash->{'source'}}[0];
         &main::daemon_log("registration at $source",1);
+        $main::server_address = $source;
     }
 
     # set globaly variable client_address
@@ -110,7 +111,6 @@ sub registered {
             unlink($main::opts_file);
     }
 
-    &main::daemon_log(Dumper($msg_hash),1);
     my $opts_file_FH;
     my $hostname= $main::client_dnsname;
     $hostname =~ s/\..*$//;

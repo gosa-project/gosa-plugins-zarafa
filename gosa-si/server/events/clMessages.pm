@@ -12,6 +12,7 @@ my @events = (
     "GOTOACTIVATION",
     "LOGIN",
     "LOGOUT",
+    "CURRENTLY_LOGGED_IN",
     );
 @EXPORT = @events;
 
@@ -82,7 +83,7 @@ sub LOGIN {
         client=>$source,
         user=>$login,
         timestamp=>&get_time,
-    ); 
+        ); 
     my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
     if ($res != 0)  {
         &main::daemon_log("ERROR: cannot add entry to known_clients: $error_str");
@@ -92,7 +93,7 @@ sub LOGIN {
     return;   
 }
 
-
+# TODO umstellen wie bei LOGIN
 sub LOGOUT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -111,11 +112,57 @@ sub LOGOUT {
 
     if( $act_login eq "" ){ $act_login = "nobody"; }
 
-    $sql_statement = "UPDATE known_clients ".
-                "SET login='$act_login' ".
-                "WHERE hostname='$source'";
+    $sql_statement = "UPDATE known_clients SET login='$act_login' WHERE hostname='$source'";
     $res = $main::known_clients_db->update_dbentry($sql_statement);
     
+    return;
+}
+
+
+sub CURRENTLY_LOGGED_IN {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my ($sql_statement, $db_res);
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $login = @{$msg_hash->{$header}}[0];
+
+    $sql_statement = "SELECT * FROM $main::login_users_tn WHERE client='$source'"; 
+    $db_res = $main::login_users_db->select_dbentry($sql_statement);
+    my %currently_logged_in_user = (); 
+    while( my($hit_id, $hit) = each(%{$db_res}) ) {
+        $currently_logged_in_user{$hit->{'user'}} = 1;
+    }
+    &main::daemon_log("DEBUG: logged in users from login_user_db: ".join(", ", keys(%currently_logged_in_user)), 7); 
+
+    my @logged_in_user = split(/\s+/, $login);
+    &main::daemon_log("DEBUG: logged in users reported from client: ".join(", ", @logged_in_user), 7); 
+    foreach my $user (@logged_in_user) {
+        my %add_hash = ( table=>$main::login_users_tn, 
+                primkey=> ['client', 'user'],
+                client=>$source,
+                user=>$user,
+                timestamp=>&get_time,
+                ); 
+        my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
+        if ($res != 0)  {
+            &main::daemon_log("ERROR: cannot add entry to known_clients: $error_str");
+            return;
+        }
+
+        delete $currently_logged_in_user{$user};
+    }
+
+    # if there is still a user in %currently_logged_in_user 
+    # although he is not reported by client 
+    # then delete it from $login_user_db
+    foreach my $obsolete_user (keys(%currently_logged_in_user)) {
+        &main::daemon_log("WARNING: user '$obsolete_user' is currently not logged ".
+                "in at client '$source' but still found at login_user_db", 3); 
+        my $sql_statement = "DELETE FROM $main::login_users_tn WHERE client='$source' AND user='$obsolete_user'"; 
+        my $res =  $main::login_users_db->del_dbentry($sql_statement);
+        &main::daemon_log("WARNING: delete user '$obsolete_user' at client '$source' from login_user_db", 3); 
+    }
+
     return;
 }
 

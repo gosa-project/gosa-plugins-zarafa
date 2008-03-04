@@ -76,6 +76,9 @@ $gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
 my $delay_set_time = 5;
 our $prg= basename($0);
 
+# all x seconds the client reports logged_in users to gosa-si-server
+my $trigger_logged_in_users_report_delay = 600;
+
 %cfg_defaults = (
 "general" =>
     {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
@@ -928,7 +931,34 @@ sub trigger_new_key {
     &send_msg_to_target($msg, $client_address, $server_key, 'new_key');
 
     $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+}
 
+
+sub trigger_logged_in_users_report {
+    my ($kernel) = $_[KERNEL] ;  
+
+    # just do if client is registered already
+    if( $REGISTERED ) {
+        my $result = qx(/usr/bin/w -hs);
+        my @res_lines;
+
+        if( defined $result ) { 
+            chomp($result);
+            @res_lines = split("\n", $result);
+        }
+
+        my @logged_in_user_list;
+        foreach my $line (@res_lines) {
+            chomp($line);
+            my @line_parts = split(/\s+/, $line); 
+            push(@logged_in_user_list, $line_parts[0]);
+        }
+        system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
+        $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
+    } else {
+        # try it in 1 sec again
+        $kernel->delay_set('trigger_logged_in_users_report', 1);
+    }
 }
 
 
@@ -972,7 +1002,7 @@ sub fifo_got_record {
     my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
     &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
     my $clmsg = &create_xml_string($clmsg_hash);
-    &send_msg_to_target($clmsg, $server_address, $server_key);
+    &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");
     return;
 }
 
@@ -995,6 +1025,13 @@ sub _start {
         $heap->{services}->{ $file_watcher->ID } = $file_name;
         $heap->{watchers}->{ $file_watcher->ID } = $file_watcher;
     }
+    $kernel->yield('trigger_logged_in_users_report'); 
+}
+
+
+sub _default {
+    daemon_log("ERROR: can not handle incoming msg with header '$_[ARG0]'", 1);
+    return;
 }
 
 
@@ -1199,8 +1236,12 @@ POSIX::mkfifo("$gosa_si_client_fifo", "0600");
 POE::Session->create(
 	inline_states => {
 		_start => \&_start, 
+        _default => \&_default,
         register_at_gosa_si_server => \&register_at_gosa_si_server,
+
+        # trigger periodical tasks
         trigger_new_key => \&trigger_new_key,
+        trigger_logged_in_users_report => \&trigger_logged_in_users_report,
         
         # handle records from each defined file differently
         fifo_record => \&fifo_got_record,
