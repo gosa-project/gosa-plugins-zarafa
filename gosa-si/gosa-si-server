@@ -795,6 +795,7 @@ sub get_local_ip_for_remote_ip {
 	return $result;
 }
 
+
 sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
     my $error = 0;
@@ -805,8 +806,7 @@ sub send_msg_to_target {
   
     if( $msg_header ) {
         $header = "'$msg_header'-";
-    }
-    else {
+    } else {
         $header = "";
     }
 
@@ -853,14 +853,12 @@ sub send_msg_to_target {
             $sql_statement = "DELETE FROM known_clients WHERE hostname='$address'";
             $res = $known_clients_db->del_dbentry($sql_statement);
             daemon_log("WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
-        } 
-        else { 
+        } else { 
             $sql_statement = "UPDATE known_clients SET status='$new_status' WHERE hostname='$address'";
             $res = $known_clients_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
                 daemon_log("WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
-            }
-            else {
+            } else {
                 daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
             }
         }
@@ -891,6 +889,27 @@ sub send_msg_to_target {
 }
 
 
+sub update_jobdb_status_for_send_msgs {
+    my ($answer, $error) = @_;
+    if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
+        my $jobdb_id = $1;
+        if( $error ) {
+            # sending msg faild
+            my $sql_statement = "UPDATE $job_queue_tn ".
+                "SET status='error', result='can not deliver msg, please consult log file' ".
+                "WHERE id='$jobdb_id'";
+            my $res = $job_db->update_dbentry($sql_statement);
+        } else {
+            # sending msg was successful
+            my $sql_statement = "UPDATE $job_queue_tn ".
+                "SET status='done' ".
+                "WHERE id='$jobdb_id'";
+            my $res = $job_db->update_dbentry($sql_statement);
+        }
+    }
+}
+
+
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
@@ -901,7 +920,7 @@ sub _start {
 
 sub client_input {
     no strict "refs";
-    my ($kernel, $session, $heap,$input,$wheel) = @_[KERNEL, SESSION, HEAP, ARG0, ARG1];
+    my ($kernel, $session, $heap, $input, $wheel) = @_[KERNEL, SESSION, HEAP, ARG0, ARG1];
     my $session_id = $session->ID;
     my ($msg, $msg_hash, $module);
     my $error = 0;
@@ -970,7 +989,8 @@ sub client_input {
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
                     }
                 }
 
@@ -983,7 +1003,8 @@ sub client_input {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/KNOWN_SERVER/$host_name/g;
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
                     }
                 }
 
@@ -1005,12 +1026,13 @@ sub client_input {
                     $answer =~ /<header>(\S+)<\/header>/;   
                     my $header;
                     if( defined $1 ) { $header = $1; }
-                    &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+                    &update_jobdb_status_for_send_msgs($answer, $error);
                 }
 
                 # target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("target is mac address '$answer_target', looking for host in known_clients", 3);
+                    daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
                     my $found_ip_flag = 0;
@@ -1018,8 +1040,9 @@ sub client_input {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/$answer_target/$host_name/g;
-                        daemon_log("found host '$host_name', associated to '$answer_target'", 3);
-                        &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        daemon_log("INFO: found host '$host_name', associated to '$answer_target'", 5);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
                         $found_ip_flag++ ;
                     }   
                     if( $found_ip_flag == 0) {
@@ -1031,7 +1054,8 @@ sub client_input {
                             while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                                 my $bus_address = $hit->{hostname};
                                 my $bus_key = $hit->{hostkey};
-                                &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                &update_jobdb_status_for_send_msgs($answer, $error);
                                 last;
                             }
                         }
@@ -1051,19 +1075,21 @@ sub client_input {
                             my $query_res = $known_server_db->select_dbentry( $sql_statement );
                             my $res_length = keys( %{$query_res} );
                             if( $res_length == 0 ){
-                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, no bus found in known_server", 3);
+                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, ".
+                                        "no bus found in known_server", 3);
                             }
                             else {
                                 while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                                     my $bus_key = $hit->{hostkey};
-                                    &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                    &update_jobdb_status_for_send_msgs($answer, $error);
                                 }
                             }
                         }
                         next;
                     }
-                    # send_msg
-                    &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+                    &update_jobdb_status_for_send_msgs($answer, $error);
                 }
             }
         }
@@ -1074,7 +1100,9 @@ sub client_input {
             my $session_id = $1;
             if( defined $session_id ) {
                 my $session_reference = $kernel->ID_id_to_session($session_id);
-                $heap = $session_reference->get_heap();
+                if( defined $session_reference ) {
+                    $heap = $session_reference->get_heap();
+                }
             }     
         }
         $heap->{client}->put($client_answer);
@@ -1143,6 +1171,10 @@ sub watch_for_new_jobs {
         $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
 		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
+
+        # update status in job queue to 'processing'
+        $sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
+        my $res = $job_db->update_dbentry($sql_statement);
     }
 
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);

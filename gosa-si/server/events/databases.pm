@@ -158,7 +158,8 @@ sub update_status_jobdb_entry {
 
         # conditions
         # no timestamp update if status eq waiting
-        my $res_hash = $main::job_db->select_dbentry("SELECT * FROM $table $where AND status='processing' ");
+        my $sql_statement = "SELECT * FROM $table $where AND status='processing'";
+        my $res_hash = $main::job_db->select_dbentry($sql_statement);
         if( (0 != keys(%$res_hash)) && ($update =~ /timestamp/i) ) {
             $error ++;
             $out_xml = "<answer1>1</answer1><error_string>there is no timestamp update allowed while status is 'processing'</error_string>";
@@ -171,7 +172,6 @@ sub update_status_jobdb_entry {
 
             # check success of db update
             if( not $db_res > 0 ) { $error++; };
-
         }
     }
 

@@ -18,10 +18,11 @@ if($sock->connected()){
 # jobdb add
 #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
 #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
-#$data = "<xml> <header>job_ping</header> <source>10.89.1.155:20083</source> <target>10.89.1.155:20081</target><macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>20130102133900</timestamp> </xml>";
+#$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>19700101000000</timestamp> </xml>";
+
 
 # jobdb delete
-#$data = "<xml> <header>gosa_delete_jobdb_entry</header><where><clause><phrase><id>3</id></phrase></clause></where></xml>";
+#$data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>1</id></phrase></clause></where></xml>";
 
 # smbhash
 #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
@@ -30,8 +31,8 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target></xml>";
 
 # jobdb update  
-#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><timestamp>23450101000000</timestamp><result>XXXXXXXXXXXXXXx</result></update></xml>";
-#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <status>waiting</status></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
+#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
+#$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>done</status> <result>update</result></update></xml>";
 
 # jobdb query
 #$data = "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target>".
@@ -44,23 +45,23 @@ if($sock->connected()){
 #$data= "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target></xml>";
 
 # jobdb count
-#$data = "<xml> <header>gosa_count_packages_list</header><source>GOSA</source> <target>GOSA</target></xml>";
+#$data = "<xml> <header>gosa_count_jobdb</header><source>GOSA</source> <target>GOSA</target></xml>";
 
 # jobdb clear
-#$data = "<xml> <header>gosa_clear_jobdb</header> </xml>";
+#$data = "<xml> <header>gosa_clear_jobdb</header> <source>GOSA</source> <target>GOSA</target></xml>";
 
 # set gosa-si-client to 'activated'
-#$data = "<xml> <header>gosa_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>127.0.0.1:20081</source> </xml>";
+#$data = "<xml> <header>job_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>GOSA</source> <macaddress>00:01:6c:9d:b9:fa</macaddress></xml>";
+
 
 
 # trigger jobs at client
 #$data = "<xml> <header>gosa_detect_hardware</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
-#$data = "<xml> <header>gosa_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
+#$data = "<xml> <header>job_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp></xml>";
 #$data = "<xml> <header>gosa_trigger_action_faireboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-#$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> ".
-#    "<macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>20130101000000</timestamp> </xml>";
-$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
+#$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>20130101000000</timestamp> </xml>";
+#$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
 
 # to test
@@ -86,6 +87,12 @@ $data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fa</target> <so
 
 # recreate_fai_server_db
 #$data = "<xml> <header>gosa_recreate_fai_server_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
+
+# testing
+#$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>susi</user> <user>harald</user> <user>susi</user> <group>gosa-admins-all</group> </xml>"; 
+#$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <group>gosa-admins-all</group> <usrmesg>kaffeepause</usrmesg> </xml>"; 
+$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>cajus.pollmeier</user> <message>kaffeepause</message> </xml>"; 
+
 
     $sock->write($data);
     $answer = "nothing";

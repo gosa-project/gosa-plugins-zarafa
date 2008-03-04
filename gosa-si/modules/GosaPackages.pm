@@ -314,12 +314,9 @@ sub process_gosa_msg {
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
-print STDERR "===============================\n"; 
-print STDERR Dumper(@out_msg_l);
-
 
     # if delivery not possible raise error and return 
-    if( not defined @out_msg_l[0] ) {
+    if( not defined $out_msg_l[0] ) {
         &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
         @out_msg_l = ();
     } elsif( $out_msg_l[0] eq 'nohandler') {
@@ -349,6 +346,8 @@ sub process_job_msg {
     my $macaddress;
     if( exists $msg_hash->{'macaddress'} ) {
         $macaddress = @{$msg_hash->{'macaddress'}}[0];
+    } elsif (@{$msg_hash->{'target'}}[0] =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
+        $macaddress = $1;
     } else {
         $error ++;
         $out_msg = "<xml>".
@@ -356,7 +355,7 @@ sub process_job_msg {
             "<source>$server_address</source>".
             "<target>GOSA</target>".
             "<answer1>1</answer1>".
-            "<error_string>no mac address specified</error_string>".
+            "<error_string>no mac address specified, neither in target-tag nor in macaddres-tag</error_string>".
             "</xml>";
     }
     
