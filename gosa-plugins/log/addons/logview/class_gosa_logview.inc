@@ -207,6 +207,14 @@ class gosa_logview extends plugin
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
+    /* Prepare order setting */
+    if ($this->sort_direction == "down"){
+      $desc= "DESC";
+      $sort_sign = "<img src='images/sort_down.png' alt='\/' class='center' title='down' border=0>";
+    } else {
+      $desc= "";
+      $sort_sign = "<img src='images/sort_up.png' alt='/\' class='center' title='up' border=0>";
+    }
 
     /****
      * Query stuff 
@@ -222,64 +230,73 @@ class gosa_logview extends plugin
     } else {
 
       if (! @mysql_select_db($cfg['DB'])){
-	msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOsa LOG"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOsa LOG"), ERROR_DIALOG);
         new log("debug","logview","",array(),@mysql_error());
       } else {
 
-        /* Prepare order setting */
-        if ($this->sort_direction == "down"){
-          $desc= "DESC";
-          $sort_sign = "<img src='images/sort_down.png' alt='\/' class='center' title='down' border=0>";
-        } else {
-          $desc= "";
-          $sort_sign = "<img src='images/sort_up.png' alt='/\' class='center' title='up' border=0>";
+        /* Check for required tables
+         */
+        $query = "SHOW TABLES;";
+        $res    = @mysql_query($query,$con);
+        $tables = array();
+        while($attrs  = @mysql_fetch_row($res)){
+          $tables[] = $attrs[0];
         }
-
-        /* Get start time */
-        $start = $date_select_[$this->time];
-        
-        /* Prepare search filter */
-        $sql_regex =trim(preg_replace("/\*/","%",$this->regex));
-        $sql_regex = "%".trim($sql_regex,"%")."%";
-
-        /* Create search filter */
-        $query_base= "FROM  gosa_log WHERE timestamp >= $start ";
-  
-        /* Append action filter */
-        if($this->action != "!ALL"){
-          $query_base .=" AND action like '".$this->action."' ";
+        $error = FALSE;
+        foreach(array("gosa_log","gosa_locations") as $required){
+          if(!in_array($required,$tables)){
+            msg_dialog::display(_("Error"),
+                sprintf(_("Missing logging table (%s.%s) update your GOsa logging database schema."),
+                  $cfg['DB'],$required), ERROR_DIALOG);
+            $error = TRUE;
+          }
         }
+        if(!$error){
 
-        /* Append search filter */
-        if($sql_regex != "%%"){
-          $query_base .=" AND ( result like '".$sql_regex."' OR user like '".$sql_regex."') ";
-        }
+          /* Get start time */
+          $start = $date_select_[$this->time];
 
-        /* Appen location */
-        $query_base .= " AND location_id='".$this->location_id."' ";
+          /* Prepare search filter */
+          $sql_regex =trim(preg_replace("/\*/","%",$this->regex));
+          $sql_regex = "%".trim($sql_regex,"%")."%";
 
-        /* Get number of entries */
-        $query= "SELECT COUNT(`user`) ".$query_base.";";
-        $result = mysql_query($query);
-        if(!$result){
-          new log("debug","logview","",array(),@mysql_error());
-        }
-        $line= mysql_fetch_array($result, MYSQL_ASSOC);
-        $count= $line['COUNT(`user`)'];
-        if ($count > 25){
-          $smarty->assign("range_selector", range_selector($count, $this->start, $this->range,"EntriesPerPage"));
-        } else {
-          $smarty->assign("range_selector", "");
-        }
+          /* Create search filter */
+          $query_base= "FROM  gosa_log WHERE timestamp >= $start ";
 
-        /* Query results that will be displayed */
-        $query= "SELECT * ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
-        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
-        $result = @mysql_query($query);
-        if(!$result){
-          new log("debug","logview","",array(),@mysql_error());
-          msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOsa LOG"), ERROR_DIALOG);
-        }else{
+          /* Append action filter */
+          if($this->action != "!ALL"){
+            $query_base .=" AND action like '".$this->action."' ";
+          }
+
+          /* Append search filter */
+          if($sql_regex != "%%"){
+            $query_base .=" AND ( result like '".$sql_regex."' OR user like '".$sql_regex."') ";
+          }
+
+          /* Appen location */
+          $query_base .= " AND location_id='".$this->location_id."' ";
+
+          /* Get number of entries */
+          $query= "SELECT COUNT(`user`) ".$query_base.";";
+          $result = mysql_query($query);
+          if(!$result){
+            new log("debug","logview","",array(),@mysql_error());
+          }
+          $line= mysql_fetch_array($result, MYSQL_ASSOC);
+          $count= $line['COUNT(`user`)'];
+          if ($count > 25){
+            $smarty->assign("range_selector", range_selector($count, $this->start, $this->range,"EntriesPerPage"));
+          } else {
+            $smarty->assign("range_selector", "");
+          }
+
+          /* Query results that will be displayed */
+          $query= "SELECT * ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
+          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
+          $result = @mysql_query($query);
+          if(!$result){
+            new log("debug","logview","",array(),@mysql_error());
+          }
 
           /* Display results */
           $mod= 0;
