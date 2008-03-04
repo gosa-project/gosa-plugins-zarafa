@@ -451,7 +451,7 @@ class termstartup extends plugin
     /* Send ldap configuration update
      */
     if ($ldap_changed){
-      $events = DaemonEvent::get_event_types();
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['BY_CLASS']['DaemonEvent_reload_ldap_config'])){
         $evt = $events['BY_CLASS']['DaemonEvent_reload_ldap_config'];

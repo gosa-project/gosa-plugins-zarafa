@@ -193,7 +193,7 @@ class workgeneric extends plugin
 
       /* Check if we have an DaemonEvent for this action */ 
       if(class_available("DaemonEvent_".$action)){
-        $events = DaemonEvent::get_event_types();
+        $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
         if(isset($events['BY_CLASS']["DaemonEvent_".$action])){
           $evt = $events['BY_CLASS']["DaemonEvent_".$action];
           $tmp = new $evt['CLASS_NAME']($this->config);
@@ -602,7 +602,7 @@ class workgeneric extends plugin
 
       /* Send installation activation
        */
-      $events = DaemonEvent::get_event_types();
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['BY_CLASS']['DaemonEvent_installation_activation'])){
         $evt = $events['BY_CLASS']['DaemonEvent_installation_activation'];
