@@ -22,7 +22,6 @@ class workgeneric extends plugin
   var $ghSoundAdapter= "-";
   var $gotoLastUser= "-";
   var $FAIscript= "";
-  var $didAction= FALSE;
   var $FAIstate= "";
   var $view_logged = FALSE;
 
@@ -178,14 +177,6 @@ class workgeneric extends plugin
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
 
-      /* Check given action */
-      $mapEvent = array("wake"           => "wakeup",
-                        "instant_update" => "update");
-      $action = $_POST['saction'];
-      if(isset($mapEvent[$action])){
-        $action = $mapEvent[$action];
-      }
-
       /* Check if we have an DaemonEvent for this action */ 
       if(class_available("DaemonEvent")){
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
@@ -200,60 +191,8 @@ class workgeneric extends plugin
                   $o_queue->get_error()),ERROR_DIALOG);
           }
         }
-      }else{
-  
-        msg_dialog::display(_("Missing Daemon Event"),
-                    sprintf(_("The requested action does not exists '%s' Sending event manually."),"DaemonEvent_".$action),ERROR_DIALOG);
-
-        /* No event found, send action manually. 
-         */
-        $method= "gosa";
-        $action= $_POST['saction'];
-        if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
-          $method= "job";
-        }
-
-        gosaSupportDaemon::send("${method}_trigger_action_".$action,
-            $this->netConfigDNS->macAddress,
-            array("macAddress" => $this->netConfigDNS->macAddress));
       }
 
-
-      if ($action != "wake") {
-
-        /* Set FAIstate */
-        if($this->fai_activated && $this->dn != "new"){
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd($this->config->current['BASE']);
-            $ldap->cat($this->dn,array("objectClass"));
-            $res = $ldap->fetch();
-
-            $attrs = array();
-            $attrs['FAIstate'] = $this->FAIstate;
-            if(isset($this->mapActions[$_POST['saction']]) && $this->mapActions[$_POST['saction']] != ""){
-              $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-            }
-
-            for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-              $attrs['objectClass'][] = $res['objectClass'][$i];
-            }
-
-            if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-              $attrs['objectClass'][] = "FAIobject";
-            }
-
-            if($attrs['FAIstate'] == ""){
-	      #FIXME we should check if FAIobject is not used anymore
-              $attrs['FAIstate'] = array();
-            }
-
-            $ldap->cd($this->dn);
-            $ldap->modify($attrs);
-            show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$this->dn));
-
-          }
-          $this->didAction= TRUE;
-        }
     }
 
     /* Do we represent a valid terminal? */
@@ -567,9 +506,7 @@ class workgeneric extends plugin
       $ldap->add($this->attrs);
       new log("create","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
-      if(!$this->didAction){
-        $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
-      }
+      $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       if ($this->orig_dn != $this->dn){
         $this->move($this->orig_dn, $this->dn);
@@ -579,9 +516,7 @@ class workgeneric extends plugin
       $ldap->modify ($this->attrs); 
       new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-      if(!$this->didAction){
-        $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
-      }
+      $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 
     /* cn=default and macAddress=- indicates that this is a template */
