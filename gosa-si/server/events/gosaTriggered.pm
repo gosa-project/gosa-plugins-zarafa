@@ -290,8 +290,18 @@ sub set_activated_for_installation {
 
 sub trigger_action_faireboot {
     my ($msg, $msg_hash) = @_;
+    my $macaddress = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+
+    my @out_msg_l;
     $msg =~ s/<header>gosa_trigger_action_faireboot<\/header>/<header>trigger_action_faireboot<\/header>/;
-    my @out_msg_l = ($msg);  
+    push(@out_msg_l, $msg);
+
+    # delete all jobs from jobqueue which correspond to fai
+    my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
+        "status='processing' AND headertag='trigger_action_install')"; 
+    $main::job_db->del_dbentry($sql_statement ); 
+                                             
     return @out_msg_l;
 }
 

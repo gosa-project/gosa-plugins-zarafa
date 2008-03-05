@@ -122,11 +122,10 @@ my $login_users_file_name;
 my @login_users_col_names = ('client', 'user', 'timestamp');
 
 # holds all fai server, the debian release and tag
-my $fai_server_file_name;
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
+my $fai_server_file_name;
 our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
-our $fai_release_db;
 our $fai_release_tn = "fai_release"; 
 our @fai_release_col_names = ('timestamp', 'release', 'class'); 
 
@@ -137,6 +136,12 @@ my $packages_list_file_name;
 our @packages_list_col_names = ('distribution', 'package', 'version', 'section', 'description', 'template', 'timestamp');
 my $outdir = "/tmp/packages_list_db";
 my $arch = "i386"; 
+
+# holds all messages which should be delivered to a user
+our $messaging_db;
+our $messaging_tn = "messaging"; 
+our @messaging_col_names = ('subject', 'from', 'to', 'flag', 'direction', 'delivery_time', 'message', 'timestamp', 'id INTEGER', );
+my $messaging_file_name;
 
 %cfg_defaults = (
 "general" => {
@@ -153,6 +158,7 @@ my $arch = "i386";
     "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
     "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai.db'],
     "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
+    "messaging" => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "source-list" => [\$sources_list, '/etc/apt/sources.list'],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
@@ -1152,6 +1158,7 @@ sub watch_for_new_jobs {
 		my $jobdb_id = $hit->{id};
 		my $macaddress = $hit->{'macaddress'};
         my $job_msg = $hit->{'xmlmessage'};
+        daemon_log("DEBUG: its time to execute $job_msg", 7); 
         my $header = $hit->{'headertag'};
         my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$macaddress'";
 		my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
@@ -1517,6 +1524,11 @@ $fai_server_db->create_table($fai_release_tn, \@fai_release_col_names);
 unlink($packages_list_file_name);
 $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
+
+# connect to messaging_db
+$messaging_db = GOSA::DBsqlite->new($messaging_file_name);
+$messaging_db->create_table($messaging_tn, \@messaging_col_names);
+
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
