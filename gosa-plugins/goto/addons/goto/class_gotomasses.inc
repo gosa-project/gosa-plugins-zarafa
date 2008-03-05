@@ -589,6 +589,7 @@ class gotomasses extends plugin
     if(class_available("DaemonEvent_faireboot")){
       $tmp = new DaemonEvent_faireboot($this->config);
       $tmp->add_targets($update_ids);
+      $tmp->set_type(TRIGGERED_EVENT);
       if(!$this->o_queue->append($tmp)){
         msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
