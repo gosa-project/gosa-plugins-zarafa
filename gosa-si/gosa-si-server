@@ -122,10 +122,13 @@ my $login_users_file_name;
 my @login_users_col_names = ('client', 'user', 'timestamp');
 
 # holds all fai server, the debian release and tag
+my $fai_server_file_name;
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
-my $fai_server_file_name;
 our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
+our $fai_release_db;
+our $fai_release_tn = "fai_release"; 
+our @fai_release_col_names = ('timestamp', 'release', 'class'); 
 
 # holds all packages available from different repositories
 our $packages_list_db;
@@ -913,7 +916,8 @@ sub update_jobdb_status_for_send_msgs {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-    #$kernel->yield('create_fai_server_db', $fai_server_tn );
+    $kernel->yield('create_fai_server_db', $fai_server_tn );
+    $kernel->yield('create_fai_release_db', $fai_release_tn );
     #$kernel->yield('create_packages_list_db', $sources_list );
 }
 
@@ -1217,21 +1221,67 @@ sub refresh_ldap_handle {
 
 sub create_fai_server_db {
     my ($table_name) = $_[ARG0];
-    
-#####################################################################
-#
-# TODO für dich Cajus :-)
-#
-# ###################################################################
-    
-    $fai_server_db->add_dbentry( { 
-            table => $table_name,
-            primkey => [],
-            server => "dummyserver",        # neuer fai-server 
-            release => "kleinkind",         # neuer release
-            tag => "imwachstum",            # neues tag
-            } );
-    return;
+	my $result;
+
+	if(defined($ldap_handle)) {
+		my $mesg= $ldap_handle->search(
+			base   => $main::ldap_base,
+			scope  => 'sub',
+			attrs  => ['FAIrepository', 'gosaUnitTag'],
+			filter => "(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",
+		);
+		if($mesg->{'resultCode'} == 0 &&
+		   $mesg->count != 0) {
+		   foreach my $entry (@{$mesg->{entries}}) {
+			   if($entry->exists('FAIrepository')) {
+				   # Add an entry for each Repository configured for server
+				   foreach my $repo(@{$entry->get_value('FAIrepository', asref => 1)}) {
+						   my($tmp_url,$tmp_server,$tmp_release,$tmp_sections) = split(/\|/, $repo);
+						   my $tmp_tag= $entry->get_value('gosaUnitTag') || "";
+						   $result= $fai_server_db->add_dbentry( { 
+								   table => $table_name,
+								   primkey => ['server', 'release', 'tag'],
+								   server => $tmp_url,
+								   release => $tmp_release,
+								   tag => (length($tmp_tag)>0)?$tmp_tag:"",
+							   } );
+					   }
+				   }
+			   }
+		   }
+	}	
+   
+   	return $result;
+}
+
+
+sub create_fai_release_db {
+	my ($table_name) = $_[ARG0];
+	my $result;
+
+	if(defined($ldap_handle)) {
+		my $mesg= $ldap_handle->search(
+			base   => $main::ldap_base,
+			scope  => 'sub',
+			attrs  => ['cn', 'FAIdebianRelease'],
+			filter => "(&(FAIdebianRelease=*)(objectClass=FAIclass))",
+		);
+		if($mesg->{'resultCode'} == 0 &&
+			$mesg->count != 0) {
+			foreach my $entry (@{$mesg->{entries}}) {
+				if($entry->exists('FAIdebianRelease') && $entry->exists('cn')) {
+					$result= $fai_server_db->add_dbentry( { 
+							table => $table_name,
+							primkey => ['release', 'class'],
+							release => $entry->get_value('FAIdebianRelease'),
+							class => $entry->get_value('cn'),
+						} );
+				}
+			}
+		}
+	}	
+	
+	return $result;
 }
 
 
@@ -1458,9 +1508,10 @@ $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 
-# connect to fai_server_db
+# connect to fai_server_db and fai_release_db
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
+$fai_server_db->create_table($fai_release_tn, \@fai_release_col_names);
 
 # connect to packages_list_db
 unlink($packages_list_file_name);
@@ -1487,6 +1538,7 @@ POE::Session->create(
         watch_for_done_jobs => \&watch_for_done_jobs,
         create_packages_list_db => \&create_packages_list_db,
         create_fai_server_db => \&create_fai_server_db,
+        create_fai_release_db => \&create_fai_release_db,
 	}
 );
 

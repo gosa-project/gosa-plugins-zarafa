@@ -101,5 +101,18 @@ if (-e $db_name) {
     print $answer."\n";
 }
 
+$db_name = "/var/lib/gosa-si/fai.db";
+if (-e $db_name) {
+    print "\n############################################################\n";
+    my $table_name = "fai_release";
+    print "$db_name\n";
+    print "$table_name\n";
+
+    my $sqlite = GOSA::DBsqlite->new($db_name);
+    my $col_names = $sqlite->get_table_columns($table_name);
+    print join(', ', @{ $col_names } )."\n" ;
+    my $answer = $sqlite->show_table($table_name);
+    print $answer."\n";
+}
 
 print "\nFINISH\n";
