@@ -17,6 +17,8 @@ my @events = (
     "trigger_action_localboot",
     "trigger_action_faireboot",
     "trigger_action_reboot",
+    "trigger_action_activate",
+    "trigger_action_lock",
     "trigger_action_halt",
     "trigger_action_update", 
     "trigger_action_reinstall",
@@ -297,6 +299,8 @@ sub trigger_action_faireboot {
     $msg =~ s/<header>gosa_trigger_action_faireboot<\/header>/<header>trigger_action_faireboot<\/header>/;
     push(@out_msg_l, $msg);
 
+    change_goto_state('locked', \@{$msg_hash->{target}});
+
     # delete all jobs from jobqueue which correspond to fai
     my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
         "status='processing' AND headertag='trigger_action_install')"; 
@@ -305,6 +309,29 @@ sub trigger_action_faireboot {
     return @out_msg_l;
 }
 
+
+sub trigger_action_lock {
+    my ($msg, $msg_hash) = @_;
+    my $macaddress = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+
+    change_goto_state('locked', \@{$msg_hash->{target}});
+                                             
+    my @out_msg_l;
+    return @out_msg_l;
+}
+
+
+sub trigger_action_activate {
+    my ($msg, $msg_hash) = @_;
+    my $macaddress = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+
+    change_goto_state('active', \@{$msg_hash->{target}});
+                                             
+    my @out_msg_l;
+    return @out_msg_l;
+}
 
 
 sub trigger_action_localboot {
@@ -524,7 +551,7 @@ sub change_goto_state {
       $search.= ")";
 
       # If there's any host inside of the search string, procress them
-      if ($search !=~ /macAddress/){
+      if (!($search =~ /macAddress/)){
         return;
       }
 
