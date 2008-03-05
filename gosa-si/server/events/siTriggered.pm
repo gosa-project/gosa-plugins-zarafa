@@ -13,7 +13,6 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use Socket;
-use Net::hostent;
 
 
 BEGIN {}
@@ -256,20 +255,9 @@ sub trigger_wake {
         # get the hardware address (ethernet address)
         $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
         if ($host =~ m/^$hwaddr_re$/) {
-                $hwaddr = $host;
+          $hwaddr = $host;
         } else {
-                # $host is not a hardware address, try to resolve it
-                my $ip_re = join('\.', ('([0-9]|[1-9][0-9]|1[0-9]{2}|2([0-4][0-9]|5[0-5]))') x 4);
-                my $ip_addr;
-                if ($host =~ m/^$ip_re$/) {
-                        $ip_addr = $host;
-                } else {
-                        my $h;
-                        unless ($h = gethost($host)) {
-                                return undef;
-                        }
-                        $ip_addr = inet_ntoa($h->addr);
-                }
+          &main::daemon_log("ERROR: trigger_wake called with non mac address", 1);
         }
 
         # Generate magic sequence
