@@ -46,16 +46,8 @@ class workgeneric extends plugin
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser", "l","FAIscript");
   var $objectclasses= array("top", "gotoWorkstation", "GOhard");
 
-  var $mapActions   = array("reboot"          => "",
-                            "localboot"       => "localboot",
-                            "halt"            => "",
-                            "update"          => "softupdate",
-                            "reinstall"       => "install",
-                            "rescan"          => "",
-                            "wake"            => "",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
-
+  var $validActions   = array("reboot" => "", "localboot" => "", "halt" => "", "update" => "", "reinstall" => "",
+                            "rescan" => "", "wake" => "", "memcheck" => "", "sysinfo" => "");
   
   var $fai_activated = FALSE;
 
@@ -175,7 +167,7 @@ class workgeneric extends plugin
       }
     }
 
-    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
+    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->validActions[$_POST['saction']]) ){
       $action= $_POST['saction'];
 
       /* Check if we have an DaemonEvent for this action */ 
@@ -192,7 +184,11 @@ class workgeneric extends plugin
                   $o_queue->get_error()),ERROR_DIALOG);
           }
         }
+      } else {
+        msg_dialog::display(_("Event error"),
+                    sprintf(_("Event '%s' is not available!"),$action),ERROR_DIALOG);
       }
+
 
     }
 

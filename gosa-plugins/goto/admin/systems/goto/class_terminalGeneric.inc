@@ -44,11 +44,7 @@ class termgeneric extends plugin
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser");
   var $objectclasses= array("top", "gotoTerminal", "GOhard");
 
-  var $mapActions   = array("reboot"          => "",
-                            "rescan"          => "",
-                            "wake"            => "",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
+  var $validActions   = array("reboot" => "", "rescan" => "", "wake" => "", "memcheck" => "", "sysinfo" => "");
 
   var $fai_activated = FALSE;
   var $view_logged = FALSE;
@@ -163,17 +159,8 @@ class termgeneric extends plugin
       $this->is_account= !$this->is_account;
     }
 
-    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate") && isset($this->mapActions[$_POST['saction']])){
-
-
-
-     /* Check given action */
-      $mapEvent = array("wake"           => "wakeup",
-                        "instant_update" => "update");
+    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate") && isset($this->validActions[$_POST['saction']])){
       $action = $_POST['saction'];
-      if(isset($mapEvent[$action])){
-        $action = $mapEvent[$action];
-      }
 
       /* Check if we have an DaemonEvent for this action */
       if(class_available("DaemonEvent_".$action)){
@@ -190,22 +177,10 @@ class termgeneric extends plugin
           }
         }
       }else{
-
-        msg_dialog::display(_("Missing Daemon Event"),
-                    sprintf(_("The requested action does not exists '%s' Sending event manually."),"DaemonEvent_".$action),ERROR_DIALOG);
-
-        /* No event found, send action manually.
-         */
-        $method= "gosa";
-        $action= $_POST['saction'];
-        if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
-          $method= "job";
-        }
-
-        gosaSupportDaemon::send("${method}_trigger_action_".$action,
-            $this->netConfigDNS->macAddress,
-            array("macAddress" => $this->netConfigDNS->macAddress));
+        msg_dialog::display(_("Event error"),
+                    sprintf(_("Event '%s' is not available!"),$action),ERROR_DIALOG);
       }
+
     }
 
     /* Base select dialog */
