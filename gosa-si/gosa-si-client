@@ -601,12 +601,8 @@ sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
     my $error = 0;
 
-    if( $msg_header ) {
-        $msg_header = "'$msg_header'-";
-    }
-    else {
-        $msg_header = "";
-    }
+    if( $msg_header ) { $msg_header = "'$msg_header'-"; }
+    else { $msg_header = ""; }
 
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
@@ -618,13 +614,11 @@ sub send_msg_to_target {
         $error++;
     }
     
+    # send xml msg
     if( $error == 0 ) {
-        # send xml msg
         print $socket $crypted_msg."\n";
-
         daemon_log("send ".$msg_header."msg to $address", 1);
         daemon_log("message:\n$msg", 8);
-
     }
 
     # close socket in any case
