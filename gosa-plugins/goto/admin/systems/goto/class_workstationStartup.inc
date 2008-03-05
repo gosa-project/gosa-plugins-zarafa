@@ -898,7 +898,7 @@ class workstartup extends plugin
 
     /* Check if LDAP server has changed */
     if ($ldap_changed && class_available("DaemonEvent")){
-      $events = DaemonEvent::get_event_types(SYSETEM_EVENT | HIDDEN_EVENT);
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
         $evt = $events['TRIGGERED']['DaemonEvent_reload_ldap_config'];
