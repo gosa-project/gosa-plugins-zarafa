@@ -61,7 +61,11 @@ class faiTemplate extends plugin
       $attrs_to_search[] = "FAIstate";
       $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
+      $data = array();
       while($object = $ldap->fetch()){
+        $data[] = $object;
+      }
+      foreach($data as $object){
 
         /* Skip objects, that are tagged as removed */
         if(isset($object['FAIstate'][0])){
