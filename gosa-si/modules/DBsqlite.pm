@@ -79,8 +79,8 @@ sub create_table {
     }
 
     $col_names->{ $table_name } = $col_names_ref;
-    my $col_names_string = join(', ', @col_names);
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
+    my $col_names_string = join("', '", @col_names);
+    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
     &create_lock($self,'create_table');
     $self->{dbh}->do($sql_statement);
     &remove_lock($self,'create_table');
