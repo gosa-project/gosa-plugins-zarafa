@@ -176,7 +176,7 @@ class workgeneric extends plugin
     }
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
-      $action= $_POST['action'];
+      $action= $_POST['saction'];
 
       /* Check if we have an DaemonEvent for this action */ 
       if(class_available("DaemonEvent")){
