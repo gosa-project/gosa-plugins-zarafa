@@ -281,10 +281,10 @@ class gotomasses extends plugin
     }
     if(preg_match("/w/",$this->getacl(""))){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume all")."|resume_all\n";
-      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause all")."|pause_all\n";
-      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Abort all")."|abort_process_all\n";
-      $s.= "..|<img src='images/rocket.png'       alt='' border='0' class='center'>&nbsp;"._("Execute all")."|execute_process_all\n";
+      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
+      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
+      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
+      $s.= "..|<img src='images/rocket.png'       alt='' border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
     }
 
     $divlist->SetDropDownHeaderMenu($s);
