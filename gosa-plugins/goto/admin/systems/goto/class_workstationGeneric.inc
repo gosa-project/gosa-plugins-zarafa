@@ -22,7 +22,6 @@ class workgeneric extends plugin
   var $ghSoundAdapter= "-";
   var $gotoLastUser= "-";
   var $FAIscript= "";
-  var $FAIstate= "";
   var $view_logged = FALSE;
 
   /* Needed values and lists */
