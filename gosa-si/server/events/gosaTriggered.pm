@@ -459,51 +459,104 @@ sub change_fai_state {
       $search.= ")";
 
       # If there's any host inside of the search string, procress them
-      if ($search =~ /macAddress/){
-        # Perform search for Unit Tag
-        my $mesg = $main::ldap_handle->search(
-            base   => $main::ldap_base,
-            scope  => 'sub',
-            attrs  => ['dn', 'FAIstate', 'objectClass'],
-            filter => "$search"
-            );
+      if (!($search =~ /macAddress/)){
+        return;
+      }
 
-        if ($mesg->count) {
-          my @entries = $mesg->entries;
-          foreach my $entry (@entries) {
+      # Perform search for Unit Tag
+      my $mesg = $main::ldap_handle->search(
+          base   => $main::ldap_base,
+          scope  => 'sub',
+          attrs  => ['dn', 'FAIstate', 'objectClass'],
+          filter => "$search"
+          );
 
-            # Only modify entry if it is not set to 'localboot'
-            if ($entry->get_value("FAIstate") ne 'localboot'){
+      if ($mesg->count) {
+        my @entries = $mesg->entries;
+        foreach my $entry (@entries) {
 
-              &main::daemon_log("INFO: Setting FAIstate to 'localboot' for ".$entry->dn, 5);
-              my $result;
-              my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
-              if (exists $tmp{'FAIobject'}){
-                if ($state eq ''){
-                  $result= $main::ldap_handle->modify($entry->dn, changes => [
-                              delete => [ FAIstate => [] ] ]);
-                } else {
-                  $result= $main::ldap_handle->modify($entry->dn, changes => [
-                              replace => [ FAIstate => $state ] ]);
-                }
-              } elsif ($state ne ''){
+          # Only modify entry if it is not set to '$state'
+          if ($entry->get_value("FAIstate") ne "$state"){
+
+            &main::daemon_log("INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
+            my $result;
+            my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
+            if (exists $tmp{'FAIobject'}){
+              if ($state eq ''){
                 $result= $main::ldap_handle->modify($entry->dn, changes => [
-                            add     => [ objectClass => 'FAIobject' ],
-                            add     => [ FAIstate => $state ] ]);
+                            delete => [ FAIstate => [] ] ]);
+              } else {
+                $result= $main::ldap_handle->modify($entry->dn, changes => [
+                            replace => [ FAIstate => $state ] ]);
               }
-
-              # Errors?
-              if ($result->code){
-                &main::daemon_log("Error: Setting FAIstate to 'localboot' for ".$entry->dn. "failed: ".$result->error, 1);
-              }
-
+            } elsif ($state ne ''){
+              $result= $main::ldap_handle->modify($entry->dn, changes => [
+                          add     => [ objectClass => 'FAIobject' ],
+                          add     => [ FAIstate => $state ] ]);
             }
+
+            # Errors?
+            if ($result->code){
+              &main::daemon_log("Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+            }
+
           }
         }
+      }
+    }
+}
 
+
+sub change_goto_state {
+    my ($st, $targets) = @_;
+
+    # Switch on or off?
+    my $state= $st eq 'active' ? 'active': 'locked';
+
+    &main::refresh_ldap_handle();
+    if( defined($main::ldap_handle) ) {
+
+      # Build search filter for hosts
+      my $search= "(&(objectClass=GOhard)";
+      foreach (@{$targets}){
+        $search.= "(macAddress=$_)";
+      }
+      $search.= ")";
+
+      # If there's any host inside of the search string, procress them
+      if ($search !=~ /macAddress/){
+        return;
+      }
+
+      # Perform search for Unit Tag
+      my $mesg = $main::ldap_handle->search(
+          base   => $main::ldap_base,
+          scope  => 'sub',
+          attrs  => ['dn', 'gotoMode'],
+          filter => "$search"
+          );
+
+      if ($mesg->count) {
+        my @entries = $mesg->entries;
+        foreach my $entry (@entries) {
+
+          # Only modify entry if it is not set to '$state'
+          if ($entry->get_value("gotoMode") ne $state){
+
+            &main::daemon_log("INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
+            my $result;
+            $result= $main::ldap_handle->modify($entry->dn, changes => [
+                                                replace => [ gotoMode => $state ] ]);
+
+            # Errors?
+            if ($result->code){
+              &main::daemon_log("Error: Setting gotoMode to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+            }
+
+          }
+        }
       }
 
     }
 }
-
 1;
