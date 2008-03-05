@@ -306,9 +306,13 @@ sub trigger_action_faireboot {
 }
 
 
+
 sub trigger_action_localboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
+
+    change_fai_state('localboot', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -317,6 +321,9 @@ sub trigger_action_localboot {
 sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_halt<\/header>/<header>trigger_action_halt<\/header>/;
+
+    change_fai_state('halt', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -325,6 +332,9 @@ sub trigger_action_halt {
 sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reboot<\/header>/<header>trigger_action_reboot<\/header>/;
+
+    change_fai_state('reboot', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -333,6 +343,9 @@ sub trigger_action_reboot {
 sub trigger_action_memcheck {
     my ($msg, $msg_hash) = @_ ;
     $msg =~ s/<header>gosa_trigger_action_memcheck<\/header>/<header>trigger_action_memcheck<\/header>/;
+
+    change_fai_state('memcheck', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -341,6 +354,9 @@ sub trigger_action_memcheck {
 sub trigger_action_reinstall {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reinstall<\/header>/<header>trigger_action_reinstall<\/header>/;
+
+    change_fai_state('reinstall', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -349,6 +365,9 @@ sub trigger_action_reinstall {
 sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_update<\/header>/<header>trigger_action_update<\/header>/;
+
+    change_fai_state('update', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -357,6 +376,9 @@ sub trigger_action_update {
 sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_instant_update<\/header>/<header>trigger_action_instant_update<\/header>/;
+
+    change_fai_state('update', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -365,6 +387,9 @@ sub trigger_action_instant_update {
 sub trigger_action_sysinfo {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_sysinfo<\/header>/<header>trigger_action_sysinfo<\/header>/;
+
+    change_fai_state('sysinfo', \@{$msg_hash->{target}});
+
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
@@ -394,6 +419,86 @@ sub trigger_action_wake {
     my $out_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($out_msg);  
     return @out_msg_l;
+}
+
+sub change_fai_state {
+    my ($st, $targets) = @_;
+
+    # Set FAI state to localboot
+    my %mapActions= (
+        reboot    => '',
+        update    => 'softupdate',
+        localboot => 'localboot',
+        reinstall => 'install',
+        rescan    => '',
+        wake      => '',
+        memcheck  => 'memcheck',
+        sysinfo   => 'sysinfo',
+    );
+
+    # Return if this is unknown
+    if (!exists $mapActions{ $st }){
+      return;
+    }
+
+    my $state= $mapActions{ $st };
+
+    &main::refresh_ldap_handle();
+    if( defined($main::ldap_handle) ) {
+
+      # Build search filter for hosts
+      my $search= "(&(objectClass=GOhard)";
+      foreach (@{$targets}){
+        $search.= "(macAddress=$_)";
+      }
+      $search.= ")";
+
+      # If there's any host inside of the search string, procress them
+      if ($search =~ /macAddress/){
+        # Perform search for Unit Tag
+        my $mesg = $main::ldap_handle->search(
+            base   => $main::ldap_base,
+            scope  => 'sub',
+            attrs  => ['dn', 'FAIstate', 'objectClass'],
+            filter => "$search"
+            );
+
+        if ($mesg->count) {
+          my @entries = $mesg->entries;
+          foreach my $entry (@entries) {
+
+            # Only modify entry if it is not set to 'localboot'
+            if ($entry->get_value("FAIstate") ne 'localboot'){
+
+              &main::daemon_log("INFO: Setting FAIstate to 'localboot' for ".$entry->dn, 5);
+              my $result;
+              my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
+              if (exists $tmp{'FAIobject'}){
+                if ($state eq ''){
+                  $result= $main::ldap_handle->modify($entry->dn, changes => [
+                              delete => [ FAIstate => [] ] ]);
+                } else {
+                  $result= $main::ldap_handle->modify($entry->dn, changes => [
+                              replace => [ FAIstate => $state ] ]);
+                }
+              } elsif ($state ne ''){
+                $result= $main::ldap_handle->modify($entry->dn, changes => [
+                            add     => [ objectClass => 'FAIobject' ],
+                            add     => [ FAIstate => $state ] ]);
+              }
+
+              # Errors?
+              if ($result->code){
+                &main::daemon_log("Error: Setting FAIstate to 'localboot' for ".$entry->dn. "failed: ".$result->error, 1);
+              }
+
+            }
+          }
+        }
+
+      }
+
+    }
 }
 
 1;
