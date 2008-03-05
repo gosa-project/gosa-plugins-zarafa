@@ -165,7 +165,7 @@ sub detected_hardware {
 			$dnsname= $msg_hash->{'force-hostname'}[0];
 			&main::daemon_log("INFO: Using forced hostname $dnsname for client $address", 4);
 		} else {
-			gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
+			$dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
 		}
 
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
