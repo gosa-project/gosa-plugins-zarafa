@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:42+0100\n"
+"POT-Creation-Date: 2008-03-05 08:56+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -72,120 +72,131 @@ msgstr "传真"
 msgid "This does something"
 msgstr "******"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:170
+#: gofax/faxaccount/class_gofaxAccount.inc:164
 msgid "This account has no fax extensions."
 msgstr "这个账号没有传真扩展。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:179
+#: gofax/faxaccount/class_gofaxAccount.inc:173
 msgid "Remove fax account"
 msgstr "删除传真账号"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:180
+#: gofax/faxaccount/class_gofaxAccount.inc:174
 msgid ""
 "This account has fax features enabled. You can disable them by clicking "
 "below."
 msgstr "这个账户传真功能已启用。您可以点击下面的按钮禁用。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:182
+#: gofax/faxaccount/class_gofaxAccount.inc:176
 msgid "Create fax account"
 msgstr "创建传真账号"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:183
+#: gofax/faxaccount/class_gofaxAccount.inc:177
 msgid ""
 "This account has fax features disabled. You can enable them by clicking "
 "below."
 msgstr "这个账户传真功能已禁用。您可以点击下面的按钮来启用。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:247
-msgid "You're trying to add an invalid phone number."
-msgstr "您正在添加一个无效的电话号码。"
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+#: gofax/faxreports/class_faxreport.inc:115
+#: gofax/faxreports/class_faxreport.inc:125
+#: gofax/faxreports/class_faxreport.inc:129
+#: gofax/faxreports/class_faxreport.inc:134
+#: gofax/faxreports/class_faxreport.inc:157
+#: gofax/faxreports/class_faxreport.inc:297
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+msgid "Error"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:458
-#: gofax/faxaccount/class_gofaxAccount.inc:540
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+msgid "Phone number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:452
+#: gofax/faxaccount/class_gofaxAccount.inc:534
 msgid "back"
 msgstr "返回"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:663
+#: gofax/faxaccount/class_gofaxAccount.inc:657
 #, fuzzy, php-format
 msgid "Removing of user/fax account with dn '%s' failed."
 msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:678
-msgid "The required field 'Fax' is not set."
-msgstr "需要的字段“传真”没有设置"
+#: gofax/faxaccount/class_gofaxAccount.inc:672
+#, fuzzy
+msgid "Fax is empty!"
+msgstr "传真记录"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:682
-msgid "Please enter a valid telephone number in the 'Fax' field."
-msgstr "请在“传真”处填入一个有效的电话号码。"
+#: gofax/faxaccount/class_gofaxAccount.inc:676
+msgid "Fax number is not valid!"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:690
-msgid "Mail delivery is checked, but no address has been specified."
-msgstr "选择了邮件传递，但是没有定义地址。"
+#: gofax/faxaccount/class_gofaxAccount.inc:684
+msgid "Mail delivery is requested without target address!"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:692
-msgid "The mail address you've entered is invalid."
+#: gofax/faxaccount/class_gofaxAccount.inc:686
+#, fuzzy
+msgid "Mail address is invalid!"
 msgstr "您输入的邮件地址无效。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:698
-msgid ""
-"Deliver fax to printer, is only possible if valid printer is given. Please "
-"correct your choice."
+#: gofax/faxaccount/class_gofaxAccount.inc:692
+msgid "Printing is requested without a target printer!"
 msgstr ""
-"发送传真道打印机，只有在提供一个有效的打印机才能够实现。请修改您的选择。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:790
+#: gofax/faxaccount/class_gofaxAccount.inc:784
 #, fuzzy, php-format
 msgid "Saving of user/fax account with dn '%s' failed."
 msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:860
+#: gofax/faxaccount/class_gofaxAccount.inc:854
 #: gofax/faxaccount/paste_generic.tpl:8 gofax/faxaccount/generic.tpl:10
 #: gofax/blocklists/class_blocklistGeneric.inc:351
 msgid "Fax"
 msgstr "传真"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:861
+#: gofax/faxaccount/class_gofaxAccount.inc:855
 #, fuzzy
 msgid "Fax account settings"
 msgstr "Samba 设置"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:870
+#: gofax/faxaccount/class_gofaxAccount.inc:864
 msgid "Enable/Disable fax"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:871
+#: gofax/faxaccount/class_gofaxAccount.inc:865
 #, fuzzy
 msgid "Receive blocklist"
 msgstr "显示接收黑名单"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:872
+#: gofax/faxaccount/class_gofaxAccount.inc:866
 #, fuzzy
 msgid "Send blocklist"
 msgstr "显示发送黑名单"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:873
+#: gofax/faxaccount/class_gofaxAccount.inc:867
 #, fuzzy
 msgid "Fax number"
 msgstr "系列号"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:874
+#: gofax/faxaccount/class_gofaxAccount.inc:868
 #, fuzzy
 msgid "Alternate fax number"
 msgstr "替代传真号码"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:73
+#: gofax/faxaccount/class_gofaxAccount.inc:869 gofax/faxaccount/generic.tpl:73
 msgid "Deliver fax as mail"
 msgstr "发送传真至邮件"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:80
+#: gofax/faxaccount/class_gofaxAccount.inc:870 gofax/faxaccount/generic.tpl:80
 msgid "Deliver fax to printer"
 msgstr "发送传真至打印机"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:877 gofax/faxaccount/generic.tpl:37
+#: gofax/faxaccount/class_gofaxAccount.inc:871 gofax/faxaccount/generic.tpl:37
 msgid "Delivery format"
 msgstr "传输格式"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:878 gofax/faxaccount/generic.tpl:24
+#: gofax/faxaccount/class_gofaxAccount.inc:872 gofax/faxaccount/generic.tpl:24
 msgid "Language"
 msgstr "语言"
 
@@ -290,37 +301,49 @@ msgid "FAX Reports"
 msgstr "传真记录"
 
 #: gofax/faxreports/class_faxreport.inc:115
-#, fuzzy
-msgid ""
-"No fax extension defined in your server configuration, no reports can be "
-"shown!"
-msgstr "没有在服务器配置中定义传真扩展，无法显示报告！"
+msgid "No fax server found!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:118
-msgid "There is no mysql extension available, please check your php setup."
-msgstr "没有可用的 mysql 扩展，请检查您的 php 设置。"
+#: gofax/faxreports/class_faxreport.inc:281
+msgid "Configuration error"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:118
+#: gofax/faxreports/class_faxreport.inc:281
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:125
-msgid "Can't connect to fax database, no reports can be shown!"
+#, fuzzy, php-format
+msgid "Cannot connect to %s database!"
 msgstr "不能连接传真数据库，无法显示报告！"
 
 #: gofax/faxreports/class_faxreport.inc:129
-msgid "Can't select fax database for report generation!"
-msgstr "无法为创建报告查找传真数据库！"
+#, php-format
+msgid "Cannot select %s database!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:134
-msgid "Can't query fax table 'faxlog' for report generation!"
-msgstr "无法为创建报告查询传真数据表 'faxlog'！"
-
 #: gofax/faxreports/class_faxreport.inc:157
 #: gofax/faxreports/class_faxreport.inc:297
-msgid "Query for fax database failed!"
-msgstr "查询传真数据库失败！"
+#, php-format
+msgid "Cannot query %s database!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
-msgid "You have no permission to retrieve informations about this fax id!"
-msgstr "您无权获取关于此传真 id 的信息！"
+#: gofax/blocklists/class_blocklistManagement.inc:247
+#: gofax/blocklists/class_blocklistManagement.inc:305
+msgid "Permission error"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:166
+#: gofax/faxreports/class_faxreport.inc:176
+#, fuzzy
+msgid "You have no permission to view this fax id!"
+msgstr "您无权删除这个黑名单。"
 
 #: gofax/faxreports/class_faxreport.inc:207
 #: gofax/faxreports/class_faxreport.inc:322
@@ -496,8 +519,8 @@ msgstr "您将要删除黑名单 '%s'。"
 
 #: gofax/blocklists/class_blocklistManagement.inc:247
 #, fuzzy, php-format
-msgid "You are not allowed to delete the blocklist '%s'!"
-msgstr "您无权删除这个用户！"
+msgid "You have not permission to delete '%s'!"
+msgstr "您无权删除这个黑名单。"
 
 #: gofax/blocklists/class_blocklistManagement.inc:286
 #, php-format
@@ -505,7 +528,8 @@ msgid "You're about to delete the blocklist '%s'."
 msgstr "您将要删除黑名单 '%s'。"
 
 #: gofax/blocklists/class_blocklistManagement.inc:305
-msgid "You have no permission to remove this blocklist."
+#, fuzzy
+msgid "You have not permission to delete this entry!"
 msgstr "您无权删除这个黑名单。"
 
 #: gofax/blocklists/remove.tpl:2
@@ -712,10 +736,6 @@ msgstr "数字也可以包含通配符。"
 msgid "Blocklist management"
 msgstr "黑名单管理"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:122
-msgid "Please specify a valid phone number."
-msgstr "请给出一个有效电话号码。"
-
 #: gofax/blocklists/class_blocklistGeneric.inc:154
 msgid "send"
 msgstr "发送"
@@ -730,15 +750,17 @@ msgid "Removing of blocklist with dn '%s' failed."
 msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:205
-msgid "Required field 'Name' is not set."
-msgstr "需要的“姓名”字段没有设置"
+msgid "Name is empty!"
+msgstr ""
 
 #: gofax/blocklists/class_blocklistGeneric.inc:208
-msgid "Required field 'Name' contains invalid characters"
+#, fuzzy
+msgid "Name contains invalid characters!"
 msgstr "需要的“姓名”字段包含无效字符"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:215
-msgid "Specified name is already used."
+#, fuzzy
+msgid "Name is already in use!"
 msgstr "指定名称已经使用。"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:263
@@ -812,3 +834,52 @@ msgstr "服务"
 #, fuzzy
 msgid "Login name"
 msgstr "位置名称"
+
+#~ msgid "You're trying to add an invalid phone number."
+#~ msgstr "您正在添加一个无效的电话号码。"
+
+#~ msgid "The required field 'Fax' is not set."
+#~ msgstr "需要的字段“传真”没有设置"
+
+#~ msgid "Please enter a valid telephone number in the 'Fax' field."
+#~ msgstr "请在“传真”处填入一个有效的电话号码。"
+
+#~ msgid "Mail delivery is checked, but no address has been specified."
+#~ msgstr "选择了邮件传递，但是没有定义地址。"
+
+#~ msgid ""
+#~ "Deliver fax to printer, is only possible if valid printer is given. "
+#~ "Please correct your choice."
+#~ msgstr ""
+#~ "发送传真道打印机，只有在提供一个有效的打印机才能够实现。请修改您的选择。"
+
+#, fuzzy
+#~ msgid ""
+#~ "No fax extension defined in your server configuration, no reports can be "
+#~ "shown!"
+#~ msgstr "没有在服务器配置中定义传真扩展，无法显示报告！"
+
+#~ msgid "There is no mysql extension available, please check your php setup."
+#~ msgstr "没有可用的 mysql 扩展，请检查您的 php 设置。"
+
+#~ msgid "Can't select fax database for report generation!"
+#~ msgstr "无法为创建报告查找传真数据库！"
+
+#~ msgid "Can't query fax table 'faxlog' for report generation!"
+#~ msgstr "无法为创建报告查询传真数据表 'faxlog'！"
+
+#~ msgid "Query for fax database failed!"
+#~ msgstr "查询传真数据库失败！"
+
+#~ msgid "You have no permission to retrieve informations about this fax id!"
+#~ msgstr "您无权获取关于此传真 id 的信息！"
+
+#, fuzzy
+#~ msgid "You are not allowed to delete the blocklist '%s'!"
+#~ msgstr "您无权删除这个用户！"
+
+#~ msgid "Please specify a valid phone number."
+#~ msgstr "请给出一个有效电话号码。"
+
+#~ msgid "Required field 'Name' is not set."
+#~ msgstr "需要的“姓名”字段没有设置"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -87,24 +87,24 @@ msgid "This does something"
 msgstr "To robi coś"
 
 #: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:116
+#: addons/logview/class_gosa_logview.inc:118
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
 #: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:116
+#: addons/logview/class_gosa_logview.inc:118
 #, fuzzy, php-format
 msgid "No %s servers defined!"
 msgstr "Nie zdefiniowano serwerów logowania!"
 
 #: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:121
+#: addons/logview/class_gosa_logview.inc:123
 #, fuzzy
 msgid "Configuration error"
 msgstr "Plik konfiguracyjny"
 
 #: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:121
+#: addons/logview/class_gosa_logview.inc:123
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr ""
@@ -112,23 +112,24 @@ msgstr ""
 #: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:100
 #: addons/logview/class_logview.inc:113 addons/logview/class_logview.inc:136
 #: addons/logview/class_logview.inc:193 addons/logview/class_logview.inc:197
-#: addons/logview/class_gosa_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:153
-#: addons/logview/class_gosa_logview.inc:202
-#: addons/logview/class_gosa_logview.inc:207
+#: addons/logview/class_gosa_logview.inc:148
+#: addons/logview/class_gosa_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:228
+#: addons/logview/class_gosa_logview.inc:233
+#: addons/logview/class_gosa_logview.inc:248
 msgid "Error"
 msgstr "Błąd"
 
 #: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:193
-#: addons/logview/class_gosa_logview.inc:146
-#: addons/logview/class_gosa_logview.inc:202
+#: addons/logview/class_gosa_logview.inc:148
+#: addons/logview/class_gosa_logview.inc:228
 #, fuzzy, php-format
 msgid "Cannot connect to %s database!"
 msgstr "Nie można połączyć się z serwerem baz danych!"
 
 #: addons/logview/class_logview.inc:100 addons/logview/class_logview.inc:197
-#: addons/logview/class_gosa_logview.inc:153
-#: addons/logview/class_gosa_logview.inc:207
+#: addons/logview/class_gosa_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:233
 #, fuzzy, php-format
 msgid "Cannot select %s database!"
 msgstr "Nie można wybrać bazy danych!"
@@ -138,7 +139,8 @@ msgid "Cannot obtain host list from syslog database!"
 msgstr ""
 
 #: addons/logview/class_logview.inc:122 addons/logview/class_logview.inc:144
-#: addons/logview/class_gosa_logview.inc:163
+#: addons/logview/class_gosa_logview.inc:166
+#: addons/logview/class_gosa_logview.inc:181
 msgid "All"
 msgstr "Wszystkie"
 
@@ -147,47 +149,47 @@ msgid "Database query failed!"
 msgstr "Zapytanie do bazy danych nieudane"
 
 #: addons/logview/class_logview.inc:154
-#: addons/logview/class_gosa_logview.inc:69
+#: addons/logview/class_gosa_logview.inc:71
 msgid "one hour"
 msgstr "jedna godzina"
 
 #: addons/logview/class_logview.inc:154
-#: addons/logview/class_gosa_logview.inc:69
+#: addons/logview/class_gosa_logview.inc:71
 msgid "6 hours"
 msgstr "6 godzin"
 
 #: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:70
+#: addons/logview/class_gosa_logview.inc:72
 msgid "12 hours"
 msgstr "12 godzin"
 
 #: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:70
+#: addons/logview/class_gosa_logview.inc:72
 msgid "24 hours"
 msgstr "24 godziny"
 
 #: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_gosa_logview.inc:73
 msgid "2 days"
 msgstr "2 dni"
 
 #: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_gosa_logview.inc:73
 msgid "one week"
 msgstr "jeden tydzień"
 
 #: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_gosa_logview.inc:74
 msgid "2 weeks"
 msgstr "2 tygodnie"
 
 #: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_gosa_logview.inc:74
 msgid "one month"
 msgstr "jeden miesiąc"
 
 #: addons/logview/class_logview.inc:174
-#: addons/logview/class_gosa_logview.inc:182
+#: addons/logview/class_gosa_logview.inc:200
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "Brak uprawnień do usunięcia tej bloklisty."
@@ -217,6 +219,11 @@ msgstr "Nazwa hosta"
 #: addons/logview/main.inc:34
 msgid "System log view"
 msgstr "Podgląd logu systemowego"
+
+#: addons/logview/class_gosa_logview.inc:249
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
 
 #: admin/systems/services/log/gosaLogServer.tpl:1
 #, fuzzy

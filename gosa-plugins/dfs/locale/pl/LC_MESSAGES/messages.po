@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:41+0100\n"
+"POT-Creation-Date: 2008-03-05 08:56+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -71,36 +71,36 @@ msgstr "Zakończ"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: addons/godfs/class_dfsgeneric.inc:102 addons/godfs/class_dfsgeneric.inc:104
+#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
 msgid "Dfs share already exists."
 msgstr "Udział DFS już istnieje."
 
-#: addons/godfs/class_dfsgeneric.inc:117
+#: addons/godfs/class_dfsgeneric.inc:108
 msgid "Required Field \"Name of dfs Share\" is not set."
 msgstr "Wymagane pole 'Nazwa udziału DFS' nie jest wypełnione."
 
-#: addons/godfs/class_dfsgeneric.inc:120
+#: addons/godfs/class_dfsgeneric.inc:111
 msgid "Required Field \"Description\" is not set."
 msgstr "Wymagane pole 'Opis' nie jest wypełnione."
 
-#: addons/godfs/class_dfsgeneric.inc:123
+#: addons/godfs/class_dfsgeneric.inc:114
 msgid "Required Field \"Fileserver\" is not set."
 msgstr "Wymagane pole 'Serwer plików' nie jest wypełnione."
 
-#: addons/godfs/class_dfsgeneric.inc:126
+#: addons/godfs/class_dfsgeneric.inc:117
 msgid "Required Field \"Share on fileserver\" is not set."
 msgstr "Wymagane pole 'Udział na serwerze plików' nie jest wypełnione."
 
-#: addons/godfs/class_dfsgeneric.inc:129
+#: addons/godfs/class_dfsgeneric.inc:120
 msgid "Required Field \"Location\" is not set."
 msgstr "Wymagane pole 'Lokalizacja' nie jest wypełnione."
 
-#: addons/godfs/class_dfsgeneric.inc:186
+#: addons/godfs/class_dfsgeneric.inc:176
 #, php-format
 msgid "Saving dfs/generic with dn '%s' failed."
 msgstr "Zapisywanie dfs z dn '%s' nieudane."
 
-#: addons/godfs/class_dfsgeneric.inc:219
+#: addons/godfs/class_dfsgeneric.inc:203
 #, php-format
 msgid "Removing dfs/generic with dn '%s' failed."
 msgstr "Usuwanie dfs z dn '%s' nieudane."

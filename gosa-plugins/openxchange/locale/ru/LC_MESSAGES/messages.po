@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -64,7 +64,7 @@ msgstr "Удалить телефонный аккаунт"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
 #, fuzzy
-msgid "Open-Xchange account name is invalid!"
+msgid "Open-Xchange account name"
 msgstr "Удалить телефонный аккаунт"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
@@ -150,3 +150,7 @@ msgstr "Информация"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Open-Xchange account name is invalid!"
+#~ msgstr "Удалить телефонный аккаунт"

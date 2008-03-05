@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Proxy account"
 msgstr "代理账号"
 
@@ -30,7 +30,7 @@ msgid "Limit proxy access to working time"
 msgstr "限制代理访问仅在工作时间"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:332
+#: personal/connectivity/squid/class_proxyAccount.inc:330
 msgid "Restrict proxy usage by quota"
 msgstr "通过 quota 限制代理使用"
 
@@ -39,7 +39,7 @@ msgid "per"
 msgstr "每"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:320
+#: personal/connectivity/squid/class_proxyAccount.inc:318
 msgid "Proxy"
 msgstr "代理"
 
@@ -81,33 +81,36 @@ msgstr "月"
 msgid "Removing of user/proxy account with dn '%s' failed."
 msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:195
-msgid "Numerical value for Quota Setting is empty."
-msgstr "Quota 设置的数值为空。"
+#: personal/connectivity/squid/class_proxyAccount.inc:194
+#: personal/connectivity/squid/class_proxyAccount.inc:196
+msgid "Quota Setting"
+msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:197
-msgid "Numerical value for Quota Setting is not valid."
-msgstr "Quota 设置的数值无效。"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:300
+#: personal/connectivity/squid/class_proxyAccount.inc:298
 #, fuzzy, php-format
 msgid "Saving of user/proxy account with dn '%s' failed."
 msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:325
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:330
+#: personal/connectivity/squid/class_proxyAccount.inc:328
 msgid "Filter unwanted content"
 msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:331
+#: personal/connectivity/squid/class_proxyAccount.inc:329
 #, fuzzy
 msgid "Limit proxy access"
 msgstr "限制代理访问仅在工作时间"
+
+#~ msgid "Numerical value for Quota Setting is empty."
+#~ msgstr "Quota 设置的数值为空。"
+
+#~ msgid "Numerical value for Quota Setting is not valid."
+#~ msgstr "Quota 设置的数值无效。"

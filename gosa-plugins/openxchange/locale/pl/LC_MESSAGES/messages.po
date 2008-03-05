@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -64,7 +64,7 @@ msgstr "Usuwanie konta oxchange z dn '%s' nieudane."
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
 #, fuzzy
-msgid "Open-Xchange account name is invalid!"
+msgid "Open-Xchange account name"
 msgstr "konto Open-Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
@@ -151,3 +151,7 @@ msgstr "Informacja o użytkowniku"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "Strefa czasowa użytkownika"
+
+#, fuzzy
+#~ msgid "Open-Xchange account name is invalid!"
+#~ msgstr "konto Open-Xchange"

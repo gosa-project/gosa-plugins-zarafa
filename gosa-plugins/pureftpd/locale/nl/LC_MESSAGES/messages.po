@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -33,88 +33,87 @@ msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr "Het verwijderen van het pureftpd account is mislukt"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
-msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr "De opgegeven waarde voor 'Verstuur Bandbreedte' is niet geldig."
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Verstuur bandbreedte"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr "De opgegeven waarde voor 'Ontvangst bandbreedte' is niet geldig."
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Ontvangst bandbreedte"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
 #, fuzzy
-msgid "Value specified as 'Quota files' is not valid."
-msgstr "De opgegeven waarde voor 'Bestanden' is niet geldig."
+msgid "Quota file"
+msgstr "Quota grootte"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
-msgid "Value specified as 'Quota size' is not valid."
-msgstr "De opgegeven waarde voor 'Grootte' is niet geldig."
+msgid "Quota size"
+msgstr "Quota grootte"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
 msgid "Value specified as 'Upload ratio' is not valid."
 msgstr "De opgegeven waarde voor 'Verstuur Bandbreedte' is niet geldig."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
-#, fuzzy
-msgid "Value specified as 'Download ratio' is not valid."
-msgstr "De opgegeven waarde voor 'Ontvangst bandbreedte' is niet geldig."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
-#, fuzzy, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr "Het opslaan van het pureftpd account is mislukt"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
-#, fuzzy
-msgid "Ftp"
-msgstr "FS type"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Pure ftp account"
-msgstr "Fax account aanmaken"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Verbindingen"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
-msgid "My account"
-msgstr "Mijn account"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
-#, fuzzy
-msgid "Quota files"
-msgstr "Quota grootte"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
 #, fuzzy
 msgid "Upload ratio"
 msgstr "Uploaden"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
-#, fuzzy
-msgid "Quota MBytes"
-msgstr "Quota grootte"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 #, fuzzy
 msgid "Download ratio"
 msgstr "Systeem configuratie"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
+#, fuzzy, php-format
+msgid "Saving of user/pureftpd account with dn '%s' failed."
+msgstr "Het opslaan van het pureftpd account is mislukt"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#, fuzzy
+msgid "Ftp"
+msgstr "FS type"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Pure ftp account"
+msgstr "Fax account aanmaken"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Verbindingen"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "My account"
+msgstr "Mijn account"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#, fuzzy
+msgid "Quota files"
+msgstr "Quota grootte"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#, fuzzy
+msgid "Quota MBytes"
+msgstr "Quota grootte"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "Verstuur bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Download bandwith"
 msgstr "Ontvangst bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Status"
 msgstr "Status"
 
@@ -126,18 +125,10 @@ msgstr "FTP account"
 msgid "Bandwidth"
 msgstr "Bandbreedte"
 
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "Verstuur bandbreedte"
-
 #: personal/connectivity/pureftpd/pureftpd.tpl:26
 #: personal/connectivity/pureftpd/pureftpd.tpl:34
 msgid "kb/s"
 msgstr "kb/sec"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "Ontvangst bandbreedte"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:45
 msgid "Quota"
@@ -174,3 +165,21 @@ msgstr "Selecteer om Ftp toegang uit te schakelen"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Schakel FTP toegang tijdelijk uit"
+
+#~ msgid "Value specified as 'Upload bandwidth' is not valid."
+#~ msgstr "De opgegeven waarde voor 'Verstuur Bandbreedte' is niet geldig."
+
+#~ msgid "Value specified as 'Download bandwidth' is not valid."
+#~ msgstr "De opgegeven waarde voor 'Ontvangst bandbreedte' is niet geldig."
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota files' is not valid."
+#~ msgstr "De opgegeven waarde voor 'Bestanden' is niet geldig."
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota size' is not valid."
+#~ msgstr "De opgegeven waarde voor 'Grootte' is niet geldig."
+
+#, fuzzy
+#~ msgid "Value specified as 'Download ratio' is not valid."
+#~ msgstr "De opgegeven waarde voor 'Ontvangst bandbreedte' is niet geldig."

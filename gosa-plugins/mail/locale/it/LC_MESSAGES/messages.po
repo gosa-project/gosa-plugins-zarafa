@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -56,7 +56,7 @@ msgstr "Nome dell'utente del quale mostrare gli indirizzi"
 #: admin/systems/services/mail/goMailServer.tpl:191
 #: admin/groups/mail/mail_locals.tpl:66 admin/groups/mail/paste_mail.tpl:30
 #: admin/groups/mail/paste_mail.tpl:41 admin/groups/mail/mail.tpl:118
-#: admin/groups/mail/mail.tpl:205 admin/groups/mail/class_groupMail.inc:630
+#: admin/groups/mail/mail.tpl:205 admin/groups/mail/class_groupMail.inc:625
 msgid "Add"
 msgstr "Aggiungi"
 
@@ -79,10 +79,10 @@ msgid "Cancel"
 msgstr "Annulla"
 
 #: personal/mail/class_mailAccount.inc:15
-#: personal/mail/class_mailAccount.inc:1148
+#: personal/mail/class_mailAccount.inc:1152
 #: admin/ogroups/mail/paste_mail.tpl:4
 #: admin/ogroups/mail/class_mailogroup.inc:181
-#: admin/groups/mail/class_groupMail.inc:1224
+#: admin/groups/mail/class_groupMail.inc:1219
 msgid "Mail"
 msgstr "Posta"
 
@@ -120,7 +120,7 @@ msgstr "Questa identità non ha le estensioni per la posta"
 #: personal/mail/class_mailAccount.inc:299
 #: personal/mail/class_mailAccount.inc:302
 #: admin/ogroups/mail/class_mailogroup.inc:50
-#: admin/groups/mail/class_groupMail.inc:369
+#: admin/groups/mail/class_groupMail.inc:364
 msgid "Remove mail account"
 msgstr "Rimuovi le estensioni di posta"
 
@@ -131,7 +131,7 @@ msgid ""
 msgstr ""
 
 #: personal/mail/class_mailAccount.inc:303
-#: admin/groups/mail/class_groupMail.inc:370
+#: admin/groups/mail/class_groupMail.inc:365
 msgid ""
 "This account has mail features enabled. You can disable them by clicking "
 "below."
@@ -139,22 +139,22 @@ msgstr "Questa identià possiede estensioni di posta."
 
 #: personal/mail/class_mailAccount.inc:306
 #: admin/ogroups/mail/class_mailogroup.inc:53
-#: admin/groups/mail/class_groupMail.inc:372
+#: admin/groups/mail/class_groupMail.inc:367
 msgid "Create mail account"
 msgstr "Crea estensioni di posta"
 
 #: personal/mail/class_mailAccount.inc:306
-#: admin/groups/mail/class_groupMail.inc:373
+#: admin/groups/mail/class_groupMail.inc:368
 msgid ""
 "This account has mail features disabled. You can enable them by clicking "
 "below."
 msgstr "Questa identità non possiede estensioni di posta."
 
 #: personal/mail/class_mailAccount.inc:358
-#: personal/mail/class_mailAccount.inc:364
+#: personal/mail/class_mailAccount.inc:365
 #: personal/mail/class_mailAccount.inc:394
-#: personal/mail/class_mailAccount.inc:399
-#: personal/mail/class_mailAccount.inc:409
+#: personal/mail/class_mailAccount.inc:402
+#: personal/mail/class_mailAccount.inc:414
 #: personal/mail/sieve/class_My_Tree.inc:660
 #: personal/mail/sieve/class_sieveManagement.inc:200
 #: personal/mail/sieve/class_sieveManagement.inc:205
@@ -165,138 +165,127 @@ msgstr "Questa identità non possiede estensioni di posta."
 msgid "Error"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:358
-#: personal/mail/class_mailAccount.inc:394
-#: personal/mail/class_mailAccount.inc:399
-#, fuzzy
-msgid "Cannot add invalid mail address!"
-msgstr "Stai cercando di aggungere un indirizzo di posta non valido"
+#: personal/mail/class_mailAccount.inc:359
+#: personal/mail/class_mailAccount.inc:395
+#: personal/mail/class_mailAccount.inc:403
+#: personal/mail/class_mailAccount.inc:414
+#: personal/mail/class_mailAccount.inc:928
+#: personal/mail/class_mailAccount.inc:932
+#: personal/mail/class_mailAccount.inc:938
+#: personal/mail/class_mailAccount.inc:1162
+#: admin/ogroups/mail/class_mailogroup.inc:189
+#: admin/groups/mail/class_groupMail.inc:1227
+msgid "Mail address"
+msgstr "Indirizzo principale"
 
-#: personal/mail/class_mailAccount.inc:364
+#: personal/mail/class_mailAccount.inc:365
 #, fuzzy
 msgid "Cannot add your primary address to the list of forwarders."
 msgstr ""
 "Stai tentandi di aggiungere un indirizzo di posta non valido alla lista "
 "degli inoltri"
 
-#: personal/mail/class_mailAccount.inc:409
+#: personal/mail/class_mailAccount.inc:415
 #, fuzzy, php-format
-msgid "Cannot add mail address: it is already used by user '%s'."
+msgid "Already used by user '%s'."
 msgstr "L'indirizzo che stai cercando di aggiungere  gi in uso"
 
-#: personal/mail/class_mailAccount.inc:595
+#: personal/mail/class_mailAccount.inc:601
 msgid "January"
 msgstr "Gennaio"
 
-#: personal/mail/class_mailAccount.inc:595
+#: personal/mail/class_mailAccount.inc:601
 msgid "February"
 msgstr "Febbraio"
 
-#: personal/mail/class_mailAccount.inc:595
+#: personal/mail/class_mailAccount.inc:601
 msgid "March"
 msgstr "Marzo"
 
-#: personal/mail/class_mailAccount.inc:595
+#: personal/mail/class_mailAccount.inc:601
 msgid "April"
 msgstr "Aprile"
 
-#: personal/mail/class_mailAccount.inc:596
+#: personal/mail/class_mailAccount.inc:602
 msgid "May"
 msgstr "Maggio"
 
-#: personal/mail/class_mailAccount.inc:596
+#: personal/mail/class_mailAccount.inc:602
 msgid "June"
 msgstr "Giugno"
 
-#: personal/mail/class_mailAccount.inc:596
+#: personal/mail/class_mailAccount.inc:602
 msgid "July"
 msgstr "Luglio"
 
-#: personal/mail/class_mailAccount.inc:596
+#: personal/mail/class_mailAccount.inc:602
 msgid "August"
 msgstr "Agosto"
 
-#: personal/mail/class_mailAccount.inc:596
+#: personal/mail/class_mailAccount.inc:602
 msgid "September"
 msgstr "Settembre"
 
-#: personal/mail/class_mailAccount.inc:597
+#: personal/mail/class_mailAccount.inc:603
 msgid "October"
 msgstr "Ottobre"
 
-#: personal/mail/class_mailAccount.inc:597
+#: personal/mail/class_mailAccount.inc:603
 msgid "November"
 msgstr "Novembre"
 
-#: personal/mail/class_mailAccount.inc:597
+#: personal/mail/class_mailAccount.inc:603
 msgid "December"
 msgstr "Dicembre"
 
-#: personal/mail/class_mailAccount.inc:684
+#: personal/mail/class_mailAccount.inc:690
 #, fuzzy, php-format
 msgid "Removing of user/mail account with dn '%s' failed."
 msgstr "Rimuovi le estensioni di posta"
 
-#: personal/mail/class_mailAccount.inc:850
+#: personal/mail/class_mailAccount.inc:856
 #, fuzzy, php-format
 msgid "Saving of user/mail account with dn '%s' failed."
 msgstr "Rimuovi le estensioni di posta"
 
-#: personal/mail/class_mailAccount.inc:913
-#: personal/mail/class_mailAccount.inc:1324
+#: personal/mail/class_mailAccount.inc:919
+#: personal/mail/class_mailAccount.inc:1328
 msgid ""
 "There is no valid mailserver specified, please add one in the system setup."
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:918
-#: admin/groups/mail/class_groupMail.inc:1026
-msgid "The required field 'Primary address' is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+#: personal/mail/class_mailAccount.inc:924 personal/mail/generic.tpl:8
+#: personal/mail/copypaste.tpl:7 admin/ogroups/mail/mail.tpl:10
+#: admin/groups/mail/paste_mail.tpl:8 admin/groups/mail/mail.tpl:10
+msgid "Primary address"
+msgstr "Indirizzo principale"
 
-#: personal/mail/class_mailAccount.inc:922
-#: personal/mail/class_mailAccount.inc:926
-#: admin/ogroups/mail/class_mailogroup.inc:85
-msgid "Please enter a valid email address in 'Primary address' field."
-msgstr ""
-"Inserire un indirizzo di posta valido nel campo 'Indirizzo principale'."
+#: personal/mail/class_mailAccount.inc:944
+#: personal/mail/class_mailAccount.inc:1164 personal/mail/generic.tpl:47
+#: admin/groups/mail/mail.tpl:48 admin/groups/mail/class_groupMail.inc:1230
+msgid "Quota size"
+msgstr "Dimensione quota"
 
-#: personal/mail/class_mailAccount.inc:932
-#: admin/ogroups/mail/class_mailogroup.inc:92
-#: admin/groups/mail/class_groupMail.inc:1035
-msgid "The primary address you've entered is already in use."
-msgstr "L'indirizzo principale inserito è già in uso."
-
-#: personal/mail/class_mailAccount.inc:938
-#: personal/mail/class_mailAccount.inc:1330
-#: admin/groups/mail/class_groupMail.inc:1041
-msgid "Value in 'Quota size' is not valid."
-msgstr "Il valore di 'Dimensione quota' non è valido"
-
-#: personal/mail/class_mailAccount.inc:947
-#: personal/mail/class_mailAccount.inc:1339
-#: admin/groups/mail/class_groupMail.inc:1050
-msgid "Please specify a vaild mail size for mails to be rejected."
-msgstr "Specificare una dimenzione valida per le mail da rigettare."
-
-#: personal/mail/class_mailAccount.inc:957
-#: admin/groups/mail/class_groupMail.inc:1058
-msgid "You need to set the maximum mail size in order to reject anything."
-msgstr "Devi specificare la dimensione massima delle mail da rigettare."
-
+#: personal/mail/class_mailAccount.inc:953
 #: personal/mail/class_mailAccount.inc:961
-#: personal/mail/class_mailAccount.inc:1346
-msgid "You specified Spam settings, but there is no Folder specified."
-msgstr ""
+#, fuzzy
+msgid "Mail reject size"
+msgstr "Inoltra i messaggi a"
 
 #: personal/mail/class_mailAccount.inc:965
-#: personal/mail/class_mailAccount.inc:1351
-msgid "Time interval to show vacation message is not valid."
-msgstr ""
+#, fuzzy
+msgid "Spam folder"
+msgstr "nella cartella"
 
-#: personal/mail/class_mailAccount.inc:1005
-#: personal/mail/class_mailAccount.inc:1017
-#: personal/mail/class_mailAccount.inc:1050
-#: personal/mail/class_mailAccount.inc:1061
+#: personal/mail/class_mailAccount.inc:969
+#, fuzzy
+msgid "Vacation interval"
+msgstr "Messaggio di di risposta automatica"
+
+#: personal/mail/class_mailAccount.inc:1009
+#: personal/mail/class_mailAccount.inc:1021
+#: personal/mail/class_mailAccount.inc:1054
+#: personal/mail/class_mailAccount.inc:1065
 #: addons/mailqueue/class_mailqueue.inc:91
 #: addons/mailqueue/class_mailqueue.inc:118
 #: addons/mailqueue/class_mailqueue.inc:177
@@ -305,57 +294,46 @@ msgstr ""
 msgid "Permission error"
 msgstr "Permessi"
 
-#: personal/mail/class_mailAccount.inc:1005
-#: personal/mail/class_mailAccount.inc:1017
-#: personal/mail/class_mailAccount.inc:1050
-#: personal/mail/class_mailAccount.inc:1061
+#: personal/mail/class_mailAccount.inc:1009
+#: personal/mail/class_mailAccount.inc:1021
+#: personal/mail/class_mailAccount.inc:1054
+#: personal/mail/class_mailAccount.inc:1065
 #, fuzzy
 msgid "You have no permission to modify these addresses."
 msgstr "Non hai il permesso di cambiare la tua password."
 
-#: personal/mail/class_mailAccount.inc:1126
+#: personal/mail/class_mailAccount.inc:1130
 msgid "Waiting for kolab to remove mail properties."
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1128
+#: personal/mail/class_mailAccount.inc:1132
 msgid ""
 "Please remove the mail account first, to allow kolab to call its remove "
 "methods."
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1149 personal/mail/copypaste.tpl:1
+#: personal/mail/class_mailAccount.inc:1153 personal/mail/copypaste.tpl:1
 #: admin/groups/mail/paste_mail.tpl:1
 #, fuzzy
 msgid "Mail settings"
 msgstr "Opzioni di posta dell'identità"
 
-#: personal/mail/class_mailAccount.inc:1153
+#: personal/mail/class_mailAccount.inc:1157
 msgid "My account"
 msgstr "Identità"
 
-#: personal/mail/class_mailAccount.inc:1158
-#: admin/ogroups/mail/class_mailogroup.inc:189
-#: admin/groups/mail/class_groupMail.inc:1232
-msgid "Mail address"
-msgstr "Indirizzo principale"
-
-#: personal/mail/class_mailAccount.inc:1159
-#: admin/groups/mail/class_groupMail.inc:1236
+#: personal/mail/class_mailAccount.inc:1163
+#: admin/groups/mail/class_groupMail.inc:1231
 #, fuzzy
 msgid "Mail server"
 msgstr "Server"
 
-#: personal/mail/class_mailAccount.inc:1160 personal/mail/generic.tpl:47
-#: admin/groups/mail/mail.tpl:48 admin/groups/mail/class_groupMail.inc:1235
-msgid "Quota size"
-msgstr "Dimensione quota"
-
-#: personal/mail/class_mailAccount.inc:1162
+#: personal/mail/class_mailAccount.inc:1166
 #, fuzzy
 msgid "Add vacation information"
 msgstr "Informazioni organizzazione"
 
-#: personal/mail/class_mailAccount.inc:1163
+#: personal/mail/class_mailAccount.inc:1167
 #: personal/mail/sieve/templates/object_container.tpl:31
 #: personal/mail/sieve/templates/element_vacation.tpl:44
 #: personal/mail/sieve/class_sieveManagement.inc:503
@@ -364,57 +342,75 @@ msgstr "Informazioni organizzazione"
 msgid "Vacation message"
 msgstr "Messaggio di di risposta automatica"
 
-#: personal/mail/class_mailAccount.inc:1165
+#: personal/mail/class_mailAccount.inc:1169
 msgid "Use spam filter"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1166
+#: personal/mail/class_mailAccount.inc:1170
 msgid "Spam level"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1167
+#: personal/mail/class_mailAccount.inc:1171
 msgid "Spam mail box"
 msgstr ""
 
-#: personal/mail/class_mailAccount.inc:1169
+#: personal/mail/class_mailAccount.inc:1173
 #, fuzzy
 msgid "Sieve management"
 msgstr "Dirigenza"
 
-#: personal/mail/class_mailAccount.inc:1171
+#: personal/mail/class_mailAccount.inc:1175
 #, fuzzy
 msgid "Reject due to mailsize"
 msgstr "Rifiuta mail più grandi di"
 
-#: personal/mail/class_mailAccount.inc:1172
+#: personal/mail/class_mailAccount.inc:1176
 #, fuzzy
 msgid "Mail max size"
 msgstr "Inoltra i messaggi a"
 
-#: personal/mail/class_mailAccount.inc:1174
-#: personal/mail/class_mailAccount.inc:1179
+#: personal/mail/class_mailAccount.inc:1178
+#: personal/mail/class_mailAccount.inc:1183
 #, fuzzy
 msgid "Forwarding address"
 msgstr "Indirizzo principale"
 
-#: personal/mail/class_mailAccount.inc:1175
+#: personal/mail/class_mailAccount.inc:1179
 #, fuzzy
 msgid "Local delivery"
 msgstr "Ultimo recapito"
 
-#: personal/mail/class_mailAccount.inc:1176
+#: personal/mail/class_mailAccount.inc:1180
 #, fuzzy
 msgid "No delivery to own mailbox "
 msgstr "Non recapitare nella propria mailbox"
 
-#: personal/mail/class_mailAccount.inc:1177
+#: personal/mail/class_mailAccount.inc:1181
 #, fuzzy
 msgid "Mail alternative addresses"
 msgstr "Indirizzi alternativi"
 
-#: personal/mail/class_mailAccount.inc:1180 personal/mail/generic.tpl:124
+#: personal/mail/class_mailAccount.inc:1184 personal/mail/generic.tpl:124
 msgid "Use custom sieve script"
 msgstr "Usa uno script di sieve personalizzato"
+
+#: personal/mail/class_mailAccount.inc:1334
+#: admin/groups/mail/class_groupMail.inc:1036
+msgid "Value in 'Quota size' is not valid."
+msgstr "Il valore di 'Dimensione quota' non è valido"
+
+#: personal/mail/class_mailAccount.inc:1343
+#: admin/groups/mail/class_groupMail.inc:1045
+msgid "Please specify a vaild mail size for mails to be rejected."
+msgstr "Specificare una dimenzione valida per le mail da rigettare."
+
+#: personal/mail/class_mailAccount.inc:1350
+msgid "You specified Spam settings, but there is no Folder specified."
+msgstr ""
+
+#: personal/mail/class_mailAccount.inc:1355
+msgid "Time interval to show vacation message is not valid."
+msgstr ""
 
 #: personal/mail/sieve/class_sieveElement_Reject.inc:21
 msgid "Invalid character found, quotes are not allowed in a reject message."
@@ -426,7 +422,7 @@ msgstr ""
 
 #: personal/mail/sieve/class_My_Tree.inc:245
 #: personal/mail/sieve/templates/remove_script.tpl:2
-#: personal/mail/class_mail-methods-cyrus.inc:40
+#: personal/mail/class_mail-methods-cyrus.inc:52
 msgid "Warning"
 msgstr "Attenzione"
 
@@ -1089,10 +1085,10 @@ msgstr "L'indirizzo principale inserito è già in uso."
 #: personal/mail/sieve/class_sieveManagement.inc:772
 #: personal/mail/sieve/class_sieveManagement.inc:1032
 #: personal/mail/sieve/class_sieveManagement.inc:1045
-#: personal/mail/class_mail-methods-cyrus.inc:269
 #: personal/mail/class_mail-methods-cyrus.inc:281
-#: personal/mail/class_mail-methods-cyrus.inc:352
-#: personal/mail/class_mail-methods-cyrus.inc:356
+#: personal/mail/class_mail-methods-cyrus.inc:293
+#: personal/mail/class_mail-methods-cyrus.inc:364
+#: personal/mail/class_mail-methods-cyrus.inc:368
 #, fuzzy
 msgid "SIEVE error"
 msgstr "Errore PHP"
@@ -1100,13 +1096,13 @@ msgstr "Errore PHP"
 #: personal/mail/sieve/class_sieveManagement.inc:301
 #: personal/mail/sieve/class_sieveManagement.inc:344
 #: personal/mail/sieve/class_sieveManagement.inc:1032
-#: personal/mail/class_mail-methods-cyrus.inc:269
+#: personal/mail/class_mail-methods-cyrus.inc:281
 #, fuzzy, php-format
 msgid "Cannot log into SIEVE server: %s"
 msgstr "Accesso al server LDAP fallito. La ragione è: %s."
 
 #: personal/mail/sieve/class_sieveManagement.inc:308
-#: personal/mail/class_mail-methods-cyrus.inc:281
+#: personal/mail/class_mail-methods-cyrus.inc:293
 #, php-format
 msgid "Cannot retrieve SIEVE script: %s"
 msgstr ""
@@ -1131,8 +1127,8 @@ msgid "Uploaded script is empty!"
 msgstr ""
 
 #: personal/mail/sieve/class_sieveManagement.inc:432
-#: personal/mail/class_mail-methods-cyrus.inc:201
-#: personal/mail/class_mail-methods-cyrus.inc:219
+#: personal/mail/class_mail-methods-cyrus.inc:213
+#: personal/mail/class_mail-methods-cyrus.inc:231
 #, fuzzy
 msgid "Internal error"
 msgstr "Terminal Server"
@@ -1210,7 +1206,7 @@ msgid "Cannot insert element at the requested position!"
 msgstr ""
 
 #: personal/mail/sieve/class_sieveManagement.inc:1045
-#: personal/mail/class_mail-methods-cyrus.inc:352
+#: personal/mail/class_mail-methods-cyrus.inc:364
 #, php-format
 msgid "Cannot store SIEVE script: %s"
 msgstr ""
@@ -1227,7 +1223,7 @@ msgstr "incompleto"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:27
 #: personal/mail/sieve/class_sieveElement_If.inc:33
-#: admin/groups/mail/class_groupMail.inc:682
+#: admin/groups/mail/class_groupMail.inc:677
 #, fuzzy
 msgid "Default"
 msgstr "Stampante predefinita"
@@ -1432,12 +1428,6 @@ msgstr "Specificare una dimenzione valida per le mail da rigettare."
 msgid "Generic"
 msgstr "Generale"
 
-#: personal/mail/generic.tpl:8 personal/mail/copypaste.tpl:7
-#: admin/ogroups/mail/mail.tpl:10 admin/groups/mail/paste_mail.tpl:8
-#: admin/groups/mail/mail.tpl:10
-msgid "Primary address"
-msgstr "Indirizzo principale"
-
 #: personal/mail/generic.tpl:11 admin/groups/mail/mail.tpl:14
 msgid "Multiple edit"
 msgstr ""
@@ -1571,46 +1561,46 @@ msgstr ""
 msgid "User mail settings"
 msgstr "Opzioni di posta dell'identità"
 
-#: personal/mail/class_mail-methods-cyrus.inc:40
+#: personal/mail/class_mail-methods-cyrus.inc:52
 msgid "Mail server for this account is invalid!"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:58
-#: personal/mail/class_mail-methods-cyrus.inc:156
-#: personal/mail/class_mail-methods-cyrus.inc:175
-#: personal/mail/class_mail-methods-cyrus.inc:241
+#: personal/mail/class_mail-methods-cyrus.inc:70
+#: personal/mail/class_mail-methods-cyrus.inc:168
+#: personal/mail/class_mail-methods-cyrus.inc:187
+#: personal/mail/class_mail-methods-cyrus.inc:253
 #, fuzzy
 msgid "IMAP error"
 msgstr "Errore LDAP"
 
-#: personal/mail/class_mail-methods-cyrus.inc:58
+#: personal/mail/class_mail-methods-cyrus.inc:70
 msgid "Cannot store mail settings on IMAP server!"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:156
+#: personal/mail/class_mail-methods-cyrus.inc:168
 #, fuzzy, php-format
 msgid "Cannot create IMAP mailbox: %s"
 msgstr "Rimuovi"
 
-#: personal/mail/class_mail-methods-cyrus.inc:175
+#: personal/mail/class_mail-methods-cyrus.inc:187
 #, php-format
 msgid "Cannot modify IMAP mailbox quota: %s"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:201
+#: personal/mail/class_mail-methods-cyrus.inc:213
 msgid "Cannot remove IMAP ACL: imap_getacl not implemented!"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:219
+#: personal/mail/class_mail-methods-cyrus.inc:231
 msgid "Cannot retrieve IMAP ACL: imap_getacl not implemented!"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:241
+#: personal/mail/class_mail-methods-cyrus.inc:253
 #, php-format
 msgid "Cannot remove IMAP mailbox: %s"
 msgstr ""
 
-#: personal/mail/class_mail-methods-cyrus.inc:356
+#: personal/mail/class_mail-methods-cyrus.inc:368
 #, php-format
 msgid "Cannot activate SIEVE script: %s"
 msgstr ""
@@ -1882,6 +1872,16 @@ msgid ""
 "This group has mail features disabled. You can enable them by clicking below."
 msgstr "Questa identità non possiede estensioni di posta."
 
+#: admin/ogroups/mail/class_mailogroup.inc:85
+msgid "Please enter a valid email address in 'Primary address' field."
+msgstr ""
+"Inserire un indirizzo di posta valido nel campo 'Indirizzo principale'."
+
+#: admin/ogroups/mail/class_mailogroup.inc:92
+#: admin/groups/mail/class_groupMail.inc:1030
+msgid "The primary address you've entered is already in use."
+msgstr "L'indirizzo principale inserito è già in uso."
+
 #: admin/ogroups/mail/class_mailogroup.inc:118
 #, fuzzy, php-format
 msgid "Saving of object group/mail with dn '%s' failed."
@@ -2025,7 +2025,7 @@ msgid "Please specify a valid value for '%s'."
 msgstr "Specificare una dimenzione valida per le mail da rigettare."
 
 #: admin/systems/services/virus/class_goVirusServer.inc:218
-#: admin/systems/services/spam/class_goSpamServer.inc:325
+#: admin/systems/services/spam/class_goSpamServer.inc:320
 #: admin/systems/services/mail/class_goMailServer.inc:702
 #: admin/systems/services/imap/class_goImapServer.inc:159
 msgid "Services"
@@ -2058,13 +2058,13 @@ msgid "Rule"
 msgstr "Ruolo"
 
 #: admin/systems/services/spam/goSpamServer.tpl:8
-#: admin/systems/services/spam/class_goSpamServer.inc:333
+#: admin/systems/services/spam/class_goSpamServer.inc:328
 #, fuzzy
 msgid "Rewrite header"
 msgstr "leggere"
 
 #: admin/systems/services/spam/goSpamServer.tpl:18
-#: admin/systems/services/spam/class_goSpamServer.inc:335
+#: admin/systems/services/spam/class_goSpamServer.inc:330
 msgid "Required score"
 msgstr ""
 
@@ -2075,12 +2075,12 @@ msgstr ""
 #: admin/systems/services/spam/goSpamServer.tpl:48
 #: admin/systems/services/mail/goMailServer.tpl:73
 #: admin/systems/services/mail/goMailServer.tpl:104
-#: admin/groups/mail/class_groupMail.inc:636
+#: admin/groups/mail/class_groupMail.inc:631
 msgid "Remove"
 msgstr "Rimuovi"
 
 #: admin/systems/services/spam/goSpamServer.tpl:69
-#: admin/systems/services/spam/class_goSpamServer.inc:338
+#: admin/systems/services/spam/class_goSpamServer.inc:333
 msgid "Enable use of bayes filtering"
 msgstr ""
 
@@ -2089,56 +2089,56 @@ msgid "Enable bayes auto learning"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServer.tpl:75
-#: admin/systems/services/spam/class_goSpamServer.inc:340
+#: admin/systems/services/spam/class_goSpamServer.inc:335
 msgid "Enable RBL checks"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServer.tpl:86
-#: admin/systems/services/spam/class_goSpamServer.inc:341
+#: admin/systems/services/spam/class_goSpamServer.inc:336
 msgid "Enable use of Razor"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServer.tpl:89
-#: admin/systems/services/spam/class_goSpamServer.inc:342
+#: admin/systems/services/spam/class_goSpamServer.inc:337
 msgid "Enable use of DDC"
 msgstr ""
 
 #: admin/systems/services/spam/goSpamServer.tpl:92
-#: admin/systems/services/spam/class_goSpamServer.inc:343
+#: admin/systems/services/spam/class_goSpamServer.inc:338
 msgid "Enable use of Pyzor"
 msgstr ""
 
-#: admin/systems/services/spam/class_goSpamServer.inc:47
-#: admin/systems/services/spam/class_goSpamServer.inc:324
-#: admin/systems/services/spam/class_goSpamServer.inc:325
-#: admin/systems/services/spam/class_goSpamServer.inc:351
+#: admin/systems/services/spam/class_goSpamServer.inc:42
+#: admin/systems/services/spam/class_goSpamServer.inc:319
+#: admin/systems/services/spam/class_goSpamServer.inc:320
+#: admin/systems/services/spam/class_goSpamServer.inc:346
 msgid "Spamassassin"
 msgstr ""
 
-#: admin/systems/services/spam/class_goSpamServer.inc:222
+#: admin/systems/services/spam/class_goSpamServer.inc:217
 msgid "Specified value is not a valid 'trusted network' value."
 msgstr ""
 
-#: admin/systems/services/spam/class_goSpamServer.inc:282
+#: admin/systems/services/spam/class_goSpamServer.inc:277
 #, fuzzy, php-format
 msgid "Saving of server services/spamassassin with dn '%s' failed."
 msgstr "Crea estensioni telefoniche"
 
-#: admin/systems/services/spam/class_goSpamServer.inc:291
+#: admin/systems/services/spam/class_goSpamServer.inc:286
 msgid "Required score must be a numeric value."
 msgstr ""
 
-#: admin/systems/services/spam/class_goSpamServer.inc:334
+#: admin/systems/services/spam/class_goSpamServer.inc:329
 #, fuzzy
 msgid "Trusted networks"
 msgstr "Impostazioni Unix"
 
-#: admin/systems/services/spam/class_goSpamServer.inc:336
+#: admin/systems/services/spam/class_goSpamServer.inc:331
 #, fuzzy
 msgid "Rules"
 msgstr "Ruolo"
 
-#: admin/systems/services/spam/class_goSpamServer.inc:339
+#: admin/systems/services/spam/class_goSpamServer.inc:334
 msgid "Enabled bayes auto learning"
 msgstr ""
 
@@ -2486,66 +2486,66 @@ msgstr "Inserisci la URI del server LDAP"
 msgid "Not used in all groups"
 msgstr "Mostra gruppi funzionali"
 
-#: admin/groups/mail/class_groupMail.inc:87
+#: admin/groups/mail/class_groupMail.inc:82
 #, php-format
 msgid "There is no mail method '%s' specified in your gosa.conf available."
 msgstr "Il metodo di posta '%s' non è definito in gosa.conf"
 
-#: admin/groups/mail/class_groupMail.inc:303
+#: admin/groups/mail/class_groupMail.inc:298
 msgid "read"
 msgstr "leggere"
 
-#: admin/groups/mail/class_groupMail.inc:304
+#: admin/groups/mail/class_groupMail.inc:299
 msgid "post"
 msgstr "spedire"
 
-#: admin/groups/mail/class_groupMail.inc:305
+#: admin/groups/mail/class_groupMail.inc:300
 msgid "external post"
 msgstr "spedire esterno"
 
-#: admin/groups/mail/class_groupMail.inc:306
+#: admin/groups/mail/class_groupMail.inc:301
 msgid "append"
 msgstr "appendere"
 
-#: admin/groups/mail/class_groupMail.inc:307
+#: admin/groups/mail/class_groupMail.inc:302
 msgid "write"
 msgstr "scrivere"
 
-#: admin/groups/mail/class_groupMail.inc:308
+#: admin/groups/mail/class_groupMail.inc:303
 #, fuzzy
 msgid "admin"
 msgstr "DN dell'amministratore"
 
-#: admin/groups/mail/class_groupMail.inc:309
+#: admin/groups/mail/class_groupMail.inc:304
 msgid "none"
 msgstr "nessuno"
 
-#: admin/groups/mail/class_groupMail.inc:361
+#: admin/groups/mail/class_groupMail.inc:356
 msgid "This 'dn' has no valid mail extensions."
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:383
+#: admin/groups/mail/class_groupMail.inc:378
 msgid ""
 "Remove shared folder from mail server database when entry gets removed in "
 "LDAP"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:384
+#: admin/groups/mail/class_groupMail.inc:379
 msgid "Remove the shared folder and all its contents after saving this account"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:444
+#: admin/groups/mail/class_groupMail.inc:439
 msgid ""
 "You're trying to add an invalid email address to the list of forwarders."
 msgstr ""
 "Stai tentandi di aggiungere un indirizzo di posta non valido alla lista "
 "degli inoltri"
 
-#: admin/groups/mail/class_groupMail.inc:450
+#: admin/groups/mail/class_groupMail.inc:445
 msgid "Adding your one of your own addresses to the forwarders makes no sense."
 msgstr "Aggiungere il tuo indirizzo alla lista delgi inoltri non ha senso."
 
-#: admin/groups/mail/class_groupMail.inc:476
+#: admin/groups/mail/class_groupMail.inc:471
 msgid ""
 "You're trying to add an invalid email address to the list of alternate "
 "addresses."
@@ -2553,104 +2553,116 @@ msgstr ""
 "Stai cercando di aggungere un indirizzo di posta non valido alla lista degli "
 "indirizzi alternativi."
 
-#: admin/groups/mail/class_groupMail.inc:481
+#: admin/groups/mail/class_groupMail.inc:476
 msgid "The address you're trying to add is already used by user"
 msgstr "L'indirizzo che stai cercando di aggiungere  gi in uso"
 
-#: admin/groups/mail/class_groupMail.inc:672
-#: admin/groups/mail/class_groupMail.inc:678
+#: admin/groups/mail/class_groupMail.inc:667
+#: admin/groups/mail/class_groupMail.inc:673
 #, fuzzy
 msgid "Unspecified"
 msgstr "non definito"
 
-#: admin/groups/mail/class_groupMail.inc:672
+#: admin/groups/mail/class_groupMail.inc:667
 #, fuzzy
 msgid "Mails"
 msgstr "Posta"
 
-#: admin/groups/mail/class_groupMail.inc:673
+#: admin/groups/mail/class_groupMail.inc:668
 #, fuzzy
 msgid "Tasks"
 msgstr "classe"
 
-#: admin/groups/mail/class_groupMail.inc:673
+#: admin/groups/mail/class_groupMail.inc:668
 #, fuzzy
 msgid "Journals"
 msgstr "ora"
 
-#: admin/groups/mail/class_groupMail.inc:674
+#: admin/groups/mail/class_groupMail.inc:669
 msgid "Calendar"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:674
+#: admin/groups/mail/class_groupMail.inc:669
 #, fuzzy
 msgid "Contacts"
 msgstr "Contatto"
 
-#: admin/groups/mail/class_groupMail.inc:675
+#: admin/groups/mail/class_groupMail.inc:670
 #, fuzzy
 msgid "Notes"
 msgstr "nessuno"
 
-#: admin/groups/mail/class_groupMail.inc:678
+#: admin/groups/mail/class_groupMail.inc:673
 msgid "Inbox"
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:679
+#: admin/groups/mail/class_groupMail.inc:674
 #, fuzzy
 msgid "Drafts"
 msgstr "Data"
 
-#: admin/groups/mail/class_groupMail.inc:679
+#: admin/groups/mail/class_groupMail.inc:674
 #, fuzzy
 msgid "Sent items"
 msgstr "Stato"
 
-#: admin/groups/mail/class_groupMail.inc:680
+#: admin/groups/mail/class_groupMail.inc:675
 #, fuzzy
 msgid "Junk mail"
 msgstr "Nome gruppo"
 
-#: admin/groups/mail/class_groupMail.inc:759
+#: admin/groups/mail/class_groupMail.inc:754
 #, fuzzy, php-format
 msgid "Removing of groups/mail with dn '%s' failed."
 msgstr "Opzioni di posta dell'identità"
 
-#: admin/groups/mail/class_groupMail.inc:991
+#: admin/groups/mail/class_groupMail.inc:986
 #, fuzzy, php-format
 msgid "Saving of groups/mail with dn '%s' failed."
 msgstr "Opzioni di posta dell'identità"
 
-#: admin/groups/mail/class_groupMail.inc:1029
+#: admin/groups/mail/class_groupMail.inc:1021
+msgid "The required field 'Primary address' is not set."
+msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#: admin/groups/mail/class_groupMail.inc:1024
 msgid "Please enter a valid email addres in 'Primary address' field."
 msgstr ""
 "Prego inserire un indirizzo email valido nel campo 'Indirizzo principale'"
 
-#: admin/groups/mail/class_groupMail.inc:1062
+#: admin/groups/mail/class_groupMail.inc:1053
+msgid "You need to set the maximum mail size in order to reject anything."
+msgstr "Devi specificare la dimensione massima delle mail da rigettare."
+
+#: admin/groups/mail/class_groupMail.inc:1057
 msgid ""
 "Please choose valid permission settings. Default permission can't be emtpy."
 msgstr ""
 
-#: admin/groups/mail/class_groupMail.inc:1066
+#: admin/groups/mail/class_groupMail.inc:1061
 #, fuzzy
 msgid "Please select a valid mail server."
 msgstr "Prego inserire un numero di telefono valido!"
 
-#: admin/groups/mail/class_groupMail.inc:1225
+#: admin/groups/mail/class_groupMail.inc:1220
 #, fuzzy
 msgid "Group mail"
 msgstr "Nome gruppo"
 
-#: admin/groups/mail/class_groupMail.inc:1233
+#: admin/groups/mail/class_groupMail.inc:1228
 #, fuzzy
 msgid "Alternate addresses"
 msgstr "Indirizzi alternativi"
 
-#: admin/groups/mail/class_groupMail.inc:1234
+#: admin/groups/mail/class_groupMail.inc:1229
 #, fuzzy
 msgid "Forwarding addresses"
 msgstr "Indirizzo principale"
 
-#: admin/groups/mail/class_groupMail.inc:1237
+#: admin/groups/mail/class_groupMail.inc:1232
 msgid "Permissions"
 msgstr "Permessi"
+
+#, fuzzy
+#~ msgid "Cannot add invalid mail address!"
+#~ msgstr "Stai cercando di aggungere un indirizzo di posta non valido"

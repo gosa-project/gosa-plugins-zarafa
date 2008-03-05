@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Proxy account"
 msgstr "Compte Proxy"
 
@@ -28,7 +28,7 @@ msgid "Limit proxy access to working time"
 msgstr "Accès au proxy autorisé durant la plage horaire suivante"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:332
+#: personal/connectivity/squid/class_proxyAccount.inc:330
 msgid "Restrict proxy usage by quota"
 msgstr "Restreindre la quantité de données téléchargeables"
 
@@ -37,7 +37,7 @@ msgid "per"
 msgstr "par"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:320
+#: personal/connectivity/squid/class_proxyAccount.inc:318
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -79,32 +79,35 @@ msgid "Removing of user/proxy account with dn '%s' failed."
 msgstr ""
 "La suppression du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/squid/class_proxyAccount.inc:195
-msgid "Numerical value for Quota Setting is empty."
-msgstr "La valeur pour le quota est vide."
+#: personal/connectivity/squid/class_proxyAccount.inc:194
+#: personal/connectivity/squid/class_proxyAccount.inc:196
+msgid "Quota Setting"
+msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:197
-msgid "Numerical value for Quota Setting is not valid."
-msgstr "La valeur dans le champ 'Paramètres du quota' n'est pas valide."
-
-#: personal/connectivity/squid/class_proxyAccount.inc:300
+#: personal/connectivity/squid/class_proxyAccount.inc:298
 #, php-format
 msgid "Saving of user/proxy account with dn '%s' failed."
 msgstr ""
 "La sauvegarde du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:325
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:330
+#: personal/connectivity/squid/class_proxyAccount.inc:328
 msgid "Filter unwanted content"
 msgstr "Filtrer le contenu non désiré"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:331
+#: personal/connectivity/squid/class_proxyAccount.inc:329
 msgid "Limit proxy access"
 msgstr "Accès au proxy autorisé durant la plage horaire suivante"
+
+#~ msgid "Numerical value for Quota Setting is empty."
+#~ msgstr "La valeur pour le quota est vide."
+
+#~ msgid "Numerical value for Quota Setting is not valid."
+#~ msgstr "La valeur dans le champ 'Paramètres du quota' n'est pas valide."

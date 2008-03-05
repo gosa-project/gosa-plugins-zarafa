@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -28,88 +28,87 @@ msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr "Удалить телефонный аккаунт"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
-msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Пропускная способность (на сервер)"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr "Значение поля \"Пропускная способность (с сервера)\" некорректно."
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Пропускная способность (с сервера)"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
 #, fuzzy
-msgid "Value specified as 'Quota files' is not valid."
-msgstr "Значение поля \"Размер\" некорректно."
+msgid "Quota file"
+msgstr "Размер квоты"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
-msgid "Value specified as 'Quota size' is not valid."
-msgstr "Значение поля \"Размер\" некорректно."
+msgid "Quota size"
+msgstr "Размер квоты"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
 msgid "Value specified as 'Upload ratio' is not valid."
 msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
-#, fuzzy
-msgid "Value specified as 'Download ratio' is not valid."
-msgstr "Значение поля \"Пропускная способность (с сервера)\" некорректно."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
-#, fuzzy, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
-#, fuzzy
-msgid "Ftp"
-msgstr "Тип"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Pure ftp account"
-msgstr "Создать настройки факса"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Подключение"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
-msgid "My account"
-msgstr "Моя учетная запись"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
-#, fuzzy
-msgid "Quota files"
-msgstr "Размер квоты"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
 #, fuzzy
 msgid "Upload ratio"
 msgstr "Загрузка процессора"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
-#, fuzzy
-msgid "Quota MBytes"
-msgstr "Размер квоты"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 #, fuzzy
 msgid "Download ratio"
 msgstr "Системная информация"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
+#, fuzzy, php-format
+msgid "Saving of user/pureftpd account with dn '%s' failed."
+msgstr "Удалить телефонный аккаунт"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#, fuzzy
+msgid "Ftp"
+msgstr "Тип"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Pure ftp account"
+msgstr "Создать настройки факса"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Подключение"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "My account"
+msgstr "Моя учетная запись"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#, fuzzy
+msgid "Quota files"
+msgstr "Размер квоты"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#, fuzzy
+msgid "Quota MBytes"
+msgstr "Размер квоты"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "Пропускная способность (на сервер)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Download bandwith"
 msgstr "Пропускная способность (с сервера)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Status"
 msgstr "Состояние"
 
@@ -121,18 +120,10 @@ msgstr "Аккаунт FTP"
 msgid "Bandwidth"
 msgstr "Пропускная способность"
 
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "Пропускная способность (на сервер)"
-
 #: personal/connectivity/pureftpd/pureftpd.tpl:26
 #: personal/connectivity/pureftpd/pureftpd.tpl:34
 msgid "kb/s"
 msgstr "Кб/с"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "Пропускная способность (с сервера)"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:45
 msgid "Quota"
@@ -169,3 +160,21 @@ msgstr "Отметьте, чтобы отключить доступ к FTP"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Временно отключить доступ к FTP"
+
+#~ msgid "Value specified as 'Upload bandwidth' is not valid."
+#~ msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."
+
+#~ msgid "Value specified as 'Download bandwidth' is not valid."
+#~ msgstr "Значение поля \"Пропускная способность (с сервера)\" некорректно."
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota files' is not valid."
+#~ msgstr "Значение поля \"Размер\" некорректно."
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota size' is not valid."
+#~ msgstr "Значение поля \"Размер\" некорректно."
+
+#, fuzzy
+#~ msgid "Value specified as 'Download ratio' is not valid."
+#~ msgstr "Значение поля \"Пропускная способность (с сервера)\" некорректно."

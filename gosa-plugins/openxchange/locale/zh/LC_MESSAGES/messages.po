@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
 #, fuzzy
-msgid "Open-Xchange account name is invalid!"
+msgid "Open-Xchange account name"
 msgstr "Open-Xchange 账号"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
@@ -152,3 +152,7 @@ msgstr "用户信息"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "用户时区"
+
+#, fuzzy
+#~ msgid "Open-Xchange account name is invalid!"
+#~ msgstr "Open-Xchange 账号"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Proxy account"
 msgstr "Estenzioni Proxy Internet"
 
@@ -29,7 +29,7 @@ msgid "Limit proxy access to working time"
 msgstr "Limita l'accesso a Internet alle ore lavorative"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:332
+#: personal/connectivity/squid/class_proxyAccount.inc:330
 msgid "Restrict proxy usage by quota"
 msgstr "Restringi la quota d'uso di Internet"
 
@@ -38,7 +38,7 @@ msgid "per"
 msgstr "per"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:320
+#: personal/connectivity/squid/class_proxyAccount.inc:318
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -79,34 +79,34 @@ msgstr "mese"
 msgid "Removing of user/proxy account with dn '%s' failed."
 msgstr "Elimina estensioni Unix"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:195
-msgid "Numerical value for Quota Setting is empty."
+#: personal/connectivity/squid/class_proxyAccount.inc:194
+#: personal/connectivity/squid/class_proxyAccount.inc:196
+msgid "Quota Setting"
 msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:197
-#, fuzzy
-msgid "Numerical value for Quota Setting is not valid."
-msgstr "Il valore di 'Dimensione quota' non è valido"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:300
+#: personal/connectivity/squid/class_proxyAccount.inc:298
 #, fuzzy, php-format
 msgid "Saving of user/proxy account with dn '%s' failed."
 msgstr "Estenzioni Proxy Internet"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Connettività"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:325
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "My account"
 msgstr "Identità"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:330
+#: personal/connectivity/squid/class_proxyAccount.inc:328
 msgid "Filter unwanted content"
 msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:331
+#: personal/connectivity/squid/class_proxyAccount.inc:329
 #, fuzzy
 msgid "Limit proxy access"
 msgstr "Limita l'accesso a Internet alle ore lavorative"
+
+#, fuzzy
+#~ msgid "Numerical value for Quota Setting is not valid."
+#~ msgstr "Il valore di 'Dimensione quota' non è valido"

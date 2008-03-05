@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:366
 msgid "Netatalk"
 msgstr ""
 
@@ -25,54 +25,54 @@ msgstr ""
 msgid "Manage netatalk account"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:174
+#: personal/netatalk/class_netatalk.inc:170
 msgid "This account has no netatalk extensions."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:183
+#: personal/netatalk/class_netatalk.inc:179
 msgid "Remove netatalk account"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:183
+#: personal/netatalk/class_netatalk.inc:179
 msgid ""
 "This account has netatalk features enabled. You can disable them by clicking "
 "below."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:194
-#: personal/netatalk/class_netatalk.inc:196
+#: personal/netatalk/class_netatalk.inc:190
+#: personal/netatalk/class_netatalk.inc:192
 msgid "Create netatalk account"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:194
+#: personal/netatalk/class_netatalk.inc:190
 msgid ""
 "This account has netatalk features disabled. You can enable them by clicking "
 "below."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:229
+#: personal/netatalk/class_netatalk.inc:225
 msgid "You must select a share to use."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:294
+#: personal/netatalk/class_netatalk.inc:290
 #, php-format
 msgid "Saving of user/netatalk account with dn '%s' failed."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:356
+#: personal/netatalk/class_netatalk.inc:352
 #, php-format
 msgid "Removing of user/netatalk account with dn '%s' failed."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:374
+#: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:379
+#: personal/netatalk/class_netatalk.inc:375
 msgid "User home path"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:380 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
 msgid "Share"
 msgstr ""
 

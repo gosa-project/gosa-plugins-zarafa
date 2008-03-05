@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -94,7 +94,7 @@ msgid "Saturday"
 msgstr "Stato"
 
 #: personal/samba/class_sambaAccount.inc:24
-#: personal/samba/class_sambaAccount.inc:1171
+#: personal/samba/class_sambaAccount.inc:1170
 msgid "Samba"
 msgstr "Samba"
 
@@ -102,32 +102,32 @@ msgstr "Samba"
 msgid "This does something"
 msgstr "Questo fa qualcosa"
 
-#: personal/samba/class_sambaAccount.inc:218
+#: personal/samba/class_sambaAccount.inc:217
 msgid "This account has no samba extensions."
 msgstr "Questa identità non possiede estensioni Samba."
 
-#: personal/samba/class_sambaAccount.inc:230
+#: personal/samba/class_sambaAccount.inc:229
 msgid "Remove samba account"
 msgstr "Elimina estensioni Samba"
 
-#: personal/samba/class_sambaAccount.inc:231
+#: personal/samba/class_sambaAccount.inc:230
 msgid ""
 "This account has samba features enabled. You can disable them by clicking "
 "below."
 msgstr "Questa identià possiede estensioni Samba."
 
-#: personal/samba/class_sambaAccount.inc:240
-#: personal/samba/class_sambaAccount.inc:243
+#: personal/samba/class_sambaAccount.inc:239
+#: personal/samba/class_sambaAccount.inc:242
 msgid "Create samba account"
 msgstr "Crea estensioni Samba"
 
-#: personal/samba/class_sambaAccount.inc:241
+#: personal/samba/class_sambaAccount.inc:240
 msgid ""
 "This account has samba features disabled. You can enable them by clicking "
 "below."
 msgstr "Questa identità non possiede estensioni Samba."
 
-#: personal/samba/class_sambaAccount.inc:244
+#: personal/samba/class_sambaAccount.inc:243
 msgid ""
 "This account has samba features disabled. Posix features are needed for "
 "samba accounts, enable them first."
@@ -135,274 +135,274 @@ msgstr ""
 "Questa identità non possiede estensioni Samba. Per poterle creare occorre "
 "creare prima le estensioni Unix."
 
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
+#: personal/samba/class_sambaAccount.inc:435
+#: personal/samba/class_sambaAccount.inc:453
+#: personal/samba/class_sambaAccount.inc:471
+#: personal/samba/class_sambaAccount.inc:489
 msgid "January"
 msgstr "Gennaio"
 
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
+#: personal/samba/class_sambaAccount.inc:435
+#: personal/samba/class_sambaAccount.inc:453
+#: personal/samba/class_sambaAccount.inc:471
+#: personal/samba/class_sambaAccount.inc:489
 msgid "February"
 msgstr "Febbraio"
 
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
+#: personal/samba/class_sambaAccount.inc:435
+#: personal/samba/class_sambaAccount.inc:453
+#: personal/samba/class_sambaAccount.inc:471
+#: personal/samba/class_sambaAccount.inc:489
 msgid "March"
 msgstr "Marzo"
 
+#: personal/samba/class_sambaAccount.inc:435
+#: personal/samba/class_sambaAccount.inc:453
+#: personal/samba/class_sambaAccount.inc:471
+#: personal/samba/class_sambaAccount.inc:489
+msgid "April"
+msgstr "Aprile"
+
 #: personal/samba/class_sambaAccount.inc:436
 #: personal/samba/class_sambaAccount.inc:454
 #: personal/samba/class_sambaAccount.inc:472
 #: personal/samba/class_sambaAccount.inc:490
-msgid "April"
-msgstr "Aprile"
-
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
 msgid "May"
 msgstr "Maggio"
 
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
+#: personal/samba/class_sambaAccount.inc:436
+#: personal/samba/class_sambaAccount.inc:454
+#: personal/samba/class_sambaAccount.inc:472
+#: personal/samba/class_sambaAccount.inc:490
 msgid "June"
 msgstr "Giugno"
 
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
+#: personal/samba/class_sambaAccount.inc:436
+#: personal/samba/class_sambaAccount.inc:454
+#: personal/samba/class_sambaAccount.inc:472
+#: personal/samba/class_sambaAccount.inc:490
 msgid "July"
 msgstr "Luglio"
 
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
+#: personal/samba/class_sambaAccount.inc:436
+#: personal/samba/class_sambaAccount.inc:454
+#: personal/samba/class_sambaAccount.inc:472
+#: personal/samba/class_sambaAccount.inc:490
 msgid "August"
 msgstr "Agosto"
 
+#: personal/samba/class_sambaAccount.inc:436
+#: personal/samba/class_sambaAccount.inc:454
+#: personal/samba/class_sambaAccount.inc:472
+#: personal/samba/class_sambaAccount.inc:490
+msgid "September"
+msgstr "Settembre"
+
 #: personal/samba/class_sambaAccount.inc:437
 #: personal/samba/class_sambaAccount.inc:455
 #: personal/samba/class_sambaAccount.inc:473
 #: personal/samba/class_sambaAccount.inc:491
-msgid "September"
-msgstr "Settembre"
-
-#: personal/samba/class_sambaAccount.inc:438
-#: personal/samba/class_sambaAccount.inc:456
-#: personal/samba/class_sambaAccount.inc:474
-#: personal/samba/class_sambaAccount.inc:492
 msgid "October"
 msgstr "Ottobre"
 
-#: personal/samba/class_sambaAccount.inc:438
-#: personal/samba/class_sambaAccount.inc:456
-#: personal/samba/class_sambaAccount.inc:474
-#: personal/samba/class_sambaAccount.inc:492
+#: personal/samba/class_sambaAccount.inc:437
+#: personal/samba/class_sambaAccount.inc:455
+#: personal/samba/class_sambaAccount.inc:473
+#: personal/samba/class_sambaAccount.inc:491
 msgid "November"
 msgstr "Novembre"
 
-#: personal/samba/class_sambaAccount.inc:438
-#: personal/samba/class_sambaAccount.inc:456
-#: personal/samba/class_sambaAccount.inc:474
-#: personal/samba/class_sambaAccount.inc:492
+#: personal/samba/class_sambaAccount.inc:437
+#: personal/samba/class_sambaAccount.inc:455
+#: personal/samba/class_sambaAccount.inc:473
+#: personal/samba/class_sambaAccount.inc:491
 msgid "December"
 msgstr "Dicembre"
 
-#: personal/samba/class_sambaAccount.inc:533
+#: personal/samba/class_sambaAccount.inc:532
 msgid "disabled"
 msgstr "disabilitato"
 
-#: personal/samba/class_sambaAccount.inc:534
+#: personal/samba/class_sambaAccount.inc:533
 msgid "input on, notify on"
 msgstr "input on, notifica on"
 
-#: personal/samba/class_sambaAccount.inc:535
+#: personal/samba/class_sambaAccount.inc:534
 msgid "input on, notify off"
 msgstr "input on, notifica off"
 
-#: personal/samba/class_sambaAccount.inc:536
+#: personal/samba/class_sambaAccount.inc:535
 msgid "input off, notify on"
 msgstr "input off, notifica on"
 
-#: personal/samba/class_sambaAccount.inc:537
+#: personal/samba/class_sambaAccount.inc:536
 msgid "input off, nofify off"
 msgstr "input off, notifica off"
 
-#: personal/samba/class_sambaAccount.inc:539
+#: personal/samba/class_sambaAccount.inc:538
 msgid "disconnect"
 msgstr "disconnetti"
 
-#: personal/samba/class_sambaAccount.inc:540
+#: personal/samba/class_sambaAccount.inc:539
 msgid "reset"
 msgstr "reset"
 
-#: personal/samba/class_sambaAccount.inc:542
+#: personal/samba/class_sambaAccount.inc:541
 msgid "from any client"
 msgstr "da qualsiasi client "
 
-#: personal/samba/class_sambaAccount.inc:543
+#: personal/samba/class_sambaAccount.inc:542
 msgid "from previous client only"
 msgstr "solo dal client precedente"
 
-#: personal/samba/class_sambaAccount.inc:734
+#: personal/samba/class_sambaAccount.inc:733
 #, fuzzy, php-format
 msgid "Removing of user/samba account with dn '%s' failed."
 msgstr "Elimina estensioni Samba"
 
-#: personal/samba/class_sambaAccount.inc:750
-#: personal/samba/class_sambaAccount.inc:1240 personal/samba/samba3.tpl:13
+#: personal/samba/class_sambaAccount.inc:749
+#: personal/samba/class_sambaAccount.inc:1239 personal/samba/samba3.tpl:13
 #: personal/samba/samba3.tpl:106
 msgid "Home directory"
 msgstr "Home directory"
 
-#: personal/samba/class_sambaAccount.inc:751
-#: personal/samba/class_sambaAccount.inc:1241 personal/samba/samba2.tpl:45
+#: personal/samba/class_sambaAccount.inc:750
+#: personal/samba/class_sambaAccount.inc:1240 personal/samba/samba2.tpl:45
 #: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:120
 msgid "Profile path"
 msgstr "Path del profilo"
 
-#: personal/samba/class_sambaAccount.inc:753
-#: personal/samba/class_sambaAccount.inc:1243
+#: personal/samba/class_sambaAccount.inc:752
+#: personal/samba/class_sambaAccount.inc:1242
 #, php-format
 msgid "The value specified as '%s' contains invalid characters!"
 msgstr "Il valore specificato come '%s' contiene dei caratteri invalidi!"
 
-#: personal/samba/class_sambaAccount.inc:758
-#: personal/samba/class_sambaAccount.inc:1248 personal/samba/samba3.tpl:184
+#: personal/samba/class_sambaAccount.inc:757
+#: personal/samba/class_sambaAccount.inc:1247 personal/samba/samba3.tpl:184
 msgid "Connection"
 msgstr "Connessione"
 
-#: personal/samba/class_sambaAccount.inc:759
-#: personal/samba/class_sambaAccount.inc:1249 personal/samba/samba3.tpl:198
+#: personal/samba/class_sambaAccount.inc:758
+#: personal/samba/class_sambaAccount.inc:1248 personal/samba/samba3.tpl:198
 msgid "Disconnection"
 msgstr "Disconnessione "
 
-#: personal/samba/class_sambaAccount.inc:760
-#: personal/samba/class_sambaAccount.inc:1250 personal/samba/samba3.tpl:212
+#: personal/samba/class_sambaAccount.inc:759
+#: personal/samba/class_sambaAccount.inc:1249 personal/samba/samba3.tpl:212
 msgid "IDLE"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:763
-#: personal/samba/class_sambaAccount.inc:1254
+#: personal/samba/class_sambaAccount.inc:762
+#: personal/samba/class_sambaAccount.inc:1253
 #, php-format
 msgid ""
 "The timeout property '%s' is checked and contains invalid or no characters!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:769
-#: personal/samba/class_sambaAccount.inc:1260
+#: personal/samba/class_sambaAccount.inc:768
+#: personal/samba/class_sambaAccount.inc:1259
 msgid ""
 "The windows user manager only allows eight clients. You've specified more "
 "than eight."
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:958
-#: personal/samba/class_sambaAccount.inc:982
+#: personal/samba/class_sambaAccount.inc:957
+#: personal/samba/class_sambaAccount.inc:981
 msgid "Warning"
 msgstr "Attenzione"
 
-#: personal/samba/class_sambaAccount.inc:958
+#: personal/samba/class_sambaAccount.inc:957
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:982
+#: personal/samba/class_sambaAccount.inc:981
 msgid ""
 "Cannot convert primary group to samba group: group cannot be identified!"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1092
+#: personal/samba/class_sambaAccount.inc:1091
 #, fuzzy, php-format
 msgid "Saving of user/samba account with dn '%s' failed."
 msgstr "Account Kolab"
 
-#: personal/samba/class_sambaAccount.inc:1172 personal/samba/main.inc:125
+#: personal/samba/class_sambaAccount.inc:1171 personal/samba/main.inc:125
 msgid "Samba settings"
 msgstr "Impostazioni Samba"
 
-#: personal/samba/class_sambaAccount.inc:1176
+#: personal/samba/class_sambaAccount.inc:1175
 msgid "My account"
 msgstr "Identità"
 
-#: personal/samba/class_sambaAccount.inc:1181 personal/samba/samba3.tpl:103
+#: personal/samba/class_sambaAccount.inc:1180 personal/samba/samba3.tpl:103
 msgid "Allow login on terminal server"
 msgstr "Permetti la connessione al Terminal Server"
 
-#: personal/samba/class_sambaAccount.inc:1182 personal/samba/samba3.tpl:140
+#: personal/samba/class_sambaAccount.inc:1181 personal/samba/samba3.tpl:140
 msgid "Inherit client config"
 msgstr "Eredita la configurazione del client"
 
-#: personal/samba/class_sambaAccount.inc:1184
+#: personal/samba/class_sambaAccount.inc:1183
 #, fuzzy
 msgid "Allow user to change password"
 msgstr "Permetti all'utente di cambiare la propria password da un client"
 
-#: personal/samba/class_sambaAccount.inc:1185 personal/samba/samba2.tpl:72
+#: personal/samba/class_sambaAccount.inc:1184 personal/samba/samba2.tpl:72
 #: personal/samba/samba3.tpl:316
 msgid "Login from windows client requires no password"
 msgstr "L'accesso ai client Windows non richiede password"
 
-#: personal/samba/class_sambaAccount.inc:1186 personal/samba/samba3.tpl:321
+#: personal/samba/class_sambaAccount.inc:1185 personal/samba/samba3.tpl:321
 msgid "Lock samba account"
 msgstr "Blocca l'account samba"
 
-#: personal/samba/class_sambaAccount.inc:1189
+#: personal/samba/class_sambaAccount.inc:1188
 #, fuzzy
 msgid "Account expires"
 msgstr "L'account spira dopo"
 
-#: personal/samba/class_sambaAccount.inc:1190
+#: personal/samba/class_sambaAccount.inc:1189
 #, fuzzy
 msgid "Password expires"
 msgstr "La password spira il"
 
-#: personal/samba/class_sambaAccount.inc:1192 personal/samba/samba3.tpl:346
+#: personal/samba/class_sambaAccount.inc:1191 personal/samba/samba3.tpl:346
 msgid "Limit Logon Time"
 msgstr "Limita il tempo per la connessione"
 
-#: personal/samba/class_sambaAccount.inc:1193 personal/samba/samba3.tpl:366
+#: personal/samba/class_sambaAccount.inc:1192 personal/samba/samba3.tpl:366
 msgid "Limit Logoff Time"
 msgstr "Limita il tempo per la disconnessione"
 
-#: personal/samba/class_sambaAccount.inc:1194
+#: personal/samba/class_sambaAccount.inc:1193
 #, fuzzy
 msgid "Logon hours"
 msgstr "ora"
 
-#: personal/samba/class_sambaAccount.inc:1196
+#: personal/samba/class_sambaAccount.inc:1195
 #, fuzzy
 msgid "Generic home directory"
 msgstr "Home directory"
 
-#: personal/samba/class_sambaAccount.inc:1197
+#: personal/samba/class_sambaAccount.inc:1196
 msgid "Generic samba home drive"
 msgstr ""
 
-#: personal/samba/class_sambaAccount.inc:1198
+#: personal/samba/class_sambaAccount.inc:1197
 #, fuzzy
 msgid "Generic script path"
 msgstr "Script path"
 
-#: personal/samba/class_sambaAccount.inc:1199
+#: personal/samba/class_sambaAccount.inc:1198
 #, fuzzy
 msgid "Generic profile path"
 msgstr "Path del profilo"
 
-#: personal/samba/class_sambaAccount.inc:1200 personal/samba/samba3.tpl:27
+#: personal/samba/class_sambaAccount.inc:1199 personal/samba/samba3.tpl:27
 msgid "Domain"
 msgstr "Dominio"
 
-#: personal/samba/class_sambaAccount.inc:1201
+#: personal/samba/class_sambaAccount.inc:1200
 #, fuzzy
 msgid "Allow connection from"
 msgstr "Permetti la connessione solo da queste workstation"
@@ -545,48 +545,48 @@ msgid "Select a base"
 msgstr "Rimuovi"
 
 #: admin/systems/samba/wingeneric.tpl:25
-#: admin/systems/samba/class_winGeneric.inc:296
+#: admin/systems/samba/class_winGeneric.inc:291
 msgid "Description"
 msgstr "Descrizione"
 
-#: admin/systems/samba/class_winGeneric.inc:96
+#: admin/systems/samba/class_winGeneric.inc:91
 msgid "This 'dn' has no network features."
 msgstr ""
 
-#: admin/systems/samba/class_winGeneric.inc:157
+#: admin/systems/samba/class_winGeneric.inc:152
 #, php-format
 msgid "Removing of system wingeneric/generic with dn '%s' failed."
 msgstr ""
 
-#: admin/systems/samba/class_winGeneric.inc:207
+#: admin/systems/samba/class_winGeneric.inc:202
 msgid "You have no permissions to create a component on this 'Base'."
 msgstr ""
 
-#: admin/systems/samba/class_winGeneric.inc:220
+#: admin/systems/samba/class_winGeneric.inc:215
 #, php-format
 msgid "There is already an entry '%s' in the base choosen by you"
 msgstr ""
 
-#: admin/systems/samba/class_winGeneric.inc:275
+#: admin/systems/samba/class_winGeneric.inc:270
 #, php-format
 msgid "Saving of system wingeneric/generic with dn '%s' failed."
 msgstr ""
 
-#: admin/systems/samba/class_winGeneric.inc:286
+#: admin/systems/samba/class_winGeneric.inc:281
 #, fuzzy
 msgid "Win generic"
 msgstr "Stampante"
 
-#: admin/systems/samba/class_winGeneric.inc:287
+#: admin/systems/samba/class_winGeneric.inc:282
 #, fuzzy
 msgid "Windows workstation generic"
 msgstr "Mostra workstation"
 
-#: admin/systems/samba/class_winGeneric.inc:292
+#: admin/systems/samba/class_winGeneric.inc:287
 #, fuzzy
 msgid "Win workstation"
 msgstr "Amministrazione"
 
-#: admin/systems/samba/class_winGeneric.inc:295
+#: admin/systems/samba/class_winGeneric.inc:290
 msgid "Workstation name"
 msgstr ""

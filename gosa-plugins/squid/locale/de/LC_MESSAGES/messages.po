@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:45+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Proxy account"
 msgstr "Proxy Konto"
 
@@ -36,7 +36,7 @@ msgid "Limit proxy access to working time"
 msgstr "Inhaltsfilterung nur während der Arbeitszeit"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:332
+#: personal/connectivity/squid/class_proxyAccount.inc:330
 msgid "Restrict proxy usage by quota"
 msgstr "Proxynutzung durch Kontingent einschränken"
 
@@ -45,7 +45,7 @@ msgid "per"
 msgstr "pro"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:320
+#: personal/connectivity/squid/class_proxyAccount.inc:318
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -86,32 +86,36 @@ msgstr "Monat"
 msgid "Removing of user/proxy account with dn '%s' failed."
 msgstr "Entfernen von Benutzer/Proxy-Konto mit dn '%s' fehlgeschlagen."
 
-#: personal/connectivity/squid/class_proxyAccount.inc:195
-msgid "Numerical value for Quota Setting is empty."
-msgstr "Das numerische Feld der Kontingent-Einstellung ist leer."
-
-#: personal/connectivity/squid/class_proxyAccount.inc:197
-msgid "Numerical value for Quota Setting is not valid."
+#: personal/connectivity/squid/class_proxyAccount.inc:194
+#: personal/connectivity/squid/class_proxyAccount.inc:196
+msgid "Quota Setting"
 msgstr ""
-"Das numerische Feld der Kontingent-Einstellung enthält einen ungültigen Wert."
 
-#: personal/connectivity/squid/class_proxyAccount.inc:300
+#: personal/connectivity/squid/class_proxyAccount.inc:298
 #, php-format
 msgid "Saving of user/proxy account with dn '%s' failed."
 msgstr "Speichern von Benutzert/Proxy-Konto mit dn '%s' fehlgeschlagen."
 
-#: personal/connectivity/squid/class_proxyAccount.inc:321
+#: personal/connectivity/squid/class_proxyAccount.inc:319
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:325
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:330
+#: personal/connectivity/squid/class_proxyAccount.inc:328
 msgid "Filter unwanted content"
 msgstr "Filtere ungewünschten Inhalt"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:331
+#: personal/connectivity/squid/class_proxyAccount.inc:329
 msgid "Limit proxy access"
 msgstr "Beschränke Proxy-Zugriff"
+
+#~ msgid "Numerical value for Quota Setting is empty."
+#~ msgstr "Das numerische Feld der Kontingent-Einstellung ist leer."
+
+#~ msgid "Numerical value for Quota Setting is not valid."
+#~ msgstr ""
+#~ "Das numerische Feld der Kontingent-Einstellung enthält einen ungültigen "
+#~ "Wert."

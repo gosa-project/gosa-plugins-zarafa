@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:42+0100\n"
+"POT-Creation-Date: 2008-03-05 08:56+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -74,15 +74,15 @@ msgstr "Fax"
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:170
+#: gofax/faxaccount/class_gofaxAccount.inc:164
 msgid "This account has no fax extensions."
 msgstr "Dit account heeft geen Fax mogelijkheden."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:179
+#: gofax/faxaccount/class_gofaxAccount.inc:173
 msgid "Remove fax account"
 msgstr "Fax account verwijderen"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:180
+#: gofax/faxaccount/class_gofaxAccount.inc:174
 msgid ""
 "This account has fax features enabled. You can disable them by clicking "
 "below."
@@ -90,11 +90,11 @@ msgstr ""
 "Dit account heeft Fax mogelijkheden ingeschakeld. U kunt deze uitschakelen "
 "door de knop hieronder te gebruiken."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:182
+#: gofax/faxaccount/class_gofaxAccount.inc:176
 msgid "Create fax account"
 msgstr "Fax account aanmaken"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:183
+#: gofax/faxaccount/class_gofaxAccount.inc:177
 msgid ""
 "This account has fax features disabled. You can enable them by clicking "
 "below."
@@ -102,97 +102,107 @@ msgstr ""
 "Dit account heeft Fax mogelijkheden uitgeschakeld. U kunt deze inschakelen "
 "door de knop hieronder te gebruiken."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:247
-msgid "You're trying to add an invalid phone number."
-msgstr "U probeert een ongeldig telefoonnummer toe te voegen."
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+#: gofax/faxreports/class_faxreport.inc:115
+#: gofax/faxreports/class_faxreport.inc:125
+#: gofax/faxreports/class_faxreport.inc:129
+#: gofax/faxreports/class_faxreport.inc:134
+#: gofax/faxreports/class_faxreport.inc:157
+#: gofax/faxreports/class_faxreport.inc:297
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+msgid "Error"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:458
-#: gofax/faxaccount/class_gofaxAccount.inc:540
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+msgid "Phone number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:452
+#: gofax/faxaccount/class_gofaxAccount.inc:534
 msgid "back"
 msgstr "terug"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:663
+#: gofax/faxaccount/class_gofaxAccount.inc:657
 #, fuzzy, php-format
 msgid "Removing of user/fax account with dn '%s' failed."
 msgstr "Het verwijderen van het algemene gebruikers account is mislukt"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:678
-msgid "The required field 'Fax' is not set."
-msgstr "Het vereiste veld 'Fax' is leeg."
+#: gofax/faxaccount/class_gofaxAccount.inc:672
+#, fuzzy
+msgid "Fax is empty!"
+msgstr "Fax rapporten"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:682
-msgid "Please enter a valid telephone number in the 'Fax' field."
-msgstr "Voer a.u.b. een geldig Fax nummer bij het 'Fax' veld in."
+#: gofax/faxaccount/class_gofaxAccount.inc:676
+msgid "Fax number is not valid!"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:690
-msgid "Mail delivery is checked, but no address has been specified."
-msgstr "E-mail aflevering staat aan, alleen is er geen adres opgegeven."
+#: gofax/faxaccount/class_gofaxAccount.inc:684
+msgid "Mail delivery is requested without target address!"
+msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:692
-msgid "The mail address you've entered is invalid."
+#: gofax/faxaccount/class_gofaxAccount.inc:686
+#, fuzzy
+msgid "Mail address is invalid!"
 msgstr "Het E-mail adres dat u opgegeven heeft is ongeldig."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:698
-msgid ""
-"Deliver fax to printer, is only possible if valid printer is given. Please "
-"correct your choice."
+#: gofax/faxaccount/class_gofaxAccount.inc:692
+msgid "Printing is requested without a target printer!"
 msgstr ""
-"Fax afleveren op een printer is alleen mogelijk indien een geldige printer "
-"is opgegeven. Corrigeer uw keuze a.u.b."
 
-#: gofax/faxaccount/class_gofaxAccount.inc:790
+#: gofax/faxaccount/class_gofaxAccount.inc:784
 #, fuzzy, php-format
 msgid "Saving of user/fax account with dn '%s' failed."
 msgstr "Het opslaan van het algemene gerbuikers account is mislukt"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:860
+#: gofax/faxaccount/class_gofaxAccount.inc:854
 #: gofax/faxaccount/paste_generic.tpl:8 gofax/faxaccount/generic.tpl:10
 #: gofax/blocklists/class_blocklistGeneric.inc:351
 msgid "Fax"
 msgstr "Fax"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:861
+#: gofax/faxaccount/class_gofaxAccount.inc:855
 #, fuzzy
 msgid "Fax account settings"
 msgstr "Samba Instellingen"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:870
+#: gofax/faxaccount/class_gofaxAccount.inc:864
 msgid "Enable/Disable fax"
 msgstr ""
 
-#: gofax/faxaccount/class_gofaxAccount.inc:871
+#: gofax/faxaccount/class_gofaxAccount.inc:865
 #, fuzzy
 msgid "Receive blocklist"
 msgstr "Toon ontvangst blokkeerlijsten"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:872
+#: gofax/faxaccount/class_gofaxAccount.inc:866
 #, fuzzy
 msgid "Send blocklist"
 msgstr "Toon verstuur blokkeerlijsten"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:873
+#: gofax/faxaccount/class_gofaxAccount.inc:867
 #, fuzzy
 msgid "Fax number"
 msgstr "Serienummer"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:874
+#: gofax/faxaccount/class_gofaxAccount.inc:868
 #, fuzzy
 msgid "Alternate fax number"
 msgstr "Alternatieve Fax nummers"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:73
+#: gofax/faxaccount/class_gofaxAccount.inc:869 gofax/faxaccount/generic.tpl:73
 msgid "Deliver fax as mail"
 msgstr "Lever Fax als E-mail af"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:80
+#: gofax/faxaccount/class_gofaxAccount.inc:870 gofax/faxaccount/generic.tpl:80
 msgid "Deliver fax to printer"
 msgstr "Lever Fax af op printer"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:877 gofax/faxaccount/generic.tpl:37
+#: gofax/faxaccount/class_gofaxAccount.inc:871 gofax/faxaccount/generic.tpl:37
 msgid "Delivery format"
 msgstr "Aflever formaat"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:878 gofax/faxaccount/generic.tpl:24
+#: gofax/faxaccount/class_gofaxAccount.inc:872 gofax/faxaccount/generic.tpl:24
 msgid "Language"
 msgstr "Taal"
 
@@ -300,39 +310,50 @@ msgid "FAX Reports"
 msgstr "Fax rapporten"
 
 #: gofax/faxreports/class_faxreport.inc:115
-msgid ""
-"No fax extension defined in your server configuration, no reports can be "
-"shown!"
+msgid "No fax server found!"
 msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:118
-msgid "There is no mysql extension available, please check your php setup."
+#: gofax/faxreports/class_faxreport.inc:281
+msgid "Configuration error"
 msgstr ""
-"Er is geen MySQL extensie beschikbaar. Controleer uw PHP installatie a.u.b."
+
+#: gofax/faxreports/class_faxreport.inc:118
+#: gofax/faxreports/class_faxreport.inc:281
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:125
-msgid "Can't connect to fax database, no reports can be shown!"
+#, fuzzy, php-format
+msgid "Cannot connect to %s database!"
 msgstr ""
 "Kan niet verbinden met de Fax database. Rapporten kunnen niet getoond worden!"
 
 #: gofax/faxreports/class_faxreport.inc:129
-msgid "Can't select fax database for report generation!"
-msgstr "Kan de Fax database voor rapportage niet selecteren!"
+#, php-format
+msgid "Cannot select %s database!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:134
-#, fuzzy
-msgid "Can't query fax table 'faxlog' for report generation!"
-msgstr "Kan de Fax database voor rapportage niet selecteren!"
-
 #: gofax/faxreports/class_faxreport.inc:157
 #: gofax/faxreports/class_faxreport.inc:297
-msgid "Query for fax database failed!"
-msgstr "De zoekopdracht op de Fax database is mislukt!"
+#, php-format
+msgid "Cannot query %s database!"
+msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
-msgid "You have no permission to retrieve informations about this fax id!"
-msgstr "U heeft geen toestemming om informatie over dit Fax ID op te vragen!"
+#: gofax/blocklists/class_blocklistManagement.inc:247
+#: gofax/blocklists/class_blocklistManagement.inc:305
+msgid "Permission error"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:166
+#: gofax/faxreports/class_faxreport.inc:176
+#, fuzzy
+msgid "You have no permission to view this fax id!"
+msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
 
 #: gofax/faxreports/class_faxreport.inc:207
 #: gofax/faxreports/class_faxreport.inc:322
@@ -509,8 +530,8 @@ msgstr "U staat op het punt blokkeerlijst '%s' te verwijderen."
 
 #: gofax/blocklists/class_blocklistManagement.inc:247
 #, fuzzy, php-format
-msgid "You are not allowed to delete the blocklist '%s'!"
-msgstr "U heeft geen toestemming om deze gebruiker te verwijderen!"
+msgid "You have not permission to delete '%s'!"
+msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
 
 #: gofax/blocklists/class_blocklistManagement.inc:286
 #, php-format
@@ -518,7 +539,8 @@ msgid "You're about to delete the blocklist '%s'."
 msgstr "U staat op het punt blokkeerlijst '%s' te verwijderen."
 
 #: gofax/blocklists/class_blocklistManagement.inc:305
-msgid "You have no permission to remove this blocklist."
+#, fuzzy
+msgid "You have not permission to delete this entry!"
 msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
 
 #: gofax/blocklists/remove.tpl:2
@@ -730,10 +752,6 @@ msgstr "Nummers kunnen ook wildcards (*?) bevatten."
 msgid "Blocklist management"
 msgstr "Blokkeerlijst beheer"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:122
-msgid "Please specify a valid phone number."
-msgstr "Geef a.u.b. een geldig telefoonnummer op."
-
 #: gofax/blocklists/class_blocklistGeneric.inc:154
 msgid "send"
 msgstr "versturen"
@@ -748,15 +766,17 @@ msgid "Removing of blocklist with dn '%s' failed."
 msgstr "Het verwijderen van het blokeerlijst object is mislukt"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:205
-msgid "Required field 'Name' is not set."
-msgstr "Vereist veld 'Naam' is leeg."
+msgid "Name is empty!"
+msgstr ""
 
 #: gofax/blocklists/class_blocklistGeneric.inc:208
-msgid "Required field 'Name' contains invalid characters"
+#, fuzzy
+msgid "Name contains invalid characters!"
 msgstr "Vereist veld 'Naam' bevat ongeldige karakters"
 
 #: gofax/blocklists/class_blocklistGeneric.inc:215
-msgid "Specified name is already used."
+#, fuzzy
+msgid "Name is already in use!"
 msgstr "De opgegeven naam wordt al gebruikt."
 
 #: gofax/blocklists/class_blocklistGeneric.inc:263
@@ -830,3 +850,51 @@ msgstr "Services"
 #, fuzzy
 msgid "Login name"
 msgstr "Naam van de locatie"
+
+#~ msgid "You're trying to add an invalid phone number."
+#~ msgstr "U probeert een ongeldig telefoonnummer toe te voegen."
+
+#~ msgid "The required field 'Fax' is not set."
+#~ msgstr "Het vereiste veld 'Fax' is leeg."
+
+#~ msgid "Please enter a valid telephone number in the 'Fax' field."
+#~ msgstr "Voer a.u.b. een geldig Fax nummer bij het 'Fax' veld in."
+
+#~ msgid "Mail delivery is checked, but no address has been specified."
+#~ msgstr "E-mail aflevering staat aan, alleen is er geen adres opgegeven."
+
+#~ msgid ""
+#~ "Deliver fax to printer, is only possible if valid printer is given. "
+#~ "Please correct your choice."
+#~ msgstr ""
+#~ "Fax afleveren op een printer is alleen mogelijk indien een geldige "
+#~ "printer is opgegeven. Corrigeer uw keuze a.u.b."
+
+#~ msgid "There is no mysql extension available, please check your php setup."
+#~ msgstr ""
+#~ "Er is geen MySQL extensie beschikbaar. Controleer uw PHP installatie a.u."
+#~ "b."
+
+#~ msgid "Can't select fax database for report generation!"
+#~ msgstr "Kan de Fax database voor rapportage niet selecteren!"
+
+#, fuzzy
+#~ msgid "Can't query fax table 'faxlog' for report generation!"
+#~ msgstr "Kan de Fax database voor rapportage niet selecteren!"
+
+#~ msgid "Query for fax database failed!"
+#~ msgstr "De zoekopdracht op de Fax database is mislukt!"
+
+#~ msgid "You have no permission to retrieve informations about this fax id!"
+#~ msgstr ""
+#~ "U heeft geen toestemming om informatie over dit Fax ID op te vragen!"
+
+#, fuzzy
+#~ msgid "You are not allowed to delete the blocklist '%s'!"
+#~ msgstr "U heeft geen toestemming om deze gebruiker te verwijderen!"
+
+#~ msgid "Please specify a valid phone number."
+#~ msgstr "Geef a.u.b. een geldig telefoonnummer op."
+
+#~ msgid "Required field 'Name' is not set."
+#~ msgstr "Vereist veld 'Naam' is leeg."

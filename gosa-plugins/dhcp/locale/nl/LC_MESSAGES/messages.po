@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:41+0100\n"
+"POT-Creation-Date: 2008-03-05 08:56+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -100,7 +100,15 @@ msgid "Enter maximum lease time in seconds."
 msgstr ""
 
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:42
-msgid "The name of the DNS server your're going to add is not valid!"
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
+#: admin/systems/services/dhcp/class_servDHCP.inc:674
+msgid "Error"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:42
+#, php-format
+msgid "'%s' is not a valid DNS server name!"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:204
@@ -215,6 +223,7 @@ msgid "Allow booting"
 msgstr ""
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:2
+#: admin/systems/services/dhcp/class_servDHCP.inc:108
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -503,11 +512,8 @@ msgid "Field 'Range' contains invalid IP addresses."
 msgstr "Het veld 'Naam' bevat ongeldige karakters."
 
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
-msgid "Can't delete automatic statements. Please use the fields above."
-msgstr ""
-
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
-msgid "Can't delete automatic options. Please use the fields above."
+msgid "Cannot delete automatic statements!"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:78
@@ -586,18 +592,22 @@ msgstr "Posix instellingen"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:103
 #, fuzzy, php-format
-msgid "You are going to migrate the DHCP setup from server '%s'."
+msgid ""
+"You have requested a migration of the DHCP setup from server '%s' to the "
+"current one."
 msgstr "U staat op het punt de invoer '%s' te kopieren."
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:105
-msgid ""
-"The migration will be started when you save this system. To cancel this "
-"action, use the cancel button below."
+msgid "The migration will be started when you save this system."
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:221
+msgid "Permission error"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:221
 #, fuzzy
-msgid "You're not allowed to remove DHCP sections!"
+msgid "You have no permission to remove DHCP sections!"
 msgstr "U heeft geen toestemming om deze gebruiker te verwijderen!"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:255
@@ -648,7 +658,8 @@ msgstr "Het bijwerken van de DNS service is mislukt"
 #: admin/systems/services/dhcp/class_servDHCP.inc:674
 #, fuzzy
 msgid ""
-"DHCP configuration set is unknown. Please contact your system administrator."
+"The DHCP configuration set is unkown. Please contact your system "
+"administrator."
 msgstr ""
 "Account is geblokkeerd. Neem a.u.b. contact op met de systeembeheerder."
 

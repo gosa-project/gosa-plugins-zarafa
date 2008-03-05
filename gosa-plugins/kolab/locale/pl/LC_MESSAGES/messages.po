@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:43+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:496
-#: admin/systems/services/kolab/class_servKolab.inc:383
+#: personal/connectivity/kolab/class_kolabAccount.inc:502
+#: admin/systems/services/kolab/class_servKolab.inc:378
 msgid "Kolab"
 msgstr "Kolab"
 
@@ -30,14 +30,12 @@ msgid "Error"
 msgstr "Błąd"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:165
-#, fuzzy
-msgid "Cannot add invalid mail address!"
-msgstr "Próbujesz dodać nieprawidłowy adres email"
+msgid "Mail address"
+msgstr ""
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:173
-#, fuzzy
-msgid "Primary mail address already in use by another user!"
-msgstr "Adres podstawowy dla tego współdzielonego folderu"
+msgid "Primary mail address"
+msgstr ""
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:198
 msgid "Always accept"
@@ -69,60 +67,64 @@ msgid "Removing of user/kolab account with dn '%s' failed."
 msgstr "Usuwanie konta ogólnego użytkownika nieudane"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:343
-msgid "The value specified as Free Busy future needs to be an integer."
-msgstr "Wartość podana jako przyszłość FreeBusy musi być liczbą."
+#: personal/connectivity/kolab/class_kolabAccount.inc:346
+#, fuzzy
+msgid "Free Busy future"
+msgstr "Free busy przyszłość"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:348
-msgid "The value specified as Free Busy Information URL is invalid."
-msgstr "Wartość podana jako informacyjny URL FreeBusy jest nieprawidłowa."
+#: personal/connectivity/kolab/class_kolabAccount.inc:351
+#: personal/connectivity/kolab/class_kolabAccount.inc:354
+#, fuzzy
+msgid "Free Busy url"
+msgstr "Free busy przyszłość"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:362
+#: personal/connectivity/kolab/class_kolabAccount.inc:368
 #, php-format
 msgid "The invitation policy entry for address '%s' is not valid."
 msgstr "Polityka zapraszania dla adresu '%s' jest nieprawidłowa."
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:370
+#: personal/connectivity/kolab/class_kolabAccount.inc:376
 #, php-format
 msgid "There's no mail user with address '%s' for your invitation policy!"
 msgstr "Brak użytkownika pocztowego o adresie '%s' dla polityki zapraszania!"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:461
+#: personal/connectivity/kolab/class_kolabAccount.inc:467
 #, fuzzy, php-format
 msgid "Saving of user/kolab account with dn '%s' failed."
 msgstr "Zapisywanie konta Kolab nieudane"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:497
+#: personal/connectivity/kolab/class_kolabAccount.inc:503
 msgid "Kolab account settings"
 msgstr "Ustawienia konta Kolab"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:497
+#: personal/connectivity/kolab/class_kolabAccount.inc:503
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Konto połączeń"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:501
+#: personal/connectivity/kolab/class_kolabAccount.inc:507
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:506
+#: personal/connectivity/kolab/class_kolabAccount.inc:512
 msgid "Free busy future"
 msgstr "Free busy przyszłość"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:507
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
 msgid "Mail size restriction"
 msgstr "Ograniczenia rozmiaru wiadomości"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:508
+#: personal/connectivity/kolab/class_kolabAccount.inc:514
 msgid "Free busy information"
 msgstr "Informacja FreeBusy"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:509
+#: personal/connectivity/kolab/class_kolabAccount.inc:515
 #: personal/connectivity/kolab/kolab.tpl:51
 #: personal/connectivity/kolab/kolab.tpl:63
 msgid "Delegations"
 msgstr "Delegacje"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:510
+#: personal/connectivity/kolab/class_kolabAccount.inc:516
 #: personal/connectivity/kolab/kolab.tpl:119
 msgid "Invitation policy"
 msgstr "Polityka zapraszania"
@@ -174,141 +176,141 @@ msgstr "Przyszłość"
 msgid "days"
 msgstr "dni"
 
-#: admin/systems/services/kolab/class_servKolab.inc:103
+#: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
 msgid "Include data from %s days in the past when creating free/busy lists"
 msgstr "Dołącz dane sprzed %s dni podczas tworzenia listy free/busy"
 
-#: admin/systems/services/kolab/class_servKolab.inc:108
+#: admin/systems/services/kolab/class_servKolab.inc:103
 #, php-format
 msgid "Warn users when using more than %s%% of their mail quota"
 msgstr "Ostrzeż użytkowników jeśli używają więcej niż %s%% quoty na pocztę"
 
-#: admin/systems/services/kolab/class_servKolab.inc:198
-#: admin/systems/services/kolab/class_servKolab.inc:212
+#: admin/systems/services/kolab/class_servKolab.inc:193
+#: admin/systems/services/kolab/class_servKolab.inc:207
 #, fuzzy, php-format
 msgid "Removing host entry from system server/kolab with dn '%s' failed."
 msgstr "Usuwanie serwera z obiektu Kolab nieudane"
 
-#: admin/systems/services/kolab/class_servKolab.inc:264
+#: admin/systems/services/kolab/class_servKolab.inc:259
 msgid "Future days in Free/Busy settings must be set."
 msgstr "Przyszłe dni w ustawieniach Free/Busy muszą być liczbą."
 
-#: admin/systems/services/kolab/class_servKolab.inc:266
+#: admin/systems/services/kolab/class_servKolab.inc:261
 msgid "Future days in Free/Busy settings must be a positive value."
 msgstr "Przyszłe dni w ustawieniach Free/Busy muszą być liczbą dodanią."
 
-#: admin/systems/services/kolab/class_servKolab.inc:270
+#: admin/systems/services/kolab/class_servKolab.inc:265
 msgid "The given Quota settings value must be a number."
 msgstr "Podane parametry Quota muszą być liczbą."
 
-#: admin/systems/services/kolab/class_servKolab.inc:272
+#: admin/systems/services/kolab/class_servKolab.inc:267
 msgid "Please choose a value between 1 and 100 for Quota settings."
 msgstr "Proszę wybrać wartość pomiędzy 1 a 100 dla ustawień Quota."
 
-#: admin/systems/services/kolab/class_servKolab.inc:274
+#: admin/systems/services/kolab/class_servKolab.inc:269
 msgid "Future days must be a value."
 msgstr "Przyszłe dni muszą być liczbą."
 
-#: admin/systems/services/kolab/class_servKolab.inc:278
+#: admin/systems/services/kolab/class_servKolab.inc:273
 msgid "No SMTP privileged networks set."
 msgstr "Nie ustawiono uprawnionych sieci SMTP"
 
-#: admin/systems/services/kolab/class_servKolab.inc:357
+#: admin/systems/services/kolab/class_servKolab.inc:352
 #, fuzzy, php-format
 msgid "Saving system server/kolab with dn '%s' failed."
 msgstr "Zapisywanie serwera do obiektu Kolan nieudane"
 
-#: admin/systems/services/kolab/class_servKolab.inc:373
-#: admin/systems/services/kolab/class_servKolab.inc:384
+#: admin/systems/services/kolab/class_servKolab.inc:368
+#: admin/systems/services/kolab/class_servKolab.inc:379
 msgid "Kolab mail service"
 msgstr "Usługa poczty Kolab"
 
-#: admin/systems/services/kolab/class_servKolab.inc:384
+#: admin/systems/services/kolab/class_servKolab.inc:379
 #: admin/systems/services/kolab/servkolab.tpl:39
 msgid "Services"
 msgstr "Usługi"
 
-#: admin/systems/services/kolab/class_servKolab.inc:392
+#: admin/systems/services/kolab/class_servKolab.inc:387
 #: admin/systems/services/kolab/servkolab.tpl:9
 msgid "Postfix mydomain"
 msgstr "Postfix mydomain"
 
-#: admin/systems/services/kolab/class_servKolab.inc:393
+#: admin/systems/services/kolab/class_servKolab.inc:388
 msgid "My destination"
 msgstr "Mój cel"
 
-#: admin/systems/services/kolab/class_servKolab.inc:394
+#: admin/systems/services/kolab/class_servKolab.inc:389
 #: admin/systems/services/kolab/servkolab.tpl:27
 msgid "Cyrus admins"
 msgstr ""
 
-#: admin/systems/services/kolab/class_servKolab.inc:395
+#: admin/systems/services/kolab/class_servKolab.inc:390
 msgid "FTP FreeBusy service"
 msgstr "Usługa FTP FreeBusy"
 
-#: admin/systems/services/kolab/class_servKolab.inc:396
+#: admin/systems/services/kolab/class_servKolab.inc:391
 #: admin/systems/services/kolab/servkolab.tpl:171
 msgid "SMTP privileged networks"
 msgstr "uprzywilejowane sieci SMTP"
 
-#: admin/systems/services/kolab/class_servKolab.inc:397
+#: admin/systems/services/kolab/class_servKolab.inc:392
 msgid "Enable virus scan"
 msgstr "Włącz skanowanie antyfirusowe"
 
-#: admin/systems/services/kolab/class_servKolab.inc:398
+#: admin/systems/services/kolab/class_servKolab.inc:393
 msgid "Relayhost"
 msgstr "Host przekazujący"
 
-#: admin/systems/services/kolab/class_servKolab.inc:399
+#: admin/systems/services/kolab/class_servKolab.inc:394
 #: admin/systems/services/kolab/servkolab.tpl:202
 msgid "Enable MX lookup for relayhost"
 msgstr "Włącz sprawdzanie MX dla relayhosta"
 
-#: admin/systems/services/kolab/class_servKolab.inc:400
+#: admin/systems/services/kolab/class_servKolab.inc:395
 msgid "HTTP FreeBusy service"
 msgstr "Usługa HTTP FreeBusy"
 
-#: admin/systems/services/kolab/class_servKolab.inc:401
+#: admin/systems/services/kolab/class_servKolab.inc:396
 #, fuzzy
 msgid "Allow unauthenticated free busy"
 msgstr "Zezwól na nieautoryzowane pobieranie informacji Free/Busy"
 
-#: admin/systems/services/kolab/class_servKolab.inc:402
+#: admin/systems/services/kolab/class_servKolab.inc:397
 #: admin/systems/services/kolab/servkolab.tpl:223
 msgid "Accept Internet Mail"
 msgstr "Zezwalaj na pocztę z internetu"
 
-#: admin/systems/services/kolab/class_servKolab.inc:403
+#: admin/systems/services/kolab/class_servKolab.inc:398
 #: admin/systems/services/kolab/servkolab.tpl:68
 msgid "IMAP service"
 msgstr "Usługa IMAP"
 
-#: admin/systems/services/kolab/class_servKolab.inc:404
+#: admin/systems/services/kolab/class_servKolab.inc:399
 msgid "kolabFreeBusyFuture"
 msgstr ""
 
-#: admin/systems/services/kolab/class_servKolab.inc:405
+#: admin/systems/services/kolab/class_servKolab.inc:400
 #: admin/systems/services/kolab/servkolab.tpl:48
 msgid "POP3 service"
 msgstr "Usługa POP3"
 
-#: admin/systems/services/kolab/class_servKolab.inc:406
+#: admin/systems/services/kolab/class_servKolab.inc:401
 #: admin/systems/services/kolab/servkolab.tpl:78
 msgid "IMAP/SSL service"
 msgstr "Usługa IMAP/SSL"
 
-#: admin/systems/services/kolab/class_servKolab.inc:407
+#: admin/systems/services/kolab/class_servKolab.inc:402
 #: admin/systems/services/kolab/servkolab.tpl:58
 msgid "POP3/SSL service"
 msgstr "Usługa POP3/SSL"
 
-#: admin/systems/services/kolab/class_servKolab.inc:408
+#: admin/systems/services/kolab/class_servKolab.inc:403
 #: admin/systems/services/kolab/servkolab.tpl:88
 msgid "Sieve service"
 msgstr "Usługa Sieve"
 
-#: admin/systems/services/kolab/class_servKolab.inc:409
+#: admin/systems/services/kolab/class_servKolab.inc:404
 #: admin/systems/services/kolab/servkolab.tpl:129
 msgid "Quota settings"
 msgstr "Ustawienia Quota"
@@ -368,3 +370,17 @@ msgstr "Zapisz"
 #: admin/systems/services/kolab/servkolab.tpl:247
 msgid "Cancel"
 msgstr "Anuluj"
+
+#, fuzzy
+#~ msgid "Cannot add invalid mail address!"
+#~ msgstr "Próbujesz dodać nieprawidłowy adres email"
+
+#, fuzzy
+#~ msgid "Primary mail address already in use by another user!"
+#~ msgstr "Adres podstawowy dla tego współdzielonego folderu"
+
+#~ msgid "The value specified as Free Busy future needs to be an integer."
+#~ msgstr "Wartość podana jako przyszłość FreeBusy musi być liczbą."
+
+#~ msgid "The value specified as Free Busy Information URL is invalid."
+#~ msgstr "Wartość podana jako informacyjny URL FreeBusy jest nieprawidłowa."

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -34,75 +34,77 @@ msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr "Entfernen von Benutzer/pureftpd-Konto mit dn '%s' fehlgeschlagen."
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
-msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr "Die von Ihnen angegebene 'Upload-Bandbreite' ist nicht gültig."
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Upload-Bandbreite"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr "Die von Ihnen angegebene 'Download-Bandbreite' ist nicht gültig."
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Download-Bandbreite"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
-msgid "Value specified as 'Quota files' is not valid."
-msgstr "Das Feld 'Kontingent-Dateien' enthält eine ungültige Eingabe."
+#, fuzzy
+msgid "Quota file"
+msgstr "Kontingent-Dateien"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
-msgid "Value specified as 'Quota size' is not valid."
-msgstr "Der von Ihnen angegebene Wert für 'Kontingent-Größe' ist ungültig."
+#, fuzzy
+msgid "Quota size"
+msgstr "Kontingent-Dateien"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 msgid "Value specified as 'Upload ratio' is not valid."
 msgstr "Der von Ihnen angegebene Wert für 'Upload-Verhältnis' ist ungültig."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
-msgid "Value specified as 'Download ratio' is not valid."
-msgstr "Der von Ihnen angegebene Wert für 'Download-Verhältnis' ist ungültig."
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+msgid "Upload ratio"
+msgstr "Upload-Verhältnis"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+msgid "Download ratio"
+msgstr "Download-Verhältnis"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
 #, php-format
 msgid "Saving of user/pureftpd account with dn '%s' failed."
 msgstr "Speichern von Benutzer/pureftpd-Konto mit dn '%s' fehlgeschlagen."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
 msgid "Ftp"
 msgstr "FTP"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
 msgid "Pure ftp account"
 msgstr "PureFTP-Konto"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
 msgid "Quota files"
 msgstr "Kontingent-Dateien"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
-msgid "Upload ratio"
-msgstr "Upload-Verhältnis"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
 msgid "Quota MBytes"
 msgstr "Kontingent-Größe"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
-msgid "Download ratio"
-msgstr "Download-Verhältnis"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 msgid "Upload bandwith"
 msgstr "Upload-Bandbreite"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 msgid "Download bandwith"
 msgstr "Download-Bandbreite"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Status"
 msgstr "Status"
 
@@ -114,18 +116,10 @@ msgstr "FTP Konto"
 msgid "Bandwidth"
 msgstr "Bandbreite"
 
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "Upload-Bandbreite"
-
 #: personal/connectivity/pureftpd/pureftpd.tpl:26
 #: personal/connectivity/pureftpd/pureftpd.tpl:34
 msgid "kb/s"
 msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "Download-Bandbreite"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:45
 msgid "Quota"
@@ -162,3 +156,19 @@ msgstr "Wählen Sie diese Option, um FTP-Zugriff zu deaktivieren"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Temporäres Abschalten des FTP-Zugriffs"
+
+#~ msgid "Value specified as 'Upload bandwidth' is not valid."
+#~ msgstr "Die von Ihnen angegebene 'Upload-Bandbreite' ist nicht gültig."
+
+#~ msgid "Value specified as 'Download bandwidth' is not valid."
+#~ msgstr "Die von Ihnen angegebene 'Download-Bandbreite' ist nicht gültig."
+
+#~ msgid "Value specified as 'Quota files' is not valid."
+#~ msgstr "Das Feld 'Kontingent-Dateien' enthält eine ungültige Eingabe."
+
+#~ msgid "Value specified as 'Quota size' is not valid."
+#~ msgstr "Der von Ihnen angegebene Wert für 'Kontingent-Größe' ist ungültig."
+
+#~ msgid "Value specified as 'Download ratio' is not valid."
+#~ msgstr ""
+#~ "Der von Ihnen angegebene Wert für 'Download-Verhältnis' ist ungültig."

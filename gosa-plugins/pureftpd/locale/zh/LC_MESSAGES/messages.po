@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -31,88 +31,87 @@ msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
-msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr "提供的“上传带宽”值无效。"
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "上传带宽"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr "提供的“下载带宽”值无效。"
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "下载带宽"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
 #, fuzzy
-msgid "Value specified as 'Quota files' is not valid."
-msgstr "提供的“文件”值无效。"
+msgid "Quota file"
+msgstr "Quota 大小"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
-msgid "Value specified as 'Quota size' is not valid."
-msgstr "提供的“大小”值无效。"
+msgid "Quota size"
+msgstr "Quota 大小"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
 msgid "Value specified as 'Upload ratio' is not valid."
 msgstr "提供的“上传带宽”值无效。"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
-#, fuzzy
-msgid "Value specified as 'Download ratio' is not valid."
-msgstr "提供的“下载带宽”值无效。"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
-#, fuzzy, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
-#, fuzzy
-msgid "Ftp"
-msgstr "文件系统类型"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Pure ftp account"
-msgstr "创建传真账号"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "互联"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
-msgid "My account"
-msgstr "我的账号"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
-#, fuzzy
-msgid "Quota files"
-msgstr "Quota 大小"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
 #, fuzzy
 msgid "Upload ratio"
 msgstr "上传"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
-#, fuzzy
-msgid "Quota MBytes"
-msgstr "Quota 大小"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 #, fuzzy
 msgid "Download ratio"
 msgstr "下载配置"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
+#, fuzzy, php-format
+msgid "Saving of user/pureftpd account with dn '%s' failed."
+msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#, fuzzy
+msgid "Ftp"
+msgstr "文件系统类型"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Pure ftp account"
+msgstr "创建传真账号"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "互联"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "My account"
+msgstr "我的账号"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#, fuzzy
+msgid "Quota files"
+msgstr "Quota 大小"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#, fuzzy
+msgid "Quota MBytes"
+msgstr "Quota 大小"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "上传带宽"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Download bandwith"
 msgstr "下载带宽"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Status"
 msgstr "状态"
 
@@ -124,18 +123,10 @@ msgstr "FTP 账号"
 msgid "Bandwidth"
 msgstr "带宽"
 
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "上传带宽"
-
 #: personal/connectivity/pureftpd/pureftpd.tpl:26
 #: personal/connectivity/pureftpd/pureftpd.tpl:34
 msgid "kb/s"
 msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "下载带宽"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:45
 msgid "Quota"
@@ -172,3 +163,21 @@ msgstr "检查禁用 FTP 访问"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "临时禁用 FTP 访问"
+
+#~ msgid "Value specified as 'Upload bandwidth' is not valid."
+#~ msgstr "提供的“上传带宽”值无效。"
+
+#~ msgid "Value specified as 'Download bandwidth' is not valid."
+#~ msgstr "提供的“下载带宽”值无效。"
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota files' is not valid."
+#~ msgstr "提供的“文件”值无效。"
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota size' is not valid."
+#~ msgstr "提供的“大小”值无效。"
+
+#, fuzzy
+#~ msgid "Value specified as 'Download ratio' is not valid."
+#~ msgstr "提供的“下载带宽”值无效。"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
 #, fuzzy
-msgid "Open-Xchange account name is invalid!"
+msgid "Open-Xchange account name"
 msgstr "Open-Xchange Konto"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
@@ -154,3 +154,7 @@ msgstr "Benutzerinformation"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "Zeitzone des Benutzers"
+
+#, fuzzy
+#~ msgid "Open-Xchange account name is invalid!"
+#~ msgstr "Open-Xchange Konto"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:275
+#: personal/nagios/class_nagiosAccount.inc:270
 msgid "Nagios"
 msgstr "Nagios"
 
@@ -26,130 +26,130 @@ msgstr "Nagios"
 msgid "This does something"
 msgstr "******"
 
-#: personal/nagios/class_nagiosAccount.inc:110
+#: personal/nagios/class_nagiosAccount.inc:105
 msgid "This account has no nagios extensions."
 msgstr "这个账户尚未包含 nagios 扩展。 "
 
-#: personal/nagios/class_nagiosAccount.inc:119
+#: personal/nagios/class_nagiosAccount.inc:114
 msgid "Remove nagios account"
 msgstr "删除 nagios 账户"
 
-#: personal/nagios/class_nagiosAccount.inc:120
+#: personal/nagios/class_nagiosAccount.inc:115
 msgid ""
 "This account has nagios features enabled. You can disable them by clicking "
 "below."
 msgstr "该账号已经启用 nagios 功能。您可以点击下面按钮禁用。"
 
-#: personal/nagios/class_nagiosAccount.inc:122
+#: personal/nagios/class_nagiosAccount.inc:117
 msgid "Create nagios account"
 msgstr "创建 nagios 账户"
 
-#: personal/nagios/class_nagiosAccount.inc:122
+#: personal/nagios/class_nagiosAccount.inc:117
 msgid ""
 "This account has nagios features disabled. You can enable them by clicking "
 "below."
 msgstr "这个账户 nagios 功能已禁用。您可以点击下面的按钮来启用。"
 
-#: personal/nagios/class_nagiosAccount.inc:178
+#: personal/nagios/class_nagiosAccount.inc:173
 #, fuzzy, php-format
 msgid "Saving of user/nagios account with dn '%s' failed."
 msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
 
-#: personal/nagios/class_nagiosAccount.inc:198
+#: personal/nagios/class_nagiosAccount.inc:193
 msgid "The required field 'NagiosAlias' is not set."
 msgstr "必须的字段 'NagiosAlias' 没有设置。"
 
-#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:196
 msgid "The required field 'NagiosMail' is not set."
 msgstr "需要的字段 'NagiosMail' 没有设置。"
 
-#: personal/nagios/class_nagiosAccount.inc:205
-#: personal/nagios/class_nagiosAccount.inc:209
+#: personal/nagios/class_nagiosAccount.inc:200
+#: personal/nagios/class_nagiosAccount.inc:204
 msgid "Please enter a valid email address in 'NagiosMail' field."
 msgstr "请在 'NagiosMail' 字段输入一个有效的邮件地址。"
 
-#: personal/nagios/class_nagiosAccount.inc:261
+#: personal/nagios/class_nagiosAccount.inc:256
 #, fuzzy, php-format
 msgid "Removing of user/nagios account with dn '%s' failed."
 msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
 
-#: personal/nagios/class_nagiosAccount.inc:276
+#: personal/nagios/class_nagiosAccount.inc:271
 #, fuzzy
 msgid "Nagios account settings"
 msgstr "Nagios 设置"
 
-#: personal/nagios/class_nagiosAccount.inc:280
+#: personal/nagios/class_nagiosAccount.inc:275
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:281 personal/nagios/nagios.tpl:8
 msgid "Alias"
 msgstr "别名"
 
-#: personal/nagios/class_nagiosAccount.inc:287
+#: personal/nagios/class_nagiosAccount.inc:282
 #, fuzzy
 msgid "Pager number"
 msgstr "电话号码"
 
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:283 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "邮件地址"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:100
 msgid "Host notification commands"
 msgstr "主机通知命令"
 
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "主机通知选项"
 
-#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:27
 msgid "Host notification period"
 msgstr "主机通知周期"
 
-#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "服务通知命令"
 
-#: personal/nagios/class_nagiosAccount.inc:295 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:53
 msgid "Service notification options"
 msgstr "服务通知选项"
 
-#: personal/nagios/class_nagiosAccount.inc:296 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:40
 msgid "Service notification period"
 msgstr "服务通知周期"
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:293
 #, fuzzy
 msgid "View all hosts"
 msgstr "查看所有主机"
 
-#: personal/nagios/class_nagiosAccount.inc:299
+#: personal/nagios/class_nagiosAccount.inc:294
 #, fuzzy
 msgid "View all services"
 msgstr "查看所有服务"
 
-#: personal/nagios/class_nagiosAccount.inc:301
+#: personal/nagios/class_nagiosAccount.inc:296
 #, fuzzy
 msgid "Trigger system commands"
 msgstr "触发系统命令"
 
-#: personal/nagios/class_nagiosAccount.inc:302
+#: personal/nagios/class_nagiosAccount.inc:297
 #, fuzzy
 msgid "Trigger all host commands"
 msgstr "触发所有主机命令"
 
-#: personal/nagios/class_nagiosAccount.inc:303
+#: personal/nagios/class_nagiosAccount.inc:298
 #, fuzzy
 msgid "Trigger all service commands"
 msgstr "触发所有服务命令"
 
-#: personal/nagios/class_nagiosAccount.inc:305
+#: personal/nagios/class_nagiosAccount.inc:300
 #, fuzzy
 msgid "View configuration information"
 msgstr "查看配置信息"
 
-#: personal/nagios/class_nagiosAccount.inc:306
+#: personal/nagios/class_nagiosAccount.inc:301
 #, fuzzy
 msgid "View system informations"
 msgstr "查看系统信息"

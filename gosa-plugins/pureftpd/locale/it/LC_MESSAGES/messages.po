@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -29,88 +29,87 @@ msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr "Elimina estensioni telefoniche"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
-msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr ""
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Banda di upload"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr ""
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Banda di download"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
 #, fuzzy
-msgid "Value specified as 'Quota files' is not valid."
-msgstr "Il valore specificato per l'UID non è valido."
+msgid "Quota file"
+msgstr "Dimensione quota"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
-msgid "Value specified as 'Quota size' is not valid."
-msgstr "Il valore di 'Dimensione quota' non è valido"
+msgid "Quota size"
+msgstr "Dimensione quota"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
 msgid "Value specified as 'Upload ratio' is not valid."
 msgstr "Il valore specificato per l'UID non è valido."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
-#, fuzzy
-msgid "Value specified as 'Download ratio' is not valid."
-msgstr "Il valore specificato per il GID non è valido."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:237
-#, fuzzy, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr "Elimina estensioni telefoniche"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:256
-#, fuzzy
-msgid "Ftp"
-msgstr "Tipo"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Pure ftp account"
-msgstr "Crea estensioni FAX"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Connettività"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
-msgid "My account"
-msgstr "Identità"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
-#, fuzzy
-msgid "Quota files"
-msgstr "Dimensione quota"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
 #, fuzzy
 msgid "Upload ratio"
 msgstr "Banda di upload"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
-#, fuzzy
-msgid "Quota MBytes"
-msgstr "Dimensione quota"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 #, fuzzy
 msgid "Download ratio"
 msgstr "Scarica il file di  configurazione"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
+#, fuzzy, php-format
+msgid "Saving of user/pureftpd account with dn '%s' failed."
+msgstr "Elimina estensioni telefoniche"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#, fuzzy
+msgid "Ftp"
+msgstr "Tipo"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Pure ftp account"
+msgstr "Crea estensioni FAX"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Connettività"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+msgid "My account"
+msgstr "Identità"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#, fuzzy
+msgid "Quota files"
+msgstr "Dimensione quota"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#, fuzzy
+msgid "Quota MBytes"
+msgstr "Dimensione quota"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "Banda di upload"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Download bandwith"
 msgstr "Banda di download"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Status"
 msgstr "Stato"
 
@@ -122,18 +121,10 @@ msgstr "Estenzioni FTP"
 msgid "Bandwidth"
 msgstr "Banda"
 
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "Banda di upload"
-
 #: personal/connectivity/pureftpd/pureftpd.tpl:26
 #: personal/connectivity/pureftpd/pureftpd.tpl:34
 msgid "kb/s"
 msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "Banda di download"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:45
 msgid "Quota"
@@ -170,3 +161,15 @@ msgstr "Seleziona per disabilitale l'accesso FTP"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Disabilita temporaneamente l'accesso FTP"
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota files' is not valid."
+#~ msgstr "Il valore specificato per l'UID non è valido."
+
+#, fuzzy
+#~ msgid "Value specified as 'Quota size' is not valid."
+#~ msgstr "Il valore di 'Dimensione quota' non è valido"
+
+#, fuzzy
+#~ msgid "Value specified as 'Download ratio' is not valid."
+#~ msgstr "Il valore specificato per il GID non è valido."

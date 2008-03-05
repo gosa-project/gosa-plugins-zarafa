@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-18 14:44+0100\n"
+"POT-Creation-Date: 2008-03-05 09:01+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:366
 msgid "Netatalk"
 msgstr ""
 
@@ -24,17 +24,17 @@ msgstr ""
 msgid "Manage netatalk account"
 msgstr "Создать телефонный аккаунт"
 
-#: personal/netatalk/class_netatalk.inc:174
+#: personal/netatalk/class_netatalk.inc:170
 #, fuzzy
 msgid "This account has no netatalk extensions."
 msgstr "В этой учетной записи нет почтовых расширений."
 
-#: personal/netatalk/class_netatalk.inc:183
+#: personal/netatalk/class_netatalk.inc:179
 #, fuzzy
 msgid "Remove netatalk account"
 msgstr "Удалить настройки эл. почты"
 
-#: personal/netatalk/class_netatalk.inc:183
+#: personal/netatalk/class_netatalk.inc:179
 #, fuzzy
 msgid ""
 "This account has netatalk features enabled. You can disable them by clicking "
@@ -43,13 +43,13 @@ msgstr ""
 "В этой учетной записи есть настройки электронной почты. Вы можете удалить "
 "их, щелкнув ниже."
 
-#: personal/netatalk/class_netatalk.inc:194
-#: personal/netatalk/class_netatalk.inc:196
+#: personal/netatalk/class_netatalk.inc:190
+#: personal/netatalk/class_netatalk.inc:192
 #, fuzzy
 msgid "Create netatalk account"
 msgstr "Создать настройки запись эл. почты"
 
-#: personal/netatalk/class_netatalk.inc:194
+#: personal/netatalk/class_netatalk.inc:190
 #, fuzzy
 msgid ""
 "This account has netatalk features disabled. You can enable them by clicking "
@@ -58,30 +58,30 @@ msgstr ""
 "В этой учетной записи нет настроек электронной почты. Вы можете добавить их, "
 "щелкнув ниже."
 
-#: personal/netatalk/class_netatalk.inc:229
+#: personal/netatalk/class_netatalk.inc:225
 msgid "You must select a share to use."
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:294
+#: personal/netatalk/class_netatalk.inc:290
 #, fuzzy, php-format
 msgid "Saving of user/netatalk account with dn '%s' failed."
 msgstr "Создать телефонный аккаунт"
 
-#: personal/netatalk/class_netatalk.inc:356
+#: personal/netatalk/class_netatalk.inc:352
 #, fuzzy, php-format
 msgid "Removing of user/netatalk account with dn '%s' failed."
 msgstr "Удалить настройки эл. почты"
 
-#: personal/netatalk/class_netatalk.inc:374
+#: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/netatalk/class_netatalk.inc:379
+#: personal/netatalk/class_netatalk.inc:375
 #, fuzzy
 msgid "User home path"
 msgstr "Домашний телефон"
 
-#: personal/netatalk/class_netatalk.inc:380 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
 #, fuzzy
 msgid "Share"
 msgstr "сброс"
