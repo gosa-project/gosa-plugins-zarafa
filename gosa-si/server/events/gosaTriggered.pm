@@ -357,7 +357,9 @@ sub trigger_action_reinstall {
 
     change_fai_state('reinstall', \@{$msg_hash->{target}});
 
-    my @out_msg_l = ($msg);  
+    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }
 
@@ -368,7 +370,9 @@ sub trigger_action_update {
 
     change_fai_state('update', \@{$msg_hash->{target}});
 
-    my @out_msg_l = ($msg);  
+    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }
 
@@ -379,7 +383,9 @@ sub trigger_action_instant_update {
 
     change_fai_state('update', \@{$msg_hash->{target}});
 
-    my @out_msg_l = ($msg);  
+    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }
 
@@ -413,13 +419,12 @@ sub trigger_action_rescan {
 
 sub trigger_action_wake {
     my ($msg, $msg_hash) = @_;
-    my %data = ( 'macAddress'  => \@{$msg_hash->{'macAddress'}} ,
-            'jobdb_id' => \@{$msg_hash->{'jobdb_id'}},
-            );
+    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
     my $out_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($out_msg);  
     return @out_msg_l;
 }
+
 
 sub change_fai_state {
     my ($st, $targets) = @_;

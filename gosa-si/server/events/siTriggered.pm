@@ -13,6 +13,7 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use Socket;
+use Net::hostent;
 
 
 BEGIN {}
@@ -245,8 +246,8 @@ sub trigger_wake {
 
     foreach (@{$msg_hash->{macAddress}}){
         &main::daemon_log("INFO: trigger wake for $_", 5);
-        my $host    = shift;
-        my $ipaddr  = shift || '255.255.255.255';
+        my $host    = $_;
+        my $ipaddr  = '255.255.255.255';
         my $port    = getservbyname('discard', 'udp');
 
         my ($raddr, $them, $proto);
