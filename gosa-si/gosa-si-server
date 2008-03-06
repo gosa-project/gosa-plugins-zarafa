@@ -1365,12 +1365,12 @@ sub resolve_fai_classes {
 				if($class =~ /^ou=.*$/) {
 					next;
 				} else {
-					my $text = Data::Dumper->new([$fai_classes->{$release}->{$class}])->Purity(1)->Terse(1)->Deepcopy(1)->Dump();
-					$tmp_classes->{$class => "nix"};
-					eval "$tmp_classes->{$class}->$text;";
-					daemon_log("eval $tmp_classes->{$class}->$text;",1);
-					daemon_log(Dumper($tmp_classes),1);
-					exit(1);
+					#my $text = Data::Dumper->new([$fai_classes->{$release}->{$class}])->Purity(1)->Terse(1)->Deepcopy(1)->Dump();
+					#$tmp_classes->{$class => "nix"};
+					#eval "$tmp_classes->{$class}->$text;";
+					#daemon_log("eval $tmp_classes->{$class}->$text;",1);
+					#daemon_log(Dumper($tmp_classes),1);
+					#exit(1);
 				}
 			}
 
