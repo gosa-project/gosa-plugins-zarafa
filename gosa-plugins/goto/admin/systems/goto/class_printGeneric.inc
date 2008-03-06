@@ -814,10 +814,6 @@ class printgeneric extends plugin
           unset($this->attrs[$checkVar]);
         }
       }
-    }else{
-      if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
-        $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
-      }
     }
 
     /* Ensure to create a new object */
