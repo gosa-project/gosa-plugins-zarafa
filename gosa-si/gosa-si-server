@@ -923,7 +923,7 @@ sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
     $kernel->yield('create_fai_server_db', $fai_server_tn );
-	#$kernel->yield('create_fai_release_db', $fai_release_tn );
+    #$kernel->yield('create_fai_release_db', $fai_release_tn );
     #$kernel->yield('create_packages_list_db', $sources_list );
 }
 
@@ -1278,20 +1278,64 @@ sub create_fai_release_db {
 			# Walk through all possible FAI container ou's
 			foreach my $ou (@{$mesg->{entries}}) {
 				my $tmp_classes= resolve_fai_classes($ou->dn);
-				#daemon_log(Dumper($tmp_classes),1);
-				last;
-				#$result= $fai_server_db->add_dbentry( { 
-				#		table => $table_name,
-				#		primkey => ['release', 'class'],
-				#		release => $tmp_release,
-				#		class => $entry->get_value('cn'),
-				#	} );
+				my @fai_release_entries=@{get_fai_release_entries($tmp_classes)}[0];
+				foreach my $entry (@fai_release_entries) {
+					$fai_server_db->add_dbentry( { 
+							table => $table_name,
+							primkey => ['release', 'class', 'type'],
+							release => $entry->{'release'},
+							class => $entry->{'class'},
+							type => $entry->{'type'}
+						} );
+				}
 			}
-
 		}
-		exit(0);
 	}
 
+	return $result;
+}
+
+sub get_fai_release_entries {
+	my $tmp_classes = shift || return;
+	my $result = shift || undef;
+	my $parent = shift || undef;
+	
+	foreach my $entry (keys %{$tmp_classes}) {
+		if (ref($tmp_classes->{$entry}) eq 'HASH') {
+			if($entry =~ /^ou=.*$/) {
+				my @res;
+				my $rel = $entry;
+				$rel =~ s/ou=//g;
+				my @ent = get_fai_release_entries($tmp_classes->{$entry}, $result, $rel);
+				while(my $tmp_entry = pop(@{$ent[0]})) {
+					$tmp_entry->{'release'} = (defined($parent) && length($parent)>0)?$parent."/".$rel:$rel;
+					push @res, $tmp_entry;
+				}
+				foreach my $tmp_entry(@res) {
+					push @$result, $tmp_entry;
+				}
+			} else {
+				my $hash = {
+					'class' => $entry,
+					'type' => get_fai_types($tmp_classes->{$entry}),
+				};
+				push @$result, $hash;
+			}
+		}
+
+	return $result;
+}
+
+sub get_fai_types {
+	my $tmp_classes = shift || return undef;
+	my $result = "";
+
+	foreach my $type(keys %{$tmp_classes}) {
+		if(defined($tmp_classes->{$type}[0]) && (!($tmp_classes->{$type}[0] =~ /^.*?removed.*?$/))) {
+			$result.= "$type|";
+		}
+	}
+	chop($result);
 	return $result;
 }
 
@@ -1303,7 +1347,6 @@ sub resolve_fai_classes {
 	my $fai_filter= "(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))";
 	my $fai_classes;
 
-	#daemon_log("Searching in base $fai_base",6);
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
 		scope  => 'sub',
@@ -1336,7 +1379,7 @@ sub resolve_fai_classes {
 						last;
 					}
 				}
-				
+
 				if($tmp_release =~ /^.*?,.*?$/ && (!($tmp_release =~ /^.*?\\,.*?$/))) {
 					# A Subrelease
 					my @sub_releases = split(/,/, $tmp_release);
@@ -1365,19 +1408,30 @@ sub resolve_fai_classes {
 				if($class =~ /^ou=.*$/) {
 					next;
 				} else {
-					#my $text = Data::Dumper->new([$fai_classes->{$release}->{$class}])->Purity(1)->Terse(1)->Deepcopy(1)->Dump();
-					#$tmp_classes->{$class => "nix"};
-					#eval "$tmp_classes->{$class}->$text;";
-					#daemon_log("eval $tmp_classes->{$class}->$text;",1);
-					#daemon_log(Dumper($tmp_classes),1);
-					#exit(1);
+					$tmp_classes->{$class}= deep_copy($fai_classes->{$release}->{$class});
 				}
 			}
 
+			# Apply to each subrelease
+			# TODO infinite deep
 			if(ref $fai_classes->{$release} eq 'HASH') {
+				my $i=0;
 				foreach my $sub_release (keys %{$fai_classes->{$release}}) {
 					if($sub_release =~ /^ou=.*$/) {
-
+						foreach my $class (keys %{$tmp_classes}) {
+							if(!exists($fai_classes->{$release}->{$sub_release}->{$class})) {
+								$fai_classes->{$release}->{$sub_release}->{$class} = 
+								deep_copy($tmp_classes->{$class});
+							} else {
+								foreach my $type (keys %{$fai_classes->{$release}->{$sub_release}->{$class}}) {
+									if(!exists($fai_classes->{$release}->{$sub_release}->{$class}->{$type})) {
+										daemon_log("Type $type doesn't exist in class $class",1);
+										$fai_classes->{$release}->{$sub_release}->{$class}->{$type} =
+										deep_copy($tmp_classes->{$class}->{$type});
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -1389,22 +1443,15 @@ sub resolve_fai_classes {
 	return $result;
 }
 
-sub get_fai_classes {
-	my $result;
-	my $fai_release = shift || return;
-	my $fai_classes = shift || return;
-	
-	#daemon_log("Searching classes for release $fai_release",1);
-	foreach my $class (keys %{$fai_classes->{$fai_release}}) {
-		# Skip subreleases
-		if($class =~ /^ou=.*$/) {
-			next;
-		} else {
-			$result->{$class}= $fai_classes->{$fai_release}->{$class};
-		}
-	}
-
-	return $result;
+sub deep_copy {
+	my $this = shift;
+	if (not ref $this) {
+		$this;
+	} elsif (ref $this eq "ARRAY") {
+		[map deep_copy($_), @$this];
+	} elsif (ref $this eq "HASH") {
+		+{map { $_ => deep_copy($this->{$_}) } keys %$this};
+	} else { die "what type is $_?" }
 }
 
 sub create_packages_list_db {
