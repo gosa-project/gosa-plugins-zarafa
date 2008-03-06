@@ -441,7 +441,6 @@ class workgeneric extends plugin
         $this->gotoMode != $this->saved_attributes['gotoMode'] &&
         $this->gotoMode == "active" &&
         tests::is_ip($this->netConfigDNS->ipHostNumber));
-
     plugin::save();
 
     /* Strip out 'default' values */
@@ -486,10 +485,6 @@ class workgeneric extends plugin
       foreach($this->gotoNtpServer as $server){
         $this->attrs['gotoNtpServer'][] = $server;
       }
-    }
-
-    if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
-      $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
     }
 
     /* Write back to ldap */
