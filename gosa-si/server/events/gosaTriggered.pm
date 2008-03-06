@@ -329,8 +329,13 @@ sub trigger_action_activate {
 
     change_goto_state('active', \@{$msg_hash->{target}});
                                              
-    my @out_msg_l;
-    return @out_msg_l;
+    my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $macaddress);
+    if( exists $msg_hash->{'jobdb_id'} ) { 
+        &add_content2xml_hash($out_hash, 'jobdb_id', @{$msg_hash->{'jobdb_id'}}[0]); 
+    }
+    my $out_msg = &create_xml_string($out_hash);
+
+    return ( $out_msg );
 }
 
 
