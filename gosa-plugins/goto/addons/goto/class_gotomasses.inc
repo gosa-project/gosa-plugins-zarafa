@@ -444,7 +444,7 @@ class gotomasses extends plugin
                                     "9999" => "*"));
 
     $count = $this->o_queue->number_of_queued_entries();
-    $smarty->assign("range_selector", range_selector($count, $this->start, $this->range,"range"));
+    $divlist->SetListFooter(range_selector($count, $this->start, $this->range,"range"));
     $smarty->assign("range",$this->range);
     $smarty->assign("div",$divlist->Draw());
     return($smarty->fetch (get_template_path('gotomasses.tpl', TRUE, dirname(__FILE__))));
