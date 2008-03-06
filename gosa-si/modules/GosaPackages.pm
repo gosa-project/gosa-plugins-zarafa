@@ -264,7 +264,7 @@ sub process_incoming_msg {
     my @msg_l;
     my @out_msg_l;
 
-    &main::daemon_log("DEBUG: GosaPackages: receive '$header'", 8);
+    &main::daemon_log("DEBUG: GosaPackages: msg to process '$header'", 7);
     
     if ($header =~ /^job_/) {
         @msg_l = &process_job_msg($msg, $msg_hash, $session_id);

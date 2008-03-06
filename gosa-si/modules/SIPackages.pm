@@ -400,7 +400,6 @@ sub process_incoming_msg {
     $header =~ s/^CLMSG_//;
 
     &main::daemon_log("DEBUG: SIPackages: msg to process: $header", 7);
-    &main::daemon_log("$msg", 8);
 
     if( 0 == length @target_l){     
         &main::daemon_log("ERROR: no target specified for msg $header", 1);
