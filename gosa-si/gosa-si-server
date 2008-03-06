@@ -1578,8 +1578,9 @@ $SIG{CHLD} = 'IGNORE';
 
 # forward error messages to logfile
 if( ! $foreground ) {
-    open(STDERR, '>>', $log_file);
-    open(STDOUT, '>>', $log_file);
+  open( STDIN,  '+>/dev/null' );
+  open( STDOUT, '+>&STDIN'    );
+  open( STDERR, '+>&STDIN'    );
 }
 
 # Just fork, if we are not in foreground mode
