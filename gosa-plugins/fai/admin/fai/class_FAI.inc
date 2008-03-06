@@ -315,11 +315,11 @@ class FAI
         /* This object is inherited by some sub releases */  
 
         /* Get all releases, that inherit this object */ 
-        $r = get_following_releases_that_inherit_this_object($Current_DN);
+        $r = FAI::get_following_releases_that_inherit_this_object($Current_DN);
 
         /* Get parent object */
         $ldap->cat($parent_obj);
-        $parent_attrs = FAI::                           prepare_ldap_fetch_to_be_saved($ldap->fetch());
+        $parent_attrs = FAI::prepare_ldap_fetch_to_be_saved($ldap->fetch());
 
         /* New objects require special handling */
         if($is_new){
