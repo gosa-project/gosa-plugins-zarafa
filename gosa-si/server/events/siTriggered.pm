@@ -268,7 +268,7 @@ sub trigger_wake {
 
         # Allocate socket and send packet
 
-        $raddr = gethostbyname($ipaddr)->addr;
+        $raddr = gethostbyname($ipaddr);
         $them = pack_sockaddr_in($port, $raddr);
         $proto = getprotobyname('udp');
 
