@@ -303,7 +303,7 @@ sub trigger_action_faireboot {
 
     # delete all jobs from jobqueue which correspond to fai
     my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
-        "status='processing' AND headertag='trigger_action_install')"; 
+        "status='processing')";
     $main::job_db->del_dbentry($sql_statement ); 
                                              
     return @out_msg_l;
