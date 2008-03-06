@@ -330,6 +330,13 @@ class termgeneric extends plugin
           $og->save ();
         }
       }
+
+      /* Clean queue form entries with this mac 
+       */
+      if(class_available("gosaSupportDaemon") && tests::is_mac($this->netConfigDNS->orig_macAddress)){
+        $q = new gosaSupportDaemon();
+        $q->clean_queue_from_mac($this->netConfigDNS->orig_macAddress);
+      }
     }
   }
 
