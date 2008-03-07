@@ -1105,7 +1105,7 @@ class environment extends plugin
     $this->detect_grouptype();
 
     if(preg_match("/[^0-9]/",$this->gotoProfileQuota)) {
-      $message[]=_("Please set a valid profile quota size.");
+      $message[] = msgPool::invalid(_("Profile quota"),$this->gotoProfileQuota,"/[0-9]/") ;
     } 
     if(!isset($this->attrs['objectClass'])){
       $this->attrs['objectClass']=array();
@@ -1677,7 +1677,7 @@ class environment extends plugin
     $this->detect_grouptype();
 
     if(preg_match("/[^0-9]/",$this->gotoProfileQuota) && in_array("gotoProfileQuota",$this->multi_boxes)) {
-      $message[]=_("Please set a valid profile quota size.");
+      $message[] = msgPool::invalid(_("Profile quota"),$this->gotoProfileQuota,"/[0-9]/") ;
     }
     return($message);
   }
