@@ -121,9 +121,10 @@ class connectivity extends plugin
     $message= plugin::check();
 
     foreach ($this->plugin_name as $name){
-      $tmp= $this->plugin[$name]->check();
-
-      $message= array_merge($message, $tmp);
+      if($this->plugin[$name]->is_account){
+        $tmp= $this->plugin[$name]->check();
+        $message= array_merge($message, $tmp);
+      }
     }
 
     return ($message);
