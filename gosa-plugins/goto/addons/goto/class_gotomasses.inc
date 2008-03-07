@@ -189,6 +189,8 @@ class gotomasses extends plugin
           $ids = $this->list_get_selected_items();
         }
 
+        $this->ids_to_remove = array();
+
         if(count($ids)){
           $ret = $this->o_queue->ids_exist($ids);
           $ret = $this->o_queue->get_entries_by_id($ret);
