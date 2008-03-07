@@ -277,7 +277,7 @@ class gosa_logview extends plugin
       }
 
       /* Query results that will be displayed */
-      $query= "SELECT d* ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
+      $query= "SELECT * ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
       $result = @mysql_query($query);
       if(!$result){
