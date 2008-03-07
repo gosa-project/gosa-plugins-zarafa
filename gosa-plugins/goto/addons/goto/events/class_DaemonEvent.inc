@@ -144,7 +144,7 @@ class DaemonEvent
       return("");
     }
     $str = "<p class='seperator'></p>";
-    $str.= "<div style='text-align:right;width:100%;padding:5px;'>
+    $str.= "<div style='text-align:right;width:99%;padding:5px;'>
       <input type='submit' name='save_event_dialog' value='"._("Save")."'>&nbsp;
     <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
       </div>";
@@ -229,7 +229,7 @@ class DaemonEvent
               "attach"  => "style='width:20px; border-right:0px;'")
             ));
     }
-    $list_footer = "<input type='submit' name='open_target_list' value='"._("Add target")."'>";
+    $list_footer = "<input type='submit' name='open_target_list' value='"._("Add")."'>";
     return($divlist->DrawList().$list_footer);
   }
 
