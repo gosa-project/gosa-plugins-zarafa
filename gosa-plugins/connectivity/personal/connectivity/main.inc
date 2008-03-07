@@ -83,7 +83,7 @@ if (!$remove_lock){
       session::un_set ('connectivity');
     } else {
       /* Errors found, show message */
-      show_errors ($message);
+      msgDialog::displayChecks($message);
     }
   }
 

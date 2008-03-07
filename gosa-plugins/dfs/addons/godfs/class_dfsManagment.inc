@@ -114,7 +114,7 @@ class dfsManagment extends plugin {
         # write to ldap
         $this->dfstab->save();
       } else {
-        show_errors($message);
+        msgDialog::displayChecks($message);
       }
     }
 
@@ -164,7 +164,7 @@ class dfsManagment extends plugin {
     
     if ($ldap->count() == 0) {
       $message[] = _("No DFS entries found");
-      show_errors ($message);
+      msgDialog::displayChecks($message);
     } else {
       $have_tree= false;
       while ($dfs = $ldap->fetch()) {

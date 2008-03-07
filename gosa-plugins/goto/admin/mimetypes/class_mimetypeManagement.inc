@@ -242,7 +242,7 @@ class mimetypeManagement extends plugin
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
-        show_errors($message);
+        msgDialog::displayChecks($message);
       }
     }
 

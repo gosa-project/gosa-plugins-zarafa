@@ -251,7 +251,7 @@ class addressbook extends plugin
         session::un_set('saved_start');
       } else {
         /* Errors found, show message */
-        show_errors ($message);
+        msgDialog::displayChecks($message);
       }
     }
 

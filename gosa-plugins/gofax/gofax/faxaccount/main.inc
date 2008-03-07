@@ -60,7 +60,7 @@ if (!$remove_lock){
 
                 } else {
                         /* Errors found, show message */
-                        show_errors ($message);
+                        msgDialog::displayChecks($message);
                 }
         }
 

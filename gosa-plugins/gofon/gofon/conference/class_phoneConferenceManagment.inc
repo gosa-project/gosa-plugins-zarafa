@@ -348,7 +348,7 @@ class phoneConferenceManagment extends plugin
         $this->conftab= NULL;
         session::un_set('objectinfo');
       } else {
-        show_errors($message);
+        msgDialog::displayChecks($message);
       }
     }
 

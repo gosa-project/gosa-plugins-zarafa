@@ -74,7 +74,7 @@ if (!$remove_lock) {
       session::un_set('netatalk');
     } else {
       /* Errors found, show message */
-      show_errors($message);
+      msgDialog::displayChecks($message);
     }
   }
 

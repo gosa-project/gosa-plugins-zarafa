@@ -138,7 +138,7 @@ class servdhcp extends goService
       $this->dialog->save_object();
       $messages= $this->dialog->check();
       if (count($messages)){
-        show_errors($messages);
+        msgDialog::displayChecks($messages);
       } else {
         $dn= $this->dialog->dn;
         $class= get_class($this->dialog);

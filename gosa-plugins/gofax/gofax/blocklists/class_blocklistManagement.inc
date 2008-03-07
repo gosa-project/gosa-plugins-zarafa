@@ -150,7 +150,7 @@ class blocklist extends plugin
         }
       } else {
         /* Errors found, show message */
-        show_errors ($message);
+        msgDialog::displayChecks($message);
       }
     }
 
