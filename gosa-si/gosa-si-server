@@ -1329,15 +1329,16 @@ sub get_fai_release_entries {
 					push @result, $bufentry;
 				}
 			} else {
-				my $types = get_fai_types($tmp_classes->{$entry});
-				my $state = get_fai_state($tmp_classes->{$entry});
-				push @result, 
-				{
-					'class' => $entry,
-					'type' => $types,
-					'release' => $parent,
-					'state' => $state,
-				};
+				my @types = get_fai_types($tmp_classes->{$entry});
+				foreach my $type (@types) {
+					push @result, 
+					{
+						'class' => $entry,
+						'type' => $type->{'type'},
+						'release' => $parent,
+						'state' => $type->{'state'},
+					};
+				}
 			}
 		}
 	}
@@ -1347,15 +1348,19 @@ sub get_fai_release_entries {
 
 sub get_fai_types {
 	my $tmp_classes = shift || return undef;
-	my $result = "";
+	my @result;
 
 	foreach my $type(keys %{$tmp_classes}) {
 		if(defined($tmp_classes->{$type}[0]) && (!($tmp_classes->{$type}[0] =~ /^.*?removed.*?$/))) {
-			$result.= "$type|";
+			my $entry = {
+				type => $type,
+				state => $tmp_classes->{$type}[0],
+			};
+			push @result, $entry;
 		}
 	}
-	chop($result);
-	return $result;
+
+	return @result;
 }
 
 sub get_fai_state {
