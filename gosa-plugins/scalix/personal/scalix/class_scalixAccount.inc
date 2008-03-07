@@ -344,10 +344,10 @@ class scalixAccount extends plugin
     $message= array();
 
     if(empty($this->scalixMailnode)){
-      $message[]= _("There is no scalix mailnode specified.");
+      $message[]= msgPool::required(_("Mailnode"));
     }
     if(empty($this->scalixScalixObject)){
-      $message[]= _("scalixScalixObject must be set!");
+      $message[]= msgPool::required(_("Scalix object"));
     }
 
     $ldap->cd($this->config->current['BASE']);
@@ -356,14 +356,14 @@ class scalixAccount extends plugin
         $mail.")(!(uid=".$this->uid."))(!(cn=".$this->uid.")))", array("uid"));
   
       if ($ldap->count() != 0){
-        $message[]= _("The email address '$mail' you've entered is already in use.");
+        $message[]= msgPool::duplicated(_("Email address"));
       }
     }
 
     /* Check quota */
     if ($this->scalixLimitMailboxSize != '' && $this->acl_is_writeable("scalixLimitMailboxSize")){
       if (!is_numeric($this->scalixLimitMailboxSize)) {
-        $message[]= _("Value in 'Limit Mailbox size' is not valid.");
+        $message[]= msgPool::invalid(_("Limit Mailbox"));
       } else {
         $this->scalixLimitMailboxSize= (int) $this->scalixLimitMailboxSize;
       }
