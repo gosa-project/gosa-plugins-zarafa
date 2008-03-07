@@ -75,7 +75,7 @@ class logview extends plugin
 
     /* Test connection to log database */
     if (!isset($this->config->data['SERVERS']['LOG'])){
-      msg_dialog::display(_("Warning"), sprintf(_("No %s servers defined!"), "syslog"), WARNING_DIALOG);
+      msg_dialog::display(_("Warning"), msgPool::noserver("syslog"), WARNING_DIALOG);
       return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
 
     }elseif(!is_callable("mysql_connect")){

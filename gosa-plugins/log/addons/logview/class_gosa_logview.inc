@@ -115,7 +115,7 @@ class gosa_logview extends plugin
      *  and mysql extension 
      ****/
     if (!isset($this->config->data['SERVERS']['LOGGING']) || !count($this->config->data['SERVERS']['LOGGING'])){
-      msg_dialog::display(_("Warning"), sprintf(_("No %s servers defined!"), "GOsa log"), WARNING_DIALOG);
+      msg_dialog::display(_("Warning"), msgPool::noserver("GOsa log"), WARNING_DIALOG);
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
     
