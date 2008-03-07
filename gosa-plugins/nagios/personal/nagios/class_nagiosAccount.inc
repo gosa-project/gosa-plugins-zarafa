@@ -190,18 +190,18 @@ class nagiosAccount extends plugin
     $ldap= $this->config->get_ldap_link();
     /* must: mail */
     if ($this->NagiosAlias == ""){
-      $message[]= _("The required field 'NagiosAlias' is not set.");
+      $message[]= msgPool::required(_("Alias"));
     }
     if ($this->NagiosMail == ""){
-      $message[]= _("The required field 'NagiosMail' is not set.");
+      $message[]= msgPool::required(_("Mail"));
     }
     if ($this->is_template){
       if (!tests::is_email($this->NagiosMail, TRUE)){
-        $message[]= _("Please enter a valid email address in 'NagiosMail' field.");
+        $message[]= msgPool::invalid(_("Mail"),"","","%givenName.%dn@your-domain.com");
       }
     } else {
       if (!tests::is_email($this->NagiosMail)){
-        $message[]= _("Please enter a valid email address in 'NagiosMail' field.");
+        $message[]= msgPool::invalid(_("Mail"),"","","example@your-domain.com");
       }
     }
     return($message);
