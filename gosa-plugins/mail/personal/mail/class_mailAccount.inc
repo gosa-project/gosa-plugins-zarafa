@@ -1331,7 +1331,7 @@ class mailAccount extends plugin
     /* Check quota */
     if ($this->gosaMailQuota != ''  && in_array("gosaMailQuota",$this->multi_boxes)){
       if (!is_numeric($this->gosaMailQuota)) {
-        $message[]= _("Value in 'Quota size' is not valid.");
+        $message[]= msgPool::invalid(_("Quota size"),$this->gosaMailQuota,"/^[0-9]*/");
       } else {
         $this->gosaMailQuota= (int) $this->gosaMailQuota;
       }
@@ -1340,19 +1340,19 @@ class mailAccount extends plugin
     /* Check rejectsize for integer */
     if ($this->gosaMailMaxSize != '' && in_array("gosaMailMaxSize",$this->multi_boxes)){
       if (!is_numeric($this->gosaMailMaxSize)){
-        $message[]= _("Please specify a vaild mail size for mails to be rejected.");
+        $message[]= msgPool::invalid(_("Mail reject size"),$this->gosaMailMaxSize,"/^[0-9]*/");
       } else {
         $this->gosaMailMaxSize= (int) $this->gosaMailMaxSize;
       }
     }
 
     if(empty($this->gosaSpamMailbox) && in_array("gosaSpamMailbox",$this->multi_boxes)){
-      $message[]= _("You specified Spam settings, but there is no Folder specified.");
+      $message[]= msgPool::required(_("Spam folder"));
     }
 
     if (  in_array("use_vacation",$this->multi_boxes) &&
           preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
-      $message[]= _("Time interval to show vacation message is not valid.");
+      $message[]= msgPool::invalid(_("Vacation interval"));
     }
     return($message);
   }
