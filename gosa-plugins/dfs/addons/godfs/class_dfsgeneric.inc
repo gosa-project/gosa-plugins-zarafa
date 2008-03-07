@@ -72,13 +72,6 @@
       plugin::check(); 
       $message = array();
 
-      ## permission
-      #if (chkacl($this->acl, "create") != "") {
-      #  $message[] = _("You have no premissions to create a dfs share.");
-      #}
-
-      # existance
-      
       $ldap = $this->config->get_ldap_link();
       $base = get_base_from_people($this->ui->dn);
       $ou = get_ou("DFS");
