@@ -1299,7 +1299,7 @@ sub get_fai_release_entries {
 	my $tmp_classes = shift || return;
 	my $result = shift || undef;
 	my $parent = shift || undef;
-	
+
 	foreach my $entry (keys %{$tmp_classes}) {
 		if (ref($tmp_classes->{$entry}) eq 'HASH') {
 			if($entry =~ /^ou=.*$/) {
@@ -1322,6 +1322,7 @@ sub get_fai_release_entries {
 				push @$result, $hash;
 			}
 		}
+	}
 
 	return $result;
 }
