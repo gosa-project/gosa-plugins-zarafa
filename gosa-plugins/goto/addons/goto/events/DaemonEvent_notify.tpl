@@ -2,28 +2,27 @@
 {if $is_new}
 
 <table style='width:100%;'>
-	<tr>
-		<td style='vertical-align:top'>{t}Send on:{/t}</td>
-		<td>{$timestamp}</td>
-	</tr>
-	<tr>
-		<td>
-			{t}Subject{/t}
-		</td>
-		<td>
-			<input type="text" value="{$subject}" name="subject">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			{t}Text{/t}
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<textarea style="height:200px;width:100%;" name="message">{$message}</textarea>
-		</td>
-	</tr>
+  <tr>
+    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA'>
+      <table>
+        <tr>
+          <td style='vertical-align:top'><b>{t}Time schedule{/t}</b><br><br>
+          {$timestamp}</td>
+        </tr>
+      </table>
+    </td>
+    <td style='width:50%; vertical-align:top;'>
+      <table style='width:100%;'>
+        <tr>
+          <td>
+            <b>{t}System list{/t}</b>
+            <br>
+            {$target_list}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 </table>
 
 {else}

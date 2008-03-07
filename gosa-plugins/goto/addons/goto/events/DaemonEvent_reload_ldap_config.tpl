@@ -2,27 +2,27 @@
 {if $is_new}
 
 <table style='width:100%;'>
-	<tr>
-		<td style='width:50%; vertical-align:top;'>
-			<table>
-				<tr>
-					<td style='vertical-align:top'>{t}Timestamp{/t}</td>
-					<td>{$timestamp}</td>
-				</tr>
-			</table>
-		</td>
-		<td style='width:50%; vertical-align:top;'>
-			<table style='width:100%;'>
-				<tr>
-					<td>
-						{t}Target objects{/t}
-						<br>
-						{$target_list}
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+  <tr>
+    <td style='width:50%; vertical-align:top; border-right:1px solid #AAA'>
+      <table>
+        <tr>
+          <td style='vertical-align:top'><b>{t}Time schedule{/t}</b><br><br>
+          {$timestamp}</td>
+        </tr>
+      </table>
+    </td>
+    <td style='width:50%; vertical-align:top;'>
+      <table style='width:100%;'>
+        <tr>
+          <td>
+            <b>{t}System list{/t}</b>
+            <br>
+            {$target_list}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
 </table>
 
 {else}

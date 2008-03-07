@@ -3,6 +3,7 @@
 		<td>{t}Jahr{/t}</td>
 		<td>{t}Monat{/t}</td>
 		<td>{t}Tag{/t}</td>
+    <td>&nbsp;&nbsp;</td>
 		<td>{t}Stunde{/t}</td>
 		<td>{t}Minute{/t}</td>
 		<td>{t}Sekunde{/t}</td>
@@ -23,6 +24,7 @@
 				{html_options values=$days options=$days selected=$time_day}
 			</select>&nbsp;
 		</td>
+    <td>&nbsp;</td>
 		<td>
 			<select name="time_hour">
 				{html_options values=$hours options=$hours selected=$time_hour}
