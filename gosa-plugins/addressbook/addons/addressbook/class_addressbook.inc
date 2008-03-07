@@ -663,50 +663,49 @@ class addressbook extends plugin
 
     /* must: sn, givenName */
     if ($this->sn == ""){
-      $message[]= _("The required field 'Name' is not set.");
+      $message[] = msgPool::required(_("Name"));
       return ($message);
     }
     if ($this->givenName == ""){
-      $message[]= _("The required field 'Given name' is not set.");
+      $message[] = msgPool::required(_("Given name"));
       return ($message);
     }
 
     /* Check for valid name definition */
     if (preg_match ("/[\\\\]/", $this->sn)){
-      $message[]= _("The field 'Name' contains invalid characters.");
+      $message[] = msgPool::invalid(_("Name"),$this->sn,"/[\\\\]");
     }
     if (preg_match ("/[\\\\]/", $this->givenName)){
-      $message[]= _("The field 'Given name' contains invalid characters.");
+      $message[] = msgPool::invalid(_("Given name"),$this->givenName,"/[\\\\]");
     }
 
     /* Check phone numbers */
     if (!tests::is_phone_nr($this->homePhone)){
-      $message[]= _("The field 'Phone' contains an invalid phone number.");
+      $message[] = msgPool::invalid(_("Phone"),$this->homePhone);
     }
     if (!tests::is_phone_nr($this->telephoneNumber)){
-      $message[]= _("The field 'Phone' contains an invalid phone number.");
+      $message[] = msgPool::invalid(_("Telephone number"),$this->telephoneNumber);
     }
     if (!tests::is_phone_nr($this->facsimileTelephoneNumber)){
-      $message[]= _("The field 'Fax' contains an invalid phone number.");
+      $message[] = msgPool::invalid(_("Fax"),$this->facsimileTelephoneNumber);
     }
     if (!tests::is_phone_nr($this->mobile)){
-      $message[]= _("The field 'Mobile' contains an invalid phone number.");
+      $message[] = msgPool::invalid(_("Mobile"),$this->mobile);
     }
     if (!tests::is_phone_nr($this->pager)){
-      $message[]= _("The field 'Pager' contains an invalid phone number.");
+      $message[] = msgPool::invalid(_("Pager"),$this->pager);
     }
-
     /* Check for reserved characers */
     if (preg_match ('/[,+"<>;]/', $this->givenName)){
-      $message[]= _("The field 'Given name' contains invalid characters.");
+      $message[] = msgPool::invalid(_("Given name"),$this->givenName,'/[,+"<>;]/');
   }
   if (preg_match ('/[,+"<>;]/', $this->sn)){
-    $message[]= _("The field 'Name' contains invalid characters.");
+    $message[] = msgPool::invalid(_("Name"),$this->sn,'/[,+"<>;]/');
   }
 
   /* Check mail */
   if (!tests::is_email($this->mail)){
-    $message[]= _("Please enter a valid email address in 'Primary address' field.");
+    $message[] = msgPool::invalid(_("Email"),"","","example@your-domain.com");
   }
 
   /* Assemble cn/dn */
