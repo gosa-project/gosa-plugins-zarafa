@@ -198,7 +198,6 @@ class pureftpdAccount extends plugin
         $message[]= msgPool::invalid(_("Quota size"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPUploadRatio") && !tests::is_id($this->FTPUploadRatio)){
-        $message[]= _("Value specified as 'Upload ratio' is not valid.");
         $message[]= msgPool::invalid(_("Upload ratio"), $this->uid, "/^[0-9]+$/");
       }
       if($this->acl_is_writeable("FTPDownloadRatio") && !tests::is_id($this->FTPDownloadRatio)){
