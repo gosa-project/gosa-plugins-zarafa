@@ -786,7 +786,7 @@ class phoneAccount extends plugin
         foreach($SQL_query_array as $query){
           @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
           if(!@mysql_query($query,$new_connection)){
-            msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error()), ERROR_DIALOG);
             return false;
           }
         }
@@ -1328,7 +1328,7 @@ class phoneAccount extends plugin
 
       // Check if we are  connected correctly
       if(!$r_con){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfon"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbconnect("GOfon", mysql_error()), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1338,7 +1338,7 @@ class phoneAccount extends plugin
 
       // Test if we have the database selected correctly
       if(!$db){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfon"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbselect("GOfon", mysql_error()), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1370,7 +1370,7 @@ class phoneAccount extends plugin
       foreach($SQL as $query){
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!@mysql_query($query,$r_con)){
-          msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error())), ERROR_DIALOG);
           return false;
         }
       }
