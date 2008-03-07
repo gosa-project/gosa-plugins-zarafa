@@ -1370,7 +1370,7 @@ class phoneAccount extends plugin
       foreach($SQL as $query){
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!@mysql_query($query,$r_con)){
-          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error())), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error()), ERROR_DIALOG);
           return false;
         }
       }
