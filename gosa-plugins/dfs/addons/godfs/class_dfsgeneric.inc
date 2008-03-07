@@ -90,9 +90,9 @@
       $attrs = $ldap->fetch();
       
       if ($this->orig_dn == "new" && !($attrs == FALSE)) {
-        $message[] = _("Dfs share already exists.");
+		$message[] = msgPool::duplicated("Dfs Share");
       } elseif ($this->orig_dn != $this->dn && !($attrs == FALSE)) {
-        $message[] = _("Dfs share already exists.");
+		$message[] = msgPool::duplicated("Dfs Share");
       }
       
       if ($this->dn == "new" || $this->dn == "") {
@@ -105,19 +105,19 @@
       
       # required fields set?
       if ($this->sambasharename == "") {
-        $message[] = _("Required Field \"Name of dfs Share\" is not set.");
+		$message[] = msgPool::required("Name");
       }
       if ($this->sharedescription == "") {
-        $message[] = _("Required Field \"Description\" is not set.");
+		$message[] = msgPool::required("Description");
       }
       if ($this->fileserver == "") {
-        $message[] = _("Required Field \"Fileserver\" is not set.");
+		$message[] = msgPool::required("Fileserver");
       }
       if ($this->share == "") {
-        $message[] = _("Required Field \"Share on fileserver\" is not set.");
+		$message[] = msgPool::required("Share");
       }
       if ($this->loc == "") {
-        $message[] = _("Required Field \"Location\" is not set.");
+		$message[] = msgPool::required("Location");
       }
 
       return $message;
