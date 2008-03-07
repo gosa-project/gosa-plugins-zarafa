@@ -180,7 +180,7 @@ class gotomasses extends plugin
     if($s_action == "remove_multiple" || $s_action == "remove"){
 
       if(!$this->acl_is_removeable()){
-        msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission"), msgPool::permDelete(), ERROR_DIALOG);
       }else{
 
         if($s_action == "remove"){
@@ -598,7 +598,7 @@ class gotomasses extends plugin
       }
     }else{
       msg_dialog::display(_("Error"),
-          sprintf(_("The Job could not be aborted, the '%s' event class was not found."),
+          sprintf(_("The job could not be aborted, the required class '%s' was not found."),
             "DaemonEvent_faireboot") , ERROR_DIALOG);
     }
   }
