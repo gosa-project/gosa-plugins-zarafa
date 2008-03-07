@@ -127,7 +127,7 @@ our $fai_server_tn = "fai_server";
 my $fai_server_file_name;
 our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
 our $fai_release_tn = "fai_release"; 
-our @fai_release_col_names = ('timestamp', 'release', 'class', 'type'); 
+our @fai_release_col_names = ('timestamp', 'release', 'class', 'type', 'state'); 
 
 # holds all packages available from different repositories
 our $packages_list_db;
@@ -1279,6 +1279,7 @@ sub create_fai_release_db {
 		if($mesg->{'resultCode'} == 0 &&
 			$mesg->count != 0) {
 			# Walk through all possible FAI container ou's
+			my @sql_list;
 			foreach my $ou (@{$mesg->{entries}}) {
 				my $tmp_classes= resolve_fai_classes($ou->dn);
 				if(defined($tmp_classes)) {
@@ -1286,18 +1287,22 @@ sub create_fai_release_db {
 					if(@tmp_array) {
 						foreach my $entry (@tmp_array) {
 							if(defined($entry) && ref($entry) eq 'HASH') {
-								$fai_server_db->add_dbentry( { 
-										table => $table_name,
-										primkey => ['release', 'class', 'type'],
-										release => $entry->{'release'},
-										class => $entry->{'class'},
-										type => $entry->{'type'}
-									} );
+								my $timestamp= &get_time();
+								my $sql= 
+								 "INSERT INTO $table_name "
+								."(timestamp, release, class, type, state) VALUES ("
+								.$timestamp.","
+								."'".$entry->{'release'}."',"
+								."'".$entry->{'class'}."',"
+								."'".$entry->{'type'}."',"
+								."'".$entry->{'state'}."')";
+								push @sql_list, $sql;
 							}
 						}
 					}
 				}
 			}
+			$fai_server_db->exec_statementlist(\@sql_list);
 		}
 		daemon_log("Done with creating fai_release_db",4);
 	}
@@ -1325,11 +1330,13 @@ sub get_fai_release_entries {
 				}
 			} else {
 				my $types = get_fai_types($tmp_classes->{$entry});
+				my $state = get_fai_state($tmp_classes->{$entry});
 				push @result, 
 				{
 					'class' => $entry,
 					'type' => $types,
 					'release' => $parent,
+					'state' => $state,
 				};
 			}
 		}
@@ -1348,6 +1355,22 @@ sub get_fai_types {
 		}
 	}
 	chop($result);
+	return $result;
+}
+
+sub get_fai_state {
+	my $result = "";
+	my $tmp_classes = shift || return $result;
+
+	foreach my $type(keys %{$tmp_classes}) {
+		if(defined($tmp_classes->{$type}[0])) {
+			$result = $tmp_classes->{$type}[0];
+			
+		# State is equal for all types in class
+			last;
+		}
+	}
+
 	return $result;
 }
 
