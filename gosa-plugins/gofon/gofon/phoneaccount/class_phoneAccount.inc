@@ -435,17 +435,15 @@ class phoneAccount extends plugin
     $a_New = $this->goFonHomeServers[$this->goFonHomeServer];  // DB Configuration
     $new_connection =  @mysql_pconnect($a_New['SERVER'],$a_New['LOGIN'],$a_New['PASSWORD']);
     if(!$new_connection){
-      $this->generate_error = sprintf(
-          _("The MySQL Server '%s' isn't reachable as user '%s'. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
-          $a_New['SERVER'],$a_New['LOGIN']);
+      $this->generate_error =  msgPool::dbconnect($a_New['SERVER'],@mysql_error($new_connection),
+          _("Abort saving entries to keep the database consistent."));
       new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
       return false;
     }
     $new_database  =  @mysql_select_db($a_New['DB'],$new_connection);
     if(!$new_database){
-      $this->generate_error = sprintf(
-          _("Can't select database %s on %s. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
-          $a_New['DB'],$a_New['SERVER']);
+      $this->generate_error =  msgPool::dbselect($a_New['DB'],@mysql_error($new_connection),
+          _("Abort saving entries to keep the database consistent."));
       new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
       return false;
     }
@@ -462,17 +460,15 @@ class phoneAccount extends plugin
        */
       $old_connection =  @mysql_pconnect($a_Remove['SERVER'],$a_Remove['LOGIN'],$a_Remove['PASSWORD']);
       if(!$old_connection){
-        $this->generate_error = sprintf(
-            _("The old MySQL home server '%s' isn't reachable as user '%s'. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
-            $a_Remove['SERVER'],$a_Remove['LOGIN']);
+        $this->generate_error =  msgPool::dbconnect($a_Remove['SERVER'],@mysql_error($old_connection),
+            _("Abort saving entries to keep the database consistent."));
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
         return false;
       }
       $old_database  =  @mysql_select_db($a_Remove['DB'],$old_connection);
       if(!$old_database){
-        $this->generate_error = sprintf(
-            _("Can't select database %s on %s. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
-            $a_Remove['DB'],$a_Remove['SERVER']);
+        $this->generate_error =  msgPool::dbselect($a_Remove['DB'],@mysql_error($old_connection),
+            _("Abort saving entries to keep the database consistent."));
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
         return false;
       }
@@ -786,7 +782,7 @@ class phoneAccount extends plugin
         foreach($SQL_query_array as $query){
           @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
           if(!@mysql_query($query,$new_connection)){
-            msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error()), ERROR_DIALOG);
+            $this->generate_error =  msgPool::dbquery("GOfon",@mysql_error($old_connection));
             return false;
           }
         }
@@ -1010,7 +1006,7 @@ class phoneAccount extends plugin
         $this->phoneNumbers[$number]= $number;
         $this->is_modified= TRUE;
       } else {
-        msg_dialog::display(_("Error"), _("Phone number is invalid!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid("Phone number"), ERROR_DIALOG);
       }
     }
 
@@ -1175,19 +1171,19 @@ class phoneAccount extends plugin
     }
 
     if(empty($this->goFonHomeServer)){
-      $message[] = _("Please select a valid goFonHomeServer.");
+      $message[] = msgPool::invalid(_("Home server"));
     }
 
     if((strlen($this->goFonVoicemailPIN)==0)||(strlen($this->goFonVoicemailPIN)>4)){
-      $message[]=(_("Voicemail PIN must be between 1-4 characters."));
+      $message[]= msgPool::invalid(_("Voicemail PIN"),"","",_("Between 1-4 charactes"));
     }else{
       if(preg_match("/[^0-9]/",$this->goFonVoicemailPIN)){
-        $message[]=(_("The specified Voicemail PIN contains invalid characters, only numeric values are allowed here."));
+        $message[]= msgPool::invalid(_("Voicemail PIN"),preg_replace("/[0-9]/","X",$this->goFonVoicemailPIN),"/X/");
       }
     }
 
     if(preg_match("/[^0-9a-z]/i",$this->goFonPIN)){
-      $message[]=(_("The specified phone PIN contains invalid characters, only aphanumeric values are allowed here."));
+      $message[]= msgPool::invalid(_("Phone PIN"),preg_replace("/[0-9a-z]/i","X",$this->goFonPIN),"/X/");
     }
 
     if ($this->initially_was_account != $this->is_account || $this->is_modified){
@@ -1198,14 +1194,14 @@ class phoneAccount extends plugin
 
     /* We need at least one phone number */
     if (count($this->phoneNumbers) == 0){
-      $message[]= sprintf(_("You need to specify at least one phone number!"));
+      $message[]= msgPool::required("Phone number");
     }
 
     /* check for ! in any parameter setting*/
     if(isset($this->macroarray[$this->macro])){
       foreach($this->macroarray[$this->macro] as $val){
         if((strstr($val['choosen'],"!"))||(strstr($val['choosen'],"#"))){
-          $message[] = sprintf(_("The parameter %s contains invalid char. '!,#' is used as delimiter"),$val['name']);
+          $message[] = msgPool::invalid(sprintf(_("macro parameter %s"),$val['name']),$val['choosen'],"/[^\#]/");
         }
       }
     }
@@ -1328,7 +1324,7 @@ class phoneAccount extends plugin
 
       // Check if we are  connected correctly
       if(!$r_con){
-        msg_dialog::display(_("Error"), msgPool::dbconnect("GOfon", mysql_error()), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbconnect("GOfon",@mysql_error()), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1338,7 +1334,7 @@ class phoneAccount extends plugin
 
       // Test if we have the database selected correctly
       if(!$db){
-        msg_dialog::display(_("Error"), msgPool::dbselect("GOfon", mysql_error()), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbselect("GOfon", @mysql_error()), ERROR_DIALOG);
         new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
@@ -1370,7 +1366,7 @@ class phoneAccount extends plugin
       foreach($SQL as $query){
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!@mysql_query($query,$r_con)){
-          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon", mysql_error()), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::dbquery("GOfon",@mysql_error()), ERROR_DIALOG);
           return false;
         }
       }
