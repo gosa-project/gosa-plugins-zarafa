@@ -80,6 +80,7 @@ class logview extends plugin
 
     }elseif(!is_callable("mysql_connect")){
       msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+      new log("debug","logview","Missing MYSQL extension.");
       return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
 
     }else{
@@ -90,15 +91,15 @@ class logview extends plugin
       /* Open link to database  and check if it is valid */	
       $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
       if ($link === FALSE){
-	msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "syslog"), ERROR_DIALOG);
-        new log("debug","logview","",array(),@mysql_error());
+        msg_dialog::display(_("Error"), msgPool::dbconnect($cfg['SERVER'],@mysql_error(),"Log view"), ERROR_DIALOG);
+        new log("debug","log view","dbconnect",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       }
 
       /* check of log database is available */
       if (! @mysql_select_db("gomon")){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "syslog"), ERROR_DIALOG);
-        new log("debug","logview","",array(),@mysql_error());
+        msg_dialog::display(_("Error"), msgPool::dbselect("gomon",@mysql_error(),"Log view"), ERROR_DIALOG);
+        new log("debug","log view","dbselect",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       }
 
@@ -110,8 +111,8 @@ class logview extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
         if ($result === false){
-	  msg_dialog::display(_("Error"), _("Cannot obtain host list from syslog database!"), ERROR_DIALOG);
-          new log("debug","logview","",array(),@mysql_error());
+          msg_dialog::display(_("Error"), msgPool::dbquery("golog",@mysql_error(),"Log view"), ERROR_DIALOG);
+          new log("debug","log view","dbquery",array(),@mysql_error());
           return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
 
@@ -132,8 +133,8 @@ class logview extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
         if ($result === false){
-          new log("debug","logview","",array(),@mysql_error());
-	  msg_dialog::display(_("Error"), _("Database query failed!"), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::dbquery("golog",@mysql_error(),"Log view"), ERROR_DIALOG);
+          new log("debug","log view","dbquery",array(),@mysql_error());
           return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
 
@@ -171,7 +172,7 @@ class logview extends plugin
     if(count($tmp_cat_bases) == 0 || !preg_match("/r/",$all_acls)){
       $res = "<tr>
         <td colspan=4>
-        "._("You have insufficient permissions to view syslog entries.")."
+        ".msgPool::permView()."
         </td>
         </tr>";
 
@@ -190,12 +191,14 @@ class logview extends plugin
 
     /* Test connection object && create up query string */
     if ($link === FALSE){
-      msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "syslog"), ERROR_DIALOG);
-      new log("debug","logview","",array(),@mysql_error());
+      msg_dialog::display(_("Error"), msgPool::dbconnect($cfg['SERVER'],@mysql_error(),"Log view"), ERROR_DIALOG);
+      new log("debug","log view","dbconnect",array(),@mysql_error());
+      return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
     } else {
       if (! @mysql_select_db("gomon")){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "syslog"), ERROR_DIALOG);
-        new log("debug","logview","",array(),@mysql_error());
+        msg_dialog::display(_("Error"), msgPool::dbselect("gomon",@mysql_error(),"Log view"), ERROR_DIALOG);
+        new log("debug","log view","dbselect",array(),@mysql_error());
+        return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       } else {
 
         /* Assemble time query */
@@ -268,7 +271,9 @@ class logview extends plugin
         $query= "SELECT COUNT(*)".$query_base.";";
         $result = @mysql_query($query);
         if(!$result){
-          new log("debug","logview","",array(),@mysql_error());
+          msg_dialog::display(_("Error"), msgPool::dbquery("golog",@mysql_error(),"Log view"), ERROR_DIALOG);
+          new log("debug","log view","dbquery",array(),@mysql_error());
+          return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
         $line= mysql_fetch_array($result, MYSQL_ASSOC);
         $count= $line['COUNT(*)'];
@@ -283,7 +288,9 @@ class logview extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
         if(!$result){
-          new log("debug","logview","",array(),@mysql_error());
+          msg_dialog::display(_("Error"), msgPool::dbquery("golog",@mysql_error(),"Log view"), ERROR_DIALOG);
+          new log("debug","log view","dbquery",array(),@mysql_error());
+          return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
         /* Display results */
         $mod= 0;

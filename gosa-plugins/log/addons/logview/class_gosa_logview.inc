@@ -63,7 +63,7 @@ class gosa_logview extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      new log("view","logview/".get_class($this),$this->dn);
+      new log("view","gosa_logging/".get_class($this),$this->dn);
     }
 
     /* Time interval */
@@ -146,14 +146,14 @@ class gosa_logview extends plugin
     $link = @mysql_pconnect($this->server, $cfg['USER'], $cfg['PWD']);
     if ($link === FALSE){
       msg_dialog::display(_("Error"), msgPool::dbconnect($this->server,@mysql_error(),"GOsa LOG"), ERROR_DIALOG);
-      new log("debug","logview","dbconnect",array(),@mysql_error());
+      new log("debug","gosa_logging","dbconnect",array(),@mysql_error());
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
     /* check if log database is available */
     if (! @mysql_select_db($cfg['DB'])){
       msg_dialog::display(_("Error"), msgPool::dbselect($cfg['DB'],@mysql_error(), "GOsa LOG"), ERROR_DIALOG);
-      new log("debug","logview","selectdb",array(),@mysql_error());
+      new log("debug","gosa_logging","selectdb",array(),@mysql_error());
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
@@ -266,7 +266,7 @@ class gosa_logview extends plugin
       $query= "SELECT COUNT(`user`) ".$query_base.";";
       $result = mysql_query($query);
       if(!$result){
-        new log("debug","logview","",array(),@mysql_error());
+        new log("debug","gosa_logging","",array(),@mysql_error());
       }
       $line= mysql_fetch_array($result, MYSQL_ASSOC);
       $count= $line['COUNT(`user`)'];
@@ -282,7 +282,7 @@ class gosa_logview extends plugin
       $result = @mysql_query($query);
       if(!$result){
         msg_dialog::display(_("Error"), msgPool::dbquery("gosa_log",@mysql_error(), "GOsa LOG"), ERROR_DIALOG);
-        new log("debug","logview","querydb",array(),@mysql_error());
+        new log("debug","gosa_logging","querydb",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
       }
 
