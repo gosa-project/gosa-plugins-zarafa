@@ -100,15 +100,15 @@ class logonManagementDialog extends plugin
     $message= plugin::check();
   
     if(preg_match("/[^a-zA-Z]/",$this->LogonName)){
-      $message[] = _("Specified name should only consist of upper-/lowercase characters.");
+      $message[] = msgPool::invalid(_("Name"),$this->LogonName,"/[a-zA-Z]/");
     }
 
     if(empty($this->LogonName)){
-      $message[] = _("Please specify a valid script name.");
+      $message[] = msgPool::required(_("Script name"));
     }
 
     if(preg_match("/[^a-z0-9,\.-;:_\(\)!\? ]/i",$this->LogonDescription)){
-      $message[] = _("Specified description contains invalid characters.");
+      $message[] = msgPool::required(_("Description"),$this->LogonDescription,"/[a-z0-9,\.-;:_\(\)!\? ]/i");
     }
 
     return $message;
