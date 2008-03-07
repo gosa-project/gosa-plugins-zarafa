@@ -923,7 +923,7 @@ sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
     $kernel->yield('create_fai_server_db', $fai_server_tn );
-    #$kernel->yield('create_fai_release_db', $fai_release_tn );
+	#$kernel->yield('create_fai_release_db', $fai_release_tn );
     #$kernel->yield('create_packages_list_db', $sources_list );
 }
 
@@ -1231,6 +1231,7 @@ sub create_fai_server_db {
 	my $result;
 
 	if(defined($ldap_handle)) {
+		daemon_log("Creating fai_server_db",4);
 		my $mesg= $ldap_handle->search(
 			base   => $main::ldap_base,
 			scope  => 'sub',
@@ -1256,6 +1257,7 @@ sub create_fai_server_db {
 				   }
 			   }
 		   }
+		daemon_log("Done with creating fai_server_db",4);
 	}	
    
    	return $result;
@@ -1267,6 +1269,7 @@ sub create_fai_release_db {
 	my $result;
 
 	if(defined($ldap_handle)) {
+		daemon_log("Creating fai_release_db",4);
 		my $mesg= $ldap_handle->search(
 			base   => $main::ldap_base,
 			scope  => 'sub',
@@ -1278,18 +1281,25 @@ sub create_fai_release_db {
 			# Walk through all possible FAI container ou's
 			foreach my $ou (@{$mesg->{entries}}) {
 				my $tmp_classes= resolve_fai_classes($ou->dn);
-				my @fai_release_entries=@{get_fai_release_entries($tmp_classes)}[0];
-				foreach my $entry (@fai_release_entries) {
-					$fai_server_db->add_dbentry( { 
-							table => $table_name,
-							primkey => ['release', 'class', 'type'],
-							release => $entry->{'release'},
-							class => $entry->{'class'},
-							type => $entry->{'type'}
-						} );
+				if(defined($tmp_classes)) {
+					my @tmp_array=get_fai_release_entries($tmp_classes);
+					if(@tmp_array) {
+						foreach my $entry (@tmp_array) {
+							if(defined($entry) && ref($entry) eq 'HASH') {
+								$fai_server_db->add_dbentry( { 
+										table => $table_name,
+										primkey => ['release', 'class', 'type'],
+										release => $entry->{'release'},
+										class => $entry->{'class'},
+										type => $entry->{'type'}
+									} );
+							}
+						}
+					}
 				}
 			}
 		}
+		daemon_log("Done with creating fai_release_db",4);
 	}
 
 	return $result;
@@ -1297,34 +1307,35 @@ sub create_fai_release_db {
 
 sub get_fai_release_entries {
 	my $tmp_classes = shift || return;
-	my $result = shift || undef;
 	my $parent = shift || undef;
+	my @result = shift || ();
 
 	foreach my $entry (keys %{$tmp_classes}) {
-		if (ref($tmp_classes->{$entry}) eq 'HASH') {
+		if(defined($entry)) {
+			#daemon_log($entry,1);
 			if($entry =~ /^ou=.*$/) {
-				my @res;
-				my $rel = $entry;
-				$rel =~ s/ou=//g;
-				my @ent = get_fai_release_entries($tmp_classes->{$entry}, $result, $rel);
-				while(my $tmp_entry = pop(@{$ent[0]})) {
-					$tmp_entry->{'release'} = (defined($parent) && length($parent)>0)?$parent."/".$rel:$rel;
-					push @res, $tmp_entry;
+				my $release_name = $entry;
+				$release_name =~ s/ou=//g;
+				if(defined($parent)) {
+					$release_name = $parent."/".$release_name;
 				}
-				foreach my $tmp_entry(@res) {
-					push @$result, $tmp_entry;
+				my @bufentries = get_fai_release_entries($tmp_classes->{$entry}, $release_name, @result);
+				foreach my $bufentry(@bufentries) {
+					push @result, $bufentry;
 				}
 			} else {
-				my $hash = {
+				my $types = get_fai_types($tmp_classes->{$entry});
+				push @result, 
+				{
 					'class' => $entry,
-					'type' => get_fai_types($tmp_classes->{$entry}),
+					'type' => $types,
+					'release' => $parent,
 				};
-				push @$result, $hash;
 			}
 		}
 	}
 
-	return $result;
+	return @result;
 }
 
 sub get_fai_types {
@@ -1343,10 +1354,10 @@ sub get_fai_types {
 sub resolve_fai_classes {
 	my $result;
 	my $fai_base= shift;
-	my $fai_hash= shift;
 	my @possible_fai_classes= ("FAIscript", "FAIhook", "FAIpartitionTable", "FAItemplate", "FAIvariable", "FAIprofile", "FAIpackageList");
 	my $fai_filter= "(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))";
 	my $fai_classes;
+	daemon_log("Searching in FAI base $fai_base",6);
 
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
@@ -1357,6 +1368,7 @@ sub resolve_fai_classes {
 
 	if($mesg->{'resultCode'} == 0 &&
 		$mesg->count != 0) {
+		daemon_log("Found ".$mesg->count." entries",6);
 		foreach my $entry (@{$mesg->{entries}}) {
 			if($entry->exists('cn') && (!($entry->get_value('cn') eq 'LAST')) ) {
 				my $tmp_dn= $entry->dn();
