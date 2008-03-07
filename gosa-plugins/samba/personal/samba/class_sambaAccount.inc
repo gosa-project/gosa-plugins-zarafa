@@ -749,7 +749,7 @@ class sambaAccount extends plugin
       foreach (array( "sambaHomePath" => _("Home directory"),
             "sambaProfilePath" => _("Profile path")) as $key => $val){
         if (!$this->mungedObject->is_samba_path($this->$key)){
-          $message[]= sprintf(_("The value specified as '%s' contains invalid characters!"), $val);
+          $message[]= msgPool::invalid($val);
         }
       }
 
@@ -759,7 +759,7 @@ class sambaAccount extends plugin
             "CtxMaxIdleTime" => _("IDLE")) as $key => $val){
 
         if (isset($this->mungedObject->ctx[$key]) && !tests::is_id($this->mungedObject->ctx[$key]) && $val != 0){
-          $message[]= sprintf(_("The timeout property '%s' is checked and contains invalid or no characters!"), $val);
+          $message[]= msgPool::invalid($val);
         }
       }
 
@@ -1239,7 +1239,7 @@ class sambaAccount extends plugin
     foreach (array( "sambaHomePath" => _("Home directory"),
           "sambaProfilePath" => _("Profile path")) as $key => $val){
       if (in_array($key,$this->multi_boxes) && !$this->mungedObject->is_samba_path($this->$key)){
-        $message[]= sprintf(_("The value specified as '%s' contains invalid characters!"), $val);
+        $message[]= msgPool::invalid($val);
       }
     }
 
@@ -1250,7 +1250,7 @@ class sambaAccount extends plugin
       if (in_array($key,$this->multi_boxes) && 
           isset($this->mungedObject->ctx[$key]) && 
           !tests::is_id($this->mungedObject->ctx[$key]) && $val != 0){
-        $message[]= sprintf(_("The timeout property '%s' is checked and contains invalid or no characters!"), $val);
+        $message[]=msgPool::invalid($val);
       }
     }
 
