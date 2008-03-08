@@ -102,7 +102,7 @@ class nagiosAccount extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no nagios extensions.")."</b>";
+        msgPool::noValidextension(_("Nagios"))."</b>";
 
       $display.= back_to_main();
       return ($display);
@@ -111,10 +111,9 @@ class nagiosAccount extends plugin
     /* Show tab dialog headers */
     if ($this->parent !== NULL){
       if ($this->is_account){
-        $display= $this->show_disable_header(_("Remove nagios account"),
-            _("This account has nagios features enabled. You can disable them by clicking below."));
+        $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Nagios")), msgPool::featuresEnabled(_("Nagios")));
       } else {
-        $display= $this->show_enable_header(_("Create nagios account"), _("This account has nagios features disabled. You can enable them by clicking below."));
+        $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Nagios")), msgPool::featuresDisabled(_("Nagios")));
         return($display);
       }
     }
