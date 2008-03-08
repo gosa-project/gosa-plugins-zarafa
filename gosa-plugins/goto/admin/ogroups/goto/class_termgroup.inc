@@ -211,37 +211,40 @@ class termgroup extends plugin
       if ($_POST['saction'] != "wake"){
         foreach($member as $dn =>  $object){
 
-	      /* Get object */
-	      $ldap->cat($dn,array("objectClass"));
-	      $res                = $ldap->fetch();
-	      $attrs              = array();
+          /* Get object */
+          $ldap->cat($dn,array("objectClass"));
+          $res                = $ldap->fetch();
+          $attrs              = array();
 
-	      /* Add FAI state */
-	      $attrs['FAIstate']  = "";
-	      if(isset($this->mapActions[$_POST['saction']])){
-		      $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-	      }
+          /* Add FAI state */
+          $attrs['FAIstate']  = "";
+          if(isset($this->mapActions[$_POST['saction']])){
+            $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+          }
 
-	      /* Fix objectClass index */
-	      for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-		      $attrs['objectClass'][] = $res['objectClass'][$i];
-	      }
+          /* Fix objectClass index */
+          for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
+            $attrs['objectClass'][] = $res['objectClass'][$i];
+          }
 
-	      /* Check if we must add the objectClass */
-	      if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-		      $attrs['objectClass'][] = "FAIobject";
-	      }
+          /* Check if we must add the objectClass */
+          if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+            $attrs['objectClass'][] = "FAIobject";
+          }
 
-	      if($attrs['FAIstate'] == ""){
-		      $attrs['FAIstate'] = array();
-	      }
+          if($attrs['FAIstate'] == ""){
+            $attrs['FAIstate'] = array();
+          }
 
-	      $ldap->cd($dn);
-	      $ldap->modify($attrs);
-        if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+          $ldap->cd($dn);
+          $ldap->modify($attrs);
+
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+          }
         }
       }
+
     }
 
 
@@ -310,6 +313,7 @@ class termgroup extends plugin
     return ($smarty->fetch (get_template_path('termgroup.tpl', TRUE, dirname(__FILE__))));
   }
 
+
   function save_object()
   {
     plugin::save_object();  
@@ -373,8 +377,8 @@ class termgroup extends plugin
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
     }
-
   }
+
   
   static function plInfo()
   {

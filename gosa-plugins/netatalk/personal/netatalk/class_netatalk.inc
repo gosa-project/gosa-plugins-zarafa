@@ -187,7 +187,6 @@ class netatalk extends plugin {
         } else {
           $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk")), TRUE);
         } 
-        }
         return ($display);
       }
     }
