@@ -599,9 +599,7 @@ class mailAccount extends plugin
     for($y= $date['year']-10; $y<$date['year']+10; $y++){
       $years[]= $y;
     }
-    $months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"));
+    $months= msgPool::months();
     $smarty->assign("start_day", $date["mday"]);
     $smarty->assign("days", $days);
     $smarty->assign("months", $months);
