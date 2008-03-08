@@ -399,8 +399,8 @@ class environment extends plugin
       }
       /* Group Dialog with enabled environment options */
       if ($this->is_account){
-        $display= $this->show_enable_header(_("Remove environment extension"),
-            _("Environment extension enabled. You can disable it by clicking below."));
+        $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Environment")),
+            msgPool::featuresEnabled(_("Environment")));
       } else {
 
         /* Environment is disabled 
@@ -408,14 +408,12 @@ class environment extends plugin
            environment extensions
          */
         if((isset($this->parent->by_object['group']))||(isset($this->attrs['objectClass']))&&((in_array("posixAccount",$this->attrs['objectClass'])))){
-          // 4. There is a PosixAccount
-          $display= $this->show_enable_header(_("Add environment extension"),
-              _("Environment extension disabled. You can enable it by clicking below."));
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
+              msgPool::featuresDisabled(_("Environment")));
           return $display;
         }else{
-          // 4. There is no PosixAccount
-          $display= $this->show_enable_header(_("Add environment extension"),
-              _("Environment extension disabled. You have to setup a posix account before you can enable this feature."));
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
+              msgPool::featuresDisabled(_("Environment"), _("POSIX")), TRUE);
           return $display;
         }
       }
@@ -437,19 +435,17 @@ class environment extends plugin
 
         // 3. Account enabled . Editing from adminmenu
         if ($this->is_account){
-          $display= $this->show_disable_header(_("Remove environment extension"),
-              _("Environment extension enabled. You can disable it by clicking below."));
+          $display= $this->show_enable_header(msgPool::removeFeaturesButton(_("Environment")),
+              msgPool::featuresEnabled(_("Environment")));
         } else {
 
           if($this->parent->by_object['posixAccount']->is_account==true){
-            // 4. There is a PosixAccount
-            $display= $this->show_disable_header(_("Add environment extension"),
-                _("Environment extension disabled. You can enable it by clicking below."));
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
+                msgPool::featuresDisabled(_("Environment")));
             return $display;
           }else{
-            // 4. There is a PosixAccount
-            $display= $this->show_disable_header(_("Add environment extension"),
-                _("Environment extension disabled. You have to setup a posix account before you can enable this feature."),TRUE,TRUE);
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
+                msgPool::featuresDisabled(_("Environment"), _("POSIX")), TRUE);
             return $display;
           }
         }
@@ -640,11 +636,11 @@ class environment extends plugin
 
       /* We assign a share to this user, if we don't know where to mount the share */
       if(!isset($_POST['gotoShareSelection']) || get_post('gotoShareSelection') == ""){
-        msg_dialog::display(_("Error"), _("Please select a valid share!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Share")), ERROR_DIALOG);
       }elseif((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
-        msg_dialog::display(_("Error"), _("Please specify a valid mount point!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Mount point")), ERROR_DIALOG);
       }elseif(preg_match('/ /', $_POST['gotoShareMountPoint'])){
-        msg_dialog::display(_("Error"), _("You cannot use spaces in the mount path!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Mount point"), "/[^\s]/"), ERROR_DIALOG);
       }elseif(!(
             preg_match("/^\//",$_POST['gotoShareMountPoint'])  ||
             preg_match("/^~/",$_POST['gotoShareMountPoint']) ||
@@ -655,7 +651,7 @@ class environment extends plugin
             preg_match("/^%/",$_POST['gotoShareMountPoint'])
             )
           ){
-        msg_dialog::display(_("Error"), _("Please specify a valid mount point!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Mount point")), ERROR_DIALOG);
       }else{
         $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
         $s_mount = $_POST['gotoShareMountPoint'];
@@ -758,7 +754,7 @@ class environment extends plugin
             title='"._("Reset password hash")."'>";
           $img.= "&nbsp;";
         }
-        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/edittrash.png' alt='"._("Delete")."' 
+        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/edittrash.png' alt='".msgPool::delButton()."' 
           title='"._("Delete share entry")."'>";
         $field1 = array("string" => $value , "attach" => "style='".$color."'");
         $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
@@ -1112,7 +1108,7 @@ class environment extends plugin
     } 
     if(!$this->is_group){
       if((!((in_array("posixAccount",$this->attrs['objectClass']))||($this->parent->by_object['posixAccount']->is_account==true)))&&(!$this->is_group)){
-        $message[]=(_("You need to setup a valid posix extension in order to enable evironment features."));  
+        $message[]=(_("You need to enable POSIX features in order to enable evironment features!"));  
       }
     }
     return ($message);

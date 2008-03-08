@@ -104,7 +104,7 @@ class selectPrinterDialog extends plugin
     $message= plugin::check();
 
     if(empty($_POST['gotoPrinter'])){
-      $message[] = _("Please select a printer or press cancel.");
+      $message[] = _("Please select a printer!");
     }
     return $message;
   }
