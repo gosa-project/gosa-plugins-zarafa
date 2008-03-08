@@ -58,14 +58,7 @@ class sambaLogonHours extends plugin
   function execute()
   {
 
-    $week_days = array();
-    $week_days[0]= _("Sunday");
-    $week_days[1]= _("Monday");
-    $week_days[2]= _("Tuesday");
-    $week_days[3]= _("Wednesday");
-    $week_days[4]= _("Thursday");
-    $week_days[5]= _("Friday");
-    $week_days[6]= _("Saturday");
+    $week_days = msgPool::weekdays();
 
     $hours = array();
     for($i = 0 ; $i <24 ; $i++ ){

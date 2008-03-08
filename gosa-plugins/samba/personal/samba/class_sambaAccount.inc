@@ -214,7 +214,7 @@ class sambaAccount extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no samba extensions.")."</b>";
+        msgPool::noValidExtension(_("Samba"))."</b>";
       $display.= back_to_main();
       return ($display);
     }
@@ -226,8 +226,8 @@ class sambaAccount extends plugin
       $display= "";
       if ($this->parent !== NULL){
         if ($this->is_account){
-          $display= $this->show_disable_header(_("Remove samba account"),
-              _("This account has samba features enabled. You can disable them by clicking below."));
+          $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Samba")),
+              msgPool::featuresEnabled(_("Samba")));
         } else {
           $obj= $this->parent->by_object['posixAccount'];
 
@@ -236,11 +236,11 @@ class sambaAccount extends plugin
              uidNumbers. There'll be a better solution later
              on. */
           if ($obj->is_account){
-            $display= $this->show_enable_header(_("Create samba account"),
-                _("This account has samba features disabled. You can enable them by clicking below."));
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Samba")),
+                msgPool::featuresDisabled(_("Samba")));
           } else {
-            $display= $this->show_enable_header(_("Create samba account"),
-                _("This account has samba features disabled. Posix features are needed for samba accounts, enable them first."), TRUE);
+            $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Samba")),
+                msgPool::featuresDisabled(_("Samba"), _("POSIX")), TRUE);
           }
           return ($display);
         }
@@ -432,9 +432,7 @@ class sambaAccount extends plugin
     for($y= $date['year']-4; $y<$date['year']+4; $y++){
       $years[]= $y;
     }
-    $months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"));
+    $months= msgPool::months();
     $smarty->assign("day", $date["mday"]);
     $smarty->assign("days", $days);
     $smarty->assign("months", $months);
@@ -450,9 +448,7 @@ class sambaAccount extends plugin
     for($y= $date['year']-4; $y<$date['year']+4; $y++){
       $sambaLogonTime_years[]= $y;
     }
-    $sambaLogonTime_months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"));
+    $sambaLogonTime_months= msgPool::months;
     $smarty->assign("sambaLogonTime_day", $sambaLogonTime_date["mday"]);
     $smarty->assign("sambaLogonTime_days", $sambaLogonTime_days);
     $smarty->assign("sambaLogonTime_months", $sambaLogonTime_months);
@@ -468,9 +464,7 @@ class sambaAccount extends plugin
     for($y= $date['year']-4; $y<$date['year']+4; $y++){
       $sambaLogoffTime_years[]= $y;
     }
-    $sambaLogoffTime_months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"));
+    $sambaLogoffTime_months= msgPool::months();
     $smarty->assign("sambaLogoffTime_day", $sambaLogoffTime_date["mday"]);
     $smarty->assign("sambaLogoffTime_days", $sambaLogoffTime_days);
     $smarty->assign("sambaLogoffTime_months", $sambaLogoffTime_months);
@@ -486,9 +480,7 @@ class sambaAccount extends plugin
     for($y= $date['year']-4; $y<$date['year']+4; $y++){
       $sambaKickoffTime_years[]= $y;
     }
-    $sambaKickoffTime_months= array(_("January"), _("February"), _("March"), _("April"),
-        _("May"), _("June"), _("July"), _("August"), _("September"),
-        _("October"), _("November"), _("December"));
+    $sambaKickoffTime_months= msgPool::months();
     //$smarty->assign("sambaKickoffTime_day", $sambaKickoffTime_date["mday"]-1);
     $smarty->assign("sambaKickoffTime_day", $sambaKickoffTime_date["mday"]); // hickert
     $smarty->assign("sambaKickoffTime_days", $sambaKickoffTime_days);
@@ -765,7 +757,7 @@ class sambaAccount extends plugin
 
       /* Too many workstations? Windows usrmgr only supports eight */
       if (substr_count($this->sambaUserWorkstations, ",") >= 8){
-        $message[]= _("The windows user manager only allows eight clients. You've specified more than eight.");
+        $message[]= _("The windows usermanager allows eight clients at maximum!");
       }
     }
 
