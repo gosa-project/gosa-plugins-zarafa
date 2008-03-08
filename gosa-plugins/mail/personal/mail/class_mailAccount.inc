@@ -89,7 +89,7 @@ class mailAccount extends plugin
       if ($cls && class_exists($cls)){
         $this->method= $cls;
       } else {
-        msg_dialog::display(_("Configuration error"), sprintf(_("Unkown mail method '%s' specified!"), $method), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), sprintf(_("Mail method '%s' is unknown!"), $method), ERROR_DIALOG);
       }
     }
 
@@ -286,7 +286,7 @@ class mailAccount extends plugin
     if(!$this->multiple_support_active){
       if (!$this->is_account && $this->parent === NULL){
         $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-          _("This account has no mail extensions.")."</b>";
+          msgPool::noValidExtension(_("Mail"))."</b>";
 
         $display.= back_to_main();
         return ($display);
@@ -296,14 +296,15 @@ class mailAccount extends plugin
       if ($this->parent !== NULL){
         if ($this->is_account){
           if($this->accountDelegationsConfigured()){
-            $display= $this->show_disable_header(_("Remove mail account"),
-                _("This account can't be removed while there are delegations configured. Remove those delegations first."),TRUE,TRUE);
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),
+                _("Mail settings cannot be removed while there are delegations configured!"),TRUE,TRUE);
           }else{
-            $display= $this->show_disable_header(_("Remove mail account"),
-                _("This account has mail features enabled. You can disable them by clicking below."));
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),
+                msgPool::featuresEnabled(_("Mail")));
           }
         } else {
-          $display= $this->show_enable_header(_("Create mail account"), _("This account has mail features disabled. You can enable them by clicking below."));
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Mail")),
+                msgPool::featuresDisabled(_("Mail")));
           return ($display);
         }
       }
@@ -362,7 +363,7 @@ class mailAccount extends plugin
           }
         } elseif ($address == $this->mail
             || in_array($address, $this->gosaMailAlternateAddress)) {
-          msg_dialog::display(_("Error"),_("Cannot add your primary address to the list of forwarders.") , ERROR_DIALOG);
+          msg_dialog::display(_("Error"),_("Cannot add primary address to the list of forwarders!") , ERROR_DIALOG);
         } else {
           $valid= TRUE;
         }
@@ -412,7 +413,7 @@ class mailAccount extends plugin
         $ui= get_userinfo();
         if ($user != $ui->username){
           msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
-            sprintf(_("Already used by user '%s'."), $user), ERROR_DIALOG);
+            sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
         }
       }
     }
@@ -916,7 +917,7 @@ class mailAccount extends plugin
     $message= plugin::check();
 
     if(empty($this->gosaMailServer)){
-      $message[]= _("There is no valid mailserver specified, please add one in the system setup.");
+      $message[]= msgPool::noserver(_("Mail"));
     }
 
     /* must: mail */
@@ -1006,7 +1007,7 @@ class mailAccount extends plugin
       reset ($this->gosaMailForwardingAddress);
       $this->is_modified= TRUE;
     }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
     }
   }
 
@@ -1018,7 +1019,7 @@ class mailAccount extends plugin
       $this->gosaMailForwardingAddress= array_remove_entries ($addresses, $this->gosaMailForwardingAddress);
       $this->is_modified= TRUE;
     }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
     }
   }
 
@@ -1051,7 +1052,7 @@ class mailAccount extends plugin
       reset ($this->gosaMailAlternateAddress);
       return ("");
     }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
     }
   }
 
@@ -1062,7 +1063,7 @@ class mailAccount extends plugin
       $this->gosaMailAlternateAddress= array_remove_entries ($addresses,$this->gosaMailAlternateAddress);
       $this->is_modified= TRUE;
     }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
     }
   }
 
@@ -1127,9 +1128,9 @@ class mailAccount extends plugin
         if($ldap->count()){
           $attrs = $ldap->fetch();
           if(isset($attrs['kolabDeleteFlag'])){ 
-            return(_("Waiting for kolab to remove mail properties."));
+            return(_("Waiting for kolab to remove mail properties..."));
           }elseif(in_array("gosaMailAccount",$attrs['objectClass'])){
-            return(_("Please remove the mail account first, to allow kolab to call its remove methods."));
+            return(_("Please remove the mail settings first to allow kolab to call its remove methods!"));
           }
         }
       }
@@ -1325,7 +1326,7 @@ class mailAccount extends plugin
     $message = plugin::multiple_check();
 
     if(empty($this->gosaMailServer) && in_array("gosaMailServer",$this->multi_boxes)){
-      $message[]= _("There is no valid mailserver specified, please add one in the system setup.");
+      $message[]= msgPool::noserver(_("Mail"));
     }
 
     /* Check quota */

@@ -101,9 +101,9 @@ if (!$remove_lock){
 
     /* Are we in edit mode? */
     if (session::is_set('edit')){
-      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
       $display.= "&nbsp;";
-      $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+      $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png').
              "\"> ".$ui->dn."&nbsp;";
     } else {
@@ -111,10 +111,10 @@ if (!$remove_lock){
              "\"> ".$ui->dn."&nbsp;";
       
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
-            "\"> "._("Click the 'Edit' button below to change informations in this dialog");
+            "\"> ".msgPool::clickEditToChange();
 
         if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
-          $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
+          $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
         }
 
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
