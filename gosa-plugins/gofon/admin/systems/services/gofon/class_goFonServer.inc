@@ -142,7 +142,9 @@ class goFonServer extends goService{
         foreach($dns as $dn){
           $ldap->cd($dn);
           $ldap->modify(array("goFonHomeServer" => $this->dn));
-          show_ldap_error($ldap->get_error(),sprintf(_("Updating gofon home server failed for '%s'."),$dn));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+          }
         }
       }
 

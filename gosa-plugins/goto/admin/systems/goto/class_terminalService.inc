@@ -443,7 +443,9 @@ class termservice extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->modify($this->attrs);
-    show_ldap_error($ldap->get_error(),_("Could not remove terminal service."));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
   }
 
 
@@ -582,7 +584,9 @@ class termservice extends plugin
     $ldap->modify ($this->attrs); 
     new log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/service with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
     $this->handle_post_events("modify");
   }
 

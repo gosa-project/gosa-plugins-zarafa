@@ -737,7 +737,9 @@ class oxchangeAccount extends plugin
 
     if($ldap->dn_exists("ou=addr,".$this->dn)){
     	$ldap->rmdir_recursive("ou=addr,".$this->dn);
-			show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
     }
 
     $ldap->cd($this->dn);
@@ -748,7 +750,9 @@ class oxchangeAccount extends plugin
 
     new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-		show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->postremove(array("uid" => $this->uid));
@@ -852,14 +856,19 @@ class oxchangeAccount extends plugin
       new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
-		show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/oxchange account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->postcreate(array("uid" => $this->uid));
 
     if($needupdate){
       $ldap->create_missing_trees("ou=addr,".$this->dn);
-			show_ldap_error($ldap->get_error(), sprintf(_("Creating of user/oxchange account with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
+
       /* Finally save data to postgresql server */
       pg_set_client_encoding ("UNICODE");
       $nv = "SELECT nextval ('serial_id')";

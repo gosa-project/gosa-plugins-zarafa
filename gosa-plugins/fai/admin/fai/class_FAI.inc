@@ -491,7 +491,9 @@ class FAI
 
       $ldap->add($attrs);
     }
-    show_ldap_error($ldap->get_error(),sprintf(_("Release management failed, can't save '%s'"),$dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
+    }
   }
 
 

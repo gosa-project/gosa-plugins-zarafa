@@ -316,7 +316,9 @@ class termgeneric extends plugin
   
         new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   
-        show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+        }
 
         /* Optionally execute a command after we're done */
         $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
@@ -517,7 +519,9 @@ class termgeneric extends plugin
 
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save();
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Send installation activation
      */

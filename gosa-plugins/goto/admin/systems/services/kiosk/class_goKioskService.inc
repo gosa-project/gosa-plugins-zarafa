@@ -228,7 +228,9 @@ class goKioskService extends goService{
     $ldap->cd($this->config->current['BASE']);
     $ldap->cd($this->dn);
     $ldap->modify($this->attrs);
-    show_ldap_error($ldap->get_error(),_("Wohl kaum"));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
   }
 
   

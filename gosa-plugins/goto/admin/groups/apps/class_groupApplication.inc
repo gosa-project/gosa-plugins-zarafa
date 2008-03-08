@@ -516,9 +516,9 @@ class appgroup extends plugin
     }
     foreach($a_remove as $remove){
       $ldap->rmdir_recursive($remove);
-      show_ldap_error($ldap->get_error(),
-          sprintf(_("Removing of group/application account with dn '%s' failed, could not remove '%s'."),
-            $this->dn,$remove));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
     }
     $this->_load_menu_structure();
   }
@@ -1068,7 +1068,9 @@ class appgroup extends plugin
       $ldap->cat($dn);
       if($ldap->count()){
         $ldap->rmdir_recursive($dn);
-        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
       }
     }
     foreach($Actions['Add'] as $dn => $data){
@@ -1076,7 +1078,9 @@ class appgroup extends plugin
       $ldap->cat($dn);
       if(!$ldap->count()){
         $ldap->add($data);
-        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
       }
     }
     foreach($Actions['Edit'] as $dn => $data){
@@ -1084,7 +1088,9 @@ class appgroup extends plugin
       $ldap->cat($dn);
       if($ldap->count()){
         $ldap->modify($data);
-        show_ldap_error($ldap->get_error(), _("Could not save group application settings."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
       }
     }
     $this->_load_menu_structure();

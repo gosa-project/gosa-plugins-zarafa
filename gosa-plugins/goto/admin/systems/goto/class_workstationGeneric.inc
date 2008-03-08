@@ -322,7 +322,9 @@ class workgeneric extends plugin
       $ldap= $this->config->get_ldap_link();
       $ldap->rmdir($this->dn);
       new log("remove","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
 
       /* Optionally execute a command after we're done */
       $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
@@ -502,7 +504,9 @@ class workgeneric extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       new log("create","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       if ($this->orig_dn != $this->dn){
@@ -511,6 +515,9 @@ class workgeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+      }
       new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
@@ -523,7 +530,6 @@ class workgeneric extends plugin
 
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save();
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
 
     if ($activate && class_available("DaemonEvent")){
 

@@ -188,7 +188,9 @@ class goShareServer extends goService{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/shares with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
     if($this->initially_was_account){
       $this->handle_post_events("modify");
       new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
@@ -259,7 +261,9 @@ class goShareServer extends goService{
     if (count($attrs) == 0) {
         $ldap->cd($mountsdn);
         $ldap->add($mounts);
-        show_ldap_error($ldap->get_error(), sprintf(_("Creating system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
+        }
         new log("modify","server/".get_class($this),$mountsdn,array_keys($mounts),$ldap->get_error());
     }
 
@@ -273,7 +277,9 @@ class goShareServer extends goService{
 
       if (count($attrs) != 0) {
         $ldap->rmdir($mountdn);
-        show_ldap_error($ldap->get_error(), sprintf(_("Removing system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mountdn, LDAP_DEL, get_class()));
+        }
         new log("remove","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
       }
     }
@@ -284,7 +290,9 @@ class goShareServer extends goService{
       $mountdn = "cn=".$mount["cn"].","."$mountsdn";
       $ldap->cd($mountdn);
       $ldap->add($mount);
-      show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mount, LDAP_ADD, get_class()));
+      }
       new log("create","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
     }
   }

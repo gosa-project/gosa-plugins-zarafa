@@ -135,7 +135,9 @@ class pureftpdAccount extends plugin
     /* Log last action */
     new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/pureftpd account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('remove',array("uid" => $this->uid));
@@ -234,7 +236,9 @@ class pureftpdAccount extends plugin
       new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/pureftpd account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

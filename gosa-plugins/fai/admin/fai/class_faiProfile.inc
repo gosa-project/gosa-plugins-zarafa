@@ -443,7 +443,9 @@ class faiProfile extends plugin
       new log("create","fai/".get_class($this),$this->dn,$this->attributes);
     }
  
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
 

@@ -393,7 +393,9 @@ class macroParameter extends plugin
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
   function PrepareForCopyPaste($source)

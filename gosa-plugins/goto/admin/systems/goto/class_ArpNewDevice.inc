@@ -65,7 +65,9 @@ class ArpNewDevice extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(),_("Could not remove arp-alert device after writing dns and dhcp configuration."));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $key->dn, LDAP_DEL, get_class()));
+    }
   }
 }
 

@@ -475,7 +475,9 @@ class macro extends plugin
     /* Remove phone macro */ 
     $ldap->rmDir($this->dn);
     new log("remove","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed!"),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -484,7 +486,9 @@ class macro extends plugin
       $og= new ogroup($this->config, $ldap->getDN());
       unset($og->member[$this->dn]);
       $og->save ();
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed!"),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
     }
   }
 
@@ -518,7 +522,9 @@ class macro extends plugin
         $ldap->add($this->attrs);
         $this->handle_post_events("add");
       }
-      show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonMacro/generic account with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
 
       /* Log last action */
       if($this->initially_was_account){

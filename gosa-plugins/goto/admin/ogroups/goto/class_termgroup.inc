@@ -166,7 +166,9 @@ class termgroup extends plugin
       if(preg_match("/(w|t|s)/i",$allobs[$key]['type'])){
         $ldap->cd ($key);
         $ldap->modify($attrs);
-        show_ldap_error($ldap->get_error(),sprintf(_("Setting action state (FAIstate) failed for object '%s', value was '%s'."),$key,$action));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $key->dn, LDAP_MOD, get_class()));
+        }
       }
     }
   }
@@ -236,7 +238,8 @@ class termgroup extends plugin
 
 	      $ldap->cd($dn);
 	      $ldap->modify($attrs);
-	      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
         }
       }
     }
@@ -367,7 +370,9 @@ class termgroup extends plugin
     if(!$this->didAction){
       $this->handle_post_events("modify");
     }
-    show_ldap_error($ldap->get_error(), _("Saving workstation failed"));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
   }
   

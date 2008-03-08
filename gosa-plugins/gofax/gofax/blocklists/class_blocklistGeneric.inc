@@ -189,7 +189,9 @@ class blocklistGeneric extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
     new log("remove","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of blocklist with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
     $this->handle_post_events("remove");
   }
 
@@ -260,7 +262,9 @@ class blocklistGeneric extends plugin
       new log("create","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of blocklist with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
 

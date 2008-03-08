@@ -190,7 +190,9 @@ class servkolab extends goService {
 
       /* Remove complete entry */
       $ldap->rmdir ($this->dn);
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
     } else {
 
       /* Only modify kolabHost */
@@ -204,7 +206,9 @@ class servkolab extends goService {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($attrs); 
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+      }
     }
 
     new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
@@ -349,7 +353,9 @@ class servkolab extends goService {
       new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/kolab with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account) {

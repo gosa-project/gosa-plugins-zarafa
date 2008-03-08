@@ -82,7 +82,9 @@ class phpscheduleitAccount extends plugin
           $this->attributes, "Save");
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+      }
 
       if($this->is_account){
         new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
@@ -137,7 +139,9 @@ class phpscheduleitAccount extends plugin
       new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

@@ -278,7 +278,9 @@ class application extends plugin
 
     $ldap->rmDir($this->dn);
     new log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of application with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -290,7 +292,9 @@ class application extends plugin
       $og= new ogroup($this->config, $ldap->getDN());
       unset($og->member[$this->dn]);
       $og->save ();
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing application from objectgroup '%s' failed"), $og->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
     }
   }
 
@@ -512,7 +516,9 @@ class application extends plugin
       new log("create","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of application with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
   function set_picture($filename)

@@ -94,7 +94,9 @@ class goNtpServer extends goService{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/goNtpServer with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
     if($this->initially_was_account){
       $this->handle_post_events("modify");
       new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());

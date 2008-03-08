@@ -149,7 +149,9 @@ class wingeneric extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
     new log("remove","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system wingeneric/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
     $this->handle_post_events("remove");
 
     /* Delete references to object groups */
@@ -267,7 +269,9 @@ class wingeneric extends plugin
 
     $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->cn);
     $this->netConfigDNS->save();
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system wingeneric/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->postcreate();

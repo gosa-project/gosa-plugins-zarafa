@@ -491,7 +491,9 @@ class mimetype extends plugin
       $ldap->add($this->attrs);
       new log("create","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of mime type/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
 
@@ -501,7 +503,9 @@ class mimetype extends plugin
     plugin::remove_from_parent();
     $ldap = $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of mime type/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
     new log("remove","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
@@ -514,7 +518,9 @@ class mimetype extends plugin
       $og= new ogroup($this->config, $ldap->getDN());
       unset($og->member[$this->dn]);
       $og->save ();
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing mime type from objectgroup '%s' failed"), $og->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $og->dn, 0, get_class()));
+      }
     }
   }
 

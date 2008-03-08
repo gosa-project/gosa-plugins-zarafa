@@ -379,7 +379,9 @@ class servdhcp extends goService
     foreach ($this->dhcpObjectCache as $dn => $content){
       if ($this->objectType($dn) == 'dhcpService'){
         $ldap->rmdir_recursive($dn);
-        show_ldap_error($ldap->get_error(), _("Removing DHCP entries failed"));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
       }
     }
 
@@ -394,7 +396,9 @@ class servdhcp extends goService
     $this->cleanup();
     $ldap->modify ($this->attrs);
 
-    show_ldap_error($ldap->get_error(), _("Removing DHCP entries failed"));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -447,7 +451,9 @@ class servdhcp extends goService
         /* Check if exists, then remove... */
         if($ldap->cat($dn)){
           $ldap->rmdir_recursive($dn);
-          show_ldap_error($ldap->get_error(), _("Can't remove DHCP object!"));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+          }
         }
         continue;
       }
@@ -521,13 +527,17 @@ class servdhcp extends goService
         $ldap->cd($dn);
         if ($modify){
           $ldap->modify($attrs);
-          show_ldap_error($ldap->get_error(), _("Can't save DHCP object!"));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+          }
 
           /* Optionally execute a command after we're done */
           $this->handle_post_events("modify");
         } else {
           $ldap->add($attrs);
-          show_ldap_error($ldap->get_error(), _("Can't save DHCP object!"));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_ADD, get_class()));
+          }
 
           /* Optionally execute a command after we're done */
           $this->handle_post_events("create");
@@ -552,7 +562,9 @@ class servdhcp extends goService
     $this->cleanup();
     $ldap->modify ($this->attrs);
 
-    show_ldap_error($ldap->get_error(), _("Saving DHCP service failed"));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

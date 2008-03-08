@@ -595,7 +595,9 @@ class printgeneric extends plugin
 
       new log("remove","printer/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system print/generic with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
       $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
       /* Delete references to object groups */
@@ -851,7 +853,9 @@ class printgeneric extends plugin
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
       new log("modify","printer/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
 
     if(preg_match("/printer/i",$this->BelongsTo)){
       $this->netConfigDNS->cn = $this->cn;

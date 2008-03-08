@@ -143,7 +143,9 @@ class passwordMethodheimdal extends passwordMethod
       $ldap->cat($this->dn,array("dn"));
       if($ldap->count()){
         $ldap->rmdir($this->dn);
-        show_ldap_error($ldap->get_error(),_("Tried to remove heimdal extension."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+        }
       }
     }
   }
@@ -402,7 +404,9 @@ class passwordMethodheimdal extends passwordMethod
       }else{
         $ldap->modify($data);
       }
-      show_ldap_error($ldap->get_error(),_("Could not add or update heimdal extensions."));   
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
+      }
     }
   }
 }

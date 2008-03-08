@@ -686,7 +686,9 @@ class mailAccount extends plugin
     /* Add "view" to logging class */ 
     new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/mail account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Connect to IMAP server for account deletion */
     if ($this->gosaMailServer != ""){
@@ -852,7 +854,9 @@ class mailAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/mail account with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Log last action */ 
     if($this->initially_was_account){

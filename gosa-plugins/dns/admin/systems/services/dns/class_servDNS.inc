@@ -449,7 +449,9 @@ class servdns extends goService
         $ldap->cd($dn);
         $ldap->modify($attrs);
         new log("modify","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-        show_ldap_error($ldap->get_error(), sprintf(_("Updating of system server/dns with dn '%s' failed."),$this->dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+        }
       }
     }
 
@@ -463,7 +465,9 @@ class servdns extends goService
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
       new log("remove","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/dns with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
 
       /* Handle Post events */
       if(preg_match("/^zoneName=/",$dn)){
@@ -486,7 +490,9 @@ class servdns extends goService
       if($ldap->fetch()){
         $ldap->cd($dn);
         $ldap->modify ($attrs);
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+        }
 
         /* Handle Post events */
         if(preg_match("/^zoneName=/",$dn)){
@@ -495,7 +501,9 @@ class servdns extends goService
       }else{
         $ldap->cd($dn);
         $ldap->add($attrs);
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
+        }
 
         /* Handle Post events */
         if(preg_match("/^zoneName=/",$dn)){
@@ -526,7 +534,9 @@ class servdns extends goService
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/dns with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+      }
       $this->action_hook();
     }
   }

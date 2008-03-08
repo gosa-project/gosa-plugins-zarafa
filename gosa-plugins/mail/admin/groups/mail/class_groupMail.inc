@@ -751,7 +751,9 @@ class mailgroup extends plugin
 
     $ldap->cd($this->dn);
     $ldap->modify ($this->attrs); 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/mail with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
 
     new log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
@@ -983,7 +985,9 @@ I: Only insider delivery */
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of groups/mail with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
     
     if($this->initially_was_account){
       new log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());

@@ -222,7 +222,9 @@ class scalixAccount extends plugin
     @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save");
     $ldap->cd($this->dn);
     $ldap->modify($this->attrs);
-    show_ldap_error($ldap->get_error());
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -323,7 +325,9 @@ class scalixAccount extends plugin
     /* Save data to LDAP */
     $ldap->cd($this->dn);
     $ldap->modify($this->attrs);
-    show_ldap_error($ldap->get_error());
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

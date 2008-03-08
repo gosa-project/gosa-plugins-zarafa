@@ -151,7 +151,9 @@ class applicationParameters extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of application parameters with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('remove');
@@ -213,7 +215,9 @@ class applicationParameters extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of application parameters with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('modify');

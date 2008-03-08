@@ -893,7 +893,9 @@ class workstartup extends plugin
     $ldap->modify ($this->attrs); 
     new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/startup with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
     $this->handle_post_events("modify");
 
     /* Check if LDAP server has changed */
