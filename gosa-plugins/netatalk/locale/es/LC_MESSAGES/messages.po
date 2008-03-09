@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:367
 msgid "Netatalk"
 msgstr "Netatalk"
 
@@ -27,82 +27,91 @@ msgid "Manage netatalk account"
 msgstr ""
 
 #: personal/netatalk/class_netatalk.inc:170
-msgid "This account has no netatalk extensions."
-msgstr "Esta cuenta no tiene extensión Netatalk"
-
 #: personal/netatalk/class_netatalk.inc:179
-msgid "Remove netatalk account"
-msgstr "Eliminar cuenta Netatalk"
+#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:188
+#, fuzzy
+msgid "netatalk"
+msgstr "Netatalk"
 
-#: personal/netatalk/class_netatalk.inc:179
-msgid ""
-"This account has netatalk features enabled. You can disable them by clicking "
-"below."
+#: personal/netatalk/class_netatalk.inc:184
+msgid "POSIX"
 msgstr ""
-"Esta cuenta tiene la extensión Netatalk activa. Puede desactivarla pulsando "
-"a continuación."
 
-#: personal/netatalk/class_netatalk.inc:190
-#: personal/netatalk/class_netatalk.inc:192
-msgid "Create netatalk account"
-msgstr "Crear cuenta Netatalk"
-
-#: personal/netatalk/class_netatalk.inc:190
-msgid ""
-"This account has netatalk features disabled. You can enable them by clicking "
-"below."
+#: personal/netatalk/class_netatalk.inc:186
+msgid "netatalk or NFS share"
 msgstr ""
-"Esta cuenta tiene la extensión Netatalk desactivada. Puede activarla "
-"pulsando aqui."
 
-#: personal/netatalk/class_netatalk.inc:225
-msgid "You must select a share to use."
-msgstr "Debe seleccionar la carpeta compartida que desea usar"
+#: personal/netatalk/class_netatalk.inc:222
+#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Recurso compartido"
 
-#: personal/netatalk/class_netatalk.inc:290
-#, php-format
-msgid "Saving of user/netatalk account with dn '%s' failed."
-msgstr "Ha fallado la grabación de la cuenta de usuario/Netatalk con dn '%s'."
-
+#: personal/netatalk/class_netatalk.inc:288
 #: personal/netatalk/class_netatalk.inc:352
-#, php-format
-msgid "Removing of user/netatalk account with dn '%s' failed."
+msgid "LDAP error"
 msgstr ""
-"Ha fallado la eliminación de la cuenta de usuario/Netatalk con dn '%s'."
 
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:371
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/netatalk/class_netatalk.inc:375
+#: personal/netatalk/class_netatalk.inc:376
 msgid "User home path"
 msgstr "Ruta del directorio del usuario"
-
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-msgid "Share"
-msgstr "Recurso compartido"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "Ruta"
 
-#: personal/netatalk/main.inc:96
-msgid "Ok"
-msgstr "Ok"
-
-#: personal/netatalk/main.inc:98
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: personal/netatalk/main.inc:103
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Pulse en el botón - Editar - para cambiar la información en esta ventana"
-
-#: personal/netatalk/main.inc:104
-msgid "Edit"
-msgstr "Editar"
-
 #: personal/netatalk/main.inc:113
 msgid "Netatalk settings"
 msgstr "Parámetros de Netatalk"
+
+#~ msgid "This account has no netatalk extensions."
+#~ msgstr "Esta cuenta no tiene extensión Netatalk"
+
+#~ msgid "Remove netatalk account"
+#~ msgstr "Eliminar cuenta Netatalk"
+
+#~ msgid ""
+#~ "This account has netatalk features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Esta cuenta tiene la extensión Netatalk activa. Puede desactivarla "
+#~ "pulsando a continuación."
+
+#~ msgid "Create netatalk account"
+#~ msgstr "Crear cuenta Netatalk"
+
+#~ msgid ""
+#~ "This account has netatalk features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Esta cuenta tiene la extensión Netatalk desactivada. Puede activarla "
+#~ "pulsando aqui."
+
+#~ msgid "You must select a share to use."
+#~ msgstr "Debe seleccionar la carpeta compartida que desea usar"
+
+#~ msgid "Saving of user/netatalk account with dn '%s' failed."
+#~ msgstr ""
+#~ "Ha fallado la grabación de la cuenta de usuario/Netatalk con dn '%s'."
+
+#~ msgid "Removing of user/netatalk account with dn '%s' failed."
+#~ msgstr ""
+#~ "Ha fallado la eliminación de la cuenta de usuario/Netatalk con dn '%s'."
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Pulse en el botón - Editar - para cambiar la información en esta ventana"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:367
 msgid "Netatalk"
 msgstr "Netatalk"
 
@@ -26,77 +26,87 @@ msgid "Manage netatalk account"
 msgstr "管理 netatalk 账号"
 
 #: personal/netatalk/class_netatalk.inc:170
-msgid "This account has no netatalk extensions."
-msgstr "这个账号没有 netatalk 扩展。"
-
 #: personal/netatalk/class_netatalk.inc:179
-msgid "Remove netatalk account"
-msgstr "删除 netatalk 账号"
+#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:188
+#, fuzzy
+msgid "netatalk"
+msgstr "Netatalk"
 
-#: personal/netatalk/class_netatalk.inc:179
-msgid ""
-"This account has netatalk features enabled. You can disable them by clicking "
-"below."
-msgstr "这个账户 netatalk 功能已启用。您可以点击下面的按钮禁用。"
+#: personal/netatalk/class_netatalk.inc:184
+msgid "POSIX"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:190
-#: personal/netatalk/class_netatalk.inc:192
-msgid "Create netatalk account"
-msgstr "创建 netatalk 账号"
+#: personal/netatalk/class_netatalk.inc:186
+msgid "netatalk or NFS share"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:190
-msgid ""
-"This account has netatalk features disabled. You can enable them by clicking "
-"below."
-msgstr "这个账户 netatalk 功能已禁用。您可以点击下面的按钮来启用。"
+#: personal/netatalk/class_netatalk.inc:222
+#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "共享"
 
-#: personal/netatalk/class_netatalk.inc:225
-msgid "You must select a share to use."
-msgstr "您必须选择一个要使用的共享"
-
-#: personal/netatalk/class_netatalk.inc:290
-#, fuzzy, php-format
-msgid "Saving of user/netatalk account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
-
+#: personal/netatalk/class_netatalk.inc:288
 #: personal/netatalk/class_netatalk.inc:352
-#, fuzzy, php-format
-msgid "Removing of user/netatalk account with dn '%s' failed."
-msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+msgid "LDAP error"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:371
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/netatalk/class_netatalk.inc:375
+#: personal/netatalk/class_netatalk.inc:376
 #, fuzzy
 msgid "User home path"
 msgstr "Profile path"
-
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-msgid "Share"
-msgstr "共享"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "路径"
 
-#: personal/netatalk/main.inc:96
-msgid "Ok"
-msgstr "好"
-
-#: personal/netatalk/main.inc:98
-msgid "Cancel"
-msgstr "取消"
-
-#: personal/netatalk/main.inc:103
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
-
-#: personal/netatalk/main.inc:104
-msgid "Edit"
-msgstr "编辑"
-
 #: personal/netatalk/main.inc:113
 msgid "Netatalk settings"
 msgstr "Netatalk 设置"
+
+#~ msgid "This account has no netatalk extensions."
+#~ msgstr "这个账号没有 netatalk 扩展。"
+
+#~ msgid "Remove netatalk account"
+#~ msgstr "删除 netatalk 账号"
+
+#~ msgid ""
+#~ "This account has netatalk features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr "这个账户 netatalk 功能已启用。您可以点击下面的按钮禁用。"
+
+#~ msgid "Create netatalk account"
+#~ msgstr "创建 netatalk 账号"
+
+#~ msgid ""
+#~ "This account has netatalk features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr "这个账户 netatalk 功能已禁用。您可以点击下面的按钮来启用。"
+
+#~ msgid "You must select a share to use."
+#~ msgstr "您必须选择一个要使用的共享"
+
+#, fuzzy
+#~ msgid "Saving of user/netatalk account with dn '%s' failed."
+#~ msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
+
+#, fuzzy
+#~ msgid "Removing of user/netatalk account with dn '%s' failed."
+#~ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+
+#~ msgid "Ok"
+#~ msgstr "好"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
+
+#~ msgid "Edit"
+#~ msgstr "编辑"

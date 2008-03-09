@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,7 +15,10 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:270
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
 msgid "Nagios"
 msgstr ""
 
@@ -23,149 +26,102 @@ msgstr ""
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/nagios/class_nagiosAccount.inc:105
-#, fuzzy
-msgid "This account has no nagios extensions."
-msgstr "В этой учетной записи нет почтовых расширений."
-
-#: personal/nagios/class_nagiosAccount.inc:114
-#, fuzzy
-msgid "Remove nagios account"
-msgstr "Удалить настройки эл. почты"
-
-#: personal/nagios/class_nagiosAccount.inc:115
-#, fuzzy
-msgid ""
-"This account has nagios features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"В этой учетной записи есть настройки электронной почты. Вы можете удалить "
-"их, щелкнув ниже."
-
-#: personal/nagios/class_nagiosAccount.inc:117
-#, fuzzy
-msgid "Create nagios account"
-msgstr "Создать настройки запись эл. почты"
-
-#: personal/nagios/class_nagiosAccount.inc:117
-#, fuzzy
-msgid ""
-"This account has nagios features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"В этой учетной записи нет настроек электронной почты. Вы можете добавить их, "
-"щелкнув ниже."
-
 #: personal/nagios/class_nagiosAccount.inc:173
-#, fuzzy, php-format
-msgid "Saving of user/nagios account with dn '%s' failed."
-msgstr "Создать настройки запись эл. почты"
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
+msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:193
-#, fuzzy
-msgid "The required field 'NagiosAlias' is not set."
-msgstr "Обязательное поле \"Имя\" не заполнено."
-
-#: personal/nagios/class_nagiosAccount.inc:196
-#, fuzzy
-msgid "The required field 'NagiosMail' is not set."
-msgstr "Обязательное поле \"Имя\" не заполнено."
-
-#: personal/nagios/class_nagiosAccount.inc:200
-#: personal/nagios/class_nagiosAccount.inc:204
-#, fuzzy
-msgid "Please enter a valid email address in 'NagiosMail' field."
-msgstr "Введите корректное значение в поле \"Основной адрес\"."
-
-#: personal/nagios/class_nagiosAccount.inc:256
-#, fuzzy, php-format
-msgid "Removing of user/nagios account with dn '%s' failed."
-msgstr "Удалить настройки эл. почты"
-
-#: personal/nagios/class_nagiosAccount.inc:271
-#, fuzzy
-msgid "Nagios account settings"
-msgstr "Почтовые настройки пользователя"
-
-#: personal/nagios/class_nagiosAccount.inc:275
-msgid "My account"
-msgstr "Моя учетная запись"
-
-#: personal/nagios/class_nagiosAccount.inc:281 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
 #, fuzzy
 msgid "Alias"
 msgstr "женский"
 
-#: personal/nagios/class_nagiosAccount.inc:282
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:274
+#, fuzzy
+msgid "Nagios account settings"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Моя учетная запись"
+
+#: personal/nagios/class_nagiosAccount.inc:285
 #, fuzzy
 msgid "Pager number"
 msgstr "Телефонные номера"
 
-#: personal/nagios/class_nagiosAccount.inc:283 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
 #, fuzzy
 msgid "Mail address"
 msgstr "MAC-адрес"
 
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
 #, fuzzy
 msgid "Host notification commands"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
 #, fuzzy
 msgid "Host notification options"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
 #, fuzzy
 msgid "Host notification period"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 #, fuzzy
 msgid "Service notification commands"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
 #, fuzzy
 msgid "Service notification options"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
 #, fuzzy
 msgid "Service notification period"
 msgstr "Параметры приложения"
 
-#: personal/nagios/class_nagiosAccount.inc:293
+#: personal/nagios/class_nagiosAccount.inc:296
 #, fuzzy
 msgid "View all hosts"
 msgstr "Предоставлять службу сканирования"
 
-#: personal/nagios/class_nagiosAccount.inc:294
+#: personal/nagios/class_nagiosAccount.inc:297
 #, fuzzy
 msgid "View all services"
 msgstr "Предоставлять службу сканирования"
 
-#: personal/nagios/class_nagiosAccount.inc:296
+#: personal/nagios/class_nagiosAccount.inc:299
 #, fuzzy
 msgid "Trigger system commands"
 msgstr "Системная информация"
 
-#: personal/nagios/class_nagiosAccount.inc:297
+#: personal/nagios/class_nagiosAccount.inc:300
 msgid "Trigger all host commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:301
 #, fuzzy
 msgid "Trigger all service commands"
 msgstr "Предоставлять службу сканирования"
 
-#: personal/nagios/class_nagiosAccount.inc:300
+#: personal/nagios/class_nagiosAccount.inc:303
 #, fuzzy
 msgid "View configuration information"
 msgstr "Информация об организации"
 
-#: personal/nagios/class_nagiosAccount.inc:301
+#: personal/nagios/class_nagiosAccount.inc:304
 #, fuzzy
 msgid "View system informations"
 msgstr "Системная информация"
@@ -215,23 +171,64 @@ msgstr ""
 msgid "trigger all host commands"
 msgstr ""
 
-#: personal/nagios/main.inc:105
-msgid "Ok"
-msgstr ""
-
-#: personal/nagios/main.inc:107
-msgid "Cancel"
-msgstr "Отмена"
-
-#: personal/nagios/main.inc:116
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
-
-#: personal/nagios/main.inc:117
-msgid "Edit"
-msgstr "Изменить"
-
 #: personal/nagios/main.inc:125
 #, fuzzy
 msgid "Nagios settings"
 msgstr "Почтовые настройки пользователя"
+
+#, fuzzy
+#~ msgid "This account has no nagios extensions."
+#~ msgstr "В этой учетной записи нет почтовых расширений."
+
+#, fuzzy
+#~ msgid "Remove nagios account"
+#~ msgstr "Удалить настройки эл. почты"
+
+#, fuzzy
+#~ msgid ""
+#~ "This account has nagios features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "В этой учетной записи есть настройки электронной почты. Вы можете удалить "
+#~ "их, щелкнув ниже."
+
+#, fuzzy
+#~ msgid "Create nagios account"
+#~ msgstr "Создать настройки запись эл. почты"
+
+#, fuzzy
+#~ msgid ""
+#~ "This account has nagios features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "В этой учетной записи нет настроек электронной почты. Вы можете добавить "
+#~ "их, щелкнув ниже."
+
+#, fuzzy
+#~ msgid "Saving of user/nagios account with dn '%s' failed."
+#~ msgstr "Создать настройки запись эл. почты"
+
+#, fuzzy
+#~ msgid "The required field 'NagiosAlias' is not set."
+#~ msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#, fuzzy
+#~ msgid "The required field 'NagiosMail' is not set."
+#~ msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#, fuzzy
+#~ msgid "Please enter a valid email address in 'NagiosMail' field."
+#~ msgstr "Введите корректное значение в поле \"Основной адрес\"."
+
+#, fuzzy
+#~ msgid "Removing of user/nagios account with dn '%s' failed."
+#~ msgstr "Удалить настройки эл. почты"
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
+
+#~ msgid "Edit"
+#~ msgstr "Изменить"

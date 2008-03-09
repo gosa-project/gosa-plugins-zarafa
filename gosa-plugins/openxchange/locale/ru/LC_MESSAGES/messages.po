@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:959
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
 msgstr ""
 
@@ -24,87 +24,78 @@ msgid "This does something"
 msgstr "Что-то будет"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 msgid "Error"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #, fuzzy, php-format
 msgid "Cannot connect to %s database!"
 msgstr "Невозможно подключиться к серверу базы данных!"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #, fuzzy, php-format
 msgid "%s database configuration is missing!"
 msgstr "Базы данных"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:740
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:751
-#, fuzzy, php-format
-msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
 #, fuzzy
 msgid "Open-Xchange account name"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
-#, fuzzy, php-format
-msgid "Saving of user/oxchange account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:862
-#, fuzzy, php-format
-msgid "Creating of user/oxchange account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 #, fuzzy
 msgid "Cannot save Open-Xchange account!"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
 #, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Удалить телефонный аккаунт"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Подключение"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:964
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:973
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:978
 msgid "OXAppointmentDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:970
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:979
 msgid "OXTaskDays"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:971
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:980
 msgid "OXTimeZone"
 msgstr ""
 
@@ -150,6 +141,18 @@ msgstr "Информация"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
+#~ msgstr "Удалить телефонный аккаунт"
+
+#, fuzzy
+#~ msgid "Saving of user/oxchange account with dn '%s' failed."
+#~ msgstr "Удалить телефонный аккаунт"
+
+#, fuzzy
+#~ msgid "Creating of user/oxchange account with dn '%s' failed."
+#~ msgstr "Удалить телефонный аккаунт"
 
 #, fuzzy
 #~ msgid "Open-Xchange account name is invalid!"

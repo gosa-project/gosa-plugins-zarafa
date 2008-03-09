@@ -11,13 +11,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Intranet account"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -34,30 +38,25 @@ msgid "This account has no connectivity extensions."
 msgstr "Dit account heeft geen verbindings mogelijkheden."
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:194
+#: personal/connectivity/class_intranetAccount.inc:198
 msgid "Intranet"
 msgstr "Intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:118
-#, fuzzy, php-format
-msgid "Removing of user/intranet account with dn '%s' failed."
-msgstr "Het verwijderen van het intranet account is mislukt"
+#: personal/connectivity/class_intranetAccount.inc:119
+#: personal/connectivity/class_intranetAccount.inc:186
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/class_intranetAccount.inc:183
-#, fuzzy, php-format
-msgid "Saving of user/intranet account with dn '%s' failed."
-msgstr "Het opslaan van het intranet account is mislukt"
-
-#: personal/connectivity/class_intranetAccount.inc:197
+#: personal/connectivity/class_intranetAccount.inc:201
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 #, fuzzy
 msgid "Intranet account settings"
 msgstr "Intranet account"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Verbindingen"
@@ -80,6 +79,10 @@ msgstr ""
 msgid "Edit"
 msgstr "Bewerken"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Intranet account"
+#, fuzzy
+#~ msgid "Removing of user/intranet account with dn '%s' failed."
+#~ msgstr "Het verwijderen van het intranet account is mislukt"
+
+#, fuzzy
+#~ msgid "Saving of user/intranet account with dn '%s' failed."
+#~ msgstr "Het opslaan van het intranet account is mislukt"

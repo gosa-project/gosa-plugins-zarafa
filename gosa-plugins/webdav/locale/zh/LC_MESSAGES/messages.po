@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:25+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,13 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
-msgid "WebDAV account"
-msgstr "WebDAV 账号"
-
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:155
+#: personal/connectivity/webdav/class_webdavAccount.inc:159
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -31,21 +26,29 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "******"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:83
-#, fuzzy, php-format
-msgid "Removing of user/webDAV account with dn '%s' failed."
-msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+#: personal/connectivity/webdav/class_webdavAccount.inc:84
+#: personal/connectivity/webdav/class_webdavAccount.inc:140
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:137
-#, fuzzy, php-format
-msgid "Saving of user/webDAV account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
+msgstr "WebDAV 账号"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:164
 msgid "My account"
 msgstr "我的账号"
+
+#, fuzzy
+#~ msgid "Removing of user/webDAV account with dn '%s' failed."
+#~ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+
+#, fuzzy
+#~ msgid "Saving of user/webDAV account with dn '%s' failed."
+#~ msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"

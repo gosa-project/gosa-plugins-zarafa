@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,241 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Filtre"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Afficher les machines"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Action"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Intervalle de temps"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Recherche de"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Entrée la chaîne de caractères à rechercher"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Ensemble de règles"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Editer"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Recherche"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Date"
-
-#: addons/logview/gosa_log_contents.tpl:84
-#: admin/systems/services/log/class_gosaLogServer.inc:101
-msgid "User"
-msgstr "Utilisateur"
-
-#: addons/logview/gosa_log_contents.tpl:85
-#, fuzzy
-msgid "Object type"
-msgstr "Nom de l'objet"
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Objet"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Message"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "La recherche n'a renvoyé aucun résultat..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:408
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "journaux systèmes"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "Ceci fait quelque chose"
-
-#: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Avertissement"
-
-#: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:118
-#, fuzzy, php-format
-msgid "No %s servers defined!"
-msgstr "Pas de serveurs de journaux systèmes définis!"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, fuzzy
-msgid "Configuration error"
-msgstr "Le fichier de configuration peut être écrit"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, php-format
-msgid "Missing %s PHP extension!"
-msgstr ""
-
-#: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:100
-#: addons/logview/class_logview.inc:113 addons/logview/class_logview.inc:136
-#: addons/logview/class_logview.inc:193 addons/logview/class_logview.inc:197
-#: addons/logview/class_gosa_logview.inc:148
-#: addons/logview/class_gosa_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:228
-#: addons/logview/class_gosa_logview.inc:233
-#: addons/logview/class_gosa_logview.inc:248
-msgid "Error"
-msgstr "Erreur"
-
-#: addons/logview/class_logview.inc:93 addons/logview/class_logview.inc:193
-#: addons/logview/class_gosa_logview.inc:148
-#: addons/logview/class_gosa_logview.inc:228
-#, fuzzy, php-format
-msgid "Cannot connect to %s database!"
-msgstr "Impossible de se connecter au serveur de base de données !"
-
-#: addons/logview/class_logview.inc:100 addons/logview/class_logview.inc:197
-#: addons/logview/class_gosa_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:233
-#, fuzzy, php-format
-msgid "Cannot select %s database!"
-msgstr "Impossible de sélectionner la base de données !"
-
-#: addons/logview/class_logview.inc:113
-msgid "Cannot obtain host list from syslog database!"
-msgstr ""
-
-#: addons/logview/class_logview.inc:122 addons/logview/class_logview.inc:144
-#: addons/logview/class_gosa_logview.inc:166
-#: addons/logview/class_gosa_logview.inc:181
-msgid "All"
-msgstr "Tout"
-
-#: addons/logview/class_logview.inc:136
-msgid "Database query failed!"
-msgstr "Echec des requêtes sur la base de données !"
-
-#: addons/logview/class_logview.inc:154
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "Une heure"
-
-#: addons/logview/class_logview.inc:154
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 heures"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 heures"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 heures"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 jours"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "une semaine"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 semaines"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "un mois"
-
-#: addons/logview/class_logview.inc:174
-#: addons/logview/class_gosa_logview.inc:200
-msgid "You have insufficient permissions to view syslog entries."
-msgstr ""
-"Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
-
-#: addons/logview/class_logview.inc:402
-msgid "Log view"
-msgstr "Visualisation des journaux systèmes"
-
-#: addons/logview/class_logview.inc:403
-msgid "Log view addon"
-msgstr "Extension de visualisation des journaux systèmes"
-
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Niveaux des journaux systèmes"
-
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Niveau"
-
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Nom d'hôte"
-
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "Affichage des journaux système"
-
-#: addons/logview/class_gosa_logview.inc:249
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
-
-#: admin/systems/services/log/gosaLogServer.tpl:1
-msgid "GOsa logging database"
-msgstr "Base de données des journaux systèmes"
-
-#: admin/systems/services/log/gosaLogServer.tpl:4
-msgid "Database user"
-msgstr "Base de données utilisateur"
-
-#: admin/systems/services/log/gosaLogServer.tpl:12
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-msgid "Password"
-msgstr "Mot de passe"
-
-#: admin/systems/services/log/gosaLogServer.tpl:20
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-msgid "Database"
-msgstr "Base de données"
-
-#: admin/systems/services/log/gosaLogServer.tpl:31
-msgid "Save"
-msgstr "Enregistrer"
-
-#: admin/systems/services/log/gosaLogServer.tpl:33
-msgid "Cancel"
-msgstr "Annuler"
 
 #: admin/systems/services/log/class_gosaLogServer.inc:27
 #: admin/systems/services/log/class_gosaLogServer.inc:55
@@ -264,6 +29,227 @@ msgstr "Service de journaux systèmes"
 msgid "Services"
 msgstr "Services"
 
+#: admin/systems/services/log/class_gosaLogServer.inc:100
+#: admin/systems/services/log/gosaLogServer.tpl:20
+msgid "Database"
+msgstr "Base de données"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:101
+#: addons/logview/gosa_log_contents.tpl:84
+msgid "User"
+msgstr "Utilisateur"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:102
+#: admin/systems/services/log/gosaLogServer.tpl:12
+msgid "Password"
+msgstr "Mot de passe"
+
 #: admin/systems/services/log/class_gosaLogServer.inc:103
 msgid "Allow view of entries on this server"
 msgstr "Permet la visualisation d'entrées sur ce serveur"
+
+#: admin/systems/services/log/gosaLogServer.tpl:1
+msgid "GOsa logging database"
+msgstr "Base de données des journaux systèmes"
+
+#: admin/systems/services/log/gosaLogServer.tpl:4
+msgid "Database user"
+msgstr "Base de données utilisateur"
+
+#: admin/systems/services/log/gosaLogServer.tpl:31
+msgid "Save"
+msgstr "Enregistrer"
+
+#: admin/systems/services/log/gosaLogServer.tpl:33
+msgid "Cancel"
+msgstr "Annuler"
+
+#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
+#: addons/logview/class_gosa_logview.inc:6
+msgid "System logs"
+msgstr "journaux systèmes"
+
+#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: addons/logview/class_logview.inc:78
+#: addons/logview/class_gosa_logview.inc:118
+msgid "Warning"
+msgstr "Avertissement"
+
+#: addons/logview/class_logview.inc:82
+#: addons/logview/class_gosa_logview.inc:123
+#, fuzzy
+msgid "Configuration error"
+msgstr "Le fichier de configuration peut être écrit"
+
+#: addons/logview/class_logview.inc:82
+#: addons/logview/class_gosa_logview.inc:123
+#, php-format
+msgid "Missing %s PHP extension!"
+msgstr ""
+
+#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
+#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
+#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
+#: addons/logview/class_logview.inc:274 addons/logview/class_logview.inc:291
+#: addons/logview/class_gosa_logview.inc:148
+#: addons/logview/class_gosa_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:234
+#: addons/logview/class_gosa_logview.inc:284
+msgid "Error"
+msgstr "Erreur"
+
+#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
+#: addons/logview/class_gosa_logview.inc:166
+#: addons/logview/class_gosa_logview.inc:181
+msgid "All"
+msgstr "Tout"
+
+#: addons/logview/class_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:71
+msgid "one hour"
+msgstr "Une heure"
+
+#: addons/logview/class_logview.inc:155
+#: addons/logview/class_gosa_logview.inc:71
+msgid "6 hours"
+msgstr "6 heures"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:72
+msgid "12 hours"
+msgstr "12 heures"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:72
+msgid "24 hours"
+msgstr "24 heures"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:73
+msgid "2 days"
+msgstr "2 jours"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:73
+msgid "one week"
+msgstr "une semaine"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:74
+msgid "2 weeks"
+msgstr "2 semaines"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:74
+msgid "one month"
+msgstr "un mois"
+
+#: addons/logview/class_logview.inc:409
+msgid "Log view"
+msgstr "Visualisation des journaux systèmes"
+
+#: addons/logview/class_logview.inc:410
+msgid "Log view addon"
+msgstr "Extension de visualisation des journaux systèmes"
+
+#: addons/logview/class_gosa_logview.inc:200
+msgid "You have insufficient permissions to view syslog entries."
+msgstr ""
+"Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
+
+#: addons/logview/class_gosa_logview.inc:235
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
+
+#: addons/logview/contents.tpl:2 addons/logview/gosa_log_contents.tpl:2
+msgid "Filter"
+msgstr "Filtre"
+
+#: addons/logview/contents.tpl:11 addons/logview/gosa_log_contents.tpl:11
+msgid "Show hosts"
+msgstr "Afficher les machines"
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "Niveaux des journaux systèmes"
+
+#: addons/logview/contents.tpl:38 addons/logview/gosa_log_contents.tpl:38
+msgid "Time interval"
+msgstr "Intervalle de temps"
+
+#: addons/logview/contents.tpl:47 addons/logview/gosa_log_contents.tpl:47
+msgid "Search for"
+msgstr "Recherche de"
+
+#: addons/logview/contents.tpl:48 addons/logview/gosa_log_contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Entrée la chaîne de caractères à rechercher"
+
+#: addons/logview/contents.tpl:60 addons/logview/gosa_log_contents.tpl:60
+msgid "Ruleset"
+msgstr "Ensemble de règles"
+
+#: addons/logview/contents.tpl:62 addons/logview/gosa_log_contents.tpl:62
+msgid "Edit"
+msgstr "Editer"
+
+#: addons/logview/contents.tpl:68 addons/logview/gosa_log_contents.tpl:68
+msgid "Search"
+msgstr "Recherche"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "Niveau"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "Nom d'hôte"
+
+#: addons/logview/contents.tpl:84 addons/logview/gosa_log_contents.tpl:83
+msgid "Date"
+msgstr "Date"
+
+#: addons/logview/contents.tpl:85 addons/logview/gosa_log_contents.tpl:87
+msgid "Message"
+msgstr "Message"
+
+#: addons/logview/contents.tpl:97 addons/logview/gosa_log_contents.tpl:99
+msgid "Search returned no results..."
+msgstr "La recherche n'a renvoyé aucun résultat..."
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "Action"
+
+#: addons/logview/gosa_log_contents.tpl:85
+#, fuzzy
+msgid "Object type"
+msgstr "Nom de l'objet"
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "Objet"
+
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "Affichage des journaux système"
+
+#, fuzzy
+#~ msgid "No %s servers defined!"
+#~ msgstr "Pas de serveurs de journaux systèmes définis!"
+
+#, fuzzy
+#~ msgid "Cannot connect to %s database!"
+#~ msgstr "Impossible de se connecter au serveur de base de données !"
+
+#, fuzzy
+#~ msgid "Cannot select %s database!"
+#~ msgstr "Impossible de sélectionner la base de données !"
+
+#~ msgid "Database query failed!"
+#~ msgstr "Echec des requêtes sur la base de données !"

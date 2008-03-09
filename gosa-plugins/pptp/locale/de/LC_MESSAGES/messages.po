@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -20,13 +20,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/connectivity/pptp/pptp.tpl:3
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
-msgid "PPTP account"
-msgstr "PPTP-Konto"
-
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
-#: personal/connectivity/pptp/class_pptpAccount.inc:173
+#: personal/connectivity/pptp/class_pptpAccount.inc:177
 msgid "PPTP"
 msgstr "PPTP"
 
@@ -34,20 +29,26 @@ msgstr "PPTP"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:101
-#, php-format
-msgid "Removing of user/PPTP account with dn '%s' failed."
-msgstr "Entfernen von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/pptp/class_pptpAccount.inc:102
+#: personal/connectivity/pptp/class_pptpAccount.inc:158
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:155
-#, php-format
-msgid "Saving of user/PPTP account with dn '%s' failed."
-msgstr "Speichern von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr "PPTP-Konto"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/class_pptpAccount.inc:182
 msgid "My account"
 msgstr "Mein Konto"
+
+#~ msgid "Removing of user/PPTP account with dn '%s' failed."
+#~ msgstr "Entfernen von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
+
+#~ msgid "Saving of user/PPTP account with dn '%s' failed."
+#~ msgstr "Speichern von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."

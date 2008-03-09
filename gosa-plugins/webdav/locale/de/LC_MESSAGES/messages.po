@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:25+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -20,13 +20,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
-msgid "WebDAV account"
-msgstr "WebDAV-Konto"
-
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:155
+#: personal/connectivity/webdav/class_webdavAccount.inc:159
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -34,20 +29,26 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:83
-#, php-format
-msgid "Removing of user/webDAV account with dn '%s' failed."
-msgstr "Entfernen von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/webdav/class_webdavAccount.inc:84
+#: personal/connectivity/webdav/class_webdavAccount.inc:140
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:137
-#, php-format
-msgid "Saving of user/webDAV account with dn '%s' failed."
-msgstr "Speichern von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
+msgstr "WebDAV-Konto"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:164
 msgid "My account"
 msgstr "Mein Konto"
+
+#~ msgid "Removing of user/webDAV account with dn '%s' failed."
+#~ msgstr "Entfernen von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
+
+#~ msgid "Saving of user/webDAV account with dn '%s' failed."
+#~ msgstr "Speichern von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."

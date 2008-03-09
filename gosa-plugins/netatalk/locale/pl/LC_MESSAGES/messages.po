@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:367
 msgid "Netatalk"
 msgstr "Netatalk"
 
@@ -24,79 +24,88 @@ msgid "Manage netatalk account"
 msgstr "Zarządzaj kontem Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:170
-msgid "This account has no netatalk extensions."
-msgstr "To konto nie posiada rozszerzeń Netatalk"
-
 #: personal/netatalk/class_netatalk.inc:179
-msgid "Remove netatalk account"
-msgstr "Usuń konto Netatalk"
+#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:188
+#, fuzzy
+msgid "netatalk"
+msgstr "Netatalk"
 
-#: personal/netatalk/class_netatalk.inc:179
-msgid ""
-"This account has netatalk features enabled. You can disable them by clicking "
-"below."
+#: personal/netatalk/class_netatalk.inc:184
+msgid "POSIX"
 msgstr ""
-"To konto ma włączone cechu Netatalk. Można je wyłączyć klikając poniżej."
 
-#: personal/netatalk/class_netatalk.inc:190
-#: personal/netatalk/class_netatalk.inc:192
-msgid "Create netatalk account"
-msgstr "Utwórz konto Netatalk"
-
-#: personal/netatalk/class_netatalk.inc:190
-msgid ""
-"This account has netatalk features disabled. You can enable them by clicking "
-"below."
+#: personal/netatalk/class_netatalk.inc:186
+msgid "netatalk or NFS share"
 msgstr ""
-"To konto ma wyłączone cechy Netatalk. Można je włączyć klikając poniżej."
 
-#: personal/netatalk/class_netatalk.inc:225
-msgid "You must select a share to use."
-msgstr "Trzeba wybrać udział do użycia."
+#: personal/netatalk/class_netatalk.inc:222
+#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Udział"
 
-#: personal/netatalk/class_netatalk.inc:290
-#, php-format
-msgid "Saving of user/netatalk account with dn '%s' failed."
-msgstr "Zapisywanie konta netatalk z dn '%s' nieudane."
-
+#: personal/netatalk/class_netatalk.inc:288
 #: personal/netatalk/class_netatalk.inc:352
-#, php-format
-msgid "Removing of user/netatalk account with dn '%s' failed."
-msgstr "Usuwanie konta netatalk z dn '%s' nieudane."
+msgid "LDAP error"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:371
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/netatalk/class_netatalk.inc:375
+#: personal/netatalk/class_netatalk.inc:376
 #, fuzzy
 msgid "User home path"
 msgstr "Ścieżka do profilu"
-
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-msgid "Share"
-msgstr "Udział"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr "Ścieżka"
 
-#: personal/netatalk/main.inc:96
-msgid "Ok"
-msgstr "Ok"
-
-#: personal/netatalk/main.inc:98
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: personal/netatalk/main.inc:103
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
-
-#: personal/netatalk/main.inc:104
-msgid "Edit"
-msgstr "Edytuj"
-
 #: personal/netatalk/main.inc:113
 msgid "Netatalk settings"
 msgstr "Ustawienia Netatalk"
+
+#~ msgid "This account has no netatalk extensions."
+#~ msgstr "To konto nie posiada rozszerzeń Netatalk"
+
+#~ msgid "Remove netatalk account"
+#~ msgstr "Usuń konto Netatalk"
+
+#~ msgid ""
+#~ "This account has netatalk features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "To konto ma włączone cechu Netatalk. Można je wyłączyć klikając poniżej."
+
+#~ msgid "Create netatalk account"
+#~ msgstr "Utwórz konto Netatalk"
+
+#~ msgid ""
+#~ "This account has netatalk features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "To konto ma wyłączone cechy Netatalk. Można je włączyć klikając poniżej."
+
+#~ msgid "You must select a share to use."
+#~ msgstr "Trzeba wybrać udział do użycia."
+
+#~ msgid "Saving of user/netatalk account with dn '%s' failed."
+#~ msgstr "Zapisywanie konta netatalk z dn '%s' nieudane."
+
+#~ msgid "Removing of user/netatalk account with dn '%s' failed."
+#~ msgstr "Usuwanie konta netatalk z dn '%s' nieudane."
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
+
+#~ msgid "Edit"
+#~ msgstr "Edytuj"

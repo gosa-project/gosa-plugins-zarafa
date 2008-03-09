@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -23,131 +23,58 @@ msgstr "Название"
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: addons/godfs/class_dfsManagment.inc:147
-#, fuzzy, php-format
-msgid "Removing of DFS share with dn '%s' failed."
-msgstr "Удалить сервис DNS"
+#: addons/godfs/class_dfsManagment.inc:148
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:166
+#: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 #, fuzzy
 msgid "Go up one dfsshare"
 msgstr "Подразделение"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Up"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 #, fuzzy
 msgid "Root"
 msgstr "Перезагрузить"
 
-#: addons/godfs/class_dfsManagment.inc:211
+#: addons/godfs/class_dfsManagment.inc:213
 #, fuzzy
 msgid "Create new dfsshare"
 msgstr "Создание нового объекта в"
 
-#: addons/godfs/class_dfsManagment.inc:213
+#: addons/godfs/class_dfsManagment.inc:215
 msgid "Base"
 msgstr "Ветка"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 #, fuzzy
 msgid "Submit department"
 msgstr "Показать подразделения"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:243
+#: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Готово"
 
-#: addons/godfs/class_dfsManagment.inc:245
+#: addons/godfs/class_dfsManagment.inc:247
 msgid "Cancel"
 msgstr "Отмена"
-
-#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
-#, fuzzy
-msgid "Dfs share already exists."
-msgstr "Подразделение с таким именем уже существует."
-
-#: addons/godfs/class_dfsgeneric.inc:108
-#, fuzzy
-msgid "Required Field \"Name of dfs Share\" is not set."
-msgstr "Обязательное поле \"Имя\" не заполнено."
-
-#: addons/godfs/class_dfsgeneric.inc:111
-#, fuzzy
-msgid "Required Field \"Description\" is not set."
-msgstr "Обязательное поле \"Описание\" не заполнено."
-
-#: addons/godfs/class_dfsgeneric.inc:114
-#, fuzzy
-msgid "Required Field \"Fileserver\" is not set."
-msgstr "Обязательное поле \"Имя\" не заполнено."
-
-#: addons/godfs/class_dfsgeneric.inc:117
-#, fuzzy
-msgid "Required Field \"Share on fileserver\" is not set."
-msgstr "Обязательное поле \"Имя\" не заполнено."
-
-#: addons/godfs/class_dfsgeneric.inc:120
-#, fuzzy
-msgid "Required Field \"Location\" is not set."
-msgstr "Обязательное поле \"Описание\" не заполнено."
-
-#: addons/godfs/class_dfsgeneric.inc:176
-#, fuzzy, php-format
-msgid "Saving dfs/generic with dn '%s' failed."
-msgstr "Показать подразделения"
-
-#: addons/godfs/class_dfsgeneric.inc:203
-#, fuzzy, php-format
-msgid "Removing dfs/generic with dn '%s' failed."
-msgstr "Показать подразделения"
-
-#: addons/godfs/generic.tpl:4
-#, fuzzy
-msgid "DFS Properties"
-msgstr "Свойства"
-
-#: addons/godfs/generic.tpl:8
-#, fuzzy
-msgid "Name of dfs Share"
-msgstr "Подразделение"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Описание"
-
-#: addons/godfs/generic.tpl:16
-#, fuzzy
-msgid "Fileserver"
-msgstr "Сервер"
-
-#: addons/godfs/generic.tpl:20
-#, fuzzy
-msgid "Share on Fileserver"
-msgstr "Служба печати"
-
-#: addons/godfs/generic.tpl:30
-#, fuzzy
-msgid "DFS Location"
-msgstr "Местоположение"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Местоположение"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy
@@ -186,3 +113,72 @@ msgstr "Регулярное выражение, соответствующее 
 #: addons/godfs/main.inc:27 addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr ""
+
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Свойства"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Подразделение"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Описание"
+
+#: addons/godfs/generic.tpl:16
+#, fuzzy
+msgid "Fileserver"
+msgstr "Сервер"
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "Служба печати"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Местоположение"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Местоположение"
+
+#, fuzzy
+#~ msgid "Removing of DFS share with dn '%s' failed."
+#~ msgstr "Удалить сервис DNS"
+
+#, fuzzy
+#~ msgid "Dfs share already exists."
+#~ msgstr "Подразделение с таким именем уже существует."
+
+#, fuzzy
+#~ msgid "Required Field \"Name of dfs Share\" is not set."
+#~ msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#, fuzzy
+#~ msgid "Required Field \"Description\" is not set."
+#~ msgstr "Обязательное поле \"Описание\" не заполнено."
+
+#, fuzzy
+#~ msgid "Required Field \"Fileserver\" is not set."
+#~ msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#, fuzzy
+#~ msgid "Required Field \"Share on fileserver\" is not set."
+#~ msgstr "Обязательное поле \"Имя\" не заполнено."
+
+#, fuzzy
+#~ msgid "Required Field \"Location\" is not set."
+#~ msgstr "Обязательное поле \"Описание\" не заполнено."
+
+#, fuzzy
+#~ msgid "Saving dfs/generic with dn '%s' failed."
+#~ msgstr "Показать подразделения"
+
+#, fuzzy
+#~ msgid "Removing dfs/generic with dn '%s' failed."
+#~ msgstr "Показать подразделения"

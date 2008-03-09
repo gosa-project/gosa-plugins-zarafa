@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,13 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/connectivity/pptp/pptp.tpl:3
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
-msgid "PPTP account"
-msgstr "Cuenta PPTP"
-
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
-#: personal/connectivity/pptp/class_pptpAccount.inc:173
+#: personal/connectivity/pptp/class_pptpAccount.inc:177
 msgid "PPTP"
 msgstr "PPTP"
 
@@ -31,20 +26,26 @@ msgstr "PPTP"
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:101
-#, php-format
-msgid "Removing of user/PPTP account with dn '%s' failed."
-msgstr "Ha fallado la eliminación de la cuenta de usuario/PPTP con dn '%s'."
+#: personal/connectivity/pptp/class_pptpAccount.inc:102
+#: personal/connectivity/pptp/class_pptpAccount.inc:158
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:155
-#, php-format
-msgid "Saving of user/PPTP account with dn '%s' failed."
-msgstr "Ha fallado la grabación de la cuenta de usuario/PPTP con dn '%s'."
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr "Cuenta PPTP"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/class_pptpAccount.inc:182
 msgid "My account"
 msgstr "Mi cuenta"
+
+#~ msgid "Removing of user/PPTP account with dn '%s' failed."
+#~ msgstr "Ha fallado la eliminación de la cuenta de usuario/PPTP con dn '%s'."
+
+#~ msgid "Saving of user/PPTP account with dn '%s' failed."
+#~ msgstr "Ha fallado la grabación de la cuenta de usuario/PPTP con dn '%s'."

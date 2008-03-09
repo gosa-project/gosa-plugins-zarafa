@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,11 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-#, fuzzy
-msgid "PHPscheduleit account"
-msgstr "Учетная запись Groupware"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 #, fuzzy
@@ -28,31 +23,39 @@ msgstr "Учетная запись Groupware"
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:85
-#, fuzzy, php-format
-msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
-msgstr "Учетная запись Groupware"
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:86
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:143
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:140
-#, fuzzy, php-format
-msgid "Saving of user/PHPscheduleit account with dn '%s' failed."
-msgstr "Учетная запись Groupware"
-
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:159
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:163
 #, fuzzy
 msgid "PHP Schedule it"
 msgstr "Учетная запись Groupware"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:160
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 #, fuzzy
 msgid "PHP Schedule it settings"
 msgstr "Учетная запись Groupware"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:160
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Подключение"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
 msgid "My account"
 msgstr "Моя учетная запись"
+
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+#, fuzzy
+msgid "PHPscheduleit account"
+msgstr "Учетная запись Groupware"
+
+#, fuzzy
+#~ msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
+#~ msgstr "Учетная запись Groupware"
+
+#, fuzzy
+#~ msgid "Saving of user/PHPscheduleit account with dn '%s' failed."
+#~ msgstr "Учетная запись Groupware"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -24,129 +24,56 @@ msgstr "Dirigenza"
 msgid "This does something"
 msgstr "Questo fa qualcosa"
 
-#: addons/godfs/class_dfsManagment.inc:147
-#, fuzzy, php-format
-msgid "Removing of DFS share with dn '%s' failed."
-msgstr "Imposta dipartimento"
+#: addons/godfs/class_dfsManagment.inc:148
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:166
+#: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 #, fuzzy
 msgid "Go up one dfsshare"
 msgstr "Sali di dipartimento"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Up"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
 msgstr "Root"
 
-#: addons/godfs/class_dfsManagment.inc:211
+#: addons/godfs/class_dfsManagment.inc:213
 #, fuzzy
 msgid "Create new dfsshare"
 msgstr "Crea in"
 
-#: addons/godfs/class_dfsManagment.inc:213
+#: addons/godfs/class_dfsManagment.inc:215
 msgid "Base"
 msgstr "Base"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit department"
 msgstr "Imposta dipartimento"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
 msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:243
+#: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Esegui"
 
-#: addons/godfs/class_dfsManagment.inc:245
+#: addons/godfs/class_dfsManagment.inc:247
 msgid "Cancel"
 msgstr "Annulla"
-
-#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
-#, fuzzy
-msgid "Dfs share already exists."
-msgstr "La password immessa come 'Nuova password' è vuota"
-
-#: addons/godfs/class_dfsgeneric.inc:108
-#, fuzzy
-msgid "Required Field \"Name of dfs Share\" is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
-
-#: addons/godfs/class_dfsgeneric.inc:111
-#, fuzzy
-msgid "Required Field \"Description\" is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
-
-#: addons/godfs/class_dfsgeneric.inc:114
-#, fuzzy
-msgid "Required Field \"Fileserver\" is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
-
-#: addons/godfs/class_dfsgeneric.inc:117
-#, fuzzy
-msgid "Required Field \"Share on fileserver\" is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
-
-#: addons/godfs/class_dfsgeneric.inc:120
-#, fuzzy
-msgid "Required Field \"Location\" is not set."
-msgstr "Il campo 'Indirizzo principale' non è stao inserito"
-
-#: addons/godfs/class_dfsgeneric.inc:176
-#, fuzzy, php-format
-msgid "Saving dfs/generic with dn '%s' failed."
-msgstr "Imposta dipartimento"
-
-#: addons/godfs/class_dfsgeneric.inc:203
-#, fuzzy, php-format
-msgid "Removing dfs/generic with dn '%s' failed."
-msgstr "Imposta dipartimento"
-
-#: addons/godfs/generic.tpl:4
-#, fuzzy
-msgid "DFS Properties"
-msgstr "Modifica proprietà"
-
-#: addons/godfs/generic.tpl:8
-#, fuzzy
-msgid "Name of dfs Share"
-msgstr "Crea in"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Descrizione"
-
-#: addons/godfs/generic.tpl:16
-#, fuzzy
-msgid "Fileserver"
-msgstr "Server"
-
-#: addons/godfs/generic.tpl:20
-#, fuzzy
-msgid "Share on Fileserver"
-msgstr "server"
-
-#: addons/godfs/generic.tpl:30
-#, fuzzy
-msgid "DFS Location"
-msgstr "Località"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Località"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy
@@ -185,3 +112,72 @@ msgstr "Espressioni regolare per selezionare il nome del gruppo"
 #: addons/godfs/main.inc:27 addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr ""
+
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Modifica proprietà"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Crea in"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Descrizione"
+
+#: addons/godfs/generic.tpl:16
+#, fuzzy
+msgid "Fileserver"
+msgstr "Server"
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "server"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Località"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Località"
+
+#, fuzzy
+#~ msgid "Removing of DFS share with dn '%s' failed."
+#~ msgstr "Imposta dipartimento"
+
+#, fuzzy
+#~ msgid "Dfs share already exists."
+#~ msgstr "La password immessa come 'Nuova password' è vuota"
+
+#, fuzzy
+#~ msgid "Required Field \"Name of dfs Share\" is not set."
+#~ msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#, fuzzy
+#~ msgid "Required Field \"Description\" is not set."
+#~ msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#, fuzzy
+#~ msgid "Required Field \"Fileserver\" is not set."
+#~ msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#, fuzzy
+#~ msgid "Required Field \"Share on fileserver\" is not set."
+#~ msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#, fuzzy
+#~ msgid "Required Field \"Location\" is not set."
+#~ msgstr "Il campo 'Indirizzo principale' non è stao inserito"
+
+#, fuzzy
+#~ msgid "Saving dfs/generic with dn '%s' failed."
+#~ msgstr "Imposta dipartimento"
+
+#, fuzzy
+#~ msgid "Removing dfs/generic with dn '%s' failed."
+#~ msgstr "Imposta dipartimento"

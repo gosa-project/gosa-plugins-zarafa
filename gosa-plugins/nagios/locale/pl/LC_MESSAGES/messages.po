@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,7 +15,10 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:270
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
 msgid "Nagios"
 msgstr "Nagios"
 
@@ -23,125 +26,87 @@ msgstr "Nagios"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: personal/nagios/class_nagiosAccount.inc:105
-msgid "This account has no nagios extensions."
-msgstr "To konto nie posiada rozszerzenia nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:114
-msgid "Remove nagios account"
-msgstr "Usuń konto nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:115
-msgid ""
-"This account has nagios features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"To konto posiada rozszerzenia rozszerzenia nagios. Można je wyłączyć "
-"klikając poniżej."
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid "Create nagios account"
-msgstr "Utwórz konto nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid ""
-"This account has nagios features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"To konto nie posiada rozszerzenia nagios. Można je włączyć klikając poniżej"
-
 #: personal/nagios/class_nagiosAccount.inc:173
-#, php-format
-msgid "Saving of user/nagios account with dn '%s' failed."
-msgstr "Zapisywanie konta nagios z dn '%s' nieudane."
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
+msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:193
-msgid "The required field 'NagiosAlias' is not set."
-msgstr "Wymagane pole 'NagiosAlias' nie jest wypełnione"
-
-#: personal/nagios/class_nagiosAccount.inc:196
-msgid "The required field 'NagiosMail' is not set."
-msgstr "Wymagane pole 'NagiosMail' nie jest wypełnione"
-
-#: personal/nagios/class_nagiosAccount.inc:200
-#: personal/nagios/class_nagiosAccount.inc:204
-msgid "Please enter a valid email address in 'NagiosMail' field."
-msgstr "Proszę podać poprawny adres email w polu 'NagiosMail'"
-
-#: personal/nagios/class_nagiosAccount.inc:256
-#, php-format
-msgid "Removing of user/nagios account with dn '%s' failed."
-msgstr "Usuwanie konta nagios z dn '%s' nieudane."
-
-#: personal/nagios/class_nagiosAccount.inc:271
-msgid "Nagios account settings"
-msgstr "Ustawienia konta nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:275
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/nagios/class_nagiosAccount.inc:281 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
 msgid "Alias"
 msgstr "Alias"
 
-#: personal/nagios/class_nagiosAccount.inc:282
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:274
+msgid "Nagios account settings"
+msgstr "Ustawienia konta nagios"
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/nagios/class_nagiosAccount.inc:285
 msgid "Pager number"
 msgstr "Numer pagera"
 
-#: personal/nagios/class_nagiosAccount.inc:283 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "Adres email"
 
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
 msgid "Host notification commands"
 msgstr "Polecenia powiadamiania o hoście"
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "Opcje powiadamiania o hoście"
 
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
 msgid "Host notification period"
 msgstr "Okres powiadamiania o hoście"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "Polecenia powiadamiania o usłudze"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
 msgid "Service notification options"
 msgstr "Opcje powiadamiania o usłudze"
 
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
 msgid "Service notification period"
 msgstr "Okres powiadamiania o usłudze"
 
-#: personal/nagios/class_nagiosAccount.inc:293
+#: personal/nagios/class_nagiosAccount.inc:296
 msgid "View all hosts"
 msgstr "Pokaż wszystkie hosty"
 
-#: personal/nagios/class_nagiosAccount.inc:294
+#: personal/nagios/class_nagiosAccount.inc:297
 msgid "View all services"
 msgstr "Pokaż wszystkie usługi"
 
-#: personal/nagios/class_nagiosAccount.inc:296
+#: personal/nagios/class_nagiosAccount.inc:299
 msgid "Trigger system commands"
 msgstr "Przełącz polecenia systemowe"
 
-#: personal/nagios/class_nagiosAccount.inc:297
+#: personal/nagios/class_nagiosAccount.inc:300
 msgid "Trigger all host commands"
 msgstr "Przełącz wszystkie polecenia hosta"
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:301
 msgid "Trigger all service commands"
 msgstr "Przełącz wszystkie polecenia usługi"
 
-#: personal/nagios/class_nagiosAccount.inc:300
+#: personal/nagios/class_nagiosAccount.inc:303
 msgid "View configuration information"
 msgstr "Pokaż konfigurację"
 
-#: personal/nagios/class_nagiosAccount.inc:301
+#: personal/nagios/class_nagiosAccount.inc:304
 msgid "View system informations"
 msgstr "Pokaż informacje o systemie"
 
@@ -185,22 +150,57 @@ msgstr "przełącz wszystkie polecenia usługi"
 msgid "trigger all host commands"
 msgstr "przełącz wszystkie polecenia hosta"
 
-#: personal/nagios/main.inc:105
-msgid "Ok"
-msgstr "Ok"
-
-#: personal/nagios/main.inc:107
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: personal/nagios/main.inc:116
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
-
-#: personal/nagios/main.inc:117
-msgid "Edit"
-msgstr "Edytuj"
-
 #: personal/nagios/main.inc:125
 msgid "Nagios settings"
 msgstr "Ustawienia nagios"
+
+#~ msgid "This account has no nagios extensions."
+#~ msgstr "To konto nie posiada rozszerzenia nagios"
+
+#~ msgid "Remove nagios account"
+#~ msgstr "Usuń konto nagios"
+
+#~ msgid ""
+#~ "This account has nagios features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "To konto posiada rozszerzenia rozszerzenia nagios. Można je wyłączyć "
+#~ "klikając poniżej."
+
+#~ msgid "Create nagios account"
+#~ msgstr "Utwórz konto nagios"
+
+#~ msgid ""
+#~ "This account has nagios features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "To konto nie posiada rozszerzenia nagios. Można je włączyć klikając "
+#~ "poniżej"
+
+#~ msgid "Saving of user/nagios account with dn '%s' failed."
+#~ msgstr "Zapisywanie konta nagios z dn '%s' nieudane."
+
+#~ msgid "The required field 'NagiosAlias' is not set."
+#~ msgstr "Wymagane pole 'NagiosAlias' nie jest wypełnione"
+
+#~ msgid "The required field 'NagiosMail' is not set."
+#~ msgstr "Wymagane pole 'NagiosMail' nie jest wypełnione"
+
+#~ msgid "Please enter a valid email address in 'NagiosMail' field."
+#~ msgstr "Proszę podać poprawny adres email w polu 'NagiosMail'"
+
+#~ msgid "Removing of user/nagios account with dn '%s' failed."
+#~ msgstr "Usuwanie konta nagios z dn '%s' nieudane."
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
+
+#~ msgid "Edit"
+#~ msgstr "Edytuj"

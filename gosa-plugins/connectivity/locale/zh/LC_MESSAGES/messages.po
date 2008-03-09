@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "内联网账号"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -32,30 +36,25 @@ msgid "This account has no connectivity extensions."
 msgstr "这个账号没有互联扩展。"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:194
+#: personal/connectivity/class_intranetAccount.inc:198
 msgid "Intranet"
 msgstr "内联网"
 
-#: personal/connectivity/class_intranetAccount.inc:118
-#, fuzzy, php-format
-msgid "Removing of user/intranet account with dn '%s' failed."
-msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+#: personal/connectivity/class_intranetAccount.inc:119
+#: personal/connectivity/class_intranetAccount.inc:186
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/class_intranetAccount.inc:183
-#, fuzzy, php-format
-msgid "Saving of user/intranet account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
-
-#: personal/connectivity/class_intranetAccount.inc:197
+#: personal/connectivity/class_intranetAccount.inc:201
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 #, fuzzy
 msgid "Intranet account settings"
 msgstr "内联网账号"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
@@ -76,6 +75,10 @@ msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
 msgid "Edit"
 msgstr "编辑"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "内联网账号"
+#, fuzzy
+#~ msgid "Removing of user/intranet account with dn '%s' failed."
+#~ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+
+#, fuzzy
+#~ msgid "Saving of user/intranet account with dn '%s' failed."
+#~ msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/connectivity/pptp/pptp.tpl:3
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
-msgid "PPTP account"
-msgstr ""
-
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
-#: personal/connectivity/pptp/class_pptpAccount.inc:173
+#: personal/connectivity/pptp/class_pptpAccount.inc:177
 msgid "PPTP"
 msgstr ""
 
@@ -30,20 +25,20 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:101
-#, php-format
-msgid "Removing of user/PPTP account with dn '%s' failed."
-msgstr ""
-
-#: personal/connectivity/pptp/class_pptpAccount.inc:155
-#, php-format
-msgid "Saving of user/PPTP account with dn '%s' failed."
-msgstr ""
-
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
-msgid "Connectivity addon"
+#: personal/connectivity/pptp/class_pptpAccount.inc:102
+#: personal/connectivity/pptp/class_pptpAccount.inc:158
+msgid "LDAP error"
 msgstr ""
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr ""
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+msgid "Connectivity addon"
+msgstr ""
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:182
 msgid "My account"
 msgstr ""

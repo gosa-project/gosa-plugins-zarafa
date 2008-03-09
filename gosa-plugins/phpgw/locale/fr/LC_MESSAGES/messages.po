@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "Compte PHPGroupware"
+
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
 msgstr "PHPGroupware"
@@ -22,34 +26,31 @@ msgstr "PHPGroupware"
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:84
-#, php-format
-msgid "Removing of user/PHPgw account with dn '%s' failed."
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:85
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:141
+msgid "LDAP error"
 msgstr ""
-"La suppression du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:138
-#, php-format
-msgid "Saving of user/PHPgw account with dn '%s' failed."
-msgstr ""
-"La sauvegarde du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:156
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHP GW"
 msgstr "PHP Groupware"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "PHP GW account settings"
 msgstr "Préférences de PHPgroupware"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
-msgstr "Compte PHPGroupware"
+#~ msgid "Removing of user/PHPgw account with dn '%s' failed."
+#~ msgstr ""
+#~ "La suppression du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."
+
+#~ msgid "Saving of user/PHPgw account with dn '%s' failed."
+#~ msgstr ""
+#~ "La sauvegarde du compte/PHPgw de l'utilisateur avec le dn '%s' à échoué."

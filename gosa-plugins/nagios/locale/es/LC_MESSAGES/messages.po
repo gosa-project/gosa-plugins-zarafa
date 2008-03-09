@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,7 +18,10 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:270
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
 msgid "Nagios"
 msgstr "Nagios"
 
@@ -26,128 +29,87 @@ msgstr "Nagios"
 msgid "This does something"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:105
-msgid "This account has no nagios extensions."
-msgstr "Esta cuenta no tiene extensión nagios."
-
-#: personal/nagios/class_nagiosAccount.inc:114
-msgid "Remove nagios account"
-msgstr "Eliminar cuenta Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:115
-msgid ""
-"This account has nagios features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"Esta cuenta tiene la extensión Nagios activa. Puede desactivarla pulsando a "
-"continuación."
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid "Create nagios account"
-msgstr "Crear cuenta Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid ""
-"This account has nagios features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"Esta cuenta tiene la extensión Nagios desactivada.Puede activarla pulsando "
-"aqui."
-
 #: personal/nagios/class_nagiosAccount.inc:173
-#, php-format
-msgid "Saving of user/nagios account with dn '%s' failed."
-msgstr "Ha fallado al grabar la cuenta de usuario/Nagios con dn '%s'."
-
-#: personal/nagios/class_nagiosAccount.inc:193
-msgid "The required field 'NagiosAlias' is not set."
-msgstr "No se ha asignado ningún valor al campo requerido 'Alias de Nagios'."
-
-#: personal/nagios/class_nagiosAccount.inc:196
-msgid "The required field 'NagiosMail' is not set."
-msgstr "No se ha asignado ningún valor al campo requerido 'Correo de Nagios'."
-
-#: personal/nagios/class_nagiosAccount.inc:200
-#: personal/nagios/class_nagiosAccount.inc:204
-msgid "Please enter a valid email address in 'NagiosMail' field."
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
 msgstr ""
-"Por favor introduzca una dirección válida de correo electrónico en el campo "
-"'Cuenta Nagios'."
 
-#: personal/nagios/class_nagiosAccount.inc:256
-#, php-format
-msgid "Removing of user/nagios account with dn '%s' failed."
-msgstr "Ha fallado al eliminar la cuenta Nagios con dn '%s'."
-
-#: personal/nagios/class_nagiosAccount.inc:271
-msgid "Nagios account settings"
-msgstr "Parámetros de cuenta Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:275
-msgid "My account"
-msgstr "Mi cuenta"
-
-#: personal/nagios/class_nagiosAccount.inc:281 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
 msgid "Alias"
 msgstr "Alias"
 
-#: personal/nagios/class_nagiosAccount.inc:282
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:274
+msgid "Nagios account settings"
+msgstr "Parámetros de cuenta Nagios"
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Mi cuenta"
+
+#: personal/nagios/class_nagiosAccount.inc:285
 msgid "Pager number"
 msgstr "Número del busca"
 
-#: personal/nagios/class_nagiosAccount.inc:283 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "Dirección correo electrónico"
 
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
 msgid "Host notification commands"
 msgstr "Comandos de Notificación de máquina"
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "Opciones de Notificación de máquina"
 
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
 msgid "Host notification period"
 msgstr "Periodo de Notificación de máquina"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "Comandos de Notificación de Servicio"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
 msgid "Service notification options"
 msgstr "Opciones de Notificación de Servicio"
 
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
 msgid "Service notification period"
 msgstr "Periodo de Notificación de Servicio"
 
-#: personal/nagios/class_nagiosAccount.inc:293
+#: personal/nagios/class_nagiosAccount.inc:296
 msgid "View all hosts"
 msgstr "Ver todas las máquinas"
 
-#: personal/nagios/class_nagiosAccount.inc:294
+#: personal/nagios/class_nagiosAccount.inc:297
 msgid "View all services"
 msgstr "Ver todos los servicios"
 
-#: personal/nagios/class_nagiosAccount.inc:296
+#: personal/nagios/class_nagiosAccount.inc:299
 msgid "Trigger system commands"
 msgstr "Activar comandos de sistema"
 
-#: personal/nagios/class_nagiosAccount.inc:297
+#: personal/nagios/class_nagiosAccount.inc:300
 msgid "Trigger all host commands"
 msgstr "Activar todos los comandos de máquina"
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:301
 msgid "Trigger all service commands"
 msgstr "Activar todos los comandos de servicio"
 
-#: personal/nagios/class_nagiosAccount.inc:300
+#: personal/nagios/class_nagiosAccount.inc:303
 msgid "View configuration information"
 msgstr "Ver la información de configuración"
 
-#: personal/nagios/class_nagiosAccount.inc:301
+#: personal/nagios/class_nagiosAccount.inc:304
 msgid "View system informations"
 msgstr "Ver la información de sistemas"
 
@@ -191,23 +153,61 @@ msgstr ""
 msgid "trigger all host commands"
 msgstr ""
 
-#: personal/nagios/main.inc:105
-msgid "Ok"
-msgstr "Ok"
-
-#: personal/nagios/main.inc:107
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: personal/nagios/main.inc:116
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Pulse en el botón - Editar - para cambiar la información en esta ventana"
-
-#: personal/nagios/main.inc:117
-msgid "Edit"
-msgstr "Editar"
-
 #: personal/nagios/main.inc:125
 msgid "Nagios settings"
 msgstr "Parámetros de Nagios"
+
+#~ msgid "This account has no nagios extensions."
+#~ msgstr "Esta cuenta no tiene extensión nagios."
+
+#~ msgid "Remove nagios account"
+#~ msgstr "Eliminar cuenta Nagios"
+
+#~ msgid ""
+#~ "This account has nagios features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Esta cuenta tiene la extensión Nagios activa. Puede desactivarla pulsando "
+#~ "a continuación."
+
+#~ msgid "Create nagios account"
+#~ msgstr "Crear cuenta Nagios"
+
+#~ msgid ""
+#~ "This account has nagios features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Esta cuenta tiene la extensión Nagios desactivada.Puede activarla "
+#~ "pulsando aqui."
+
+#~ msgid "Saving of user/nagios account with dn '%s' failed."
+#~ msgstr "Ha fallado al grabar la cuenta de usuario/Nagios con dn '%s'."
+
+#~ msgid "The required field 'NagiosAlias' is not set."
+#~ msgstr ""
+#~ "No se ha asignado ningún valor al campo requerido 'Alias de Nagios'."
+
+#~ msgid "The required field 'NagiosMail' is not set."
+#~ msgstr ""
+#~ "No se ha asignado ningún valor al campo requerido 'Correo de Nagios'."
+
+#~ msgid "Please enter a valid email address in 'NagiosMail' field."
+#~ msgstr ""
+#~ "Por favor introduzca una dirección válida de correo electrónico en el "
+#~ "campo 'Cuenta Nagios'."
+
+#~ msgid "Removing of user/nagios account with dn '%s' failed."
+#~ msgstr "Ha fallado al eliminar la cuenta Nagios con dn '%s'."
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Pulse en el botón - Editar - para cambiar la información en esta ventana"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"

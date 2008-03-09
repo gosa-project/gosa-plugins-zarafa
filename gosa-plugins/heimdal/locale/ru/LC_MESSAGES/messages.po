@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -40,6 +40,74 @@ msgstr "Сохранить"
 #: admin/systems/services/kerberos/goKrbServer.tpl:32
 msgid "Cancel"
 msgstr "Отмена"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:167
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:185
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:221
+#, fuzzy
+msgid "Heimdal"
+msgstr "Email"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
+#, php-format
+msgid ""
+"Error loading heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:167
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
+#, php-format
+msgid "The configured HEIMDAL_KEYGEN '%s' is not a valid command."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:147
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:408
+msgid "LDAP error"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:185
+#, php-format
+msgid ""
+"The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command "
+"does not return 0."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:331
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
+#, fuzzy, php-format
+msgid "Please specify a numeric value for %s."
+msgstr "Укажите корректный номер телефона."
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
+msgid "Max life"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:331
+msgid "Max renew"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
+msgid "Valid start"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
+msgid "Valid end"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
+#, fuzzy
+msgid "Valid password"
+msgstr "Пароль"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:29
 #, fuzzy
@@ -89,75 +157,10 @@ msgstr "Имя сервера"
 msgid "Admin"
 msgstr "DN администратора"
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:165
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:171
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:183
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:219
 #, fuzzy
-msgid "Heimdal"
-msgstr "Email"
+#~ msgid "Tried to remove heimdal extension."
+#~ msgstr "Удалить параметры"
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
-#, php-format
-msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
-"found for '%s'."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:165
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:171
-#, php-format
-msgid "The configured HEIMDAL_KEYGEN '%s' is not a valid command."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:146
 #, fuzzy
-msgid "Tried to remove heimdal extension."
-msgstr "Удалить параметры"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:183
-#, php-format
-msgid ""
-"The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command "
-"does not return 0."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:326
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:329
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:332
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:335
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:338
-#, fuzzy, php-format
-msgid "Please specify a numeric value for %s."
-msgstr "Укажите корректный номер телефона."
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:326
-msgid "Max life"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:329
-msgid "Max renew"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:332
-msgid "Valid start"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:335
-msgid "Valid end"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:338
-#, fuzzy
-msgid "Valid password"
-msgstr "Пароль"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:405
-#, fuzzy
-msgid "Could not add or update heimdal extensions."
-msgstr "В этой учетной записи нет почтовых расширений."
+#~ msgid "Could not add or update heimdal extensions."
+#~ msgstr "В этой учетной записи нет почтовых расширений."

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:25+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
-#: personal/scalix/class_scalixAccount.inc:456
+#: personal/scalix/paste_generic.tpl:4
+#: personal/scalix/class_scalixAccount.inc:460 personal/scalix/generic.tpl:98
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Email-Adresse"
@@ -38,6 +38,179 @@ msgstr "Hinzufügen"
 #: personal/scalix/paste_generic.tpl:13 personal/scalix/generic.tpl:114
 msgid "Delete"
 msgstr "Entfernen"
+
+#: personal/scalix/class_scalixAccount.inc:16
+#, fuzzy
+msgid "Scalix"
+msgstr "Speziell"
+
+#: personal/scalix/class_scalixAccount.inc:17
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: personal/scalix/class_scalixAccount.inc:120
+#, fuzzy
+msgid "This account has no scalix extensions."
+msgstr "Dieses Konto besitzt keine Fax-Erweiterungen."
+
+#: personal/scalix/class_scalixAccount.inc:129
+#, fuzzy
+msgid "Remove scalix account"
+msgstr "UNIX-Konto entfernen"
+
+#: personal/scalix/class_scalixAccount.inc:130
+#, fuzzy
+msgid ""
+"This account has scalix synchronization enabled. You can disable it by "
+"clicking below."
+msgstr ""
+"Dieses Konto besitzt aktivierte UNIX-Erweiterungen. Sie können diese durch "
+"einen Klick auf die untere Schaltfläche deaktivieren."
+
+#: personal/scalix/class_scalixAccount.inc:132
+#, fuzzy
+msgid "Create scalix account"
+msgstr "UNIX-Konto erstellen"
+
+#: personal/scalix/class_scalixAccount.inc:132
+#, fuzzy
+msgid ""
+"This account has scalix synchronization disabled. You can enable it by "
+"clicking below."
+msgstr ""
+"Dieses Konto besitzt keine aktivierten UNIX-Erweiterungen. Sie können diese "
+"durch einen Klick auf die untere Schaltfläche aktivieren."
+
+#: personal/scalix/class_scalixAccount.inc:226
+#: personal/scalix/class_scalixAccount.inc:329
+msgid "LDAP error"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:249
+#: personal/scalix/class_scalixAccount.inc:256
+#: personal/scalix/class_scalixAccount.inc:263
+#: personal/scalix/class_scalixAccount.inc:273
+#: personal/scalix/class_scalixAccount.inc:480
+#: personal/scalix/class_scalixAccount.inc:489
+msgid "Error"
+msgstr "Fehler"
+
+#: personal/scalix/class_scalixAccount.inc:249
+#: personal/scalix/class_scalixAccount.inc:480
+#, fuzzy
+msgid "Cannot add invalid mail address!"
+msgstr "Sie versuchen, eine ungültige Mail-Adresse hinzuzufügen"
+
+#: personal/scalix/class_scalixAccount.inc:256
+#: personal/scalix/class_scalixAccount.inc:273
+#, fuzzy
+msgid "You have no permission to modify these addresses."
+msgstr "Sie haben keine Berechtigung, diese Abteilung zu entfernen."
+
+#: personal/scalix/class_scalixAccount.inc:263
+#: personal/scalix/class_scalixAccount.inc:489
+#, fuzzy, php-format
+msgid "Cannot add mail address: it is already used by user '%s'."
+msgstr ""
+"Die Adresse, die Sie gerade hinzufügen möchten, wird bereits von einem "
+"anderen Benutzer verwendet"
+
+#: personal/scalix/class_scalixAccount.inc:351
+msgid "Mailnode"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:354
+#, fuzzy
+msgid "Scalix object"
+msgstr "Mail-Konto"
+
+#: personal/scalix/class_scalixAccount.inc:363
+#, fuzzy
+msgid "Email address"
+msgstr "Email-Adresse"
+
+#: personal/scalix/class_scalixAccount.inc:370
+#, fuzzy
+msgid "Limit Mailbox"
+msgstr "Maximale Größe der Mailbox"
+
+#: personal/scalix/class_scalixAccount.inc:440
+#, fuzzy
+msgid "Scalix account"
+msgstr "Mail-Konto"
+
+#: personal/scalix/class_scalixAccount.inc:444
+msgid "My account"
+msgstr "Mein Konto"
+
+#: personal/scalix/class_scalixAccount.inc:450
+msgid "Scalix Mail node"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:451
+#, fuzzy
+msgid "Mailbox class"
+msgstr "Mail-Adresse"
+
+#: personal/scalix/class_scalixAccount.inc:452
+#, fuzzy
+msgid "Server language"
+msgstr "Server-Name"
+
+#: personal/scalix/class_scalixAccount.inc:453
+msgid "Administrator"
+msgstr "Administrator"
+
+#: personal/scalix/class_scalixAccount.inc:454
+#, fuzzy
+msgid "Mailbox administrator"
+msgstr "Ordner-Administratoren"
+
+#: personal/scalix/class_scalixAccount.inc:455
+msgid "Hide user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:456
+#, fuzzy
+msgid "Mailbox size limitations"
+msgstr "Beschränkung der Nachrichtengröße"
+
+#: personal/scalix/class_scalixAccount.inc:457
+#, fuzzy
+msgid "Limit outbound"
+msgstr "Profil-Kontingent"
+
+#: personal/scalix/class_scalixAccount.inc:458
+msgid "Limit inbound"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:459
+#, fuzzy
+msgid "Notify user"
+msgstr "Zähle Benutzer"
+
+#: personal/scalix/main.inc:101
+msgid "Save"
+msgstr "Speichern"
+
+#: personal/scalix/main.inc:103
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
+"Dialog zu ändern"
+
+#: personal/scalix/main.inc:114
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: personal/scalix/main.inc:125
+#, fuzzy
+msgid "Scalix settings"
+msgstr "Mail-Einstellungen"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -128,165 +301,10 @@ msgstr ""
 msgid "Notify User"
 msgstr ""
 
-#: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
-msgid "Scalix"
-msgstr "Speziell"
+#~ msgid "There is no scalix mailnode specified."
+#~ msgstr "Es wurden keine Mail-Server angegeben."
 
-#: personal/scalix/class_scalixAccount.inc:17
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: personal/scalix/class_scalixAccount.inc:120
 #, fuzzy
-msgid "This account has no scalix extensions."
-msgstr "Dieses Konto besitzt keine Fax-Erweiterungen."
-
-#: personal/scalix/class_scalixAccount.inc:129
-#, fuzzy
-msgid "Remove scalix account"
-msgstr "UNIX-Konto entfernen"
-
-#: personal/scalix/class_scalixAccount.inc:130
-#, fuzzy
-msgid ""
-"This account has scalix synchronization enabled. You can disable it by "
-"clicking below."
-msgstr ""
-"Dieses Konto besitzt aktivierte UNIX-Erweiterungen. Sie können diese durch "
-"einen Klick auf die untere Schaltfläche deaktivieren."
-
-#: personal/scalix/class_scalixAccount.inc:132
-#, fuzzy
-msgid "Create scalix account"
-msgstr "UNIX-Konto erstellen"
-
-#: personal/scalix/class_scalixAccount.inc:132
-#, fuzzy
-msgid ""
-"This account has scalix synchronization disabled. You can enable it by "
-"clicking below."
-msgstr ""
-"Dieses Konto besitzt keine aktivierten UNIX-Erweiterungen. Sie können diese "
-"durch einen Klick auf die untere Schaltfläche aktivieren."
-
-#: personal/scalix/class_scalixAccount.inc:247
-#: personal/scalix/class_scalixAccount.inc:254
-#: personal/scalix/class_scalixAccount.inc:261
-#: personal/scalix/class_scalixAccount.inc:271
-#: personal/scalix/class_scalixAccount.inc:476
-#: personal/scalix/class_scalixAccount.inc:485
-msgid "Error"
-msgstr "Fehler"
-
-#: personal/scalix/class_scalixAccount.inc:247
-#: personal/scalix/class_scalixAccount.inc:476
-#, fuzzy
-msgid "Cannot add invalid mail address!"
-msgstr "Sie versuchen, eine ungültige Mail-Adresse hinzuzufügen"
-
-#: personal/scalix/class_scalixAccount.inc:254
-#: personal/scalix/class_scalixAccount.inc:271
-#, fuzzy
-msgid "You have no permission to modify these addresses."
-msgstr "Sie haben keine Berechtigung, diese Abteilung zu entfernen."
-
-#: personal/scalix/class_scalixAccount.inc:261
-#: personal/scalix/class_scalixAccount.inc:485
-#, fuzzy, php-format
-msgid "Cannot add mail address: it is already used by user '%s'."
-msgstr ""
-"Die Adresse, die Sie gerade hinzufügen möchten, wird bereits von einem "
-"anderen Benutzer verwendet"
-
-#: personal/scalix/class_scalixAccount.inc:347
-#, fuzzy
-msgid "There is no scalix mailnode specified."
-msgstr "Es wurden keine Mail-Server angegeben."
-
-#: personal/scalix/class_scalixAccount.inc:350
-msgid "scalixScalixObject must be set!"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:366
-#, fuzzy
-msgid "Value in 'Limit Mailbox size' is not valid."
-msgstr "Das Feld 'Kontingent-Größe' enthält einen ungültigen Wert."
-
-#: personal/scalix/class_scalixAccount.inc:436
-#, fuzzy
-msgid "Scalix account"
-msgstr "Mail-Konto"
-
-#: personal/scalix/class_scalixAccount.inc:440
-msgid "My account"
-msgstr "Mein Konto"
-
-#: personal/scalix/class_scalixAccount.inc:446
-msgid "Scalix Mail node"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:447
-#, fuzzy
-msgid "Mailbox class"
-msgstr "Mail-Adresse"
-
-#: personal/scalix/class_scalixAccount.inc:448
-#, fuzzy
-msgid "Server language"
-msgstr "Server-Name"
-
-#: personal/scalix/class_scalixAccount.inc:449
-msgid "Administrator"
-msgstr "Administrator"
-
-#: personal/scalix/class_scalixAccount.inc:450
-#, fuzzy
-msgid "Mailbox administrator"
-msgstr "Ordner-Administratoren"
-
-#: personal/scalix/class_scalixAccount.inc:451
-msgid "Hide user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:452
-#, fuzzy
-msgid "Mailbox size limitations"
-msgstr "Beschränkung der Nachrichtengröße"
-
-#: personal/scalix/class_scalixAccount.inc:453
-#, fuzzy
-msgid "Limit outbound"
-msgstr "Profil-Kontingent"
-
-#: personal/scalix/class_scalixAccount.inc:454
-msgid "Limit inbound"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:455
-#, fuzzy
-msgid "Notify user"
-msgstr "Zähle Benutzer"
-
-#: personal/scalix/main.inc:101
-msgid "Save"
-msgstr "Speichern"
-
-#: personal/scalix/main.inc:103
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-"Dialog zu ändern"
-
-#: personal/scalix/main.inc:114
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: personal/scalix/main.inc:125
-#, fuzzy
-msgid "Scalix settings"
-msgstr "Mail-Einstellungen"
+#~ msgid "Value in 'Limit Mailbox size' is not valid."
+#~ msgstr "Das Feld 'Kontingent-Größe' enthält einen ungültigen Wert."

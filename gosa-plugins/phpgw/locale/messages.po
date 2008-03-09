@@ -8,13 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr ""
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -24,32 +28,23 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:84
-#, php-format
-msgid "Removing of user/PHPgw account with dn '%s' failed."
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:85
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:141
+msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:138
-#, php-format
-msgid "Saving of user/PHPgw account with dn '%s' failed."
-msgstr ""
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:156
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHP GW"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "PHP GW account settings"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "Connectivity addon"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
-msgstr ""
-
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
 msgstr ""

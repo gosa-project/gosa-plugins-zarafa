@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -22,116 +22,54 @@ msgstr "Zarządzanie DFS"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: addons/godfs/class_dfsManagment.inc:147
-#, php-format
-msgid "Removing of DFS share with dn '%s' failed."
-msgstr "Usuwanie udziału DFS z dn '%s' nieudane."
+#: addons/godfs/class_dfsManagment.inc:148
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:166
+#: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
 msgstr "Nie znaleziono wpisów DFS"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Go up one dfsshare"
 msgstr "Idź w górę jeden udział DFS"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Up"
 msgstr "Góra"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
 msgstr "Idź do głównego DFS"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
 msgstr "Główny"
 
-#: addons/godfs/class_dfsManagment.inc:211
+#: addons/godfs/class_dfsManagment.inc:213
 msgid "Create new dfsshare"
 msgstr "Utwórz nowy udział DFS"
 
-#: addons/godfs/class_dfsManagment.inc:213
+#: addons/godfs/class_dfsManagment.inc:215
 msgid "Base"
 msgstr "Kontener"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit department"
 msgstr "Zatwierdź departament"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
 msgstr "Wyślij"
 
-#: addons/godfs/class_dfsManagment.inc:243
+#: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Zakończ"
 
-#: addons/godfs/class_dfsManagment.inc:245
+#: addons/godfs/class_dfsManagment.inc:247
 msgid "Cancel"
 msgstr "Anuluj"
-
-#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
-msgid "Dfs share already exists."
-msgstr "Udział DFS już istnieje."
-
-#: addons/godfs/class_dfsgeneric.inc:108
-msgid "Required Field \"Name of dfs Share\" is not set."
-msgstr "Wymagane pole 'Nazwa udziału DFS' nie jest wypełnione."
-
-#: addons/godfs/class_dfsgeneric.inc:111
-msgid "Required Field \"Description\" is not set."
-msgstr "Wymagane pole 'Opis' nie jest wypełnione."
-
-#: addons/godfs/class_dfsgeneric.inc:114
-msgid "Required Field \"Fileserver\" is not set."
-msgstr "Wymagane pole 'Serwer plików' nie jest wypełnione."
-
-#: addons/godfs/class_dfsgeneric.inc:117
-msgid "Required Field \"Share on fileserver\" is not set."
-msgstr "Wymagane pole 'Udział na serwerze plików' nie jest wypełnione."
-
-#: addons/godfs/class_dfsgeneric.inc:120
-msgid "Required Field \"Location\" is not set."
-msgstr "Wymagane pole 'Lokalizacja' nie jest wypełnione."
-
-#: addons/godfs/class_dfsgeneric.inc:176
-#, php-format
-msgid "Saving dfs/generic with dn '%s' failed."
-msgstr "Zapisywanie dfs z dn '%s' nieudane."
-
-#: addons/godfs/class_dfsgeneric.inc:203
-#, php-format
-msgid "Removing dfs/generic with dn '%s' failed."
-msgstr "Usuwanie dfs z dn '%s' nieudane."
-
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "Właściwości DFS"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Nazwa udziału DFS"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Opis"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Serwer plików"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Udział na serwerze plików"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "Lokacja DFS"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Lokalizacja"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -166,3 +104,58 @@ msgstr "Wyrażenie regularne dla dopasowanie nazw udziałów DFS"
 #: addons/godfs/main.inc:27 addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr "Administracja Distributed File System"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "Właściwości DFS"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Nazwa udziału DFS"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Opis"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Serwer plików"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Udział na serwerze plików"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "Lokacja DFS"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Lokalizacja"
+
+#~ msgid "Removing of DFS share with dn '%s' failed."
+#~ msgstr "Usuwanie udziału DFS z dn '%s' nieudane."
+
+#~ msgid "Dfs share already exists."
+#~ msgstr "Udział DFS już istnieje."
+
+#~ msgid "Required Field \"Name of dfs Share\" is not set."
+#~ msgstr "Wymagane pole 'Nazwa udziału DFS' nie jest wypełnione."
+
+#~ msgid "Required Field \"Description\" is not set."
+#~ msgstr "Wymagane pole 'Opis' nie jest wypełnione."
+
+#~ msgid "Required Field \"Fileserver\" is not set."
+#~ msgstr "Wymagane pole 'Serwer plików' nie jest wypełnione."
+
+#~ msgid "Required Field \"Share on fileserver\" is not set."
+#~ msgstr "Wymagane pole 'Udział na serwerze plików' nie jest wypełnione."
+
+#~ msgid "Required Field \"Location\" is not set."
+#~ msgstr "Wymagane pole 'Lokalizacja' nie jest wypełnione."
+
+#~ msgid "Saving dfs/generic with dn '%s' failed."
+#~ msgstr "Zapisywanie dfs z dn '%s' nieudane."
+
+#~ msgid "Removing dfs/generic with dn '%s' failed."
+#~ msgstr "Usuwanie dfs z dn '%s' nieudane."

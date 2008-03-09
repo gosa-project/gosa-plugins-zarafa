@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,10 +14,6 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-msgid "PHPscheduleit account"
-msgstr "konto PHPscheduleit"
-
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 msgid "PHPscheduleit"
 msgstr "PHPscheduleit"
@@ -26,29 +22,34 @@ msgstr "PHPscheduleit"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:85
-#, php-format
-msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
-msgstr "Usuwanie konta PHPscheduleit z dn '%s' nieudane."
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:86
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:143
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:140
-#, php-format
-msgid "Saving of user/PHPscheduleit account with dn '%s' failed."
-msgstr "Zapisywanie konta PHPscheduleit z dn '%s' nieudane."
-
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:159
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:163
 msgid "PHP Schedule it"
 msgstr "PHP schedule it"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:160
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 msgid "PHP Schedule it settings"
 msgstr "Ustawienia PHP schedule it"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:160
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Konto połączeń"
 
-#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:164
+#: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
 msgid "My account"
 msgstr "Moje konto "
+
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+msgid "PHPscheduleit account"
+msgstr "konto PHPscheduleit"
+
+#~ msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
+#~ msgstr "Usuwanie konta PHPscheduleit z dn '%s' nieudane."
+
+#~ msgid "Saving of user/PHPscheduleit account with dn '%s' failed."
+#~ msgstr "Zapisywanie konta PHPscheduleit z dn '%s' nieudane."

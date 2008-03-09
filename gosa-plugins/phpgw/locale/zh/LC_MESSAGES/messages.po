@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "PHPGroupware 账号"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -25,34 +29,33 @@ msgstr "PHPGroupware"
 msgid "This does something"
 msgstr "******"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:84
-#, fuzzy, php-format
-msgid "Removing of user/PHPgw account with dn '%s' failed."
-msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:85
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:141
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:138
-#, fuzzy, php-format
-msgid "Saving of user/PHPgw account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:156
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHP GW"
 msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 #, fuzzy
 msgid "PHP GW account settings"
 msgstr "电话设置"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
-msgstr "PHPGroupware 账号"
+#, fuzzy
+#~ msgid "Removing of user/PHPgw account with dn '%s' failed."
+#~ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+
+#, fuzzy
+#~ msgid "Saving of user/PHPgw account with dn '%s' failed."
+#~ msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"

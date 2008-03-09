@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -22,116 +22,54 @@ msgstr "Gestion DFS"
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: addons/godfs/class_dfsManagment.inc:147
-#, php-format
-msgid "Removing of DFS share with dn '%s' failed."
-msgstr "La suppression du partage DFS avec le dn '%s' à échoué."
+#: addons/godfs/class_dfsManagment.inc:148
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:166
+#: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
 msgstr "Pas d'entrée DFS trouvée"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Go up one dfsshare"
 msgstr "Monter d'un partage DFS"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Up"
 msgstr "Au dessus"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
 msgstr "Aller au répertoire de base de DFS"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
 msgstr "Racine"
 
-#: addons/godfs/class_dfsManagment.inc:211
+#: addons/godfs/class_dfsManagment.inc:213
 msgid "Create new dfsshare"
 msgstr "Création d'un nouveau partage dfs"
 
-#: addons/godfs/class_dfsManagment.inc:213
+#: addons/godfs/class_dfsManagment.inc:215
 msgid "Base"
 msgstr "Base"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit department"
 msgstr "Soumettre le département"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
 msgstr "Soumettre"
 
-#: addons/godfs/class_dfsManagment.inc:243
+#: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Terminé"
 
-#: addons/godfs/class_dfsManagment.inc:245
+#: addons/godfs/class_dfsManagment.inc:247
 msgid "Cancel"
 msgstr "Annuler"
-
-#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
-msgid "Dfs share already exists."
-msgstr "Le partage dfs indiqué existe déjà."
-
-#: addons/godfs/class_dfsgeneric.inc:108
-msgid "Required Field \"Name of dfs Share\" is not set."
-msgstr "Le champ obligatoire \"Nom du partage DFS\" n'est pas rempli."
-
-#: addons/godfs/class_dfsgeneric.inc:111
-msgid "Required Field \"Description\" is not set."
-msgstr "Le champ obligatoire \"Description\" n'est pas rempli."
-
-#: addons/godfs/class_dfsgeneric.inc:114
-msgid "Required Field \"Fileserver\" is not set."
-msgstr "Le champ obligatoire \"Serveur de fichiers\"' n'est pas rempli."
-
-#: addons/godfs/class_dfsgeneric.inc:117
-msgid "Required Field \"Share on fileserver\" is not set."
-msgstr "Le champ obligatoire \"Partage sur le serveur\" n'est pas rempli."
-
-#: addons/godfs/class_dfsgeneric.inc:120
-msgid "Required Field \"Location\" is not set."
-msgstr "Le champ obligatoire \"Endroit\" n'est pas rempli."
-
-#: addons/godfs/class_dfsgeneric.inc:176
-#, php-format
-msgid "Saving dfs/generic with dn '%s' failed."
-msgstr "La sauvegarde du type dfs/générique avec le dn '%s' à échoué."
-
-#: addons/godfs/class_dfsgeneric.inc:203
-#, php-format
-msgid "Removing dfs/generic with dn '%s' failed."
-msgstr "La suppression du type dfs/générique avec le dn '%s' à échoué."
-
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "Propriétés DFS"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Nom du partage DFS"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Description"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Serveur de fichier"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Partage sur le serveur de fichier"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "Location DFS"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Lieu"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -166,3 +104,58 @@ msgstr "Expression régulière pour sélectionner les partages dfs"
 #: addons/godfs/main.inc:27 addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr "Administration du systèmes de fichiers distribués DFS"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "Propriétés DFS"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Nom du partage DFS"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Description"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Serveur de fichier"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Partage sur le serveur de fichier"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "Location DFS"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Lieu"
+
+#~ msgid "Removing of DFS share with dn '%s' failed."
+#~ msgstr "La suppression du partage DFS avec le dn '%s' à échoué."
+
+#~ msgid "Dfs share already exists."
+#~ msgstr "Le partage dfs indiqué existe déjà."
+
+#~ msgid "Required Field \"Name of dfs Share\" is not set."
+#~ msgstr "Le champ obligatoire \"Nom du partage DFS\" n'est pas rempli."
+
+#~ msgid "Required Field \"Description\" is not set."
+#~ msgstr "Le champ obligatoire \"Description\" n'est pas rempli."
+
+#~ msgid "Required Field \"Fileserver\" is not set."
+#~ msgstr "Le champ obligatoire \"Serveur de fichiers\"' n'est pas rempli."
+
+#~ msgid "Required Field \"Share on fileserver\" is not set."
+#~ msgstr "Le champ obligatoire \"Partage sur le serveur\" n'est pas rempli."
+
+#~ msgid "Required Field \"Location\" is not set."
+#~ msgstr "Le champ obligatoire \"Endroit\" n'est pas rempli."
+
+#~ msgid "Saving dfs/generic with dn '%s' failed."
+#~ msgstr "La sauvegarde du type dfs/générique avec le dn '%s' à échoué."
+
+#~ msgid "Removing dfs/generic with dn '%s' failed."
+#~ msgstr "La suppression du type dfs/générique avec le dn '%s' à échoué."

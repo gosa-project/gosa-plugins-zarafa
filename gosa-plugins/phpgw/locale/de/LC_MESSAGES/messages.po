@@ -12,13 +12,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "phpGroupware-Konto"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -28,32 +32,29 @@ msgstr "phpGroupware"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:84
-#, php-format
-msgid "Removing of user/PHPgw account with dn '%s' failed."
-msgstr "Entfernen von Benutzer/PHPgw-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:85
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:141
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:138
-#, php-format
-msgid "Saving of user/PHPgw account with dn '%s' failed."
-msgstr "Speichern von Benutzer/PHPgw-Konto mit dn '%s' fehlgeschlagen."
-
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:156
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHP GW"
 msgstr "PHP GW"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "PHP GW account settings"
 msgstr "PHP GW Konto-Einstellungen"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:157
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/phpgw/class_phpgwAccount.inc:161
+#: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
-msgstr "phpGroupware-Konto"
+#~ msgid "Removing of user/PHPgw account with dn '%s' failed."
+#~ msgstr "Entfernen von Benutzer/PHPgw-Konto mit dn '%s' fehlgeschlagen."
+
+#~ msgid "Saving of user/PHPgw account with dn '%s' failed."
+#~ msgstr "Speichern von Benutzer/PHPgw-Konto mit dn '%s' fehlgeschlagen."

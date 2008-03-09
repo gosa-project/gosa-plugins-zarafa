@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:959
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
 msgstr "Open-Xchange"
 
@@ -24,89 +24,77 @@ msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 msgid "Error"
 msgstr "Erreur"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:828
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #, fuzzy, php-format
 msgid "Cannot connect to %s database!"
 msgstr "Impossible de se connecter au serveur de base de données !"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, fuzzy
 msgid "Configuration error"
 msgstr "Le fichier de configuration peut être écrit"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #, fuzzy, php-format
 msgid "%s database configuration is missing!"
 msgstr "Configuration de la base de données des fax"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:740
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:751
-#, php-format
-msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
+msgid "LDAP error"
 msgstr ""
-"La suppression du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:816
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
 #, fuzzy
 msgid "Open-Xchange account name"
 msgstr "Compte Open Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:855
-#, php-format
-msgid "Saving of user/oxchange account with dn '%s' failed."
-msgstr ""
-"La sauvegarde du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:862
-#, php-format
-msgid "Creating of user/oxchange account with dn '%s' failed."
-msgstr ""
-"La création du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:949
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 #, fuzzy
 msgid "Cannot save Open-Xchange account!"
 msgstr "Compte Open Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
 #, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Paramètres du compte Open Xchange"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:960
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:964
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:973
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:978
 msgid "OXAppointmentDays"
 msgstr "Rendez vous"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:970
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:979
 msgid "OXTaskDays"
 msgstr "Tâches"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:971
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:980
 msgid "OXTimeZone"
 msgstr "Fuseau Horaire de l'utilisateur"
 
@@ -150,6 +138,20 @@ msgstr "Information Utilisateur"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "Zone Horaire de l'utilisateur"
+
+#~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
+#~ msgstr ""
+#~ "La suppression du compte/oxchange de l'utilisateur avec le dn '%s' à "
+#~ "échoué."
+
+#~ msgid "Saving of user/oxchange account with dn '%s' failed."
+#~ msgstr ""
+#~ "La sauvegarde du compte/oxchange de l'utilisateur avec le dn '%s' à "
+#~ "échoué."
+
+#~ msgid "Creating of user/oxchange account with dn '%s' failed."
+#~ msgstr ""
+#~ "La création du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
 
 #, fuzzy
 #~ msgid "Open-Xchange account name is invalid!"

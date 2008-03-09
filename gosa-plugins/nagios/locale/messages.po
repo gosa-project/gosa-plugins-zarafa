@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:270
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
 msgid "Nagios"
 msgstr ""
 
@@ -25,122 +28,87 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:105
-msgid "This account has no nagios extensions."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:114
-msgid "Remove nagios account"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:115
-msgid ""
-"This account has nagios features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid "Create nagios account"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:117
-msgid ""
-"This account has nagios features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-
 #: personal/nagios/class_nagiosAccount.inc:173
-#, php-format
-msgid "Saving of user/nagios account with dn '%s' failed."
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:193
-msgid "The required field 'NagiosAlias' is not set."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:196
-msgid "The required field 'NagiosMail' is not set."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:200
-#: personal/nagios/class_nagiosAccount.inc:204
-msgid "Please enter a valid email address in 'NagiosMail' field."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:256
-#, php-format
-msgid "Removing of user/nagios account with dn '%s' failed."
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:271
-msgid "Nagios account settings"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:275
-msgid "My account"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:281 personal/nagios/nagios.tpl:8
+#: personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
 msgid "Alias"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:282
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:274
+msgid "Nagios account settings"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:285
 msgid "Pager number"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:283 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:100
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
 msgid "Host notification commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:27
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
 msgid "Host notification period"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:90
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:53
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
 msgid "Service notification options"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:291 personal/nagios/nagios.tpl:40
+#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
 msgid "Service notification period"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:293
+#: personal/nagios/class_nagiosAccount.inc:296
 msgid "View all hosts"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:294
+#: personal/nagios/class_nagiosAccount.inc:297
 msgid "View all services"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:296
+#: personal/nagios/class_nagiosAccount.inc:299
 msgid "Trigger system commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:297
+#: personal/nagios/class_nagiosAccount.inc:300
 msgid "Trigger all host commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:298
+#: personal/nagios/class_nagiosAccount.inc:301
 msgid "Trigger all service commands"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:300
+#: personal/nagios/class_nagiosAccount.inc:303
 msgid "View configuration information"
 msgstr ""
 
-#: personal/nagios/class_nagiosAccount.inc:301
+#: personal/nagios/class_nagiosAccount.inc:304
 msgid "View system informations"
 msgstr ""
 
@@ -182,22 +150,6 @@ msgstr ""
 
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
-msgstr ""
-
-#: personal/nagios/main.inc:105
-msgid "Ok"
-msgstr ""
-
-#: personal/nagios/main.inc:107
-msgid "Cancel"
-msgstr ""
-
-#: personal/nagios/main.inc:116
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-
-#: personal/nagios/main.inc:117
-msgid "Edit"
 msgstr ""
 
 #: personal/nagios/main.inc:125

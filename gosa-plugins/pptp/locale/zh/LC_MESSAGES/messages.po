@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,13 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/connectivity/pptp/pptp.tpl:3
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
-msgid "PPTP account"
-msgstr "PPTP 账号"
-
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
-#: personal/connectivity/pptp/class_pptpAccount.inc:173
+#: personal/connectivity/pptp/class_pptpAccount.inc:177
 msgid "PPTP"
 msgstr "PPTP"
 
@@ -31,21 +26,29 @@ msgstr "PPTP"
 msgid "This does something"
 msgstr "******"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:101
-#, fuzzy, php-format
-msgid "Removing of user/PPTP account with dn '%s' failed."
-msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+#: personal/connectivity/pptp/class_pptpAccount.inc:102
+#: personal/connectivity/pptp/class_pptpAccount.inc:158
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:155
-#, fuzzy, php-format
-msgid "Saving of user/PPTP account with dn '%s' failed."
-msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr "PPTP 账号"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:174
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
 
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/class_pptpAccount.inc:182
 msgid "My account"
 msgstr "我的账号"
+
+#, fuzzy
+#~ msgid "Removing of user/PPTP account with dn '%s' failed."
+#~ msgstr "删除 dn 为 '%s' 的 user/kolab 账号失败。"
+
+#, fuzzy
+#~ msgid "Saving of user/PPTP account with dn '%s' failed."
+#~ msgstr "保存 dn 为 '%s' 的 user/kolab 账号为空。"

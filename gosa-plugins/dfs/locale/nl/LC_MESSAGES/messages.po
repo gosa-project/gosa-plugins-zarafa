@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -27,116 +27,54 @@ msgstr "DFS Beheer"
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: addons/godfs/class_dfsManagment.inc:147
-#, fuzzy, php-format
-msgid "Removing of DFS share with dn '%s' failed."
-msgstr "Het verwijderen van de DFS share is mislukt"
+#: addons/godfs/class_dfsManagment.inc:148
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr ""
 
-#: addons/godfs/class_dfsManagment.inc:166
+#: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
 msgstr "Geen DFS regels gevonden"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Go up one dfsshare"
 msgstr "Ga een DFS share omhoog"
 
-#: addons/godfs/class_dfsManagment.inc:209
+#: addons/godfs/class_dfsManagment.inc:211
 msgid "Up"
 msgstr "Omhoog"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
 msgstr "Ga naar DFS root"
 
-#: addons/godfs/class_dfsManagment.inc:210
+#: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
 msgstr "Basis"
 
-#: addons/godfs/class_dfsManagment.inc:211
+#: addons/godfs/class_dfsManagment.inc:213
 msgid "Create new dfsshare"
 msgstr "Maak een nieuwe DFS share aan"
 
-#: addons/godfs/class_dfsManagment.inc:213
+#: addons/godfs/class_dfsManagment.inc:215
 msgid "Base"
 msgstr "Basis"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit department"
 msgstr "Verwerk afdeling"
 
-#: addons/godfs/class_dfsManagment.inc:214
+#: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
 msgstr "Verwerk"
 
-#: addons/godfs/class_dfsManagment.inc:243
+#: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Opslaan"
 
-#: addons/godfs/class_dfsManagment.inc:245
+#: addons/godfs/class_dfsManagment.inc:247
 msgid "Cancel"
 msgstr "Annuleren"
-
-#: addons/godfs/class_dfsgeneric.inc:93 addons/godfs/class_dfsgeneric.inc:95
-msgid "Dfs share already exists."
-msgstr "De opgegeven DFS share bestaat al."
-
-#: addons/godfs/class_dfsgeneric.inc:108
-msgid "Required Field \"Name of dfs Share\" is not set."
-msgstr "Vereist veld \"Naam van DFS share\" is leeg."
-
-#: addons/godfs/class_dfsgeneric.inc:111
-msgid "Required Field \"Description\" is not set."
-msgstr "Vereist veld \"Omschrijving\" is leeg."
-
-#: addons/godfs/class_dfsgeneric.inc:114
-msgid "Required Field \"Fileserver\" is not set."
-msgstr "Vereist veld \"Bestandserver\" is leeg."
-
-#: addons/godfs/class_dfsgeneric.inc:117
-msgid "Required Field \"Share on fileserver\" is not set."
-msgstr "Vereist veld \"Share op bestandserver\" is leeg."
-
-#: addons/godfs/class_dfsgeneric.inc:120
-msgid "Required Field \"Location\" is not set."
-msgstr "Vereist veld \"DFS locatie\" is leeg."
-
-#: addons/godfs/class_dfsgeneric.inc:176
-#, fuzzy, php-format
-msgid "Saving dfs/generic with dn '%s' failed."
-msgstr "Het opslaan van het algemene gerbuikers account is mislukt"
-
-#: addons/godfs/class_dfsgeneric.inc:203
-#, fuzzy, php-format
-msgid "Removing dfs/generic with dn '%s' failed."
-msgstr "Het verwijderen van een algemeen component is mislukt"
-
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "DFS eigenschappen"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Naam van DFS share"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Omschrijving"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Bestandserver"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Share op bestandserver"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "DFS locatie"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Plaats"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -171,3 +109,61 @@ msgstr "Reguliere expressie voor overeenkomende DFS share namen"
 #: addons/godfs/main.inc:27 addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr "Distibuted File System Beheer"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "DFS eigenschappen"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Naam van DFS share"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Omschrijving"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Bestandserver"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Share op bestandserver"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "DFS locatie"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Plaats"
+
+#, fuzzy
+#~ msgid "Removing of DFS share with dn '%s' failed."
+#~ msgstr "Het verwijderen van de DFS share is mislukt"
+
+#~ msgid "Dfs share already exists."
+#~ msgstr "De opgegeven DFS share bestaat al."
+
+#~ msgid "Required Field \"Name of dfs Share\" is not set."
+#~ msgstr "Vereist veld \"Naam van DFS share\" is leeg."
+
+#~ msgid "Required Field \"Description\" is not set."
+#~ msgstr "Vereist veld \"Omschrijving\" is leeg."
+
+#~ msgid "Required Field \"Fileserver\" is not set."
+#~ msgstr "Vereist veld \"Bestandserver\" is leeg."
+
+#~ msgid "Required Field \"Share on fileserver\" is not set."
+#~ msgstr "Vereist veld \"Share op bestandserver\" is leeg."
+
+#~ msgid "Required Field \"Location\" is not set."
+#~ msgstr "Vereist veld \"DFS locatie\" is leeg."
+
+#, fuzzy
+#~ msgid "Saving dfs/generic with dn '%s' failed."
+#~ msgstr "Het opslaan van het algemene gerbuikers account is mislukt"
+
+#, fuzzy
+#~ msgid "Removing dfs/generic with dn '%s' failed."
+#~ msgstr "Het verwijderen van een algemeen component is mislukt"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -22,93 +22,83 @@ msgstr "FTP"
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:138
-#, fuzzy, php-format
-msgid "Removing of user/pureftpd account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:240
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:190
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
 msgid "Upload bandwidth"
 msgstr "Пропускная способность (на сервер)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:193
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
 msgid "Download bandwidth"
 msgstr "Пропускная способность (с сервера)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:197
 #, fuzzy
 msgid "Quota file"
 msgstr "Размер квоты"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:200
 #, fuzzy
 msgid "Quota size"
 msgstr "Размер квоты"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
-#, fuzzy
-msgid "Value specified as 'Upload ratio' is not valid."
-msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:203
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Upload ratio"
 msgstr "Загрузка процессора"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:206
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 #, fuzzy
 msgid "Download ratio"
 msgstr "Системная информация"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
-#, fuzzy, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr "Удалить телефонный аккаунт"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:260
 #, fuzzy
 msgid "Ftp"
 msgstr "Тип"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 #, fuzzy
 msgid "Pure ftp account"
 msgstr "Создать настройки факса"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Подключение"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:265
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 #, fuzzy
 msgid "Quota files"
 msgstr "Размер квоты"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Quota MBytes"
 msgstr "Размер квоты"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "Пропускная способность (на сервер)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
 #, fuzzy
 msgid "Download bandwith"
 msgstr "Пропускная способность (с сервера)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
 msgid "Status"
 msgstr "Состояние"
 
@@ -160,6 +150,18 @@ msgstr "Отметьте, чтобы отключить доступ к FTP"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Временно отключить доступ к FTP"
+
+#, fuzzy
+#~ msgid "Removing of user/pureftpd account with dn '%s' failed."
+#~ msgstr "Удалить телефонный аккаунт"
+
+#, fuzzy
+#~ msgid "Value specified as 'Upload ratio' is not valid."
+#~ msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."
+
+#, fuzzy
+#~ msgid "Saving of user/pureftpd account with dn '%s' failed."
+#~ msgstr "Удалить телефонный аккаунт"
 
 #~ msgid "Value specified as 'Upload bandwidth' is not valid."
 #~ msgstr "Значение поля \"Пропускная способность (на сервер)\" некорректно."

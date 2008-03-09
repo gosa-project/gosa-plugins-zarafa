@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 08:56+0100\n"
+"POT-Creation-Date: 2008-03-09 20:23+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,6 +13,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Créer un compte Intranet"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -29,31 +33,24 @@ msgid "This account has no connectivity extensions."
 msgstr "Ce compte n'as pas d'extension de connectivité."
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:194
+#: personal/connectivity/class_intranetAccount.inc:198
 msgid "Intranet"
 msgstr "Intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:118
-#, php-format
-msgid "Removing of user/intranet account with dn '%s' failed."
+#: personal/connectivity/class_intranetAccount.inc:119
+#: personal/connectivity/class_intranetAccount.inc:186
+msgid "LDAP error"
 msgstr ""
-"La suppression du compte/intranet de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/class_intranetAccount.inc:183
-#, php-format
-msgid "Saving of user/intranet account with dn '%s' failed."
-msgstr ""
-"La sauvegarde du compte/intranet de l'utilisateur avec le dn '%s' à échoué."
-
-#: personal/connectivity/class_intranetAccount.inc:197
+#: personal/connectivity/class_intranetAccount.inc:201
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet account settings"
 msgstr "Paramètres du compte Intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_intranetAccount.inc:205
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
@@ -75,6 +72,12 @@ msgstr ""
 msgid "Edit"
 msgstr "Editer"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Créer un compte Intranet"
+#~ msgid "Removing of user/intranet account with dn '%s' failed."
+#~ msgstr ""
+#~ "La suppression du compte/intranet de l'utilisateur avec le dn '%s' à "
+#~ "échoué."
+
+#~ msgid "Saving of user/intranet account with dn '%s' failed."
+#~ msgstr ""
+#~ "La sauvegarde du compte/intranet de l'utilisateur avec le dn '%s' à "
+#~ "échoué."

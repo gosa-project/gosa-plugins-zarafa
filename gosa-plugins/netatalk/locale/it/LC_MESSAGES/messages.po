@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:367
 msgid "Netatalk"
 msgstr ""
 
@@ -26,86 +26,89 @@ msgid "Manage netatalk account"
 msgstr "Crea estensioni telefoniche"
 
 #: personal/netatalk/class_netatalk.inc:170
-#, fuzzy
-msgid "This account has no netatalk extensions."
-msgstr "Questa identità non ha le estensioni per la posta"
-
 #: personal/netatalk/class_netatalk.inc:179
-#, fuzzy
-msgid "Remove netatalk account"
-msgstr "Rimuovi le estensioni di posta"
-
-#: personal/netatalk/class_netatalk.inc:179
-#, fuzzy
-msgid ""
-"This account has netatalk features enabled. You can disable them by clicking "
-"below."
-msgstr "Questa identià possiede estensioni di posta."
-
-#: personal/netatalk/class_netatalk.inc:190
-#: personal/netatalk/class_netatalk.inc:192
-#, fuzzy
-msgid "Create netatalk account"
-msgstr "Crea estensioni di posta"
-
-#: personal/netatalk/class_netatalk.inc:190
-#, fuzzy
-msgid ""
-"This account has netatalk features disabled. You can enable them by clicking "
-"below."
-msgstr "Questa identità non possiede estensioni di posta."
-
-#: personal/netatalk/class_netatalk.inc:225
-msgid "You must select a share to use."
+#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:188
+msgid "netatalk"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:290
-#, fuzzy, php-format
-msgid "Saving of user/netatalk account with dn '%s' failed."
-msgstr "Crea estensioni telefoniche"
+#: personal/netatalk/class_netatalk.inc:184
+msgid "POSIX"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:352
-#, fuzzy, php-format
-msgid "Removing of user/netatalk account with dn '%s' failed."
-msgstr "Rimuovi le estensioni di posta"
+#: personal/netatalk/class_netatalk.inc:186
+msgid "netatalk or NFS share"
+msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:370
-msgid "My account"
-msgstr "Identità"
-
-#: personal/netatalk/class_netatalk.inc:375
-#, fuzzy
-msgid "User home path"
-msgstr "Telefono privato"
-
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:222
+#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
 #, fuzzy
 msgid "Share"
 msgstr "reset"
+
+#: personal/netatalk/class_netatalk.inc:288
+#: personal/netatalk/class_netatalk.inc:352
+msgid "LDAP error"
+msgstr ""
+
+#: personal/netatalk/class_netatalk.inc:371
+msgid "My account"
+msgstr "Identità"
+
+#: personal/netatalk/class_netatalk.inc:376
+#, fuzzy
+msgid "User home path"
+msgstr "Telefono privato"
 
 #: personal/netatalk/netatalk.tpl:16
 msgid "Path"
 msgstr ""
 
-#: personal/netatalk/main.inc:96
-msgid "Ok"
-msgstr ""
-
-#: personal/netatalk/main.inc:98
-msgid "Cancel"
-msgstr "Annulla"
-
-#: personal/netatalk/main.inc:103
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
-"questo dialogo"
-
-#: personal/netatalk/main.inc:104
-msgid "Edit"
-msgstr "Modifica"
-
 #: personal/netatalk/main.inc:113
 #, fuzzy
 msgid "Netatalk settings"
 msgstr "Mostra workstation"
+
+#, fuzzy
+#~ msgid "This account has no netatalk extensions."
+#~ msgstr "Questa identità non ha le estensioni per la posta"
+
+#, fuzzy
+#~ msgid "Remove netatalk account"
+#~ msgstr "Rimuovi le estensioni di posta"
+
+#, fuzzy
+#~ msgid ""
+#~ "This account has netatalk features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr "Questa identià possiede estensioni di posta."
+
+#, fuzzy
+#~ msgid "Create netatalk account"
+#~ msgstr "Crea estensioni di posta"
+
+#, fuzzy
+#~ msgid ""
+#~ "This account has netatalk features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr "Questa identità non possiede estensioni di posta."
+
+#, fuzzy
+#~ msgid "Saving of user/netatalk account with dn '%s' failed."
+#~ msgstr "Crea estensioni telefoniche"
+
+#, fuzzy
+#~ msgid "Removing of user/netatalk account with dn '%s' failed."
+#~ msgstr "Rimuovi le estensioni di posta"
+
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
+#~ "questo dialogo"
+
+#~ msgid "Edit"
+#~ msgstr "Modifica"

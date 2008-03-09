@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:25+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:319
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "Proxy account"
 msgstr "Proxy account"
 
@@ -35,7 +35,7 @@ msgid "Limit proxy access to working time"
 msgstr "Beperk proxy gebruik tot tijd"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:330
+#: personal/connectivity/squid/class_proxyAccount.inc:334
 msgid "Restrict proxy usage by quota"
 msgstr "Beperk proxy gebruik met quota"
 
@@ -44,7 +44,7 @@ msgid "per"
 msgstr "per"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:318
+#: personal/connectivity/squid/class_proxyAccount.inc:322
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -80,38 +80,41 @@ msgstr "week"
 msgid "month"
 msgstr "maand"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:174
-#, fuzzy, php-format
-msgid "Removing of user/proxy account with dn '%s' failed."
-msgstr "Het verwijderen van het proxy account is mislukt"
+#: personal/connectivity/squid/class_proxyAccount.inc:175
+#: personal/connectivity/squid/class_proxyAccount.inc:301
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:194
 #: personal/connectivity/squid/class_proxyAccount.inc:196
+#: personal/connectivity/squid/class_proxyAccount.inc:198
 msgid "Quota Setting"
 msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:298
-#, fuzzy, php-format
-msgid "Saving of user/proxy account with dn '%s' failed."
-msgstr "Het opslaan van het proxy account is mislukt"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:319
+#: personal/connectivity/squid/class_proxyAccount.inc:323
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Verbindingen"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:323
+#: personal/connectivity/squid/class_proxyAccount.inc:327
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:328
+#: personal/connectivity/squid/class_proxyAccount.inc:332
 msgid "Filter unwanted content"
 msgstr ""
 
-#: personal/connectivity/squid/class_proxyAccount.inc:329
+#: personal/connectivity/squid/class_proxyAccount.inc:333
 #, fuzzy
 msgid "Limit proxy access"
 msgstr "Beperk proxy gebruik tot tijd"
+
+#, fuzzy
+#~ msgid "Removing of user/proxy account with dn '%s' failed."
+#~ msgstr "Het verwijderen van het proxy account is mislukt"
+
+#, fuzzy
+#~ msgid "Saving of user/proxy account with dn '%s' failed."
+#~ msgstr "Het opslaan van het proxy account is mislukt"
 
 #~ msgid "Numerical value for Quota Setting is empty."
 #~ msgstr "De nummerieke waarde opgegeven voor Quota Instellingen is leeg."

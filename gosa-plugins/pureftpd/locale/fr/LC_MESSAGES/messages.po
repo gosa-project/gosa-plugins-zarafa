@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -22,87 +22,74 @@ msgstr "FTP"
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:138
-#, php-format
-msgid "Removing of user/pureftpd account with dn '%s' failed."
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:240
+msgid "LDAP error"
 msgstr ""
-"La suppression du compte/pureftpd de l'utilisateur avec le dn '%s' à échoué."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:190
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
 msgid "Upload bandwidth"
 msgstr "Bande passante montante"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:193
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
 msgid "Download bandwidth"
 msgstr "Bande passante descendante"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:197
 #, fuzzy
 msgid "Quota file"
 msgstr "Taille du Quota"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:200
 #, fuzzy
 msgid "Quota size"
 msgstr "Taille du Quota"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
-msgid "Value specified as 'Upload ratio' is not valid."
-msgstr ""
-"La valeur spécifiée dans le champ 'Bande passante en montée' n'est pas "
-"valide."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:203
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 msgid "Upload ratio"
 msgstr "Ratio de Téléchargerment"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:206
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Download ratio"
 msgstr "Ratio de téléchargement (descente)"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
-#, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr ""
-"La sauvegarde du compte/pureftpd de l'utilisateur avec le dn '%s' à échoué."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:260
 msgid "Ftp"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 msgid "Pure ftp account"
 msgstr "Créer un compte Pure ftp"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:265
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 msgid "Quota files"
 msgstr "Taille du Quota"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 msgid "Quota MBytes"
 msgstr "Taille du Quota en MBytes"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
 msgid "Upload bandwith"
 msgstr "Bande passante montante"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
 msgid "Download bandwith"
 msgstr "Bande passante descendante"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
 msgid "Status"
 msgstr "Statut"
 
@@ -154,6 +141,21 @@ msgstr "Cliquez ici pour désactivez l'accès FTP"
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr "Désactiver temporairement l'accès FTP"
+
+#~ msgid "Removing of user/pureftpd account with dn '%s' failed."
+#~ msgstr ""
+#~ "La suppression du compte/pureftpd de l'utilisateur avec le dn '%s' à "
+#~ "échoué."
+
+#~ msgid "Value specified as 'Upload ratio' is not valid."
+#~ msgstr ""
+#~ "La valeur spécifiée dans le champ 'Bande passante en montée' n'est pas "
+#~ "valide."
+
+#~ msgid "Saving of user/pureftpd account with dn '%s' failed."
+#~ msgstr ""
+#~ "La sauvegarde du compte/pureftpd de l'utilisateur avec le dn '%s' à "
+#~ "échoué."
 
 #~ msgid "Value specified as 'Upload bandwidth' is not valid."
 #~ msgstr ""

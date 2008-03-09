@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,436 +19,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/samba/samba3_workstations.tpl:6
-msgid "Select workstations to add"
-msgstr "Selecteer de toe te voegen werkstations"
-
-#: personal/samba/samba3_workstations.tpl:20
-msgid "Filters"
-msgstr "Filters"
-
-#: personal/samba/samba3_workstations.tpl:26
-msgid "Display workstations of department"
-msgstr "Toon werkstations van afdeling"
-
-#: personal/samba/samba3_workstations.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "Selecteer de afdeling waarbinnen gezocht zal worden"
-
-#: personal/samba/samba3_workstations.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "Reguliere expresie voor overeenkomende adressen"
-
-#: personal/samba/samba3_workstations.tpl:39 personal/samba/samba3.tpl:437
-#: personal/samba/samba3.tpl:447
-msgid "Add"
-msgstr "Toevoegen"
-
-#: personal/samba/samba3_workstations.tpl:41
-#: personal/samba/sambaLogonHours.tpl:96 personal/samba/main.inc:106
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: personal/samba/sambaLogonHours.tpl:21
-#, fuzzy
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Specificeer de mailserver waarop het account opgeslagen wordt"
-
-#: personal/samba/sambaLogonHours.tpl:27
-#, fuzzy
-msgid "Hour"
-msgstr "uur"
-
-#: personal/samba/sambaLogonHours.tpl:94
-msgid "Apply"
-msgstr "Toepassen"
-
-#: personal/samba/class_sambaLogonHours.inc:62
-#, fuzzy
-msgid "Sunday"
-msgstr "dag"
-
-#: personal/samba/class_sambaLogonHours.inc:63
-#, fuzzy
-msgid "Monday"
-msgstr "dag"
-
-#: personal/samba/class_sambaLogonHours.inc:64
-#, fuzzy
-msgid "Tuesday"
-msgstr "dag"
-
-#: personal/samba/class_sambaLogonHours.inc:65
-msgid "Wednesday"
-msgstr ""
-
-#: personal/samba/class_sambaLogonHours.inc:66
-#, fuzzy
-msgid "Thursday"
-msgstr "uren"
-
-#: personal/samba/class_sambaLogonHours.inc:67
-#, fuzzy
-msgid "Friday"
-msgstr "dag"
-
-#: personal/samba/class_sambaLogonHours.inc:68
-#, fuzzy
-msgid "Saturday"
-msgstr "Strategie"
-
-#: personal/samba/class_sambaAccount.inc:24
-#: personal/samba/class_sambaAccount.inc:1170
-msgid "Samba"
-msgstr "Samba"
-
-#: personal/samba/class_sambaAccount.inc:25
-msgid "This does something"
-msgstr "Dit doet iets"
-
-#: personal/samba/class_sambaAccount.inc:217
-msgid "This account has no samba extensions."
-msgstr "Dit account heeft geen samba extensies."
-
-#: personal/samba/class_sambaAccount.inc:229
-msgid "Remove samba account"
-msgstr "Samba account verwijderen"
-
-#: personal/samba/class_sambaAccount.inc:230
-msgid ""
-"This account has samba features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"De samba mogelijkheden zijn ingeschakeld voor dit account. U kunt deze "
-"uitschakelen door de knop hieronder te gebruiken."
-
-#: personal/samba/class_sambaAccount.inc:239
-#: personal/samba/class_sambaAccount.inc:242
-msgid "Create samba account"
-msgstr "Samba account aanmaken"
-
-#: personal/samba/class_sambaAccount.inc:240
-msgid ""
-"This account has samba features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"De samba mogelijkheden zijn uitgeschakeld voor dit account. U kunt deze "
-"inschakelen door de knop hieronder te gebruiken."
-
-#: personal/samba/class_sambaAccount.inc:243
-msgid ""
-"This account has samba features disabled. Posix features are needed for "
-"samba accounts, enable them first."
-msgstr ""
-"De samba mogelijkheden zijn uitgeschakeld voor dit account. Posix "
-"mogelijkheden zijn noodzakelijk voor samba accounts. Schakel deze eerst in."
-
-#: personal/samba/class_sambaAccount.inc:435
-#: personal/samba/class_sambaAccount.inc:453
-#: personal/samba/class_sambaAccount.inc:471
-#: personal/samba/class_sambaAccount.inc:489
-msgid "January"
-msgstr "Januari"
-
-#: personal/samba/class_sambaAccount.inc:435
-#: personal/samba/class_sambaAccount.inc:453
-#: personal/samba/class_sambaAccount.inc:471
-#: personal/samba/class_sambaAccount.inc:489
-msgid "February"
-msgstr "Februari"
-
-#: personal/samba/class_sambaAccount.inc:435
-#: personal/samba/class_sambaAccount.inc:453
-#: personal/samba/class_sambaAccount.inc:471
-#: personal/samba/class_sambaAccount.inc:489
-msgid "March"
-msgstr "Maart"
-
-#: personal/samba/class_sambaAccount.inc:435
-#: personal/samba/class_sambaAccount.inc:453
-#: personal/samba/class_sambaAccount.inc:471
-#: personal/samba/class_sambaAccount.inc:489
-msgid "April"
-msgstr "April"
-
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
-msgid "May"
-msgstr "Mei"
-
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
-msgid "June"
-msgstr "Juni"
-
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
-msgid "July"
-msgstr "Juli"
-
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
-msgid "August"
-msgstr "Augustus"
-
-#: personal/samba/class_sambaAccount.inc:436
-#: personal/samba/class_sambaAccount.inc:454
-#: personal/samba/class_sambaAccount.inc:472
-#: personal/samba/class_sambaAccount.inc:490
-msgid "September"
-msgstr "September"
-
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
-msgid "October"
-msgstr "Oktober"
-
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
-msgid "November"
-msgstr "November"
-
-#: personal/samba/class_sambaAccount.inc:437
-#: personal/samba/class_sambaAccount.inc:455
-#: personal/samba/class_sambaAccount.inc:473
-#: personal/samba/class_sambaAccount.inc:491
-msgid "December"
-msgstr "December"
-
-#: personal/samba/class_sambaAccount.inc:532
-msgid "disabled"
-msgstr "gedeactiveerd"
-
-#: personal/samba/class_sambaAccount.inc:533
-msgid "input on, notify on"
-msgstr "invoer met notificatie"
-
-#: personal/samba/class_sambaAccount.inc:534
-msgid "input on, notify off"
-msgstr "invoer zonder notificatie"
-
-#: personal/samba/class_sambaAccount.inc:535
-msgid "input off, notify on"
-msgstr "geen invoer met notificatie"
-
-#: personal/samba/class_sambaAccount.inc:536
-msgid "input off, nofify off"
-msgstr "geen invoer zonder notificatie"
-
-#: personal/samba/class_sambaAccount.inc:538
-msgid "disconnect"
-msgstr "verbreken"
-
-#: personal/samba/class_sambaAccount.inc:539
-msgid "reset"
-msgstr "sluiten"
-
-#: personal/samba/class_sambaAccount.inc:541
-msgid "from any client"
-msgstr "vanaf elke client"
-
-#: personal/samba/class_sambaAccount.inc:542
-msgid "from previous client only"
-msgstr "alleen vanaf vorige client"
-
-#: personal/samba/class_sambaAccount.inc:733
-#, fuzzy, php-format
-msgid "Removing of user/samba account with dn '%s' failed."
-msgstr "Het verwijderen van het Samba account is mislukt"
-
-#: personal/samba/class_sambaAccount.inc:749
-#: personal/samba/class_sambaAccount.inc:1239 personal/samba/samba3.tpl:13
-#: personal/samba/samba3.tpl:106
-msgid "Home directory"
-msgstr "Persoonlijke map"
-
-#: personal/samba/class_sambaAccount.inc:750
-#: personal/samba/class_sambaAccount.inc:1240 personal/samba/samba2.tpl:45
-#: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:120
-msgid "Profile path"
-msgstr "Profielpad"
-
-#: personal/samba/class_sambaAccount.inc:752
-#: personal/samba/class_sambaAccount.inc:1242
-#, php-format
-msgid "The value specified as '%s' contains invalid characters!"
-msgstr "De waarde gespecificeerd als '%s' bevat ongeldige karakters!"
-
-#: personal/samba/class_sambaAccount.inc:757
-#: personal/samba/class_sambaAccount.inc:1247 personal/samba/samba3.tpl:184
-msgid "Connection"
-msgstr "Max. verbindingsduur"
-
-#: personal/samba/class_sambaAccount.inc:758
-#: personal/samba/class_sambaAccount.inc:1248 personal/samba/samba3.tpl:198
-msgid "Disconnection"
-msgstr "Max. verbrekingsduur"
-
-#: personal/samba/class_sambaAccount.inc:759
-#: personal/samba/class_sambaAccount.inc:1249 personal/samba/samba3.tpl:212
-msgid "IDLE"
-msgstr "Max. inactiviteitsduur"
-
-#: personal/samba/class_sambaAccount.inc:762
-#: personal/samba/class_sambaAccount.inc:1253
-#, php-format
-msgid ""
-"The timeout property '%s' is checked and contains invalid or no characters!"
-msgstr ""
-"De timeout optie '%s' is geselecteerd en bevat geen of ongeldige karakters!"
-
-#: personal/samba/class_sambaAccount.inc:768
-#: personal/samba/class_sambaAccount.inc:1259
-msgid ""
-"The windows user manager only allows eight clients. You've specified more "
-"than eight."
-msgstr ""
-"Het Windows gebruikersbeheer programma staat slechts acht clients toe. U "
-"heeft er meer dan acht opgegeven."
-
-#: personal/samba/class_sambaAccount.inc:957
-#: personal/samba/class_sambaAccount.inc:981
-msgid "Warning"
-msgstr "Waarschuwing"
-
-#: personal/samba/class_sambaAccount.inc:957
-msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:981
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:1091
-#, fuzzy, php-format
-msgid "Saving of user/samba account with dn '%s' failed."
-msgstr "Het opslaan van het Samba account is mislukt"
-
-#: personal/samba/class_sambaAccount.inc:1171 personal/samba/main.inc:125
-msgid "Samba settings"
-msgstr "Samba Instellingen"
-
-#: personal/samba/class_sambaAccount.inc:1175
-msgid "My account"
-msgstr "Mijn account"
-
-#: personal/samba/class_sambaAccount.inc:1180 personal/samba/samba3.tpl:103
-msgid "Allow login on terminal server"
-msgstr "Sta inloggen op de Terminal Server toe"
-
-#: personal/samba/class_sambaAccount.inc:1181 personal/samba/samba3.tpl:140
-msgid "Inherit client config"
-msgstr "Client configuratie voor initieel programma overnemen"
-
-#: personal/samba/class_sambaAccount.inc:1183
-#, fuzzy
-msgid "Allow user to change password"
-msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
-
-#: personal/samba/class_sambaAccount.inc:1184 personal/samba/samba2.tpl:72
-#: personal/samba/samba3.tpl:316
-msgid "Login from windows client requires no password"
-msgstr "Inloggen op Windows werkstation zonder wachtwoord toestaan"
-
-#: personal/samba/class_sambaAccount.inc:1185 personal/samba/samba3.tpl:321
-msgid "Lock samba account"
-msgstr "Blokkeer het Samba/Windows account"
-
-#: personal/samba/class_sambaAccount.inc:1188
-#, fuzzy
-msgid "Account expires"
-msgstr "Het account verloopt op"
-
-#: personal/samba/class_sambaAccount.inc:1189
-#, fuzzy
-msgid "Password expires"
-msgstr "Wachtwoord verloopt op"
-
-#: personal/samba/class_sambaAccount.inc:1191 personal/samba/samba3.tpl:346
-msgid "Limit Logon Time"
-msgstr "Stel laatste inlogtijd in op"
-
-#: personal/samba/class_sambaAccount.inc:1192 personal/samba/samba3.tpl:366
-msgid "Limit Logoff Time"
-msgstr "Stel laatste uitlogtijd in op"
-
-#: personal/samba/class_sambaAccount.inc:1193
-#, fuzzy
-msgid "Logon hours"
-msgstr "1 uur"
-
-#: personal/samba/class_sambaAccount.inc:1195
-#, fuzzy
-msgid "Generic home directory"
-msgstr "Persoonlijke map"
-
-#: personal/samba/class_sambaAccount.inc:1196
-msgid "Generic samba home drive"
-msgstr ""
-
-#: personal/samba/class_sambaAccount.inc:1197
-#, fuzzy
-msgid "Generic script path"
-msgstr "Inlogscript"
-
-#: personal/samba/class_sambaAccount.inc:1198
-#, fuzzy
-msgid "Generic profile path"
-msgstr "Profielpad"
-
-#: personal/samba/class_sambaAccount.inc:1199 personal/samba/samba3.tpl:27
-msgid "Domain"
-msgstr "Domein"
-
-#: personal/samba/class_sambaAccount.inc:1200
-#, fuzzy
-msgid "Allow connection from"
-msgstr "Sta alleen verbindingen vanaf deze werkstations toe"
-
-#: personal/samba/samba2.tpl:6 personal/samba/samba3.tpl:6
+#: personal/samba/samba3.tpl:6 personal/samba/samba2.tpl:6
 msgid "Generic"
 msgstr "Algemeen"
 
-#: personal/samba/samba2.tpl:13
-msgid "Samba home"
-msgstr "Samba home"
+#: personal/samba/samba3.tpl:13 personal/samba/samba3.tpl:106
+#: personal/samba/class_sambaAccount.inc:743
+#: personal/samba/class_sambaAccount.inc:1235
+msgid "Home directory"
+msgstr "Persoonlijke map"
 
-#: personal/samba/samba2.tpl:37 personal/samba/samba3.tpl:44
+#: personal/samba/samba3.tpl:27 personal/samba/class_sambaAccount.inc:1195
+msgid "Domain"
+msgstr "Domein"
+
+#: personal/samba/samba3.tpl:44 personal/samba/samba2.tpl:37
 msgid "Script path"
 msgstr "Inlogscript"
 
-#: personal/samba/samba2.tpl:59 personal/samba/samba3.tpl:303
-msgid "Access options"
-msgstr "Toegangsopties"
-
-#: personal/samba/samba2.tpl:67 personal/samba/samba3.tpl:311
-msgid "Allow user to change password from client"
-msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
-
-#: personal/samba/samba2.tpl:77
-msgid "Temporary disable samba account"
-msgstr "Schakel het Samba/Windows account tijdelijk uit"
-
-#: personal/samba/samba2.tpl:87 personal/samba/samba3.tpl:326
-msgid "Password expires on"
-msgstr "Wachtwoord verloopt op"
+#: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:120
+#: personal/samba/samba2.tpl:45 personal/samba/class_sambaAccount.inc:744
+#: personal/samba/class_sambaAccount.inc:1236
+msgid "Profile path"
+msgstr "Profielpad"
 
 #: personal/samba/samba3.tpl:66
 msgid "Terminal Server"
 msgstr "Terminal Server"
+
+#: personal/samba/samba3.tpl:103 personal/samba/class_sambaAccount.inc:1176
+msgid "Allow login on terminal server"
+msgstr "Sta inloggen op de Terminal Server toe"
+
+#: personal/samba/samba3.tpl:140 personal/samba/class_sambaAccount.inc:1177
+msgid "Inherit client config"
+msgstr "Client configuratie voor initieel programma overnemen"
 
 #: personal/samba/samba3.tpl:143
 msgid "Initial program"
@@ -461,6 +66,21 @@ msgstr "Werkdirectory"
 #: personal/samba/samba3.tpl:168
 msgid "Timeout settings (in minutes)"
 msgstr "Terminal Service timeouts (in minuten)"
+
+#: personal/samba/samba3.tpl:184 personal/samba/class_sambaAccount.inc:751
+#: personal/samba/class_sambaAccount.inc:1243
+msgid "Connection"
+msgstr "Max. verbindingsduur"
+
+#: personal/samba/samba3.tpl:198 personal/samba/class_sambaAccount.inc:752
+#: personal/samba/class_sambaAccount.inc:1244
+msgid "Disconnection"
+msgstr "Max. verbrekingsduur"
+
+#: personal/samba/samba3.tpl:212 personal/samba/class_sambaAccount.inc:753
+#: personal/samba/class_sambaAccount.inc:1245
+msgid "IDLE"
+msgstr "Max. inactiviteitsduur"
 
 #: personal/samba/samba3.tpl:228
 msgid "Client devices"
@@ -494,6 +114,35 @@ msgstr "Bij verbroken verbinding of timeout"
 msgid "Reconnect if disconnected"
 msgstr "Herstel sessie indien verbroken"
 
+#: personal/samba/samba3.tpl:303 personal/samba/samba2.tpl:59
+msgid "Access options"
+msgstr "Toegangsopties"
+
+#: personal/samba/samba3.tpl:311 personal/samba/samba2.tpl:67
+msgid "Allow user to change password from client"
+msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
+
+#: personal/samba/samba3.tpl:316 personal/samba/samba2.tpl:72
+#: personal/samba/class_sambaAccount.inc:1180
+msgid "Login from windows client requires no password"
+msgstr "Inloggen op Windows werkstation zonder wachtwoord toestaan"
+
+#: personal/samba/samba3.tpl:321 personal/samba/class_sambaAccount.inc:1181
+msgid "Lock samba account"
+msgstr "Blokkeer het Samba/Windows account"
+
+#: personal/samba/samba3.tpl:326 personal/samba/samba2.tpl:87
+msgid "Password expires on"
+msgstr "Wachtwoord verloopt op"
+
+#: personal/samba/samba3.tpl:346 personal/samba/class_sambaAccount.inc:1187
+msgid "Limit Logon Time"
+msgstr "Stel laatste inlogtijd in op"
+
+#: personal/samba/samba3.tpl:366 personal/samba/class_sambaAccount.inc:1188
+msgid "Limit Logoff Time"
+msgstr "Stel laatste uitlogtijd in op"
+
 #: personal/samba/samba3.tpl:387
 msgid "Account expires after"
 msgstr "Het account verloopt op"
@@ -520,23 +169,205 @@ msgstr ""
 msgid "Used by some users"
 msgstr ""
 
+#: personal/samba/samba3.tpl:437 personal/samba/samba3.tpl:447
+#: personal/samba/samba3_workstations.tpl:39
+msgid "Add"
+msgstr "Toevoegen"
+
 #: personal/samba/samba3.tpl:438 personal/samba/samba3.tpl:450
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: personal/samba/main.inc:104
-msgid "Ok"
+#: personal/samba/samba2.tpl:13
+msgid "Samba home"
+msgstr "Samba home"
+
+#: personal/samba/samba2.tpl:77
+msgid "Temporary disable samba account"
+msgstr "Schakel het Samba/Windows account tijdelijk uit"
+
+#: personal/samba/class_sambaAccount.inc:24
+#: personal/samba/class_sambaAccount.inc:217
+#: personal/samba/class_sambaAccount.inc:229
+#: personal/samba/class_sambaAccount.inc:230
+#: personal/samba/class_sambaAccount.inc:239
+#: personal/samba/class_sambaAccount.inc:240
+#: personal/samba/class_sambaAccount.inc:242
+#: personal/samba/class_sambaAccount.inc:243
+#: personal/samba/class_sambaAccount.inc:1166
+msgid "Samba"
+msgstr "Samba"
+
+#: personal/samba/class_sambaAccount.inc:25
+msgid "This does something"
+msgstr "Dit doet iets"
+
+#: personal/samba/class_sambaAccount.inc:243
+msgid "POSIX"
 msgstr ""
 
-#: personal/samba/main.inc:116
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
-"veranderen"
+#: personal/samba/class_sambaAccount.inc:524
+msgid "disabled"
+msgstr "gedeactiveerd"
 
-#: personal/samba/main.inc:117
-msgid "Edit"
-msgstr "Bewerken"
+#: personal/samba/class_sambaAccount.inc:525
+msgid "input on, notify on"
+msgstr "invoer met notificatie"
+
+#: personal/samba/class_sambaAccount.inc:526
+msgid "input on, notify off"
+msgstr "invoer zonder notificatie"
+
+#: personal/samba/class_sambaAccount.inc:527
+msgid "input off, notify on"
+msgstr "geen invoer met notificatie"
+
+#: personal/samba/class_sambaAccount.inc:528
+msgid "input off, nofify off"
+msgstr "geen invoer zonder notificatie"
+
+#: personal/samba/class_sambaAccount.inc:530
+msgid "disconnect"
+msgstr "verbreken"
+
+#: personal/samba/class_sambaAccount.inc:531
+msgid "reset"
+msgstr "sluiten"
+
+#: personal/samba/class_sambaAccount.inc:533
+msgid "from any client"
+msgstr "vanaf elke client"
+
+#: personal/samba/class_sambaAccount.inc:534
+msgid "from previous client only"
+msgstr "alleen vanaf vorige client"
+
+#: personal/samba/class_sambaAccount.inc:726
+#: personal/samba/class_sambaAccount.inc:1086
+#: admin/systems/samba/class_winGeneric.inc:153
+#: admin/systems/samba/class_winGeneric.inc:273
+msgid "LDAP error"
+msgstr ""
+
+#: personal/samba/class_sambaAccount.inc:762
+#, fuzzy
+msgid "The windows usermanager allows eight clients at maximum!"
+msgstr ""
+"Het Windows gebruikersbeheer programma staat slechts acht clients toe. U "
+"heeft er meer dan acht opgegeven."
+
+#: personal/samba/class_sambaAccount.inc:951
+#: personal/samba/class_sambaAccount.inc:975
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: personal/samba/class_sambaAccount.inc:951
+msgid "Undefined Samba SID detected. Please fix this problem manually!"
+msgstr ""
+
+#: personal/samba/class_sambaAccount.inc:975
+msgid ""
+"Cannot convert primary group to samba group: group cannot be identified!"
+msgstr ""
+
+#: personal/samba/class_sambaAccount.inc:1167 personal/samba/main.inc:125
+msgid "Samba settings"
+msgstr "Samba Instellingen"
+
+#: personal/samba/class_sambaAccount.inc:1171
+msgid "My account"
+msgstr "Mijn account"
+
+#: personal/samba/class_sambaAccount.inc:1179
+#, fuzzy
+msgid "Allow user to change password"
+msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
+
+#: personal/samba/class_sambaAccount.inc:1184
+#, fuzzy
+msgid "Account expires"
+msgstr "Het account verloopt op"
+
+#: personal/samba/class_sambaAccount.inc:1185
+#, fuzzy
+msgid "Password expires"
+msgstr "Wachtwoord verloopt op"
+
+#: personal/samba/class_sambaAccount.inc:1189
+#, fuzzy
+msgid "Logon hours"
+msgstr "1 uur"
+
+#: personal/samba/class_sambaAccount.inc:1191
+#, fuzzy
+msgid "Generic home directory"
+msgstr "Persoonlijke map"
+
+#: personal/samba/class_sambaAccount.inc:1192
+msgid "Generic samba home drive"
+msgstr ""
+
+#: personal/samba/class_sambaAccount.inc:1193
+#, fuzzy
+msgid "Generic script path"
+msgstr "Inlogscript"
+
+#: personal/samba/class_sambaAccount.inc:1194
+#, fuzzy
+msgid "Generic profile path"
+msgstr "Profielpad"
+
+#: personal/samba/class_sambaAccount.inc:1196
+#, fuzzy
+msgid "Allow connection from"
+msgstr "Sta alleen verbindingen vanaf deze werkstations toe"
+
+#: personal/samba/class_sambaAccount.inc:1255
+msgid ""
+"The windows user manager only allows eight clients. You've specified more "
+"than eight."
+msgstr ""
+"Het Windows gebruikersbeheer programma staat slechts acht clients toe. U "
+"heeft er meer dan acht opgegeven."
+
+#: personal/samba/samba3_workstations.tpl:6
+msgid "Select workstations to add"
+msgstr "Selecteer de toe te voegen werkstations"
+
+#: personal/samba/samba3_workstations.tpl:20
+msgid "Filters"
+msgstr "Filters"
+
+#: personal/samba/samba3_workstations.tpl:26
+msgid "Display workstations of department"
+msgstr "Toon werkstations van afdeling"
+
+#: personal/samba/samba3_workstations.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr "Selecteer de afdeling waarbinnen gezocht zal worden"
+
+#: personal/samba/samba3_workstations.tpl:31
+msgid "Regular expression for matching addresses"
+msgstr "Reguliere expresie voor overeenkomende adressen"
+
+#: personal/samba/samba3_workstations.tpl:41
+#: personal/samba/sambaLogonHours.tpl:96
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: personal/samba/sambaLogonHours.tpl:21
+#, fuzzy
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Specificeer de mailserver waarop het account opgeslagen wordt"
+
+#: personal/samba/sambaLogonHours.tpl:27
+#, fuzzy
+msgid "Hour"
+msgstr "uur"
+
+#: personal/samba/sambaLogonHours.tpl:94
+msgid "Apply"
+msgstr "Toepassen"
 
 #: admin/systems/samba/wingeneric.tpl:6
 msgid "Machine name"
@@ -555,7 +386,7 @@ msgid "Select a base"
 msgstr "Selecteer een basis"
 
 #: admin/systems/samba/wingeneric.tpl:25
-#: admin/systems/samba/class_winGeneric.inc:291
+#: admin/systems/samba/class_winGeneric.inc:295
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -563,41 +394,148 @@ msgstr "Omschrijving"
 msgid "This 'dn' has no network features."
 msgstr "Deze 'dn' heeft geen netwerk mogelijkheden."
 
-#: admin/systems/samba/class_winGeneric.inc:152
-#, php-format
-msgid "Removing of system wingeneric/generic with dn '%s' failed."
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:202
+#: admin/systems/samba/class_winGeneric.inc:204
 msgid "You have no permissions to create a component on this 'Base'."
 msgstr ""
 "U heeft geen toestemming om een component aan te maken onder deze 'Basis'."
 
-#: admin/systems/samba/class_winGeneric.inc:215
+#: admin/systems/samba/class_winGeneric.inc:217
 #, php-format
 msgid "There is already an entry '%s' in the base choosen by you"
 msgstr "Er is al een invoer '%s' onder de basis die u gekozen heeft"
 
-#: admin/systems/samba/class_winGeneric.inc:270
-#, php-format
-msgid "Saving of system wingeneric/generic with dn '%s' failed."
-msgstr ""
-
-#: admin/systems/samba/class_winGeneric.inc:281
+#: admin/systems/samba/class_winGeneric.inc:285
 #, fuzzy
 msgid "Win generic"
 msgstr "Print Service"
 
-#: admin/systems/samba/class_winGeneric.inc:282
+#: admin/systems/samba/class_winGeneric.inc:286
 #, fuzzy
 msgid "Windows workstation generic"
 msgstr "Werkstation naam"
 
-#: admin/systems/samba/class_winGeneric.inc:287
+#: admin/systems/samba/class_winGeneric.inc:291
 #, fuzzy
 msgid "Win workstation"
 msgstr "Windows werkstation"
 
-#: admin/systems/samba/class_winGeneric.inc:290
+#: admin/systems/samba/class_winGeneric.inc:294
 msgid "Workstation name"
 msgstr "Werkstation naam"
+
+#, fuzzy
+#~ msgid "Sunday"
+#~ msgstr "dag"
+
+#, fuzzy
+#~ msgid "Monday"
+#~ msgstr "dag"
+
+#, fuzzy
+#~ msgid "Tuesday"
+#~ msgstr "dag"
+
+#, fuzzy
+#~ msgid "Thursday"
+#~ msgstr "uren"
+
+#, fuzzy
+#~ msgid "Friday"
+#~ msgstr "dag"
+
+#, fuzzy
+#~ msgid "Saturday"
+#~ msgstr "Strategie"
+
+#~ msgid "This account has no samba extensions."
+#~ msgstr "Dit account heeft geen samba extensies."
+
+#~ msgid "Remove samba account"
+#~ msgstr "Samba account verwijderen"
+
+#~ msgid ""
+#~ "This account has samba features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "De samba mogelijkheden zijn ingeschakeld voor dit account. U kunt deze "
+#~ "uitschakelen door de knop hieronder te gebruiken."
+
+#~ msgid "Create samba account"
+#~ msgstr "Samba account aanmaken"
+
+#~ msgid ""
+#~ "This account has samba features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "De samba mogelijkheden zijn uitgeschakeld voor dit account. U kunt deze "
+#~ "inschakelen door de knop hieronder te gebruiken."
+
+#~ msgid ""
+#~ "This account has samba features disabled. Posix features are needed for "
+#~ "samba accounts, enable them first."
+#~ msgstr ""
+#~ "De samba mogelijkheden zijn uitgeschakeld voor dit account. Posix "
+#~ "mogelijkheden zijn noodzakelijk voor samba accounts. Schakel deze eerst "
+#~ "in."
+
+#~ msgid "January"
+#~ msgstr "Januari"
+
+#~ msgid "February"
+#~ msgstr "Februari"
+
+#~ msgid "March"
+#~ msgstr "Maart"
+
+#~ msgid "April"
+#~ msgstr "April"
+
+#~ msgid "May"
+#~ msgstr "Mei"
+
+#~ msgid "June"
+#~ msgstr "Juni"
+
+#~ msgid "July"
+#~ msgstr "Juli"
+
+#~ msgid "August"
+#~ msgstr "Augustus"
+
+#~ msgid "September"
+#~ msgstr "September"
+
+#~ msgid "October"
+#~ msgstr "Oktober"
+
+#~ msgid "November"
+#~ msgstr "November"
+
+#~ msgid "December"
+#~ msgstr "December"
+
+#, fuzzy
+#~ msgid "Removing of user/samba account with dn '%s' failed."
+#~ msgstr "Het verwijderen van het Samba account is mislukt"
+
+#~ msgid "The value specified as '%s' contains invalid characters!"
+#~ msgstr "De waarde gespecificeerd als '%s' bevat ongeldige karakters!"
+
+#~ msgid ""
+#~ "The timeout property '%s' is checked and contains invalid or no "
+#~ "characters!"
+#~ msgstr ""
+#~ "De timeout optie '%s' is geselecteerd en bevat geen of ongeldige "
+#~ "karakters!"
+
+#, fuzzy
+#~ msgid "Saving of user/samba account with dn '%s' failed."
+#~ msgstr "Het opslaan van het Samba account is mislukt"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
+#~ "veranderen"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerken"

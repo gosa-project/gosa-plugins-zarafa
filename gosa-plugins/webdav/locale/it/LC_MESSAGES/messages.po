@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:25+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,13 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
-msgid "WebDAV account"
-msgstr "Estenzioni WebDAV"
-
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:155
+#: personal/connectivity/webdav/class_webdavAccount.inc:159
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -29,21 +24,29 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "Questo fa qualcosa"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:83
-#, fuzzy, php-format
-msgid "Removing of user/webDAV account with dn '%s' failed."
-msgstr "Elimina estensioni telefoniche"
+#: personal/connectivity/webdav/class_webdavAccount.inc:84
+#: personal/connectivity/webdav/class_webdavAccount.inc:140
+msgid "LDAP error"
+msgstr ""
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:137
-#, fuzzy, php-format
-msgid "Saving of user/webDAV account with dn '%s' failed."
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
 msgstr "Estenzioni WebDAV"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:156
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Connettività"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:164
 msgid "My account"
 msgstr "Identità"
+
+#, fuzzy
+#~ msgid "Removing of user/webDAV account with dn '%s' failed."
+#~ msgstr "Elimina estensioni telefoniche"
+
+#, fuzzy
+#~ msgid "Saving of user/webDAV account with dn '%s' failed."
+#~ msgstr "Estenzioni WebDAV"

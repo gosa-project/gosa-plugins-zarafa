@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,6 +14,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+
+#: personal/connectivity/opengroupware/opengw.tpl:1
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
+#, fuzzy
+msgid "Opengroupware"
+msgstr "Estenzioni PHPGroupware"
+
+#: personal/connectivity/opengroupware/opengw.tpl:8
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+#, fuzzy
+msgid "Location team"
+msgstr "Nome locazione"
+
+#: personal/connectivity/opengroupware/opengw.tpl:21
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+#, fuzzy
+msgid "Template user"
+msgstr "Template"
+
+#: personal/connectivity/opengroupware/opengw.tpl:33
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+msgid "Locked"
+msgstr ""
+
+#: personal/connectivity/opengroupware/opengw.tpl:48
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+msgid "Teams"
+msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:6
 #, fuzzy
@@ -46,12 +74,6 @@ msgstr "Scarica il file di  configurazione"
 msgid "Cannot connect to %s database!"
 msgstr "Impossibile connettersi al server del database!"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-#: personal/connectivity/opengroupware/opengw.tpl:1
-#, fuzzy
-msgid "Opengroupware"
-msgstr "Estenzioni PHPGroupware"
-
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:339
 #, fuzzy
 msgid "Open groupware account settings"
@@ -65,25 +87,3 @@ msgstr "Connettività"
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:343
 msgid "My account"
 msgstr "Identità"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
-#: personal/connectivity/opengroupware/opengw.tpl:8
-#, fuzzy
-msgid "Location team"
-msgstr "Nome locazione"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
-#: personal/connectivity/opengroupware/opengw.tpl:21
-#, fuzzy
-msgid "Template user"
-msgstr "Template"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
-#: personal/connectivity/opengroupware/opengw.tpl:33
-msgid "Locked"
-msgstr ""
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
-#: personal/connectivity/opengroupware/opengw.tpl:48
-msgid "Teams"
-msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 09:01+0100\n"
+"POT-Creation-Date: 2008-03-09 20:24+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -25,85 +25,74 @@ msgstr ""
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:138
-#, php-format
-msgid "Removing of user/pureftpd account with dn '%s' failed."
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:240
+msgid "LDAP error"
 msgstr ""
-"Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:188
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:190
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
 msgid "Upload bandwidth"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:193
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
 msgid "Download bandwidth"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:195
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:197
 #, fuzzy
 msgid "Quota file"
 msgstr "Cuota de ficheros"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:200
 #, fuzzy
 msgid "Quota size"
 msgstr "Cuota de ficheros"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
-msgid "Value specified as 'Upload ratio' is not valid."
-msgstr "El valor especificado en 'Relación de subida'no es válido."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:202
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:268
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:203
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 msgid "Upload ratio"
 msgstr "Relación de subida"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:205
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:206
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Download ratio"
 msgstr "Relación de descarga"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:238
-#, php-format
-msgid "Saving of user/pureftpd account with dn '%s' failed."
-msgstr ""
-"Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:257
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:260
 msgid "Ftp"
 msgstr "Ftp"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 msgid "Pure ftp account"
 msgstr "Cuenta Pure ftp"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:258
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:265
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:267
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
 msgid "Quota files"
 msgstr "Cuota de ficheros"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:269
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 msgid "Quota MBytes"
 msgstr "Cuota en Mbytes"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
 msgid "Upload bandwith"
 msgstr "Ancho de banda de subida"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
 msgid "Download bandwith"
 msgstr "Ancho de banda de descarga"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
 msgid "Status"
 msgstr "Estado"
 
@@ -155,6 +144,17 @@ msgstr ""
 #: personal/connectivity/pureftpd/pureftpd.tpl:102
 msgid "Temporary disable FTP access"
 msgstr ""
+
+#~ msgid "Removing of user/pureftpd account with dn '%s' failed."
+#~ msgstr ""
+#~ "Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
+
+#~ msgid "Value specified as 'Upload ratio' is not valid."
+#~ msgstr "El valor especificado en 'Relación de subida'no es válido."
+
+#~ msgid "Saving of user/pureftpd account with dn '%s' failed."
+#~ msgstr ""
+#~ "Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
 
 #~ msgid "Value specified as 'Upload bandwidth' is not valid."
 #~ msgstr "El valor especificado en 'Ancho de Banda de subida' no es válido."
