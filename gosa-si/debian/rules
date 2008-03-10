@@ -4,6 +4,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+DEB_UPDATE_RCD_PARAMS += start 10 2 3 4 5 . stop  90 1 .
+
 build: patch 
 	#********************************************************
 	#*  Building ltsp-goto into a Debian/GNU Linux Package  *
