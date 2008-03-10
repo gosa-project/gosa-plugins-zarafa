@@ -64,7 +64,7 @@
 <p class="seperator">
 </p>
 <div style="width:100%; text-align:right; padding:3px;">
-	<input type="submit" name="app_entry_save" value="{t}Save{/t}">
+	<input type="submit" name="app_entry_save" value="{msgPool type=saveButton}">
 	&nbsp;
-	<input type="submit" name="app_entry_cancel" value="{t}Cancel{/t}">
+	<input type="submit" name="app_entry_cancel" value="{msgPool type=cancelButton}">
 </div>
