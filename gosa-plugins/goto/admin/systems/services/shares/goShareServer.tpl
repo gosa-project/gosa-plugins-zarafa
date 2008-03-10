@@ -11,7 +11,7 @@
     <br>
 	
 {render acl=$nameACL}
-        <input type="submit"    value="{t}Add{/t}"  	name="NewNfsAdd"   id="NewNfsAddId" {if !$createable} disabled {/if}>
+        <input type="submit"    value="{msgPool type=addButton}"  	name="NewNfsAdd"   id="NewNfsAddId" {if !$createable} disabled {/if}>
 {/render}
 {render acl=$nameACL mode=read_active}
         <input type="submit"    value="{t}Edit{/t}"     name="NewNfsEdit"  id="NewNfsEditId">
