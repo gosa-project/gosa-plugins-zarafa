@@ -7,7 +7,7 @@
 	<input name="is_string">
 	<input type="submit" name="add_os" 		value="{msgPool type=addButton}" >
 	<input type="submit" name="rename_os" 	value="{t}Rename{/t}" >
-	<input type="submit" name="del_os" 		value="{t}Delete{/t}" >
+	<input type="submit" name="del_os" 		value="{msgPool type=delButton}" >
 
 <p class="seperator">&nbsp;</p>
 <div align="right">

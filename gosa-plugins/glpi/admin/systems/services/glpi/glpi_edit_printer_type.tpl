@@ -6,7 +6,7 @@
 	 <input name="type_string">
 	 <input type="submit" name="add_type" 		value="{msgPool type=addButton}" >
 	 <input type="submit" name="rename_type" 	value="{t}Rename{/t}" >
-	 <input type="submit" name="del_type" 		value="{t}Delete{/t}" >
+	 <input type="submit" name="del_type" 		value="{msgPool type=delButton}" >
 
 	<p class="seperator">&nbsp;</p>
 	<div align="right">

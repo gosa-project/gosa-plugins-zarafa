@@ -5,7 +5,7 @@
 	 <input name="cartridge_type_string">
 	 <input type="submit" name="add_cartridge_type" 		value="{msgPool type=addButton}" >
 	 <input type="submit" name="rename_cartridge_type" 	value="{t}Rename{/t}" >
-	 <input type="submit" name="del_cartridge_type" 		value="{t}Delete{/t}" >
+	 <input type="submit" name="del_cartridge_type" 		value="{msgPool type=delButton}" >
 
 <p class="seperator">&nbsp;</p>
 <div align="right">
