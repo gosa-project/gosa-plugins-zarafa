@@ -11,5 +11,5 @@
 <div class='seperator' style='text-align:right; width:100%;'>
     <input type='submit' name='Import_Script_Save' value='{t}Import{/t}'>
         &nbsp;
-    <input type='submit' name='Import_Script_Cancel' value='{t}Cancel{/t}'>
+    <input type='submit' name='Import_Script_Cancel' value='{msgPool type=cancelButton}'>
 </div>

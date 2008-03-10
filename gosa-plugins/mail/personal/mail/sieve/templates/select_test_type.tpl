@@ -10,5 +10,5 @@
 <div class='seperator' style='text-align:right; width:100%;'>
 	<input type='submit' name='add_type' value='{t}Continue{/t}'>
     	&nbsp;
-	<input type='submit' name='does_nothing' value='{t}Cancel{/t}'>
+	<input type='submit' name='does_nothing' value='{msgPool type=cancelButton}'>
 </div>

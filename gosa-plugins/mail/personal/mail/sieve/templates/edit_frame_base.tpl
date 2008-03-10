@@ -36,7 +36,7 @@
 	</tr>
 </table>
 <div class='seperator' style='text-align:right; width:100%;'>
-	<input type='submit' name='save_sieve_changes' value='{t}Save{/t}'>
+	<input type='submit' name='save_sieve_changes' value='{msgPool type=saveButton}'>
         &nbsp;
-    <input type='submit' name='cancel_sieve_changes' value='{t}Cancel{/t}'>
+    <input type='submit' name='cancel_sieve_changes' value='{msgPool type=cancelButton}'>
 </div>

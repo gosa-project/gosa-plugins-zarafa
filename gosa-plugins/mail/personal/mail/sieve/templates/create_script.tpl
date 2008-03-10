@@ -10,9 +10,9 @@
 <br>
 
 <div class='seperator' style='border-top:1px solid #999; text-align:right; width:100%; padding-top:10px;'>
-   <input type='submit' name='create_script_save' value='{t}Apply{/t}' id='create_script_save'>
+   <input type='submit' name='create_script_save' value='{msgPool type=applyButton}' id='create_script_save'>
    &nbsp;
-   <input type='submit' name='create_script_cancel' value='{t}Cancel{/t}'>
+   <input type='submit' name='create_script_cancel' value='{msgPool type=cancelButton}'>
 </div>
 <script language="JavaScript" type="text/javascript">
 	<!--
