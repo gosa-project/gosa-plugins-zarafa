@@ -48,7 +48,7 @@
 <p class="seperator">&nbsp;</p>
 <div style="text-align: right;width:99%;">
 	<p>
-		<input type="submit" name="CancelBranchName" value="{t}Back{/t}">
+		<input type="submit" name="CancelBranchName" value="{msgPool type=backButton}">
 	</p>
 </div>
 -->
