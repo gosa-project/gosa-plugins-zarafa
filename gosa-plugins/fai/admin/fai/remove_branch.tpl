@@ -13,6 +13,6 @@
 <p class="plugbottom">
   <input type=submit name="delete_branch_confirm" value="{t}Delete{/t}">
   &nbsp;
-  <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+  <input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
 </p>
 

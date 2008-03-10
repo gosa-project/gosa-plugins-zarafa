@@ -35,9 +35,9 @@
 <br>
 <div style="align:right;" align="right">
 {render acl=$allowSave}
-<input type="submit" name="SaveDisk" value="{t}Save{/t}">
+<input type="submit" name="SaveDisk" value="{msgPool type=saveButton}">
 {/render}
-<input type="submit" name="CancelDisk" value="{t}Cancel{/t}" >
+<input type="submit" name="CancelDisk" value="{msgPool type=cancelButton}" >
 </div>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

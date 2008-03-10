@@ -3,7 +3,7 @@
 <p class="seperator">&nbsp;</p>
 <br>
 <div align="right" style="align:right;">
-    <input name="SaveObjectConfig" value="{t}Apply{/t}" type="submit">
-    <input name="CancelObjectConfig" value="{t}Cancel{/t}" type="submit">
+    <input name="SaveObjectConfig" value="{msgPool type=applyButton}" type="submit">
+    <input name="CancelObjectConfig" value="{msgPool type=cancelButton}" type="submit">
 </div>
 

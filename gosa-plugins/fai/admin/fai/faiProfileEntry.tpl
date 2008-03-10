@@ -67,7 +67,7 @@
 </table>
 
 <div align="right" style="align:right;">
-	<input name="SaveSubObject" value="{t}Apply{/t}" type="submit">
-	<input name="CancelSubObject" value="{t}Cancel{/t}" type="submit">
+	<input name="SaveSubObject" value="{msgPool type=applyButton}" type="submit">
+	<input name="CancelSubObject" value="{msgPool type=cancelButton}" type="submit">
 </div>
 <!-- Place cursor -->

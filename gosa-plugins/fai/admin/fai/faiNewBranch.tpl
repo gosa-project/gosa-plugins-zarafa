@@ -18,8 +18,8 @@
 
 <div align="right">
 	<p>
-		<input type="submit" value="{t}Apply{/t}" 	name="UseBranchName">		
-		<input type="submit" value="{t}Cancel{/t}" 	name="CancelBranchName">		
+		<input type="submit" value="{msgPool type=applyButton}" 	name="UseBranchName">		
+		<input type="submit" value="{msgPool type=cancelButton}" 	name="CancelBranchName">		
 	</p>
 </div>
 

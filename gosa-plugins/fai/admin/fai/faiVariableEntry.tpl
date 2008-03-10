@@ -51,8 +51,8 @@
 <p class="seperator">&nbsp;</p>
 <br>
 <div style="align:right;" align="right">
-	<input type="submit" value="{t}Apply{/t}" 	name="SaveSubObject" >&nbsp;
-	<input type="submit" value="{t}Cancel{/t}" 	name="CancelSubObject">
+	<input type="submit" value="{msgPool type=applyButton}" 	name="SaveSubObject" >&nbsp;
+	<input type="submit" value="{msgPool type=cancelButton}" 	name="CancelSubObject">
 </div>
 
 <!-- Place cursor -->

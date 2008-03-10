@@ -15,10 +15,10 @@
 {if $multiple}
 	<input type=submit name="delete_multiple_fai_object_confirm" value="{t}Delete{/t}">
 	&nbsp;
-	<input type=submit name="delete_multiple_fai_object_cancel" value="{t}Cancel{/t}">
+	<input type=submit name="delete_multiple_fai_object_cancel" value="{msgPool type=cancelButton}">
 {else}
 	<input type=submit name="delete_terminal_confirm" value="{t}Delete{/t}">
 	&nbsp;
-	<input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+	<input type=submit name="delete_cancel" value="{msgPool type=cancelButton}">
 {/if}
 </p>
