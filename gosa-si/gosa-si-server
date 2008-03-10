@@ -143,6 +143,9 @@ our $messaging_tn = "messaging";
 our @messaging_col_names = ('subject', 'from', 'to', 'flag', 'direction', 'delivery_time', 'message', 'timestamp', 'id INTEGER', );
 my $messaging_file_name;
 
+# path to directory to store client install log files
+our $client_fai_log_dir = "/var/log/fai"; 
+
 %cfg_defaults = (
 "general" => {
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
@@ -763,6 +766,7 @@ sub get_ip {
 	return $result;
 }
 
+
 sub get_local_ip_for_remote_ip {
 	my $remote_ip= shift;
 	my $result="0.0.0.0";
@@ -897,25 +901,19 @@ sub send_msg_to_target {
     return $error; 
 }
 
-###
-#
-#   HIER LÄUFT WAS SCHIEF - GENAU HIER KACK MIST
-#
-#   ERROR
-#
-#   TODO
-#
-###
+
 sub update_jobdb_status_for_send_msgs {
     my ($answer, $error) = @_;
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
         my $jobdb_id = $1;
         if( $error ) {
-            # sending msg faild
-            my $sql_statement = "UPDATE $job_queue_tn ".
-                "SET status='error', result='can not deliver msg, please consult log file' ".
-                "WHERE id='$jobdb_id'";
-            my $res = $job_db->update_dbentry($sql_statement);
+            if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
+                # sending msg faild
+                my $sql_statement = "UPDATE $job_queue_tn ".
+                    "SET status='error', result='can not deliver msg, please consult log file' ".
+                    "WHERE id='$jobdb_id'";
+                my $res = $job_db->update_dbentry($sql_statement);
+            }
         } else {
             # sending msg was successful
             my $sql_statement = "UPDATE $job_queue_tn ".

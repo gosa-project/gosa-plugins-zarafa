@@ -13,6 +13,7 @@ my @events = (
     "LOGIN",
     "LOGOUT",
     "CURRENTLY_LOGGED_IN",
+    "save_fai_log",
     );
 @EXPORT = @events;
 
@@ -21,6 +22,7 @@ use warnings;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use utf8;
+use MIME::Base64;
 
 
 BEGIN {}
@@ -69,6 +71,41 @@ sub read_configfile {
             ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
         }
     }
+}
+
+
+sub save_fai_log {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+    my $all_logs = @{$msg_hash->{$header}}[0];
+
+    my $client_fai_log_dir = $main::client_fai_log_dir;
+    if (not -d $client_fai_log_dir) {
+        mkdir($client_fai_log_dir, 0755)
+    }
+
+    $client_fai_log_dir = File::Spec->catfile( $client_fai_log_dir, $macaddress );
+    if (not -d $client_fai_log_dir) {
+        mkdir($client_fai_log_dir, 0755)
+    }
+
+    my $time = &get_time;
+    $time = substr($time, 1, 8)."_".substr($time, 8, 6);
+    $client_fai_log_dir = File::Spec->catfile( $client_fai_log_dir, "install-$time" );
+    mkdir($client_fai_log_dir, 0755);
+
+    my @all_logs = split(/log_file:/, $all_logs); 
+    foreach my $log (@all_logs) {
+        if (length $log == 0) { next; };
+        my ($log_file, $log_string) = split("\n", $log, 2);
+        my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
+        open(my $LOG_FILE, ">$client_fai_log_file"); 
+        print $LOG_FILE &decode_base64($log_string);
+        close($LOG_FILE);
+    }
+    return;
 }
 
 
@@ -265,7 +302,6 @@ sub TASKSKIP {
 
     return; 
 }
-
 
 
 sub TASKBEGIN {

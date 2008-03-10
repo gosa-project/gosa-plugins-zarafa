@@ -37,6 +37,7 @@ use MIME::Base64;
 use XML::Simple;
 use Net::DNS;
 use File::Basename;
+use File::Spec;
 
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
@@ -78,6 +79,9 @@ our $prg= basename($0);
 
 # all x seconds the client reports logged_in users to gosa-si-server
 my $trigger_logged_in_users_report_delay = 600;
+
+# directory where all log files from installation are stored
+my $fai_log_dir = "/tmp/fai"; 
 
 %cfg_defaults = (
 "general" =>
@@ -978,6 +982,7 @@ sub generic_file_error {
     return;
 }
 
+
 sub fifo_got_record {
     my $file_record = $_[ARG0];
     my $header;
@@ -999,7 +1004,55 @@ sub fifo_got_record {
     &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
     my $clmsg = &create_xml_string($clmsg_hash);
     &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");
+
+    # if installation finished, save all log files 
+    if ($file_record eq "TASKBEGIN finish") {
+        &save_fai_log($fai_log_dir); 
+    }
+
     return;
+}
+
+
+sub save_fai_log {
+    my ($fai_log_dir) = @_ ;
+    my $FAI_DIR;
+
+print STDERR "===========================================\n";
+print STDERR "fai_log_dir: $fai_log_dir\n"; 
+
+    opendir($FAI_DIR, $fai_log_dir);
+    if (not defined $FAI_DIR) {  
+        daemon_log("ERROR: can not open directory $fai_log_dir: $!", 1);
+        return; 
+    }
+
+    my @log_files = readdir($FAI_DIR);
+    closedir($FAI_DIR);   
+    my @log_list;
+
+    foreach my $log_file (@log_files) {
+        if( $log_file eq "." || $log_file eq ".." ) { next; }
+        my $log = "log_file:$log_file\n";
+        $log_file = File::Spec->catfile( $fai_log_dir, $log_file );
+        open(my $FILE, "<$log_file"); 
+        if (not defined $FILE ) {
+            daemon_log("ERROR: can not open '$log_file': $!", 1);
+            next;
+        }
+        my @lines = <$FILE>;
+        my $log_string = join("", @lines); 
+        $log .= &encode_base64($log_string);
+        push(@log_list, $log); 
+        close ($FILE);
+    }
+
+    my $all_log_string = join("\n", @log_list); 
+    my $msg_hash = &create_xml_hash("CLMSG_save_fai_log", $client_address, $server_address, $all_log_string);
+    &add_content2xml_hash($msg_hash, "macaddress", $client_mac_address);
+    my $msg = &create_xml_string($msg_hash);
+    &send_msg_to_target($msg, $server_address, $server_key, "CLMSG_save_fai_log");
+
 }
 
 
