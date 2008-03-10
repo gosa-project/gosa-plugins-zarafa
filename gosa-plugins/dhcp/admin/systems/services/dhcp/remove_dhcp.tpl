@@ -11,7 +11,7 @@
 </p>
 
 <p class="plugbottom">
-  <input type=submit name="delete_dhcp_confirm" value="{t}Delete{/t}">
+  <input type=submit name="delete_dhcp_confirm" value="{msgPool type=delButton}">
   &nbsp;
   <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
 </p>
