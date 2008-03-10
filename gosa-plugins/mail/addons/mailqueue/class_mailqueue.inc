@@ -119,8 +119,7 @@ class mailqueue extends plugin
           $only_once = false;
 
           if(!$this->acl_is_readable($opt)){
-            msg_dialog::display(_("Permission error"), i
-                sprintf(_("You have no permission to submit a '%s' command!"), $opt), ERROR_DIALOG);
+            msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to submit a '%s' command!"), $opt), ERROR_DIALOG);
           }else{
             /* Create cmd */
             $r_cmd = preg_replace("/%action/" , $opt            ,$this->mailQueueScript);
