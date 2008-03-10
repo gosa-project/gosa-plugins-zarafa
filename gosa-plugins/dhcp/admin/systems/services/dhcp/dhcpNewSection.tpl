@@ -14,7 +14,7 @@
 <p class="plugbottom">
   <input type=submit name="create_section" value="{t}Create{/t}">
   &nbsp;
-  <input type=submit name="cancel_section" value="{t}Cancel{/t}">
+  <input type=submit name="cancel_section" value="{msgPool type=cancelButton}">
 </p>
 	
 <!-- Place cursor -->
