@@ -57,7 +57,7 @@ class termgroup extends plugin
       for ($i= 0; $i<$this->attrs['member']['count']; $i++){
         $member= $this->attrs['member'][$i];
         $ldap->cat($member, array('objectClass', 'macAddress', 'cn'));
-        if (preg_match("/success/i", $ldap->error)){
+        if ($ldap->success()){
           $attrs = $ldap->fetch();
           if (in_array("gotoTerminal", $attrs['objectClass']) ||
               in_array("gotoWorkstation", $attrs['objectClass'])){

@@ -979,7 +979,7 @@ class FAI
           $ldap->add($attr);
         }
 
-        if($ldap->error != "Success"){
+        if(!$ldap->success()){
 
           /* Some error occurred */
           print "---------------------------------------------";
