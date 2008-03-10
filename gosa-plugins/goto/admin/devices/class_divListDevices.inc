@@ -32,7 +32,6 @@ class divListDevices extends MultiSelectWindow
     /* Set list strings */
     $this->SetTitle       (_("List of defined devices"));
     $this->SetSummary     (_("List of defined devices"));
-    $this->SetInformation (_("This menu allows you to add, edit and remove selected devices. You may want to use the range selector on top of the device listbox, when working with a large number of devices."));
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
