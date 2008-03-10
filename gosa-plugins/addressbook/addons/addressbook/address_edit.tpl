@@ -261,8 +261,8 @@
 			</table>
 
 			<p align=right>
-			<input type="submit" name="save" value="{t}Save{/t}">
-			<input type="submit" name="cancel" value="{t}Cancel{/t}">
+			<input type="submit" name="save" value="{msgPool type=saveButton}">
+			<input type="submit" name="cancel" value="{msgPool type=cancelButton}">
 			</p>
 
 		</td>
