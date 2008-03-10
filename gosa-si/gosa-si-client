@@ -981,6 +981,7 @@ sub fifo_got_record {
     my $file_record = $_[ARG0];
     my $header;
     my $content = "";
+    daemon_log("DEBUG: fifo got record: $file_record", 7); 
 
     $file_record =~ /^(\S+)[ ]?([\s\S]+)?$/;
     if( defined $1 ) {

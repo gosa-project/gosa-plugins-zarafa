@@ -584,7 +584,7 @@ sub input_from_known_client {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        &daemon_log("DEBUG: Incoming message is not from a known client", 5);
+        &daemon_log("DEBUG: Incoming message is not from a known client", 7);
     }
 
     return ($msg, $msg_hash, $module);
@@ -948,7 +948,7 @@ sub client_input {
 
     daemon_log("", 5); 
     daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
-    daemon_log("DEBUG: Incoming message:\n$input", 9);
+    daemon_log("DEBUG: Incoming msg:\n$input", 9);
 
     ####################
     # check incoming msg
@@ -970,6 +970,7 @@ sub client_input {
     ######################
     # process incoming msg
     if( $error == 0) {
+        daemon_log("INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
         daemon_log("DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
