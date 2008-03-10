@@ -52,7 +52,7 @@ class EventTargetAddList extends MultiSelectWindow
     $this->EnableCloseButton(FALSE);
     $this->EnableSaveButton(FALSE);
 
-    $this->SetInformation(_("This dialog shows all available targets for your event, check the targets you want to add   and use the 'Use' button to accept."));
+    $this->SetInformation(_("This dialog shows all available targets for your event, check the targets you want to add and use the 'Use' button to accept."));
 
     /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
