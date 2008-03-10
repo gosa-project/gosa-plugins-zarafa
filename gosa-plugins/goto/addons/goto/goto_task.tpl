@@ -94,6 +94,6 @@
 <p class='seperator'>&nbsp;</p>
 <input type='hidden' name='goto_task_posted' value='1'>
 <p style="text-align:right">
-	<input type='submit' name='save_goto_task' value='{t}Ok{/t}'>
-	<input type='submit' name='close_goto_task' value='{t}Cancel{/t}'>
+	<input type='submit' name='save_goto_task' value='{msgPool type=okButton}'>
+	<input type='submit' name='close_goto_task' value='{msgPool type=cancelButton}'>
 </p>
