@@ -263,7 +263,7 @@
       <input type="submit" name="gotoLogonScriptEdit"  value="{t}Edit{/t}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" name="gotoLogonScriptDel"  value="{t}Delete{/t}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
+      <input type="submit" name="gotoLogonScriptDel"  value="{msgPool type=delButton}" {if $gotoLogonScriptKeysCnt ==0} disabled {/if}>
 {/render}
      </td>
     </tr>
@@ -308,7 +308,7 @@
       <input type="submit" name="gotoHotplugDeviceUse" value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
+      <input type="submit" name="gotoHotplugDeviceDel" value="{msgPool type=delButton}"
       {if !$gotoHotplugDevices} disabled {/if}>
 {/render}
      </td>
@@ -343,7 +343,7 @@
       <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{t}Delete{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter } disabled {/if}>
 {/render}
 {render acl=$gotoPrinterACL}
       <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
@@ -376,7 +376,7 @@
       <input type="submit"  name="gotoPrinterAdd"     value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" name="gotoPrinterDel"     value="{t}Delete{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDel"     value="{msgPool type=delButton}" {if !$gotoPrinter } disabled {/if}>
 {/render}
 {render acl=$gotoPrinterACL}
       <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
