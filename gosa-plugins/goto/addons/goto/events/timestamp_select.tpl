@@ -1,12 +1,12 @@
 <table cellspacing="0" cellpadding="0">
 	<tr>
-		<td>{t}Jahr{/t}</td>
-		<td>{t}Monat{/t}</td>
-		<td>{t}Tag{/t}</td>
+		<td>{t}Year{/t}</td>
+		<td>{t}Month{/t}</td>
+		<td>{t}Day{/t}</td>
     <td>&nbsp;&nbsp;</td>
-		<td>{t}Stunde{/t}</td>
+		<td>{t}Hour{/t}</td>
 		<td>{t}Minute{/t}</td>
-		<td>{t}Sekunde{/t}</td>
+		<td>{t}Second{/t}</td>
 	</tr>
 	<tr>
 		<td>
