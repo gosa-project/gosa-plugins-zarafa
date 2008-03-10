@@ -119,7 +119,7 @@
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{t}Delete{/t}" name="delete_alternate">
+   <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 {/render}
 
   </td>
@@ -208,7 +208,7 @@
    <input type=submit value="{t}Add local{/t}" name="add_local_forwarder">&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input type=submit value="{t}Delete{/t}" name="delete_forwarder">
+   <input type=submit value="{msgPool type=delButton}" name="delete_forwarder">
 {/render}
   </td>
  </tr>
