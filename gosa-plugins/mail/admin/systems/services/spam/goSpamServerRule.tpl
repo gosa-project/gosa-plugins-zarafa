@@ -18,8 +18,8 @@
 </table>
 <p class='seperator'>&nbsp;</p>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
-    <input type='submit' name='SaveRule' value='{t}Save{/t}'>
+    <input type='submit' name='SaveRule' value='{msgPool type=saveButton}'>
     &nbsp;
-    <input type='submit' name='CancelRule' value='{t}Cancel{/t}'>
+    <input type='submit' name='CancelRule' value='{msgPool type=cancelButton}'>
 </div>
 
