@@ -45,7 +45,6 @@ class divListFai extends MultiSelectWindow
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
-    $this->SetInformation(_("This menu allows you to create, delete and edit FAI classes."));
 
     $this->EnableAplhabet   (true);
   
