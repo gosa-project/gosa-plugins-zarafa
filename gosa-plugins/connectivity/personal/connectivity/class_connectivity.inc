@@ -72,7 +72,7 @@ class connectivity extends plugin
       }
       if (!$enabled){
         $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-          _("This account has no connectivity extensions.")."</b>";
+          msgPool::noValidExtension()."</b>";
         $display.= back_to_main();
         return ($display);
       }
