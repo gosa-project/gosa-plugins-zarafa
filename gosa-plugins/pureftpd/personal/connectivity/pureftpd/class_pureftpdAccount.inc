@@ -7,12 +7,12 @@ class pureftpdAccount extends plugin
   var $plDescription= "This does something";
 
   /* FTP attributes */
-  var $FTPQuotaFiles = 0;
-  var $FTPQuotaMBytes = 0;
-  var $FTPUploadRatio = 0;
-  var $FTPDownloadRatio = 0;
-  var $FTPUploadBandwidth = 0;
-  var $FTPDownloadBandwidth = 0;
+  var $FTPQuotaFiles = "";
+  var $FTPQuotaMBytes = "";
+  var $FTPUploadRatio = "";
+  var $FTPDownloadRatio = "";
+  var $FTPUploadBandwidth = "";
+  var $FTPDownloadBandwidth = "";
   var $FTPStatus = "enabled";
   var $FTPuid = "";
   var $FTPgid = "";
@@ -168,11 +168,12 @@ class pureftpdAccount extends plugin
       $this->is_modified= ($old != $this->FTPStatus)?TRUE:$this->is_modified;
 
       /* Ensure that these vars are numeric. Values starting with 0 like '0123' cause ldap errors */
-      foreach(array("FTPQuotaFiles","FTPQuotaMBytes","FTPUploadRatio","FTPDownloadRatio","FTPUploadBandwidth","FTPDownloadBandwidth") as $testVar){
-        $this->$testVar = (int) ($this->$testVar);
+      foreach(array("FTPQuotaFiles","FTPQuotaMBytes","FTPUploadRatio","FTPDownloadRatio",
+                    "FTPUploadBandwidth","FTPDownloadBandwidth") as $testVar){
+        if(!empty($this->$testVar)){
+          $this->$testVar = (int) ($this->$testVar);
+        }
       }
-    
-
     }
   }
 
@@ -186,23 +187,23 @@ class pureftpdAccount extends plugin
     /* Check for positive integer values */
     if ($this->is_account){
 
-      if($this->acl_is_writeable("FTPUploadBandwidth") && !tests::is_id($this->FTPUploadBandwidth)){
+      if($this->acl_is_writeable("FTPUploadBandwidth") && preg_match("/[^0-9]/",$this->FTPUploadBandwidth)){
         $message[]= msgPool::invalid(_("Upload bandwidth"), $this->uid, "/^[0-9]+$/");
       }
-      if($this->acl_is_writeable("FTPDownloadBandwidth") && !tests::is_id($this->FTPDownloadBandwidth)){
+      if($this->acl_is_writeable("FTPDownloadBandwidth") && preg_match("/[^0-9]/",$this->FTPDownloadBandwidth)){
         $message[]= msgPool::invalid(_("Download bandwidth"), $this->uid, "/^[0-9]+$/");
       }
 
-      if($this->acl_is_writeable("FTPQuotaFiles") && !tests::is_id($this->FTPQuotaFiles)){
+      if($this->acl_is_writeable("FTPQuotaFiles") && preg_match("/[^0-9]/",$this->FTPQuotaFiles)){
         $message[]= msgPool::invalid(_("Quota file"), $this->uid, "/^[0-9]+$/");
       }
-      if($this->acl_is_writeable("FTPQuotaMBytes") && !tests::is_id($this->FTPQuotaMBytes)){
+      if($this->acl_is_writeable("FTPQuotaMBytes") && preg_match("/[^0-9]/",$this->FTPQuotaMBytes)){
         $message[]= msgPool::invalid(_("Quota size"), $this->uid, "/^[0-9]+$/");
       }
-      if($this->acl_is_writeable("FTPUploadRatio") && !tests::is_id($this->FTPUploadRatio)){
+      if($this->acl_is_writeable("FTPUploadRatio") && preg_match("/[^0-9]/",$this->FTPUploadRatio)){
         $message[]= msgPool::invalid(_("Upload ratio"), $this->uid, "/^[0-9]+$/");
       }
-      if($this->acl_is_writeable("FTPDownloadRatio") && !tests::is_id($this->FTPDownloadRatio)){
+      if($this->acl_is_writeable("FTPDownloadRatio") && preg_match("/[^0-9]/",$this->FTPDownloadRatio)){
         $message[]= msgPool::invalid(_("Download ratio"), $this->uid, "/^[0-9]+$/");
       }
     }
