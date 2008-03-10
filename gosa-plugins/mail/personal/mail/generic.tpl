@@ -77,7 +77,7 @@
    <input type=submit value="{msgPool type=addButton}" name="add_alternate">
 {/render}
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{t}Delete{/t}" name="delete_alternate">
+   <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 {/render}
   </td>
 
@@ -285,7 +285,7 @@ onclick="changeState('day'); changeState('month'); changeState('year'); changeSt
    <input id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input id='delete_forwarder' type="submit" value="{t}Delete{/t}" name="delete_forwarder">
+   <input id='delete_forwarder' type="submit" value="{msgPool type=delButton}" name="delete_forwarder">
 {/render}
   </td>
  </tr>
