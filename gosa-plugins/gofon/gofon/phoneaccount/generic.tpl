@@ -29,7 +29,7 @@
    <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber">&nbsp;
 {/render}
 {render acl=$telephoneNumberACL}
-      <input type="submit" value="{t}Delete{/t}" name="delete_phonenumber">
+      <input type="submit" value="{msgPool type=delButton}" name="delete_phonenumber">
 {/render}
 
 {/if}
