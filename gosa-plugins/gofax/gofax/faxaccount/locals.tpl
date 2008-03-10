@@ -57,7 +57,7 @@
 </table>
 
 <p class="plugbottom">
-  <input type=submit name="add_locals_finish" value="{t}Add{/t}">
+  <input type=submit name="add_locals_finish" value="{msgPool type=addButton}">
   &nbsp;
   <input type=submit name="add_locals_cancel" value="{msgPool type=cancelButton}">
 </p>

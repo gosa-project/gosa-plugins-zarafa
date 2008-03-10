@@ -10,7 +10,7 @@
    </select>
    <br>
    <input name="block_number" size=25 align="middle" maxlength=30 value="">
-   <input type=submit value="{t}Add{/t}" name="add_blocklist_number" >&nbsp;
+   <input type=submit value="{msgPool type=addButton}" name="add_blocklist_number" >&nbsp;
    <input type=submit value="{t}Delete{/t}" name="delete_blocklist_number" >
   </td>
   <td>
