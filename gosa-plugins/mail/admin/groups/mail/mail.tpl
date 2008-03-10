@@ -115,7 +115,7 @@
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
-   <input type=submit value="{t}Add{/t}" name="add_alternate">&nbsp;
+   <input type=submit value="{msgPool type=addButton}" name="add_alternate">&nbsp;
 {/render}
 
 {render acl=$gosaMailAlternateAddressACL}
@@ -202,7 +202,7 @@
    <input name="forward_address" size=20 align=middle maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input type=submit value="{t}Add{/t}" name="add_forwarder">&nbsp;
+   <input type=submit value="{msgPool type=addButton}" name="add_forwarder">&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
    <input type=submit value="{t}Add local{/t}" name="add_local_forwarder">&nbsp;
