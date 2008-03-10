@@ -34,7 +34,6 @@ class divListMimeTypes extends MultiSelectWindow
     /* Set list strings */
     $this->SetTitle       (_("List of defined mime types"));
     $this->SetSummary     (_("List of defined mime types"));
-    $this->SetInformation (_("This menu allows you to add, edit and remove selected mime types. You may want to use the range selector on top of the mime type listbox, when working with a large number of mime types."));
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
