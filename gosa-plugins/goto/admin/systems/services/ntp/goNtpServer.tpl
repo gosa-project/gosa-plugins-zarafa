@@ -15,7 +15,7 @@
 	<input type="text" name="NewNTPExport"  id="NewNTPExportId">
 {/render}
 {render acl=$goNtpServerACL}
-	<input type="submit"    value="{t}Add{/t}"      name="NewNTPAdd"  id="NewNTPAddId">
+	<input type="submit"    value="{msgPool type=addButton}"      name="NewNTPAdd"  id="NewNTPAddId">
 {/render}
 {render acl=$goNtpServerACL}
 	<input type="submit"    value="{t}Delete{/t}"   name="DelNTPEnt"  id="DelNTPEntId">
