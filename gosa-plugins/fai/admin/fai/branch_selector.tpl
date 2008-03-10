@@ -1,4 +1,3 @@
-<br>
  <div class="contentboxh" style="border-bottom:1px solid #B0B0B0;">
     <p class="contentboxh"><img src="{$branchimage}" align="right" alt="[F]">{t}Branches{/t}</p>
    </div>
@@ -39,4 +38,5 @@
      </tr>
         </table>
    </div>
+<br>
 
