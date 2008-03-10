@@ -112,7 +112,7 @@
 						{$AttachmentsDiv}
 {/render}
 {render acl=$AttachmentsACL}
-						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit" >	
+						<input name="AddAttachment" 	value="{msgPool type=addButton}" type="submit" >	
 {/render}
 					</td>
 				</tr>
@@ -146,7 +146,7 @@
 						</select>
 {/render}
 {render acl=$CartridgesACL}
-						<input name="AddCartridge" 	value="{t}Add{/t}" type="submit" >	
+						<input name="AddCartridge" 	value="{msgPool type=addButton}" type="submit" >	
 {/render}
 {render acl=$CartridgesACL}
 						<input name="RemoveCartridge" 	value="{t}Remove{/t}" type="submit" >	

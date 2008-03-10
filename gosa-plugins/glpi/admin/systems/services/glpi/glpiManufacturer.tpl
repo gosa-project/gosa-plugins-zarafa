@@ -3,7 +3,7 @@
   {html_options values=$ManuKeys output=$Manus}
 </select>
 <br>
-<input name="add_manu" 		value="{t}Add{/t}" 		type="submit">
+<input name="add_manu" 		value="{msgPool type=addButton}" 		type="submit">
 <input name="edit_manu" 	value="{t}Edit{/t}" 	type="submit">
 <input name="remove_manu" 	value="{t}Remove{/t}" 	type="submit">
 

@@ -122,7 +122,7 @@
 						{$AttachmentsDiv}
 {/render}
 {render acl=$AttachmentsACL}
-						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit">	
+						<input name="AddAttachment" 	value="{msgPool type=addButton}" type="submit">	
 {/render}
 					</td>
 				</tr>

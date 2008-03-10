@@ -5,7 +5,7 @@
 				{html_options values=$OSKeys output=$OSs}
 	</select><br>
 	<input name="is_string">
-	<input type="submit" name="add_os" 		value="{t}Add{/t}" >
+	<input type="submit" name="add_os" 		value="{msgPool type=addButton}" >
 	<input type="submit" name="rename_os" 	value="{t}Rename{/t}" >
 	<input type="submit" name="del_os" 		value="{t}Delete{/t}" >
 
