@@ -34,7 +34,7 @@ if (!$remove_lock){
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/addressbook.png'), _("Address book")).$display;
+	$display= print_header(get_template_path('images/addressbook.png'), _("Addressbook")).$display;
 
 	/* Store changes  in session */
 	session::set('addressbook',$addressbook);

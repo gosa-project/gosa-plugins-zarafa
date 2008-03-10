@@ -205,7 +205,7 @@ class addressbook extends plugin
         if (!$ldap->success()){
           msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
         }
-        new log("remove","addressbook/".get_class($this),$this->dn,array(),"Address book object'".$this->dn."' has been removed");
+        new log("remove","addressbook/".get_class($this),$this->dn,array(),"Addressbook object'".$this->dn."' has been removed");
   
       } else {
 
