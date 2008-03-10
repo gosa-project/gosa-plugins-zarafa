@@ -14,11 +14,11 @@
 	{if $multiple}
 		<input type=submit name="delete_multiple_blocklist_confirm" value="{t}Delete{/t}">
 		&nbsp;
-		<input type=submit name="delete_multiple_blocklist_cancel" value="{t}Cancel{/t}">
+		<input type=submit name="delete_multiple_blocklist_cancel" value="{msgPool type=cancelButton}">
 	{else}
 		<input type=submit name="delete_blocklist_confirm" value="{t}Delete{/t}">
 		&nbsp;
-		<input type=submit name="delete_blocklist_cancel" value="{t}Cancel{/t}">
+		<input type=submit name="delete_blocklist_cancel" value="{msgPool type=cancelButton}">
 	{/if}
 </p>
 

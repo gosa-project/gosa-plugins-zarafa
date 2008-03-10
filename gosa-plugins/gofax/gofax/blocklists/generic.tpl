@@ -96,9 +96,9 @@
 </table>
 
 <p class="plugbottom">
-  <input type=submit name="edit_finish" style="width:80px" value="{t}Ok{/t}">
-  <input type=submit name="edit_apply" value="{t}Apply{/t}">
-  <input type=submit name="edit_cancel" value="{t}Cancel{/t}">
+  <input type=submit name="edit_finish" style="width:80px" value="{msgPool type=okButton}">
+  <input type=submit name="edit_apply" value="{msgPool type=applyButton}">
+  <input type=submit name="edit_cancel" value="{msgPool type=cancelButton}">
 </p>
 <input type='hidden' name='blocklist_posted' value="1">
 <!-- Place cursor -->
