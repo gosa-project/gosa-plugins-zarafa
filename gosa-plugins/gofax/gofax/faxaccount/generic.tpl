@@ -114,7 +114,7 @@
     <input type=submit value="{t}Add local{/t}" name="add_local_alternate" >&nbsp;
 {/render}
 {render acl=$facsimileAlternateTelephoneNumberACL}
-    <input type=submit value="{t}Delete{/t}" name="delete_alternate">
+    <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 {/render}
 	{/if}
    </td>
