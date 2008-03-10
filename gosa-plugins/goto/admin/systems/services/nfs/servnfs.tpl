@@ -136,8 +136,8 @@
 	</tr>
 	<tr>
 		<td colspan=2 style="text-align:right">
-			<input type="submit" name="NFSsave" value="{t}Save{/t}">
-			<input type="submit" name="NFScancel" value="{t}Cancel{/t}">
+			<input type="submit" name="NFSsave" value="{msgPool type=saveButton}">
+			<input type="submit" name="NFScancel" value="{msgPool type=cancelButton}">
 		</td>
 	</tr>
 </table>
