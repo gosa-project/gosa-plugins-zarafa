@@ -111,7 +111,7 @@
    <input type=submit value="{msgPool type=addButton}" name="add_email">&nbsp;
 {/render}
 {render acl=$scalixEmailAddressACL}
-   <input type=submit value="{t}Delete{/t}" name="delete_email">
+   <input type=submit value="{msgPool type=delButton}" name="delete_email">
 {/render}
   </td>
  </tr>
