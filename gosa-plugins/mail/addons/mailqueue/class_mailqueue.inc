@@ -387,8 +387,8 @@ class mailqueue extends plugin
   static function plInfo()
   {
     return (array(
-        "plShortName"   => _("Mailqueue"),
-        "plDescription" => _("Mailqueue addon"),
+        "plShortName"   => _("Mail queue"),
+        "plDescription" => _("Mail queue addon"),
         "plSelfModify"  => FALSE,
         "plDepends"     => array(),
         "plPriority"    => 1,
