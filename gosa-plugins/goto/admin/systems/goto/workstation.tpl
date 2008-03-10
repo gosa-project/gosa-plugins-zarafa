@@ -109,7 +109,7 @@
       </select>
 {/render}
 {render acl=$gotoNtpServerACL}
-        <input type="submit" name="addNtpServer" value="{t}Add{/t}"     id="addNtpServer"
+        <input type="submit" name="addNtpServer" value="{msgPool type=addButton}"     id="addNtpServer"
          {if $inheritTimeServer} disabled {/if}>
 {/render}
 {render acl=$gotoNtpServerACL}

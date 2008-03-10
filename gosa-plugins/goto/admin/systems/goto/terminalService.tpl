@@ -205,7 +205,7 @@
       </select>
 {/render}
 {render acl=$gotoXdmcpServerACL}
-	<input type="submit" name="XdmcpAddServer" value="{t}Add{/t}" title="{t}Add selected server{/t}"
+	<input type="submit" name="XdmcpAddServer" value="{msgPool type=addButton}" title="{t}Add selected server{/t}"
 		{if $gotoXMethod_select == "default"} disabled {/if}>
 {/render}
 {render acl=$gotoXdmcpServerACL}

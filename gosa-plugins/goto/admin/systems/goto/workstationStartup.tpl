@@ -44,7 +44,7 @@
     </select>
 {/render}
 {render acl=$gotoLdapServerACL_inherit}
-	<input type='submit' name='add_ldap_server' value="{t}Add{/t}" id='add_ldap_server'>
+	<input type='submit' name='add_ldap_server' value="{msgPool type=addButton}" id='add_ldap_server'>
 {/render}
      </td>
     </tr>
@@ -150,7 +150,7 @@
 			</select>	
 	{/render}
 	{render acl=$FAIclassACL}
-			<input name="AddClass" value="{t}Add{/t}" type="submit"> 
+			<input name="AddClass" value="{msgPool type=addButton}" type="submit"> 
 	{/render}
 	<!--		<input name="DelClass" value="{t}Delete{/t}" type="submit"> -->
 		{/if}
@@ -183,7 +183,7 @@
     <input name="module" size=30 align=middle maxlength=30>
 {/render}
 {render acl=$gotoModulesACL}
-    <input type=submit value="{t}Add{/t}" name="add_module">&nbsp;
+    <input type=submit value="{msgPool type=addButton}" name="add_module">&nbsp;
 {/render}
 {render acl=$gotoModulesACL}
     <input type=submit value="{t}Delete{/t}" name="delete_module">
@@ -212,7 +212,7 @@
                                 <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
 {/render}
 {render acl=$gotoShareACL}
-                                <input type="submit" name="gotoShareAdd" value="{t}Add{/t}">
+                                <input type="submit" name="gotoShareAdd" value="{msgPool type=addButton}">
 {/render}
 {render acl=$gotoShareACL}
                                 <input type="submit" name="gotoShareDel" value="{t}Remove{/t}" {if $gotoSharesCount == 0} disabled {/if}>
