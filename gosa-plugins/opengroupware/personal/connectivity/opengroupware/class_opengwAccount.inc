@@ -164,12 +164,12 @@ class opengwAccount extends plugin
 
 		/* Check database extension */    
 		if(!is_callable("pg_connect") && count($this->serverCon)){
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "postgresql"), ERROR_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::missingext("postgresql"), ERROR_DIALOG);
 		}elseif(count($this->serverCon)){
 
 			/* Check if config exists */
 			if($this->config->search("opengwAccount", 'DATABASE',array('tabs'))){
-        msg_dialog::display(_("Configuration error"), sprintf(_("%s database configuration is missing!"), "Open Groupware"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::noserver(_("Open Groupware database")), ERROR_DIALOG);
 			}else{
 
 				/* Create handle */
@@ -177,7 +177,7 @@ class opengwAccount extends plugin
 
 				/* Check if we are successfully connected to db */
 				if(!$this->handle->connected){
-          msg_dialog::display(_("Configuration error"), sprintf( _("Cannot connect to %s database!"), "Open Groupware"), ERROR_DIALOG);
+          msg_dialog::display(_("Configuration error"), msgPool::dbconnect(_("Open Groupware")), ERROR_DIALOG);
 				}else{
 
 					/* Assign LocationTeams */
