@@ -34,7 +34,7 @@
 </table>
 
 <p class="plugbottom">
- <input type=submit name="edit_admins_finish" value="{t}Apply{/t}">
+ <input type=submit name="edit_admins_finish" value="{msgPool type=applyButton}">
  &nbsp;
- <input type=submit name="edit_admins_cancel" value="{t}Cancel{/t}">
+ <input type=submit name="edit_admins_cancel" value="{msgPool type=cancelButton}">
 </p>
