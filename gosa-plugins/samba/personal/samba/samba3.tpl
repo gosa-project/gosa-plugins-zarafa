@@ -434,7 +434,7 @@
 	{/foreach}
    </select>
    <br>
-   <input type="submit" value="{t}Add{/t}" name="add_ws">
+   <input type="submit" value="{msgPool type=addButton}" name="add_ws">
    <input type="submit" value="{t}Delete{/t}" name="delete_ws">
 {else}
 	{render acl=$sambaUserWorkstationsACL}
@@ -444,7 +444,7 @@
 	{/render}
 	   <br>
 	{render acl=$sambaUserWorkstationsACL}
-	   <input type="submit" value="{t}Add{/t}" name="add_ws">
+	   <input type="submit" value="{msgPool type=addButton}" name="add_ws">
 	{/render}
 	{render acl=$sambaUserWorkstationsACL}
 	   <input type="submit" value="{t}Delete{/t}" name="delete_ws">
