@@ -66,8 +66,8 @@
 <p class="seperator">&nbsp;</p>
 <div align="right">
 	<p>
-		<input type="submit" name="SaveAttachment" 		value="{t}Save{/t}">
-		<input type="submit" name="CancelAttachment" 	value="{t}Cancel{/t}">
+		<input type="submit" name="SaveAttachment" 		value="{msgPool type=saveButton}">
+		<input type="submit" name="CancelAttachment" 	value="{msgPool type=cancelButton}">
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

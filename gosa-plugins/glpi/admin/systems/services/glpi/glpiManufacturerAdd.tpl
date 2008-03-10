@@ -77,7 +77,7 @@
 <p class="seperator">&nbsp;</p>
 <div align="right">
 <p>
-	<input name="save_manufacturer" value="{t}Save{/t}" type="submit">
+	<input name="save_manufacturer" value="{msgPool type=saveButton}" type="submit">
 	<input name="close_manufacturer" value="{t}Close{/t}" type="submit">
 </p>
 </div>

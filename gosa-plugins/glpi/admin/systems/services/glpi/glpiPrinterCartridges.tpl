@@ -49,6 +49,6 @@
 <div align="right">
 	<p>
 	<input type="submit" name="SelectCartridgeSave" value="{t}Use{/t}">
-	<input type="submit" name="SelectCartridgeCancel" value="{t}Cancel{/t}">
+	<input type="submit" name="SelectCartridgeCancel" value="{msgPool type=cancelButton}">
 	</p>
 </div>

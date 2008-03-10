@@ -757,7 +757,7 @@
 <p class="seperator">&nbsp;</p>
 <div align="right">
 	<p>
-		<input type="submit" value="{t}Save{/t}" name="SaveDeviceChanges">
-		<input type="submit" value="{t}Cancel{/t}" name="AbortDeviceChanges">
+		<input type="submit" value="{msgPool type=saveButton}" name="SaveDeviceChanges">
+		<input type="submit" value="{msgPool type=cancelButton}" name="AbortDeviceChanges">
 	</p> 
 </div>

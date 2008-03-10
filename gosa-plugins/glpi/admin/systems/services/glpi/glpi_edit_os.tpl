@@ -26,7 +26,7 @@
     <p>
         <div align="right" style="text-align: right;">
             <input type="submit" name="Rename_os_OK"       value="{t}Rename{/t}" >
-            <input type="submit" name="Rename_Cancel"   value="{t}Cancel{/t}" >
+            <input type="submit" name="Rename_Cancel"   value="{msgPool type=cancelButton}" >
         </div>
     </p>
 <script language="JavaScript" type="text/javascript">

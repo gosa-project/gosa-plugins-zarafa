@@ -71,8 +71,8 @@
 <p class="seperator">&nbsp;</p>
 <div style="text-align:right;">
 	<p>
-		<input type="submit" name="SaveCartridge" 	value="{t}Save{/t}">&nbsp;
-		<input type="submit" name="CancelCartridge" value="{t}Cancel{/t}"><br>
+		<input type="submit" name="SaveCartridge" 	value="{msgPool type=saveButton}">&nbsp;
+		<input type="submit" name="CancelCartridge" value="{msgPool type=cancelButton}"><br>
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

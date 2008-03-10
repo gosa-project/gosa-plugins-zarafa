@@ -48,6 +48,6 @@
 <p class="seperator">&nbsp;</p>
 <div align="right">
 	<p>
-	<input type="submit" name="{$AbortSelectUser}" value="{t}Cancel{/t}">
+	<input type="submit" name="{$AbortSelectUser}" value="{msgPool type=cancelButton}">
 </p>
 </div>
