@@ -64,6 +64,6 @@
 </table>
 
 <p class="plugbottom">
-  <input type=submit name="bck_to_list" value="{t}Back{/t}">
+  <input type=submit name="bck_to_list" value="{msgPool type=backButton}">
 </p>
 
