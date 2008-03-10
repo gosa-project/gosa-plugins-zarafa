@@ -34,7 +34,7 @@
 			<input name="phonenumber" size=20 align=middle maxlength=60 value="">
 {/render}
 {render acl=$telephoneNumberACL}
-			<input type="submit" value="{t}Add{/t}" 	name="add_phonenumber" >&nbsp;
+			<input type="submit" value="{msgPool type=addButton}" 	name="add_phonenumber" >&nbsp;
 {/render}
 {render acl=$telephoneNumberACL}
 			<input type="submit" value="{t}Delete{/t}" 	name="delete_phonenumber" >
