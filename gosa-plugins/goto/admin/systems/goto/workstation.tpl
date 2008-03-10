@@ -113,7 +113,7 @@
          {if $inheritTimeServer} disabled {/if}>
 {/render}
 {render acl=$gotoNtpServerACL}
-        <input type="submit" name="delNtpServer" value="{t}Delete{/t}"  id="delNtpServer" 
+        <input type="submit" name="delNtpServer" value="{msgPool type=delButton}"  id="delNtpServer" 
          {if $inheritTimeServer} disabled {/if}>
 {/render}
      </td>

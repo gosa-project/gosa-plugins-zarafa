@@ -152,7 +152,7 @@
 	{render acl=$FAIclassACL}
 			<input name="AddClass" value="{msgPool type=addButton}" type="submit"> 
 	{/render}
-	<!--		<input name="DelClass" value="{t}Delete{/t}" type="submit"> -->
+	<!--		<input name="DelClass" value="{msgPool type=delButton}" type="submit"> -->
 		{/if}
 
 		{else}
@@ -186,7 +186,7 @@
     <input type=submit value="{msgPool type=addButton}" name="add_module">&nbsp;
 {/render}
 {render acl=$gotoModulesACL}
-    <input type=submit value="{t}Delete{/t}" name="delete_module">
+    <input type=submit value="{msgPool type=delButton}" name="delete_module">
 {/render}
   </td>
 

@@ -99,7 +99,7 @@
       <input type="submit" value="{t}Add group{/t}" name="AddGroup">
 {/render}
 {render acl=$gotoUserPrinterACL}
-      <input type="submit" value="{t}Delete{/t}" name="DelUser">
+      <input type="submit" value="{msgPool type=delButton}" name="DelUser">
 {/render}
      </td>
     </tr>
@@ -123,7 +123,7 @@
        <input type="submit" value="{t}Add group{/t}" name="AddAdminGroup">
 {/render}
 {render acl=$gotoUserPrinterACL}
-       <input type="submit" value="{t}Delete{/t}" name="DelAdmin">
+       <input type="submit" value="{msgPool type=delButton}" name="DelAdmin">
 {/render}
   
      </td>
