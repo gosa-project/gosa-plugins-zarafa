@@ -52,7 +52,7 @@
 {/if}
 
 						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}">
-						<input type="submit" name="DelDisk"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
+						<input type="submit" name="DelDisk"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
 					</td>
 				</tr>
 				</table>

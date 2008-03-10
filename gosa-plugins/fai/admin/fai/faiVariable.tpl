@@ -52,9 +52,9 @@
 {/if}
 					<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
 {if $is_removeable}
-					<input type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
+					<input type="submit" name="DelSubObject"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
 {else}
-					<input disabled type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
+					<input disabled type="submit" name="DelSubObject"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
 {/if}
 					</td>
 				</tr>
