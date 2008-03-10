@@ -76,7 +76,7 @@
       		</select>
 			<br>
 {render acl=$FAIpackageACL}
-			<input type="submit" name="Addpkg" value="{t}Add{/t}">
+			<input type="submit" name="Addpkg" value="{msgPool type=addButton}">
 {/render}
 {render acl=$FAIpackageACL}
 			<input type="submit" name="Delpkg" value="{t}Remove{/t}">

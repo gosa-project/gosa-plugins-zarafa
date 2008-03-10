@@ -46,9 +46,9 @@
 							<option>&nbsp;</option>
 						</select><br>
 {if $sub_object_is_addable}
-						<input type="submit" name="AddDisk"     value="{t}Add{/t}"     title="{t}Add{/t}">
+						<input type="submit" name="AddDisk"     value="{msgPool type=addButton}"     title="{msgPool type=addButton}">
 {else}
-						<input type="submit" name="AddDisk"     value="{t}Add{/t}"     title="{t}Add{/t}" disabled >
+						<input type="submit" name="AddDisk"     value="{msgPool type=addButton}"     title="{msgPool type=addButton}" disabled >
 {/if}
 
 						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}">

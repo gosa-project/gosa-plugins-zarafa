@@ -46,9 +46,9 @@
 							{html_options options=$SubObjects}
 						</select><br>
 {if $is_createable}
-					<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}">
+					<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"		title="{msgPool type=addButton}">
 {else}
-					<input disabled type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}">
+					<input disabled type="submit" name="AddSubObject"     value="{msgPool type=addButton}"		title="{msgPool type=addButton}">
 {/if}
 					<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
 {if $is_removeable}
