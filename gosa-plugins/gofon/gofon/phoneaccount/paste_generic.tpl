@@ -15,7 +15,7 @@
    </select>
    <br>
    <input name="phonenumber" size=20 align=middle maxlength=60 value="">
-   <input type="submit" value="{t}Add{/t}" name="add_phonenumber"> 
+   <input type="submit" value="{msgPool type=addButton}" name="add_phonenumber"> 
    <input type="submit" value="{t}Delete{/t}" name="delete_phonenumber">
   </td>
   <td style="vertical-align:top; width:50%;">
