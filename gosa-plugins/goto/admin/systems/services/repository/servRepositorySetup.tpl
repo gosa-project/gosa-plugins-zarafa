@@ -51,8 +51,8 @@
 </table>
 <input type='hidden' name='servRepositorySetup_Posted' value='1'>
 <p class="plugbottom">
-  <input type=submit name="repository_setup_save" value="{t}Apply{/t}">
+  <input type=submit name="repository_setup_save" value="{msgPool type=applyButton}">
   &nbsp;
-  <input type=submit name="repository_setup_cancel" value="{t}Cancel{/t}">
+  <input type=submit name="repository_setup_cancel" value="{msgPool type=cancelButton}">
 </p>
 
