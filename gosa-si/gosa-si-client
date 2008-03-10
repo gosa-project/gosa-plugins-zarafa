@@ -647,9 +647,10 @@ sub write_to_file {
 
         chomp($string);
     
-        open(FILE, ">> $file");
-        print FILE $string."\n";
-        close(FILE);
+        if (open(FILE, ">> $file")){
+          print FILE $string."\n";
+          close(FILE);
+        }
     }
 
     return;    

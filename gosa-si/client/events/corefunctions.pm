@@ -18,8 +18,6 @@ use strict;
 use warnings;
 use Data::Dumper;
 use Fcntl;
-use utf8;
-use open ':utf8';
 use GOSA::GosaSupportDaemon;
 use File::Basename;
 
