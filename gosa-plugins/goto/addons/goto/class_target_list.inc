@@ -248,11 +248,11 @@ class target_list extends MultiSelectWindow
 
     if($this->IPMatch){
       if(!tests::is_ip($IP_start)){
-	msg_dialog::display(_("Error"), _("IP range is invalid!"), ERROR_DIALOG);
+	msg_dialog::display(_("Error"), msgPool::invalid(_("IP range")), ERROR_DIALOG);
         return;
       }
       if(!tests::is_ip($IP_end)){
-	msg_dialog::display(_("Error"), _("IP range is invalid!"), ERROR_DIALOG);
+	msg_dialog::display(_("Error"), msgPool::invalid(_("IP range")), ERROR_DIALOG);
         return;
       }
     }
