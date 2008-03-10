@@ -8,7 +8,7 @@
 <p class="plugbottom">
   <input type=submit name="cd_create" value="{t}Create ISO-Image{/t}">
   &nbsp;
-  <input type=submit name="cd_cancel" value="{t}Cancel{/t}">
+  <input type=submit name="cd_cancel" value="{msgPool type=cancelButton}">
 </p>
 
 <!-- Place cursor -->

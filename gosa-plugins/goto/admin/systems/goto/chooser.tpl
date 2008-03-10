@@ -15,7 +15,7 @@
 <p class="plugbottom">
  <input type=submit name="create_system" value="{t}Create{/t}">
  &nbsp;
- <input type=submit name="cancel" value="{t}Cancel{/t}">
+ <input type=submit name="cancel" value="{msgPool type=cancelButton}">
 </p>
 
 <input type="hidden" name="ignore">

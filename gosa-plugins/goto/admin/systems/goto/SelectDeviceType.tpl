@@ -42,5 +42,5 @@
 <p class="seperator">&nbsp;</p>
 <div style="align: right;" align="right"><p>
 	<input type="submit" name="SystemTypeChoosen" value="{t}Continue{/t}">
-	<input type="submit" name="SystemTypeAborted" value="{t}Cancel{/t}">
+	<input type="submit" name="SystemTypeAborted" value="{msgPool type=cancelButton}">
 </p></div>

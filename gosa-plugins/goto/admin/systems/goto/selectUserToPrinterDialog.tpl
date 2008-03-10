@@ -65,6 +65,6 @@
 	<p class="seperator">&nbsp;</p>
     <p align="right">
     <input type="submit" name="PrinterSave"     value="{t}Add{/t}">
-    <input type="submit" name="PrinterCancel"   value="{t}Cancel{/t}">
+    <input type="submit" name="PrinterCancel"   value="{msgPool type=cancelButton}">
     </p>
 
