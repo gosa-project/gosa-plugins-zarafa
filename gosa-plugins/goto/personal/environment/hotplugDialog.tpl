@@ -60,8 +60,8 @@
     <p class="seperator">&nbsp;</p>
 
     <p align="right">
-    <input type="submit" name="HotPlugSave"     value="{t}Add{/t}">
-    <input type="submit" name="HotPlugCancel"   value="{t}Cancel{/t}">
+    <input type="submit" name="HotPlugSave"     value="{msgPool type=okButton}">
+    <input type="submit" name="HotPlugCancel"   value="{msgPool type=cancelButton}">
     </p>
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

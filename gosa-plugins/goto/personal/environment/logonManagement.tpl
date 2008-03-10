@@ -72,8 +72,8 @@
 
 	<p class="seperator">&nbsp;</p>
     <p align="right">
-    <input type="submit" name="LogonSave"     value="{t}Apply{/t}">
-    <input type="submit" name="LogonCancel"   value="{t}Cancel{/t}">
+    <input type="submit" name="LogonSave"     value="{msgPool type=applyButton}">
+    <input type="submit" name="LogonCancel"   value="{msgPool type=cancelButton}">
     </p>
 
 <script language="JavaScript" type="text/javascript">

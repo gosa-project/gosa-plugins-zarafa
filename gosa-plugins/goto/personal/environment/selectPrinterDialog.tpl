@@ -62,8 +62,8 @@
 
     <p class="seperator">&nbsp;</p>
     <p align="right">
-    <input type="submit" name="PrinterSave"     value="{t}Add{/t}">
-    <input type="submit" name="PrinterCancel"   value="{t}Cancel{/t}">
+    <input type="submit" name="PrinterSave"     value="{msgPool type=okButton}">
+    <input type="submit" name="PrinterCancel"   value="{msgPool type=cancelButton}">
     </p>
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

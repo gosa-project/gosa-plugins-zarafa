@@ -546,7 +546,7 @@ class environment extends plugin
     if(isset($_POST['LogonSave'])){
 
       if(!$this->acl_is_writeable("gotoLogonScript")){
-        msg_dialog::display(_("Permission error"), _("You have no permission to modify logon scripts!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permModify(_("Logon scripts")), ERROR_DIALOG);
         unset($this->dialog);
         $this->dialog=FALSE;
         $this->is_dialog=false;
@@ -1110,7 +1110,7 @@ class environment extends plugin
     } 
     if(!$this->is_group){
       if((!((in_array("posixAccount",$this->attrs['objectClass']))||($this->parent->by_object['posixAccount']->is_account==true)))&&(!$this->is_group)){
-        $message[]=(_("You need to enable POSIX features in order to enable evironment features!"));  
+        $message[]= msgPool::featuresDisabled(_("environemnt"),_("POSIX"));  
       }
     }
     return ($message);
