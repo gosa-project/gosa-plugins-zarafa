@@ -80,7 +80,7 @@
      <input type=submit value="{msgPool type=addButton}" name="add_number">&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{t}Delete{/t}" name="delete_number">
+     <input type=submit value="{msgPool type=delButton}" name="delete_number">
 {/render}
    </td>
   <td style="border-left:1px solid #A0A0A0">

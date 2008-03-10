@@ -12,11 +12,11 @@
 
 <p class="plugbottom">
 	{if $multiple}
-		<input type=submit name="delete_multiple_blocklist_confirm" value="{t}Delete{/t}">
+		<input type=submit name="delete_multiple_blocklist_confirm" value="{msgPool type=delButton}">
 		&nbsp;
 		<input type=submit name="delete_multiple_blocklist_cancel" value="{msgPool type=cancelButton}">
 	{else}
-		<input type=submit name="delete_blocklist_confirm" value="{t}Delete{/t}">
+		<input type=submit name="delete_blocklist_confirm" value="{msgPool type=delButton}">
 		&nbsp;
 		<input type=submit name="delete_blocklist_cancel" value="{msgPool type=cancelButton}">
 	{/if}
