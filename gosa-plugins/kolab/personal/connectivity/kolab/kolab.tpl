@@ -56,7 +56,7 @@
 	</select>
    <br>
    <input name="delegate_address" size=30 align=middle maxlength=60 value="" id="delegate_address">
-   <input type=submit value="{t}Add{/t}" name="add_delegation" id="add_delegation">&nbsp;
+   <input type=submit value="{msgPool type=addButton}" name="add_delegation" id="add_delegation">&nbsp;
    <input type=submit value="{t}Delete{/t}" name="delete_delegation" id="delete_delegation">
 
 {else}
@@ -73,7 +73,7 @@
 	   <input name="delegate_address" size=30 align=middle maxlength=60 {if !$kolabState} disabled {/if} value="" id="delegate_address">
 	{/render}
 	{render acl=$kolabDelegateACL}
-	   <input type=submit value="{t}Add{/t}" name="add_delegation" {if !$kolabState} disabled {/if} id="add_delegation">&nbsp;
+	   <input type=submit value="{msgPool type=addButton}" name="add_delegation" {if !$kolabState} disabled {/if} id="add_delegation">&nbsp;
 	{/render}
 	{render acl=$kolabDelegateACL}
 	   <input type=submit value="{t}Delete{/t}" name="delete_delegation" {if !$kolabState} disabled {/if} id="delete_delegation">
