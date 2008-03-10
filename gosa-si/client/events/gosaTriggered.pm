@@ -19,7 +19,7 @@ my @events = (
 use strict;
 use warnings;
 use utf8;
-
+use GOSA::GosaSupportDaemon;
 
 BEGIN {}
 
@@ -79,6 +79,46 @@ sub trigger_action_faireboot {
 
 sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
+    my $timeout;
+
+    if((not exists $msg_hash->{timeout} ) || (1 != @{$msg_hash->{timeout}} ) ) {
+        $timeout = -1;
+    } 
+    else {
+        $timeout = @{$msg_hash->{timeout}}[0];
+    }
+
+    # check logged in user
+    my @user_list = &get_logged_in_users;
+    if( @user_list >= 1 ) {
+        # TODO do something
+    }
+    else {
+        $timeout = 0;
+    }
+        
+    # execute function
+    if( $timeout == 0 ) {
+        print STDERR ("shutdown -r +$timeout\n");
+    }
+    elsif( $timeout > 0 ) {
+        print STDERR ("shutdown -r +$timeout\n");
+    }
+    elsif( $timeout < 0 ) {
+        print STDERR "The administrator has sent a signal to reboot this workstation. It will reboot after you've logged out.\n";
+        open(FILE, "> /etc/gosa-si/event");
+        print FILE "trigger_action_reboot\n";
+        close(FILE);
+    }
+    else {
+        # TODO do something, error handling, logging
+    }
+
+    return;
+
+    
+
+
     print STDERR "jetzt würde ich trigger_action_reboot ausführen\n";
     return;
 }

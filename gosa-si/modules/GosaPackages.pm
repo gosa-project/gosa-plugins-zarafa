@@ -315,6 +315,17 @@ sub process_gosa_msg {
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
 
+    # if incoming 'gosa_'-msg is scheduled from job_queue, than it contains xml-tag 'jobdb_id'
+    # after procesing this msg, set status of this job in job_queue to done
+    if ($msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='done' ".
+            "WHERE id='$1'";
+        &main::daemon_log("DEBUG: $sql_statement", 7);         
+        my $res = $main::job_db->update_dbentry($sql_statement);
+        &main::daemon_log("INFO: set job '$1' to status processed", 5); 
+    }
+
     # if delivery not possible raise error and return 
     if( not defined $out_msg_l[0] ) {
         &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);

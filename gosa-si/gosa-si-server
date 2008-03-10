@@ -414,7 +414,7 @@ sub check_key_and_xml_validity {
         $msg = &decrypt_msg($crypted_msg, $module_key);
 
         if ($msg =~ /<xml>/i){
-            &main::daemon_log("decrypted_msg: \n$msg", 8);
+            daemon_log("decrypted_msg: \n$msg", 8);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
             ##############
@@ -443,7 +443,7 @@ sub check_key_and_xml_validity {
         }
     };
     if($@) {
-        &main::daemon_log("WARNING: do not understand the message: $@", 5);
+        daemon_log("WARNING: do not understand the message: $@", 5);
         $msg = undef;
         $msg_hash = undef;
     }
@@ -547,7 +547,7 @@ sub input_from_known_server {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        daemon_log("INFO: Incoming message is not from a known server", 5);
+        daemon_log("DEBUG: Incoming message is not from a known server", 7);
     }
   
     return ($msg, $msg_hash, $module);
@@ -584,7 +584,7 @@ sub input_from_known_client {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        &daemon_log("INFO: Incoming message is not from a known client", 5);
+        &daemon_log("DEBUG: Incoming message is not from a known client", 5);
     }
 
     return ($msg, $msg_hash, $module);
@@ -624,7 +624,7 @@ sub input_from_unknown_host {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("INFO: Incoming message is not from an unknown host", 5);
+        daemon_log("DEBUG: Incoming message is not from an unknown host", 7);
     }
 
     return ($msg, $msg_hash, $module);
@@ -897,7 +897,15 @@ sub send_msg_to_target {
     return $error; 
 }
 
-
+###
+#
+#   HIER LÄUFT WAS SCHIEF - GENAU HIER KACK MIST
+#
+#   ERROR
+#
+#   TODO
+#
+###
 sub update_jobdb_status_for_send_msgs {
     my ($answer, $error) = @_;
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
@@ -912,7 +920,7 @@ sub update_jobdb_status_for_send_msgs {
             # sending msg was successful
             my $sql_statement = "UPDATE $job_queue_tn ".
                 "SET status='done' ".
-                "WHERE id='$jobdb_id'";
+                "WHERE id='$jobdb_id' AND status='processed'";
             my $res = $job_db->update_dbentry($sql_statement);
         }
     }
@@ -938,8 +946,9 @@ sub client_input {
     my ($answer_header, @answer_target_l, $answer_source);
     my $client_answer;
 
+    daemon_log("", 5); 
     daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
-    daemon_log("DEBUG: Incoming message:\n$input", 8);
+    daemon_log("DEBUG: Incoming message:\n$input", 9);
 
     ####################
     # check incoming msg
@@ -1226,6 +1235,141 @@ sub refresh_ldap_handle {
 }
 
 
+sub change_fai_state {
+    my ($st, $targets) = @_;
+
+    # Set FAI state to localboot
+    my %mapActions= (
+        reboot    => '',
+        update    => 'softupdate',
+        localboot => 'localboot',
+        reinstall => 'install',
+        rescan    => '',
+        wake      => '',
+        memcheck  => 'memcheck',
+        sysinfo   => 'sysinfo',
+    );
+
+    # Return if this is unknown
+    if (!exists $mapActions{ $st }){
+      return;
+    }
+
+    my $state= $mapActions{ $st };
+
+    &refresh_ldap_handle();
+    if( defined($ldap_handle) ) {
+
+      # Build search filter for hosts
+      my $search= "(&(objectClass=GOhard)";
+      foreach (@{$targets}){
+        $search.= "(macAddress=$_)";
+      }
+      $search.= ")";
+
+      # If there's any host inside of the search string, procress them
+      if (!($search =~ /macAddress/)){
+        return;
+      }
+
+      # Perform search for Unit Tag
+      my $mesg = $ldap_handle->search(
+          base   => $ldap_base,
+          scope  => 'sub',
+          attrs  => ['dn', 'FAIstate', 'objectClass'],
+          filter => "$search"
+          );
+
+      if ($mesg->count) {
+        my @entries = $mesg->entries;
+        foreach my $entry (@entries) {
+
+          # Only modify entry if it is not set to '$state'
+          if ($entry->get_value("FAIstate") ne "$state"){
+
+            daemon_log("INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
+            my $result;
+            my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
+            if (exists $tmp{'FAIobject'}){
+              if ($state eq ''){
+                $result= $ldap_handle->modify($entry->dn, changes => [
+                            delete => [ FAIstate => [] ] ]);
+              } else {
+                $result= $ldap_handle->modify($entry->dn, changes => [
+                            replace => [ FAIstate => $state ] ]);
+              }
+            } elsif ($state ne ''){
+              $result= $ldap_handle->modify($entry->dn, changes => [
+                          add     => [ objectClass => 'FAIobject' ],
+                          add     => [ FAIstate => $state ] ]);
+            }
+
+            # Errors?
+            if ($result->code){
+              daemon_log("Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+            }
+
+          }
+        }
+      }
+    }
+}
+
+
+sub change_goto_state {
+    my ($st, $targets) = @_;
+
+    # Switch on or off?
+    my $state= $st eq 'active' ? 'active': 'locked';
+
+    &refresh_ldap_handle();
+    if( defined($ldap_handle) ) {
+
+      # Build search filter for hosts
+      my $search= "(&(objectClass=GOhard)";
+      foreach (@{$targets}){
+        $search.= "(macAddress=$_)";
+      }
+      $search.= ")";
+
+      # If there's any host inside of the search string, procress them
+      if (!($search =~ /macAddress/)){
+        return;
+      }
+
+      # Perform search for Unit Tag
+      my $mesg = $ldap_handle->search(
+          base   => $ldap_base,
+          scope  => 'sub',
+          attrs  => ['dn', 'gotoMode'],
+          filter => "$search"
+          );
+
+      if ($mesg->count) {
+        my @entries = $mesg->entries;
+        foreach my $entry (@entries) {
+
+          # Only modify entry if it is not set to '$state'
+          if ($entry->get_value("gotoMode") ne $state){
+
+            daemon_log("INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
+            my $result;
+            $result= $ldap_handle->modify($entry->dn, changes => [
+                                                replace => [ gotoMode => $state ] ]);
+
+            # Errors?
+            if ($result->code){
+              &daemon_log("Error: Setting gotoMode to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+            }
+
+          }
+        }
+      }
+
+    }
+}
+
+
 sub create_fai_server_db {
     my ($table_name) = $_[ARG0];
 	my $result;
@@ -1233,7 +1377,7 @@ sub create_fai_server_db {
 	if(defined($ldap_handle)) {
 		daemon_log("Creating fai_server_db",4);
 		my $mesg= $ldap_handle->search(
-			base   => $main::ldap_base,
+			base   => $ldap_base,
 			scope  => 'sub',
 			attrs  => ['FAIrepository', 'gosaUnitTag'],
 			filter => "(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",
@@ -1271,7 +1415,7 @@ sub create_fai_release_db {
 	if(defined($ldap_handle)) {
 		daemon_log("Creating fai_release_db",4);
 		my $mesg= $ldap_handle->search(
-			base   => $main::ldap_base,
+			base   => $ldap_base,
 			scope  => 'sub',
 			attrs  => [],
 			filter => "(&(objectClass=organizationalUnit)(ou=fai))",

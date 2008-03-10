@@ -899,7 +899,7 @@ sub import_events {
         eval{ require $event; };
         if( $@ ) {
             daemon_log("ERROR: import of event module '$event' failed", 1);
-            daemon_log("$@", 8);
+            daemon_log("$@", 1);
             next;
         }
 
@@ -1076,7 +1076,8 @@ sub server_input {
                 $REGISTERED = 1;
             } 
             else {
-                &send_msg_to_target($answer, $server_address, $server_key);
+                $answer =~ /<header>(\S+)<\/header>/;
+                &send_msg_to_target($answer, $server_address, $server_key, $1);
             }
 
             # postprocessing

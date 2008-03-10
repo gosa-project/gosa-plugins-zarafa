@@ -169,56 +169,171 @@ sub CURRENTLY_LOGGED_IN {
 
 sub GOTOACTIVATION {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
-    return @out_msg_l; 
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    my $content = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header"."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress'", 5); 
+    return; 
 }
 
 
 sub PROGRESS {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_progress_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
-    return @out_msg_l; 
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    my $content;
+    my $cont = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$cont) ) { $content = ""; } };
+    if( $@ ) { $content = "$cont"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+        "SET progress='$content' ".
+        "WHERE status='processing' AND macaddress='$macaddress'";
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - $content%", 5); 
+
+    return;
 }
 
 
 sub FAIREBOOT {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
-    return @out_msg_l; 
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    my $content = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+
+    return; 
 }
 
 
 sub TASKSKIP {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
-    return @out_msg_l; 
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    my $content = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+
+    return; 
 }
 
 
 
 sub TASKBEGIN {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+    my $content = @{$msg_hash->{$header}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    # check if installation finished
+    if (($content eq 'finish') || ($content eq 'faiend')){
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='done', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+        &main::daemon_log("DEBUG: $sql_statement", 7);         
+        my $res = $main::job_db->update_dbentry($sql_statement);
+        &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+        
+        # set fai_state to localboot
+        &main::change_fai_state('localboot', \@{$msg_hash->{target}});
+
+    } else {
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+        &main::daemon_log("DEBUG: $sql_statement", 7);         
+        my $res = $main::job_db->update_dbentry($sql_statement);
+        &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+
 
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
 #  <header>CLMSG_TASKBEGIN</header>
 # macaddress auslesen, Client im LDAP lokalisieren
 # FAIstate auf "localboot" setzen, wenn FAIstate "install" oder "softupdate" war
+    }
 
-    return @out_msg_l; 
+    return; 
 }
 
 
 sub TASKEND {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # test whether content is an empty hash or a string which is required
+    my $content = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
 
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
@@ -226,14 +341,30 @@ sub TASKEND {
 # macaddress auslesen, Client im LDAP lokalisieren
 # FAIstate auf "error" setzen
 
-    return @out_msg_l; 
+    return; 
 }
 
 
 sub TASKERROR {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'target'}}[0];
+    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
+
+    # test whether content is an empty hash or a string which is required
+    my $content = @{$msg_hash->{$header}}[0];
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
+
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
 
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
@@ -241,136 +372,32 @@ sub TASKERROR {
 # macaddress auslesen, Client im LDAP lokalisieren
 # FAIstate auf "error" setzen
 
-    return @out_msg_l; 
+    return; 
 }
 
 
 sub HOOK {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $out_msg = &build_status_result_update_msg($msg_hash);
-    my @out_msg_l = ($out_msg);  
-    return @out_msg_l; 
-}
-
-
-sub build_status_result_update_msg {
-    my ($msg_hash) = @_;
-
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'target'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+    # clean up header
+    $header =~ s/CLMSG_//g;
 
     # test whether content is an empty hash or a string which is required
     my $content = @{$msg_hash->{$header}}[0];
-    eval{
-        if( 0 == keys(%$content) ) {
-            $content = "";
-        }
-    };
-    if( $@ ) {
-        $content = " $content";
-    }
+    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    if( $@ ) { $content = "$content"; }
 
-    $header =~ s/CLMSG_//g;
-    my $out_msg = sprintf("<xml> ".  
-        "<header>gosa_update_status_jobdb_entry</header> ".
-        "<source>%s</source> ".
-        "<target>%s</target>".
-        "<where> ".
-            "<clause> ".
-                "<phrase> ".
-                    "<status>processing</status> ".
-                    "<macaddress>%s</macaddress> ".
-                "</phrase> ".
-            "</clause> ".
-        "</where> ".
-        "<update> ".
-            "<status>processing</status> ".
-            "<result>%s</result> ".
-        "</update> ".
-        "</xml>", $source, "JOBDB", $macaddress, $header.$content);
-    return $out_msg;
-}   
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress='$macaddress'"; 
+    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
 
-
-sub build_progress_update_msg {
-    my ($msg_hash) = @_;
-
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
-
-    # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
-    eval{
-        if( 0 == keys(%$content) ) {
-            $content = "";
-        }
-    };
-    if( $@ ) {
-        $content = "$content";
-    }
-
-    $header =~ s/CLMSG_//g;
-    my $out_msg = sprintf("<xml> ".  
-        "<header>gosa_update_status_jobdb_entry</header> ".
-        "<source>%s</source> ".
-        "<target>%s</target>".
-        "<where> ".
-            "<clause> ".
-                "<phrase> ".
-                    "<status>processing</status> ".
-                    "<macaddress>%s</macaddress> ".
-                "</phrase> ".
-            "</clause> ".
-        "</where> ".
-        "<update> ".
-            "<progress>%s</progress> ".
-        "</update> ".
-        "</xml>", $source, "JOBDB", $macaddress, $content);
-    return $out_msg;
-}
-
-
-sub build_result_update_msg {
-    my ($msg_hash) = @_;
-
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $macaddress = @{$msg_hash->{'macaddress'}}[0];
-
-    # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
-    eval{
-        if( 0 == keys(%$content) ) {
-            $content = "";
-        }
-    };
-    if( $@ ) {
-        $content = " $content";
-    }
-
-    $header =~ s/CLMSG_//g;
-    my $out_msg = sprintf("<xml> ".  
-        "<header>gosa_update_status_jobdb_entry</header> ".
-        "<source>%s</source> ".
-        "<target>%s</target>".
-        "<where> ".
-            "<clause> ".
-                "<phrase> ".
-                    "<status>processing</status> ".
-                    "<macaddress>%s</macaddress> ".
-                "</phrase> ".
-            "</clause> ".
-        "</where> ".
-        "<update> ".
-            "<result>%s</result> ".
-        "</update> ".
-        "</xml>", $source, "JOBDB", $macaddress, $header.$content);
-    return $out_msg;
+    return;
 }
 
 

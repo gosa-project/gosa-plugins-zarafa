@@ -18,6 +18,7 @@ my @functions = (
     "get_limit_statement",
     "get_orderby_statement",
     "get_dns_domains",
+    "get_logged_in_users",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -384,6 +385,27 @@ sub get_dns_domains() {
         @searches = sort keys %tmp;
 
         return @searches;
+}
+
+
+sub get_logged_in_users {
+    my $result = qx(/usr/bin/w -hs);
+    my @res_lines;
+
+    if( defined $result ) { 
+        chomp($result);
+        @res_lines = split("\n", $result);
+    }
+
+    my @logged_in_user_list;
+    foreach my $line (@res_lines) {
+        chomp($line);
+        my @line_parts = split(/\s+/, $line); 
+        push(@logged_in_user_list, $line_parts[0]);
+    }
+
+    return @logged_in_user_list;
+
 }
 
 1;

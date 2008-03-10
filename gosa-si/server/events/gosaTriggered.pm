@@ -299,8 +299,8 @@ sub trigger_action_faireboot {
     $msg =~ s/<header>gosa_trigger_action_faireboot<\/header>/<header>trigger_action_faireboot<\/header>/;
     push(@out_msg_l, $msg);
 
-    change_goto_state('locked', \@{$msg_hash->{target}});
-    change_fai_state('localboot', \@{$msg_hash->{target}});
+    &main::change_goto_state('locked', \@{$msg_hash->{target}});
+    &main::change_fai_state('localboot', \@{$msg_hash->{target}});
 
     # delete all jobs from jobqueue which correspond to fai
     my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
@@ -316,7 +316,7 @@ sub trigger_action_lock {
     my $macaddress = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
 
-    change_goto_state('locked', \@{$msg_hash->{target}});
+    &main::change_goto_state('locked', \@{$msg_hash->{target}});
                                              
     my @out_msg_l;
     return @out_msg_l;
@@ -328,7 +328,7 @@ sub trigger_action_activate {
     my $macaddress = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
 
-    change_goto_state('active', \@{$msg_hash->{target}});
+    &main::change_goto_state('active', \@{$msg_hash->{target}});
                                              
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $macaddress);
     if( exists $msg_hash->{'jobdb_id'} ) { 
@@ -344,7 +344,7 @@ sub trigger_action_localboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
 
-    change_fai_state('localboot', \@{$msg_hash->{target}});
+    &main::change_fai_state('localboot', \@{$msg_hash->{target}});
 
     my @out_msg_l = ($msg);  
     return @out_msg_l;
@@ -355,7 +355,7 @@ sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_halt<\/header>/<header>trigger_action_halt<\/header>/;
 
-    change_fai_state('halt', \@{$msg_hash->{target}});
+    &main::change_fai_state('halt', \@{$msg_hash->{target}});
 
     my @out_msg_l = ($msg);  
     return @out_msg_l;
@@ -366,7 +366,7 @@ sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reboot<\/header>/<header>trigger_action_reboot<\/header>/;
 
-    change_fai_state('reboot', \@{$msg_hash->{target}});
+    &main::change_fai_state('reboot', \@{$msg_hash->{target}});
 
     my @out_msg_l = ($msg);  
     return @out_msg_l;
@@ -377,7 +377,7 @@ sub trigger_action_memcheck {
     my ($msg, $msg_hash) = @_ ;
     $msg =~ s/<header>gosa_trigger_action_memcheck<\/header>/<header>trigger_action_memcheck<\/header>/;
 
-    change_fai_state('memcheck', \@{$msg_hash->{target}});
+    &main::change_fai_state('memcheck', \@{$msg_hash->{target}});
 
     my @out_msg_l = ($msg);  
     return @out_msg_l;
@@ -388,7 +388,7 @@ sub trigger_action_reinstall {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_reinstall<\/header>/<header>trigger_action_reinstall<\/header>/;
 
-    change_fai_state('reinstall', \@{$msg_hash->{target}});
+    &main::change_fai_state('reinstall', \@{$msg_hash->{target}});
 
     my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
@@ -401,7 +401,7 @@ sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_update<\/header>/<header>trigger_action_update<\/header>/;
 
-    change_fai_state('update', \@{$msg_hash->{target}});
+    &main::change_fai_state('update', \@{$msg_hash->{target}});
 
     my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
@@ -414,7 +414,7 @@ sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_instant_update<\/header>/<header>trigger_action_instant_update<\/header>/;
 
-    change_fai_state('update', \@{$msg_hash->{target}});
+    &main::change_fai_state('update', \@{$msg_hash->{target}});
 
     my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
@@ -427,7 +427,7 @@ sub trigger_action_sysinfo {
     my ($msg, $msg_hash) = @_;
     $msg =~ s/<header>gosa_trigger_action_sysinfo<\/header>/<header>trigger_action_sysinfo<\/header>/;
 
-    change_fai_state('sysinfo', \@{$msg_hash->{target}});
+    &main::change_fai_state('sysinfo', \@{$msg_hash->{target}});
 
     my @out_msg_l = ($msg);  
     return @out_msg_l;
@@ -459,137 +459,4 @@ sub trigger_action_wake {
 }
 
 
-sub change_fai_state {
-    my ($st, $targets) = @_;
-
-    # Set FAI state to localboot
-    my %mapActions= (
-        reboot    => '',
-        update    => 'softupdate',
-        localboot => 'localboot',
-        reinstall => 'install',
-        rescan    => '',
-        wake      => '',
-        memcheck  => 'memcheck',
-        sysinfo   => 'sysinfo',
-    );
-
-    # Return if this is unknown
-    if (!exists $mapActions{ $st }){
-      return;
-    }
-
-    my $state= $mapActions{ $st };
-
-    &main::refresh_ldap_handle();
-    if( defined($main::ldap_handle) ) {
-
-      # Build search filter for hosts
-      my $search= "(&(objectClass=GOhard)";
-      foreach (@{$targets}){
-        $search.= "(macAddress=$_)";
-      }
-      $search.= ")";
-
-      # If there's any host inside of the search string, procress them
-      if (!($search =~ /macAddress/)){
-        return;
-      }
-
-      # Perform search for Unit Tag
-      my $mesg = $main::ldap_handle->search(
-          base   => $main::ldap_base,
-          scope  => 'sub',
-          attrs  => ['dn', 'FAIstate', 'objectClass'],
-          filter => "$search"
-          );
-
-      if ($mesg->count) {
-        my @entries = $mesg->entries;
-        foreach my $entry (@entries) {
-
-          # Only modify entry if it is not set to '$state'
-          if ($entry->get_value("FAIstate") ne "$state"){
-
-            &main::daemon_log("INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
-            my $result;
-            my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
-            if (exists $tmp{'FAIobject'}){
-              if ($state eq ''){
-                $result= $main::ldap_handle->modify($entry->dn, changes => [
-                            delete => [ FAIstate => [] ] ]);
-              } else {
-                $result= $main::ldap_handle->modify($entry->dn, changes => [
-                            replace => [ FAIstate => $state ] ]);
-              }
-            } elsif ($state ne ''){
-              $result= $main::ldap_handle->modify($entry->dn, changes => [
-                          add     => [ objectClass => 'FAIobject' ],
-                          add     => [ FAIstate => $state ] ]);
-            }
-
-            # Errors?
-            if ($result->code){
-              &main::daemon_log("Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
-            }
-
-          }
-        }
-      }
-    }
-}
-
-
-sub change_goto_state {
-    my ($st, $targets) = @_;
-
-    # Switch on or off?
-    my $state= $st eq 'active' ? 'active': 'locked';
-
-    &main::refresh_ldap_handle();
-    if( defined($main::ldap_handle) ) {
-
-      # Build search filter for hosts
-      my $search= "(&(objectClass=GOhard)";
-      foreach (@{$targets}){
-        $search.= "(macAddress=$_)";
-      }
-      $search.= ")";
-
-      # If there's any host inside of the search string, procress them
-      if (!($search =~ /macAddress/)){
-        return;
-      }
-
-      # Perform search for Unit Tag
-      my $mesg = $main::ldap_handle->search(
-          base   => $main::ldap_base,
-          scope  => 'sub',
-          attrs  => ['dn', 'gotoMode'],
-          filter => "$search"
-          );
-
-      if ($mesg->count) {
-        my @entries = $mesg->entries;
-        foreach my $entry (@entries) {
-
-          # Only modify entry if it is not set to '$state'
-          if ($entry->get_value("gotoMode") ne $state){
-
-            &main::daemon_log("INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
-            my $result;
-            $result= $main::ldap_handle->modify($entry->dn, changes => [
-                                                replace => [ gotoMode => $state ] ]);
-
-            # Errors?
-            if ($result->code){
-              &main::daemon_log("Error: Setting gotoMode to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
-            }
-
-          }
-        }
-      }
-
-    }
-}
 1;
