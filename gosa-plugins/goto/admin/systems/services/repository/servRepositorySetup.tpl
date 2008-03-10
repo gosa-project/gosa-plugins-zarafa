@@ -44,7 +44,7 @@
 			<input type="text" 	name="SectionName" value="" style='width:100%;'>
 {/render}
 {render acl=$SectionACL}
-			<input type="submit" 	name="AddSection"  value="{t}Add{/t}">
+			<input type="submit" 	name="AddSection"  value="{msgPool type=addButton}">
 {/render}
 		</td>
 	</tr>
