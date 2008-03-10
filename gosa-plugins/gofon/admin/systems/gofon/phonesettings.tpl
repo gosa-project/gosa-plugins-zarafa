@@ -207,7 +207,7 @@
                         <input type=submit value="{msgPool type=addButton}" name="goFonPermitAdd">
 {/render}
 {render acl=$goFonPermitACL}
-                        <input type=submit value="{t}Delete{/t}" name="goFonPermitDel">
+                        <input type=submit value="{msgPool type=delButton}" name="goFonPermitDel">
 {/render}
 						<br><br>
                     </td>
@@ -230,7 +230,7 @@
                         <input type=submit value="{msgPool type=addButton}" name="goFonDenyAdd">
 {/render}
 {render acl=$goFonDenyACL}
-                        <input type=submit value="{t}Delete{/t}" name="goFonDenyDel">
+                        <input type=submit value="{msgPool type=delButton}" name="goFonDenyDel">
 {/render}
                     </td>
                 </table>
