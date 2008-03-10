@@ -64,7 +64,7 @@
       </select>
       <br>
       <input type='text' name='addserver' size='25' maxlength='80' title='{t}DNS server do be added{/t}'>&nbsp;
-      <input type='submit' name='add_dns' value='{t}Add{/t}' title='{t}Click here add the selected server to the list{/t}'>
+      <input type='submit' name='add_dns' value='{msgPool type=addButton}' title='{t}Click here add the selected server to the list{/t}'>
       <input type='submit' name='delete_dns' value='{t}Delete{/t}' title='{t}Click here remove the selected servers from the list{/t}'>
      </td>
     </tr>

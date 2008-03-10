@@ -19,7 +19,7 @@
    </select>
    <br>
    <input type='text' name='addstatement' size='25' maxlength='80'>&nbsp;
-   <input type='submit' name='add_statement' value='{t}Add{/t}'>&nbsp;
+   <input type='submit' name='add_statement' value='{msgPool type=addButton}'>&nbsp;
    <input type='submit' name='delete_statement' value='{t}Delete{/t}'> 
   </td>
 
@@ -32,7 +32,7 @@
    </select>
    <br>
    <input type='text' name='addoption' size='25' maxlength='80'>&nbsp;
-   <input type='submit' name='add_option' value='{t}Add{/t}'>&nbsp;
+   <input type='submit' name='add_option' value='{msgPool type=addButton}'>&nbsp;
    <input type='submit' name='delete_option' value='{t}Delete{/t}'> 
   </td>
  </tr>
