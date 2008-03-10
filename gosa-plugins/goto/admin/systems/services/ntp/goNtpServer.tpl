@@ -18,7 +18,7 @@
 	<input type="submit"    value="{msgPool type=addButton}"      name="NewNTPAdd"  id="NewNTPAddId">
 {/render}
 {render acl=$goNtpServerACL}
-	<input type="submit"    value="{t}Delete{/t}"   name="DelNTPEnt"  id="DelNTPEntId">
+	<input type="submit"    value="{msgPool type=delButton}"   name="DelNTPEnt"  id="DelNTPEntId">
 {/render}
 </td>
 </tr>
