@@ -17,7 +17,7 @@
         <input type="submit"    value="{t}Edit{/t}"     name="NewNfsEdit"  id="NewNfsEditId">
 {/render}
 {render acl=$nameACL}
-        <input type="submit"    value="{t}Delete{/t}"   name="DelNfsEnt"   id="DelNfsEntId" {if !$removeable} disabled {/if}>
+        <input type="submit"    value="{msgPool type=delButton}"   name="DelNfsEnt"   id="DelNfsEntId" {if !$removeable} disabled {/if}>
 {/render}
     </td>
     </tr>
