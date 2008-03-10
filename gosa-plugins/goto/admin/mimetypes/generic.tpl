@@ -105,7 +105,7 @@
 			<input type='text'	 name='NewFilePattern'	  value='' title='{t}Please specify a new file pattern{/t}'>
 {/render}
 {render acl=$gotoMimeFilePatternACL}	
-			<input type='submit' name='AddNewFilePattern' value='{t}Add{/t}' title='{t}Add a new file pattern{/t}'>
+			<input type='submit' name='AddNewFilePattern' value='{msgPool type=addButton}' title='{t}Add a new file pattern{/t}'>
 {/render}
 		</td>
 		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
@@ -124,7 +124,7 @@
 			<input type='text'	 name='NewApplication'	  value='' title='{t}Enter an application name here{/t}'>
 {/render}
 {render acl=$gotoMimeApplicationACL}	
-			<input type='submit' name='AddNewApplication' value='{t}Add{/t}' title='{t}Add application{/t}'>
+			<input type='submit' name='AddNewApplication' value='{msgPool type=addButton}' title='{t}Add application{/t}'>
 {/render}
 		</td>
 	</tr>
@@ -184,7 +184,7 @@
 				title='{t}Enter an application name here{/t}'>
 {/render}
 {render acl=$gotoMimeEmbeddedApplicationACL}
-			<input type='submit' name='AddNewEmbeddedApplication' value='{t}Add{/t}' 
+			<input type='submit' name='AddNewEmbeddedApplication' value='{msgPool type=addButton}' 
 				title='{t}Add application{/t}'>
 {/render}
 		</td>
