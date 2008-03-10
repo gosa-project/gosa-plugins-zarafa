@@ -40,7 +40,7 @@
 					   	</select>
 						<br>
 					    <input name="forward_address" size=20 align="middle" maxlength=65 	value="">
-					    <input type="submit" value="{t}Add{/t}" name="add_forwarder"	>&nbsp;
+					    <input type="submit" value="{msgPool type=addButton}" name="add_forwarder"	>&nbsp;
 					    <input type="submit" value="{t}Add local{/t}" name="add_local_forwarder"	>&nbsp;
 					    <input type="submit" value="{t}Delete{/t}" name="delete_forwarder"	>
 					</td>
@@ -58,7 +58,7 @@
 					   	</select>
 					   	<br/>
 					   	<input name="alternate_address" size="30" align="middle" maxlength="65" value="">
-			   			<input type=submit value="{t}Add{/t}" name="add_alternate">
+			   			<input type=submit value="{msgPool type=addButton}" name="add_alternate">
 			   			<input type=submit value="{t}Delete{/t}" name="delete_alternate">
 			  		</td>
 				</tr>
