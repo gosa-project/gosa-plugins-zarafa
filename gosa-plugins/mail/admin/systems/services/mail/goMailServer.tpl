@@ -67,7 +67,7 @@
 						<input type="text" name="NewString_postfixMyNetworks" value="">
 {/render}
 {render acl=$postfixMyNetworksACL}
-						<input type="submit" name="AddpostfixMyNetworks" value="{t}Add{/t}">
+						<input type="submit" name="AddpostfixMyNetworks" value="{msgPool type=addButton}">
 {/render}
 {render acl=$postfixMyNetworksACL}
 						<input type="submit" name="DelpostfixMyNetworks" value="{t}Remove{/t}">
@@ -98,7 +98,7 @@
                         <input type="text" name="NewString_postfixMyDestinations" value="">
 {/render}
 {render acl=$postfixMyDestinationsACL}
-                        <input type="submit" name="AddpostfixMyDestinations" value="{t}Add{/t}">
+                        <input type="submit" name="AddpostfixMyDestinations" value="{msgPool type=addButton}">
 {/render}
 {render acl=$postfixMyDestinationsACL}
                         <input type="submit" name="DelpostfixMyDestinations" value="{t}Remove{/t}">
@@ -128,7 +128,7 @@
                         <input type="text" name="Destination_postfixTransportTable" value="">
 {/render}
 {render acl=$postfixTransportTableACL}
-                        <input type="submit" name="AddpostfixTransportTable" value="{t}Add{/t}">
+                        <input type="submit" name="AddpostfixTransportTable" value="{msgPool type=addButton}">
 {/render}
                     </td>
                 </tr>
@@ -162,7 +162,7 @@
                         <input type="text" name="Destination_postfixSenderRestrictions" value="">
 {/render}
 {render acl=$postfixSenderRestrictionsACL}
-                        <input type="submit" name="AddpostfixSenderRestrictions" value="{t}Add{/t}">
+                        <input type="submit" name="AddpostfixSenderRestrictions" value="{msgPool type=addButton}">
 {/render}
                     </td>
                 </tr>
@@ -188,7 +188,7 @@
                         <input type="text" name="Destination_postfixRecipientRestrictions" value="">
 {/render}
 {render acl=$postfixRecipientRestrictionsACL}
-                        <input type="submit" name="AddpostfixRecipientRestrictions" value="{t}Add{/t}">
+                        <input type="submit" name="AddpostfixRecipientRestrictions" value="{msgPool type=addButton}">
 {/render}
                     </td>
                 </tr>
