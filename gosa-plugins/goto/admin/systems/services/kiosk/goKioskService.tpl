@@ -7,7 +7,7 @@
 <br>
 {$divlist}
 <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
-<input type="submit" name="profileAdd" value="{t}Add{/t}">
+<input type="submit" name="profileAdd" value="{msgPool type=addButton}">
 
 <p class='seperator'>&nbsp;</p>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
