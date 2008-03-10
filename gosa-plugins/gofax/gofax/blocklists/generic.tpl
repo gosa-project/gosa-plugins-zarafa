@@ -77,7 +77,7 @@
      <input id="number" name="number" size=25 maxlength=60 >&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{t}Add{/t}" name="add_number">&nbsp;
+     <input type=submit value="{msgPool type=addButton}" name="add_number">&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
      <input type=submit value="{t}Delete{/t}" name="delete_number">
