@@ -720,15 +720,15 @@ class oxchangeAccount extends plugin
          isset($this->oxconf["PGPASSWD"])){
         $pgcon = @pg_connect("host=".$this->oxconf["PGHOST"]." user=".$this->oxconf["PGUSER"]." password=".$this->oxconf["PGPASSWD"]." dbname=".$this->oxconf["PGDBNAME"]);
         if (! $pgcon){
-          msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "Open-Xchange"), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::dbconnect("Open-Xchange",@pg_last_error($pgcon)), ERROR_DIALOG);
           return;
         }
       }else{
-        msg_dialog::display(_("Configuration error"), sprintf(_("%s database configuration is missing!"), "Open-Xchange"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::noserver("Open-Xchange database"), ERROR_DIALOG);
         return;
       }
     }else{
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "postgresql"), ERROR_DIALOG);
+      msg_dialog::display(_("Configuration error"),msgPool::missingext("postgresql"), ERROR_DIALOG);
       return;
     }
 
@@ -829,15 +829,15 @@ class oxchangeAccount extends plugin
         if(isset($this->oxconf["PGUSER"]) and isset($this->oxconf["PGHOST"]) and isset($this->oxconf["PGDBNAME"]) and isset($this->oxconf["PGPASSWD"])){
           $pgcon =  @pg_connect("host=".$this->oxconf["PGHOST"]." user=".$this->oxconf["PGUSER"]." password=".$this->oxconf["PGPASSWD"]." dbname=".$this->oxconf["PGDBNAME"]);
           if (! $pgcon){
-            msg::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "Open-Xchange"), ERROR_DIALOG);
+            msg_dialog::display(_("Error"), msgPool::dbconnect("Open-Xchange",@pg_last_error($pgcon)), ERROR_DIALOG);
             return;
           }
         }else{
-          msg_dialog::display(_("Configuration error"), sprintf(_("%s database configuration is missing!"), "Open-Xchange"), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), msgPool::noserver("Open-Xchange database"), ERROR_DIALOG);
           return;
         }
       }else{
-        msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "postgresql"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"),msgPool::missingext("postgresql"), ERROR_DIALOG);
         return;
       }
     }
