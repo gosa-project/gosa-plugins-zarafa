@@ -172,9 +172,9 @@
 <div style="text-algin:right;" align="right">
 	<p>
 {render acl=$ACLs}					
-		<input type="submit" name="SaveZoneChanges" value="{t}Save{/t}">
+		<input type="submit" name="SaveZoneChanges" value="{msgPool type=saveButton}">
 {/render}
-		<input type="submit" name="CancelZoneChanges" value="{t}Cancel{/t}">
+		<input type="submit" name="CancelZoneChanges" value="{msgPool type=cancelButton}">
 	</p>
 </div>
 <script language="JavaScript" type="text/javascript">

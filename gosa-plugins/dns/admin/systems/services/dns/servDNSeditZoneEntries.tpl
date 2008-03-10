@@ -14,8 +14,8 @@
 <p class="seperator">&nbsp;</p>
 <div style="text-algin:right;" align="right">
     <p>
-        <input type="submit" name="SaveZoneEntryChanges" value="{t}Save{/t}">
-        <input type="submit" name="CancelZoneEntryChanges" value="{t}Cancel{/t}">
+        <input type="submit" name="SaveZoneEntryChanges" value="{msgPool type=saveButton}">
+        <input type="submit" name="CancelZoneEntryChanges" value="{msgPool type=cancelButton}">
     </p>
 </div>
 

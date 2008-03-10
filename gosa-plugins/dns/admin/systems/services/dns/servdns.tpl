@@ -8,7 +8,7 @@
             <p>
             {$warning2}
             <br>
-            <input type='submit' name='cancel_take_over' value='{t}Cancel{/t}'>
+            <input type='submit' name='cancel_take_over' value='{msgPool type=cancelButton}'>
             </p>
             <p>
             {t}Following objects will be taken over{/t}&nbsp;:
@@ -56,8 +56,8 @@
 <p class="seperator">&nbsp;</p>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='SaveService' value='{t}Save{/t}'>
+    <input type='submit' name='SaveService' value='{msgPool type=saveButton}'>
     &nbsp;
-    <input type='submit' name='CancelService' value='{t}Cancel{/t}'>
+    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
 </div>
 </p>
