@@ -155,7 +155,7 @@
 						<input type="text" 		name="StrMXRecord" value="">
 {/render}
 {render acl=$ACLs}					
-						<input type="submit" 	name="AddMXRecord" value="{t}Add{/t}">
+						<input type="submit" 	name="AddMXRecord" value="{msgPool type=addButton}">
 {/render}
 					</td>
 				</tr>

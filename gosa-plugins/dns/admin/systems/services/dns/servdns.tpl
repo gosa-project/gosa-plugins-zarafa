@@ -37,9 +37,9 @@
 <h2>{t}Zones{/t}</h2>
 		  {$ZoneList}
 		  {if $is_createable}
-		  <input type="submit" name="AddZone" value="{t}Add{/t}">
+		  <input type="submit" name="AddZone" value="{msgPool type=addButton}">
 		  {else}
-		  <input type="button" value="{t}Add{/t}" disabled>
+		  <input type="button" value="{msgPool type=addButton}" disabled>
 		  {/if}
     </td>
 </tr>
