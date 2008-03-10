@@ -42,7 +42,7 @@
       <input type='text'	name='NewTrustName' value=''>&nbsp;
 {/render}
 {render acl=$saTrustedNetworksACL}
-      <input type='submit'      name='AddNewTrust'  value='{t}Add{/t}'>
+      <input type='submit'      name='AddNewTrust'  value='{msgPool type=addButton}'>
 {/render}
 {render acl=$saTrustedNetworksACL}
       <input type='submit'      name='DelTrust'     value='{t}Remove{/t}'>
@@ -110,7 +110,7 @@
      <td>
       {$divRules}<br>
 {render acl=$saTrustedNetworksACL}
-      <input type='submit' name='AddRule' value='{t}Add{/t}'> 
+      <input type='submit' name='AddRule' value='{msgPool type=addButton}'> 
 {/render}
      </td>
     </tr>
