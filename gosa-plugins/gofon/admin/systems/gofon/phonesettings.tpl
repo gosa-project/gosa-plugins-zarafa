@@ -204,7 +204,7 @@
                             <input name="goFonPermitNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonPermitACL}
-                        <input type=submit value="{t}Add{/t}" name="goFonPermitAdd">
+                        <input type=submit value="{msgPool type=addButton}" name="goFonPermitAdd">
 {/render}
 {render acl=$goFonPermitACL}
                         <input type=submit value="{t}Delete{/t}" name="goFonPermitDel">
@@ -227,7 +227,7 @@
                             <input name="goFonDenyNew" size=30 align="middle" maxlength="65" value="">
 {/render}
 {render acl=$goFonDenyACL}
-                        <input type=submit value="{t}Add{/t}" name="goFonDenyAdd">
+                        <input type=submit value="{msgPool type=addButton}" name="goFonDenyAdd">
 {/render}
 {render acl=$goFonDenyACL}
                         <input type=submit value="{t}Delete{/t}" name="goFonDenyDel">
