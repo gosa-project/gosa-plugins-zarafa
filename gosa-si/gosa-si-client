@@ -1018,9 +1018,6 @@ sub save_fai_log {
     my ($fai_log_dir) = @_ ;
     my $FAI_DIR;
 
-print STDERR "===========================================\n";
-print STDERR "fai_log_dir: $fai_log_dir\n"; 
-
     opendir($FAI_DIR, $fai_log_dir);
     if (not defined $FAI_DIR) {  
         daemon_log("ERROR: can not open directory $fai_log_dir: $!", 1);

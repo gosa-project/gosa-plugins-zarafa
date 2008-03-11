@@ -92,7 +92,7 @@ sub save_fai_log {
     }
 
     my $time = &get_time;
-    $time = substr($time, 1, 8)."_".substr($time, 8, 6);
+    $time = substr($time, 0, 8)."_".substr($time, 8, 6);
     $client_fai_log_dir = File::Spec->catfile( $client_fai_log_dir, "install-$time" );
     mkdir($client_fai_log_dir, 0755);
 
