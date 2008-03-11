@@ -80,7 +80,7 @@ if (!$remove_lock){
 			session::set('phoneAccount',$phoneAccount);
 		} else {
 			/* Errors found, show message */
-			msgDialog::displayChecks($message);
+			msg_dialog::displayChecks($message);
 		}
 	}
 

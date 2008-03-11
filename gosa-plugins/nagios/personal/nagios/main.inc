@@ -79,7 +79,7 @@ if (!$remove_lock){
       session::un_set ('nagiosAccount');
     } else {
       /* Errors found, show message */
-      msgDialog::displayChecks($message);
+      msg_dialog::displayChecks($message);
     }
   }
 
