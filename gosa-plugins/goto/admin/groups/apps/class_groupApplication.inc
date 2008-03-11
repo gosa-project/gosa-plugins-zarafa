@@ -263,13 +263,12 @@ class appgroup extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account){
       $display= $this->show_enable_header(_("Add application extension"),
-          _("Application extension disabled. You can enable it by clicking below."));
+          msgPool::featuresDisabled(_("application")));
       return ($display);
     }
 
     $display =  $this->show_enable_header(_("Remove application extension"),
-          _("Application extension enabled. You can disable it by clicking below."));
-
+          msgPool::featuresEnabled(_("application")));
 
     if(isset($_GET['send'])){
       $id = $_GET['send'];
@@ -820,8 +819,8 @@ class appgroup extends plugin
 
   
   /* !\brief Remove the given id from the menu structure.
-      @param  String  ID to of the entry we want to remove.
-      @return Boolean TRUE on success
+     @param  String  ID to of the entry we want to remove.
+     @return Boolean TRUE on success
    */
   function _add_entry($folder_id,$entry,$pos = 0)
   {
@@ -846,32 +845,29 @@ class appgroup extends plugin
       $entry['PARENT'] = $folder_id;
       $entry['ENTRIES']= array();
       $entry['STATUS'] = "ADDED";
-      
+
       $cnt = 0; 
       $new = array();
       $added =FALSE;
-      foreach($folder['ENTRIES'] as $key => $obj){
-        if($obj['STATUS'] == "LOADED"){
-          $obj['STATUS'] = "EDITED";
-        }
-        if($pos == $cnt){
-          $new[] = $entry;
-          $added = TRUE;
-        }
-        $cnt ++;
-        $new[] = $obj;
+      if($obj['STATUS'] == "LOADED"){
+        $obj['STATUS'] = "EDITED";
       }
-      if(!$added){
+      if($pos == $cnt){
         $new[] = $entry;
+        $added = TRUE;
       }
-  
-      $all[$folder_id]['ENTRIES'] = $new;
-      foreach($entries as $sub){
-        $this->_add_entry($entry['UNIQID'],$sub,-1);
-      }
-      return(TRUE);
+      $cnt ++;
+      $new[] = $obj;
     }
-    return(FALSE);
+    if(!$added){
+      $new[] = $entry;
+    }
+
+    $all[$folder_id]['ENTRIES'] = $new;
+    foreach($entries as $sub){
+      $this->_add_entry($entry['UNIQID'],$sub,-1);
+    }
+    return(TRUE);
   }
 
  
