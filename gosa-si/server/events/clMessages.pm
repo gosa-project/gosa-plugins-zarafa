@@ -220,7 +220,7 @@ sub GOTOACTIVATION {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header"."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress'", 5); 
@@ -245,7 +245,7 @@ sub PROGRESS {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
         "SET progress='$content' ".
-        "WHERE status='processing' AND macaddress='$macaddress'";
+        "WHERE status='processing' AND macaddress LIKE '$macaddress'";
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - $content%", 5); 
@@ -270,7 +270,7 @@ sub FAIREBOOT {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -295,7 +295,7 @@ sub TASKSKIP {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -322,7 +322,7 @@ sub TASKBEGIN {
     if (($content eq 'finish') || ($content eq 'faiend')){
         my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='done', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
         &main::daemon_log("DEBUG: $sql_statement", 7);         
         my $res = $main::job_db->update_dbentry($sql_statement);
         &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -333,7 +333,7 @@ sub TASKBEGIN {
     } else {
         my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
         &main::daemon_log("DEBUG: $sql_statement", 7);         
         my $res = $main::job_db->update_dbentry($sql_statement);
         &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -366,7 +366,7 @@ sub TASKEND {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -397,7 +397,7 @@ sub TASKERROR {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
@@ -428,7 +428,7 @@ sub HOOK {
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress='$macaddress'"; 
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 

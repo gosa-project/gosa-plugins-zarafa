@@ -813,7 +813,7 @@ sub bus_input {
                 }
                 elsif( $target =~ /([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})/ ) {
                     # target is a mac address
-                    my $sql_statement = "SELECT * FROM bus_known_clients WHERE macaddress='$target'";
+                    my $sql_statement = "SELECT * FROM bus_known_clients WHERE macaddress LIKE '$target'";
                     my $query_res = $bus_known_clients_db->select_dbentry( $sql_statement );
                     if( 1 > keys(%{$query_res})) {
                         daemon_log("ERROR: there are more than one hosts in bus_known_clients_db with mac address '$target'", 1);

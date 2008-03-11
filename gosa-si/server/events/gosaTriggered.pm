@@ -159,7 +159,7 @@ sub get_login_usr_for_client {
 
     $header =~ s/^gosa_//;
 
-    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$client' OR macaddress='$client'";
+    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$client' OR macaddress LIKE '$client'";
     my $res = $main::known_clients_db->select_dbentry($sql_statement);
 
     my $out_msg = "<xml><header>$header</header><source>$target</source><target>$source</target>";
