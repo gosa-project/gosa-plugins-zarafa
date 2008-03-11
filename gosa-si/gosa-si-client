@@ -97,7 +97,7 @@ my $fai_log_dir = "/tmp/fai";
      "ldap"               => [\$ldap_enabled, 1],
      "ldap-config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam-config"         => [\$pam_config, "/etc/pam_ldap.conf"],
-     "nss-config"         => [\$nss_config, "/etc/libnss_ldap.conf"],
+     "nss-config"         => [\$nss_config, "/etc/libnss-ldap.conf"],
      "fai-logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
 	 "force-hostname"		=> [\$client_force_hostname, "false"],
     },
