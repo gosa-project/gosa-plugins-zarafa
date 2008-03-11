@@ -12,6 +12,8 @@ my @events = (
     "count_packages_list",
     "query_fai_server",
     "count_fai_server",
+    "query_fai_releases",
+    "count_fai_releases",
     );
 @EXPORT = @events;
 
@@ -33,7 +35,7 @@ sub get_events {
     return \@events;
 }
 
-
+sub query_fai_releases{ return &query_db( @_ ); }
 sub query_fai_server{ return &query_db( @_ ) ; }
 sub query_packages_list { return &query_db( @_ ) ; }
 sub query_jobdb { return &query_db( @_ ) ; }
@@ -50,10 +52,14 @@ sub query_db {
     } elsif( $header =~ /query_packages_list/ ) {
         $table = $main::packages_list_tn;
         $db = $main::packages_list_db;
-    }± elsif( $header =~ /query_fai_server/ ) {
+    } elsif( $header =~ /query_fai_server/ ) {
         $table = $main::fai_server_tn;
         $db = $main::fai_server_db
+    } elsif( $header =~ /count_fai_releases/ ) {
+        $table = $main::fai_releases_tn;
+        $db = $main::fai_server_db
     }
+
    
     # prepare sql statement and execute query
     my $select= &get_select_statement($msg, $msg_hash);
@@ -68,6 +74,7 @@ sub query_db {
     return @out_msg_l;
 }
     
+sub count_fai_releases{ return &count_db( @_ ); }    
 sub count_fai_server{ return &count_db( @_ ); }
 sub count_packages_list{ return &count_db( @_ ); }
 sub count_jobdb{ return &count_db( @_ ); }
@@ -79,8 +86,6 @@ sub count_db {
     my $table;
     my $db;
 
-    
-
     if( $header =~ /count_jobdb/ ) {
         $table = $main::job_queue_tn;
         $db = $main::job_db;
@@ -90,7 +95,11 @@ sub count_db {
     } elsif( $header =~ /count_fai_server/ ) {
         $table = $main::fai_server_tn;
         $db = $main::fai_server_db
+    } elsif( $header =~ /count_fai_releases/ ) {
+        $table = $main::fai_releases_tn;
+        $db = $main::fai_server_db
     }
+
 
     # prepare sql statement and execute query
     my $res_hash = $db->select_dbentry("SELECT * FROM $table");
