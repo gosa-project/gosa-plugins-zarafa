@@ -248,7 +248,7 @@ sub get_interface_for_ip {
 		} else {
 			foreach (@ifs) {
 				my $if=$_;
-				if(get_ip($if) eq $ip) {
+				if(&main::get_ip($if) eq $ip) {
 					$result = $if;
 				}
 			}	
@@ -892,6 +892,8 @@ sub server_matches {
 	my $result = 0;
 
 	if($server_ip eq $target_ip) {
+		$result= 1;
+	} elsif ($target_ip eq "0.0.0.0") {
 		$result= 1;
 	} elsif ($server_ip eq "0.0.0.0") {	
 		if ($target_ip eq "127.0.0.1") {
