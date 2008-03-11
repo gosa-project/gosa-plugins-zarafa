@@ -1890,6 +1890,40 @@ sub apply_fai_inheritance {
        return $fai_classes;
 }
 
+sub get_fai_release_entries {
+	my $tmp_classes = shift || return;
+	my $parent = shift || "";
+	my @result = shift || ();
+
+	foreach my $entry (keys %{$tmp_classes}) {
+		if(defined($entry)) {
+			if($entry =~ /^ou=.*$/) {
+				my $release_name = $entry;
+				$release_name =~ s/ou=//g;
+				if(length($parent)>0) {
+					$release_name = $parent."/".$release_name;
+				}
+				my @bufentries = get_fai_release_entries($tmp_classes->{$entry}, $release_name, @result);
+				foreach my $bufentry(@bufentries) {
+					push @result, $bufentry;
+				}
+			} else {
+				my @types = get_fai_types($tmp_classes->{$entry});
+				foreach my $type (@types) {
+					push @result, 
+					{
+						'class' => $entry,
+						'type' => $type->{'type'},
+						'release' => $parent,
+						'state' => $type->{'state'},
+					};
+				}
+			}
+		}
+	}
+
+	return @result;
+}
 
 sub deep_copy {
 	my $this = shift;
