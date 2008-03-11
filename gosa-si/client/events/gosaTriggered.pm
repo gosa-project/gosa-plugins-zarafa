@@ -245,6 +245,9 @@ sub trigger_action_instant_update {
     my $logged_in_user = 1;
     if( $logged_in_user ) {
         print STDERR "This system has been sent a signal for an update. The update will take place now.\n";
+		if(stat('/usr/bin/fai-softupdate-notify')) {
+			system('/usr/bin/fai-softupdate-notify start');
+		}
     }
 
     # not jet
