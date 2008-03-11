@@ -316,7 +316,8 @@ sub check_pid {
             chomp( $pid );
             if( -f "/proc/$pid/stat" ) {
                 my($stat) = `cat /proc/$pid/stat` =~ m/$pid \((.+)\).*/;
-                if( $0 eq $stat ) {
+                if( $stat ) {
+					daemon_log("ERROR: Already running",1);
                     close( LOCK_FILE );
                     exit -1;
                 }
