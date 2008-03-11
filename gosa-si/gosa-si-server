@@ -953,15 +953,15 @@ sub next_task {
                 StdoutEvent  => "task_result",
                 StderrEvent  => "task_debug",
                 CloseEvent   => "task_done",
-                );
+               );
 
         $heap->{task}->{ $task->ID } = $task;
     }
 }
 
 sub handle_task_result {
-    my ($kernel, $heap, $client_answer, $heap_id) = @_[KERNEL, HEAP, ARG0, ARG1];
-	daemon_log(Dumper($heap_id),1);
+    my ($kernel, $heap, $result) = @_[KERNEL, HEAP, ARG0];
+    my $client_answer = $result->{'answer'};
     if( $client_answer =~ s/session_id=(\d+)$// ) {
         my $session_id = $1;
         if( defined $session_id ) {
@@ -1164,8 +1164,19 @@ sub process_task {
         }
     }
 
-    print $client_answer;
-	return;
+    my $filter = POE::Filter::Reference->new();
+    my %result = ( 
+            status => "seems ok to me",
+            answer => $client_answer,
+            );
+
+    my $output = $filter->put( [ \%result ] );
+    print @$output;
+
+
+#    print STDERR $client_answer."\n";
+#    print $client_answer;
+#	return;
 }
 
 
