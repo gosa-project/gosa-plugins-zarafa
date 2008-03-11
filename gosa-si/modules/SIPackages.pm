@@ -580,14 +580,16 @@ sub here_i_am {
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
     my $new_ldap_config_out = &new_ldap_config($source);
-    if( $new_ldap_config_out ) {
-            &add_content2xml_hash($out_hash, "ldap_available", "true");
-    }
+	if( $new_ldap_config_out && (!($new_ldap_config_out =~ /error/ ))) {
+		&add_content2xml_hash($out_hash, "ldap_available", "true");
+	} elsif ($new_ldap_config_out && $new_ldap_config_out =~ /error/){
+		&add_content2xml_hash($out_hash, "error", $new_ldap_config_out);
+	}
     my $register_out = &create_xml_string($out_hash);
     push(@out_msg_l, $register_out);
 
     # Really send the ldap config
-    if( $new_ldap_config_out ) {
+    if( $new_ldap_config_out  (!($new_ldap_config_out =~ /error/))) {
             push(@out_msg_l, $new_ldap_config_out);
     }
 
@@ -791,13 +793,13 @@ sub new_ldap_config {
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
 			&main::daemon_log($mesg->error, 1);
-			return;
+			return "error-unit-tag-count-0";
 		}
 
 		# Sanity check
 		if ($mesg->count != 1) {
 			&main::daemon_log("WARNING: cannot find administrative unit for client with tag $unit_tag", 1);
-			return;
+			return "error-unit-tag-count-".$mesg->count;
 		}
 
 		$entry= $mesg->entry(0);

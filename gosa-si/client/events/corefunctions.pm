@@ -121,6 +121,11 @@ sub registered {
 	           @{$msg_hash->{'ldap_available'}}[0] eq "true") {
     	print $opts_file_FH "LDAP_AVAILABLE=\"true\"\n";
 	}
+    if(defined(@{$msg_hash->{'error'}})) {
+		my $errormsg= @{$msg_hash->{'error'}}[0];
+    	print $opts_file_FH "GOSA_SI_ERROR=\"$errormsg\"\n";
+		&write_to_file($errormsg, $fai_logpath);
+	}
     close($opts_file_FH);
      
     my $out_msg = &create_xml_string($out_hash);
