@@ -1172,7 +1172,7 @@ sub watch_for_new_jobs {
         my $job_msg = $hit->{'xmlmessage'};
         daemon_log("DEBUG: its time to execute $job_msg", 7); 
         my $header = $hit->{'headertag'};
-        my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$macaddress'";
+        my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$macaddress'";
 		my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
 		# expect macaddress is unique!!!!!!
 		my $target = $res_hash->{1}->{hostname};
