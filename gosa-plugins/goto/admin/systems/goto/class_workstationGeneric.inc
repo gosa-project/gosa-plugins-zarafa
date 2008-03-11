@@ -52,6 +52,9 @@ class workgeneric extends plugin
 
   var $member_of_ogroup = FALSE;
 
+  var $currently_installing = FALSE;
+  var $currently_installing_warned = FALSE;
+
   function workgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
@@ -69,6 +72,17 @@ class workgeneric extends plugin
     }
 
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+
+    /* Check if this host is currently in installation process*/
+    $o = new gosaSupportDaemon();
+    $e_types = DaemonEvent::get_event_types(USER_EVENT | SYSTEM_EVENT | HIDDEN_EVENT);
+    $evts = $o->get_entries_by_mac(array($this->netConfigDNS->macAddress));
+    foreach($evts as $evt){
+      if(isset($e_types['QUEUED'][$evt['HEADERTAG']]) &&
+          $e_types['QUEUED'][$evt['HEADERTAG']] == "DaemonEvent_reinstall"){
+        $this->currently_installing =TRUE;
+      }
+    }
 
     /* Read arrays */
     foreach (array("ghNetNic", "ghIdeDev", "ghScsiDev") as $val){
@@ -311,6 +325,7 @@ class workgeneric extends plugin
     $smarty->assign("netconfig", $str);
 
     /* Show main page */
+    $smarty->assign("currently_installing", $this->currently_installing);
     return($smarty->fetch (get_template_path('workstation.tpl', TRUE, dirname(__FILE__))));
   }
 
@@ -436,6 +451,12 @@ class workgeneric extends plugin
     /* Check for valid ntpServer selection */
     if((!$this->inheritTimeServer) && (!count($this->gotoNtpServer))){
       $message[]= _("There must be at least one NTP server selected, or the inherit mode activated.");
+    }
+
+    /* Warn the user, that this host is currently installing */
+    if($this->currently_installing && !$this->currently_installing_warned){
+      $this->currently_installing_warned = TRUE;
+      $message[] = _("This host is currently installing, if you really want to save it, save again.");
     }
 
     return ($message);

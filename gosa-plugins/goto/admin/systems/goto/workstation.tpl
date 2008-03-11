@@ -134,6 +134,9 @@
 <table summary="">
  <tr>
   <td>
+{if $currently_installing}
+       <i>{t}System installation in progress, the FAI state cannot be changed right now.{/t}</i>
+{else}
 {render acl=$FAIstateACL}
    <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
     <option>&nbsp;</option>
@@ -142,8 +145,11 @@
 {/render}
   </td>
   <td>
+{render acl=$FAIstateACL}
    <input type=submit name="action" value="{t}Execute{/t}">
+{/render}
   </td>
+{/if}
  </tr>
 </table>
 {/if}
