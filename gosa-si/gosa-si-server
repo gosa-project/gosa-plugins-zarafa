@@ -401,8 +401,12 @@ sub import_modules {
 sub sig_int_handler {
     my ($signal) = @_;
 
+	if(defined($ldap_handle)) {
+		$ldap_handle->disconnect;
+	}
+
     daemon_log("shutting down gosa-si-server", 1);
-    exit(1);
+    exit(0);
 }
 $SIG{INT} = \&sig_int_handler;
 
