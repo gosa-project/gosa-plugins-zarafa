@@ -1714,42 +1714,6 @@ sub run_create_fai_release_db {
     return;
 }
 
-sub get_fai_release_entries {
-	my $tmp_classes = shift || return;
-	my $parent = shift || undef;
-	my @result = shift || ();
-
-	foreach my $entry (keys %{$tmp_classes}) {
-		if(defined($entry)) {
-			#daemon_log($entry,1);
-			if($entry =~ /^ou=.*$/) {
-				my $release_name = $entry;
-				$release_name =~ s/ou=//g;
-				if(defined($parent)) {
-					$release_name = $parent."/".$release_name;
-				}
-				my @bufentries = get_fai_release_entries($tmp_classes->{$entry}, $release_name, @result);
-				foreach my $bufentry(@bufentries) {
-					push @result, $bufentry;
-				}
-			} else {
-				my @types = get_fai_types($tmp_classes->{$entry});
-				foreach my $type (@types) {
-					push @result, 
-					{
-						'class' => $entry,
-						'type' => $type->{'type'},
-						'release' => $parent,
-						'state' => $type->{'state'},
-					};
-				}
-			}
-		}
-	}
-
-	return @result;
-}
-
 sub get_fai_types {
 	my $tmp_classes = shift || return undef;
 	my @result;
@@ -1961,23 +1925,6 @@ sub get_fai_release_entries {
 	return @result;
 }
 
-sub get_fai_types {
-	my $tmp_classes = shift || return undef;
-	my @result;
-
-	foreach my $type(keys %{$tmp_classes}) {
-		if(defined($tmp_classes->{$type}[0]) && (!($tmp_classes->{$type}[0] =~ /^.*?removed.*?$/))) {
-			my $entry = {
-				type => $type,
-				state => $tmp_classes->{$type}[0],
-			};
-			push @result, $entry;
-		}
-	}
-
-	return @result;
-}
-
 sub deep_copy {
 	my $this = shift;
 	if (not ref $this) {
@@ -2095,10 +2042,11 @@ sub parse_package {
         return;
     }
 
-    open($PACKAGES, "<$path.in") || sub {
+    open($PACKAGES, "<$path.in");
+	if(defined($PACKAGES)) {
         daemon_log("ERROR: create_packages_list_db: parse_package: can not open '$path.in'",1); 
         return;
-    };
+    }
 
     # Read lines
     while (<$PACKAGES>){
