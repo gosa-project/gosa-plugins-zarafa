@@ -658,7 +658,7 @@ sub who_has_i_do {
 sub new_ldap_config {
 	my ($address) = @_ ;
 
-	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress='$address'";
+	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress LIKE '$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
 
 	# check hit
