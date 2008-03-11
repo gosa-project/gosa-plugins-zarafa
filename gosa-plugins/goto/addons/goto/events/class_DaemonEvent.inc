@@ -117,7 +117,7 @@ class DaemonEvent
     $str = "<h2>"._("This job has no template.")."</h2>";
     $str.= "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:100%;padding:3px;'>
-      <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
+      <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>
       </div>";
     return($str);
   }
@@ -145,8 +145,8 @@ class DaemonEvent
     }
     $str = "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:99%;padding:5px;'>
-      <input type='submit' name='save_event_dialog' value='"._("Save")."'>&nbsp;
-    <input type='submit' name='abort_event_dialog' value='"._("Cancel")."'>
+      <input type='submit' name='save_event_dialog' value='".msgPool::saveButton()."'>&nbsp;
+    <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>
       </div>";
     return($str);
   }
