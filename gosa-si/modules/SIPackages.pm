@@ -579,17 +579,23 @@ sub here_i_am {
 
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
-    my $new_ldap_config_out = &new_ldap_config($source);
-	if( $new_ldap_config_out && (!($new_ldap_config_out =~ /error/ ))) {
+	my $new_ldap_config_out = &new_ldap_config($source);
+	if($new_ldap_config_out && (!($new_ldap_config_out =~ /error/))) {
 		&add_content2xml_hash($out_hash, "ldap_available", "true");
-	} elsif ($new_ldap_config_out && $new_ldap_config_out =~ /error/){
+	} elsif($new_ldap_config_out && $new_ldap_config_out =~ /error/){
 		&add_content2xml_hash($out_hash, "error", $new_ldap_config_out);
+
+		my $sql_statement = "UPDATE $main::job_queue_tn ".
+		"SET status='error', result='$new_ldap_config_out' ".
+		"WHERE status='processing' AND macaddress LIKE '$mac_address'";
+		my $res = $main::job_db->update_dbentry($sql_statement);
+		&main::daemon_log("DEBUG: $sql_statement RESULT: $res", 7);         
 	}
     my $register_out = &create_xml_string($out_hash);
     push(@out_msg_l, $register_out);
 
     # Really send the ldap config
-    if( $new_ldap_config_out  (!($new_ldap_config_out =~ /error/))) {
+    if( $new_ldap_config_out && (!($new_ldap_config_out =~ /error/))) {
             push(@out_msg_l, $new_ldap_config_out);
     }
 
