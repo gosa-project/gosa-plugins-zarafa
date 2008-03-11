@@ -20,7 +20,7 @@ use Data::Dumper;
 use Fcntl;
 use GOSA::GosaSupportDaemon;
 use File::Basename;
-
+use open ':utf8';
 
 my ($ldap_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
