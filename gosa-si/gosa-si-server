@@ -44,7 +44,7 @@ use File::Basename;
 use File::Path;
 use GOSA::DBsqlite;
 use GOSA::GosaSupportDaemon;
-use POE qw(Component::Server::TCP);
+use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 
@@ -145,6 +145,9 @@ my $messaging_file_name;
 
 # path to directory to store client install log files
 our $client_fai_log_dir = "/var/log/fai"; 
+
+# queue which stores taskes while max_clients are reached
+my @tasks = qw();
 
 %cfg_defaults = (
 "general" => {
@@ -934,7 +937,233 @@ sub _start {
     &trigger_db_loop($kernel);
     $kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
-    #$kernel->yield('create_packages_list_db', $sources_list );
+    $kernel->yield('create_packages_list_db', $sources_list );
+}
+
+
+sub next_tasks {
+    my ($session, $heap) = @_[SESSION, HEAP];
+
+    while ( keys( %{ $heap->{task} } ) < $max_clients ) {
+        my $next_task = shift @tasks;
+        last unless defined $next_task;
+
+        my $task = POE::Wheel::Run->new(
+                Program => sub { process_task($session, $heap, $next_task) },
+                StdoutFilter => POE::Filter::Reference->new(),
+                StdoutEvent  => "task_result",
+                StderrEvent  => "task_debug",
+                CloseEvent   => "task_done",
+                );
+
+        $heap->{task}->{ $task->ID } = $task;
+    }
+}
+sub handle_task_result {
+    my ($kernel, $heap, $client_answer) = @_[KERNEL, HEAP, ARG0];    
+    if( $client_answer =~ s/session_id=(\d+)$// ) {
+        my $session_id = $1;
+        if( defined $session_id ) {
+            my $session_reference = $kernel->ID_id_to_session($session_id);
+            if( defined $session_reference ) {
+                $heap = $session_reference->get_heap();
+            }
+        }     
+    }
+    $heap->{client}->put($client_answer);
+    $kernel->sig(CHLD => "child_reap");
+}
+sub handle_task_debug {
+    my $result = $_[ARG0];
+    print STDERR "$result\n";
+}
+
+sub handle_task_done {
+    my ( $kernel, $heap, $task_id ) = @_[ KERNEL, HEAP, ARG0 ];
+    delete $heap->{task}->{$task_id};
+    $kernel->yield("next_task");
+}
+sub process_task {
+    no strict "refs";
+    my ($session, $heap, $input) = @_;
+    my $session_id = $session->ID;
+    my ($msg, $msg_hash, $module);
+    my $error = 0;
+    my $answer_l;
+    my ($answer_header, @answer_target_l, $answer_source);
+    my $client_answer = "";
+
+    daemon_log("", 5); 
+    daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
+    daemon_log("DEBUG: Incoming msg:\n$input", 9);
+
+    ####################
+    # check incoming msg
+    # msg is from a new client or gosa
+    ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
+    # msg is from a gosa-si-server or gosa-si-bus
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
+    }
+    # msg is from a gosa-si-client
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
+    }
+    # an error occurred
+    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        $error++;
+    }
+
+    ######################
+    # process incoming msg
+    if( $error == 0) {
+        daemon_log("INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
+        daemon_log("DEBUG: Processing module ".$module, 7);
+        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
+
+        if ( 0 > @{$answer_l} ) {
+            my $answer_str = join("\n", @{$answer_l});
+            daemon_log("DEGUB: $module: Got answer from module: \n".$answer_str,8);
+        }
+    }
+    if( !$answer_l ) { $error++ };
+
+    ########
+    # answer
+    if( $error == 0 ) {
+
+        foreach my $answer ( @{$answer_l} ) {
+            # for each answer in answer list
+            
+            # check outgoing msg to xml validity
+            my $answer_hash = &check_outgoing_xml_validity($answer);
+            if( not defined $answer_hash ) {
+                next;
+            }
+            
+            $answer_header = @{$answer_hash->{'header'}}[0];
+            @answer_target_l = @{$answer_hash->{'target'}};
+            $answer_source = @{$answer_hash->{'source'}}[0];
+
+            # deliver msg to all targets 
+            foreach my $answer_target ( @answer_target_l ) {
+
+                # targets of msg are all gosa-si-clients in known_clients_db
+                if( $answer_target eq "*" ) {
+                    # answer is for all clients
+                    my $sql_statement= "SELECT * FROM known_clients";
+                    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
+                    }
+                }
+
+                # targets of msg are all gosa-si-server in known_server_db
+                elsif( $answer_target eq "KNOWN_SERVER" ) {
+                    # answer is for all server in known_server
+                    my $sql_statement= "SELECT * FROM known_server";
+                    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        $answer =~ s/KNOWN_SERVER/$host_name/g;
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
+                    }
+                }
+
+                # target of msg is GOsa
+                elsif( $answer_target eq "GOSA" ) {
+                    $answer =~ /<session_id>(\d+)<\/session_id>/;
+                    my $session_id = $1;
+                    my $add_on = "";
+                    if( defined $session_id ) {
+                        $add_on = ".session_id=$session_id";
+                    }
+                    # answer is for GOSA and has to returned to connected client
+                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+                    $client_answer = $gosa_answer.$add_on;
+                }
+
+                # target of msg is job queue at this host
+                elsif( $answer_target eq "JOBDB") {
+                    $answer =~ /<header>(\S+)<\/header>/;   
+                    my $header;
+                    if( defined $1 ) { $header = $1; }
+                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+                    &update_jobdb_status_for_send_msgs($answer, $error);
+                }
+
+                # target of msg is a mac address
+                elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
+                    daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
+                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
+                    my $query_res = $known_clients_db->select_dbentry( $sql_statement );
+                    my $found_ip_flag = 0;
+                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                        my $host_name = $hit->{hostname};
+                        my $host_key = $hit->{hostkey};
+                        $answer =~ s/$answer_target/$host_name/g;
+                        daemon_log("INFO: found host '$host_name', associated to '$answer_target'", 5);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        &update_jobdb_status_for_send_msgs($answer, $error);
+                        $found_ip_flag++ ;
+                    }   
+                    if( $found_ip_flag == 0) {
+                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target'", 3);
+                        if( $bus_activ eq "true" ) { 
+                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
+                            while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                                my $bus_address = $hit->{hostname};
+                                my $bus_key = $hit->{hostkey};
+                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                &update_jobdb_status_for_send_msgs($answer, $error);
+                                last;
+                            }
+                        }
+
+                    }
+
+                #  answer is for one specific host   
+                } else {
+                    # get encrypt_key
+                    my $encrypt_key = &get_encrypt_key($answer_target);
+                    if( not defined $encrypt_key ) {
+                        # unknown target, forward msg to bus
+                        daemon_log("WARNING: unknown target '$answer_target'", 3);
+                        if( $bus_activ eq "true" ) { 
+                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
+                            my $res_length = keys( %{$query_res} );
+                            if( $res_length == 0 ){
+                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, ".
+                                        "no bus found in known_server", 3);
+                            }
+                            else {
+                                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+                                    my $bus_key = $hit->{hostkey};
+                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                    &update_jobdb_status_for_send_msgs($answer, $error);
+                                }
+                            }
+                        }
+                        next;
+                    }
+                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+                    &update_jobdb_status_for_send_msgs($answer, $error);
+                }
+            }
+        }
+    }
+
+    print $client_answer;
+    return;
 }
 
 
@@ -1374,11 +1603,11 @@ sub change_goto_state {
 
 
 sub create_fai_server_db {
-    my ($table_name) = $_[ARG0];
+    my ($table_name) = @_;
 	my $result;
 
 	if(defined($ldap_handle)) {
-		daemon_log("Creating fai_server_db",4);
+		daemon_log("INFO: create_fai_server_db: start", 5);
 		my $mesg= $ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
@@ -1404,19 +1633,30 @@ sub create_fai_server_db {
 				   }
 			   }
 		   }
-		daemon_log("Done with creating fai_server_db",4);
+		daemon_log("INFO: create_fai_server_db: finished", 5);
 	}	
-   
    	return $result;
+}
+sub run_create_fai_server_db {
+    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
+    my $task = POE::Wheel::Run->new(
+            Program => sub { &create_fai_server_db($table_name) },
+            StdoutEvent  => "session_run_result",
+            StderrEvent  => "session_run_debug",
+            CloseEvent   => "session_run_done",
+            );
+
+    $heap->{task}->{ $task->ID } = $task;
+    return;
 }
 
 
 sub create_fai_release_db {
-	my ($table_name) = $_[ARG0];
+	my ($table_name) = @_;
 	my $result;
 
 	if(defined($ldap_handle)) {
-		daemon_log("Creating fai_release_db",4);
+		daemon_log("INFO: create_fai_release_db: start",5);
 		my $mesg= $ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
@@ -1456,7 +1696,88 @@ sub create_fai_release_db {
 			}
 			daemon_log("Done with inserting",6);
 		}
-		daemon_log("Done with creating fai_release_db",4);
+		daemon_log("INFO: create_fai_release_db: finished",5);
+	}
+
+	return $result;
+}
+sub run_create_fai_release_db {
+    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
+    my $task = POE::Wheel::Run->new(
+            Program => sub { &create_fai_release_db($table_name) },
+            StdoutEvent  => "session_run_result",
+            StderrEvent  => "session_run_debug",
+            CloseEvent   => "session_run_done",
+            );
+
+    $heap->{task}->{ $task->ID } = $task;
+    return;
+}
+
+sub get_fai_release_entries {
+	my $tmp_classes = shift || return;
+	my $parent = shift || undef;
+	my @result = shift || ();
+
+	foreach my $entry (keys %{$tmp_classes}) {
+		if(defined($entry)) {
+			#daemon_log($entry,1);
+			if($entry =~ /^ou=.*$/) {
+				my $release_name = $entry;
+				$release_name =~ s/ou=//g;
+				if(defined($parent)) {
+					$release_name = $parent."/".$release_name;
+				}
+				my @bufentries = get_fai_release_entries($tmp_classes->{$entry}, $release_name, @result);
+				foreach my $bufentry(@bufentries) {
+					push @result, $bufentry;
+				}
+			} else {
+				my @types = get_fai_types($tmp_classes->{$entry});
+				foreach my $type (@types) {
+					push @result, 
+					{
+						'class' => $entry,
+						'type' => $type->{'type'},
+						'release' => $parent,
+						'state' => $type->{'state'},
+					};
+				}
+			}
+		}
+	}
+
+	return @result;
+}
+
+sub get_fai_types {
+	my $tmp_classes = shift || return undef;
+	my @result;
+
+	foreach my $type(keys %{$tmp_classes}) {
+		if(defined($tmp_classes->{$type}[0]) && (!($tmp_classes->{$type}[0] =~ /^.*?removed.*?$/))) {
+			my $entry = {
+				type => $type,
+				state => $tmp_classes->{$type}[0],
+			};
+			push @result, $entry;
+		}
+	}
+
+	return @result;
+}
+
+sub get_fai_state {
+	my $result = "";
+	my $tmp_classes = shift || return $result;
+
+	foreach my $type(keys %{$tmp_classes}) {
+		if(defined($tmp_classes->{$type}[0])) {
+			$result = $tmp_classes->{$type}[0];
+			
+		# State is equal for all types in class
+			last;
+		}
 	}
 
 	return $result;
@@ -1558,6 +1879,53 @@ sub resolve_fai_classes {
 	return $result;
 }
 
+sub apply_fai_inheritance {
+       my $fai_classes = shift || return {};
+       my $tmp_classes;
+
+       # Get the classes from the branch
+       foreach my $class (keys %{$fai_classes}) {
+               # Skip subreleases
+               if($class =~ /^ou=.*$/) {
+                       next;
+               } else {
+                       $tmp_classes->{$class}= deep_copy($fai_classes->{$class});
+               }
+       }
+
+       # Apply to each subrelease
+       foreach my $subrelease (keys %{$fai_classes}) {
+               if($subrelease =~ /ou=/) {
+                       foreach my $tmp_class (keys %{$tmp_classes}) {
+                               if(!exists($fai_classes->{$subrelease}->{$tmp_class})) {
+                                       $fai_classes->{$subrelease}->{$tmp_class} =
+                                       deep_copy($tmp_classes->{$tmp_class});
+                               } else {
+                                       foreach my $type (keys %{$tmp_classes->{$tmp_class}}) {
+                                               if(!exists($fai_classes->{$subrelease}->{$tmp_class}->{$type})) {
+                                                       $fai_classes->{$subrelease}->{$tmp_class}->{$type}=
+                                                       deep_copy($tmp_classes->{$tmp_class}->{$type});
+                                               }
+                                       }
+                               }
+                       }
+               }
+       }
+
+       # Find subreleases in deeper levels
+       foreach my $subrelease (keys %{$fai_classes}) {
+               if($subrelease =~ /ou=/) {
+                       foreach my $subsubrelease (keys %{$fai_classes->{$subrelease}}) {
+                               if($subsubrelease =~ /ou=/) {
+                                       apply_fai_inheritance($fai_classes->{$subrelease});
+                               }
+                       }
+               }
+       }
+
+       return $fai_classes;
+}
+
 sub get_fai_release_entries {
 	my $tmp_classes = shift || return;
 	my $parent = shift || "";
@@ -1610,53 +1978,6 @@ sub get_fai_types {
 	return @result;
 }
 
-sub apply_fai_inheritance {
-	my $fai_classes = shift || return {};
-	my $tmp_classes;
-
-	# Get the classes from the branch
-	foreach my $class (keys %{$fai_classes}) {
-		# Skip subreleases
-		if($class =~ /^ou=.*$/) {
-			next;
-		} else {
-			$tmp_classes->{$class}= deep_copy($fai_classes->{$class});
-		}
-	}
-
-	# Apply to each subrelease
-	foreach my $subrelease (keys %{$fai_classes}) {
-		if($subrelease =~ /ou=/) {
-			foreach my $tmp_class (keys %{$tmp_classes}) {
-				if(!exists($fai_classes->{$subrelease}->{$tmp_class})) {
-					$fai_classes->{$subrelease}->{$tmp_class} = 
-					deep_copy($tmp_classes->{$tmp_class});
-				} else {
-					foreach my $type (keys %{$tmp_classes->{$tmp_class}}) {
-						if(!exists($fai_classes->{$subrelease}->{$tmp_class}->{$type})) {
-							$fai_classes->{$subrelease}->{$tmp_class}->{$type}=
-							deep_copy($tmp_classes->{$tmp_class}->{$type});
-						}
-					}
-				}
-			}
-		}
-	}
-
-	# Find subreleases in deeper levels
-	foreach my $subrelease (keys %{$fai_classes}) {
-		if($subrelease =~ /ou=/) {
-			foreach my $subsubrelease (keys %{$fai_classes->{$subrelease}}) {
-				if($subsubrelease =~ /ou=/) {
-					apply_fai_inheritance($fai_classes->{$subrelease});
-				}
-			}
-		}
-	}
-	
-	return $fai_classes;
-}
-
 sub deep_copy {
 	my $this = shift;
 	if (not ref $this) {
@@ -1668,12 +1989,30 @@ sub deep_copy {
 	} else { die "what type is $_?" }
 }
 
+
+sub session_run_result {
+    my ($kernel, $heap, $client_answer) = @_[KERNEL, HEAP, ARG0];    
+    $kernel->sig(CHLD => "child_reap");
+}
+
+sub session_run_debug {
+    my $result = $_[ARG0];
+    print STDERR "$result\n";
+}
+
+sub session_run_done {
+    my ( $kernel, $heap, $task_id ) = @_[ KERNEL, HEAP, ARG0 ];
+    delete $heap->{task}->{$task_id};
+}
+
+
 sub create_packages_list_db {
-    my ($sources_file) = $_[ARG0] ;
+    my ($sources_file) = @_ ;
     my $line;
+    daemon_log("INFO: create_packages_list_db: start", 5); 
 
     open(CONFIG, "<$sources_file") or do {
-        daemon_log( "ERROR: Failed to open '$sources_file', creating packages.db stopped", 1);
+        daemon_log( "ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
         return;
     };
     
@@ -1704,8 +2043,19 @@ sub create_packages_list_db {
 
     close (CONFIG);
 
-
+    daemon_log("INFO: create_packages_list_db: finished", 5); 
     return;
+}
+sub run_create_packages_list_db {
+    my ($session, $heap, $sources_list) = @_[SESSION, HEAP, ARG0];
+    my $task = POE::Wheel::Run->new(
+            Program => sub { &create_packages_list_db($sources_list) },
+            StdoutEvent  => "session_run_result",
+            StderrEvent  => "session_run_debug",
+            CloseEvent   => "session_run_done",
+            );
+
+    $heap->{task}->{ $task->ID } = $task;
 }
 sub parse_package_info {
   my ($baseurl, $dist, $section)= @_;
@@ -1714,13 +2064,9 @@ sub parse_package_info {
   my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
 
   foreach $package ("Packages.gz"){
-    print "getting $baseurl , $dist , $section... \n";
+    daemon_log("DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
     get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section" );
-    print "done\n";
-    print "parsing packages... \n"; 
     parse_package( "$outdir/$dist/$section", $dist, $path );
-    print "done\n";
-    last;
   }
 }
 sub get_package {
@@ -1730,22 +2076,33 @@ sub get_package {
   -d "$tpath" || mkpath "$tpath";
 
   # This is ugly, but I've no time to take a look at "how it works in perl"
-  if( system("wget '$url' -O '$dest' 2>/dev/null") ) {
-    system("gzip -cd '$dest' > '$dest.in'");
-    system("rm -f '$dest'");
+  if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
+      system("gunzip -cd '$dest' > '$dest.in'");
+      system("rm -f '$dest'");
+  } else {
+      daemon_log("ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
   }
-
   return 0;
 }
 sub parse_package {
     my ($path, $dist, $srv_path )= @_;
     my ($package, $version, $section, $description);
     my @sql_list;
+    my $PACKAGES;
 
-    open(PACKAGES, "<$path.in") or return;
+    if(not stat("$path.in")) {
+        daemon_log("ERROR: create_packages_list: parse_package: file '$path.in' is not readable",1);
+        return;
+    }
+
+    open($PACKAGES, "<$path.in") || sub {
+        daemon_log("ERROR: create_packages_list_db: parse_package: can not open '$path.in'",1); 
+        return;
+    };
 
     # Read lines
-    while (my $line = <PACKAGES>){
+    while (<$PACKAGES>){
+        my $line = $_;
         # Unify
         chop($line);
 
@@ -1786,7 +2143,7 @@ sub parse_package {
 
     }
 
-    close( PACKAGES );
+    close( $PACKAGES );
     unlink( "$path.in" );
     
     $packages_list_db->exec_statementlist(\@sql_list);
@@ -1805,19 +2162,6 @@ sub parse_package {
 #  $repo_files{ "${srvdir}${path}/$file" } = \%fileinfo;
 #}
 
-sub next_task {
-    my ($heap) = $_[HEAP];
-
-    if( keys(%{$heap->{task}}) < $max_clients ) {
-        
-    }
-    
-    #$heap->{task}->{$task->ID} = $task;
-}
-
-sub task_result {
-
-}
 
 #==== MAIN = main ==============================================================
 #  parse commandline options
@@ -1911,23 +2255,38 @@ $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 $xml = new XML::Simple();
 
 # create socket for incoming xml messages
+
 POE::Component::Server::TCP->new(
 	Port => $server_port,
-	ClientInput => \&client_input,
+	ClientInput => sub {
+        my ($kernel, $input) = @_[KERNEL, ARG0];
+        push(@tasks, $input);
+        $kernel->yield("next_task");
+        },
+    InlineStates => {
+        next_task => \&next_tasks,
+        task_result => \&handle_task_result,
+        task_done   => \&handle_task_done,
+        task_debug  => \&handle_task_debug,
+        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
+    }
 );
+
 daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 
 # create session for repeatedly checking the job queue for jobs
 POE::Session->create(
 	inline_states => {
 		_start => \&_start,
-        next_task => \&next_task,
-        task_result => \&task_result,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
-        create_packages_list_db => \&create_packages_list_db,
-        create_fai_server_db => \&create_fai_server_db,
-        create_fai_release_db => \&create_fai_release_db,
+        create_packages_list_db => \&run_create_packages_list_db,
+        create_fai_server_db => \&run_create_fai_server_db,
+        create_fai_release_db => \&run_create_fai_release_db,
+        session_run_result => \&session_run_result,
+        session_run_debug => \&session_run_debug,
+        session_run_done => \&session_run_done,
+        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
 	}
 );
 

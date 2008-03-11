@@ -4,12 +4,14 @@ use Exporter;
 my @events = (
     "get_events", 
     "query_jobdb",
-    "query_packages_list",
     "count_jobdb",
-    "count_packages_list",
     "delete_jobdb_entry",
     "clear_jobdb",
     "update_status_jobdb_entry",
+    "query_packages_list",
+    "count_packages_list",
+    "query_fai_server",
+    "count_fai_server",
     );
 @EXPORT = @events;
 
@@ -32,6 +34,7 @@ sub get_events {
 }
 
 
+sub query_fai_server{ return &query_db( @_ ) ; }
 sub query_packages_list { return &query_db( @_ ) ; }
 sub query_jobdb { return &query_db( @_ ) ; }
 sub query_db {
@@ -47,6 +50,9 @@ sub query_db {
     } elsif( $header =~ /query_packages_list/ ) {
         $table = $main::packages_list_tn;
         $db = $main::packages_list_db;
+    }± elsif( $header =~ /query_fai_server/ ) {
+        $table = $main::fai_server_tn;
+        $db = $main::fai_server_db
     }
    
     # prepare sql statement and execute query
@@ -62,7 +68,7 @@ sub query_db {
     return @out_msg_l;
 }
     
-
+sub count_fai_server{ return &count_db( @_ ); }
 sub count_packages_list{ return &count_db( @_ ); }
 sub count_jobdb{ return &count_db( @_ ); }
 sub count_db {
@@ -72,12 +78,18 @@ sub count_db {
     my $source = @{$msg_hash->{'source'}}[0];
     my $table;
     my $db;
+
+    
+
     if( $header =~ /count_jobdb/ ) {
         $table = $main::job_queue_tn;
         $db = $main::job_db;
     } elsif( $header =~ /count_packages_list/ ) {
         $table = $main::packages_list_tn;
         $db = $main::packages_list_db;
+    } elsif( $header =~ /count_fai_server/ ) {
+        $table = $main::fai_server_tn;
+        $db = $main::fai_server_db
     }
 
     # prepare sql statement and execute query
