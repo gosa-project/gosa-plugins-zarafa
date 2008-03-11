@@ -969,9 +969,9 @@ sub handle_task_result {
             if( defined $session_reference ) {
                 $heap = $session_reference->get_heap();
             }
-        }     
+        }
+        $heap->{'client'}->put($client_answer);
     }
-    $heap->{client}->put($client_answer);
     $kernel->sig(CHLD => "child_reap");
 }
 
@@ -1174,9 +1174,6 @@ sub process_task {
     print @$output;
 
 
-#    print STDERR $client_answer."\n";
-#    print $client_answer;
-#	return;
 }
 
 
