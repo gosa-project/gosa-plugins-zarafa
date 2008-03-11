@@ -932,17 +932,15 @@ sub update_jobdb_status_for_send_msgs {
     }
 }
 
-
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-    $kernel->yield('create_fai_server_db', $fai_server_tn );
-	$kernel->yield('create_fai_release_db', $fai_release_tn );
-    $kernel->yield('create_packages_list_db', $sources_list );
+	$kernel->yield('create_fai_server_db', $fai_server_tn );
+	#$kernel->yield('create_fai_release_db', $fai_release_tn );
+	#$kernel->yield('create_packages_list_db', $sources_list );
 }
 
-
-sub next_tasks {
+sub next_task {
     my ($session, $heap) = @_[SESSION, HEAP];
 
     while ( keys( %{ $heap->{task} } ) < $max_clients ) {
@@ -951,7 +949,7 @@ sub next_tasks {
 
         my $task = POE::Wheel::Run->new(
                 Program => sub { process_task($session, $heap, $next_task) },
-                StdoutFilter => POE::Filter::Reference->new(),
+                StdioFilter => POE::Filter::Reference->new(),
                 StdoutEvent  => "task_result",
                 StderrEvent  => "task_debug",
                 CloseEvent   => "task_done",
@@ -960,8 +958,10 @@ sub next_tasks {
         $heap->{task}->{ $task->ID } = $task;
     }
 }
+
 sub handle_task_result {
-    my ($kernel, $heap, $client_answer) = @_[KERNEL, HEAP, ARG0];    
+    my ($kernel, $heap, $client_answer, $heap_id) = @_[KERNEL, HEAP, ARG0, ARG1];
+	daemon_log(Dumper($heap_id),1);
     if( $client_answer =~ s/session_id=(\d+)$// ) {
         my $session_id = $1;
         if( defined $session_id ) {
@@ -974,6 +974,7 @@ sub handle_task_result {
     $heap->{client}->put($client_answer);
     $kernel->sig(CHLD => "child_reap");
 }
+
 sub handle_task_debug {
     my $result = $_[ARG0];
     print STDERR "$result\n";
@@ -984,6 +985,7 @@ sub handle_task_done {
     delete $heap->{task}->{$task_id};
     $kernel->yield("next_task");
 }
+
 sub process_task {
     no strict "refs";
     my ($session, $heap, $input) = @_;
@@ -995,7 +997,7 @@ sub process_task {
     my $client_answer = "";
 
     daemon_log("", 5); 
-    daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
+    daemon_log("INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
     daemon_log("DEBUG: Incoming msg:\n$input", 9);
 
     ####################
@@ -1022,9 +1024,9 @@ sub process_task {
         daemon_log("DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
-        if ( 0 > @{$answer_l} ) {
+        if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
-            daemon_log("DEGUB: $module: Got answer from module: \n".$answer_str,8);
+            daemon_log("DEBUG: $module: Got answer from module: \n".$answer_str,8);
         }
     }
     if( !$answer_l ) { $error++ };
@@ -1077,10 +1079,9 @@ sub process_task {
                 }
 
                 # target of msg is GOsa
-                elsif( $answer_target eq "GOSA" ) {
-                    $answer =~ /<session_id>(\d+)<\/session_id>/;
-                    my $session_id = $1;
-                    my $add_on = "";
+				elsif( $answer_target eq "GOSA" ) {
+					my $session_id = ($1) if $answer =~ s/<session_id>(\d+?)<\/session_id>//;
+					my $add_on = "";
                     if( defined $session_id ) {
                         $add_on = ".session_id=$session_id";
                     }
@@ -1164,204 +1165,204 @@ sub process_task {
     }
 
     print $client_answer;
-    return;
+	return;
 }
 
 
-sub client_input {
-    no strict "refs";
-    my ($kernel, $session, $heap, $input, $wheel) = @_[KERNEL, SESSION, HEAP, ARG0, ARG1];
-    my $session_id = $session->ID;
-    my ($msg, $msg_hash, $module);
-    my $error = 0;
-    my $answer_l;
-    my ($answer_header, @answer_target_l, $answer_source);
-    my $client_answer;
-
-    daemon_log("", 5); 
-    daemon_log("INFO: Incoming msg from '".$heap->{'remote_ip'}."'", 5);
-    daemon_log("DEBUG: Incoming msg:\n$input", 9);
-
-    ####################
-    # check incoming msg
-    # msg is from a new client or gosa
-    ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
-    # msg is from a gosa-si-server or gosa-si-bus
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
-    }
-    # msg is from a gosa-si-client
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
-    }
-    # an error occurred
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        $error++;
-    }
-
-    ######################
-    # process incoming msg
-    if( $error == 0) {
-        daemon_log("INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
-        daemon_log("DEBUG: Processing module ".$module, 7);
-        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
-
-        if ( 0 > @{$answer_l} ) {
-            my $answer_str = join("\n", @{$answer_l});
-            daemon_log("DEGUB: $module: Got answer from module: \n".$answer_str,8);
-        }
-    }
-    if( !$answer_l ) { $error++ };
-
-    ########
-    # answer
-    if( $error == 0 ) {
-
-        foreach my $answer ( @{$answer_l} ) {
-            # for each answer in answer list
-            
-            # check outgoing msg to xml validity
-            my $answer_hash = &check_outgoing_xml_validity($answer);
-            if( not defined $answer_hash ) {
-                next;
-            }
-            
-            $answer_header = @{$answer_hash->{'header'}}[0];
-            @answer_target_l = @{$answer_hash->{'target'}};
-            $answer_source = @{$answer_hash->{'source'}}[0];
-
-            # deliver msg to all targets 
-            foreach my $answer_target ( @answer_target_l ) {
-
-                # targets of msg are all gosa-si-clients in known_clients_db
-                if( $answer_target eq "*" ) {
-                    # answer is for all clients
-                    my $sql_statement= "SELECT * FROM known_clients";
-                    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
-                    }
-                }
-
-                # targets of msg are all gosa-si-server in known_server_db
-                elsif( $answer_target eq "KNOWN_SERVER" ) {
-                    # answer is for all server in known_server
-                    my $sql_statement= "SELECT * FROM known_server";
-                    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        $answer =~ s/KNOWN_SERVER/$host_name/g;
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
-                    }
-                }
-
-                # target of msg is GOsa
-                elsif( $answer_target eq "GOSA" ) {
-                    $answer =~ /<session_id>(\d+)<\/session_id>/;
-                    my $session_id = $1;
-                    my $add_on = "";
-                    if( defined $session_id ) {
-                        $add_on = ".session_id=$session_id";
-                    }
-                    # answer is for GOSA and has to returned to connected client
-                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
-                    $client_answer = $gosa_answer.$add_on;
-                }
-
-                # target of msg is job queue at this host
-                elsif( $answer_target eq "JOBDB") {
-                    $answer =~ /<header>(\S+)<\/header>/;   
-                    my $header;
-                    if( defined $1 ) { $header = $1; }
-                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
-                    &update_jobdb_status_for_send_msgs($answer, $error);
-                }
-
-                # target of msg is a mac address
-                elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
-                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
-                    my $query_res = $known_clients_db->select_dbentry( $sql_statement );
-                    my $found_ip_flag = 0;
-                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                        my $host_name = $hit->{hostname};
-                        my $host_key = $hit->{hostkey};
-                        $answer =~ s/$answer_target/$host_name/g;
-                        daemon_log("INFO: found host '$host_name', associated to '$answer_target'", 5);
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
-                        $found_ip_flag++ ;
-                    }   
-                    if( $found_ip_flag == 0) {
-                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target'", 3);
-                        if( $bus_activ eq "true" ) { 
-                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
-                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                            while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                                my $bus_address = $hit->{hostname};
-                                my $bus_key = $hit->{hostkey};
-                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
-                                &update_jobdb_status_for_send_msgs($answer, $error);
-                                last;
-                            }
-                        }
-
-                    }
-
-                #  answer is for one specific host   
-                } else {
-                    # get encrypt_key
-                    my $encrypt_key = &get_encrypt_key($answer_target);
-                    if( not defined $encrypt_key ) {
-                        # unknown target, forward msg to bus
-                        daemon_log("WARNING: unknown target '$answer_target'", 3);
-                        if( $bus_activ eq "true" ) { 
-                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
-                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                            my $res_length = keys( %{$query_res} );
-                            if( $res_length == 0 ){
-                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, ".
-                                        "no bus found in known_server", 3);
-                            }
-                            else {
-                                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                                    my $bus_key = $hit->{hostkey};
-                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
-                                    &update_jobdb_status_for_send_msgs($answer, $error);
-                                }
-                            }
-                        }
-                        next;
-                    }
-                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
-                    &update_jobdb_status_for_send_msgs($answer, $error);
-                }
-            }
-        }
-    }
-
-    if( $client_answer ) {
-        if( $client_answer =~ s/session_id=(\d+)$// ) {
-            my $session_id = $1;
-            if( defined $session_id ) {
-                my $session_reference = $kernel->ID_id_to_session($session_id);
-                if( defined $session_reference ) {
-                    $heap = $session_reference->get_heap();
-                }
-            }     
-        }
-        $heap->{client}->put($client_answer);
-    }
-
-    return;
-}
+#sub client_input {
+#    no strict "refs";
+#    my ($kernel, $session, $heap, $input, $wheel) = @_[KERNEL, SESSION, HEAP, ARG0, ARG1];
+#    my $session_id = $session->ID;
+#    my ($msg, $msg_hash, $module);
+#    my $error = 0;
+#    my $answer_l;
+#    my ($answer_header, @answer_target_l, $answer_source);
+#    my $client_answer;
+#
+#    daemon_log("", 5); 
+#    daemon_log("INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
+#    daemon_log("DEBUG: Incoming msg:\n$input", 9);
+#
+#    ####################
+#    # check incoming msg
+#    # msg is from a new client or gosa
+#    ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
+#    # msg is from a gosa-si-server or gosa-si-bus
+#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+#        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
+#    }
+#    # msg is from a gosa-si-client
+#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+#        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
+#    }
+#    # an error occurred
+#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+#        $error++;
+#    }
+#
+#    ######################
+#    # process incoming msg
+#    if( $error == 0) {
+#        daemon_log("INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
+#        daemon_log("DEBUG: Processing module ".$module, 7);
+#        $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
+#
+#        if ( 0 < @{$answer_l} ) {
+#            my $answer_str = join("\n", @{$answer_l});
+#            daemon_log("DEGUB: $module: Got answer from module: \n".$answer_str,8);
+#        }
+#    }
+#    if( !$answer_l ) { $error++ };
+#
+#    ########
+#    # answer
+#    if( $error == 0 ) {
+#
+#        foreach my $answer ( @{$answer_l} ) {
+#            # for each answer in answer list
+#            
+#            # check outgoing msg to xml validity
+#            my $answer_hash = &check_outgoing_xml_validity($answer);
+#            if( not defined $answer_hash ) {
+#                next;
+#            }
+#            
+#            $answer_header = @{$answer_hash->{'header'}}[0];
+#            @answer_target_l = @{$answer_hash->{'target'}};
+#            $answer_source = @{$answer_hash->{'source'}}[0];
+#
+#            # deliver msg to all targets 
+#            foreach my $answer_target ( @answer_target_l ) {
+#
+#                # targets of msg are all gosa-si-clients in known_clients_db
+#                if( $answer_target eq "*" ) {
+#                    # answer is for all clients
+#                    my $sql_statement= "SELECT * FROM known_clients";
+#                    my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+#                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+#                        my $host_name = $hit->{hostname};
+#                        my $host_key = $hit->{hostkey};
+#                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+#                        &update_jobdb_status_for_send_msgs($answer, $error);
+#                    }
+#                }
+#
+#                # targets of msg are all gosa-si-server in known_server_db
+#                elsif( $answer_target eq "KNOWN_SERVER" ) {
+#                    # answer is for all server in known_server
+#                    my $sql_statement= "SELECT * FROM known_server";
+#                    my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
+#                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+#                        my $host_name = $hit->{hostname};
+#                        my $host_key = $hit->{hostkey};
+#                        $answer =~ s/KNOWN_SERVER/$host_name/g;
+#                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+#                        &update_jobdb_status_for_send_msgs($answer, $error);
+#                    }
+#                }
+#
+#                # target of msg is GOsa
+#                elsif( $answer_target eq "GOSA" ) {
+#                    $answer =~ /<session_id>(\d+)<\/session_id>/;
+#                    my $session_id = $1;
+#                    my $add_on = "";
+#                    if( defined $session_id ) {
+#                        $add_on = ".session_id=$session_id";
+#                    }
+#                    # answer is for GOSA and has to returned to connected client
+#                    my $gosa_answer = &encrypt_msg($answer, $GosaPackages_key);
+#                    $client_answer = $gosa_answer.$add_on;
+#                }
+#
+#                # target of msg is job queue at this host
+#                elsif( $answer_target eq "JOBDB") {
+#                    $answer =~ /<header>(\S+)<\/header>/;   
+#                    my $header;
+#                    if( defined $1 ) { $header = $1; }
+#                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+#                    &update_jobdb_status_for_send_msgs($answer, $error);
+#                }
+#
+#                # target of msg is a mac address
+#                elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
+#                    daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
+#                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
+#                    my $query_res = $known_clients_db->select_dbentry( $sql_statement );
+#                    my $found_ip_flag = 0;
+#                    while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+#                        my $host_name = $hit->{hostname};
+#                        my $host_key = $hit->{hostkey};
+#                        $answer =~ s/$answer_target/$host_name/g;
+#                        daemon_log("INFO: found host '$host_name', associated to '$answer_target'", 5);
+#                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+#                        &update_jobdb_status_for_send_msgs($answer, $error);
+#                        $found_ip_flag++ ;
+#                    }   
+#                    if( $found_ip_flag == 0) {
+#                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target'", 3);
+#                        if( $bus_activ eq "true" ) { 
+#                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+#                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+#                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
+#                            while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+#                                my $bus_address = $hit->{hostname};
+#                                my $bus_key = $hit->{hostkey};
+#                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+#                                &update_jobdb_status_for_send_msgs($answer, $error);
+#                                last;
+#                            }
+#                        }
+#
+#                    }
+#
+#                #  answer is for one specific host   
+#                } else {
+#                    # get encrypt_key
+#                    my $encrypt_key = &get_encrypt_key($answer_target);
+#                    if( not defined $encrypt_key ) {
+#                        # unknown target, forward msg to bus
+#                        daemon_log("WARNING: unknown target '$answer_target'", 3);
+#                        if( $bus_activ eq "true" ) { 
+#                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+#                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
+#                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
+#                            my $res_length = keys( %{$query_res} );
+#                            if( $res_length == 0 ){
+#                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, ".
+#                                        "no bus found in known_server", 3);
+#                            }
+#                            else {
+#                                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+#                                    my $bus_key = $hit->{hostkey};
+#                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+#                                    &update_jobdb_status_for_send_msgs($answer, $error);
+#                                }
+#                            }
+#                        }
+#                        next;
+#                    }
+#                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+#                    &update_jobdb_status_for_send_msgs($answer, $error);
+#                }
+#            }
+#        }
+#    }
+#
+#    if( $client_answer ) {
+#        if( $client_answer =~ s/session_id=(\d+)$// ) {
+#            my $session_id = $1;
+#            if( defined $session_id ) {
+#                my $session_reference = $kernel->ID_id_to_session($session_id);
+#                if( defined $session_reference ) {
+#                    $heap = $session_reference->get_heap();
+#                }
+#            }     
+#        }
+#        $heap->{client}->put($client_answer);
+#    }
+#
+#    return;
+#}
 
 
 
@@ -2213,7 +2214,7 @@ POE::Component::Server::TCP->new(
         $kernel->yield("next_task");
         },
     InlineStates => {
-        next_task => \&next_tasks,
+        next_task => \&next_task,
         task_result => \&handle_task_result,
         task_done   => \&handle_task_done,
         task_debug  => \&handle_task_debug,

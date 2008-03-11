@@ -105,7 +105,7 @@ sub count_db {
     my $res_hash = $db->select_dbentry("SELECT * FROM $table");
 
     my $count = keys(%{$res_hash});
-    my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><count>$count</count></xml>";
+    my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><count>$count</count><session_id>$session_id</session_id></xml>";
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }
