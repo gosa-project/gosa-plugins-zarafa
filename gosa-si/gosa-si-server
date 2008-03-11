@@ -929,7 +929,7 @@ sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
     $kernel->yield('create_fai_server_db', $fai_server_tn );
-	#$kernel->yield('create_fai_release_db', $fai_release_tn );
+	$kernel->yield('create_fai_release_db', $fai_release_tn );
     #$kernel->yield('create_packages_list_db', $sources_list );
 }
 
@@ -1051,7 +1051,7 @@ sub client_input {
                 # target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
                     daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
-                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
+                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
                     my $found_ip_flag = 0;
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -1423,16 +1423,16 @@ sub create_fai_release_db {
 			$mesg->count != 0) {
 			# Walk through all possible FAI container ou's
 			my @sql_list;
+			my $timestamp= &get_time();
 			foreach my $ou (@{$mesg->{entries}}) {
 				my $tmp_classes= resolve_fai_classes($ou->dn);
-				if(defined($tmp_classes)) {
+				if(defined($tmp_classes) && ref($tmp_classes) eq 'HASH') {
 					my @tmp_array=get_fai_release_entries($tmp_classes);
 					if(@tmp_array) {
 						foreach my $entry (@tmp_array) {
 							if(defined($entry) && ref($entry) eq 'HASH') {
-								my $timestamp= &get_time();
 								my $sql= 
-								 "INSERT INTO $table_name "
+								"INSERT INTO $table_name "
 								."(timestamp, release, class, type, state) VALUES ("
 								.$timestamp.","
 								."'".$entry->{'release'}."',"
@@ -1445,7 +1445,9 @@ sub create_fai_release_db {
 					}
 				}
 			}
+			daemon_log("Inserting entries to DB",6);
 			$fai_server_db->exec_statementlist(\@sql_list);
+			daemon_log("Done with inserting",6);
 		}
 		daemon_log("Done with creating fai_release_db",4);
 	}
@@ -1453,18 +1455,113 @@ sub create_fai_release_db {
 	return $result;
 }
 
+sub resolve_fai_classes {
+	my $result;
+	my $fai_base= shift;
+	my @possible_fai_classes= ("FAIscript", "FAIhook", "FAIpartitionTable", "FAItemplate", "FAIvariable", "FAIprofile", "FAIpackageList");
+	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
+	my $fai_classes;
+
+	daemon_log("Searching for FAI entries in base $fai_base",6);
+	my $mesg= $ldap_handle->search(
+		base   => $fai_base,
+		scope  => 'sub',
+		attrs  => ['cn','objectClass','FAIstate'],
+		filter => $fai_filter,
+	);
+	daemon_log("Found ".$mesg->count()." FAI entries",6);
+
+	if($mesg->{'resultCode'} == 0 &&
+		$mesg->count != 0) {
+		foreach my $entry (@{$mesg->{entries}}) {
+			if($entry->exists('cn')) {
+				my $tmp_dn= $entry->dn();
+
+				# Skip classname and ou dn parts for class
+				my $tmp_release = ($1) if $tmp_dn =~ /^[^,]+,[^,]+,(.*?),$fai_base$/;
+
+				# Skip classes without releases
+				if((!defined($tmp_release)) || length($tmp_release)==0) {
+					next;
+				}
+
+				my $tmp_cn= $entry->get_value('cn');
+				my $tmp_state= $entry->get_value('FAIstate');
+
+				my $tmp_type;
+				# Get FAI type
+				for my $oclass(@{$entry->get_value('objectClass', asref => 1)}) {
+					if(grep $_ eq $oclass, @possible_fai_classes) {
+						$tmp_type= $oclass;
+						last;
+					}
+				}
+
+				if($tmp_release =~ /^.*?,.*?$/ && (!($tmp_release =~ /^.*?\\,.*?$/))) {
+					# A Subrelease
+					my @sub_releases = split(/,/, $tmp_release);
+
+					# Walk through subreleases and build hash tree
+					my $hash;
+					while(my $tmp_sub_release = pop @sub_releases) {
+						$hash .= "\{'$tmp_sub_release'\}->";						
+					}
+					eval('push @{$fai_classes->'.$hash.'{$tmp_cn}->{$tmp_type}}, (defined($tmp_state) && length($tmp_state)>0)?$tmp_state:"";');
+				} else {
+					# A branch, no subrelease
+					push @{$fai_classes->{$tmp_release}->{$tmp_cn}->{$tmp_type}}, (defined($tmp_state) && length($tmp_state)>0)?$tmp_state:"";
+				}
+			} elsif (!$entry->exists('cn')) {
+				my $tmp_dn= $entry->dn();
+				my $tmp_release = ($1) if $tmp_dn =~ /^(.*?),$fai_base$/;
+
+				# Skip classes without releases
+				if((!defined($tmp_release)) || length($tmp_release)==0) {
+					next;
+				}
+
+				if($tmp_release =~ /^.*?,.*?$/ && (!($tmp_release =~ /^.*?\\,.*?$/))) {
+					# A Subrelease
+					my @sub_releases= split(/,/, $tmp_release);
+
+					# Walk through subreleases and build hash tree
+					my $hash;
+					while(my $tmp_sub_release = pop @sub_releases) {
+						$hash .= "\{'$tmp_sub_release'\}->";						
+					}
+					# Remove the last two characters
+					chop($hash);
+					chop($hash);
+
+					eval('$fai_classes->'.$hash.'= {}');
+				} else {
+					# A branch, no subrelease
+					if(!exists($fai_classes->{$tmp_release})) {
+						$fai_classes->{$tmp_release} = {};
+					}
+				}
+			}
+		}
+
+		# The hash is complete, now we can honor the copy-on-write based missing entries
+		foreach my $release (keys %$fai_classes) {
+			$result->{$release}= deep_copy(apply_fai_inheritance($fai_classes->{$release}));
+		}
+	}
+	return $result;
+}
+
 sub get_fai_release_entries {
 	my $tmp_classes = shift || return;
-	my $parent = shift || undef;
+	my $parent = shift || "";
 	my @result = shift || ();
 
 	foreach my $entry (keys %{$tmp_classes}) {
 		if(defined($entry)) {
-			#daemon_log($entry,1);
 			if($entry =~ /^ou=.*$/) {
 				my $release_name = $entry;
 				$release_name =~ s/ou=//g;
-				if(defined($parent)) {
+				if(length($parent)>0) {
 					$release_name = $parent."/".$release_name;
 				}
 				my @bufentries = get_fai_release_entries($tmp_classes->{$entry}, $release_name, @result);
@@ -1506,125 +1603,51 @@ sub get_fai_types {
 	return @result;
 }
 
-sub get_fai_state {
-	my $result = "";
-	my $tmp_classes = shift || return $result;
+sub apply_fai_inheritance {
+	my $fai_classes = shift || return {};
+	my $tmp_classes;
 
-	foreach my $type(keys %{$tmp_classes}) {
-		if(defined($tmp_classes->{$type}[0])) {
-			$result = $tmp_classes->{$type}[0];
-			
-		# State is equal for all types in class
-			last;
+	# Get the classes from the branch
+	foreach my $class (keys %{$fai_classes}) {
+		# Skip subreleases
+		if($class =~ /^ou=.*$/) {
+			next;
+		} else {
+			$tmp_classes->{$class}= deep_copy($fai_classes->{$class});
 		}
 	}
 
-	return $result;
-}
-
-sub resolve_fai_classes {
-	my $result;
-	my $fai_base= shift;
-	my @possible_fai_classes= ("FAIscript", "FAIhook", "FAIpartitionTable", "FAItemplate", "FAIvariable", "FAIprofile", "FAIpackageList");
-	my $fai_filter= "(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))";
-	my $fai_classes;
-	daemon_log("Searching in FAI base $fai_base",6);
-
-	my $mesg= $ldap_handle->search(
-		base   => $fai_base,
-		scope  => 'sub',
-		attrs  => ['cn','objectClass','FAIstate'],
-		filter => $fai_filter,
-	);
-
-	if($mesg->{'resultCode'} == 0 &&
-		$mesg->count != 0) {
-		daemon_log("Found ".$mesg->count." entries",6);
-		foreach my $entry (@{$mesg->{entries}}) {
-			if($entry->exists('cn') && (!($entry->get_value('cn') eq 'LAST')) ) {
-				my $tmp_dn= $entry->dn();
-
-				# Skip classname and ou dn parts for class
-				my $tmp_release = ($1) if $tmp_dn =~ /^[^,]+,[^,]+,(.*?),$fai_base$/;
-
-				# Skip classes without releases
-				if((!defined($tmp_release)) || length($tmp_release)==0) {
-					next;
-				}
-
-				my $tmp_cn= $entry->get_value('cn');
-				my $tmp_state= $entry->get_value('FAIstate');
-
-				my $tmp_type;
-				# Get FAI type
-				for my $oclass(@{$entry->get_value('objectClass', asref => 1)}) {
-					if(grep $_ eq $oclass, @possible_fai_classes) {
-						$tmp_type= $oclass;
-						last;
-					}
-				}
-
-				if($tmp_release =~ /^.*?,.*?$/ && (!($tmp_release =~ /^.*?\\,.*?$/))) {
-					# A Subrelease
-					my @sub_releases = split(/,/, $tmp_release);
-
-					# Walk through subreleases and build hash tree
-					my $hash;
-					while(my $tmp_sub_release = pop @sub_releases) {
-						$hash .= "\{'$tmp_sub_release'\}->";						
-					}
-					eval('push @{$fai_classes->'.$hash.'{$tmp_cn}->{$tmp_type}}, (defined($tmp_state) && length($tmp_state)>0)?$tmp_state:"";');
+	# Apply to each subrelease
+	foreach my $subrelease (keys %{$fai_classes}) {
+		if($subrelease =~ /ou=/) {
+			foreach my $tmp_class (keys %{$tmp_classes}) {
+				if(!exists($fai_classes->{$subrelease}->{$tmp_class})) {
+					$fai_classes->{$subrelease}->{$tmp_class} = 
+					deep_copy($tmp_classes->{$tmp_class});
 				} else {
-					# A branch, no subrelease
-					push @{$fai_classes->{$tmp_release}->{$tmp_cn}->{$tmp_type}}, (defined($tmp_state) && length($tmp_state)>0)?$tmp_state:"";
-				}
-			}
-		}
-
-		# The hash is complete, now we can honor the copy-on-write based missing entries
-		foreach my $release (keys %$fai_classes) {
-			# Prepare the classes
-			my $tmp_classes;
-
-			# Get the classes from the branch
-			foreach my $class (keys %{$fai_classes->{$release}}) {
-				# Skip subreleases
-				if($class =~ /^ou=.*$/) {
-					next;
-				} else {
-					$tmp_classes->{$class}= deep_copy($fai_classes->{$release}->{$class});
-				}
-			}
-
-			# Apply to each subrelease
-			# TODO infinite deep
-			if(ref $fai_classes->{$release} eq 'HASH') {
-				my $i=0;
-				foreach my $sub_release (keys %{$fai_classes->{$release}}) {
-					if($sub_release =~ /^ou=.*$/) {
-						foreach my $class (keys %{$tmp_classes}) {
-							if(!exists($fai_classes->{$release}->{$sub_release}->{$class})) {
-								$fai_classes->{$release}->{$sub_release}->{$class} = 
-								deep_copy($tmp_classes->{$class});
-							} else {
-								foreach my $type (keys %{$fai_classes->{$release}->{$sub_release}->{$class}}) {
-									if(!exists($fai_classes->{$release}->{$sub_release}->{$class}->{$type})) {
-										daemon_log("Type $type doesn't exist in class $class",1);
-										$fai_classes->{$release}->{$sub_release}->{$class}->{$type} =
-										deep_copy($tmp_classes->{$class}->{$type});
-									}
-								}
-							}
+					foreach my $type (keys %{$tmp_classes->{$tmp_class}}) {
+						if(!exists($fai_classes->{$subrelease}->{$tmp_class}->{$type})) {
+							$fai_classes->{$subrelease}->{$tmp_class}->{$type}=
+							deep_copy($tmp_classes->{$tmp_class}->{$type});
 						}
 					}
 				}
 			}
 		}
-
-		$result= $fai_classes;
 	}
 
-	return $result;
+	# Find subreleases in deeper levels
+	foreach my $subrelease (keys %{$fai_classes}) {
+		if($subrelease =~ /ou=/) {
+			foreach my $subsubrelease (keys %{$fai_classes->{$subrelease}}) {
+				if($subsubrelease =~ /ou=/) {
+					apply_fai_inheritance($fai_classes->{$subrelease});
+				}
+			}
+		}
+	}
+	
+	return $fai_classes;
 }
 
 sub deep_copy {
