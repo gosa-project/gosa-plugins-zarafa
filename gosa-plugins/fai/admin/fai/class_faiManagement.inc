@@ -835,24 +835,24 @@ class faiManagement extends plugin
         if((isset($obj->is_dialog) && (!$obj->is_dialog)) || (isset($obj->dialog) && (!$obj->dialog))){
 
           $display.= "<p style=\"text-align:right\">\n";
-          $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+          $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
           $display.= "&nbsp;\n";
           if ($this->dn != "new"){
-            $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+            $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
             $display.= "&nbsp;\n";
           }
-          $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+          $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
           $display.= "</p>";
         }elseif(!isset($this->dialog->current)){
           $display.= "<p style=\"text-align:right\">\n";
           $display.= "<input type=\"submit\" name=\"edit_continue\" value=\""._("Continue")."\">&nbsp;";
-          $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+          $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
           $display.= "</p>";
         }
       }else{
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_continue\" value=\""._("Continue")."\">&nbsp;";
-        $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+        $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
         $display.= "</p>";
 
       }
