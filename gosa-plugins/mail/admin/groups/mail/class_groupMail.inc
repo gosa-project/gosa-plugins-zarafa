@@ -352,8 +352,7 @@ class mailgroup extends plugin
       /* Do we represent a valid account? */
       if (!$this->is_account && $this->parent === NULL){
 
-        $display.= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-          _("This 'dn' has no valid mail extensions.")."</b>";
+        $display.= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".msgPool::noValidExtension(_("mail"))."</b>";
         return ($display);
       }
 
@@ -362,10 +361,10 @@ class mailgroup extends plugin
       if ($this->parent !== NULL){
         if ($this->is_account){
           $display.= $this->show_disable_header(_("Remove mail account"),
-              _("This account has mail features enabled. You can disable them by clicking below."));
+              msgPool::featuresEnabled(_("mail"));
         } else {
           $display.= $this->show_enable_header(_("Create mail account"),
-              _("This account has mail features disabled. You can enable them by clicking below."));
+              msgPool::featuresDisabled(_("mail"));
 
           /* Show checkbox that allows us to remove imap entry too*/
           if($this->initially_was_account){
@@ -436,8 +435,7 @@ class mailgroup extends plugin
         $address= $_POST['forward_address'];
         if (!tests::is_email($address)){
 
-          print_red (_("You're trying to add an invalid email address ".
-                "to the list of forwarders."));
+          print_red (msgPool::invalid(_("forward address")));
 
         } elseif ($address == $this->mail
             || in_array($address, $this->gosaMailAlternateAddress)) {
@@ -468,12 +466,12 @@ class mailgroup extends plugin
       if ($_POST['alternate_address'] != "" && $this->acl_is_writeable("gosaMailAlternateAddress")){
 
         if (!tests::is_email($_POST['alternate_address'])){
-          print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
+          print_red (msgPool::invalid(_("alternate address")));
 
         } elseif (($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
           $ui= get_userinfo();
           if ($user != $ui->username){
-            print_red (_("The address you're trying to add is already used by user")." '$user'.");
+            print_red (msgPool::duplicated(_("mail address")));
           }
         }
       }
