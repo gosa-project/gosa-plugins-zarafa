@@ -12,8 +12,8 @@ my @events = (
     "count_packages_list",
     "query_fai_server",
     "count_fai_server",
-    "query_fai_releases",
-    "count_fai_releases",
+    "query_fai_release",
+    "count_fai_release",
     );
 @EXPORT = @events;
 
@@ -54,10 +54,10 @@ sub query_db {
         $db = $main::packages_list_db;
     } elsif( $header =~ /query_fai_server/ ) {
         $table = $main::fai_server_tn;
-        $db = $main::fai_server_db
-    } elsif( $header =~ /count_fai_releases/ ) {
-        $table = $main::fai_releases_tn;
-        $db = $main::fai_server_db
+        $db = $main::fai_server_db;
+    } elsif( $header =~ /count_fai_release/ ) {
+        $table = $main::fai_release_tn;
+        $db = $main::fai_server_db;
     }
 
    
@@ -74,7 +74,7 @@ sub query_db {
     return @out_msg_l;
 }
     
-sub count_fai_releases{ return &count_db( @_ ); }    
+sub count_fai_release{ return &count_db( @_ ); }    
 sub count_fai_server{ return &count_db( @_ ); }
 sub count_packages_list{ return &count_db( @_ ); }
 sub count_jobdb{ return &count_db( @_ ); }
@@ -94,10 +94,10 @@ sub count_db {
         $db = $main::packages_list_db;
     } elsif( $header =~ /count_fai_server/ ) {
         $table = $main::fai_server_tn;
-        $db = $main::fai_server_db
-    } elsif( $header =~ /count_fai_releases/ ) {
-        $table = $main::fai_releases_tn;
-        $db = $main::fai_server_db
+        $db = $main::fai_server_db;
+    } elsif( $header =~ /count_fai_release/ ) {
+        $table = $main::fai_release_tn;
+        $db = $main::fai_server_db;
     }
 
 
