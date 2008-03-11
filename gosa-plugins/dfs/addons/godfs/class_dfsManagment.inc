@@ -244,7 +244,7 @@ class dfsManagment extends plugin {
     $display .= "        <td style=\"text-align: right\">\n";
     $display .= "          <input type=submit name=\"edit_finish\" value=\""._("Finish")."\">\n";
     $display .= "          &nbsp;\n";
-    $display .= "          <input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+    $display .= "          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
     $display .= "        </td>\n";
     $display .= "      </tr>\n";
     $display .= "    </tbody>\n";
