@@ -361,10 +361,10 @@ class mailgroup extends plugin
       if ($this->parent !== NULL){
         if ($this->is_account){
           $display.= $this->show_disable_header(_("Remove mail account"),
-              msgPool::featuresEnabled(_("mail"));
+              msgPool::featuresEnabled(_("mail")));
         } else {
           $display.= $this->show_enable_header(_("Create mail account"),
-              msgPool::featuresDisabled(_("mail"));
+              msgPool::featuresDisabled(_("mail")));
 
           /* Show checkbox that allows us to remove imap entry too*/
           if($this->initially_was_account){
