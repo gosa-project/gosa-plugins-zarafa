@@ -455,9 +455,13 @@ class DaemonEvent
   /*! \brief  Returns the event timestamp in GOsa daemon format. 
     @return Returns the event timestamp (20081231120000)
    */
-  public function get_timestamp()
+  public function get_timestamp($si_type = TRUE)
   {
-    return($this->_timestamp_to_event($this->timestamp));
+    if($si_type){
+      return($this->_timestamp_to_event($this->timestamp));
+    }else{
+      return($this->timestamp);
+    }
   }
 
 

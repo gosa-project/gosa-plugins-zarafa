@@ -220,6 +220,27 @@ class gotomasses extends plugin
 
     /* Remove specified tasks */
     if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
+
+      /* Reboot hosts with not yet startet installations and timestamps in the past 
+       */
+      timezone::get_default_timezone();
+      foreach($this->ids_to_remove as $id){
+        $entry = $this->o_queue->get_entries_by_id(array($id));
+        if(isset($entry['ANSWER1'])){
+          $entry = $entry['ANSWER1'];
+          if( $entry['STATUS'] == "wating" && 
+              $entry['HEADERTAG'] == "trigger_action_reinstall"){
+            $evt = new DaemonEvent_reinstall($this->config,$entry);
+            if($evt->get_timestamp(FALSE)  < time()){
+              $r_evt = new DaemonEvent_localboot($this->config);
+              $r_evt->add_targets(array($entry['MACADDRESS']));
+              $r_evt->set_type(TRIGGERED_EVENT);
+              $this->o_queue->append($r_evt);
+            }
+          }
+        }
+      }
+
       $this->o_queue->remove_entries($this->ids_to_remove);
       $this->save();
     }
