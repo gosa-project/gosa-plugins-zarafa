@@ -1689,12 +1689,12 @@ sub create_fai_release_db {
 					}
 				}
 			}
-			daemon_log("Inserting entries to DB",6);
+			daemon_log("DEBUG: Inserting ".scalar @sql_list." entries to DB",6);
 			if(@sql_list) {
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_server_db->exec_statementlist(\@sql_list);
 			}
-			daemon_log("Done with inserting",6);
+			daemon_log("DEBUG: Done with inserting",6);
 		}
 		daemon_log("INFO: create_fai_release_db: finished",5);
 	}
@@ -1754,14 +1754,14 @@ sub resolve_fai_classes {
 	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
 	my $fai_classes;
 
-	daemon_log("Searching for FAI entries in base $fai_base",6);
+	daemon_log("DEBUG: Searching for FAI entries in base $fai_base",6);
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
 		scope  => 'sub',
 		attrs  => ['cn','objectClass','FAIstate'],
 		filter => $fai_filter,
 	);
-	daemon_log("Found ".$mesg->count()." FAI entries",6);
+	daemon_log("DEBUG: Found ".$mesg->count()." FAI entries",6);
 
 	if($mesg->{'resultCode'} == 0 &&
 		$mesg->count != 0) {
