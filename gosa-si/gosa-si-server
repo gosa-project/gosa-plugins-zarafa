@@ -1446,7 +1446,10 @@ sub create_fai_release_db {
 				}
 			}
 			daemon_log("Inserting entries to DB",6);
-			$fai_server_db->exec_statementlist(\@sql_list);
+			if(@sql_list) {
+				unshift @sql_list, "DELETE FROM $table_name";
+				$fai_server_db->exec_statementlist(\@sql_list);
+			}
 			daemon_log("Done with inserting",6);
 		}
 		daemon_log("Done with creating fai_release_db",4);
