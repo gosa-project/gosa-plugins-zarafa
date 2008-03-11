@@ -78,7 +78,7 @@ class workgeneric extends plugin
     $e_types = DaemonEvent::get_event_types(USER_EVENT | SYSTEM_EVENT | HIDDEN_EVENT);
     $evts = $o->get_entries_by_mac(array($this->netConfigDNS->macAddress));
     foreach($evts as $evt){
-      if(isset($e_types['QUEUED'][$evt['HEADERTAG']]) &&
+      if(isset($e_types['QUEUED'][$evt['HEADERTAG']]) && $evt['status'] == "processing" &&
           $e_types['QUEUED'][$evt['HEADERTAG']] == "DaemonEvent_reinstall"){
         $this->currently_installing =TRUE;
       }
