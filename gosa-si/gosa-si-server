@@ -1415,7 +1415,7 @@ sub change_goto_state {
 
 
 sub create_fai_server_db {
-    my ($table_name) = @_;
+    my ($table_name, $kernel) = @_;
 	my $result;
 
 	if(defined($ldap_handle)) {
@@ -1447,18 +1447,18 @@ sub create_fai_server_db {
 			   }
 		   }
 		daemon_log("INFO: create_fai_server_db: finished", 5);
-	}	
 
-	# Now we can create the packages list
-	$kernel->yield('create_packages_list_db');
+		# TODO: Find a way to post the 'create_packages_list_db' event
+		&create_packages_list_db();
+	}	
 
    	return $result;
 }
 
 sub run_create_fai_server_db {
-    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
+    my ($kernel, $session, $heap, $table_name) = @_[KERNEL, SESSION, HEAP, ARG0];
     my $task = POE::Wheel::Run->new(
-            Program => sub { &create_fai_server_db($table_name) },
+            Program => sub { &create_fai_server_db($table_name,$kernel) },
             StdoutEvent  => "session_run_result",
             StderrEvent  => "session_run_debug",
             CloseEvent   => "session_run_done",
@@ -1832,7 +1832,7 @@ sub create_packages_list_db {
     return;
 }
 sub run_create_packages_list_db {
-    my ($session, $heap, $sources_list) = @_[SESSION, HEAP, ARG0];
+    my ($session, $heap) = @_[SESSION, HEAP];
     my $task = POE::Wheel::Run->new(
             Program => sub {&create_packages_list_db},
             StdoutEvent  => "session_run_result",
