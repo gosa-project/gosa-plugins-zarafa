@@ -149,6 +149,7 @@ our $client_fai_log_dir = "/var/log/fai";
 # queue which stores taskes while max_clients are reached
 my @tasks = qw();
 
+
 %cfg_defaults = (
 "general" => {
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
@@ -410,7 +411,7 @@ sub sig_int_handler {
 	}
 
     daemon_log("shutting down gosa-si-server", 1);
-    exit(0);
+    system("killall gosa-si-server");
 }
 $SIG{INT} = \&sig_int_handler;
 
@@ -852,7 +853,7 @@ sub send_msg_to_target {
         print $socket $crypted_msg."\n";
 
         daemon_log("INFO: send ".$header."msg to $address", 5);
-        daemon_log("message:\n$msg", 8);
+        daemon_log("DEBUG: message:\n$msg", 9);
         
     }
 
@@ -1013,6 +1014,15 @@ sub process_task {
     }
     # an error occurred
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
+        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+            my $host_name = $hit->{'hostname'};
+            my $host_key = $hit->{'hostkey'};
+            my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
+            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping");
+            &update_jobdb_status_for_send_msgs($ping_msg, $error);
+        }
         $error++;
     }
 
@@ -1850,7 +1860,6 @@ sub run_create_packages_list_db {
             StderrEvent  => "session_run_debug",
             CloseEvent   => "session_run_done",
             );
-
     $heap->{task}->{ $task->ID } = $task;
 }
 sub parse_package_info {
