@@ -467,6 +467,7 @@ class gotomasses extends plugin
                                     "9999" => "*"));
 
     $count = $this->o_queue->number_of_queued_entries();
+    if(!$count) $count = $this->range;
     $divlist->SetListFooter(range_selector($count, $this->start, $this->range,"range"));
     $smarty->assign("range",$this->range);
     $smarty->assign("div",$divlist->Draw());
