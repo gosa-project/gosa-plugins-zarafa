@@ -261,25 +261,14 @@ class application extends plugin
         this application is still in use. 
      */
     if(count($found)){
-      $objs = "";
-      $cnt = 3;
-      for($i = 0 ; $i < $cnt ; $i++ ){
-        if(isset($found[$i])){
-          $objs .= "&nbsp;".$found[$i].",";
-        }
-      }
-      if(count($found) > $cnt){
-        $objs .= "... ";
-      }
-      $objs = trim($objs,", ");
-      print_red(sprintf(_("Can not remove application, it is still in use by these objects: %s."),$objs));
+      msg_dialog::display(_("Error"), sprintf(_("Cannot remove application - it is still in use by these objects: %s"), "<br>".msgPool::buildList($found)), ERROR_DIALOG);
       return(FALSE);
     }
 
     $ldap->rmDir($this->dn);
     new log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()), ERROR_DIALOG);
     }
 
     /* Optionally execute a command after we're done */
@@ -293,7 +282,7 @@ class application extends plugin
       unset($og->member[$this->dn]);
       $og->save ();
       if (!$ldap->success()){
-        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()), ERROR_DIALOG);
       }
     }
   }
@@ -344,7 +333,7 @@ class application extends plugin
       if (isset($_FILES['picture_file']['name']) && $_FILES['picture_file']['name'] != ""){
 
         if (!is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
-          print_red (_("The specified picture has not been uploaded correctly."));
+          msg_dialog::display(_("Error"), msgPool::incorrectUpload(), ERROR_DIALOG);
         }
 
         if (!function_exists("imagick_blob2image")){
@@ -376,21 +365,21 @@ class application extends plugin
 
           /* Load the new uploaded Photo */
           if(!$handle  =  imagick_ReadImage($_FILES['picture_file']['tmp_name'])){
-            print_red(_("Can't access uploaded image."));
+            msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("no read permission")), ERROR_DIALOG);
           }
 
           /* Resizing image to 147x200 and blur */
           if(!imagick_resize($handle,48,48,IMAGICK_FILTER_GAUSSIAN,0)){
-            print_red(_("Uploaded image could not be resized, possilby the image magick extension is missing."));
+            msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("cannot resize image")), ERROR_DIALOG);
           }
 
           /* Converting image to JPEG */
           if(!imagick_convert($handle,"PNG")) {
-            print_red(_("Could not convert image to png, possilby the image magick extension is missing."));
+            msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("cannot convert image")), ERROR_DIALOG);
           }
 
           if(!imagick_writeimage($handle,$_FILES['picture_file']['tmp_name'])){
-            print_red(sprintf(_("Could not save uploaded image to %s."),$_FILES['picture_file']['tmp_name']));
+            msg_dialog::display(_("Error"), msgPool::incorrectUpload(sprintf(_("cannot save image to '%s'"), $_FILES['picture_file']['tmp_name'])), ERROR_DIALOG);
           }
 
           imagick_free($handle);
@@ -517,7 +506,7 @@ class application extends plugin
       $this->handle_post_events("add");
     }
     if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()), ERROR_DIALOG);
     }
   }
 
