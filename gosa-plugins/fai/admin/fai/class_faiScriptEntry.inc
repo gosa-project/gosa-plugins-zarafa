@@ -138,15 +138,15 @@ class faiScriptEntry extends plugin
     $message= plugin::check();
   
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
-      $message[] =_("Name is already in use!");
+      $message[] = msgPool::duplicated(_("Name"));
     }
 
     if(empty($this->cn)){
-      $message[] = _("Name is empty!");
+      $message[] = msgPool::required(_("Name"));
     }
 
     if(empty($this->FAIscript)){
-      $message[]=_("Please enter a script!");
+      $message[]= msgPool::required("Script"));
     }
 
     return ($message);

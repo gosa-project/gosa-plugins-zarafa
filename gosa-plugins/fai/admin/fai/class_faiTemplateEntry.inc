@@ -193,38 +193,34 @@ class faiTemplateEntry extends plugin
     $message= plugin::check();
 
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
-      $message[] =_("There is already a template with the given name.");
+      $message[] = msgPool::duplicated(_("Name"));
     }
 
     if(empty($this->FAItemplateFile)){
-      $message[]=_("Please specify a value for attribute 'file'.");
+      $message[]= msgPool::required(_("File"));
     } 
 
     if(!preg_match('/^\//', $this->FAItemplatePath)){
-      $message[]=_("Please specify a valid value for attribute 'Destination path'.");
+      $message[]= msgPool::invalid(_("Destination path"),$this->FAItemplatePath,'/^\//');
     } 
-  
-    if(empty($this->cn)){
-      $message[] = _("Please enter a file name.");
+ 
+    $b = basename($this->FAItemplatePath); 
+    if(empty($b)){
+      $message[] = msgPool::required(_("File name"));
     }
-
-#    echo $this->cn;
-#    if(preg_match('/\//', $this->cn)){
-#      $message[] = _("The file name should not contain / characters.");
-# #   }
 
     if(empty($this->user)){
-      $message[] = _("Please enter a user.");
+      $message[] = msgPool::required(_("User"));
     }
     elseif(preg_match("/[^0-9a-z]/i",$this->user)){
-      $message[] = _("Please enter a valid user. Only a-z/0-9 are allowed.");
+      $message[] = msgPool::invalid(_("User"),$this->user,"/[0-9a-z]/");
     }
 
     if(empty($this->group)){
-      $message[] = _("Please enter a group.");
+      $message[] = msgPool::required(_("Group"));
     }
     elseif(preg_match("/[^0-9a-z]/i",$this->group)){
-      $message[] = _("Please enter a valid group. Only a-z/0-9 are allowed.");
+      $message[] = msgPool::invalid(_("Group"),$this->group,"/[0-9a-z]/");
     }
 
     return ($message);
