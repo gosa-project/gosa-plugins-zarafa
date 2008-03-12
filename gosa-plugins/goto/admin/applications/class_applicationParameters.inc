@@ -46,11 +46,9 @@ class applicationParameters extends plugin
     $display= "";
     if ($this->parent !== NULL){
       if ($this->is_account){
-        $display= $this->show_disable_header(_("Remove options"),
-            msgPool::featuresEnabled(_("parameter"));
+        $display= $this->show_disable_header(_("Remove options"),msgPool::featuresEnabled(_("parameter")));
       } else {
-        $display= $this->show_enable_header(_("Create options"),
-            msgPool::featuresDisabled(_("parameter"));
+        $display= $this->show_enable_header(_("Create options"), msgPool::featuresDisabled(_("parameter")));
         $this->parent->by_object['application']->generateTemplate();
         return ($display);
       }

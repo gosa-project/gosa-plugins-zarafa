@@ -252,7 +252,7 @@ class servdhcp extends goService
         if (isset($this->dhcpObjectCache[$dn])){
           $this->current_object= $dn;
           $this->dialog= 1;
-          $smarty->assign("warning", sprintf(_("You're about to delete the DHCP section '%s'."), $dn));
+          $smarty->assign("warning", msgPool::deleteInfo(@LDAP::fix($dn),_("DHCP section")));
           return($smarty->fetch(get_template_path('remove_dhcp.tpl', TRUE, dirname(__FILE__))));
         }
       }

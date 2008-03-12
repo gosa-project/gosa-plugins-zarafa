@@ -65,7 +65,7 @@ class glpiAttachmentPool extends plugin
 
         /* remove attach from db */
         $this->delAttach = $str;
-        $smarty->assign("warning", sprintf(_("You're about to delete the glpi attachment component '%s'."), $attach[$str]['name']));
+        $smarty->assign("warning",msgPool::deleteInfo($attach[$str]['name'],_("attachment")));
         return($smarty->fetch(get_template_path('remove_glpi.tpl',TRUE,dirname(__FILE__))));
       }
  

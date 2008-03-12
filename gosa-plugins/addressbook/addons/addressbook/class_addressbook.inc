@@ -313,7 +313,7 @@ class addressbook extends plugin
           /* Lock the current entry, so nobody will edit it during deletion */
           $ui= get_userinfo();
           add_lock ($this->dn, $ui->dn);
-          $smarty->assign("info", sprintf(_("You're about to delete the entry %s."), $this->dn));
+          $smarty->assign("info", msgPool::deleteInfo($this->dn));
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         } else {
 

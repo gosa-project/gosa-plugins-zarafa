@@ -211,7 +211,7 @@ class gotomasses extends plugin
             }
           }
           $smarty->assign("multiple", TRUE); 
-          $smarty->assign("info",sprintf(_("You are about to remove the following actions from the GOsa support Daemon: %s"),"<pre>".$tmp."</pre>"));
+          $smarty->assign("info",msgPool::deleteInfo("<pre>".$tmp."</pre>"));
           $this->current = $s_entry;
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }

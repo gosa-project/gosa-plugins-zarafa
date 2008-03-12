@@ -214,15 +214,14 @@ class blocklist extends plugin
           $this->dns[$id] = $dn;
         }
 
-        $dns_names = "<br><pre>";
+        $dns_names[] = array();
         foreach($this->dns as $dn){
           add_lock ($dn, $this->ui->dn);
-          $dns_names .= $dn."\n";
+          $dns_names[]=@LDAP::fix( $dn);
         }
-        $dns_names .="</pre>";
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info",     sprintf(_("You're about to delete the following blocklists(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("blocklist")));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
@@ -283,7 +282,7 @@ class blocklist extends plugin
 
         // Lock this dn for editing
         add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("info", sprintf(_("You're about to delete the blocklist '%s'."), $this->dn));
+        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn),_("blocklist")));
         $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }

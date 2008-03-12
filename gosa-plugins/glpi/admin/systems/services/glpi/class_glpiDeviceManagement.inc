@@ -105,9 +105,9 @@ class glpiDeviceManagement extends plugin
       $this->delete = $tmp;
 
       if(isset($tmp['name'])){
-        $smarty->assign("warning", sprintf(_("You're about to delete the glpi device '%s'."), $tmp['name']));
+        $smarty->assign("warning",msgPool::deleteInfo($tmp['name'],_("glpi device")));
       }elseif(isset($tmp['designation'])){
-        $smarty->assign("warning", sprintf(_("You're about to delete the glpi device '%s'."), $tmp['designation']));
+        $smarty->assign("warning",msgPool::deleteInfo($tmp['designation'],_("glpi device")));
       }else{
         print_red(_("Can't detect object name."));
       }

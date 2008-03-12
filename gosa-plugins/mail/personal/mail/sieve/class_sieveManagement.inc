@@ -356,9 +356,7 @@ class sieveManagement extends plugin
     /* Display confirm dialog */
     if($this->script_to_delete != -1){
       $smarty = get_smarty();
-      $smarty->assign("Warning",
-          sprintf(_("You are going to remove the sieve script '%s' from your mail server."),
-            $this->scripts[$this->script_to_delete]['NAME']));
+      $smarty->assign("Warning",msgPool::deleteInfo($this->scripts[$this->script_to_delete]['NAME']));
       return($smarty->fetch(get_template_path("templates/remove_script.tpl",TRUE,dirname(__FILE__))));
     }
 

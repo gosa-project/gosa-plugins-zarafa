@@ -89,7 +89,7 @@ class glpiPrinterCartridges extends plugin
         /* remove attach from db */
         $this->del = $_GET['id'];
         $val = ($this->parent->handle->getCartridgeTypeInformations($_GET['id']));
-        $smarty->assign("warning", sprintf(_("You're about to delete the glpi cartridge type '%s'."), $val[$this->del]['name']));
+        $smarty->assign("warning", msgPool::deleteInfo($val[$this->del]['name'],_("cartridge")));
         return($smarty->fetch(get_template_path('remove_glpi.tpl',TRUE,dirname(__FILE__))));
     }
 
