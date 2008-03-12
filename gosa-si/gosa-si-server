@@ -937,7 +937,6 @@ sub _start {
     &trigger_db_loop($kernel);
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
-	$kernel->yield('create_packages_list_db');
 }
 
 sub next_task {
@@ -1449,8 +1448,13 @@ sub create_fai_server_db {
 		   }
 		daemon_log("INFO: create_fai_server_db: finished", 5);
 	}	
+
+	# Now we can create the packages list
+	$kernel->yield('create_packages_list_db');
+
    	return $result;
 }
+
 sub run_create_fai_server_db {
     my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
     my $task = POE::Wheel::Run->new(
