@@ -312,6 +312,11 @@ sub new_key {
 
     my $out_hash = &create_xml_hash("new_key", $main::client_address, $main::server_address, $new_server_key);    
     my $out_msg = &create_xml_string($out_hash);
+
+    # set global $NEW_KEY_FLAG, gosa-si-client cause a reregistering process if no 'confirm_new_key'-msg 
+    # comes from gosa-si-server within a given time
+    
+
     return $out_msg; 
 }
 

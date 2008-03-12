@@ -70,6 +70,7 @@ sub query_db {
     my $res_hash = $db->select_dbentry($sql_statement);
     
     my $out_xml = &db_res2si_msg($res_hash, $header, $target, $source);
+    $out_xml =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }
@@ -131,7 +132,7 @@ sub delete_jobdb_entry {
     }
 
     # prepare xml answer
-    my $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>$res</answer1></xml>";
+    my $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>$res</answer1><session_id>$session_id</session_id></xml>";
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 
@@ -153,7 +154,7 @@ sub clear_jobdb {
     if( not $db_res > 0 ) { $error++; };
     
     if( $error == 0 ) {
-        $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>0</answer1></xml>";
+        $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>0</answer1><session_id>$session_id</session_id></xml>";
     }
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
@@ -166,7 +167,7 @@ sub update_status_jobdb_entry {
     my $source = @{$msg_hash->{'source'}}[0];
 
     my $error= 0;
-    my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>1</answer1></xml>";
+    my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>1</answer1><session_id>$session_id</session_id></xml>";
 
     my @len_hash = keys %{$msg_hash};
     if( 0 == @len_hash) {  $error++; };
@@ -200,7 +201,7 @@ sub update_status_jobdb_entry {
         $out_xml = "<answer1>0</answer1>";
     }
     
-    my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>%s</target>%s</xml>", $target, $source, $out_xml);
+    my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>%s</target>%s<session_id>$session_id</session_id></xml>", $target, $source, $out_xml);
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }

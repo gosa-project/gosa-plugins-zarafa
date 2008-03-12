@@ -614,15 +614,15 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        daemon_log("ERROR: cannot send ".$msg_header."msg to $address , host not reachable", 1);
         $error++;
     }
     
     # send xml msg
     if( $error == 0 ) {
         print $socket $crypted_msg."\n";
-        daemon_log("send ".$msg_header."msg to $address", 1);
-        daemon_log("message:\n$msg", 8);
+        daemon_log("INFO: send ".$msg_header."msg to $address", 5);
+        daemon_log("DEBUG: message:\n$msg", 8);
     }
 
     # close socket in any case
@@ -930,6 +930,7 @@ sub trigger_new_key {
     &send_msg_to_target($msg, $client_address, $server_key, 'new_key');
 
     $kernel->delay_set('trigger_new_key', $server_key_lifetime);
+    $kernel->delay_set('trigger_reregistering_process', 10);
 }
 
 
@@ -958,6 +959,10 @@ sub trigger_logged_in_users_report {
         # try it in 1 sec again
         $kernel->delay_set('trigger_logged_in_users_report', 1);
     }
+}
+
+sub trigger_reregistering_process {
+    $REGISTERED = 0;
 }
 
 
@@ -1086,11 +1091,11 @@ sub server_input {
     my $error = 0;
     my $answer;
     
-    daemon_log("Incoming msg:\n$input\n", 8);
+    daemon_log("DEBUG: Incoming msg:\n$input\n", 8);
 
     my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
     if( (!$msg) || (!$msg_hash) ) {
-        daemon_log("Deciphering of incoming msg failed", 5);
+        daemon_log("WARNING: Deciphering of incoming msg failed", 3);
         $error++;
     }
 
@@ -1102,8 +1107,14 @@ sub server_input {
         my $source = @{$msg_hash->{source}}[0];
 
         if( exists $event_hash->{$header} ) {
+
+            # preprocessing 
+            if($header eq "confirm_new_key") {
+                $kernel->delay_set()
+            }
+
             # a event exists with the header as name
-            daemon_log("found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+            daemon_log("DEBUG: found event '$header' at event-module '".$event_hash->{$header}."'", 7);
             no strict 'refs';
             $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
         }
