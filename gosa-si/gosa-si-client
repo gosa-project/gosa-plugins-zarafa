@@ -961,10 +961,6 @@ sub trigger_logged_in_users_report {
     }
 }
 
-sub trigger_reregistering_process {
-    $REGISTERED = 0;
-}
-
 
 sub generic_file_reset {
     my ( $heap, $wheel_id ) = @_[ HEAP, ARG0 ];
@@ -1088,14 +1084,24 @@ sub _default {
 
 sub server_input {
     my ($kernel, $heap, $input, $wheel) = @_[KERNEL, HEAP, ARG0, ARG1];
+    my $remote_ip = $heap->{'remote_ip'},
     my $error = 0;
     my $answer;
     
+
+    daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
     daemon_log("DEBUG: Incoming msg:\n$input\n", 8);
 
     my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
     if( (!$msg) || (!$msg_hash) ) {
         daemon_log("WARNING: Deciphering of incoming msg failed", 3);
+        if($server_address =~ /$remote_ip/) {
+            # got a msg from gosa-si-server which can not be decrypted, may the secrete not up-to-date
+            # cause a reregistering with a new secrete handshake
+            daemon_log("WARNING: Message from gosa-si-server could not be understood, cause reregistering at server", 3);
+            $REGISTERED = 0;
+            $kernel->yield('register_at_gosa_si_server');
+        }
         $error++;
     }
 
