@@ -125,7 +125,7 @@ my @login_users_col_names = ('client', 'user', 'timestamp');
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
 my $fai_server_file_name;
-our @fai_server_col_names = ('timestamp', 'server', 'release', 'tag'); 
+our @fai_server_col_names = ('timestamp', 'server', 'release', 'sections', 'tag'); 
 our $fai_release_tn = "fai_release"; 
 our @fai_release_col_names = ('timestamp', 'release', 'class', 'type', 'state'); 
 
@@ -1440,6 +1440,7 @@ sub create_fai_server_db {
 								   primkey => ['server', 'release', 'tag'],
 								   server => $tmp_url,
 								   release => $tmp_release,
+								   sections => $tmp_sections,
 								   tag => (length($tmp_tag)>0)?$tmp_tag:"",
 							   } );
 					   }
