@@ -84,21 +84,21 @@ class deviceGeneric extends plugin
     $message = plugin::check();
 
     if(empty($this->cn)||(preg_match("/[^a-z0-9]/i",$this->cn))){
-      $message[]=_("Please specify a valid name. Only 0-9 a-Z is allowed.");
+      $message[]= msgPool::invalid(_("Name"),$this->cn,"/^[a-z0-9]*$/i");
     }
     if(preg_match("/[^a-z0-9!\"?.,;:-_\(\) ]/i",$this->description)){
-      $message[]=_("Invalid character in description. Please specify a valid description.");
+      $message[]= msgPool::invalid(_("Description"),$this->cn,"/^[a-z0-9!\"?.,;:-_\(\) ]*$/i");
     }
 
     /* Skip serial check if vendor and product id are given */
     if(preg_match("/^\s+$/i",$this->dev_id)){
-      $message[]=_("Please specify a valid iSerial.");
+      $message[]= msgPool::invalid(_("iSerial"),"","01234");
     }
     if(empty($this->serial) || !$this->is_2byteHex($this->serial)){
-      $message[]=_("Please specify a valid vendor ID. (2 byte hex like '0xFFFF')");
+      $message[]= msgPool::invalid(_("Serial"),"","","0x1234");
     }
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
-      $message[]=_("Please specify a valid product ID. (2 byte hex like '0xFFFF')");
+      $message[]= msgPool::invalid(_("Vender ID"),"","","0x1234");
     }
    
     /* Check if entry already exists */ 
@@ -106,7 +106,7 @@ class deviceGeneric extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->search("(&(objectClass=gotoDevice)(cn=".$this->cn."*))",array("cn"));
       if($ldap->count()){
-        $message[]=_("An Entry with this name already exists.");
+        $message[]= msgPool::duplicate(_("Name"));
       }
     }
 
