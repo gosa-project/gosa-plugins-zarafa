@@ -937,7 +937,7 @@ sub _start {
     &trigger_db_loop($kernel);
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
-	$kernel->yield('create_packages_list_db', $sources_list );
+	$kernel->yield('create_packages_list_db');
 }
 
 sub next_task {
@@ -1766,9 +1766,29 @@ sub session_run_done {
     delete $heap->{task}->{$task_id};
 }
 
+sub create_sources_list {
+	my $result="";
+
+	my $query_result= $fai_server_db->select_dbentry('SELECT * FROM '.$fai_server_tn);
+	if($query_result) {
+		my $fh;
+		$result= '/tmp/gosa_si_tmp_sources_list';
+		open($fh, ">$result") or return undef;
+		while (my ($hit_num, $hit) = each %{$query_result}) {
+			my $line = "deb ".$hit->{'server'}." ".$hit->{'release'};
+			my $sections= $hit->{'sections'};
+			$sections =~ s/,/ /g;
+			$line.= " $sections";
+			print $fh $line."\n";
+		}
+		close($fh);
+	}
+
+	return $result;
+}
 
 sub create_packages_list_db {
-    my ($sources_file) = @_ ;
+    my ($sources_file) = @_ || &create_sources_list;
     my $line;
     daemon_log("INFO: create_packages_list_db: start", 5); 
 
@@ -1810,7 +1830,7 @@ sub create_packages_list_db {
 sub run_create_packages_list_db {
     my ($session, $heap, $sources_list) = @_[SESSION, HEAP, ARG0];
     my $task = POE::Wheel::Run->new(
-            Program => sub { &create_packages_list_db($sources_list) },
+            Program => sub {&create_packages_list_db},
             StdoutEvent  => "session_run_result",
             StderrEvent  => "session_run_debug",
             CloseEvent   => "session_run_done",
