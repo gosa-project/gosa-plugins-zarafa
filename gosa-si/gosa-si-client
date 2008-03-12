@@ -691,6 +691,9 @@ sub register_at_gosa_si_server {
   my $try_to_register = 0;
 
   if( not $REGISTERED ) {
+    # clear all other triggered events and wait till registration was successful
+    $kernel->delay('trigger_new_key');
+
     # create new passwd and ciphering object for client-server communication
     $server_key = &create_passwd();
 
@@ -768,6 +771,9 @@ sub register_at_gosa_si_server {
       # clear old settings and set it again
       $kernel->delay_set('trigger_new_key', $server_key_lifetime);
     }
+
+  } else {
+    $kernel->delay('register_at_gosa_si_server');
   }
   return;
 }
@@ -930,7 +936,6 @@ sub trigger_new_key {
     &send_msg_to_target($msg, $client_address, $server_key, 'new_key');
 
     $kernel->delay_set('trigger_new_key', $server_key_lifetime);
-    $kernel->delay_set('trigger_reregistering_process', 10);
 }
 
 
@@ -1100,7 +1105,7 @@ sub server_input {
             # cause a reregistering with a new secrete handshake
             daemon_log("WARNING: Message from gosa-si-server could not be understood, cause reregistering at server", 3);
             $REGISTERED = 0;
-            $kernel->yield('register_at_gosa_si_server');
+            $kernel->post('client_session', 'register_at_gosa_si_server');
         }
         $error++;
     }
@@ -1113,11 +1118,6 @@ sub server_input {
         my $source = @{$msg_hash->{source}}[0];
 
         if( exists $event_hash->{$header} ) {
-
-            # preprocessing 
-            if($header eq "confirm_new_key") {
-                $kernel->delay_set()
-            }
 
             # a event exists with the header as name
             daemon_log("DEBUG: found event '$header' at event-module '".$event_hash->{$header}."'", 7);

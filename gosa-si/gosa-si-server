@@ -936,8 +936,8 @@ sub update_jobdb_status_for_send_msgs {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-	$kernel->yield('create_fai_server_db', $fai_server_tn );
-	$kernel->yield('create_fai_release_db', $fai_release_tn );
+	#$kernel->yield('create_fai_server_db', $fai_server_tn );
+	#$kernel->yield('create_fai_release_db', $fai_release_tn );
 }
 
 sub next_task {
