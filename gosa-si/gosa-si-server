@@ -77,7 +77,7 @@ our $no_arp;
 our $verbose;
 our $forground;
 our $cfg_file;
-our ($ldap_handle, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password );
+our ($ldap_handle, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 
 
 # specifies the verbosity of the daemon_log
@@ -1771,22 +1771,33 @@ sub session_run_done {
 }
 
 sub create_sources_list {
-	my $result="";
+	my $result="/tmp/gosa_si_tmp_sources_list";
 
-	my $query_result= $fai_server_db->select_dbentry('SELECT * FROM '.$fai_server_tn);
-	if($query_result) {
-		my $fh;
-		$result= '/tmp/gosa_si_tmp_sources_list';
-		open($fh, ">$result") or return undef;
-		while (my ($hit_num, $hit) = each %{$query_result}) {
-			my $line = "deb ".$hit->{'server'}." ".$hit->{'release'};
-			my $sections= $hit->{'sections'};
-			$sections =~ s/,/ /g;
-			$line.= " $sections";
-			print $fh $line."\n";
-		}
-		close($fh);
+	# Remove old file
+	if(stat($result)) {
+		unlink($result);
 	}
+
+	my $fh;
+	open($fh, ">$result") or return undef;
+	if(defined($ldap_server_dn) && length($ldap_server_dn)>0) {
+		my $mesg=$ldap_handle->search(
+			base	=> $ldap_server_dn,
+			scope	=> 'base',
+			attrs	=> 'FAIrepository',
+		);
+
+		if($mesg->count) {
+			foreach my $entry(@{$mesg->{'entries'}}) {
+				my ($server, $tag, $release, $sections)= split /\|/, $entry->get_value('FAIrepository');
+				my $line = "deb $server $release";
+				$sections =~ s/,/ /g;
+				$line.= " $sections";
+				print $fh $line."\n";
+			}
+		}
+	}
+	close($fh);
 
 	return $result;
 }
