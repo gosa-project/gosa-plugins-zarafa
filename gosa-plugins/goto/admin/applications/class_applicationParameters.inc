@@ -47,10 +47,10 @@ class applicationParameters extends plugin
     if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove options"),
-            _("This application has options. You can disable them by clicking below."));
+            msgPool::featuresEnabled(_("parameter"));
       } else {
         $display= $this->show_enable_header(_("Create options"),
-            _("This application has options disabled. You can enable them by clicking below."));
+            msgPool::featuresDisabled(_("parameter"));
         $this->parent->by_object['application']->generateTemplate();
         return ($display);
       }
@@ -184,8 +184,7 @@ class applicationParameters extends plugin
     /* Check for valid option names */
     for ($i= 0; $i<count($this->option_name); $i++){
       if (!preg_match ("/^[a-z0-9_]+$/i", $this->option_name[$i])){
-        $message[]= sprintf(_("Value '%s' specified as option name is not valid."), 
-            $this->option_name[$i]);
+        $message[]= msgPool::invalid(_("Name"), $this->option_name[$i],"/^[a-z0-9_]+$/i");
       }
     }
 

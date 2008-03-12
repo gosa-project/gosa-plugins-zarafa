@@ -128,7 +128,7 @@ class application extends plugin
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This 'dn' is no application.")."</b>";
+        msgPool::noValidExtension(_("application"))."</b>";
       return ($display);
     }
 
@@ -419,7 +419,7 @@ class application extends plugin
     $message= plugin::check();
 
     if(!preg_match("#^/#",$this->gosaApplicationExecute)){
-      $message[]=(_("Specified execute path must start with '/'."));
+      $message[]=msgPool::invalid(_("Execute path"),"","","/some/path");
     }
 
     /* Permissions for that base? */
@@ -436,15 +436,15 @@ class application extends plugin
 
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not filled.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     if(preg_match("/[^a-z0-9]/",$this->cn))	{
-      $message[]=_("Invalid character in application name. Only a-z 0-9 are allowed.");
+      $message[]=msgPool::invalid(_("Name"),$this->cn,"/^[a-z0-9]*$/");
     }
 
     if ($this->gosaApplicationExecute == ""){
-      $message[]= _("Required field 'Execute' is not filled.");
+      $message[]= msgPool::required(_("Execute"));
     }
 
     /* Check for existing application */
@@ -460,7 +460,7 @@ class application extends plugin
       if($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= _("There's already an application with this 'Name'.");
+          $message[]= msgPool::duplicate("cn");
         }
       }
     }else{
@@ -468,7 +468,7 @@ class application extends plugin
       if ($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= _("There's already an application with this 'Name'.");
+          $message[]= msgPool::duplicate("cn");
         }
       }
     }
