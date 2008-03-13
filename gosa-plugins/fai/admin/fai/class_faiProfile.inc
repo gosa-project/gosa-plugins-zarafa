@@ -295,7 +295,7 @@ class faiProfile extends plugin
     $objTypes['FAItemplate']        = "<img src='images/fai_template.png' title='"._("Template bundle")."' alt=''>";
     $objTypes['FAIscript']          = "<img src='images/fai_script.png' title='"._("Script bundle")."' alt=''>";
     $objTypes['FAIvariable']        = "<img src='images/fai_variable.png' title='"._("Variable bundle")."' alt=''>";
-    $objTypes['FAIpackageList']        = "<img src='images/fai_packages.png' title='"._("Packages bundle")."' alt=''>";
+    $objTypes['FAIpackageList']        = "<img src='images/fai_packages.png' title='"._("Package bundle")."' alt=''>";
     $objTypes['FAIpartitionTable']  = "<img src='images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>";
 
     /* Delete button */
@@ -395,7 +395,7 @@ class faiProfile extends plugin
     }
 
     if(empty($this->cn)){
-      $message[]=_("'Name' is not valid!");
+      $message[]= msgPool::invalid(_("Name"));
     }
 
     $ldap = $this->config->get_ldap_link();
@@ -414,7 +414,7 @@ class faiProfile extends plugin
     }
 
     if($ldap->count() || isset($this->FAIAllclasses[$this->cn])){
-      $message[]=_("Name is already in use!");
+      $message[]= msgPool::duplicated(_("Name"));
     }
 
     return ($message);

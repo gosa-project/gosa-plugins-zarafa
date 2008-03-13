@@ -69,13 +69,13 @@ class divListFai extends MultiSelectWindow
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
-    $this->AddCheckBox("ShowProfiles"   , _("Display FAI profile objects")    ,_("Show profiles")     ,true);
-    $this->AddCheckBox("ShowTemplates"  , _("Display FAI template objects")   ,_("Show templates")    ,true);
-    $this->AddCheckBox("ShowScripts"    , _("Display FAI scripts")            ,_("Show scripts")      ,true);
-    $this->AddCheckBox("ShowHooks"      , _("Display FAI hooks")              ,_("Show hooks")        ,true);
-    $this->AddCheckBox("ShowVariables"  , _("Display FAI variables")          ,_("Show variables")    ,true);
-    $this->AddCheckBox("ShowPackages"   , _("Display FAI packages")           ,_("Show packages")     ,true);
-    $this->AddCheckBox("ShowPartitions" , _("Display FAI partitions")         ,_("Show partitions")   ,true);
+    $this->AddCheckBox("ShowProfiles"   , sprintf(_("Display objects of type '%s'."),_("Profile"))  ,_("Show profiles")     ,true);
+    $this->AddCheckBox("ShowTemplates"  , sprintf(_("Display objects of type '%s'."),_("Variable")) ,_("Show templates")    ,true);
+    $this->AddCheckBox("ShowScripts"    , sprintf(_("Display objects of type '%s'."),_("Script"))   ,_("Show scripts")      ,true);
+    $this->AddCheckBox("ShowHooks"      , sprintf(_("Display objects of type '%s'."),_("Hook"))     ,_("Show hooks")        ,true);
+    $this->AddCheckBox("ShowVariables"  , sprintf(_("Display objects of type '%s'."),_("Variable")) ,_("Show variables")    ,true);
+    $this->AddCheckBox("ShowPackages"   , sprintf(_("Display objects of type '%s'."),_("Package"))  ,_("Show packages")     ,true);
+    $this->AddCheckBox("ShowPartitions" , sprintf(_("Display objects of type '%s'."),_("Partition")),_("Show partitions")   ,true);
 
     /* Add SubSearch checkbox */
     //$this->AddCheckBox(SEPERATOR);
@@ -369,14 +369,14 @@ class divListFai extends MultiSelectWindow
        $num_deps = count($this->Added_Departments);
      }
 
-     $profile_str    = _("Number of listed profiles");
-     $partition_str  = _("Number of listed partitions");
-     $script_str     = _("Number of listed scripts");
-     $hook_str       = _("Number of listed hooks");
-     $variable_str   = _("Number of listed variables");
-     $template_str   = _("Number of listed templates");
-     $package_str    = _("Number of listed packages");
-     $dep_str        = _("Number of listed departments");
+     $profile_str    = sprintf(_("Number of listed '%s'"),_("profiles"));
+     $partition_str  = sprintf(_("Number of listed '%s'"),_("partitions"));
+     $script_str     = sprintf(_("Number of listed '%s'"),_("scripts"));
+     $hook_str       = sprintf(_("Number of listed '%s'"),_("hooks"));
+     $variable_str   = sprintf(_("Number of listed '%s'"),_("variables"));
+     $template_str   = sprintf(_("Number of listed '%s'"),_("templates"));
+     $package_str    = sprintf(_("Number of listed '%s'"),_("packages"));   
+     $dep_str        = sprintf(_("Number of listed '%s'"),_("departments"));
 
      $str = "<img class='center' src='".$objects['FAIprofile']['IMG']."'
        title='".$profile_str."' alt='".$profile_str."'>&nbsp;".$cnts['FAIprofile']."&nbsp;&nbsp;&nbsp;&nbsp;";

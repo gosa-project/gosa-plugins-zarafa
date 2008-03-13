@@ -210,7 +210,7 @@ class faiManagement extends plugin
 			} else {
 
 				/* Obviously the user isn't allowed to delete. Show message and clean session. */
-        msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(),ERROR_DIALOG);
 			}
 		}
 
@@ -297,7 +297,7 @@ class faiManagement extends plugin
 
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
+          msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
@@ -368,7 +368,7 @@ class faiManagement extends plugin
 
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          msg_dialog::display(_("Permission error"), _("You have no permission to delete this entry!"), ERROR_DIALOG);
+          msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
@@ -494,17 +494,13 @@ class faiManagement extends plugin
 
       /* Check used characters */
       if(preg_match("/[^0-9a-z \ö\ä\ü\.-_:,]/i",$name)){
-        if($type == "branch"){
-          msg_dialog::display(_("Error"), _("Branch name is not valid!"), ERROR_DIALOG);
-        }else{
-          msg_dialog::display(_("Error"), _("Freeze name is not valid!"), ERROR_DIALOG);
-        }
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z \ö\ä\ü\.-_:,]/i"), ERROR_DIALOG);
         $is_ok = false;
       }
 
       /* Check if this name is already in use */
       if(!$this->CheckNewBranchName($_POST['BranchName'],$this->DivListFai->selectedBranch)){
-        msg_dialog::display(_("Error"), _("Name is already in use!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::duplicated(_("Name")), ERROR_DIALOG);
         $is_ok = false;
       }
 
@@ -533,7 +529,7 @@ class faiManagement extends plugin
     if(isset($_GET['PerformBranch'])){
     
       if(!$this->acl_is_createable()){
-        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
       }else{
 
         /* Create it know */
@@ -667,7 +663,7 @@ class faiManagement extends plugin
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
         if(!$this->acl_is_createable()){
-        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
           $this->dispNewBranch=true;
           $smarty->assign("iframe",false);
@@ -688,7 +684,7 @@ class faiManagement extends plugin
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
         if(!$this->acl_is_createable()){
-        msg_dialog::display(_("Permission error"), _("You have no permission to create a new branch!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
           $this->dispNewFreeze = true;
           $smarty->assign("iframe",false);

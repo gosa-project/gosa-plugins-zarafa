@@ -400,7 +400,7 @@ class faiPartitionTableEntry extends plugin
   
     /* Check for an empty disk name */
     if(empty($this->DISKcn)){
-      $message[] = _("Please specify a valid disc name.");
+      $message[] = msgPool::required(_("Name"));
     }
        
     /* check every partition.
@@ -428,7 +428,7 @@ class faiPartitionTableEntry extends plugin
 
       if($part['FAIfsType']!="swap" && $part['FAImountPoint'] != "-"){
         if((empty($part['FAImountPoint']))||(!((preg_match("/^\/.*/",$part['FAImountPoint']))||(preg_match("/^swap$/",$part['FAImountPoint']))))){
-          $message[]=sprintf(_("Please enter a valid mount point for partition %s." ),($key));
+          $message[]= msgPool::invalid(sprintf(_("partition %s mount point"),$key));
         }
       }
       if($part['FAIfsType'] == "swap"){
@@ -443,24 +443,24 @@ class faiPartitionTableEntry extends plugin
       $tmp = split("-",$part['FAIpartitionSize']);
       switch (count($tmp)){
         case 0:
-                $message[]= sprintf(_("Please enter a valid partition size for partition %s."),($key));
+                $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
                 break;
         case 1:
-                if (!tests::is_id(is_id($tmp[0])) &&(!empty($tmp[1]))){
-                  $message[]= sprintf(_("Please enter a valid partition size for partition %s."),($key));
+                if (!tests::is_id($tmp[0]) &&(!empty($tmp[1]))){
+                  $message[]=  msgPool::invalid(sprintf(_("partition %s size"),$key));
                 }
                 break;
                 
         case 2:
                 if((!tests::is_id($tmp[0]))&&(!tests::is_id($tmp[1])) &&(!empty($tmp[1]))){
-                  $message[]=sprintf(_("Please enter a valid range for partition %s."),($key)); 
+                  $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
                 }elseif($tmp[0]>=$tmp[1]){
-                  $message[]=sprintf(_("Please enter a valid range for partition %s."),($key));
+                  $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
                 }
                 break;
 
         default:
-                $message[]=sprintf(_("Please enter a range for partition size for partition %s."),($key));
+                $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
       }
 
       foreach($this->UsedAttrs as $attrs){

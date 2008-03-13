@@ -95,15 +95,15 @@ class faiVariableEntry extends plugin
     $message= plugin::check();
 
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
-      $message[] =_("There is already a variable with the given name.");
+      $message[] = msgPool::duplicate(_("Name"));
     }
     
     if(empty($this->FAIvariableContent)) {
-      $message[]=_("Please specify a value for the attribute 'content'."); 
+      $message[]= msgPool::required(_("Content")); 
     }
    
     if(empty($this->cn)){
-      $message[] = _("Please enter a name.");
+      $message[] = msgPool::required(_("Name"));
     }
 
     return ($message);

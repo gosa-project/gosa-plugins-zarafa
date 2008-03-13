@@ -371,7 +371,7 @@ class faiPackage extends plugin
     $message= plugin::check();
 
     if(count($this->usedPackages)==0){
-      $message[]=_("Please select a least one package!");
+      $message[]= _("Please select a least one package!");
     }
 
     if((empty($this->FAIdebianRelease))||(empty($this->FAIdebianSection))){

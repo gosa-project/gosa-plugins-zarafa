@@ -77,13 +77,13 @@ class askClassName extends plugin
      * Depending on the object type we want to create, a different headline will be shown
      */ 
     switch($this->objectClass) {
-      case "FAIpartitionTable":  $str =_("Create new FAI object - partition table.");break;
-      case "FAIpackageList"   :  $str =_("Create new FAI object - package bundle.");break;
-      case "FAIscript"        :  $str =_("Create new FAI object - script bundle.");break;
-      case "FAIvariable"      :  $str =_("Create new FAI object - variable bundle.");break;
-      case "FAIhook"          :  $str =_("Create new FAI object - hook bundle.");break;
-      case "FAIprofile"       :  $str =_("Create new FAI object - profile.");break;
-      case "FAItemplate"      :  $str =_("Create new FAI object - template.");break;
+      case "FAIpartitionTable":  $str =_("Create new FAI object")." - "._("Partition table");break;
+      case "FAIpackageList"   :  $str =_("Create new FAI object")." - "._("Package bundle");break;
+      case "FAIscript"        :  $str =_("Create new FAI object")." - "._("Script bundle");break;
+      case "FAIvariable"      :  $str =_("Create new FAI object")." - "._("Variable bundle");break;
+      case "FAIhook"          :  $str =_("Create new FAI object")." - "._("Hook bundle");break;
+      case "FAIprofile"       :  $str =_("Create new FAI object")." - "._("Profile");break;
+      case "FAItemplate"      :  $str =_("Create new FAI object")." - "._("Template bundle");break;
       default                 :  $str =_("Create new FAI object");break;
     }
     $smarty->assign("headline",$str);
@@ -140,15 +140,15 @@ class askClassName extends plugin
     $message= plugin::check();
   
     if($this->ClassName != preg_replace("/ /","",trim($this->ClassName))){
-      $message[] = _("Spaces are not allowed within class names.");
+      $message[] = msgPool::invalid(_("Name"),preg_replace("/ /","_",$this->ClassName),"/[^_]/");
     }
 
     if(empty($this->ClassName)){
-      $message[]=_("The given class name is empty.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     if(in_array($this->ClassName,$this->forbidden)){
-      $message[]=_("The specified class name is already in use for this object type.");
+      $message[]= msgPool::duplicated(_("Name"));
     }
 
     return ($message);
