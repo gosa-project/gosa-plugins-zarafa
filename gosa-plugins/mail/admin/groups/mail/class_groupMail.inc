@@ -471,7 +471,7 @@ class mailgroup extends plugin
         } elseif (($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
           $ui= get_userinfo();
           if ($user != $ui->username){
-            print_red (msgPool::duplicated(_("mail address")));
+            print_red (msgPool::duplicated(_("Mail address")));
           }
         }
       }
@@ -1020,22 +1020,22 @@ I: Only insider delivery */
 
     /* must: mail */
     if ($this->mail == ""){
-      $message[]= _("The required field 'Primary address' is not set.");
+      $message[]= msgPool::required(_("Mail address"));
     }
     if (!tests::is_email($this->mail)){
-      $message[]= _("Please enter a valid email addres in 'Primary address' field.");
+      $message[]= msgPool::invalid(_("Mail address"),"","",_("your-name@your-domain.com"));
     }
     $ldap->cd($this->config->current['BASE']);
     $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=".$this->mail.")(gosaMailAlternateAddress=".
         $this->mail."))(!(uid=".$this->orig_cn."))(!(cn=".$this->orig_cn.")))");
     if ($ldap->count() != 0){
-      $message[]= _("The primary address you've entered is already in use.");
+      $message[]= msgPool::duplicated(_("Mail address"));
     }
   
     /* Check quota */
     if ($this->gosaMailQuota != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailQuota)) {
-        $message[]= _("Value in 'Quota size' is not valid.");
+        $message[]= msgPool::invalid(_("Quota size"),$this->gosaMailQuota,"/[0-9]/");
       } else {
         $this->gosaMailQuota= (int) $this->gosaMailQuota;
       }
@@ -1044,7 +1044,7 @@ I: Only insider delivery */
     /* Check rejectsize for integer */
     if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailMaxSize)){
-        $message[]= _("Please specify a vaild mail size for mails to be rejected.");
+        $message[]= msgPool::msgPool::invalid(_("Mail max size"));
       } else {
         $this->gosaMailMaxSize= (int) $this->gosaMailMaxSize;
       }
@@ -1060,7 +1060,7 @@ I: Only insider delivery */
     }
 
     if(empty($this->gosaMailServer)){
-      $message[] = _("Please select a valid mail server.");
+      $message[] = msgPool::requried(_("Mail server"));
     }
 
     return ($message);
