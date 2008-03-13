@@ -144,7 +144,7 @@ class phonequeue extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
+      return(msgPool::missingext("mysql"));
     }
 
     /********************
@@ -155,13 +155,13 @@ class phonequeue extends plugin
     $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     if(!$r_current){
       new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
-      return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+      return(msgPool::dbconnect("GOfon",@mysql_error($r_current),$cfg_Current['SERVER']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
       new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
-      return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+      return(msgPool::dbselect("GOfon",@mysql_error($r_current),$cfg_Current['DB']));
     }
 
     /********************
@@ -173,13 +173,13 @@ class phonequeue extends plugin
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
-        return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+        return(msgPool::dbconnect("GOfon",@mysql_error($r_current),$cfg_Init['SERVER']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
-        return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+        return(msgPool::dbselect("GOfon",@mysql_error($r_current),$cfg_Init['DB']));
       }
     }
   }
@@ -208,10 +208,10 @@ class phonequeue extends plugin
     if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove the phone queue from this Account"),
-            _("Phone queue is enabled for this group. You can disable it by clicking below."));
+            msgPool::featuresEnabled(_("phone queue")));
       } else {
         $display= $this->show_enable_header(_("Create phone queue"),
-            _("For this group the phone queues are disabled. You can enable them by clicking below."));
+            msgPool::featuresDisabled(_("phone queue")));
         return ($display);
       }
     }
@@ -302,25 +302,25 @@ class phonequeue extends plugin
       $message[] = _("There must be at least one server with an asterisk database to create a phone queue.");
     }
     if(empty($this->goFonHomeServer)){
-      $message[] = _("Please select a valid goFonHomeServer.");
+      $message[] = msgPool::required(_("Home server"));
     }
     if($this->is_number_used()){
       $message[] = $this->is_number_used();
     }
     if(!((is_numeric($this->goFonTimeOut))||(empty($this->goFonTimeOut)))){
-      $message[] = _("Timeout must be numeric");
+      $message[] = msgPool::invalid(_("Timeout"),$this->goFonTimeOut,"/[0-9]/");
     }
     if(!((is_numeric($this->goFonQueueRetry))||(empty($this->goFonQueueRetry)))){
-      $message[] = _("Retry must be numeric");
+      $message[] = msgPool::invalid(_("Retry"),$this->goFonQueueRetry,"/[0-9]/");
     }
     if(!((is_numeric($this->goFonMaxLen))||(empty($this->goFonMaxLen)))){
-      $message[] = _("Max queue length must be numeric");
+      $message[] = msgPool::invalid(_("Queue length"),$this->goFonMaxLen,"/[0-9]/");
     }
     if(!((is_numeric($this->goFonAnnounceFrequency))||(empty($this->goFonAnnounceFrequency)))){
-      $message[] = _("Announce frequency must be numeric");
+      $message[] = msgPool::invalid(_("Announce frequency"),$this->goFonAnnounceFrequency,"/[0-9]/");
     }
     if(count($this->telephoneNumber)==0){
-      $message[] = _("There must be least one queue number defined.");
+      $message[] = msgPool::required(_("Number"));
     }
 
     /* check if add to database could be successfull  */
@@ -343,7 +343,7 @@ class phonequeue extends plugin
 
       /* Check if there is at least on server configuration */
       if(!count($this->goFonHomeServers)){
-        return( _("There is currently no asterisk server defined!"));
+        return(msgPool::noserver(_("asterisk")));
       }
 
       /********************
@@ -375,7 +375,7 @@ class phonequeue extends plugin
           $res = @mysql_query($sql,$res_cur);
           if(!$res){
             new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
-            return(_("Cannot remove queue entries from database!"));
+            return(msgPool::dbquery(_("GOfon"),@mysql_error($r_current))));
           }
         }
       }
@@ -391,7 +391,7 @@ class phonequeue extends plugin
   {
     /* Check if there is at least on server configuration */
     if(!count($this->goFonHomeServers)){
-      return( _("There is currently no asterisk server defined!"));
+      return( msgPool::noserver(_("asterisk")));
     }
 
     /********************
@@ -729,7 +729,7 @@ class phonequeue extends plugin
       $res   = mysql_query($query,$res_cur);
       if(!$res){
         new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($res_cur));
-        return(_("Mysql query failed.")."&nbsp;"._("Please have a look a the gosa logfiles."));
+        return(msgPool::dbquery(_("GOfon"),@mysql_error($res_cur)));
       }
     }
     @mysql_close($r_con);
@@ -761,9 +761,9 @@ class phonequeue extends plugin
     foreach($this->telephoneNumber as $num){
       if((isset($numbers[$num]))&&(($numbers[$num]['cn'][0]!= $this->attrs['cn'][0]))){
         if(isset($numbers[$num]['uid'][0])){
-          return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['uid'][0]);
+          msgPool::duplicated(_("telephone number"));
         }else{
-          return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['cn'][0]);
+          msgPool::duplicated(_("telephone number"));
         }
       }
     }
