@@ -142,7 +142,7 @@ class dhcpSharedNetwork extends dhcpPlugin
 
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not filled.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* Check lease times */
@@ -151,7 +151,7 @@ class dhcpSharedNetwork extends dhcpPlugin
           "min-lease-time" => _("Min. lease time")) as $key => $val){
       if (isset($this->statements[$key]) && $this->statements[$key] != "" && 
           !tests::is_id($this->statements[$key])){
-        $message[]= sprintf(_("The value specified as '%s' is not numeric!"), $val);
+        $message[]= msgPool::invalid($val,$this->statements[$key],"/[0-9]/");
       }
     }
 
@@ -160,7 +160,7 @@ class dhcpSharedNetwork extends dhcpPlugin
 
       foreach($cache as $dn => $dummy){
         if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-          $message[]= _("The name for this host section is already used!");
+          $message[]= msgPool::duplicated(_("Name"));
           break;
         }
       }

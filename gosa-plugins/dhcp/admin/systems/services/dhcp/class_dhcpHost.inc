@@ -134,7 +134,7 @@ class dhcpHost extends dhcpPlugin
   
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not filled.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* cn already used? */
@@ -142,7 +142,7 @@ class dhcpHost extends dhcpPlugin
       
       foreach($cache as $dn => $dummy){
         if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-          $message[]= _("The name for this host section is already used!");
+          $message[]= msgPool::duplicated(_("Name"));
           break;
         }
       }
@@ -151,7 +151,7 @@ class dhcpHost extends dhcpPlugin
     /* Check syntax of MAC address */
     $check= preg_replace('/^[^\s]*\s/', '', $this->dhcpHWAddress);
     if (!preg_match('/^([0-9a-fA-F]{1,2}:){5}[0-9a-fA-F]{1,2}$/', $check)){
-      $message[]= _("The hardware address specified by you is not valid!");
+      $message[]= msgPool::invalid(_("Hardware address"));
     }
 
     /* Check external plugins */

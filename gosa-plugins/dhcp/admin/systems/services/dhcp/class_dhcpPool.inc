@@ -103,7 +103,7 @@ class dhcpPool extends dhcpPlugin
 
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not filled.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* cn already used? */
@@ -111,22 +111,22 @@ class dhcpPool extends dhcpPlugin
 
       foreach($cache as $dn => $dummy){
         if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-          $message[]= _("The name for this section is already used!");
+          $message[]= msgPool::duplicated(_("Name"));
           break;
         }
       }
     }
 
     if ($this->dhcpRange == ""){
-      $message[]= _("Required field 'Range' is not filled.");
+      $message[]= msgPool::required(_("Range"));
     }
 
     if (!tests::is_ip($this->range_start) || !tests::is_ip($this->range_stop)){
-      $message[]= _("Field 'Range' contains invalid IP addresses.");
+      $message[]= msgPool::invalid(_("Range"));
     }
 
     if(!tests::is_ip_range($this->range_start,$this->range_stop)){
-      $message[] = _("Field 'Range' contains invalid IP range.");
+      $message[]= msgPool::invalid(_("Range"));
     }
 
     /* Check if range is in the network */

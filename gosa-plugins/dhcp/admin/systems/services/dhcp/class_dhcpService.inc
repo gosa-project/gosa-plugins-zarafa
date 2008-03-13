@@ -137,13 +137,13 @@ class dhcpService extends dhcpPlugin
     $message= array();
 
     if (!tests::is_id($this->statements['default-lease-time'])){
-      $message[]= _('Default lease time needs to be numeric.');
+      $message[]= msgPool::invalid(_("Lease time"),$this->statements['default-lease-time'],"/[0-9]/");
     }
     if (!tests::is_id($this->statements['max-lease-time'])){
-      $message[]= _('Maximum lease time needs to be numeric.');
+      $message[]= msgPool::invalid(_("May lease time"),$this->statements['max-lease-time'],"/[0-9]/");
     }
     if ($this->statements['default-lease-time'] > $this->statements['max-lease-time']){
-      $message[]= _('Default lease time needs to smaller than the maximum lease time.');
+      $message[]= msgPool::toobig(_("Default lease time"),_("Maximum lease time"));
     }
 
     /* Check external plugins */

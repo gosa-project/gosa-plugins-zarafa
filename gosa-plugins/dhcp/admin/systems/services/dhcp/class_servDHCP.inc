@@ -218,7 +218,7 @@ class servdhcp extends goService
           }
         }
       } else {
-        msg_dialog::display(_("Permission error"), _("You have no permission to remove DHCP sections!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
       }
       $this->dialog= FALSE;
     }
@@ -286,9 +286,6 @@ class servdhcp extends goService
 
     /* Show tab dialog headers */
     if ($this->is_account){
-#      $display= $this->show_header(_("Remove DHCP service"),
-#          _("This server has DHCP features enabled. You can disable them by clicking below."));
-
       if (!count($this->dhcpObjectCache)){
         $attrs= array();
         $attrs['dn']= 'cn=dhcp,'.$this->dn;
@@ -305,9 +302,6 @@ class servdhcp extends goService
       }
 
     } else {
-#      $display= $this->show_header(_("Add DHCP service"),
-
-#          _("This server has DHCP features disabled. You can enable them by clicking below."));
       return ($display);
     }
 

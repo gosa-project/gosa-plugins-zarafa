@@ -39,7 +39,7 @@ class dhcpNetwork extends plugin
     /* Check for iteraction */
     if (isset($_POST['add_dns']) && $_POST['addserver'] != ""){
       if (!preg_match('/^[0-9a-z.-]+$/', get_post('addserver'))){
-        msg_dialog::display(_("Error"), sprintf(_("'%s' is not a valid DNS server name!"), htmlentities(get_post('addserver'))), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),htmlentities(get_post('addserver')),"/[0-9a-z.-]/"), ERROR_DIALOG);
       } else {
         $servers= array();
         if (isset($this->options['domain-name-servers'])){

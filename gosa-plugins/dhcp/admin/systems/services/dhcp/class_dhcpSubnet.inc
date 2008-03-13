@@ -133,10 +133,10 @@ class dhcpSubnet extends dhcpPlugin
 
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Network address' is not filled.");
+      $message[]= msgPool::required(_("Network address"));
     }
     if ($this->dhcpNetMask == ""){
-      $message[]= _("Required field 'Netmask' is not filled.");
+      $message[]= msgPool::required(_("Netmask"));
     }
 
     /* cn already used? */
@@ -144,7 +144,7 @@ class dhcpSubnet extends dhcpPlugin
 
       foreach($cache as $dn => $dummy){
         if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-          $message[]= _("The name for this section is already used!");
+          $message[]= msgPool::duplicated(_("Name"));
           break;
         }
       }
@@ -153,14 +153,14 @@ class dhcpSubnet extends dhcpPlugin
     /* IP's? */
     foreach(array('dhcpNetMask' => _("Netmask"), 'cn' => _("Network address"), 'range_start' => _("Range"), 'range_stop' => _("Range")) as $attr => $str){
       if ($this->$attr != "" && !tests::is_ip($this->$attr)){
-        $message[]= sprintf(_("The field '%s' contains an invalid IP address"), $str);
+        $message[]= msgPool::invalid($str,"","","192.168.0.23");
       }
     }
 
     /* Check ip range */
     if ($this->use_range){
       if(!tests::is_ip_range($this->range_start,$this->range_stop)){
-        $message[] = _("Field 'Range' contains invalid IP range.");
+        $message[]= msgPool::invalid(_("Network range"));
       }
 
       /* Check if range is in the network */

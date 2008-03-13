@@ -87,10 +87,10 @@ class dhcpGroup extends dhcpPlugin
 
     /* All required fields are set? */
     if ($this->cn == ""){
-      $message[]= _("Required field 'Name' is not filled.");
+      $message[]= msgPool::required(_("Name"));
     }
     if (!preg_match('/^[a-z0-9_-]*$/i', $this->cn)){
-      $message[]= _("Field 'Name' contains illegal characters.");
+      $message[]= msgPool::invalid(_("Name"),$this->cn,"/[a-z0-9_-]/i");
     }
 
     /* cn already used? */
@@ -98,7 +98,7 @@ class dhcpGroup extends dhcpPlugin
 
       foreach($cache as $dn => $dummy){
         if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-          $message[]= _("The name for this host section is already used!");
+          $message[]= msgPool::duplicated(_("Name"));
           break;
         }
       }
