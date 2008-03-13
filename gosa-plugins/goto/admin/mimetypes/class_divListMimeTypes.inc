@@ -56,7 +56,7 @@ class divListMimeTypes extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("Mime type name")." / "._("Department"), "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("Mime type")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     /* Add SubSearch checkbox */
