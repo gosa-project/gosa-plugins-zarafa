@@ -375,7 +375,7 @@ class phonequeue extends plugin
           $res = @mysql_query($sql,$res_cur);
           if(!$res){
             new log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
-            return(msgPool::dbquery(_("GOfon"),@mysql_error($r_current))));
+            return(msgPool::dbquery(_("GOfon"),@mysql_error($r_current)));
           }
         }
       }
