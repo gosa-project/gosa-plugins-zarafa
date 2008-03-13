@@ -25,7 +25,6 @@ use warnings;
 use Getopt::Long;
 use Config::IniFiles;
 use POSIX;
-use utf8;
 
 use Fcntl;
 use IO::Socket::INET;

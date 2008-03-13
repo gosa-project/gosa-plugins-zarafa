@@ -34,7 +34,6 @@ use XML::Simple;
 use MIME::Base64;
 use File::Basename;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
-use utf8;
 
 use GOSA::GosaSupportDaemon;
 use GOSA::DBsqlite;

@@ -18,7 +18,6 @@ my @events = (
 
 use strict;
 use warnings;
-use utf8;
 use GOSA::GosaSupportDaemon;
 
 BEGIN {}

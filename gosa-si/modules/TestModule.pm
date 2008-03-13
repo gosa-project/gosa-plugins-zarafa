@@ -6,7 +6,6 @@ use Exporter;
 use strict;
 use warnings;
 use GosaSupportDaemon;
-use utf8;
 
 BEGIN{
 }

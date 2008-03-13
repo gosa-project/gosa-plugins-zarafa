@@ -21,7 +21,6 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
-use utf8;
 
 BEGIN {}
 

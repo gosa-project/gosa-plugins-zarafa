@@ -21,7 +21,6 @@ use strict;
 use warnings;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
-use utf8;
 use MIME::Base64;
 
 

@@ -20,7 +20,6 @@
 
 use strict;
 use warnings;
-use utf8;
 use Getopt::Long;
 use Config::IniFiles;
 use POSIX;
@@ -38,6 +37,9 @@ use XML::Simple;
 use Net::DNS;
 use File::Basename;
 use File::Spec;
+
+# Workaround: need pure perl to make it work with UTF-8 :-(
+$XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
 
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
