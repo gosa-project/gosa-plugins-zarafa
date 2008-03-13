@@ -48,9 +48,10 @@ class mailogroup extends plugin
     if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove mail account"),
-            _("This group has mail features enabled. You can disable them by clicking below."));
+            msgPool::featuresEnabled(_("mail group")));
       } else {
-        $display= $this->show_enable_header(_("Create mail account"), _("This group has mail features disabled. You can enable them by clicking below."));
+        $display= $this->show_enable_header(_("Create mail account"), 
+            msgPool::featuresDisabled(_("mail group")));
         return ($display);
       }
     }
@@ -82,14 +83,14 @@ class mailogroup extends plugin
 
       /* Check if mail address is valid */
       if (!tests::is_email($this->mail) || $this->mail == ""){
-        $message[]= _("Please enter a valid email address in 'Primary address' field.");
+        $message[]= msgPool::invalid(_("Mail address"),"","",_("your-name@your-domain.com"));
       }
 
       /* Check if mail address is already in use */
       $ldap->cd($this->config->current['BASE']);
       $ldap->search ("(&(!(objectClass=gosaUserTemplate))(|(mail=".$this->mail.")(gosaMailAlternateAddress=".$this->mail."))(!(cn=".$this->cn.")))", array("uid"));
       if ($ldap->count() != 0){
-        $message[]= _("The primary address you've entered is already in use.");
+        $message[]= msgPool::duplicated(_("Mail address"));
       }
     }
 
