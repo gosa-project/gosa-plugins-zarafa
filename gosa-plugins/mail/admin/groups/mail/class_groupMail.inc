@@ -1044,7 +1044,7 @@ I: Only insider delivery */
     /* Check rejectsize for integer */
     if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailMaxSize)){
-        $message[]= msgPool::msgPool::invalid(_("Mail max size"));
+        $message[]= msgPool::invalid(_("Mail max size"));
       } else {
         $this->gosaMailMaxSize= (int) $this->gosaMailMaxSize;
       }
