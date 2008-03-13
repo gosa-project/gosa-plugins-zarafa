@@ -321,7 +321,7 @@ class appgroup extends plugin
       if($value["description"][0]!=".."){
         $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
       }else{
-        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
+        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("back")."]";
       }
     }
 
