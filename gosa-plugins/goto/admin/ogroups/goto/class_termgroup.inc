@@ -106,12 +106,12 @@ class termgroup extends plugin
     $message= plugin::check();
 
     if (!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a workstation on this 'Base'.");
+      $message[]= msgPool::permCreate();
     }
 
     /* Check for valid ntpServer selection */
     if((!$this->inheritTimeServer) && (!count($this->gotoNtpServer))){
-      $message[]= _("There must be at least one NTP server selected.");
+      $message[]= msgPool::required(_("NTP server"));
     }
     return($message);
   }
