@@ -116,7 +116,7 @@ class phoneGeneric extends plugin
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no phone features.")."</b>";
+        msgPool::noValidExtension(_("phone"))."</b>";
       return($display);
     }
 
@@ -323,23 +323,23 @@ class phoneGeneric extends plugin
 
     /* To check for valid ip*/
     if($this->netConfigDNS->ipHostNumber == ""){
-       $message[]= _("IP address is not set!");
+       $message[]=  msgPool::required(_("IP address"));
     } else {
       if (!tests::is_ip($this->netConfigDNS->ipHostNumber)){
-        $message[]= _("IP address is not valid!");
+        $message[]= msgPool::invalid(_("IP address"));
       }
     }
 
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn) ){
-      $message[] = _("Name is not valid!");
+      $message[] = msgPool::invalid(_("Name"));
     }
 
     if ($this->cn == ""){
-      $message[]= _("Name is not set!");
+      $message[]= msgPool::required(_("Name"));
     }
     if ($this->cn == "0"){ 
-      $message[]= _("'0' is a reserved name and cannot be used!");
+      $message[]= msgPool::reserved(_("Name"));
     }
 
     if ($this->orig_dn != $this->dn){
@@ -354,7 +354,7 @@ class phoneGeneric extends plugin
           }
   
           if ($attrs['dn'] != $this->orig_dn){
-            $message[]= _("Name is already in use!");
+            $message[]= msgPool::duplicated(_("Name"));
             break;
           }
         }
