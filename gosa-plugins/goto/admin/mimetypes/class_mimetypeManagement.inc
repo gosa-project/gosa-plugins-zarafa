@@ -300,7 +300,7 @@ class mimetypeManagement extends plugin
         }
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("mimetype")));
+        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Mime type")));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
@@ -334,7 +334,7 @@ class mimetypeManagement extends plugin
         } else {
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          print_red (_("You are not allowed to delete this mime type!"));
+          print_red (msgPool::deleteInfo());
           new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
@@ -382,14 +382,14 @@ class mimetypeManagement extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
-        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn),_("mimetype")));
+        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn),_("Mime type")));
         $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        print_red (_("You are not allowed to delete this mime type!"));
+        print_red (msgPool::permDelete());
       }
     }
 
@@ -418,7 +418,7 @@ class mimetypeManagement extends plugin
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red (_("You are not allowed to delete this mime type!"));
+        print_red (msgPool::permDelete());
         new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 

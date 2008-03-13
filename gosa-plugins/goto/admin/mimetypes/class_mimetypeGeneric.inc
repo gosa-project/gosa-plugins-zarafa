@@ -530,10 +530,10 @@ class mimetype extends plugin
   {
     $message = plugin::check();
     if(empty($this->cn)){
-      $message[] = _("Please specify a valid name for this mime type.");
+      $message[] = msgPool::required(_("Name"));
     }
     if(!count($this->use_gotoMimeFilePattern)){
-      $message[] = _("Please specify at least one file pattern.") ;
+      $message[] = msgPool::required(_("File pattern"));
     }
 
     /* Check if there is already a mime type with this cn */
@@ -549,7 +549,7 @@ class mimetype extends plugin
       if($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= _("There's already a mime type with this 'Name'.");
+          $message[]= msgPool::duplicated(_("Name"));
         }
       }
     }else{
@@ -557,7 +557,7 @@ class mimetype extends plugin
       if ($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= _("There's already an mime with this 'Name'.");
+          $message[]= msgPool::duplicated(_("Name"));
         }
       }
     }
