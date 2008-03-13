@@ -146,7 +146,7 @@ class faiScriptEntry extends plugin
     }
 
     if(empty($this->FAIscript)){
-      $message[]= msgPool::required("Script"));
+      $message[]= msgPool::required(_("Script"));
     }
 
     return ($message);
