@@ -81,6 +81,9 @@ sub save_fai_log {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
     my $all_logs = @{$msg_hash->{$header}}[0];
 
+    # if there is nothing to log
+    if( ref($all_logs) eq "HASH" ) { return; }
+        
     my $client_fai_log_dir = $main::client_fai_log_dir;
     if (not -d $client_fai_log_dir) {
         mkdir($client_fai_log_dir, 0755)
@@ -123,7 +126,7 @@ sub LOGIN {
         ); 
     my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
     if ($res != 0)  {
-        &main::daemon_log("ERROR: cannot add entry to known_clients: $error_str");
+        &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str");
         return;
     }
 
@@ -169,10 +172,10 @@ sub CURRENTLY_LOGGED_IN {
     while( my($hit_id, $hit) = each(%{$db_res}) ) {
         $currently_logged_in_user{$hit->{'user'}} = 1;
     }
-    &main::daemon_log("DEBUG: logged in users from login_user_db: ".join(", ", keys(%currently_logged_in_user)), 7); 
+    &main::daemon_log("$session_id DEBUG: logged in users from login_user_db: ".join(", ", keys(%currently_logged_in_user)), 7); 
 
     my @logged_in_user = split(/\s+/, $login);
-    &main::daemon_log("DEBUG: logged in users reported from client: ".join(", ", @logged_in_user), 7); 
+    &main::daemon_log("$session_id DEBUG: logged in users reported from client: ".join(", ", @logged_in_user), 7); 
     foreach my $user (@logged_in_user) {
         my %add_hash = ( table=>$main::login_users_tn, 
                 primkey=> ['client', 'user'],
@@ -182,7 +185,7 @@ sub CURRENTLY_LOGGED_IN {
                 ); 
         my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
         if ($res != 0)  {
-            &main::daemon_log("ERROR: cannot add entry to known_clients: $error_str");
+            &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str");
             return;
         }
 
@@ -193,11 +196,11 @@ sub CURRENTLY_LOGGED_IN {
     # although he is not reported by client 
     # then delete it from $login_user_db
     foreach my $obsolete_user (keys(%currently_logged_in_user)) {
-        &main::daemon_log("WARNING: user '$obsolete_user' is currently not logged ".
+        &main::daemon_log("$session_id WARNING: user '$obsolete_user' is currently not logged ".
                 "in at client '$source' but still found at login_user_db", 3); 
         my $sql_statement = "DELETE FROM $main::login_users_tn WHERE client='$source' AND user='$obsolete_user'"; 
         my $res =  $main::login_users_db->del_dbentry($sql_statement);
-        &main::daemon_log("WARNING: delete user '$obsolete_user' at client '$source' from login_user_db", 3); 
+        &main::daemon_log("$session_id WARNING: delete user '$obsolete_user' at client '$source' from login_user_db", 3); 
     }
 
     return;
@@ -221,9 +224,9 @@ sub GOTOACTIVATION {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header"."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress'", 5); 
     return; 
 }
 
@@ -246,9 +249,9 @@ sub PROGRESS {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
         "SET progress='$content' ".
         "WHERE status='processing' AND macaddress LIKE '$macaddress'";
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - $content%", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - $content%", 5); 
 
     return;
 }
@@ -271,9 +274,9 @@ sub FAIREBOOT {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
     return; 
 }
@@ -296,9 +299,9 @@ sub TASKSKIP {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
     return; 
 }
@@ -323,20 +326,20 @@ sub TASKBEGIN {
         my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='done', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-        &main::daemon_log("DEBUG: $sql_statement", 7);         
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
         my $res = $main::job_db->update_dbentry($sql_statement);
-        &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+        &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
         
         # set fai_state to localboot
-        &main::change_fai_state('localboot', \@{$msg_hash->{target}});
+        &main::change_fai_state('localboot', \@{$msg_hash->{target}}, $session_id);
 
     } else {
         my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-        &main::daemon_log("DEBUG: $sql_statement", 7);         
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
         my $res = $main::job_db->update_dbentry($sql_statement);
-        &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+        &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
 
 # -----------------------> Update hier
@@ -367,9 +370,9 @@ sub TASKEND {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
@@ -398,9 +401,9 @@ sub TASKERROR {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
@@ -429,9 +432,9 @@ sub HOOK {
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("DEBUG: $sql_statement", 7);         
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("INFO: $header at '$macaddress' - '$content'", 5); 
+    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
     return;
 }

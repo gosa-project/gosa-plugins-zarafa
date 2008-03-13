@@ -224,7 +224,7 @@ sub get_ip {
 
 sub import_events {
     if (not -e $event_dir) {
-        &main::daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+        &main::daemon_log("G ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
     }
     opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
 
@@ -235,7 +235,7 @@ sub import_events {
 
         eval{ require $event; };
         if( $@ ) {
-            &main::daemon_log("ERROR: import of event module '$event' failed", 1);
+            &main::daemon_log("G ERROR: import of event module '$event' failed", 1);
             &main::daemon_log("$@", 1);
             next;
         }
@@ -247,7 +247,7 @@ sub import_events {
             $event_hash->{$event_name} = $event_module;
         }
         my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("INFO: GosaPackages imported events $events_string", 5);
+        &main::daemon_log("G INFO: GosaPackages imported events $events_string", 5);
     }
 }
 
@@ -264,7 +264,7 @@ sub process_incoming_msg {
     my @msg_l;
     my @out_msg_l;
 
-    &main::daemon_log("DEBUG: GosaPackages: msg to process '$header'", 7);
+    &main::daemon_log("$session_id DEBUG: GosaPackages: msg to process '$header'", 7);
     
     if ($header =~ /^job_/) {
         @msg_l = &process_job_msg($msg, $msg_hash, $session_id);
@@ -273,23 +273,23 @@ sub process_incoming_msg {
         @msg_l = &process_gosa_msg($msg, $msg_hash, $session_id);
     } 
     else {
-        &main::daemon_log("ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix", 1);
+        &main::daemon_log("$session_id ERROR: $header is not a valid GosaPackage-header, need a 'job_' or a 'gosa_' prefix", 1);
     }
 
     foreach my $out_msg ( @msg_l ) {
 
-        # keep job queue up-to-date and save result and status
-        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
-            my $job_id = $1;
-            my $sql = "UPDATE '".$main::job_queue_tn."'".
-                " SET status='processing'".
-                " WHERE id='$job_id'";
-            my $res = $main::job_db->exec_statement($sql);
-        } 
+#        # keep job queue up-to-date and save result and status
+#        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
+#            my $job_id = $1;
+#            my $sql = "UPDATE '".$main::job_queue_tn."'".
+#                " SET status='processing'".
+#                " WHERE id='$job_id'";
+#            my $res = $main::job_db->exec_statement($sql);
+#        } 
 
         # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
         $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
-
+        $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
         if (defined $out_msg){
             push(@out_msg_l, $out_msg);
         }
@@ -310,28 +310,28 @@ sub process_gosa_msg {
 
     if( exists $event_hash->{$header} ) {
         # a event exists with the header as name
-        &main::daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
 
     # if incoming 'gosa_'-msg is scheduled from job_queue, than it contains xml-tag 'jobdb_id'
     # after procesing this msg, set status of this job in job_queue to done
-    if ($msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
-        my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='done' ".
-            "WHERE id='$1'";
-        &main::daemon_log("DEBUG: $sql_statement", 7);         
-        my $res = $main::job_db->update_dbentry($sql_statement);
-        &main::daemon_log("INFO: set job '$1' to status processed", 5); 
-    }
+#    if ($msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
+#        my $sql_statement = "UPDATE $main::job_queue_tn ".
+#            "SET status='done' ".
+#            "WHERE id='$1'";
+#        &main::daemon_log("DEBUG: $sql_statement", 7);         
+#        my $res = $main::job_db->update_dbentry($sql_statement);
+#        &main::daemon_log("INFO: set job '$1' to status 'done'", 5); 
+#    }
 
     # if delivery not possible raise error and return 
     if( not defined $out_msg_l[0] ) {
-        &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
+#        &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
         @out_msg_l = ();
     } elsif( $out_msg_l[0] eq 'nohandler') {
-        &main::daemon_log("ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
+        &main::daemon_log("$session_id ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
         @out_msg_l = ();
     } 
 
@@ -389,9 +389,9 @@ sub process_job_msg {
 
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {
-            &main::daemon_log("ERROR: GosaPackages: process_job_msg: $res", 1);
+            &main::daemon_log("$session_id ERROR: GosaPackages: process_job_msg: $res", 1);
         } else {
-            &main::daemon_log("INFO: GosaPackages: $header job successfully added to job queue", 5);
+            &main::daemon_log("$session_id INFO: GosaPackages: $header job successfully added to job queue", 5);
         }
         $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
     }

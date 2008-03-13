@@ -390,7 +390,7 @@ sub process_incoming_msg {
     my $error = 0;
     my $host_name;
     my $host_key;
-    my @out_msg_l = ();
+    my @out_msg_l = ("nohandler");
 
     # process incoming msg
     my $header = @{$msg_hash->{header}}[0]; 
@@ -399,10 +399,10 @@ sub process_incoming_msg {
     # skip PREFIX
     $header =~ s/^CLMSG_//;
 
-    &main::daemon_log("DEBUG: SIPackages: msg to process: $header", 7);
+    &main::daemon_log("$session_id DEBUG: SIPackages: msg to process: $header", 7);
 
     if( 0 == length @target_l){     
-        &main::daemon_log("ERROR: no target specified for msg $header", 1);
+        &main::daemon_log("$session_id ERROR: no target specified for msg $header", 1);
         $error++;
     }
 
@@ -414,22 +414,24 @@ sub process_incoming_msg {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
-                @out_msg_l = &here_i_am($msg_hash)
+                @out_msg_l = &here_i_am($msg_hash, $session_id)
             } else {
                 if( exists $event_hash->{$header} ) {
                     # a event exists with the header as name
-                    &main::daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+                    &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
                     no strict 'refs';
                     @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
                 }
             }
 
             # if delivery not possible raise error and return 
-            if( not @out_msg_l ) {
-                &main::daemon_log("WARNING: SIPackages got no answer from event handler '$header'", 3);
-            } elsif( 0 == @out_msg_l) {
-                &main::daemon_log("ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
+            if( not defined $out_msg_l[0] ) {
+                @out_msg_l = ();
+            } elsif( $out_msg_l[0] eq 'nohandler') {
+                &main::daemon_log("$session_id ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
+                @out_msg_l = ();
             } 
+
         }
 		else {
 			&main::daemon_log("INFO: msg is not for gosa-si-server '$server_address', deliver it to target '$target'", 5);
@@ -499,7 +501,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($msg_hash) = @_;
+    my ($msg_hash, $session_id) = @_;
     my @out_msg_l;
     my $out_hash;
 
@@ -515,16 +517,16 @@ sub here_i_am {
     my $db_res= $main::known_clients_db->select_dbentry( $sql_statement );
     
     if ( 1 == keys %{$db_res} ) {
-        &main::daemon_log("WARNING: $source is already known as a client", 1);
-        &main::daemon_log("WARNING: values for $source are being overwritten", 1);   
+        &main::daemon_log("$session_id WARNING: $source is already known as a client", 1);
+        &main::daemon_log("$session_id WARNING: values for $source are being overwritten", 1);   
         $nu_clients --;
     }
 
     # number of actual activ clients
     my $act_nu_clients = $nu_clients;
 
-    &main::daemon_log("INFO: number of actual activ clients: $act_nu_clients", 5);
-    &main::daemon_log("INFO: number of maximal allowed clients: $max_clients", 5);
+    &main::daemon_log("$session_id INFO: number of actual activ clients: $act_nu_clients", 5);
+    &main::daemon_log("$session_id INFO: number of maximal allowed clients: $max_clients", 5);
 
     if($max_clients <= $act_nu_clients) {
         my $out_hash = &create_xml_hash("denied", $server_address, $source);
@@ -554,7 +556,7 @@ sub here_i_am {
                                                 } );
 
     if ($res != 0)  {
-        &main::daemon_log("ERROR: cannot add entry to known_clients: $res");
+        &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $res");
         return;
     }
     
@@ -574,12 +576,12 @@ sub here_i_am {
         &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
         my $new_client_out = &create_xml_string($out_hash);
         push(@out_msg_l, $new_client_out);
-        &main::daemon_log("INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
+        &main::daemon_log("$session_id INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
     }
 
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
-	my $new_ldap_config_out = &new_ldap_config($source);
+	my $new_ldap_config_out = &new_ldap_config($source, $session_id);
 	if($new_ldap_config_out && (!($new_ldap_config_out =~ /error/))) {
 		&add_content2xml_hash($out_hash, "ldap_available", "true");
 	} elsif($new_ldap_config_out && $new_ldap_config_out =~ /error/){
@@ -589,7 +591,7 @@ sub here_i_am {
 		"SET status='error', result='$new_ldap_config_out' ".
 		"WHERE status='processing' AND macaddress LIKE '$mac_address'";
 		my $res = $main::job_db->update_dbentry($sql_statement);
-		&main::daemon_log("DEBUG: $sql_statement RESULT: $res", 7);         
+		&main::daemon_log("$session_id DEBUG: $sql_statement RESULT: $res", 7);         
 	}
     my $register_out = &create_xml_string($out_hash);
     push(@out_msg_l, $register_out);
@@ -664,7 +666,7 @@ sub who_has_i_do {
 #  DESCRIPTION:  send to address the ldap configuration found for dn gotoLdapServer
 #===============================================================================
 sub new_ldap_config {
-	my ($address) = @_ ;
+	my ($address, $session_id) = @_ ;
 
 	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address' OR macaddress LIKE '$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -672,7 +674,7 @@ sub new_ldap_config {
 	# check hit
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
-		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
 	}
 
     $address = $res->{1}->{hostname};
@@ -680,14 +682,14 @@ sub new_ldap_config {
 	my $hostkey = $res->{1}->{hostkey};
 
 	if (not defined $macaddress) {
-		&main::daemon_log("ERROR: no mac address found for client $address", 1);
+		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
 
 	# Build LDAP connection
   &main::refresh_ldap_handle();
 	if( not defined $main::ldap_handle ) {
-		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;
 	} 
 
@@ -698,17 +700,17 @@ sub new_ldap_config {
 		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))");
 	#$mesg->code && die $mesg->error;
 	if($mesg->code) {
-		&main::daemon_log($mesg->error, 1);
+		&main::daemon_log("$session_id ".$mesg->error, 1);
 		return;
 	}
 
 	# Sanity check
 	if ($mesg->count != 1) {
-		&main::daemon_log("WARNING: client with mac address $macaddress not found/unique/active - not sending ldap config", 1);
-		&main::daemon_log("\tbase: $ldap_base", 1);
-		&main::daemon_log("\tscope: sub", 1);
-		&main::daemon_log("\tattrs: dn, gotoLdapServer", 1);
-		&main::daemon_log("\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))", 1);
+		&main::daemon_log("$session_id WARNING: client with mac address $macaddress not found/unique/active - not sending ldap config".
+                "\n\tbase: $ldap_base".
+                "\n\tscope: sub".
+                "\n\tattrs: dn, gotoLdapServer".
+                "\n\tfilter: (&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))", 1);
 		return;
 	}
 
@@ -735,13 +737,13 @@ sub new_ldap_config {
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
-			&main::daemon_log($mesg->error, 1);
+			&main::daemon_log("$session_id ".$mesg->error, 1);
 			return;
 		}
 
 		# Sanity check
 		if ($mesg->count != 1) {
-			&main::daemon_log("WARNING: no LDAP information found for client mac $macaddress", 1);
+			&main::daemon_log("$session_id WARNING: no LDAP information found for client mac $macaddress", 1);
 			return;
 		}
 

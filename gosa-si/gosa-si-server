@@ -146,8 +146,9 @@ my $messaging_file_name;
 # path to directory to store client install log files
 our $client_fai_log_dir = "/var/log/fai"; 
 
-# queue which stores taskes while max_clients are reached
+# queue which stores taskes until one of the $max_children children are ready to process the task
 my @tasks = qw();
+my $max_children = 2;
 
 
 %cfg_defaults = (
@@ -418,7 +419,7 @@ $SIG{INT} = \&sig_int_handler;
 
 
 sub check_key_and_xml_validity {
-    my ($crypted_msg, $module_key) = @_;
+    my ($crypted_msg, $module_key, $session_id) = @_;
     my $msg;
     my $msg_hash;
     my $error_string;
@@ -426,7 +427,8 @@ sub check_key_and_xml_validity {
         $msg = &decrypt_msg($crypted_msg, $module_key);
 
         if ($msg =~ /<xml>/i){
-            daemon_log("decrypted_msg: \n$msg", 8);
+            $msg =~ s/\s+/ /g;  # just for better daemon_log
+            daemon_log("$session_id DEBUG: decrypted_msg: \n$msg", 8);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
             ##############
@@ -455,7 +457,7 @@ sub check_key_and_xml_validity {
         }
     };
     if($@) {
-        daemon_log("WARNING: do not understand the message: $@", 5);
+        daemon_log("$session_id DEBUG: do not understand the message: $@", 7);
         $msg = undef;
         $msg_hash = undef;
     }
@@ -528,7 +530,7 @@ sub check_outgoing_xml_validity {
 
 
 sub input_from_known_server {
-    my ($input, $remote_ip) = @_ ;  
+    my ($input, $remote_ip, $session_id) = @_ ;  
     my ($msg, $msg_hash, $module);
 
     my $sql_statement= "SELECT * FROM known_server";
@@ -540,13 +542,13 @@ sub input_from_known_server {
             next;
         }
         my $host_key = $hit->{hostkey};
-        daemon_log("DEBUG: input_from_known_server: host_name: $host_name", 7);
+        daemon_log("$session_id DEBUG: input_from_known_server: host_name: $host_name", 7);
         daemon_log("DEBUG: input_from_known_server: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
-        my ($tmp_msg, $tmp_msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        my ($tmp_msg, $tmp_msg_hash) = &check_key_and_xml_validity($input, $host_key, $session_id);
         if( (!$tmp_msg) || (!$tmp_msg_hash) ) {
-            daemon_log("DEBUG: input_from_known_server: deciphering raise error", 7);
+            daemon_log("$session_id DEBUG: input_from_known_server: deciphering raise error", 7);
             daemon_log("$@", 8);
             next;
         }
@@ -559,7 +561,7 @@ sub input_from_known_server {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        daemon_log("DEBUG: Incoming message is not from a known server", 7);
+        daemon_log("$session_id DEBUG: Incoming message is not from a known server", 7);
     }
   
     return ($msg, $msg_hash, $module);
@@ -567,7 +569,7 @@ sub input_from_known_server {
 
 
 sub input_from_known_client {
-    my ($input, $remote_ip) = @_ ;  
+    my ($input, $remote_ip, $session_id) = @_ ;  
     my ($msg, $msg_hash, $module);
 
     my $sql_statement= "SELECT * FROM known_clients";
@@ -578,14 +580,14 @@ sub input_from_known_client {
                 next;
 		}
         my $host_key = $hit->{hostkey};
-        &daemon_log("DEBUG: input_from_known_client: host_name: $host_name", 7);
-        &daemon_log("DEBUG: input_from_known_client: host_key: $host_key", 7);
+        &daemon_log("$session_id DEBUG: input_from_known_client: host_name: $host_name", 7);
+        &daemon_log("$session_id DEBUG: input_from_known_client: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
-        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key);
+        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $host_key, $session_id);
 
         if( (!$msg) || (!$msg_hash) ) {
-            &daemon_log("DEGUG: input_from_known_client: deciphering raise error", 7);
+            &daemon_log("$session_id DEGUG: input_from_known_client: deciphering raise error", 7);
             &daemon_log("$@", 8);
             next;
         }
@@ -596,7 +598,7 @@ sub input_from_known_client {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module) ) {
-        &daemon_log("DEBUG: Incoming message is not from a known client", 7);
+        &daemon_log("$session_id DEBUG: Incoming message is not from a known client", 7);
     }
 
     return ($msg, $msg_hash, $module);
@@ -605,7 +607,7 @@ sub input_from_known_client {
 
 sub input_from_unknown_host {
     no strict "refs";
-    my ($input) = @_ ;
+    my ($input, $session_id) = @_ ;
     my ($msg, $msg_hash, $module);
     my $error_string;
     
@@ -619,13 +621,13 @@ sub input_from_unknown_host {
             if( $mod eq 'ArpHandler' ) {
                 next;
             }
-            daemon_log("ERROR: no key specified in config file for $mod", 1);
+            daemon_log("$session_id ERROR: no key specified in config file for $mod", 1);
             next;
         }
-        daemon_log("DEBUG: $mod: $module_key", 7);
+        daemon_log("$session_id DEBUG: $mod: $module_key", 7);
 
         # check if module can open msg envelope with module key
-        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key);
+        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key, $session_id);
         if( (not defined $msg) || (not defined $msg_hash) ) {
             next;
         }
@@ -636,7 +638,7 @@ sub input_from_unknown_host {
     }
 
     if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("DEBUG: Incoming message is not from an unknown host", 7);
+        daemon_log("$session_id DEBUG: Incoming message is not from an unknown host", 7);
     }
 
     return ($msg, $msg_hash, $module);
@@ -819,7 +821,7 @@ sub get_local_ip_for_remote_ip {
 
 
 sub send_msg_to_target {
-    my ($msg, $address, $encrypt_key, $msg_header) = @_ ;
+    my ($msg, $address, $encrypt_key, $msg_header, $session_id) = @_ ;
     my $error = 0;
     my $header;
     my $new_status;
@@ -844,7 +846,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("ERROR: cannot send ".$header."msg to $address , host not reachable", 1);
+        daemon_log("$session_id ERROR: cannot send ".$header."msg to $address , host not reachable", 1);
         $error++;
     }
     
@@ -852,8 +854,8 @@ sub send_msg_to_target {
         # send xml msg
         print $socket $crypted_msg."\n";
 
-        daemon_log("INFO: send ".$header."msg to $address", 5);
-        daemon_log("DEBUG: message:\n$msg", 9);
+        daemon_log("$session_id INFO: send ".$header."msg to $address", 5);
+        #daemon_log("DEBUG: message:\n$msg", 9);
         
     }
 
@@ -874,14 +876,14 @@ sub send_msg_to_target {
         if( $act_status eq "down" ) {
             $sql_statement = "DELETE FROM known_clients WHERE hostname='$address'";
             $res = $known_clients_db->del_dbentry($sql_statement);
-            daemon_log("WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
+            daemon_log("$session_id WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
         } else { 
             $sql_statement = "UPDATE known_clients SET status='$new_status' WHERE hostname='$address'";
             $res = $known_clients_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
-                daemon_log("WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
+                daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
             } else {
-                daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+                daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
             }
         }
     }
@@ -894,16 +896,16 @@ sub send_msg_to_target {
         if( $act_status eq "down" ) {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
             $res = $known_server_db->del_dbentry($sql_statement);
-            daemon_log("WARNING: failed 2x to a send msg to host '$address', delete host from known_server", 3);
+            daemon_log("$session_id WARNING: failed 2x to a send msg to host '$address', delete host from known_server", 3);
         } 
         else { 
             $sql_statement = "UPDATE known_server SET status='$new_status' WHERE hostname='$address'";
             $res = $known_server_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
-                daemon_log("WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
+                daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
             }
             else {
-                daemon_log("INFO: set '$address' from status '$act_status' to '$new_status'", 5);
+                daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
             }
         }
     }
@@ -915,16 +917,18 @@ sub update_jobdb_status_for_send_msgs {
     my ($answer, $error) = @_;
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
         my $jobdb_id = $1;
+            
+        # sending msg faild
         if( $error ) {
             if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
-                # sending msg faild
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id='$jobdb_id'";
                 my $res = $job_db->update_dbentry($sql_statement);
             }
+
+        # sending msg was successful
         } else {
-            # sending msg was successful
             my $sql_statement = "UPDATE $job_queue_tn ".
                 "SET status='done' ".
                 "WHERE id='$jobdb_id' AND status='processed'";
@@ -943,7 +947,7 @@ sub _start {
 sub next_task {
     my ($session, $heap) = @_[SESSION, HEAP];
 
-    while ( keys( %{ $heap->{task} } ) < $max_clients ) {
+    while ( keys( %{ $heap->{task} } ) < $max_children ) {
         my $next_task = shift @tasks;
         last unless defined $next_task;
 
@@ -970,7 +974,10 @@ sub handle_task_result {
                 $heap = $session_reference->get_heap();
             }
         }
-        $heap->{'client'}->put($client_answer);
+
+        if(exists $heap->{'client'}) {
+            $heap->{'client'}->put($client_answer);
+        }
     }
     $kernel->sig(CHLD => "child_reap");
 }
@@ -997,30 +1004,32 @@ sub process_task {
     my $client_answer = "";
 
     daemon_log("", 5); 
-    daemon_log("INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
-    daemon_log("DEBUG: Incoming msg:\n$input", 9);
+    daemon_log("$session_id INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
+    daemon_log("$session_id DEBUG: Incoming msg:\n$input", 9);
 
     ####################
     # check incoming msg
     # msg is from a new client or gosa
-    ($msg, $msg_hash, $module) = &input_from_unknown_host($input);
+    ($msg, $msg_hash, $module) = &input_from_unknown_host($input, $session_id);
     # msg is from a gosa-si-server or gosa-si-bus
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'});
+        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'}, $session_id);
     }
     # msg is from a gosa-si-client
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'});
+        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'}, $session_id);
     }
     # an error occurred
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+        # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
+        # could not understand a msg from its server the client cause a re-registering process
         my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
             my $host_name = $hit->{'hostname'};
             my $host_key = $hit->{'hostkey'};
             my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
-            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping");
+            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping", $session_id);
             &update_jobdb_status_for_send_msgs($ping_msg, $error);
         }
         $error++;
@@ -1029,13 +1038,13 @@ sub process_task {
     ######################
     # process incoming msg
     if( $error == 0) {
-        daemon_log("INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
-        daemon_log("DEBUG: Processing module ".$module, 7);
+        daemon_log("$session_id INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
+        daemon_log("$session_id DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
-            daemon_log("DEBUG: $module: Got answer from module: \n".$answer_str,8);
+            daemon_log("$session_id DEBUG: $module: Got answer from module: \n".$answer_str,8);
         }
     }
     if( !$answer_l ) { $error++ };
@@ -1068,7 +1077,7 @@ sub process_task {
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
                         &update_jobdb_status_for_send_msgs($answer, $error);
                     }
                 }
@@ -1082,14 +1091,14 @@ sub process_task {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/KNOWN_SERVER/$host_name/g;
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
                         &update_jobdb_status_for_send_msgs($answer, $error);
                     }
                 }
 
                 # target of msg is GOsa
 				elsif( $answer_target eq "GOSA" ) {
-					my $session_id = ($1) if $answer =~ s/<session_id>(\d+?)<\/session_id>//;
+					my $session_id = ($1) if $answer =~ /<session_id>(\d+?)<\/session_id>/;
 					my $add_on = "";
                     if( defined $session_id ) {
                         $add_on = ".session_id=$session_id";
@@ -1104,13 +1113,13 @@ sub process_task {
                     $answer =~ /<header>(\S+)<\/header>/;   
                     my $header;
                     if( defined $1 ) { $header = $1; }
-                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header);
+                    my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header, $session_id);
                     &update_jobdb_status_for_send_msgs($answer, $error);
                 }
 
                 # target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
+                    daemon_log("$session_id INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
                     my $found_ip_flag = 0;
@@ -1118,21 +1127,21 @@ sub process_task {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/$answer_target/$host_name/g;
-                        daemon_log("INFO: found host '$host_name', associated to '$answer_target'", 5);
-                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header);
+                        daemon_log("$session_id INFO: found host '$host_name', associated to '$answer_target'", 5);
+                        my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
                         &update_jobdb_status_for_send_msgs($answer, $error);
                         $found_ip_flag++ ;
                     }   
                     if( $found_ip_flag == 0) {
-                        daemon_log("WARNING: no host found in known_clients with mac address '$answer_target'", 3);
+                        daemon_log("$session_id WARNING: no host found in known_clients with mac address '$answer_target'", 3);
                         if( $bus_activ eq "true" ) { 
-                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+                            daemon_log("$session_id INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
                             my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
                             my $query_res = $known_server_db->select_dbentry( $sql_statement );
                             while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                                 my $bus_address = $hit->{hostname};
                                 my $bus_key = $hit->{hostkey};
-                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header, $session_id);
                                 &update_jobdb_status_for_send_msgs($answer, $error);
                                 last;
                             }
@@ -1146,27 +1155,27 @@ sub process_task {
                     my $encrypt_key = &get_encrypt_key($answer_target);
                     if( not defined $encrypt_key ) {
                         # unknown target, forward msg to bus
-                        daemon_log("WARNING: unknown target '$answer_target'", 3);
+                        daemon_log("$session_id WARNING: unknown target '$answer_target'", 3);
                         if( $bus_activ eq "true" ) { 
-                            daemon_log("INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
+                            daemon_log("$session_id INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
                             my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
                             my $query_res = $known_server_db->select_dbentry( $sql_statement );
                             my $res_length = keys( %{$query_res} );
                             if( $res_length == 0 ){
-                                daemon_log("WARNING: send '$answer_header' to '$bus_address' failed, ".
+                                daemon_log("$session_id WARNING: send '$answer_header' to '$bus_address' failed, ".
                                         "no bus found in known_server", 3);
                             }
                             else {
                                 while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                                     my $bus_key = $hit->{hostkey};
-                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header);
+                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header,$session_id );
                                     &update_jobdb_status_for_send_msgs($answer, $error);
                                 }
                             }
                         }
                         next;
                     }
-                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header);
+                    my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header,$session_id);
                     &update_jobdb_status_for_send_msgs($answer, $error);
                 }
             }
@@ -1221,30 +1230,31 @@ sub watch_for_new_jobs {
 		my $jobdb_id = $hit->{id};
 		my $macaddress = $hit->{'macaddress'};
         my $job_msg = $hit->{'xmlmessage'};
-        daemon_log("DEBUG: its time to execute $job_msg", 7); 
-        my $header = $hit->{'headertag'};
+        daemon_log("J DEBUG: its time to execute $job_msg", 7); 
         my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$macaddress'";
 		my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
 		# expect macaddress is unique!!!!!!
 		my $target = $res_hash->{1}->{hostname};
 
-		if (not defined $target) {
-			&daemon_log("ERROR: no host found for mac address: $macaddress", 1);
-			&daemon_log("$hit->{xmlmessage}", 8);
-            my $sql_statement = "UPDATE $job_queue_tn ".
-                "SET status='error', result='no host found for mac address' ".
-                "WHERE id='$jobdb_id'";
-			my $res = $job_db->update_dbentry($sql_statement);
-			next;
-		}
-
+#        if (not defined $target) {
+#			&daemon_log("ERROR: no host found for mac address: $macaddress", 1);
+#			&daemon_log("$hit->{xmlmessage}", 8);
+#            my $sql_statement = "UPDATE $job_queue_tn ".
+#                "SET status='error', result='no host found for mac address' ".
+#                "WHERE id='$jobdb_id'";
+#			my $res = $job_db->update_dbentry($sql_statement);
+#			next;
+#		}
+#
 		# change header
         $job_msg =~ s/<header>job_/<header>gosa_/;
 
 		# add sqlite_id 
         $job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
-		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header);
+        $job_msg =~ /<header>(\S+)<\/header>/;
+        my $header = $1 ;
+		my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");
 
         # update status in job queue to 'processing'
         $sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
@@ -1290,7 +1300,8 @@ sub refresh_ldap_handle {
 
 
 sub change_fai_state {
-    my ($st, $targets) = @_;
+    my ($st, $targets, $session_id) = @_;
+    $session_id = 0 if not defined $session_id;
 
     # Set FAI state to localboot
     my %mapActions= (
@@ -1337,11 +1348,9 @@ sub change_fai_state {
       if ($mesg->count) {
         my @entries = $mesg->entries;
         foreach my $entry (@entries) {
-
           # Only modify entry if it is not set to '$state'
           if ($entry->get_value("FAIstate") ne "$state"){
-
-            daemon_log("INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
+            daemon_log("$session_id INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
             my $result;
             my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
             if (exists $tmp{'FAIobject'}){
@@ -1360,7 +1369,7 @@ sub change_fai_state {
 
             # Errors?
             if ($result->code){
-              daemon_log("Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+              daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
             }
 
           }
@@ -1371,7 +1380,8 @@ sub change_fai_state {
 
 
 sub change_goto_state {
-    my ($st, $targets) = @_;
+    my ($st, $targets, $session_id) = @_;
+    $session_id = 0  if not defined $session_id;
 
     # Switch on or off?
     my $state= $st eq 'active' ? 'active': 'locked';
@@ -1406,14 +1416,14 @@ sub change_goto_state {
           # Only modify entry if it is not set to '$state'
           if ($entry->get_value("gotoMode") ne $state){
 
-            daemon_log("INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
+            daemon_log("$session_id INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
             my $result;
             $result= $ldap_handle->modify($entry->dn, changes => [
                                                 replace => [ gotoMode => $state ] ]);
 
             # Errors?
             if ($result->code){
-              &daemon_log("Error: Setting gotoMode to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+              &daemon_log("$session_id Error: Setting gotoMode to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
             }
 
           }

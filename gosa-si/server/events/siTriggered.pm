@@ -244,7 +244,7 @@ sub trigger_wake {
     my ($msg, $msg_hash, $session_id) = @_ ;
 
     foreach (@{$msg_hash->{macAddress}}){
-        &main::daemon_log("INFO: trigger wake for $_", 5);
+        &main::daemon_log("$session_id INFO: trigger wake for $_", 5);
         my $host    = $_;
         my $ipaddr  = '255.255.255.255';
         my $port    = getservbyname('discard', 'udp');
@@ -257,7 +257,7 @@ sub trigger_wake {
         if ($host =~ m/^$hwaddr_re$/) {
           $hwaddr = $host;
         } else {
-          &main::daemon_log("ERROR: trigger_wake called with non mac address", 1);
+          &main::daemon_log("$session_id ERROR: trigger_wake called with non mac address", 1);
         }
 
         # Generate magic sequence
