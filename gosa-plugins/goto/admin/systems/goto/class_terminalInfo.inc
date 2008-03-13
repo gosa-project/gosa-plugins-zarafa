@@ -65,13 +65,13 @@ class terminfo extends plugin
     /* Do we represent a valid terminal? */
     if (!$this->is_account && $this->parent === NULL){
       return("<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no terminal features.")."</b>");
+        msgPool::noValidExtension(_("terminal"))."</b>");
     }
 
     $smarty= get_smarty();
     $display= "";
     if(!is_callable("snmpget")){
-      print_red(_("There is no php snmp module installed, can't gather any informations."));
+      print_red(msgPool::missingext("snmp"));
 
       $smarty->assign("load", progressbar(0,100,15,true));
       $smarty->assign("mem", progressbar(0,100,15,true));

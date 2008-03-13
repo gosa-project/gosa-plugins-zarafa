@@ -385,12 +385,12 @@ class workservice extends plugin
 
         if($this->acl_is_writeable("gotoXVsync")){
           if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
-            $message[]= _("Please specify a valid VSync range.");
+            $message[]= msgPool::invalid(_("VSync"));
           } else{
             list($v1,$v2)= preg_split ("/[-+]/", $val);
             if ($v2 != ""){
               if ($v1 > $v2){
-                $message[]= _("Please specify a valid VSync range.");
+                $message[]= msgPool::invalid(_("VSync"));
               }
             }
           }
@@ -400,12 +400,12 @@ class workservice extends plugin
         $val= preg_replace ("/\s/", "", $this->gotoXHsync);
         if($this->acl_is_writeable("gotoXHsync")){
           if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
-            $message[]= _("Please specify a valid HSync range.");
+            $message[]= msgPool::invalid(_("HSync"));
           } else{
             list($v1,$v2)= preg_split ("/[-+]/", $val);
             if ($v2 != ""){
               if ($v1 > $v2){
-                $message[]= _("Please specify a valid HSync range.");
+                $message[]= msgPool::invalid(_("HSync"));
               }
             }
           }

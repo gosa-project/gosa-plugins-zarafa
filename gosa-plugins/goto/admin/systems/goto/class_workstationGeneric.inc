@@ -210,7 +210,7 @@ class workgeneric extends plugin
     /* Do we represent a valid terminal? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no workstation features.")."</b>";
+        msgPool::noValidExtension(_("workstation"))."</b>";
       return($display);
     }
 
@@ -419,12 +419,12 @@ class workgeneric extends plugin
     $this->dn= "cn=".$this->cn.",".get_ou('workstationou').$this->base;
 
     if ($this->cn == ""){
-      $message[]= _("The required field 'Workstation name' is not set.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn)){
-      $message[] = _("Please specify a valid name for this object.");
+      $message[] = msgPool::invalid(_("Name"));
     }
 
     if ($this->orig_dn != $this->dn){
@@ -442,7 +442,7 @@ class workgeneric extends plugin
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){
-              $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+              $message[]= msgPool::duplicated(_("Name"));
               break;
             }
           }
@@ -452,7 +452,7 @@ class workgeneric extends plugin
 
     /* Check for valid ntpServer selection */
     if((!$this->inheritTimeServer) && (!count($this->gotoNtpServer))){
-      $message[]= _("There must be at least one NTP server selected, or the inherit mode activated.");
+      $message[]= msgPool::required(_("NTP server"));
     }
 
     /* Warn the user, that this host is currently installing */

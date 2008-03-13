@@ -311,7 +311,7 @@ class printgeneric extends plugin
     /* Do we represent a valid printer? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no printer features.")."</b>";
+        msgPool::noValidExtension(_("printer"))."</b>";
       return($display);
     }
 
@@ -319,7 +319,7 @@ class printgeneric extends plugin
     if(!preg_match("/^Printer$/i",$this->BelongsTo)){
       if((empty($this->cn)) && ($this->dn != "new")){
         $display= $this->show_enable_header(_("Add printer extension"),
-            _("This object has printer extension disabled. You can't enable it while 'cn' is not present in entry. Possibly you are currently creating a new terminal template"),TRUE,TRUE);
+            msgPool::featuresDisabled(_("printer"))._("You can't enable it while 'cn' is not present in entry. Possibly you are currently creating a new terminal template."),TRUE,TRUE);
         $this->is_account= false;
         return $display;
       }
@@ -327,18 +327,18 @@ class printgeneric extends plugin
       if (($this->is_account)){
         if(preg_match("/^Workstation$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Remove printer extension"),
-              _("This workstation has printer extension enabled.You can disable it by clicking below."));
+              msgPool::featuresEnabled(_("printer")));
         }elseif(preg_match("/^Terminal$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Remove printer extension"),
-              _("This terminal has printer extension enabled. You can disable it by clicking below."));
+              msgPool::featuresDisabled(_("printer")));
         }
       }else{
         if(preg_match("/^Workstation$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Add printer extension"),
-              _("This workstation has printer extension disabled. You can enable it by clicking below."));
+              msgPool::featuresEnabled(_("printer")));
         }elseif(preg_match("/^Terminal$/i",$this->BelongsTo)){
           $display= $this->show_enable_header(_("Add printer extension"),
-              _("This terminal has printer extension disabled. You can enable it by clicking below."));
+              msgPool::featuresDisabled(_("printer")));
         }  
         return ($display);
       }
@@ -529,9 +529,9 @@ class printgeneric extends plugin
 
     if(!preg_match("/Printer/i",$this->BelongsTo)){
       if(preg_match("/Terminal/i",$this->BelongsTo)){
-        $smarty->assign("desc"    ,sprintf(_("This printer belongs to terminal %s. You can't rename this printer."),"<b>".$this->cn."</b>"));
+        $smarty->assign("desc"    ,sprintf(_("This printer belongs to %s. You can't rename this printer."),_("terminal"),"<b>".$this->cn."</b>"));
       }else{
-        $smarty->assign("desc"    ,sprintf(_("This printer belongs to workstation %s. You can't rename this printer."),"<b>".$this->cn."</b>"));
+        $smarty->assign("desc"    ,sprintf(_("This printer belongs to %s. You can't rename this printer."),_("workstation"),"<b>".$this->cn."</b>"));
       }
       $smarty->assign("cnACL"    , $this->getacl("cn",true));
     }else{
@@ -665,17 +665,17 @@ class printgeneric extends plugin
 
     /* must: cn */
     if(($this->BelongsTo == "Printer") && (empty($this->cn))){
-      $message[]= _("The required field 'Printer name' is not set.");
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* must: cn */
     if(($this->BelongsTo == "Printer") && !tests::is_dns_name($this->cn)){
-      $message[]= _("Invalid character in printer name.");
+      $message[]= msgPool::invalid(_("Name"));
     }
 
     /* must: labeledURI */
     if(empty($this->labeledURI)){
-      $message[]= "The required field 'Printer URL' is not set.";
+      $message[]= msgPool::required(_("Printer URL"));
     }
     
     /* Check if there is already an entry with this cn*/
@@ -689,7 +689,7 @@ class printgeneric extends plugin
             continue;
           }
           if ($attrs['dn'] != $this->orig_dn){
-            $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+            $message[]= msgPool::duplicated(_("Name"));
             break;
           }
         }

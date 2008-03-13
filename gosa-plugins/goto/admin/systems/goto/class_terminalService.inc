@@ -485,13 +485,12 @@ class termservice extends plugin
         /* Check vsync for correct usage */
         $val= preg_replace ("/\s/", "", $this->gotoXVsync);
         if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXVsync")){
-
-          $message[]= _("Please specify a valid VSync range.");
+          $message[]= msgPool::invalid(_("VSync range"));
         } elseif ($this->acl_is_writeable("gotoXVsync")){
           list($v1,$v2)= preg_split ("/[-+]/", $val);
           if ($v2 != ""){
             if ($v1 > $v2){
-              $message[]= _("Please specify a valid VSync range.");
+              $message[]= msgPool::invalid(_("VSync range"));
             }
           }
         }
@@ -499,13 +498,12 @@ class termservice extends plugin
         /* Check hsync for correct usage */
         $val= preg_replace ("/\s/", "", $this->gotoXHsync);
         if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXHsync")){
-
-          $message[]= _("Please specify a valid HSync range.");
+          $message[]= msgPool::invalid(_("HSync range"));
         } elseif ($this->acl_is_writeable("gotoXHsync")){
           list($v1,$v2)= preg_split ("/[-+]/", $val);
           if ($v2 != ""){
             if ($v1 > $v2){
-              $message[]= _("Please specify a valid HSync range.");
+              $message[]= msgPool::invalid(_("HSync range"));
             }
           }
         }

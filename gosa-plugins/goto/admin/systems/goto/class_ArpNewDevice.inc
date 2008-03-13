@@ -43,7 +43,7 @@ class ArpNewDevice extends plugin
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
     if(empty($this->cn)){
-      $message[] = _("Please specify a valid dns name.");
+      $message[] = msgPool::required(_("Name."));
     }
     return($message);
   }
