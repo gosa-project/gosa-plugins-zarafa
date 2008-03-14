@@ -919,10 +919,12 @@ sub update_jobdb_status_for_send_msgs {
             
         # sending msg faild
         if( $error ) {
+            if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id='$jobdb_id'";
                 my $res = $job_db->update_dbentry($sql_statement);
+            }
 
         # sending msg was successful
         } else {
