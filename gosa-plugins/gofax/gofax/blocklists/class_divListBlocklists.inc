@@ -57,8 +57,8 @@ class divListBlocklist extends MultiSelectWindow
     $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 
     /* Add Checkboxes / SubSearch checkbox */
-    $this->AddCheckBox("ShowSendBocklists"     , msgPool::selectToView(_("Send blocklist"),     _("Show send blocklists"),true);
-    $this->AddCheckBox("ShowReceiveBlocklists" , msgPool::selectToView(_("Receive blocklist"),  _("Show receive blocklists"),true);
+    $this->AddCheckBox("ShowSendBocklists"     , msgPool::selectToView(_("Send blocklist"),     _("Show send blocklists"),true));
+    $this->AddCheckBox("ShowReceiveBlocklists" , msgPool::selectToView(_("Receive blocklist"),  _("Show receive blocklists"),true));
   
     $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Search in subtrees"), false);
