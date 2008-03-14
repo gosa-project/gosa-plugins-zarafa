@@ -65,10 +65,10 @@ class goFaxServer extends goService {
   { 
     $message = plugin::check();
     if (empty($this->goFaxAdmin)){
-      $message[]= _("The attribute user is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("User"));
     }
     if (empty($this->goFaxPassword)){
-      $message[]= _("The attribute password is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("Password"));
     }
     return($message);
   }
