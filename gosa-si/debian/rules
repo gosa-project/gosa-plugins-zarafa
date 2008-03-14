@@ -59,6 +59,7 @@ binary-indep: install
 	dh_installcron
 	dh_installexamples
 	dh_installchangelogs
+	dh_installlogrotate
 	#dh_installdebconf
 	dh_installinit --init-script=gosa-si -- start 00 2 3 4 5 . stop 29 1 .
 

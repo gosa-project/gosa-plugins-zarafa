@@ -1,0 +1,10 @@
+/var/log/gosa-si-server.log {
+    weekly
+    rotate 4
+    compress
+    missingok
+    postrotate
+        pkill -SIGUSR1 gosa-si-server > /dev/null || true
+    endscript
+}
+
