@@ -199,7 +199,7 @@ class servrepository extends goService
     if(isset($_POST['repository_setup_save']) && is_object($this->dialog)){
       $this->dialog->save_object();
       if(($this->dialog->is_new_name())&&(isset($this->repositories[$this->dialog->GetName()]))){
-        print_red(_("This name is already in use."));
+        print_red(msgPool::duplicated(_("Name"))); 
       }else
 
       if(count($this->dialog->check())!=0){
