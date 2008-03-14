@@ -107,25 +107,24 @@ class goImapServer extends goService {
   { 
     $message = plugin::check();
     if(empty($this->goImapName)){
-      $message[] =_("Please specify a server identifier.");
+      $message[] = msgPool::required(_("Server identifier"));
     }  
     if(empty($this->goImapConnect)){
-      $message[] =_("Please specify a connect url.");
+      $message[] = msgPool::required(_("Connect URL"));
     }  
     if(empty($this->goImapAdmin)){
-      $message[] =_("Please specify an admin user.");
+      $message[] = msgPool::required(_("Admin user"));
     }  
     if(empty($this->goImapPassword)){
-      $message[] =_("Please specify a password for the admin user.");
+      $message[] = msgPool::required(_("Password"));
     } 
 
     /* Check connect string */
     if (!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapConnect)){
-      $message[]= sprintf(_("The imap connect string needs to be in the form '%s'."),
-          '{server-name:port/options}');
+      $message[]= msgPool::invalid(_("Connect URL"),"","{server-name:port/options}");
     }
     if (!preg_match('/^[0-9]+$/', $this->goImapSievePort)){
-      $message[]= _("The sieve port needs to be numeric.");
+      $message[]= msgPool::invalid(_("Sieve port"),$this->goImapSievePort,"/[0-9]/");
     }
  
     return ($message);
