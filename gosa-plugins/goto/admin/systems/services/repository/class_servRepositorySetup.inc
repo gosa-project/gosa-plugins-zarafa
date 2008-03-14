@@ -142,11 +142,11 @@ class servRepositorySetup  extends plugin
     $message= plugin::check();
 
     if(empty($this->Release)){
-      $message[]=_("Please enter a value for 'release'.");
+      $message[]= msgPool::required(_("Release"));
     }
 
     if(empty($this->Url)){
-      $message[] = _("Please specify a valid value for 'url'.");
+      $message[] = msgPool::required(_("Url"));
     }
 
     return ($message);
@@ -192,10 +192,8 @@ class servRepositorySetup  extends plugin
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);
-      if(!$res){
-        print_red(sprintf(_("Can't execute specified REPOSITORY_HOOK '%s'. Please check your gosa.conf."),$cmd));
-      }elseif(empty($res2)){
-        print_red(sprintf(_("The specified REPOSITORY_HOOK '%s', specified in your gosa.conf, returns an empty string."),$cmd));
+      if(!$res || empty($res2)){
+        print_red( msgPool::cmdexecfailed("REPOSITORY_HOOK",$cmd,_("Repository service")));
       }else{  
         $tmp = split("\n",$res);
         foreach($tmp as $hook){
