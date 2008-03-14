@@ -53,7 +53,7 @@ class divListMacro extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("Macro name")." / "._("Department"), "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("Name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Visible"), "attach" => "style='width:50px;'"));
     $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 
@@ -271,8 +271,8 @@ class divListMacro extends MultiSelectWindow
     }
     $num_objs = count($list);
 
-    $num_obj_str = _("Number of listed macros");
-    $num_dep_str = _("Number of listed departments");
+    $num_obj_str = sprintf(_("Number of listed %s"),_("macros"));
+    $num_deb_str = sprintf(_("Number of listed %s"),_("departments"));
 
     $str = "<img class='center' src='images/select_macro.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";

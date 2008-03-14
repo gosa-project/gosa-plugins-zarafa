@@ -182,7 +182,7 @@ class macro extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
+      return(msgPool::missingext("php-mysql"));
     }
 
     /********************
@@ -192,13 +192,13 @@ class macro extends plugin
       $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
       if(!$r_current){
         new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
-        return (sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+        return ( msgPool::dbconnect("GOfon",@mysql_error(),$cfg_Current['SERVER']));
       }
       $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
       if(!$db_current){
         new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         mysql_close($r_current);
-        return (sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+        return ( msgPool::dbselect("GOfon",@mysql_error(),$cfg_Current['DB']));
       }
     }
   }
@@ -229,7 +229,7 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
-          return(sprintf(_("Cannot remove macro from '%s'!"),$Server['SERVER']));
+          return ( msgPool::dbquery("GOfon",@mysql_error($r_current),$Server['SERVER']));
         }
         @mysql_close($r_current);
       }
@@ -291,10 +291,6 @@ class macro extends plugin
        */
       $tmp  = split(",", $s_linestr,3);
 
-      /* Check if there are exactly 2 , */ 
-#      if(substr_count($s_linestr,",") !=2){
-#        return(sprintf(_("More than two ',' given in line : '%s'. Remember that parameters are seperated by '|'."),$i_linenum));
-#      }
       /* Multiple () are not supproted currently ... */  
       if(substr_count($s_linestr,"(") >1 ){
         return(sprintf(_("Not supported multiple brace in line %s!"),$i_linenum));
@@ -338,7 +334,6 @@ class macro extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
         if(!$res){
           new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
-          return(sprintf(_("Cannot insert new macro on server '%s'!"),$cfg['SERVER']));
         }
         @mysql_close($r_con);
       }
@@ -398,7 +393,7 @@ class macro extends plugin
     $message= plugin::check();
 
     if(!count($this->goFonHomeServers)){
-      $message[] = _("There is currently no asterisk server defined!");
+      $message[] = msgPool::noserver(_("GOfon"));
     }
 
     /* Check if insert/replace is possible and all servers are available */
@@ -412,13 +407,13 @@ class macro extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->search("(&(objectClass=goFonMacro)(cn=".$this->cn."))",array("cn"));
       if($ldap->count()>0){
-        $message[]= _("Name is already in use!");
+        $message[]= msgPool::duplicated(_("Name"));
       }
     }
   
     /* Check if display name is set */
     if(empty($this->displayName)){
-      $message[] = _("Display name is not set!");
+      $message[] = msgPool::requried(_("Name"));
     }  
     /* CN is restricted to 20 chars */
     if(strlen("Makro-".$this->cn)>20 ){
@@ -468,7 +463,7 @@ class macro extends plugin
         return false;
       }
     }else{
-      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
       return false;
     }
 
