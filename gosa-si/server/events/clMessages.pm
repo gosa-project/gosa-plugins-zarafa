@@ -103,9 +103,11 @@ sub save_fai_log {
         if (length $log == 0) { next; };
         my ($log_file, $log_string) = split("\n", $log, 2);
         my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
-        open(my $LOG_FILE, ">$client_fai_log_file"); 
+
+	open(my $LOG_FILE, ">$client_fai_log_file"); 
         print $LOG_FILE &decode_base64($log_string);
         close($LOG_FILE);
+
     }
     return;
 }

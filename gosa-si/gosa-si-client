@@ -1038,7 +1038,7 @@ sub save_fai_log {
 
     foreach my $log_file (@log_files) {
         if( $log_file eq "." || $log_file eq ".." ) { next; }
-        my $log = "log_file:$log_file\n";
+        my $log = "log_file:$log_file:";
         $log_file = File::Spec->catfile( $fai_log_dir, $log_file );
         open(my $FILE, "<$log_file"); 
         if (not defined $FILE ) {
