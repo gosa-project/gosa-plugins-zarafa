@@ -214,7 +214,7 @@ class gospamserver extends goService{
       if(tests::is_ip($post) || tests::is_domain($post) || (tests::is_ip_with_subnetmask($post))){
         $this->TrustedNetworks[$post] = $post;
       }else{
-        print_red(_("Specified value is not a valid 'trusted network' value."));
+        print_red(msgPool::invalid(_("Trusted network")));
       }
     }
   }
@@ -285,7 +285,7 @@ class gospamserver extends goService{
 
     /* Check if required score is numeric */
     if(!is_numeric($this->saRequiredScore)){
-      $message[] = _("Required score must be a numeric value.");
+      $message[] = msgPool::invalid(_("Score"),$this->saRequiredScore,"/[0-9]/");
     }
 
     return($message);
