@@ -222,13 +222,14 @@ sub GOTOACTIVATION {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
-# TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-#	my $content = @{$msg_hash->{$header}}[0];
-#	$content = "$content";
-#	if(ref($content) eq "HASH") { $content = ""; }
-#		
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+########
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -253,8 +254,14 @@ sub PROGRESS {
     my $content;
     my $cont = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$cont) ) { $content = ""; } };
-    if( $@ ) { $content = "$cont"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+########
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -279,8 +286,14 @@ sub FAIREBOOT {
     # test whether content is an empty hash or a string which is required
     my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+######### 
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -305,8 +318,14 @@ sub TASKSKIP {
     # test whether content is an empty hash or a string which is required
     my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+#########
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -331,8 +350,14 @@ sub TASKBEGIN {
 
     # test whether content is an empty hash or a string which is required
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+#########
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -378,8 +403,14 @@ sub TASKEND {
     # test whether content is an empty hash or a string which is required
     my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+#########
 
     # clean up header
     $header =~ s/CLMSG_//g;
@@ -413,8 +444,14 @@ sub TASKERROR {
     # test whether content is an empty hash or a string which is required
     my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+#########
 
 	# set fai_state to localboot
 	&main::change_fai_state('error', \@{$msg_hash->{'macaddress'}}, $session_id);
@@ -449,8 +486,14 @@ sub HOOK {
     my $content = @{$msg_hash->{$header}}[0];
 
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
-    eval{ if( 0 == keys(%$content) ) { $content = ""; } };
-    if( $@ ) { $content = "$content"; }
+#########
+# testing 
+	my $content = @{$msg_hash->{$header}}[0];
+    if(ref($content) eq "HASH") { $content = ""; }
+    #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
+    #if( $@ ) { $content = "$content"; }
+# testing
+#########
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
