@@ -179,7 +179,7 @@ class servnfs extends plugin
     }
 
     if(!test::is_path($this->path)){
-      $message[]= msgPool::invalid(_("Path"))
+      $message[]= msgPool::invalid(_("Path"));
     }
 
     // only 0-9a-z
