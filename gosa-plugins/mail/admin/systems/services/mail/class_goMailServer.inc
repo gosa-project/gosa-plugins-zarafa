@@ -596,19 +596,15 @@ class goMailServer extends goService{
   function check()
   { 
     $message =plugin::check();
-  
     if(!is_numeric($this->postfixHeaderSizeLimit)){
-      $message[] = _("Please specify a numeric value for header size limit.");
+      $message[] = msgPool::invalid(_("Header size limit",$this->postfixHeaderSizeLimit,"/[0-9]/");
     }
-
     if(!is_numeric($this->postfixMailboxSizeLimit)){
-      $message[] = _("Please specify a numeric value for mailbox size limit.");
+      $message[] = msgPool::invalid(_("Mailbox size limit",$this->postfixMailboxSizeLimit,"/[0-9]/");
     }
-
     if(!is_numeric($this->postfixMessageSizeLimit)){
-      $message[] = _("Please specify a numeric value for message size limit.");
+      $message[] = msgPool::invalid(_("Message size limit",$this->postfixMessageSizeLimit,"/[0-9]/");
     }
-
     return $message;
   }
 
