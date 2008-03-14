@@ -919,12 +919,10 @@ sub update_jobdb_status_for_send_msgs {
             
         # sending msg faild
         if( $error ) {
-            if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id='$jobdb_id'";
                 my $res = $job_db->update_dbentry($sql_statement);
-            }
 
         # sending msg was successful
         } else {
@@ -1119,7 +1117,7 @@ sub process_task {
                 # target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
                     daemon_log("$session_id INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
-                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress='$answer_target'";
+                    my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
                     my $found_ip_flag = 0;
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -1301,7 +1299,6 @@ sub refresh_ldap_handle {
 sub change_fai_state {
     my ($st, $targets, $session_id) = @_;
     $session_id = 0 if not defined $session_id;
-
     # Set FAI state to localboot
     my %mapActions= (
         reboot    => '',
@@ -1316,6 +1313,7 @@ sub change_fai_state {
 
     # Return if this is unknown
     if (!exists $mapActions{ $st }){
+        daemon_log("$session_id ERROR: unknown action '$st', can not translate ot FAIstate", 1); 
       return;
     }
 
@@ -1325,16 +1323,17 @@ sub change_fai_state {
     if( defined($ldap_handle) ) {
 
       # Build search filter for hosts
-      my $search= "(&(objectClass=GOhard)";
-      foreach (@{$targets}){
-        $search.= "(macAddress=$_)";
-      }
-      $search.= ")";
+        my $search= "(&(objectClass=GOhard)";
+        foreach (@{$targets}){
+            $search.= "(macAddress=$_)";
+        }
+        $search.= ")";
 
       # If there's any host inside of the search string, procress them
-      if (!($search =~ /macAddress/)){
-        return;
-      }
+        if (!($search =~ /macAddress/)){
+            daemon_log("$session_id ERROR: no macAddress found in filter statement for LDAP search: '$search'", 1);    
+            return;
+        }
 
       # Perform search for Unit Tag
       my $mesg = $ldap_handle->search(
@@ -1344,6 +1343,7 @@ sub change_fai_state {
           filter => "$search"
           );
 
+#print STDERR "=============================================\n$search\n"; 
       if ($mesg->count) {
         my @entries = $mesg->entries;
         foreach my $entry (@entries) {
@@ -1371,9 +1371,14 @@ sub change_fai_state {
               daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
             }
 
-          }
+          } else {
+            daemon_log("$session_id DEBUG FAIstate at host found with filter statement '$search' already at state '$st'", 7); 
+          }  
         }
       }
+    # if no ldap handle defined
+    } else {
+        daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
     }
 }
 
