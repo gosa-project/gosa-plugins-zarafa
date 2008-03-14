@@ -224,7 +224,7 @@ sub GOTOACTIVATION {
     # test whether content is an empty hash or a string which is required
 #########
 # testing 
-	my $content = @{$msg_hash->{$header}}[0];
+    my $content = @{$msg_hash->{$header}}[0];
     if(ref($content) eq "HASH") { $content = ""; }
     #eval{ if( 0 == keys(%$content) ) { $content = ""; } };
     #if( $@ ) { $content = "$content"; }
@@ -251,8 +251,6 @@ sub PROGRESS {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
-    my $content;
-    my $cont = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
@@ -284,7 +282,6 @@ sub FAIREBOOT {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
@@ -316,7 +313,6 @@ sub TASKSKIP {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
@@ -401,7 +397,6 @@ sub TASKEND {
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
@@ -442,7 +437,6 @@ sub TASKERROR {
     $header =~ s/CLMSG_//g;
 
     # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
@@ -483,8 +477,6 @@ sub HOOK {
     $header =~ s/CLMSG_//g;
 
     # test whether content is an empty hash or a string which is required
-    my $content = @{$msg_hash->{$header}}[0];
-
 # TODO eval ändern auf if(ref($content) eq "HASH") dann ... else, dann...
 #########
 # testing 
