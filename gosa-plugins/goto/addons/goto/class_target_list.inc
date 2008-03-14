@@ -76,7 +76,7 @@ class target_list extends MultiSelectWindow
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
-    $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Search in subtrees"), false);
+    $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), msgPool::selectToView("","subsearch_small"), false);
     $this->AddCheckBox("IPMatch",    _("Select to search for a specific IP range only"), _("Match IP range"), false);
 
     /* Name,Text,Default  , Connect with alphabet  */
