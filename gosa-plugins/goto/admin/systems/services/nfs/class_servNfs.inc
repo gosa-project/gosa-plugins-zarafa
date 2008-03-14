@@ -174,35 +174,34 @@ class servnfs extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    // fixme : a check for the path ?  ? 
     if(empty($this->path)){
-      $message[]=_("Please specify a valid path for your setup.");
+      $message[]= msgPool::required(_("Path"));
+    }
+
+    if(!test::is_path($this->path)){
+      $message[]= msgPool::invalid(_("Path"))
     }
 
     // only 0-9a-z
     if(!$this->is_edit){
-      if(!preg_match("/^[a-z0-9\._äüö]*$/ui",$this->name)){
-        $message[]=_("Please specify a valid name for your share.");
-      }
       if(empty($this->name)){
-        $message[]=_("Please specify a name for your share.");
+        $message[]= msgPool::required(_("Name"));
+      }
+      if(!preg_match("/^[a-z0-9\._äüö]*$/ui",$this->name)){
+        $message[]= msgPool::invalid(_("Name"),$this->name,"/[a-z0-9\._äüö]/ui");
       }
     }
 
     if(!empty($this->description) && preg_match("/^[^a-z0-9\._äüö\+ -]*$/ui",$this->description)){
-      $message[]=_("Description contains invalid characters.");
+      $message[]= msgPool::invalid(_("Description"),$this->description,"/^[a-z0-9\._äüö\+ -]*$/ui");
     }
 
     if(!empty($this->volume) && preg_match("/^[^a-z0-9\._äüö\+ -]*$/ui",$this->volume)){
-      $message[]=_("Volume contains invalid characters.");
-    }
-
-    if(preg_match("/\|/",$this->path)){
-      $message[]=_("Path contains invalid characters.");
+      $message[]= msgPool::invalid(_("Volume"),$this->volume,"/^[a-z0-9\._äüö\+ -]*$/ui");
     }
 
     if(!empty($this->option) && preg_match("/^[^a-z0-9\._äüö,=\+ -]*$/ui",$this->option)){
-      $message[]=_("Option contains invalid characters.");
+      $message[]= msgPool::invalid(_("Option"),$this->option,"/^[a-z0-9\._äüö\+ -]*$/ui");
     }
 
     /* remove a / at the end of the path, we neither need it there nor
