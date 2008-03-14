@@ -304,7 +304,7 @@ class phoneAccount extends plugin
      */
     if(!count($this->goFonHomeServers)){
       if($save){
-        msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
       }
       return(true);
     }
@@ -312,7 +312,7 @@ class phoneAccount extends plugin
     /* Check if Mysql extension is available */
     if(!is_callable("mysql_pconnect")){
       if($save){
-        msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
       }
       return(true);
     }
@@ -845,7 +845,7 @@ class phoneAccount extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no phone extensions.")."</b>";
+        msgPool::noValidExtension(_("Phone"))."</b>";
       $display.= back_to_main();
       return ($display);
     }
@@ -858,7 +858,7 @@ class phoneAccount extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no phone extensions.")."</b>";
+        msgPool::noValidExtension(_("Phone"))."</b>";
       $display.= back_to_main();
       return($display);
     }
@@ -870,14 +870,14 @@ class phoneAccount extends plugin
     if (!$this->multiple_support_active && $this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove phone account"),
-            _("This account has phone features enabled. You can disable them by clicking below."));
+            msgPool::featuresEnabled(_("Phone")));
       } else {
         if(empty($this->uid)){
           $display= $this->show_enable_header(_("Create phone account"),
-              _("This account has phone features disabled. You can't enable them while no uid is set."),TRUE,TRUE);
+            msgPool::featuresDisabled(_("Phone"),_("User uid")));
         }else{
           $display= $this->show_enable_header(_("Create phone account"),
-              _("This account has phone features disabled. You can enable them by clicking below."));
+            msgPool::featuresDisabled(_("Phone")));
         }
         return ($display);
       }
@@ -901,7 +901,7 @@ class phoneAccount extends plugin
 
     /* check if there is a FON server created */
     if(!count($this->goFonHomeServer)){
-      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
     }
 
     /* Create html parameter table for selected macro parameters 
@@ -1373,7 +1373,7 @@ class phoneAccount extends plugin
         }
       }
     }else{
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
       return false;
     }
 
