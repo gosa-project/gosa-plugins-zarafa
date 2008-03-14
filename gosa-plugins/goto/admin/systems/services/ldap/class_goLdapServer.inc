@@ -51,7 +51,7 @@ class goLdapServer extends goService{
   function getListEntry()
   {
     $fields  = goService::getListEntry();
-    $fields['Message']    = _("LDAP Service");
+    $fields['Message']    = _("LDAP service");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -62,10 +62,10 @@ class goLdapServer extends goService{
   { 
     $message = plugin::check();
     if(empty($this->goLdapBase)){
-      $message[] = _("The given base is empty or contains invalid characters.");
+      $message[] = msgPool::required(_("Base"));
     }
     if(!preg_match("/^ldap[si]?:\/\/[^\/]+\/.+$/", $this->goLdapBase)){
-      $message[] = _("Not in URI format.");
+      $message[] = msgPool::invalid(_("Base"),"","","ldap[si]://base");
     }
     return($message);
   }
