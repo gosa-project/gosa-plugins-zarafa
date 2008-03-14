@@ -318,7 +318,7 @@ class conference extends plugin
   {
     /* Check if mysql extension is available */
     if(!is_callable("mysql_pconnect")){
-      return(sprintf(_("Missing %s PHP extension!"), "mysql"));
+      return(msgPool::missingext("php-mysql"));
     }
 
     /********************
@@ -329,14 +329,13 @@ class conference extends plugin
     $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     if(!$r_current){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
-
-      return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+      return(msgPool::dbconnect("GOfon",@mysql_error($r_current), $cfg_Current['SERVER']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
-      return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+      return(msgPool::dbselect("GOfon",@mysql_error($r_current), $cfg_Current['DB']));
     }
 
     /********************
@@ -348,13 +347,13 @@ class conference extends plugin
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-        return(sprintf(_("Cannot connect to %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+        return(msgPool::dbconnect("GOfon",@mysql_error($r_current), $cfg_Init['SERVER']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
-        return(sprintf(_("Cannot select %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+        return(msgPool::dbselect("GOfon",@mysql_error($r_current), $cfg_Init['DB']));
       }
     }
   }
@@ -376,19 +375,19 @@ class conference extends plugin
     }
 
     if((empty($this->goFonPIN))&&($this->goFonConferenceOption_P=="P")&&($this->goFonConferenceOption_D=="D")){
-      $message[]= _("PIN is not set!");
+      $message[]= msgPool::required(_("PIN"));
     }
 
     if(empty($this->cn)){
-      $message[] =_("Name is not set!");
+      $message[] = msgPool::required(_("Name"));
     }
 
     if(!is_numeric($this->telephoneNumber)){
-      $message[] =_("Number is not valid!");
+      $message[] = msgPool::invalid(_("Number"),$this->telephoneNumber,"/[0-9]/");
     }
 
     if(!((is_numeric($this->goFonConferenceOptionLifetime))||(empty($this->goFonConferenceOptionLifetime)))){
-      $message[] =_("Lifetime is not valid!");
+      $message[] = msgPool::invalid(_("Lifetime"),$this->goFonConferenceOptionLifetime,"/[0-9]/");
     }
 
     /* Check if add could be successful */    
@@ -402,7 +401,7 @@ class conference extends plugin
       $ldap->cd(get_ou('conferenceou').$this->base);
       $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
       if($ldap->count()){
-        $message[] =_("Name is already in use!");
+        $message[] = msgPool::duplicated(_("Name"));
       }
     }
     return $message;
@@ -413,7 +412,7 @@ class conference extends plugin
   {
     /* Check if there is at least on server configuration */
     if(!count($this->goFonHomeServers)){
-      return( _("There is currently no asterisk server defined!"));
+      return(msgPool::noserver(_("GOfon")));
     }
   
     /********************
@@ -451,7 +450,7 @@ class conference extends plugin
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
-        return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+        return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Current['SERVER']));
       }
       if($save && mysql_affected_rows($res_cur)) {
         $SQL = "DELETE FROM ".$cfg_Current['EXT_TABLE']." 
@@ -463,7 +462,7 @@ class conference extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
         if(!$res){
           new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
-          return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Current['SERVER']));
+          return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Current['SERVER']));
         }
       }
     }
@@ -582,7 +581,7 @@ class conference extends plugin
     @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
     if(!$res){
       new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-      return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+      return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Init['SERVER']));
     }
    
     /* There are entries using this cn and/or phone number */
@@ -596,7 +595,7 @@ class conference extends plugin
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$SQL, "Database query");
       if(!$res){
         new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
-        return(sprintf(_("Cannot query %s database on server '%s'!"), "GOfon", $cfg_Init['SERVER']));
+        return(msgPool::dbquery("GOfon", @mysql_error($res_cur),$cfg_Init['SERVER']));
       }
 
     }//ENDE  old num availiable ...

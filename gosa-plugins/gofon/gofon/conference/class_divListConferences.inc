@@ -53,7 +53,7 @@ class divListConference extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" =>_("Name - Number"), "attach" => "style=''"));
+    $this->AddHeader(array("string" =>_("Name")." - "._("Number"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Owner"), "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("PIN"), "attach" => "style='width:50px;'"));
     $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
@@ -290,8 +290,8 @@ class divListConference extends MultiSelectWindow
     }
     $num_objs = count($list);
 
-    $num_obj_str = _("Number of listed conferences");
-    $num_dep_str = _("Number of listed departments");
+    $num_obj_str = sprintf(_("Number of listed %s"),_("conferences"));
+    $num_dep_str = sprintf(_("Number of listed %s"),_("departments"));
 
     $str = "<img class='center' src='images/select_conference.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
