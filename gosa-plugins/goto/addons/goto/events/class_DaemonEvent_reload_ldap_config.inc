@@ -27,8 +27,8 @@ class DaemonEvent_reload_ldap_config extends DaemonEvent
     DaemonEvent::__construct($config,$data);
     $this->s_Menu_Name  = _("Reload ldap config"); 
     $this->s_Event_Name = _("Reload ldap config"); 
-    $this->s_Schedule_Action= "job_reload_ldap_config";
-    $this->s_Trigger_Action = "gosa_reload_ldap_config";
+    $this->s_Schedule_Action= "job_trigger_reload_ldap_config";
+    $this->s_Trigger_Action = "gosa_trigger_reload_ldap_config";
     $this->s_Queued_Action  = "reload_ldap_config";
     $this->s_Menu_Image = "images/edit.png";
     $this->s_List_Image = "images/edit.png";
