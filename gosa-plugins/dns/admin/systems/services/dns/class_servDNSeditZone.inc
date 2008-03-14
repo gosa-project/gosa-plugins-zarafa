@@ -403,7 +403,6 @@ class servdnseditZone extends plugin
         
     /* Check if zoneName is already in use */
     $usedZones = $this->getUsedZoneNames();
-    if(($this->isNew == true)||($this->zoneName  != $this->InitialzoneName)||($this->ReverseZone != $this->InitialReverseZone)){
 
     if(empty($this->zoneName)){
       $message[] = msgPool::required(_("Zone name"));
