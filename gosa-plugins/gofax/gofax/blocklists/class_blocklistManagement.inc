@@ -243,7 +243,7 @@ class blocklist extends plugin
           $this->dialog->delete();
           $this->dialog = NULL;
         } else {
-          msg_dialog::display(_("Permission error"), msgPool::permDelete(), $dn), ERROR_DIALOG);
+          msg_dialog::display(_("Permission error"), msgPool::permDelete($dn), ERROR_DIALOG);
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
