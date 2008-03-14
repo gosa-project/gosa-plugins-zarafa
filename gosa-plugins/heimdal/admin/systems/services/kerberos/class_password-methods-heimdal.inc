@@ -108,13 +108,13 @@ class passwordMethodheimdal extends passwordMethod
     if(isset($config->current['HEIMDAL_KEYGEN'])){
       $cmd = $config->current['HEIMDAL_KEYGEN'];
       if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
     if(isset($this->config->data['MAIN']['HEIMDAL_KEYGEN'])){
       $cmd = $this->config->data['MAIN']['HEIMDAL_KEYGEN'];
       if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
     if(isset($config->data['SERVERS']['KERBEROS']['REALM']) && check_command($cmd)){
@@ -164,13 +164,13 @@ class passwordMethodheimdal extends passwordMethod
     if(isset($config->current['HEIMDAL_KEYGEN'])){
       $cmd = $config->current['HEIMDAL_KEYGEN'];
       if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
     if(isset($this->config->data['MAIN']['HEIMDAL_KEYGEN'])){
       $cmd = $this->config->data['MAIN']['HEIMDAL_KEYGEN'];
       if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' is not a valid command."),$cmd),WARNING_DIALOG);
+        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
     if ($cmd != ""){
@@ -182,7 +182,7 @@ class passwordMethodheimdal extends passwordMethod
       $cmd  = $cmd." '".$this->generate_hash($password)."' '".$password."'" ;
       exec($cmd,$out,$res);
       if($res != 0){
-        new msg_dialog(_("Heimdal"),sprintf(_("The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command does not return 0."),$cmdd),WARNING_DIALOG);
+        new msg_dialog(_("Heimdal"), msgPool::cmdexecfailed("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
   }
@@ -325,19 +325,19 @@ class passwordMethodheimdal extends passwordMethod
   {
     $message = array();
     if(!is_numeric($this->krb5MaxLife) && !empty($this->krb5MaxLife)){
-      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max life"));
+      $message[] = msgPool::invalid(_("Max life"),$this->krb5MaxLife,"/[0-9]/");
     }
     if(!is_numeric($this->krb5MaxRenew) && !empty($this->krb5MaxRenew)){
-      $message[] = sprintf(_("Please specify a numeric value for %s."),_("Max renew"));
+      $message[] = msgPool::invalid(_("Max renew"),$this->krb5MaxRenew,"/[0-9]/");
     }
    if(!$this->krb5ValidStart_clear && !$this->chk_times($this->krb5ValidStart)){
-     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid start"));
+     $message[] = msgPool::invalid(_("Valid start"),$this->krb5ValidStart,"/[0-9]/");
    }
    if(!$this->krb5ValidEnd_clear && !$this->chk_times($this->krb5ValidEnd)){
-     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid end"));
+     $message[] = msgPool::invalid(_("Valid end"),$this->krb5ValidEnd,"/[0-9]/");
    }
    if(!$this->krb5PasswordEnd_clear && !$this->chk_times($this->krb5PasswordEnd)){
-     $message[] = sprintf(_("Please specify a numeric value for %s."),_("Valid password"));
+     $message[] = msgPool::invalid(_("Valid password"),$this->krb5PasswordEnd,"/[0-9]/");
    }
     return($message);
   }

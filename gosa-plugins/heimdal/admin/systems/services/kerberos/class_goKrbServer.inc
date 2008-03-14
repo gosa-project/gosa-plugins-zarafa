@@ -64,13 +64,13 @@ class goKrbServer extends goService{
     $message = plugin::check();
     /* goKrbPassword is a must field, if goKrbServer is used as objectClass */
     if (empty($this->goKrbPassword)){
-      $message[]= sprintf(_("The specified kerberos password is empty."), $attr);
+      $message[]= msgPool::required(_("Password"));
     }
     if (empty($this->goKrbAdmin)){
-      $message[]= sprintf(_("The specified kerberos admin is empty."), $attr);
+      $message[]= msgPool::required(_("Admin"));
     }
     if (empty($this->goKrbRealm)){
-      $message[]= sprintf(_("The specified kerberos realm is empty."), $attr);
+      $message[]= msgPool::required(_("Realm"));
     }
 
     return($message);
