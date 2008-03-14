@@ -286,7 +286,7 @@ class goFonMacro extends plugin
           $this->macrotabs= NULL;
 
         } else {
-          msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
+          msg_dialog::display(_("Permission error"),msgPool::permDelete(), ERROR_DIALOG);
         }
 
         /* Remove lock file after successfull deletion */
@@ -340,7 +340,7 @@ class goFonMacro extends plugin
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
       }
     }
 
@@ -364,7 +364,7 @@ class goFonMacro extends plugin
       } else {
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
         new log("security","gofonmacro/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
       }
       /* Remove lock file after successfull deletion */

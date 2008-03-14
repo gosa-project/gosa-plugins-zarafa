@@ -193,7 +193,7 @@ class macroParameter extends plugin
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This 'dn' is no phone macro.")."</b>";
+        msgPool::noValidExtension(_("Phone macro"))."</b>";
       return ($display);
     }
 
