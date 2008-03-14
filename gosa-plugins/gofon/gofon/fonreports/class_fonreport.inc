@@ -162,21 +162,21 @@ class fonreport extends plugin
 
     /* Connecting, selecting database */
     if (!isset($this->config->data['SERVERS']['FON'][0])){
-      msg_dialog::display(_("Configuration error"), _("There is currently no asterisk server defined!"), WARNING_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }elseif(!is_callable("mysql_connect")){
-      msg_dialog::display(_("Configuration error"), sprintf(_("Missing %s PHP extension!"), "mysql"), WARNING_DIALOG);
+      msg_dialog::display(_("Configuration error"), msgPool::missingext("php-mysql"), WARNING_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }else{
 
       $cfg= $this->config->data['SERVERS']['FON'][0];
       $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
       if ($link === FALSE){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot connect to %s database!"), "GOfon"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbconnect(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
       if (! @mysql_select_db("gophone")){
-        msg_dialog::display(_("Error"), sprintf(_("Cannot select %s database!"), "GOfon"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::dbselect(_("GOfon"),@mysql_error(),$cfg['DB']),ERROR_DIALOG);
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
     }
@@ -194,7 +194,7 @@ class fonreport extends plugin
 
     $result = @mysql_query($query);
     if ($result === false){
-      msg_dialog::display(_("Error"), sprintf(_("Cannot query %s database!"), "GOfon"), ERROR_DIALOG);
+      msg_dialog::display(_("Error"), msgPool::dbquery(_("GOfon"),@mysql_error(),$cfg['SERVER']),ERROR_DIALOG);
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }
 
@@ -206,7 +206,7 @@ class fonreport extends plugin
     
     /* Restricted attributes will not be displayed, this will be displayed instead */
     $no_acl = "<img class='center' src='images/closedlock.png'
-      title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
+      title='".msgPool::permView()."' alt='"._("Insufficient permissions")."'>";
 
     $no_acl = "&nbsp;";
 
