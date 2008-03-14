@@ -260,27 +260,22 @@ class servkolab extends goService {
     $message= plugin::check();
 
     if(($this->kolabFreeBusyFuture==""))    {
-      $message[] = _("Future days in Free/Busy settings must be set.");
+      $message[] = msgPool::required(_("Future days"));
     }elseif(!tests::is_uid($this->kolabFreeBusyFuture) || $this->kolabFreeBusyFuture < 0){
-      $message[] = _("Future days in Free/Busy settings must be a positive value.");
+      $message[] = msgPool::invalid(_("Future days"),$this->kolabFreeBusyFuture,"/[0-9]/");
     }
 
     if(!is_int((int)($this->cyrus_quotawarn))) {
-      $message[] = _("The given Quota settings value must be a number.");
-    }elseif(!(($this->cyrus_quotawarn<=100)&&($this->cyrus_quotawarn>=0))){
+      $message[] = msgPool::required(_("Quota"));
+    }elseif($this->cyrus_quotawarn>100){
       $message[] = _("Please choose a value between 1 and 100 for Quota settings.");
-    }elseif(strcasecmp($this->cyrus_quotawarn,(int)$this->cyrus_quotawarn)){
-      $message[] = _("Future days must be a value.");
+    }elseif($this->cyrus_quotawarn < 1){
+      $message[] = msgPool::toosmall(_("Quota"),1);
     }
 
     if(empty($this->postfix_mynetworks)) { 
-      $message[] = _("No SMTP privileged networks set.");
+      $message[] = msgPool::required(_("Privileged networks"));
     }
-
-    /*if(empty($this->postfix_relayhost)) {
-      $message[] = _("No SMTP smarthost/relayhost set.");
-      }
-     */
 
     return ($message);
   }
