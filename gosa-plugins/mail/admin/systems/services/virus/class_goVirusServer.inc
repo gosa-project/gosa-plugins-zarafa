@@ -169,13 +169,13 @@ class govirusserver extends goService{
 
     foreach($mustBeNumeric as $key => $trans){
       if(!is_numeric($this->$key)){
-        $message[] = sprintf(_("The specified value for '%s' must be a numeric value."),$trans);
+        $message[] = msgPool::invalid($trans,$this->$key,"/[0-9]/");
       }
     }
 
     foreach(array("avUser"=>_("Database user"),"avHttpProxyURL"=>_("Http proxy URL"),"avDatabaseMirror"=>_("Database mirror")) as $attr => $name){
       if(!preg_match("/^[a-z0-9:_\-\.\/]*$/",$this->$attr)){
-        $message[] = sprintf(_("Please specify a valid value for '%s'."),$name);
+        $message[] = msgPool::invalid($name,$this->$attr,"/[a-z0-9:_\-\.\/]/");
       }
     }
   
