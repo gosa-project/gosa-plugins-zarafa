@@ -908,8 +908,7 @@ class workstartup extends plugin
         $tmp->set_type(TRIGGERED_EVENT);
         $tmp->add_targets(array($this->parent->by_object['workgeneric']->netConfigDNS->macAddress));
         if(!$o_queue->append($tmp)){
-          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                $o_queue->get_error()),ERROR_DIALOG);
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
         }
       }
     }
