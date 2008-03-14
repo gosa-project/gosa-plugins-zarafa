@@ -28,7 +28,7 @@ class goShareServer extends goService{
   {
     goService::goService($config,$dn);
 
-    $this->DisplayName = _("File service");
+    $this->DisplayName = _("File service (Shares)");
 
     $tmp =array();
     if(isset($this->attrs['goExportEntry'])){
