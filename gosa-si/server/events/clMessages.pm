@@ -165,14 +165,16 @@ sub CURRENTLY_LOGGED_IN {
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
 
+    # fetch all user currently assigned to the client at login_users_db
+    my %currently_logged_in_user = (); 
     $sql_statement = "SELECT * FROM $main::login_users_tn WHERE client='$source'"; 
     $db_res = $main::login_users_db->select_dbentry($sql_statement);
-    my %currently_logged_in_user = (); 
     while( my($hit_id, $hit) = each(%{$db_res}) ) {
         $currently_logged_in_user{$hit->{'user'}} = 1;
     }
     &main::daemon_log("$session_id DEBUG: logged in users from login_user_db: ".join(", ", keys(%currently_logged_in_user)), 7); 
 
+    # 
     my @logged_in_user = split(/\s+/, $login);
     &main::daemon_log("$session_id DEBUG: logged in users reported from client: ".join(", ", @logged_in_user), 7); 
     foreach my $user (@logged_in_user) {
@@ -330,7 +332,7 @@ sub TASKBEGIN {
         &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
         
         # set fai_state to localboot
-        &main::change_fai_state('localboot', \@{$msg_hash->{target}}, $session_id);
+        &main::change_fai_state('localboot', \@{$msg_hash->{'macaddress'}}, $session_id);
 
     } else {
         my $sql_statement = "UPDATE $main::job_queue_tn ".

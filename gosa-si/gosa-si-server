@@ -1343,7 +1343,6 @@ sub change_fai_state {
           filter => "$search"
           );
 
-#print STDERR "=============================================\n$search\n"; 
       if ($mesg->count) {
         my @entries = $mesg->entries;
         foreach my $entry (@entries) {
