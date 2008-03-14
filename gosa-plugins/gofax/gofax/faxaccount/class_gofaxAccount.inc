@@ -161,7 +161,7 @@ class gofaxAccount extends plugin
       /* Do we represent a valid account? */
       if (!$this->is_account && $this->parent === NULL){
         $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-          _("This account has no fax extensions.")."</b>";
+          msgPool::noValidExtension(_("GOfax"))."</b>";
         $display.= back_to_main();
         return ($display);
       }
@@ -171,10 +171,10 @@ class gofaxAccount extends plugin
       if ($this->parent !== NULL){
         if ($this->is_account){
           $display= $this->show_disable_header(_("Remove fax account"),
-              _("This account has fax features enabled. You can disable them by clicking below."));
+              msgPool::featuresEnabled(_("GOfax")));
         } else {
           $display= $this->show_enable_header(_("Create fax account"),
-              _("This account has fax features disabled. You can enable them by clicking below."));
+              msgPool::featuresDisabled(_("GOfax")));
           return ($display);
         }
       }
@@ -238,7 +238,7 @@ class gofaxAccount extends plugin
     /* Add number to blocklist (dialog) */
     if (isset($_POST['add_blocklist_number']) && $_POST['block_number'] != ""){
       if (!tests::is_phone_nr($_POST['block_number'])){
-        msg_dialog::display(_("Error"), _("Phone number is not valid!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Phone number")), ERROR_DIALOG);
       } else {
         array_push($this->current_blocklist, $_POST['block_number']);
         $this->current_blocklist= array_unique($this->current_blocklist);
@@ -671,11 +671,11 @@ class gofaxAccount extends plugin
 
     /* must: facsimileTelephoneNumber */
     if ($this->facsimileTelephoneNumber == ""){
-      $message[]= _("Fax is empty!");
+      $message[]= msgPool::required(_("Faxi number"));
     }
 
     if (!tests::is_phone_nr($this->facsimileTelephoneNumber)){
-      $message[]= _("Fax number is not valid!");
+      $message[]= msgPool::invalid(_("Fax number"),$this->facsimileTelephoneNumber,"/[0-9]/");
     }
 
     /* IF mail is specified (which is only the case if there's no mail account
@@ -685,7 +685,7 @@ class gofaxAccount extends plugin
       if ($this->mail == ""){
         $message[]= _("Mail delivery is requested without target address!");
       } elseif (!tests::is_email($this->mail)){
-        $message[]= _("Mail address is invalid!");
+        $message[]= msgPool::invalid(_("Mail address"),"","",_("your-name@your-domain.com"));
       }
     }
 
