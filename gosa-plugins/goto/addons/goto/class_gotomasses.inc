@@ -260,8 +260,7 @@ class gotomasses extends plugin
       if(is_object($this->dialog)){
         $this->dialog->save_object();
         if(!$this->o_queue->append($this->dialog)){
-          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                $this->o_queue->get_error()),ERROR_DIALOG);
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
         }else{
           $this->dialog = FALSE; 
           $this->current = -1;
