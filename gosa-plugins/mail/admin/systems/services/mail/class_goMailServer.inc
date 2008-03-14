@@ -597,13 +597,13 @@ class goMailServer extends goService{
   { 
     $message =plugin::check();
     if(!is_numeric($this->postfixHeaderSizeLimit)){
-      $message[] = msgPool::invalid(_("Header size limit",$this->postfixHeaderSizeLimit,"/[0-9]/");
+      $message[] = msgPool::invalid(_("Header size limit",$this->postfixHeaderSizeLimit,"/[0-9]/"));
     }
     if(!is_numeric($this->postfixMailboxSizeLimit)){
-      $message[] = msgPool::invalid(_("Mailbox size limit",$this->postfixMailboxSizeLimit,"/[0-9]/");
+      $message[] = msgPool::invalid(_("Mailbox size limit",$this->postfixMailboxSizeLimit,"/[0-9]/"));
     }
     if(!is_numeric($this->postfixMessageSizeLimit)){
-      $message[] = msgPool::invalid(_("Message size limit",$this->postfixMessageSizeLimit,"/[0-9]/");
+      $message[] = msgPool::invalid(_("Message size limit",$this->postfixMessageSizeLimit,"/[0-9]/"));
     }
     return $message;
   }
