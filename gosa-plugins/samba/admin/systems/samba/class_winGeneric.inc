@@ -88,7 +88,7 @@ class wingeneric extends plugin
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no network features.")."</b>";
+        msgPool::noValidExtension(_("network"))."</b>";
       return($display);
     }
 
@@ -201,7 +201,7 @@ class wingeneric extends plugin
     }
 
     if(!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a component on this 'Base'.");
+      $message[]= msgPool::permCreate();
     }
 
     if ($this->orig_dn != $this->dn){
@@ -214,7 +214,7 @@ class wingeneric extends plugin
             continue;
           }
           if ($attrs['dn'] != $this->orig_dn){
-            $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+            $message[]= msgPool::duplicated(_("Name"));
             break;
           }
         }
