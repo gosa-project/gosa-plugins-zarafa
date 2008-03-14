@@ -101,7 +101,7 @@ sub save_fai_log {
     my @all_logs = split(/log_file:/, $all_logs); 
     foreach my $log (@all_logs) {
         if (length $log == 0) { next; };
-        my ($log_file, $log_string) = split("\n", $log, 2);
+        my ($log_file, $log_string) = split(":", $log);
         my $client_fai_log_file = File::Spec->catfile( $client_fai_log_dir, $log_file);
 
 	open(my $LOG_FILE, ">$client_fai_log_file"); 
