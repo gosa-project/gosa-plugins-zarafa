@@ -263,8 +263,8 @@ class divListBlocklist extends MultiSelectWindow
     }
     $num_objs = count($list);
 
-    $num_obj_str = sprintf(_("Number of listed %s"),_("blocklists"));
-    $num_dep_str = sprintf(_("Number of listed %s"),_("departments"));
+    $num_obj_str = sprintf(_("Number of listed '%s'"),_("blocklists"));
+    $num_dep_str = sprintf(_("Number of listed '%s'"),_("departments"));
 
     $str = "<img class='center' src='images/list_blocklist.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
