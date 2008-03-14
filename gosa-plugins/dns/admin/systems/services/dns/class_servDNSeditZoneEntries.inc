@@ -245,7 +245,7 @@ class servDNSeditZoneEntries extends plugin
       /* Checking entry name
        */
       if(!preg_match("/^[a-z0-9_\.-]+$/i", $DevName) || (empty($DevName))){
-        $message[] = _("Entry name contains invalid characters.");
+        $message[] = msgPool::invalid(_("Name"),$DevName,"/[a-z0-9_\.-]/i");
       }      
 
       /* Renaming check for existing devices 
@@ -451,13 +451,6 @@ class servDNSeditZoneEntries extends plugin
           <input type='image' name='AddRecord_".$name."'   src='images/list_new.png' alt='"._("Add")."' title='"._("Add")."'>
           <input type='image' name='RemoveRecord_".$name."' src='images/edittrash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
         ";
-
-#        if($record['type'] == "aRecord"){
-#          $str .="<input type='image' name='AddPtr_".$name."' src='images/network.png' 
-#                    alt='"._("Add PTR")."' title='"._("Add PTR record")."'>";
-#        }else{
-#          $str .= "<img src='images/empty.png' alt=''>";
-#        }
 
       $str.=
         "</td>

@@ -404,50 +404,43 @@ class servdnseditZone extends plugin
     /* Check if zoneName is already in use */
     $usedZones = $this->getUsedZoneNames();
     if(($this->isNew == true)||($this->zoneName  != $this->InitialzoneName)||($this->ReverseZone != $this->InitialReverseZone)){
-    /*  if((isset($usedZones[$this->zoneName]))&&($this->zoneName  != $this->InitialzoneName)){
-        $message[] =_("This zoneName is already in use");
-      }
-      if((in_array($this->ReverseZone,$usedZones))&&($this->ReverseZone != $this->InitialReverseZone)){
-        $message[] =_("This reverse zone is already in use");
-      }*/
-    }
 
     if(empty($this->zoneName)){
-      $message[] =sprintf(_("The zone name is not valid!"));
+      $message[] = msgPool::required(_("Zone name"));
     }
 
     if(empty($this->ReverseZone)){
-      $message[] =sprintf(_("The reverse zone is not valid!"));
+      $message[] = msgPool::required(_("Reverse zone"));
     }
 
     if($this->zoneName != strtolower($this->zoneName)){
-      $message[] = _("Only lowercase characters are allowed in zone names!");
+      $message[] = msgPool::invalid(_("Zone name"),"","",_("Only lowercase allowed"));
     }
 
     if(!is_numeric($this->sOAserial)){
-      $message[] = sprintf(_("'%s' is not numeric!"), _("Serial"));
+      $message[] = msgPool::invalid(_("Serial"),$this->sOAserial,"/[0-9]/");
     }
 
     if(!is_numeric($this->sOArefresh)){
-      $message[] = sprintf(_("'%s' is not numeric!"), _("Refresh"));
+      $message[] = msgPool::invalid(_("Refresh"),$this->sOArefresh,"/[0-9]/");
     }
 
     if(!is_numeric($this->sOAttl)){
-      $message[] = sprintf(_("'%s' is not numeric!"), _("TTL"));
+      $message[] = msgPool::invalid(_("Time to life"),$this->sOAttl,"/[0-9]/");
     }
 
     if(!is_numeric($this->sOAexpire)){
-      $message[] = sprintf(_("'%s' is not numeric!"), _("Expire"));
+      $message[] = msgPool::invalid(_("Expire"),$this->sOAexpire,"/[0-9]/");
     }
 
     if(!is_numeric($this->sOAretry)){
-      $message[] = sprintf(_("'%s' is not numeric!"), _("Retry"));
+      $message[] = msgPool::invalid(_("Retry"),$this->sOAretry,"/[0-9]/");
     }
 
     foreach($this->Records as $name => $values){
       /* only lower-case is allowed in record entries ... */
       if($values['value'] != strtolower($values['value'])){
-        $message[] = sprintf(_("Only lowercase records are allowed for '%s'!"),$values['type']);
+        $message[] = msgPool::invalid($values['type'],"","",_("Only lowercase allowed"));
       }
     }
 
@@ -456,7 +449,7 @@ class servdnseditZone extends plugin
   
     /* Check for valid&complete IP address */
     if(!tests::is_ip($addr)){
-      $message[] = _("Network address is not valid!");
+      $message[] = msgPool::invalid(_("Network address"));
     }
  
     /* Check if given address matches selected network class */
@@ -479,7 +472,7 @@ class servdnseditZone extends plugin
                   }
                 }
                 break;
-      default : $message[] =sprintf(_("The network class '%s' is not valid!"),$this->NetworkClass);
+      default : $message[] = msgPool::invalid(_("Network class"),$this->NetworkClass);
     }
 
     return ($message);
