@@ -65,13 +65,13 @@ class gosaLogServer extends goService{
   { 
     $message = plugin::check();
     if (empty($this->goLogDBUser)){
-      $message[]= sprintf_("The attribute user is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("User"));
     }
     if (empty($this->goLogDBPassword)){
-      $message[]= sprintf_("The attribute password is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("Password"));
     }
     if (empty($this->goLogDB)){
-      $message[]= sprintf_("The attribute database is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("Database"));
     }
     return($message);
   }
