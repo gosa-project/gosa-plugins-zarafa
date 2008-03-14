@@ -28,7 +28,7 @@ class goKioskService extends goService{
 
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
-      print_red(_("There is no KIOSKPATH defined in your gosa.conf. Can't manage kiosk profiles!"));
+      print_red(msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")));
     }else{
       $this->gotoKioskProfiles = array();
       if(isset($this->attrs['gotoKioskProfile']) && is_array($this->attrs['gotoKioskProfile'])){
