@@ -53,17 +53,17 @@ class divListBlocklist extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("Blocklist name")." / "._("Department"), "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("Name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 
     /* Add Checkboxes / SubSearch checkbox */
-    $this->AddCheckBox("ShowSendBocklists"     , _("Select to see send blocklists"),    _("Show send blocklists"),true);
-    $this->AddCheckBox("ShowReceiveBlocklists" , _("Select to see receive blocklists"), _("Show receive blocklists"),true);
+    $this->AddCheckBox("ShowSendBocklists"     , msgPool::selectToView(_("Send blocklist"),     _("Show send blocklists"),true);
+    $this->AddCheckBox("ShowReceiveBlocklists" , msgPool::selectToView(_("Receive blocklist"),  _("Show receive blocklists"),true);
   
     $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Search in subtrees"), false);
 
-    /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
+    /* Name,Text,Default,Connect with alphabet */
     $this->AddRegex   ("Regex",     _("Regular expression for matching list names"),"*" , true);
   }
 

@@ -2,7 +2,7 @@
 class blocklist extends plugin
 {
   /* Definitions */
-  var $plHeadline= "FAX Blocklists";
+  var $plHeadline= "FAX blocklists";
   var $plDescription= "This does something";
 
   var $blocklists       = array();

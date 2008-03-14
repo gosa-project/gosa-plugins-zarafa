@@ -6,7 +6,7 @@ define("BLOCK_LIST_SEND" , 1);
 class blocklistGeneric extends plugin
 {
   /* Definitions */
-  var $plHeadline= "FAX Blocklists";
+  var $plHeadline= "Fax blocklists";
   var $plDescription= "This does something";
 
   var $cn ="";
@@ -358,7 +358,7 @@ class blocklistGeneric extends plugin
           "plDepends"         => array(),
 
           "plPriority"    => 0,
-          "plSection"     => array("administration" => _("FAX Blocklists")),
+          "plSection"     => array("administration" => _("Fax blocklists")),
           "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
               "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
           "plProvidedAcls" => array(
