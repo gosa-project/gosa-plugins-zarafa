@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:25+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:460 personal/scalix/generic.tpl:98
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:460
 msgid "Scalix email addresses"
 msgstr "Adresse de messagerie Scalix"
 
@@ -23,13 +23,96 @@ msgstr "Adresse de messagerie Scalix"
 msgid "List of scalix email addresses"
 msgstr "Liste des adresses de messagerie scalix"
 
-#: personal/scalix/paste_generic.tpl:12 personal/scalix/generic.tpl:111
-msgid "Add"
-msgstr "Ajouter"
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr "Informations"
 
-#: personal/scalix/paste_generic.tpl:13 personal/scalix/generic.tpl:114
-msgid "Delete"
-msgstr "Supprimer"
+#: personal/scalix/generic.tpl:7
+msgid "Scalix mailnode"
+msgstr "Noeud de mail Scalix"
+
+#: personal/scalix/generic.tpl:15
+msgid "Salix mailbox class"
+msgstr "Type de compte de messagerie Scalix"
+
+#: personal/scalix/generic.tpl:19
+msgid ""
+"Limited users con not make use of the group calendar functionality in Scalix"
+msgstr ""
+"Les utilisateurs limites ne peuvent pas utiliser les fonctionnalité de "
+"calendrier de groupe de scalix"
+
+#: personal/scalix/generic.tpl:26
+msgid "Scalix server language"
+msgstr "Langue du serveur scalix"
+
+#: personal/scalix/generic.tpl:30
+msgid "Message catalog language for client."
+msgstr "Langue pour le client."
+
+#: personal/scalix/generic.tpl:45
+msgid "Select for admin capability."
+msgstr "Sélectionner pour ajouter les droits d'administration."
+
+#: personal/scalix/generic.tpl:45
+msgid "Scalix Administrator"
+msgstr "Administrateur Scalix"
+
+#: personal/scalix/generic.tpl:50
+msgid "Select for mailbox admin capability."
+msgstr ""
+"Sélectionnez pour ajouter les droits d'administration sur les comptes de "
+"messagerie."
+
+#: personal/scalix/generic.tpl:50
+msgid "Scalix Mailbox Administrator"
+msgstr "Administrateur des comptes Scalix"
+
+#: personal/scalix/generic.tpl:55
+msgid "Hide user entry from addressbook."
+msgstr "Cacher l'entrée de l'utilisateur dans le carnet d'adresse"
+
+#: personal/scalix/generic.tpl:55
+msgid "Hide this user entry in Scalix"
+msgstr "Cacher l'entrée de cet utilisateur dans Scalix"
+
+#: personal/scalix/generic.tpl:64
+msgid "Limit mailbox size"
+msgstr "Limiter la taille des comptes de messagerie"
+
+#: personal/scalix/generic.tpl:67
+msgid "MB"
+msgstr "MB"
+
+#: personal/scalix/generic.tpl:75
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+"Comme sanction pour dépassement du quota du compte de messagerie, empêcher "
+"l'utilisateur d'envoyer des messages."
+
+#: personal/scalix/generic.tpl:75
+msgid "Limit Outbound Mail"
+msgstr "Limiter les messages en sortie"
+
+#: personal/scalix/generic.tpl:80
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+"Comme sanction pour dépassement du quota du compte de messagerie, empêcher "
+"l'utilisateur de recevoir des messages."
+
+#: personal/scalix/generic.tpl:80
+msgid "Limit Inbound Mail"
+msgstr "Limiter les messages en entrée"
+
+#: personal/scalix/generic.tpl:85
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+"Comme sanction pour dépassement du quota du compte de messagerie, avertir "
+"l'utilisateur par email."
+
+#: personal/scalix/generic.tpl:85
+msgid "Notify User"
+msgstr "Avertir l'utilisateur"
 
 #: personal/scalix/class_scalixAccount.inc:16
 msgid "Scalix"
@@ -167,118 +250,30 @@ msgstr "Limite en entrée"
 msgid "Notify user"
 msgstr "Avertir l'utilisateur"
 
-#: personal/scalix/main.inc:101
-msgid "Save"
-msgstr "Enregistrer"
-
-#: personal/scalix/main.inc:103
-msgid "Cancel"
-msgstr "Annuler"
-
 #: personal/scalix/main.inc:112
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
 "cette boite de dialogue"
 
-#: personal/scalix/main.inc:114
-msgid "Edit"
-msgstr "Editer"
-
 #: personal/scalix/main.inc:125
 msgid "Scalix settings"
 msgstr "Paramètres de Scalix"
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr "Informations"
+#~ msgid "Add"
+#~ msgstr "Ajouter"
 
-#: personal/scalix/generic.tpl:7
-msgid "Scalix mailnode"
-msgstr "Noeud de mail Scalix"
+#~ msgid "Delete"
+#~ msgstr "Supprimer"
 
-#: personal/scalix/generic.tpl:15
-msgid "Salix mailbox class"
-msgstr "Type de compte de messagerie Scalix"
+#~ msgid "Save"
+#~ msgstr "Enregistrer"
 
-#: personal/scalix/generic.tpl:19
-msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
-msgstr ""
-"Les utilisateurs limites ne peuvent pas utiliser les fonctionnalité de "
-"calendrier de groupe de scalix"
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
 
-#: personal/scalix/generic.tpl:26
-msgid "Scalix server language"
-msgstr "Langue du serveur scalix"
-
-#: personal/scalix/generic.tpl:30
-msgid "Message catalog language for client."
-msgstr "Langue pour le client."
-
-#: personal/scalix/generic.tpl:45
-msgid "Select for admin capability."
-msgstr "Sélectionner pour ajouter les droits d'administration."
-
-#: personal/scalix/generic.tpl:45
-msgid "Scalix Administrator"
-msgstr "Administrateur Scalix"
-
-#: personal/scalix/generic.tpl:50
-msgid "Select for mailbox admin capability."
-msgstr ""
-"Sélectionnez pour ajouter les droits d'administration sur les comptes de "
-"messagerie."
-
-#: personal/scalix/generic.tpl:50
-msgid "Scalix Mailbox Administrator"
-msgstr "Administrateur des comptes Scalix"
-
-#: personal/scalix/generic.tpl:55
-msgid "Hide user entry from addressbook."
-msgstr "Cacher l'entrée de l'utilisateur dans le carnet d'adresse"
-
-#: personal/scalix/generic.tpl:55
-msgid "Hide this user entry in Scalix"
-msgstr "Cacher l'entrée de cet utilisateur dans Scalix"
-
-#: personal/scalix/generic.tpl:64
-msgid "Limit mailbox size"
-msgstr "Limiter la taille des comptes de messagerie"
-
-#: personal/scalix/generic.tpl:67
-msgid "MB"
-msgstr "MB"
-
-#: personal/scalix/generic.tpl:75
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-"Comme sanction pour dépassement du quota du compte de messagerie, empêcher "
-"l'utilisateur d'envoyer des messages."
-
-#: personal/scalix/generic.tpl:75
-msgid "Limit Outbound Mail"
-msgstr "Limiter les messages en sortie"
-
-#: personal/scalix/generic.tpl:80
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-"Comme sanction pour dépassement du quota du compte de messagerie, empêcher "
-"l'utilisateur de recevoir des messages."
-
-#: personal/scalix/generic.tpl:80
-msgid "Limit Inbound Mail"
-msgstr "Limiter les messages en entrée"
-
-#: personal/scalix/generic.tpl:85
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-"Comme sanction pour dépassement du quota du compte de messagerie, avertir "
-"l'utilisateur par email."
-
-#: personal/scalix/generic.tpl:85
-msgid "Notify User"
-msgstr "Avertir l'utilisateur"
+#~ msgid "Edit"
+#~ msgstr "Editer"
 
 #~ msgid "There is no scalix mailnode specified."
 #~ msgstr "Il n'y a pas de mailnode scalix spécifié."

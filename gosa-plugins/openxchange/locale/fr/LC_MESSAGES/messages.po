@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -15,6 +15,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
 msgstr "Open-Xchange"
@@ -24,37 +26,25 @@ msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 msgid "Error"
 msgstr "Erreur"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#, fuzzy, php-format
-msgid "Cannot connect to %s database!"
-msgstr "Impossible de se connecter au serveur de base de données !"
-
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#, fuzzy
+msgid "Open-Xchange database"
+msgstr "Compte Open Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, fuzzy
 msgid "Configuration error"
 msgstr "Le fichier de configuration peut être écrit"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy, php-format
-msgid "%s database configuration is missing!"
-msgstr "Configuration de la base de données des fax"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, php-format
-msgid "Missing %s PHP extension!"
-msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
@@ -138,6 +128,14 @@ msgstr "Information Utilisateur"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "Zone Horaire de l'utilisateur"
+
+#, fuzzy
+#~ msgid "Cannot connect to %s database!"
+#~ msgstr "Impossible de se connecter au serveur de base de données !"
+
+#, fuzzy
+#~ msgid "%s database configuration is missing!"
+#~ msgstr "Configuration de la base de données des fax"
 
 #~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
 #~ msgstr ""

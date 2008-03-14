@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,79 +17,250 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:1
-msgid "FAX database information"
+#: gofax/faxaccount/locals.tpl:6
+msgid "Select numbers to add"
 msgstr ""
 
-#: admin/systems/services/gofax/goFaxServer.tpl:4
-msgid "FAX DB user"
+#: gofax/faxaccount/locals.tpl:19
+msgid "Filters"
 msgstr ""
 
-#: admin/systems/services/gofax/goFaxServer.tpl:12
-#: admin/systems/services/gofax/class_goFaxServer.inc:98
-msgid "Password"
-msgstr "Contraseña"
-
-#: admin/systems/services/gofax/goFaxServer.tpl:23
-msgid "Save"
-msgstr "Guardar"
-
-#: admin/systems/services/gofax/goFaxServer.tpl:25
-#: gofax/faxaccount/locals.tpl:62 gofax/faxaccount/lists.tpl:33
-#: gofax/faxaccount/main.inc:94 gofax/blocklists/remove.tpl:17
-#: gofax/blocklists/remove.tpl:21 gofax/blocklists/generic.tpl:101
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:30
-msgid "FAX database"
-msgstr "Base de datos de FAX"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:59
-msgid "FAX database configuration"
-msgstr "Configuración de la base de datos de FAX"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:68
-msgid "The attribute user is empty or contains invalid characters."
-msgstr "El atributo usuario está vacío o tiene caracteres no validos"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:71
-msgid "The attribute password is empty or contains invalid characters."
-msgstr "El atributo contraseña está vacío o tiene caracteres no validos"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:88
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
-msgid "Fax database"
-msgstr "Base de datos de Fax"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
-msgid "Services"
-msgstr "Servicios"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:97
-msgid "Login name"
-msgstr "Nombre de acceso"
-
-#: gofax/faxreports/class_faxreport.inc:6
-msgid "FAX Reports"
+#: gofax/faxaccount/locals.tpl:28
+msgid "Display numbers of department"
 msgstr ""
 
-#: gofax/faxreports/class_faxreport.inc:7
+#: gofax/faxaccount/locals.tpl:29
+msgid "Choose the department the search will be based on"
+msgstr ""
+
+#: gofax/faxaccount/locals.tpl:38
+msgid "Display numbers matching"
+msgstr ""
+
+#: gofax/faxaccount/locals.tpl:41
+msgid "Regular expression for matching numbers"
+msgstr ""
+
+#: gofax/faxaccount/locals.tpl:47
+msgid "Display numbers of user"
+msgstr ""
+
+#: gofax/faxaccount/locals.tpl:50
+msgid "User name of which numbers are shown"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:6
+msgid "FAX"
+msgstr ""
+
 #: gofax/faxaccount/class_gofaxAccount.inc:7
-#: gofax/blocklists/class_blocklistGeneric.inc:10
+#: gofax/faxreports/class_faxreport.inc:7
 #: gofax/blocklists/class_blocklistManagement.inc:6
+#: gofax/blocklists/class_blocklistGeneric.inc:10
 msgid "This does something"
 msgstr ""
 
+#: gofax/faxaccount/class_gofaxAccount.inc:164
+msgid "This account has no fax extensions."
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:173
+msgid "Remove fax account"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:174
+msgid ""
+"This account has fax features enabled. You can disable them by clicking "
+"below."
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:176
+msgid "Create fax account"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:177
+msgid ""
+"This account has fax features disabled. You can enable them by clicking "
+"below."
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:241
 #: gofax/faxreports/class_faxreport.inc:115
 #: gofax/faxreports/class_faxreport.inc:125
 #: gofax/faxreports/class_faxreport.inc:129
 #: gofax/faxreports/class_faxreport.inc:134
 #: gofax/faxreports/class_faxreport.inc:157
 #: gofax/faxreports/class_faxreport.inc:297
-#: gofax/faxaccount/class_gofaxAccount.inc:241
 #: gofax/blocklists/class_blocklistGeneric.inc:122
 msgid "Error"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+msgid "Phone number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:452
+#: gofax/faxaccount/class_gofaxAccount.inc:534
+msgid "back"
+msgstr "atrás"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:658
+#: gofax/faxaccount/class_gofaxAccount.inc:787
+#: gofax/blocklists/class_blocklistGeneric.inc:193
+#: gofax/blocklists/class_blocklistGeneric.inc:266
+msgid "LDAP error"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:674
+msgid "Fax is empty!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:678
+msgid "Fax number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:686
+msgid "Mail delivery is requested without target address!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:688
+msgid "Mail address is invalid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:694
+msgid "Printing is requested without a target printer!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:858
+#: gofax/faxaccount/paste_generic.tpl:8 gofax/faxaccount/generic.tpl:10
+#: gofax/blocklists/class_blocklistGeneric.inc:355
+msgid "Fax"
+msgstr "Fax"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:859
+msgid "Fax account settings"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:868
+msgid "Enable/Disable fax"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:869
+msgid "Receive blocklist"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:870
+msgid "Send blocklist"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:871
+msgid "Fax number"
+msgstr "Número de Fax"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:872
+msgid "Alternate fax number"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:873 gofax/faxaccount/generic.tpl:73
+msgid "Deliver fax as mail"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:874 gofax/faxaccount/generic.tpl:80
+msgid "Deliver fax to printer"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:37
+msgid "Delivery format"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:24
+msgid "Language"
+msgstr ""
+
+#: gofax/faxaccount/lists.tpl:5
+msgid "Blocked numbers/lists"
+msgstr ""
+
+#: gofax/faxaccount/lists.tpl:17
+msgid "List of predefined blocklists"
+msgstr ""
+
+#: gofax/faxaccount/lists.tpl:25
+msgid "Add the list to the blocklists"
+msgstr ""
+
+#: gofax/faxaccount/paste_generic.tpl:4 gofax/faxaccount/generic.tpl:6
+#: gofax/blocklists/generic.tpl:1
+msgid "Generic"
+msgstr "Genérico"
+
+#: gofax/faxaccount/paste_generic.tpl:13 gofax/faxaccount/generic.tpl:17
+msgid "Fax number for GOfax to trigger on"
+msgstr ""
+
+#: gofax/faxaccount/paste_generic.tpl:18
+msgid "Alternate fax numbers will not be copied"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:13
+msgid "Multiple edit"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:29
+msgid "Specify the GOfax communication language for fax to mail gateway"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:41
+msgid "Specify delivery format for fax to mail gateway"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:54
+msgid "Delivery methods"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:59
+msgid "Temporary disable fax usage"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:65
+msgid "Deliver fax as mail to"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:99
+msgid "Alternate fax numbers"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:114
+msgid "Add local"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:122
+msgid "Blocklists"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:125
+msgid "Blocklists for incoming fax"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:128 gofax/faxaccount/generic.tpl:136
+msgid "Edit"
+msgstr "Editar"
+
+#: gofax/faxaccount/generic.tpl:133
+msgid "Blocklists for outgoing fax"
+msgstr ""
+
+#: gofax/faxaccount/main.inc:100
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Pulse en el botón - Editar - para cambiar la información en esta ventana"
+
+#: gofax/faxaccount/main.inc:109
+msgid "FAX settings"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:6
+msgid "FAX Reports"
 msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:115
@@ -126,8 +297,8 @@ msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
-#: gofax/blocklists/class_blocklistManagement.inc:247
-#: gofax/blocklists/class_blocklistManagement.inc:305
+#: gofax/blocklists/class_blocklistManagement.inc:246
+#: gofax/blocklists/class_blocklistManagement.inc:304
 msgid "Permission error"
 msgstr ""
 
@@ -240,6 +411,7 @@ msgid "Search"
 msgstr ""
 
 #: gofax/faxreports/contents.tpl:30 gofax/faxreports/detail.tpl:21
+#: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "Usuario"
 
@@ -257,6 +429,10 @@ msgstr ""
 
 #: gofax/faxreports/contents.tpl:50
 msgid "Search returned no results..."
+msgstr ""
+
+#: gofax/faxreports/main.inc:14
+msgid "FAX reports"
 msgstr ""
 
 #: gofax/faxreports/detail.tpl:5
@@ -279,465 +455,15 @@ msgstr ""
 msgid "Status message"
 msgstr ""
 
-#: gofax/faxreports/detail.tpl:67
-msgid "Back"
-msgstr "Atrás"
-
-#: gofax/faxreports/main.inc:14
-msgid "FAX reports"
-msgstr ""
-
-#: gofax/faxaccount/paste_generic.tpl:4 gofax/faxaccount/generic.tpl:6
-#: gofax/blocklists/generic.tpl:1
-msgid "Generic"
-msgstr "Genérico"
-
-#: gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:858 gofax/faxaccount/generic.tpl:10
-#: gofax/blocklists/class_blocklistGeneric.inc:355
-msgid "Fax"
-msgstr "Fax"
-
-#: gofax/faxaccount/paste_generic.tpl:13 gofax/faxaccount/generic.tpl:17
-msgid "Fax number for GOfax to trigger on"
-msgstr ""
-
-#: gofax/faxaccount/paste_generic.tpl:18
-msgid "Alternate fax numbers will not be copied"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:6
-msgid "Select numbers to add"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:19
-msgid "Filters"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:28
-msgid "Display numbers of department"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:29
-msgid "Choose the department the search will be based on"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:38
-msgid "Display numbers matching"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:41
-msgid "Regular expression for matching numbers"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:47
-msgid "Display numbers of user"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:50
-msgid "User name of which numbers are shown"
-msgstr ""
-
-#: gofax/faxaccount/locals.tpl:60 gofax/faxaccount/lists.tpl:13
-#: gofax/faxaccount/generic.tpl:111 gofax/blocklists/generic.tpl:80
-msgid "Add"
-msgstr "Añadir"
-
-#: gofax/faxaccount/lists.tpl:5
-msgid "Blocked numbers/lists"
-msgstr ""
-
-#: gofax/faxaccount/lists.tpl:14 gofax/faxaccount/generic.tpl:117
-#: gofax/blocklists/remove.tpl:15 gofax/blocklists/remove.tpl:19
-#: gofax/blocklists/generic.tpl:83
-msgid "Delete"
-msgstr "Eliminar"
-
-#: gofax/faxaccount/lists.tpl:17
-msgid "List of predefined blocklists"
-msgstr ""
-
-#: gofax/faxaccount/lists.tpl:25
-msgid "Add the list to the blocklists"
-msgstr ""
-
-#: gofax/faxaccount/lists.tpl:31 gofax/blocklists/generic.tpl:100
-msgid "Apply"
-msgstr "Aplicar"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:6
-msgid "FAX"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:164
-msgid "This account has no fax extensions."
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:173
-msgid "Remove fax account"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:174
-msgid ""
-"This account has fax features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:176
-msgid "Create fax account"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:177
-msgid ""
-"This account has fax features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:241
-#: gofax/blocklists/class_blocklistGeneric.inc:122
-msgid "Phone number is not valid!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:452
-#: gofax/faxaccount/class_gofaxAccount.inc:534
-msgid "back"
-msgstr "atrás"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:658
-#: gofax/faxaccount/class_gofaxAccount.inc:787
-#: gofax/blocklists/class_blocklistGeneric.inc:193
-#: gofax/blocklists/class_blocklistGeneric.inc:266
-msgid "LDAP error"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:674
-msgid "Fax is empty!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:678
-msgid "Fax number is not valid!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:686
-msgid "Mail delivery is requested without target address!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:688
-msgid "Mail address is invalid!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:694
-msgid "Printing is requested without a target printer!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:859
-msgid "Fax account settings"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:868
-msgid "Enable/Disable fax"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:869
-msgid "Receive blocklist"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:870
-msgid "Send blocklist"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:871
-msgid "Fax number"
-msgstr "Número de Fax"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:872
-msgid "Alternate fax number"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:873 gofax/faxaccount/generic.tpl:73
-msgid "Deliver fax as mail"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:874 gofax/faxaccount/generic.tpl:80
-msgid "Deliver fax to printer"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:37
-msgid "Delivery format"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:24
-msgid "Language"
-msgstr ""
-
-#: gofax/faxaccount/main.inc:92 gofax/blocklists/generic.tpl:99
-msgid "Ok"
-msgstr "Ok"
-
-#: gofax/faxaccount/main.inc:100
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Pulse en el botón - Editar - para cambiar la información en esta ventana"
-
-#: gofax/faxaccount/main.inc:101 gofax/faxaccount/generic.tpl:128
-#: gofax/faxaccount/generic.tpl:136
-msgid "Edit"
-msgstr "Editar"
-
-#: gofax/faxaccount/main.inc:109
-msgid "FAX settings"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:13
-msgid "Multiple edit"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:29
-msgid "Specify the GOfax communication language for fax to mail gateway"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:41
-msgid "Specify delivery format for fax to mail gateway"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:54
-msgid "Delivery methods"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:59
-msgid "Temporary disable fax usage"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:65
-msgid "Deliver fax as mail to"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:99
-msgid "Alternate fax numbers"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:114
-msgid "Add local"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:122
-msgid "Blocklists"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:125
-msgid "Blocklists for incoming fax"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:133
-msgid "Blocklists for outgoing fax"
-msgstr ""
-
-#: gofax/blocklists/paste_generic.tpl:3 gofax/blocklists/generic.tpl:8
-msgid "List name"
-msgstr ""
-
-#: gofax/blocklists/paste_generic.tpl:5 gofax/blocklists/generic.tpl:12
-msgid "Name of blocklist"
-msgstr ""
-
+#: gofax/blocklists/class_blocklistManagement.inc:5
 #: gofax/blocklists/class_blocklistGeneric.inc:9
 #: gofax/blocklists/class_blocklistGeneric.inc:361
-#: gofax/blocklists/class_blocklistManagement.inc:5
 msgid "FAX Blocklists"
 msgstr ""
 
-#: gofax/blocklists/class_blocklistGeneric.inc:154
-msgid "send"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:154
-msgid "receive"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:207
-msgid "Name is empty!"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:210
-#, fuzzy
-msgid "Name contains invalid characters!"
-msgstr "El atributo usuario está vacío o tiene caracteres no validos"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:217
-msgid "Name is already in use!"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:356
-#: gofax/blocklists/class_blocklistGeneric.inc:362
-msgid "Fax blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:365
-msgid "Name"
-msgstr "Nombre"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:366
-#: gofax/blocklists/generic.tpl:51
-msgid "Description"
-msgstr "Descripción"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:367
-#: gofax/blocklists/class_divListBlocklists.inc:135
-#: gofax/blocklists/generic.tpl:17
-msgid "Base"
-msgstr "Base"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:368
-#: gofax/blocklists/class_divListBlocklists.inc:147
-msgid "Blocklist"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:369
-msgid "Blocklist type"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:31
-#: gofax/blocklists/class_divListBlocklists.inc:32
-msgid "List of blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:36
-msgid ""
-"This menu allows you to create, delete and edit selected blocklists. Having "
-"a large size of lists, you might prefer the range selectors on top of the "
-"select box."
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-msgid "Blocklist name"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-msgid "Department"
-msgstr "Departamento"
-
-#: gofax/blocklists/class_divListBlocklists.inc:58
-#: gofax/blocklists/class_divListBlocklists.inc:140
-msgid "Actions"
-msgstr "Acciones"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Select to see send blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Show send blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:62
-msgid "Select to see receive blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:62
-msgid "Show receive blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:65
-msgid "Select to search within subtrees"
-msgstr "Seleccione para buscar dentro de los subárboles"
-
-#: gofax/blocklists/class_divListBlocklists.inc:65
-msgid "Search in subtrees"
-msgstr "Buscar en subárboles"
-
-#: gofax/blocklists/class_divListBlocklists.inc:68
-msgid "Regular expression for matching list names"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:137
-msgid "Submit department"
-msgstr "Enviar departamento"
-
-#: gofax/blocklists/class_divListBlocklists.inc:137
-msgid "Submit"
-msgstr "Enviar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:142
-msgid "Create"
-msgstr "Crear"
-
-#: gofax/blocklists/class_divListBlocklists.inc:153
-msgid "Remove"
-msgstr "Eliminar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:159
-#, fuzzy
-msgid "Copy"
-msgstr "copiar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:161
-#, fuzzy
-msgid "Cut"
-msgstr "mover"
-
-#: gofax/blocklists/class_divListBlocklists.inc:165
-#: gofax/blocklists/class_divListBlocklists.inc:168
-msgid "Paste"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:211
-msgid "edit"
-msgstr "editar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:211
-msgid "Edit user"
-msgstr "Editar usuario"
-
-#: gofax/blocklists/class_divListBlocklists.inc:222
-msgid "cut"
-msgstr "mover"
-
-#: gofax/blocklists/class_divListBlocklists.inc:222
-msgid "Cut this entry"
-msgstr "Mover esta entrada"
-
-#: gofax/blocklists/class_divListBlocklists.inc:224
-msgid "copy"
-msgstr "copiar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:224
-msgid "Copy this entry"
-msgstr "Copiar esta entrada"
-
-#: gofax/blocklists/class_divListBlocklists.inc:230
-msgid "delete"
-msgstr "eliminar"
-
-#: gofax/blocklists/class_divListBlocklists.inc:230
-msgid "Delete user"
-msgstr "Eliminar usuario"
-
-#: gofax/blocklists/class_divListBlocklists.inc:267
-msgid "Number of listed blocklists"
-msgstr ""
-
-#: gofax/blocklists/class_divListBlocklists.inc:268
-#, fuzzy
-msgid "Number of listed departments"
-msgstr "Eliminar departamentos seleccionados"
-
-#: gofax/blocklists/class_blocklistManagement.inc:225
-#, php-format
-msgid "You're about to delete the following blocklists(s) %s"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistManagement.inc:247
-#, php-format
-msgid "You have not permission to delete '%s'!"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistManagement.inc:286
-#, php-format
-msgid "You're about to delete the blocklist '%s'."
-msgstr ""
-
-#: gofax/blocklists/class_blocklistManagement.inc:305
-msgid "You have not permission to delete this entry!"
+#: gofax/blocklists/class_blocklistManagement.inc:224
+#: gofax/blocklists/class_blocklistManagement.inc:285
+msgid "blocklist"
 msgstr ""
 
 #: gofax/blocklists/remove.tpl:2
@@ -754,8 +480,147 @@ msgstr ""
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
-#: gofax/blocklists/main.inc:27 gofax/blocklists/main.inc:29
-msgid "Blocklist management"
+#: gofax/blocklists/class_divListBlocklists.inc:31
+#: gofax/blocklists/class_divListBlocklists.inc:32
+msgid "List of blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+msgid "Blocklist name"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+msgid "Department"
+msgstr "Departamento"
+
+#: gofax/blocklists/class_divListBlocklists.inc:57
+#: gofax/blocklists/class_divListBlocklists.inc:139
+msgid "Actions"
+msgstr "Acciones"
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+msgid "Select to see send blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+msgid "Show send blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+msgid "Select to see receive blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+msgid "Show receive blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:64
+msgid "Select to search within subtrees"
+msgstr "Seleccione para buscar dentro de los subárboles"
+
+#: gofax/blocklists/class_divListBlocklists.inc:64
+msgid "Search in subtrees"
+msgstr "Buscar en subárboles"
+
+#: gofax/blocklists/class_divListBlocklists.inc:67
+msgid "Regular expression for matching list names"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:134
+#: gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:367
+msgid "Base"
+msgstr "Base"
+
+#: gofax/blocklists/class_divListBlocklists.inc:136
+msgid "Submit department"
+msgstr "Enviar departamento"
+
+#: gofax/blocklists/class_divListBlocklists.inc:136
+msgid "Submit"
+msgstr "Enviar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:141
+msgid "Create"
+msgstr "Crear"
+
+#: gofax/blocklists/class_divListBlocklists.inc:146
+#: gofax/blocklists/class_blocklistGeneric.inc:368
+msgid "Blocklist"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:152
+msgid "Remove"
+msgstr "Eliminar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:158
+#, fuzzy
+msgid "Copy"
+msgstr "copiar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:160
+#, fuzzy
+msgid "Cut"
+msgstr "mover"
+
+#: gofax/blocklists/class_divListBlocklists.inc:164
+#: gofax/blocklists/class_divListBlocklists.inc:167
+msgid "Paste"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:210
+msgid "edit"
+msgstr "editar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:210
+msgid "Edit user"
+msgstr "Editar usuario"
+
+#: gofax/blocklists/class_divListBlocklists.inc:221
+msgid "cut"
+msgstr "mover"
+
+#: gofax/blocklists/class_divListBlocklists.inc:221
+msgid "Cut this entry"
+msgstr "Mover esta entrada"
+
+#: gofax/blocklists/class_divListBlocklists.inc:223
+msgid "copy"
+msgstr "copiar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:223
+msgid "Copy this entry"
+msgstr "Copiar esta entrada"
+
+#: gofax/blocklists/class_divListBlocklists.inc:229
+msgid "delete"
+msgstr "eliminar"
+
+#: gofax/blocklists/class_divListBlocklists.inc:229
+msgid "Delete user"
+msgstr "Eliminar usuario"
+
+#: gofax/blocklists/class_divListBlocklists.inc:266
+#: gofax/blocklists/class_divListBlocklists.inc:267
+#, fuzzy, php-format
+msgid "Number of listed %s"
+msgstr "Eliminar departamentos seleccionados"
+
+#: gofax/blocklists/class_divListBlocklists.inc:266
+msgid "blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_divListBlocklists.inc:267
+#, fuzzy
+msgid "departments"
+msgstr "Departamento"
+
+#: gofax/blocklists/paste_generic.tpl:3 gofax/blocklists/generic.tpl:8
+msgid "List name"
+msgstr ""
+
+#: gofax/blocklists/paste_generic.tpl:5 gofax/blocklists/generic.tpl:12
+msgid "Name of blocklist"
 msgstr ""
 
 #: gofax/blocklists/generic.tpl:20
@@ -774,6 +639,11 @@ msgstr "Tipo"
 msgid "Select wether to filter incoming or outgoing calls"
 msgstr ""
 
+#: gofax/blocklists/generic.tpl:51
+#: gofax/blocklists/class_blocklistGeneric.inc:366
+msgid "Description"
+msgstr "Descripción"
+
 #: gofax/blocklists/generic.tpl:54
 msgid "Descriptive text for this blocklist"
 msgstr ""
@@ -789,6 +659,105 @@ msgstr ""
 #: gofax/blocklists/generic.tpl:92
 msgid "Numbers can also contain wild cards."
 msgstr ""
+
+#: gofax/blocklists/main.inc:27 gofax/blocklists/main.inc:29
+msgid "Blocklist management"
+msgstr ""
+
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+#, fuzzy
+msgid "Phone number"
+msgstr "Número de Fax"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:154
+msgid "send"
+msgstr ""
+
+#: gofax/blocklists/class_blocklistGeneric.inc:154
+msgid "receive"
+msgstr ""
+
+#: gofax/blocklists/class_blocklistGeneric.inc:207
+#: gofax/blocklists/class_blocklistGeneric.inc:210
+#: gofax/blocklists/class_blocklistGeneric.inc:217
+#: gofax/blocklists/class_blocklistGeneric.inc:365
+msgid "Name"
+msgstr "Nombre"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:356
+#: gofax/blocklists/class_blocklistGeneric.inc:362
+msgid "Fax blocklists"
+msgstr ""
+
+#: gofax/blocklists/class_blocklistGeneric.inc:369
+msgid "Blocklist type"
+msgstr ""
+
+#: admin/systems/services/gofax/goFaxServer.tpl:1
+msgid "FAX database information"
+msgstr ""
+
+#: admin/systems/services/gofax/goFaxServer.tpl:4
+msgid "FAX DB user"
+msgstr ""
+
+#: admin/systems/services/gofax/goFaxServer.tpl:12
+#: admin/systems/services/gofax/class_goFaxServer.inc:71
+#: admin/systems/services/gofax/class_goFaxServer.inc:98
+msgid "Password"
+msgstr "Contraseña"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:30
+msgid "FAX database"
+msgstr "Base de datos de FAX"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:59
+msgid "FAX database configuration"
+msgstr "Configuración de la base de datos de FAX"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:88
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
+msgid "Fax database"
+msgstr "Base de datos de Fax"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
+msgid "Services"
+msgstr "Servicios"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:97
+msgid "Login name"
+msgstr "Nombre de acceso"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "The attribute user is empty or contains invalid characters."
+#~ msgstr "El atributo usuario está vacío o tiene caracteres no validos"
+
+#~ msgid "The attribute password is empty or contains invalid characters."
+#~ msgstr "El atributo contraseña está vacío o tiene caracteres no validos"
+
+#~ msgid "Back"
+#~ msgstr "Atrás"
+
+#~ msgid "Add"
+#~ msgstr "Añadir"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#, fuzzy
+#~ msgid "Name contains invalid characters!"
+#~ msgstr "El atributo usuario está vacío o tiene caracteres no validos"
 
 #~ msgid "Required field 'Name' is not set."
 #~ msgstr "No ha introducido el campo obligatorio 'Nombre'."

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:25+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:460 personal/scalix/generic.tpl:98
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:460
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Email-Adresse"
@@ -31,13 +31,94 @@ msgstr "Email-Adresse"
 msgid "List of scalix email addresses"
 msgstr "Liste alternativer Mail-Adressen"
 
-#: personal/scalix/paste_generic.tpl:12 personal/scalix/generic.tpl:111
-msgid "Add"
-msgstr "Hinzufügen"
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr "Allgemein"
 
-#: personal/scalix/paste_generic.tpl:13 personal/scalix/generic.tpl:114
-msgid "Delete"
-msgstr "Entfernen"
+#: personal/scalix/generic.tpl:7
+msgid "Scalix mailnode"
+msgstr ""
+
+#: personal/scalix/generic.tpl:15
+#, fuzzy
+msgid "Salix mailbox class"
+msgstr "Maximale Größe der Mailbox"
+
+#: personal/scalix/generic.tpl:19
+msgid ""
+"Limited users con not make use of the group calendar functionality in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:26
+#, fuzzy
+msgid "Scalix server language"
+msgstr "Speichern des Servers ist fehlgeschlagen"
+
+#: personal/scalix/generic.tpl:30
+msgid "Message catalog language for client."
+msgstr ""
+
+#: personal/scalix/generic.tpl:45
+#, fuzzy
+msgid "Select for admin capability."
+msgstr "Wählen Sie aus der Liste"
+
+#: personal/scalix/generic.tpl:45
+#, fuzzy
+msgid "Scalix Administrator"
+msgstr "Administrator"
+
+#: personal/scalix/generic.tpl:50
+msgid "Select for mailbox admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:50
+#, fuzzy
+msgid "Scalix Mailbox Administrator"
+msgstr "Administrator"
+
+#: personal/scalix/generic.tpl:55
+#, fuzzy
+msgid "Hide user entry from addressbook."
+msgstr "Bitte geben Sie eine Mail-Adresse ein"
+
+#: personal/scalix/generic.tpl:55
+msgid "Hide this user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:64
+#, fuzzy
+msgid "Limit mailbox size"
+msgstr "Maximale Größe der Mailbox"
+
+#: personal/scalix/generic.tpl:67
+msgid "MB"
+msgstr "MB"
+
+#: personal/scalix/generic.tpl:75
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:75
+#, fuzzy
+msgid "Limit Outbound Mail"
+msgstr "Profil-Kontingent"
+
+#: personal/scalix/generic.tpl:80
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:80
+msgid "Limit Inbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:85
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:85
+msgid "Notify User"
+msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -189,117 +270,31 @@ msgstr ""
 msgid "Notify user"
 msgstr "Zähle Benutzer"
 
-#: personal/scalix/main.inc:101
-msgid "Save"
-msgstr "Speichern"
-
-#: personal/scalix/main.inc:103
-msgid "Cancel"
-msgstr "Abbrechen"
-
 #: personal/scalix/main.inc:112
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
 "Dialog zu ändern"
 
-#: personal/scalix/main.inc:114
-msgid "Edit"
-msgstr "Bearbeiten"
-
 #: personal/scalix/main.inc:125
 #, fuzzy
 msgid "Scalix settings"
 msgstr "Mail-Einstellungen"
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr "Allgemein"
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
 
-#: personal/scalix/generic.tpl:7
-msgid "Scalix mailnode"
-msgstr ""
+#~ msgid "Delete"
+#~ msgstr "Entfernen"
 
-#: personal/scalix/generic.tpl:15
-#, fuzzy
-msgid "Salix mailbox class"
-msgstr "Maximale Größe der Mailbox"
+#~ msgid "Save"
+#~ msgstr "Speichern"
 
-#: personal/scalix/generic.tpl:19
-msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
-msgstr ""
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
 
-#: personal/scalix/generic.tpl:26
-#, fuzzy
-msgid "Scalix server language"
-msgstr "Speichern des Servers ist fehlgeschlagen"
-
-#: personal/scalix/generic.tpl:30
-msgid "Message catalog language for client."
-msgstr ""
-
-#: personal/scalix/generic.tpl:45
-#, fuzzy
-msgid "Select for admin capability."
-msgstr "Wählen Sie aus der Liste"
-
-#: personal/scalix/generic.tpl:45
-#, fuzzy
-msgid "Scalix Administrator"
-msgstr "Administrator"
-
-#: personal/scalix/generic.tpl:50
-msgid "Select for mailbox admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:50
-#, fuzzy
-msgid "Scalix Mailbox Administrator"
-msgstr "Administrator"
-
-#: personal/scalix/generic.tpl:55
-#, fuzzy
-msgid "Hide user entry from addressbook."
-msgstr "Bitte geben Sie eine Mail-Adresse ein"
-
-#: personal/scalix/generic.tpl:55
-msgid "Hide this user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:64
-#, fuzzy
-msgid "Limit mailbox size"
-msgstr "Maximale Größe der Mailbox"
-
-#: personal/scalix/generic.tpl:67
-msgid "MB"
-msgstr "MB"
-
-#: personal/scalix/generic.tpl:75
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:75
-#, fuzzy
-msgid "Limit Outbound Mail"
-msgstr "Profil-Kontingent"
-
-#: personal/scalix/generic.tpl:80
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:80
-msgid "Limit Inbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:85
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:85
-msgid "Notify User"
-msgstr ""
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
 
 #, fuzzy
 #~ msgid "There is no scalix mailnode specified."

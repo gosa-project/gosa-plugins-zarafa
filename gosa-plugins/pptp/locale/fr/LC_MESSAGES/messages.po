@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,6 +13,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: personal/connectivity/pptp/pptp.tpl:3
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+msgid "PPTP account"
+msgstr "Compte PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
 #: personal/connectivity/pptp/class_pptpAccount.inc:177
@@ -27,11 +32,6 @@ msgstr "Ceci fait quelque chose"
 #: personal/connectivity/pptp/class_pptpAccount.inc:158
 msgid "LDAP error"
 msgstr ""
-
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
-#: personal/connectivity/pptp/pptp.tpl:3
-msgid "PPTP account"
-msgstr "Compte PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:178
 msgid "Connectivity addon"

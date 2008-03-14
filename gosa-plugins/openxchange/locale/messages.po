@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
 msgstr ""
@@ -26,35 +28,22 @@ msgid "This does something"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 msgid "Error"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#, php-format
-msgid "Cannot connect to %s database!"
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+msgid "Open-Xchange database"
 msgstr ""
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 msgid "Configuration error"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, php-format
-msgid "%s database configuration is missing!"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, php-format
-msgid "Missing %s PHP extension!"
 msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:741

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,172 +19,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/samba/samba3.tpl:6 personal/samba/samba2.tpl:6
-msgid "Generic"
-msgstr "Algemeen"
+#: personal/samba/samba3_workstations.tpl:6
+msgid "Select workstations to add"
+msgstr "Selecteer de toe te voegen werkstations"
 
-#: personal/samba/samba3.tpl:13 personal/samba/samba3.tpl:106
-#: personal/samba/class_sambaAccount.inc:743
-#: personal/samba/class_sambaAccount.inc:1235
-msgid "Home directory"
-msgstr "Persoonlijke map"
+#: personal/samba/samba3_workstations.tpl:20
+msgid "Filters"
+msgstr "Filters"
 
-#: personal/samba/samba3.tpl:27 personal/samba/class_sambaAccount.inc:1195
-msgid "Domain"
-msgstr "Domein"
+#: personal/samba/samba3_workstations.tpl:26
+msgid "Display workstations of department"
+msgstr "Toon werkstations van afdeling"
 
-#: personal/samba/samba3.tpl:44 personal/samba/samba2.tpl:37
-msgid "Script path"
-msgstr "Inlogscript"
+#: personal/samba/samba3_workstations.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr "Selecteer de afdeling waarbinnen gezocht zal worden"
 
-#: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:120
-#: personal/samba/samba2.tpl:45 personal/samba/class_sambaAccount.inc:744
-#: personal/samba/class_sambaAccount.inc:1236
-msgid "Profile path"
-msgstr "Profielpad"
+#: personal/samba/samba3_workstations.tpl:31
+msgid "Regular expression for matching addresses"
+msgstr "Reguliere expresie voor overeenkomende adressen"
 
-#: personal/samba/samba3.tpl:66
-msgid "Terminal Server"
-msgstr "Terminal Server"
-
-#: personal/samba/samba3.tpl:103 personal/samba/class_sambaAccount.inc:1176
-msgid "Allow login on terminal server"
-msgstr "Sta inloggen op de Terminal Server toe"
-
-#: personal/samba/samba3.tpl:140 personal/samba/class_sambaAccount.inc:1177
-msgid "Inherit client config"
-msgstr "Client configuratie voor initieel programma overnemen"
-
-#: personal/samba/samba3.tpl:143
-msgid "Initial program"
-msgstr "Initiëel programma"
-
-#: personal/samba/samba3.tpl:151
-msgid "Working directory"
-msgstr "Werkdirectory"
-
-#: personal/samba/samba3.tpl:168
-msgid "Timeout settings (in minutes)"
-msgstr "Terminal Service timeouts (in minuten)"
-
-#: personal/samba/samba3.tpl:184 personal/samba/class_sambaAccount.inc:751
-#: personal/samba/class_sambaAccount.inc:1243
-msgid "Connection"
-msgstr "Max. verbindingsduur"
-
-#: personal/samba/samba3.tpl:198 personal/samba/class_sambaAccount.inc:752
-#: personal/samba/class_sambaAccount.inc:1244
-msgid "Disconnection"
-msgstr "Max. verbrekingsduur"
-
-#: personal/samba/samba3.tpl:212 personal/samba/class_sambaAccount.inc:753
-#: personal/samba/class_sambaAccount.inc:1245
-msgid "IDLE"
-msgstr "Max. inactiviteitsduur"
-
-#: personal/samba/samba3.tpl:228
-msgid "Client devices"
-msgstr "Terminal Service client apparaten"
-
-#: personal/samba/samba3.tpl:235
-msgid "Connect client drives at logon"
-msgstr "Verbindt client schijven bij inloggen"
-
-#: personal/samba/samba3.tpl:243
-msgid "Connect client printers at logon"
-msgstr "Verbindt client printers bij inloggen"
-
-#: personal/samba/samba3.tpl:251
-msgid "Default to main client printer"
-msgstr "Standaard printer als client printer"
-
-#: personal/samba/samba3.tpl:261
-msgid "Miscellaneous"
-msgstr "Terminal Service diverse"
-
-#: personal/samba/samba3.tpl:265
-msgid "Shadowing"
-msgstr "Schaduwen van andere sessie"
-
-#: personal/samba/samba3.tpl:276
-msgid "On broken or timed out"
-msgstr "Bij verbroken verbinding of timeout"
-
-#: personal/samba/samba3.tpl:286
-msgid "Reconnect if disconnected"
-msgstr "Herstel sessie indien verbroken"
-
-#: personal/samba/samba3.tpl:303 personal/samba/samba2.tpl:59
-msgid "Access options"
-msgstr "Toegangsopties"
-
-#: personal/samba/samba3.tpl:311 personal/samba/samba2.tpl:67
-msgid "Allow user to change password from client"
-msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
-
-#: personal/samba/samba3.tpl:316 personal/samba/samba2.tpl:72
-#: personal/samba/class_sambaAccount.inc:1180
-msgid "Login from windows client requires no password"
-msgstr "Inloggen op Windows werkstation zonder wachtwoord toestaan"
-
-#: personal/samba/samba3.tpl:321 personal/samba/class_sambaAccount.inc:1181
-msgid "Lock samba account"
-msgstr "Blokkeer het Samba/Windows account"
-
-#: personal/samba/samba3.tpl:326 personal/samba/samba2.tpl:87
-msgid "Password expires on"
-msgstr "Wachtwoord verloopt op"
-
-#: personal/samba/samba3.tpl:346 personal/samba/class_sambaAccount.inc:1187
-msgid "Limit Logon Time"
-msgstr "Stel laatste inlogtijd in op"
-
-#: personal/samba/samba3.tpl:366 personal/samba/class_sambaAccount.inc:1188
-msgid "Limit Logoff Time"
-msgstr "Stel laatste uitlogtijd in op"
-
-#: personal/samba/samba3.tpl:387
-msgid "Account expires after"
-msgstr "Het account verloopt op"
-
-#: personal/samba/samba3.tpl:410
+#: personal/samba/sambaLogonHours.tpl:21
 #, fuzzy
-msgid "Samba logon times"
-msgstr "Samba groep"
+msgid "Specify the hours this user is allowed to log in"
+msgstr "Specificeer de mailserver waarop het account opgeslagen wordt"
 
-#: personal/samba/samba3.tpl:410
+#: personal/samba/sambaLogonHours.tpl:27
 #, fuzzy
-msgid "Edit settings..."
-msgstr "E-mail instellingen"
-
-#: personal/samba/samba3.tpl:418
-msgid "Allow connection from these workstations only"
-msgstr "Sta alleen verbindingen vanaf deze werkstations toe"
-
-#: personal/samba/samba3.tpl:429
-msgid "Used by all users"
-msgstr ""
-
-#: personal/samba/samba3.tpl:432
-msgid "Used by some users"
-msgstr ""
-
-#: personal/samba/samba3.tpl:437 personal/samba/samba3.tpl:447
-#: personal/samba/samba3_workstations.tpl:39
-msgid "Add"
-msgstr "Toevoegen"
-
-#: personal/samba/samba3.tpl:438 personal/samba/samba3.tpl:450
-msgid "Delete"
-msgstr "Verwijderen"
-
-#: personal/samba/samba2.tpl:13
-msgid "Samba home"
-msgstr "Samba home"
-
-#: personal/samba/samba2.tpl:77
-msgid "Temporary disable samba account"
-msgstr "Schakel het Samba/Windows account tijdelijk uit"
+msgid "Hour"
+msgstr "uur"
 
 #: personal/samba/class_sambaAccount.inc:24
 #: personal/samba/class_sambaAccount.inc:217
@@ -249,6 +112,33 @@ msgstr "alleen vanaf vorige client"
 msgid "LDAP error"
 msgstr ""
 
+#: personal/samba/class_sambaAccount.inc:743
+#: personal/samba/class_sambaAccount.inc:1235 personal/samba/samba3.tpl:13
+#: personal/samba/samba3.tpl:106
+msgid "Home directory"
+msgstr "Persoonlijke map"
+
+#: personal/samba/class_sambaAccount.inc:744
+#: personal/samba/class_sambaAccount.inc:1236 personal/samba/samba2.tpl:45
+#: personal/samba/samba3.tpl:52 personal/samba/samba3.tpl:120
+msgid "Profile path"
+msgstr "Profielpad"
+
+#: personal/samba/class_sambaAccount.inc:751
+#: personal/samba/class_sambaAccount.inc:1243 personal/samba/samba3.tpl:184
+msgid "Connection"
+msgstr "Max. verbindingsduur"
+
+#: personal/samba/class_sambaAccount.inc:752
+#: personal/samba/class_sambaAccount.inc:1244 personal/samba/samba3.tpl:198
+msgid "Disconnection"
+msgstr "Max. verbrekingsduur"
+
+#: personal/samba/class_sambaAccount.inc:753
+#: personal/samba/class_sambaAccount.inc:1245 personal/samba/samba3.tpl:212
+msgid "IDLE"
+msgstr "Max. inactiviteitsduur"
+
 #: personal/samba/class_sambaAccount.inc:762
 #, fuzzy
 msgid "The windows usermanager allows eight clients at maximum!"
@@ -278,10 +168,27 @@ msgstr "Samba Instellingen"
 msgid "My account"
 msgstr "Mijn account"
 
+#: personal/samba/class_sambaAccount.inc:1176 personal/samba/samba3.tpl:103
+msgid "Allow login on terminal server"
+msgstr "Sta inloggen op de Terminal Server toe"
+
+#: personal/samba/class_sambaAccount.inc:1177 personal/samba/samba3.tpl:140
+msgid "Inherit client config"
+msgstr "Client configuratie voor initieel programma overnemen"
+
 #: personal/samba/class_sambaAccount.inc:1179
 #, fuzzy
 msgid "Allow user to change password"
 msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
+
+#: personal/samba/class_sambaAccount.inc:1180 personal/samba/samba2.tpl:72
+#: personal/samba/samba3.tpl:316
+msgid "Login from windows client requires no password"
+msgstr "Inloggen op Windows werkstation zonder wachtwoord toestaan"
+
+#: personal/samba/class_sambaAccount.inc:1181 personal/samba/samba3.tpl:321
+msgid "Lock samba account"
+msgstr "Blokkeer het Samba/Windows account"
 
 #: personal/samba/class_sambaAccount.inc:1184
 #, fuzzy
@@ -292,6 +199,14 @@ msgstr "Het account verloopt op"
 #, fuzzy
 msgid "Password expires"
 msgstr "Wachtwoord verloopt op"
+
+#: personal/samba/class_sambaAccount.inc:1187 personal/samba/samba3.tpl:346
+msgid "Limit Logon Time"
+msgstr "Stel laatste inlogtijd in op"
+
+#: personal/samba/class_sambaAccount.inc:1188 personal/samba/samba3.tpl:366
+msgid "Limit Logoff Time"
+msgstr "Stel laatste uitlogtijd in op"
 
 #: personal/samba/class_sambaAccount.inc:1189
 #, fuzzy
@@ -317,6 +232,10 @@ msgstr "Inlogscript"
 msgid "Generic profile path"
 msgstr "Profielpad"
 
+#: personal/samba/class_sambaAccount.inc:1195 personal/samba/samba3.tpl:27
+msgid "Domain"
+msgstr "Domein"
+
 #: personal/samba/class_sambaAccount.inc:1196
 #, fuzzy
 msgid "Allow connection from"
@@ -330,44 +249,107 @@ msgstr ""
 "Het Windows gebruikersbeheer programma staat slechts acht clients toe. U "
 "heeft er meer dan acht opgegeven."
 
-#: personal/samba/samba3_workstations.tpl:6
-msgid "Select workstations to add"
-msgstr "Selecteer de toe te voegen werkstations"
+#: personal/samba/samba2.tpl:6 personal/samba/samba3.tpl:6
+msgid "Generic"
+msgstr "Algemeen"
 
-#: personal/samba/samba3_workstations.tpl:20
-msgid "Filters"
-msgstr "Filters"
+#: personal/samba/samba2.tpl:13
+msgid "Samba home"
+msgstr "Samba home"
 
-#: personal/samba/samba3_workstations.tpl:26
-msgid "Display workstations of department"
-msgstr "Toon werkstations van afdeling"
+#: personal/samba/samba2.tpl:37 personal/samba/samba3.tpl:44
+msgid "Script path"
+msgstr "Inlogscript"
 
-#: personal/samba/samba3_workstations.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "Selecteer de afdeling waarbinnen gezocht zal worden"
+#: personal/samba/samba2.tpl:59 personal/samba/samba3.tpl:303
+msgid "Access options"
+msgstr "Toegangsopties"
 
-#: personal/samba/samba3_workstations.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "Reguliere expresie voor overeenkomende adressen"
+#: personal/samba/samba2.tpl:67 personal/samba/samba3.tpl:311
+msgid "Allow user to change password from client"
+msgstr "Gebruiker mag zijn wachtwoord vanaf een werkstation wijzigen"
 
-#: personal/samba/samba3_workstations.tpl:41
-#: personal/samba/sambaLogonHours.tpl:96
-msgid "Cancel"
-msgstr "Annuleren"
+#: personal/samba/samba2.tpl:77
+msgid "Temporary disable samba account"
+msgstr "Schakel het Samba/Windows account tijdelijk uit"
 
-#: personal/samba/sambaLogonHours.tpl:21
+#: personal/samba/samba2.tpl:87 personal/samba/samba3.tpl:326
+msgid "Password expires on"
+msgstr "Wachtwoord verloopt op"
+
+#: personal/samba/samba3.tpl:66
+msgid "Terminal Server"
+msgstr "Terminal Server"
+
+#: personal/samba/samba3.tpl:143
+msgid "Initial program"
+msgstr "Initiëel programma"
+
+#: personal/samba/samba3.tpl:151
+msgid "Working directory"
+msgstr "Werkdirectory"
+
+#: personal/samba/samba3.tpl:168
+msgid "Timeout settings (in minutes)"
+msgstr "Terminal Service timeouts (in minuten)"
+
+#: personal/samba/samba3.tpl:228
+msgid "Client devices"
+msgstr "Terminal Service client apparaten"
+
+#: personal/samba/samba3.tpl:235
+msgid "Connect client drives at logon"
+msgstr "Verbindt client schijven bij inloggen"
+
+#: personal/samba/samba3.tpl:243
+msgid "Connect client printers at logon"
+msgstr "Verbindt client printers bij inloggen"
+
+#: personal/samba/samba3.tpl:251
+msgid "Default to main client printer"
+msgstr "Standaard printer als client printer"
+
+#: personal/samba/samba3.tpl:261
+msgid "Miscellaneous"
+msgstr "Terminal Service diverse"
+
+#: personal/samba/samba3.tpl:265
+msgid "Shadowing"
+msgstr "Schaduwen van andere sessie"
+
+#: personal/samba/samba3.tpl:276
+msgid "On broken or timed out"
+msgstr "Bij verbroken verbinding of timeout"
+
+#: personal/samba/samba3.tpl:286
+msgid "Reconnect if disconnected"
+msgstr "Herstel sessie indien verbroken"
+
+#: personal/samba/samba3.tpl:387
+msgid "Account expires after"
+msgstr "Het account verloopt op"
+
+#: personal/samba/samba3.tpl:410
 #, fuzzy
-msgid "Specify the hours this user is allowed to log in"
-msgstr "Specificeer de mailserver waarop het account opgeslagen wordt"
+msgid "Samba logon times"
+msgstr "Samba groep"
 
-#: personal/samba/sambaLogonHours.tpl:27
+#: personal/samba/samba3.tpl:410
 #, fuzzy
-msgid "Hour"
-msgstr "uur"
+msgid "Edit settings..."
+msgstr "E-mail instellingen"
 
-#: personal/samba/sambaLogonHours.tpl:94
-msgid "Apply"
-msgstr "Toepassen"
+#: personal/samba/samba3.tpl:418
+msgid "Allow connection from these workstations only"
+msgstr "Sta alleen verbindingen vanaf deze werkstations toe"
+
+#: personal/samba/samba3.tpl:429
+msgid "Used by all users"
+msgstr ""
+
+#: personal/samba/samba3.tpl:432
+msgid "Used by some users"
+msgstr ""
 
 #: admin/systems/samba/wingeneric.tpl:6
 msgid "Machine name"
@@ -391,18 +373,12 @@ msgid "Description"
 msgstr "Omschrijving"
 
 #: admin/systems/samba/class_winGeneric.inc:91
-msgid "This 'dn' has no network features."
-msgstr "Deze 'dn' heeft geen netwerk mogelijkheden."
-
-#: admin/systems/samba/class_winGeneric.inc:204
-msgid "You have no permissions to create a component on this 'Base'."
+msgid "network"
 msgstr ""
-"U heeft geen toestemming om een component aan te maken onder deze 'Basis'."
 
 #: admin/systems/samba/class_winGeneric.inc:217
-#, php-format
-msgid "There is already an entry '%s' in the base choosen by you"
-msgstr "Er is al een invoer '%s' onder de basis die u gekozen heeft"
+msgid "Name"
+msgstr ""
 
 #: admin/systems/samba/class_winGeneric.inc:285
 #, fuzzy
@@ -422,6 +398,28 @@ msgstr "Windows werkstation"
 #: admin/systems/samba/class_winGeneric.inc:294
 msgid "Workstation name"
 msgstr "Werkstation naam"
+
+#~ msgid "Add"
+#~ msgstr "Toevoegen"
+
+#~ msgid "Delete"
+#~ msgstr "Verwijderen"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Apply"
+#~ msgstr "Toepassen"
+
+#~ msgid "This 'dn' has no network features."
+#~ msgstr "Deze 'dn' heeft geen netwerk mogelijkheden."
+
+#~ msgid "You have no permissions to create a component on this 'Base'."
+#~ msgstr ""
+#~ "U heeft geen toestemming om een component aan te maken onder deze 'Basis'."
+
+#~ msgid "There is already an entry '%s' in the base choosen by you"
+#~ msgstr "Er is al een invoer '%s' onder de basis die u gekozen heeft"
 
 #, fuzzy
 #~ msgid "Sunday"

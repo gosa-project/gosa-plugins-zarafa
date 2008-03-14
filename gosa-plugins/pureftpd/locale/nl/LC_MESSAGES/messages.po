@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -28,82 +28,82 @@ msgid "This does something"
 msgstr "Dit doet iets"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:240
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
 msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:190
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
 msgid "Upload bandwidth"
 msgstr "Verstuur bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:193
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
 msgid "Download bandwidth"
 msgstr "Ontvangst bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:197
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
 msgid "Quota file"
 msgstr "Quota grootte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:200
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
 msgid "Quota size"
 msgstr "Quota grootte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:203
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 #, fuzzy
 msgid "Upload ratio"
 msgstr "Uploaden"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:206
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:207
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
 #, fuzzy
 msgid "Download ratio"
 msgstr "Systeem configuratie"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:260
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 #, fuzzy
 msgid "Ftp"
 msgstr "FS type"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 #, fuzzy
 msgid "Pure ftp account"
 msgstr "Fax account aanmaken"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Verbindingen"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:265
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 #, fuzzy
 msgid "Quota files"
 msgstr "Quota grootte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 #, fuzzy
 msgid "Quota MBytes"
 msgstr "Quota grootte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
 #, fuzzy
 msgid "Upload bandwith"
 msgstr "Verstuur bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
 #, fuzzy
 msgid "Download bandwith"
 msgstr "Ontvangst bandbreedte"
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "Status"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,11 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: personal/connectivity/pptp/pptp.tpl:3
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+msgid "PPTP account"
+msgstr "Konto PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
 #: personal/connectivity/pptp/class_pptpAccount.inc:177
@@ -27,11 +32,6 @@ msgstr "To robi coś"
 #: personal/connectivity/pptp/class_pptpAccount.inc:158
 msgid "LDAP error"
 msgstr ""
-
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
-#: personal/connectivity/pptp/pptp.tpl:3
-msgid "PPTP account"
-msgstr "Konto PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:178
 #, fuzzy

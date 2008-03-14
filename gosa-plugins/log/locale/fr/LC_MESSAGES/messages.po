@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,55 +14,69 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
-#, fuzzy
-msgid "GOsa MySQL logging service"
-msgstr "Service de journaux systèmes"
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr "Filtre"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "GOsa logging service"
-msgstr "Service de journaux systèmes"
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr "Afficher les machines"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "Services"
-msgstr "Services"
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "Action"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:20
-msgid "Database"
-msgstr "Base de données"
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "Intervalle de temps"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:101
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "Recherche de"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Entrée la chaîne de caractères à rechercher"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "Ensemble de règles"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "Editer"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "Recherche"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "Date"
+
 #: addons/logview/gosa_log_contents.tpl:84
+#: admin/systems/services/log/class_gosaLogServer.inc:68
+#: admin/systems/services/log/class_gosaLogServer.inc:101
 msgid "User"
 msgstr "Utilisateur"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:12
-msgid "Password"
-msgstr "Mot de passe"
+#: addons/logview/gosa_log_contents.tpl:85
+#, fuzzy
+msgid "Object type"
+msgstr "Nom de l'objet"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:103
-msgid "Allow view of entries on this server"
-msgstr "Permet la visualisation d'entrées sur ce serveur"
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "Objet"
 
-#: admin/systems/services/log/gosaLogServer.tpl:1
-msgid "GOsa logging database"
-msgstr "Base de données des journaux systèmes"
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "Message"
 
-#: admin/systems/services/log/gosaLogServer.tpl:4
-msgid "Database user"
-msgstr "Base de données utilisateur"
-
-#: admin/systems/services/log/gosaLogServer.tpl:31
-msgid "Save"
-msgstr "Enregistrer"
-
-#: admin/systems/services/log/gosaLogServer.tpl:33
-msgid "Cancel"
-msgstr "Annuler"
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "La recherche n'a renvoyé aucun résultat..."
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
 #: addons/logview/class_gosa_logview.inc:6
@@ -155,6 +169,22 @@ msgstr "Visualisation des journaux systèmes"
 msgid "Log view addon"
 msgstr "Extension de visualisation des journaux systèmes"
 
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "Niveaux des journaux systèmes"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "Niveau"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "Nom d'hôte"
+
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "Affichage des journaux système"
+
 #: addons/logview/class_gosa_logview.inc:200
 msgid "You have insufficient permissions to view syslog entries."
 msgstr ""
@@ -165,79 +195,50 @@ msgstr ""
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""
 
-#: addons/logview/contents.tpl:2 addons/logview/gosa_log_contents.tpl:2
-msgid "Filter"
-msgstr "Filtre"
+#: admin/systems/services/log/gosaLogServer.tpl:1
+msgid "GOsa logging database"
+msgstr "Base de données des journaux systèmes"
 
-#: addons/logview/contents.tpl:11 addons/logview/gosa_log_contents.tpl:11
-msgid "Show hosts"
-msgstr "Afficher les machines"
+#: admin/systems/services/log/gosaLogServer.tpl:4
+msgid "Database user"
+msgstr "Base de données utilisateur"
 
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Niveaux des journaux systèmes"
+#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/log/class_gosaLogServer.inc:71
+#: admin/systems/services/log/class_gosaLogServer.inc:102
+msgid "Password"
+msgstr "Mot de passe"
 
-#: addons/logview/contents.tpl:38 addons/logview/gosa_log_contents.tpl:38
-msgid "Time interval"
-msgstr "Intervalle de temps"
+#: admin/systems/services/log/gosaLogServer.tpl:20
+#: admin/systems/services/log/class_gosaLogServer.inc:74
+#: admin/systems/services/log/class_gosaLogServer.inc:100
+msgid "Database"
+msgstr "Base de données"
 
-#: addons/logview/contents.tpl:47 addons/logview/gosa_log_contents.tpl:47
-msgid "Search for"
-msgstr "Recherche de"
-
-#: addons/logview/contents.tpl:48 addons/logview/gosa_log_contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Entrée la chaîne de caractères à rechercher"
-
-#: addons/logview/contents.tpl:60 addons/logview/gosa_log_contents.tpl:60
-msgid "Ruleset"
-msgstr "Ensemble de règles"
-
-#: addons/logview/contents.tpl:62 addons/logview/gosa_log_contents.tpl:62
-msgid "Edit"
-msgstr "Editer"
-
-#: addons/logview/contents.tpl:68 addons/logview/gosa_log_contents.tpl:68
-msgid "Search"
-msgstr "Recherche"
-
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Niveau"
-
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Nom d'hôte"
-
-#: addons/logview/contents.tpl:84 addons/logview/gosa_log_contents.tpl:83
-msgid "Date"
-msgstr "Date"
-
-#: addons/logview/contents.tpl:85 addons/logview/gosa_log_contents.tpl:87
-msgid "Message"
-msgstr "Message"
-
-#: addons/logview/contents.tpl:97 addons/logview/gosa_log_contents.tpl:99
-msgid "Search returned no results..."
-msgstr "La recherche n'a renvoyé aucun résultat..."
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Action"
-
-#: addons/logview/gosa_log_contents.tpl:85
+#: admin/systems/services/log/class_gosaLogServer.inc:27
+#: admin/systems/services/log/class_gosaLogServer.inc:55
 #, fuzzy
-msgid "Object type"
-msgstr "Nom de l'objet"
+msgid "GOsa MySQL logging service"
+msgstr "Service de journaux systèmes"
 
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Objet"
+#: admin/systems/services/log/class_gosaLogServer.inc:91
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "GOsa logging service"
+msgstr "Service de journaux systèmes"
 
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "Affichage des journaux système"
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/log/class_gosaLogServer.inc:103
+msgid "Allow view of entries on this server"
+msgstr "Permet la visualisation d'entrées sur ce serveur"
+
+#~ msgid "Save"
+#~ msgstr "Enregistrer"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
 
 #, fuzzy
 #~ msgid "No %s servers defined!"

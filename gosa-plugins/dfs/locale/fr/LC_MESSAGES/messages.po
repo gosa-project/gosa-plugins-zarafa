@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -67,9 +67,33 @@ msgstr "Soumettre"
 msgid "Finish"
 msgstr "Terminé"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Annuler"
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "Propriétés DFS"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Nom du partage DFS"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Description"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Serveur de fichier"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Partage sur le serveur de fichier"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "Location DFS"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Lieu"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -105,33 +129,8 @@ msgstr "Expression régulière pour sélectionner les partages dfs"
 msgid "Distributed File System Administration"
 msgstr "Administration du systèmes de fichiers distribués DFS"
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "Propriétés DFS"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Nom du partage DFS"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Description"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Serveur de fichier"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Partage sur le serveur de fichier"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "Location DFS"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Lieu"
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
 
 #~ msgid "Removing of DFS share with dn '%s' failed."
 #~ msgstr "La suppression du partage DFS avec le dn '%s' à échoué."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: poEdit 1.3.1\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:367
+#: personal/netatalk/class_netatalk.inc:366
 msgid "Netatalk"
 msgstr ""
 
@@ -40,22 +40,22 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:222
-#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
 #, fuzzy
 msgid "Share"
 msgstr "сброс"
 
-#: personal/netatalk/class_netatalk.inc:288
-#: personal/netatalk/class_netatalk.inc:352
+#: personal/netatalk/class_netatalk.inc:287
+#: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:371
+#: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
 msgstr "Моя учетная запись"
 
-#: personal/netatalk/class_netatalk.inc:376
+#: personal/netatalk/class_netatalk.inc:375
 #, fuzzy
 msgid "User home path"
 msgstr "Домашний телефон"

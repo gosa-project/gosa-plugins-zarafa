@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -67,9 +67,33 @@ msgstr "Wyślij"
 msgid "Finish"
 msgstr "Zakończ"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Anuluj"
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "Właściwości DFS"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Nazwa udziału DFS"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Opis"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Serwer plików"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Udział na serwerze plików"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "Lokacja DFS"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Lokalizacja"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -105,33 +129,8 @@ msgstr "Wyrażenie regularne dla dopasowanie nazw udziałów DFS"
 msgid "Distributed File System Administration"
 msgstr "Administracja Distributed File System"
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "Właściwości DFS"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Nazwa udziału DFS"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Opis"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Serwer plików"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Udział na serwerze plików"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "Lokacja DFS"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Lokalizacja"
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
 
 #~ msgid "Removing of DFS share with dn '%s' failed."
 #~ msgstr "Usuwanie udziału DFS z dn '%s' nieudane."

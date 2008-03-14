@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -27,17 +27,42 @@ msgid "Admin user"
 msgstr "Użytkownik administracyjny"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:20
+#: admin/systems/services/kerberos/class_goKrbServer.inc:67
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Hasło"
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:30
-msgid "Save"
-msgstr "Zapisz"
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+msgid "Kerberos service"
+msgstr "Usługa Kerberos"
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:32
-msgid "Cancel"
-msgstr "Anuluj"
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Informacje dostępowe Kerberos kadmin"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+msgid "Admin"
+msgstr "Admin"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+msgid "Realm"
+msgstr "Dziedzina"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Informacje dostępowe Kerberos kadmin"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
+msgstr "Usługi"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
@@ -57,34 +82,10 @@ msgid ""
 "found for '%s'."
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:167
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
-#, php-format
-msgid "The configured HEIMDAL_KEYGEN '%s' is not a valid command."
-msgstr ""
-
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:147
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:408
 msgid "LDAP error"
 msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:185
-#, php-format
-msgid ""
-"The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command "
-"does not return 0."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:331
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
-#, fuzzy, php-format
-msgid "Please specify a numeric value for %s."
-msgstr "Proszę podać liczbę jako wartość dla ttl."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
 msgid "Max life"
@@ -107,50 +108,24 @@ msgstr ""
 msgid "Valid password"
 msgstr "Stare hasło"
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
-msgid "Kerberos service"
-msgstr "Usługa Kerberos"
+#~ msgid "Save"
+#~ msgstr "Zapisz"
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
+
 #, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Informacje dostępowe Kerberos kadmin"
+#~ msgid "Please specify a numeric value for %s."
+#~ msgstr "Proszę podać liczbę jako wartość dla ttl."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:67
-#, php-format
-msgid "The specified kerberos password is empty."
-msgstr "Podane hasło kerberos jest puste."
+#~ msgid "The specified kerberos password is empty."
+#~ msgstr "Podane hasło kerberos jest puste."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#, php-format
-msgid "The specified kerberos admin is empty."
-msgstr "Podany administrator kerberos jest pusty."
+#~ msgid "The specified kerberos admin is empty."
+#~ msgstr "Podany administrator kerberos jest pusty."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#, php-format
-msgid "The specified kerberos realm is empty."
-msgstr "Podana dziedzina kerberos jest pusta."
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Informacje dostępowe Kerberos kadmin"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
-msgstr "Usługi"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
-msgid "Realm"
-msgstr "Dziedzina"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-msgid "Admin"
-msgstr "Admin"
+#~ msgid "The specified kerberos realm is empty."
+#~ msgstr "Podana dziedzina kerberos jest pusta."
 
 #, fuzzy
 #~ msgid "Tried to remove heimdal extension."

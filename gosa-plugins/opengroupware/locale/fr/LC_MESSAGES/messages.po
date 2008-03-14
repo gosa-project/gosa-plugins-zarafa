@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,31 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: personal/connectivity/opengroupware/opengw.tpl:1
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-msgid "Opengroupware"
-msgstr "OpenGroupware"
-
-#: personal/connectivity/opengroupware/opengw.tpl:8
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
-msgid "Location team"
-msgstr "Emplacement de l'équipe"
-
-#: personal/connectivity/opengroupware/opengw.tpl:21
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
-msgid "Template user"
-msgstr "Modèle d'utilisateur"
-
-#: personal/connectivity/opengroupware/opengw.tpl:33
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
-msgid "Locked"
-msgstr "Verrouillé"
-
-#: personal/connectivity/opengroupware/opengw.tpl:48
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
-msgid "Teams"
-msgstr "Equipes"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:6
 msgid "Opengroupware account"
@@ -54,20 +29,20 @@ msgstr "Ceci fait quelque chose"
 msgid "Configuration error"
 msgstr "Le fichier de configuration peut être écrit"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:167
-#, php-format
-msgid "Missing %s PHP extension!"
-msgstr ""
-
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:172
-#, fuzzy, php-format
-msgid "%s database configuration is missing!"
-msgstr "Configuration de la base de données des fax"
+#, fuzzy
+msgid "Open Groupware database"
+msgstr "Compte Opengroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:180
-#, fuzzy, php-format
-msgid "Cannot connect to %s database!"
-msgstr "Impossible de se connecter au serveur de base de données !"
+#, fuzzy
+msgid "Open Groupware"
+msgstr "OpenGroupware"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
+#: personal/connectivity/opengroupware/opengw.tpl:1
+msgid "Opengroupware"
+msgstr "OpenGroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:339
 msgid "Open groupware account settings"
@@ -80,3 +55,31 @@ msgstr "Connectivité"
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:343
 msgid "My account"
 msgstr "Mon Compte"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+#: personal/connectivity/opengroupware/opengw.tpl:8
+msgid "Location team"
+msgstr "Emplacement de l'équipe"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+#: personal/connectivity/opengroupware/opengw.tpl:21
+msgid "Template user"
+msgstr "Modèle d'utilisateur"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+#: personal/connectivity/opengroupware/opengw.tpl:33
+msgid "Locked"
+msgstr "Verrouillé"
+
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+#: personal/connectivity/opengroupware/opengw.tpl:48
+msgid "Teams"
+msgstr "Equipes"
+
+#, fuzzy
+#~ msgid "%s database configuration is missing!"
+#~ msgstr "Configuration de la base de données des fax"
+
+#, fuzzy
+#~ msgid "Cannot connect to %s database!"
+#~ msgstr "Impossible de se connecter au serveur de base de données !"

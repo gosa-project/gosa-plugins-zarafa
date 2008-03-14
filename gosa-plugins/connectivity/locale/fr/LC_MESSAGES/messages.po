@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,10 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Créer un compte Intranet"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -27,10 +23,6 @@ msgstr "Connectivité"
 #: personal/connectivity/class_intranetAccount.inc:18
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
-
-#: personal/connectivity/class_connectivity.inc:75
-msgid "This account has no connectivity extensions."
-msgstr "Ce compte n'as pas d'extension de connectivité."
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:198
@@ -54,23 +46,26 @@ msgstr "Paramètres du compte Intranet"
 msgid "Connectivity addon"
 msgstr "Connectivité"
 
-#: personal/connectivity/main.inc:102
-msgid "Ok"
-msgstr "Ok"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Créer un compte Intranet"
 
-#: personal/connectivity/main.inc:104
-msgid "Cancel"
-msgstr "Annuler"
+#~ msgid "This account has no connectivity extensions."
+#~ msgstr "Ce compte n'as pas d'extension de connectivité."
 
-#: personal/connectivity/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
-"cette boite de dialogue"
+#~ msgid "Ok"
+#~ msgstr "Ok"
 
-#: personal/connectivity/main.inc:113
-msgid "Edit"
-msgstr "Editer"
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations "
+#~ "dans cette boite de dialogue"
+
+#~ msgid "Edit"
+#~ msgstr "Editer"
 
 #~ msgid "Removing of user/intranet account with dn '%s' failed."
 #~ msgstr ""

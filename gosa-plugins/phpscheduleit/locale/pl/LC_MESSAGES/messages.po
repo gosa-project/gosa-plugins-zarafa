@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,10 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+msgid "PHPscheduleit account"
+msgstr "konto PHPscheduleit"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 msgid "PHPscheduleit"
@@ -43,10 +47,6 @@ msgstr "Konto połączeń"
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
 msgid "My account"
 msgstr "Moje konto "
-
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-msgid "PHPscheduleit account"
-msgstr "konto PHPscheduleit"
 
 #~ msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
 #~ msgstr "Usuwanie konta PHPscheduleit z dn '%s' nieudane."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -71,9 +71,38 @@ msgstr ""
 msgid "Finish"
 msgstr "Esegui"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Annulla"
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Modifica proprietà"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Crea in"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Descrizione"
+
+#: addons/godfs/generic.tpl:16
+#, fuzzy
+msgid "Fileserver"
+msgstr "Server"
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "server"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Località"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Località"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy
@@ -113,38 +142,8 @@ msgstr "Espressioni regolare per selezionare il nome del gruppo"
 msgid "Distributed File System Administration"
 msgstr ""
 
-#: addons/godfs/generic.tpl:4
-#, fuzzy
-msgid "DFS Properties"
-msgstr "Modifica proprietà"
-
-#: addons/godfs/generic.tpl:8
-#, fuzzy
-msgid "Name of dfs Share"
-msgstr "Crea in"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Descrizione"
-
-#: addons/godfs/generic.tpl:16
-#, fuzzy
-msgid "Fileserver"
-msgstr "Server"
-
-#: addons/godfs/generic.tpl:20
-#, fuzzy
-msgid "Share on Fileserver"
-msgstr "server"
-
-#: addons/godfs/generic.tpl:30
-#, fuzzy
-msgid "DFS Location"
-msgstr "Località"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Località"
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
 
 #, fuzzy
 #~ msgid "Removing of DFS share with dn '%s' failed."

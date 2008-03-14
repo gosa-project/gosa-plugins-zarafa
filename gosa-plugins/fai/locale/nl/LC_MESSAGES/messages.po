@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,151 +19,332 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: admin/fai/class_faiPackage.inc:241 admin/fai/class_faiPackage.inc:434
+#: admin/fai/tabsHook.inc:36 admin/fai/class_faiHookEntry.inc:67
+#: admin/fai/class_faiHookEntry.inc:70 admin/fai/tabsPackage.inc:39
+#: admin/fai/class_faiManagement.inc:376 admin/fai/class_faiManagement.inc:497
+#: admin/fai/class_faiManagement.inc:503 admin/fai/class_faiManagement.inc:749
+#: admin/fai/class_faiManagement.inc:792 admin/fai/class_faiHook.inc:250
+#: admin/fai/tabsTemplate.inc:38 admin/fai/class_FAI.inc:387
+#: admin/fai/tabsProfile.inc:38 admin/fai/class_faiSummaryTab.inc:87
+#: admin/fai/tabsScript.inc:39 admin/fai/class_faiVariable.inc:165
+#: admin/fai/class_faiTemplate.inc:226 admin/fai/tabsVariable.inc:39
+#: admin/fai/tabsPartition.inc:38 admin/fai/class_faiScript.inc:243
+#: admin/fai/class_faiPartitionTable.inc:200
+#: admin/fai/class_faiScriptEntry.inc:63 admin/fai/class_faiScriptEntry.inc:66
+#: admin/fai/class_faiProfile.inc:265 admin/fai/class_faiPackageEntry.inc:123
+msgid "Error"
+msgstr "Fout"
+
+#: admin/fai/class_faiPackage.inc:374
+#, fuzzy
+msgid "Please select a least one package!"
+msgstr "Selecteer a.u.b. tenminste een pakket."
+
+#: admin/fai/class_faiPackage.inc:378
+#, fuzzy
+msgid ""
+"Please choose a valid release/section combination for your repository setup!"
+msgstr ""
+"Kies a.u.b. een geldige combinatie voor uw verzamelplaats instellingen."
+
+#: admin/fai/class_faiPackage.inc:399
+msgid "package is configured"
+msgstr "pakket is geconfigureerd"
+
+#: admin/fai/class_faiPackage.inc:405
+msgid "Package marked for removal"
+msgstr "Pakket gemarkeerd voor verwijdering"
+
+#: admin/fai/class_faiPackage.inc:434
+#, fuzzy, php-format
+msgid "Package file '%s' does not exist!"
+msgstr "Pakketbestand '%s' bestaat niet."
+
+#: admin/fai/class_faiPackage.inc:493 admin/fai/class_faiHook.inc:469
+#: admin/fai/class_FAI.inc:495 admin/fai/class_faiVariable.inc:336
+#: admin/fai/class_faiTemplate.inc:447 admin/fai/class_faiScript.inc:515
+#: admin/fai/class_faiPartitionTable.inc:414
+#: admin/fai/class_faiProfile.inc:447
+msgid "LDAP error"
+msgstr ""
+
+#: admin/fai/class_faiPackage.inc:537 admin/fai/faiPackageConfiguration.tpl:1
+#: admin/fai/class_divListFai.inc:77
+msgid "Package"
+msgstr "Pakket"
+
+#: admin/fai/class_faiPackage.inc:538
+#, fuzzy
+msgid "FAI Package list"
+msgstr "Pakketlijst"
+
+#: admin/fai/class_faiPackage.inc:545 admin/fai/faiScript.tpl:9
+#: admin/fai/faiPartitionTable.tpl:9 admin/fai/class_faiHookEntry.inc:152
+#: admin/fai/class_faiHookEntry.inc:160 admin/fai/class_faiHookEntry.inc:198
+#: admin/fai/class_faiManagement.inc:497 admin/fai/class_faiManagement.inc:503
+#: admin/fai/class_faiHook.inc:598 admin/fai/class_faiTemplateEntry.inc:196
+#: admin/fai/class_faiTemplateEntry.inc:260
+#: admin/fai/class_faiSummaryTab.inc:341 admin/fai/class_faiVariable.inc:454
+#: admin/fai/faiHook.tpl:9 admin/fai/class_faiTemplate.inc:568
+#: admin/fai/class_askClassName.inc:143 admin/fai/class_askClassName.inc:147
+#: admin/fai/class_askClassName.inc:151 admin/fai/faiVariable.tpl:9
+#: admin/fai/class_faiScript.inc:341 admin/fai/class_faiScript.inc:647
+#: admin/fai/faiHookEntry.tpl:9 admin/fai/class_faiPartitionTable.inc:594
+#: admin/fai/class_faiScriptEntry.inc:141
+#: admin/fai/class_faiScriptEntry.inc:145
+#: admin/fai/class_faiScriptEntry.inc:188
+#: admin/fai/class_faiVariableEntry.inc:98
+#: admin/fai/class_faiVariableEntry.inc:106
+#: admin/fai/class_faiVariableEntry.inc:141
+#: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiTemplate.tpl:9
+#: admin/fai/class_faiProfile.inc:398 admin/fai/class_faiProfile.inc:417
+#: admin/fai/class_faiProfile.inc:486 admin/fai/faiPackage.tpl:9
+#: admin/fai/faiScriptEntry.tpl:9 admin/fai/faiVariableEntry.tpl:9
+#: admin/fai/faiProfile.tpl:9 admin/fai/class_faiPartitionTableEntry.inc:403
+#: admin/fai/class_faiPartitionTableEntry.inc:498
+msgid "Name"
+msgstr "Naam"
+
+#: admin/fai/class_faiPackage.inc:546 admin/fai/faiScript.tpl:21
+#: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiTemplateEntry.tpl:33
+#: admin/fai/class_faiHookEntry.inc:199 admin/fai/class_faiHook.inc:599
+#: admin/fai/class_faiTemplateEntry.inc:261
+#: admin/fai/class_faiVariable.inc:455 admin/fai/faiHook.tpl:21
+#: admin/fai/class_faiTemplate.inc:569 admin/fai/faiVariable.tpl:21
+#: admin/fai/class_faiScript.inc:648 admin/fai/faiHookEntry.tpl:19
+#: admin/fai/class_faiPartitionTable.inc:595
+#: admin/fai/class_faiScriptEntry.inc:189
+#: admin/fai/class_faiVariableEntry.inc:142
+#: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiTemplate.tpl:21
+#: admin/fai/class_faiProfile.inc:487 admin/fai/faiPackage.tpl:21
+#: admin/fai/faiScriptEntry.tpl:19 admin/fai/faiVariableEntry.tpl:19
+#: admin/fai/faiProfile.tpl:21 admin/fai/class_faiPartitionTableEntry.inc:499
+msgid "Description"
+msgstr "Omschrijving"
+
+#: admin/fai/class_faiPackage.inc:547
+msgid "Packages"
+msgstr "Pakketten"
+
+#: admin/fai/class_faiPackage.inc:548 admin/fai/faiPackage.tpl:45
+msgid "Section"
+msgstr "Sectie"
+
+#: admin/fai/class_faiPackage.inc:548 admin/fai/class_faiPackage.inc:551
+#: admin/fai/class_faiTemplate.inc:568 admin/fai/class_faiScript.inc:647
+#, fuzzy
+msgid "Readonly"
+msgstr "Lezen"
+
+#: admin/fai/class_faiPackage.inc:549
+#, fuzzy
+msgid "Install Method"
+msgstr "Installatie methode"
+
+#: admin/fai/class_faiPackage.inc:550
+#, fuzzy
+msgid "Package configuration"
+msgstr "FAX database"
+
+#: admin/fai/class_faiPackage.inc:551 admin/fai/faiPackage.tpl:37
+msgid "Release"
+msgstr "Distributie versie"
+
+#: admin/fai/faiScript.tpl:4 admin/fai/faiPartitionTable.tpl:4
+#: admin/fai/faiTemplateEntry.tpl:3 admin/fai/faiHook.tpl:4
+#: admin/fai/faiVariable.tpl:4 admin/fai/faiHookEntry.tpl:5
+#: admin/fai/faiPartitionTableEntry.tpl:2 admin/fai/faiTemplate.tpl:4
+#: admin/fai/faiPackage.tpl:4 admin/fai/faiScriptEntry.tpl:5
+#: admin/fai/faiVariableEntry.tpl:5 admin/fai/faiProfile.tpl:4
+#: admin/fai/faiProfile.tpl:36
+msgid "Generic"
+msgstr "Algemeen"
+
+#: admin/fai/faiScript.tpl:38 admin/fai/faiPartitionTable.tpl:36
+#: admin/fai/class_faiProfileEntry.inc:176 admin/fai/faiHook.tpl:38
+#: admin/fai/faiVariable.tpl:36 admin/fai/faiTemplate.tpl:33
+msgid "Objects"
+msgstr "Objecten"
+
+#: admin/fai/faiScript.tpl:39
+msgid "List of scripts"
+msgstr "Lijst met scripts"
+
+#: admin/fai/faiPartitionTable.tpl:38
+msgid "Discs"
+msgstr "Schijven"
+
+#: admin/fai/faiPartitionTable.tpl:44
+msgid "Choose a disk to delete or edit"
+msgstr "Kies een te bewerken of verwijderen hardeschijf"
+
+#: admin/fai/faiPartitionTable.tpl:54 admin/fai/class_faiHook.inc:323
+#: admin/fai/class_faiHook.inc:325 admin/fai/faiVariable.tpl:53
+msgid "Edit"
+msgstr "Bewerken"
+
 #: admin/fai/class_debconfTemplate.inc:260
 msgid "This package has no debconf options."
 msgstr "Dit pakket heeft geen debconf mogelijkheden."
 
-#: admin/fai/class_faiScriptEntry.inc:63 admin/fai/class_faiScriptEntry.inc:66
-#: admin/fai/class_faiManagement.inc:381 admin/fai/class_faiManagement.inc:503
-#: admin/fai/class_faiManagement.inc:505 admin/fai/class_faiManagement.inc:512
-#: admin/fai/class_faiManagement.inc:758 admin/fai/class_faiManagement.inc:801
-#: admin/fai/tabsPartition.inc:38 admin/fai/tabsScript.inc:39
-#: admin/fai/class_faiProfile.inc:265 admin/fai/class_faiSummaryTab.inc:87
-#: admin/fai/tabsTemplate.inc:38 admin/fai/class_faiPartitionTable.inc:200
-#: admin/fai/tabsProfile.inc:38 admin/fai/class_faiPackage.inc:241
-#: admin/fai/class_faiPackage.inc:434 admin/fai/class_faiPackageEntry.inc:123
-#: admin/fai/tabsVariable.inc:39 admin/fai/tabsHook.inc:36
-#: admin/fai/class_faiVariable.inc:165 admin/fai/tabsPackage.inc:39
-#: admin/fai/class_faiHookEntry.inc:67 admin/fai/class_faiHookEntry.inc:70
-#: admin/fai/class_faiHook.inc:250 admin/fai/class_faiTemplate.inc:226
-#: admin/fai/class_faiScript.inc:243 admin/fai/class_FAI.inc:387
-msgid "Error"
-msgstr "Fout"
+#: admin/fai/faiTemplateEntry.tpl:10 admin/fai/class_faiTemplateEntry.inc:209
+#, fuzzy
+msgid "File name"
+msgstr "Bestandsnaam"
 
-#: admin/fai/class_faiScriptEntry.inc:63 admin/fai/class_faiHookEntry.inc:67
+#: admin/fai/faiTemplateEntry.tpl:21 admin/fai/class_faiTemplateEntry.inc:204
+msgid "Destination path"
+msgstr "Doelpad"
+
+#: admin/fai/faiTemplateEntry.tpl:45
+msgid "Template attributes"
+msgstr "Sjabloon atributen"
+
+#: admin/fai/faiTemplateEntry.tpl:53 admin/fai/class_faiTemplateEntry.inc:200
+msgid "File"
+msgstr "Bestand"
+
+#: admin/fai/faiTemplateEntry.tpl:60
+msgid "Save template"
+msgstr "Sjabloon opslaan"
+
+#: admin/fai/faiTemplateEntry.tpl:69
+msgid "Upload"
+msgstr "Uploaden"
+
+#: admin/fai/faiTemplateEntry.tpl:76
+#, fuzzy
+msgid "Full path"
+msgstr "Fontpad"
+
+#: admin/fai/faiTemplateEntry.tpl:92
+msgid "Owner"
+msgstr "Eigenaar"
+
+#: admin/fai/faiTemplateEntry.tpl:103 admin/fai/faiTemplateEntry.tpl:145
+#: admin/fai/class_faiTemplateEntry.inc:220
+#: admin/fai/class_faiTemplateEntry.inc:223
+msgid "Group"
+msgstr "Groep"
+
+#: admin/fai/faiTemplateEntry.tpl:114
+msgid "Access"
+msgstr "Toegang"
+
+#: admin/fai/faiTemplateEntry.tpl:120
+msgid "Class"
+msgstr "Klasse"
+
+#: admin/fai/faiTemplateEntry.tpl:121
+msgid "Read"
+msgstr "Lezen"
+
+#: admin/fai/faiTemplateEntry.tpl:122
+msgid "Write"
+msgstr "Schrijven"
+
+#: admin/fai/faiTemplateEntry.tpl:123
+msgid "Execute"
+msgstr "Commando"
+
+#: admin/fai/faiTemplateEntry.tpl:125
+msgid "Special"
+msgstr "Speciaal"
+
+#: admin/fai/faiTemplateEntry.tpl:128 admin/fai/class_faiTemplateEntry.inc:213
+#: admin/fai/class_faiTemplateEntry.inc:216
+msgid "User"
+msgstr "Gebruiker"
+
+#: admin/fai/faiTemplateEntry.tpl:142
+msgid "SUID"
+msgstr "SUID"
+
+#: admin/fai/faiTemplateEntry.tpl:159
+msgid "SGID"
+msgstr "SGID"
+
+#: admin/fai/faiTemplateEntry.tpl:162
+msgid "Others"
+msgstr "Anderen"
+
+#: admin/fai/faiTemplateEntry.tpl:176
+msgid "sticky"
+msgstr "sticky"
+
+#: admin/fai/tabsHook.inc:36 admin/fai/tabsPackage.inc:39
+#: admin/fai/tabsTemplate.inc:38 admin/fai/tabsProfile.inc:38
+#: admin/fai/tabsScript.inc:39 admin/fai/tabsVariable.inc:39
+#: admin/fai/tabsPartition.inc:38
+#, fuzzy
+msgid "Moving the tree failed. Destination tree is subtree of source tree."
+msgstr ""
+"Het verplaatsen van de tree is mislukt. Bestemmings-tree is een subtree van "
+"de bron-tree."
+
+#: admin/fai/class_faiHookEntry.inc:67 admin/fai/class_faiScriptEntry.inc:63
 #, fuzzy
 msgid "Upload failed!"
 msgstr "Uploaden"
 
-#: admin/fai/class_faiScriptEntry.inc:66 admin/fai/class_faiHookEntry.inc:70
+#: admin/fai/class_faiHookEntry.inc:70 admin/fai/class_faiScriptEntry.inc:66
 #, fuzzy
 msgid "Uploaded file is empty!"
 msgstr "Het opgegeven bestand is leeg."
 
-#: admin/fai/class_faiScriptEntry.inc:89 admin/fai/class_faiHookEntry.inc:85
-#: admin/fai/class_faiHook.inc:337 admin/fai/class_faiTemplate.inc:314
-#: admin/fai/class_faiScript.inc:344 admin/fai/class_faiScript.inc:372
+#: admin/fai/class_faiHookEntry.inc:85 admin/fai/class_faiHook.inc:337
+#: admin/fai/class_faiTemplate.inc:314 admin/fai/class_faiScript.inc:344
+#: admin/fai/class_faiScript.inc:372 admin/fai/class_faiScriptEntry.inc:89
 msgid "Download"
 msgstr "Downloaden"
 
-#: admin/fai/class_faiScriptEntry.inc:141
-#: admin/fai/class_faiManagement.inc:512 admin/fai/class_faiProfile.inc:417
-#: admin/fai/class_faiHookEntry.inc:152
-#, fuzzy
-msgid "Name is already in use!"
-msgstr "De opgegeven naam wordt al gebruikt."
+#: admin/fai/class_faiHookEntry.inc:156 admin/fai/class_faiScript.inc:639
+#: admin/fai/faiHookEntry.tpl:56 admin/fai/class_faiScriptEntry.inc:149
+#: admin/fai/class_divListFai.inc:74 admin/fai/faiScriptEntry.tpl:56
+msgid "Script"
+msgstr "Script"
 
-#: admin/fai/class_faiScriptEntry.inc:145 admin/fai/class_faiHookEntry.inc:160
-msgid "Name is empty!"
-msgstr ""
-
-#: admin/fai/class_faiScriptEntry.inc:149 admin/fai/class_faiHookEntry.inc:156
+#: admin/fai/class_faiHookEntry.inc:190
 #, fuzzy
-msgid "Please enter a script!"
-msgstr "Geef a.u.b. een scripts op."
+msgid "Hook entry"
+msgstr "Record verwijderen"
 
-#: admin/fai/class_faiScriptEntry.inc:180
-#: admin/fai/class_faiScriptEntry.inc:190
+#: admin/fai/class_faiHookEntry.inc:191
 #, fuzzy
-msgid "Script entry"
-msgstr "Variabele inhoud"
+msgid "FAI hook entry"
+msgstr "Toon FAI inhakers"
 
-#: admin/fai/class_faiScriptEntry.inc:181
+#: admin/fai/class_faiHookEntry.inc:200 admin/fai/faiHookEntry.tpl:38
+msgid "Task"
+msgstr "Taak"
+
+#: admin/fai/class_faiHookEntry.inc:201 admin/fai/class_faiScript.inc:640
 #, fuzzy
-msgid "FAI script entry"
+msgid "FAI script"
 msgstr "Importeer script"
 
-#: admin/fai/class_faiScriptEntry.inc:188 admin/fai/class_faiProfile.inc:486
-#: admin/fai/class_faiTemplateEntry.inc:264
-#: admin/fai/class_faiSummaryTab.inc:341 admin/fai/faiProfile.tpl:9
-#: admin/fai/class_faiPartitionTable.inc:594 admin/fai/faiScriptEntry.tpl:9
-#: admin/fai/faiScript.tpl:9 admin/fai/faiTemplate.tpl:9
-#: admin/fai/faiHookEntry.tpl:9 admin/fai/faiHook.tpl:9
-#: admin/fai/class_faiPackage.inc:545 admin/fai/class_faiVariableEntry.inc:141
-#: admin/fai/faiVariable.tpl:9 admin/fai/faiPackage.tpl:9
-#: admin/fai/class_faiVariable.inc:454 admin/fai/class_faiHookEntry.inc:198
-#: admin/fai/class_faiPartitionTableEntry.inc:498
-#: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/class_faiHook.inc:598
-#: admin/fai/class_faiTemplate.inc:568 admin/fai/faiVariableEntry.tpl:9
-#: admin/fai/class_faiScript.inc:341 admin/fai/class_faiScript.inc:647
-#: admin/fai/faiPartitionTable.tpl:9
-msgid "Name"
-msgstr "Naam"
+#: admin/fai/remove_branch.tpl:2 admin/fai/remove.tpl:2
+msgid "Warning"
+msgstr "Waarschuwing"
 
-#: admin/fai/class_faiScriptEntry.inc:189 admin/fai/class_faiProfile.inc:487
-#: admin/fai/class_faiTemplateEntry.inc:265 admin/fai/faiProfile.tpl:21
-#: admin/fai/class_faiPartitionTable.inc:595 admin/fai/faiScriptEntry.tpl:19
-#: admin/fai/faiScript.tpl:21 admin/fai/faiTemplate.tpl:21
-#: admin/fai/faiHookEntry.tpl:19 admin/fai/faiHook.tpl:21
-#: admin/fai/class_faiPackage.inc:546 admin/fai/class_faiVariableEntry.inc:142
-#: admin/fai/faiVariable.tpl:21 admin/fai/faiPackage.tpl:21
-#: admin/fai/class_faiVariable.inc:455 admin/fai/class_faiHookEntry.inc:199
-#: admin/fai/class_faiPartitionTableEntry.inc:499
-#: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/class_faiHook.inc:599
-#: admin/fai/faiTemplateEntry.tpl:33 admin/fai/class_faiTemplate.inc:569
-#: admin/fai/faiVariableEntry.tpl:19 admin/fai/class_faiScript.inc:648
-#: admin/fai/faiPartitionTable.tpl:21
-msgid "Description"
-msgstr "Omschrijving"
+#: admin/fai/remove_branch.tpl:6
+msgid ""
+"This includes all account data, system access, etc. for this branch. Please "
+"double check if your really want to do this since there is no way for GOsa "
+"to get your data back."
+msgstr ""
+"Dit omvat alle account gegevens, systeem toegangsregels, instellingen etc. "
+"voor deze aftakkingen. Verzeker uzelf hiervan, aangezien er geen "
+"mogelijkheid voor GOsa is om deze informatie terug te halen."
 
-#: admin/fai/class_faiScriptEntry.inc:191
-#, fuzzy
-msgid "Script Priority"
-msgstr "Inlogscript"
+#: admin/fai/remove_branch.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
+"om te annuleren."
 
-#: admin/fai/class_faiProfileEntry.inc:139 admin/fai/class_faiProfile.inc:294
-msgid "Hook bundle"
-msgstr "Inhakers bundel"
-
-#: admin/fai/class_faiProfileEntry.inc:140 admin/fai/class_faiProfile.inc:295
-msgid "Template bundle"
-msgstr "Sjabloon bundel"
-
-#: admin/fai/class_faiProfileEntry.inc:141 admin/fai/class_faiProfile.inc:296
-msgid "Script bundle"
-msgstr "Script bundel"
-
-#: admin/fai/class_faiProfileEntry.inc:142 admin/fai/class_faiProfile.inc:297
-msgid "Variable bundle"
-msgstr "Variabele bundel"
-
-#: admin/fai/class_faiProfileEntry.inc:143
-msgid "Package bundle"
-msgstr "Pakket bundel"
-
-#: admin/fai/class_faiProfileEntry.inc:144 admin/fai/class_faiProfile.inc:299
-#: admin/fai/class_faiSummaryTab.inc:48
-#: admin/fai/class_faiPartitionTable.inc:586
-#: admin/fai/class_divListFai.inc:204 admin/fai/class_divListFai.inc:271
-msgid "Partition table"
-msgstr "Partitietabel"
-
-#: admin/fai/class_faiProfileEntry.inc:173 admin/fai/class_faiProfile.inc:291
-msgid "This list displays all assigned class names for this profile."
-msgstr "Deze lijst toont alle toegekende klassenamen voor dit profiel."
-
-#: admin/fai/class_faiProfileEntry.inc:175 admin/fai/askClassName.tpl:32
-#: admin/fai/askClassName.tpl:54
-msgid "Class name"
-msgstr "Klassenaam"
-
-#: admin/fai/class_faiProfileEntry.inc:176 admin/fai/faiScript.tpl:38
-#: admin/fai/faiTemplate.tpl:33 admin/fai/faiHook.tpl:38
-#: admin/fai/faiVariable.tpl:36 admin/fai/faiPartitionTable.tpl:36
-msgid "Objects"
-msgstr "Objecten"
-
-#: admin/fai/class_faiManagement.inc:25 admin/fai/class_faiManagement.inc:1170
+#: admin/fai/class_faiManagement.inc:25 admin/fai/class_faiManagement.inc:1161
 msgid "FAI"
 msgstr "FAI"
 
@@ -171,26 +352,18 @@ msgstr "FAI"
 msgid "Fully Automatic Installation - management"
 msgstr "Fully Automatic Installation - beheer"
 
-#: admin/fai/class_faiManagement.inc:207
-#, php-format
-msgid "You're about to delete all information about the FAI class at '%s'."
-msgstr ""
-"U staat op het punt alle informatie over deze FAI klasse op '%s' te "
-"verwijderen."
+#: admin/fai/class_faiManagement.inc:207 admin/fai/class_faiManagement.inc:256
+#, fuzzy
+msgid "FAI object"
+msgstr "FAI objectlijst"
 
-#: admin/fai/class_faiManagement.inc:213 admin/fai/class_faiManagement.inc:305
-#: admin/fai/class_faiManagement.inc:376 admin/fai/class_faiManagement.inc:438
-#: admin/fai/class_faiManagement.inc:541 admin/fai/class_faiManagement.inc:675
-#: admin/fai/class_faiManagement.inc:696 admin/fai/class_faiManagement.inc:729
-#: admin/fai/class_faiManagement.inc:745
+#: admin/fai/class_faiManagement.inc:213 admin/fai/class_faiManagement.inc:300
+#: admin/fai/class_faiManagement.inc:371 admin/fai/class_faiManagement.inc:433
+#: admin/fai/class_faiManagement.inc:532 admin/fai/class_faiManagement.inc:666
+#: admin/fai/class_faiManagement.inc:687 admin/fai/class_faiManagement.inc:720
+#: admin/fai/class_faiManagement.inc:736
 msgid "Permission error"
 msgstr ""
-
-#: admin/fai/class_faiManagement.inc:213 admin/fai/class_faiManagement.inc:305
-#: admin/fai/class_faiManagement.inc:376
-#, fuzzy
-msgid "You have no permission to delete this entry!"
-msgstr "U heeft geen toestemming om dit component te verwijderen!"
 
 #: admin/fai/class_faiManagement.inc:243
 #, fuzzy
@@ -202,241 +375,206 @@ msgstr "Aftakkingen"
 msgid "The following entries are locked, you can't remove them %s."
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:258
-#, fuzzy, php-format
-msgid "You're about to delete the following entry %s"
-msgstr "U staat op het punt de invoer %s te verwijderen."
-
-#: admin/fai/class_faiManagement.inc:260
-#, fuzzy, php-format
-msgid "You're about to delete the following entries %s"
-msgstr "U staat op het punt de invoer %s te verwijderen."
-
-#: admin/fai/class_faiManagement.inc:381
+#: admin/fai/class_faiManagement.inc:376
 #, fuzzy, php-format
 msgid "Cannot delete '%s': object does not exist!"
 msgstr "Pakketbestand '%s' bestaat niet."
 
-#: admin/fai/class_faiManagement.inc:435
-#, php-format
-msgid "You're about to delete a fai branch / freeze  '%s'."
+#: admin/fai/class_faiManagement.inc:430
+msgid "FAI branch/freeze"
 msgstr ""
-"U staat op het punt een FAI aftakking / bevriezing '%s' te verwijderen."
 
-#: admin/fai/class_faiManagement.inc:438
+#: admin/fai/class_faiManagement.inc:433
 #, fuzzy
 msgid "You have no permission to delete this release!"
 msgstr "U heeft geen toestemming om deze uitgave te verwijderen!"
 
-#: admin/fai/class_faiManagement.inc:503
-#, fuzzy
-msgid "Branch name is not valid!"
-msgstr "De opgegeven aftakkingsnaam is ongeldig."
-
-#: admin/fai/class_faiManagement.inc:505
-#, fuzzy
-msgid "Freeze name is not valid!"
-msgstr "De opgegeven bevriesnaam is ongeldig."
-
-#: admin/fai/class_faiManagement.inc:541 admin/fai/class_faiManagement.inc:675
-#: admin/fai/class_faiManagement.inc:696
-#, fuzzy
-msgid "You have no permission to create a new branch!"
-msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
-
-#: admin/fai/class_faiManagement.inc:644 admin/fai/class_faiManagement.inc:848
-#: admin/fai/class_faiManagement.inc:854
-msgid "Continue"
-msgstr "Doorgaan"
-
-#: admin/fai/class_faiManagement.inc:717
-#, fuzzy
-msgid "partition table"
-msgstr "Partitietabel"
-
-#: admin/fai/class_faiManagement.inc:718
-#, fuzzy
-msgid "script"
-msgstr "Script"
-
-#: admin/fai/class_faiManagement.inc:719
-#, fuzzy
-msgid "hook"
-msgstr "Inhakers"
-
-#: admin/fai/class_faiManagement.inc:720
-#, fuzzy
-msgid "variable"
-msgstr "Variabele"
-
-#: admin/fai/class_faiManagement.inc:721
-#, fuzzy
-msgid "template"
-msgstr "Sjabloon"
-
-#: admin/fai/class_faiManagement.inc:722
-#, fuzzy
-msgid "package list"
-msgstr "Pakketlijst"
-
-#: admin/fai/class_faiManagement.inc:729 admin/fai/class_faiManagement.inc:745
-#, fuzzy, php-format
-msgid "You have no permission to create a new %s!"
-msgstr "U heeft geen toestemming deze objectgroep te verwijderen!"
-
-#: admin/fai/class_faiManagement.inc:745
-#, fuzzy
-msgid "profile"
-msgstr "Profielen"
-
-#: admin/fai/class_faiManagement.inc:838
-msgid "Ok"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:841 admin/fai/faiPackageEntry.tpl:56
-#: admin/fai/faiScriptEntry.tpl:83 admin/fai/faiHookEntry.tpl:85
-#: admin/fai/faiProfileEntry.tpl:70 admin/fai/faiTemplateEntry.tpl:188
-#: admin/fai/faiPackageConfiguration.tpl:6 admin/fai/faiVariableEntry.tpl:54
-#: admin/fai/faiNewBranch.tpl:21
-msgid "Apply"
-msgstr "Toepassen"
-
-#: admin/fai/class_faiManagement.inc:844 admin/fai/class_faiManagement.inc:849
-#: admin/fai/class_faiManagement.inc:855 admin/fai/faiPackageEntry.tpl:57
-#: admin/fai/faiScriptEntry.tpl:84 admin/fai/faiHookEntry.tpl:86
-#: admin/fai/faiProfileEntry.tpl:71 admin/fai/faiPartitionTableEntry.tpl:40
-#: admin/fai/remove_branch.tpl:16 admin/fai/faiTemplateEntry.tpl:189
-#: admin/fai/faiPackageConfiguration.tpl:7 admin/fai/faiVariableEntry.tpl:55
-#: admin/fai/faiNewBranch.tpl:22 admin/fai/remove.tpl:18
-#: admin/fai/remove.tpl:22
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: admin/fai/class_faiManagement.inc:1164
-#, fuzzy
-msgid "FAI releases"
-msgstr "FAI klassen"
-
-#: admin/fai/class_faiManagement.inc:1165
-#, fuzzy
-msgid "FAI release management"
-msgstr "Blokkeerlijst beheer"
-
-#: admin/fai/branch_selector.tpl:3
-msgid "Branches"
-msgstr "Aftakkingen"
-
-#: admin/fai/branch_selector.tpl:9
-msgid "Current release"
-msgstr "Huidige uitgave"
-
-#: admin/fai/branch_selector.tpl:21 admin/fai/branch_selector.tpl:27
-msgid "Create new branch"
-msgstr "Maak nieuwe tak aan"
-
-#: admin/fai/branch_selector.tpl:24 admin/fai/branch_selector.tpl:30
-msgid "Create new locked branch"
-msgstr "Maak nieuwe geblokkeerde tak aan"
-
-#: admin/fai/branch_selector.tpl:26
+#: admin/fai/class_faiManagement.inc:532 admin/fai/class_faiManagement.inc:666
+#: admin/fai/class_faiManagement.inc:687 admin/fai/branch_selector.tpl:25
 #, fuzzy
 msgid "Branch"
 msgstr "Aftakkingen"
 
-#: admin/fai/branch_selector.tpl:29
+#: admin/fai/class_faiManagement.inc:635 admin/fai/class_faiManagement.inc:839
+#: admin/fai/class_faiManagement.inc:845
+msgid "Continue"
+msgstr "Doorgaan"
+
+#: admin/fai/class_faiManagement.inc:708
 #, fuzzy
-msgid "Freeze"
-msgstr "Frequentie"
+msgid "partition table"
+msgstr "Partitietabel"
 
-#: admin/fai/branch_selector.tpl:36
-msgid "Delete current release"
-msgstr "Verwijder huidige uitgave"
-
-#: admin/fai/tabsPartition.inc:38 admin/fai/tabsScript.inc:39
-#: admin/fai/tabsTemplate.inc:38 admin/fai/tabsProfile.inc:38
-#: admin/fai/tabsVariable.inc:39 admin/fai/tabsHook.inc:36
-#: admin/fai/tabsPackage.inc:39
+#: admin/fai/class_faiManagement.inc:709
 #, fuzzy
-msgid "Moving the tree failed. Destination tree is subtree of source tree."
-msgstr ""
-"Het verplaatsen van de tree is mislukt. Bestemmings-tree is een subtree van "
-"de bron-tree."
+msgid "script"
+msgstr "Script"
 
-#: admin/fai/faiPackageEntry.tpl:6
-msgid "List of available packages"
-msgstr "Lijst met beschikbare pakketten"
-
-#: admin/fai/faiPackageEntry.tpl:22 admin/fai/faiProfileEntry.tpl:21
-msgid "Information"
-msgstr "Informatie"
-
-#: admin/fai/faiPackageEntry.tpl:26
-msgid ""
-"This menu allows you to select multiple packages to add them to the "
-"currently edited package list."
-msgstr ""
-"Dit menu maakt het mogelijk om meerdere pakketten toe te voegen aan de op "
-"dit moment bewerkte pakketlijst."
-
-#: admin/fai/faiPackageEntry.tpl:32 admin/fai/faiProfileEntry.tpl:31
-msgid "Filters"
-msgstr "Filters"
-
-#: admin/fai/faiPackageEntry.tpl:42 admin/fai/faiProfileEntry.tpl:54
-#: admin/fai/faiProfileEntry.tpl:55
-msgid "Display objects matching"
-msgstr "Toon overeenkomende objecten"
-
-#: admin/fai/faiPackageEntry.tpl:46 admin/fai/faiProfileEntry.tpl:59
-msgid "Regular expression for matching object names"
-msgstr "Reguliere expressie voor overeenkomende objectnamen"
-
-#: admin/fai/class_faiProfile.inc:298
-msgid "Packages bundle"
-msgstr "Pakketbundel"
-
-#: admin/fai/class_faiProfile.inc:302
-msgid "Remove class from profile"
-msgstr "Verwijder klasse uit profiel"
-
-#: admin/fai/class_faiProfile.inc:305
-msgid "Up"
-msgstr "Omhoog"
-
-#: admin/fai/class_faiProfile.inc:306
-msgid "Down"
-msgstr "Omlaag"
-
-#: admin/fai/class_faiProfile.inc:394
-msgid "No class specified for this profile!"
-msgstr ""
-
-#: admin/fai/class_faiProfile.inc:398
-msgid "'Name' is not valid!"
-msgstr ""
-
-#: admin/fai/class_faiProfile.inc:447
-#: admin/fai/class_faiPartitionTable.inc:414
-#: admin/fai/class_faiPackage.inc:493 admin/fai/class_faiVariable.inc:336
-#: admin/fai/class_faiHook.inc:469 admin/fai/class_faiTemplate.inc:447
-#: admin/fai/class_faiScript.inc:515 admin/fai/class_FAI.inc:495
-msgid "LDAP error"
-msgstr ""
-
-#: admin/fai/class_faiProfile.inc:478 admin/fai/class_divListFai.inc:199
-#: admin/fai/class_divListFai.inc:276
+#: admin/fai/class_faiManagement.inc:710
 #, fuzzy
-msgid "Profile"
+msgid "hook"
+msgstr "Inhakers"
+
+#: admin/fai/class_faiManagement.inc:711
+#, fuzzy
+msgid "variable"
+msgstr "Variabele"
+
+#: admin/fai/class_faiManagement.inc:712
+#, fuzzy
+msgid "template"
+msgstr "Sjabloon"
+
+#: admin/fai/class_faiManagement.inc:713
+#, fuzzy
+msgid "package list"
+msgstr "Pakketlijst"
+
+#: admin/fai/class_faiManagement.inc:720 admin/fai/class_faiManagement.inc:736
+#, fuzzy, php-format
+msgid "You have no permission to create a new %s!"
+msgstr "U heeft geen toestemming deze objectgroep te verwijderen!"
+
+#: admin/fai/class_faiManagement.inc:736
+#, fuzzy
+msgid "profile"
 msgstr "Profielen"
 
-#: admin/fai/class_faiProfile.inc:479
+#: admin/fai/class_faiManagement.inc:1155
 #, fuzzy
-msgid "FAI profile"
-msgstr "Nieuw profiel"
-
-#: admin/fai/class_faiProfile.inc:488 admin/fai/faiProfile.tpl:36
-msgid "FAI classes"
+msgid "FAI releases"
 msgstr "FAI klassen"
+
+#: admin/fai/class_faiManagement.inc:1156
+#, fuzzy
+msgid "FAI release management"
+msgstr "Blokkeerlijst beheer"
+
+#: admin/fai/askClassName.tpl:6
+msgid ""
+"Adding a new class to the FAI management, requires a class name. You have to "
+"specify a unique class name for unique types of FAI classes, while you can "
+"use the same class name for different types of FAI classes. In the laste "
+"case, FAI will automatically enclose all these different class types to one "
+"unique class name."
+msgstr ""
+"Het toevoegen van een nieuwe klasse aan FAI beheer, vereist een klassenaam. "
+"U dient een unieke klassenaam binnen een FAI klassetype te gebruiken. Het is "
+"mogelijk dezelfde klassenaam voor verschillende FAI klassetypes te "
+"gebruiken. In het laatste geval zal FAI automatisch alle verschillende "
+"klassetypes onderbrengen binnen een unieke klassenaam."
+
+#: admin/fai/askClassName.tpl:12
+msgid ""
+"Please use one of the following methods to choose the name for the new FAI "
+"class."
+msgstr ""
+"Gebruik a.u.b. een van de volgende methodes om de naam voor de nieuwe FAI "
+"klasse te kiezen."
+
+#: admin/fai/askClassName.tpl:26
+msgid "Enter FAI class name manually"
+msgstr "Voer FAI klassenaam handmatig in"
+
+#: admin/fai/askClassName.tpl:32 admin/fai/askClassName.tpl:54
+#: admin/fai/class_faiProfileEntry.inc:175
+msgid "Class name"
+msgstr "Klassenaam"
+
+#: admin/fai/askClassName.tpl:48
+msgid "Choose FAI class name from a list of existing classes"
+msgstr "Kies FAI klassenaam uit een lijst met bestaande klasses"
+
+#: admin/fai/askClassName.tpl:54
+msgid "Choose class name"
+msgstr "Kies een klassenaam"
+
+#: admin/fai/askClassName.tpl:70 admin/fai/askClassName.tpl:77
+msgid "Use"
+msgstr "Gebruik"
+
+#: admin/fai/askClassName.tpl:74
+msgid "A new class name."
+msgstr "Een nieuwe klassenaam."
+
+#: admin/fai/class_faiPackageConfiguration.inc:40
+#, php-format
+msgid "Debconf information for package '%s'"
+msgstr "Debconf informatie voor pakket '%s'"
+
+#: admin/fai/class_faiHook.inc:327
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: admin/fai/class_faiHook.inc:590 admin/fai/class_divListFai.inc:75
+#, fuzzy
+msgid "Hook"
+msgstr "Inhakers"
+
+#: admin/fai/class_faiHook.inc:591
+#, fuzzy
+msgid "FAI hook"
+msgstr "Toon FAI inhakers"
+
+#: admin/fai/class_faiHook.inc:598 admin/fai/class_faiVariable.inc:454
+#: admin/fai/class_faiPartitionTable.inc:594
+#, fuzzy
+msgid "Read only"
+msgstr "Lezen"
+
+#: admin/fai/class_FAI.inc:387
+#, php-format
+msgid "Error, following objects should be equal '%s' and '%s'"
+msgstr ""
+
+#: admin/fai/class_FAI.inc:707
+#, php-format
+msgid "Creating group application release for %s"
+msgstr ""
+
+#: admin/fai/class_FAI.inc:776 admin/fai/class_FAI.inc:798
+#: admin/fai/class_FAI.inc:838 admin/fai/class_FAI.inc:843
+#: admin/fai/class_FAI.inc:881
+msgid "Object"
+msgstr "Object"
+
+#: admin/fai/class_FAI.inc:777
+#, php-format
+msgid "Adding missing group application release container %s."
+msgstr ""
+
+#: admin/fai/class_FAI.inc:799
+#, php-format
+msgid "Adding group application release container %s."
+msgstr ""
+
+#: admin/fai/class_FAI.inc:839
+#, fuzzy, php-format
+msgid "Could not create menu entry %s. (Already exists)."
+msgstr "Kan '%s' niet aanmaken. De gewenste naam bestaat al."
+
+#: admin/fai/class_FAI.inc:844
+#, php-format
+msgid "Created group application menu entry for %s."
+msgstr ""
+
+#: admin/fai/class_FAI.inc:875
+#, php-format
+msgid "Creating copy of %s"
+msgstr "Bezig met maken van kopie van %s"
+
+#: admin/fai/class_FAI.inc:878
+msgid "Processing"
+msgstr "Bezig met verwerken"
+
+#: admin/fai/class_FAI.inc:896
+#, fuzzy
+msgid "Could not create new release, the destination dn is already in use."
+msgstr "Kan '%s' niet aanmaken. De gewenste naam bestaat al."
+
+#: admin/fai/class_FAI.inc:909
+msgid "Error while fetching source dn - aborted!"
+msgstr "Fout bij het ophalen van de bron dn - afgebroken!"
 
 #: admin/fai/class_faiTemplateEntry.inc:95
 msgid "no file uploaded yet"
@@ -447,92 +585,94 @@ msgstr "nog geen bestand ge-upload."
 msgid "exists in database (size: %s bytes)"
 msgstr "bestaat in database (grootte: %s bytes)"
 
-#: admin/fai/class_faiTemplateEntry.inc:196
-#, fuzzy
-msgid "There is already a template with the given name."
-msgstr "Er bestaat al een bestand met dezelfde naam."
-
-#: admin/fai/class_faiTemplateEntry.inc:200
-msgid "Please specify a value for attribute 'file'."
-msgstr "Geef a.u.b. een waarde op voor het atribuut 'bestand'."
-
-#: admin/fai/class_faiTemplateEntry.inc:204
-#, fuzzy
-msgid "Please specify a valid value for attribute 'Destination path'."
-msgstr "Geef a.u.b. een waarde op voor het atribuut 'pad'."
-
-#: admin/fai/class_faiTemplateEntry.inc:208
-#, fuzzy
-msgid "Please enter a file name."
-msgstr "Kies a.u.b. een naam."
-
-#: admin/fai/class_faiTemplateEntry.inc:217
-msgid "Please enter a user."
-msgstr "Geef a.u.b. een gebruiker op."
-
-#: admin/fai/class_faiTemplateEntry.inc:220
-msgid "Please enter a valid user. Only a-z/0-9 are allowed."
-msgstr "Geef a.u.b. een geldige gebruiker op! Alleen a-z/0-9 zijn toegestaan."
-
-#: admin/fai/class_faiTemplateEntry.inc:224
-msgid "Please enter a group."
-msgstr "Geef a.u.b. een groep op."
-
-#: admin/fai/class_faiTemplateEntry.inc:227
-msgid "Please enter a valid group. Only a-z/0-9 are allowed."
-msgstr "Geef a.u.b. een geldige groep op! Alleen a-z/0-9 zijn toegestaan."
-
-#: admin/fai/class_faiTemplateEntry.inc:256
+#: admin/fai/class_faiTemplateEntry.inc:252
 #, fuzzy
 msgid "Template entry"
 msgstr "Sjabloongebruiker"
 
-#: admin/fai/class_faiTemplateEntry.inc:257
+#: admin/fai/class_faiTemplateEntry.inc:253
 #, fuzzy
 msgid "FAI template entry"
 msgstr "Nieuw sjabloon"
 
-#: admin/fai/class_faiTemplateEntry.inc:266
+#: admin/fai/class_faiTemplateEntry.inc:262
 #, fuzzy
 msgid "Template file"
 msgstr "Sjabloon bundel"
 
-#: admin/fai/class_faiTemplateEntry.inc:267
+#: admin/fai/class_faiTemplateEntry.inc:263
 #, fuzzy
 msgid "Template path"
 msgstr "Sjabloon naam"
 
-#: admin/fai/class_faiTemplateEntry.inc:268
+#: admin/fai/class_faiTemplateEntry.inc:264
 #, fuzzy
 msgid "File owner"
 msgstr "Bestandsnaam"
 
-#: admin/fai/class_faiTemplateEntry.inc:269
+#: admin/fai/class_faiTemplateEntry.inc:265
 #, fuzzy
 msgid "File permissions"
 msgstr "Rechten"
 
-#: admin/fai/class_faiSummaryTab.inc:44 admin/fai/class_divListFai.inc:205
-#: admin/fai/class_divListFai.inc:273
+#: admin/fai/class_faiProfileEntry.inc:139 admin/fai/class_askClassName.inc:84
+#: admin/fai/class_faiProfile.inc:294
+msgid "Hook bundle"
+msgstr "Inhakers bundel"
+
+#: admin/fai/class_faiProfileEntry.inc:140 admin/fai/class_askClassName.inc:86
+#: admin/fai/class_faiProfile.inc:295
+msgid "Template bundle"
+msgstr "Sjabloon bundel"
+
+#: admin/fai/class_faiProfileEntry.inc:141 admin/fai/class_askClassName.inc:82
+#: admin/fai/class_faiProfile.inc:296
+msgid "Script bundle"
+msgstr "Script bundel"
+
+#: admin/fai/class_faiProfileEntry.inc:142 admin/fai/class_askClassName.inc:83
+#: admin/fai/class_faiProfile.inc:297
+msgid "Variable bundle"
+msgstr "Variabele bundel"
+
+#: admin/fai/class_faiProfileEntry.inc:143 admin/fai/class_askClassName.inc:81
+#: admin/fai/class_faiProfile.inc:298
+msgid "Package bundle"
+msgstr "Pakket bundel"
+
+#: admin/fai/class_faiProfileEntry.inc:144
+#: admin/fai/class_faiSummaryTab.inc:48 admin/fai/class_askClassName.inc:80
+#: admin/fai/class_faiPartitionTable.inc:586
+#: admin/fai/class_faiProfile.inc:299 admin/fai/class_divListFai.inc:203
+#: admin/fai/class_divListFai.inc:270
+msgid "Partition table"
+msgstr "Partitietabel"
+
+#: admin/fai/class_faiProfileEntry.inc:173 admin/fai/class_faiProfile.inc:291
+msgid "This list displays all assigned class names for this profile."
+msgstr "Deze lijst toont alle toegekende klassenamen voor dit profiel."
+
+#: admin/fai/class_faiSummaryTab.inc:44 admin/fai/class_divListFai.inc:204
+#: admin/fai/class_divListFai.inc:272
 msgid "Scripts"
 msgstr "Scripts"
 
-#: admin/fai/class_faiSummaryTab.inc:45 admin/fai/class_divListFai.inc:206
-#: admin/fai/class_divListFai.inc:275
+#: admin/fai/class_faiSummaryTab.inc:45 admin/fai/class_divListFai.inc:205
+#: admin/fai/class_divListFai.inc:274
 msgid "Hooks"
 msgstr "Inhakers"
 
-#: admin/fai/class_faiSummaryTab.inc:46 admin/fai/class_divListFai.inc:207
-#: admin/fai/class_divListFai.inc:274
+#: admin/fai/class_faiSummaryTab.inc:46 admin/fai/class_divListFai.inc:206
+#: admin/fai/class_divListFai.inc:273
 msgid "Variables"
 msgstr "Variabelen"
 
-#: admin/fai/class_faiSummaryTab.inc:47 admin/fai/class_divListFai.inc:277
+#: admin/fai/class_faiSummaryTab.inc:47 admin/fai/class_divListFai.inc:276
 msgid "Templates"
 msgstr "Sjablonen"
 
-#: admin/fai/class_faiSummaryTab.inc:49 admin/fai/class_divListFai.inc:209
-#: admin/fai/class_divListFai.inc:272
+#: admin/fai/class_faiSummaryTab.inc:49 admin/fai/class_divListFai.inc:208
+#: admin/fai/class_divListFai.inc:271
 msgid "Package list"
 msgstr "Pakketlijst"
 
@@ -590,153 +730,87 @@ msgstr "Koppelpunt"
 msgid "Type"
 msgstr "Type"
 
-#: admin/fai/class_askClassName.inc:80
-msgid "Create new FAI object - partition table."
-msgstr "Nieuw FAI object - partitie tabel aanmaken."
+#: admin/fai/class_faiVariable.inc:446 admin/fai/class_divListFai.inc:73
+#: admin/fai/class_divListFai.inc:76
+msgid "Variable"
+msgstr "Variabele"
 
-#: admin/fai/class_askClassName.inc:81
-msgid "Create new FAI object - package bundle."
-msgstr "Nieuw FAI object - pakketbundel aanmaken."
-
-#: admin/fai/class_askClassName.inc:82
-msgid "Create new FAI object - script bundle."
-msgstr "Nieuw FAI object - scriptbundel aanmaken."
-
-#: admin/fai/class_askClassName.inc:83
-msgid "Create new FAI object - variable bundle."
-msgstr "Nieuw FAI object - variabelebundel aanmaken."
-
-#: admin/fai/class_askClassName.inc:84
-msgid "Create new FAI object - hook bundle."
-msgstr "Nieuw FAI object - inhakerbundel aanmaken."
-
-#: admin/fai/class_askClassName.inc:85
-msgid "Create new FAI object - profile."
-msgstr "Nieuw FAI object - profiel aanmaken."
-
-#: admin/fai/class_askClassName.inc:86
-msgid "Create new FAI object - template."
-msgstr "Nieuw FAI object - sjabloon aanmaken."
-
-#: admin/fai/class_askClassName.inc:87
-msgid "Create new FAI object"
-msgstr "Nieuw FAI object aanmaken"
-
-#: admin/fai/class_askClassName.inc:143
+#: admin/fai/class_faiVariable.inc:447
 #, fuzzy
-msgid "Spaces are not allowed within class names."
-msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
-
-#: admin/fai/class_askClassName.inc:147
-msgid "The given class name is empty."
-msgstr "De opgegeven klassenaam is leeg."
-
-#: admin/fai/class_askClassName.inc:151
-msgid "The specified class name is already in use for this object type."
-msgstr ""
-"De waarde die opgegeven is voor de klassenaam is al in gebruik voor dit "
-"objecttype."
-
-#: admin/fai/faiProfile.tpl:4 admin/fai/faiProfile.tpl:36
-#: admin/fai/faiScriptEntry.tpl:5 admin/fai/faiScript.tpl:4
-#: admin/fai/faiTemplate.tpl:4 admin/fai/faiHookEntry.tpl:5
-#: admin/fai/faiHook.tpl:4 admin/fai/faiVariable.tpl:4
-#: admin/fai/faiPackage.tpl:4 admin/fai/faiPartitionTableEntry.tpl:2
-#: admin/fai/faiTemplateEntry.tpl:3 admin/fai/faiVariableEntry.tpl:5
-#: admin/fai/faiPartitionTable.tpl:4
-msgid "Generic"
-msgstr "Algemeen"
-
-#: admin/fai/faiProfile.tpl:37
-msgid "Choose a priority"
-msgstr "Kies een prioriteit"
-
-#: admin/fai/faiProfile.tpl:43 admin/fai/faiScript.tpl:46
-#: admin/fai/faiScript.tpl:48 admin/fai/faiTemplate.tpl:38
-#: admin/fai/faiTemplate.tpl:40 admin/fai/faiHook.tpl:46
-#: admin/fai/faiHook.tpl:48 admin/fai/faiVariable.tpl:49
-#: admin/fai/faiVariable.tpl:51 admin/fai/faiPackage.tpl:79
-#: admin/fai/faiPartitionTable.tpl:49 admin/fai/faiPartitionTable.tpl:51
-msgid "Add"
-msgstr "Toevoegen"
-
-#: admin/fai/class_faiPartitionTable.inc:318
-#: admin/fai/class_faiPartitionTable.inc:324
-#, php-format
-msgid "%s partition"
-msgstr "%s partitie"
-
-#: admin/fai/class_faiPartitionTable.inc:320
-#: admin/fai/class_faiPartitionTable.inc:326
-#, php-format
-msgid "%s partition(s)"
-msgstr "%s partitie(s)"
-
-#: admin/fai/class_faiPartitionTable.inc:587
-#, fuzzy
-msgid "FAI partition table"
-msgstr "Nieuwe partitietabel"
-
-#: admin/fai/class_faiPartitionTable.inc:594
-#: admin/fai/class_faiVariable.inc:454 admin/fai/class_faiHook.inc:598
-#, fuzzy
-msgid "Read only"
-msgstr "Lezen"
-
-#: admin/fai/faiScriptEntry.tpl:33
-msgid "Properties"
-msgstr "Eigenschappen"
-
-#: admin/fai/faiScriptEntry.tpl:33 admin/fai/faiScriptEntry.tpl:54
-msgid "Script attributes"
-msgstr "Script attributen"
-
-#: admin/fai/faiScriptEntry.tpl:38 admin/fai/class_faiScript.inc:342
-msgid "Priority"
-msgstr "Prioriteit"
-
-#: admin/fai/faiScriptEntry.tpl:43
-msgid ""
-"Choose a priority. Low values result in earlyer, high values in later "
-"excecution."
-msgstr ""
-
-#: admin/fai/faiScriptEntry.tpl:56 admin/fai/faiHookEntry.tpl:56
-#: admin/fai/class_faiScript.inc:639
-msgid "Script"
-msgstr "Script"
-
-#: admin/fai/faiScriptEntry.tpl:75 admin/fai/faiHookEntry.tpl:75
-msgid "Import script"
-msgstr "Importeer script"
-
-#: admin/fai/faiScript.tpl:39
-msgid "List of scripts"
-msgstr "Lijst met scripts"
-
-#: admin/fai/faiTemplate.tpl:34
-msgid "List of template files"
-msgstr "Lijst met sjabloonbestanden"
-
-#: admin/fai/faiHookEntry.tpl:33 admin/fai/faiHookEntry.tpl:54
-msgid "Hook attributes"
-msgstr "Inhakers atributen"
-
-#: admin/fai/faiHookEntry.tpl:38 admin/fai/class_faiHookEntry.inc:200
-msgid "Task"
-msgstr "Taak"
-
-#: admin/fai/faiHookEntry.tpl:41
-msgid "Choose an existing FAI task"
-msgstr "Kies een bestaande FAI taak"
+msgid "FAI variable"
+msgstr "Toon FAI variabelen"
 
 #: admin/fai/faiHook.tpl:39
 msgid "List of hook scripts"
 msgstr "Lijst met inhakers scripts"
 
+#: admin/fai/class_faiTemplate.inc:300 admin/fai/class_faiTemplate.inc:302
+#: admin/fai/class_faiScript.inc:358 admin/fai/class_faiScript.inc:360
+#: admin/fai/class_divListFai.inc:331 admin/fai/class_divListFai.inc:335
+msgid "edit"
+msgstr "Bewerk"
+
+#: admin/fai/class_faiTemplate.inc:304 admin/fai/class_faiScript.inc:362
+#: admin/fai/class_divListFai.inc:338
+msgid "delete"
+msgstr "Verwijder"
+
+#: admin/fai/class_faiTemplate.inc:560
+msgid "Template"
+msgstr "Sjabloon"
+
+#: admin/fai/class_faiTemplate.inc:561
+#, fuzzy
+msgid "FAI template"
+msgstr "Nieuw sjabloon"
+
+#: admin/fai/remove.tpl:7
+msgid ""
+"This includes 'all' object information. Please double check if your really "
+"want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"Dit omvat 'alle' object informatie. Verzeker uzelf hiervan, aangezien er "
+"geen manier is voor GOsa om deze gegevens terug te halen."
+
+#: admin/fai/remove.tpl:11
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Het is aan te raden de huidige inhoud van uw LDAP database op te slaan "
+"alvorens u doorgaat. Indien u dat gedaan heeft drukt u op 'Verwijderen' om "
+"door te gaan of op 'Annuleren' om te annuleren."
+
+#: admin/fai/class_askClassName.inc:80 admin/fai/class_askClassName.inc:81
+#: admin/fai/class_askClassName.inc:82 admin/fai/class_askClassName.inc:83
+#: admin/fai/class_askClassName.inc:84 admin/fai/class_askClassName.inc:85
+#: admin/fai/class_askClassName.inc:86 admin/fai/class_askClassName.inc:87
+msgid "Create new FAI object"
+msgstr "Nieuw FAI object aanmaken"
+
+#: admin/fai/class_askClassName.inc:85 admin/fai/class_faiProfile.inc:478
+#: admin/fai/class_divListFai.inc:72 admin/fai/class_divListFai.inc:198
+#: admin/fai/class_divListFai.inc:275
+#, fuzzy
+msgid "Profile"
+msgstr "Profielen"
+
+#: admin/fai/faiVariable.tpl:38
+msgid "List of assigned variables"
+msgstr "Lijst met toegekende variabelen"
+
+#: admin/fai/faiVariable.tpl:44
+msgid "Choose a variable to delete or edit"
+msgstr "Kies een te bewerken of verwijderen variabele"
+
 #: admin/fai/faiProfileEntry.tpl:6
 msgid "List of FAI objects (Fully Automatic Installation)"
 msgstr "Lijst met FAI objecten (Fully Automatic Installation)"
+
+#: admin/fai/faiProfileEntry.tpl:21 admin/fai/faiPackageEntry.tpl:22
+msgid "Information"
+msgstr "Informatie"
 
 #: admin/fai/faiProfileEntry.tpl:26
 msgid ""
@@ -745,6 +819,10 @@ msgid ""
 msgstr ""
 "Dit menu maakt het mogelijk ok FAI klassenamen te selecteren en deze toe te "
 "voegen aan het profiel dat op dit moment bewerkt wordt."
+
+#: admin/fai/faiProfileEntry.tpl:31 admin/fai/faiPackageEntry.tpl:32
+msgid "Filters"
+msgstr "Filters"
 
 #: admin/fai/faiProfileEntry.tpl:39
 msgid "Show only classes with templates"
@@ -770,80 +848,114 @@ msgstr "Toon alleen klassen met pakketten"
 msgid "Show only classes with partitions"
 msgstr "Toon alleen klassen met partities"
 
-#: admin/fai/class_faiPackage.inc:374
+#: admin/fai/faiProfileEntry.tpl:54 admin/fai/faiProfileEntry.tpl:55
+#: admin/fai/faiPackageEntry.tpl:42
+msgid "Display objects matching"
+msgstr "Toon overeenkomende objecten"
+
+#: admin/fai/faiProfileEntry.tpl:59 admin/fai/faiPackageEntry.tpl:46
+msgid "Regular expression for matching object names"
+msgstr "Reguliere expressie voor overeenkomende objectnamen"
+
+#: admin/fai/class_faiScript.inc:328 admin/fai/class_faiScript.inc:330
 #, fuzzy
-msgid "Please select a least one package!"
-msgstr "Selecteer a.u.b. tenminste een pakket."
-
-#: admin/fai/class_faiPackage.inc:378
-#, fuzzy
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
-msgstr ""
-"Kies a.u.b. een geldige combinatie voor uw verzamelplaats instellingen."
-
-#: admin/fai/class_faiPackage.inc:399
-msgid "package is configured"
-msgstr "pakket is geconfigureerd"
-
-#: admin/fai/class_faiPackage.inc:405
-msgid "Package marked for removal"
-msgstr "Pakket gemarkeerd voor verwijdering"
-
-#: admin/fai/class_faiPackage.inc:434
-#, fuzzy, php-format
-msgid "Package file '%s' does not exist!"
-msgstr "Pakketbestand '%s' bestaat niet."
-
-#: admin/fai/class_faiPackage.inc:537 admin/fai/faiPackageConfiguration.tpl:1
-msgid "Package"
-msgstr "Pakket"
-
-#: admin/fai/class_faiPackage.inc:538
-#, fuzzy
-msgid "FAI Package list"
-msgstr "Pakketlijst"
-
-#: admin/fai/class_faiPackage.inc:547
-msgid "Packages"
-msgstr "Pakketten"
-
-#: admin/fai/class_faiPackage.inc:548 admin/fai/faiPackage.tpl:45
-msgid "Section"
+msgid "Sort direction"
 msgstr "Sectie"
 
-#: admin/fai/class_faiPackage.inc:548 admin/fai/class_faiPackage.inc:551
-#: admin/fai/class_faiTemplate.inc:568 admin/fai/class_faiScript.inc:647
-#, fuzzy
-msgid "Readonly"
-msgstr "Lezen"
+#: admin/fai/class_faiScript.inc:342 admin/fai/faiScriptEntry.tpl:38
+msgid "Priority"
+msgstr "Prioriteit"
 
-#: admin/fai/class_faiPackage.inc:549
-#, fuzzy
-msgid "Install Method"
-msgstr "Installatie methode"
+#: admin/fai/class_faiScript.inc:346
+msgid "Action"
+msgstr "Actie"
 
-#: admin/fai/class_faiPackage.inc:550
-#, fuzzy
-msgid "Package configuration"
-msgstr "FAX database"
+#: admin/fai/faiHookEntry.tpl:33 admin/fai/faiHookEntry.tpl:54
+msgid "Hook attributes"
+msgstr "Inhakers atributen"
 
-#: admin/fai/class_faiPackage.inc:551 admin/fai/faiPackage.tpl:37
-msgid "Release"
-msgstr "Distributie versie"
+#: admin/fai/faiHookEntry.tpl:41
+msgid "Choose an existing FAI task"
+msgstr "Kies een bestaande FAI taak"
 
-#: admin/fai/class_faiVariableEntry.inc:98
+#: admin/fai/faiHookEntry.tpl:75 admin/fai/faiScriptEntry.tpl:75
+msgid "Import script"
+msgstr "Importeer script"
+
+#: admin/fai/class_faiPartitionTable.inc:318
+#: admin/fai/class_faiPartitionTable.inc:324
+#, php-format
+msgid "%s partition"
+msgstr "%s partitie"
+
+#: admin/fai/class_faiPartitionTable.inc:320
+#: admin/fai/class_faiPartitionTable.inc:326
+#, php-format
+msgid "%s partition(s)"
+msgstr "%s partitie(s)"
+
+#: admin/fai/class_faiPartitionTable.inc:587
 #, fuzzy
-msgid "There is already a variable with the given name."
-msgstr "Er bestaat al een bestand met dezelfde naam."
+msgid "FAI partition table"
+msgstr "Nieuwe partitietabel"
+
+#: admin/fai/class_faiScriptEntry.inc:180
+#: admin/fai/class_faiScriptEntry.inc:190
+#, fuzzy
+msgid "Script entry"
+msgstr "Variabele inhoud"
+
+#: admin/fai/class_faiScriptEntry.inc:181
+#, fuzzy
+msgid "FAI script entry"
+msgstr "Importeer script"
+
+#: admin/fai/class_faiScriptEntry.inc:191
+#, fuzzy
+msgid "Script Priority"
+msgstr "Inlogscript"
+
+#: admin/fai/branch_selector.tpl:2
+msgid "Branches"
+msgstr "Aftakkingen"
+
+#: admin/fai/branch_selector.tpl:8
+msgid "Current release"
+msgstr "Huidige uitgave"
+
+#: admin/fai/branch_selector.tpl:20 admin/fai/branch_selector.tpl:26
+msgid "Create new branch"
+msgstr "Maak nieuwe tak aan"
+
+#: admin/fai/branch_selector.tpl:23 admin/fai/branch_selector.tpl:29
+msgid "Create new locked branch"
+msgstr "Maak nieuwe geblokkeerde tak aan"
+
+#: admin/fai/branch_selector.tpl:28
+#, fuzzy
+msgid "Freeze"
+msgstr "Frequentie"
+
+#: admin/fai/branch_selector.tpl:35
+msgid "Delete current release"
+msgstr "Verwijder huidige uitgave"
+
+#: admin/fai/faiPackageEntry.tpl:6
+msgid "List of available packages"
+msgstr "Lijst met beschikbare pakketten"
+
+#: admin/fai/faiPackageEntry.tpl:26
+msgid ""
+"This menu allows you to select multiple packages to add them to the "
+"currently edited package list."
+msgstr ""
+"Dit menu maakt het mogelijk om meerdere pakketten toe te voegen aan de op "
+"dit moment bewerkte pakketlijst."
 
 #: admin/fai/class_faiVariableEntry.inc:102
-msgid "Please specify a value for the attribute 'content'."
-msgstr "Geef a.u.b. een waarde op voor het atribuut 'inhoud'."
-
-#: admin/fai/class_faiVariableEntry.inc:106
-msgid "Please enter a name."
-msgstr "Kies a.u.b. een naam."
+#, fuzzy
+msgid "Content"
+msgstr "Doorgaan"
 
 #: admin/fai/class_faiVariableEntry.inc:133
 #, fuzzy
@@ -859,463 +971,6 @@ msgstr "Toon FAI variabelen"
 msgid "Variable content"
 msgstr "Variabele inhoud"
 
-#: admin/fai/class_faiPackageConfiguration.inc:40
-#, php-format
-msgid "Debconf information for package '%s'"
-msgstr "Debconf informatie voor pakket '%s'"
-
-#: admin/fai/class_faiPackageEntry.inc:30
-msgid "Please enter your search string here"
-msgstr "Geef hier uw zoekwaarde op"
-
-#: admin/fai/class_faiPackageEntry.inc:44
-msgid ""
-"This list displays all assigned package names for this repository settings."
-msgstr ""
-"Deze lijst toont alle toegekende pakketnamen voor deze verzamelplaats "
-"instellingen."
-
-#: admin/fai/class_faiPackageEntry.inc:123
-msgid "Search returned too many reults - showing the first 200 matches, only!"
-msgstr ""
-
-#: admin/fai/faiVariable.tpl:38
-msgid "List of assigned variables"
-msgstr "Lijst met toegekende variabelen"
-
-#: admin/fai/faiVariable.tpl:44
-msgid "Choose a variable to delete or edit"
-msgstr "Kies een te bewerken of verwijderen variabele"
-
-#: admin/fai/faiVariable.tpl:53 admin/fai/class_faiHook.inc:323
-#: admin/fai/class_faiHook.inc:325 admin/fai/faiPartitionTable.tpl:54
-msgid "Edit"
-msgstr "Bewerken"
-
-#: admin/fai/faiVariable.tpl:55 admin/fai/faiVariable.tpl:57
-#: admin/fai/class_faiHook.inc:327 admin/fai/remove_branch.tpl:14
-#: admin/fai/faiPartitionTable.tpl:55 admin/fai/remove.tpl:16
-#: admin/fai/remove.tpl:20
-msgid "Delete"
-msgstr "Verwijderen"
-
-#: admin/fai/faiPackage.tpl:33
-msgid "Repository"
-msgstr "Verzamelplaats"
-
-#: admin/fai/faiPackage.tpl:53
-msgid "Install method"
-msgstr "Installatie methode"
-
-#: admin/fai/faiPackage.tpl:57
-#, fuzzy
-msgid "Please select the installation method"
-msgstr "Selecteer a.u.b. een geldig bestand."
-
-#: admin/fai/faiPackage.tpl:71
-msgid "Used packages"
-msgstr "Gebruikte pakketten"
-
-#: admin/fai/faiPackage.tpl:73
-msgid "Choosen packages"
-msgstr "Gekozen pakketten"
-
-#: admin/fai/faiPackage.tpl:82 admin/fai/class_divListFai.inc:221
-#: admin/fai/class_faiPartitionTableEntry.inc:308
-#: admin/fai/class_faiPartitionTableEntry.inc:310
-msgid "Remove"
-msgstr "Verwijderen"
-
-#: admin/fai/faiPackage.tpl:85
-msgid "Configure"
-msgstr "Instellen"
-
-#: admin/fai/faiPackage.tpl:88
-msgid "Toggle remove flag"
-msgstr "Verwijder markering omschakelen"
-
-#: admin/fai/class_divListFai.inc:43
-msgid "List of FAI classes"
-msgstr "Lijst met FAI klassen"
-
-#: admin/fai/class_divListFai.inc:44
-#, fuzzy
-msgid "This table displays all FAI classes in the selected tree."
-msgstr "Deze tabel toont alle systemen in de geselecteerde tree"
-
-#: admin/fai/class_divListFai.inc:48
-msgid "This menu allows you to create, delete and edit FAI classes."
-msgstr ""
-"Dit menu maakt het mogelijk om FAI klassen aan te maken, bewerken en "
-"verwijderen."
-
-#: admin/fai/class_divListFai.inc:69
-msgid "Name of FAI class"
-msgstr "Naam van de FAI klasse"
-
-#: admin/fai/class_divListFai.inc:70
-msgid "Class type"
-msgstr "Klasse type"
-
-#: admin/fai/class_divListFai.inc:71 admin/fai/class_divListFai.inc:192
-msgid "Actions"
-msgstr "Acties"
-
-#: admin/fai/class_divListFai.inc:73
-msgid "Display FAI profile objects"
-msgstr "Toon FAI profieel objecten"
-
-#: admin/fai/class_divListFai.inc:73
-msgid "Show profiles"
-msgstr "Toon profielen"
-
-#: admin/fai/class_divListFai.inc:74
-msgid "Display FAI template objects"
-msgstr "Toon FAI sjabloon objecten"
-
-#: admin/fai/class_divListFai.inc:74
-msgid "Show templates"
-msgstr "Toon sjablonen"
-
-#: admin/fai/class_divListFai.inc:75
-msgid "Display FAI scripts"
-msgstr "Toon FAI scripts"
-
-#: admin/fai/class_divListFai.inc:75
-msgid "Show scripts"
-msgstr "Toon scripts"
-
-#: admin/fai/class_divListFai.inc:76
-msgid "Display FAI hooks"
-msgstr "Toon FAI inhakers"
-
-#: admin/fai/class_divListFai.inc:76
-msgid "Show hooks"
-msgstr "Toon inhakers"
-
-#: admin/fai/class_divListFai.inc:77
-msgid "Display FAI variables"
-msgstr "Toon FAI variabelen"
-
-#: admin/fai/class_divListFai.inc:77
-msgid "Show variables"
-msgstr "Toon variabelen"
-
-#: admin/fai/class_divListFai.inc:78
-msgid "Display FAI packages"
-msgstr "Toon FAI pakketten"
-
-#: admin/fai/class_divListFai.inc:78
-msgid "Show packages"
-msgstr "Toon pakketten"
-
-#: admin/fai/class_divListFai.inc:79
-msgid "Display FAI partitions"
-msgstr "Toon FAI partities"
-
-#: admin/fai/class_divListFai.inc:79
-msgid "Show partitions"
-msgstr "Toon partities"
-
-#: admin/fai/class_divListFai.inc:86
-msgid "Display users matching"
-msgstr "Toon overeenkomende gebruikers"
-
-#: admin/fai/class_divListFai.inc:187
-msgid "Base"
-msgstr "Basis"
-
-#: admin/fai/class_divListFai.inc:189
-msgid "Submit department"
-msgstr "Verwerk afdeling"
-
-#: admin/fai/class_divListFai.inc:189
-msgid "Submit"
-msgstr "Verwerk"
-
-#: admin/fai/class_divListFai.inc:194
-msgid "Create"
-msgstr "Aanmaken"
-
-#: admin/fai/class_divListFai.inc:204
-msgid "PT"
-msgstr "PT"
-
-#: admin/fai/class_divListFai.inc:205
-msgid "S"
-msgstr "SC"
-
-#: admin/fai/class_divListFai.inc:206
-msgid "H"
-msgstr "H"
-
-#: admin/fai/class_divListFai.inc:207
-msgid "V"
-msgstr "V"
-
-#: admin/fai/class_divListFai.inc:208
-#, fuzzy
-msgid "Templates "
-msgstr "Sjablonen"
-
-#: admin/fai/class_divListFai.inc:208
-#, fuzzy
-msgid "I"
-msgstr "NI"
-
-#: admin/fai/class_divListFai.inc:209
-msgid "PK"
-msgstr "PK"
-
-#: admin/fai/class_divListFai.inc:227
-#, fuzzy
-msgid "Copy"
-msgstr "kopieer"
-
-#: admin/fai/class_divListFai.inc:229
-#, fuzzy
-msgid "Cut"
-msgstr "knippen"
-
-#: admin/fai/class_divListFai.inc:237 admin/fai/class_divListFai.inc:240
-msgid "Paste"
-msgstr "Plakken"
-
-#: admin/fai/class_divListFai.inc:326
-msgid "cut"
-msgstr "knippen"
-
-#: admin/fai/class_divListFai.inc:326
-msgid "Cut this entry"
-msgstr "Deze invoer knippen"
-
-#: admin/fai/class_divListFai.inc:328
-msgid "copy"
-msgstr "kopieer"
-
-#: admin/fai/class_divListFai.inc:328
-msgid "Copy this entry"
-msgstr "Deze invoer kopieren"
-
-#: admin/fai/class_divListFai.inc:332 admin/fai/class_divListFai.inc:336
-#: admin/fai/class_faiTemplate.inc:300 admin/fai/class_faiTemplate.inc:302
-#: admin/fai/class_faiScript.inc:358 admin/fai/class_faiScript.inc:360
-msgid "edit"
-msgstr "Bewerk"
-
-#: admin/fai/class_divListFai.inc:333 admin/fai/class_divListFai.inc:337
-msgid "Edit class"
-msgstr "Bewerk klasse"
-
-#: admin/fai/class_divListFai.inc:339 admin/fai/class_faiTemplate.inc:304
-#: admin/fai/class_faiScript.inc:362
-msgid "delete"
-msgstr "Verwijder"
-
-#: admin/fai/class_divListFai.inc:340
-msgid "Delete class"
-msgstr "Verwijder klasse"
-
-#: admin/fai/class_divListFai.inc:373
-#, fuzzy
-msgid "Number of listed profiles"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_divListFai.inc:374
-#, fuzzy
-msgid "Number of listed partitions"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_divListFai.inc:375
-#, fuzzy
-msgid "Number of listed scripts"
-msgstr "Lijst met scripts"
-
-#: admin/fai/class_divListFai.inc:376
-#, fuzzy
-msgid "Number of listed hooks"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_divListFai.inc:377
-#, fuzzy
-msgid "Number of listed variables"
-msgstr "Lijst met toegekende variabelen"
-
-#: admin/fai/class_divListFai.inc:378
-#, fuzzy
-msgid "Number of listed templates"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_divListFai.inc:379
-#, fuzzy
-msgid "Number of listed packages"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_divListFai.inc:380
-#, fuzzy
-msgid "Number of listed departments"
-msgstr "Naam van de afdeling"
-
-#: admin/fai/class_faiVariable.inc:446
-msgid "Variable"
-msgstr "Variabele"
-
-#: admin/fai/class_faiVariable.inc:447
-#, fuzzy
-msgid "FAI variable"
-msgstr "Toon FAI variabelen"
-
-#: admin/fai/class_faiHookEntry.inc:190
-#, fuzzy
-msgid "Hook entry"
-msgstr "Record verwijderen"
-
-#: admin/fai/class_faiHookEntry.inc:191
-#, fuzzy
-msgid "FAI hook entry"
-msgstr "Toon FAI inhakers"
-
-#: admin/fai/class_faiHookEntry.inc:201 admin/fai/class_faiScript.inc:640
-#, fuzzy
-msgid "FAI script"
-msgstr "Importeer script"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:185
-#, fuzzy
-msgid "primary"
-msgstr "Primaire groep"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:185
-#, fuzzy
-msgid "logical"
-msgstr "Lokaal toevoegen"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:193
-msgid "FS type"
-msgstr "FS type"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:197
-msgid "FS option"
-msgstr "FS opties"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:198
-msgid "Preserve"
-msgstr "Bewaar"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:199
-msgid "Encrypted"
-msgstr ""
-
-#: admin/fai/class_faiPartitionTableEntry.inc:297
-#: admin/fai/class_faiPartitionTableEntry.inc:302
-msgid "False"
-msgstr "Nee"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:299
-#: admin/fai/class_faiPartitionTableEntry.inc:304
-msgid "True"
-msgstr "Ja"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:403
-#, fuzzy
-msgid "Please specify a valid disc name."
-msgstr "Geef a.u.b. een geldige scriptnaam op."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:426
-#, php-format
-msgid "please enter a unique mount point for partition %s"
-msgstr "Geef a.u.b. een uniek koppelpunt op voor partitie %s"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:431
-#, php-format
-msgid "Please enter a valid mount point for partition %s."
-msgstr "Geef a.u.b. een geldig koppelpunt op voor partitie %s."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:436
-#, php-format
-msgid ""
-"File system type 'swap' is already used, change file system type for "
-"partition %s."
-msgstr ""
-"Bestandssysteem type 'swap' wordt al gebruikt. Verander bestandssysteem type "
-"voor partitie %s."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:440
-msgid "Please use 'swap' as mount point, if 'swap' is used as fs-type."
-msgstr ""
-"Gebruik a.u.b. 'swap' als koppelpunt indien 'swap' gebruikt wordt als fs-"
-"type."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:446
-#: admin/fai/class_faiPartitionTableEntry.inc:450
-#, php-format
-msgid "Please enter a valid partition size for partition %s."
-msgstr "Geef a.u.b. een geldige partitie grootte op voor partitie %s."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:456
-#: admin/fai/class_faiPartitionTableEntry.inc:458
-#, php-format
-msgid "Please enter a valid range for partition %s."
-msgstr "Geef a.u.b. een geldig bereik op voor partitie %s."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:463
-#, php-format
-msgid "Please enter a range for partition size for partition %s."
-msgstr "Geef a.u.b. een bereik op voor de partitie grootte van partitie %s."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:478
-msgid ""
-"You have more than 3 primary partition table entries in your configuration, "
-"please check your configuration twice."
-msgstr ""
-"U heeft meer dan 3 primaire partitietabel regels in uw configuratie. "
-"Controleer uw configuratie a.u.b. nogmaals."
-
-#: admin/fai/class_faiPartitionTableEntry.inc:490
-#, fuzzy
-msgid "Partition table entry"
-msgstr "Partitietabel"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:491
-#, fuzzy
-msgid "FAI partition table entry"
-msgstr "Nieuwe partitietabel"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:500
-#, fuzzy
-msgid "Partition type"
-msgstr "Partitietabel"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:501
-#, fuzzy
-msgid "Partition no."
-msgstr "Partities"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:502
-#, fuzzy
-msgid "File system type"
-msgstr "Systeemtype"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:504
-#, fuzzy
-msgid "Partition size"
-msgstr "Partities"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:506
-#, fuzzy
-msgid "File system options"
-msgstr "systeem informatie bekijken"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:507
-#, fuzzy
-msgid "File system encryption"
-msgstr "systeem informatie bekijken"
-
-#: admin/fai/class_faiPartitionTableEntry.inc:508
-#, fuzzy
-msgid "Partition flags"
-msgstr "Partities"
-
 #: admin/fai/faiPartitionTableEntry.tpl:2
 msgid "Device"
 msgstr "Apparaat"
@@ -1329,260 +984,9 @@ msgstr "Partitie regels"
 msgid "Add partition"
 msgstr "Partitie toevoegen"
 
-#: admin/fai/faiPartitionTableEntry.tpl:38
-msgid "Save"
-msgstr "Opslaan"
-
-#: admin/fai/class_faiHook.inc:590
-#, fuzzy
-msgid "Hook"
-msgstr "Inhakers"
-
-#: admin/fai/class_faiHook.inc:591
-#, fuzzy
-msgid "FAI hook"
-msgstr "Toon FAI inhakers"
-
-#: admin/fai/askClassName.tpl:6
-msgid ""
-"Adding a new class to the FAI management, requires a class name. You have to "
-"specify a unique class name for unique types of FAI classes, while you can "
-"use the same class name for different types of FAI classes. In the laste "
-"case, FAI will automatically enclose all these different class types to one "
-"unique class name."
-msgstr ""
-"Het toevoegen van een nieuwe klasse aan FAI beheer, vereist een klassenaam. "
-"U dient een unieke klassenaam binnen een FAI klassetype te gebruiken. Het is "
-"mogelijk dezelfde klassenaam voor verschillende FAI klassetypes te "
-"gebruiken. In het laatste geval zal FAI automatisch alle verschillende "
-"klassetypes onderbrengen binnen een unieke klassenaam."
-
-#: admin/fai/askClassName.tpl:12
-msgid ""
-"Please use one of the following methods to choose the name for the new FAI "
-"class."
-msgstr ""
-"Gebruik a.u.b. een van de volgende methodes om de naam voor de nieuwe FAI "
-"klasse te kiezen."
-
-#: admin/fai/askClassName.tpl:26
-msgid "Enter FAI class name manually"
-msgstr "Voer FAI klassenaam handmatig in"
-
-#: admin/fai/askClassName.tpl:48
-msgid "Choose FAI class name from a list of existing classes"
-msgstr "Kies FAI klassenaam uit een lijst met bestaande klasses"
-
-#: admin/fai/askClassName.tpl:54
-msgid "Choose class name"
-msgstr "Kies een klassenaam"
-
-#: admin/fai/askClassName.tpl:70 admin/fai/askClassName.tpl:77
-msgid "Use"
-msgstr "Gebruik"
-
-#: admin/fai/askClassName.tpl:74
-msgid "A new class name."
-msgstr "Een nieuwe klassenaam."
-
-#: admin/fai/remove_branch.tpl:2 admin/fai/remove.tpl:2
-msgid "Warning"
-msgstr "Waarschuwing"
-
-#: admin/fai/remove_branch.tpl:6
-msgid ""
-"This includes all account data, system access, etc. for this branch. Please "
-"double check if your really want to do this since there is no way for GOsa "
-"to get your data back."
-msgstr ""
-"Dit omvat alle account gegevens, systeem toegangsregels, instellingen etc. "
-"voor deze aftakkingen. Verzeker uzelf hiervan, aangezien er geen "
-"mogelijkheid voor GOsa is om deze informatie terug te halen."
-
-#: admin/fai/remove_branch.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
-"om te annuleren."
-
-#: admin/fai/faiTemplateEntry.tpl:10
-#, fuzzy
-msgid "File name"
-msgstr "Bestandsnaam"
-
-#: admin/fai/faiTemplateEntry.tpl:21
-msgid "Destination path"
-msgstr "Doelpad"
-
-#: admin/fai/faiTemplateEntry.tpl:45
-msgid "Template attributes"
-msgstr "Sjabloon atributen"
-
-#: admin/fai/faiTemplateEntry.tpl:53
-msgid "File"
-msgstr "Bestand"
-
-#: admin/fai/faiTemplateEntry.tpl:60
-msgid "Save template"
-msgstr "Sjabloon opslaan"
-
-#: admin/fai/faiTemplateEntry.tpl:69
-msgid "Upload"
-msgstr "Uploaden"
-
-#: admin/fai/faiTemplateEntry.tpl:76
-#, fuzzy
-msgid "Full path"
-msgstr "Fontpad"
-
-#: admin/fai/faiTemplateEntry.tpl:92
-msgid "Owner"
-msgstr "Eigenaar"
-
-#: admin/fai/faiTemplateEntry.tpl:103 admin/fai/faiTemplateEntry.tpl:145
-msgid "Group"
-msgstr "Groep"
-
-#: admin/fai/faiTemplateEntry.tpl:114
-msgid "Access"
-msgstr "Toegang"
-
-#: admin/fai/faiTemplateEntry.tpl:120
-msgid "Class"
-msgstr "Klasse"
-
-#: admin/fai/faiTemplateEntry.tpl:121
-msgid "Read"
-msgstr "Lezen"
-
-#: admin/fai/faiTemplateEntry.tpl:122
-msgid "Write"
-msgstr "Schrijven"
-
-#: admin/fai/faiTemplateEntry.tpl:123
-msgid "Execute"
-msgstr "Commando"
-
-#: admin/fai/faiTemplateEntry.tpl:125
-msgid "Special"
-msgstr "Speciaal"
-
-#: admin/fai/faiTemplateEntry.tpl:128
-msgid "User"
-msgstr "Gebruiker"
-
-#: admin/fai/faiTemplateEntry.tpl:142
-msgid "SUID"
-msgstr "SUID"
-
-#: admin/fai/faiTemplateEntry.tpl:159
-msgid "SGID"
-msgstr "SGID"
-
-#: admin/fai/faiTemplateEntry.tpl:162
-msgid "Others"
-msgstr "Anderen"
-
-#: admin/fai/faiTemplateEntry.tpl:176
-msgid "sticky"
-msgstr "sticky"
-
-#: admin/fai/faiSummary.tpl:4
-msgid "FAI object tree"
-msgstr "FAI objectlijst"
-
-#: admin/fai/faiSummary.tpl:11
-msgid "Reload class and release configuration from parent object."
-msgstr "Klasse herladen en configuratie van ouder object vrijgeven."
-
-#: admin/fai/faiSummary.tpl:22
-#, fuzzy
-msgid "You are not allowed to view the fai summary."
-msgstr "U heeft geen toestemming om deze gebruiker te verwijderen!"
-
-#: admin/fai/class_faiTemplate.inc:560
-msgid "Template"
-msgstr "Sjabloon"
-
-#: admin/fai/class_faiTemplate.inc:561
-#, fuzzy
-msgid "FAI template"
-msgstr "Nieuw sjabloon"
-
-#: admin/fai/faiVariableEntry.tpl:33
-msgid "Variable attributes"
-msgstr "Variabele attributen"
-
-#: admin/fai/class_faiScript.inc:328 admin/fai/class_faiScript.inc:330
-#, fuzzy
-msgid "Sort direction"
-msgstr "Sectie"
-
-#: admin/fai/class_faiScript.inc:346
-msgid "Action"
-msgstr "Actie"
-
-#: admin/fai/class_FAI.inc:387
-#, php-format
-msgid "Error, following objects should be equal '%s' and '%s'"
-msgstr ""
-
-#: admin/fai/class_FAI.inc:707
-#, php-format
-msgid "Creating group application release for %s"
-msgstr ""
-
-#: admin/fai/class_FAI.inc:776 admin/fai/class_FAI.inc:798
-#: admin/fai/class_FAI.inc:838 admin/fai/class_FAI.inc:843
-#: admin/fai/class_FAI.inc:881
-msgid "Object"
-msgstr "Object"
-
-#: admin/fai/class_FAI.inc:777
-#, php-format
-msgid "Adding missing group application release container %s."
-msgstr ""
-
-#: admin/fai/class_FAI.inc:799
-#, php-format
-msgid "Adding group application release container %s."
-msgstr ""
-
-#: admin/fai/class_FAI.inc:839
-#, fuzzy, php-format
-msgid "Could not create menu entry %s. (Already exists)."
-msgstr "Kan '%s' niet aanmaken. De gewenste naam bestaat al."
-
-#: admin/fai/class_FAI.inc:844
-#, php-format
-msgid "Created group application menu entry for %s."
-msgstr ""
-
-#: admin/fai/class_FAI.inc:875
-#, php-format
-msgid "Creating copy of %s"
-msgstr "Bezig met maken van kopie van %s"
-
-#: admin/fai/class_FAI.inc:878
-msgid "Processing"
-msgstr "Bezig met verwerken"
-
-#: admin/fai/class_FAI.inc:896
-#, fuzzy
-msgid "Could not create new release, the destination dn is already in use."
-msgstr "Kan '%s' niet aanmaken. De gewenste naam bestaat al."
-
-#: admin/fai/class_FAI.inc:909
-msgid "Error while fetching source dn - aborted!"
-msgstr "Fout bij het ophalen van de bron dn - afgebroken!"
-
-#: admin/fai/faiPartitionTable.tpl:38
-msgid "Discs"
-msgstr "Schijven"
-
-#: admin/fai/faiPartitionTable.tpl:44
-msgid "Choose a disk to delete or edit"
-msgstr "Kies een te bewerken of verwijderen hardeschijf"
+#: admin/fai/faiTemplate.tpl:34
+msgid "List of template files"
+msgstr "Lijst met sjabloonbestanden"
 
 #: admin/fai/faiNewBranch.tpl:5
 msgid ""
@@ -1642,31 +1046,640 @@ msgstr "Gewenste opdracht uitvoeren."
 msgid "Initiate operation"
 msgstr "Opdracht starten"
 
-#: admin/fai/faiNewBranch.tpl:51
-msgid "Back"
-msgstr "Terug"
+#: admin/fai/class_faiProfile.inc:302
+msgid "Remove class from profile"
+msgstr "Verwijder klasse uit profiel"
 
-#: admin/fai/remove.tpl:7
-msgid ""
-"This includes 'all' object information. Please double check if your really "
-"want to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"Dit omvat 'alle' object informatie. Verzeker uzelf hiervan, aangezien er "
-"geen manier is voor GOsa om deze gegevens terug te halen."
+#: admin/fai/class_faiProfile.inc:305
+msgid "Up"
+msgstr "Omhoog"
 
-#: admin/fai/remove.tpl:11
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
+#: admin/fai/class_faiProfile.inc:306
+msgid "Down"
+msgstr "Omlaag"
+
+#: admin/fai/class_faiProfile.inc:394
+msgid "No class specified for this profile!"
 msgstr ""
-"Het is aan te raden de huidige inhoud van uw LDAP database op te slaan "
-"alvorens u doorgaat. Indien u dat gedaan heeft drukt u op 'Verwijderen' om "
-"door te gaan of op 'Annuleren' om te annuleren."
+
+#: admin/fai/class_faiProfile.inc:479
+#, fuzzy
+msgid "FAI profile"
+msgstr "Nieuw profiel"
+
+#: admin/fai/class_faiProfile.inc:488 admin/fai/faiProfile.tpl:36
+msgid "FAI classes"
+msgstr "FAI klassen"
 
 #: admin/fai/main.inc:47 admin/fai/main.inc:49
 msgid "Fully Automatic Installation"
 msgstr "Fully Automatic Installation"
+
+#: admin/fai/class_divListFai.inc:43
+msgid "List of FAI classes"
+msgstr "Lijst met FAI klassen"
+
+#: admin/fai/class_divListFai.inc:44
+#, fuzzy
+msgid "This table displays all FAI classes in the selected tree."
+msgstr "Deze tabel toont alle systemen in de geselecteerde tree"
+
+#: admin/fai/class_divListFai.inc:68
+msgid "Name of FAI class"
+msgstr "Naam van de FAI klasse"
+
+#: admin/fai/class_divListFai.inc:69
+msgid "Class type"
+msgstr "Klasse type"
+
+#: admin/fai/class_divListFai.inc:70 admin/fai/class_divListFai.inc:191
+msgid "Actions"
+msgstr "Acties"
+
+#: admin/fai/class_divListFai.inc:72 admin/fai/class_divListFai.inc:73
+#: admin/fai/class_divListFai.inc:74 admin/fai/class_divListFai.inc:75
+#: admin/fai/class_divListFai.inc:76 admin/fai/class_divListFai.inc:77
+#: admin/fai/class_divListFai.inc:78
+#, fuzzy, php-format
+msgid "Display objects of type '%s'."
+msgstr "Toon overeenkomende objecten"
+
+#: admin/fai/class_divListFai.inc:72
+msgid "Show profiles"
+msgstr "Toon profielen"
+
+#: admin/fai/class_divListFai.inc:73
+msgid "Show templates"
+msgstr "Toon sjablonen"
+
+#: admin/fai/class_divListFai.inc:74
+msgid "Show scripts"
+msgstr "Toon scripts"
+
+#: admin/fai/class_divListFai.inc:75
+msgid "Show hooks"
+msgstr "Toon inhakers"
+
+#: admin/fai/class_divListFai.inc:76
+msgid "Show variables"
+msgstr "Toon variabelen"
+
+#: admin/fai/class_divListFai.inc:77
+msgid "Show packages"
+msgstr "Toon pakketten"
+
+#: admin/fai/class_divListFai.inc:78
+#, fuzzy
+msgid "Partition"
+msgstr "Partities"
+
+#: admin/fai/class_divListFai.inc:78
+msgid "Show partitions"
+msgstr "Toon partities"
+
+#: admin/fai/class_divListFai.inc:85
+msgid "Display users matching"
+msgstr "Toon overeenkomende gebruikers"
+
+#: admin/fai/class_divListFai.inc:186
+msgid "Base"
+msgstr "Basis"
+
+#: admin/fai/class_divListFai.inc:188
+msgid "Submit department"
+msgstr "Verwerk afdeling"
+
+#: admin/fai/class_divListFai.inc:188
+msgid "Submit"
+msgstr "Verwerk"
+
+#: admin/fai/class_divListFai.inc:193
+msgid "Create"
+msgstr "Aanmaken"
+
+#: admin/fai/class_divListFai.inc:203
+msgid "PT"
+msgstr "PT"
+
+#: admin/fai/class_divListFai.inc:204
+msgid "S"
+msgstr "SC"
+
+#: admin/fai/class_divListFai.inc:205
+msgid "H"
+msgstr "H"
+
+#: admin/fai/class_divListFai.inc:206
+msgid "V"
+msgstr "V"
+
+#: admin/fai/class_divListFai.inc:207
+#, fuzzy
+msgid "Templates "
+msgstr "Sjablonen"
+
+#: admin/fai/class_divListFai.inc:207
+#, fuzzy
+msgid "I"
+msgstr "NI"
+
+#: admin/fai/class_divListFai.inc:208
+msgid "PK"
+msgstr "PK"
+
+#: admin/fai/class_divListFai.inc:220 admin/fai/faiPackage.tpl:82
+#: admin/fai/class_faiPartitionTableEntry.inc:308
+#: admin/fai/class_faiPartitionTableEntry.inc:310
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: admin/fai/class_divListFai.inc:226
+#, fuzzy
+msgid "Copy"
+msgstr "kopieer"
+
+#: admin/fai/class_divListFai.inc:228
+#, fuzzy
+msgid "Cut"
+msgstr "knippen"
+
+#: admin/fai/class_divListFai.inc:236 admin/fai/class_divListFai.inc:239
+msgid "Paste"
+msgstr "Plakken"
+
+#: admin/fai/class_divListFai.inc:325
+msgid "cut"
+msgstr "knippen"
+
+#: admin/fai/class_divListFai.inc:325
+msgid "Cut this entry"
+msgstr "Deze invoer knippen"
+
+#: admin/fai/class_divListFai.inc:327
+msgid "copy"
+msgstr "kopieer"
+
+#: admin/fai/class_divListFai.inc:327
+msgid "Copy this entry"
+msgstr "Deze invoer kopieren"
+
+#: admin/fai/class_divListFai.inc:332 admin/fai/class_divListFai.inc:336
+msgid "Edit class"
+msgstr "Bewerk klasse"
+
+#: admin/fai/class_divListFai.inc:339
+msgid "Delete class"
+msgstr "Verwijder klasse"
+
+#: admin/fai/class_divListFai.inc:372 admin/fai/class_divListFai.inc:373
+#: admin/fai/class_divListFai.inc:374 admin/fai/class_divListFai.inc:375
+#: admin/fai/class_divListFai.inc:376 admin/fai/class_divListFai.inc:377
+#: admin/fai/class_divListFai.inc:378 admin/fai/class_divListFai.inc:379
+#, fuzzy, php-format
+msgid "Number of listed '%s'"
+msgstr "Naam van de afdeling"
+
+#: admin/fai/class_divListFai.inc:372
+#, fuzzy
+msgid "profiles"
+msgstr "Profielen"
+
+#: admin/fai/class_divListFai.inc:373
+#, fuzzy
+msgid "partitions"
+msgstr "%s partitie"
+
+#: admin/fai/class_divListFai.inc:374
+#, fuzzy
+msgid "scripts"
+msgstr "Script"
+
+#: admin/fai/class_divListFai.inc:375
+#, fuzzy
+msgid "hooks"
+msgstr "Inhakers"
+
+#: admin/fai/class_divListFai.inc:376
+#, fuzzy
+msgid "variables"
+msgstr "Variabele"
+
+#: admin/fai/class_divListFai.inc:377
+#, fuzzy
+msgid "templates"
+msgstr "Sjabloon"
+
+#: admin/fai/class_divListFai.inc:378
+#, fuzzy
+msgid "packages"
+msgstr "Pakketten"
+
+#: admin/fai/class_divListFai.inc:379
+#, fuzzy
+msgid "departments"
+msgstr "Verwerk afdeling"
+
+#: admin/fai/faiPackage.tpl:33
+msgid "Repository"
+msgstr "Verzamelplaats"
+
+#: admin/fai/faiPackage.tpl:53
+msgid "Install method"
+msgstr "Installatie methode"
+
+#: admin/fai/faiPackage.tpl:57
+#, fuzzy
+msgid "Please select the installation method"
+msgstr "Selecteer a.u.b. een geldig bestand."
+
+#: admin/fai/faiPackage.tpl:71
+msgid "Used packages"
+msgstr "Gebruikte pakketten"
+
+#: admin/fai/faiPackage.tpl:73
+msgid "Choosen packages"
+msgstr "Gekozen pakketten"
+
+#: admin/fai/faiPackage.tpl:85
+msgid "Configure"
+msgstr "Instellen"
+
+#: admin/fai/faiPackage.tpl:88
+msgid "Toggle remove flag"
+msgstr "Verwijder markering omschakelen"
+
+#: admin/fai/class_faiPackageEntry.inc:30
+msgid "Please enter your search string here"
+msgstr "Geef hier uw zoekwaarde op"
+
+#: admin/fai/class_faiPackageEntry.inc:44
+msgid ""
+"This list displays all assigned package names for this repository settings."
+msgstr ""
+"Deze lijst toont alle toegekende pakketnamen voor deze verzamelplaats "
+"instellingen."
+
+#: admin/fai/class_faiPackageEntry.inc:123
+msgid "Search returned too many reults - showing the first 200 matches, only!"
+msgstr ""
+
+#: admin/fai/faiScriptEntry.tpl:33
+msgid "Properties"
+msgstr "Eigenschappen"
+
+#: admin/fai/faiScriptEntry.tpl:33 admin/fai/faiScriptEntry.tpl:54
+msgid "Script attributes"
+msgstr "Script attributen"
+
+#: admin/fai/faiScriptEntry.tpl:43
+msgid ""
+"Choose a priority. Low values result in earlyer, high values in later "
+"excecution."
+msgstr ""
+
+#: admin/fai/faiVariableEntry.tpl:33
+msgid "Variable attributes"
+msgstr "Variabele attributen"
+
+#: admin/fai/faiProfile.tpl:37
+msgid "Choose a priority"
+msgstr "Kies een prioriteit"
+
+#: admin/fai/faiSummary.tpl:4
+msgid "FAI object tree"
+msgstr "FAI objectlijst"
+
+#: admin/fai/faiSummary.tpl:11
+msgid "Reload class and release configuration from parent object."
+msgstr "Klasse herladen en configuratie van ouder object vrijgeven."
+
+#: admin/fai/faiSummary.tpl:22
+#, fuzzy
+msgid "You are not allowed to view the fai summary."
+msgstr "U heeft geen toestemming om deze gebruiker te verwijderen!"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:185
+#, fuzzy
+msgid "primary"
+msgstr "Primaire groep"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:185
+#, fuzzy
+msgid "logical"
+msgstr "Lokaal toevoegen"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:193
+msgid "FS type"
+msgstr "FS type"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:197
+msgid "FS option"
+msgstr "FS opties"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:198
+msgid "Preserve"
+msgstr "Bewaar"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:199
+msgid "Encrypted"
+msgstr ""
+
+#: admin/fai/class_faiPartitionTableEntry.inc:297
+#: admin/fai/class_faiPartitionTableEntry.inc:302
+msgid "False"
+msgstr "Nee"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:299
+#: admin/fai/class_faiPartitionTableEntry.inc:304
+msgid "True"
+msgstr "Ja"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:426
+#, php-format
+msgid "please enter a unique mount point for partition %s"
+msgstr "Geef a.u.b. een uniek koppelpunt op voor partitie %s"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:431
+#, php-format
+msgid "partition %s mount point"
+msgstr ""
+
+#: admin/fai/class_faiPartitionTableEntry.inc:436
+#, php-format
+msgid ""
+"File system type 'swap' is already used, change file system type for "
+"partition %s."
+msgstr ""
+"Bestandssysteem type 'swap' wordt al gebruikt. Verander bestandssysteem type "
+"voor partitie %s."
+
+#: admin/fai/class_faiPartitionTableEntry.inc:440
+msgid "Please use 'swap' as mount point, if 'swap' is used as fs-type."
+msgstr ""
+"Gebruik a.u.b. 'swap' als koppelpunt indien 'swap' gebruikt wordt als fs-"
+"type."
+
+#: admin/fai/class_faiPartitionTableEntry.inc:446
+#: admin/fai/class_faiPartitionTableEntry.inc:450
+#: admin/fai/class_faiPartitionTableEntry.inc:456
+#: admin/fai/class_faiPartitionTableEntry.inc:458
+#: admin/fai/class_faiPartitionTableEntry.inc:463
+#, fuzzy, php-format
+msgid "partition %s size"
+msgstr "Partities"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:478
+msgid ""
+"You have more than 3 primary partition table entries in your configuration, "
+"please check your configuration twice."
+msgstr ""
+"U heeft meer dan 3 primaire partitietabel regels in uw configuratie. "
+"Controleer uw configuratie a.u.b. nogmaals."
+
+#: admin/fai/class_faiPartitionTableEntry.inc:490
+#, fuzzy
+msgid "Partition table entry"
+msgstr "Partitietabel"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:491
+#, fuzzy
+msgid "FAI partition table entry"
+msgstr "Nieuwe partitietabel"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:500
+#, fuzzy
+msgid "Partition type"
+msgstr "Partitietabel"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:501
+#, fuzzy
+msgid "Partition no."
+msgstr "Partities"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:502
+#, fuzzy
+msgid "File system type"
+msgstr "Systeemtype"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:504
+#, fuzzy
+msgid "Partition size"
+msgstr "Partities"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:506
+#, fuzzy
+msgid "File system options"
+msgstr "systeem informatie bekijken"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:507
+#, fuzzy
+msgid "File system encryption"
+msgstr "systeem informatie bekijken"
+
+#: admin/fai/class_faiPartitionTableEntry.inc:508
+#, fuzzy
+msgid "Partition flags"
+msgstr "Partities"
+
+#, fuzzy
+#~ msgid "Name is already in use!"
+#~ msgstr "De opgegeven naam wordt al gebruikt."
+
+#, fuzzy
+#~ msgid "Please enter a script!"
+#~ msgstr "Geef a.u.b. een scripts op."
+
+#~ msgid "You're about to delete all information about the FAI class at '%s'."
+#~ msgstr ""
+#~ "U staat op het punt alle informatie over deze FAI klasse op '%s' te "
+#~ "verwijderen."
+
+#, fuzzy
+#~ msgid "You have no permission to delete this entry!"
+#~ msgstr "U heeft geen toestemming om dit component te verwijderen!"
+
+#, fuzzy
+#~ msgid "You're about to delete the following entry %s"
+#~ msgstr "U staat op het punt de invoer %s te verwijderen."
+
+#, fuzzy
+#~ msgid "You're about to delete the following entries %s"
+#~ msgstr "U staat op het punt de invoer %s te verwijderen."
+
+#~ msgid "You're about to delete a fai branch / freeze  '%s'."
+#~ msgstr ""
+#~ "U staat op het punt een FAI aftakking / bevriezing '%s' te verwijderen."
+
+#, fuzzy
+#~ msgid "Branch name is not valid!"
+#~ msgstr "De opgegeven aftakkingsnaam is ongeldig."
+
+#, fuzzy
+#~ msgid "Freeze name is not valid!"
+#~ msgstr "De opgegeven bevriesnaam is ongeldig."
+
+#, fuzzy
+#~ msgid "You have no permission to create a new branch!"
+#~ msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
+
+#~ msgid "Apply"
+#~ msgstr "Toepassen"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Packages bundle"
+#~ msgstr "Pakketbundel"
+
+#, fuzzy
+#~ msgid "There is already a template with the given name."
+#~ msgstr "Er bestaat al een bestand met dezelfde naam."
+
+#~ msgid "Please specify a value for attribute 'file'."
+#~ msgstr "Geef a.u.b. een waarde op voor het atribuut 'bestand'."
+
+#, fuzzy
+#~ msgid "Please specify a valid value for attribute 'Destination path'."
+#~ msgstr "Geef a.u.b. een waarde op voor het atribuut 'pad'."
+
+#, fuzzy
+#~ msgid "Please enter a file name."
+#~ msgstr "Kies a.u.b. een naam."
+
+#~ msgid "Please enter a user."
+#~ msgstr "Geef a.u.b. een gebruiker op."
+
+#~ msgid "Please enter a valid user. Only a-z/0-9 are allowed."
+#~ msgstr ""
+#~ "Geef a.u.b. een geldige gebruiker op! Alleen a-z/0-9 zijn toegestaan."
+
+#~ msgid "Please enter a group."
+#~ msgstr "Geef a.u.b. een groep op."
+
+#~ msgid "Please enter a valid group. Only a-z/0-9 are allowed."
+#~ msgstr "Geef a.u.b. een geldige groep op! Alleen a-z/0-9 zijn toegestaan."
+
+#~ msgid "Create new FAI object - partition table."
+#~ msgstr "Nieuw FAI object - partitie tabel aanmaken."
+
+#~ msgid "Create new FAI object - package bundle."
+#~ msgstr "Nieuw FAI object - pakketbundel aanmaken."
+
+#~ msgid "Create new FAI object - script bundle."
+#~ msgstr "Nieuw FAI object - scriptbundel aanmaken."
+
+#~ msgid "Create new FAI object - variable bundle."
+#~ msgstr "Nieuw FAI object - variabelebundel aanmaken."
+
+#~ msgid "Create new FAI object - hook bundle."
+#~ msgstr "Nieuw FAI object - inhakerbundel aanmaken."
+
+#~ msgid "Create new FAI object - profile."
+#~ msgstr "Nieuw FAI object - profiel aanmaken."
+
+#~ msgid "Create new FAI object - template."
+#~ msgstr "Nieuw FAI object - sjabloon aanmaken."
+
+#, fuzzy
+#~ msgid "Spaces are not allowed within class names."
+#~ msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
+
+#~ msgid "The given class name is empty."
+#~ msgstr "De opgegeven klassenaam is leeg."
+
+#~ msgid "The specified class name is already in use for this object type."
+#~ msgstr ""
+#~ "De waarde die opgegeven is voor de klassenaam is al in gebruik voor dit "
+#~ "objecttype."
+
+#~ msgid "Add"
+#~ msgstr "Toevoegen"
+
+#, fuzzy
+#~ msgid "There is already a variable with the given name."
+#~ msgstr "Er bestaat al een bestand met dezelfde naam."
+
+#~ msgid "Please specify a value for the attribute 'content'."
+#~ msgstr "Geef a.u.b. een waarde op voor het atribuut 'inhoud'."
+
+#~ msgid "Please enter a name."
+#~ msgstr "Kies a.u.b. een naam."
+
+#~ msgid "This menu allows you to create, delete and edit FAI classes."
+#~ msgstr ""
+#~ "Dit menu maakt het mogelijk om FAI klassen aan te maken, bewerken en "
+#~ "verwijderen."
+
+#~ msgid "Display FAI profile objects"
+#~ msgstr "Toon FAI profieel objecten"
+
+#~ msgid "Display FAI template objects"
+#~ msgstr "Toon FAI sjabloon objecten"
+
+#~ msgid "Display FAI scripts"
+#~ msgstr "Toon FAI scripts"
+
+#~ msgid "Display FAI hooks"
+#~ msgstr "Toon FAI inhakers"
+
+#~ msgid "Display FAI variables"
+#~ msgstr "Toon FAI variabelen"
+
+#~ msgid "Display FAI packages"
+#~ msgstr "Toon FAI pakketten"
+
+#~ msgid "Display FAI partitions"
+#~ msgstr "Toon FAI partities"
+
+#, fuzzy
+#~ msgid "Number of listed profiles"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "Number of listed partitions"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "Number of listed scripts"
+#~ msgstr "Lijst met scripts"
+
+#, fuzzy
+#~ msgid "Number of listed variables"
+#~ msgstr "Lijst met toegekende variabelen"
+
+#, fuzzy
+#~ msgid "Number of listed templates"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "Number of listed packages"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "Please specify a valid disc name."
+#~ msgstr "Geef a.u.b. een geldige scriptnaam op."
+
+#~ msgid "Please enter a valid mount point for partition %s."
+#~ msgstr "Geef a.u.b. een geldig koppelpunt op voor partitie %s."
+
+#~ msgid "Please enter a valid partition size for partition %s."
+#~ msgstr "Geef a.u.b. een geldige partitie grootte op voor partitie %s."
+
+#~ msgid "Please enter a valid range for partition %s."
+#~ msgstr "Geef a.u.b. een geldig bereik op voor partitie %s."
+
+#~ msgid "Please enter a range for partition size for partition %s."
+#~ msgstr "Geef a.u.b. een bereik op voor de partitie grootte van partitie %s."
+
+#~ msgid "Save"
+#~ msgstr "Opslaan"
+
+#~ msgid "Back"
+#~ msgstr "Terug"
 
 #, fuzzy
 #~ msgid "Saving of FAI/package list with dn '%s' failed."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:22+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:805
-#: addons/addressbook/class_addressbook.inc:811
+#: addons/addressbook/class_addressbook.inc:811 addons/addressbook/main.inc:37
 msgid "Addressbook"
 msgstr "Adresboek"
 
@@ -50,11 +50,6 @@ msgstr ""
 #: addons/addressbook/class_addressbook.inc:769
 msgid "LDAP error"
 msgstr ""
-
-#: addons/addressbook/class_addressbook.inc:316
-#, php-format
-msgid "You're about to delete the entry %s."
-msgstr "U staat op het punt de invoer %s te verwijderen."
 
 #: addons/addressbook/class_addressbook.inc:444
 #: addons/addressbook/class_addressbook.inc:451
@@ -127,10 +122,10 @@ msgid "User ID"
 msgstr "Gebruikers ID"
 
 #: addons/addressbook/class_addressbook.inc:686
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
 #: addons/addressbook/address_edit.tpl:221
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
 msgid "Phone"
 msgstr "Telefoon"
 
@@ -145,21 +140,21 @@ msgid "Fax"
 msgstr "Fax"
 
 #: addons/addressbook/class_addressbook.inc:695
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:75
-#: addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/address_info.tpl:75
 msgid "Mobile"
 msgstr "GSM"
 
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:822
-#: addons/addressbook/address_info.tpl:179
 #: addons/addressbook/address_edit.tpl:246
+#: addons/addressbook/address_info.tpl:179
 msgid "Pager"
 msgstr "Pieper"
 
 #: addons/addressbook/class_addressbook.inc:710
-#: addons/addressbook/address_info.tpl:83
 #: addons/addressbook/address_edit.tpl:118
+#: addons/addressbook/address_info.tpl:83
 msgid "Email"
 msgstr "E-mail"
 
@@ -217,8 +212,8 @@ msgid "Organization"
 msgstr "Organisatie"
 
 #: addons/addressbook/class_addressbook.inc:824
-#: addons/addressbook/address_info.tpl:117
 #: addons/addressbook/address_edit.tpl:155
+#: addons/addressbook/address_info.tpl:117
 msgid "Department"
 msgstr "Afdeling"
 
@@ -236,8 +231,8 @@ msgid "State"
 msgstr "Provincie"
 
 #: addons/addressbook/class_addressbook.inc:829
-#: addons/addressbook/address_info.tpl:32
 #: addons/addressbook/address_edit.tpl:48
+#: addons/addressbook/address_info.tpl:32
 msgid "Initials"
 msgstr "Initialen"
 
@@ -253,8 +248,32 @@ msgstr "Adres thuis"
 msgid "Common name"
 msgstr "Algemene naam"
 
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:53
-#: addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/remove.tpl:2
+msgid "Warning"
+msgstr "Waarschuwing"
+
+#: addons/addressbook/remove.tpl:6
+msgid ""
+"This includes all addressbook data in this entry. Please double check if "
+"your really want to do this since there is no way for GOsa to get your data "
+"back."
+msgstr ""
+"Dit omvat alle adresboek data in dit record. Verzeker uzelf ervan dat dit "
+"hetgeen is dat u wenst, aangezien er geen manier voor GOsa is om deze data "
+"terug te halen."
+
+#: addons/addressbook/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
+"om te annuleren."
+
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "Bel..."
+
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/address_info.tpl:53
 msgid "Private"
 msgstr "Privé"
 
@@ -337,65 +356,14 @@ msgstr "Zoek naar"
 msgid "Search string"
 msgstr "Zoekstring"
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "Bel..."
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/address_edit.tpl:265
-#: addons/addressbook/remove.tpl:16
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: addons/addressbook/address_info.tpl:18
-#: addons/addressbook/address_edit.tpl:24
-msgid "Personal"
-msgstr "Persoonlijk"
-
-#: addons/addressbook/address_info.tpl:40
-#: addons/addressbook/address_edit.tpl:60
-msgid "Personal title"
-msgstr "Aanhef"
-
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-msgid "Address"
-msgstr "Adres"
-
-#: addons/addressbook/address_info.tpl:99
-#: addons/addressbook/address_edit.tpl:134
-msgid "Organizational"
-msgstr "Bedrijfsmatig"
-
-#: addons/addressbook/address_info.tpl:109
-#: addons/addressbook/address_edit.tpl:143
-msgid "Company"
-msgstr "Bedrijf"
-
-#: addons/addressbook/address_info.tpl:125
-#: addons/addressbook/address_edit.tpl:167
-msgid "City"
-msgstr "Plaats"
-
-#: addons/addressbook/address_info.tpl:133
-#: addons/addressbook/address_edit.tpl:179
-msgid "Postal code"
-msgstr "Postcode"
-
-#: addons/addressbook/address_info.tpl:141
-#: addons/addressbook/address_edit.tpl:191
-msgid "Country"
-msgstr "Land"
-
-#: addons/addressbook/address_info.tpl:171
-#: addons/addressbook/address_edit.tpl:233
-msgid "FAX"
-msgstr "Fax"
-
 #: addons/addressbook/address_edit.tpl:7
 msgid "Choose the department to store entry in"
 msgstr "Selecteer de afdeling waarin de invoer bewaard wordt."
+
+#: addons/addressbook/address_edit.tpl:24
+#: addons/addressbook/address_info.tpl:18
+msgid "Personal"
+msgstr "Persoonlijk"
 
 #: addons/addressbook/address_edit.tpl:30
 msgid "Last name"
@@ -405,37 +373,62 @@ msgstr "Achternaam"
 msgid "First name"
 msgstr "Voornaam"
 
-#: addons/addressbook/address_edit.tpl:264
-msgid "Save"
-msgstr "Opslaan"
+#: addons/addressbook/address_edit.tpl:60
+#: addons/addressbook/address_info.tpl:40
+msgid "Personal title"
+msgstr "Aanhef"
 
-#: addons/addressbook/remove.tpl:2
-msgid "Warning"
-msgstr "Waarschuwing"
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+msgid "Address"
+msgstr "Adres"
 
-#: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
-msgstr ""
-"Dit omvat alle adresboek data in dit record. Verzeker uzelf ervan dat dit "
-"hetgeen is dat u wenst, aangezien er geen manier voor GOsa is om deze data "
-"terug te halen."
+#: addons/addressbook/address_edit.tpl:134
+#: addons/addressbook/address_info.tpl:99
+msgid "Organizational"
+msgstr "Bedrijfsmatig"
 
-#: addons/addressbook/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
-"om te annuleren."
+#: addons/addressbook/address_edit.tpl:143
+#: addons/addressbook/address_info.tpl:109
+msgid "Company"
+msgstr "Bedrijf"
 
-#: addons/addressbook/remove.tpl:14
-msgid "Delete"
-msgstr "Verwijderen"
+#: addons/addressbook/address_edit.tpl:167
+#: addons/addressbook/address_info.tpl:125
+msgid "City"
+msgstr "Plaats"
 
-#: addons/addressbook/main.inc:37
-msgid "Address book"
-msgstr "Adresboek"
+#: addons/addressbook/address_edit.tpl:179
+#: addons/addressbook/address_info.tpl:133
+msgid "Postal code"
+msgstr "Postcode"
+
+#: addons/addressbook/address_edit.tpl:191
+#: addons/addressbook/address_info.tpl:141
+msgid "Country"
+msgstr "Land"
+
+#: addons/addressbook/address_edit.tpl:233
+#: addons/addressbook/address_info.tpl:171
+msgid "FAX"
+msgstr "Fax"
+
+#~ msgid "You're about to delete the entry %s."
+#~ msgstr "U staat op het punt de invoer %s te verwijderen."
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Save"
+#~ msgstr "Opslaan"
+
+#~ msgid "Delete"
+#~ msgstr "Verwijderen"
+
+#~ msgid "Address book"
+#~ msgstr "Adresboek"
 
 #, fuzzy
 #~ msgid "Removing of addressbook entry '%s' failed."

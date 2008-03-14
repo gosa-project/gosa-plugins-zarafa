@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:367
+#: personal/netatalk/class_netatalk.inc:366
 msgid "Netatalk"
 msgstr "Netatalk"
 
@@ -40,21 +40,21 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:222
-#: personal/netatalk/class_netatalk.inc:377 personal/netatalk/netatalk.tpl:4
+#: personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
 msgid "Share"
 msgstr "Udział"
 
-#: personal/netatalk/class_netatalk.inc:288
-#: personal/netatalk/class_netatalk.inc:352
+#: personal/netatalk/class_netatalk.inc:287
+#: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:371
+#: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/netatalk/class_netatalk.inc:376
+#: personal/netatalk/class_netatalk.inc:375
 #, fuzzy
 msgid "User home path"
 msgstr "Ścieżka do profilu"

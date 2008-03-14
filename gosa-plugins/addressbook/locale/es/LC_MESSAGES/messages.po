@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:22+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:805
-#: addons/addressbook/class_addressbook.inc:811
+#: addons/addressbook/class_addressbook.inc:811 addons/addressbook/main.inc:37
 msgid "Addressbook"
 msgstr "Libreta direcciones"
 
@@ -45,11 +45,6 @@ msgstr "Necesita introducir su contraseña actual para continuar."
 #: addons/addressbook/class_addressbook.inc:206
 #: addons/addressbook/class_addressbook.inc:769
 msgid "LDAP error"
-msgstr ""
-
-#: addons/addressbook/class_addressbook.inc:316
-#, php-format
-msgid "You're about to delete the entry %s."
 msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:444
@@ -123,10 +118,10 @@ msgid "User ID"
 msgstr "Identificador (ID) de usuario"
 
 #: addons/addressbook/class_addressbook.inc:686
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
 #: addons/addressbook/address_edit.tpl:221
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -141,21 +136,21 @@ msgid "Fax"
 msgstr "Fax"
 
 #: addons/addressbook/class_addressbook.inc:695
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:75
-#: addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/address_info.tpl:75
 msgid "Mobile"
 msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:822
-#: addons/addressbook/address_info.tpl:179
 #: addons/addressbook/address_edit.tpl:246
+#: addons/addressbook/address_info.tpl:179
 msgid "Pager"
 msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:710
-#: addons/addressbook/address_info.tpl:83
 #: addons/addressbook/address_edit.tpl:118
+#: addons/addressbook/address_info.tpl:83
 msgid "Email"
 msgstr ""
 
@@ -205,8 +200,8 @@ msgid "Organization"
 msgstr "Organización"
 
 #: addons/addressbook/class_addressbook.inc:824
-#: addons/addressbook/address_info.tpl:117
 #: addons/addressbook/address_edit.tpl:155
+#: addons/addressbook/address_info.tpl:117
 msgid "Department"
 msgstr "Departamento"
 
@@ -224,8 +219,8 @@ msgid "State"
 msgstr "Provincia"
 
 #: addons/addressbook/class_addressbook.inc:829
-#: addons/addressbook/address_info.tpl:32
 #: addons/addressbook/address_edit.tpl:48
+#: addons/addressbook/address_info.tpl:32
 msgid "Initials"
 msgstr ""
 
@@ -241,8 +236,27 @@ msgstr "Dirección Postal personal"
 msgid "Common name"
 msgstr ""
 
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:53
-#: addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/remove.tpl:2
+msgid "Warning"
+msgstr "Aviso"
+
+#: addons/addressbook/remove.tpl:6
+msgid ""
+"This includes all addressbook data in this entry. Please double check if "
+"your really want to do this since there is no way for GOsa to get your data "
+"back."
+msgstr ""
+
+#: addons/addressbook/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr ""
+
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/address_info.tpl:53
 msgid "Private"
 msgstr ""
 
@@ -321,64 +335,13 @@ msgstr ""
 msgid "Search string"
 msgstr ""
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr ""
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/address_edit.tpl:265
-#: addons/addressbook/remove.tpl:16
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: addons/addressbook/address_info.tpl:18
-#: addons/addressbook/address_edit.tpl:24
-msgid "Personal"
-msgstr ""
-
-#: addons/addressbook/address_info.tpl:40
-#: addons/addressbook/address_edit.tpl:60
-msgid "Personal title"
-msgstr "Título Personal"
-
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-msgid "Address"
-msgstr "Dirección"
-
-#: addons/addressbook/address_info.tpl:99
-#: addons/addressbook/address_edit.tpl:134
-msgid "Organizational"
-msgstr ""
-
-#: addons/addressbook/address_info.tpl:109
-#: addons/addressbook/address_edit.tpl:143
-msgid "Company"
-msgstr ""
-
-#: addons/addressbook/address_info.tpl:125
-#: addons/addressbook/address_edit.tpl:167
-msgid "City"
-msgstr ""
-
-#: addons/addressbook/address_info.tpl:133
-#: addons/addressbook/address_edit.tpl:179
-msgid "Postal code"
-msgstr "Código Postal"
-
-#: addons/addressbook/address_info.tpl:141
-#: addons/addressbook/address_edit.tpl:191
-msgid "Country"
-msgstr "País"
-
-#: addons/addressbook/address_info.tpl:171
-#: addons/addressbook/address_edit.tpl:233
-msgid "FAX"
-msgstr ""
-
 #: addons/addressbook/address_edit.tpl:7
 msgid "Choose the department to store entry in"
+msgstr ""
+
+#: addons/addressbook/address_edit.tpl:24
+#: addons/addressbook/address_info.tpl:18
+msgid "Personal"
 msgstr ""
 
 #: addons/addressbook/address_edit.tpl:30
@@ -389,32 +352,56 @@ msgstr ""
 msgid "First name"
 msgstr ""
 
-#: addons/addressbook/address_edit.tpl:264
-msgid "Save"
-msgstr "Guardar"
+#: addons/addressbook/address_edit.tpl:60
+#: addons/addressbook/address_info.tpl:40
+msgid "Personal title"
+msgstr "Título Personal"
 
-#: addons/addressbook/remove.tpl:2
-msgid "Warning"
-msgstr "Aviso"
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+msgid "Address"
+msgstr "Dirección"
 
-#: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
+#: addons/addressbook/address_edit.tpl:134
+#: addons/addressbook/address_info.tpl:99
+msgid "Organizational"
 msgstr ""
 
-#: addons/addressbook/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#: addons/addressbook/address_edit.tpl:143
+#: addons/addressbook/address_info.tpl:109
+msgid "Company"
 msgstr ""
 
-#: addons/addressbook/remove.tpl:14
-msgid "Delete"
-msgstr "Eliminar"
-
-#: addons/addressbook/main.inc:37
-msgid "Address book"
+#: addons/addressbook/address_edit.tpl:167
+#: addons/addressbook/address_info.tpl:125
+msgid "City"
 msgstr ""
+
+#: addons/addressbook/address_edit.tpl:179
+#: addons/addressbook/address_info.tpl:133
+msgid "Postal code"
+msgstr "Código Postal"
+
+#: addons/addressbook/address_edit.tpl:191
+#: addons/addressbook/address_info.tpl:141
+msgid "Country"
+msgstr "País"
+
+#: addons/addressbook/address_edit.tpl:233
+#: addons/addressbook/address_info.tpl:171
+msgid "FAX"
+msgstr ""
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
 
 #, fuzzy
 #~ msgid "Permission error"

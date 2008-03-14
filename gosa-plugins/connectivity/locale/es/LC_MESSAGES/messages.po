@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -30,10 +26,6 @@ msgstr "Conectividad"
 #: personal/connectivity/class_intranetAccount.inc:18
 msgid "This does something"
 msgstr ""
-
-#: personal/connectivity/class_connectivity.inc:75
-msgid "This account has no connectivity extensions."
-msgstr "Esta cuenta no tiene extensión de conectividad"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:198
@@ -57,22 +49,25 @@ msgstr "Configuración de la cuenta de intranet"
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
-#: personal/connectivity/main.inc:102
-msgid "Ok"
-msgstr "Ok"
-
-#: personal/connectivity/main.inc:104
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: personal/connectivity/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
 msgstr ""
-"Pulse en el botón - Editar - para cambiar la información en esta ventana"
 
-#: personal/connectivity/main.inc:113
-msgid "Edit"
-msgstr "Editar"
+#~ msgid "This account has no connectivity extensions."
+#~ msgstr "Esta cuenta no tiene extensión de conectividad"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Pulse en el botón - Editar - para cambiar la información en esta ventana"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
 
 #~ msgid "Removing of user/intranet account with dn '%s' failed."
 #~ msgstr ""

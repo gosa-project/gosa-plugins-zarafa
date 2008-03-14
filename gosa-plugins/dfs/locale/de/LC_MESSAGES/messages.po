@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -73,9 +73,33 @@ msgstr "Übertragen"
 msgid "Finish"
 msgstr "Speichern"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Abbrechen"
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "DFS-Eigenschaften"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Name der DFS-Freigabe"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Beschreibung"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Dateiserver"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Freigabe auf Dateiserver"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "DFS-Pfad"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Ort"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -111,33 +135,8 @@ msgstr "Regulärer Ausdruck zum Erkennen von DFS-Freigaben"
 msgid "Distributed File System Administration"
 msgstr "Verteiltes Dateisystem (DFS) Verwaltung"
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "DFS-Eigenschaften"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Name der DFS-Freigabe"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Beschreibung"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Dateiserver"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Freigabe auf Dateiserver"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "DFS-Pfad"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Ort"
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
 
 #~ msgid "Removing of DFS share with dn '%s' failed."
 #~ msgstr "Entfernen von DFS-Freigabe mit dn '%s' fehlgeschlagen."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:22+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:805
-#: addons/addressbook/class_addressbook.inc:811
+#: addons/addressbook/class_addressbook.inc:811 addons/addressbook/main.inc:37
 msgid "Addressbook"
 msgstr "Książka adresowa"
 
@@ -45,11 +45,6 @@ msgstr ""
 #: addons/addressbook/class_addressbook.inc:769
 msgid "LDAP error"
 msgstr ""
-
-#: addons/addressbook/class_addressbook.inc:316
-#, php-format
-msgid "You're about to delete the entry %s."
-msgstr "Zamierzasz usunąć element %s."
 
 #: addons/addressbook/class_addressbook.inc:444
 #: addons/addressbook/class_addressbook.inc:451
@@ -122,10 +117,10 @@ msgid "User ID"
 msgstr "Identyfikator użytkownika"
 
 #: addons/addressbook/class_addressbook.inc:686
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
 #: addons/addressbook/address_edit.tpl:221
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
 msgid "Phone"
 msgstr "Telefon"
 
@@ -140,21 +135,21 @@ msgid "Fax"
 msgstr "Fax"
 
 #: addons/addressbook/class_addressbook.inc:695
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:75
-#: addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/address_info.tpl:75
 msgid "Mobile"
 msgstr "Komórka"
 
 #: addons/addressbook/class_addressbook.inc:698
 #: addons/addressbook/class_addressbook.inc:822
-#: addons/addressbook/address_info.tpl:179
 #: addons/addressbook/address_edit.tpl:246
+#: addons/addressbook/address_info.tpl:179
 msgid "Pager"
 msgstr "Pager"
 
 #: addons/addressbook/class_addressbook.inc:710
-#: addons/addressbook/address_info.tpl:83
 #: addons/addressbook/address_edit.tpl:118
+#: addons/addressbook/address_info.tpl:83
 msgid "Email"
 msgstr "Email"
 
@@ -207,8 +202,8 @@ msgid "Organization"
 msgstr "Organizacja"
 
 #: addons/addressbook/class_addressbook.inc:824
-#: addons/addressbook/address_info.tpl:117
 #: addons/addressbook/address_edit.tpl:155
+#: addons/addressbook/address_info.tpl:117
 msgid "Department"
 msgstr "Departament"
 
@@ -226,8 +221,8 @@ msgid "State"
 msgstr "Stan"
 
 #: addons/addressbook/class_addressbook.inc:829
-#: addons/addressbook/address_info.tpl:32
 #: addons/addressbook/address_edit.tpl:48
+#: addons/addressbook/address_info.tpl:32
 msgid "Initials"
 msgstr "Inicjały"
 
@@ -243,8 +238,32 @@ msgstr "Adres domowy"
 msgid "Common name"
 msgstr "Nazwa potoczna"
 
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_info.tpl:53
-#: addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/remove.tpl:2
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: addons/addressbook/remove.tpl:6
+msgid ""
+"This includes all addressbook data in this entry. Please double check if "
+"your really want to do this since there is no way for GOsa to get your data "
+"back."
+msgstr ""
+"Operacja odnosi się do wszystkich danych książki adresowej w tym elemencie. "
+"Proszę upewnić się że jest to pożądana akcja, gdyż nie będzie możliwości "
+"powrotu."
+
+#: addons/addressbook/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
+"anulować."
+
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "Połączenie dzwonienia..."
+
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/address_info.tpl:53
 msgid "Private"
 msgstr "Prywatne"
 
@@ -326,65 +345,14 @@ msgstr "Szukaj dla"
 msgid "Search string"
 msgstr "Poszukiwany napis"
 
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "Połączenie dzwonienia..."
-
-#: addons/addressbook/dial.tpl:10 addons/addressbook/address_edit.tpl:265
-#: addons/addressbook/remove.tpl:16
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: addons/addressbook/address_info.tpl:18
-#: addons/addressbook/address_edit.tpl:24
-msgid "Personal"
-msgstr "Osobiste"
-
-#: addons/addressbook/address_info.tpl:40
-#: addons/addressbook/address_edit.tpl:60
-msgid "Personal title"
-msgstr "Osobisty tytuł"
-
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-msgid "Address"
-msgstr "Adres"
-
-#: addons/addressbook/address_info.tpl:99
-#: addons/addressbook/address_edit.tpl:134
-msgid "Organizational"
-msgstr "Organizacyjne"
-
-#: addons/addressbook/address_info.tpl:109
-#: addons/addressbook/address_edit.tpl:143
-msgid "Company"
-msgstr "Firma"
-
-#: addons/addressbook/address_info.tpl:125
-#: addons/addressbook/address_edit.tpl:167
-msgid "City"
-msgstr "Miasto"
-
-#: addons/addressbook/address_info.tpl:133
-#: addons/addressbook/address_edit.tpl:179
-msgid "Postal code"
-msgstr "Kod pocztowy"
-
-#: addons/addressbook/address_info.tpl:141
-#: addons/addressbook/address_edit.tpl:191
-msgid "Country"
-msgstr "Kraj"
-
-#: addons/addressbook/address_info.tpl:171
-#: addons/addressbook/address_edit.tpl:233
-msgid "FAX"
-msgstr "FAX"
-
 #: addons/addressbook/address_edit.tpl:7
 msgid "Choose the department to store entry in"
 msgstr "Wybierz departament do przechowania wpisu"
+
+#: addons/addressbook/address_edit.tpl:24
+#: addons/addressbook/address_info.tpl:18
+msgid "Personal"
+msgstr "Osobiste"
 
 #: addons/addressbook/address_edit.tpl:30
 msgid "Last name"
@@ -394,37 +362,62 @@ msgstr "Nazwisko"
 msgid "First name"
 msgstr "Imię"
 
-#: addons/addressbook/address_edit.tpl:264
-msgid "Save"
-msgstr "Zapisz"
+#: addons/addressbook/address_edit.tpl:60
+#: addons/addressbook/address_info.tpl:40
+msgid "Personal title"
+msgstr "Osobisty tytuł"
 
-#: addons/addressbook/remove.tpl:2
-msgid "Warning"
-msgstr "Ostrzeżenie"
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+msgid "Address"
+msgstr "Adres"
 
-#: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
-msgstr ""
-"Operacja odnosi się do wszystkich danych książki adresowej w tym elemencie. "
-"Proszę upewnić się że jest to pożądana akcja, gdyż nie będzie możliwości "
-"powrotu."
+#: addons/addressbook/address_edit.tpl:134
+#: addons/addressbook/address_info.tpl:99
+msgid "Organizational"
+msgstr "Organizacyjne"
 
-#: addons/addressbook/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
-"anulować."
+#: addons/addressbook/address_edit.tpl:143
+#: addons/addressbook/address_info.tpl:109
+msgid "Company"
+msgstr "Firma"
 
-#: addons/addressbook/remove.tpl:14
-msgid "Delete"
-msgstr "Usuń"
+#: addons/addressbook/address_edit.tpl:167
+#: addons/addressbook/address_info.tpl:125
+msgid "City"
+msgstr "Miasto"
 
-#: addons/addressbook/main.inc:37
-msgid "Address book"
-msgstr "Książka adresowa"
+#: addons/addressbook/address_edit.tpl:179
+#: addons/addressbook/address_info.tpl:133
+msgid "Postal code"
+msgstr "Kod pocztowy"
+
+#: addons/addressbook/address_edit.tpl:191
+#: addons/addressbook/address_info.tpl:141
+msgid "Country"
+msgstr "Kraj"
+
+#: addons/addressbook/address_edit.tpl:233
+#: addons/addressbook/address_info.tpl:171
+msgid "FAX"
+msgstr "FAX"
+
+#~ msgid "You're about to delete the entry %s."
+#~ msgstr "Zamierzasz usunąć element %s."
+
+#~ msgid "Cancel"
+#~ msgstr "Anuluj"
+
+#~ msgid "Save"
+#~ msgstr "Zapisz"
+
+#~ msgid "Delete"
+#~ msgstr "Usuń"
+
+#~ msgid "Address book"
+#~ msgstr "Książka adresowa"
 
 #~ msgid "Removing of addressbook entry '%s' failed."
 #~ msgstr "Usuwanie wpisu książki adresowej '%s' nieudane."

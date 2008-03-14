@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -72,9 +72,33 @@ msgstr "Verwerk"
 msgid "Finish"
 msgstr "Opslaan"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Annuleren"
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "DFS eigenschappen"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Naam van DFS share"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Omschrijving"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Bestandserver"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Share op bestandserver"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "DFS locatie"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Plaats"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -110,33 +134,8 @@ msgstr "Reguliere expressie voor overeenkomende DFS share namen"
 msgid "Distributed File System Administration"
 msgstr "Distibuted File System Beheer"
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "DFS eigenschappen"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Naam van DFS share"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Omschrijving"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Bestandserver"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Share op bestandserver"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "DFS locatie"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Plaats"
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
 
 #, fuzzy
 #~ msgid "Removing of DFS share with dn '%s' failed."

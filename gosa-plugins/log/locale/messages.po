@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,53 +16,67 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/systems/services/log/class_gosaLogServer.inc:27
-#: admin/systems/services/log/class_gosaLogServer.inc:55
-msgid "GOsa MySQL logging service"
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:91
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "GOsa logging service"
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:92
-msgid "Services"
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:100
-#: admin/systems/services/log/gosaLogServer.tpl:20
-msgid "Database"
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:101
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr ""
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr ""
+
 #: addons/logview/gosa_log_contents.tpl:84
+#: admin/systems/services/log/class_gosaLogServer.inc:68
+#: admin/systems/services/log/class_gosaLogServer.inc:101
 msgid "User"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:102
-#: admin/systems/services/log/gosaLogServer.tpl:12
-msgid "Password"
+#: addons/logview/gosa_log_contents.tpl:85
+msgid "Object type"
 msgstr ""
 
-#: admin/systems/services/log/class_gosaLogServer.inc:103
-msgid "Allow view of entries on this server"
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
 msgstr ""
 
-#: admin/systems/services/log/gosaLogServer.tpl:1
-msgid "GOsa logging database"
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
 msgstr ""
 
-#: admin/systems/services/log/gosaLogServer.tpl:4
-msgid "Database user"
-msgstr ""
-
-#: admin/systems/services/log/gosaLogServer.tpl:31
-msgid "Save"
-msgstr ""
-
-#: admin/systems/services/log/gosaLogServer.tpl:33
-msgid "Cancel"
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
 msgstr ""
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
@@ -155,49 +169,8 @@ msgstr ""
 msgid "Log view addon"
 msgstr ""
 
-#: addons/logview/class_gosa_logview.inc:200
-msgid "You have insufficient permissions to view syslog entries."
-msgstr ""
-
-#: addons/logview/class_gosa_logview.inc:235
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
-
-#: addons/logview/contents.tpl:2 addons/logview/gosa_log_contents.tpl:2
-msgid "Filter"
-msgstr ""
-
-#: addons/logview/contents.tpl:11 addons/logview/gosa_log_contents.tpl:11
-msgid "Show hosts"
-msgstr ""
-
 #: addons/logview/contents.tpl:20
 msgid "Log level"
-msgstr ""
-
-#: addons/logview/contents.tpl:38 addons/logview/gosa_log_contents.tpl:38
-msgid "Time interval"
-msgstr ""
-
-#: addons/logview/contents.tpl:47 addons/logview/gosa_log_contents.tpl:47
-msgid "Search for"
-msgstr ""
-
-#: addons/logview/contents.tpl:48 addons/logview/gosa_log_contents.tpl:48
-msgid "Enter string to search for"
-msgstr ""
-
-#: addons/logview/contents.tpl:60 addons/logview/gosa_log_contents.tpl:60
-msgid "Ruleset"
-msgstr ""
-
-#: addons/logview/contents.tpl:62 addons/logview/gosa_log_contents.tpl:62
-msgid "Edit"
-msgstr ""
-
-#: addons/logview/contents.tpl:68 addons/logview/gosa_log_contents.tpl:68
-msgid "Search"
 msgstr ""
 
 #: addons/logview/contents.tpl:82
@@ -208,31 +181,53 @@ msgstr ""
 msgid "Hostname"
 msgstr ""
 
-#: addons/logview/contents.tpl:84 addons/logview/gosa_log_contents.tpl:83
-msgid "Date"
-msgstr ""
-
-#: addons/logview/contents.tpl:85 addons/logview/gosa_log_contents.tpl:87
-msgid "Message"
-msgstr ""
-
-#: addons/logview/contents.tpl:97 addons/logview/gosa_log_contents.tpl:99
-msgid "Search returned no results..."
-msgstr ""
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr ""
-
-#: addons/logview/gosa_log_contents.tpl:85
-msgid "Object type"
-msgstr ""
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr ""
-
 #: addons/logview/main.inc:34
 msgid "System log view"
+msgstr ""
+
+#: addons/logview/class_gosa_logview.inc:200
+msgid "You have insufficient permissions to view syslog entries."
+msgstr ""
+
+#: addons/logview/class_gosa_logview.inc:235
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:1
+msgid "GOsa logging database"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:4
+msgid "Database user"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:12
+#: admin/systems/services/log/class_gosaLogServer.inc:71
+#: admin/systems/services/log/class_gosaLogServer.inc:102
+msgid "Password"
+msgstr ""
+
+#: admin/systems/services/log/gosaLogServer.tpl:20
+#: admin/systems/services/log/class_gosaLogServer.inc:74
+#: admin/systems/services/log/class_gosaLogServer.inc:100
+msgid "Database"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:27
+#: admin/systems/services/log/class_gosaLogServer.inc:55
+msgid "GOsa MySQL logging service"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:91
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "GOsa logging service"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:92
+msgid "Services"
+msgstr ""
+
+#: admin/systems/services/log/class_gosaLogServer.inc:103
+msgid "Allow view of entries on this server"
 msgstr ""

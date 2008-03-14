@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:25+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:460 personal/scalix/generic.tpl:98
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:460
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Indirizzo principale"
@@ -26,13 +26,93 @@ msgstr "Indirizzo principale"
 msgid "List of scalix email addresses"
 msgstr "Lista degli indirizzi alternativi"
 
-#: personal/scalix/paste_generic.tpl:12 personal/scalix/generic.tpl:111
-msgid "Add"
-msgstr "Aggiungi"
+#: personal/scalix/generic.tpl:4
+msgid "Generic"
+msgstr "Generale"
 
-#: personal/scalix/paste_generic.tpl:13 personal/scalix/generic.tpl:114
-msgid "Delete"
+#: personal/scalix/generic.tpl:7
+msgid "Scalix mailnode"
+msgstr ""
+
+#: personal/scalix/generic.tpl:15
+msgid "Salix mailbox class"
+msgstr ""
+
+#: personal/scalix/generic.tpl:19
+msgid ""
+"Limited users con not make use of the group calendar functionality in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:26
+#, fuzzy
+msgid "Scalix server language"
+msgstr "Imposta dipartimento"
+
+#: personal/scalix/generic.tpl:30
+msgid "Message catalog language for client."
+msgstr ""
+
+#: personal/scalix/generic.tpl:45
+#, fuzzy
+msgid "Select for admin capability."
 msgstr "Rimuovi"
+
+#: personal/scalix/generic.tpl:45
+#, fuzzy
+msgid "Scalix Administrator"
+msgstr "Amministrazione"
+
+#: personal/scalix/generic.tpl:50
+msgid "Select for mailbox admin capability."
+msgstr ""
+
+#: personal/scalix/generic.tpl:50
+#, fuzzy
+msgid "Scalix Mailbox Administrator"
+msgstr "Amministrazione"
+
+#: personal/scalix/generic.tpl:55
+#, fuzzy
+msgid "Hide user entry from addressbook."
+msgstr "Prego inserire un numero di telefono valido!"
+
+#: personal/scalix/generic.tpl:55
+msgid "Hide this user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/generic.tpl:64
+#, fuzzy
+msgid "Limit mailbox size"
+msgstr "Inoltra i messaggi a"
+
+#: personal/scalix/generic.tpl:67
+msgid "MB"
+msgstr "Mb"
+
+#: personal/scalix/generic.tpl:75
+msgid "As sanction on mailbox quota overuse, stop user from sending mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:75
+#, fuzzy
+msgid "Limit Outbound Mail"
+msgstr "Path del profilo"
+
+#: personal/scalix/generic.tpl:80
+msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:80
+msgid "Limit Inbound Mail"
+msgstr ""
+
+#: personal/scalix/generic.tpl:85
+msgid "As sanction on mailbox quota overuse, notify the user by eMail."
+msgstr ""
+
+#: personal/scalix/generic.tpl:85
+msgid "Notify User"
+msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -179,116 +259,31 @@ msgstr ""
 msgid "Notify user"
 msgstr "Paese"
 
-#: personal/scalix/main.inc:101
-msgid "Save"
-msgstr "Salva"
-
-#: personal/scalix/main.inc:103
-msgid "Cancel"
-msgstr "Annulla"
-
 #: personal/scalix/main.inc:112
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
 "questo dialogo"
 
-#: personal/scalix/main.inc:114
-msgid "Edit"
-msgstr "Modifica"
-
 #: personal/scalix/main.inc:125
 #, fuzzy
 msgid "Scalix settings"
 msgstr "Opzioni di posta dell'identità"
 
-#: personal/scalix/generic.tpl:4
-msgid "Generic"
-msgstr "Generale"
+#~ msgid "Add"
+#~ msgstr "Aggiungi"
 
-#: personal/scalix/generic.tpl:7
-msgid "Scalix mailnode"
-msgstr ""
+#~ msgid "Delete"
+#~ msgstr "Rimuovi"
 
-#: personal/scalix/generic.tpl:15
-msgid "Salix mailbox class"
-msgstr ""
+#~ msgid "Save"
+#~ msgstr "Salva"
 
-#: personal/scalix/generic.tpl:19
-msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
-msgstr ""
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
 
-#: personal/scalix/generic.tpl:26
-#, fuzzy
-msgid "Scalix server language"
-msgstr "Imposta dipartimento"
-
-#: personal/scalix/generic.tpl:30
-msgid "Message catalog language for client."
-msgstr ""
-
-#: personal/scalix/generic.tpl:45
-#, fuzzy
-msgid "Select for admin capability."
-msgstr "Rimuovi"
-
-#: personal/scalix/generic.tpl:45
-#, fuzzy
-msgid "Scalix Administrator"
-msgstr "Amministrazione"
-
-#: personal/scalix/generic.tpl:50
-msgid "Select for mailbox admin capability."
-msgstr ""
-
-#: personal/scalix/generic.tpl:50
-#, fuzzy
-msgid "Scalix Mailbox Administrator"
-msgstr "Amministrazione"
-
-#: personal/scalix/generic.tpl:55
-#, fuzzy
-msgid "Hide user entry from addressbook."
-msgstr "Prego inserire un numero di telefono valido!"
-
-#: personal/scalix/generic.tpl:55
-msgid "Hide this user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/generic.tpl:64
-#, fuzzy
-msgid "Limit mailbox size"
-msgstr "Inoltra i messaggi a"
-
-#: personal/scalix/generic.tpl:67
-msgid "MB"
-msgstr "Mb"
-
-#: personal/scalix/generic.tpl:75
-msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:75
-#, fuzzy
-msgid "Limit Outbound Mail"
-msgstr "Path del profilo"
-
-#: personal/scalix/generic.tpl:80
-msgid "As sanction on mailbox quota overuse, stop user from receiving mail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:80
-msgid "Limit Inbound Mail"
-msgstr ""
-
-#: personal/scalix/generic.tpl:85
-msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-
-#: personal/scalix/generic.tpl:85
-msgid "Notify User"
-msgstr ""
+#~ msgid "Edit"
+#~ msgstr "Modifica"
 
 #, fuzzy
 #~ msgid "There is no scalix mailnode specified."

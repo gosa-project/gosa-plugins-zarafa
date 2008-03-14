@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -72,9 +72,38 @@ msgstr ""
 msgid "Finish"
 msgstr "Готово"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Отмена"
+#: addons/godfs/generic.tpl:4
+#, fuzzy
+msgid "DFS Properties"
+msgstr "Свойства"
+
+#: addons/godfs/generic.tpl:8
+#, fuzzy
+msgid "Name of dfs Share"
+msgstr "Подразделение"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Описание"
+
+#: addons/godfs/generic.tpl:16
+#, fuzzy
+msgid "Fileserver"
+msgstr "Сервер"
+
+#: addons/godfs/generic.tpl:20
+#, fuzzy
+msgid "Share on Fileserver"
+msgstr "Служба печати"
+
+#: addons/godfs/generic.tpl:30
+#, fuzzy
+msgid "DFS Location"
+msgstr "Местоположение"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Местоположение"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy
@@ -114,38 +143,8 @@ msgstr "Регулярное выражение, соответствующее 
 msgid "Distributed File System Administration"
 msgstr ""
 
-#: addons/godfs/generic.tpl:4
-#, fuzzy
-msgid "DFS Properties"
-msgstr "Свойства"
-
-#: addons/godfs/generic.tpl:8
-#, fuzzy
-msgid "Name of dfs Share"
-msgstr "Подразделение"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Описание"
-
-#: addons/godfs/generic.tpl:16
-#, fuzzy
-msgid "Fileserver"
-msgstr "Сервер"
-
-#: addons/godfs/generic.tpl:20
-#, fuzzy
-msgid "Share on Fileserver"
-msgstr "Служба печати"
-
-#: addons/godfs/generic.tpl:30
-#, fuzzy
-msgid "DFS Location"
-msgstr "Местоположение"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Местоположение"
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
 
 #, fuzzy
 #~ msgid "Removing of DFS share with dn '%s' failed."

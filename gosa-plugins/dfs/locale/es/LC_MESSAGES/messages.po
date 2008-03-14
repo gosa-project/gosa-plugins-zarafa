@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -70,9 +70,33 @@ msgstr "Enviar"
 msgid "Finish"
 msgstr "Terminar"
 
-#: addons/godfs/class_dfsManagment.inc:247
-msgid "Cancel"
-msgstr "Cancelar"
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr ""
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr ""
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Descripción"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr ""
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Localización"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -105,30 +129,5 @@ msgstr ""
 msgid "Distributed File System Administration"
 msgstr ""
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr ""
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr ""
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Descripción"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr ""
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr ""
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr ""
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Localización"
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"

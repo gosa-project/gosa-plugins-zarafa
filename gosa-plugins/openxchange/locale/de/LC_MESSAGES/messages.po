@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -21,6 +21,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
 msgstr "Open-Xchange"
@@ -30,37 +32,25 @@ msgid "This does something"
 msgstr "Dies tut etwas"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
 msgid "Error"
 msgstr "Fehler"
 
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#, fuzzy, php-format
-msgid "Cannot connect to %s database!"
-msgstr "Die SQL-Datenbank kann nicht erreicht werden!"
-
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
+#, fuzzy
+msgid "Open-Xchange database"
+msgstr "Open-Xchange Konto"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
 #, fuzzy
 msgid "Configuration error"
 msgstr "Konfigurationsdatei"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy, php-format
-msgid "%s database configuration is missing!"
-msgstr "Konfiguration der Fax-Datenbank"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, php-format
-msgid "Missing %s PHP extension!"
-msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
@@ -144,6 +134,14 @@ msgstr "Benutzerinformation"
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
 msgstr "Zeitzone des Benutzers"
+
+#, fuzzy
+#~ msgid "Cannot connect to %s database!"
+#~ msgstr "Die SQL-Datenbank kann nicht erreicht werden!"
+
+#, fuzzy
+#~ msgid "%s database configuration is missing!"
+#~ msgstr "Konfiguration der Fax-Datenbank"
 
 #~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
 #~ msgstr ""

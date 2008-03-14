@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -29,17 +29,45 @@ msgid "Admin user"
 msgstr "Пользователи домена"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:20
+#: admin/systems/services/kerberos/class_goKrbServer.inc:67
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Пароль"
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:30
-msgid "Save"
-msgstr "Сохранить"
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos"
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:32
-msgid "Cancel"
-msgstr "Отмена"
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+#, fuzzy
+msgid "Admin"
+msgstr "DN администратора"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+#, fuzzy
+msgid "Realm"
+msgstr "Имя сервера"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
+msgstr "Сервисы"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
@@ -59,34 +87,10 @@ msgid ""
 "found for '%s'."
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:167
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
-#, php-format
-msgid "The configured HEIMDAL_KEYGEN '%s' is not a valid command."
-msgstr ""
-
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:147
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:408
 msgid "LDAP error"
 msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:185
-#, php-format
-msgid ""
-"The configured HEIMDAL_KEYGEN '%s' wasn't successfully executed. Command "
-"does not return 0."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:331
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
-#, fuzzy, php-format
-msgid "Please specify a numeric value for %s."
-msgstr "Укажите корректный номер телефона."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
 msgid "Max life"
@@ -109,53 +113,27 @@ msgstr ""
 msgid "Valid password"
 msgstr "Пароль"
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#~ msgid "Save"
+#~ msgstr "Сохранить"
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
 #, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos"
+#~ msgid "Please specify a numeric value for %s."
+#~ msgstr "Укажите корректный номер телефона."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
 #, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Личная информация"
+#~ msgid "The specified kerberos password is empty."
+#~ msgstr "Значение поля \"Файлы\" некорректно."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:67
-#, fuzzy, php-format
-msgid "The specified kerberos password is empty."
-msgstr "Значение поля \"Файлы\" некорректно."
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#, fuzzy, php-format
-msgid "The specified kerberos admin is empty."
-msgstr "Значение поля \"Файлы\" некорректно."
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#, fuzzy, php-format
-msgid "The specified kerberos realm is empty."
-msgstr "Значение поля \"Файлы\" некорректно."
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
 #, fuzzy
-msgid "Kerberos access information"
-msgstr "Личная информация"
+#~ msgid "The specified kerberos admin is empty."
+#~ msgstr "Значение поля \"Файлы\" некорректно."
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
-msgstr "Сервисы"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
 #, fuzzy
-msgid "Realm"
-msgstr "Имя сервера"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-#, fuzzy
-msgid "Admin"
-msgstr "DN администратора"
+#~ msgid "The specified kerberos realm is empty."
+#~ msgstr "Значение поля \"Файлы\" некорректно."
 
 #, fuzzy
 #~ msgid "Tried to remove heimdal extension."

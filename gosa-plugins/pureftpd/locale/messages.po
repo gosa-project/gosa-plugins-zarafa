@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,71 +25,71 @@ msgid "This does something"
 msgstr ""
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:240
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
 msgid "LDAP error"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:190
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
 msgid "Upload bandwidth"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:193
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
 #: personal/connectivity/pureftpd/pureftpd.tpl:29
 msgid "Download bandwidth"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:197
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 msgid "Quota file"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:200
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 msgid "Quota size"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:203
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 msgid "Upload ratio"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:206
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:207
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
 msgid "Download ratio"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:260
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
 msgid "Ftp"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 msgid "Pure ftp account"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:261
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 msgid "Connectivity addon"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:265
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:266
 msgid "My account"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:270
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 msgid "Quota files"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Quota MBytes"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
 msgid "Upload bandwith"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:275
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
 msgid "Download bandwith"
 msgstr ""
 
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:276
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr ""
 

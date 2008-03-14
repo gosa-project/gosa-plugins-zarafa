@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:24+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/pptp/pptp.tpl:3
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+msgid "PPTP account"
+msgstr "Cuenta PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
 #: personal/connectivity/pptp/class_pptpAccount.inc:177
@@ -30,11 +35,6 @@ msgstr ""
 #: personal/connectivity/pptp/class_pptpAccount.inc:158
 msgid "LDAP error"
 msgstr ""
-
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
-#: personal/connectivity/pptp/pptp.tpl:3
-msgid "PPTP account"
-msgstr "Cuenta PPTP"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:178
 msgid "Connectivity addon"

@@ -12,17 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-06-18 15:08+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Intranet-Konto"
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/main.inc:120
@@ -33,10 +29,6 @@ msgstr "Konnektivität"
 #: personal/connectivity/class_intranetAccount.inc:18
 msgid "This does something"
 msgstr "Dies tut etwas"
-
-#: personal/connectivity/class_connectivity.inc:75
-msgid "This account has no connectivity extensions."
-msgstr "Dieses Konto besitzt keine Konnektivitäts-Erweiterungen."
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:198
@@ -60,23 +52,26 @@ msgstr "Einstellungen für Intranet-Konto"
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/main.inc:102
-msgid "Ok"
-msgstr "Ok"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Intranet-Konto"
 
-#: personal/connectivity/main.inc:104
-msgid "Cancel"
-msgstr "Abbrechen"
+#~ msgid "This account has no connectivity extensions."
+#~ msgstr "Dieses Konto besitzt keine Konnektivitäts-Erweiterungen."
 
-#: personal/connectivity/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-"Dialog zu ändern"
+#~ msgid "Ok"
+#~ msgstr "Ok"
 
-#: personal/connectivity/main.inc:113
-msgid "Edit"
-msgstr "Bearbeiten"
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
+
+#~ msgid "Click the 'Edit' button below to change informations in this dialog"
+#~ msgstr ""
+#~ "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
+#~ "Dialog zu ändern"
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
 
 #~ msgid "Removing of user/intranet account with dn '%s' failed."
 #~ msgstr "Entfernen von Benutzer/Intranet-Konto mit dn '%s' fehlgeschlagen."

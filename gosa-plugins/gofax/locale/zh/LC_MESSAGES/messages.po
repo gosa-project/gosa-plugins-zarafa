@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:23+0100\n"
+"POT-Creation-Date: 2008-03-14 13:40+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,87 +16,258 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:1
-#, fuzzy
-msgid "FAX database information"
-msgstr "系统信息"
+#: gofax/faxaccount/locals.tpl:6
+msgid "Select numbers to add"
+msgstr "选择要添加的数字"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:4
-msgid "FAX DB user"
-msgstr "传真数据库用户名"
+#: gofax/faxaccount/locals.tpl:19
+msgid "Filters"
+msgstr "过滤器"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:12
-#: admin/systems/services/gofax/class_goFaxServer.inc:98
-msgid "Password"
-msgstr "口令"
+#: gofax/faxaccount/locals.tpl:28
+msgid "Display numbers of department"
+msgstr "显示部门号码"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:23
-msgid "Save"
-msgstr "保存"
+#: gofax/faxaccount/locals.tpl:29
+msgid "Choose the department the search will be based on"
+msgstr "选择一个部门来做查询"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:25
-#: gofax/faxaccount/locals.tpl:62 gofax/faxaccount/lists.tpl:33
-#: gofax/faxaccount/main.inc:94 gofax/blocklists/remove.tpl:17
-#: gofax/blocklists/remove.tpl:21 gofax/blocklists/generic.tpl:101
-msgid "Cancel"
-msgstr "取消"
+#: gofax/faxaccount/locals.tpl:38
+msgid "Display numbers matching"
+msgstr "显示匹配数字"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:30
-msgid "FAX database"
-msgstr "传真数据库"
+#: gofax/faxaccount/locals.tpl:41
+msgid "Regular expression for matching numbers"
+msgstr "匹配号码的正则表达式"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:59
-#, fuzzy
-msgid "FAX database configuration"
-msgstr "传真数据库"
+#: gofax/faxaccount/locals.tpl:47
+msgid "Display numbers of user"
+msgstr "显示用户编号"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:68
-#, fuzzy
-msgid "The attribute user is empty or contains invalid characters."
-msgstr "属性 '%s' 为空或者包含无效字符。"
+#: gofax/faxaccount/locals.tpl:50
+msgid "User name of which numbers are shown"
+msgstr "显示该号码的用户名"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:71
-#, fuzzy
-msgid "The attribute password is empty or contains invalid characters."
-msgstr "属性 '%s' 为空或者包含无效字符。"
+#: gofax/faxaccount/class_gofaxAccount.inc:6
+msgid "FAX"
+msgstr "传真"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:88
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
-#, fuzzy
-msgid "Fax database"
-msgstr "传真数据库"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
-msgid "Services"
-msgstr "服务"
-
-#: admin/systems/services/gofax/class_goFaxServer.inc:97
-#, fuzzy
-msgid "Login name"
-msgstr "位置名称"
-
-#: gofax/faxreports/class_faxreport.inc:6
-msgid "FAX Reports"
-msgstr "传真记录"
-
-#: gofax/faxreports/class_faxreport.inc:7
 #: gofax/faxaccount/class_gofaxAccount.inc:7
-#: gofax/blocklists/class_blocklistGeneric.inc:10
+#: gofax/faxreports/class_faxreport.inc:7
 #: gofax/blocklists/class_blocklistManagement.inc:6
+#: gofax/blocklists/class_blocklistGeneric.inc:10
 #, fuzzy
 msgid "This does something"
 msgstr "******"
 
+#: gofax/faxaccount/class_gofaxAccount.inc:164
+msgid "This account has no fax extensions."
+msgstr "这个账号没有传真扩展。"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:173
+msgid "Remove fax account"
+msgstr "删除传真账号"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:174
+msgid ""
+"This account has fax features enabled. You can disable them by clicking "
+"below."
+msgstr "这个账户传真功能已启用。您可以点击下面的按钮禁用。"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:176
+msgid "Create fax account"
+msgstr "创建传真账号"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:177
+msgid ""
+"This account has fax features disabled. You can enable them by clicking "
+"below."
+msgstr "这个账户传真功能已禁用。您可以点击下面的按钮来启用。"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:241
 #: gofax/faxreports/class_faxreport.inc:115
 #: gofax/faxreports/class_faxreport.inc:125
 #: gofax/faxreports/class_faxreport.inc:129
 #: gofax/faxreports/class_faxreport.inc:134
 #: gofax/faxreports/class_faxreport.inc:157
 #: gofax/faxreports/class_faxreport.inc:297
-#: gofax/faxaccount/class_gofaxAccount.inc:241
 #: gofax/blocklists/class_blocklistGeneric.inc:122
 msgid "Error"
 msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:241
+msgid "Phone number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:452
+#: gofax/faxaccount/class_gofaxAccount.inc:534
+msgid "back"
+msgstr "返回"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:658
+#: gofax/faxaccount/class_gofaxAccount.inc:787
+#: gofax/blocklists/class_blocklistGeneric.inc:193
+#: gofax/blocklists/class_blocklistGeneric.inc:266
+msgid "LDAP error"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:674
+#, fuzzy
+msgid "Fax is empty!"
+msgstr "传真记录"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:678
+msgid "Fax number is not valid!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:686
+msgid "Mail delivery is requested without target address!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:688
+#, fuzzy
+msgid "Mail address is invalid!"
+msgstr "您输入的邮件地址无效。"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:694
+msgid "Printing is requested without a target printer!"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:858
+#: gofax/faxaccount/paste_generic.tpl:8 gofax/faxaccount/generic.tpl:10
+#: gofax/blocklists/class_blocklistGeneric.inc:355
+msgid "Fax"
+msgstr "传真"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:859
+#, fuzzy
+msgid "Fax account settings"
+msgstr "Samba 设置"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:868
+msgid "Enable/Disable fax"
+msgstr ""
+
+#: gofax/faxaccount/class_gofaxAccount.inc:869
+#, fuzzy
+msgid "Receive blocklist"
+msgstr "显示接收黑名单"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:870
+#, fuzzy
+msgid "Send blocklist"
+msgstr "显示发送黑名单"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:871
+#, fuzzy
+msgid "Fax number"
+msgstr "系列号"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:872
+#, fuzzy
+msgid "Alternate fax number"
+msgstr "替代传真号码"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:873 gofax/faxaccount/generic.tpl:73
+msgid "Deliver fax as mail"
+msgstr "发送传真至邮件"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:874 gofax/faxaccount/generic.tpl:80
+msgid "Deliver fax to printer"
+msgstr "发送传真至打印机"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:37
+msgid "Delivery format"
+msgstr "传输格式"
+
+#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:24
+msgid "Language"
+msgstr "语言"
+
+#: gofax/faxaccount/lists.tpl:5
+msgid "Blocked numbers/lists"
+msgstr "封锁号码/列表"
+
+#: gofax/faxaccount/lists.tpl:17
+msgid "List of predefined blocklists"
+msgstr "预定义黑名单列表"
+
+#: gofax/faxaccount/lists.tpl:25
+msgid "Add the list to the blocklists"
+msgstr "添加列表至黑名单"
+
+#: gofax/faxaccount/paste_generic.tpl:4 gofax/faxaccount/generic.tpl:6
+#: gofax/blocklists/generic.tpl:1
+msgid "Generic"
+msgstr "通用配置"
+
+#: gofax/faxaccount/paste_generic.tpl:13 gofax/faxaccount/generic.tpl:17
+msgid "Fax number for GOfax to trigger on"
+msgstr "要打开的 GOfax 的传真号码"
+
+#: gofax/faxaccount/paste_generic.tpl:18
+msgid "Alternate fax numbers will not be copied"
+msgstr "不拷贝到替代传真号码"
+
+#: gofax/faxaccount/generic.tpl:13
+msgid "Multiple edit"
+msgstr ""
+
+#: gofax/faxaccount/generic.tpl:29
+msgid "Specify the GOfax communication language for fax to mail gateway"
+msgstr "描述传真到邮件网关的 GOfax 通讯语言"
+
+#: gofax/faxaccount/generic.tpl:41
+msgid "Specify delivery format for fax to mail gateway"
+msgstr "说明传真到邮件网关的格式"
+
+#: gofax/faxaccount/generic.tpl:54
+msgid "Delivery methods"
+msgstr "传输方法"
+
+#: gofax/faxaccount/generic.tpl:59
+msgid "Temporary disable fax usage"
+msgstr "临时禁用传真"
+
+#: gofax/faxaccount/generic.tpl:65
+msgid "Deliver fax as mail to"
+msgstr "发送传真至邮件到"
+
+#: gofax/faxaccount/generic.tpl:99
+msgid "Alternate fax numbers"
+msgstr "替代传真号码"
+
+#: gofax/faxaccount/generic.tpl:114
+msgid "Add local"
+msgstr "添加本地"
+
+#: gofax/faxaccount/generic.tpl:122
+msgid "Blocklists"
+msgstr "黑名单"
+
+#: gofax/faxaccount/generic.tpl:125
+msgid "Blocklists for incoming fax"
+msgstr "输入传真黑名单"
+
+#: gofax/faxaccount/generic.tpl:128 gofax/faxaccount/generic.tpl:136
+msgid "Edit"
+msgstr "编辑"
+
+#: gofax/faxaccount/generic.tpl:133
+msgid "Blocklists for outgoing fax"
+msgstr "外发传真黑名单"
+
+#: gofax/faxaccount/main.inc:100
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
+
+#: gofax/faxaccount/main.inc:109
+msgid "FAX settings"
+msgstr "传真设置"
+
+#: gofax/faxreports/class_faxreport.inc:6
+msgid "FAX Reports"
+msgstr "传真记录"
 
 #: gofax/faxreports/class_faxreport.inc:115
 msgid "No fax server found!"
@@ -132,8 +303,8 @@ msgstr ""
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
-#: gofax/blocklists/class_blocklistManagement.inc:247
-#: gofax/blocklists/class_blocklistManagement.inc:305
+#: gofax/blocklists/class_blocklistManagement.inc:246
+#: gofax/blocklists/class_blocklistManagement.inc:304
 msgid "Permission error"
 msgstr ""
 
@@ -257,6 +428,7 @@ msgid "Search"
 msgstr "查找"
 
 #: gofax/faxreports/contents.tpl:30 gofax/faxreports/detail.tpl:21
+#: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "用户"
 
@@ -275,6 +447,10 @@ msgstr "# 页"
 #: gofax/faxreports/contents.tpl:50
 msgid "Search returned no results..."
 msgstr "查无结果..."
+
+#: gofax/faxreports/main.inc:14
+msgid "FAX reports"
+msgstr "传真记录"
 
 #: gofax/faxreports/detail.tpl:5
 msgid "FAX preview - please wait"
@@ -296,481 +472,17 @@ msgstr "日期 / 时间"
 msgid "Status message"
 msgstr "状态信息"
 
-#: gofax/faxreports/detail.tpl:67
-msgid "Back"
-msgstr "返回"
-
-#: gofax/faxreports/main.inc:14
-msgid "FAX reports"
-msgstr "传真记录"
-
-#: gofax/faxaccount/paste_generic.tpl:4 gofax/faxaccount/generic.tpl:6
-#: gofax/blocklists/generic.tpl:1
-msgid "Generic"
-msgstr "通用配置"
-
-#: gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:858 gofax/faxaccount/generic.tpl:10
-#: gofax/blocklists/class_blocklistGeneric.inc:355
-msgid "Fax"
-msgstr "传真"
-
-#: gofax/faxaccount/paste_generic.tpl:13 gofax/faxaccount/generic.tpl:17
-msgid "Fax number for GOfax to trigger on"
-msgstr "要打开的 GOfax 的传真号码"
-
-#: gofax/faxaccount/paste_generic.tpl:18
-msgid "Alternate fax numbers will not be copied"
-msgstr "不拷贝到替代传真号码"
-
-#: gofax/faxaccount/locals.tpl:6
-msgid "Select numbers to add"
-msgstr "选择要添加的数字"
-
-#: gofax/faxaccount/locals.tpl:19
-msgid "Filters"
-msgstr "过滤器"
-
-#: gofax/faxaccount/locals.tpl:28
-msgid "Display numbers of department"
-msgstr "显示部门号码"
-
-#: gofax/faxaccount/locals.tpl:29
-msgid "Choose the department the search will be based on"
-msgstr "选择一个部门来做查询"
-
-#: gofax/faxaccount/locals.tpl:38
-msgid "Display numbers matching"
-msgstr "显示匹配数字"
-
-#: gofax/faxaccount/locals.tpl:41
-msgid "Regular expression for matching numbers"
-msgstr "匹配号码的正则表达式"
-
-#: gofax/faxaccount/locals.tpl:47
-msgid "Display numbers of user"
-msgstr "显示用户编号"
-
-#: gofax/faxaccount/locals.tpl:50
-msgid "User name of which numbers are shown"
-msgstr "显示该号码的用户名"
-
-#: gofax/faxaccount/locals.tpl:60 gofax/faxaccount/lists.tpl:13
-#: gofax/faxaccount/generic.tpl:111 gofax/blocklists/generic.tpl:80
-msgid "Add"
-msgstr "添加"
-
-#: gofax/faxaccount/lists.tpl:5
-msgid "Blocked numbers/lists"
-msgstr "封锁号码/列表"
-
-#: gofax/faxaccount/lists.tpl:14 gofax/faxaccount/generic.tpl:117
-#: gofax/blocklists/remove.tpl:15 gofax/blocklists/remove.tpl:19
-#: gofax/blocklists/generic.tpl:83
-msgid "Delete"
-msgstr "删除"
-
-#: gofax/faxaccount/lists.tpl:17
-msgid "List of predefined blocklists"
-msgstr "预定义黑名单列表"
-
-#: gofax/faxaccount/lists.tpl:25
-msgid "Add the list to the blocklists"
-msgstr "添加列表至黑名单"
-
-#: gofax/faxaccount/lists.tpl:31 gofax/blocklists/generic.tpl:100
-msgid "Apply"
-msgstr "应用"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:6
-msgid "FAX"
-msgstr "传真"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:164
-msgid "This account has no fax extensions."
-msgstr "这个账号没有传真扩展。"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:173
-msgid "Remove fax account"
-msgstr "删除传真账号"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:174
-msgid ""
-"This account has fax features enabled. You can disable them by clicking "
-"below."
-msgstr "这个账户传真功能已启用。您可以点击下面的按钮禁用。"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:176
-msgid "Create fax account"
-msgstr "创建传真账号"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:177
-msgid ""
-"This account has fax features disabled. You can enable them by clicking "
-"below."
-msgstr "这个账户传真功能已禁用。您可以点击下面的按钮来启用。"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:241
-#: gofax/blocklists/class_blocklistGeneric.inc:122
-msgid "Phone number is not valid!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:452
-#: gofax/faxaccount/class_gofaxAccount.inc:534
-msgid "back"
-msgstr "返回"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:658
-#: gofax/faxaccount/class_gofaxAccount.inc:787
-#: gofax/blocklists/class_blocklistGeneric.inc:193
-#: gofax/blocklists/class_blocklistGeneric.inc:266
-msgid "LDAP error"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:674
-#, fuzzy
-msgid "Fax is empty!"
-msgstr "传真记录"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:678
-msgid "Fax number is not valid!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:686
-msgid "Mail delivery is requested without target address!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:688
-#, fuzzy
-msgid "Mail address is invalid!"
-msgstr "您输入的邮件地址无效。"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:694
-msgid "Printing is requested without a target printer!"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:859
-#, fuzzy
-msgid "Fax account settings"
-msgstr "Samba 设置"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:868
-msgid "Enable/Disable fax"
-msgstr ""
-
-#: gofax/faxaccount/class_gofaxAccount.inc:869
-#, fuzzy
-msgid "Receive blocklist"
-msgstr "显示接收黑名单"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:870
-#, fuzzy
-msgid "Send blocklist"
-msgstr "显示发送黑名单"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:871
-#, fuzzy
-msgid "Fax number"
-msgstr "系列号"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:872
-#, fuzzy
-msgid "Alternate fax number"
-msgstr "替代传真号码"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:873 gofax/faxaccount/generic.tpl:73
-msgid "Deliver fax as mail"
-msgstr "发送传真至邮件"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:874 gofax/faxaccount/generic.tpl:80
-msgid "Deliver fax to printer"
-msgstr "发送传真至打印机"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:875 gofax/faxaccount/generic.tpl:37
-msgid "Delivery format"
-msgstr "传输格式"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:876 gofax/faxaccount/generic.tpl:24
-msgid "Language"
-msgstr "语言"
-
-#: gofax/faxaccount/main.inc:92 gofax/blocklists/generic.tpl:99
-msgid "Ok"
-msgstr "好"
-
-#: gofax/faxaccount/main.inc:100
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
-
-#: gofax/faxaccount/main.inc:101 gofax/faxaccount/generic.tpl:128
-#: gofax/faxaccount/generic.tpl:136
-msgid "Edit"
-msgstr "编辑"
-
-#: gofax/faxaccount/main.inc:109
-msgid "FAX settings"
-msgstr "传真设置"
-
-#: gofax/faxaccount/generic.tpl:13
-msgid "Multiple edit"
-msgstr ""
-
-#: gofax/faxaccount/generic.tpl:29
-msgid "Specify the GOfax communication language for fax to mail gateway"
-msgstr "描述传真到邮件网关的 GOfax 通讯语言"
-
-#: gofax/faxaccount/generic.tpl:41
-msgid "Specify delivery format for fax to mail gateway"
-msgstr "说明传真到邮件网关的格式"
-
-#: gofax/faxaccount/generic.tpl:54
-msgid "Delivery methods"
-msgstr "传输方法"
-
-#: gofax/faxaccount/generic.tpl:59
-msgid "Temporary disable fax usage"
-msgstr "临时禁用传真"
-
-#: gofax/faxaccount/generic.tpl:65
-msgid "Deliver fax as mail to"
-msgstr "发送传真至邮件到"
-
-#: gofax/faxaccount/generic.tpl:99
-msgid "Alternate fax numbers"
-msgstr "替代传真号码"
-
-#: gofax/faxaccount/generic.tpl:114
-msgid "Add local"
-msgstr "添加本地"
-
-#: gofax/faxaccount/generic.tpl:122
-msgid "Blocklists"
-msgstr "黑名单"
-
-#: gofax/faxaccount/generic.tpl:125
-msgid "Blocklists for incoming fax"
-msgstr "输入传真黑名单"
-
-#: gofax/faxaccount/generic.tpl:133
-msgid "Blocklists for outgoing fax"
-msgstr "外发传真黑名单"
-
-#: gofax/blocklists/paste_generic.tpl:3 gofax/blocklists/generic.tpl:8
-msgid "List name"
-msgstr "列表名称"
-
-#: gofax/blocklists/paste_generic.tpl:5 gofax/blocklists/generic.tpl:12
-msgid "Name of blocklist"
-msgstr "黑名单名称"
-
+#: gofax/blocklists/class_blocklistManagement.inc:5
 #: gofax/blocklists/class_blocklistGeneric.inc:9
 #: gofax/blocklists/class_blocklistGeneric.inc:361
-#: gofax/blocklists/class_blocklistManagement.inc:5
 msgid "FAX Blocklists"
 msgstr "传真黑名单"
 
-#: gofax/blocklists/class_blocklistGeneric.inc:154
-msgid "send"
-msgstr "发送"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:154
-msgid "receive"
-msgstr "接收"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:207
-msgid "Name is empty!"
-msgstr ""
-
-#: gofax/blocklists/class_blocklistGeneric.inc:210
+#: gofax/blocklists/class_blocklistManagement.inc:224
+#: gofax/blocklists/class_blocklistManagement.inc:285
 #, fuzzy
-msgid "Name contains invalid characters!"
-msgstr "需要的“姓名”字段包含无效字符"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:217
-#, fuzzy
-msgid "Name is already in use!"
-msgstr "指定名称已经使用。"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:356
-#: gofax/blocklists/class_blocklistGeneric.inc:362
-#, fuzzy
-msgid "Fax blocklists"
-msgstr "传真黑名单"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:365
-msgid "Name"
-msgstr "名称"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:366
-#: gofax/blocklists/generic.tpl:51
-msgid "Description"
-msgstr "描述"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:367
-#: gofax/blocklists/class_divListBlocklists.inc:135
-#: gofax/blocklists/generic.tpl:17
-msgid "Base"
-msgstr "位置"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:368
-#: gofax/blocklists/class_divListBlocklists.inc:147
-#, fuzzy
-msgid "Blocklist"
+msgid "blocklist"
 msgstr "黑名单"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:369
-#, fuzzy
-msgid "Blocklist type"
-msgstr "黑名单名称"
-
-#: gofax/blocklists/class_divListBlocklists.inc:31
-#: gofax/blocklists/class_divListBlocklists.inc:32
-msgid "List of blocklists"
-msgstr "黑名单列表"
-
-#: gofax/blocklists/class_divListBlocklists.inc:36
-msgid ""
-"This menu allows you to create, delete and edit selected blocklists. Having "
-"a large size of lists, you might prefer the range selectors on top of the "
-"select box."
-msgstr ""
-"这个菜单允许您创建，删除和修改所选的黑名单。对于一个长列表，您可以通过选择框"
-"上面的范围选择来调整。"
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-msgid "Blocklist name"
-msgstr "黑名单名称"
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-msgid "Department"
-msgstr "部门"
-
-#: gofax/blocklists/class_divListBlocklists.inc:58
-#: gofax/blocklists/class_divListBlocklists.inc:140
-msgid "Actions"
-msgstr "动作"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Select to see send blocklists"
-msgstr "选择查看发送黑名单"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Show send blocklists"
-msgstr "显示发送黑名单"
-
-#: gofax/blocklists/class_divListBlocklists.inc:62
-msgid "Select to see receive blocklists"
-msgstr "选择查看接收黑名单"
-
-#: gofax/blocklists/class_divListBlocklists.inc:62
-msgid "Show receive blocklists"
-msgstr "显示接收黑名单"
-
-#: gofax/blocklists/class_divListBlocklists.inc:65
-msgid "Select to search within subtrees"
-msgstr "选择在子树中查询"
-
-#: gofax/blocklists/class_divListBlocklists.inc:65
-#, fuzzy
-msgid "Search in subtrees"
-msgstr "在子树中查找"
-
-#: gofax/blocklists/class_divListBlocklists.inc:68
-msgid "Regular expression for matching list names"
-msgstr "匹配列表名称的正则表达式"
-
-#: gofax/blocklists/class_divListBlocklists.inc:137
-msgid "Submit department"
-msgstr "提交部门"
-
-#: gofax/blocklists/class_divListBlocklists.inc:137
-msgid "Submit"
-msgstr "提交"
-
-#: gofax/blocklists/class_divListBlocklists.inc:142
-msgid "Create"
-msgstr "创建"
-
-#: gofax/blocklists/class_divListBlocklists.inc:153
-msgid "Remove"
-msgstr "删除"
-
-#: gofax/blocklists/class_divListBlocklists.inc:159
-#, fuzzy
-msgid "Copy"
-msgstr "复制"
-
-#: gofax/blocklists/class_divListBlocklists.inc:161
-#, fuzzy
-msgid "Cut"
-msgstr "剪切"
-
-#: gofax/blocklists/class_divListBlocklists.inc:165
-#: gofax/blocklists/class_divListBlocklists.inc:168
-msgid "Paste"
-msgstr "粘贴"
-
-#: gofax/blocklists/class_divListBlocklists.inc:211
-msgid "edit"
-msgstr "编辑"
-
-#: gofax/blocklists/class_divListBlocklists.inc:211
-msgid "Edit user"
-msgstr "编辑用户"
-
-#: gofax/blocklists/class_divListBlocklists.inc:222
-msgid "cut"
-msgstr "剪切"
-
-#: gofax/blocklists/class_divListBlocklists.inc:222
-msgid "Cut this entry"
-msgstr "剪切条目"
-
-#: gofax/blocklists/class_divListBlocklists.inc:224
-msgid "copy"
-msgstr "复制"
-
-#: gofax/blocklists/class_divListBlocklists.inc:224
-msgid "Copy this entry"
-msgstr "拷贝条目"
-
-#: gofax/blocklists/class_divListBlocklists.inc:230
-msgid "delete"
-msgstr "删除"
-
-#: gofax/blocklists/class_divListBlocklists.inc:230
-msgid "Delete user"
-msgstr "删除用户"
-
-#: gofax/blocklists/class_divListBlocklists.inc:267
-#, fuzzy
-msgid "Number of listed blocklists"
-msgstr "黑名单名称"
-
-#: gofax/blocklists/class_divListBlocklists.inc:268
-#, fuzzy
-msgid "Number of listed departments"
-msgstr "部门名称"
-
-#: gofax/blocklists/class_blocklistManagement.inc:225
-#, fuzzy, php-format
-msgid "You're about to delete the following blocklists(s) %s"
-msgstr "您将要删除黑名单 '%s'。"
-
-#: gofax/blocklists/class_blocklistManagement.inc:247
-#, fuzzy, php-format
-msgid "You have not permission to delete '%s'!"
-msgstr "您无权删除这个黑名单。"
-
-#: gofax/blocklists/class_blocklistManagement.inc:286
-#, php-format
-msgid "You're about to delete the blocklist '%s'."
-msgstr "您将要删除黑名单 '%s'。"
-
-#: gofax/blocklists/class_blocklistManagement.inc:305
-#, fuzzy
-msgid "You have not permission to delete this entry!"
-msgstr "您无权删除这个黑名单。"
 
 #: gofax/blocklists/remove.tpl:2
 msgid "Warning"
@@ -786,9 +498,151 @@ msgstr "请再次检查您是否要这么做，因为 GOsa 将没有办法将您
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
-#: gofax/blocklists/main.inc:27 gofax/blocklists/main.inc:29
-msgid "Blocklist management"
-msgstr "黑名单管理"
+#: gofax/blocklists/class_divListBlocklists.inc:31
+#: gofax/blocklists/class_divListBlocklists.inc:32
+msgid "List of blocklists"
+msgstr "黑名单列表"
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+msgid "Blocklist name"
+msgstr "黑名单名称"
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+msgid "Department"
+msgstr "部门"
+
+#: gofax/blocklists/class_divListBlocklists.inc:57
+#: gofax/blocklists/class_divListBlocklists.inc:139
+msgid "Actions"
+msgstr "动作"
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+msgid "Select to see send blocklists"
+msgstr "选择查看发送黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+msgid "Show send blocklists"
+msgstr "显示发送黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+msgid "Select to see receive blocklists"
+msgstr "选择查看接收黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+msgid "Show receive blocklists"
+msgstr "显示接收黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:64
+msgid "Select to search within subtrees"
+msgstr "选择在子树中查询"
+
+#: gofax/blocklists/class_divListBlocklists.inc:64
+#, fuzzy
+msgid "Search in subtrees"
+msgstr "在子树中查找"
+
+#: gofax/blocklists/class_divListBlocklists.inc:67
+msgid "Regular expression for matching list names"
+msgstr "匹配列表名称的正则表达式"
+
+#: gofax/blocklists/class_divListBlocklists.inc:134
+#: gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_blocklistGeneric.inc:367
+msgid "Base"
+msgstr "位置"
+
+#: gofax/blocklists/class_divListBlocklists.inc:136
+msgid "Submit department"
+msgstr "提交部门"
+
+#: gofax/blocklists/class_divListBlocklists.inc:136
+msgid "Submit"
+msgstr "提交"
+
+#: gofax/blocklists/class_divListBlocklists.inc:141
+msgid "Create"
+msgstr "创建"
+
+#: gofax/blocklists/class_divListBlocklists.inc:146
+#: gofax/blocklists/class_blocklistGeneric.inc:368
+#, fuzzy
+msgid "Blocklist"
+msgstr "黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:152
+msgid "Remove"
+msgstr "删除"
+
+#: gofax/blocklists/class_divListBlocklists.inc:158
+#, fuzzy
+msgid "Copy"
+msgstr "复制"
+
+#: gofax/blocklists/class_divListBlocklists.inc:160
+#, fuzzy
+msgid "Cut"
+msgstr "剪切"
+
+#: gofax/blocklists/class_divListBlocklists.inc:164
+#: gofax/blocklists/class_divListBlocklists.inc:167
+msgid "Paste"
+msgstr "粘贴"
+
+#: gofax/blocklists/class_divListBlocklists.inc:210
+msgid "edit"
+msgstr "编辑"
+
+#: gofax/blocklists/class_divListBlocklists.inc:210
+msgid "Edit user"
+msgstr "编辑用户"
+
+#: gofax/blocklists/class_divListBlocklists.inc:221
+msgid "cut"
+msgstr "剪切"
+
+#: gofax/blocklists/class_divListBlocklists.inc:221
+msgid "Cut this entry"
+msgstr "剪切条目"
+
+#: gofax/blocklists/class_divListBlocklists.inc:223
+msgid "copy"
+msgstr "复制"
+
+#: gofax/blocklists/class_divListBlocklists.inc:223
+msgid "Copy this entry"
+msgstr "拷贝条目"
+
+#: gofax/blocklists/class_divListBlocklists.inc:229
+msgid "delete"
+msgstr "删除"
+
+#: gofax/blocklists/class_divListBlocklists.inc:229
+msgid "Delete user"
+msgstr "删除用户"
+
+#: gofax/blocklists/class_divListBlocklists.inc:266
+#: gofax/blocklists/class_divListBlocklists.inc:267
+#, fuzzy, php-format
+msgid "Number of listed %s"
+msgstr "黑名单名称"
+
+#: gofax/blocklists/class_divListBlocklists.inc:266
+#, fuzzy
+msgid "blocklists"
+msgstr "黑名单"
+
+#: gofax/blocklists/class_divListBlocklists.inc:267
+#, fuzzy
+msgid "departments"
+msgstr "部门"
+
+#: gofax/blocklists/paste_generic.tpl:3 gofax/blocklists/generic.tpl:8
+msgid "List name"
+msgstr "列表名称"
+
+#: gofax/blocklists/paste_generic.tpl:5 gofax/blocklists/generic.tpl:12
+msgid "Name of blocklist"
+msgstr "黑名单名称"
 
 #: gofax/blocklists/generic.tpl:20
 msgid "Choose subtree to place group in"
@@ -806,6 +660,11 @@ msgstr "类型"
 msgid "Select wether to filter incoming or outgoing calls"
 msgstr "选择过滤打入电话还是打出电话"
 
+#: gofax/blocklists/generic.tpl:51
+#: gofax/blocklists/class_blocklistGeneric.inc:366
+msgid "Description"
+msgstr "描述"
+
 #: gofax/blocklists/generic.tpl:54
 msgid "Descriptive text for this blocklist"
 msgstr "此黑名带描述文字"
@@ -821,6 +680,144 @@ msgstr "提示信息"
 #: gofax/blocklists/generic.tpl:92
 msgid "Numbers can also contain wild cards."
 msgstr "数字也可以包含通配符。"
+
+#: gofax/blocklists/main.inc:27 gofax/blocklists/main.inc:29
+msgid "Blocklist management"
+msgstr "黑名单管理"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:122
+#, fuzzy
+msgid "Phone number"
+msgstr "封锁号码"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:154
+msgid "send"
+msgstr "发送"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:154
+msgid "receive"
+msgstr "接收"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:207
+#: gofax/blocklists/class_blocklistGeneric.inc:210
+#: gofax/blocklists/class_blocklistGeneric.inc:217
+#: gofax/blocklists/class_blocklistGeneric.inc:365
+msgid "Name"
+msgstr "名称"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:356
+#: gofax/blocklists/class_blocklistGeneric.inc:362
+#, fuzzy
+msgid "Fax blocklists"
+msgstr "传真黑名单"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:369
+#, fuzzy
+msgid "Blocklist type"
+msgstr "黑名单名称"
+
+#: admin/systems/services/gofax/goFaxServer.tpl:1
+#, fuzzy
+msgid "FAX database information"
+msgstr "系统信息"
+
+#: admin/systems/services/gofax/goFaxServer.tpl:4
+msgid "FAX DB user"
+msgstr "传真数据库用户名"
+
+#: admin/systems/services/gofax/goFaxServer.tpl:12
+#: admin/systems/services/gofax/class_goFaxServer.inc:71
+#: admin/systems/services/gofax/class_goFaxServer.inc:98
+msgid "Password"
+msgstr "口令"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:30
+msgid "FAX database"
+msgstr "传真数据库"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:59
+#, fuzzy
+msgid "FAX database configuration"
+msgstr "传真数据库"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:88
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
+#, fuzzy
+msgid "Fax database"
+msgstr "传真数据库"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
+msgid "Services"
+msgstr "服务"
+
+#: admin/systems/services/gofax/class_goFaxServer.inc:97
+#, fuzzy
+msgid "Login name"
+msgstr "位置名称"
+
+#~ msgid "Save"
+#~ msgstr "保存"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#, fuzzy
+#~ msgid "The attribute user is empty or contains invalid characters."
+#~ msgstr "属性 '%s' 为空或者包含无效字符。"
+
+#, fuzzy
+#~ msgid "The attribute password is empty or contains invalid characters."
+#~ msgstr "属性 '%s' 为空或者包含无效字符。"
+
+#~ msgid "Back"
+#~ msgstr "返回"
+
+#~ msgid "Add"
+#~ msgstr "添加"
+
+#~ msgid "Delete"
+#~ msgstr "删除"
+
+#~ msgid "Apply"
+#~ msgstr "应用"
+
+#~ msgid "Ok"
+#~ msgstr "好"
+
+#, fuzzy
+#~ msgid "Name contains invalid characters!"
+#~ msgstr "需要的“姓名”字段包含无效字符"
+
+#, fuzzy
+#~ msgid "Name is already in use!"
+#~ msgstr "指定名称已经使用。"
+
+#~ msgid ""
+#~ "This menu allows you to create, delete and edit selected blocklists. "
+#~ "Having a large size of lists, you might prefer the range selectors on top "
+#~ "of the select box."
+#~ msgstr ""
+#~ "这个菜单允许您创建，删除和修改所选的黑名单。对于一个长列表，您可以通过选择"
+#~ "框上面的范围选择来调整。"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "部门名称"
+
+#, fuzzy
+#~ msgid "You're about to delete the following blocklists(s) %s"
+#~ msgstr "您将要删除黑名单 '%s'。"
+
+#, fuzzy
+#~ msgid "You have not permission to delete '%s'!"
+#~ msgstr "您无权删除这个黑名单。"
+
+#~ msgid "You're about to delete the blocklist '%s'."
+#~ msgstr "您将要删除黑名单 '%s'。"
+
+#, fuzzy
+#~ msgid "You have not permission to delete this entry!"
+#~ msgstr "您无权删除这个黑名单。"
 
 #, fuzzy
 #~ msgid "Removing of user/fax account with dn '%s' failed."
