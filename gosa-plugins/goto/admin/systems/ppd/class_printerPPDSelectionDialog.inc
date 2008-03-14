@@ -68,7 +68,7 @@ class printerPPDSelectionDialog extends plugin
       if(!empty($found)){
         $this->current_del_id = $id_to_del;
 
-        $smarty->assign("warning", sprintf(_("You're about to delete the ppd file '%s' at '%s'."), $found,$id_to_del));
+        $smarty->assign("warning", sprintf(msgPool::deleteInfo($found)));
         return($smarty->fetch(get_template_path('remove_ppd.tpl', TRUE)));
 
       }else{
