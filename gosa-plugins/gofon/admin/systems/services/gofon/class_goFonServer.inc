@@ -62,7 +62,7 @@ class goFonServer extends goService{
   function getListEntry()
   {
     $fields = goService::getListEntry();
-    $fields['Message']    = _("VoIP service - Asterisk management");
+    $fields['Message']    = _("VoIP service")." - "._("Asterisk management");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -71,16 +71,16 @@ class goFonServer extends goService{
   { 
     $message = plugin::check();
     if (empty($this->goFonAdmin)){
-      $message[]= _("The attribute DB user is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("User"));
     }
     if (empty($this->goFonPassword)){
-      $message[]= _("The attribute password is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("Password"));
     }
     if (empty($this->goFonAreaCode)){
-      $message[]= _("The attribute local dial prefix is empty or contains invalid characters.");
+      $message[]= msgPool::required(_("Local dial prefix"));
     }
     if (empty($this->goFonCountryCode)){
-      $message[]= _("The attribute country dial prefix is empty or contains invalid characters.");
+      $message[]= msgPool::requierd(_("Country prefix"));
     }
     return($message);
   }
