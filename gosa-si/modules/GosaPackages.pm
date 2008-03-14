@@ -20,7 +20,7 @@ use lib "/usr/lib/gosa-si/server/events";
 BEGIN{}
 END{}
 
-my ($server_ip, $server_mac_address, $server_port, $server_passwd, $max_clients);
+my ($server_ip, $server_port, $server_passwd, $max_clients);
 my ($gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
 my ($job_queue_timeout, $job_queue_file_name);
 
