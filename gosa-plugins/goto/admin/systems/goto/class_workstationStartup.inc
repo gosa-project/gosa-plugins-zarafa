@@ -1278,7 +1278,7 @@ class workstartup extends plugin
       if((!$res)){
         msg_dialog(_("Configuration error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd), ERROR_DIALOG);
       }elseif(empty($res2)){
-        msg_dialog(_("Configuration error"), _("REPOSITORY_HOOK returned empty result!"), ERROR_DIALOG);
+        msg_dialog(_("Configuration error"), _("REPOSITORY_HOOK returned no result!"), ERROR_DIALOG);
       }else{
         $tmp = split("\n",$res);
         foreach($tmp as $line){
