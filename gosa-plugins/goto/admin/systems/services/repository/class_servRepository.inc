@@ -126,20 +126,21 @@ class servrepository extends goService
           $ldap->cd ($this->config->current['BASE']);
 
           $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
-
-          $found = false;
-          $found_in = " ";
-          while($attrs = $ldap->fetch()){
-            foreach($attrs['FAIclass'] as $class){
-              if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
-                $found = true;  
-                $found_in .= $attrs['cn'][0]." ";
+          if ($ldap->count() != 0){
+            $obj= array();
+            $found= false;
+            while($attrs = $ldap->fetch()){
+              foreach($attrs['FAIclass'] as $class){
+                if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
+                  $obj[$ldap->getDN()]= $attrs['cn'][0];
+                  $found= true;
+                }
               }
             }
-          }
 
-          if($found){
-            print_red(sprintf(_("You can't delete this release, it is still used by these workstations [%s]. Please solve this dependencies first, to keep data base consistency."),$found_in));
+            if ($found){
+              msg_dialog::display(_("Error"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), ERROR_DIALOG);
+            }
           }else{
             if(isset($this->repositories[$value])){
               unset($this->repositories[$value]);
@@ -160,20 +161,21 @@ class servrepository extends goService
             $release = $this->repositories[$value]['Release'];
 
             $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
-
-            $found = false;
-            $found_in = " ";
-            while($attrs = $ldap->fetch()){
-              foreach($attrs['FAIclass'] as $class){
-                if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
-                  $found = true;
-                  $found_in .= $attrs['cn'][0]." ";
+            if ($ldap->count() != 0){
+              $found = false;
+              $obj= array();
+              while($attrs = $ldap->fetch()){
+                foreach($attrs['FAIclass'] as $class){
+                  if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
+                    $found = true;
+                    $obj[$ldap->getDN()]= $attrs['cn'][0];
+                  }
                 }
               }
-            }
 
-            if($found){
-              print_red(sprintf(_("Be careful editing this release, it is still used by these workstations [%s]."),$found_in));
+              if($found){
+                msg_dialog::display(_("Warning"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), WARNING_DIALOG);
+              }
             } 
 
             if(isset($this->repositories[$value])){
@@ -199,12 +201,12 @@ class servrepository extends goService
     if(isset($_POST['repository_setup_save']) && is_object($this->dialog)){
       $this->dialog->save_object();
       if(($this->dialog->is_new_name())&&(isset($this->repositories[$this->dialog->GetName()]))){
-        print_red(msgPool::duplicated(_("Name"))); 
+        msg_dialog::display(_("Error"), msgPool::duplicated(_("Name")), ERROR_DIALOG);
       }else
 
       if(count($this->dialog->check())!=0){
         foreach($this->dialog->check() as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $obj = $this->dialog->save();

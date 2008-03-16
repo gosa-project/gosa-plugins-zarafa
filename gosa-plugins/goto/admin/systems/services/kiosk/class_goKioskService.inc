@@ -28,7 +28,7 @@ class goKioskService extends goService{
 
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
-      print_red(msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")));
+      msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")), ERROR_DIALOG);
     }else{
       $this->gotoKioskProfiles = array();
       if(isset($this->attrs['gotoKioskProfile']) && is_array($this->attrs['gotoKioskProfile'])){
@@ -51,15 +51,12 @@ class goKioskService extends goService{
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=gotoEnvironment)(gotoKioskProfile=*/".$this->cn."/*))",array("cn"));
-    $str ="";
-    $cnt = 3;
-    while($cnt && $attrs = $ldap->fetch()){
-      $str .= $attrs['cn'][0].", ";
-      $cnt --;
-    }    
-    $str = preg_replace("/, $/","",$str);
-    if($cnt != 3){
-      print_red(sprintf(_("Can not remove kiosk profile service, it is currently in use by following user(s) : %s."),$str));
+    if ($ldap->count() != 0){
+      $obj= array();
+      while($attrs = $ldap->fetch()){
+        $obj[$ldap->getDN()]= $attrs['cn'][0];
+      }    
+      msg_dialog::display(_("Error"), msgPool::stillInUse(_("Kiosk profile service"), msgPool::buildList($obj)), ERROR_DIALOG);
     }else{
       goService::remove_from_parent();
     }
@@ -109,9 +106,6 @@ class goKioskService extends goService{
             'exists'  => TRUE);
         $this->gotoKioskProfiles[] = $tmp;
       }
-      if(!is_writeable($this->baseDir)){
-        print_red(sprintf(_("Can't save new kiosk profiles, possibly permission denied for folder: '%s'."),$this->baseDir));
-      }
     }
 
     $only_once = true;
@@ -130,27 +124,31 @@ class goKioskService extends goService{
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $ldap->search("(&(objectClass=gotoEnvironment)(gotoKioskProfile=*".$name.")",array("cn","uid","gotoKioskProfile"));
-        $used_by = "";
-        $cnt = 3;
-        while(($attrs = $ldap->fetch()) && ($cnt)){
-          $cnt --;
-          $check = preg_replace("/^.*\//i","",$attrs['gotoKioskProfile'][0]);
-          if($check == $name){
-            $used_by .= $attrs['cn'][0].", ";
+
+        if ($ldap->count() != 0){
+
+          $obj= array();
+          $found= false;
+          while(($attrs = $ldap->fetch()) && ($cnt)){
+            $check = preg_replace("/^.*\//i","",$attrs['gotoKioskProfile'][0]);
+            if($check == $name){
+              $obj[$ldap->getDN()]= $attrs['cn'][0];
+              $found= true;
+            }
           }
-        }
-        $used_by = preg_replace("/, $/","",$used_by);
-        if(!empty($used_by)){
-          print_red(sprintf(_("Can't remove kioks profile, it is still in use by the following objects '%s'."),$used_by));
+ 
+          if ($found){
+            msg_dialog::display(_("Error"), msgPool::stillInUse(_("Kiosk profile"), msgPool::buildList($obj)), ERROR_DIALOG);
+          }
         }else{
           if($this->gotoKioskProfiles[$id]['initial']){
             $res = @unlink($filename);
             if(!$res){
               if(!is_writeable($filename)){
-                print_red(sprintf(_("Can't delete '%s'. Error was: permission denied."), $filename));
+                msg_dialog::display(_("Error"), msgPool::cannotDeleteFile($filename), ERROR_DIALOG);
               }
               if(!file_exists($filename)){
-                print_red(sprintf(_("Can't delete '%s'. Error was: file doesn't exist."), $filename));
+                msg_dialog::display(_("Error"), msgPool::fileDoesNotExist($filename), ERROR_DIALOG);
               }
             }
             unset($this->gotoKioskProfiles[$id]);
@@ -214,7 +212,7 @@ class goKioskService extends goService{
         $path = $this->baseDir."/".$profile['name'];
         $fp = @fopen($path,"w");
         if(!$fp){
-          print_red(_("Can't save new kiosk profiles, possibly permission denied for folder")." : ",$path);
+          msg_dialog::display(_("Error"), msgPool::cannotWriteFile($path), ERROR_DIALOG);
         }else{
           fwrite($fp,$contents,strlen($contents));
           $this->attrs['gotoKioskProfile'][] = $method.$profile['name'];

@@ -140,7 +140,7 @@ class gospamserver extends goService{
       $msgs = $this->dialog->check();
       if(count($msgs)){
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }elseif($this->acl_is_writeable("saRule")){
         $ret = $this->dialog->save();
@@ -214,7 +214,7 @@ class gospamserver extends goService{
       if(tests::is_ip($post) || tests::is_domain($post) || (tests::is_ip_with_subnetmask($post))){
         $this->TrustedNetworks[$post] = $post;
       }else{
-        print_red(msgPool::invalid(_("Trusted network")));
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Trusted network")), ERROR_DIALOG);
       }
     }
   }

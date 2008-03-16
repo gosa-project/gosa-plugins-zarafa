@@ -39,10 +39,10 @@ class servnfs extends plugin
     $this->charsets = array();
 
     if(!file_exists(CONFIG_DIR."/encodings")){
-      print_red(sprintf(_("The file '%s/encodings' does not exist, can't get supported charsets."),CONFIG_DIR));
+      msg_dialog::display(_("Error"), msgPool::fileDoesNotExist(CONFIG_DIR."/encodings"), ERROR_DIALOG);
     }else{
       if(!is_readable(CONFIG_DIR."/encodings")){
-        print_red(sprintf(_("Can't read '%s/encodings', please check permissions."),CONFIG_DIR));
+        msg_dialog::display(_("Error"), msgPool::cannotReadFile(CONFIG_DIR."/encodings"), ERROR_DIALOG);
       }else{
         $fp = fopen(CONFIG_DIR."/encodings","r");
         $i = 100;

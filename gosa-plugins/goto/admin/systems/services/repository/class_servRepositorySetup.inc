@@ -193,7 +193,7 @@ class servRepositorySetup  extends plugin
       $res = shell_exec($cmd);
       $res2 = trim($res);
       if(!$res || empty($res2)){
-        print_red( msgPool::cmdexecfailed("REPOSITORY_HOOK",$cmd,_("Repository service")));
+        msg_dialog::display(_("Error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd, _("Repository service")), ERROR_DIALOG);
       }else{  
         $tmp = split("\n",$res);
         foreach($tmp as $hook){

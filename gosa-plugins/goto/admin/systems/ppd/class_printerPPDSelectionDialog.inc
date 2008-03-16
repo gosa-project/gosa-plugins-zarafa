@@ -72,7 +72,7 @@ class printerPPDSelectionDialog extends plugin
         return($smarty->fetch(get_template_path('remove_ppd.tpl', TRUE)));
 
       }else{
-        print_red(sprintf(_("Could not found specified ppd file '%s'."),$id_to_del));
+        msg_dialog::display(_("PPD error"), msgPool::fileDoesNotExist($id_to_del), ERROR_DIALOG);
       }
     }
 
@@ -80,6 +80,7 @@ class printerPPDSelectionDialog extends plugin
     if(isset($_POST['delete_ppd_confirm']) && !empty($this->current_del_id)){
 
       /* check if file is removeable */
+      $is_ok = false;
       if(is_writeable($this->current_del_id)){
         $is_ok = @unlink($this->current_del_id);
 
@@ -93,12 +94,10 @@ class printerPPDSelectionDialog extends plugin
             }
           }
         }
-      }else{
-        $is_ok = false;
       }
 
       if(!$is_ok){
-        print_red(_("Something went wrong while trying to remove the ppd file from server, possibly we have no write access."));
+        msg_dialog::display(_("PPD error"), msgPool::cannotDeleteFile($this->current_del_id), ERROR_DIALOG);
       }
     }
 
@@ -118,7 +117,7 @@ class printerPPDSelectionDialog extends plugin
     if((isset($_GET['act']))&&($_GET['act']=="open"))  {
       
       if((!empty($_GET['id'])) && (!isset( $this->header[base64_decode($_GET['id'])]))){
-        print_red(sprintf(_("Selected vendor '%s' does not exists in our list of ppds."),base64_decode($_GET['id'])));      
+        msg_dialog::display(_("PPD error"), sprintf(_("Cannot locate vendor '%s' in available PPDs!"), base64_decode($_GET['id'])), ERROR_DIALOG);
         $this->Vendor = ""; 
       }else{
         $this->Vendor = base64_decode($_GET['id']);

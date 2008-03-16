@@ -177,11 +177,11 @@ class servkolab extends goService {
 
     /* Integration check, not translated because they can't pop up at all, only for debug */ 
     if(count($this->kolabHost) == 0){
-      print_red("Server - Kolab tab : This is not possible, we can't remove an account which doesn't exists.");
+      msg_dialog::display(_("Internal error"), _("Kolab account does not exist!"), ERROR_DIALOG);
       return;
     }
     if(!isset($this->hostname) || (empty($this->hostname))){
-      print_red("The required attribute hostname seams to empty.");
+      msg_dialog::display(_("Error"), msgPool::required(_("hostname")), ERROR_DIALOG);
     }
 
     /* Our hostname is in kolabHosts and there is a only one entry 

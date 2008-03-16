@@ -194,7 +194,7 @@ class printerPPDDialog extends plugin
 
     /* Get PPD informations and set vendor / modell / name */ 
     if((!file_exists($AbsoluteSourceName)) || (!is_readable($AbsoluteSourceName))){
-      print_red(sprintf(_("Can't select PPD file '%s', the file is not readable"),$AbsoluteSourceName));   
+      msg_dialog::display(_("PPD error"), msgPool::cannotReadFile($AbsoluteSourceName), ERROR_DIALOG);
       return;
     }
     $res  = $this->ppdManager->loadDescription($AbsoluteSourceName);
@@ -211,7 +211,7 @@ class printerPPDDialog extends plugin
     /* Create the vendors path, if it doesn't exists already */
     if(!is_dir($AbsoluteDestinationPath.$Vendor)){
       if(!(@mkdir($AbsoluteDestinationPath.$Vendor))){
-        print_red(sprintf(_("Can't create folder '%s' for the uploaded ppd file."),$AbsoluteDestinationPath.$Vendor));
+        msg_dialog::display(_("PPD error"), msgPool::cannotCreateFolder($AbsoluteDestinationPath.$Vendor), ERROR_DIALOG);
         return(false);
       }
     }
@@ -219,7 +219,7 @@ class printerPPDDialog extends plugin
     /* Create destination file handle */
     $fp = @fopen($AbsoluteDestinationPath.$PPDName,"w+");
     if(!$fp){
-      print_red(sprintf(_("Can't create file '%s' to store modifed ppd informations."),$AbsoluteDestinationPath.$PPDName));
+      msg_dialog::display(_("PPD error"), msgPool::cannotWriteFile($AbsoluteDestinationPath.$PPDName), ERROR_DIALOG);
       return(false);
     }
 
@@ -243,7 +243,7 @@ class printerPPDDialog extends plugin
   {
     /* Check if file exists && is readable */
     if((!is_file($_PathOnHdd)) || (!is_readable($_PathOnHdd))){
-      print_red(sprintf(_("Can't add new ppd file, the source file '%s' is not accessible."),$_PathOnHdd));
+      msg_dialog::display(_("PPD error"), msgPool::cannotReadFile($_PathOnHdd), ERROR_DIALOG);
       return(false);
     }
     
@@ -261,7 +261,7 @@ class printerPPDDialog extends plugin
 
     /* Check if parse was successfull */
     if(empty($name) || empty($vendor)){
-      print_red(sprintf(_("The given ppd file '%s' seams to be invalid, can't get any model or vendor informations."),$_PathOnHdd));
+      msg_dialog::display(_("PPD error"), sprintf(_("Cannot parse PPD '%s'!"), $_PathOnHdd), ERROR_DIALOG);
       return(false);
     }
 
@@ -284,7 +284,7 @@ class printerPPDDialog extends plugin
         $found = true;
         if(!$overwrite){
           if(!copy($_PathOnHdd,$_PathOnHdd."_back")){
-            print_red(sprintf(_("Can't add new ppd file, the source file '%s' is not accessible."),$_PathOnHdd));         
+            msg_dialog::display(_("PPD error"), msgPool::cannotReadFile($_PathOnHdd), ERROR_DIALOG);
           }else{
             $this->add_ppd_later = $_PathOnHdd."_back";
             $this->add_later_msg_dialog = new msg_dialog(_("Overwrite existing PPD"),
@@ -298,7 +298,7 @@ class printerPPDDialog extends plugin
     /* Create the vendors path, if it doesn't exists already */
     if(!is_dir($this->pathToPPD.$vendor)){
       if(!(@mkdir($this->pathToPPD.$vendor))){
-        print_red(sprintf(_("Can't create folder '%s' for the uploaded ppd file."),$this->pathToPPD.$vendor));
+        msg_dialog::display(_("PPD error"), msgPool::cannotCreateFolder($this->pathToPPD.$vendor), ERROR_DIALOG);
         return(false);
       }
     }
@@ -308,11 +308,11 @@ class printerPPDDialog extends plugin
 
     /* Check file handle & contents */
     if(!$fp){
-      print_red(sprintf(_("Can't save file '%s'."),$filename));
+      msg_dialog::display(_("PPD error"), msgPool::cannotWriteFile($filename), ERROR_DIALOG);
       return;
     }
     if(empty($contents)){
-      print_red(_("Uploaded ppd file is empty, can't create new ppd file."));
+      msg_dialog::display(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       return;
     }
     
@@ -498,7 +498,7 @@ class printerPPDDialog extends plugin
             $str  .=  "</select>\n";
 
           }else{
-            print_red(sprintf(_("Unsupported ppd type '%s' used for '%s' "),$type,$name));
+            msg_dialog(_("PPD error"), sprintf(_("PPD type '%s' is not supported!"), $type), ERROR_DIALOG);
           }
           $str .= "</td></tr>\n";
         }
@@ -515,13 +515,13 @@ class printerPPDDialog extends plugin
     if(file_exists($path)){
       if(is_writeable($path)){
         if(!@unlink($path)){
-          print_red(sprintf(_("Removing old ppd file '%s' failed."),$path));
+          msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
         }
       }else{
-        print_red(sprintf(_("Removing old ppd file '%s' failed. File is not accessible."),$path));
+        msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
       }
     }else{
-      print_red(sprintf(_("Removing old ppd file '%s' failed. File does not exists or is not accessible."),$path));
+      msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
     }
   }
 

@@ -95,7 +95,7 @@ class goShareServer extends goService{
     if(isset($_POST['NFSsave']) && isset($this->o_subWindow) && is_object($this->o_subWindow)){
       if(count($this->o_subWindow->check())>0){
         foreach($this->o_subWindow->check() as $msg) {
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $this->o_subWindow->save_object();
@@ -226,15 +226,11 @@ class goShareServer extends goService{
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=*|$id|*||*))", array("cn"));
-    $cnt= $ldap->count();
-    if ($cnt){
-      $msg= sprintf(_("The share can't be removed since it is still used by %d users:"), $cnt);
-      $msg.= "<br><br><ul>";
+    if ($ldap->count != 0){
       while ($attrs= $ldap->fetch()){
-        $msg.= "<li>".$attrs["cn"][0]."</li>";
+        $obj[$ldap->getDN()]= $attrs['cn'][0];
       }
-      $msg.= "</ul>"._("Please correct the share-/profile settings of these users");
-      print_red($msg);
+      msg_dialog::display(_("Error"), msgPool::stillInUse(_("share"), msgPool::buildList($obj)), ERROR_DIALOG);
 
     } else {
       /* Finally remove it */

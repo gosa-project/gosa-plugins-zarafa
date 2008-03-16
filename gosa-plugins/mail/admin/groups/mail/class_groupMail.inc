@@ -79,7 +79,7 @@ class mailgroup extends plugin
     if ($cls && class_exists($cls)){
       $this->method= $cls;
     } else {
-      print_red(sprintf(_("There is no mail method '%s' specified in your gosa.conf available."), $this->mmethod));
+      msg_dialog::display(_("Configuration error"), sprintf(_("Cannot locate mail method '%s'!"), $this->mmethod), ERROR_DIALOG);
     }
 
     /* Load Mailserver  
@@ -434,13 +434,11 @@ class mailgroup extends plugin
         /* Valid email address specified? */
         $address= $_POST['forward_address'];
         if (!tests::is_email($address)){
-
-          print_red (msgPool::invalid(_("forward address")));
-
+          msg_dialog::display(_("Error"), msgPool::invalid(_("forward address")), ERROR_DIALOG);
         } elseif ($address == $this->mail
             || in_array($address, $this->gosaMailAlternateAddress)) {
 
-          print_red (_("Adding your one of your own addresses to the forwarders makes no sense."));
+          msg_dialog::display(_("Error"), _("Cannot forward to users own mail address!"), ERROR_DIALOG);
 
         } else {
 
@@ -466,12 +464,12 @@ class mailgroup extends plugin
       if ($_POST['alternate_address'] != "" && $this->acl_is_writeable("gosaMailAlternateAddress")){
 
         if (!tests::is_email($_POST['alternate_address'])){
-          print_red (msgPool::invalid(_("alternate address")));
+          msg_dialog::display(_("Error"),msgPool::invalid(_("Alternate address")), ERROR_DIALOG);
 
         } elseif (($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
           $ui= get_userinfo();
           if ($user != $ui->username){
-            print_red (msgPool::duplicated(_("Mail address")));
+          msg_dialog::display(_("Error"),msgPool::duplicated(_("Mail address")), ERROR_DIALOG);
           }
         }
       }
