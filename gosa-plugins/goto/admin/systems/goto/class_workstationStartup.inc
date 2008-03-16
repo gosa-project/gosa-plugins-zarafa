@@ -472,7 +472,7 @@ class workstartup extends plugin
     if((isset($_POST['gotoShareAdd'])) && ($this->acl_is_writeable("gotoShare"))) {
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
-        msg_dialog(_("Error"), msgPool::required(_("Mount point"), ERROR_DIALOG);
+        msg_dialog(_("Error"), msgPool::required(_("Mount point")), ERROR_DIALOG);
       }else{
         if(count($this->gotoAvailableShares)){
           $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
