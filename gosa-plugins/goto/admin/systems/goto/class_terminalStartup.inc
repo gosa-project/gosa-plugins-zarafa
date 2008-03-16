@@ -204,7 +204,7 @@ class termstartup extends plugin
     if(isset($_POST['gotoShareAdd']) && $this->acl_is_writeable("gotoShare")){
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
-        print_red(msgPool::invalid(_("Mount point")));
+        msg_dialog(_("Error"), msgPool::invalid(_("Mount point"), WARNING_DIALOG);
       }else{
         $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
         $s_mount = $_POST['gotoShareMountPoint'];

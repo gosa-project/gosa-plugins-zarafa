@@ -60,7 +60,7 @@ class printerPPDDialog extends plugin
       if(($ppdfile!== NULL)&&(strlen($ppdfile)>0)){
         $ppdfile = preg_replace("#".$this->pathToModified."#","",$ppdfile);
         if(!file_exists($this->pathToPPD.$this->pathToModified.$ppdfile)){
-          print_red(sprintf(_("Can't open '%s', ppd settings resetted."),$ppdfile));
+          msg_dialog(_("PPD error"), sprintf(_("Cannot open PPD '%s'!"), $ppdfile), ERROR_DIALOG);
         }else{
           $res  = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$ppdfile);
           if($res){
@@ -97,7 +97,8 @@ class printerPPDDialog extends plugin
       /* Check if path is write/readable*/
       $is_r = @is_readable($path);  
       if(((!is_dir($path))||(empty($path)) || (!$is_r)) && (!@mkdir($path))){
-        print_red(sprintf(_("The specified path '%s' which results from PPD_PATH in your gosa.conf is invalid, can't read/write any ppd informations."),$path));
+        msg_dialog(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and wrinting!"), $path), ERROR_DIALOG);
+
         /* Print out template */
         $display.= $smarty->fetch(get_template_path('printerPPDDialog.tpl', TRUE,dirname(__FILE__)));
         return($display);
@@ -114,7 +115,7 @@ class printerPPDDialog extends plugin
           $this->SelectPPD($name); 
         }
       }else{
-        print_red(_("Please specify a valid ppd file."));
+        msg_dialog(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }
     }
 

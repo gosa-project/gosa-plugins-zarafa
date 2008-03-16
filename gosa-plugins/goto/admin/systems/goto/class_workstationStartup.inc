@@ -234,8 +234,7 @@ class workstartup extends plugin
        */
       if(!isset($this->cache['SERVERS'][$this->FAIdebianMirror])){
         if(count($this->FAIclass)){
-          print_red(sprintf(_("The selected FAI mirror '%s' is no longer available, the mirror was set to 'auto'."),
-                $this->FAIdebianMirror));
+          msg_dialog(_("Error"), sprintf(_("FAI mirror '%s' is not available - setting to mirror 'auto'!"), $this->FAIdebianMirror), ERROR_DIALOG);
         }
         $this->FAIdebianMirror = "auto";
         $this->FAIrelease = key($this->cache['SERVERS'][$this->FAIdebianMirror]);
@@ -249,8 +248,7 @@ class workstartup extends plugin
       if(!isset($this->cache['SERVERS'][$this->FAIdebianMirror][$this->FAIrelease])){
         $new_release = key($this->cache['SERVERS'][$this->FAIdebianMirror]); 
         if(count($this->FAIclass)){
-          print_red(sprintf(_("The selected FAI release '%s' is not available for mirror '%s', the release was set to '%s'."),
-                $this->FAIrelease,$this->FAIdebianMirror,$new_release));
+          msg_dialog(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianmirror), ERROR_DIALOG);
         }
         $this->FAIrelease = $new_release;
         $this->cache =array();
@@ -366,7 +364,7 @@ class workstartup extends plugin
         }
 
         if((isset($this->FAIclassInfo[$_POST['FAIclassesSel']]['FAIpartitionTable']))&&($found>0)){
-          print_red(_("There is already a profile in your selection that contain partition table configurations."));
+          msg_dialog(_("Error"), _("There is already a profile containing a partition table in your configuration!") , ERROR_DIALOG);
         }else{
           $this->FAIclass[$_POST['FAIclassesSel']]=$_POST['FAIclassesSel'];
         }
@@ -474,7 +472,7 @@ class workstartup extends plugin
     if((isset($_POST['gotoShareAdd'])) && ($this->acl_is_writeable("gotoShare"))) {
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
-        print_red(msgPool::required(_("Mount point")));
+        msg_dialog(_("Error"), msgPool::required(_("Mount point"), ERROR_DIALOG);
       }else{
         if(count($this->gotoAvailableShares)){
           $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
@@ -1130,7 +1128,7 @@ class workstartup extends plugin
           }
         }
       }else{
-        print_red(_("Could not load available classes, the fai extension plugin seems not to be installed."));
+        msg_dialog(_("Configuration error"), _("Missing FAI plugin extension!"), ERROR_DIALOG);
       }
 
       /* Add object caught from external hook
@@ -1278,9 +1276,9 @@ class workstartup extends plugin
       $res = shell_exec($cmd);
       $res2 = trim($res);
       if((!$res)){
-        print_red(sprintf(_("Can't execute specified REPOSITORY_HOOK '%s' please check your gosa.conf."),$cmd));
+        msg_dialog(_("Configuration error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd), ERROR_DIALOG);
       }elseif(empty($res2)){
-        print_red(sprintf(_("The specified REPOSITORY_HOOK '%s', specified in your gosa.conf, returns an empty string."),$cmd));
+        msg_dialog(_("Configuration error"), _("REPOSITORY_HOOK returned empty result!"), ERROR_DIALOG);
       }else{
         $tmp = split("\n",$res);
         foreach($tmp as $line){

@@ -101,7 +101,7 @@ class printgeneric extends plugin
       }
 
       if(!isset($this->config->idepartments[$this->base])){
-        print_red(_("Can't extract a valid base out of object dn, setting base to '%s'."),session::get('CurrentMainBase'));
+        msg_dialog::display(_("Internal error"), sprintf(_("Cannot determine a valid department for this object. Setting base to '%s'!"), session::get('CurrentMainBase')) , WARNING_DIALOG);
         $this->base  = session::get('CurrentMainBase');
       }
     }
@@ -429,7 +429,7 @@ class printgeneric extends plugin
       $this->dialog->save_object();
       if(count($this->dialog->check())){
         foreach($this->dialog->check() as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $this->gotoPrinterPPD = array();
@@ -476,7 +476,7 @@ class printgeneric extends plugin
       $this->dialog->save_object();
       if(count($this->dialog->check())){
         foreach($this->dialog->check() as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $data= $new = $this->dialog->save();
@@ -578,14 +578,14 @@ class printgeneric extends plugin
       $ldap= $this->config->get_ldap_link();
       $ldap->cat($this->dn, array('dn',"objectClass"));
       if(!$ldap->count()){
-        print_red("Trying to remove printer object which isn't a printer. Aborted to avoid data loss.");
+        msg_dialog::display(_("Error"), _("Object is no printer!"), ERROR_DIALOG);
         return;
       }
 
       /* Check if obejct is a printer */
       $CheckPrinter = $ldap->fetch();
       if(!in_array("gotoPrinter",$CheckPrinter['objectClass'])){
-        print_red("Trying to remove printer object which isn't a printer. Aborted to avoid data loss.");
+        msg_dialog::display(_("Error"), _("Object is no printer!"), ERROR_DIALOG);
         return;
       }
 
@@ -920,7 +920,7 @@ class printgeneric extends plugin
     }
   
     if(!$this->acl_is_writeable("gotoUserPrinter")){
-      print_red(sprintf(_("You are not allowed to remove the given object '%s' from the list of members of printer '%s'."),$id,$this->dn));
+      msg_dialog::display(_("Permission error"), msgPool::permDelete(_("printer user"), $id), INFO_DIALOG);
       return(FALSE);
     }
  
@@ -937,12 +937,12 @@ class printgeneric extends plugin
   {
     $types = array("AddUser","AddGroup","AddAdminUser","AddAdminGroup");
     if(!in_array_ics($type, $types)){
-      print_red(sprintf(_("Illegal printer type while adding '%s' to the list of '%s' printers,"),$dn,$type));
+      msg_dialog::display(_("Internal error"), sprintf(_("Illegal member type type '%s'!"), $type), ERROR_DIALOG);
       return(FALSE);
     }
 
     if(!$this->acl_is_writeable("gotoUserPrinter")){
-      print_red(sprintf(_("You are not allowed to add the given object '%s' to the list of members of '%s'."),$dn,$this->dn));
+      msg_dialog::display(_("Permission error"), msgPool::permModify(_("printer user"), $this->dn), INFO_DIALOG);
       return(FALSE);
     }
 
@@ -977,7 +977,7 @@ class printgeneric extends plugin
           }
 
           if(isset(  $this->member[$ctype][$name])){
-            print_red(sprintf(_("Can't add '%s' to the list of members, it is already used."),$attrs[$var][0]));
+            msg_dialog::display(_("Error"), sprintf(_("'%s' is already used!"), $attrs[$var][0]), ERROR_DIALOG);
             return(FALSE);
           }
         }
@@ -988,7 +988,7 @@ class printgeneric extends plugin
         print_a($attrs);
       }
     }else{
-      print_red(sprintf(_("Can't add '%s' to list of members, it is not reachable."),$dn));
+      msg_dialog::display(_("Error"), sprintf(_("'%s' does not exist!"), $dn), ERROR_DIALOG);
       return(FALSE);
     }
     return(TRUE);

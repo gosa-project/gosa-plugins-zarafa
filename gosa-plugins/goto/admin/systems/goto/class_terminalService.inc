@@ -95,8 +95,8 @@ class termservice extends plugin
           "1400x1050" =>  "1400x1050",
           "1600x1200" =>  "1600x1200");
 
-    if(isset($this->config->data['MAIN']['RESOLUTION_HOOK'])){
-      $file = $this->config->data['MAIN']['RESOLUTION_HOOK'];
+    if(isset($this->config->data['MAIN']['RESOLUTIONS'])){
+      $file = $this->config->data['MAIN']['RESOLUTIONS'];
       if(is_readable($file)){
         $str = file_get_contents($file);
         $lines = split("\n",$str);
@@ -107,7 +107,7 @@ class termservice extends plugin
           }
         }
       }else{
-        print_red(sprintf(_("You have specified an external resolution hook which can't be read, please check the permission of the file '%s'."),$file));
+        msg_dialog(_("Configuration error"), msgPool::cannotReadFile($file), WARNING_DIALOG);
       }
     }
 

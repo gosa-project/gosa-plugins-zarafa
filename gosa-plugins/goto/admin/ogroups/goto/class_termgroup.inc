@@ -194,57 +194,7 @@ class termgroup extends plugin
         $macaddresses[]= $macAddress;
       }
 
-      print_red("trigger action is missing");
-      #gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
-
-      /* Update members fai state */
-      $this->update_term_member_FAIstate(trim($_POST['saction']));
-
-      $this->didAction= TRUE;
-
-      /* Get dns from member objects. Create ldap object  */
-      $member = $this->parent->by_object['ogroup']->member;
-      $ldap = $this->config->get_ldap_link();
-      $ldap->cd($this->config->current['BASE']);
-
-      /* walk trough members and add FAIstate */ 
-      if ($_POST['saction'] != "wake"){
-        foreach($member as $dn =>  $object){
-
-          /* Get object */
-          $ldap->cat($dn,array("objectClass"));
-          $res                = $ldap->fetch();
-          $attrs              = array();
-
-          /* Add FAI state */
-          $attrs['FAIstate']  = "";
-          if(isset($this->mapActions[$_POST['saction']])){
-            $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-          }
-
-          /* Fix objectClass index */
-          for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-            $attrs['objectClass'][] = $res['objectClass'][$i];
-          }
-
-          /* Check if we must add the objectClass */
-          if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-            $attrs['objectClass'][] = "FAIobject";
-          }
-
-          if($attrs['FAIstate'] == ""){
-            $attrs['FAIstate'] = array();
-          }
-
-          $ldap->cd($dn);
-          $ldap->modify($attrs);
-
-          if (!$ldap->success()){
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
-          }
-        }
-      }
-
+      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
     }
 
 

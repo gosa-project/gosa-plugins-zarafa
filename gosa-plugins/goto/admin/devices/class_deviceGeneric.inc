@@ -143,19 +143,13 @@ class deviceGeneric extends plugin
 
     $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDeviceDN=".$this->dn."))",array("cn","gotoHotplugDeviceDN"));
     $skip = FALSE;
-    $str ="";
-    $cnt = 3;
+    $obj = array();
     while($cnt && $attrs = $ldap->fetch()){
+      $obj[$ldap->getDN()]= $attrs['cn'][0];
       $skip =TRUE;
-      $str .= $attrs['cn'][0].", ";
-      $cnt --;
     }
     if($skip){
-      $str  = preg_replace("/, $/","",$str);
-      if($cnt == 0){
-        $str .= "...";
-      }
-      print_red(sprintf(_("Can't remove the device '%s' it is still in use be this user(s) : %s"),$this->cn,$str));
+      msg_dialog::display(_("Error"), msgPool::stillInUse(_("Device"), $obj), INFO_DIALOG);
     }else{
       $ldap->rmdir_recursive($this->dn);
     }

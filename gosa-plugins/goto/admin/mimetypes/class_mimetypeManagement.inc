@@ -334,7 +334,7 @@ class mimetypeManagement extends plugin
         } else {
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
-          print_red (msgPool::deleteInfo());
+          msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
           new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
@@ -389,7 +389,7 @@ class mimetypeManagement extends plugin
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        print_red (msgPool::permDelete());
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
       }
     }
 
@@ -418,7 +418,7 @@ class mimetypeManagement extends plugin
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red (msgPool::permDelete());
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
         new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 

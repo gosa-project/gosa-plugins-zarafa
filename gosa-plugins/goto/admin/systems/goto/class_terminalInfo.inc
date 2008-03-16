@@ -71,7 +71,7 @@ class terminfo extends plugin
     $smarty= get_smarty();
     $display= "";
     if(!is_callable("snmpget")){
-      print_red(msgPool::missingext("snmp"));
+      msg_dialog::display(_("Configuration error"), msgPool::missingext("snmp"), ERROR_DIALOG);
 
       $smarty->assign("load", progressbar(0,100,15,true));
       $smarty->assign("mem", progressbar(0,100,15,true));
