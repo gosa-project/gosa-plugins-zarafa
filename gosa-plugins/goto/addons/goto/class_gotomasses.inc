@@ -436,9 +436,20 @@ class gotomasses extends plugin
        */
       if($status == "processing" && isset($task['PROGRESS'])){
         $percent = $task['PROGRESS'];
-        $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
-      }
 
+        /* Show activation? */
+        if ($percent == "goto-activation"){
+          $status = "<img class='center' src='images/status_stopped.png' alt=''>&nbsp;"._("Activation");
+
+        /* Show hardware detect? */
+        } elseif ($percent == "goto-hardware-detection") {
+          $status = "<img class='center' src='images/hardware.png' alt=''>&nbsp;"._("Detection");
+
+        /* Real percent */
+        } else {
+          $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
+        }
+      }
 
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
