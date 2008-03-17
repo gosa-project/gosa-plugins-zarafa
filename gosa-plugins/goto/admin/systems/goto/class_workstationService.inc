@@ -469,7 +469,7 @@ class workservice extends plugin
       }
     } else {
       $drivers = array("ati", "atimisc", "chips", "cirrus", "cyrix", "fbdev", "fglrx",
-          "i128", "i740", "i810", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
+          "i128", "i740", "i810", "intel", "imstt", "mga", "neomagic", "newport", "nsc",  "nv", "nvidia",
           "r128", "radeon", "rendition", "s3", "s3virge", "savage", "siliconmotion",
           "sis", "tdfx", "tga", "trident", "tseng", "vesa", "vga", "vmware");
     }
