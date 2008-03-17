@@ -423,7 +423,6 @@ sub sig_int_handler {
 $SIG{INT} = \&sig_int_handler;
 
 
-
 sub check_key_and_xml_validity {
     my ($crypted_msg, $module_key, $session_id) = @_;
     my $msg;
@@ -948,7 +947,17 @@ sub _start {
     &trigger_db_loop($kernel);
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	#$kernel->yield('create_fai_release_db', $fai_release_tn );
+	$kernel->sig(USR1 => "sig_handler");
 }
+
+
+sub sig_handler {
+		my ($kernel, $signal) = @_[KERNEL, ARG0] ;
+		daemon_log("0 INFO got signal '$signal'", 7);
+		$kernel->sig_handled();
+		return;
+}
+
 
 sub next_task {
     my ($session, $heap) = @_[SESSION, HEAP];
@@ -2151,6 +2160,7 @@ daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
 POE::Session->create(
 	inline_states => {
 		_start => \&_start,
+		sig_handler => \&sig_handler,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
         create_packages_list_db => \&run_create_packages_list_db,
