@@ -847,9 +847,16 @@ class workstartup extends plugin
     }
 
     /* Check if LDAP server has changed */
-    $ldap_changed= (isset($this->attrs['gotoLdapServer'])) && 
-                   (isset($this->saved_attributes['gotoLdapServer'])) &&
-                   ($this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']);
+    $ldap_changed= false;
+    if (isset($this->saved_attributes['gotoLdapServer'])){
+      if (isset($this->attrs['gotoLdapServer']) && $this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']){
+        $ldap_changed= true;
+      }
+    } else {
+      if (isset($this->attrs['gotoLdapServer'])){
+        $ldap_changed= true;
+      }
+    }
 
     if (($this->attrs['gotoBootKernel'] == "default-inherited") || ($this->attrs['gotoBootKernel'] == "%default%")){
       $this->attrs['gotoBootKernel']= array();
