@@ -439,7 +439,7 @@ class gotomasses extends plugin
 
         /* Show activation? */
         if ($percent == "goto-activation"){
-          $status = "<img class='center' src='images/status_stopped.png' alt=''>&nbsp;"._("Activation");
+          $status = "<img class='center' src='images/status_stopped.png' alt=''>&nbsp;"._("Locked");
 
         /* Show hardware detect? */
         } elseif ($percent == "goto-hardware-detection") {
