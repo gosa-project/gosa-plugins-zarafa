@@ -40,8 +40,6 @@ use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
 use File::Basename;
-use File::Find;
-use File::Copy;
 use File::Path;
 use GOSA::DBsqlite;
 use GOSA::GosaSupportDaemon;
@@ -54,7 +52,7 @@ use lib "/usr/lib/gosa-si/modules";
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
-my ($server);
+my ($server, $server_mac_address);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
@@ -62,9 +60,6 @@ my ($arp_activ, $arp_fifo);
 my ($xml);
 my $sources_list;
 my $max_clients;
-my %repo_files=();
-my $repo_path;
-my %repo_dirs=();
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $SIPackages_key, 
@@ -74,7 +69,6 @@ our (%cfg_defaults, $log_file, $pid_file,
 
 # additional variable which should be globaly accessable
 our $server_address;
-our $server_mac_address;
 our $bus_address;
 our $gosa_address;
 our $no_bus;
@@ -105,8 +99,16 @@ our $prg= basename($0);
 our $job_db;
 our $job_queue_tn = 'jobs';
 my $job_queue_file_name;
-my @job_queue_col_names = ("id INTEGER", "timestamp", "status", "result", "progress INTEGER", 
-        "headertag", "targettag", "xmlmessage", "macaddress");
+my @job_queue_col_names = ("id INTEGER", 
+		"timestamp", 
+		"status DEFAULT 'none'", 
+		"result DEFAULT 'none'", 
+		"progress DEFAULT 'none'", 
+        	"headertag DEFAULT 'none'", 
+		"targettag DEFAULT 'none'", 
+		"xmlmessage DEFAULT 'none'", 
+		"macaddress DEFAULT 'none'",
+		);
 
 # holds all other gosa-sd as well as the gosa-sd-bus
 our $known_server_db;
@@ -173,7 +175,6 @@ my $max_children = 2;
     "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
     "messaging" => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "source-list" => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path" => [\$repo_path, '/srv/www/repository'],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
@@ -945,19 +946,17 @@ sub update_jobdb_status_for_send_msgs {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-	$kernel->yield('create_fai_server_db', $fai_server_tn );
+	#$kernel->yield('create_fai_server_db', $fai_server_tn );
 	#$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
 }
 
-
 sub sig_handler {
-		my ($kernel, $signal) = @_[KERNEL, ARG0] ;
-		daemon_log("0 INFO got signal '$signal'", 7);
-		$kernel->sig_handled();
-		return;
+	my ($kernel, $signal) = @_[KERNEL, ARG0] ;
+	daemon_log("0 INFO got signal '$signal'", 1); 
+	$kernel->sig_handled();
+	return;
 }
-
 
 sub next_task {
     my ($session, $heap) = @_[SESSION, HEAP];
@@ -1283,7 +1282,6 @@ sub watch_for_new_jobs {
 sub refresh_ldap_handle {
   my $mesg;
 
-  daemon_log("DEBUG: Trying to create a connection to URI $ldap_uri", 5);
   # Get an ldap handle, if we don't have one
   if( ! defined $ldap_handle ){
 	  $ldap_handle = Net::LDAP->new( $ldap_uri );
@@ -1822,13 +1820,13 @@ sub create_sources_list {
 
 	my $fh;
 	open($fh, ">$result") or return undef;
-	if(defined($ldap_server_dn) and length($ldap_server_dn) > 0) {
+	if(defined($ldap_server_dn) && length($ldap_server_dn)>0) {
 		my $mesg=$ldap_handle->search(
-				base	=> $ldap_server_dn,
-				scope	=> 'base',
-				attrs	=> 'FAIrepository',
-				filter	=> 'objectClass=FAIrepositoryServer'
-				);
+			base	=> $ldap_server_dn,
+			scope	=> 'base',
+			attrs	=> 'FAIrepository',
+		);
+
 		if($mesg->count) {
 			foreach my $entry(@{$mesg->{'entries'}}) {
 				my ($server, $tag, $release, $sections)= split /\|/, $entry->get_value('FAIrepository');
@@ -1880,12 +1878,10 @@ sub create_packages_list_db {
     }
 
     close (CONFIG);
-   	find(\&cleanup_and_extract, keys( %repo_dirs ) );
 
     daemon_log("INFO: create_packages_list_db: finished", 5); 
     return;
 }
-
 sub run_create_packages_list_db {
     my ($session, $heap) = @_[SESSION, HEAP];
     my $task = POE::Wheel::Run->new(
@@ -1896,13 +1892,11 @@ sub run_create_packages_list_db {
             );
     $heap->{task}->{ $task->ID } = $task;
 }
-
 sub parse_package_info {
   my ($baseurl, $dist, $section)= @_;
   my ($package);
 
   my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
-  $repo_dirs{ "${repo_path}/pool" } = 1;
 
   foreach $package ("Packages.gz"){
     daemon_log("DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
@@ -1910,7 +1904,6 @@ sub parse_package_info {
     parse_package( "$outdir/$dist/$section", $dist, $path );
   }
 }
-
 sub get_package {
   my ($url, $dest)= @_;
 
@@ -1926,9 +1919,8 @@ sub get_package {
   }
   return 0;
 }
-
 sub parse_package {
-    my ($path, $dist, $srv_path)= @_;
+    my ($path, $dist, $srv_path )= @_;
     my ($package, $version, $section, $description);
     my @sql_list;
     my $PACKAGES;
@@ -1985,12 +1977,6 @@ sub parse_package {
             next;
         }
 
-	# Trigger for filename
-	if ($line =~ /^Filename:\s/){
-		my ($filename) = ($line =~ /^Filename: (.*)$/);
-		store_fileinfo( $package, $filename, $dist, $srv_path, $version, $repo_path );
-		next;
-	}
     }
 
     close( $PACKAGES );
@@ -1999,50 +1985,18 @@ sub parse_package {
     $packages_list_db->exec_statementlist(\@sql_list);
 }
 
-sub store_fileinfo {
-  my( $package, $file, $dist, $path, $vers, $srvdir) = @_;
-
-  my %fileinfo = (
-    'package' => $package,
-    'dist' => $dist,
-    'version' => $vers,
-  );
-
-  $repo_files{ "${srvdir}/$file" } = \%fileinfo;
-}
-
-sub cleanup_and_extract {
-
-  my %templates = ();
-  my $fileinfo = $repo_files{ $File::Find::name };
-
-  if( defined $fileinfo ) {
-
-    my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-    system( "mkdir -p '$dir'" );
-
-    system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
-    if( -f "$dir/DEBIAN/templates" ) {
-      my $package = $fileinfo->{ 'package' };
-      my $newver = $fileinfo->{ 'version' };
-
-      daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
-      if( exists $templates{ "$fileinfo->{ 'dist' }/$package" } ) {
-        my $oldver = $templates{ "$fileinfo->{ 'dist' }/$package" };
-        my $ret = system( "dpkg --compare-versions '$oldver' gt '$newver'" );
-        if( ! $ret ) {
-          daemon_log("DEBUG: duplicated '$package' ($newver) in $fileinfo->{ 'dist' } - keeping tmpl v'$oldver'", 5);
-          return;
-        }
-        else {
-          daemon_log("DEBUG: duplicated '$package' ($newver) in $fileinfo->{ 'dist' } - overwriting tmpl v'$oldver'", 5);
-        }
-      }
-      $templates{ "$fileinfo->{ 'dist' }/$package" } = $newver;
-      move( "$dir/DEBIAN/templates", "$dir/$package.templates" );
-    }
-  }
-}
+#
+#sub store_fileinfo {
+#  my( $package, $file, $dist, $path, $vers ) = @_;
+#
+#  my %fileinfo = (
+#    'package' => $package,
+#    'dist' => $dist,
+#    'version' => $vers
+#  );
+#
+#  $repo_files{ "${srvdir}${path}/$file" } = \%fileinfo;
+#}
 
 
 #==== MAIN = main ==============================================================

@@ -23,7 +23,7 @@ use lib "/usr/lib/gosa-si/server/events";
 BEGIN{}
 END {}
 
-my ($server_ip, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
+my ($server_ip, $server_mac_address, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $event_hash;
@@ -41,7 +41,7 @@ my %cfg_defaults = (
     },
 "server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
-    "mac-address" => [\$main::server_mac_address, "00:00:00:00:00"],
+    "mac-address" => [\$server_mac_address, "00:00:00:00:00"],
     "port" => [\$server_port, "20081"],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
@@ -63,28 +63,27 @@ my %cfg_defaults = (
 # if server_ip is not an ip address but a name
 if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); } 
 $network_interface= &get_interface_for_ip($server_ip);
-$main::server_mac_address= &get_mac($network_interface);
+$server_mac_address= &get_mac($network_interface);
 
 &import_events();
 
 # Unit tag can be defined in config
 if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
-        &main::refresh_ldap_handle();
+  &main::refresh_ldap_handle();
 	if( defined($main::ldap_handle) ) {
-		&main::daemon_log("INFO: Searching for servers gosaUnitTag with mac address $main::server_mac_address",5);
+		&main::daemon_log("INFO: Searching for servers gosaUnitTag with mac address $server_mac_address",5);
 		# Perform search for Unit Tag
 		$mesg = $main::ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
 			attrs  => ['gosaUnitTag'],
-			filter => "(macaddress=$main::server_mac_address)"
+			filter => "(macaddress=$server_mac_address)"
 		);
 
 		if ($mesg->count == 1) {
 			my $entry= $mesg->entry(0);
 			my $unit_tag= $entry->get_value("gosaUnitTag");
-			$main::ldap_server_dn= $mesg->entry(0)->dn;
 			if(defined($unit_tag) && length($unit_tag) > 0) {
 				&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 				$main::gosa_unit_tag= $unit_tag;
@@ -103,7 +102,6 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 			if ($mesg->count == 1) {
 				my $entry= $mesg->entry(0);
 				my $unit_tag= $entry->get_value("gosaUnitTag");
-			        $main::ldap_server_dn= $mesg->entry(0)->dn;
 				if(defined($unit_tag) && length($unit_tag) > 0) {
 					&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 					$main::gosa_unit_tag= $unit_tag;
@@ -122,7 +120,6 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 				if ($mesg->count == 1) {
 					my $entry= $mesg->entry(0);
 					my $unit_tag= $entry->get_value("gosaUnitTag");
-			        	$main::ldap_server_dn= $mesg->entry(0)->dn;
 					if(defined($unit_tag) && length($unit_tag) > 0) {
 						&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 						$main::gosa_unit_tag= $unit_tag;
@@ -306,8 +303,8 @@ sub get_mac {
 			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
 
 			# A configured MAC Address should always override a guessed value
-			if ($main::server_mac_address and length($main::server_mac_address) > 0) {
-				$result= $main::server_mac_address;
+			if ($server_mac_address and length($server_mac_address) > 0) {
+				$result= $server_mac_address;
 			}
 
 			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
@@ -416,7 +413,7 @@ sub process_incoming_msg {
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
-                @out_msg_l = &here_i_am($msg_hash, $session_id)
+                @out_msg_l = &here_i_am($msg, $msg_hash, $session_id)
             } else {
                 if( exists $event_hash->{$header} ) {
                     # a event exists with the header as name
@@ -503,7 +500,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($msg_hash, $session_id) = @_;
+    my ($msg, $msg_hash, $session_id) = @_;
     my @out_msg_l;
     my $out_hash;
 
@@ -603,7 +600,7 @@ sub here_i_am {
             push(@out_msg_l, $new_ldap_config_out);
     }
 
-	my $hardware_config_out = &hardware_config($source, $gotoHardwareChecksum);
+	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id);
 	if( $hardware_config_out ) {
 		push(@out_msg_l, $hardware_config_out);
 	}
@@ -832,7 +829,10 @@ sub new_ldap_config {
 #  DESCRIPTION:  
 #===============================================================================
 sub hardware_config {
-	my ($address, $gotoHardwareChecksum) = @_ ;
+	my ($msg, $msg_hash, $session_id) = @_ ;
+	my $address = @{$msg_hash->{source}}[0];
+	my $header = @{$msg_hash->{header}}[0];
+	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
 
 	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
 	my $res = $main::known_clients_db->select_dbentry( $sql_statement );
@@ -842,7 +842,6 @@ sub hardware_config {
 	if( not $hit_counter == 1 ) {
 		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
 	}
-
 	my $macaddress = $res->{1}->{macaddress};
 	my $hostkey = $res->{1}->{hostkey};
 
@@ -892,9 +891,23 @@ sub hardware_config {
 		$data{'goto_secret'}= $goto_secret;
 	}
 
-	&main::daemon_log("Send detect_hardware message to $address", 4);
+	# set status = hardware_detection at jobqueue if entry exists
+	my $func_dic = {table=>$main::job_queue_tn,
+		primkey=>['id'],
+		timestamp=>&get_time,
+		status=>'processing',
+		result=>'none',
+		progress=>'hardware-detection',
+		headertag=>$header,
+		targettag=>$address,
+		xmlmessage=>$msg,
+		macaddress=>$macaddress,
+	};
+	my $hd_res = $main::job_db->add_dbentry($func_dic);
+	&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);
 
 	# Send information
+	&main::daemon_log("$session_id INFO: Send detect_hardware message to $address", 5);
 	return &build_msg("detect_hardware", $server_address, $address, \%data);
 }
 
