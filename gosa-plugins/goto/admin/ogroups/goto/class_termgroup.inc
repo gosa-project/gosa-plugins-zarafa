@@ -134,44 +134,6 @@ class termgroup extends plugin
   }
 
 
-  function update_term_member_FAIstate($act)
-  {
-    /* Get required informations */
-    $og     = $this->parent->by_object['ogroup'];
-    $allobs = $og->objcache;
-
-    /* Get correct value for FAIstate */
-    $action = $this->mapActions[$act];
-
-    /* Get ldap connection */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->config->current['BASE']);
-
-    /* Foreach member of mthis ogroup  ... */
-    foreach($og->member  as $key ){
-  
-      /* check objectClasses and create attributes array */
-      $attrs = array("FAIstate"=>$action);  
-      for($i = 0; $i < $allobs[$key]['objectClass']['count'] ; $i ++){
-        $attrs['objectClass'][] = $allobs[$key]['objectClass'][$i];
-      }
-      if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-        $attrs['objectClass'][] = "FAIobject";
-      }
-      if($attrs['FAIstate'] == ""){
-        $attrs['FAIstate'] = array();
-      }
-
-      /* If this objects is workstation,terminal or server upodate FAIstate */ 
-      if(preg_match("/(w|t|s)/i",$allobs[$key]['type'])){
-        $ldap->cd ($key);
-        $ldap->modify($attrs);
-        if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $key->dn, LDAP_MOD, get_class()));
-        }
-      }
-    }
-  }
 
   function execute()
   {
