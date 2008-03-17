@@ -146,15 +146,17 @@ sub add_dbentry {
         my $col_names = &get_table_columns($self, $table);
 
         # assign values to column name variables
-        my @add_list;
+        my @col_list;
+		my @val_list;
         foreach my $col_name (@{$col_names}) {
             # use function parameter for column values
             if (exists $arg->{$col_name}) {
-                push(@add_list, $arg->{$col_name});
+                push(@col_list, $col_name);
+				push(@val_list, $arg->{$col_name});
             }
         }    
 
-        my $sql_statement = "INSERT INTO $table VALUES ('".join("', '", @add_list)."')";
+        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
         &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');

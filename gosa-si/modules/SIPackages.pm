@@ -898,9 +898,9 @@ sub hardware_config {
 		status=>'processing',
 		result=>'none',
 		progress=>'hardware-detection',
-		headertag=>$header,
+		headertag=>'trigger_action_reinstall',
 		targettag=>$address,
-		xmlmessage=>$msg,
+		xmlmessage=>'none',
 		macaddress=>$macaddress,
 	};
 	my $hd_res = $main::job_db->add_dbentry($func_dic);
