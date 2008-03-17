@@ -486,18 +486,7 @@ class faiHook extends plugin
 
     /* We do not need to save untouched objects */
     foreach($this->SubObjects as $name => $obj){
-      if($obj['status'] == "FreshLoaded"){
-        unset($this->SubObjects[$name]);
-      }
-    }
-
-    foreach($this->SubObjects as $name => $obj){
-      if($obj['status'] == "delete"){
-        $Objects[$name] = $obj; 
-      }
-    }
-    foreach($this->SubObjects as $name => $obj){
-      if($obj['status'] != "delete"){
+      if($obj['status'] != "FreshLoaded"){
         $Objects[$name] = $obj; 
       }
     }
