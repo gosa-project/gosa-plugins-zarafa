@@ -252,7 +252,9 @@ class environment extends plugin
     while($attrs = $ldap->fetch()){
       for($i = 0 ; $i < $attrs['gotoKioskProfile']['count'] ; $i ++){
         $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
+        $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
         $tmp1[$attrs['cn'][0]][] = $name;
+        $tmp3[$attrs['cn'][0]][$name] = $attrs['gotoKioskProfile'][$i];
       }
       $tmp2[$attrs['cn'][0]]= $attrs['cn'][0];
       $cnt ++;
@@ -264,6 +266,7 @@ class environment extends plugin
 
     $this->gotoKioskProfiles['BY_SERVER'] = $tmp1;
     $this->gotoKioskProfiles['SERVERS']   = $tmp2;
+    $this->gotoKioskProfiles['MAP']       = $tmp3;
   
     $this->gotoKioskProfile_Server = preg_replace("/^.*:\/\/([^\/]*).*$/","\\1",$this->gotoKioskProfile);
     $this->gotoKioskProfile_Profile= preg_replace("/^.*\//","",$this->gotoKioskProfile);
@@ -1124,11 +1127,7 @@ class environment extends plugin
      */ 
     /* only save changed variables ....*/
     if ($this->gotoKioskProfile_Server != "none"){
-      if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
-        $method="https://".$this->gotoKioskProfile_Server."/kiosk/".$this->gotoKioskProfile_Profile;
-      }else{
-        $method="http://".$this->gotoKioskProfile_Server."/kiosk/".$this->gotoKioskProfile_Profile;
-      }
+      $method = $this->gotoKioskProfiles['MAP'][$this->gotoKioskProfile_Server][$this->gotoKioskProfile_Profile];
       $this->gotoKioskProfile= $method;
     }else{
       $this->gotoKioskProfile= array();
