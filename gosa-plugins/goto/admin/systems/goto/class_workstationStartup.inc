@@ -543,11 +543,20 @@ class workstartup extends plugin
       } 
     }
   
-    /* Add Entries 
-     */
+    /* Add Entries */
     foreach($this->gotoLdapServers as $key => $server){
+      /* Announce missing entries */
       if(!in_array($server,$this->gotoLdapServerList)){
         $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+      }
+
+      /* Convert old style entry */
+      if (!preg_match('%:ldap://%', $server)){
+        $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
+
+      /* Beautify new style entries */
+      } else {
+        $server= preg_replace("/^[^:]+:/", "", $server);
       }
 
       $SelectBoxLdapServer->AddEntry(
@@ -568,6 +577,16 @@ class workstartup extends plugin
     $list = array();
     foreach($this->gotoLdapServerList as $key => $entry){
       if(!in_array($entry,$this->gotoLdapServers)){
+
+        /* Convert old style entry */
+        if (!preg_match('%:ldap://%', $entry)){
+          $entry= "ldap://".preg_replace('/^([^:]+):/', '\1/', $entry);
+
+        /* Beautify new style entries */
+        } else {
+          $entry= preg_replace("/^[^:]+:/", "", $entry);
+        }
+
         $list[$key] = $entry;
       }
     }
