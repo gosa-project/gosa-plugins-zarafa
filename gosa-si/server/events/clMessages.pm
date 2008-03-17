@@ -14,7 +14,7 @@ my @events = (
     "LOGOUT",
     "CURRENTLY_LOGGED_IN",
     "save_fai_log",
-	"goto-activation-start",
+	"goto_activation_start",
     );
 @EXPORT = @events;
 
@@ -74,23 +74,19 @@ sub read_configfile {
 }
 
 
-#####################
-## under construction
-#sub goto-activation-start {
-#	my ($msg, $msg_hash, $session_id) = @_;
-#	my $header = @{$msg_hash->{'header'}}[0];
-#	my $macaddress = @{$msg_hash->{'macaddress'}}[0];
-#	
-#    my $sql_statement = "UPDATE $main::job_queue_tn ".
-#            "SET status='processing', progress='goto-activation'".
-#            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-#    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
-#    my $res = $main::job_db->update_dbentry($sql_statement);
-#    &main::daemon_log("$session_id INFO: '$header' at '$macaddress'", 5); 
-#	
-#}
-## under construction
-#####################
+sub goto_activation_start {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+	
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', progress='goto-activation' ".
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
+    my $res = $main::job_db->update_dbentry($sql_statement);
+    &main::daemon_log("$session_id INFO: '$header' at '$macaddress'", 5); 
+	
+}
 
 
 sub save_fai_log {
