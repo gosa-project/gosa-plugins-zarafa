@@ -215,42 +215,22 @@ sub trigger_action_reinstall {
 }
 
 
+# Backward compatibility
 sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
 
-    # execute function
-    open(FILE, "> /etc/gosa-si/event");
-    print FILE "trigger_action_reinstall\n";
-    close(FILE);
-
-    # check logged in user
-    my $logged_in_user = 1;
-    if( $logged_in_user ) {
-        print STDERR "This system has been sent a signal for an update. The update will take place after you log out.\n";
-    }
-    else {
-        # not jet
-        #system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai -N softupdate &" )
-    }
+    # Execute update
+    system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
 
     return;
 }
 
-
+# Backward compatibility
 sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
 
-    # check logged in user
-    my $logged_in_user = 1;
-    if( $logged_in_user ) {
-        print STDERR "This system has been sent a signal for an update. The update will take place now.\n";
-		if(stat('/usr/bin/fai-softupdate-notify')) {
-			system('/usr/bin/fai-softupdate-notify start');
-		}
-    }
-
-    # not jet
-    #system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai -N softupdate &" )
+    # Execute update
+    system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
 
     return;
 }
