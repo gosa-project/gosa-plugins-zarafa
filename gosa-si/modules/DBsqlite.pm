@@ -156,7 +156,7 @@ sub add_dbentry {
             }
         }    
 
-        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
+        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES ('".join("', '", @val_list)."')";
         &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
         &remove_lock($self,'add_dbentry');
