@@ -417,13 +417,22 @@ sub TASKEND {
     # clean up header
     $header =~ s/CLMSG_//g;
 
-    my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', result='$header "."$content' ".
-            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
-    my $res = $main::job_db->update_dbentry($sql_statement);
-    &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
+	if ($header eq "TASKEND softupdate 0") {
+		&main::daemon_log("$session_id DEBUG: softupdate at host '$source' successful", 7);
+		my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+		my $res = $main::job_db->del_dbentry($sql_statement);
 
+	} else {
+
+			my $sql_statement = "UPDATE $main::job_queue_tn ".
+					"SET status='processing', result='$header "."$content' ".
+					"WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+			&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
+			my $res = $main::job_db->update_dbentry($sql_statement);
+			&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
+
+	}
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
 #  <header>CLMSG_TASKBEGIN</header>

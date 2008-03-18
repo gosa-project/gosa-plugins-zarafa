@@ -276,16 +276,6 @@ sub process_incoming_msg {
     }
 
     foreach my $out_msg ( @msg_l ) {
-
-#        # keep job queue up-to-date and save result and status
-#        if (defined ($out_msg) && $out_msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
-#            my $job_id = $1;
-#            my $sql = "UPDATE '".$main::job_queue_tn."'".
-#                " SET status='processing'".
-#                " WHERE id='$job_id'";
-#            my $res = $main::job_db->exec_statement($sql);
-#        } 
-
         # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
         $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
         $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
@@ -313,17 +303,6 @@ sub process_gosa_msg {
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     }
-
-    # if incoming 'gosa_'-msg is scheduled from job_queue, than it contains xml-tag 'jobdb_id'
-    # after procesing this msg, set status of this job in job_queue to done
-#    if ($msg =~ /<jobdb_id>(\d+)<\/jobdb_id>/) {
-#        my $sql_statement = "UPDATE $main::job_queue_tn ".
-#            "SET status='done' ".
-#            "WHERE id='$1'";
-#        &main::daemon_log("DEBUG: $sql_statement", 7);         
-#        my $res = $main::job_db->update_dbentry($sql_statement);
-#        &main::daemon_log("INFO: set job '$1' to status 'done'", 5); 
-#    }
 
     # if delivery not possible raise error and return 
     if( not defined $out_msg_l[0] ) {
