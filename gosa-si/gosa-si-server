@@ -1926,7 +1926,7 @@ sub get_package {
   # This is ugly, but I've no time to take a look at "how it works in perl"
   if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
       system("gunzip -cd '$dest' > '$dest.in'");
-      system("rm -f '$dest'");
+      unlink($dest);
   } else {
       daemon_log("ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
   }
@@ -2018,36 +2018,38 @@ sub store_fileinfo {
 }
 
 sub cleanup_and_extract {
-
-  my %templates = ();
   my $fileinfo = $repo_files{ $File::Find::name };
 
   if( defined $fileinfo ) {
-  print STDERR "============> $File::Find::name\n"; 
 
     my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-    system( "mkdir -p '$dir'" );
+    my $sql;
+    my $package = $fileinfo->{ 'package' };
+    my $newver = $fileinfo->{ 'version' };
 
+    mkpath($dir);
     system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
+
     if( -f "$dir/DEBIAN/templates" ) {
-      my $package = $fileinfo->{ 'package' };
-      my $newver = $fileinfo->{ 'version' };
 
       daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
-      if( exists $templates{ "$fileinfo->{ 'dist' }/$package" } ) {
-        my $oldver = $templates{ "$fileinfo->{ 'dist' }/$package" };
-        my $ret = system( "dpkg --compare-versions '$oldver' gt '$newver'" );
-        if( ! $ret ) {
-          daemon_log("DEBUG: duplicated '$package' ($newver) in $fileinfo->{ 'dist' } - keeping tmpl v'$oldver'", 5);
-          return;
-        }
-        else {
-          daemon_log("DEBUG: duplicated '$package' ($newver) in $fileinfo->{ 'dist' } - overwriting tmpl v'$oldver'", 5);
-        }
+
+      my $tmpl= "";
+      {
+	  local $/=undef;
+	  open FILE, "$dir/DEBIAN/templates";
+	  $tmpl = &encode_base64(<FILE>);
+	  close FILE;
       }
-      $templates{ "$fileinfo->{ 'dist' }/$package" } = $newver;
-      move( "$dir/DEBIAN/templates", "$dir/$package.templates" );
+      rmtree("$dir/DEBIAN/templates");
+
+      $sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
+
+    } else {
+      $sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
     }
+
+    my $res= $main::packages_list_db->update_dbentry($sql);
   }
 }
 
