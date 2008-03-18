@@ -248,7 +248,7 @@ class workstartup extends plugin
       if(!isset($this->cache['SERVERS'][$this->FAIdebianMirror][$this->FAIrelease])){
         $new_release = key($this->cache['SERVERS'][$this->FAIdebianMirror]); 
         if(count($this->FAIclass)){
-          msg_dialog(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianmirror), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianmirror), ERROR_DIALOG);
         }
         $this->FAIrelease = $new_release;
         $this->cache =array();
