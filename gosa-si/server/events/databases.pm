@@ -34,8 +34,8 @@ sub get_events {
     return \@events;
 }
 
-sub query_fai_releases{ return &query_db( @_ ); }
-sub query_fai_server{ return &query_db( @_ ) ; }
+sub query_fai_release { return &query_db( @_ ); }
+sub query_fai_server { return &query_db( @_ ) ; }
 sub query_packages_list { return &query_db( @_ ) ; }
 sub query_jobdb { return &query_db( @_ ) ; }
 sub query_db {
@@ -74,9 +74,9 @@ sub query_db {
     return @out_msg_l;
 }
     
-sub count_fai_release{ return &count_db( @_ ); }    
-sub count_fai_server{ return &count_db( @_ ); }
-sub count_packages_list{ return &count_db( @_ ); }
+sub count_fai_release { return &count_db( @_ ); }    
+sub count_fai_server { return &count_db( @_ ); }
+sub count_packages_list { return &count_db( @_ ); }
 sub count_jobdb{ return &count_db( @_ ); }
 sub count_db {
     my ($msg, $msg_hash, $session_id) = @_;
