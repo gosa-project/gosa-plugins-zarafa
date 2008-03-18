@@ -4,22 +4,52 @@
 <table style='width:100%;'>
   <tr>
     <td style='width:50%; vertical-align:top; border-right:1px solid #AAA'>
-      <table>
-        <tr>
-          <td style='vertical-align:top'><b>{t}Time schedule{/t}</b><br><br>
-          {$timestamp}</td>
-        </tr>
+	  <b>{t}Message settings{/t}</b>
+	  <table style="width:100%;">
+		<tr>
+			<td>{t}Subject{/t}</td>
+			<td><input type='text' name="subject" value="{$subject}" style="width:100%;"></td>
+		</tr>
+		<tr>
+			<td colspan="2">{t}Message{/t} :</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="width:100%;">
+				<textarea style="width:100%;height:250px;" name="message" style="100%;">{$message}</textarea>
+			</td>
+		</tr>
       </table>
     </td>
     <td style='width:50%; vertical-align:top;'>
+	  <b>{t}Time schedule{/t}</b>
+      <table>
+        <tr>
+          <td colspan="2" style='vertical-align:top'>{$timestamp}<br><br></td>
+        </tr>
+	  </table>
       <table style='width:100%;'>
         <tr>
-          <td>
-            <b>{t}System list{/t}</b>
+          <td style="width:50%;">
+            <b>{t}Target users{/t}</b>
             <br>
-            {$target_list}
+			<select style="height:180px;width:100%" name="users[]"  multiple size=4>
+				{html_options options=$users}
+			</select>
+          </td>
+          <td>
+            <b>{t}Target groups{/t}</b>
+            <br>
+			<select style="height:180px;width:100%" name="groups[]"  multiple size=4>
+				{html_options options=$groups}
+			</select>
           </td>
         </tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" name="add_any_target" value="{$add_str}">
+				<input type="submit" name="del_any_target" value="{$del_str}">
+			</td>
+		</tr>
       </table>
     </td>
   </tr>

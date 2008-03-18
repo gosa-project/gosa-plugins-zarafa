@@ -23,6 +23,13 @@
 class DaemonEvent_notify extends DaemonEvent
 {
   var $visible_for = USER_EVENT;
+
+  var $users = array();
+  var $groups= array(); 
+
+  var $message = "";
+  var $subject = "";
+
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
@@ -33,8 +40,7 @@ class DaemonEvent_notify extends DaemonEvent
     $this->s_Queued_Action= "trigger_action_notify";
     $this->s_Menu_Image = "images/mailto.png";
     $this->s_List_Image = "images/mailto.png";
-
-    $this->a_targets = array("GOsa");
+    $this->a_targets = array("GOsa"); // Required to get the event send. Maybe this is a wrong value.
   }
 
   public function execute()
@@ -46,24 +52,81 @@ class DaemonEvent_notify extends DaemonEvent
     $smarty->assign("subject" ,"subject");
     $smarty->assign("message" ,"message");
     $smarty->assign("data"        , $this->data);
-    $smarty->assign("data"        , $this->data);
     $smarty->assign("is_new"      , $this->is_new);
     $smarty->assign("timestamp"   , $this->get_time_select());
+    
+    $smarty->assign("users" , $this->users);
+    $smarty->assign("groups" , $this->groups);
+    
+    $smarty->assign("add_str", msgPool::addButton(_("Target")));
+    $smarty->assign("del_str", msgPool::delButton(_("Target")));
+
+    $smarty->assign("subject", xmlentities($this->subject));
+    $smarty->assign("message", xmlentities($this->message));
+
     $display.= $smarty->fetch(get_template_path('DaemonEvent_notify.tpl', TRUE, dirname(__FILE__)));
     $display.= $this->get_footer();
     return($display);
   }
 
+
+  public function check()
+  {
+    $msgs = DaemonEvent::check();
+    if(empty($this->subject)){
+      $msgs[] = msgPool::required(_("Subject"));
+    }
+    if(empty($this->message)){
+      $msgs[] = msgPool::required(_("Message"));
+    }
+    return($msgs);
+  }
+
+
   public function save_object()
   {
     DaemonEvent::save_object();
+
+    if(isset($_POST['del_any_target']) && isset($_POST['groups'])){
+      foreach($_POST['groups'] as $id){
+        if(isset($this->groups[$id])){
+          unset($this->groups[$id]);
+        }
+      }
+    }
+    if(isset($_POST['del_any_target']) && isset($_POST['users'])){
+      foreach($_POST['users'] as $id){
+        if(isset($this->users[$id])){
+          unset($this->users[$id]);
+        }
+      }
+    }
+
+    if(isset($_POST['subject'])){
+      $this->subject = get_post('subject');
+    }
+    if(isset($_POST['message'])){
+      $this->message = get_post('message');
+    }
+  }
+
+  public function add_users($targets)
+  {
+    $this->users = $targets;
+  }
+
+  public function add_groups($targets)
+  {
+    $this->groups = $targets;
   }
 
   public function save()
   {
     $ret = DaemonEvent::save();
-    $ret['user'] = array("test","asdf");
-    print_a($ret);
+    $ret['users']   = array_values($this->users);
+    $ret['groups']  = array_values($this->groups);
+    $ret['subject'] = $this->subject;
+    $ret['message'] = $this->message;
     return($ret);
   }
 } 
