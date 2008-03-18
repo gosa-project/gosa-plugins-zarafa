@@ -353,7 +353,7 @@ sub trigger_action_faireboot {
     push(@out_msg_l, $msg);
 
     &main::change_goto_state('locked', \@{$msg_hash->{target}}, $session_id);
-    &main::change_fai_state('localboot', \@{$msg_hash->{target}}, $session_id);
+	&main::change_fai_state('install', \@{$msg_hash->{target}}, $session_id); 
 
     # delete all jobs from jobqueue which correspond to fai
     my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".

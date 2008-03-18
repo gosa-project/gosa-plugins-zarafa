@@ -246,7 +246,7 @@ sub import_events {
             $event_hash->{$event_name} = $event_module;
         }
         my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("G INFO: GosaPackages imported events $events_string", 5);
+        &main::daemon_log("G DEBUG: GosaPackages imported events $events_string", 8);
     }
 }
 

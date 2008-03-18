@@ -323,63 +323,76 @@ sub TASKBEGIN {
     # clean up header
     $header =~ s/CLMSG_//g;
 
-    # check if installation finished
+    # TASKBEGIN eq finish or faiend 
     if (($content eq 'finish') || ($content eq 'faiend')){
-		my $sql_statement = "UPDATE $main::job_queue_tn ".
-				"SET status='done', result='$header "."$content' ".
-				"WHERE status='processing' AND macaddress LIKE '$macaddress'";
-		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
-		my $res = $main::job_db->update_dbentry($sql_statement);
-		&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5);
-#
-#		my $add_hash = { table=>$main::job_queue_tn, 
-#						primkey=> ['id'],
-#						timestamp=>&get_time,
-#						status=>"'processing'", 
-#						result=>"'$header $content'",
-#						progress=>"'none'",
-#						headertag=>"'trigger_action_reinstall'",
-#						targettag=>"'none'",
-#						xmlmessage=>"'none'",
-#						macaddress=>"'$macaddress'",
-#					   }; 
-#		my ($res, $error_str) = $main::job_db->add_dbentry( $add_hash );
-#		if ($res != 0)  {
-#			&main::daemon_log("$session_id ERROR: $res - can not add entry to $main::job_queue_tn: $error_str");
-#		} else {
-#			&main::daemon_log("$session_id INFO: '$header' at '$macaddress' - '$content'", 5); 
-#		}
-#
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='done', result='$header "."$content' ".
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
+        my $res = $main::job_db->update_dbentry($sql_statement);
+        &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
+        
         # set fai_state to localboot
         &main::change_fai_state('localboot', \@{$msg_hash->{'macaddress'}}, $session_id);
 
+	# other TASKBEGIN msgs
     } else {
-			my $sql_statement = "UPDATE $main::job_queue_tn ".
-					"SET status='processing', result='$header "."$content' ".
-					"WHERE status='processing' AND macaddress LIKE '$macaddress'";
-			&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
-			my $res = $main::job_db->update_dbentry($sql_statement);
-			&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5);
+		# select processing jobs for host
+		my $sql_statement = "SELECT * FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+		my $res = $main::job_db->select_dbentry($sql_statement);
 
-#
-#		my $add_hash = { table=>$main::job_queue_tn, 
-#						primkey=> ['id'],
-#						timestamp=>&get_time,
-#						status=>"'processing'", 
-#						result=>"'$header $content'",
-#						progress=>"'none'",
-#						headertag=>"'trigger_action_reinstall'",
-#						targettag=>"'none'",
-#						xmlmessage=>"'none'",
-#						macaddress=>"'$macaddress'",
-#					   }; 
-#		my ($res, $error_str) = $main::job_db->add_dbentry( $add_hash );
-#		if ($res != 0)  {
-#			&main::daemon_log("$session_id ERROR: $res - can not add entry to $main::job_queue_tn: $error_str");
-#		} else {
-#			&main::daemon_log("$session_id INFO: '$header' at '$macaddress' - '$content'", 5); 
-#		}
-#
+		# there is exactly one job entry in queue for this host
+		if (keys(%$res) == 1) {
+			&main::daemon_log("$session_id DEBUG: there is already one processing job in queue for host '$macaddress', run an update for this entry", 7);
+			my $sql_statement = "UPDATE $main::job_queue_tn SET result='$header $content' WHERE status='processing' AND macaddress LIKE '$macaddress'";
+			my $err = $main::job_db->update_dbentry($sql_statement);
+			if (not defined  $err) {
+				&main::daemon_log("$session_id ERROR: cannot update job_db entry: ".Dumper($err), 1);
+			}
+			
+		# there is no entry or more than one enties
+		} else {
+			# in case of more than one running jobs in queue, delete all jobs
+			if (keys(%$res) > 1) {
+				&main::daemon_log("$session_id DEBUG: there are more than one processing job in queue for host '$macaddress', ".
+								"delete entries", 7); 
+
+				my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'";
+				my ($err) = $main::job_db->del_dbentry($sql_statement);
+				if (not defined $err) {
+					&main::daemon_log("$session_id ERROR: can not delete multiple processing queue entries for host '$macaddress': ".Dumper($err), 1); 
+				}
+			}
+		
+			# in case of no and more than one running jobs in queue, add on single job
+			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
+			my $func_dic = {table=>$main::job_queue_tn,
+					primkey=>['id'],
+					timestamp=>&get_time,
+					status=>'processing',
+					result=>"$header $content",
+					progress=>'none',
+					headertag=>'trigger_action_reinstall',
+					targettag=>$source,
+					xmlmessage=>'none',
+					macaddress=>$macaddress,
+			};
+			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
+			if ($err != 0)  {
+					&main::daemon_log("$session_id ERROR: cannot add entry to job_db: $error_str", 1);
+			}
+
+		}
+
+        #my $sql_statement = "UPDATE $main::job_queue_tn ".
+        #    "SET status='processing', result='$header "."$content' ".
+        #    "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+        #&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
+        #my $res = $main::job_db->update_dbentry($sql_statement);
+        #&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
+		
+
 # -----------------------> Update hier
 #  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
 #  <header>CLMSG_TASKBEGIN</header>

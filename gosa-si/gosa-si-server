@@ -40,8 +40,6 @@ use Sys::Syslog qw( :DEFAULT setlogsock);
 use Cwd;
 use File::Spec;
 use File::Basename;
-use File::Find;
-use File::Copy;
 use File::Path;
 use GOSA::DBsqlite;
 use GOSA::GosaSupportDaemon;
@@ -54,7 +52,7 @@ use lib "/usr/lib/gosa-si/modules";
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
-my ($server);
+my ($server, $server_mac_address);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
@@ -62,9 +60,6 @@ my ($arp_activ, $arp_fifo);
 my ($xml);
 my $sources_list;
 my $max_clients;
-my %repo_files=();
-my $repo_path;
-my %repo_dirs=();
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $SIPackages_key, 
@@ -74,7 +69,6 @@ our (%cfg_defaults, $log_file, $pid_file,
 
 # additional variable which should be globaly accessable
 our $server_address;
-our $server_mac_address;
 our $bus_address;
 our $gosa_address;
 our $no_bus;
@@ -181,7 +175,6 @@ my $max_children = 2;
     "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
     "messaging" => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "source-list" => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path" => [\$repo_path, '/srv/www/repository'],
     "ldap-uri" => [\$ldap_uri, ""],
     "ldap-base" => [\$ldap_base, ""],
     "ldap-admin-dn" => [\$ldap_admin_dn, ""],
@@ -953,8 +946,8 @@ sub update_jobdb_status_for_send_msgs {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
-	$kernel->yield('create_fai_server_db', $fai_server_tn );
-	$kernel->yield('create_fai_release_db', $fai_release_tn );
+	#$kernel->yield('create_fai_server_db', $fai_server_tn );
+	#$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
 }
 
@@ -1289,7 +1282,6 @@ sub watch_for_new_jobs {
 sub refresh_ldap_handle {
   my $mesg;
 
-  daemon_log("DEBUG: Trying to create a connection to URI $ldap_uri", 5);
   # Get an ldap handle, if we don't have one
   if( ! defined $ldap_handle ){
 	  $ldap_handle = Net::LDAP->new( $ldap_uri );
@@ -1334,6 +1326,7 @@ sub change_fai_state {
         wake      => '',
         memcheck  => 'memcheck',
         sysinfo   => 'sysinfo',
+		install   => 'install',
     );
 
     # Return if this is unknown
@@ -1828,13 +1821,13 @@ sub create_sources_list {
 
 	my $fh;
 	open($fh, ">$result") or return undef;
-	if(defined($ldap_server_dn) and length($ldap_server_dn) > 0) {
+	if(defined($ldap_server_dn) && length($ldap_server_dn)>0) {
 		my $mesg=$ldap_handle->search(
-				base	=> $ldap_server_dn,
-				scope	=> 'base',
-				attrs	=> 'FAIrepository',
-				filter	=> 'objectClass=FAIrepositoryServer'
-				);
+			base	=> $ldap_server_dn,
+			scope	=> 'base',
+			attrs	=> 'FAIrepository',
+		);
+
 		if($mesg->count) {
 			foreach my $entry(@{$mesg->{'entries'}}) {
 				my ($server, $tag, $release, $sections)= split /\|/, $entry->get_value('FAIrepository');
@@ -1890,7 +1883,6 @@ sub create_packages_list_db {
     daemon_log("INFO: create_packages_list_db: finished", 5); 
     return;
 }
-
 sub run_create_packages_list_db {
     my ($session, $heap) = @_[SESSION, HEAP];
     my $task = POE::Wheel::Run->new(
@@ -1901,22 +1893,18 @@ sub run_create_packages_list_db {
             );
     $heap->{task}->{ $task->ID } = $task;
 }
-
 sub parse_package_info {
   my ($baseurl, $dist, $section)= @_;
   my ($package);
 
   my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
-  $repo_dirs{ "${repo_path}/pool" } = 1;
 
   foreach $package ("Packages.gz"){
     daemon_log("DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
     get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section" );
     parse_package( "$outdir/$dist/$section", $dist, $path );
   }
-  find(\&cleanup_and_extract, keys( %repo_dirs ) );
 }
-
 sub get_package {
   my ($url, $dest)= @_;
 
@@ -1932,9 +1920,8 @@ sub get_package {
   }
   return 0;
 }
-
 sub parse_package {
-    my ($path, $dist, $srv_path)= @_;
+    my ($path, $dist, $srv_path )= @_;
     my ($package, $version, $section, $description);
     my @sql_list;
     my $PACKAGES;
@@ -1991,12 +1978,6 @@ sub parse_package {
             next;
         }
 
-	# Trigger for filename
-	if ($line =~ /^Filename:\s/){
-		my ($filename) = ($line =~ /^Filename: (.*)$/);
-		store_fileinfo( $package, $filename, $dist, $srv_path, $version, $repo_path );
-		next;
-	}
     }
 
     close( $PACKAGES );
@@ -2005,17 +1986,19 @@ sub parse_package {
     $packages_list_db->exec_statementlist(\@sql_list);
 }
 
+
 sub store_fileinfo {
-  my( $package, $file, $dist, $path, $vers, $srvdir) = @_;
+		my( $package, $file, $dist, $path, $vers, $srvdir) = @_;
 
-  my %fileinfo = (
-    'package' => $package,
-    'dist' => $dist,
-    'version' => $vers,
-  );
+		my %fileinfo = (
+						'package' => $package,
+						'dist' => $dist,
+						'version' => $vers,
+					   );
 
-  $repo_files{ "${srvdir}/$file" } = \%fileinfo;
+		$repo_files{ "${srvdir}/$file" } = \%fileinfo;
 }
+
 
 sub cleanup_and_extract {
   my $fileinfo = $repo_files{ $File::Find::name };

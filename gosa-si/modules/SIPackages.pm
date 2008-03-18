@@ -354,7 +354,7 @@ sub register_at_bus {
 
 sub import_events {
     if (not -e $event_dir) {
-        &main::daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+        &main::daemon_log("S ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
     }
     opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
 
@@ -376,7 +376,7 @@ sub import_events {
             $event_hash->{$event_name} = $event_module;
         }
         my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("INFO: SIPackages imported events $events_string", 5);
+        &main::daemon_log("S DEBUG: SIPackages imported events $events_string", 8);
     }
 }
 
@@ -854,7 +854,7 @@ sub hardware_config {
 	}
 
 	# Build LDAP connection
-  &main::refresh_ldap_handle();
+	&main::refresh_ldap_handle();
 	if( not defined $main::ldap_handle ) {
 		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;
