@@ -1958,7 +1958,7 @@ sub parse_package {
 
         # Use empty lines as a trigger
         if ($line =~ /^\s*$/){
-            my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', 'xxx', 'none', '0')";
+            my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '0')";
             push(@sql_list, $sql);
             $package = "none";
             $version = "none";
