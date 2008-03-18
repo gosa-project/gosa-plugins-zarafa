@@ -1073,6 +1073,8 @@ class workstartup extends plugin
   {
     $force = FALSE;
 
+    $start = microtime(TRUE);  
+
     /* Get the list of available servers and their releases. 
      */
     if($force || !isset($this->cache['SERVERS'])){
@@ -1085,10 +1087,14 @@ class workstartup extends plugin
 
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_server();  
-      foreach($tmp as $entry){
-        $rel = $entry['RELEASE'];
-        $this->cache['SERVERS']['auto'][$rel] = $rel;
-        $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
+      if($o_queue->is_error()){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+      }else{
+        foreach($tmp as $entry){
+          $rel = $entry['RELEASE'];
+          $this->cache['SERVERS']['auto'][$rel] = $rel;
+          $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
+        }
       }
     }
 
@@ -1117,77 +1123,23 @@ class workstartup extends plugin
     }else{
       $release = $this->FAIrelease;
     }
+
     if($force || !isset($this->cache['CLASSES'][$release])){
 
-
-#
-#   Currently not working here, it seems that my FAI environment is not
-#   configured to support GOsa-si FAI - Packages
-#
-#     /* Get the list of available servers and their releases.
-#      */
-#     if($force || !isset($this->cache['SERVERS'])){
-#
-#       /* Only add inherit option, if we are part in an object group
-#        */
-#       if($this->member_of_ogroup){
-#         $this->cache['SERVERS']['inherited']=array();
-#       }
-#
-#       $o_queue = new gosaSupportDaemon();
-#       $tmp = $o_queue->FAI_get_classes();
-#       print_a($tmp);
-#       echo $o_queue->get_error();
-#     }
-#
-#
-#
-#
-
-
-
-
-
-
-      /*  Create a list of available releases.
-       *  $this->cache['RELEASE_DNS'][ou=siga...,c=de]         = "siga";
-       *  $this->cache['RELEASE_DNS'][ou=siga,ou=rc1,...,c=de] = "siga/rc1";
+      /* Get the list of available servers and their releases.
        */
-      if($force || !isset($this->cache['RELEASE_DNS'])){
-        $this->cache['RELEASE_DNS'] = array();
-        $fai_ou_parts = preg_replace("/\/.*$/","",$this->FAIrelease);
-
-        $tmp = get_sub_list("(objectClass=FAIbranch)","",get_ou("faiou"),
-                $this->config->current['BASE'],array("ou"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
-
-        foreach($tmp as $attrs){
-          if(preg_match("/".normalizePreg(get_ou("faiou"))."/",$attrs['dn'])){
-            $this->cache['RELEASE_DNS'][$attrs['dn']] = $this->dn_to_release_name($attrs['dn']);
+      if($force || !isset($this->cache['SERVERS'])){
+        $o_queue = new gosaSupportDaemon();
+        $tmp = $o_queue->FAI_get_classes($release);
+        if($o_queue->is_error()){
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        }else{
+          foreach($tmp as $entry){
+            $this->cache['CLASSES'][$release][$entry['CLASS']] = $this->analyse_fai_object($entry); 
           }
         }
       }
 
-      /* Create list of available classes for the currenlty selected release.
-       */
-      $base = array_search($release,$this->cache['RELEASE_DNS']);
-      $this->cache['CLASSES'][$release] = array();
-
-      if(class_exists("FAI")){
-        if(!empty($base)){
-          $filter = "(|(objectClass=FAIpackageList)(objectClass=FAItemplate)(objectClass=FAIvariable)".
-            "(objectClass=FAIscript)(objectClass=FAIhook)(objectClass=FAIprofile)".
-            "(objectClass=FAIpartitionTable))";
-          $list = FAI::get_all_objects_for_given_base($base,$filter,TRUE);
-          foreach($list as $attrs){
-            $info = $this->analyse_fai_object($attrs);
-            if(count($info)){
-              $this->cache['CLASSES'][$release][$attrs['cn'][0]][] = $info;
-            }
-          }
-        }
-      }else{
-        msg_dialog(_("Configuration error"), _("Missing FAI plugin extension!"), ERROR_DIALOG);
-      }
 
       /* Add object caught from external hook
        */
@@ -1197,7 +1149,7 @@ class workstartup extends plugin
         $server = $entries['0'];
         $url    = $entries['1'];
         if (!empty($url)){
-          
+
           /* Split releases */
           if (isset($entries[2])){
             $releases= split(",", $entries[2]);
@@ -1218,6 +1170,7 @@ class workstartup extends plugin
         }
       }
     }
+    echo sprintf("%f",microtime(TRUE) - $start);  
   }
 
 
@@ -1281,46 +1234,40 @@ class workstartup extends plugin
    */
   function analyse_fai_object($attr)
   {
-    $tmp2 = array();
-    if(!isset($attr['description'])){
-      $attr['description'][0] ="";
+    $tmp = array();
+    switch($attr['TYPE']){
+
+      case 'FAIpackageList':
+        $tmp["Type"]= 'FAIpackageList';
+        $tmp["Abbr"]= 'Pl';
+        break;
+      case 'FAItemplate': 
+        $tmp["Type"]= 'FAItemplate'; 
+        $tmp["Abbr"]= 'T'; 
+        break;
+      case 'FAIvariable':
+        $tmp["Type"]= 'FAIvariable'; 
+        $tmp["Abbr"]= 'V'; 
+        break;
+      case 'FAIscript':
+        $tmp["Type"]= 'FAIscript'; 
+        $tmp["Abbr"]= 'S'; 
+        break;
+      case 'FAIhook':
+        $tmp["Type"]= 'FAIhook'; 
+        $tmp["Abbr"]= 'H'; 
+        break;
+      case 'FAIpartitionTable':
+        $tmp["Type"]= 'FAIpartitionTable'; 
+        $tmp["Abbr"]= 'Pt'; 
+        break;
+      case 'FAIprofile':
+        $tmp["Type"]= 'FAIprofile'; 
+        $tmp["Abbr"]= 'P'; 
+        break;
+      default: trigger_error("Unknown FAI object type!");;
     }
-    if(in_array('FAIpackageList',$attr['objectClass'])){
-      $tmp2["Type"]   = 'FAIpackageList'; 
-      $tmp2["Abbr"]   = 'Pl';
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAItemplate',$attr['objectClass'])){
-      $tmp2["Type"]      = 'FAItemplate'; 
-      $tmp2["Abbr"]      = 'T'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAIvariable',$attr['objectClass'])){
-      $tmp2["Type"]      = 'FAIvariable'; 
-      $tmp2["Abbr"]      = 'V'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAIscript',$attr['objectClass'])){
-      $tmp2["Type"]        = 'FAIscript'; 
-      $tmp2["Abbr"]        = 'S'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAIhook',$attr['objectClass'])){
-      $tmp2["Type"]          = 'FAIhook'; 
-      $tmp2["Abbr"]          = 'H'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAIpartitionTable',$attr['objectClass'])){
-      $tmp2["Type"]= 'FAIpartitionTable'; 
-      $tmp2["Abbr"]= 'Pt'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    if(in_array('FAIprofile',$attr['objectClass'])){
-      $tmp2["Type"]= 'FAIprofile'; 
-      $tmp2["Abbr"]= 'P'; 
-      $tmp2["Desc"]  = $attr['description'][0];
-    }
-    return($tmp2);
+    return($tmp);
   }
 
 
