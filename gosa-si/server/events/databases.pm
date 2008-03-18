@@ -54,7 +54,7 @@ sub query_db {
     } elsif( $header =~ /query_fai_server/ ) {
         $table = $main::fai_server_tn;
         $db = $main::fai_server_db;
-    } elsif( $header =~ /count_fai_release/ ) {
+    } elsif( $header =~ /query_fai_release/ ) {
         $table = $main::fai_release_tn;
         $db = $main::fai_server_db;
     }
