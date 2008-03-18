@@ -706,9 +706,6 @@ sub register_at_gosa_si_server {
 
     	my $events = join( ",", keys %{$event_hash} );
     	while(1) {
-
-      		if( $try_to_register >= @servers )  { last; }
-
       		# fetch first gosa-si-server from @servers
 			my $server = shift(@servers);
 
@@ -724,49 +721,47 @@ sub register_at_gosa_si_server {
         		exit(1);
       		}
 
-      # create registration msg
-      my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-      my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-      my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
-      &add_content2xml_hash($register_hash, "new_passwd", $server_key);
-      &add_content2xml_hash($register_hash, "mac_address", $local_mac);
-      &add_content2xml_hash($register_hash, "events", $events);
-      &add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+      		# create registration msg
+			my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+			my $local_mac = &get_local_mac_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+			my $register_hash = &create_xml_hash("here_i_am", $local_ip.":".$client_port, $server);
+			&add_content2xml_hash($register_hash, "new_passwd", $server_key);
+			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
+			&add_content2xml_hash($register_hash, "events", $events);
+			&add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
-	  # Add $HOSTNAME from ENV if force-hostname is set
-	  if( defined($client_force_hostname) && 
-		  $client_force_hostname eq "true") {
-		  if(defined($ENV{HOSTNAME}) &&
-			  length($ENV{HOSTNAME}) >0 ) {
-			  &add_content2xml_hash($register_hash, "force-hostname", $ENV{HOSTNAME});
-		  } else {
-			  &main::daemon_log("force-hostname was set to true, but no \$HOSTNAME was found in Environment!",0);
-		  }
-	  }
+			# Add $HOSTNAME from ENV if force-hostname is set
+			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+				if(defined($ENV{HOSTNAME}) && length($ENV{HOSTNAME}) >0 ) {
+					&add_content2xml_hash($register_hash, "force-hostname", $ENV{HOSTNAME});
+				} else {
+					&main::daemon_log("force-hostname was set to true, but no \$HOSTNAME was found in Environment!",0);
+				}
+			}
 
-      # send xml hash to server with general server passwd
-      my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
+      		# send xml hash to server with general server passwd
+			my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
 	  
-	  # if delivery of registration msg succeed
-      if($res == 0) {
-        # reset try_to_register
-        $try_to_register = 0;
+	  		# if delivery of registration msg succeed
+			if($res == 0) {
+        		# reset try_to_register
+				$try_to_register = 0;
 
-        # Set fixed client address and mac address
-        $client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
-        $client_address= "$client_ip:$client_port";
-        $client_mac_address = $local_mac;
-		$client_dnsname = $dnsname;
+        		# Set fixed client address and mac address
+				$client_ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
+				$client_address= "$client_ip:$client_port";
+				$client_mac_address = $local_mac;
+				$client_dnsname = $dnsname;
 
-        last;
+	  		# delivery of registration msg failed	
+			} else {
+				$try_to_register++;
+        		# wait 1 sec until trying to register again
+				sleep(1);
+				next;
+			}
 
-	  # delivery of registration msg failed	
-      } else {
-        $try_to_register++;
-        # wait 1 sec until trying to register again
-        sleep(1);
-        next;
-      }
+			if( $try_to_register >= @servers )  { last; }
 
     } # end of while
 
