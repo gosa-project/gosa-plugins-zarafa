@@ -512,6 +512,11 @@ class DaemonEvent
       $this->a_targets[] = $target;
     }
   }
+
+  public function check()
+  {
+    return(array());
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
