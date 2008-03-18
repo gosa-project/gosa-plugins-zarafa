@@ -1076,45 +1076,19 @@ class workstartup extends plugin
     /* Get the list of available servers and their releases. 
      */
     if($force || !isset($this->cache['SERVERS'])){
-      $ldap = $this->config->get_ldap_link();
-      $ldap->cd($this->config->current['BASE']);
 
-      $server_list = get_sub_list("(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",
-                      "",get_ou("serverou"),$this->config->current['BASE'],array("FAIrepository"),GL_NO_ACL_CHECK);
-     
       /* Only add inherit option, if we are part in an object group
        */
       if($this->member_of_ogroup){
         $this->cache['SERVERS']['inherited']=array();
       }
 
-      /* Add auto value  
-       */
-      $this->cache['SERVERS']['auto'] = array();
-      $sort_by = array("auto");
-      $server_tmp = array("auto"=>array());
-      foreach($server_list as $attr){
-        if(isset($attr['FAIrepository'])){
-          for($i = 0 ; $i < $attr['FAIrepository']['count'] ; $i ++ ){
-            $rep = $attr['FAIrepository'][$i];
-            $tmp = split("\|",$rep);
-            if(count($tmp)==4){
-              $sections = split(",",$tmp[3]);
-              $release  = $tmp[2];
-              $server   = $tmp[1];
-              $url      = $tmp[0];
-              $server_tmp[$url][$release]=$release;
-              $server_tmp['auto'][$release]=$release;
-              $sort_by[$url] = $url;
-            }
-          }
-        }
-      }
-      natcasesort($sort_by);
-      foreach($sort_by as $name){
-        $releases = $server_tmp[$name];
-        natcasesort($releases);
-        $this->cache['SERVERS'][$name] = $releases; 
+      $o_queue = new gosaSupportDaemon();
+      $tmp = $o_queue->FAI_get_server();  
+      foreach($tmp as $entry){
+        $rel = $entry['RELEASE'];
+        $this->cache['SERVERS']['auto'][$rel] = $rel;
+        $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
       }
     }
 
@@ -1144,6 +1118,36 @@ class workstartup extends plugin
       $release = $this->FAIrelease;
     }
     if($force || !isset($this->cache['CLASSES'][$release])){
+
+
+#
+#   Currently not working here, it seems that my FAI environment is not
+#   configured to support GOsa-si FAI - Packages
+#
+#     /* Get the list of available servers and their releases.
+#      */
+#     if($force || !isset($this->cache['SERVERS'])){
+#
+#       /* Only add inherit option, if we are part in an object group
+#        */
+#       if($this->member_of_ogroup){
+#         $this->cache['SERVERS']['inherited']=array();
+#       }
+#
+#       $o_queue = new gosaSupportDaemon();
+#       $tmp = $o_queue->FAI_get_classes();
+#       print_a($tmp);
+#       echo $o_queue->get_error();
+#     }
+#
+#
+#
+#
+
+
+
+
+
 
       /*  Create a list of available releases.
        *  $this->cache['RELEASE_DNS'][ou=siga...,c=de]         = "siga";
