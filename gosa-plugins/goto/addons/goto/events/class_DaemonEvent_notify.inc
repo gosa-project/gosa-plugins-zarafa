@@ -46,6 +46,9 @@ class DaemonEvent_notify extends DaemonEvent
   public function execute()
   {
     DaemonEvent::execute();
+    if(isset($_POST['add_any_target'])){
+      echo "Not implemented yet";  
+    }
     $display = $this->get_header();
     $tmp = $this->data;
     $smarty = get_smarty();
@@ -78,6 +81,9 @@ class DaemonEvent_notify extends DaemonEvent
     }
     if(empty($this->message)){
       $msgs[] = msgPool::required(_("Message"));
+    }
+    if(!count($this->groups) && !count($this->users)){
+      $msgs[] = msgPool::required(_("Target"));
     }
     return($msgs);
   }
