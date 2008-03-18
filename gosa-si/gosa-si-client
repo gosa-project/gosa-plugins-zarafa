@@ -1114,8 +1114,15 @@ sub server_input {
             # got a msg from gosa-si-server which can not be decrypted, may the secrete not up-to-date
             # cause a reregistering with a new secrete handshake
             daemon_log("WARNING: Message from gosa-si-server could not be understood, cause reregistering at server", 3);
-            $REGISTERED = 0;
-            $kernel->post('client_session', 'register_at_gosa_si_server');
+
+			# if client is alread in a registration process, that means not registered, do nothing
+			# if not, cause re-registration
+			if (not $REGISTERED) {
+				&daemon_log("WARNING: gosa-si-client is already in a registration process so ignore this message", 3);
+			} else {
+				$REGISTERED = 0;
+				$kernel->post('client_session', 'register_at_gosa_si_server');
+			}
         }
         $error++;
     }
