@@ -20,6 +20,13 @@
 #     REVISION:  ---
 #===============================================================================
 
+# TODO es gibt eine globale funktion get_ldap_handle
+# - ist in einer session dieses ldap handle schon vorhanden, wird es zurückgegeben
+# - ist es nicht vorhanden, wird es erzeugt, im heap für spätere ldap anfragen gespeichert und zurückgegeben
+# - sessions die kein ldap handle brauchen, sollen auch keins haben
+# - wird eine session geschlossen, muss das ldap verbindung vorher beendet werden
+
+
 use strict;
 use warnings;
 use Getopt::Long;
@@ -1258,16 +1265,6 @@ sub watch_for_new_jobs {
 		# expect macaddress is unique!!!!!!
 		my $target = $res_hash->{1}->{hostname};
 
-#        if (not defined $target) {
-#			&daemon_log("ERROR: no host found for mac address: $macaddress", 1);
-#			&daemon_log("$hit->{xmlmessage}", 8);
-#            my $sql_statement = "UPDATE $job_queue_tn ".
-#                "SET status='error', result='no host found for mac address' ".
-#                "WHERE id='$jobdb_id'";
-#			my $res = $job_db->update_dbentry($sql_statement);
-#			next;
-#		}
-#
 		# change header
         $job_msg =~ s/<header>job_/<header>gosa_/;
 
@@ -1284,6 +1281,31 @@ sub watch_for_new_jobs {
     }
 
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
+}
+
+
+sub get_ldap_handle {
+	my ($session_id) = @_;
+	my $heap;
+	my $ldap_handle;
+	
+	if (not defined $session_id) {
+		return $ldap_handle;
+	}
+
+	my $session_reference = $kernel->ID_id_to_session($session_id);
+	if( defined $session_reference ) {
+		$heap = $session_reference->get_heap();
+	}
+
+	if (not exists $heap->{ldap_handle}) {
+		# create new ldap handle
+		# add ldap handle to heap
+	}
+
+	$ldap_handle = $heap->{ldap_handle};
+
+	return \$ldap_handle;
 }
 
 
