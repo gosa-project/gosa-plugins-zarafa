@@ -228,7 +228,7 @@ class gotomasses extends plugin
         $entry = $this->o_queue->get_entries_by_id(array($id));
         if(isset($entry['ANSWER1'])){
           $entry = $entry['ANSWER1'];
-          if( $entry['STATUS'] == "wating" && 
+          if( $entry['STATUS'] == "waiting" && 
               $entry['HEADERTAG'] == "trigger_action_reinstall"){
             $evt = new DaemonEvent_reinstall($this->config,$entry);
             if($evt->get_timestamp(FALSE)  < time()){
