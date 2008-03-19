@@ -707,7 +707,7 @@ class addressbook extends plugin
 
   /* Check mail */
   if (!tests::is_email($this->mail)){
-    $message[] = msgPool::invalid(_("Email"),"","","example@your-domain.com");
+    $message[] = msgPool::invalid(_("Email"),"","","your-domain@your-domain.com");
   }
 
   /* Assemble cn/dn */

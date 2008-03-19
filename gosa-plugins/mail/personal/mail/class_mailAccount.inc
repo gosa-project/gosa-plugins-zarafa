@@ -357,7 +357,7 @@ class mailAccount extends plugin
               $valid= TRUE;
             } else {
               msg_dialog::display(_("Error"), 
-                  msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+                  msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
                   ERROR_DIALOG);
             }
           }
@@ -393,7 +393,7 @@ class mailAccount extends plugin
         if ($this->is_template){
           if (!(tests::is_email($_POST['alternate_address'], TRUE))){
             msg_dialog::display(_("Error"), 
-                msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+                msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
                 ERROR_DIALOG);
 
           } else {
@@ -401,7 +401,7 @@ class mailAccount extends plugin
           }
         } else {
           msg_dialog::display(_("Error"), 
-              msgPool::invalid(_("Mail address"),"","","example@your-domain.com"),
+              msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
               ERROR_DIALOG);
         }
 
@@ -932,7 +932,7 @@ class mailAccount extends plugin
       }
     } else {
       if (!tests::is_email($this->mail)){
-        $message[]= msgPool::invalid(_("Mail address"),"","","example@your-domain.com");
+        $message[]= msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com");
       }
     }
     $ldap->cd($this->config->current['BASE']);

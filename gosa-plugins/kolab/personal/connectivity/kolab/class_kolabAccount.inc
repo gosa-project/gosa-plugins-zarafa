@@ -162,7 +162,7 @@ class kolabAccount extends plugin
         $valid= FALSE;
         if (!tests::is_email($address)){
           if (!tests::is_email($address, TRUE)){
-            msg_dialog::display(_("Error"), msgPool::invalid(_("Mail address"), "","", "example@your-domain.com"));
+            msg_dialog::display(_("Error"), msgPool::invalid(_("Mail address"), "","", "your-domain@your-domain.com"));
           }
         } else {
 

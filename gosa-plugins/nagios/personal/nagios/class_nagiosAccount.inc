@@ -202,7 +202,7 @@ class nagiosAccount extends plugin
       }
     } else {
       if (!tests::is_email($this->NagiosMail)){
-        $message[]= msgPool::invalid(_("Mail"),"","","example@your-domain.com");
+        $message[]= msgPool::invalid(_("Mail"),"","","your-domain@your-domain.com");
       }
     }
     return($message);
