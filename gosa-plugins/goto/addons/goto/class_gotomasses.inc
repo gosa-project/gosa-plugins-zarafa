@@ -375,7 +375,7 @@ class gotomasses extends plugin
 
       /* If PROCESSING add abort action
        */  
-      if(in_array($task['STATUS'],array("processing"))){
+      if(in_array($task['STATUS'],array("processing")) && preg_match("/*install*/",$task['HEADERTAG'])){
         $prio_actions.= "<input class='center' type='image' src='images/small_error.png' 
           title='"._("Abort execution")."' name='abort_process_".$key."'>";
       }
