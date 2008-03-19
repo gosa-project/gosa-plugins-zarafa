@@ -872,16 +872,18 @@ sub hardware_config {
 	} else {
 		my $entry= $mesg->entry(0);
 		my $dn= $entry->dn;
-		if(defined($entry->get_value("gotoHardwareChecksum"))) {
-			if(! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
+		if (defined($entry->get_value("gotoHardwareChecksum"))) {
+			if (! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
 				$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
 				if($entry->update($main::ldap_handle)) {
-					&main::daemon_log("Hardware changed! Detection triggered.", 4);
+					&main::daemon_log("$session_id INFO: Hardware changed! Detection triggered.", 5);
 				}
 			} else {
 				# Nothing to do
 				return;
 			}
+		} else {
+			&main::daemon_log("$session_id WARNING: there is no 'gotoHardwareChecksum' found in LDAP for host '$macaddress'", 3); 
 		}
 	} 
 
@@ -910,7 +912,9 @@ sub hardware_config {
 	&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);
 
 	# Send information
-	&main::daemon_log("$session_id INFO: Send detect_hardware message to $address", 5);
+
+	# log info not needed
+	#&main::daemon_log("$session_id INFO: Send detect_hardware message to $address", 5);
 	return &build_msg("detect_hardware", $server_address, $address, \%data);
 }
 

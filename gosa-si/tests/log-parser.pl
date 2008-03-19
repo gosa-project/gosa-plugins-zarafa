@@ -25,8 +25,31 @@ use Getopt::Long;
 my $log_file = "/var/log/gosa-si-server.log"; 
 my $within_session = 0;
 my $within_incoming = 0;
+my $within_header = 0;
 my $session;
 my $incoming;
+my $header;
+
+sub check_header {
+	my ($line) = @_ ;
+	my @line_list = split(" ", $line);
+
+	# new header, set all values back to default
+	if ($line =~ /INFO: Incoming msg with header/ ) {
+		$within_header = 0; 
+	}
+
+	if ($line =~ /INFO: Incoming msg with header '$header'/) {
+		$within_header = 1;
+		return $line;
+	} else {
+		if ($within_header) {
+			return $line;
+		} else {
+			return;
+		}
+	}
+}
 
 sub check_incoming {
 	my ($line) = @_ ;
@@ -72,52 +95,76 @@ sub check_session {
 ### MAIN ######################################################################
 
 GetOptions(
-		"s|session=s" => \$session,
+		"s|session=s"  => \$session,
 		"i|incoming=s" => \$incoming,
+		"h|header=s"   => \$header,
 		);
 
 # check script pram
-my $check_script_pram = 0;
+my $script_pram = {};
 if (defined $session) { 
 	print "session: $session\n";
-	$check_script_pram++;
-}
+	$script_pram->{'session'} = $session;
+	}
 if (defined $incoming) { 
-	print "incoming msg for mac: $incoming\n";
-	$check_script_pram++;
+	print "incoming: $incoming\n";
+	$script_pram->{'incoming'} = $incoming;
 } 
+if (defined $header) {
+	print "header: $header\n";
+	$script_pram->{'header'} = $header;
+}	
 
-if ($check_script_pram == 0) {
+if (keys(%$script_pram) == 0) {
 	# print usage and die
 	print "exiting script\n"; 
 	exit(0);
 }
 
 open(FILE, "<$log_file") or die "\t can not open log-file"; 
+my @lines;
+my $positive_msg = 0;
 # Read lines
-my $line;
-while ($line = <FILE>){
+while ( my $line = <FILE>){
     chomp($line);
-	my $line2print;
-	if (defined $session && (not defined $incoming)) {
-		$line2print = &check_session($line);
+
+	# start of a new message, plot saved log lines
+	if ($line =~ /INFO: Incoming msg with session ID \d+ from / ) {
+		if ($positive_msg) {
+			print join("\n", @lines)."\n"; 
+			$positive_msg = 0;
+		}
+
+		$within_session = 0;
+		$within_header = 0;
+		$within_incoming = 0;
+		@lines = ();
+	}
+
+	push (@lines, $line); 
+
+	my $positiv_counter = 0;
+	while (my ($pram, $val) = each %$script_pram) {
+		if ($pram eq 'session') {
+			my $l = &check_session($line);
+			if (defined $l) { $positiv_counter++; } 
+		}
+
+		elsif ($pram eq 'incoming') {
+			my $l = &check_incoming($line);
+			if (defined $l) { $positiv_counter++; } 
+		}
 		
-	} elsif (defined $incoming && (not defined $session)) {
-		$line2print = &check_incoming($line);
-		
-	} elsif ((defined $incoming) && (defined $session)) {
-		my $line1 = &check_session($line);
-		my $line2 = &check_incoming($line);
-		if ((defined $line1) && (defined $line2)) {
-			$line2print = $line;
+		elsif ($pram eq 'header') {
+			my $l = &check_header($line);
+			if (defined $l) { $positiv_counter++; } 
 		}
 	}
 
-	# printing
-	if (defined $line2print) {
-		print "$line\n";
+	if (keys(%$script_pram) == $positiv_counter) {
+		$positive_msg = 1;
 	}
-	
+
 }
 
 

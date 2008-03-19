@@ -1059,7 +1059,8 @@ sub process_task {
     ######################
     # process incoming msg
     if( $error == 0) {
-        daemon_log("$session_id INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
+        daemon_log("$session_id INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0].
+				"' from '".$heap->{'remote_ip'}."'", 5); 
         daemon_log("$session_id DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
