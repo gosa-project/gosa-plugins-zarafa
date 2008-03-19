@@ -884,6 +884,8 @@ sub hardware_config {
 			}
 		} else {
 			&main::daemon_log("$session_id WARNING: there is no 'gotoHardwareChecksum' found in LDAP for host '$macaddress'", 3); 
+			# Noting to do, only trigger hardware detection if no entry found in LDAP
+			return;
 		}
 	} 
 

@@ -1401,7 +1401,7 @@ sub change_fai_state {
             }
 
           } else {
-            daemon_log("$session_id DEBUG FAIstate at host found with filter statement '$search' already at state '$st'", 7); 
+            daemon_log("$session_id DEBUG FAIstate at host '$_' already at state '$st'", 7); 
           }  
         }
       }

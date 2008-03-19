@@ -74,7 +74,7 @@ sub check_session {
 			return $line;
 		} else { $within_session = 0; }
 	} else {
-		if ($within_session == 1) {	return $line; } 
+		if ($within_session == 1) { return $line; } 
 	}
 	return;
 }
