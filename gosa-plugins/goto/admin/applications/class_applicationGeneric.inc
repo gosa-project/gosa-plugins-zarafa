@@ -449,7 +449,7 @@ class application extends plugin
       if($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicate("cn");
+          $message[]= msgPool::duplicated("cn");
         }
       }
     }else{
@@ -457,7 +457,7 @@ class application extends plugin
       if ($ldap->count()){
         $attrs = $ldap->fetch();
         if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicate("cn");
+          $message[]= msgPool::duplicated("cn");
         }
       }
     }
