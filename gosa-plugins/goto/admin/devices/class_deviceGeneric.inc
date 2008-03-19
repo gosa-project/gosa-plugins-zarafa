@@ -106,7 +106,7 @@ class deviceGeneric extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->search("(&(objectClass=gotoDevice)(cn=".$this->cn."*))",array("cn"));
       if($ldap->count()){
-        $message[]= msgPool::duplicate(_("Name"));
+        $message[]= msgPool::duplicated(_("Name"));
       }
     }
 
