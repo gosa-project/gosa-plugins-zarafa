@@ -1071,7 +1071,7 @@ class workstartup extends plugin
    */
   function update_fai_cache($first_call = FALSE)
   {
-    $force = FALSE;
+    $force = TRUE;
 
     $start = microtime(TRUE);  
 
@@ -1086,7 +1086,7 @@ class workstartup extends plugin
       }
 
       $o_queue = new gosaSupportDaemon();
-      $tmp = $o_queue->FAI_get_server();  
+      $tmp = $o_queue->FAI_get_server(); 
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
       }else{
@@ -1128,15 +1128,13 @@ class workstartup extends plugin
 
       /* Get the list of available servers and their releases.
        */
-      if($force || !isset($this->cache['SERVERS'])){
-        $o_queue = new gosaSupportDaemon();
-        $tmp = $o_queue->FAI_get_classes($release);
-        if($o_queue->is_error()){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-        }else{
-          foreach($tmp as $entry){
-            $this->cache['CLASSES'][$release][$entry['CLASS']] = $this->analyse_fai_object($entry); 
-          }
+      $o_queue = new gosaSupportDaemon();
+      $tmp = $o_queue->FAI_get_classes($release);
+      if($o_queue->is_error()){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+      }else{
+        foreach($tmp as $entry){
+          $this->cache['CLASSES'][$release][$entry['CLASS']] = $this->analyse_fai_object($entry); 
         }
       }
 
@@ -1155,14 +1153,17 @@ class workstartup extends plugin
             $releases= split(",", $entries[2]);
 
             foreach ($releases as $release_data){
-              $release= preg_replace('/:.*$/', '', $release_data);
-              $sections = split(':', preg_replace('/^[^:]+:([^|]+)|.*$/', '\1', $release_data));
-              $classes  = split('\|', preg_replace('/^[^|]+\|(.*)$/', '\1', $release_data));
-              $this->cache['SERVERS'][$url][$release]=$release;
-              $this->cache['SERVERS']['auto'][$release]=$release; 
-              foreach ($classes as $class){
-                if ($class != ""){
-                  $this->cache['CLASSES'][$release][$class]= array();
+              $release_c  = preg_replace('/:.*$/', '', $release_data);
+              $sections_c = split(':', preg_replace('/^[^:]+:([^|]+)|.*$/', '\1', $release_data));
+              $classes_c  = split('\|', preg_replace('/^[^|]+\|(.*)$/', '\1', $release_data));
+
+              if($release_c == $release){
+                $this->cache['SERVERS'][$url][$release_c]=$release_c;
+                $this->cache['SERVERS']['auto'][$release_c]=$release_c; 
+                foreach ($classes as $class){
+                  if ($class != ""){
+                    $this->cache['CLASSES'][$release_c][$class]= array();
+                  }
                 }
               }
             }
@@ -1170,7 +1171,6 @@ class workstartup extends plugin
         }
       }
     }
-    echo sprintf("%f",microtime(TRUE) - $start);  
   }
 
 
