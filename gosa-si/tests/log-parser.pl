@@ -21,6 +21,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use Data::Dumper;
 
 my $log_file = "/var/log/gosa-si-server.log"; 
 my $within_session = 0;
@@ -32,7 +33,6 @@ my $header;
 
 sub check_header {
 	my ($line) = @_ ;
-	my @line_list = split(" ", $line);
 
 	# new header, set all values back to default
 	if ($line =~ /INFO: Incoming msg with header/ ) {
@@ -43,17 +43,13 @@ sub check_header {
 		$within_header = 1;
 		return $line;
 	} else {
-		if ($within_header) {
-			return $line;
-		} else {
-			return;
-		}
+		if ($within_header) { return $line; }
 	}
+	return;
 }
 
 sub check_incoming {
 	my ($line) = @_ ;
-	my @line_list = split(" ", $line);
 
 	# new incoming msg, set all values back to default
 	if ($line =~ /INFO: Incoming msg with session ID \d+ from/ ) {
@@ -64,33 +60,26 @@ sub check_incoming {
 		$within_incoming = 1;
 		return $line;
 	} else {
-		if ($within_incoming) { 
-			return $line;
-		} else {
-			return;
-		}
+		if ($within_incoming) { return $line; } 
 	}
+	return;
 }
 
 sub check_session {
 	my ($line) = @_ ;
-	my @line_list = split(" ", $line);
 	
-	if (not $line_list[4]) {
-		if ($within_session) {
+	if ($line =~ /gosa-si-server (\d+) / ) {
+		if ((defined $1) && ($1 eq $session)) {
+			$within_session = 1;	
 			return $line;
-		}
-		return;
-	}
-
-	if($line_list[4] eq $session) {
-		$within_session = 1;
-		return $line;
+		} else { $within_session = 0; }
 	} else {
-		$within_session = 0;
+		if ($within_session == 1) {	return $line; } 
 	}
 	return;
 }
+
+
 
 ### MAIN ######################################################################
 
@@ -132,9 +121,9 @@ while ( my $line = <FILE>){
 	if ($line =~ /INFO: Incoming msg with session ID \d+ from / ) {
 		if ($positive_msg) {
 			print join("\n", @lines)."\n"; 
-			$positive_msg = 0;
 		}
 
+		$positive_msg = 0;
 		$within_session = 0;
 		$within_header = 0;
 		$within_incoming = 0;
