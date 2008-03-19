@@ -95,7 +95,7 @@ class faiVariableEntry extends plugin
     $message= plugin::check();
 
     if(isset($this->parent->SubObjects[$this->cn]) && $this->cn != $this->orig_cn){
-      $message[] = msgPool::duplicate(_("Name"));
+      $message[] = msgPool::duplicated(_("Name"));
     }
     
     if(empty($this->FAIvariableContent)) {
