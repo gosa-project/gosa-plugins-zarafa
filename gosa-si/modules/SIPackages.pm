@@ -869,6 +869,22 @@ sub hardware_config {
 
 	if($mesg->count() == 0) {
 		&main::daemon_log("Host was not found in LDAP!", 1);
+
+		# set status = hardware_detection at jobqueue if entry exists
+		my $func_dic = {table=>$main::job_queue_tn,
+				primkey=>['id'],
+				timestamp=>&get_time,
+				status=>'processing',
+				result=>'none',
+				progress=>'hardware-detection',
+				headertag=>'trigger_action_reinstall',
+				targettag=>$address,
+				xmlmessage=>'none',
+				macaddress=>$macaddress,
+		};
+		my $hd_res = $main::job_db->add_dbentry($func_dic);
+		&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);
+	
 	} else {
 		my $entry= $mesg->entry(0);
 		my $dn= $entry->dn;
@@ -882,11 +898,7 @@ sub hardware_config {
 				# Nothing to do
 				return;
 			}
-		} else {
-			&main::daemon_log("$session_id WARNING: there is no 'gotoHardwareChecksum' found in LDAP for host '$macaddress'", 3); 
-			# Noting to do, only trigger hardware detection if no entry found in LDAP
-			return;
-		}
+		} 
 	} 
 
 	# Assemble data package
@@ -898,25 +910,7 @@ sub hardware_config {
 		$data{'goto_secret'}= $goto_secret;
 	}
 
-	# set status = hardware_detection at jobqueue if entry exists
-	my $func_dic = {table=>$main::job_queue_tn,
-		primkey=>['id'],
-		timestamp=>&get_time,
-		status=>'processing',
-		result=>'none',
-		progress=>'hardware-detection',
-		headertag=>'trigger_action_reinstall',
-		targettag=>$address,
-		xmlmessage=>'none',
-		macaddress=>$macaddress,
-	};
-	my $hd_res = $main::job_db->add_dbentry($func_dic);
-	&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);
-
 	# Send information
-
-	# log info not needed
-	#&main::daemon_log("$session_id INFO: Send detect_hardware message to $address", 5);
 	return &build_msg("detect_hardware", $server_address, $address, \%data);
 }
 
