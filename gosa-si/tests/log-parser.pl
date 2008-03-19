@@ -23,6 +23,7 @@ use warnings;
 use Getopt::Long;
 
 my $log_file = "/var/log/gosa-si-server.log"; 
+my $within_log_session = 0;
 
 my $session;
 GetOptions("s|session=s" => \$session);
@@ -36,16 +37,22 @@ open(FILE, "<$log_file") or die "\t can not open log-file";
 # Read lines
 my $line;
 while ($line = <FILE>){
-    next if $line =~ /^\s/;
 
     chomp($line);
     my @line_list = split(" ", $line);
 
-    next if not $line_list[4];
+	if (not $line_list[4]) {
+		if ($within_log_session) {
+			print "$line\n";
+		}
+		next;
+	}
 
     if($line_list[4] eq $session) {
-
         print "$line\n"; 
-
-    }
+		$within_log_session = 1; 
+		
+    } else {
+		$within_log_session = 0;
+	}
 }

@@ -1287,16 +1287,19 @@ sub watch_for_new_jobs {
 
 
 sub refresh_ldap_handle {
+	my ($session_id) = @_ ;
+	if (not defined $session_id) { $session_id = 0; } 
+	
   my $mesg;
 
-  daemon_log("DEBUG: Trying to create a connection to URI $ldap_uri", 5);
+  daemon_log("$session_id DEBUG: Trying to create a connection to URI '$ldap_uri'", 7);
   # Get an ldap handle, if we don't have one
   if( ! defined $ldap_handle ){
 	  $ldap_handle = Net::LDAP->new( $ldap_uri );
   }
   # Still not defined?
   if( ! defined $ldap_handle ) {
-	  daemon_log( "ch $$: Net::LDAP constructor failed: $!\n" );
+	  daemon_log( "$session_id ERROR: ch $$: Net::LDAP constructor failed: $!\n" );
 	  return 0;
   }
 
@@ -1313,10 +1316,10 @@ sub refresh_ldap_handle {
 
   if( 0 != $mesg->code ) {
     undef( $ldap_handle ) if( 81 == $mesg->code );
-    daemon_log( "ch $$: LDAP bind: error (". $mesg->code . ') - ' . $mesg->error . "\n", 1);
+    daemon_log( "$session_id ERROR: ch $$: LDAP bind: error (". $mesg->code . ') - ' . $mesg->error . "\n", 1);
     return 0;
   }
-
+	daemon_log("$session_id DEBUG: create a new connection to URI '$ldap_uri'", 7);
   return 1;
 }
 
