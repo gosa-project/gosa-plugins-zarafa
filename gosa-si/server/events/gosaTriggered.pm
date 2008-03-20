@@ -86,17 +86,17 @@ sub send_user_msg {
 
     }
 
+    my $ldap_handle = &main::get_ldap_handle($session_id);
     # resolve groups to users
     if( @group_list ) {
         # build ldap connection
-        &main::refresh_ldap_handle();
-        if( not defined $main::ldap_handle ) {
+        if( not defined $ldap_handle ) {
             &main::daemon_log("ERROR: cannot connect to ldap", 1);
             return ();
         } 
         foreach my $group (@group_list) {
             # Perform search
-            my $mesg = $main::ldap_handle->search( 
+            my $mesg = $ldap_handle->search( 
                     base => $main::ldap_base,
                     scope => 'sub',
                     attrs => ['memberUid'],

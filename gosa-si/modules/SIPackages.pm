@@ -70,11 +70,12 @@ $main::server_mac_address= &get_mac($network_interface);
 # Unit tag can be defined in config
 if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 	# Read gosaUnitTag from LDAP
-        &main::refresh_ldap_handle();
-	if( defined($main::ldap_handle) ) {
+        
+    my $ldap_handle = &main::get_ldap_handle(); 
+    if( defined($ldap_handle) ) {
 		&main::daemon_log("INFO: Searching for servers gosaUnitTag with mac address $main::server_mac_address",5);
 		# Perform search for Unit Tag
-		$mesg = $main::ldap_handle->search(
+		$mesg = $ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
 			attrs  => ['gosaUnitTag'],
@@ -94,7 +95,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 			my $hostname= `hostname -f`;
 			chomp($hostname);
 			&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
-			$mesg = $main::ldap_handle->search(
+			$mesg = $ldap_handle->search(
 				base   => $ldap_base,
 				scope  => 'sub',
 				attrs  => ['gosaUnitTag'],
@@ -113,7 +114,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 				$hostname= `hostname -s`;
 				chomp($hostname);
 				&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
-				$mesg = $main::ldap_handle->search(
+				$mesg = $ldap_handle->search(
 					base   => $ldap_base,
 					scope  => 'sub',
 					attrs  => ['gosaUnitTag'],
@@ -689,14 +690,14 @@ sub new_ldap_config {
 	}
 
 	# Build LDAP connection
-  &main::refresh_ldap_handle();
-	if( not defined $main::ldap_handle ) {
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+	if( not defined $ldap_handle ) {
 		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;
 	} 
 
 	# Perform search
-	$mesg = $main::ldap_handle->search( base   => $ldap_base,
+    $mesg = $ldap_handle->search( base   => $ldap_base,
 		scope  => 'sub',
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
 		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))");
@@ -733,7 +734,7 @@ sub new_ldap_config {
 
 	# Do we need to look at an object class?
 	if (length(@servers) < 1){
-		$mesg = $main::ldap_handle->search( base   => $ldap_base,
+        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
@@ -796,7 +797,7 @@ sub new_ldap_config {
 	if (defined $unit_tag){
 
 		# Find admin base and department name
-		$mesg = $main::ldap_handle->search( base   => $ldap_base,
+		$mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'ou'],
 			filter => "(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$unit_tag))");
@@ -854,14 +855,14 @@ sub hardware_config {
 	}
 
 	# Build LDAP connection
-	&main::refresh_ldap_handle();
-	if( not defined $main::ldap_handle ) {
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+	if( not defined $ldap_handle ) {
 		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;
 	} 
 
 	# Perform search
-	$mesg = $main::ldap_handle->search(
+	$mesg = $ldap_handle->search(
 		base   => $ldap_base,
 		scope  => 'sub',
 		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
@@ -891,7 +892,7 @@ sub hardware_config {
 		if (defined($entry->get_value("gotoHardwareChecksum"))) {
 			if (! $entry->get_value("gotoHardwareChecksum") eq $gotoHardwareChecksum) {
 				$entry->replace(gotoHardwareChecksum => $gotoHardwareChecksum);
-				if($entry->update($main::ldap_handle)) {
+				if($entry->update($ldap_handle)) {
 					&main::daemon_log("$session_id INFO: Hardware changed! Detection triggered.", 5);
 				}
 			} else {

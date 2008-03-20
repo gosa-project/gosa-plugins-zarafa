@@ -58,7 +58,7 @@ use lib "/usr/lib/gosa-si/modules";
 # - ist es nicht vorhanden, wird es erzeugt, im heap für spätere ldap anfragen gespeichert und zurückgegeben
 # - sessions die kein ldap handle brauchen, sollen auch keins haben
 # - wird eine session geschlossen, muss das ldap verbindung vorher beendet werden
-#our $global_kernel;
+our $global_kernel;
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
@@ -90,7 +90,8 @@ our $no_arp;
 our $verbose;
 our $forground;
 our $cfg_file;
-our ($ldap_handle, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
+#our ($ldap_handle, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
+our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 
 
 # specifies the verbosity of the daemon_log
@@ -429,9 +430,11 @@ sub import_modules {
 sub sig_int_handler {
     my ($signal) = @_;
 
-	if (defined($ldap_handle)) {
-		$ldap_handle->disconnect;
-	}
+#	if (defined($ldap_handle)) {
+#		$ldap_handle->disconnect;
+#	}
+    # TODO alle verbliebenden ldap verbindungen aus allen heaps beenden
+    
 
     daemon_log("shutting down gosa-si-server", 1);
     system("killall gosa-si-server");
@@ -1053,6 +1056,7 @@ sub process_task {
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
         # could not understand a msg from its server the client cause a re-registering process
+        daemon_log("$session_id INFO cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}."' to cause a re-registering of the client if necessary", 5);
         my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -1290,71 +1294,34 @@ sub get_ldap_handle {
 	my ($session_id) = @_;
 	my $heap;
 	my $ldap_handle;
-	
-	if (not defined $session_id) {
-        daemon_log("0 DEBUG: need a session_id to fetch the correct ldap handle", 7); 
-		return;
-	}
 
-	my $session_reference = $global_kernel->ID_id_to_session($session_id);
-	if( defined $session_reference ) {
-		$heap = $session_reference->get_heap();
-	}
+    if (not defined $session_id ) { $session_id = 0 };
 
-    if (not defined $heap) {
-        daemon_log("$session_id DEBUG: cannot get heap for session_id '$session_id'", 7); 
-        return;
+	if ($session_id == 0) {
+        daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
+        $ldap_handle = Net::LDAP->new( $ldap_uri );
+
+	} else {
+        my $session_reference = $global_kernel->ID_id_to_session($session_id);
+        if( defined $session_reference ) {
+            $heap = $session_reference->get_heap();
+        }
+
+        if (not defined $heap) {
+            daemon_log("$session_id DEBUG: cannot get heap for session_id '$session_id'", 7); 
+            return;
+        }
+
+        if (not exists $heap->{ldap_handle}) {
+            # create new ldap handle
+            $ldap_handle = Net::LDAP->new( $ldap_uri );
+            # add ldap handle to heap
+            $heap->{ldap_handle} = $ldap_handle;
+        }
     }
 
-	if (not exists $heap->{ldap_handle}) {
-		# create new ldap handle
-        my $ldap_handle = Net::LDAP->new( $ldap_uri );
 
-		# add ldap handle to heap
-        $heap->{ldap_handle} = $ldap_handle;
-	}
-
-	$ldap_handle = $heap->{ldap_handle};
-
-	return \$ldap_handle;
-}
-
-
-sub refresh_ldap_handle {
-	my ($session_id) = @_ ;
-	if (not defined $session_id) { $session_id = 0; } 
-	
-  my $mesg;
-
-  daemon_log("$session_id DEBUG: Trying to create a connection to URI '$ldap_uri'", 7);
-  # Get an ldap handle, if we don't have one
-  if( ! defined $ldap_handle ){
-	  $ldap_handle = Net::LDAP->new( $ldap_uri );
-  }
-  # Still not defined?
-  if( ! defined $ldap_handle ) {
-	  daemon_log( "$session_id ERROR: ch $$: Net::LDAP constructor failed: $!\n" );
-	  return 0;
-  }
-
-  # Bind to ldap server - eventually authenticate
-  if( defined $ldap_admin_dn ) {
-    if( defined $ldap_admin_password ) {
-      $mesg = $ldap_handle->bind( $ldap_admin_dn, password => $ldap_admin_password );
-    } else {
-      $mesg = $ldap_handle->bind( $ldap_admin_dn );
-    }
-  } else {
-    $mesg = $ldap_handle->bind();
-  }
-
-  if( 0 != $mesg->code ) {
-    undef( $ldap_handle ) if( 81 == $mesg->code );
-    daemon_log( "$session_id ERROR: ch $$: LDAP bind: error (". $mesg->code . ') - ' . $mesg->error . "\n", 1);
-    return 0;
-  }
-	daemon_log("$session_id DEBUG: create a new connection to URI '$ldap_uri'", 7);
-  return 1;
+	return $ldap_handle;
 }
 
 
@@ -1382,8 +1349,7 @@ sub change_fai_state {
 
     my $state= $mapActions{ $st };
 
-    &refresh_ldap_handle();
-#    my $ldap_handle = get_ldap_handle($session_id);
+    my $ldap_handle = get_ldap_handle($session_id);
     if( defined($ldap_handle) ) {
 
       # Build search filter for hosts
@@ -1443,6 +1409,7 @@ sub change_fai_state {
     } else {
         daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
     }
+
 }
 
 
@@ -1453,7 +1420,7 @@ sub change_goto_state {
     # Switch on or off?
     my $state= $st eq 'active' ? 'active': 'locked';
 
-    &refresh_ldap_handle();
+    my $ldap_handle = &get_ldap_handle($session_id);
     if( defined($ldap_handle) ) {
 
       # Build search filter for hosts
@@ -1504,7 +1471,7 @@ sub change_goto_state {
 sub create_fai_server_db {
     my ($table_name, $kernel) = @_;
 	my $result;
-
+    my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
 		daemon_log("INFO: create_fai_server_db: start", 5);
 		my $mesg= $ldap_handle->search(
@@ -1536,9 +1503,10 @@ sub create_fai_server_db {
 		daemon_log("INFO: create_fai_server_db: finished", 5);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
-		&create_packages_list_db();
+		&create_packages_list_db($ldap_handle);
 	}	
-
+    
+    $ldap_handle->disconnect;
    	return $result;
 }
 
@@ -1560,6 +1528,7 @@ sub create_fai_release_db {
 	my ($table_name) = @_;
 	my $result;
 
+    my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
 		daemon_log("INFO: create_fai_release_db: start",5);
 		my $mesg= $ldap_handle->search(
@@ -1574,7 +1543,7 @@ sub create_fai_release_db {
 			my @sql_list;
 			my $timestamp= &get_time();
 			foreach my $ou (@{$mesg->{entries}}) {
-				my $tmp_classes= resolve_fai_classes($ou->dn);
+				my $tmp_classes= resolve_fai_classes($ou->dn, $ldap_handle);
 				if(defined($tmp_classes) && ref($tmp_classes) eq 'HASH') {
 					my @tmp_array=get_fai_release_entries($tmp_classes);
 					if(@tmp_array) {
@@ -1603,7 +1572,7 @@ sub create_fai_release_db {
 		}
 		daemon_log("INFO: create_fai_release_db: finished",5);
 	}
-
+    $ldap_handle->disconnect;
 	return $result;
 }
 sub run_create_fai_release_db {
@@ -1653,8 +1622,8 @@ sub get_fai_state {
 }
 
 sub resolve_fai_classes {
+	my ($fai_base, $ldap_handle) = @_;
 	my $result;
-	my $fai_base= shift;
 	my @possible_fai_classes= ("FAIscript", "FAIhook", "FAIpartitionTable", "FAItemplate", "FAIvariable", "FAIprofile", "FAIpackageList");
 	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
 	my $fai_classes;
@@ -1858,6 +1827,7 @@ sub session_run_done {
 }
 
 sub create_sources_list {
+    my ($ldap_handle) = @_;
 	my $result="/tmp/gosa_si_tmp_sources_list";
 
 	# Remove old file
@@ -1890,7 +1860,16 @@ sub create_sources_list {
 }
 
 sub create_packages_list_db {
-    my ($sources_file) = @_ || &create_sources_list;
+    my ($ldap_handle, $sources_file) = @_ ;
+
+    if (not defined $ldap_handle) { 
+        daemon_log("0 ERROR: no ldap_handle available to create_packages_list_db", 1);
+        return;
+    }
+    if (not defined $sources_file) { 
+        $sources_file = &create_sources_list($ldap_handle);
+    }
+
     my $line;
     daemon_log("INFO: create_packages_list_db: start", 5); 
 

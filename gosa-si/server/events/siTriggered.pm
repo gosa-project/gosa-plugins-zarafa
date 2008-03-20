@@ -141,14 +141,14 @@ sub detected_hardware {
 		return;
 	}
 	# Build LDAP connection
-	&main::refresh_ldap_handle();
-	if( not defined $main::ldap_handle ) {
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+	if( not defined $ldap_handle ) {
 		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;
 	} 
 
 	# Perform search
-	$mesg = $main::ldap_handle->search(
+	$mesg = $ldap_handle->search(
 		base   => $ldap_base,
 		scope  => 'sub',
 		filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
@@ -183,14 +183,14 @@ sub detected_hardware {
 			$entry->add("objectClass" => "gosaAdministrativeUnitTag");
 			$entry->add("gosaUnitTag" => $main::gosa_unit_tag);
 		}
-		my $res=$entry->update($main::ldap_handle);
+		my $res=$entry->update($ldap_handle);
 		if(defined($res->{'errorMessage'}) &&
 			length($res->{'errorMessage'}) >0) {
 			&main::daemon_log("ERROR: can not add entries to LDAP: ".$res->{'errorMessage'}, 1);
 			return;
 		} else {
 			# Fill $mesg again
-			$mesg = $main::ldap_handle->search(
+			$mesg = $ldap_handle->search(
 				base   => $ldap_base,
 				scope  => 'sub',
 				filter => "(&(objectClass=GOhard)(|(macAddress=$macaddress)(dhcpHWaddress=ethernet $macaddress)))"
@@ -227,7 +227,7 @@ sub detected_hardware {
 			}
 		}
 
-		my $res=$entry->update($main::ldap_handle);
+		my $res=$entry->update($ldap_handle);
 		if(defined($res->{'errorMessage'}) &&
 			length($res->{'errorMessage'}) >0) {
 			&main::daemon_log("ERROR: can not add entries to LDAP: ".$res->{'errorMessage'}, 1);

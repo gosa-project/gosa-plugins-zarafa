@@ -752,6 +752,7 @@ sub register_at_gosa_si_server {
 				$client_address= "$client_ip:$client_port";
 				$client_mac_address = $local_mac;
 				$client_dnsname = $dnsname;
+                last;
 
 	  		# delivery of registration msg failed	
 			} else {

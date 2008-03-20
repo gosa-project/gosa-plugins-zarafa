@@ -94,13 +94,13 @@ sub get_module_info {
 				&main::daemon_log("Loading OUI cache file suceeded!", 6);
 			}
 		}
+        my $ldap_handle = &main::get_ldap_handle();
 		if(defined($ldap_uri) && length($ldap_uri)>0) {
-			&main::refresh_ldap_handle();
-			if (!$main::ldap_handle) {
+			if (!$ldap_handle) {
 				&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
 			}
 		} else {
-			$main::ldap_handle= undef;
+			$ldap_handle= undef;
 		}
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
@@ -177,7 +177,8 @@ sub got_packet {
 	
 	my $capture_device = sprintf "%s", $kernel->alias_list($sender) =~ /^arp_watch_(.*)$/;
 
-	if(!exists($hosts_database->{$packet->{source_haddr}})) {
+	my $ldap_handle = &main::get_ldap_handle(); 
+    if(!exists($hosts_database->{$packet->{source_haddr}})) {
 		my $dnsname= gethostbyaddr(inet_aton($packet->{source_ipaddr}), AF_INET) || $packet->{source_ipaddr};
 		my $ldap_result=&get_host_from_ldap($packet->{source_haddr});
 		if(exists($ldap_result->{dn})) {
@@ -209,7 +210,7 @@ sub got_packet {
 				": ".$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}.
 				"/".$hosts_database->{$packet->{source_haddr}}->{macAddress},4);
 			&add_ldap_entry(
-				$main::ldap_handle, 
+				$ldap_handle, 
 				$ldap_base, 
 				$hosts_database->{$packet->{source_haddr}}->{macAddress},
 				'new-system',
@@ -226,7 +227,7 @@ sub got_packet {
 				"->".$packet->{source_ipaddr}, 4);
 			$hosts_database->{$packet->{source_haddr}}->{ipHostNumber}= $packet->{source_ipaddr};
 			&change_ldap_entry(
-				$main::ldap_handle, 
+				$ldap_handle, 
 				$ldap_base, 
 				$hosts_database->{$packet->{source_haddr}}->{macAddress},
 				'ip-changed',
@@ -242,9 +243,10 @@ sub get_host_from_ldap {
 	my $mac=shift;
 	my $result={};
 		
-	if(defined($main::ldap_handle)) {
+    my $ladp_handle = &get_ldap_handle();     
+	if(defined($ldap_handle)) {
 		my $ldap_result= &search_ldap_entry(
-			$main::ldap_handle,
+			$ldap_handle,
 			$ldap_base,
 			"(|(macAddress=$mac)(dhcpHWAddress=ethernet $mac))"
 		);
@@ -440,7 +442,7 @@ sub change_ldap_entry {
 		if (defined($ip)) {
 			$replace->{'ipHostNumber'} = $ip;
 		}
-		my $result = $main::ldap_handle->modify( $dn, replace => $replace );
+		my $result = $ldap_tree->modify( $dn, replace => $replace );
 
 		# for $result->code constants please look at Net::LDAP::Constant
 		if($result->code == 32) {   # entry doesnt exists 
