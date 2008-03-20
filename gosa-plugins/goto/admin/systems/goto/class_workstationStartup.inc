@@ -249,7 +249,7 @@ class workstartup extends plugin
       if(!isset($this->cache['SERVERS'][$this->FAIdebianMirror][$this->FAIrelease])){
         $new_release = key($this->cache['SERVERS'][$this->FAIdebianMirror]); 
         if(count($this->FAIclass)){
-          msg_dialog::display(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianmirror), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianMirror,$new_release), ERROR_DIALOG);
         }
         $this->FAIrelease = $new_release;
         $this->cache =array();
@@ -608,6 +608,7 @@ class workstartup extends plugin
     $smarty->assign("fai_activated",$this->fai_activated);
 
     /* Create FAI output */
+    $this->update_fai_cache();
     if($this->si_fai_action_failed){
       $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
     }elseif($this->fai_activated){
@@ -830,7 +831,7 @@ class workstartup extends plugin
     $str = "";
 
     /* Skip FAI attribute handling if not necessary */
-    if($this->fai_activated){
+    if($this->fai_activated && !$this->si_fai_action_failed){
       if($this->FAIdebianMirror == "inherited"){
         $this->attrs['FAIclass'] = $this->attrs['FAIrelease'] =  $this->attrs['FAIdebianMirror'] = array();
       }else{
@@ -841,7 +842,7 @@ class workstartup extends plugin
         if(empty($this->attrs['FAIclass'])){
           $this->attrs['FAIclass'] = array();
         }else{
-          $this->attrs['FAIclass']= $str.":".$this->FAIrelease;
+          $this->attrs['FAIclass']= $str." :".$this->FAIrelease;
         }
       }
     }
@@ -892,7 +893,7 @@ class workstartup extends plugin
 
 
     /* Skip FAI attribute handling if not necessary */
-    if($this->fai_activated){
+    if($this->fai_activated && !$this->si_fai_action_failed){
       $ldap->cat($this->dn,array("FAIstate"));
       $checkFAIstate = $ldap->fetch();
 
@@ -1072,7 +1073,7 @@ class workstartup extends plugin
   function update_fai_cache($first_call = FALSE)
   {
     $force = FALSE;
-    $this->si_fai_action_failed = false;
+    $this->si_fai_action_failed = FALSE;
   
     $start = microtime(TRUE);  
 
@@ -1091,6 +1092,7 @@ class workstartup extends plugin
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
         $this->si_fai_action_failed = TRUE;
+        $this->cache = array();
         return;
       }else{
         foreach($tmp as $entry){
@@ -1136,7 +1138,8 @@ class workstartup extends plugin
       $this->cache['CLASSES'][$release] = array();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-        $this->si_fai_action_failed = TRUEi;
+        $this->si_fai_action_failed = TRUE;
+        $this->cache=array();
         return;
       }else{
         foreach($tmp as $entry){
