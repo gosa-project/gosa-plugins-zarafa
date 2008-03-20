@@ -825,27 +825,25 @@ class workstartup extends plugin
     plugin::save();
 
     unset( $this->attrs['FAIrelease'] );
-    
     $str = "";
 
     /* Skip FAI attribute handling if not necessary */
     if($this->fai_activated){
       if($this->FAIdebianMirror == "inherited"){
-        $this->attrs['FAIclass'] = $this->attrs['FAIrelease'] =  $this->attrs['FAIdebianMirror'] = array(); 
+        $this->attrs['FAIclass'] = $this->attrs['FAIrelease'] =  $this->attrs['FAIdebianMirror'] = array();
       }else{
         foreach($this->FAIclass as $class){
           $str .= $class." ";
         }
-        $str .= ":" . $this->FAIrelease;
-        $this->attrs['FAIclass']= "";
-        $this->attrs['FAIclass']= trim($str);
-
+        $str = trim($str);
         if(empty($this->attrs['FAIclass'])){
           $this->attrs['FAIclass'] = array();
+        }else{
+          $this->attrs['FAIclass']= $str.":".$this->FAIrelease;
         }
       }
     }
-  
+
     /* Add missing arrays */
     foreach (array("gotoFilesystem", "gotoAutoFs", "gotoModules") as $val){
       if (isset ($this->$val) && count ($this->$val) != 0){
@@ -1071,7 +1069,7 @@ class workstartup extends plugin
    */
   function update_fai_cache($first_call = FALSE)
   {
-    $force = TRUE;
+    $force = FALSE;
 
     $start = microtime(TRUE);  
 
@@ -1130,14 +1128,15 @@ class workstartup extends plugin
        */
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_classes($release);
+      $this->cache['CLASSES'][$release] = array();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
       }else{
         foreach($tmp as $entry){
-          $this->cache['CLASSES'][$release][$entry['CLASS']] = $this->analyse_fai_object($entry); 
+          $class = $entry['CLASS'];
+          $this->cache['CLASSES'][$release][$class] = $this->analyse_fai_object($entry); 
         }
       }
-
 
       /* Add object caught from external hook
        */
@@ -1160,7 +1159,7 @@ class workstartup extends plugin
               if($release_c == $release){
                 $this->cache['SERVERS'][$url][$release_c]=$release_c;
                 $this->cache['SERVERS']['auto'][$release_c]=$release_c; 
-                foreach ($classes as $class){
+                foreach ($classes_c as $class){
                   if ($class != ""){
                     $this->cache['CLASSES'][$release_c][$class]= array();
                   }
@@ -1171,6 +1170,7 @@ class workstartup extends plugin
         }
       }
     }
+#    echo sprintf("Took %.6f <br> ",microtime(1) - $start);
   }
 
 
