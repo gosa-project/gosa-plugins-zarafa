@@ -37,6 +37,7 @@ class workstartup extends plugin
   var $FAIclass           = array();  // The currently selected classes 
   var $FAIrelease         = "";
   var $FAIdebianMirror    = "auto";
+  var $si_fai_action_failed = FALSE;
 
   var $cache              = array(); // Used as cache in fai mehtods
 
@@ -228,7 +229,7 @@ class workstartup extends plugin
     }
 
 
-    if($this->fai_activated){
+    if($this->fai_activated && !$this->si_fai_action_failed){
 
       /* Check if the current mirror is available 
        */
@@ -607,10 +608,11 @@ class workstartup extends plugin
     $smarty->assign("fai_activated",$this->fai_activated);
 
     /* Create FAI output */
-    if($this->fai_activated){
+    if($this->si_fai_action_failed){
+      $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
+    }elseif($this->fai_activated){
 
-      $this->update_fai_cache();
-
+      $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
       $smarty->assign("FAIservers"  , $this->cache['SERVERS']);
       $smarty->assign("FAIdebianMirror",$this->FAIdebianMirror);
       $smarty->assign("FAIrelease"  , $this->FAIrelease);
@@ -1070,7 +1072,8 @@ class workstartup extends plugin
   function update_fai_cache($first_call = FALSE)
   {
     $force = FALSE;
-
+    $this->si_fai_action_failed = false;
+  
     $start = microtime(TRUE);  
 
     /* Get the list of available servers and their releases. 
@@ -1087,6 +1090,8 @@ class workstartup extends plugin
       $tmp = $o_queue->FAI_get_server(); 
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        $this->si_fai_action_failed = TRUE;
+        return;
       }else{
         foreach($tmp as $entry){
           $rel = $entry['RELEASE'];
@@ -1131,6 +1136,8 @@ class workstartup extends plugin
       $this->cache['CLASSES'][$release] = array();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        $this->si_fai_action_failed = TRUEi;
+        return;
       }else{
         foreach($tmp as $entry){
           $class = $entry['CLASS'];

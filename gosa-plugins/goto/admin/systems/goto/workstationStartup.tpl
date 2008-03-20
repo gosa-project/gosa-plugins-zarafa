@@ -58,7 +58,10 @@
   
   <td style="vertical-align:top;">
 
-	{if $fai_activated}
+	{if $si_fai_action_failed}
+		<b>{msgPool type=siError}</b><br>
+		{t}Check if the GOsa support daemon (gosa-si) is running.{/t}
+	{elseif $fai_activated}
 
 		{if $FAIdebianMirror == "inherited"}
 
