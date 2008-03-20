@@ -20,12 +20,6 @@
 #     REVISION:  ---
 #===============================================================================
 
-# TODO es gibt eine globale funktion get_ldap_handle
-# - ist in einer session dieses ldap handle schon vorhanden, wird es zurückgegeben
-# - ist es nicht vorhanden, wird es erzeugt, im heap für spätere ldap anfragen gespeichert und zurückgegeben
-# - sessions die kein ldap handle brauchen, sollen auch keins haben
-# - wird eine session geschlossen, muss das ldap verbindung vorher beendet werden
-
 
 use strict;
 use warnings;
@@ -58,6 +52,13 @@ use Net::LDAP::Util qw(:escape);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
+
+# TODO es gibt eine globale funktion get_ldap_handle
+# - ist in einer session dieses ldap handle schon vorhanden, wird es zurückgegeben
+# - ist es nicht vorhanden, wird es erzeugt, im heap für spätere ldap anfragen gespeichert und zurückgegeben
+# - sessions die kein ldap handle brauchen, sollen auch keins haben
+# - wird eine session geschlossen, muss das ldap verbindung vorher beendet werden
+#our $global_kernel;
 
 my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
@@ -428,7 +429,7 @@ sub import_modules {
 sub sig_int_handler {
     my ($signal) = @_;
 
-	if(defined($ldap_handle)) {
+	if (defined($ldap_handle)) {
 		$ldap_handle->disconnect;
 	}
 
@@ -960,6 +961,7 @@ sub update_jobdb_status_for_send_msgs {
 sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
+    $global_kernel = $kernel;
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
@@ -1290,17 +1292,26 @@ sub get_ldap_handle {
 	my $ldap_handle;
 	
 	if (not defined $session_id) {
-		return $ldap_handle;
+        daemon_log("0 DEBUG: need a session_id to fetch the correct ldap handle", 7); 
+		return;
 	}
 
-	my $session_reference = $kernel->ID_id_to_session($session_id);
+	my $session_reference = $global_kernel->ID_id_to_session($session_id);
 	if( defined $session_reference ) {
 		$heap = $session_reference->get_heap();
 	}
 
+    if (not defined $heap) {
+        daemon_log("$session_id DEBUG: cannot get heap for session_id '$session_id'", 7); 
+        return;
+    }
+
 	if (not exists $heap->{ldap_handle}) {
 		# create new ldap handle
+        my $ldap_handle = Net::LDAP->new( $ldap_uri );
+
 		# add ldap handle to heap
+        $heap->{ldap_handle} = $ldap_handle;
 	}
 
 	$ldap_handle = $heap->{ldap_handle};
@@ -1360,7 +1371,7 @@ sub change_fai_state {
         wake      => '',
         memcheck  => 'memcheck',
         sysinfo   => 'sysinfo',
-	install   => 'install',
+        install   => 'install',
     );
 
     # Return if this is unknown
@@ -1372,6 +1383,7 @@ sub change_fai_state {
     my $state= $mapActions{ $st };
 
     &refresh_ldap_handle();
+#    my $ldap_handle = get_ldap_handle($session_id);
     if( defined($ldap_handle) ) {
 
       # Build search filter for hosts
