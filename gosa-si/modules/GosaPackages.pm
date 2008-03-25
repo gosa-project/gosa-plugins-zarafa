@@ -229,8 +229,8 @@ sub import_events {
 
     while (defined (my $event = readdir (DIR))) {
         if( $event eq "." || $event eq ".." ) { next; }   
-        if( $event eq "siTriggered.pm" ) { next; }      # SI specific events not needed in GosaPackages.pm
-        if( $event eq "clMessages.pm" ) { next; }                    # SI specific events not needed in GosaPackages.pm
+        if( $event eq "siTriggered.pm" ) { next; }                  # SI specific events not needed in GosaPackages.pm
+        if( $event eq "clMessages.pm" ) { next; }                   # SI specific events not needed in GosaPackages.pm
 
         eval{ require $event; };
         if( $@ ) {
@@ -246,7 +246,7 @@ sub import_events {
             $event_hash->{$event_name} = $event_module;
         }
         my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("G DEBUG: GosaPackages imported events $events_string", 8);
+        &main::daemon_log("G DEBUG: GosaPackages from '$1' imported events $events_string", 8);
     }
 }
 

@@ -28,7 +28,7 @@ if($sock->connected()){
 #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
 
 # Reload ldap config
-$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target></xml>";
+#$data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</source><target>00:01:6c:9d:b9:fa</target></xml>";
 
 # jobdb update  
 #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
@@ -63,21 +63,6 @@ $data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</so
 #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
 
-# to test
-#    "trigger_reload_ldap_config",
-#    "network_completition",
-#    "trigger_action_localboot",
-#    "trigger_action_faireboot",
-#    "trigger_action_reboot",
-#    "trigger_action_halt",
-#    "trigger_action_update", 
-#    "trigger_action_reinstall",
-#    "trigger_action_memcheck", 
-#    "trigger_action_sysinfo",
-#    "trigger_action_instant_update",
-#    "trigger_action_rescan",
-#    "trigger_action_wake",
-
 # get_login_usr_for_client
 #$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
 
@@ -91,6 +76,12 @@ $data = "<xml> <header>gosa_trigger_reload_ldap_config</header> <source>GOSA</so
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>susi</user> <user>harald</user> <user>susi</user> <group>gosa-admins-all</group> </xml>"; 
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <group>gosa-admins-all</group> <usrmesg>kaffeepause</usrmesg> </xml>"; 
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>cajus.pollmeier</user> <message>kaffeepause</message> </xml>"; 
+
+
+################
+# logHandling.pm
+$data = "<xml> <header>gosa_show_log_by_mac</header> <target>GOSA</target> <source>GOSA</source> <mac>00:01:6c:9d:b9:fa</mac> </xml>"; 
+
 
 
     $sock->write($data);
