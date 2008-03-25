@@ -199,7 +199,8 @@ class gotomasses extends plugin
           foreach($ret as $task){
 
             /* Only remove WAITING or ERROR entries */
-            if(in_array($task['STATUS'],array("waiting","error"))){
+            if(in_array($task['STATUS'],array("waiting","error")) || 
+               ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
               $this->ids_to_remove[] = $task['ID'];
               if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
                 $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
@@ -375,7 +376,7 @@ class gotomasses extends plugin
 
       /* If PROCESSING add abort action
        */  
-      if(in_array($task['STATUS'],array("processing")) && preg_match("/*install*/",$task['HEADERTAG'])){
+      if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
         $prio_actions.= "<input class='center' type='image' src='images/small_error.png' 
           title='"._("Abort execution")."' name='abort_process_".$key."'>";
       }
@@ -397,6 +398,10 @@ class gotomasses extends plugin
       /* If WAITING or ERROR add remove action
        */  
       if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error"))){
+        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
+          class='center' alt='"._("Remove")."'>";
+      }
+      if(in_array($task['STATUS'],array("processing")) && !preg_match("/install/",$task['HEADERTAG'])){
         $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
           class='center' alt='"._("Remove")."'>";
       }
