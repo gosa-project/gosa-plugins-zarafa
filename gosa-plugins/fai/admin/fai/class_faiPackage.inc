@@ -70,27 +70,23 @@ class faiPackage extends plugin
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Get FAIstate
-       */
+      /* Get FAIstate */
       if(isset($this->attrs['FAIstate'][0])){
         $this->FAIstate = $this->attrs['FAIstate'][0];
       }
-    }
 
-    if(isset($this->attrs['FAIpackage'])){
-      unset($this->attrs['FAIpackage']['count']);
-      foreach($this->attrs['FAIpackage'] as $pkg){
-        $this->usedPackages[$pkg] = $pkg;
-      }
-      ksort($this->usedPackages);
-    }else{
+      /* Check if there are already some packages in this list 
+       */
       $this->usedPackages = array();
-    }  
+      if(isset($this->attrs['FAIpackage'])){
+        unset($this->attrs['FAIpackage']['count']);
+        foreach($this->attrs['FAIpackage'] as $pkg){
+          $this->usedPackages[$pkg] = $pkg;
+        }
+        ksort($this->usedPackages);
+      }  
 
-    if($dn != "new"){
-
-      /* Create one filter with all package names, 
-         instead of calling $ldap->search for every single package 
+      /* Fetch all package configurations from ldap 
        */
       $PackageFilter = "";
       foreach($this->usedPackages as $name){
@@ -101,9 +97,11 @@ class faiPackage extends plugin
       /* Search for configuration objects */ 
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->dn);
-      $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType","FAIvariableContent","FAIpackage","FAIdebianSection","FAIstate"));
+      $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType",
+            "FAIvariableContent","FAIpackage","FAIdebianSection","FAIstate"));
 
-      /* Walk through configurations and append them to our list of ConfiguredPackages */
+      /* Walk through configurations and append them to our list of ConfiguredPackages 
+       */
       while($attr = $ldap->fetch()){
 
         /* Skip objects, that are tagged as removed */
@@ -130,36 +128,37 @@ class faiPackage extends plugin
           $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
         }
       }
-    }
 
-    if (isset($this->attrs['FAIdebianSection']['count'])){
-      unset($this->attrs['FAIdebianSection']['count']);
-    }
-    if((isset($this->attrs['FAIdebianSection']))&&(is_array($this->attrs['FAIdebianSection']))){
-      $this->FAIdebianSection = array();
-      foreach($this->attrs['FAIdebianSection'] as $sec){
-        $this->FAIdebianSection[$sec]=$sec;
+      if (isset($this->attrs['FAIdebianSection']['count'])){
+        unset($this->attrs['FAIdebianSection']['count']);
       }
-    }
+      if((isset($this->attrs['FAIdebianSection']))&&(is_array($this->attrs['FAIdebianSection']))){
+        $this->FAIdebianSection = array();
+        foreach($this->attrs['FAIdebianSection'] as $sec){
+          $this->FAIdebianSection[$sec]=$sec;
+        }
+      }
 
-    if((isset($this->attrs['FAIdebianSection']))&&(is_string($this->attrs['FAIdebianSection']))){
-      $this->FAIdebianSection=array($this->attrs['FAIdebianSection']=>$this->attrs['FAIdebianSection']) ;
-    }
-    $this->confDir = CONFIG_DIR."/fai/";
-    $this->FAIpackage = array();
+      if((isset($this->attrs['FAIdebianSection']))&&(is_string($this->attrs['FAIdebianSection']))){
+        $this->FAIdebianSection=array($this->attrs['FAIdebianSection']=>$this->attrs['FAIdebianSection']) ;
+      }
+      $this->confDir = CONFIG_DIR."/fai/";
+      $this->FAIpackage = array();
 
+    } // ENDE  dn != new  
 
     $methods = array();
     foreach($this->FAIinstallMethods as $method){
       $methods[$method] = $method;
     }
     $this->FAIinstallMethods = $methods;
+
     /* Check if we exist already - no need to ask for revisions, etc. then */
     if ($this->dn != "new"){
       $this->newDialogShown= true;
     }
-
   }
+
 
   function execute()
   {
@@ -215,7 +214,7 @@ class faiPackage extends plugin
       $this->is_dialog =true;
     }
 
-    /* Delte selected package */ 
+    /* Delete selected package */ 
     if(isset($_POST['Delpkg']) && $this->acl_is_writeable("FAIpackage")){
       if($this->FAIstate != "freeze"){
         foreach($_POST['usedPackages'] as $del){
