@@ -58,7 +58,10 @@
   
   <td style="vertical-align:top;">
 
-	{if $si_fai_action_failed}
+	{if !$si_active}
+		<b>{t}GOsa support daemon not configured{/t}</b><br>
+		{t}FAI settings cannot be modified{/t}
+	{elseif $si_fai_action_failed}
 		<b>{msgPool type=siError}</b><br>
 		{t}Check if the GOsa support daemon (gosa-si) is running.{/t}
 	{elseif $fai_activated}

@@ -37,6 +37,7 @@ class workstartup extends plugin
   var $FAIclass           = array();  // The currently selected classes 
   var $FAIrelease         = "";
   var $FAIdebianMirror    = "auto";
+  var $si_active            = FALSE;
   var $si_fai_action_failed = FALSE;
 
   var $cache              = array(); // Used as cache in fai mehtods
@@ -68,6 +69,9 @@ class workstartup extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    /* Check for si daemon */
+    $this->si_active = isset($this->config->current['GOSA_SI']) && !empty($this->config->current['GOSA_SI']);
 
     /* Check object group membership */
     if(!isset($this->parent->by_object['ogroup'])){
@@ -229,7 +233,7 @@ class workstartup extends plugin
     }
 
 
-    if($this->fai_activated && !$this->si_fai_action_failed){
+    if($this->fai_activated && !$this->si_fai_action_failed && $this->si_active){
 
       /* Check if the current mirror is available 
        */
@@ -609,11 +613,11 @@ class workstartup extends plugin
 
     /* Create FAI output */
     $this->update_fai_cache();
-    if($this->si_fai_action_failed){
-      $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
-    }elseif($this->fai_activated){
+    $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
+    $smarty->assign("si_active",$this->si_active);
+  
+    if(!$this->si_fai_action_failed && $this->si_active && $this->fai_activated){
 
-      $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
       $smarty->assign("FAIservers"  , $this->cache['SERVERS']);
       $smarty->assign("FAIdebianMirror",$this->FAIdebianMirror);
       $smarty->assign("FAIrelease"  , $this->FAIrelease);
@@ -893,7 +897,7 @@ class workstartup extends plugin
 
 
     /* Skip FAI attribute handling if not necessary */
-    if($this->fai_activated && !$this->si_fai_action_failed){
+    if($this->fai_activated && !$this->si_fai_action_failed && $this->si_active){
       $ldap->cat($this->dn,array("FAIstate"));
       $checkFAIstate = $ldap->fetch();
 
@@ -1074,7 +1078,7 @@ class workstartup extends plugin
   {
     $force = FALSE;
     $this->si_fai_action_failed = FALSE;
-  
+    if(!$this->si_active) return; 
     $start = microtime(TRUE);  
 
     /* Get the list of available servers and their releases. 
