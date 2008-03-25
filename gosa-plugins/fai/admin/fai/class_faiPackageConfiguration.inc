@@ -10,11 +10,15 @@ class faiPackageConfiguration extends plugin
   var $Debconf_handle = NULL;
   var $pkg_config ;
   var $obj;
+  var $release;
 
-  function faiPackageConfiguration (&$config, $dn= NULL,$obj,$path,$pkg_config)
+  function faiPackageConfiguration (&$config, $dn= NULL,$obj,$release,$pkg_config)
   {
     plugin::plugin ($config, $dn);
     $this->obj = $obj;
+    $this->release = $release;
+
+
 #   $this->Debconf_handle = new debconf();
 #   $this->Debconf_handle->set_template_directory($path);
 #   $this->Debconf_handle->set_package($this->obj);
@@ -33,6 +37,11 @@ class faiPackageConfiguration extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    $q = new gosaSupportDaemon();
+    $ret = $q->FAI_get_packages($this->release,$this->obj);
+    print_a($ret);
+
 
     return("Not implemented yet<input type='submit' name='CancelObjectConfig' value='back'>");
 

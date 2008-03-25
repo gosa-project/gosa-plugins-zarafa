@@ -263,7 +263,7 @@ class faiPackage extends plugin
         $pkg_config = $this->ConfiguredPackages[$pkg];
       }
 
-      $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $path, $pkg_config);
+      $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $this->FAIdebianRelease , $pkg_config);
       $this->is_dialog =true;
     }
 
