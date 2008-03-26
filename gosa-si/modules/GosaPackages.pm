@@ -361,7 +361,7 @@ sub process_job_msg {
 						base => $main::ldap_base,
 						scope => 'sub',
 						attrs => ['cn'],
-						filter => "(macAddress=$macAddress)");
+						filter => "(macAddress=$macaddress)");
 		if($mesg->code) {
 			&main::daemon_log($mesg->error, 1);
 			$target = "none";
