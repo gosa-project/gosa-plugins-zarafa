@@ -40,6 +40,8 @@ sub show_log_by_date {
     my $source = @{$msg_hash->{source}}[0];
 
     my $date_l =  $msg_hash->{date};
+	#my $date_h;
+	#map {$date_h->{$_}++} @{$date_l};
 
     if (not -d $main::client_fai_log_dir) {
         &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
@@ -53,7 +55,30 @@ sub show_log_by_date {
     opendir(DIR, $main::client_fai_log_dir); 
     my @avail_macs = readdir(DIR);
     closedir(DIR);   
-   
+ 
+ 	# goto each mac directory
+	# select all dates which matches the parameter dates
+	my %res_h;
+	foreach my $date ($date_l) {
+		
+		# go through all mac addresses 
+		foreach my $mac (@avail_macs) {
+			my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $mac);
+
+			opendir(DIR, $mac_dir);
+			my @avail_dates = readdir(DIR);
+			closedir(DIR);
+			
+			# go through all dates of one mac address
+			foreach my $avail_date (@avail_dates) {
+				if ($avail_date =~ /$date/i) {
+					if (not exists %res)
+					push(%res_h->{$mac}, );
+				}
+			}
+		}
+	}
+
 }
 
 sub show_log_by_mac {
