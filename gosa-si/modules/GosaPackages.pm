@@ -348,8 +348,28 @@ sub process_job_msg {
             "</xml>";
     }
     
-    # check wether mac address is already known in known_daemons or known_clients
-    my $target = 'none';
+	# if mac address is already known in ldap, set targettag to 'cn'
+    my $target;
+	my $ldap_handle = &main::get_ldap_handle($session_id); 
+	if( not defined $ldap_handle ) {
+		&main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
+		$target = "none"; 
+		
+	# try to fetch a 'real name'		
+	} else {
+		my $mesg = $ldap_handle->search(
+						base => $main::ldap_base,
+						scope => 'sub',
+						attrs => ['cn'],
+						filter => "(macAddress=$macAddress)");
+		if($mesg->code) {
+			&main::daemon_log($mesg->error, 1);
+			$target = "none";
+		} else {
+			my $entry= $mesg->entry(0);
+			$target = $entry->get_value("cn");
+		}
+	}
 
     if( $error == 0 ) {
         # add job to job queue
