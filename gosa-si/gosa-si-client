@@ -954,20 +954,27 @@ sub trigger_logged_in_users_report {
 
     # just do if client is registered already
     if( $REGISTERED ) {
-        my $result = qx(/usr/bin/w -hs);
-        my @res_lines;
-
-        if( defined $result ) { 
-            chomp($result);
-            @res_lines = split("\n", $result);
-        }
-
-        my @logged_in_user_list;
-        foreach my $line (@res_lines) {
-            chomp($line);
-            my @line_parts = split(/\s+/, $line); 
-            push(@logged_in_user_list, $line_parts[0]);
-        }
+        my $result = qx(/usr/bin/users);
+		my @logged_in_user_list;
+		if( defined $result ) {
+			chomp($result);
+			@logged_in_user_list = split("\n", $result);
+		}
+		
+#        my @res_lines;
+#
+#        if( defined $result ) { 
+#            chomp($result);
+#            @res_lines = split("\n", $result);
+#        }
+#
+#        my @logged_in_user_list;
+#        foreach my $line (@res_lines) {
+#            chomp($line);
+#            my @line_parts = split(/\s+/, $line); 
+#            push(@logged_in_user_list, $line_parts[0]);
+#        }
+#        
         system("echo 'CURRENTLY_LOGGED_IN ".join(" ", @logged_in_user_list)."' > /var/run/gosa-si-client.socket"); 
         $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
     } else {
