@@ -965,10 +965,8 @@ sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
     $global_kernel = $kernel;
-	#################################
-	# out commented, just for testing
-	#$kernel->yield('create_fai_server_db', $fai_server_tn );
-	#$kernel->yield('create_fai_release_db', $fai_release_tn );
+	$kernel->yield('create_fai_server_db', $fai_server_tn );
+	$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
 }
 
