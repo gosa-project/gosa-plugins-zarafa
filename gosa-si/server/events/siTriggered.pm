@@ -129,7 +129,7 @@ sub detected_hardware {
 	# check hit
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
-		&main::daemon_log("ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
 		return;
 	}
 
@@ -137,13 +137,13 @@ sub detected_hardware {
 	my $hostkey = $res->{1}->{hostkey};
 
 	if (not defined $macaddress) {
-		&main::daemon_log("ERROR: no mac address found for client $address", 1);
+		&main::daemon_log("$session_id ERROR: no mac address found for client $address", 1);
 		return;
 	}
 	# Build LDAP connection
     my $ldap_handle = &main::get_ldap_handle($session_id);
 	if( not defined $ldap_handle ) {
-		&main::daemon_log("ERROR: cannot connect to ldap: $ldap_uri", 1);
+		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1)
 		return;
 	} 
 

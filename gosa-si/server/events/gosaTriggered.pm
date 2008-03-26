@@ -75,12 +75,12 @@ sub send_user_msg {
 
     # error handling
     if( not @user_list && not @group_list ) {
-        &main::daemon_log("WARNING: no user-tag or a group-tag specified in 'send_user_msg'", 3); 
+        &main::daemon_log("$session_id WARNING: no user-tag or a group-tag specified in 'send_user_msg'", 3); 
         return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
                 "<error_string>no user-tag or a group-tag specified in 'send_user_msg'</error_string></xml>");
     }
     if( not defined $message ) {
-        &main::daemon_log("WARNING: no message-tag specified in 'send_user_msg'", 3); 
+        &main::daemon_log("$session_id WARNING: no message-tag specified in 'send_user_msg'", 3); 
         return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
                 "<error_string>no message-tag specified in 'send_user_msg'</error_string></xml>");
 
@@ -91,7 +91,7 @@ sub send_user_msg {
     if( @group_list ) {
         # build ldap connection
         if( not defined $ldap_handle ) {
-            &main::daemon_log("ERROR: cannot connect to ldap", 1);
+            &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
             return ();
         } 
         foreach my $group (@group_list) {
