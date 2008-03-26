@@ -613,6 +613,10 @@ sub send_msg_to_target {
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
 
+	# xxxxxxxxxxxxxx
+
+	
+
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
@@ -968,7 +972,7 @@ sub trigger_logged_in_users_report {
         $kernel->delay_set('trigger_logged_in_users_report', $trigger_logged_in_users_report_delay);
     } else {
         # try it in 1 sec again
-        $kernel->delay_set('trigger_logged_in_users_report', 1);
+        $kernel->delay_set('trigger_logged_in_users_report', 10);
     }
 }
 
