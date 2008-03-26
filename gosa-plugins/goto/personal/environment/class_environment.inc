@@ -245,6 +245,7 @@ class environment extends plugin
   { 
     $tmp1  = array("none" => array(_("disabled")));
     $tmp2  = array("none" => _("disabled"));
+    $tmp3  = array();
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=goEnvironmentServer)(gotoKioskProfile=*)(cn=*))",array("cn","gotoKioskProfile"));
