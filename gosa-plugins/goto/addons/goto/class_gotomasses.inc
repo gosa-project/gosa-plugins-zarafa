@@ -199,7 +199,7 @@ class gotomasses extends plugin
           foreach($ret as $task){
 
             /* Only remove WAITING or ERROR entries */
-            if(in_array($task['STATUS'],array("waiting","error")) || 
+            if(in_array($task['STATUS'],array("waiting","error","processed")) || 
                ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
               $this->ids_to_remove[] = $task['ID'];
               if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
@@ -397,7 +397,7 @@ class gotomasses extends plugin
 
       /* If WAITING or ERROR add remove action
        */  
-      if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error"))){
+      if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error","processed"))){
         $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
           class='center' alt='"._("Remove")."'>";
       }
