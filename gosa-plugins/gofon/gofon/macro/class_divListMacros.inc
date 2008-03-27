@@ -272,7 +272,7 @@ class divListMacro extends MultiSelectWindow
     $num_objs = count($list);
 
     $num_obj_str = sprintf(_("Number of listed %s"),_("macros"));
-    $num_deb_str = sprintf(_("Number of listed %s"),_("departments"));
+    $num_dep_str = sprintf(_("Number of listed %s"),_("departments"));
 
     $str = "<img class='center' src='images/select_macro.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
