@@ -40,18 +40,12 @@ class faiPackageConfiguration extends plugin
     /* Call parent execute */
     plugin::execute();
 
-
     /* Fill templating stuff */
     $smarty     = get_smarty();
-    $display = "";
     $smarty->assign("headline", sprintf(_("Debconf information for package '%s'"), $this->obj));
-
     $this->Debconf_handle->PostCheck();
-
     $smarty->assign("Config",$this->Debconf_handle->get_dialog());
-
-    $display.= $smarty->fetch(get_template_path('faiPackageConfiguration.tpl', TRUE));
-    return($display);
+    return($smarty->fetch(get_template_path('faiPackageConfiguration.tpl', TRUE)));
   }
 
   /* Save data to object */
@@ -64,7 +58,6 @@ class faiPackageConfiguration extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-
     return ($message);
   }
 
@@ -72,7 +65,6 @@ class faiPackageConfiguration extends plugin
   {
     $this->Debconf_handle->PostCheck();
     $pkgs = $this->Debconf_handle->template;
-
     $tmp = array();
     foreach($pkgs as $pkg){
       $tmp[$this->obj][$pkg['Name']]['Value']= $pkg['Default'];
