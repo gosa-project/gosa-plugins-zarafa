@@ -42,18 +42,16 @@ msgid "Name"
 msgstr "Nom"
 
 #: admin/systems/services/dhcp/dhcp_pool.tpl:8
-#, fuzzy
 msgid "Name of pool"
-msgstr "Nom de la liste rouge"
+msgstr "Nom du pool d'addresse"
 
 #: admin/systems/services/dhcp/dhcp_pool.tpl:11
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:154
 #: admin/systems/services/dhcp/class_dhcpPool.inc:121
 #: admin/systems/services/dhcp/class_dhcpPool.inc:125
 #: admin/systems/services/dhcp/class_dhcpPool.inc:129
-#, fuzzy
 msgid "Range"
-msgstr "Gérer"
+msgstr "Etendue"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:11
 #, fuzzy
