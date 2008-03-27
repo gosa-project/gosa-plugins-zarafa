@@ -51,6 +51,7 @@ class faiPackage extends plugin
   var $FAIstate         = "";
   var $view_logged      = FALSE;
   var $base;
+  var $FAIpackage ;
 
   var $FAIinstallMethods  = array( "install", "ninstall", "remove", 
       "dselect-upgrade", "taskinst", "taskrm",
@@ -421,10 +422,11 @@ class faiPackage extends plugin
 
   function genPkgs()
   {
-    if($this->buffer === NULL || !count($this->buffer)){
+    $start = microtime(1);
+    if(1 | $this->buffer === NULL || !count($this->buffer)){
       $this->buffer = array();
       $q = new gosaSupportDaemon();
-      $attrs = array("distribution", "package","version", "section", "description", "timestamp","template=''");
+      $attrs = array("distribution", "package","version=''", "section", "description", "timestamp=''","template=''");
       $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs);
       if($q->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
@@ -434,6 +436,9 @@ class faiPackage extends plugin
         }
       }
     }
+    
+    printf("%0.6f",(microtime(1) - $start));
+    print_a($this->buffer);
     return $this->buffer;
   }
 
