@@ -255,14 +255,11 @@ class faiPackage extends plugin
 
     /* Configuration dialog open*/
     if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'][0])) && $this->acl_is_writeable("FAIdebconfInfo")){
-      $path = CONFIG_DIR."/fai/".$this->FAIdebianRelease."/debconf.d";
       $pkg_config = array();
       $pkg = $_POST['usedPackages'][0];
-
       if(isset($this->ConfiguredPackages[$pkg])){
         $pkg_config = $this->ConfiguredPackages[$pkg];
       }
-
       $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $this->FAIdebianRelease , $pkg_config);
       $this->is_dialog =true;
     }
@@ -423,10 +420,10 @@ class faiPackage extends plugin
   function genPkgs()
   {
     $start = microtime(1);
-    if(1 | $this->buffer === NULL || !count($this->buffer)){
+    if($this->buffer === NULL || !count($this->buffer)){
       $this->buffer = array();
       $q = new gosaSupportDaemon();
-      $attrs = array("distribution", "package","version=''", "section", "description", "timestamp=''","template=''");
+      $attrs = array("distribution", "package","version", "section", "description", "timestamp","template=''");
       $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs);
       if($q->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
@@ -437,8 +434,7 @@ class faiPackage extends plugin
       }
     }
     
-    printf("%0.6f",(microtime(1) - $start));
-    print_a($this->buffer);
+#    printf("%0.6f",(microtime(1) - $start));
     return $this->buffer;
   }
 
