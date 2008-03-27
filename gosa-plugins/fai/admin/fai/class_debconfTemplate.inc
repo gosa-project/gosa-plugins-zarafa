@@ -5,174 +5,124 @@ class debconf
   var $package= "";
   var $language= "";
   var $loaded_template= FALSE;
-  var $template_directory= "";
   var $template= array();
 
 
-  function debconf($package= "", $language= "")
+  function debconf($language= "")
   {
     $this->set_language($language);
-    $this->set_package($package);
   }
-
-
-  function set_package($package)
-  {
-    $this->package= $package;
-  }
-
-
-  function set_template_directory($directory)
-  {
-    if (is_dir($directory) && is_readable($directory)){
-      $this->template_directory = $directory;
-      return TRUE;
-    }
-
-    $this->template_directory= "";
-    return FALSE;
-  }
-
 
   function set_language($language)
   {
     $this->language= $language;
   }
 
-
-  function load()
+  function load_from_string($str)
   {
-    if( TRUE === $this->has_template() ) {
-    
-      /* Try to load package based template file */
-      $this->template= array();
+    $lines                 = split("\n",$str);
+    $this->template        = array();
+    $post_name             = 0;
+    $langcode              = $this->language.".UTF-8";
+    $in_description        = FALSE;
+    $got_local_description = FALSE;
 
-      /* Read template array */
-      $post_name             = 0;
-      $langcode              = $this->language.".UTF-8";
-      $in_description        = FALSE;
-      $got_local_description = FALSE;
+    foreach($lines as $line){
 
-      /* get filename */
-      $filename= preg_replace("/\/+/", "/", $this->template_directory."/".$this->package.".templates");
-
-      /* Check if file is readable */
-      if (!is_file($filename) || !is_readable($filename)){
-        return(FALSE);
+      /* Reset description flag */
+      if ($in_description && !preg_match("/^ /", $line)){
+        $in_description= FALSE;
       }
 
-      /* Open file and read content line by line */
-      $fh= fopen($filename, 'r');
+      /* Template header */
+      if (preg_match("/^Template: /", $line)){
+        $post_name ++; 
+        $name= trim(preg_replace("/^Template: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Name'] = $name;
+        $this->template[$post_name]['Default'] ="";
 
-      /* While the file handle is valid && there is still data to read -> parse configuration file */
-      while ($fh && !feof($fh)){
-        $line= fgets($fh, 1024);
-
-        /* Reset description flag */
-        if ($in_description && !preg_match("/^ /", $line)){
-          $in_description= FALSE;
-        }
-
-        /* Template header */
-        if (preg_match("/^Template: /", $line)){
-          $post_name ++; 
-          $name= trim(preg_replace("/^Template: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Name'] = $name;
-          $this->template[$post_name]['Default'] ="";
-         
-          $got_local_description= FALSE;
-          continue;
-        }
-
-        /* Get type */
-        if (preg_match("/^Type: /", $line)){
-          $type= trim(preg_replace("/^Type: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Type']= $type;
-          continue;
-        }
-
-        /* Get default */
-        if (preg_match("/^Default: /", $line)){
-          $this->template[$post_name]['Default']= "";
-          $default= trim(preg_replace("/^Default: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Default']= $default;
-          continue;
-        }
-
-        /* Get description */
-        if (!$got_local_description && preg_match("/^Description: /", $line)){
-          $this->template[$post_name]['Description']= "";
-          $description= trim(preg_replace("/^Description: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Topic']= $description;
-          $this->template[$post_name]['Description']= "";
-          $in_description= TRUE;
-          continue;
-        }
-
-        /* Fill description */
-        if (!$got_local_description && $in_description){
-          $description= preg_replace("/^ (.*)$/", "\\1", $line);
-          $this->template[$post_name]['Description'].= $description;
-          continue;
-        }
-
-        /* Get local description */
-        if (preg_match("/^Description-$langcode: /", $line)){
-          $description= trim(preg_replace("/^Description-$langcode: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Topic']= $description;
-          $in_description= TRUE;
-          $got_local_description= TRUE;
-          $this->template[$post_name]['Description']= "";
-          continue;
-        }
-
-        /* Fill local description */
-        if ($got_local_description && $in_description){
-          $description= preg_replace("/^ (.*)$/", "\\1", $line);
-          $this->template[$post_name]['Description'].= $description;
-          continue;
-        }
-
-        /* Get native choices */
-        if (preg_match("/^Choices: /", $line)){
-          $type= trim(preg_replace("/^Choices: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Choices']= $type;
-        }
-
-        /* Get local choices */
-        if (preg_match("/^Choices-$langcode: /", $line)){
-          $type= trim(preg_replace("/^Choices-$langcode: (.*)$/", "\\1", $line));
-          $this->template[$post_name]['Choices-local']= $type;
-        }
-
+        $got_local_description= FALSE;
+        continue;
       }
 
-      fclose($fh);
-      $this->loaded_template= TRUE;
-      
-      $tmp= array();
-      foreach($this->template as $post_name => $template){
-        $template['post_name'] = "post_".$post_name;
-        $tmp[] = $template;
+      /* Get type */
+      if (preg_match("/^Type: /", $line)){
+        $type= trim(preg_replace("/^Type: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Type']= $type;
+        continue;
       }
-      $this->template = $tmp;
 
-      return (TRUE);
+      /* Get default */
+      if (preg_match("/^Default: /", $line)){
+        $this->template[$post_name]['Default']= "";
+        $default= trim(preg_replace("/^Default: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Default']= $default;
+        continue;
+      }
+
+      /* Get description */
+      if (!$got_local_description && preg_match("/^Description: /", $line)){
+        $this->template[$post_name]['Description']= "";
+        $description= trim(preg_replace("/^Description: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Topic']= $description;
+        $this->template[$post_name]['Description']= "";
+        $in_description= TRUE;
+        continue;
+      }
+
+      /* Fill description */
+      if (!$got_local_description && $in_description){
+        $description= preg_replace("/^ (.*)$/", "\\1", $line);
+        $this->template[$post_name]['Description'].= $description;
+        continue;
+      }
+
+      /* Get local description */
+      if (preg_match("/^Description-$langcode: /", $line)){
+        $description= trim(preg_replace("/^Description-$langcode: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Topic']= $description;
+        $in_description= TRUE;
+        $got_local_description= TRUE;
+        $this->template[$post_name]['Description']= "";
+        continue;
+      }
+
+      /* Fill local description */
+      if ($got_local_description && $in_description){
+        $description= preg_replace("/^ (.*)$/", "\\1", $line);
+        $this->template[$post_name]['Description'].= $description;
+        continue;
+      }
+
+      /* Get native choices */
+      if (preg_match("/^Choices: /", $line)){
+        $type= trim(preg_replace("/^Choices: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Choices']= $type;
+      }
+
+      /* Get local choices */
+      if (preg_match("/^Choices-$langcode: /", $line)){
+        $type= trim(preg_replace("/^Choices-$langcode: (.*)$/", "\\1", $line));
+        $this->template[$post_name]['Choices-local']= $type;
+      }
+
     }
 
-    $this->loaded_template= FALSE;
-    return (FALSE);
-  }
+    $this->loaded_template= TRUE;
 
+    $tmp= array();
+    foreach($this->template as $post_name => $template){
+      $template['post_name'] = "post_".$post_name;
+      $tmp[] = $template;
+    }
+    $this->template = $tmp;
+
+    return (TRUE);
+  }
 
   function has_template()
   {
-    /* Reject requests, if parameters are not set */
-    if ($this->package == "" || $this->template_directory == ""){
-      return (FALSE);
-    }
-    $filename= preg_replace("/\/+/", "/", $this->template_directory."/".$this->package.".templates");
-    return (is_file($filename) && is_readable($filename));
+    return(count($this->template) != FALSE);
   }
 
 
@@ -210,8 +160,6 @@ class debconf
         $this->template[$post_name]['Default'] = preg_replace("/, $/","",$this->template[$post_name]['Default']);
       }
     }
-
-
   }
 
 

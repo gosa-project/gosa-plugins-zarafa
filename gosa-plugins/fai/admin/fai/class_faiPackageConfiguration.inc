@@ -17,20 +17,22 @@ class faiPackageConfiguration extends plugin
     plugin::plugin ($config, $dn);
     $this->obj = $obj;
     $this->release = $release;
+    $this->pkg_config = $pkg_config;
 
-
-#   $this->Debconf_handle = new debconf();
-#   $this->Debconf_handle->set_template_directory($path);
-#   $this->Debconf_handle->set_package($this->obj);
-#   $this->Debconf_handle->set_language(preg_replace('/_.*$/', '', get_browser_language()));
-#
-#   if( $this->Debconf_handle->load() ) {
-#     $this->pkg_config = $pkg_config;
-#
-#     foreach($this->pkg_config as $var){
-#       $this->Debconf_handle->SetDefault($var['Name'],$var['Value']);
-#     }
-#   }
+    /* Read pkg debconf info */
+    $q = new gosaSupportDaemon();
+    $ret = $q->FAI_get_packages($this->release,array("*"),$this->obj);
+    $tpl = "";
+    if(isset($ret['ANSWER1']) && isset($ret['ANSWER1']['TEMPLATE'])){
+      $tpl = base64_decode($ret['ANSWER1']['TEMPLATE']);
+    }
+    $this->Debconf_handle = new debconf(preg_replace('/_.*$/', '', get_browser_language()));
+    $this->Debconf_handle->load_from_string($tpl);
+    if($this->Debconf_handle->has_template()){
+      foreach($this->pkg_config as $var){
+        $this->Debconf_handle->SetDefault($var['Name'],$var['Value']);
+      }
+    }
   }
 
   function execute()
@@ -38,12 +40,6 @@ class faiPackageConfiguration extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $q = new gosaSupportDaemon();
-    $ret = $q->FAI_get_packages($this->release,$this->obj);
-    print_a($ret);
-
-
-    return("Not implemented yet<input type='submit' name='CancelObjectConfig' value='back'>");
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
