@@ -111,6 +111,7 @@ sub registered {
     my $opts_file_FH;
     my $hostname= $main::client_dnsname;
     $hostname =~ s/\..*$//;
+    $hostname =~ tr/A-Z/a-z/;
     open($opts_file_FH, ">$main::opts_file");
     print $opts_file_FH "MAC=\"$main::client_mac_address\"\n";
     print $opts_file_FH "IPADDRESS=\"$main::client_ip\"\n";
