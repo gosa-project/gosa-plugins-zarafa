@@ -138,7 +138,7 @@ class servnfs extends plugin
       }        
     }
 
-    $display= $smarty->fetch(get_template_path('servnfs.tpl', TRUE));
+    $display= $smarty->fetch(get_template_path('servnfs.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
@@ -178,7 +178,7 @@ class servnfs extends plugin
       $message[]= msgPool::required(_("Path"));
     }
 
-    if(!test::is_path($this->path)){
+    if(!tests::is_path($this->path)){
       $message[]= msgPool::invalid(_("Path"));
     }
 
