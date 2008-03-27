@@ -418,55 +418,23 @@ class faiPackage extends plugin
     return($a_ret);
   }
 
+
   function genPkgs()
   {
     if($this->buffer === NULL || !count($this->buffer)){
       $this->buffer = array();
       $q = new gosaSupportDaemon();
-      $ret = $q->FAI_get_packages($this->FAIdebianRelease);
-      foreach($ret as $attr){
-        $this->buffer[$attr['PACKAGE']] = array($attr['PACKAGE'],$attr['VERSION'],$attr['SECTION'],$attr['DESCRIPTION']);
+      $attrs = array("distribution", "package","version", "section", "description", "timestamp","template=''");
+      $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs);
+      if($q->is_error()){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
+      }else{
+        foreach($ret as $attr){
+          $this->buffer[$attr['PACKAGE']] = array($attr['PACKAGE'],$attr['VERSION'],$attr['SECTION'],$attr['DESCRIPTION']);
+        }
       }
     }
     return $this->buffer;
- 
-#   /* Generate a list off available packages for this mirror, section and release
-#    */
-#   /* Only read this file if it wasn't read before */
-#   $this->buffer = NULL;
-#   if($this->buffer === NULL){
-#     $this->buffer=array();
-#     $a_ret = array();
-#     foreach($this->FAIdebianSection as $sec){
-#       $strID= CONFIG_DIR."/fai/".$this->FAIdebianRelease."/".$sec;
-#
-#       if(!is_file($strID)){
-#         msg_dialog::display(_("Error"), sprintf(_("Package file '%s' does not exist!"), $strID), ERROR_DIALOG);
-#         unset($this->buffer);
-#         return(array());
-#       }
-#       $fp = fopen($strID,"r");
-#
-#       /* Parse every line and create an array */
-#       while(!feof($fp)){
-#         $str= fgets($fp,512);
-#         $stra= split("\|",$str);
-#         if(count($stra)==4){
-#           $a_ret[$stra[0]] = $stra;
-#         break;
-#         }
-#       }
-#       fclose($fp);
-#       /* Save our Data, to avoid reading it again */
-#     }
-#     $this->buffer = $a_ret;
-#     ksort($a_ret);
-#     print_a($this->buffer);
-#     return($a_ret);
-#   }else{
-#     print_a($this->buffer);
-#     return $this->buffer;
-#   }
   }
 
 
