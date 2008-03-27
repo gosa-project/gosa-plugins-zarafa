@@ -26,9 +26,8 @@ class deviceGeneric extends plugin
     $this->is_account = TRUE;
 
     $this->types= array("camera" => _("Digital camera"),
-                        "harddisk" => _("Harddisk"),
-                        "stick" => _("USB stick"),
-                        "cd" => _("CD/DVD drive"),);
+                        "disc" => _("USB stick"),
+                        "cdrom" => _("CD/DVD drive"),);
     asort($this->types);
 
     /* Set class values */
