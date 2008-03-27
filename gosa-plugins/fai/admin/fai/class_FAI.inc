@@ -186,7 +186,7 @@ class FAI
         $ar1[$key1] = $val1[0];
       }
 
-      if((is_array($ar2[$key1])) && (count($ar2[$key1])==1)){
+      if(isset($ar2[$key1])&&  (is_array($ar2[$key1])) && (count($ar2[$key1])==1)){
         $val1 = $val1[0];
         $ar2[$key1] = $ar2[$key1][0];
       }
