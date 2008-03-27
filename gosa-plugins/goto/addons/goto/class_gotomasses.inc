@@ -435,6 +435,9 @@ class gotomasses extends plugin
       if($status == "error"){
         $status = "<img class='center' src='images/false.png' alt=''>&nbsp;"._("Error");
       }
+      if($status == "processed"){
+        $status = "<img class='center' src='images/true.png' alt=''>&nbsp;"._("Processed");
+      }
 
       /* Special handling for all entries that have 
           STATUS == "processing" && PROGRESS == NUMERIC
