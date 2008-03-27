@@ -179,7 +179,11 @@ class macroParameter extends plugin
     /* Get acls for this tab, 
         there is only one attribute to write,
          so we use the acls from gofon/marco */
-    $ACLs = $this->ui->get_permissions($this->dn,"gofonmacro/macro","goFonMarcoContent");
+    if($this->is_new){
+      $ACLs = $this->ui->get_permissions($this->base,"gofonmacro/macro","goFonMacroContent");
+    }else{
+      $ACLs = $this->ui->get_permissions($this->dn,"gofonmacro/macro","goFonMacroContent");
+    }
 
     /* get current content */
     $macroManagment = session::get('macroManagment') ;
