@@ -463,22 +463,6 @@ class DaemonEvent
   }
 
 
-  /*! \brief  Returns a set of elements selected in a MultiSelectWindow
-    @return Array[integer]=integer
-   */
-  protected  function list_get_selected_items()
-  {
-    $ids = array();
-    foreach($_POST as $name => $value){
-      if(preg_match("/^item_selected_[0-9]*$/",$name)){
-        $id   = preg_replace("/^item_selected_/","",$name);
-        $ids[$id] = $id;
-      }
-    }
-    return($ids);
-  }
-
-
   /*! \brief Add a target MAC address 
       @param Array A List of all target that should be added.
    */

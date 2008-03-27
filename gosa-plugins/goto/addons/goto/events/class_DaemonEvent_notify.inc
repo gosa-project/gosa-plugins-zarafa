@@ -46,9 +46,13 @@ class DaemonEvent_notify extends DaemonEvent
   public function execute()
   {
     DaemonEvent::execute();
-    if(isset($_POST['add_any_target'])){
-      echo "Not implemented yet";  
+
+    /* Check if target add dialog is open */
+    if($this->is_target_list_open() && $this->is_new){
+      return($this->get_target_add_list());
     }
+
+
     $display = $this->get_header();
     $tmp = $this->data;
     $smarty = get_smarty();
@@ -118,13 +122,63 @@ class DaemonEvent_notify extends DaemonEvent
 
   public function add_users($targets)
   {
-    $this->users = $targets;
+    $add = $targets;
+    if(!is_array($add)){
+      $add = array($add);
+    }
+    foreach($add as $target){
+      if(!in_array($target,$this->users)){
+        $this->users[] = $target;
+      }
+    }
   }
+
 
   public function add_groups($targets)
   {
-    $this->groups = $targets;
+    $add = $targets;
+    if(!is_array($add)){
+      $add = array($add);
+    }
+    foreach($add as $target){
+      if(!in_array($target,$this->groups)){
+        $this->groups[] = $target;
+      }
+    }
   }
+
+
+  /*! \brief  Returns HTML content, displaying a dialog which allows to add new targets.
+    @return String HTML content. (EventTargetAddList)
+   */
+  public function get_target_add_list()
+  {
+    $this->target_add_list_used = TRUE;
+
+    if($this->target_divlist == NULL){
+      $this->target_divlist = new EventTargetAddUserList($this->config,$this);
+    }
+    $this->target_divlist->execute();
+
+    $smarty = get_smarty();
+    $smarty->assign("divlist",$this->target_divlist->Draw());
+    return($smarty->fetch(get_template_path('target_list.tpl', TRUE, dirname(__FILE__))));
+  }
+
+
+  /*! \brief Add a target MAC address
+      @param Array A List of all target that should be added.
+   */
+  public function add_targets($targets)
+  {
+    if(isset($targets['USERS'])){
+      $this->add_users($targets['USERS']);
+    }
+    if(isset($targets['GROUPS'])){
+      $this->add_groups($targets['GROUPS']);
+    }
+  }
+
 
   public function save()
   {

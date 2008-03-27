@@ -46,7 +46,7 @@
         </tr>
 		<tr>
 			<td colspan="2">
-				<input type="submit" name="add_any_target" value="{$add_str}">
+				<input type="submit" name="open_target_list" value="{$add_str}">
 				<input type="submit" name="del_any_target" value="{$del_str}">
 			</td>
 		</tr>
