@@ -294,6 +294,7 @@ print STDERR Dumper(PerlIO::get_layers(file1, output => 1));
     open(file1, "> $cfg_name");
     print file1 "LDAP_BASE=\"$ldap_base\"\n";
     print file1 "LDAP_SERVER=\"$ldap_server\"\n";
+    print file1 "LDAP_URIS=\"@ldap_uris\"\n";
     print file1 "ADMIN_BASE=\"$admin_base\"\n";
     print file1 "DEPARTMENT=\"$department\"\n";
     print file1 "RELEASE=\"$release\"\n";

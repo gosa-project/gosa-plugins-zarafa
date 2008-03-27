@@ -958,7 +958,7 @@ sub trigger_logged_in_users_report {
 		my @logged_in_user_list;
 		if( defined $result ) {
 			chomp($result);
-			@logged_in_user_list = split("\s", $result);
+			@logged_in_user_list = split(/\s/, $result);
 		}
 		
 #        my @res_lines;
