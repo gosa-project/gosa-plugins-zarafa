@@ -413,7 +413,7 @@ class macro extends plugin
   
     /* Check if display name is set */
     if(empty($this->displayName)){
-      $message[] = msgPool::requried(_("Name"));
+      $message[] = msgPool::required(_("Name"));
     }  
     /* CN is restricted to 20 chars */
     if(strlen("Makro-".$this->cn)>20 ){
