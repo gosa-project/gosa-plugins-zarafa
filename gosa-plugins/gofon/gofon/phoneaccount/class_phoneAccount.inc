@@ -131,7 +131,7 @@ class phoneAccount extends plugin
     /* Get available phone hardware  
      * Search for all available phone hardware  
      */
-    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneou")),
+    $tmp = get_sub_list("(objectClass=goFonHardware)","phone",array(get_ou("phoneou")),
                   $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
     foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
@@ -158,7 +158,7 @@ class phoneAccount extends plugin
         get_ou("componentou"),
         get_ou("phoneou"));
 
-    $tmp = get_sub_list("(goFonHardware=*)","",$deps_a,$this->config->current['BASE'],
+    $tmp = get_sub_list("(goFonHardware=*)","phone",$deps_a,$this->config->current['BASE'],
         array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);
     foreach($tmp as $attrs){
       $cn = $attrs['goFonHardware'][0];
