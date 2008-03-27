@@ -172,8 +172,8 @@ class phoneAccount extends plugin
      * Search for all Marcos that are visible and create 
      *  an array with name and parameters 
      */
-    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","",array(get_ou("macroou")),
-                  $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn"), GL_NONE);
+    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("macroou")),
+                  $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn","cn"), GL_NONE);
     
 
     /* Add none for no macro*/
