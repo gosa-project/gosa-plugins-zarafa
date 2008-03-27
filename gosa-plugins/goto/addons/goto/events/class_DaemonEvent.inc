@@ -269,22 +269,7 @@ class DaemonEvent
       }
       if(isset($_POST['save_target_dialog'])){
         $this->target_add_list_used =FALSE;
-        foreach($this->list_get_selected_items() as $id){
-          if(in_array("gosaGroupOfNames",$this->target_divlist->_target_list[$id]['objectClass'])){
-            foreach($this->target_divlist->_target_list[$id]['member'] as $mem_dn){
-              if(isset($this->target_divlist->workstation_list[$mem_dn])){
-                $this->a_targets[] = $this->target_divlist->workstation_list[$mem_dn]['macAddress'][0];  
-              }
-              if(isset($this->target_divlist->server_list[$mem_dn])){
-                $this->a_targets[] = $this->target_divlist->server_list[$mem_dn]['macAddress'][0];  
-              }
-            } 
-          }else{
-            if(isset($this->target_divlist->_target_list[$id]['macAddress'][0])){
-              $this->a_targets[] = $this->target_divlist->_target_list[$id]['macAddress'][0];
-            }
-          }
-        }
+        $this->add_targets($this->target_divlist->get_selected_targets());
         $this->target_divlist = NULL;
       }
     }

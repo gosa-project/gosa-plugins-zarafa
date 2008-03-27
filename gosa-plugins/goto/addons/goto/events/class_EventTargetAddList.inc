@@ -167,6 +167,29 @@ class EventTargetAddList extends MultiSelectWindow
   }
 
 
+  function get_selected_targets()
+  {
+    $a_targets = array();
+    foreach($this->list_get_selected_items() as $id){
+      if(in_array("gosaGroupOfNames",$this->_target_list[$id]['objectClass'])){
+        foreach($this->_target_list[$id]['member'] as $mem_dn){
+          if(isset($this->workstation_list[$mem_dn])){
+            $a_targets[] = $this->workstation_list[$mem_dn]['macAddress'][0];
+          }
+          if(isset($this->server_list[$mem_dn])){
+            $a_targets[] = $this->server_list[$mem_dn]['macAddress'][0];
+          }
+        }
+      }else{
+        if(isset($this->_target_list[$id]['macAddress'][0])){
+          $a_targets[] = $this->_target_list[$id]['macAddress'][0];
+        }
+      }
+    }
+    return($a_targets);
+  }
+
+
   function setEntries()
   {
     $_target_list = array();
@@ -243,6 +266,22 @@ class EventTargetAddList extends MultiSelectWindow
       $field3 = array("string" => $name , "attach" => "title='".$obj['dn']."'");
       $this->AddElement(array($field1,$field2,$field3));
     }
+  }
+
+
+  /*! \brief  Returns a set of elements selected in a MultiSelectWindow
+    @return Array[integer]=integer
+   */
+  protected  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
