@@ -1077,9 +1077,12 @@ class workstartup extends plugin
   function update_fai_cache($first_call = FALSE)
   {
     $force = FALSE;
-    $this->si_fai_action_failed = FALSE;
     if(!$this->si_active) return; 
     $start = microtime(TRUE);  
+
+    if($this->si_fai_action_failed && !isset($_POST['fai_si_retry'])) return;
+
+    $this->si_fai_action_failed = FALSE;
 
     /* Get the list of available servers and their releases. 
      */

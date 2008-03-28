@@ -64,6 +64,7 @@
 	{elseif $si_fai_action_failed}
 		<b>{msgPool type=siError}</b><br>
 		{t}Check if the GOsa support daemon (gosa-si) is running.{/t}
+		<input type='submit' name='fai_si_retry' value="{t}retry{/t}">
 	{elseif $fai_activated}
 
 		{if $FAIdebianMirror == "inherited"}
