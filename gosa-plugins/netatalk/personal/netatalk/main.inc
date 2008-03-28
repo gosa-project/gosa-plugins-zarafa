@@ -100,7 +100,7 @@ if (!$remove_lock) {
     } else {
       $info = "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png')."\"> ".$ui->dn."&nbsp;";
       if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/netatalk"))){
-        $info .= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".msgPool::clickEditToChange());
+        $info .= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".msgPool::clickEditToChange();
         $display .= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
       }
 
