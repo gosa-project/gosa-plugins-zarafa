@@ -40,7 +40,7 @@ class printgeneric extends plugin
 
   /* attribute list for save action */
   var $attributes     = array("cn", "description", "l", "labeledURI", "gotoPrinterPPD","gotoUserPrinter", "macAddress", 
-                              "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter");
+                              "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter","gosaUnitTag");
   var $objectclasses  = array("top", "gotoPrinter");
   var $view_logged    = FALSE;
   var $parent;
@@ -764,11 +764,12 @@ class printgeneric extends plugin
     }
 
     $dn= $this->dn;
-    plugin::save();
-    $ldap= $this->config->get_ldap_link();
 
     /* reduce objectClasses to minimun */
     $this->attrs['objectClass']= $this->objectclasses;
+
+    plugin::save();
+    $ldap= $this->config->get_ldap_link();
 
     /* Remove all empty values */
     if ($this->orig_dn == 'new'){
