@@ -56,15 +56,23 @@ class hotplugDialog extends plugin
     return($display);
   }
 
+  function check(){
+    /* Call common method to give check the hook */
+    $message= plugin::check();
+
+    if(empty($_POST['hostplugName'])){
+      $message[] = _("Please select a hotplug device!");
+    }
+    return $message;
+  }
+
 
   /* Save to LDAP */
   function save()
   {
     $entries = array();
-    if (isset($_POST['hotplugName'])){
-      foreach($_POST['hotplugName'] as $name){
-        $entries[$name] = $this->hotplugDeviceList[$name];
-      }
+    foreach($_POST['hotplugName'] as $name){
+      $entries[$name] = $this->hotplugDeviceList[$name];
     }
 
     return $entries;
