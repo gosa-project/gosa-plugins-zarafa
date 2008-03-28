@@ -62,7 +62,7 @@
 
     <p class="seperator">&nbsp;</p>
     <p align="right">
-    <input type="submit" name="PrinterSave"     value="{msgPool type=okButton}">
+    <input type="submit" name="PrinterSave"     value="{msgPool type=addButton}">
     <input type="submit" name="PrinterCancel"   value="{msgPool type=cancelButton}">
     </p>
 <script language="JavaScript" type="text/javascript">

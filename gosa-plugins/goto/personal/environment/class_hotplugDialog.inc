@@ -61,9 +61,12 @@ class hotplugDialog extends plugin
   function save()
   {
     $entries = array();
-    foreach($_POST['hotplugName'] as $name){
-      $entries[$name] = $this->hotplugDeviceList[$name];
+    if (isset($_POST['hotplugName'])){
+      foreach($_POST['hotplugName'] as $name){
+        $entries[$name] = $this->hotplugDeviceList[$name];
+      }
     }
+
     return $entries;
   }
 
