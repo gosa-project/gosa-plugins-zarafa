@@ -415,6 +415,10 @@ class environment extends plugin
           $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
               msgPool::featuresDisabled(_("Environment")));
           return $display;
+        }elseif((isset($this->parent->by_object['ogroup']))){
+          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
+              msgPool::featuresDisabled(_("Environment")));
+          return $display;
         }else{
           $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Environment")),
               msgPool::featuresDisabled(_("Environment"), _("POSIX")), TRUE);
