@@ -102,7 +102,7 @@ class workstartup extends plugin
       foreach($this->attrs['gotoLdapServer'] as $value){
         $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
       }
-    }
+    } 
     if(!count($this->gotoLdapServers) && $this->member_of_ogroup){ 
       $this->gotoLdap_inherit = TRUE;
     }
@@ -870,18 +870,6 @@ class workstartup extends plugin
       }
     }
 
-    /* Check if LDAP server has changed */
-    $ldap_changed= false;
-    if (isset($this->saved_attributes['gotoLdapServer'])){
-      if (isset($this->attrs['gotoLdapServer']) && $this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']){
-        $ldap_changed= true;
-      }
-    } else {
-      if (isset($this->attrs['gotoLdapServer'])){
-        $ldap_changed= true;
-      }
-    }
-
     if (($this->attrs['gotoBootKernel'] == "default-inherited") || ($this->attrs['gotoBootKernel'] == "%default%")){
       $this->attrs['gotoBootKernel']= array();
     }
@@ -917,7 +905,6 @@ class workstartup extends plugin
       $tmp[] = $settings['server']."|".$name."|".$settings['mountPoint'];
     }
     $this->attrs['gotoShare']=$tmp;
-
     $this->cleanup();
     $ldap->modify ($this->attrs); 
     new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
@@ -928,7 +915,7 @@ class workstartup extends plugin
     $this->handle_post_events("modify");
 
     /* Check if LDAP server has changed */
-    if ($ldap_changed && class_available("DaemonEvent")){
+    if (isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent")){
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
