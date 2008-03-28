@@ -1295,32 +1295,32 @@ sub get_ldap_handle {
 	my $heap;
 	my $ldap_handle;
 
-    if (not defined $session_id ) { $session_id = 0 };
+	if (not defined $session_id ) { $session_id = 0 };
 
 	if ($session_id == 0) {
-        daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
-        $ldap_handle = Net::LDAP->new( $ldap_uri );
+		daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
+		$ldap_handle = Net::LDAP->new( $ldap_uri );
 		$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password); 
 
 	} else {
-        my $session_reference = $global_kernel->ID_id_to_session($session_id);
-        if( defined $session_reference ) {
-            $heap = $session_reference->get_heap();
-        }
+		my $session_reference = $global_kernel->ID_id_to_session($session_id);
+		if( defined $session_reference ) {
+			$heap = $session_reference->get_heap();
+		}
 
-        if (not defined $heap) {
-            daemon_log("$session_id DEBUG: cannot get heap for session_id '$session_id'", 7); 
-            return;
-        }
+		if (not defined $heap) {
+			daemon_log("$session_id DEBUG: cannot get heap for session_id '$session_id'", 7); 
+			return;
+		}
 
-        if (not exists $heap->{ldap_handle}) {
-            # create new ldap handle
-            $ldap_handle = Net::LDAP->new( $ldap_uri );
+		# TODO: This "if" is nonsense, because it doesn't prove that the
+                #       used handle is still valid - or if we've to reconnect...
+		#if (not exists $heap->{ldap_handle}) {
+			$ldap_handle = Net::LDAP->new( $ldap_uri );
 			$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password); 
-            # add ldap handle to heap
-            $heap->{ldap_handle} = $ldap_handle;
-        }
-    }
+			$heap->{ldap_handle} = $ldap_handle;
+		#}
+	}
 	return $ldap_handle;
 }
 
