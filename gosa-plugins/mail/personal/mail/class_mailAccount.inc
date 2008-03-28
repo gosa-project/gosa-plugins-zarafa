@@ -327,21 +327,26 @@ class mailAccount extends plugin
     /* Finished adding of locals? */
     if (isset($_POST['add_locals_finish'])){
 
-      /* Check if we are able to write gosaMailForwardingAddress */
-      if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      if (isset($_POST['local_list'])){
 
-        /* Walk through list of forwarders, ignore own addresses */
-        foreach ($_POST['local_list'] as $val){
-          if (!in_array ($val, $this->gosaMailAlternateAddress) &&
-              $val != $this->mail){
+        /* Check if we are able to write gosaMailForwardingAddress */
+        if($this->acl_is_writeable("gosaMailForwardingAddress")){
 
-            $this->addForwarder($val);
-            $this->is_modified= TRUE;
+          /* Walk through list of forwarders, ignore own addresses */
+          foreach ($_POST['local_list'] as $val){
+            if (!in_array ($val, $this->gosaMailAlternateAddress) &&
+                $val != $this->mail){
+
+              $this->addForwarder($val);
+              $this->is_modified= TRUE;
+            }
           }
         }
+        $this->forward_dialog= FALSE;
+        $this->dialog= FALSE;
+      } else {
+        msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
       }
-      $this->forward_dialog= FALSE;
-      $this->dialog= FALSE;
     }
 
     /* Add forward email addresses */
