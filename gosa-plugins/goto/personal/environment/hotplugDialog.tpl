@@ -4,7 +4,7 @@
 
   	<table summary="{t}Hotplug management{/t}" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 cellspacing=2>
         <tr>
-            <td width="50%" style="vertical-align:top;">
+            <td style="vertical-align:top;">
 	 			<div class="contentboxh" style="height:20px;">
     				<p class="contentboxh" style="font-size:12px">
      					<b><LABEL for="hotplugName">{t}Select hotplug device to add{/t}</LABEL></b>
@@ -12,14 +12,14 @@
    				</div>
    				<div class="contentboxb">
     				<p class="contentboxb" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
-						<select style="width:600px;height:450px" size=20 name="hotplugName[]" id="hotplugName" multiple>
+						<select style="width:100%;height:450px" size=20 name="hotplugName[]" id="hotplugName" multiple>
 							{html_options values=$hotplugDeviceKeys output=$hotplugDevices}
 						<option disabled>&nbsp;</option>
 						</select><br>
 					</p>
 				</div>
             </td>
-		 	<td style="vertical-align:top;">
+		 	<td style="vertical-align:top; width:350px">
                 <div class="contentboxh" style="height:20px">
                     <p class="contentboxh" style="font-size:12px"><img src="{$launchimage}" align="right" alt="[F]">{t}Filters{/t}</p>
                 </div>
