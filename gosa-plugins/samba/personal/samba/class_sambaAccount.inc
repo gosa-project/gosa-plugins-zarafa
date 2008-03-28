@@ -338,27 +338,34 @@ class sambaAccount extends plugin
     }
 
     /* Add user workstation finished? */
-    if (isset($_POST["add_ws_finish"]) || isset($_POST["add_ws_cancel"])){
+    if (isset($_POST["add_ws_cancel"])){
       $this->show_ws_dialog= FALSE;
       $this->dialog= FALSE;
     }
 
     /* Add user workstation? */
-    if (isset($_POST["add_ws_finish"]) && isset($_POST['wslist'])){
+    if (isset($_POST["add_ws_finish"])){
 
-      if($this->multiple_support_active){
-        foreach($_POST['wslist'] as $ws){
-          $this->multiple_sambaUserWorkstations[trim($we)] = array("Name" => trim($ws), "UsedByAllUsers" => TRUE);
+      if (isset($_POST['wslist'])){
+        if($this->multiple_support_active){
+          foreach($_POST['wslist'] as $ws){
+            $this->multiple_sambaUserWorkstations[trim($we)] = array("Name" => trim($ws), "UsedByAllUsers" => TRUE);
+          }
+        }else{
+          $tmp= $this->sambaUserWorkstations;
+          foreach($_POST['wslist'] as $ws){
+            $tmp.= ",$ws";
+          }
+          $tmp= preg_replace('/,+/', ',', $tmp);
+          $this->sambaUserWorkstations= trim($tmp, ',');
         }
-      }else{
-        $tmp= $this->sambaUserWorkstations;
-        foreach($_POST['wslist'] as $ws){
-          $tmp.= ",$ws";
-        }
-        $tmp= preg_replace('/,+/', ',', $tmp);
-        $this->sambaUserWorkstations= trim($tmp, ',');
+        $this->is_modified= TRUE;
+
+        $this->show_ws_dialog= FALSE;
+        $this->dialog= FALSE;
+      } else {
+        msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
       }
-      $this->is_modified= TRUE;
     }
 
     /* Show ws dialog */

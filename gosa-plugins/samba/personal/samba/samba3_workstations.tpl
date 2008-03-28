@@ -1,6 +1,6 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="4">
 <tr>
-  <td style="vertical-align:top;width:600px">
+  <td style="vertical-align:top;">
    <div class="contentboxh" style="height:20px;">
     <p class="contentboxh" style="font-size:12px">
      <b><label for="wslist">{t}Select workstations to add{/t}</label> {$hint}</b><br />
@@ -8,13 +8,13 @@
    </div>
    <div class="contentboxb">
     <p class="contentboxb" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
-     <select id="wslist" style="width:600px; margin-top:4px; height:450px;" name="wslist[]" size="15" multiple>
+     <select id="wslist" style="width:100%; margin-top:4px; height:450px;" name="wslist[]" size="15" multiple>
 	{html_options values=$wslist output=$wslist}
      </select>
     </p>
    </div>
   </td>
-  <td style="vertical-align:top;">
+  <td style="vertical-align:top;width:350px">
    <div class="contentboxh" style="height:20px;">
     <p class="contentboxh" style="font-size:12px"><img src="{$launchimage}" align="right" alt="[F]">
 	<b>{t}Filters{/t}</b></p>

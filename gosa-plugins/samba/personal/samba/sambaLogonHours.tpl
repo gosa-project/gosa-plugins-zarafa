@@ -91,7 +91,7 @@
 <input type='hidden' name='sambaLogonHoursPosted' value='1'> 
 <br>
 <p class="plugbottom">
-  <input type=submit name="save_logonHours" value="{msgPool type=applyButton}">
+  <input type=submit name="save_logonHours" value="{msgPool type=saveButton}">
   &nbsp;
   <input type=submit name="cancel_logonHours" value="{msgPool type=cancelButton}">
 </p>
