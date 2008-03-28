@@ -448,7 +448,7 @@ class sambaAccount extends plugin
     for($y= $date['year']-4; $y<$date['year']+4; $y++){
       $sambaLogonTime_years[]= $y;
     }
-    $sambaLogonTime_months= msgPool::months;
+    $sambaLogonTime_months= msgPool::months();
     $smarty->assign("sambaLogonTime_day", $sambaLogonTime_date["mday"]);
     $smarty->assign("sambaLogonTime_days", $sambaLogonTime_days);
     $smarty->assign("sambaLogonTime_months", $sambaLogonTime_months);
