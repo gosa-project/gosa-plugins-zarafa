@@ -687,6 +687,7 @@ class phoneAccount extends plugin
       /* Remove old entries */
       $query = array();
       $query[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$this->uid."\";";
+      $oldnums= array();
       foreach($oldnums as $s_telenums){
         $query[]= "DELETE FROM ".$a_New['EXT_TABLE']." WHERE exten=\"".$s_telenums."\";";
       }
