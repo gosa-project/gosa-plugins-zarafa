@@ -377,11 +377,16 @@ class scalixAccount extends plugin
   }
 
   /* Adapt from template, using 'dn' */
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
-    plugin::adapt_from_template($dn);
+    plugin::adapt_from_template($dn, $skip);
 
     foreach (array("scalixEmailAddress") as $val){
+
+      if (in_array($val, $skip)){
+        continue;
+      }
+
       $this->$val= array();
       if (isset($this->attrs["$val"]["count"])){
         for ($i= 0; $i<$this->attrs["$val"]["count"]; $i++){

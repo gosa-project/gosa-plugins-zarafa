@@ -614,17 +614,22 @@ class kolabAccount extends plugin
   }
 
   /* Adapt from template, using 'dn' */
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
-    plugin::adapt_from_template($dn);
+    plugin::adapt_from_template($dn, $skip);
 
     /* Setting uid to default */
-    if(isset($this->attrs['uid'][0])){
+    if(isset($this->attrs['uid'][0]) && !in_array("uid", $skip)){
       $this->uid = $this->attrs['uid'][0];
     }
 
     /* Pull arrays */
     foreach(array("kolabDelegate", "kolabInvitationPolicy") as $attr){
+
+      if (in_array($val, $skip)){
+        continue;
+      }
+
       if (isset($this->attrs["$attr"]["count"])){
         $tmp = array();
         for ($i= 0; $i<$this->attrs["$attr"]["count"]; $i++){

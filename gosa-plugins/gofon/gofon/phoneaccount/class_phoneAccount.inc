@@ -1292,12 +1292,12 @@ class phoneAccount extends plugin
   }
 
 
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
-    plugin::adapt_from_template($dn);
+    plugin::adapt_from_template($dn, $skip);
 
     /* Assemble phone numbers */
-    if (isset($this->attrs['telephoneNumber'])){
+    if (isset($this->attrs['telephoneNumber']) && !in_array("telephoneNumber", $skip)){
       for ($i= 0; $i<$this->attrs['telephoneNumber']['count']; $i++){
         $number= $this->attrs['telephoneNumber'][$i];
         $this->phoneNumbers[$number]= $number;

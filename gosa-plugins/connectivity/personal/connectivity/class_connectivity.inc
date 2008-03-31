@@ -170,12 +170,12 @@ class connectivity extends plugin
     }
   }
 
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
     /* Adapt objects */
     foreach ($this->plugin_name as $name){
       $this->plugin[$name]->dn= $this->dn;
-      $this->plugin[$name]->adapt_from_template($dn);
+      $this->plugin[$name]->adapt_from_template($dn, $skip);
     }
   }
 

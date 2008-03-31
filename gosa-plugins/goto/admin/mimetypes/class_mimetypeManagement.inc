@@ -651,7 +651,7 @@ class mimetypeManagement extends plugin
   }
 
   function check() {}
-  function adapt_from_template($dn) {}
+  function adapt_from_template($dn, $skip= array()) {}
   function password_change_needed() {}
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

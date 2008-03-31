@@ -1119,33 +1119,33 @@ class sambaAccount extends plugin
   }
 
 
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
-    plugin::adapt_from_template($dn);
+    plugin::adapt_from_template($dn, $skip);
     $this->sambaSID= "";
     $this->sambaPrimaryGroupSID= "";
 
       /* Fill mungedDial field */
-    if ($this->samba3 && isset($this->attrs['sambaMungedDial'])){
+    if ($this->samba3 && isset($this->attrs['sambaMungedDial']) && !in_array('sambaMungedDial', $skip)){
       $this->mungedObject->load($this->sambaMungedDial);
     }
 
     /* Password expiery */
     if(isset($this->attrs['sambaPwdMustChange']) &&
-        $this->attrs['sambaPwdMustChange'][0] != 0){
+        $this->attrs['sambaPwdMustChange'][0] != 0 && !in_array('sambaPwdMustChange', $skip)){
       $this->password_expires= 1;
     }
 
     if(isset($this->attrs['sambaLogonTime']) && ! (
         $this->attrs['sambaLogonTime'][0] == 0 ||
         $this->attrs['sambaLogonTime'][0] == 2147483647
-      )){
+      ) && !in_array('sambaLogonTime', $skip)){
       $this->logon_time_set= 1;
     }
     if(isset($this->attrs['sambaLogoffTime']) && ! (
         $this->attrs['sambaLogoffTime'][0] == 0 ||
         $this->attrs['sambaLogoffTime'][0] == 2147483647
-      )){
+      ) && !in_array('sambaLogonTime', $skip)){
       $this->logoff_time_set= 1;
     }
 
@@ -1153,7 +1153,7 @@ class sambaAccount extends plugin
     if(isset($this->attrs['sambaKickoffTime']) && ! (
         $this->attrs['sambaKickoffTime'][0] == 0 ||
         $this->attrs['sambaKickoffTime'][0] == 2147483647
-      )){
+      ) && !in_array('sambaKickoffTime', $skip)){
       $this->kickoff_time_set= 1;
     }
 

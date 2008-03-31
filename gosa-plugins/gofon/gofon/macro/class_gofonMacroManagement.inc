@@ -544,7 +544,7 @@ class goFonMacro extends plugin
   }
 
 
-  function adapt_from_template($dn)  { }
+  function adapt_from_template($dn, $skip= array())  { }
   function check() { }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
