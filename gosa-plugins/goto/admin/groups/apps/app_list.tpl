@@ -23,7 +23,7 @@
 {foreach from=$entries item=item key=key}
 	{if $item.TYPE == "OPEN"}
 		<tr>
-			<td colspan=3 style="background-color: #BBBBBB;height:1px"></td>
+			<td colspan=3 style="background-color: #DDDDDD;height:1px"></td>
 		</tr>
 		<tr>
 			<td style='padding-left:20px;' colspan=3>
@@ -34,7 +34,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan=3 style="background-color: #BBBBBB;height:1px"></td>
+			<td colspan=3 style="background-color: #DDDDDD;height:1px"></td>
 		</tr>
 	{elseif $item.TYPE == "RELEASE"}
 		{ if $i++ % 2 == 0}
@@ -89,7 +89,9 @@
 		{else}
 			<tr class="rowxp1">
 		{/if}
-			<td style='background-color: transparent;width:22px; padding-top:5px;padding-bottom:5px;' colspan="2">--</td>
+			<td style='background-color: transparent;width:22px; padding-top:5px;padding-bottom:5px;' colspan="2">
+				<div style="height:3px; width:100%; background-color:#BBBBBB;"></div>
+			</td>
             <td style='width:100px;text-align:right; background-color: transparent;'>
                 <input title="{t}Move up{/t}"   class="center" type='image'
                     name='up_{$item.UNIQID}' src='images/move_object_up.png'>
@@ -97,6 +99,7 @@
                     name='down_{$item.UNIQID}' src='images/move_object_down.png'>
                 <input title="{t}Remove{/t}"    class="center" type='image'
                     name='del_{$item.UNIQID}' src='images/edittrash.png'>
+				<img src="images/empty.png" style="width:16px;" alt=" ">
             </td>
 		</tr>
 	{elseif $item.TYPE == "ENTRY"}
