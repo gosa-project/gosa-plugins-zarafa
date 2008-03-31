@@ -76,7 +76,7 @@ $gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
 
 # in function register_at_gosa_si_server, after which period of seconds a new registration should be tried if a registration was 
 # not successful until now
-my $delay_set_time = 5;
+my $delay_set_time = 10;
 our $prg= basename($0);
 
 # all x seconds the client reports logged_in users to gosa-si-server
@@ -746,6 +746,8 @@ sub register_at_gosa_si_server {
       		# send xml hash to server with general server passwd
 			my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
 	  
+			if( $try_to_register >= @servers )  { last; }
+
 	  		# if delivery of registration msg succeed
 			if($res == 0) {
         		# reset try_to_register
@@ -765,8 +767,6 @@ sub register_at_gosa_si_server {
 				sleep(1);
 				next;
 			}
-
-			if( $try_to_register >= @servers )  { last; }
 
     } # end of while
 
