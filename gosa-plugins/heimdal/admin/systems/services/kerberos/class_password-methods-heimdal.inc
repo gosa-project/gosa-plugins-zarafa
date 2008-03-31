@@ -69,9 +69,15 @@ class passwordMethodheimdal extends passwordMethod
     $this->krb5ValidEnd   = date("Ymd",time())."0000Z";
     $this->krb5PasswordEnd= date("Ymd",time())."0000Z";
 
+    if(!is_object($config)){
+      return;
+    }  
+    
+
     /* Load existing entries */
     if($dn != "new"){
       $ldap = $this->config->get_ldap_link();
+
       $ldap->cd($dn);
       $ldap->ls("objectClass=krb5Principal",$dn,array("*"));
       if($ldap->count()==1){
