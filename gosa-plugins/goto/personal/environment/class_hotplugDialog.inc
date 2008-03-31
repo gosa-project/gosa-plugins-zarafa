@@ -60,7 +60,7 @@ class hotplugDialog extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if(empty($_POST['hostplugName'])){
+    if(empty($_POST['hotplugName'])){
       $message[] = _("Please select a hotplug device!");
     }
     return $message;
