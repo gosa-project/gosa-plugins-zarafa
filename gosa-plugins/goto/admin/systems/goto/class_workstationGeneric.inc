@@ -4,6 +4,7 @@ class workgeneric extends plugin
 {
   /* Generic terminal attributes */
   var $gotoMode= "locked";
+  var $initial_gotoMode= "locked";
   var $gotoSyslogServer= "";
   var $gotoSyslogServers= array();
   var $gotoNtpServer= array();
@@ -145,6 +146,8 @@ class workgeneric extends plugin
       }
       $this->gotoSyslogServers[$server] = $visible;
     }
+
+    $this->initial_gotoMode = $this->gotoMode;
 
     /* Save 'dn' for later referal */
     $this->orig_dn= $this->dn;
@@ -409,7 +412,16 @@ class workgeneric extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-  
+ 
+    /* Only systems with a valid ldap handle can be activated 
+     */
+    if($this->gotoMode == "active" && $this->initial_gotoMode != "active"){
+     
+      if(isset($this->parent->by_object['workstartup']) && !count($this->parent->by_object['workstartup']->gotoLdapServers)){
+        $message[] = _("In order to activate this system a valid ldap handle is required, please select at least one ldap URI in the workstation startup tab.");
+      }
+    }
+ 
     /* Skip IP & Mac checks if this is a template */
     if($this->cn != "wdefault"){
       $message= array_merge($message, $this->netConfigDNS->check());
