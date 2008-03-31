@@ -82,6 +82,23 @@
 					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
 			</td>
 		</tr>
+	{elseif $item.TYPE == "SEPERATOR"}
+
+		{ if $i++ % 2 == 0}
+			<tr class="rowxp0">
+		{else}
+			<tr class="rowxp1">
+		{/if}
+			<td style='background-color: transparent;width:22px; padding-top:5px;padding-bottom:5px;' colspan="2">--</td>
+            <td style='width:100px;text-align:right; background-color: transparent;'>
+                <input title="{t}Move up{/t}"   class="center" type='image'
+                    name='up_{$item.UNIQID}' src='images/move_object_up.png'>
+                <input title="{t}Move down{/t}" class="center" type='image'
+                    name='down_{$item.UNIQID}' src='images/move_object_down.png'>
+                <input title="{t}Remove{/t}"    class="center" type='image'
+                    name='del_{$item.UNIQID}' src='images/edittrash.png'>
+            </td>
+		</tr>
 	{elseif $item.TYPE == "ENTRY"}
 
 		{ if $i++ % 2 == 0}
@@ -120,6 +137,7 @@
 			{/foreach}
 			</select>
 			<input type="submit" name="add_menu_to_folder" value="{msgPool type=addButton}" title="{t}Add selected applications to this folder.{/t}">
+			<input type="submit" name="add_seperator" 	   value="{t}Seperator{/t}" title="{t}Add a seperator to this folder.{/t}">
 		</td>
 		<td style="vertical-align:top">
 			{$app_list}	

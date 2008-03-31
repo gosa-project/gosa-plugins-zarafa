@@ -216,13 +216,20 @@ class appgroup extends plugin
             }
 
           }elseif(in_array("gotoMenuEntry",$attrs['objectClass'])){
+
             $type = "ENTRY";
             $data['INFO'] = "";
             $data['PARAMETER'] = array();
             if(isset($attrs['gosaApplicationParameter'])){
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
-                $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
-                $data['PARAMETER'][$tmp[0]] = $tmp[1];
+                if(preg_match("/:/",$attrs['gosaApplicationParameter'][$p])){
+                  $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
+                  $data['PARAMETER'][$tmp[0]] = $tmp[1];
+                }elseif($attrs['gosaApplicationParameter'][$p] == "*separator*"){
+                  $type = "SEPERATOR";
+                  $data['PARAMETER'] = array();
+                  break;
+                }
               }
             }
           }elseif(in_array("FAIbranch",$attrs['objectClass'])){
@@ -256,6 +263,8 @@ class appgroup extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if(isset($_GET['r'])) $this->__construct($this->config,$this->dn);
+
     if (isset($_POST['modify_state'])){
       $this->is_account = !$this->is_account;
     }
@@ -263,12 +272,13 @@ class appgroup extends plugin
     /* Do we represent a valid account? */
     if (!$this->is_account){
       $display= $this->show_enable_header(_("Add application extension"),
-          msgPool::featuresDisabled(_("application")));
+          _("Application extension disabled. You can enable it by clicking below."));
       return ($display);
     }
 
     $display =  $this->show_enable_header(_("Remove application extension"),
-          msgPool::featuresEnabled(_("application")));
+          _("Application extension enabled. You can disable it by clicking below."));
+
 
     if(isset($_GET['send'])){
       $id = $_GET['send'];
@@ -321,7 +331,7 @@ class appgroup extends plugin
       if($value["description"][0]!=".."){
         $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
       }else{
-        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("back")."]";
+        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
       }
     }
 
@@ -717,6 +727,13 @@ class appgroup extends plugin
         }
       }
     }
+
+    /* Add seperator */
+    if(isset($_POST['add_seperator']) && isset($_POST['menu_folder'])){
+      $folder = $_POST['menu_folder'];
+      $this->_add_seperator($folder);
+    }
+
     if(isset($_POST['add_menu_to_folder']) && isset($_POST['menu_folder'])){
       $folder = $_POST['menu_folder'];
       $name = $_POST['menu_folder_name'];
@@ -819,8 +836,8 @@ class appgroup extends plugin
 
   
   /* !\brief Remove the given id from the menu structure.
-     @param  String  ID to of the entry we want to remove.
-     @return Boolean TRUE on success
+      @param  String  ID to of the entry we want to remove.
+      @return Boolean TRUE on success
    */
   function _add_entry($folder_id,$entry,$pos = 0)
   {
@@ -845,29 +862,32 @@ class appgroup extends plugin
       $entry['PARENT'] = $folder_id;
       $entry['ENTRIES']= array();
       $entry['STATUS'] = "ADDED";
-
+      
       $cnt = 0; 
       $new = array();
       $added =FALSE;
-      if($obj['STATUS'] == "LOADED"){
-        $obj['STATUS'] = "EDITED";
+      foreach($folder['ENTRIES'] as $key => $obj){
+        if($obj['STATUS'] == "LOADED"){
+          $obj['STATUS'] = "EDITED";
+        }
+        if($pos == $cnt){
+          $new[] = $entry;
+          $added = TRUE;
+        }
+        $cnt ++;
+        $new[] = $obj;
       }
-      if($pos == $cnt){
+      if(!$added){
         $new[] = $entry;
-        $added = TRUE;
       }
-      $cnt ++;
-      $new[] = $obj;
+  
+      $all[$folder_id]['ENTRIES'] = $new;
+      foreach($entries as $sub){
+        $this->_add_entry($entry['UNIQID'],$sub,-1);
+      }
+      return(TRUE);
     }
-    if(!$added){
-      $new[] = $entry;
-    }
-
-    $all[$folder_id]['ENTRIES'] = $new;
-    foreach($entries as $sub){
-      $this->_add_entry($entry['UNIQID'],$sub,-1);
-    }
-    return(TRUE);
+    return(FALSE);
   }
 
  
@@ -894,6 +914,30 @@ class appgroup extends plugin
       }else{
         $new['INFO']  = "";
       }
+      $new['STATUS']= "ADDED";
+      $all[$folder_id]['ENTRIES'][] = $new;
+    }
+  }
+
+
+  /*! \brief Add the application identified by $app_id to folder $folder_id 
+      @param  String  folder_id The UNIQID of the folder where we want to add the new folder.
+      @param  Integer app_id    The ID of the application which should be added.
+   */ 
+  function _add_seperator($folder_id)
+  {
+    $all = $this->_get_all_entries();
+    if($folder_id == "BASE"){
+      $folder_id = $this->_get_release_key($this->FAIrelease);
+    }
+
+    if(isset($all[$folder_id])){
+      $new = array();
+      $new['TYPE']  = "SEPERATOR";
+      $new['NAME']  = "SEPERATOR";
+      $new['UNIQID']= uniqid(); 
+      $new['PARENT']= $folder_id;
+      $new['PARAMETER']= array();
       $new['STATUS']= "ADDED";
       $all[$folder_id]['ENTRIES'][] = $new;
     }
@@ -974,13 +1018,17 @@ class appgroup extends plugin
     $prio = 0;
     $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
 
+    $sep_id = 0;
     foreach($all as $entry){
       $prio ++;
       $cur = $entry;
       $dn = "";
 
       do{  
-        if($cur['TYPE'] == "ENTRY"){
+        if($cur['TYPE'] == "SEPERATOR"){
+          $sep_id ++;
+          $dn.= "cn=seperator_".$sep_id.",";
+        }elseif($cur['TYPE'] == "ENTRY"){
           $dn.= "cn=".$cur['NAME'].",";
         }elseif($cur['TYPE'] == "FOLDER"){
           $dn.= "cn=".$cur['NAME'].",";
@@ -999,6 +1047,14 @@ class appgroup extends plugin
 
       $attrs = array();
       switch($entry['TYPE']){
+        case "SEPERATOR"    :
+        { 
+          $attrs['objectClass'] = "gotoMenuEntry";
+          $attrs['cn']          = "seperator_".$sep_id;
+          $attrs['gosaApplicationPriority'] = $prio;
+          $attrs['gosaApplicationParameter'] = "*separator*";
+        }
+        break;
         case "ENTRY"    :
         { 
           $attrs['objectClass'] = "gotoMenuEntry";
@@ -1047,7 +1103,7 @@ class appgroup extends plugin
         continue;
       }
       if($entry['STATUS'] == "REMOVED"){
-        $Actions['Remove'][$cur_dn] = $cur_dn;
+        $Actions['Remove'][$entry['DN']] = $entry['DN'];
       }
       if($entry['STATUS'] == "EDITED"){
         $Actions['Edit'][$cur_dn] = $attrs;
@@ -1089,6 +1145,7 @@ class appgroup extends plugin
         }
       }
     }
+
     $this->_load_menu_structure();
   }
 
