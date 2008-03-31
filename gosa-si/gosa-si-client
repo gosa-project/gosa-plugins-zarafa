@@ -1092,7 +1092,7 @@ sub _start {
         #    ErrorEvent => "file_error",
         #    );
 	$heap->{tail} = POE::Wheel::Run->new(
-		Program     => [ "/usr/bin/tail", "-f", $file_name ],
+		Program     => [ "/usr/bin/tail", "-f", $file ],
 		StdoutEvent => $file_name."_record",
 	);
         #$heap->{services}->{ $file_watcher->ID } = $file_name;
