@@ -16,7 +16,7 @@ sub new {
     my $class = shift;
     my $db_name = shift;
 
-    my $lock = $db_name.".lock";
+    my $lock = $db_name.".si.lock";
 	# delete existing lock - instance should be running only once
 	if(stat($lock)) {
 		unlink($lock);
@@ -38,7 +38,7 @@ sub lock_exists : locked {
     my $result=(-f $lock);
     if($result) {
         #&main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found", 8);
-        usleep 100;
+        usleep 500;
     }
     return $result;
 }
