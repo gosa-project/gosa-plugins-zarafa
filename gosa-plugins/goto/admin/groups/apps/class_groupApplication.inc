@@ -242,6 +242,7 @@ class appgroup extends plugin
             }
           }
 
+          $data['LDAP_ATTRS'] = $attrs;
           $data['DN']       = $attrs['dn'];
           $data['NAME']     = $name;
           $data['TYPE']     = $type;
@@ -1046,10 +1047,11 @@ class appgroup extends plugin
       $cur_dn = $dn.$this->dn;
 
       $attrs = array();
+
       switch($entry['TYPE']){
         case "SEPERATOR"    :
         { 
-          $attrs['objectClass'] = "gotoMenuEntry";
+          $attrs['objectClass'] = array("gotoMenuEntry");
           $attrs['cn']          = "seperator_".$sep_id;
           $attrs['gosaApplicationPriority'] = $prio;
           $attrs['gosaApplicationParameter'] = "*separator*";
@@ -1057,7 +1059,7 @@ class appgroup extends plugin
         break;
         case "ENTRY"    :
         { 
-          $attrs['objectClass'] = "gotoMenuEntry";
+          $attrs['objectClass'] = array("gotoMenuEntry");
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
           $attrs['gosaApplicationParameter'] = array(); 
@@ -1073,7 +1075,7 @@ class appgroup extends plugin
         break;
         case "FOLDER"   : 
         { 
-          $attrs['objectClass'] = "gotoSubmenuEntry";
+          $attrs['objectClass'] = array("gotoSubmenuEntry");
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
           if($entry['STATUS'] != "ADDED"){
@@ -1086,7 +1088,7 @@ class appgroup extends plugin
         }
         break;
         case "RELEASE"  : 
-        { 
+        {
           $attrs['ou']            = $entry['NAME'];
           $attrs['objectClass']   = array();
           $attrs['objectClass'][] = "top";
@@ -1098,7 +1100,17 @@ class appgroup extends plugin
         }
         break;
       }
-  
+ 
+      /* Append missing ObjectClasses,  ...  Tagging */
+      if(isset($entry['LDAP_ATTRS'])){
+        for($i = 0 ; $i < $entry['LDAP_ATTRS']['objectClass']['count']; $i ++){
+          $oc = $entry['LDAP_ATTRS']['objectClass'][$i];
+          if(!in_array($oc,$attrs['objectClass'])){
+            $attrs['objectClass'][] = $oc;
+          }
+        }
+      }
+ 
       if($entry['STATUS'] == "LOADED"){
         continue;
       }
