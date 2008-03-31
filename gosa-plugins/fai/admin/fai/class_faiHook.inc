@@ -199,8 +199,8 @@ class faiHook extends plugin
 
     /* File download requested */
     if(isset($_GET['getFAIHook'])){
-      if(isset($this->SubObjects[$_GET['getFAIHook']])){
-        $obj = $this->SubObjects[$_GET['getFAIHook']];
+      if(isset($this->SubObjects[base64_decode($_GET['getFAIHook'])])){
+        $obj = $this->SubObjects[base64_decode($_GET['getFAIHook'])];
         $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         send_binary_content($obj['FAIscript'],$obj['cn'].".FAIhook");
       }
@@ -208,8 +208,8 @@ class faiHook extends plugin
 
     /* Edit entries via GET */
     if(isset($_GET['act']) && isset($_GET['id'])){
-      if($_GET['act'] == "edit" && isset($this->SubObjects[$_GET['id']])){
-        $obj = $this->SubObjects[$_GET['id']];
+      if($_GET['act'] == "edit" && isset($this->SubObjects[base64_decode($_GET['id'])])){
+        $obj = $this->SubObjects[base64_decode($_GET['id'])];
           if($obj['status'] == "FreshLoaded"){
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
@@ -333,7 +333,7 @@ class faiHook extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='?plug=".$_GET['plug']."&getFAIHook=".$key."'>
+        $down = "<a href='?plug=".$_GET['plug']."&getFAIHook=".base64_encode($key)."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>";
       }
@@ -342,7 +342,7 @@ class faiHook extends plugin
       $s_acl = $this->ui->get_permissions($dn,"fai/faiHookEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
 
-        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$name['name']."</a>";
+        $edit_link = "<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_encode($key)."'>".$name['name']."</a>";
         $divlist->AddEntry(array( array("string"=>$edit_link),
               array("string"=>$down , "attach" => "style='width:20px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
@@ -384,19 +384,19 @@ class faiHook extends plugin
     $a_return=array();
     foreach($this->SubObjects as $obj){
       if($obj['status'] != "delete"){
+
+        $cn   = stripslashes($obj['cn']);
+        $desc = "";
+
+        if((isset($obj['description']))&&(!empty($obj['description']))){
+          $desc = " [".stripslashes($obj['description'])."]"; 
+        }
+
         if($use_dns){
-          if((isset($obj['description']))&&(!empty($obj['description']))){
-            $a_return[$obj['cn']]['name']= $obj['cn']." [".stripslashes($obj['description'])."]";
-          }else{
-            $a_return[$obj['cn']]['name']= $obj['cn'];
-          }
+          $a_return[$obj['cn']]['name']= $cn.$desc;
           $a_return[$obj['cn']]['dn']= $obj['dn'];
         }else{
-          if((isset($obj['description']))&&(!empty($obj['description']))){
-            $a_return[$obj['cn']]= $obj['cn']." [".stripslashes($obj['description'])."]";
-          }else{
-            $a_return[$obj['cn']]= $obj['cn'];
-          }
+          $a_return[$obj['cn']] =  $cn.$desc;
         }
       }
     }
