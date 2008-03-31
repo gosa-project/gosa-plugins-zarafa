@@ -808,7 +808,7 @@ class gofaxAccount extends plugin
           "goFaxSBlockgroups", "facsimileAlternateTelephoneNumber") as $val){
 
       if (in_array($val, $skip)){
-        continue();
+        continue;
       }
 
       if (isset($this->attrs[$val])){
