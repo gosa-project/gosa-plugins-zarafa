@@ -25,7 +25,7 @@ use Config::IniFiles;
 use POSIX;
 use Time::HiRes qw( gettimeofday );
 
-use POE qw(Component::Server::TCP Wheel::FollowTail);
+use POE qw(Component::Server::TCP Wheel::FollowTail Wheel::Run);
 use IO::Socket::INET;
 use NetAddr::IP;
 use Data::Dumper;
