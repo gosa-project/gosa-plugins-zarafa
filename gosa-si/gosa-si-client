@@ -984,26 +984,26 @@ sub trigger_logged_in_users_report {
 }
 
 
-sub generic_file_reset {
-    my ( $heap, $wheel_id ) = @_[ HEAP, ARG0 ];
+#sub generic_file_reset {
+#    my ( $heap, $wheel_id ) = @_[ HEAP, ARG0 ];
+#
+#    my $service = $heap->{services}->{$wheel_id};
+#    daemon_log("INFO: '$service' watching reset", 5);
+#    return;
+#}
 
-    my $service = $heap->{services}->{$wheel_id};
-    daemon_log("INFO: '$service' watching reset", 5);
-    return;
-}
-
-sub generic_file_error {
-    my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
-      @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
-
-    my $service = $heap->{services}->{$wheel_id};
-    daemon_log("ERROR: '$service' watcher $operation error $errno: $error_string", 1);
-    daemon_log("ERROR: shutting down '$service' file watcher", 1);
-
-    delete $heap->{services}->{$wheel_id};
-    delete $heap->{watchers}->{$wheel_id};
-    return;
-}
+#sub generic_file_error {
+#    my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
+#      @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
+#
+#    my $service = $heap->{services}->{$wheel_id};
+#    daemon_log("ERROR: '$service' watcher $operation error $errno: $error_string", 1);
+#    daemon_log("ERROR: shutting down '$service' file watcher", 1);
+#
+#    delete $heap->{services}->{$wheel_id};
+#    delete $heap->{watchers}->{$wheel_id};
+#    return;
+#}
 
 
 sub fifo_got_record {
@@ -1085,14 +1085,18 @@ sub _start {
     
     # install all file watcher defined
     while( my($file_name, $file) = each %files_to_watch ) {
-        my $file_watcher = POE::Wheel::FollowTail->new(
-            Filename   => $file,
-            InputEvent => $file_name."_record",
-            ResetEvent => "file_reset",
-            ErrorEvent => "file_error",
-            );
-        $heap->{services}->{ $file_watcher->ID } = $file_name;
-        $heap->{watchers}->{ $file_watcher->ID } = $file_watcher;
+        #my $file_watcher = POE::Wheel::FollowTail->new(
+        #    Filename   => $file,
+        #    InputEvent => $file_name."_record",
+        #    ResetEvent => "file_reset",
+        #    ErrorEvent => "file_error",
+        #    );
+	$heap->{tail} = POE::Wheel::Run->new(
+		Program     => [ "/usr/bin/tail", "-f", $file_name ],
+		StdoutEvent => $file_name."_record",
+	);
+        #$heap->{services}->{ $file_watcher->ID } = $file_name;
+        #$heap->{watchers}->{ $file_watcher->ID } = $file_watcher;
     }
     $kernel->yield('trigger_logged_in_users_report'); 
 }
