@@ -413,15 +413,6 @@ class workgeneric extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
  
-    /* Only systems with a valid ldap handle can be activated 
-     */
-    if($this->gotoMode == "active" && $this->initial_gotoMode != "active"){
-     
-      if(isset($this->parent->by_object['workstartup']) && !count($this->parent->by_object['workstartup']->gotoLdapServers)){
-        $message[] = _("In order to activate this system a valid ldap handle is required, please select at least one ldap URI in the workstation startup tab.");
-      }
-    }
- 
     /* Skip IP & Mac checks if this is a template */
     if($this->cn != "wdefault"){
       $message= array_merge($message, $this->netConfigDNS->check());
@@ -466,12 +457,21 @@ class workgeneric extends plugin
       $message[]= msgPool::required(_("NTP server"));
     }
 
-    /* Warn the user, that this host is currently installing */
-    if($this->currently_installing && !$this->currently_installing_warned){
-      $this->currently_installing_warned = TRUE;
-      $message[] = _("This host is currently installing, if you really want to save it, save again.");
-    }
+    /* Only systems with a valid ldap handle can be activated 
+     */
+    if($this->gotoMode == "active" && $this->initial_gotoMode != "active"){
 
+      if(isset($this->parent->by_object['workstartup']) && !count($this->parent->by_object['workstartup']->gotoLdapServers)){
+        $message[] = _("In order to activate this system a valid ldap handle is required, please select at least one ldap URI in the workstation startup tab.");
+      }
+    }else{
+      /* Warn the user, that this host is currently installing */
+      if($this->currently_installing && !$this->currently_installing_warned){
+        $this->currently_installing_warned = TRUE;
+        $message[] = _("This host is currently installing, if you really want to save it, save again.");
+      }
+    }
+  
     return ($message);
   }
 
