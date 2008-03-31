@@ -164,10 +164,10 @@ class faiScript extends plugin
 
     /* File download requested */
     if(isset($_GET['getFAIscript'])){
-      if(isset($this->SubObjects[$_GET['getFAIscript']])){
-        $obj = $this->SubObjects[$_GET['getFAIscript']];
+      if(isset($this->SubObjects[base64_decode($_GET['getFAIscript'])])){
+        $obj = $this->SubObjects[base64_decode($_GET['getFAIscript'])];
         $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content($obj['FAIscript'],$obj['cn'].".FAIscript"); 
+        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIscript"); 
       }
     }
     
@@ -193,7 +193,7 @@ class faiScript extends plugin
     }
 
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
-      $s_entry = $_GET['id'];
+      $s_entry = base64_decode($_GET['id']);
       if(isset($this->SubObjects[$s_entry])){
         $s_action = "edit";
       }
@@ -368,7 +368,7 @@ class faiScript extends plugin
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-        $down = "<a href='?plug=".$_GET['plug']."&getFAIscript=".$key."'>
+        $down = "<a href='?plug=".$_GET['plug']."&getFAIscript=".base64_encode($key)."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>"; 
       } 
@@ -376,7 +376,7 @@ class faiScript extends plugin
       /* Check if we are allowed to view this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".$key."'>".$name['name']."</a>"),
+        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_decode($key)."'>".$name['name']."</a>"),
               array("string"=>$name['FAIpriority'] , "attach" => "style='width:100px;'"),
               array("string"=>$down , "attach" => "style='width:100px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
@@ -384,7 +384,6 @@ class faiScript extends plugin
       }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
-
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
@@ -411,31 +410,33 @@ class faiScript extends plugin
     return($display);
   }
 
+
   /* Generate listbox friendly SubObject list
    */
   function getList($use_dns=false){
     $a_return=array();
     foreach($this->SubObjects as $obj){
       if($obj['status'] != "delete"){
+
+        $cn   = stripslashes($obj['cn']);
+        $desc = "";
+
+        if((isset($obj['description']))&&(!empty($obj['description']))){
+          $desc = " [".stripslashes($obj['description'])."]";
+        }
+
         if($use_dns){
-          if((isset($obj['description']))&&(!empty($obj['description']))){
-            $a_return[$obj['cn']]['name']= $obj['cn']." [".stripslashes($obj['description'])."]";
-          }else{
-            $a_return[$obj['cn']]['name']= $obj['cn'];
-          }
+          $a_return[$obj['cn']]['name']= $cn.$desc;
           $a_return[$obj['cn']]['dn']= $obj['dn'];
           $a_return[$obj['cn']]['FAIpriority']= $obj['FAIpriority'];
         }else{
-          if((isset($obj['description']))&&(!empty($obj['description']))){
-            $a_return[$obj['cn']]= $obj['cn']." [".stripslashes($obj['description'])."]";
-          }else{
-            $a_return[$obj['cn']]= $obj['cn'];
-          }
+          $a_return[$obj['cn']] =  $cn.$desc;
         }
       }
     }
     return($a_return);
   }
+
 
   /* Delete me, and all my subtrees
    */

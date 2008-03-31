@@ -70,17 +70,20 @@ class faiScriptEntry extends plugin
       }
     }
   
+     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
+     * If we post the escaped strings they will be escaped again
+     */
     foreach($this->attributes as $attrs){
       if(get_magic_quotes_gpc()){
-       $smarty->assign($attrs,stripslashes($this->$attrs));
+        $smarty->assign($attrs,(stripslashes($this->$attrs)));
       }else{
-       $smarty->assign($attrs,($this->$attrs));
-      } 
+        $smarty->assign($attrs,($this->$attrs));
+      }
     }
 
     /* File download requested */
     if(isset($_GET['getFAIScript'])){
-      send_binary_content($this->FAIscript,$this->cn.".FAIscript");
+      send_binary_content(stripslashes($this->FAIscript),$this->cn.".FAIscript");
     }
 
     /* Create download button*/
@@ -105,12 +108,12 @@ class faiScriptEntry extends plugin
       $smarty->assign($name."ACL",$acl);
     }
 
-    $smarty->assign("FAIprioritys",$FAIprioritys);
     if(get_magic_quotes_gpc()){
       $smarty->assign("FAIscript" , htmlentities(stripslashes($this->FAIscript)));
     }else{
       $smarty->assign("FAIscript" , htmlentities($this->FAIscript));
     }
+    $smarty->assign("FAIprioritys",$FAIprioritys);
     $display.= $smarty->fetch(get_template_path('faiScriptEntry.tpl', TRUE));
     return($display);
   }
