@@ -6,7 +6,6 @@ use warnings;
 use DBI;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
-use threads;
 use Time::HiRes qw(usleep);
 
 
@@ -32,45 +31,6 @@ sub new {
     return($self);
 }
 
-sub lock_exists : locked {
-    my $self=shift;
-    my $funcname=shift;
-    my $lock = $self->{db_lock};
-    my $result=(-f $lock);
-	my $i=0;
-    if($result) {
-		if($i>10) {
-        	&main::daemon_log("WARNING: (".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found. Waiting time: ".($i*500)." us", 8);
-		}
-        usleep 500;
-		$i++;
-    }
-    return $result;
-}
-
-sub create_lock : locked {
-    my $self=shift;
-    my $funcname=shift;
-    #&main::daemon_log("(".((defined $funcname)?$funcname:"").") Creating Lock (PID ".$$.") ".($self->{db_lock}),8);
-
-    my $lock = $self->{db_lock};
-    while( -f $lock ) {
-		#&main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found",8);
-        usleep 100;
-    }
-
-    open($self->{db_lock_handle},'>',$self->{db_lock});
-}
-
-sub remove_lock : locked {
-    my $self=shift;
-    my $funcname=shift;
-    #&main::daemon_log("(".((defined $funcname)?$funcname:"").") Removing Lock (PID ".$$.") ".$self->{db_lock}, 8);
-    close($self->{db_lock_handle});
-    unlink($self->{db_lock});
-}
-
-
 sub create_table {
     my $self = shift;
     my $table_name = shift;
@@ -85,9 +45,7 @@ sub create_table {
     $col_names->{ $table_name } = $col_names_ref;
     my $col_names_string = join("', '", @col_names);
     my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
-    &create_lock($self,'create_table');
     $self->{dbh}->do($sql_statement);
-    &remove_lock($self,'create_table');
     return 0;
 }
 
@@ -114,9 +72,7 @@ sub add_dbentry {
             if($primkey eq 'id') {
                 # if primkey is id, fetch max id from table and give new job id=  max(id)+1
                 my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
-                &create_lock($self,'add_dbentry');
                 my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
-                &remove_lock($self,'add_dbentry');
                 my $id;
                 if( defined $max_id) {
                     $id = $max_id + 1; 
@@ -140,9 +96,7 @@ sub add_dbentry {
 
     # check wether primkey is unique in table, otherwise return errorflag
     my $sql_statement = "SELECT * FROM $table $prim_statement";
-    &create_lock($self,'add_dbentry');
     my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
-    &remove_lock($self,'add_dbentry');
 
     if ($res == 0) {
         # primekey is unique
@@ -162,9 +116,7 @@ sub add_dbentry {
         }    
 
         my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES ('".join("', '", @val_list)."')";
-        &create_lock($self,'add_dbentry');
         my $db_res = $self->{dbh}->do($sql_statement);
-        &remove_lock($self,'add_dbentry');
         if( $db_res != 1 ) {
             return (4, $sql_statement);
         } 
@@ -210,9 +162,7 @@ sub get_table_columns {
     if(exists $col_names->{$table}) {
         @column_names = @{$col_names->{$table}};
     } else {
-        &create_lock($self,'get_table_columns');
         my @res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
-        &remove_lock($self,'get_table_columns');
 
         foreach my $column (@res) {
             push(@column_names, @$column[1]);
@@ -266,9 +216,7 @@ sub exec_statement {
     my $self = shift;
     my $sql_statement = shift;
 
-    &create_lock($self,'exec_statement');
     my @db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
-    &remove_lock($self, 'exec_statement');
 
     return \@db_answer;
 }
@@ -279,11 +227,9 @@ sub exec_statementlist {
     my $sql_list = shift;
     my @db_answer;
 
-    &create_lock($self,'exec_statement');
     foreach my $sql (@$sql_list) {
         @db_answer = @{$self->{dbh}->selectall_arrayref($sql)};
     }
-    &remove_lock($self, 'exec_statement');
 
     return \@db_answer;
 }
@@ -307,10 +253,6 @@ sub move_table {
 
     my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
     my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
-    &create_lock($self,'move_table');
-    my $db_res = $self->{dbh}->do($sql_statement_drop);
-    $db_res = $self->{dbh}->do($sql_statement_alter);
-    &remove_lock($self,'move_table');
 
     return;
 } 
