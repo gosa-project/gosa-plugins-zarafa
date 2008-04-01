@@ -2125,39 +2125,32 @@ if ($no_bus > 0) {
 }
 
 # connect to gosa-si job queue
-unlink($job_queue_file_name.".si.lock");
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table($job_queue_tn, \@job_queue_col_names);
 
 # connect to known_clients_db
-unlink($known_clients_file_name.".si.lock");
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
 
 # connect to known_server_db
-unlink($known_server_file_name.".si.lock");
 $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
 $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 
 # connect to login_usr_db
-unlink($login_users_file_name.".si.lock");
 $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 
 # connect to fai_server_db and fai_release_db
-unlink($fai_server_file_name.".si.lock");
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
 $fai_server_db->create_table($fai_release_tn, \@fai_release_col_names);
 
 # connect to packages_list_db
-unlink($packages_list_file_name.".si.lock");
 unlink($packages_list_file_name);
 $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
 
 # connect to messaging_db
-unlink($messaging_file_name.".si.lock");
 $messaging_db = GOSA::DBsqlite->new($messaging_file_name);
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 

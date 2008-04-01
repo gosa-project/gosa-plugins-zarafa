@@ -19,6 +19,7 @@ sub new {
     my $lock = $db_name.".si.lock";
 	# delete existing lock - instance should be running only once
 	if(stat($lock)) {
+		&main::daemon_log("DEBUG: Removed existing lock $lock.", 7);
 		unlink($lock);
 	}
     my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
@@ -36,9 +37,13 @@ sub lock_exists : locked {
     my $funcname=shift;
     my $lock = $self->{db_lock};
     my $result=(-f $lock);
+	my $i=0;
     if($result) {
-        #&main::daemon_log("(".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found", 8);
+		if($i>10) {
+        	&main::daemon_log("WARNING: (".((defined $funcname)?$funcname:"").") Lock (PID ".$$.") $lock found. Waiting time: ".($i*500)." us", 8);
+		}
         usleep 500;
+		$i++;
     }
     return $result;
 }
