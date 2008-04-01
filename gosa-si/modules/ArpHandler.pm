@@ -94,14 +94,7 @@ sub get_module_info {
 				&main::daemon_log("Loading OUI cache file suceeded!", 6);
 			}
 		}
-        my $ldap_handle = &main::get_ldap_handle();
-		if(defined($ldap_uri) && length($ldap_uri)>0) {
-			if (!$ldap_handle) {
-				&main::daemon_log("Could not connect to LDAP Server at $ldap_uri!\n$@", 1);
-			}
-		} else {
-			$ldap_handle= undef;
-		}
+		my $ldap_handle = &main::get_ldap_handle();
 
 		# When interface is not configured (or 'all'), start arpwatch on all possible interfaces
 		if ((!defined($arp_interface)) || $arp_interface eq 'all') {
