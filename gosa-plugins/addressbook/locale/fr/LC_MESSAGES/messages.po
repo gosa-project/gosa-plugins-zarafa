@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-02 14:01+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,9 +14,109 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: addons/addressbook/class_addressbook.inc:6
+#: addons/addressbook/address_info.tpl:18
+#: addons/addressbook/address_edit.tpl:24
+msgid "Personal"
+msgstr "Personnel"
+
+#: addons/addressbook/address_info.tpl:24
+#: addons/addressbook/class_addressbook.inc:628
+#: addons/addressbook/class_addressbook.inc:668
+#: addons/addressbook/class_addressbook.inc:678
+#: addons/addressbook/class_addressbook.inc:705
+#: addons/addressbook/contents.tpl:14
+msgid "Name"
+msgstr "Nom"
+
+#: addons/addressbook/address_info.tpl:32
+#: addons/addressbook/class_addressbook.inc:829
+#: addons/addressbook/address_edit.tpl:48
+msgid "Initials"
+msgstr "Initiales"
+
+#: addons/addressbook/address_info.tpl:40
+#: addons/addressbook/address_edit.tpl:60
+msgid "Personal title"
+msgstr "Titre Personnel"
+
+#: addons/addressbook/address_info.tpl:53 addons/addressbook/contents.tpl:15
+#: addons/addressbook/address_edit.tpl:74
+msgid "Private"
+msgstr "Privé"
+
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+msgid "Address"
+msgstr "Adresse"
+
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+#: addons/addressbook/class_addressbook.inc:686
+#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221
+msgid "Phone"
+msgstr "Téléphone"
+
+#: addons/addressbook/address_info.tpl:75
+#: addons/addressbook/class_addressbook.inc:695
+#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
+msgid "Mobile"
+msgstr "GSM"
+
+#: addons/addressbook/address_info.tpl:83
+#: addons/addressbook/class_addressbook.inc:710
+#: addons/addressbook/address_edit.tpl:118
+msgid "Email"
+msgstr "Adresse de messagerie"
+
+#: addons/addressbook/address_info.tpl:99
+#: addons/addressbook/address_edit.tpl:134
+msgid "Organizational"
+msgstr "Organisation"
+
+#: addons/addressbook/address_info.tpl:109
+#: addons/addressbook/address_edit.tpl:143
+msgid "Company"
+msgstr "Société"
+
+#: addons/addressbook/address_info.tpl:117
+#: addons/addressbook/class_addressbook.inc:824
+#: addons/addressbook/address_edit.tpl:155
+msgid "Department"
+msgstr "Département"
+
+#: addons/addressbook/address_info.tpl:125
+#: addons/addressbook/address_edit.tpl:167
+msgid "City"
+msgstr "Ville"
+
+#: addons/addressbook/address_info.tpl:133
+#: addons/addressbook/address_edit.tpl:179
+msgid "Postal code"
+msgstr "Code postal"
+
+#: addons/addressbook/address_info.tpl:141
+#: addons/addressbook/address_edit.tpl:191
+msgid "Country"
+msgstr "Pays"
+
+#: addons/addressbook/address_info.tpl:171
+#: addons/addressbook/address_edit.tpl:233
+msgid "FAX"
+msgstr "FAX"
+
+#: addons/addressbook/address_info.tpl:179
+#: addons/addressbook/class_addressbook.inc:698
+#: addons/addressbook/class_addressbook.inc:822
+#: addons/addressbook/address_edit.tpl:246
+msgid "Pager"
+msgstr "Bip"
+
+#: addons/addressbook/main.inc:37 addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:805
-#: addons/addressbook/class_addressbook.inc:811 addons/addressbook/main.inc:37
+#: addons/addressbook/class_addressbook.inc:811
 msgid "Addressbook"
 msgstr "Carnet d'adresses"
 
@@ -85,14 +185,6 @@ msgid "All"
 msgstr "Tout"
 
 #: addons/addressbook/class_addressbook.inc:628
-#: addons/addressbook/class_addressbook.inc:668
-#: addons/addressbook/class_addressbook.inc:678
-#: addons/addressbook/class_addressbook.inc:705
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_info.tpl:24
-msgid "Name"
-msgstr "Nom"
-
-#: addons/addressbook/class_addressbook.inc:628
 #: addons/addressbook/class_addressbook.inc:672
 #: addons/addressbook/class_addressbook.inc:681
 #: addons/addressbook/class_addressbook.inc:702
@@ -116,14 +208,6 @@ msgstr "Téléphone personnel"
 msgid "User ID"
 msgstr "ID de l'utilisateur"
 
-#: addons/addressbook/class_addressbook.inc:686
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-msgid "Phone"
-msgstr "Téléphone"
-
 #: addons/addressbook/class_addressbook.inc:689
 #, fuzzy
 msgid "Telephone number"
@@ -133,25 +217,6 @@ msgstr "Numéro de téléphone"
 #: addons/addressbook/contents.tpl:14
 msgid "Fax"
 msgstr "Fax"
-
-#: addons/addressbook/class_addressbook.inc:695
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
-#: addons/addressbook/address_info.tpl:75
-msgid "Mobile"
-msgstr "GSM"
-
-#: addons/addressbook/class_addressbook.inc:698
-#: addons/addressbook/class_addressbook.inc:822
-#: addons/addressbook/address_edit.tpl:246
-#: addons/addressbook/address_info.tpl:179
-msgid "Pager"
-msgstr "Bip"
-
-#: addons/addressbook/class_addressbook.inc:710
-#: addons/addressbook/address_edit.tpl:118
-#: addons/addressbook/address_info.tpl:83
-msgid "Email"
-msgstr "Adresse de messagerie"
 
 #: addons/addressbook/class_addressbook.inc:718
 msgid ""
@@ -200,12 +265,6 @@ msgstr "Adresse de messagerie"
 msgid "Organization"
 msgstr "Entreprise"
 
-#: addons/addressbook/class_addressbook.inc:824
-#: addons/addressbook/address_edit.tpl:155
-#: addons/addressbook/address_info.tpl:117
-msgid "Department"
-msgstr "Département"
-
 #: addons/addressbook/class_addressbook.inc:825
 msgid "Location"
 msgstr "Lieu"
@@ -219,12 +278,6 @@ msgstr "Adresse postale"
 msgid "State"
 msgstr "Département"
 
-#: addons/addressbook/class_addressbook.inc:829
-#: addons/addressbook/address_edit.tpl:48
-#: addons/addressbook/address_info.tpl:32
-msgid "Initials"
-msgstr "Initiales"
-
 #: addons/addressbook/class_addressbook.inc:830
 msgid "Title"
 msgstr "Titre"
@@ -236,36 +289,6 @@ msgstr "Adresse postale personnelle"
 #: addons/addressbook/class_addressbook.inc:832
 msgid "Common name"
 msgstr "Nom complet"
-
-#: addons/addressbook/remove.tpl:2
-msgid "Warning"
-msgstr "Avertissement"
-
-#: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
-msgstr ""
-"Ceci inclut toutes les données du carnet d'adresse situées dans cette "
-"entrée. Veuillez vérifier si vous voulez réaliser cette opération, toutes "
-"les données seront définitivement perdues, il n'y a pas de moyen pour GOsa "
-"de les récupérer."
-
-#: addons/addressbook/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
-"'Annuler' pour abandonner."
-
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "Appel en cours ..."
-
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:74
-#: addons/addressbook/address_info.tpl:53
-msgid "Private"
-msgstr "Privé"
 
 #: addons/addressbook/contents.tpl:15
 msgid "Contact"
@@ -347,14 +370,34 @@ msgstr "Recherche de"
 msgid "Search string"
 msgstr "Phrase de recherche"
 
+#: addons/addressbook/remove.tpl:2
+msgid "Warning"
+msgstr "Avertissement"
+
+#: addons/addressbook/remove.tpl:6
+msgid ""
+"This includes all addressbook data in this entry. Please double check if "
+"your really want to do this since there is no way for GOsa to get your data "
+"back."
+msgstr ""
+"Ceci inclut toutes les données du carnet d'adresse situées dans cette "
+"entrée. Veuillez vérifier si vous voulez réaliser cette opération, toutes "
+"les données seront définitivement perdues, il n'y a pas de moyen pour GOsa "
+"de les récupérer."
+
+#: addons/addressbook/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
+"'Annuler' pour abandonner."
+
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "Appel en cours ..."
+
 #: addons/addressbook/address_edit.tpl:7
 msgid "Choose the department to store entry in"
 msgstr "Choisissez le département où l'entrée sera stockée"
-
-#: addons/addressbook/address_edit.tpl:24
-#: addons/addressbook/address_info.tpl:18
-msgid "Personal"
-msgstr "Personnel"
 
 #: addons/addressbook/address_edit.tpl:30
 msgid "Last name"
@@ -363,48 +406,6 @@ msgstr "Nom de famille"
 #: addons/addressbook/address_edit.tpl:33
 msgid "First name"
 msgstr "Prénom"
-
-#: addons/addressbook/address_edit.tpl:60
-#: addons/addressbook/address_info.tpl:40
-msgid "Personal title"
-msgstr "Titre Personnel"
-
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-msgid "Address"
-msgstr "Adresse"
-
-#: addons/addressbook/address_edit.tpl:134
-#: addons/addressbook/address_info.tpl:99
-msgid "Organizational"
-msgstr "Organisation"
-
-#: addons/addressbook/address_edit.tpl:143
-#: addons/addressbook/address_info.tpl:109
-msgid "Company"
-msgstr "Société"
-
-#: addons/addressbook/address_edit.tpl:167
-#: addons/addressbook/address_info.tpl:125
-msgid "City"
-msgstr "Ville"
-
-#: addons/addressbook/address_edit.tpl:179
-#: addons/addressbook/address_info.tpl:133
-msgid "Postal code"
-msgstr "Code postal"
-
-#: addons/addressbook/address_edit.tpl:191
-#: addons/addressbook/address_info.tpl:141
-msgid "Country"
-msgstr "Pays"
-
-#: addons/addressbook/address_edit.tpl:233
-#: addons/addressbook/address_info.tpl:171
-msgid "FAX"
-msgstr "FAX"
 
 #~ msgid "You're about to delete the entry %s."
 #~ msgstr "Vous êtes sur le point de supprimer l'entrée %s."
