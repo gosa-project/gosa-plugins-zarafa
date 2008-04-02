@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-02 18:04+0200\n"
-"PO-Revision-Date: 2008-04-02 18:14+0200\n"
+"PO-Revision-Date: 2008-04-02 18:45+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +141,7 @@ msgid "Class"
 msgstr "Klasse"
 
 #: admin/systems/services/dns/class_servDNS.inc:342
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
 msgstr ""
 "Sie können die gewählte Zone nicht entfernen, sie wird noch von folgendem(n) "
