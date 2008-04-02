@@ -471,17 +471,20 @@ class faiPackage extends plugin
     }
 
     FAI::prepare_to_save_FAI_object($this->dn,$this->attrs);
+    $ldap->cd($this->dn);
+
+    if($this->initially_was_account){
+      new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+      $ldap->modify($this->attrs);
+    }else{
+      new log("create","fai/".get_class($this),$this->dn,$this->attributes);
+      $ldap->add($this->attrs);
+    }
+
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
     
-    if($this->initially_was_account){
-      new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
-    }else{
-      new log("create","fai/".get_class($this),$this->dn,$this->attributes);
-    }
-
-    $ldap->cd($this->dn);
 
     /* Save Package configurations */
     foreach($this->ConfiguredPackages as $pkgname => $attrs){
@@ -502,8 +505,8 @@ class faiPackage extends plugin
         $pkgattrs['FAIvariableContent']   = $attr['Value'];
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
 
-	/* Tag object */
-	$this->tag_attrs($pkgattrs, $pkgdn, $this->gosaUnitTag);
+        /* Tag object */
+        $this->tag_attrs($pkgattrs, $pkgdn, $this->gosaUnitTag);
 
         if(in_array($pkgattrs['FAIvariableType'],array("boolean","multiselect","password","select","string","text"))){
           FAI::prepare_to_save_FAI_object($pkgdn,$pkgattrs);
