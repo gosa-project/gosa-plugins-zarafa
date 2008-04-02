@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-02 18:03+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,19 +16,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#: addons/godfs/class_dfsManagment.inc:148
+msgid "LDAP error"
+msgstr ""
+
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr "分布式文件系统管理"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "DFS 属性"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "dfs 共享名称"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "描述"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "文件服务器"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "文件服务器的共享"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "DFS 位置"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "位置"
+
 #: addons/godfs/class_dfsManagment.inc:8
-msgid "DFS Managment"
+#, fuzzy
+msgid "DFS Management"
 msgstr "DFS 管理"
 
 #: addons/godfs/class_dfsManagment.inc:9
 #, fuzzy
 msgid "This does something"
 msgstr "******"
-
-#: addons/godfs/class_dfsManagment.inc:148
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-msgid "LDAP error"
-msgstr ""
 
 #: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
@@ -70,34 +103,6 @@ msgstr "提交"
 msgid "Finish"
 msgstr "完成"
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "DFS 属性"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "dfs 共享名称"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "描述"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "文件服务器"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "文件服务器的共享"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "DFS 位置"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "位置"
-
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
 msgstr "DFS 共享"
@@ -126,10 +131,6 @@ msgstr "显示匹配的 dfs 共享"
 #: addons/godfs/contents.tpl:44
 msgid "Regular expression for matching dfs share names"
 msgstr "匹配 dns 共享名的正则表达式"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
-msgid "Distributed File System Administration"
-msgstr "分布式文件系统管理"
 
 #~ msgid "Cancel"
 #~ msgstr "取消"

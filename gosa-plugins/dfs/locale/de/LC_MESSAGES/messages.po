@@ -1,37 +1,71 @@
 # translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-04-02 18:03+0200\n"
+"PO-Revision-Date: 2008-04-02 18:02+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#: addons/godfs/class_dfsManagment.inc:148
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr "Verwaltung des Verteilten Dateisystems (DFS)"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "DFS-Eigenschaften"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Name der DFS-Freigabe"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Beschreibung"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Dateiserver"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Freigabe auf Dateiserver"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "DFS-Pfad"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Pfad"
 
 #: addons/godfs/class_dfsManagment.inc:8
-msgid "DFS Managment"
+#, fuzzy
+msgid "DFS Management"
 msgstr "DFS-Verwaltung"
 
 #: addons/godfs/class_dfsManagment.inc:9
 msgid "This does something"
 msgstr "Dies tut etwas"
-
-#: addons/godfs/class_dfsManagment.inc:148
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-msgid "LDAP error"
-msgstr ""
 
 #: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
@@ -63,7 +97,7 @@ msgstr "Basis"
 
 #: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit department"
-msgstr "Aktualisieren"
+msgstr "Übertrage Abteilung"
 
 #: addons/godfs/class_dfsManagment.inc:216
 msgid "Submit"
@@ -72,34 +106,6 @@ msgstr "Übertragen"
 #: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Speichern"
-
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "DFS-Eigenschaften"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Name der DFS-Freigabe"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Beschreibung"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Dateiserver"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Freigabe auf Dateiserver"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "DFS-Pfad"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Ort"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -130,37 +136,3 @@ msgstr "Zeige die DFS-Freigaben, auf die das Folgende passt"
 #: addons/godfs/contents.tpl:44
 msgid "Regular expression for matching dfs share names"
 msgstr "Regulärer Ausdruck zum Erkennen von DFS-Freigaben"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
-msgid "Distributed File System Administration"
-msgstr "Verteiltes Dateisystem (DFS) Verwaltung"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
-
-#~ msgid "Removing of DFS share with dn '%s' failed."
-#~ msgstr "Entfernen von DFS-Freigabe mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Dfs share already exists."
-#~ msgstr "Diese DFS-Freigabe existiert bereits."
-
-#~ msgid "Required Field \"Name of dfs Share\" is not set."
-#~ msgstr "Das benötigte Feld 'Name der DFS-Freigabe' ist nicht ausgefüllt."
-
-#~ msgid "Required Field \"Description\" is not set."
-#~ msgstr "Das benötigte Feld 'Beschreibung' ist nicht gesetzt."
-
-#~ msgid "Required Field \"Fileserver\" is not set."
-#~ msgstr "Das benötigte Feld 'Dateiserver' ist nicht ausgefüllt."
-
-#~ msgid "Required Field \"Share on fileserver\" is not set."
-#~ msgstr "Das benötigte Feld 'Freigabe auf Dateiserver' ist nicht ausgefüllt."
-
-#~ msgid "Required Field \"Location\" is not set."
-#~ msgstr "Das benötigte Feld 'Pfad' ist nicht gesetzt."
-
-#~ msgid "Saving dfs/generic with dn '%s' failed."
-#~ msgstr "Speichern von DFS/Allgemein mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Removing dfs/generic with dn '%s' failed."
-#~ msgstr "Entfernen von DFS/Allgemein mit dn '%s' fehlgeschlagen."

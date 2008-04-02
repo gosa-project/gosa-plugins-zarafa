@@ -5,7 +5,7 @@
     from LDAP to local variables and prepare the save to ldap routine for you. */
 class dfsManagment extends plugin {
   /* Definitions */
-  var $plHeadline = "DFS Managment";
+  var $plHeadline = "DFS Management";
   var $plDescription = "This does something";
    
   /* These contain attributes to be loaded. We're not doing an LDAP plugin currently, so we don't
