@@ -120,7 +120,7 @@ $CHKS = "<input type='hidden' value='chkchange' name='chkchange'><table summary=
     $cnt = 0; 
     foreach($pkgs as $pkg){
       if($cnt > 200) {
-        msg_dialog::display(_("Error"), _("Search returned too many reults - showing the first 200 matches, only!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), _("Search returned too many results - showing the first 200 matches, only!"), ERROR_DIALOG);
         break;
       }
       if((preg_match("/^".$search_str."/i",$pkg[0]))||

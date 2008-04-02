@@ -84,7 +84,7 @@ class faiSummaryTab extends plugin{
       }elseif(isset($this->parent->by_object['servgeneric'])){
         $this->base    = $this->parent->by_object['servgeneric']->base;
       }else{
-        msg_dialog::display(_("Error"), _("Unkonwn FAI information source!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), _("Unknown FAI information source!"), ERROR_DIALOG);
       }
       
       /* Append workstation class && LAST */
