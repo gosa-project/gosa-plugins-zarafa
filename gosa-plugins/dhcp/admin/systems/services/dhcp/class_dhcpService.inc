@@ -140,7 +140,7 @@ class dhcpService extends dhcpPlugin
       $message[]= msgPool::invalid(_("Lease time"),$this->statements['default-lease-time'],"/[0-9]/");
     }
     if (!tests::is_id($this->statements['max-lease-time'])){
-      $message[]= msgPool::invalid(_("May lease time"),$this->statements['max-lease-time'],"/[0-9]/");
+      $message[]= msgPool::invalid(_("Max lease time"),$this->statements['max-lease-time'],"/[0-9]/");
     }
     if ($this->statements['default-lease-time'] > $this->statements['max-lease-time']){
       $message[]= msgPool::toobig(_("Default lease time"),_("Maximum lease time"));
