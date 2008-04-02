@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-02 18:04+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr ""
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:104
+#, fuzzy
+msgid "New entry"
+msgstr "пользователи"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
+#, fuzzy
+msgid "Create a new DNS zone entry"
+msgstr "Создание нового объекта в"
 
 #: admin/systems/services/dns/servdns.tpl:5
 msgid "DNS take over initiated"
@@ -46,204 +69,6 @@ msgstr "Сервисы"
 #, fuzzy
 msgid "Zones"
 msgstr "телефоны"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
-msgid ""
-"This dialog allows you to configure all components of this DNS zone on a "
-"single list."
-msgstr ""
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
-msgid ""
-"This dialog can't be used until the currently edited zone was saved or the "
-"zone entry exists in the ldap database."
-msgstr ""
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:104
-#, fuzzy
-msgid "New entry"
-msgstr "пользователи"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:11
-#, fuzzy
-msgid "Create a new DNS zone entry"
-msgstr "Создание нового объекта в"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:240
-#: admin/systems/services/dns/class_DNS.inc:161
-#: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:606
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:342
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
-msgid "Error"
-msgstr ""
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:336
-msgid "Up"
-msgstr ""
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:337
-#, fuzzy
-msgid "Down"
-msgstr "Домен"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:339
-#: admin/systems/services/dns/class_servDNSeditZone.inc:562
-msgid "Delete"
-msgstr "Удалить"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:408
-#: admin/systems/services/dns/class_servDNSeditZone.inc:416
-#: admin/systems/services/dns/servdnseditzone.tpl:7
-#: admin/systems/services/dns/class_servDNS.inc:586
-#, fuzzy
-msgid "Zone name"
-msgstr "Название"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:412
-#: admin/systems/services/dns/class_servDNS.inc:276
-#: admin/systems/services/dns/class_servDNS.inc:587
-#, fuzzy
-msgid "Reverse zone"
-msgstr "Ссылки"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:416
-#: admin/systems/services/dns/class_servDNSeditZone.inc:442
-msgid "Only lowercase allowed"
-msgstr ""
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:420
-#: admin/systems/services/dns/class_servDNS.inc:590
-#, fuzzy
-msgid "Serial"
-msgstr "терминалы"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:424
-#: admin/systems/services/dns/servdnseditzone.tpl:102
-#: admin/systems/services/dns/class_servDNS.inc:591
-#, fuzzy
-msgid "Refresh"
-msgstr "Ссылки"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:428
-msgid "Time to life"
-msgstr ""
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:432
-#: admin/systems/services/dns/servdnseditzone.tpl:120
-#: admin/systems/services/dns/class_servDNS.inc:593
-#, fuzzy
-msgid "Expire"
-msgstr "Экспорт"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:436
-#: admin/systems/services/dns/servdnseditzone.tpl:111
-#: admin/systems/services/dns/class_servDNS.inc:592
-msgid "Retry"
-msgstr "Повторить"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:451
-#: admin/systems/services/dns/servdnseditzone.tpl:16
-#, fuzzy
-msgid "Network address"
-msgstr "Сетевые устройства"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:458
-#: admin/systems/services/dns/class_servDNSeditZone.inc:464
-#: admin/systems/services/dns/class_servDNSeditZone.inc:470
-#, php-format
-msgid ""
-"The specified network address and the network class (%s/%s) do not match!"
-msgstr ""
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:474
-#, fuzzy
-msgid "Network class"
-msgstr "Сетевые устройства"
-
-#: admin/systems/services/dns/class_servDNSeditZone.inc:568
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:451
-msgid "Add"
-msgstr "Добавить"
-
-#: admin/systems/services/dns/class_DNS.inc:161
-#, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr ""
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr ""
-
-#: admin/systems/services/dns/class_DNS.inc:606
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:1
-msgid "Generic"
-msgstr "Общее"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:25
-msgid "Netmask"
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:38
-msgid "Zone is in use, network settings can't be modified."
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:48
-#: admin/systems/services/dns/class_servDNS.inc:595
-#, fuzzy
-msgid "Zone records"
-msgstr "Каталог"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:51
-msgid "Can't be edited because the zone wasn't saved right now."
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:56
-msgid "Edit"
-msgstr "Изменить"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:65
-#, fuzzy
-msgid "SOA record"
-msgstr "Каталог"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:71
-#, fuzzy
-msgid "Primary dns server for this zone"
-msgstr "Основной адрес эл. почты для этой общей папки"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:80
-#: admin/systems/services/dns/class_servDNS.inc:589
-#, fuzzy
-msgid "Mail address"
-msgstr "MAC-адрес"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:89
-msgid "Serial number (automatically incremented)"
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:129
-#: admin/systems/services/dns/class_servDNS.inc:277
-#: admin/systems/services/dns/class_servDNS.inc:594
-msgid "TTL"
-msgstr ""
-
-#: admin/systems/services/dns/servdnseditzone.tpl:147
-#, fuzzy
-msgid "MxRecords"
-msgstr "Каталог"
-
-#: admin/systems/services/dns/servdnseditzone.tpl:165
-#, fuzzy
-msgid "Global zone records"
-msgstr "Каталог"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
 #: admin/systems/services/dns/class_servDNS.inc:548
@@ -288,6 +113,29 @@ msgstr ""
 "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
 "ниже."
 
+#: admin/systems/services/dns/class_servDNS.inc:184
+#: admin/systems/services/dns/class_servDNS.inc:342
+#: admin/systems/services/dns/class_DNS.inc:161
+#: admin/systems/services/dns/class_DNS.inc:166
+#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
+#: admin/systems/services/dns/class_servDNSeditZone.inc:240
+msgid "Error"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNS.inc:276
+#: admin/systems/services/dns/class_servDNS.inc:587
+#: admin/systems/services/dns/class_servDNSeditZone.inc:412
+#, fuzzy
+msgid "Reverse zone"
+msgstr "Ссылки"
+
+#: admin/systems/services/dns/class_servDNS.inc:277
+#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/servdnseditzone.tpl:129
+msgid "TTL"
+msgstr ""
+
 #: admin/systems/services/dns/class_servDNS.inc:278
 #, fuzzy
 msgid "Class"
@@ -310,10 +158,121 @@ msgstr ""
 msgid "Services"
 msgstr "Сервисы"
 
+#: admin/systems/services/dns/class_servDNS.inc:586
+#: admin/systems/services/dns/servdnseditzone.tpl:7
+#: admin/systems/services/dns/class_servDNSeditZone.inc:408
+#: admin/systems/services/dns/class_servDNSeditZone.inc:416
+#, fuzzy
+msgid "Zone name"
+msgstr "Название"
+
 #: admin/systems/services/dns/class_servDNS.inc:588
 #, fuzzy
 msgid "Primary dns server"
 msgstr "Основной адрес эл. почты для этой общей папки"
+
+#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/servdnseditzone.tpl:80
+#, fuzzy
+msgid "Mail address"
+msgstr "MAC-адрес"
+
+#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNSeditZone.inc:420
+#, fuzzy
+msgid "Serial"
+msgstr "терминалы"
+
+#: admin/systems/services/dns/class_servDNS.inc:591
+#: admin/systems/services/dns/servdnseditzone.tpl:102
+#: admin/systems/services/dns/class_servDNSeditZone.inc:424
+#, fuzzy
+msgid "Refresh"
+msgstr "Ссылки"
+
+#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/servdnseditzone.tpl:111
+#: admin/systems/services/dns/class_servDNSeditZone.inc:436
+msgid "Retry"
+msgstr "Повторить"
+
+#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/servdnseditzone.tpl:120
+#: admin/systems/services/dns/class_servDNSeditZone.inc:432
+#, fuzzy
+msgid "Expire"
+msgstr "Экспорт"
+
+#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/servdnseditzone.tpl:48
+#, fuzzy
+msgid "Zone records"
+msgstr "Каталог"
+
+#: admin/systems/services/dns/class_DNS.inc:161
+#, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+
+#: admin/systems/services/dns/class_DNS.inc:606
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:1
+msgid "Generic"
+msgstr "Общее"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:16
+#: admin/systems/services/dns/class_servDNSeditZone.inc:451
+#, fuzzy
+msgid "Network address"
+msgstr "Сетевые устройства"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:25
+msgid "Netmask"
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:38
+msgid "Zone is in use, network settings can't be modified."
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:51
+msgid "Can't be edited because the zone wasn't saved right now."
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:56
+msgid "Edit"
+msgstr "Изменить"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:65
+#, fuzzy
+msgid "SOA record"
+msgstr "Каталог"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:71
+#, fuzzy
+msgid "Primary dns server for this zone"
+msgstr "Основной адрес эл. почты для этой общей папки"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:89
+msgid "Serial number (automatically incremented)"
+msgstr ""
+
+#: admin/systems/services/dns/servdnseditzone.tpl:147
+#, fuzzy
+msgid "MxRecords"
+msgstr "Каталог"
+
+#: admin/systems/services/dns/servdnseditzone.tpl:165
+#, fuzzy
+msgid "Global zone records"
+msgstr "Каталог"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
 #, fuzzy, php-format
@@ -354,9 +313,50 @@ msgstr "Метод '%s' не описан в вашем файле конфиг�
 msgid "Please fix the duplicate %s record for entry '%s'."
 msgstr ""
 
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:451
+#: admin/systems/services/dns/class_servDNSeditZone.inc:568
+msgid "Add"
+msgstr "Добавить"
+
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:452
 msgid "Remove"
 msgstr "Удалить"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:336
+msgid "Up"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:337
+#, fuzzy
+msgid "Down"
+msgstr "Домен"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:339
+#: admin/systems/services/dns/class_servDNSeditZone.inc:562
+msgid "Delete"
+msgstr "Удалить"
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:416
+#: admin/systems/services/dns/class_servDNSeditZone.inc:442
+msgid "Only lowercase allowed"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:428
+msgid "Time to life"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:458
+#: admin/systems/services/dns/class_servDNSeditZone.inc:464
+#: admin/systems/services/dns/class_servDNSeditZone.inc:470
+#, php-format
+msgid ""
+"The specified network address and the network class (%s/%s) do not match!"
+msgstr ""
+
+#: admin/systems/services/dns/class_servDNSeditZone.inc:474
+#, fuzzy
+msgid "Network class"
+msgstr "Сетевые устройства"
 
 #, fuzzy
 #~ msgid "The zone name is not valid!"

@@ -149,7 +149,7 @@ class servdns extends goService
       $smarty->assign("dns_take_over",TRUE);
       $smarty->assign("info",$info);
       $warning = sprintf(_("You are going to migrate the DNS setup from server '%s'."),$this->dns_server_list['ENTRIES'][$id]['cn'][0]);
-      $warning2 = _("The migration will be startet when you save this system. To cancel this action, use the cancel button below.");
+      $warning2 = _("The migration will be started when you save this system. To cancel this action, use the cancel button below.");
       $smarty->assign("warning",$warning);
       $smarty->assign("warning2",$warning2);
       return($smarty->fetch(get_template_path('servdns.tpl', TRUE, dirname(__FILE__))));
