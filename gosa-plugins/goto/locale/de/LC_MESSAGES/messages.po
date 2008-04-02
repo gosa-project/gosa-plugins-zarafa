@@ -3022,7 +3022,7 @@ msgstr "Seriennumner"
 
 #: admin/devices/deviceGeneric.tpl:45
 msgid "(iSerial)"
-msgstr "(iSeriell)"
+msgstr "(iSerial)"
 
 #: admin/devices/deviceGeneric.tpl:53
 msgid "Vendor-ID"
@@ -3030,7 +3030,7 @@ msgstr "Anbieter-ID"
 
 #: admin/devices/deviceGeneric.tpl:53
 msgid "(idVendor)"
-msgstr "(idAnbieter)"
+msgstr "(idVendor)"
 
 #: admin/devices/deviceGeneric.tpl:60
 msgid "Product-ID"
@@ -3038,7 +3038,7 @@ msgstr "Produkt-ID"
 
 #: admin/devices/deviceGeneric.tpl:60
 msgid "(idProduct)"
-msgstr "(idProdukt)"
+msgstr "(idProduct)"
 
 #: admin/devices/class_deviceGeneric.inc:28
 msgid "Digital camera"
