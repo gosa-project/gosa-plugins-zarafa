@@ -272,14 +272,11 @@ class appgroup extends plugin
 
     /* Do we represent a valid account? */
     if (!$this->is_account){
-      $display= $this->show_enable_header(_("Add application extension"),
-          _("Application extension disabled. You can enable it by clicking below."));
+      $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Menu")), msgPool::featuresDisabled(_("Menu")));
       return ($display);
     }
 
-    $display =  $this->show_enable_header(_("Remove application extension"),
-          _("Application extension enabled. You can disable it by clicking below."));
-
+    $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Menu")), msgPool::featuresEnabled(_("Menu")));
 
     if(isset($_GET['send'])){
       $id = $_GET['send'];
@@ -1115,7 +1112,11 @@ class appgroup extends plugin
         continue;
       }
       if($entry['STATUS'] == "REMOVED"){
-        $Actions['Remove'][$entry['DN']] = $entry['DN'];
+        if(isset($entry['DN'])){
+          $Actions['Remove'][$entry['DN']] = $entry['DN'];
+        }else{
+          $Actions['Remove'][$cur_dn] = $cur_dn;
+        }
       }
       if($entry['STATUS'] == "EDITED"){
         $Actions['Edit'][$cur_dn] = $attrs;

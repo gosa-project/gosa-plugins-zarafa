@@ -53,9 +53,9 @@
 		</tr>
 	{elseif $item.TYPE == "FOLDER"}
 		{ if $i++ % 2 == 0}
-			<tr class="rowxp1">
-		{else}
 			<tr class="rowxp0">
+		{else}
+			<tr class="rowxp1">
 		{/if}
 			<td width="22" style='width:22px; padding-top:3px;padding-bottom:3px; overflow:hidden;'>
 				{if $item.ICON != ""}
