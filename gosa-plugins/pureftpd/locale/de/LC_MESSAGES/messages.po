@@ -1,24 +1,25 @@
 # translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-04-03 14:25+0200\n"
+"PO-Revision-Date: 2008-04-03 14:25+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
 msgid "FTP"
@@ -31,7 +32,7 @@ msgstr "Dies tut etwas"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP-Fehler"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
@@ -44,14 +45,12 @@ msgid "Download bandwidth"
 msgstr "Download-Bandbreite"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
-#, fuzzy
 msgid "Quota file"
-msgstr "Kontingent-Dateien"
+msgstr "Kontingent-Datei"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
-#, fuzzy
 msgid "Quota size"
-msgstr "Kontingent-Dateien"
+msgstr "Kontingent-Größe"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
@@ -148,27 +147,3 @@ msgstr "Wählen Sie diese Option, um FTP-Zugriff zu deaktivieren"
 msgid "Temporary disable FTP access"
 msgstr "Temporäres Abschalten des FTP-Zugriffs"
 
-#~ msgid "Removing of user/pureftpd account with dn '%s' failed."
-#~ msgstr "Entfernen von Benutzer/pureftpd-Konto mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Value specified as 'Upload ratio' is not valid."
-#~ msgstr "Der von Ihnen angegebene Wert für 'Upload-Verhältnis' ist ungültig."
-
-#~ msgid "Saving of user/pureftpd account with dn '%s' failed."
-#~ msgstr "Speichern von Benutzer/pureftpd-Konto mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Value specified as 'Upload bandwidth' is not valid."
-#~ msgstr "Die von Ihnen angegebene 'Upload-Bandbreite' ist nicht gültig."
-
-#~ msgid "Value specified as 'Download bandwidth' is not valid."
-#~ msgstr "Die von Ihnen angegebene 'Download-Bandbreite' ist nicht gültig."
-
-#~ msgid "Value specified as 'Quota files' is not valid."
-#~ msgstr "Das Feld 'Kontingent-Dateien' enthält eine ungültige Eingabe."
-
-#~ msgid "Value specified as 'Quota size' is not valid."
-#~ msgstr "Der von Ihnen angegebene Wert für 'Kontingent-Größe' ist ungültig."
-
-#~ msgid "Value specified as 'Download ratio' is not valid."
-#~ msgstr ""
-#~ "Der von Ihnen angegebene Wert für 'Download-Verhältnis' ist ungültig."
