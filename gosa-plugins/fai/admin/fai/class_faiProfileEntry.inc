@@ -189,9 +189,10 @@ class faiProfileEntry extends plugin
 
       $fi = str_replace("*",".*",$SUBfaifilter['Sregex']);  
  
-      $abort = true; 
+      $abort = true;
       if(!preg_match("/".$fi."/",$usedClass)){
         $abort = false;
+        continue;
       }
       if((isset($classes['objects']['FAIscript']))&&($SUBfaifilter['SShowScripts'])){
         $abort = false;

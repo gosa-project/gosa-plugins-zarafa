@@ -56,7 +56,7 @@
      			</td>
      			<td width="99%">
      					<input type='text' name='Sregex' maxlength='20' style='width:99%' value='{$Sregex}' id='filter' 
-     						title='{t}Regular expression for matching object names{/t}' onClick="mainform.submit()">
+     						title='{t}Regular expression for matching object names{/t}' >
      			</td>
      		</tr>
      	</table>
