@@ -1,128 +1,66 @@
 # translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-04-03 16:12+0200\n"
+"PO-Revision-Date: 2008-04-03 16:12+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:105
-#: personal/nagios/class_nagiosAccount.inc:114
-#: personal/nagios/class_nagiosAccount.inc:116
-#: personal/nagios/class_nagiosAccount.inc:273
-msgid "Nagios"
-msgstr "Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:19
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: personal/nagios/class_nagiosAccount.inc:173
-#: personal/nagios/class_nagiosAccount.inc:258
-msgid "LDAP error"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:194
-#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
-msgid "Alias"
-msgstr "Alias"
-
-#: personal/nagios/class_nagiosAccount.inc:197
-#: personal/nagios/class_nagiosAccount.inc:201
-#: personal/nagios/class_nagiosAccount.inc:205
-msgid "Mail"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:274
-msgid "Nagios account settings"
-msgstr "Nagios-Konto-Einstellungen"
-
-#: personal/nagios/class_nagiosAccount.inc:278
-msgid "My account"
-msgstr "Mein Konto"
-
-#: personal/nagios/class_nagiosAccount.inc:285
-msgid "Pager number"
-msgstr "Pagernummer"
-
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
-msgid "Mail address"
-msgstr "Mail-Adresse"
-
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
-msgid "Host notification commands"
-msgstr "Befehle für Host-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
-msgid "Host notification options"
-msgstr "Optionen der Host-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
-msgid "Host notification period"
-msgstr "Frequenz der Host-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
-msgid "Service notification commands"
-msgstr "Befehle für Dienst-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
-msgid "Service notification options"
-msgstr "Optionen der Dienst-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
-msgid "Service notification period"
-msgstr "Frequenz der Dienst-Meldungen"
-
-#: personal/nagios/class_nagiosAccount.inc:296
-msgid "View all hosts"
-msgstr "Alle Systeme anzeigen"
-
-#: personal/nagios/class_nagiosAccount.inc:297
-msgid "View all services"
-msgstr "Alle Dienste anzeigen"
-
-#: personal/nagios/class_nagiosAccount.inc:299
-msgid "Trigger system commands"
-msgstr "Auslösen aller System-Befehle"
-
-#: personal/nagios/class_nagiosAccount.inc:300
-msgid "Trigger all host commands"
-msgstr "Auslösen aller Host-Befehle"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-msgid "Trigger all service commands"
-msgstr "Auslösen aller Dienst-Befehle"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-msgid "View configuration information"
-msgstr "Konfiguration anzeigen"
-
-#: personal/nagios/class_nagiosAccount.inc:304
-msgid "View system informations"
-msgstr "System-Informationen anzeigen"
+"X-Generator: KBabel 1.11.4\n"
 
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr "Nagios-Konto"
 
+#: personal/nagios/nagios.tpl:8 personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284
+msgid "Alias"
+msgstr "Alias"
+
+#: personal/nagios/nagios.tpl:17 personal/nagios/class_nagiosAccount.inc:286
+msgid "Mail address"
+msgstr "Mail-Adresse"
+
+#: personal/nagios/nagios.tpl:27 personal/nagios/class_nagiosAccount.inc:290
+msgid "Host notification period"
+msgstr "Frequenz der Host-Meldungen"
+
+#: personal/nagios/nagios.tpl:40 personal/nagios/class_nagiosAccount.inc:294
+msgid "Service notification period"
+msgstr "Frequenz der Dienst-Meldungen"
+
+#: personal/nagios/nagios.tpl:53 personal/nagios/class_nagiosAccount.inc:293
+msgid "Service notification options"
+msgstr "Optionen der Dienst-Meldungen"
+
+#: personal/nagios/nagios.tpl:66 personal/nagios/class_nagiosAccount.inc:289
+msgid "Host notification options"
+msgstr "Optionen der Host-Meldungen"
+
 #: personal/nagios/nagios.tpl:79
 msgid "Pager"
 msgstr "Pager"
+
+#: personal/nagios/nagios.tpl:90 personal/nagios/class_nagiosAccount.inc:292
+msgid "Service notification commands"
+msgstr "Befehle für Dienst-Meldungen"
+
+#: personal/nagios/nagios.tpl:100 personal/nagios/class_nagiosAccount.inc:288
+msgid "Host notification commands"
+msgstr "Befehle für Host-Meldungen"
 
 #: personal/nagios/nagios.tpl:115
 msgid "Nagios authentification"
@@ -160,55 +98,66 @@ msgstr "Alle Host-Befehle ausführen"
 msgid "Nagios settings"
 msgstr "Nagios-Einstellungen"
 
-#~ msgid "This account has no nagios extensions."
-#~ msgstr "Dieses Konto besitzt keine Nagios-Erweiterungen."
+#: personal/nagios/class_nagiosAccount.inc:18
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
+msgid "Nagios"
+msgstr "Nagios"
 
-#~ msgid "Remove nagios account"
-#~ msgstr "Nagios-Konto entfernen"
+#: personal/nagios/class_nagiosAccount.inc:19
+msgid "This does something"
+msgstr "Dies tut etwas"
 
-#~ msgid ""
-#~ "This account has nagios features enabled. You can disable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "Dieses Konto besitzt aktivierte Nagios-Erweiterungen. Sie können diese "
-#~ "deaktivieren, indem Sie auf die Schaltfläche unten klicken."
+#: personal/nagios/class_nagiosAccount.inc:173
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
 
-#~ msgid "Create nagios account"
-#~ msgstr "Neues Nagios-Konto erzeugen"
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr "Mail"
 
-#~ msgid ""
-#~ "This account has nagios features disabled. You can enable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "Dieses Konto besitzt keine aktivierten Nagios-Erweiterungen. Sie können "
-#~ "diese aktivieren, indem Sie auf die Schaltfläche unten klicken."
+#: personal/nagios/class_nagiosAccount.inc:274
+msgid "Nagios account settings"
+msgstr "Nagios-Konto-Einstellungen"
 
-#~ msgid "Saving of user/nagios account with dn '%s' failed."
-#~ msgstr "Speichern von Benutzer/Nagios-Konto mit dn '%s' fehlgeschlagen."
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Mein Konto"
 
-#~ msgid "The required field 'NagiosAlias' is not set."
-#~ msgstr "Das benötigte Feld 'NagiosAlias' ist nicht gesetzt."
+#: personal/nagios/class_nagiosAccount.inc:285
+msgid "Pager number"
+msgstr "Pagernummer"
 
-#~ msgid "The required field 'NagiosMail' is not set."
-#~ msgstr "Das benötigte Feld 'NagiosMail' ist nicht gesetzt."
+#: personal/nagios/class_nagiosAccount.inc:296
+msgid "View all hosts"
+msgstr "Alle Systeme anzeigen"
 
-#~ msgid "Please enter a valid email address in 'NagiosMail' field."
-#~ msgstr ""
-#~ "Bitte geben Sie eine gültige E-Mail-Adresse in das Feld 'NagiosMail' ein."
+#: personal/nagios/class_nagiosAccount.inc:297
+msgid "View all services"
+msgstr "Alle Dienste anzeigen"
 
-#~ msgid "Removing of user/nagios account with dn '%s' failed."
-#~ msgstr "Entfernen von Benutzer/Nagios-Konto mit dn '%s' fehlgeschlagen."
+#: personal/nagios/class_nagiosAccount.inc:299
+msgid "Trigger system commands"
+msgstr "Auslösen aller System-Befehle"
 
-#~ msgid "Ok"
-#~ msgstr "Ok"
+#: personal/nagios/class_nagiosAccount.inc:300
+msgid "Trigger all host commands"
+msgstr "Auslösen aller Host-Befehle"
 
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
+#: personal/nagios/class_nagiosAccount.inc:301
+msgid "Trigger all service commands"
+msgstr "Auslösen aller Dienst-Befehle"
 
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-#~ "Dialog zu ändern"
+#: personal/nagios/class_nagiosAccount.inc:303
+msgid "View configuration information"
+msgstr "Konfiguration anzeigen"
 
-#~ msgid "Edit"
-#~ msgstr "Bearbeiten"
+#: personal/nagios/class_nagiosAccount.inc:304
+msgid "View system informations"
+msgstr "System-Informationen anzeigen"
+
