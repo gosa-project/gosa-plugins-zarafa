@@ -11,13 +11,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 14:23+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/netatalk/main.inc:113
+msgid "Netatalk settings"
+msgstr "Netatalk instellingen"
+
+#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376
+msgid "Share"
+msgstr "Share"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Pad"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:366
@@ -45,11 +58,6 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-msgid "Share"
-msgstr "Share"
-
 #: personal/netatalk/class_netatalk.inc:287
 #: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
@@ -63,14 +71,6 @@ msgstr "Mijn account"
 #, fuzzy
 msgid "User home path"
 msgstr "Profielpad"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Pad"
-
-#: personal/netatalk/main.inc:113
-msgid "Netatalk settings"
-msgstr "Netatalk instellingen"
 
 #~ msgid "This account has no netatalk extensions."
 #~ msgstr "Dit account heeft Netatalk mogelijkheden uitgeschakeld."

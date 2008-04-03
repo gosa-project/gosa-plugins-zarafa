@@ -1,24 +1,38 @@
 # translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-04-03 14:23+0200\n"
+"PO-Revision-Date: 2008-04-03 14:23+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: personal/netatalk/main.inc:113
+msgid "Netatalk settings"
+msgstr "Netatalk-Einstellungen"
+
+#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376
+msgid "Share"
+msgstr "Freigabe"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Pfad"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:366
@@ -34,27 +48,21 @@ msgstr "Netatalk-Konto verwalten"
 #: personal/netatalk/class_netatalk.inc:184
 #: personal/netatalk/class_netatalk.inc:186
 #: personal/netatalk/class_netatalk.inc:188
-#, fuzzy
 msgid "netatalk"
 msgstr "Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:184
 msgid "POSIX"
-msgstr ""
+msgstr "POSIX"
 
 #: personal/netatalk/class_netatalk.inc:186
 msgid "netatalk or NFS share"
-msgstr ""
-
-#: personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-msgid "Share"
-msgstr "Freigabe"
+msgstr "Netatalk- oder NFS-Freigabe"
 
 #: personal/netatalk/class_netatalk.inc:287
 #: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP-Fehler"
 
 #: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
@@ -64,56 +72,3 @@ msgstr "Mein Konto"
 msgid "User home path"
 msgstr "Benutzer Basisverzeichnis"
 
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Pfad"
-
-#: personal/netatalk/main.inc:113
-msgid "Netatalk settings"
-msgstr "Netatalk-Einstellungen"
-
-#~ msgid "This account has no netatalk extensions."
-#~ msgstr "Dieses Konto hat keine Netatalk-Erweiterungen."
-
-#~ msgid "Remove netatalk account"
-#~ msgstr "Netatalk-Konto entfernen"
-
-#~ msgid ""
-#~ "This account has netatalk features enabled. You can disable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "Dieses Konto hat die Netatalk-Erweiterungen aktiviert. Sie können diese "
-#~ "deaktivieren, indem Sie auf die Schaltfläche unten klicken."
-
-#~ msgid "Create netatalk account"
-#~ msgstr "Neues Netatalk-Konto erzeugen"
-
-#~ msgid ""
-#~ "This account has netatalk features disabled. You can enable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "Dieses Konto hat keine Netatalk-Erweiterungen. Sie können diese "
-#~ "aktivieren, wenn Sie auf die untere Schaltfläche klicken."
-
-#~ msgid "You must select a share to use."
-#~ msgstr "Sie müssen eine zu verwendende Freigabe auswählen."
-
-#~ msgid "Saving of user/netatalk account with dn '%s' failed."
-#~ msgstr "Speichern von Benutzer/Netatalk-Konto mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Removing of user/netatalk account with dn '%s' failed."
-#~ msgstr "Entfernen von Benutzer/Netatalk-Konto mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
-
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-#~ "Dialog zu ändern"
-
-#~ msgid "Edit"
-#~ msgstr "Bearbeiten"
