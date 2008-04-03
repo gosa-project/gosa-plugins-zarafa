@@ -102,7 +102,7 @@ class appgroup extends plugin
     if($this->enableReleaseManagement){
 
       /* Only display those releases that we are able to read */
-      $dn     = $this->config->current['BASE'];
+      $dn     = get_ou("applicationou").$this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
       $res    = get_sub_list($filter,array("application","fai"), array(get_ou("applicationou"),get_ou("faiou")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
