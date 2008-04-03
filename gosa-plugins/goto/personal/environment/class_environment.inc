@@ -1118,7 +1118,7 @@ class environment extends plugin
     } 
     if(!$this->is_group){
       if((!((in_array("posixAccount",$this->attrs['objectClass']))||($this->parent->by_object['posixAccount']->is_account==true)))&&(!$this->is_group)){
-        $message[]= msgPool::featuresDisabled(_("environemnt"),_("POSIX"));  
+        $message[]= msgPool::featuresDisabled(_("environment"),_("POSIX"));  
       }
     }
     return ($message);

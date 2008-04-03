@@ -97,7 +97,7 @@ class deviceGeneric extends plugin
       $message[]= msgPool::invalid(_("Serial"),"","","0x1234");
     }
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
-      $message[]= msgPool::invalid(_("Vender ID"),"","","0x1234");
+      $message[]= msgPool::invalid(_("Vendor ID"),"","","0x1234");
     }
    
     /* Check if entry already exists */ 

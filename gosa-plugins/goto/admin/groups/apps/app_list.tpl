@@ -140,7 +140,7 @@
 			{/foreach}
 			</select>
 			<input type="submit" name="add_menu_to_folder" value="{msgPool type=addButton}" title="{t}Add selected applications to this folder.{/t}">
-			<input type="submit" name="add_seperator" 	   value="{t}Seperator{/t}" title="{t}Add a seperator to this folder.{/t}">
+			<input type="submit" name="add_seperator" 	   value="{t}Separator{/t}" title="{t}Add a separator to this folder.{/t}">
 		</td>
 		<td style="vertical-align:top">
 			{$app_list}	

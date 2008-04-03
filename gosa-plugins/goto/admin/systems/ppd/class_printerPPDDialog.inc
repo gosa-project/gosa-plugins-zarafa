@@ -97,7 +97,7 @@ class printerPPDDialog extends plugin
       /* Check if path is write/readable*/
       $is_r = @is_readable($path);  
       if(((!is_dir($path))||(empty($path)) || (!$is_r)) && (!@mkdir($path))){
-        msg_dialog(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and wrinting!"), $path), ERROR_DIALOG);
+        msg_dialog(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and writing!"), $path), ERROR_DIALOG);
 
         /* Print out template */
         $display.= $smarty->fetch(get_template_path('printerPPDDialog.tpl', TRUE,dirname(__FILE__)));

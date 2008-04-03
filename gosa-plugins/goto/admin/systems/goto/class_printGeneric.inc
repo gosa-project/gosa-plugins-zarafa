@@ -938,7 +938,7 @@ class printgeneric extends plugin
   {
     $types = array("AddUser","AddGroup","AddAdminUser","AddAdminGroup");
     if(!in_array_ics($type, $types)){
-      msg_dialog::display(_("Internal error"), sprintf(_("Illegal member type type '%s'!"), $type), ERROR_DIALOG);
+      msg_dialog::display(_("Internal error"), sprintf(_("Illegal member type '%s'!"), $type), ERROR_DIALOG);
       return(FALSE);
     }
 
