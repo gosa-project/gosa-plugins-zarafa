@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 14:18+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -34,6 +34,50 @@ msgstr "Usuario administrador"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Contraseña"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:123
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:179
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:191
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:227
+#, fuzzy
+msgid "Heimdal"
+msgstr "mujer"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#, php-format
+msgid ""
+"Error loading heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:153
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:414
+msgid "LDAP error"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
+msgid "Max life"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
+msgid "Max renew"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
+msgid "Valid start"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:343
+msgid "Valid end"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:346
+#, fuzzy
+msgid "Valid password"
+msgstr "contraseña"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:29
 msgid "Kerberos service"
@@ -64,50 +108,6 @@ msgstr "Acceso a información Kerberos"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:92
 msgid "Services"
 msgstr "Servicios"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:111
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:167
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:185
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:221
-#, fuzzy
-msgid "Heimdal"
-msgstr "mujer"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:98
-#, php-format
-msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
-"found for '%s'."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:147
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:408
-msgid "LDAP error"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:328
-msgid "Max life"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:331
-msgid "Max renew"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
-msgid "Valid start"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
-msgid "Valid end"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
-#, fuzzy
-msgid "Valid password"
-msgstr "contraseña"
 
 #~ msgid "Save"
 #~ msgstr "Guardar"
