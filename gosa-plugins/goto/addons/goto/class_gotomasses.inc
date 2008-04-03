@@ -23,8 +23,8 @@
 class gotomasses extends plugin
 {
   /* Definitions */
-  var $plHeadline     = "System deployment";
-  var $plDescription  = "This does something";
+  var $plHeadline     = "Deployment status";
+  var $plDescription  = "System deployment status";
 
   /* attribute list for save action */
   var $attributes= array();
