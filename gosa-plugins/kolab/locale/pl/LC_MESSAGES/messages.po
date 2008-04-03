@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 16:01+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,156 +14,6 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:506
-#: admin/systems/services/kolab/class_servKolab.inc:379
-msgid "Kolab"
-msgstr "Kolab"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:6
-msgid "This does something"
-msgstr "To robi coś"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:165
-#: personal/connectivity/kolab/class_kolabAccount.inc:173
-msgid "Error"
-msgstr "Błąd"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:165
-msgid "Mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:173
-msgid "Primary mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:198
-msgid "Always accept"
-msgstr "Zawsze akceptuj"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:199
-msgid "Always reject"
-msgstr "Zawsze odrzuć"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:200
-msgid "Reject if conflicts"
-msgstr "Odmów jeśli koliduje"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:201
-msgid "Manual if conflicts"
-msgstr "Ustaw ręcznie jeśli koliduje"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:202
-msgid "Manual"
-msgstr "Ręczne"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:250
-msgid "Anonymous"
-msgstr "Anonimowy"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:333
-#: personal/connectivity/kolab/class_kolabAccount.inc:470
-#: admin/systems/services/kolab/class_servKolab.inc:194
-#: admin/systems/services/kolab/class_servKolab.inc:210
-#: admin/systems/services/kolab/class_servKolab.inc:352
-msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:345
-#: personal/connectivity/kolab/class_kolabAccount.inc:348
-#, fuzzy
-msgid "Free Busy future"
-msgstr "Free busy przyszłość"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:353
-#: personal/connectivity/kolab/class_kolabAccount.inc:356
-#, fuzzy
-msgid "Free Busy url"
-msgstr "Free busy przyszłość"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:370
-#, php-format
-msgid "The invitation policy entry for address '%s' is not valid."
-msgstr "Polityka zapraszania dla adresu '%s' jest nieprawidłowa."
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:378
-#, php-format
-msgid "There's no mail user with address '%s' for your invitation policy!"
-msgstr "Brak użytkownika pocztowego o adresie '%s' dla polityki zapraszania!"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:507
-msgid "Kolab account settings"
-msgstr "Ustawienia konta Kolab"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:507
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Konto połączeń"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:511
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:516
-msgid "Free busy future"
-msgstr "Free busy przyszłość"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:517
-msgid "Mail size restriction"
-msgstr "Ograniczenia rozmiaru wiadomości"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:518
-msgid "Free busy information"
-msgstr "Informacja FreeBusy"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:519
-#: personal/connectivity/kolab/kolab.tpl:51
-#: personal/connectivity/kolab/kolab.tpl:63
-msgid "Delegations"
-msgstr "Delegacje"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:520
-#: personal/connectivity/kolab/kolab.tpl:119
-msgid "Invitation policy"
-msgstr "Polityka zapraszania"
-
-#: personal/connectivity/kolab/kolab.tpl:3
-#: personal/connectivity/kolab/kolab.tpl:43
-msgid "Kolab account"
-msgstr "Konto Kolab"
-
-#: personal/connectivity/kolab/kolab.tpl:4
-msgid ""
-"The kolab account is currently disabled. It's features can be adjusted if "
-"you add a mail account."
-msgstr ""
-"To konto kolab jest obecnie wyłączone. Parametry konta można zmieniać po "
-"dodaniu konta pocztowego."
-
-#: personal/connectivity/kolab/kolab.tpl:83
-msgid "Mail size"
-msgstr "Rozmiar poczty"
-
-#: personal/connectivity/kolab/kolab.tpl:87
-msgid "No mail size restriction for this account"
-msgstr "Brak ograniczeń co do wielkości poczty dla tego konta"
-
-#: personal/connectivity/kolab/kolab.tpl:95
-msgid "Free Busy information"
-msgstr "Informacja FreeBusy"
-
-#: personal/connectivity/kolab/kolab.tpl:98
-msgid "URL"
-msgstr "URL"
-
-#: personal/connectivity/kolab/kolab.tpl:107
-msgid "Future"
-msgstr "Przyszłość"
-
-#: personal/connectivity/kolab/kolab.tpl:112
-msgid "days"
-msgstr "dni"
-
 #: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
 msgid "Include data from %s days in the past when creating free/busy lists"
@@ -173,6 +23,33 @@ msgstr "Dołącz dane sprzed %s dni podczas tworzenia listy free/busy"
 #, php-format
 msgid "Warn users when using more than %s%% of their mail quota"
 msgstr "Ostrzeż użytkowników jeśli używają więcej niż %s%% quoty na pocztę"
+
+#: admin/systems/services/kolab/class_servKolab.inc:180
+msgid "Internal error"
+msgstr ""
+
+#: admin/systems/services/kolab/class_servKolab.inc:180
+#, fuzzy
+msgid "Kolab account does not exist!"
+msgstr "Ustawienia konta Kolab"
+
+#: admin/systems/services/kolab/class_servKolab.inc:184
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+msgid "Error"
+msgstr "Błąd"
+
+#: admin/systems/services/kolab/class_servKolab.inc:184
+msgid "hostname"
+msgstr ""
+
+#: admin/systems/services/kolab/class_servKolab.inc:194
+#: admin/systems/services/kolab/class_servKolab.inc:210
+#: admin/systems/services/kolab/class_servKolab.inc:352
+#: personal/connectivity/kolab/class_kolabAccount.inc:339
+#: personal/connectivity/kolab/class_kolabAccount.inc:476
+msgid "LDAP error"
+msgstr ""
 
 #: admin/systems/services/kolab/class_servKolab.inc:263
 #: admin/systems/services/kolab/class_servKolab.inc:265
@@ -198,6 +75,12 @@ msgstr "uprzywilejowane sieci SMTP"
 #: admin/systems/services/kolab/class_servKolab.inc:380
 msgid "Kolab mail service"
 msgstr "Usługa poczty Kolab"
+
+#: admin/systems/services/kolab/class_servKolab.inc:379
+#: personal/connectivity/kolab/class_kolabAccount.inc:5
+#: personal/connectivity/kolab/class_kolabAccount.inc:512
+msgid "Kolab"
+msgstr "Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:380
 #: admin/systems/services/kolab/servkolab.tpl:39
@@ -335,6 +218,137 @@ msgstr "Host użyty do przekazywania poczty"
 #: admin/systems/services/kolab/servkolab.tpl:231
 msgid "Accept mail from other domains over non-authenticated SMTP"
 msgstr "Akceptuj pocztę z innych domen przez nie-autentykowane SMTP"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:6
+msgid "This does something"
+msgstr "To robi coś"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+msgid "Mail address"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+msgid "Primary mail address"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:204
+msgid "Always accept"
+msgstr "Zawsze akceptuj"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:205
+msgid "Always reject"
+msgstr "Zawsze odrzuć"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:206
+msgid "Reject if conflicts"
+msgstr "Odmów jeśli koliduje"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:207
+msgid "Manual if conflicts"
+msgstr "Ustaw ręcznie jeśli koliduje"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:208
+msgid "Manual"
+msgstr "Ręczne"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:256
+msgid "Anonymous"
+msgstr "Anonimowy"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:351
+#: personal/connectivity/kolab/class_kolabAccount.inc:354
+#, fuzzy
+msgid "Free Busy future"
+msgstr "Free busy przyszłość"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:359
+#: personal/connectivity/kolab/class_kolabAccount.inc:362
+#, fuzzy
+msgid "Free Busy url"
+msgstr "Free busy przyszłość"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:376
+#, php-format
+msgid "The invitation policy entry for address '%s' is not valid."
+msgstr "Polityka zapraszania dla adresu '%s' jest nieprawidłowa."
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:384
+#, php-format
+msgid "There's no mail user with address '%s' for your invitation policy!"
+msgstr "Brak użytkownika pocztowego o adresie '%s' dla polityki zapraszania!"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+msgid "Kolab account settings"
+msgstr "Ustawienia konta Kolab"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Konto połączeń"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:517
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:522
+msgid "Free busy future"
+msgstr "Free busy przyszłość"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:523
+msgid "Mail size restriction"
+msgstr "Ograniczenia rozmiaru wiadomości"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:524
+msgid "Free busy information"
+msgstr "Informacja FreeBusy"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:525
+#: personal/connectivity/kolab/kolab.tpl:51
+#: personal/connectivity/kolab/kolab.tpl:63
+msgid "Delegations"
+msgstr "Delegacje"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:526
+#: personal/connectivity/kolab/kolab.tpl:119
+msgid "Invitation policy"
+msgstr "Polityka zapraszania"
+
+#: personal/connectivity/kolab/kolab.tpl:3
+#: personal/connectivity/kolab/kolab.tpl:43
+msgid "Kolab account"
+msgstr "Konto Kolab"
+
+#: personal/connectivity/kolab/kolab.tpl:4
+msgid ""
+"The kolab account is currently disabled. It's features can be adjusted if "
+"you add a mail account."
+msgstr ""
+"To konto kolab jest obecnie wyłączone. Parametry konta można zmieniać po "
+"dodaniu konta pocztowego."
+
+#: personal/connectivity/kolab/kolab.tpl:83
+msgid "Mail size"
+msgstr "Rozmiar poczty"
+
+#: personal/connectivity/kolab/kolab.tpl:87
+msgid "No mail size restriction for this account"
+msgstr "Brak ograniczeń co do wielkości poczty dla tego konta"
+
+#: personal/connectivity/kolab/kolab.tpl:95
+msgid "Free Busy information"
+msgstr "Informacja FreeBusy"
+
+#: personal/connectivity/kolab/kolab.tpl:98
+msgid "URL"
+msgstr "URL"
+
+#: personal/connectivity/kolab/kolab.tpl:107
+msgid "Future"
+msgstr "Przyszłość"
+
+#: personal/connectivity/kolab/kolab.tpl:112
+msgid "days"
+msgstr "dni"
 
 #~ msgid "Add"
 #~ msgstr "Dodaj"

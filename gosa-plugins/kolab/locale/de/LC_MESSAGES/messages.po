@@ -1,175 +1,25 @@
 # translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-04-03 16:01+0200\n"
+"PO-Revision-Date: 2008-04-03 16:02+0200\n"
+"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:506
-#: admin/systems/services/kolab/class_servKolab.inc:379
-msgid "Kolab"
-msgstr "Kolab"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:6
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:165
-#: personal/connectivity/kolab/class_kolabAccount.inc:173
-msgid "Error"
-msgstr "Fehler"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:165
-msgid "Mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:173
-msgid "Primary mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:198
-msgid "Always accept"
-msgstr "Immer annehmen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:199
-msgid "Always reject"
-msgstr "Immer ablehnen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:200
-msgid "Reject if conflicts"
-msgstr "Im Konfliktfall ablehnen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:201
-msgid "Manual if conflicts"
-msgstr "Im Konfliktfall manuell bearbeiten"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:202
-msgid "Manual"
-msgstr "Manuell"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:250
-msgid "Anonymous"
-msgstr "Anonym"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:333
-#: personal/connectivity/kolab/class_kolabAccount.inc:470
-#: admin/systems/services/kolab/class_servKolab.inc:194
-#: admin/systems/services/kolab/class_servKolab.inc:210
-#: admin/systems/services/kolab/class_servKolab.inc:352
-msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:345
-#: personal/connectivity/kolab/class_kolabAccount.inc:348
-#, fuzzy
-msgid "Free Busy future"
-msgstr "Frei/Belegt Ausblick"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:353
-#: personal/connectivity/kolab/class_kolabAccount.inc:356
-#, fuzzy
-msgid "Free Busy url"
-msgstr "Frei/Belegt Ausblick"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:370
-#, php-format
-msgid "The invitation policy entry for address '%s' is not valid."
-msgstr "Die Einladungs-Richtlinie für die Adresse '%s' ist ungültig."
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:378
-#, php-format
-msgid "There's no mail user with address '%s' for your invitation policy!"
-msgstr ""
-"Es gibt keinen Mail Benutzer mit der Adresse %s für Ihre Einladungs-"
-"Richtlinie!"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:507
-msgid "Kolab account settings"
-msgstr "Kolab Konto-Einstellungen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:507
-msgid "Connectivity addon"
-msgstr "Konnektivitäts-Erweiterung"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:511
-msgid "My account"
-msgstr "Mein Konto"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:516
-msgid "Free busy future"
-msgstr "Frei/Belegt Ausblick"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:517
-msgid "Mail size restriction"
-msgstr "Beschränkung der Nachrichtengröße"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:518
-msgid "Free busy information"
-msgstr "Frei/Belegt-Information"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:519
-#: personal/connectivity/kolab/kolab.tpl:51
-#: personal/connectivity/kolab/kolab.tpl:63
-msgid "Delegations"
-msgstr "Stellvertreter"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:520
-#: personal/connectivity/kolab/kolab.tpl:119
-msgid "Invitation policy"
-msgstr "Einladungs-Richtlinie"
-
-#: personal/connectivity/kolab/kolab.tpl:3
-#: personal/connectivity/kolab/kolab.tpl:43
-msgid "Kolab account"
-msgstr "Kolab-Konto"
-
-#: personal/connectivity/kolab/kolab.tpl:4
-msgid ""
-"The kolab account is currently disabled. It's features can be adjusted if "
-"you add a mail account."
-msgstr ""
-"Das Kolab-Konto ist aktuell deaktiviert. Die Einstellungen können angepasst "
-"werden, wenn Sie ein Postfach hinzufügen."
-
-#: personal/connectivity/kolab/kolab.tpl:83
-msgid "Mail size"
-msgstr "Mailgröße"
-
-#: personal/connectivity/kolab/kolab.tpl:87
-msgid "No mail size restriction for this account"
-msgstr "Keine Beschränkung der Mailgröße für dieses Konto"
-
-#: personal/connectivity/kolab/kolab.tpl:95
-msgid "Free Busy information"
-msgstr "Frei/Belegt-Information"
-
-#: personal/connectivity/kolab/kolab.tpl:98
-msgid "URL"
-msgstr "URL"
-
-#: personal/connectivity/kolab/kolab.tpl:107
-msgid "Future"
-msgstr "Zukunft"
-
-#: personal/connectivity/kolab/kolab.tpl:112
-msgid "days"
-msgstr "Tage"
+"X-Generator: KBabel 1.11.4\n"
 
 #: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
@@ -183,30 +33,60 @@ msgstr ""
 msgid "Warn users when using more than %s%% of their mail quota"
 msgstr "Warne Benutzer, wenn sie mehr als %s%% ihres Mail-Kontigentes benutzen"
 
+#: admin/systems/services/kolab/class_servKolab.inc:180
+msgid "Internal error"
+msgstr "Interner Fehler"
+
+#: admin/systems/services/kolab/class_servKolab.inc:180
+msgid "Kolab account does not exist!"
+msgstr "Kolab-Konto existiert nicht!"
+
+#: admin/systems/services/kolab/class_servKolab.inc:184
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+msgid "Error"
+msgstr "Fehler"
+
+#: admin/systems/services/kolab/class_servKolab.inc:184
+msgid "hostname"
+msgstr "Hostname"
+
+#: admin/systems/services/kolab/class_servKolab.inc:194
+#: admin/systems/services/kolab/class_servKolab.inc:210
+#: admin/systems/services/kolab/class_servKolab.inc:352
+#: personal/connectivity/kolab/class_kolabAccount.inc:339
+#: personal/connectivity/kolab/class_kolabAccount.inc:476
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
 #: admin/systems/services/kolab/class_servKolab.inc:263
 #: admin/systems/services/kolab/class_servKolab.inc:265
-#, fuzzy
 msgid "Future days"
-msgstr "Zukunft"
+msgstr "Tage in der Zukunft"
 
 #: admin/systems/services/kolab/class_servKolab.inc:269
 #: admin/systems/services/kolab/class_servKolab.inc:273
 msgid "Quota"
-msgstr ""
+msgstr "Kontingent"
 
 #: admin/systems/services/kolab/class_servKolab.inc:271
 msgid "Please choose a value between 1 and 100 for Quota settings."
 msgstr "Bitte wählen Sie einen Kontingent-Wert zwischen 1 und 100."
 
 #: admin/systems/services/kolab/class_servKolab.inc:277
-#, fuzzy
 msgid "Privileged networks"
-msgstr "SMTP privilegierte Netzwerke"
+msgstr "Privilegierte Netzwerke"
 
 #: admin/systems/services/kolab/class_servKolab.inc:369
 #: admin/systems/services/kolab/class_servKolab.inc:380
 msgid "Kolab mail service"
 msgstr "Kolab Mail-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:379
+#: personal/connectivity/kolab/class_kolabAccount.inc:5
+#: personal/connectivity/kolab/class_kolabAccount.inc:512
+msgid "Kolab"
+msgstr "Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:380
 #: admin/systems/services/kolab/servkolab.tpl:39
@@ -255,8 +135,7 @@ msgstr "HTTP Frei/Belegt-Dienst"
 
 #: admin/systems/services/kolab/class_servKolab.inc:397
 msgid "Allow unauthenticated free busy"
-msgstr ""
-"Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
+msgstr "Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
 
 #: admin/systems/services/kolab/class_servKolab.inc:398
 #: admin/systems/services/kolab/servkolab.tpl:223
@@ -323,8 +202,7 @@ msgstr "Frei/Belegt-Einstellungen"
 
 #: admin/systems/services/kolab/servkolab.tpl:153
 msgid "Allow unauthenticated downloading of Free/Busy information"
-msgstr ""
-"Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
+msgstr "Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
 
 #: admin/systems/services/kolab/servkolab.tpl:176
 msgid "Hosts/networks allowed to relay"
@@ -346,58 +224,133 @@ msgstr "Host für Mail Relay"
 msgid "Accept mail from other domains over non-authenticated SMTP"
 msgstr "Akzeptiere Mails von anderen Domänen über nicht-authentifiziertes SMTP"
 
-#~ msgid "Add"
-#~ msgstr "Hinzufügen"
+#: personal/connectivity/kolab/class_kolabAccount.inc:6
+msgid "This does something"
+msgstr "Dies tut etwas"
 
-#~ msgid "Delete"
-#~ msgstr "Entfernen"
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+msgid "Mail address"
+msgstr "Mail-Adresse"
 
-#~ msgid "Save"
-#~ msgstr "Speichern"
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+msgid "Primary mail address"
+msgstr "Primäre Mail-Adresse"
 
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
+#: personal/connectivity/kolab/class_kolabAccount.inc:204
+msgid "Always accept"
+msgstr "Immer annehmen"
 
-#~ msgid "Future days in Free/Busy settings must be set."
-#~ msgstr "Intervall für Frei/Belegt-Informationen muß gesetzt sein."
+#: personal/connectivity/kolab/class_kolabAccount.inc:205
+msgid "Always reject"
+msgstr "Immer ablehnen"
 
-#~ msgid "Future days in Free/Busy settings must be a positive value."
-#~ msgstr ""
-#~ "Intervall für Frei/Belegt-Informationen muß ein positiver Wert sein."
+#: personal/connectivity/kolab/class_kolabAccount.inc:206
+msgid "Reject if conflicts"
+msgstr "Im Konfliktfall ablehnen"
 
-#~ msgid "The given Quota settings value must be a number."
-#~ msgstr "Der angegebene Kontingent-Wert muß numerisch sein."
+#: personal/connectivity/kolab/class_kolabAccount.inc:207
+msgid "Manual if conflicts"
+msgstr "Im Konfliktfall manuell bearbeiten"
 
-#~ msgid "Future days must be a value."
-#~ msgstr "Frei/Belegt-Intervall muß einen Wert besitzen."
+#: personal/connectivity/kolab/class_kolabAccount.inc:208
+msgid "Manual"
+msgstr "Manuell"
 
-#~ msgid "No SMTP privileged networks set."
-#~ msgstr "Es sind keine SMTP-privilegierten Netzwerke vorhanden."
+#: personal/connectivity/kolab/class_kolabAccount.inc:256
+msgid "Anonymous"
+msgstr "Anonym"
 
-#~ msgid "Removing of user/kolab account with dn '%s' failed."
-#~ msgstr "Entfernen von Benutzer/Kolab-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/kolab/class_kolabAccount.inc:351
+#: personal/connectivity/kolab/class_kolabAccount.inc:354
+msgid "Free Busy future"
+msgstr "Frei/Belegt Ausblick"
 
-#~ msgid "Saving of user/kolab account with dn '%s' failed."
-#~ msgstr "Speichern von Benutzer/Kolab-Konto mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/kolab/class_kolabAccount.inc:359
+#: personal/connectivity/kolab/class_kolabAccount.inc:362
+msgid "Free Busy url"
+msgstr "Frei/Belegt URL"
 
-#~ msgid "Removing host entry from system server/kolab with dn '%s' failed."
-#~ msgstr ""
-#~ "Entfernen des Host-Eintrags von System Server/Kolab mit dn '%s' "
-#~ "fehlgeschlagen."
+#: personal/connectivity/kolab/class_kolabAccount.inc:376
+#, php-format
+msgid "The invitation policy entry for address '%s' is not valid."
+msgstr "Die Einladungs-Richtlinie für die Adresse '%s' ist ungültig."
 
-#~ msgid "Saving system server/kolab with dn '%s' failed."
-#~ msgstr "Speichern von System Server/Kolab mit dn '%s' fehlgeschlagen."
+#: personal/connectivity/kolab/class_kolabAccount.inc:384
+#, php-format
+msgid "There's no mail user with address '%s' for your invitation policy!"
+msgstr ""
+"Es gibt keinen Mail Benutzer mit der Adresse %s für Ihre Einladungs-"
+"Richtlinie!"
 
-#, fuzzy
-#~ msgid "Cannot add invalid mail address!"
-#~ msgstr "Sie versuchen, eine ungültige Mail-Adresse hinzuzufügen"
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+msgid "Kolab account settings"
+msgstr "Kolab Konto-Einstellungen"
 
-#, fuzzy
-#~ msgid "Primary mail address already in use by another user!"
-#~ msgstr "Primäre Mail-Adresse dieses geteilten Ordners"
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+msgid "Connectivity addon"
+msgstr "Konnektivitäts-Erweiterung"
 
-#~ msgid "The value specified as Free Busy future needs to be an integer."
-#~ msgstr "Der Wert für Intervall muß eine Ganzzahl sein."
+#: personal/connectivity/kolab/class_kolabAccount.inc:517
+msgid "My account"
+msgstr "Mein Konto"
 
-#~ msgid "The value specified as Free Busy Information URL is invalid."
-#~ msgstr "Der Wert für Information URL is ungültig."
+#: personal/connectivity/kolab/class_kolabAccount.inc:522
+msgid "Free busy future"
+msgstr "Frei/Belegt Ausblick"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:523
+msgid "Mail size restriction"
+msgstr "Beschränkung der Nachrichtengröße"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:524
+msgid "Free busy information"
+msgstr "Frei/Belegt-Information"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:525
+#: personal/connectivity/kolab/kolab.tpl:51
+#: personal/connectivity/kolab/kolab.tpl:63
+msgid "Delegations"
+msgstr "Stellvertreter"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:526
+#: personal/connectivity/kolab/kolab.tpl:119
+msgid "Invitation policy"
+msgstr "Einladungs-Richtlinie"
+
+#: personal/connectivity/kolab/kolab.tpl:3
+#: personal/connectivity/kolab/kolab.tpl:43
+msgid "Kolab account"
+msgstr "Kolab-Konto"
+
+#: personal/connectivity/kolab/kolab.tpl:4
+msgid ""
+"The kolab account is currently disabled. It's features can be adjusted if "
+"you add a mail account."
+msgstr ""
+"Das Kolab-Konto ist aktuell deaktiviert. Die Einstellungen können angepasst "
+"werden, wenn Sie ein Postfach hinzufügen."
+
+#: personal/connectivity/kolab/kolab.tpl:83
+msgid "Mail size"
+msgstr "Mailgröße"
+
+#: personal/connectivity/kolab/kolab.tpl:87
+msgid "No mail size restriction for this account"
+msgstr "Keine Beschränkung der Mailgröße für dieses Konto"
+
+#: personal/connectivity/kolab/kolab.tpl:95
+msgid "Free Busy information"
+msgstr "Frei/Belegt-Information"
+
+#: personal/connectivity/kolab/kolab.tpl:98
+msgid "URL"
+msgstr "URL"
+
+#: personal/connectivity/kolab/kolab.tpl:107
+msgid "Future"
+msgstr "Zukunft"
+
+#: personal/connectivity/kolab/kolab.tpl:112
+msgid "days"
+msgstr "Tage"
+
