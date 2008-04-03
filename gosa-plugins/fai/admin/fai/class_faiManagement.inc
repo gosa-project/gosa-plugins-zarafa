@@ -22,8 +22,8 @@
 class faiManagement extends plugin
 {
 	/* Definitions */
-	var $plHeadline			= "FAI";
-	var $plDescription		= "Fully Automatic Installation - management";
+  var $plHeadline     = "Software deployment";
+  var $plDescription    = "Manage software packages and deployment reciepes";
 
 	/* Headpage attributes */
   var $lock_type    = "";    // should be branch/freeze

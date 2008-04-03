@@ -40,8 +40,8 @@ class divListFai extends MultiSelectWindow
     $this->selectedBase  = session::get('CurrentMainBase');
 
     /* Set list strings */
-    $this->SetTitle(_("List of FAI classes"));
-    $this->SetSummary(_("This table displays all FAI classes in the selected tree."));
+    $this->SetTitle(_("List of classes"));
+    $this->SetSummary(_("List of deployment classes and packages"));
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
@@ -65,7 +65,7 @@ class divListFai extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("Name of FAI class"),  "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("Class name"),  "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
