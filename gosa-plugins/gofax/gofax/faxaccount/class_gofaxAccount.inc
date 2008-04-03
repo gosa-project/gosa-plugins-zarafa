@@ -671,7 +671,7 @@ class gofaxAccount extends plugin
 
     /* must: facsimileTelephoneNumber */
     if ($this->facsimileTelephoneNumber == ""){
-      $message[]= msgPool::required(_("Faxi number"));
+      $message[]= msgPool::required(_("Fax number"));
     }
 
     if (!tests::is_phone_nr($this->facsimileTelephoneNumber)){
