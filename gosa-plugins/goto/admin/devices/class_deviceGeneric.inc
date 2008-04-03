@@ -143,7 +143,7 @@ class deviceGeneric extends plugin
     $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDeviceDN=".$this->dn."))",array("cn","gotoHotplugDeviceDN"));
     $skip = FALSE;
     $obj = array();
-    while($cnt && $attrs = $ldap->fetch()){
+    while($attrs = $ldap->fetch()){
       $obj[$ldap->getDN()]= $attrs['cn'][0];
       $skip =TRUE;
     }
