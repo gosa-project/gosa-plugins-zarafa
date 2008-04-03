@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 16:02+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,11 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-#, fuzzy
-msgid "PHPscheduleit account"
-msgstr "Учетная запись Groupware"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 #, fuzzy
@@ -51,6 +46,11 @@ msgstr "Подключение"
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
 msgid "My account"
 msgstr "Моя учетная запись"
+
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+#, fuzzy
+msgid "PHPscheduleit account"
+msgstr "Учетная запись Groupware"
 
 #, fuzzy
 #~ msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
