@@ -1070,6 +1070,10 @@ class faiManagement extends plugin
   function save_object()
   {
     $this->DivListFai->save_object();
+
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
 
