@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-02 14:01+0200\n"
-"PO-Revision-Date: 2008-04-02 14:10+0200\n"
+"POT-Creation-Date: 2008-04-03 14:14+0200\n"
+"PO-Revision-Date: 2008-04-03 14:15+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,11 +141,8 @@ msgid "Error"
 msgstr "Fehler"
 
 #: addons/addressbook/class_addressbook.inc:178
-#, fuzzy
 msgid "You need to set your personal phone number in order to perform direct dials."
-msgstr ""
-"Sie haben keine Telefonnummer. Um direkt wählen zu können müssen Sie zuerst "
-"eine erstellen."
+msgstr "Um direkt wählen zu können müssen Sie zuerst Ihre persönliche Telefonnummer einstellen."
 
 #: addons/addressbook/class_addressbook.inc:206
 #: addons/addressbook/class_addressbook.inc:769
@@ -215,7 +212,6 @@ msgid "User ID"
 msgstr "Benutzer-ID"
 
 #: addons/addressbook/class_addressbook.inc:689
-#, fuzzy
 msgid "Telephone number"
 msgstr "Telefonnummer"
 
