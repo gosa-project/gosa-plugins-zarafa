@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 14:20+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -83,98 +83,102 @@ msgstr "Bericht"
 msgid "Search returned no results..."
 msgstr "De zoekopdracht gaf geen resultaten terug..."
 
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
-#: addons/logview/class_gosa_logview.inc:6
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "Systeem log weergave"
+
+#: addons/logview/class_gosa_logview.inc:6 addons/logview/class_logview.inc:6
+#: addons/logview/class_logview.inc:415
 msgid "System logs"
 msgstr "Systeem logs"
 
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+#: addons/logview/class_gosa_logview.inc:7 addons/logview/class_logview.inc:7
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: addons/logview/class_logview.inc:78
+#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_logview.inc:155
+msgid "one hour"
+msgstr "1 uur"
+
+#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_logview.inc:155
+msgid "6 hours"
+msgstr "6 uur"
+
+#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_logview.inc:156
+msgid "12 hours"
+msgstr "12 uur"
+
+#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_logview.inc:156
+msgid "24 hours"
+msgstr "24 uur"
+
+#: addons/logview/class_gosa_logview.inc:73
+#: addons/logview/class_logview.inc:157
+msgid "2 days"
+msgstr "2 dagen"
+
+#: addons/logview/class_gosa_logview.inc:73
+#: addons/logview/class_logview.inc:157
+msgid "one week"
+msgstr "1 week"
+
+#: addons/logview/class_gosa_logview.inc:74
+#: addons/logview/class_logview.inc:158
+msgid "2 weeks"
+msgstr "2 weken"
+
+#: addons/logview/class_gosa_logview.inc:74
+#: addons/logview/class_logview.inc:158
+msgid "one month"
+msgstr "1 maand"
+
 #: addons/logview/class_gosa_logview.inc:118
+#: addons/logview/class_logview.inc:78
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_logview.inc:82
 #, fuzzy
 msgid "Configuration error"
 msgstr "Configuratie bestand"
 
-#: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_logview.inc:82
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr ""
 
-#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
-#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
-#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
-#: addons/logview/class_logview.inc:274 addons/logview/class_logview.inc:291
 #: addons/logview/class_gosa_logview.inc:148
 #: addons/logview/class_gosa_logview.inc:155
 #: addons/logview/class_gosa_logview.inc:234
 #: addons/logview/class_gosa_logview.inc:284
+#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
+#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
+#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
+#: addons/logview/class_logview.inc:274 addons/logview/class_logview.inc:291
 msgid "Error"
 msgstr "Fout"
 
-#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
 #: addons/logview/class_gosa_logview.inc:166
 #: addons/logview/class_gosa_logview.inc:181
+#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
 msgid "All"
 msgstr "Alle"
 
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "1 uur"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 uur"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 uur"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 uur"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 dagen"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "1 week"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 weken"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "1 maand"
-
-#: addons/logview/class_logview.inc:409
+#: addons/logview/class_gosa_logview.inc:200
 #, fuzzy
-msgid "Log view"
-msgstr "Log DB gebruiker"
+msgid "You have insufficient permissions to view syslog entries."
+msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
 
-#: addons/logview/class_logview.inc:410
-#, fuzzy
-msgid "Log view addon"
-msgstr "Omlaag verplaatsen"
+#: addons/logview/class_gosa_logview.inc:235
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
 
 #: addons/logview/contents.tpl:20
 msgid "Log level"
@@ -188,19 +192,15 @@ msgstr "Prioriteit"
 msgid "Hostname"
 msgstr "Computernaam"
 
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "Systeem log weergave"
-
-#: addons/logview/class_gosa_logview.inc:200
+#: addons/logview/class_logview.inc:409
 #, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "U heeft geen toestemming om deze blokkeerlijst te verwijderen."
+msgid "Log view"
+msgstr "Log DB gebruiker"
 
-#: addons/logview/class_gosa_logview.inc:235
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
+#: addons/logview/class_logview.inc:410
+#, fuzzy
+msgid "Log view addon"
+msgstr "Omlaag verplaatsen"
 
 #: admin/systems/services/log/gosaLogServer.tpl:1
 #, fuzzy

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
+"POT-Creation-Date: 2008-04-03 14:20+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -78,96 +78,102 @@ msgstr "Message"
 msgid "Search returned no results..."
 msgstr "La recherche n'a renvoyé aucun résultat..."
 
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
-#: addons/logview/class_gosa_logview.inc:6
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "Affichage des journaux système"
+
+#: addons/logview/class_gosa_logview.inc:6 addons/logview/class_logview.inc:6
+#: addons/logview/class_logview.inc:415
 msgid "System logs"
 msgstr "journaux systèmes"
 
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+#: addons/logview/class_gosa_logview.inc:7 addons/logview/class_logview.inc:7
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: addons/logview/class_logview.inc:78
+#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_logview.inc:155
+msgid "one hour"
+msgstr "Une heure"
+
+#: addons/logview/class_gosa_logview.inc:71
+#: addons/logview/class_logview.inc:155
+msgid "6 hours"
+msgstr "6 heures"
+
+#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_logview.inc:156
+msgid "12 hours"
+msgstr "12 heures"
+
+#: addons/logview/class_gosa_logview.inc:72
+#: addons/logview/class_logview.inc:156
+msgid "24 hours"
+msgstr "24 heures"
+
+#: addons/logview/class_gosa_logview.inc:73
+#: addons/logview/class_logview.inc:157
+msgid "2 days"
+msgstr "2 jours"
+
+#: addons/logview/class_gosa_logview.inc:73
+#: addons/logview/class_logview.inc:157
+msgid "one week"
+msgstr "une semaine"
+
+#: addons/logview/class_gosa_logview.inc:74
+#: addons/logview/class_logview.inc:158
+msgid "2 weeks"
+msgstr "2 semaines"
+
+#: addons/logview/class_gosa_logview.inc:74
+#: addons/logview/class_logview.inc:158
+msgid "one month"
+msgstr "un mois"
+
 #: addons/logview/class_gosa_logview.inc:118
+#: addons/logview/class_logview.inc:78
 msgid "Warning"
 msgstr "Avertissement"
 
-#: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_logview.inc:82
 #, fuzzy
 msgid "Configuration error"
 msgstr "Le fichier de configuration peut être écrit"
 
-#: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
+#: addons/logview/class_logview.inc:82
 #, php-format
 msgid "Missing %s PHP extension!"
 msgstr ""
 
-#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
-#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
-#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
-#: addons/logview/class_logview.inc:274 addons/logview/class_logview.inc:291
 #: addons/logview/class_gosa_logview.inc:148
 #: addons/logview/class_gosa_logview.inc:155
 #: addons/logview/class_gosa_logview.inc:234
 #: addons/logview/class_gosa_logview.inc:284
+#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
+#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
+#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
+#: addons/logview/class_logview.inc:274 addons/logview/class_logview.inc:291
 msgid "Error"
 msgstr "Erreur"
 
-#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
 #: addons/logview/class_gosa_logview.inc:166
 #: addons/logview/class_gosa_logview.inc:181
+#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
 msgid "All"
 msgstr "Tout"
 
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "Une heure"
+#: addons/logview/class_gosa_logview.inc:200
+msgid "You have insufficient permissions to view syslog entries."
+msgstr ""
+"Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
 
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 heures"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 heures"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 heures"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 jours"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "une semaine"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 semaines"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "un mois"
-
-#: addons/logview/class_logview.inc:409
-msgid "Log view"
-msgstr "Visualisation des journaux systèmes"
-
-#: addons/logview/class_logview.inc:410
-msgid "Log view addon"
-msgstr "Extension de visualisation des journaux systèmes"
+#: addons/logview/class_gosa_logview.inc:235
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
 
 #: addons/logview/contents.tpl:20
 msgid "Log level"
@@ -181,19 +187,13 @@ msgstr "Niveau"
 msgid "Hostname"
 msgstr "Nom d'hôte"
 
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "Affichage des journaux système"
+#: addons/logview/class_logview.inc:409
+msgid "Log view"
+msgstr "Visualisation des journaux systèmes"
 
-#: addons/logview/class_gosa_logview.inc:200
-msgid "You have insufficient permissions to view syslog entries."
-msgstr ""
-"Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
-
-#: addons/logview/class_gosa_logview.inc:235
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
+#: addons/logview/class_logview.inc:410
+msgid "Log view addon"
+msgstr "Extension de visualisation des journaux systèmes"
 
 #: admin/systems/services/log/gosaLogServer.tpl:1
 msgid "GOsa logging database"
