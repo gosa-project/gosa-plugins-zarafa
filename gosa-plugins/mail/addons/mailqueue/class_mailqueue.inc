@@ -239,7 +239,7 @@ class mailqueue extends plugin
          Else display error   */
       $server = $this->getServer();
       if((count($server) == 1 ) && (isset($server['all']))){
-        msg_dialog::display(_("Configuration error"), _("No mail servers sepcified!"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), _("No mail servers specified!"), ERROR_DIALOG);
         $error = true;
       }
 
