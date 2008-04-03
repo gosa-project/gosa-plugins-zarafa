@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-02 13:18+0200\n"
-"PO-Revision-Date: 2008-04-02 13:17+0200\n"
+"POT-Creation-Date: 2008-04-03 16:00+0200\n"
+"PO-Revision-Date: 2008-04-03 16:00+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,8 +79,7 @@ msgstr "Öffentliche Serverbezeichnung für dieses Verteilte Netzwerk"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:31
 msgid "Select if this server is authoritative for this shared network"
-msgstr ""
-"Auswählen, wenn dieser Server Authoritativ für dieses Verteilte Netzwerk ist"
+msgstr "Auswählen, wenn dieser Server Authoritativ für dieses Verteilte Netzwerk ist"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:31
 msgid "Authoritative server"
@@ -111,8 +110,7 @@ msgstr "Zugriffskontrolle"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:79
 msgid "Select if unknown clients should get dynamic IP addresses"
-msgstr ""
-"Auswählen, wenn unbekannte Clients eine dynamische IP-Adresse erhalten sollen"
+msgstr "Auswählen, wenn unbekannte Clients eine dynamische IP-Adresse erhalten sollen"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:79
 msgid "Allow unknown clients"
@@ -120,8 +118,7 @@ msgstr "Erlaube unbekannte Clients"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:85
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr ""
-"Auswählen, wenn Bootp Clients eine dynamische IP-Adresse erhalten sollen"
+msgstr "Auswählen, wenn Bootp Clients eine dynamische IP-Adresse erhalten sollen"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:85
 msgid "Allow bootp clients"
@@ -209,7 +206,6 @@ msgid "Shared network"
 msgstr "Verteiltes Netzwerk"
 
 #: admin/systems/services/dhcp/dhcp_group.tpl:10
-#, fuzzy
 msgid "Name of group"
 msgstr "Name der Gruppe"
 
@@ -242,8 +238,7 @@ msgstr "Bereich"
 #: admin/systems/services/dhcp/class_dhcpPool.inc:143
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
 msgid "'Range' is not inside the configured network."
-msgstr ""
-"Der Bereich befindet sich nicht innerhalb des konfigurierten Netzwerks."
+msgstr "Der Bereich befindet sich nicht innerhalb des konfigurierten Netzwerks."
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:33
 #: admin/systems/services/dhcp/class_servDHCP.inc:691
@@ -343,7 +338,6 @@ msgid "Lease time"
 msgstr "Lease-Gültigkeit"
 
 #: admin/systems/services/dhcp/class_dhcpService.inc:143
-#, fuzzy
 msgid "Max lease time"
 msgstr "Max. Lease-Gültigkeit"
 
@@ -449,8 +443,7 @@ msgid "Filename"
 msgstr "Dateiname"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:35
-msgid ""
-"Enter name of file that will be loaded via tftp after client has started"
+msgid "Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Geben Sie den Namen der Datei ein, die via Tftp geladen werden soll, wenn "
 "der Client gestartet wurde"
@@ -461,8 +454,7 @@ msgstr "Nächster Server"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
 msgid "Enter name of server to retrieve bootimages from"
-msgstr ""
-"Geben Sie den Namen des Servers ein, von dem Bootimages bezogen werden sollen"
+msgstr "Geben Sie den Namen des Servers ein, von dem Bootimages bezogen werden sollen"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:49
 msgid "Domain Name Service"
@@ -550,6 +542,3 @@ msgstr "FDDI"
 msgid "Token Ring"
 msgstr "Token Ring"
 
-#, fuzzy
-#~ msgid "May lease time"
-#~ msgstr "Maximale Nachrichten-Größe"
