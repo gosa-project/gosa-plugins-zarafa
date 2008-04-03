@@ -442,10 +442,6 @@ class faiProfile extends plugin
     }else{
       new log("create","fai/".get_class($this),$this->dn,$this->attributes);
     }
- 
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-    }
   }
 
 

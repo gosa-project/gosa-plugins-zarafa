@@ -9,7 +9,7 @@ class tabsTemplate extends tabs
 	tabs::tabs($config, $data, $dn, $category);
 
 	/* Add references/acls/snapshots */
-	$this->addSpecialTabs();
+#	$this->addSpecialTabs();
   }
 
   function check($ignore_account= FALSE)

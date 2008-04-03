@@ -465,9 +465,6 @@ class faiHook extends plugin
     $ldap = $this->config->get_ldap_link();
 
     FAI::prepare_to_save_FAI_object($this->dn,$this->attrs);
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-    }
 
     if($this->initially_was_account){
       new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
