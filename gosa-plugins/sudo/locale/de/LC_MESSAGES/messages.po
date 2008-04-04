@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 10:09+0200\n"
+"POT-Creation-Date: 2008-04-04 10:27+0200\n"
 "PO-Revision-Date: 2008-04-04 10:10+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -70,7 +70,9 @@ msgstr "Warnung"
 
 #: admin/sudo/remove.tpl:9
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr "Wenn Sie sicher sind, klicken Sie auf 'Entfernen' um fortzufahren oder 'Abbrechen' um die Aktion abzubrechen."
+msgstr ""
+"Wenn Sie sicher sind, klicken Sie auf 'Entfernen' um fortzufahren oder "
+"'Abbrechen' um die Aktion abzubrechen."
 
 #: admin/sudo/class_sudoManagement.inc:31 admin/sudo/class_sudoGeneric.inc:274
 msgid "Sudo"
@@ -150,4 +152,3 @@ msgstr "Aus Liste hinzufügen"
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 msgid "Sudo role administration"
 msgstr "Administration der sudo-Rollen"
-
