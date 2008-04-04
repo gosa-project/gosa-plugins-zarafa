@@ -131,7 +131,7 @@ class sudoOption extends plugin
         if(!isset($this->options[$opt])){
           $this->options[$opt]=array('NAME'=>$opt,'TYPE'=>'STRING','DEFAULT' => '');
           msg_dialog::display(_("Unknown option"),
-              sprintf(_("The sudo option '%s' is unkown to GOsa, it is now temporarily added as type string."),
+              sprintf(_("The sudo option '%s' is invalid!"),
                 $opt),WARNING_DIALOG);
         }
 

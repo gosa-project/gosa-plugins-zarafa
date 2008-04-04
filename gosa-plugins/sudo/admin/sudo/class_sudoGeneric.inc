@@ -168,7 +168,7 @@ class sudo extends plugin
           $attrs[] =  trim($_POST['new_'.$attr]); 
           $this->$attr = $attrs;
         }else{
-          msg_dialog::display(_("Invalid"),msgPool::invalid($attr,$_POST['new_'.$attr],"/[a-z0-9]/"));
+          msg_dialog::display(_("Error"),msgPool::invalid($attr,$_POST['new_'.$attr],"/[a-z0-9]/"));
         }
       }
     }

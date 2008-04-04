@@ -136,11 +136,11 @@ class divListSudo extends MultiSelectWindow
       /* Add edit icon */
       $actions = "";
       $actions.= "<input class='center' type='image'
-        src='images/edit.png' alt='"._("edit")."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
+        src='images/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
-          src='images/edittrash.png' alt='"._("delete")."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
+          src='images/edittrash.png' alt='".msgPool::deleteButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";

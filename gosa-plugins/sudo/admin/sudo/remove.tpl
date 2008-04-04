@@ -6,7 +6,7 @@
 </p>
 
 <p>
-  {t}So - if you're sure - press 'Delete' to continue or 'Cancel' to abort.{/t}
+  {t}If you're sure, press 'Delete' to continue or 'Cancel' to abort.{/t}
 </p>
 
 <p class="plugbottom">

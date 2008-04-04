@@ -208,7 +208,7 @@ class sudoManagement extends plugin
         }
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("sudo role")));
+        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Sudo role")));
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }

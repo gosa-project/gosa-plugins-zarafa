@@ -1,153 +1,153 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# translation of messages.po to
+# Header entry was created by KBabel!
 #
-#, fuzzy
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 10:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2008-04-04 10:10+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: admin/sudo/class_divListSudo.inc:48 admin/sudo/class_divListSudo.inc:49
 msgid "List of sudo roles"
-msgstr ""
+msgstr "Liste der sudo-Rollen"
 
 #: admin/sudo/class_divListSudo.inc:69 admin/sudo/class_sudoGeneric.inc:283
 #: admin/sudo/generic.tpl:8
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: admin/sudo/class_divListSudo.inc:69
 msgid "Department"
-msgstr ""
+msgstr "Abteilung"
 
 #: admin/sudo/class_divListSudo.inc:70 admin/sudo/class_divListSudo.inc:93
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: admin/sudo/class_divListSudo.inc:74
 msgid "Regular expression for matching role names"
-msgstr ""
+msgstr "Regulärer Ausdruck zum Abgleich der Rollen-Namen"
 
 #: admin/sudo/class_divListSudo.inc:76
 msgid "Regular expression for matching role member names"
-msgstr ""
+msgstr "Regulärer Ausdruck zum Abgleich der Mitglieds-Namen"
 
 #: admin/sudo/class_divListSudo.inc:95
 msgid "Create"
-msgstr ""
+msgstr "Anlegen"
 
 #: admin/sudo/class_divListSudo.inc:99
 msgid "Role"
-msgstr ""
+msgstr "Rolle"
 
 #: admin/sudo/class_divListSudo.inc:106
 msgid "Remove"
-msgstr ""
+msgstr "Entfernen"
 
 #: admin/sudo/class_divListSudo.inc:139
 msgid "Edit this entry"
-msgstr ""
+msgstr "Diesen Eintrag bearbeiten"
 
 #: admin/sudo/class_divListSudo.inc:143
 msgid "Delete this entry"
-msgstr ""
+msgstr "Diesen Eintrag löschen"
 
 #: admin/sudo/class_divListSudo.inc:169
 msgid "Number of listed roles"
-msgstr ""
+msgstr "Anzahl der angezeigten Rollen"
 
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #: admin/sudo/remove.tpl:9
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
+msgstr "Wenn Sie sicher sind, klicken Sie auf 'Entfernen' um fortzufahren oder 'Abbrechen' um die Aktion abzubrechen."
 
 #: admin/sudo/class_sudoManagement.inc:31 admin/sudo/class_sudoGeneric.inc:274
 msgid "Sudo"
-msgstr ""
+msgstr "Sudo"
 
 #: admin/sudo/class_sudoManagement.inc:32
 msgid "Manage sudo roles"
-msgstr ""
+msgstr "Sudo-Rollen verwalten"
 
 #: admin/sudo/class_sudoManagement.inc:211
 #: admin/sudo/class_sudoGeneric.inc:275 admin/sudo/class_sudoGeneric.inc:280
 msgid "Sudo role"
-msgstr ""
+msgstr "Sudo-Rolle"
 
 #: admin/sudo/class_sudoManagement.inc:243
 msgid "Permission error"
-msgstr ""
+msgstr "Berechtigungs-Fehler"
 
 #: admin/sudo/class_sudoOptions.inc:133
 msgid "Unknown option"
-msgstr ""
+msgstr "Unbekannte Option"
 
 #: admin/sudo/class_sudoOptions.inc:134
 #, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "Die sudo-Option '%s' ist ungültig!"
 
 #: admin/sudo/class_sudoOptions.inc:254 admin/sudo/class_sudoOptions.inc:256
 msgid "string"
-msgstr ""
+msgstr "Zeichenkette"
 
 #: admin/sudo/class_sudoOptions.inc:254 admin/sudo/class_sudoOptions.inc:255
 #: admin/sudo/class_sudoOptions.inc:256
 msgid "bool"
-msgstr ""
+msgstr "Bool'sch"
 
 #: admin/sudo/class_sudoOptions.inc:255
 msgid "integer"
-msgstr ""
+msgstr "Ganzzahl"
 
 #: admin/sudo/class_sudoOptions.inc:256
 msgid "list"
-msgstr ""
+msgstr "Liste"
 
 #: admin/sudo/class_sudoGeneric.inc:171
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: admin/sudo/class_sudoGeneric.inc:284 admin/sudo/generic.tpl:16
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: admin/sudo/class_sudoGeneric.inc:285
 msgid "Users"
-msgstr ""
+msgstr "Benutzer"
 
 #: admin/sudo/class_sudoGeneric.inc:286
 msgid "Host"
-msgstr ""
+msgstr "System"
 
 #: admin/sudo/class_sudoGeneric.inc:287
 msgid "Command"
-msgstr ""
+msgstr "Kommando"
 
 #: admin/sudo/class_sudoGeneric.inc:288
 msgid "Run as user"
-msgstr ""
+msgstr "Als Benutzer ausführen"
 
 #: admin/sudo/options.tpl:75
 msgid "Available options"
-msgstr ""
+msgstr "Verfügbare Optionen"
 
 #: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:41
 msgid "Add from list"
-msgstr ""
+msgstr "Aus Liste hinzufügen"
 
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 msgid "Sudo role administration"
-msgstr ""
+msgstr "Administration der sudo-Rollen"
+
