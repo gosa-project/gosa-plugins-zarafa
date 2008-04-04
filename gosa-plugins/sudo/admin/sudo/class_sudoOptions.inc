@@ -253,7 +253,7 @@ class sudoOption extends plugin
     $smarty = get_smarty();
     $smarty->assign("map",  array("STRING" => _("string"), "BOOLEAN" => _("bool"),
       "INTEGER" => _("integer") , "BOOL_INTEGER" => _("integer")."-"._("bool") ,
-      "STRING_BOOL" => _("string")."-"._("bool"),"LISTS" => _("lists")));
+      "STRING_BOOL" => _("string")."-"._("bool"),"LISTS" => _("list")));
     $smarty->assign("sudoOption",$this->sudoOption);
     $smarty->assign("options",$this->options);
     return($smarty->fetch(get_template_path('options.tpl', TRUE)));

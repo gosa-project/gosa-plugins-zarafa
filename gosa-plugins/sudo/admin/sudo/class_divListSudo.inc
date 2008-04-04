@@ -83,7 +83,7 @@ class divListSudo extends MultiSelectWindow
     /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
-    $base  = $this->parent->base;
+    $base  = sudo::get_sudoers_ou($this->config);
     $acl   = $this->ui->get_category_permissions($base,"sudo"); 
  
     /* Add default header */

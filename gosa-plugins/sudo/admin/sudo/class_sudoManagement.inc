@@ -20,18 +20,24 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*! \brief This is the sudo management class. \
+           This class allows to add/remove/edit sudo roles with GOsa. \
+           All roles will be listed by this plugin, the displayed objects \
+            can also be filtered.
+*/
 class sudoManagement extends plugin
 {
   /* Definitions */
-  var $plHeadline     = "Sudo";
-  var $plDescription  = "Manage sudo roles";
+  public $plHeadline     = "Sudo";
+  public $plDescription  = "Manage sudo roles";
 
-  var $DivListSudo    = NULL;
-  var $base           = "";
+  private $DivListSudo    = NULL;
+  private $sudotabs       = NULL;
+  private $base           = "";
+ 
 
-  var $sudotabs       = NULL;
-
-  function sudoManagement (&$config, &$ui)
+   
+  public function __construct(&$config, &$ui)
   {
     /* Save configuration for internal use */
     $this->config = &$config;
@@ -43,7 +49,7 @@ class sudoManagement extends plugin
   }
 
 
-  function execute()
+  public function execute()
   {
     /* Call parent execute */
     plugin::execute();
@@ -136,6 +142,10 @@ class sudoManagement extends plugin
           unset ($this->sudotabs);
           $this->sudotabs= NULL;
           session::un_set('objectinfo');
+        }else{
+          $this->dn = $this->sudotabs->dn;
+          $this->sudotabs= new sudotabs($this->config, $this->config->data['TABS']['SUDOTABS'], $this->dn);
+          session::set('objectinfo',$this->dn);
         }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
@@ -301,7 +311,7 @@ class sudoManagement extends plugin
   }
 
 
-  function list_get_selected_items()
+  private function list_get_selected_items()
   {
     $ids = array();
     foreach($_POST as $name => $value){
@@ -314,7 +324,7 @@ class sudoManagement extends plugin
   }
 
 
-  function reload($CreatePosixsList=false)
+  private function reload($CreatePosixsList=false)
   {
     $this->list             = array();
     $base                   = $this->base;
@@ -343,21 +353,12 @@ class sudoManagement extends plugin
 
 
   /* Save data to object */
-  function save_object()
+  public function save_object()
   {
     $this->DivListSudo->save_object();
   }
 
-
-  function remove_lock()
-  {
-    if (isset($this->sudotabs->dn)){
-      del_lock ($this->sudotabs->dn);
-    }
-  }
-
-
-  function remove_from_parent()
+  public function remove_from_parent()
   {
     /* Optionally execute a command after we're done */
     $this->postremove();
@@ -365,16 +366,11 @@ class sudoManagement extends plugin
 
 
   /* Save to LDAP */
-  function save()
+  public function save()
   {
     /* Optionally execute a command after we're done */
     $this->postcreate();
   }
-
-  /* Unused functions  */
-  function check()  { }
-  function adapt_from_template($dn, $skip= array()) { }
-  function password_change_needed()  { }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
