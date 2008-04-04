@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:13+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,15 +14,14 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
-"cette boite de dialogue"
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:465
+msgid "Scalix email addresses"
+msgstr "Adresse de messagerie Scalix"
 
-#: personal/scalix/main.inc:125
-msgid "Scalix settings"
-msgstr "Paramètres de Scalix"
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+msgid "List of scalix email addresses"
+msgstr "Liste des adresses de messagerie scalix"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -37,8 +36,9 @@ msgid "Salix mailbox class"
 msgstr "Type de compte de messagerie Scalix"
 
 #: personal/scalix/generic.tpl:19
+#, fuzzy
 msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 "Les utilisateurs limites ne peuvent pas utiliser les fonctionnalité de "
 "calendrier de groupe de scalix"
@@ -114,15 +114,6 @@ msgstr ""
 #: personal/scalix/generic.tpl:85
 msgid "Notify User"
 msgstr "Avertir l'utilisateur"
-
-#: personal/scalix/generic.tpl:98 personal/scalix/class_scalixAccount.inc:465
-#: personal/scalix/paste_generic.tpl:4
-msgid "Scalix email addresses"
-msgstr "Adresse de messagerie Scalix"
-
-#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
-msgid "List of scalix email addresses"
-msgstr "Liste des adresses de messagerie scalix"
 
 #: personal/scalix/class_scalixAccount.inc:16
 msgid "Scalix"
@@ -259,6 +250,16 @@ msgstr "Limite en entrée"
 #: personal/scalix/class_scalixAccount.inc:464
 msgid "Notify user"
 msgstr "Avertir l'utilisateur"
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
+"cette boite de dialogue"
+
+#: personal/scalix/main.inc:125
+msgid "Scalix settings"
+msgstr "Paramètres de Scalix"
 
 #~ msgid "Add"
 #~ msgstr "Ajouter"

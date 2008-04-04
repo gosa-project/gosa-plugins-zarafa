@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:01+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2008-04-03 16:02+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -21,212 +21,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/kolab/class_servKolab.inc:98
-#, php-format
-msgid "Include data from %s days in the past when creating free/busy lists"
-msgstr ""
-"Berücksichtige %s Tage in der Vergangenheit beim Erstellen von Frei/Belegt-"
-"Listen"
-
-#: admin/systems/services/kolab/class_servKolab.inc:103
-#, php-format
-msgid "Warn users when using more than %s%% of their mail quota"
-msgstr "Warne Benutzer, wenn sie mehr als %s%% ihres Mail-Kontigentes benutzen"
-
-#: admin/systems/services/kolab/class_servKolab.inc:180
-msgid "Internal error"
-msgstr "Interner Fehler"
-
-#: admin/systems/services/kolab/class_servKolab.inc:180
-msgid "Kolab account does not exist!"
-msgstr "Kolab-Konto existiert nicht!"
-
-#: admin/systems/services/kolab/class_servKolab.inc:184
-#: personal/connectivity/kolab/class_kolabAccount.inc:171
-#: personal/connectivity/kolab/class_kolabAccount.inc:179
-msgid "Error"
-msgstr "Fehler"
-
-#: admin/systems/services/kolab/class_servKolab.inc:184
-msgid "hostname"
-msgstr "Hostname"
-
-#: admin/systems/services/kolab/class_servKolab.inc:194
-#: admin/systems/services/kolab/class_servKolab.inc:210
-#: admin/systems/services/kolab/class_servKolab.inc:352
-#: personal/connectivity/kolab/class_kolabAccount.inc:339
-#: personal/connectivity/kolab/class_kolabAccount.inc:476
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: admin/systems/services/kolab/class_servKolab.inc:263
-#: admin/systems/services/kolab/class_servKolab.inc:265
-msgid "Future days"
-msgstr "Tage in der Zukunft"
-
-#: admin/systems/services/kolab/class_servKolab.inc:269
-#: admin/systems/services/kolab/class_servKolab.inc:273
-msgid "Quota"
-msgstr "Kontingent"
-
-#: admin/systems/services/kolab/class_servKolab.inc:271
-msgid "Please choose a value between 1 and 100 for Quota settings."
-msgstr "Bitte wählen Sie einen Kontingent-Wert zwischen 1 und 100."
-
-#: admin/systems/services/kolab/class_servKolab.inc:277
-msgid "Privileged networks"
-msgstr "Privilegierte Netzwerke"
-
-#: admin/systems/services/kolab/class_servKolab.inc:369
-#: admin/systems/services/kolab/class_servKolab.inc:380
-msgid "Kolab mail service"
-msgstr "Kolab Mail-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:379
 #: personal/connectivity/kolab/class_kolabAccount.inc:5
 #: personal/connectivity/kolab/class_kolabAccount.inc:512
+#: admin/systems/services/kolab/class_servKolab.inc:379
 msgid "Kolab"
 msgstr "Kolab"
-
-#: admin/systems/services/kolab/class_servKolab.inc:380
-#: admin/systems/services/kolab/servkolab.tpl:39
-msgid "Services"
-msgstr "Dienste"
-
-#: admin/systems/services/kolab/class_servKolab.inc:388
-#: admin/systems/services/kolab/servkolab.tpl:9
-msgid "Postfix mydomain"
-msgstr "Postfix 'mydomain'"
-
-#: admin/systems/services/kolab/class_servKolab.inc:389
-msgid "My destination"
-msgstr "Mein Ziel"
-
-#: admin/systems/services/kolab/class_servKolab.inc:390
-#: admin/systems/services/kolab/servkolab.tpl:27
-msgid "Cyrus admins"
-msgstr "Cyrus Administratoren"
-
-#: admin/systems/services/kolab/class_servKolab.inc:391
-msgid "FTP FreeBusy service"
-msgstr "FTP Frei/Belegt-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:392
-#: admin/systems/services/kolab/servkolab.tpl:171
-msgid "SMTP privileged networks"
-msgstr "SMTP privilegierte Netzwerke"
-
-#: admin/systems/services/kolab/class_servKolab.inc:393
-msgid "Enable virus scan"
-msgstr "Virus-Scan aktivieren"
-
-#: admin/systems/services/kolab/class_servKolab.inc:394
-msgid "Relayhost"
-msgstr "Relay Host"
-
-#: admin/systems/services/kolab/class_servKolab.inc:395
-#: admin/systems/services/kolab/servkolab.tpl:202
-msgid "Enable MX lookup for relayhost"
-msgstr "Aktiviere MX lookup für relayhost"
-
-#: admin/systems/services/kolab/class_servKolab.inc:396
-msgid "HTTP FreeBusy service"
-msgstr "HTTP Frei/Belegt-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:397
-msgid "Allow unauthenticated free busy"
-msgstr "Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
-
-#: admin/systems/services/kolab/class_servKolab.inc:398
-#: admin/systems/services/kolab/servkolab.tpl:223
-msgid "Accept Internet Mail"
-msgstr "Akzeptiere Internet-Mail"
-
-#: admin/systems/services/kolab/class_servKolab.inc:399
-#: admin/systems/services/kolab/servkolab.tpl:68
-msgid "IMAP service"
-msgstr "IMAP-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:400
-msgid "kolabFreeBusyFuture"
-msgstr "Kolab Frei/Belegt Ausblick"
-
-#: admin/systems/services/kolab/class_servKolab.inc:401
-#: admin/systems/services/kolab/servkolab.tpl:48
-msgid "POP3 service"
-msgstr "POP3-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:402
-#: admin/systems/services/kolab/servkolab.tpl:78
-msgid "IMAP/SSL service"
-msgstr "IMAP/SSL-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:403
-#: admin/systems/services/kolab/servkolab.tpl:58
-msgid "POP3/SSL service"
-msgstr "POP3/SSL-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:404
-#: admin/systems/services/kolab/servkolab.tpl:88
-msgid "Sieve service"
-msgstr "Sieve-Dienst"
-
-#: admin/systems/services/kolab/class_servKolab.inc:405
-#: admin/systems/services/kolab/servkolab.tpl:129
-msgid "Quota settings"
-msgstr "Kontingent-Einstellungen"
-
-#: admin/systems/services/kolab/servkolab.tpl:6
-msgid "Generic"
-msgstr "Allgemein"
-
-#: admin/systems/services/kolab/servkolab.tpl:18
-msgid "Postfix mydestination"
-msgstr "Postfix 'mydestination'"
-
-#: admin/systems/services/kolab/servkolab.tpl:98
-msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
-msgstr "FTP Frei/Belegt-Dienst (alt, inkompatibel mit Kolab 2)"
-
-#: admin/systems/services/kolab/servkolab.tpl:108
-msgid "HTTP FreeBusy service (legacy)"
-msgstr "HTTP Frei/Belegt-Dienst (alt)"
-
-#: admin/systems/services/kolab/servkolab.tpl:118
-msgid "Amavis email scanning (virus/spam)"
-msgstr "Email scannen (Virus/Spam)"
-
-#: admin/systems/services/kolab/servkolab.tpl:147
-msgid "Free/Busy settings"
-msgstr "Frei/Belegt-Einstellungen"
-
-#: admin/systems/services/kolab/servkolab.tpl:153
-msgid "Allow unauthenticated downloading of Free/Busy information"
-msgstr "Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
-
-#: admin/systems/services/kolab/servkolab.tpl:176
-msgid "Hosts/networks allowed to relay"
-msgstr "Rechner/Netzwerke, denen Weiterleitung erlaubt ist"
-
-#: admin/systems/services/kolab/servkolab.tpl:181
-msgid "Enter multiple values, seperated with"
-msgstr "Eingabe mehrerer Werte, getrennt durch"
-
-#: admin/systems/services/kolab/servkolab.tpl:194
-msgid "SMTP smarthost/relayhost"
-msgstr "SMTP smarthost/relayhost"
-
-#: admin/systems/services/kolab/servkolab.tpl:207
-msgid "Host used to relay mails"
-msgstr "Host für Mail Relay"
-
-#: admin/systems/services/kolab/servkolab.tpl:231
-msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr "Akzeptiere Mails von anderen Domänen über nicht-authentifiziertes SMTP"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:6
 msgid "This does something"
 msgstr "Dies tut etwas"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+#: admin/systems/services/kolab/class_servKolab.inc:184
+msgid "Error"
+msgstr "Fehler"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Mail address"
@@ -259,6 +68,14 @@ msgstr "Manuell"
 #: personal/connectivity/kolab/class_kolabAccount.inc:256
 msgid "Anonymous"
 msgstr "Anonym"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:339
+#: personal/connectivity/kolab/class_kolabAccount.inc:476
+#: admin/systems/services/kolab/class_servKolab.inc:194
+#: admin/systems/services/kolab/class_servKolab.inc:210
+#: admin/systems/services/kolab/class_servKolab.inc:352
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
@@ -354,3 +171,187 @@ msgstr "Zukunft"
 msgid "days"
 msgstr "Tage"
 
+#: admin/systems/services/kolab/class_servKolab.inc:98
+#, php-format
+msgid "Include data from %s days in the past when creating free/busy lists"
+msgstr ""
+"Berücksichtige %s Tage in der Vergangenheit beim Erstellen von Frei/Belegt-"
+"Listen"
+
+#: admin/systems/services/kolab/class_servKolab.inc:103
+#, php-format
+msgid "Warn users when using more than %s%% of their mail quota"
+msgstr "Warne Benutzer, wenn sie mehr als %s%% ihres Mail-Kontigentes benutzen"
+
+#: admin/systems/services/kolab/class_servKolab.inc:180
+msgid "Internal error"
+msgstr "Interner Fehler"
+
+#: admin/systems/services/kolab/class_servKolab.inc:180
+msgid "Kolab account does not exist!"
+msgstr "Kolab-Konto existiert nicht!"
+
+#: admin/systems/services/kolab/class_servKolab.inc:184
+msgid "hostname"
+msgstr "Hostname"
+
+#: admin/systems/services/kolab/class_servKolab.inc:263
+#: admin/systems/services/kolab/class_servKolab.inc:265
+msgid "Future days"
+msgstr "Tage in der Zukunft"
+
+#: admin/systems/services/kolab/class_servKolab.inc:269
+#: admin/systems/services/kolab/class_servKolab.inc:273
+msgid "Quota"
+msgstr "Kontingent"
+
+#: admin/systems/services/kolab/class_servKolab.inc:271
+msgid "Please choose a value between 1 and 100 for Quota settings."
+msgstr "Bitte wählen Sie einen Kontingent-Wert zwischen 1 und 100."
+
+#: admin/systems/services/kolab/class_servKolab.inc:277
+msgid "Privileged networks"
+msgstr "Privilegierte Netzwerke"
+
+#: admin/systems/services/kolab/class_servKolab.inc:369
+#: admin/systems/services/kolab/class_servKolab.inc:380
+msgid "Kolab mail service"
+msgstr "Kolab Mail-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:380
+#: admin/systems/services/kolab/servkolab.tpl:39
+msgid "Services"
+msgstr "Dienste"
+
+#: admin/systems/services/kolab/class_servKolab.inc:388
+#: admin/systems/services/kolab/servkolab.tpl:9
+msgid "Postfix mydomain"
+msgstr "Postfix 'mydomain'"
+
+#: admin/systems/services/kolab/class_servKolab.inc:389
+msgid "My destination"
+msgstr "Mein Ziel"
+
+#: admin/systems/services/kolab/class_servKolab.inc:390
+#: admin/systems/services/kolab/servkolab.tpl:27
+msgid "Cyrus admins"
+msgstr "Cyrus Administratoren"
+
+#: admin/systems/services/kolab/class_servKolab.inc:391
+msgid "FTP FreeBusy service"
+msgstr "FTP Frei/Belegt-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:392
+#: admin/systems/services/kolab/servkolab.tpl:171
+msgid "SMTP privileged networks"
+msgstr "SMTP privilegierte Netzwerke"
+
+#: admin/systems/services/kolab/class_servKolab.inc:393
+msgid "Enable virus scan"
+msgstr "Virus-Scan aktivieren"
+
+#: admin/systems/services/kolab/class_servKolab.inc:394
+msgid "Relayhost"
+msgstr "Relay Host"
+
+#: admin/systems/services/kolab/class_servKolab.inc:395
+#: admin/systems/services/kolab/servkolab.tpl:202
+msgid "Enable MX lookup for relayhost"
+msgstr "Aktiviere MX lookup für relayhost"
+
+#: admin/systems/services/kolab/class_servKolab.inc:396
+msgid "HTTP FreeBusy service"
+msgstr "HTTP Frei/Belegt-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:397
+msgid "Allow unauthenticated free busy"
+msgstr ""
+"Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
+
+#: admin/systems/services/kolab/class_servKolab.inc:398
+#: admin/systems/services/kolab/servkolab.tpl:223
+msgid "Accept Internet Mail"
+msgstr "Akzeptiere Internet-Mail"
+
+#: admin/systems/services/kolab/class_servKolab.inc:399
+#: admin/systems/services/kolab/servkolab.tpl:68
+msgid "IMAP service"
+msgstr "IMAP-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:400
+msgid "kolabFreeBusyFuture"
+msgstr "Kolab Frei/Belegt Ausblick"
+
+#: admin/systems/services/kolab/class_servKolab.inc:401
+#: admin/systems/services/kolab/servkolab.tpl:48
+msgid "POP3 service"
+msgstr "POP3-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:402
+#: admin/systems/services/kolab/servkolab.tpl:78
+msgid "IMAP/SSL service"
+msgstr "IMAP/SSL-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:403
+#: admin/systems/services/kolab/servkolab.tpl:58
+msgid "POP3/SSL service"
+msgstr "POP3/SSL-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:404
+#: admin/systems/services/kolab/servkolab.tpl:88
+msgid "Sieve service"
+msgstr "Sieve-Dienst"
+
+#: admin/systems/services/kolab/class_servKolab.inc:405
+#: admin/systems/services/kolab/servkolab.tpl:129
+msgid "Quota settings"
+msgstr "Kontingent-Einstellungen"
+
+#: admin/systems/services/kolab/servkolab.tpl:6
+msgid "Generic"
+msgstr "Allgemein"
+
+#: admin/systems/services/kolab/servkolab.tpl:18
+msgid "Postfix mydestination"
+msgstr "Postfix 'mydestination'"
+
+#: admin/systems/services/kolab/servkolab.tpl:98
+msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
+msgstr "FTP Frei/Belegt-Dienst (alt, inkompatibel mit Kolab 2)"
+
+#: admin/systems/services/kolab/servkolab.tpl:108
+msgid "HTTP FreeBusy service (legacy)"
+msgstr "HTTP Frei/Belegt-Dienst (alt)"
+
+#: admin/systems/services/kolab/servkolab.tpl:118
+msgid "Amavis email scanning (virus/spam)"
+msgstr "Email scannen (Virus/Spam)"
+
+#: admin/systems/services/kolab/servkolab.tpl:147
+msgid "Free/Busy settings"
+msgstr "Frei/Belegt-Einstellungen"
+
+#: admin/systems/services/kolab/servkolab.tpl:153
+msgid "Allow unauthenticated downloading of Free/Busy information"
+msgstr ""
+"Erlaube nicht-authentifiziertes Herunterladen von Frei/Belegt-Informationen"
+
+#: admin/systems/services/kolab/servkolab.tpl:176
+msgid "Hosts/networks allowed to relay"
+msgstr "Rechner/Netzwerke, denen Weiterleitung erlaubt ist"
+
+#: admin/systems/services/kolab/servkolab.tpl:181
+msgid "Enter multiple values, seperated with"
+msgstr "Eingabe mehrerer Werte, getrennt durch"
+
+#: admin/systems/services/kolab/servkolab.tpl:194
+msgid "SMTP smarthost/relayhost"
+msgstr "SMTP smarthost/relayhost"
+
+#: admin/systems/services/kolab/servkolab.tpl:207
+msgid "Host used to relay mails"
+msgstr "Host für Mail Relay"
+
+#: admin/systems/services/kolab/servkolab.tpl:231
+msgid "Accept mail from other domains over non-authenticated SMTP"
+msgstr "Akzeptiere Mails von anderen Domänen über nicht-authentifiziertes SMTP"

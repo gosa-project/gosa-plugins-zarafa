@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 15:58+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,28 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: personal/connectivity/squid/proxy.tpl:37
+#: personal/connectivity/squid/class_proxyAccount.inc:323
+msgid "Proxy account"
+msgstr "Konto Proxy"
+
+#: personal/connectivity/squid/proxy.tpl:48
+msgid "Filter unwanted content (i.e. pornographic or violence related)"
+msgstr "Filtruj niechcianą zawartość (n.p. pornografia, przemoc)"
+
+#: personal/connectivity/squid/proxy.tpl:58
+msgid "Limit proxy access to working time"
+msgstr "Ogranicz dostęp do proxy do czasu pracu"
+
+#: personal/connectivity/squid/proxy.tpl:100
+#: personal/connectivity/squid/class_proxyAccount.inc:334
+msgid "Restrict proxy usage by quota"
+msgstr "Ogranicz użycie proxy mechanizmami quota"
+
+#: personal/connectivity/squid/proxy.tpl:115
+msgid "per"
+msgstr "na"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
 #: personal/connectivity/squid/class_proxyAccount.inc:322
@@ -62,11 +84,6 @@ msgid "Quota Setting"
 msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:323
-#: personal/connectivity/squid/proxy.tpl:37
-msgid "Proxy account"
-msgstr "Konto Proxy"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:323
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Konto połączeń"
@@ -82,23 +99,6 @@ msgstr "Filtruj niechcianą zawartość"
 #: personal/connectivity/squid/class_proxyAccount.inc:333
 msgid "Limit proxy access"
 msgstr "Ogranicz dostęp do proxy"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:334
-#: personal/connectivity/squid/proxy.tpl:100
-msgid "Restrict proxy usage by quota"
-msgstr "Ogranicz użycie proxy mechanizmami quota"
-
-#: personal/connectivity/squid/proxy.tpl:48
-msgid "Filter unwanted content (i.e. pornographic or violence related)"
-msgstr "Filtruj niechcianą zawartość (n.p. pornografia, przemoc)"
-
-#: personal/connectivity/squid/proxy.tpl:58
-msgid "Limit proxy access to working time"
-msgstr "Ogranicz dostęp do proxy do czasu pracu"
-
-#: personal/connectivity/squid/proxy.tpl:115
-msgid "per"
-msgstr "na"
 
 #, fuzzy
 #~ msgid "Removing of user/proxy account with dn '%s' failed."

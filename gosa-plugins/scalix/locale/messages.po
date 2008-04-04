@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:13+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:465
+msgid "Scalix email addresses"
 msgstr ""
 
-#: personal/scalix/main.inc:125
-msgid "Scalix settings"
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+msgid "List of scalix email addresses"
 msgstr ""
 
 #: personal/scalix/generic.tpl:4
@@ -38,7 +39,7 @@ msgstr ""
 
 #: personal/scalix/generic.tpl:19
 msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 
 #: personal/scalix/generic.tpl:26
@@ -103,15 +104,6 @@ msgstr ""
 
 #: personal/scalix/generic.tpl:85
 msgid "Notify User"
-msgstr ""
-
-#: personal/scalix/generic.tpl:98 personal/scalix/class_scalixAccount.inc:465
-#: personal/scalix/paste_generic.tpl:4
-msgid "Scalix email addresses"
-msgstr ""
-
-#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
-msgid "List of scalix email addresses"
 msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:16
@@ -238,4 +230,12 @@ msgstr ""
 
 #: personal/scalix/class_scalixAccount.inc:464
 msgid "Notify user"
+msgstr ""
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+
+#: personal/scalix/main.inc:125
+msgid "Scalix settings"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:18+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,36 @@ msgstr ""
 #: admin/systems/services/kerberos/class_goKrbServer.inc:67
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+msgid "Kerberos service"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+msgid "Kerberos service (kadmin access informations)"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+msgid "Admin"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+msgid "Realm"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Kerberos access information"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
@@ -74,34 +104,4 @@ msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:346
 msgid "Valid password"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
-msgid "Kerberos service"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
-msgid "Kerberos service (kadmin access informations)"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-msgid "Admin"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
-msgid "Realm"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Kerberos access information"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
 msgstr ""

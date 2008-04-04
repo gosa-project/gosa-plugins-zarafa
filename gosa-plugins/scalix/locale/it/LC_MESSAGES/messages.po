@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:13+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,16 +15,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
-"questo dialogo"
-
-#: personal/scalix/main.inc:125
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:465
 #, fuzzy
-msgid "Scalix settings"
-msgstr "Opzioni di posta dell'identità"
+msgid "Scalix email addresses"
+msgstr "Indirizzo principale"
+
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+#, fuzzy
+msgid "List of scalix email addresses"
+msgstr "Lista degli indirizzi alternativi"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: personal/scalix/generic.tpl:19
 msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 
 #: personal/scalix/generic.tpl:26
@@ -113,17 +113,6 @@ msgstr ""
 #: personal/scalix/generic.tpl:85
 msgid "Notify User"
 msgstr ""
-
-#: personal/scalix/generic.tpl:98 personal/scalix/class_scalixAccount.inc:465
-#: personal/scalix/paste_generic.tpl:4
-#, fuzzy
-msgid "Scalix email addresses"
-msgstr "Indirizzo principale"
-
-#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
-#, fuzzy
-msgid "List of scalix email addresses"
-msgstr "Lista degli indirizzi alternativi"
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -269,6 +258,17 @@ msgstr ""
 #, fuzzy
 msgid "Notify user"
 msgstr "Paese"
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
+"questo dialogo"
+
+#: personal/scalix/main.inc:125
+#, fuzzy
+msgid "Scalix settings"
+msgstr "Opzioni di posta dell'identità"
 
 #~ msgid "Add"
 #~ msgstr "Aggiungi"

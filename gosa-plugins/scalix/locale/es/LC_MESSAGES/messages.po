@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:13+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,14 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Pulse en el botón - Editar - para cambiar la información en esta ventana"
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:465
+msgid "Scalix email addresses"
+msgstr "Direcciones de correo electrónico de Scalix"
 
-#: personal/scalix/main.inc:125
-msgid "Scalix settings"
-msgstr "Configuración de Scalix"
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+#, fuzzy
+msgid "List of scalix email addresses"
+msgstr "Direcciones de correo electrónico de Scalix"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -42,7 +43,7 @@ msgstr "Tipo de buzón de correo"
 
 #: personal/scalix/generic.tpl:19
 msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 
 #: personal/scalix/generic.tpl:26
@@ -117,16 +118,6 @@ msgstr ""
 #, fuzzy
 msgid "Notify User"
 msgstr "Notificar al usuario"
-
-#: personal/scalix/generic.tpl:98 personal/scalix/class_scalixAccount.inc:465
-#: personal/scalix/paste_generic.tpl:4
-msgid "Scalix email addresses"
-msgstr "Direcciones de correo electrónico de Scalix"
-
-#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
-#, fuzzy
-msgid "List of scalix email addresses"
-msgstr "Direcciones de correo electrónico de Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -266,6 +257,15 @@ msgstr "Limitaciones de entrada"
 #: personal/scalix/class_scalixAccount.inc:464
 msgid "Notify user"
 msgstr "Notificar al usuario"
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Pulse en el botón - Editar - para cambiar la información en esta ventana"
+
+#: personal/scalix/main.inc:125
+msgid "Scalix settings"
+msgstr "Configuración de Scalix"
 
 #~ msgid "Add"
 #~ msgstr "Añadir"

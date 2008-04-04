@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:12+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,46 +14,109 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
+#: personal/nagios/class_nagiosAccount.inc:18
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
+msgid "Nagios"
+msgstr "Nagios"
+
+#: personal/nagios/class_nagiosAccount.inc:19
+msgid "This does something"
+msgstr "To robi coś"
+
+#: personal/nagios/class_nagiosAccount.inc:173
+#: personal/nagios/class_nagiosAccount.inc:258
+msgid "LDAP error"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
+msgid "Alias"
+msgstr "Alias"
+
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:274
+msgid "Nagios account settings"
+msgstr "Ustawienia konta nagios"
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/nagios/class_nagiosAccount.inc:285
+msgid "Pager number"
+msgstr "Numer pagera"
+
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
+msgid "Mail address"
+msgstr "Adres email"
+
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
+msgid "Host notification commands"
+msgstr "Polecenia powiadamiania o hoście"
+
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
+msgid "Host notification options"
+msgstr "Opcje powiadamiania o hoście"
+
+#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
+msgid "Host notification period"
+msgstr "Okres powiadamiania o hoście"
+
+#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
+msgid "Service notification commands"
+msgstr "Polecenia powiadamiania o usłudze"
+
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
+msgid "Service notification options"
+msgstr "Opcje powiadamiania o usłudze"
+
+#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
+msgid "Service notification period"
+msgstr "Okres powiadamiania o usłudze"
+
+#: personal/nagios/class_nagiosAccount.inc:296
+msgid "View all hosts"
+msgstr "Pokaż wszystkie hosty"
+
+#: personal/nagios/class_nagiosAccount.inc:297
+msgid "View all services"
+msgstr "Pokaż wszystkie usługi"
+
+#: personal/nagios/class_nagiosAccount.inc:299
+msgid "Trigger system commands"
+msgstr "Przełącz polecenia systemowe"
+
+#: personal/nagios/class_nagiosAccount.inc:300
+msgid "Trigger all host commands"
+msgstr "Przełącz wszystkie polecenia hosta"
+
+#: personal/nagios/class_nagiosAccount.inc:301
+msgid "Trigger all service commands"
+msgstr "Przełącz wszystkie polecenia usługi"
+
+#: personal/nagios/class_nagiosAccount.inc:303
+msgid "View configuration information"
+msgstr "Pokaż konfigurację"
+
+#: personal/nagios/class_nagiosAccount.inc:304
+msgid "View system informations"
+msgstr "Pokaż informacje o systemie"
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr "Konto Nagios"
 
-#: personal/nagios/nagios.tpl:8 personal/nagios/class_nagiosAccount.inc:194
-#: personal/nagios/class_nagiosAccount.inc:284
-msgid "Alias"
-msgstr "Alias"
-
-#: personal/nagios/nagios.tpl:17 personal/nagios/class_nagiosAccount.inc:286
-msgid "Mail address"
-msgstr "Adres email"
-
-#: personal/nagios/nagios.tpl:27 personal/nagios/class_nagiosAccount.inc:290
-msgid "Host notification period"
-msgstr "Okres powiadamiania o hoście"
-
-#: personal/nagios/nagios.tpl:40 personal/nagios/class_nagiosAccount.inc:294
-msgid "Service notification period"
-msgstr "Okres powiadamiania o usłudze"
-
-#: personal/nagios/nagios.tpl:53 personal/nagios/class_nagiosAccount.inc:293
-msgid "Service notification options"
-msgstr "Opcje powiadamiania o usłudze"
-
-#: personal/nagios/nagios.tpl:66 personal/nagios/class_nagiosAccount.inc:289
-msgid "Host notification options"
-msgstr "Opcje powiadamiania o hoście"
-
 #: personal/nagios/nagios.tpl:79
 msgid "Pager"
 msgstr "Pager"
-
-#: personal/nagios/nagios.tpl:90 personal/nagios/class_nagiosAccount.inc:292
-msgid "Service notification commands"
-msgstr "Polecenia powiadamiania o usłudze"
-
-#: personal/nagios/nagios.tpl:100 personal/nagios/class_nagiosAccount.inc:288
-msgid "Host notification commands"
-msgstr "Polecenia powiadamiania o hoście"
 
 #: personal/nagios/nagios.tpl:115
 msgid "Nagios authentification"
@@ -90,69 +153,6 @@ msgstr "przełącz wszystkie polecenia hosta"
 #: personal/nagios/main.inc:125
 msgid "Nagios settings"
 msgstr "Ustawienia nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:105
-#: personal/nagios/class_nagiosAccount.inc:114
-#: personal/nagios/class_nagiosAccount.inc:116
-#: personal/nagios/class_nagiosAccount.inc:273
-msgid "Nagios"
-msgstr "Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:19
-msgid "This does something"
-msgstr "To robi coś"
-
-#: personal/nagios/class_nagiosAccount.inc:173
-#: personal/nagios/class_nagiosAccount.inc:258
-msgid "LDAP error"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:197
-#: personal/nagios/class_nagiosAccount.inc:201
-#: personal/nagios/class_nagiosAccount.inc:205
-msgid "Mail"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:274
-msgid "Nagios account settings"
-msgstr "Ustawienia konta nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:278
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/nagios/class_nagiosAccount.inc:285
-msgid "Pager number"
-msgstr "Numer pagera"
-
-#: personal/nagios/class_nagiosAccount.inc:296
-msgid "View all hosts"
-msgstr "Pokaż wszystkie hosty"
-
-#: personal/nagios/class_nagiosAccount.inc:297
-msgid "View all services"
-msgstr "Pokaż wszystkie usługi"
-
-#: personal/nagios/class_nagiosAccount.inc:299
-msgid "Trigger system commands"
-msgstr "Przełącz polecenia systemowe"
-
-#: personal/nagios/class_nagiosAccount.inc:300
-msgid "Trigger all host commands"
-msgstr "Przełącz wszystkie polecenia hosta"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-msgid "Trigger all service commands"
-msgstr "Przełącz wszystkie polecenia usługi"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-msgid "View configuration information"
-msgstr "Pokaż konfigurację"
-
-#: personal/nagios/class_nagiosAccount.inc:304
-msgid "View system informations"
-msgstr "Pokaż informacje o systemie"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "To konto nie posiada rozszerzenia nagios"

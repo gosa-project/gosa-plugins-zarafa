@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:18+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2008-04-03 14:19+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -38,48 +38,6 @@ msgstr "Administrator"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Passwort"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:123
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:179
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:191
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:227
-msgid "Heimdal"
-msgstr "Heimdal"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#, php-format
-msgid ""
-"Error loading heimdal configuration, more than one configuration entry was "
-"found for '%s'."
-msgstr "Fehler beim Laden der Heimdal-Konfiguration, es wurde mehr als ein Konfigurationseintrag für '%s' gefunden."
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:153
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:414
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
-msgid "Max life"
-msgstr "Max Gültigkeit"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
-msgid "Max renew"
-msgstr "Max Erneuerung"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
-msgid "Valid start"
-msgstr "Gültigkeitsbeginn"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:343
-msgid "Valid end"
-msgstr "Gültigkeitsende"
-
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:346
-msgid "Valid password"
-msgstr "Gültigkeitspasswort"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:29
 msgid "Kerberos service"
@@ -111,3 +69,46 @@ msgstr "Kerberos Zugangs-Information"
 msgid "Services"
 msgstr "Dienste"
 
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:123
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:179
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:191
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:227
+msgid "Heimdal"
+msgstr "Heimdal"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
+#, php-format
+msgid ""
+"Error loading heimdal configuration, more than one configuration entry was "
+"found for '%s'."
+msgstr ""
+"Fehler beim Laden der Heimdal-Konfiguration, es wurde mehr als ein "
+"Konfigurationseintrag für '%s' gefunden."
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:153
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:414
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
+msgid "Max life"
+msgstr "Max Gültigkeit"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
+msgid "Max renew"
+msgstr "Max Erneuerung"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
+msgid "Valid start"
+msgstr "Gültigkeitsbeginn"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:343
+msgid "Valid end"
+msgstr "Gültigkeitsende"
+
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:346
+msgid "Valid password"
+msgstr "Gültigkeitspasswort"

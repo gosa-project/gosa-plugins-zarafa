@@ -11,13 +11,167 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:01+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:5
+#: personal/connectivity/kolab/class_kolabAccount.inc:512
+#: admin/systems/services/kolab/class_servKolab.inc:379
+msgid "Kolab"
+msgstr "Kolab"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:6
+msgid "This does something"
+msgstr "Dit doet iets"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+#: admin/systems/services/kolab/class_servKolab.inc:184
+msgid "Error"
+msgstr "Fout"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:171
+msgid "Mail address"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:179
+msgid "Primary mail address"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:204
+msgid "Always accept"
+msgstr "Altijd accepteren"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:205
+msgid "Always reject"
+msgstr "Altijd afwijzen"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:206
+msgid "Reject if conflicts"
+msgstr "Afwijzen bij conflicten"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:207
+msgid "Manual if conflicts"
+msgstr "Handmatig bij conflicten"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:208
+msgid "Manual"
+msgstr "Handmatig"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:256
+msgid "Anonymous"
+msgstr "Anoniem"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:339
+#: personal/connectivity/kolab/class_kolabAccount.inc:476
+#: admin/systems/services/kolab/class_servKolab.inc:194
+#: admin/systems/services/kolab/class_servKolab.inc:210
+#: admin/systems/services/kolab/class_servKolab.inc:352
+msgid "LDAP error"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:351
+#: personal/connectivity/kolab/class_kolabAccount.inc:354
+#, fuzzy
+msgid "Free Busy future"
+msgstr "Free Busy informatie"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:359
+#: personal/connectivity/kolab/class_kolabAccount.inc:362
+#, fuzzy
+msgid "Free Busy url"
+msgstr "Free Busy informatie"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:376
+#, php-format
+msgid "The invitation policy entry for address '%s' is not valid."
+msgstr "Het uitnodigingsbeleid invoer voor adres '%s' is niet geldig"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:384
+#, php-format
+msgid "There's no mail user with address '%s' for your invitation policy!"
+msgstr "Er is geen E-mail gebruiker met adres '%s' voor uw uitwisselingsbeleid"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+#, fuzzy
+msgid "Kolab account settings"
+msgstr "Kolab account"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:513
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Verbindingen"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:517
+msgid "My account"
+msgstr "Mijn account"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:522
+msgid "Free busy future"
+msgstr ""
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:523
+#, fuzzy
+msgid "Mail size restriction"
+msgstr "Mail distributielijst"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:524
+#, fuzzy
+msgid "Free busy information"
+msgstr "Free Busy informatie"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:525
+#: personal/connectivity/kolab/kolab.tpl:51
+#: personal/connectivity/kolab/kolab.tpl:63
+msgid "Delegations"
+msgstr "Delegaties"
+
+#: personal/connectivity/kolab/class_kolabAccount.inc:526
+#: personal/connectivity/kolab/kolab.tpl:119
+msgid "Invitation policy"
+msgstr "Uitnodigingsbeleid"
+
+#: personal/connectivity/kolab/kolab.tpl:3
+#: personal/connectivity/kolab/kolab.tpl:43
+msgid "Kolab account"
+msgstr "Kolab account"
+
+#: personal/connectivity/kolab/kolab.tpl:4
+msgid ""
+"The kolab account is currently disabled. It's features can be adjusted if "
+"you add a mail account."
+msgstr ""
+"Het kolab account is uitgeschakeld. U kunt opties aanpassen indien u een e-"
+"mail account toevoegd."
+
+#: personal/connectivity/kolab/kolab.tpl:83
+msgid "Mail size"
+msgstr "E-mail grootte"
+
+#: personal/connectivity/kolab/kolab.tpl:87
+msgid "No mail size restriction for this account"
+msgstr "Geen E-mail grootte restrictie voor dit account"
+
+#: personal/connectivity/kolab/kolab.tpl:95
+msgid "Free Busy information"
+msgstr "Free Busy informatie"
+
+#: personal/connectivity/kolab/kolab.tpl:98
+msgid "URL"
+msgstr "URL"
+
+#: personal/connectivity/kolab/kolab.tpl:107
+msgid "Future"
+msgstr "Toekomstig"
+
+#: personal/connectivity/kolab/kolab.tpl:112
+msgid "days"
+msgstr "dagen"
 
 #: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
@@ -42,21 +196,7 @@ msgid "Kolab account does not exist!"
 msgstr "Kolab account"
 
 #: admin/systems/services/kolab/class_servKolab.inc:184
-#: personal/connectivity/kolab/class_kolabAccount.inc:171
-#: personal/connectivity/kolab/class_kolabAccount.inc:179
-msgid "Error"
-msgstr "Fout"
-
-#: admin/systems/services/kolab/class_servKolab.inc:184
 msgid "hostname"
-msgstr ""
-
-#: admin/systems/services/kolab/class_servKolab.inc:194
-#: admin/systems/services/kolab/class_servKolab.inc:210
-#: admin/systems/services/kolab/class_servKolab.inc:352
-#: personal/connectivity/kolab/class_kolabAccount.inc:339
-#: personal/connectivity/kolab/class_kolabAccount.inc:476
-msgid "LDAP error"
 msgstr ""
 
 #: admin/systems/services/kolab/class_servKolab.inc:263
@@ -84,12 +224,6 @@ msgstr "SMTP toegestane netwerken"
 #, fuzzy
 msgid "Kolab mail service"
 msgstr "Voeg Kolab service toe"
-
-#: admin/systems/services/kolab/class_servKolab.inc:379
-#: personal/connectivity/kolab/class_kolabAccount.inc:5
-#: personal/connectivity/kolab/class_kolabAccount.inc:512
-msgid "Kolab"
-msgstr "Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:380
 #: admin/systems/services/kolab/servkolab.tpl:39
@@ -232,140 +366,6 @@ msgstr "Host die gebruikt wordt om E-mails te relayen"
 #: admin/systems/services/kolab/servkolab.tpl:231
 msgid "Accept mail from other domains over non-authenticated SMTP"
 msgstr "Accepteer E-mail van andere domeinen over niet geauthenticeerde SMTP"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:6
-msgid "This does something"
-msgstr "Dit doet iets"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:171
-msgid "Mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:179
-msgid "Primary mail address"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:204
-msgid "Always accept"
-msgstr "Altijd accepteren"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:205
-msgid "Always reject"
-msgstr "Altijd afwijzen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:206
-msgid "Reject if conflicts"
-msgstr "Afwijzen bij conflicten"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:207
-msgid "Manual if conflicts"
-msgstr "Handmatig bij conflicten"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:208
-msgid "Manual"
-msgstr "Handmatig"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:256
-msgid "Anonymous"
-msgstr "Anoniem"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:351
-#: personal/connectivity/kolab/class_kolabAccount.inc:354
-#, fuzzy
-msgid "Free Busy future"
-msgstr "Free Busy informatie"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:359
-#: personal/connectivity/kolab/class_kolabAccount.inc:362
-#, fuzzy
-msgid "Free Busy url"
-msgstr "Free Busy informatie"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:376
-#, php-format
-msgid "The invitation policy entry for address '%s' is not valid."
-msgstr "Het uitnodigingsbeleid invoer voor adres '%s' is niet geldig"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:384
-#, php-format
-msgid "There's no mail user with address '%s' for your invitation policy!"
-msgstr "Er is geen E-mail gebruiker met adres '%s' voor uw uitwisselingsbeleid"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:513
-#, fuzzy
-msgid "Kolab account settings"
-msgstr "Kolab account"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:513
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Verbindingen"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:517
-msgid "My account"
-msgstr "Mijn account"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:522
-msgid "Free busy future"
-msgstr ""
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:523
-#, fuzzy
-msgid "Mail size restriction"
-msgstr "Mail distributielijst"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:524
-#, fuzzy
-msgid "Free busy information"
-msgstr "Free Busy informatie"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:525
-#: personal/connectivity/kolab/kolab.tpl:51
-#: personal/connectivity/kolab/kolab.tpl:63
-msgid "Delegations"
-msgstr "Delegaties"
-
-#: personal/connectivity/kolab/class_kolabAccount.inc:526
-#: personal/connectivity/kolab/kolab.tpl:119
-msgid "Invitation policy"
-msgstr "Uitnodigingsbeleid"
-
-#: personal/connectivity/kolab/kolab.tpl:3
-#: personal/connectivity/kolab/kolab.tpl:43
-msgid "Kolab account"
-msgstr "Kolab account"
-
-#: personal/connectivity/kolab/kolab.tpl:4
-msgid ""
-"The kolab account is currently disabled. It's features can be adjusted if "
-"you add a mail account."
-msgstr ""
-"Het kolab account is uitgeschakeld. U kunt opties aanpassen indien u een e-"
-"mail account toevoegd."
-
-#: personal/connectivity/kolab/kolab.tpl:83
-msgid "Mail size"
-msgstr "E-mail grootte"
-
-#: personal/connectivity/kolab/kolab.tpl:87
-msgid "No mail size restriction for this account"
-msgstr "Geen E-mail grootte restrictie voor dit account"
-
-#: personal/connectivity/kolab/kolab.tpl:95
-msgid "Free Busy information"
-msgstr "Free Busy informatie"
-
-#: personal/connectivity/kolab/kolab.tpl:98
-msgid "URL"
-msgstr "URL"
-
-#: personal/connectivity/kolab/kolab.tpl:107
-msgid "Future"
-msgstr "Toekomstig"
-
-#: personal/connectivity/kolab/kolab.tpl:112
-msgid "days"
-msgstr "dagen"
 
 #~ msgid "Add"
 #~ msgstr "Toevoegen"

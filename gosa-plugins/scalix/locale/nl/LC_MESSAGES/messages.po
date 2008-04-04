@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:13+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,16 +19,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
-"veranderen"
-
-#: personal/scalix/main.inc:125
+#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:465
 #, fuzzy
-msgid "Scalix settings"
-msgstr "E-mail instellingen"
+msgid "Scalix email addresses"
+msgstr "E-mail adres"
+
+#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+#, fuzzy
+msgid "List of scalix email addresses"
+msgstr "Lijst met alternatieve E-mail adressen"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -45,7 +45,7 @@ msgstr "E-mail grootte"
 
 #: personal/scalix/generic.tpl:19
 msgid ""
-"Limited users con not make use of the group calendar functionality in Scalix"
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 
 #: personal/scalix/generic.tpl:26
@@ -118,17 +118,6 @@ msgstr ""
 #: personal/scalix/generic.tpl:85
 msgid "Notify User"
 msgstr ""
-
-#: personal/scalix/generic.tpl:98 personal/scalix/class_scalixAccount.inc:465
-#: personal/scalix/paste_generic.tpl:4
-#, fuzzy
-msgid "Scalix email addresses"
-msgstr "E-mail adres"
-
-#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
-#, fuzzy
-msgid "List of scalix email addresses"
-msgstr "Lijst met alternatieve E-mail adressen"
 
 #: personal/scalix/class_scalixAccount.inc:16
 #, fuzzy
@@ -278,6 +267,17 @@ msgstr ""
 #, fuzzy
 msgid "Notify user"
 msgstr "Tel het aantal gebruikers"
+
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
+"veranderen"
+
+#: personal/scalix/main.inc:125
+#, fuzzy
+msgid "Scalix settings"
+msgstr "E-mail instellingen"
 
 #~ msgid "Add"
 #~ msgstr "Toevoegen"

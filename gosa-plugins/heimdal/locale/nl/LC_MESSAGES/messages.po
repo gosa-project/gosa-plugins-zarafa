@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:18+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -36,6 +36,41 @@ msgstr "Beheerder"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Wachtwoord"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos server"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Kerberos kadmin toegang"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+#, fuzzy
+msgid "Admin"
+msgstr "Beheerders"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+#, fuzzy
+msgid "Realm"
+msgstr "RAM"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Kerberos kadmin toegang"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
+msgstr "Services"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
@@ -80,41 +115,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "Oud wachtwoord"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos server"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Kerberos kadmin toegang"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-#, fuzzy
-msgid "Admin"
-msgstr "Beheerders"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
-#, fuzzy
-msgid "Realm"
-msgstr "RAM"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Kerberos kadmin toegang"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
-msgstr "Services"
 
 #~ msgid "Save"
 #~ msgstr "Opslaan"

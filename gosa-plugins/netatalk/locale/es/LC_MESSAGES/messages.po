@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:23+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,19 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/netatalk/main.inc:113
-msgid "Netatalk settings"
-msgstr "Parámetros de Netatalk"
-
-#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376
-msgid "Share"
-msgstr "Recurso compartido"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Ruta"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:366
@@ -56,6 +43,11 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
+#: personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Recurso compartido"
+
 #: personal/netatalk/class_netatalk.inc:287
 #: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
@@ -68,6 +60,14 @@ msgstr "Mi cuenta"
 #: personal/netatalk/class_netatalk.inc:375
 msgid "User home path"
 msgstr "Ruta del directorio del usuario"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Ruta"
+
+#: personal/netatalk/main.inc:113
+msgid "Netatalk settings"
+msgstr "Parámetros de Netatalk"
 
 #~ msgid "This account has no netatalk extensions."
 #~ msgstr "Esta cuenta no tiene extensión Netatalk"

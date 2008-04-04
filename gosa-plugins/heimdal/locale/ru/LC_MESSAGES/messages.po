@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:18+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -33,6 +33,41 @@ msgstr "Пользователи домена"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "Пароль"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+#, fuzzy
+msgid "Admin"
+msgstr "DN администратора"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+#, fuzzy
+msgid "Realm"
+msgstr "Имя сервера"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
+msgstr "Сервисы"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
@@ -77,41 +112,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "Пароль"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Личная информация"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-#, fuzzy
-msgid "Admin"
-msgstr "DN администратора"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
-#, fuzzy
-msgid "Realm"
-msgstr "Имя сервера"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Личная информация"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
-msgstr "Сервисы"
 
 #~ msgid "Save"
 #~ msgstr "Сохранить"

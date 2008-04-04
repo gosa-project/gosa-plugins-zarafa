@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 14:18+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -33,6 +33,41 @@ msgstr "管理员"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:102
 msgid "Password"
 msgstr "口令"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos 服务器"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Kerberos kadmin 访问"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:70
+#: admin/systems/services/kerberos/class_goKrbServer.inc:101
+#, fuzzy
+msgid "Admin"
+msgstr "管理员"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:73
+#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+#, fuzzy
+msgid "Realm"
+msgstr "Ram"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "个人信息"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+msgid "Services"
+msgstr "服务"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
@@ -77,41 +112,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "旧口令"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos 服务器"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Kerberos kadmin 访问"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-#, fuzzy
-msgid "Admin"
-msgstr "管理员"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
-#, fuzzy
-msgid "Realm"
-msgstr "Ram"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "个人信息"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
-msgid "Services"
-msgstr "服务"
 
 #~ msgid "Save"
 #~ msgstr "保存"

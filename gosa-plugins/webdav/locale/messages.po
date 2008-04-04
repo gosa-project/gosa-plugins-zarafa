@@ -8,13 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 16:04+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+msgid "WebDAV account"
+msgstr ""
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
 #: personal/connectivity/webdav/class_webdavAccount.inc:159
@@ -28,11 +33,6 @@ msgstr ""
 #: personal/connectivity/webdav/class_webdavAccount.inc:84
 #: personal/connectivity/webdav/class_webdavAccount.inc:140
 msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-#: personal/connectivity/webdav/webdav.tpl:5
-msgid "WebDAV account"
 msgstr ""
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:160

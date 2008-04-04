@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-03 15:58+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,6 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/squid/proxy.tpl:37
+#: personal/connectivity/squid/class_proxyAccount.inc:323
+msgid "Proxy account"
+msgstr "Cuenta Proxy"
+
+#: personal/connectivity/squid/proxy.tpl:48
+msgid "Filter unwanted content (i.e. pornographic or violence related)"
+msgstr ""
+
+#: personal/connectivity/squid/proxy.tpl:58
+msgid "Limit proxy access to working time"
+msgstr ""
+
+#: personal/connectivity/squid/proxy.tpl:100
+#: personal/connectivity/squid/class_proxyAccount.inc:334
+msgid "Restrict proxy usage by quota"
+msgstr "Restringir el uso del proxy con cuotas"
+
+#: personal/connectivity/squid/proxy.tpl:115
+msgid "per"
+msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
 #: personal/connectivity/squid/class_proxyAccount.inc:322
@@ -65,11 +87,6 @@ msgid "Quota Setting"
 msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:323
-#: personal/connectivity/squid/proxy.tpl:37
-msgid "Proxy account"
-msgstr "Cuenta Proxy"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
@@ -84,23 +101,6 @@ msgstr "Filtrar contenido no requerido"
 #: personal/connectivity/squid/class_proxyAccount.inc:333
 msgid "Limit proxy access"
 msgstr "Limitar acceso al Proxy"
-
-#: personal/connectivity/squid/class_proxyAccount.inc:334
-#: personal/connectivity/squid/proxy.tpl:100
-msgid "Restrict proxy usage by quota"
-msgstr "Restringir el uso del proxy con cuotas"
-
-#: personal/connectivity/squid/proxy.tpl:48
-msgid "Filter unwanted content (i.e. pornographic or violence related)"
-msgstr ""
-
-#: personal/connectivity/squid/proxy.tpl:58
-msgid "Limit proxy access to working time"
-msgstr ""
-
-#: personal/connectivity/squid/proxy.tpl:115
-msgid "per"
-msgstr ""
 
 #~ msgid "Removing of user/proxy account with dn '%s' failed."
 #~ msgstr "Se ha fallado al eliminar la cuenta de usuario/Proxy con dn '%s'."

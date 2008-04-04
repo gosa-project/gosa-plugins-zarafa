@@ -1,24 +1,25 @@
-# translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# translation of messages.po to
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-14 13:40+0100\n"
-"PO-Revision-Date: 2007-06-18 15:08+0200\n"
+"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"PO-Revision-Date: 2008-04-04 09:30+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
@@ -42,35 +43,30 @@ msgstr "Fehler"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy
 msgid "Open-Xchange database"
-msgstr "Open-Xchange Konto"
+msgstr "Open-Xchange Datenbank"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, fuzzy
 msgid "Configuration error"
-msgstr "Konfigurationsdatei"
+msgstr "Konfigurations-Fehler"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP-Fehler"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#, fuzzy
 msgid "Open-Xchange account name"
-msgstr "Open-Xchange Konto"
+msgstr "Open-Xchange Konto-Name"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-#, fuzzy
 msgid "Cannot save Open-Xchange account!"
-msgstr "Open-Xchange Konto"
+msgstr "Kann Open-Xchange Konto nicht speichern!"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Open-Xchange Konto-Einstellungen"
 
@@ -135,25 +131,3 @@ msgstr "Benutzerinformation"
 msgid "User Timezone"
 msgstr "Zeitzone des Benutzers"
 
-#, fuzzy
-#~ msgid "Cannot connect to %s database!"
-#~ msgstr "Die SQL-Datenbank kann nicht erreicht werden!"
-
-#, fuzzy
-#~ msgid "%s database configuration is missing!"
-#~ msgstr "Konfiguration der Fax-Datenbank"
-
-#~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
-#~ msgstr ""
-#~ "Entfernen von Benutzer/oxchange-Adressbuchkonto mit dn '%s' "
-#~ "fehlgeschlagen."
-
-#~ msgid "Saving of user/oxchange account with dn '%s' failed."
-#~ msgstr "Speichern von Benutzer/oxchange-Konto mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Creating of user/oxchange account with dn '%s' failed."
-#~ msgstr "Erstellen von Benutzer/oxchange-Konto mit dn '%s' fehlgeschlagen."
-
-#, fuzzy
-#~ msgid "Open-Xchange account name is invalid!"
-#~ msgstr "Open-Xchange Konto"
