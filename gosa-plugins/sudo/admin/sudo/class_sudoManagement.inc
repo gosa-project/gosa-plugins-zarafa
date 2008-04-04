@@ -35,8 +35,7 @@ class sudoManagement extends plugin
   private $sudotabs       = NULL;
   private $base           = "";
  
-
-   
+  /*! \brief */ 
   public function __construct(&$config, &$ui)
   {
     /* Save configuration for internal use */
@@ -370,6 +369,13 @@ class sudoManagement extends plugin
   {
     /* Optionally execute a command after we're done */
     $this->postcreate();
+  }
+
+  public function remove_lock()
+  {
+    if (isset($this->sudotabs->dn)){
+      del_lock ($this->sudotabs->dn);
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
