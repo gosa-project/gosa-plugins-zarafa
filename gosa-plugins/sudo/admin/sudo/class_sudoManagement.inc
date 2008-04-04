@@ -28,7 +28,7 @@
 class sudoManagement extends plugin
 {
   /* Definitions */
-  public $plHeadline     = "Sudo";
+  public $plHeadline     = "Sudo roles";
   public $plDescription  = "Manage sudo roles";
 
   private $DivListSudo    = NULL;
