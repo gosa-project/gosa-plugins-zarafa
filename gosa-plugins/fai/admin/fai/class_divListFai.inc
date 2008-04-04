@@ -327,7 +327,7 @@ class divListFai extends MultiSelectWindow
            src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
        }
 
-       if($value['FAIstate'] == "freeze"){
+       if(preg_match("/^freeze/", $value['FAIstate'])){
          $action.=  "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
                       name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          $action.=  "<img src='images/closedlock.png' alt='F' class='center'>";

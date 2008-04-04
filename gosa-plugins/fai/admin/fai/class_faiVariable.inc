@@ -233,8 +233,8 @@ class faiVariable extends plugin
     }
 
     $c_dn = $this->acl_base_for_current_object($this->dn);
-    $smarty->assign("is_createable",     preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
-    $smarty->assign("is_removeable",  preg_match("/d/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
+    $smarty->assign("is_createable",     preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && !preg_match("/freeze/", $this->FAIstate));
+    $smarty->assign("is_removeable",  preg_match("/d/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && !preg_match("/freeze/", $this->FAIstate));
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation) {
@@ -304,7 +304,7 @@ class faiVariable extends plugin
    */
   function save_object()
   {
-    if((isset($_POST['FAIvariable_posted'])) && ($this->FAIstate != "freeze") ){
+    if((isset($_POST['FAIvariable_posted'])) && !preg_match("/freeze/", $this->FAIstate) ){
       plugin::save_object();
       foreach($this->attributes as $attrs){
         if(isset($_POST[$attrs])){

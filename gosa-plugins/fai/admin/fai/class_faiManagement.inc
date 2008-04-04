@@ -229,7 +229,7 @@ class faiManagement extends plugin
         foreach($ids as $id){
           $dn = $this->objects[$id]['dn'];
           $cn = $this->objects[$id]['cn'];
-          if($this->objects[$id]['FAIstate'] != "freeze"){
+          if(!preg_match('/^freeze/', $this->objects[$id]['FAIstate'])){
             $this->dns[$id] = $dn;
           }else{
             $errors .= $cn.", ";
@@ -399,7 +399,7 @@ class faiManagement extends plugin
       $this->dialog->set_acl_base($this->dn);
 			$this->is_dialog  = true;
 
-      if($entry['FAIstate'] == "freeze"){
+      if(preg_match("/^freeze/", $entry['FAIstate'])){
         #$this->dialog->set_acl(array("*none*"))  ;    
       }
 			session::set('objectinfo',$this->dn);

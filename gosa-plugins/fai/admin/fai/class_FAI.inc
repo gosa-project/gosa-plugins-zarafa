@@ -787,7 +787,7 @@ class FAI
     $n_data['ou'] = $destination_name;
     $n_data['objectClass'] = array("top","organizationalUnit","FAIbranch");
     if(!empty($type)){
-      $n_data['FAIstate'] = $type;
+      $n_data['FAIstate'] = $type."/cow";
     }
 
     foreach($groups as $dn => $att){

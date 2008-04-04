@@ -217,7 +217,7 @@ class faiPackage extends plugin
 
     /* Delete selected package */ 
     if(isset($_POST['Delpkg']) && $this->acl_is_writeable("FAIpackage")){
-      if($this->FAIstate != "freeze"){
+      if(!preg_match("/^freeze/", $this->FAIstate)){
         foreach($_POST['usedPackages'] as $del){
           if(isset($this->usedPackages[$del])){
             unset($this->usedPackages[$del]);
@@ -234,7 +234,7 @@ class faiPackage extends plugin
 
     /* attach new packages */
     if(isset($_POST['SaveSubObject'])) {
-      if($this->FAIstate != "freeze"){
+      if(!preg_match("/^freeze/", $this->FAIstate)){
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msgs){
@@ -265,7 +265,7 @@ class faiPackage extends plugin
     }
 
     /* Configuration dialog open*/
-    if($this->FAIstate != "freeze" && $this->acl_is_writeable("FAIpackage")){
+    if(preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
       if((isset($_POST['Markpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages']))){
         foreach($_POST['usedPackages'] as $pkg){
           if (isset($this->usedPackages[$pkg])){
@@ -283,7 +283,7 @@ class faiPackage extends plugin
 
     /* Save Configuration */
     if(isset($_POST['SaveObjectConfig'])){
-      if($this->FAIstate != "freeze"){
+      if(!preg_match("/^freeze/", $this->FAIstate)){
         $this->ConfiguredPackages= array_merge($this->ConfiguredPackages,$this->dialog->save());
       }
       $this->dialog = false;
@@ -356,7 +356,7 @@ class faiPackage extends plugin
    */
   function save_object()
   {
-    if($this->FAIstate == "freeze") return;  
+    if(preg_match("/^freeze/", $this->FAIstate)) return;
     plugin::save_object();
   }
 

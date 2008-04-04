@@ -354,7 +354,7 @@ class faiScript extends plugin
       $act = "";
       
       /* Hide delete icon if this object is freezed */
-      if($this->FAIstate == "freeze"){
+      if(preg_match("/freeze/", $this->FAIstate)){
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
       }else{
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
@@ -471,7 +471,7 @@ class faiScript extends plugin
    */
   function save_object()
   {
-    if((isset($_POST['FAIscript_posted'])) && ($this->FAIstate != "freeze")){
+    if((isset($_POST['FAIscript_posted'])) && !preg_match("/freeze/", $this->FAIstate)){
       plugin::save_object();
       foreach($this->attributes as $attrs){
         if(isset($_POST[$attrs])){

@@ -319,7 +319,7 @@ class faiHook extends plugin
       $act = "";
 
       /* Check if this object is freezed, in this case hide the delete icon */
-      if($this->FAIstate == "freeze"){
+      if(preg_match("/^freeze/", $this->FAIstate)){
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
       }else{
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
@@ -369,7 +369,7 @@ class faiHook extends plugin
     $tmp = $this->plInfo();
       
     $c_dn = $this->acl_base_for_current_object($this->dn);
-    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiHookEntry")) && $this->FAIstate!="freeze");
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiHookEntry")) && !preg_match('/^freeze/', $this->FAIstate));
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
@@ -436,7 +436,7 @@ class faiHook extends plugin
    */
   function save_object()
   {
-    if((isset($_POST['FAIhook_posted'])) && ($this->FAIstate != "freeze")){
+    if((isset($_POST['FAIhook_posted'])) && !preg_match("/^freeze/", $this->FAIstate)){
       plugin::save_object();
       foreach($this->attributes as $attrs){
         if(isset($_POST[$attrs])){

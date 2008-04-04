@@ -149,7 +149,7 @@ class faiTemplateEntry extends plugin
   function save_object()
   {
     /* Check if form is posted and we are not freezed */
-    if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
+    if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/freeze/", $this->FAIstate)){
 
       plugin::save_object();
 

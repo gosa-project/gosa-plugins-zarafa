@@ -214,7 +214,7 @@ class faiPartitionTableEntry extends plugin
       }
 
       $disableALL = "";
-      if($this->FAIstate =="freeze"){
+      if (preg_match("/freeze/", $this->FAIstate)){
         $disableALL = " disabled ";
       }
 
@@ -356,7 +356,7 @@ class faiPartitionTableEntry extends plugin
   /* Save data to object */
   function save_object()
   {
-    if((isset($_POST['TableEntryFrameSubmitted'])) && ($this->FAIstate != "freeze") ){
+    if((isset($_POST['TableEntryFrameSubmitted'])) && !preg_match("/freeze/", $this->FAIstate) ){
       plugin::save_object();
 
       foreach($this->partitions as $key => $part){

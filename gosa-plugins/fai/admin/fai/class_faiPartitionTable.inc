@@ -193,7 +193,7 @@ class faiPartitionTable extends plugin
      */
     if(isset($_POST['SaveDisk'])){
 
-      if($this->FAIstate != "freeze"){
+      if (!preg_match("/freeze/", $this->FAIstate)){
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msg){
@@ -234,7 +234,7 @@ class faiPartitionTable extends plugin
      * Assign delete status for all its partitions      
      */
     if((isset($_POST['DelDisk']))&&(!empty($_POST['disks']))){
-      if($this->FAIstate != "freeze"){
+      if (!preg_match("/freeze/", $this->FAIstate)){
         foreach($_POST['disks'] as $disk) {
 
           if(isset($this->disks[$disk])){
@@ -376,7 +376,7 @@ class faiPartitionTable extends plugin
    */
   function save_object()
   {
-    if($this->FAIstate == "freeze") return;
+    if (preg_match("/freeze/", $this->FAIstate)) return;
     plugin::save_object();
     foreach($this->attributes as $attrs){
       if(isset($_POST[$attrs])){

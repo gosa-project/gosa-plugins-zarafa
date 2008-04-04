@@ -319,7 +319,7 @@ class faiProfile extends plugin
 
         $field1 = array("string"=> $usedClass,"attach"=>"");
         $field2 = array("string"=> $str,"attach"=>"");
-        if(($this->FAIstate != "freeze") && $this->acl_is_writeable("FAIclass")){
+        if(!preg_match("/freeze/", $this->FAIstate) && $this->acl_is_writeable("FAIclass")){
           $field3 = array("string"=> preg_replace("/%KEY%/",base64_encode($usedClass),$actions).
               preg_replace("/%s/",base64_encode($usedClass),$linkupdown),
               "attach"=>"style='border-right:none;'");

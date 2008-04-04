@@ -129,7 +129,7 @@ class faiHookEntry extends plugin
   /* Save data to object */
   function save_object()
   {
-    if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
+    if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/^freeze/", $this->FAIstate)){
       foreach($this->attributes as $attrs){
         if($this->acl_is_writeable($attrs)){
           if(isset($_POST[$attrs])){
