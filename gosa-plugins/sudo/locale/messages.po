@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 10:36+0200\n"
+"POT-Creation-Date: 2008-04-04 10:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,8 +73,8 @@ msgstr ""
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
-#: admin/sudo/class_sudoManagement.inc:31 admin/sudo/class_sudoGeneric.inc:274
-msgid "Sudo"
+#: admin/sudo/class_sudoManagement.inc:31
+msgid "Sudo roles"
 msgstr ""
 
 #: admin/sudo/class_sudoManagement.inc:32
@@ -118,6 +118,10 @@ msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:171
 msgid "Error"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:274
+msgid "Sudo"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:284 admin/sudo/generic.tpl:16

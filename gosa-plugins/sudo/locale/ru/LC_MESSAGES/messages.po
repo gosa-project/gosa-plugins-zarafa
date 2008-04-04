@@ -55,8 +55,8 @@ msgstr ""
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
-#: admin/sudo/class_sudoManagement.inc:31 admin/sudo/class_sudoGeneric.inc:274
-msgid "Sudo"
+#: admin/sudo/class_sudoManagement.inc:31
+msgid "Sudo roles"
 msgstr ""
 
 #: admin/sudo/class_sudoManagement.inc:32
@@ -100,6 +100,10 @@ msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:171
 msgid "Error"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:274
+msgid "Sudo"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:284 admin/sudo/generic.tpl:16
