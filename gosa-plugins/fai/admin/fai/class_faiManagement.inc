@@ -46,6 +46,8 @@ class faiManagement extends plugin
   var $CopyPasteHandler = FALSE;
   var $base = "";
 
+  var $no_save;
+
 	/* construction/reconstruction 
 	 */
 	function faiManagement (&$config, $ui)
@@ -76,9 +78,10 @@ class faiManagement extends plugin
 		$display 	= "";
     $s_action	= "";
 		$s_entry 	= "";
+    $no_save = FALSE;   // hide Apply / Save buttons
     
     /* If an entry was locked, these vars will be stored in a session to allow direct edit */
-    session::set('LOCK_VARS_TO_USE',array("/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/","/^menu_action/"));
+    session::set('LOCK_VARS_TO_USE',array("/^edit_freeze_entry$/","/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/","/^menu_action/"));
 
 
     /****************
@@ -112,6 +115,11 @@ class faiManagement extends plugin
 				$s_entry = preg_replace("/^entry_edit_/","",$name);
 				$s_entry = preg_replace("/_.*$/","",$s_entry);
 				$s_action = "edit";
+			}elseif(preg_match("/^entry_freeze_edit_.*/",$name)){
+				$s_entry = preg_replace("/^entry_freeze_edit_/","",$name);
+				$s_entry = preg_replace("/_.*$/","",$s_entry);
+				$s_action = "edit";
+        $no_save = TRUE;
 			}elseif(preg_match("/^entry_delete_.*/",$name)){
 				$s_entry = preg_replace("/^entry_delete_/","",$name);
 				$s_entry = preg_replace("/_.*$/","",$s_entry);
@@ -122,6 +130,12 @@ class faiManagement extends plugin
 		if(isset($_GET['edit_entry'])){
 			$s_entry = $_GET['edit_entry'];
 			$s_action = "edit";
+		}
+
+		if(isset($_GET['edit_freeze_entry'])){
+			$s_entry = $_GET['edit_freeze_entry'];
+			$s_action = "edit";
+      $no_save = TRUE;
 		}
 
     if(isset($_GET['act']) && $_GET['act'] == "freeze_branch"){
@@ -170,6 +184,11 @@ class faiManagement extends plugin
     /* handle remove from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
+    }
+
+
+    if(!empty($s_action)){
+      $this->no_save = $no_save;
     }
 
     /********************
@@ -396,11 +415,12 @@ class faiManagement extends plugin
 			add_lock ($this->dn, $this->ui->dn);
 
 			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+
       $this->dialog->set_acl_base($this->dn);
 			$this->is_dialog  = true;
 
-      if(preg_match("/^freeze/", $entry['FAIstate'])){
-        #$this->dialog->set_acl(array("*none*"))  ;    
+      if(preg_match("/^freeze/", $entry['FAIstate']) || $this->no_save){
+#        $this->dialog->set_acl_base("freezed")  ;    
       }
 			session::set('objectinfo',$this->dn);
 		}
@@ -826,11 +846,13 @@ class faiManagement extends plugin
         if((isset($obj->is_dialog) && (!$obj->is_dialog)) || (isset($obj->dialog) && (!$obj->dialog))){
 
           $display.= "<p style=\"text-align:right\">\n";
-          $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-          $display.= "&nbsp;\n";
-          if ($this->dn != "new"){
-            $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+          if(!$this->no_save){
+            $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
             $display.= "&nbsp;\n";
+            if ($this->dn != "new"){
+              $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+              $display.= "&nbsp;\n";
+            }
           }
           $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
           $display.= "</p>";
@@ -968,6 +990,17 @@ class faiManagement extends plugin
     /* Ge listed ldap objects */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
+
+    /* Get release tag 
+       If current release is freezed, all objects are freezed to.
+     */
+    $ldap->cat($base);
+    $release_attrs = $ldap->fetch();
+    $force_freezed = FALSE;
+    if(isset($release_attrs['FAIstate'][0]) && preg_match("/freeze/i",$release_attrs['FAIstate'][0])){
+      $force_freezed = TRUE;
+    }
+
     foreach($tmp as $entry){
 
       /* Get some more informations about the object */ 
@@ -1002,6 +1035,10 @@ class faiManagement extends plugin
             $obj['FAIstate'] = $this->lock_type;
           }else{
             $obj['FAIstate'] = $object['FAIstate'][0]; 
+          }
+
+          if($force_freezed){
+            $obj['FAIstate'] = "freeze";
           }
 
           $this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;

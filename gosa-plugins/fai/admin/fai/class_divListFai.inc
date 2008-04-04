@@ -275,7 +275,6 @@ class divListFai extends MultiSelectWindow
            "FAIprofile"         => array("IMG"=> "images/fai_profile.png",        "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
            "FAItemplate"        => array("IMG"=> "images/fai_template.png",       "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"));
 
-    $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
 
     /* Dynamic action col, depending on snapshot icons */
     $action_col_size = 120;
@@ -328,10 +327,12 @@ class divListFai extends MultiSelectWindow
        }
 
        if(preg_match("/^freeze/", $value['FAIstate'])){
+         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
          $action.=  "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
-                      name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+           name='entry_freeze_edit_%KEY%' title='"._("Edit class")."'>";
          $action.=  "<img src='images/closedlock.png' alt='F' class='center'>";
        }else{
+         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
          $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          if(preg_match("/d/",$value['acl'])){
