@@ -49,7 +49,7 @@ if (!$remove_lock){
 	$display= $gotomasses->execute ();
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/system.png'), _("System deployment status")).$display;
+	$display= print_header(get_template_path('images/queue.png'), _("System deployment status")).$display;
 
 	/* Store changes  in session */
 	session::set('gotomasses',$gotomasses);
