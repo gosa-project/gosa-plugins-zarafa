@@ -3,8 +3,8 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
-#    "show_log_by_mac",
-#    "show_log_by_date",
+    "show_log_by_mac",
+    "show_log_by_date",
 #    "show_log_by_date_and_mac",
 #    "get_log_by_date",
 #    "get_log_by_mac",
@@ -59,26 +59,31 @@ sub show_log_by_date {
  	# goto each mac directory
 	# select all dates which matches the parameter dates
 	my %res_h;
-	foreach my $date ($date_l) {
+	foreach my $date ( @{$date_l} ) {
 		
 		# go through all mac addresses 
 		foreach my $mac (@avail_macs) {
-			my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $mac);
+            if ($mac eq ".." || $mac eq ".") { next; }
 
+            # read all installations dates
+			my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $mac);
 			opendir(DIR, $mac_dir);
 			my @avail_dates = readdir(DIR);
 			closedir(DIR);
 			
 			# go through all dates of one mac address
 			foreach my $avail_date (@avail_dates) {
+                if ($avail_date eq ".." || $avail_date eq ".") { next; }
 				if ($avail_date =~ /$date/i) {
-					if (not exists %res)
-					push(%res_h->{$mac}, );
-				}
+                    #$mac =~ s/:/_/g;
+                    &add_content2xml_hash($out_hash, $avail_date, $mac); 
+                }
 			}
 		}
 	}
 
+    my $out_msg = &create_xml_string($out_hash);
+    return ($out_msg);
 }
 
 sub show_log_by_mac {
@@ -94,20 +99,30 @@ sub show_log_by_mac {
         return;
     }
 
+    # fetch mac directory
+    opendir(DIR, $main::client_fai_log_dir); 
+    my @avail_macs = readdir(DIR);
+    closedir(DIR);   
+
     # build out_msg
     my $out_hash = &create_xml_hash($header, $target, $source);
     foreach my $mac (@{$mac_l}) {
-        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $mac);
-        if (not -d $act_log_dir) { next; }
-        $mac =~ s/:/_/g;
+        foreach my $avail_mac ( @avail_macs ) {
+            if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
+            if ($avail_mac =~ /$mac/i) {
+                my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+                if (not -d $act_log_dir) { next; }
+                $avail_mac =~ s/:/_/g;
 
-        # fetch mac directory
-        opendir(DIR, $act_log_dir); 
-        my @install_dates = readdir(DIR);
-        closedir(DIR);   
-        foreach my $date (@install_dates) {
-            if ($date eq ".." || $date eq ".") { next; }
-            &add_content2xml_hash($out_hash, "mac_$mac", $date);
+                # fetch mac directory
+                opendir(DIR, $act_log_dir); 
+                my @install_dates = readdir(DIR);
+                closedir(DIR);   
+                foreach my $date (@install_dates) {
+                    if ($date eq ".." || $date eq ".") { next; }
+                    &add_content2xml_hash($out_hash, "mac_$avail_mac", $date);
+                }
+            }
         }
     }
 

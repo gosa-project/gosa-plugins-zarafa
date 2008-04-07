@@ -81,7 +81,8 @@ if($sock->connected()){
 
 ################
 # logHandling.pm
-#$data = "<xml> <header>gosa_show_log_by_mac</header> <target>GOSA</target> <source>GOSA</source> <mac>00:01:6c:9d:b9:fa</mac> </xml>"; 
+#$data = "<xml> <header>gosa_show_log_by_mac</header> <target>GOSA</target> <source>GOSA</source> <mac>00:01:6C:9D:B9:FA</mac> <mac>00:01:6c:9d:b9:fb</mac> </xml>"; 
+$data = "<xml> <header>gosa_show_log_by_date</header> <target>GOSA</target> <source>GOSA</source> <date>20080313</date> <date>20080323</date> </xml>"; 
 
 
 
