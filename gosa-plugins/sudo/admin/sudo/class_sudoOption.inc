@@ -20,16 +20,22 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+/*! \brief  Sudo option class.
+            Allows setting flags/options for a sudo role.
+ */
 class sudoOption extends plugin
 {
   /* Group attributes */
   var $sudoOption = array();
-
   var $attributes    = array("sudoOption");
   var $is_account = TRUE;
-  
   var $options = array();
 
+  /*! \brief  Initializes this class
+        @param  Object $config  The GOsa configuration object.
+        @param  String $dn      The object dn.
+   */
   function sudoOption(&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -174,6 +180,10 @@ class sudoOption extends plugin
     }
   }
 
+
+  /*! \brief  Create HTML output for this plugin 
+      @return String  HTML output for this plugin.
+    */
   function execute()
   {
     /* Call parent execute */
@@ -259,11 +269,16 @@ class sudoOption extends plugin
     return($smarty->fetch(get_template_path('options.tpl', TRUE)));
   }
 
+
+  /*! \brief  Removes this plugin 
+   */
   function remove_from_parent()
   {
   }
 
-  /* Save data to object */
+
+  /*! \brief  Saves all relevant HTML post values for this plugin 
+   */
   function save_object()
   {
     plugin::save_object();
@@ -336,7 +351,9 @@ class sudoOption extends plugin
     }
   }
 
-  /* Save to LDAP */
+
+  /*! \brief  Save changes to ldap 
+   */
   function save()
   {
     plugin::save(); 
@@ -417,6 +434,9 @@ class sudoOption extends plugin
     $ldap->modify($this->attrs);;
   }
 
+  
+  /*! \brief  Checks input validity
+   */
   function check()
   {
     $message = plugin::check();

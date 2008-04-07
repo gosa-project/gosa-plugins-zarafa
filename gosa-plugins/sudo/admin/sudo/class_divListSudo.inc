@@ -20,6 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+/*! \brief  The sudo management class.
+            This class lists all configured sudo roles.
+ */
 class divListSudo extends MultiSelectWindow
 {
 
@@ -37,6 +41,11 @@ class divListSudo extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
+
+  /*! \brief  Initialize this class 
+      @param  Object $config  The GOsa configuration object.
+      @param  Object $parent  The parent class.
+   */
   function divListSudo (&$config, &$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "sudo", "sudo");
@@ -78,6 +87,8 @@ class divListSudo extends MultiSelectWindow
   }
 
 
+  /*! \brief  Generate the list header.
+   */
   function GenHeader()
   {
     /* Prepare departments,
@@ -111,6 +122,8 @@ class divListSudo extends MultiSelectWindow
   }
 
 
+  /*! \brief  Prepare the plguin to list a set of objects 
+   */
   function execute()
   {
     $this->ClearElementsList();
@@ -118,6 +131,9 @@ class divListSudo extends MultiSelectWindow
   }
 
 
+  /*! \brief  Create a list of all objects that should be displayed 
+      @param  Array $list   The list of sudo roles, passed from the sudoManagement class.
+   */
   function setEntries($list)
   {
     /* Prepare links */
@@ -172,11 +188,16 @@ class divListSudo extends MultiSelectWindow
     $this->set_List_Bottom_Info($str);
   }
 
+  
+  /*! \brief  Save this plugin. In this case nothing will be saved
+    */
   function Save()
   {
     MultiSelectWindow :: Save();  
   }
 
+  /*! \brief  Save all relevant HTML inputs for this plugin.
+    */
   function save_object()
   {
     /* Save automatic created POSTs like regex, checkboxes */
