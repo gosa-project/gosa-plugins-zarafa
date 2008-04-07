@@ -91,46 +91,8 @@ class sudo extends plugin
         }
       }
     }
-
-    /*******
-      Prepare Flags
-     *******/
-
-    $options = array();
-    // BOOLEAN
-    $options[]=array("NAME"=>"long_otp_prompt"      , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"ignore_dot"           , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"mail_always"          , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"mail_badpass"         , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"mail_no_user"         , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"mail_no_host"         , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"mail_no_perms"        , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"tty_tickets"          , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"authenticate"         , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"root_sudo"            , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"log_host"             , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"log_year"             , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"shell_noargs"         , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"set_home"             , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"always_set_home"      , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"path_info"            , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"preserve_groups"      , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"fqdn"                 , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"insults"              , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"requiretty"           , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"env_editor"           , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"rootpw"               , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"runaspw"              , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"targetpw"             , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"set_logname"          , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"stay_setuid"          , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"env_reset"            , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"use_loginclass"       , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"noexec"               , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-    $options[]=array("NAME"=>"ignore_local_sudoers" , "TYPE"=>"BOOLEAN", "VALUE" => "1");
-
-    //STRINGS 
   }
+
 
   /*! \brief  Creates the sudo generic ui. 
       @return String  The generated HTML content for this plugin. 
@@ -141,18 +103,47 @@ class sudo extends plugin
     plugin::execute();
 
     /*********************
+       Add users 
+     *********************/ 
+  
+    if(isset($_POST['list_sudoUser']) && !is_object($this->dialog)){
+      $used = array();
+      foreach($this->sudoUser as $name){
+        $used[] = preg_replace("/^!/","",$name);
+      }
+      $this->dialog =new target_list_users($this->config,$used);
+    }
+   
+    /* Add selected hosts  to the sudoUser list */ 
+    if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_users){
+      foreach($this->dialog->list_get_selected_items() as $id){
+        $cn = trim($this->dialog->list[$id]['uid'][0]);
+        if(!in_array($cn,$this->sudoUser) && !in_array("!".$cn,$this->sudoUser)){
+          $this->sudoUser[] = $cn;
+        }
+      }   
+      unset($this->dialog);
+      $this->dialog = NULL;
+    }    
+
+
+    /*********************
        Add systems 
      *********************/ 
   
     if(isset($_POST['list_sudoHost']) && !is_object($this->dialog)){
-      $this->dialog =new target_list_systems($this->config,array());
+      $used = array();
+      foreach($this->sudoHost as $name){
+        $used[] = preg_replace("/^!/","",$name);
+      }
+      $this->dialog =new target_list_systems($this->config,$used);
     }
    
     /* Add selected hosts  to the sudoHost list */ 
-    if(isset($_POST['SaveMultiSelectWindow']) && is_object($this->dialog)){
+    if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_systems){
       foreach($this->dialog->list_get_selected_items() as $id){
         $cn = trim($this->dialog->list[$id]['cn'][0]);
-        if(!in_array($cn,$this->sudoHost)){
+        if(!in_array($cn,$this->sudoHost) && !in_array("!".$cn,$this->sudoHost)){
           $this->sudoHost[] = $cn;
         }
       }   
@@ -160,6 +151,11 @@ class sudo extends plugin
       $this->dialog = NULL;
     }    
 
+
+    /*********************
+       Dialog handling / display / close  
+     *********************/ 
+  
     if(isset($_POST['CloseMultiSelectWindow']) && is_object($this->dialog)){
       unset($this->dialog);
       $this->dialog = NULL;
@@ -168,6 +164,7 @@ class sudo extends plugin
     if(is_object($this->dialog)){
       return($this->dialog->execute());
     }
+
  
     /*********************
        NEGATE values 
@@ -319,6 +316,10 @@ class sudo extends plugin
 
       /* Send signal to the world that we've done */
       $this->handle_post_events("modify");
+    }
+
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
     }
   }
 
