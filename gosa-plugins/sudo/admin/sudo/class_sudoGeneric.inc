@@ -116,8 +116,8 @@ class sudo extends plugin
    
     /* Add selected hosts  to the sudoUser list */ 
     if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_users){
-      foreach($this->dialog->list_get_selected_items() as $id){
-        $cn = trim($this->dialog->list[$id]['uid'][0]);
+      foreach($this->dialog->save() as $entry){
+        $cn = trim($entry['uid'][0]);
         if(!in_array($cn,$this->sudoUser) && !in_array("!".$cn,$this->sudoUser)){
           $this->sudoUser[] = $cn;
         }
@@ -141,8 +141,8 @@ class sudo extends plugin
    
     /* Add selected hosts  to the sudoHost list */ 
     if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_systems){
-      foreach($this->dialog->list_get_selected_items() as $id){
-        $cn = trim($this->dialog->list[$id]['cn'][0]);
+      foreach($this->dialog->save() as $entry){
+        $cn = trim($entry['cn'][0]);
         if(!in_array($cn,$this->sudoHost) && !in_array("!".$cn,$this->sudoHost)){
           $this->sudoHost[] = $cn;
         }

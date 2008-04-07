@@ -34,15 +34,13 @@ class target_list_systems extends MultiSelectWindow
   var $Regex              = "*";
 
   /* CheckBoxes, to change default values modify $this->AddCheckBox */
-  var $ogroups        ;
   var $servers        ;
   var $workstations   ;
-  var $incoming       ;
+  var $terminals      ;
 
 
   /* Subsearch checkbox */
   var $SubSearch          ;
-  var $IPMatch            ;
   var $parent             ;
   var $ui                 ;
  
@@ -103,8 +101,7 @@ class target_list_systems extends MultiSelectWindow
     }
 
     /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("ogroups");
+    $tdeps= $ui->get_module_departments(array("server","terminal","workstation"));
     $ids = $this->config->idepartments;
     $first = "";
     $found = FALSE;
@@ -134,10 +131,6 @@ class target_list_systems extends MultiSelectWindow
     if(!$found){
       $this->selectedBase = $first;
     }
-
-    /* Get copy & paste icon */
-    $acls  = $ui->get_permissions($this->selectedBase,"ogroups/ogroup");
-    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"ogroups");
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
@@ -172,7 +165,7 @@ class target_list_systems extends MultiSelectWindow
 
     $ui = get_userinfo();
 
-    // Assigning ogroups
+    // Assigning systems 
     foreach($list as $key => $val){
 
       if(in_array($val['cn'][0],$this->Targets_used) || 
@@ -184,22 +177,14 @@ class target_list_systems extends MultiSelectWindow
       }else{
         $desc = " - [ ".$val['description'][0]." ]";
       }
-      if(!isset($val['ipHostNumber'][0])){
-        $desc.= "";
-      }else{
-        $desc.= " - ".$val['ipHostNumber'][0]."";
-      }
 
-
-      $img ="Hmm";
+      $img ="?";
       if(in_array("goServer",$val['objectClass'])){
         $img = "<img src='images/select_server.png' alt='"._("Server")."' ".$title.">";
       }elseif(in_array("gotoWorkstation",$val['objectClass'])){
         $img = "<img src='images/select_workstation.png' alt='"._("Workstation")."' ".$title.">";
       }elseif(in_array("gotoTerminal",$val['objectClass'])){
         $img = "<img src='images/select_terminal.png' alt='"._("Terminal")."' ".$title.">";
-      }else{
-          print_a($val);
       }
 
       /* Create each field */
@@ -255,7 +240,7 @@ class target_list_systems extends MultiSelectWindow
 
     if($this->SubSearch){
       $res= get_list($filter, array("terminal","workstation","server"), $base, 
-            array("cn","objectClass","gosaGroupObjects","ipHostNumber","description"), GL_SIZELIMIT | GL_SUBSEARCH);
+            array("cn","objectClass","gosaGroupObjects","description"), GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
       $res= get_list($filter, "terminal", get_ou('terminalou').$base, 
             array("cn","objectClass","description"), GL_SIZELIMIT );
