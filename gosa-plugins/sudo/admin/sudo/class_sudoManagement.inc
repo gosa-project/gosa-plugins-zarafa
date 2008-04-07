@@ -48,6 +48,8 @@ class sudoManagement extends plugin
   }
 
 
+  /*! \brief Generate && Display HTML content 
+   */
   public function execute()
   {
     /* Call parent execute */
@@ -309,7 +311,10 @@ class sudoManagement extends plugin
     return($this->DivListSudo->Draw());
   }
 
-
+  
+  /*! \brief  Return all selected elements from HTML list 
+      @return Array List of all selected list elements 
+    */
   private function list_get_selected_items()
   {
     $ids = array();
@@ -323,6 +328,8 @@ class sudoManagement extends plugin
   }
 
 
+  /*! \brief  Reload the list of sudo roles. 
+   */
   private function reload($CreatePosixsList=false)
   {
     $this->list             = array();
@@ -351,12 +358,16 @@ class sudoManagement extends plugin
   }
 
 
-  /* Save data to object */
+  /*! \brief Save HTML post data to object 
+   */
   public function save_object()
   {
     $this->DivListSudo->save_object();
   }
 
+  
+  /*! \brief Remove this account 
+   */
   public function remove_from_parent()
   {
     /* Optionally execute a command after we're done */
@@ -364,13 +375,17 @@ class sudoManagement extends plugin
   }
 
 
-  /* Save to LDAP */
+  /*! \brief Save to LDAP 
+   */
   public function save()
   {
     /* Optionally execute a command after we're done */
     $this->postcreate();
   }
 
+  
+  /*! \brief Remove lock from entry 
+   */
   public function remove_lock()
   {
     if (isset($this->sudotabs->dn)){

@@ -140,7 +140,7 @@ class divListSudo extends MultiSelectWindow
 
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
-          src='images/edittrash.png' alt='".msgPool::deleteButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
+          src='images/edittrash.png' alt='".msgPool::delButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";

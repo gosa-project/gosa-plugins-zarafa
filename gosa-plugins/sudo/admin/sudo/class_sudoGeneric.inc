@@ -20,6 +20,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+/*! \brief Sudo generic class. Allow setting User/Host/Command/Runas
+           for a sudo role object.
+ */
 class sudo extends plugin
 {
   /* Group attributes */
@@ -36,6 +40,11 @@ class sudo extends plugin
 
   var $is_account = TRUE;
 
+  /*! \brief  Returns to the base department for sudo roles.
+              This department is then used to store new roles.
+      @param  Object  GOsa configuration object.
+      @return String sudo store department
+   */
   public static function get_sudoers_ou($config)
   {
     /***
@@ -59,6 +68,11 @@ class sudo extends plugin
     return($base);
   }
 
+  /*! \brief  Initializes this sudo class, with all required attributes.
+      @param  Object $config  GOsa configuration object.
+      @param  String $db      "new" or the sudo role dn.
+      @return .
+   */
   function sudo(&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -114,6 +128,9 @@ class sudo extends plugin
     //STRINGS 
   }
 
+  /*! \brief  Creates the sudo generic ui. 
+      @return String  The generated HTML content for this plugin. 
+   */
   function execute()
   {
     /* Call parent execute */
@@ -219,6 +236,9 @@ class sudo extends plugin
     return($smarty->fetch(get_template_path('generic.tpl', TRUE)));
   }
 
+
+  /*! \brief  Remove this sudo role from the ldap server 
+   */
   function remove_from_parent()
   {
     plugin::remove_from_parent();
@@ -231,13 +251,17 @@ class sudo extends plugin
     $this->handle_post_events("remove");
   }
 
-  /* Save data to object */
+
+  /*! \brief  Save all relevant HTML posts. 
+   */
   function save_object()
   {
     plugin::save_object();
   }
 
-  /* Save to LDAP */
+
+  /*! \brief  Save changes into the ldap database.
+   */
   function save()
   {
     plugin::save(); 
@@ -261,13 +285,20 @@ class sudo extends plugin
     }
   }
 
+
+  /*! \brief  Check the given input.
+      @return Array   All error messages in an array();
+   */
   function check()
   {
     $message = plugin::check();
     return ($message);
   }
 
-  /* Return plugin informations for acl handling  */ 
+
+  /*! \brief  Add ACL object
+      @return Returns the ACL object.
+   */
   static function plInfo()
   {
     return (array(  
