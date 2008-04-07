@@ -30,15 +30,17 @@ class sudo extends plugin
   var $cn= "";
   var $description= "";
 
-  var $sudoUser   = array();
+  var $sudoUser   = array("ALL");
   var $sudoCommand= array();
-  var $sudoHost   = array();
-  var $sudoRunas  = array();
+  var $sudoHost   = array("ALL");
+  var $sudoRunas  = array("ALL");
 
   var $objectclasses = array("top","sudoRole");
   var $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunas");
 
   var $is_account = TRUE;
+
+  var $dialog;
 
   /*! \brief  Returns to the base department for sudo roles.
               This department is then used to store new roles.
@@ -77,14 +79,16 @@ class sudo extends plugin
   {
     plugin::plugin ($config, $dn);
 
-    foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunas") as $attr){
-      $this->$attr = array();
-      if(isset($this->attrs[$attr])){
-        $tmp = array();
-        for($i = 0 ; $i < $this->attrs[$attr]['count']; $i++){
-          $tmp[] = $this->attrs[$attr][$i];
+    if($this->initially_was_account){
+      foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunas") as $attr){
+        $this->$attr = array();
+        if(isset($this->attrs[$attr])){
+          $tmp = array();
+          for($i = 0 ; $i < $this->attrs[$attr]['count']; $i++){
+            $tmp[] = $this->attrs[$attr][$i];
+          }
+          $this->$attr = $tmp;
         }
-        $this->$attr = $tmp;
       }
     }
 
@@ -135,6 +139,35 @@ class sudo extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /*********************
+       Add systems 
+     *********************/ 
+  
+    if(isset($_POST['list_sudoHost']) && !is_object($this->dialog)){
+      $this->dialog =new target_list_systems($this->config,array());
+    }
+   
+    /* Add selected hosts  to the sudoHost list */ 
+    if(isset($_POST['SaveMultiSelectWindow']) && is_object($this->dialog)){
+      foreach($this->dialog->list_get_selected_items() as $id){
+        $cn = trim($this->dialog->list[$id]['cn'][0]);
+        if(!in_array($cn,$this->sudoHost)){
+          $this->sudoHost[] = $cn;
+        }
+      }   
+      unset($this->dialog);
+      $this->dialog = NULL;
+    }    
+
+    if(isset($_POST['CloseMultiSelectWindow']) && is_object($this->dialog)){
+      unset($this->dialog);
+      $this->dialog = NULL;
+    }    
+
+    if(is_object($this->dialog)){
+      return($this->dialog->execute());
+    }
  
     /*********************
        NEGATE values 
@@ -257,6 +290,10 @@ class sudo extends plugin
   function save_object()
   {
     plugin::save_object();
+
+    if(is_object($this->dialog)){
+      $this->dialog->save_object();
+    }
   }
 
 
