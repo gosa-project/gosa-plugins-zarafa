@@ -1283,17 +1283,27 @@ sub watch_for_new_jobs {
 			}
 		}
 	}
-	
+
 	# Commit deletion
 	$job_db->exec_statementlist(\@drops);
 
 	# Look for new jobs that could be executed
 	foreach my $macaddress (keys %{$hits}) {
+
+		# Look if there is an executing job
+		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='processing'";
+		my $res = $job_db->exec_statement( $sql_statement );
+
+		# Skip new jobs for host if there is a processing job
+		if(defined($res) and defined @{$res}[0]) {
+			next;
+		}
+
 		foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
 			my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
 			my $job_msg = @{$hits->{$macaddress}->{$jobdb_headertag}}[7];
 
-			daemon_log("J DEBUG: its time to execute $job_msg", 7); 
+			daemon_log("J DEBUG: its time to execute $job_msg", 7);
 			my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$macaddress'";
 			my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
 
@@ -1303,7 +1313,7 @@ sub watch_for_new_jobs {
 			# change header
 			$job_msg =~ s/<header>job_/<header>gosa_/;
 
-			# add sqlite_id 
+			# add sqlite_id
 			$job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
 
 			$job_msg =~ /<header>(\S+)<\/header>/;
@@ -1313,6 +1323,9 @@ sub watch_for_new_jobs {
 			# update status in job queue to 'processing'
 			$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
 			my $res = $job_db->update_dbentry($sql_statement);
+
+			# We don't want parallel processing
+			last;
 		}
 	}
 
