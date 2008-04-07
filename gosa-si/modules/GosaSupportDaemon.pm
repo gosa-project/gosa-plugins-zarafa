@@ -36,6 +36,7 @@ my $op_hash = {
     'gt' => '>',
     'le' => '<=',
     'lt' => '<',
+    'like' => ' LIKE ',
 };
 
 
@@ -249,7 +250,7 @@ sub get_where_statement {
                 if( exists $phrase->{'operator'} ) {
                     my $op = $op_hash->{$phrase->{'operator'}[0]};
                     if( not defined $op ) {
-                        &main::daemon_log("ERROR: Can not translate operator '$operator' in where ".
+                        &main::daemon_log("ERROR: Can not translate operator '$operator' in where-".
                                 "statement to sql valid syntax. Please use 'eq', ".
                                 "'ne', 'ge', 'gt', 'le', 'lt' in xml message\n", 1);
                         &main::daemon_log($msg, 8);
