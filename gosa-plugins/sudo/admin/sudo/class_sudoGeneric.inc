@@ -298,7 +298,14 @@ class sudo extends plugin
    */
   function save()
   {
-    plugin::save(); 
+    plugin::save();
+   
+    /* Ensure a correct array index 
+     */ 
+    $this->attrs['sudoHost']    = array_values($this->attrs['sudoHost']);
+    $this->attrs['sudoRunas']   = array_values($this->attrs['sudoRunas']);
+    $this->attrs['sudoUser']    = array_values($this->attrs['sudoUser']);
+    $this->attrs['sudoCommand'] = array_values($this->attrs['sudoCommand']);
     $this->cleanup();
 
     $ldap = $this->config->get_ldap_link();
