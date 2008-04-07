@@ -134,27 +134,16 @@ sub LOGIN {
     return;   
 }
 
-# TODO umstellen wie bei LOGIN
+
 sub LOGOUT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
-
-    my $sql_statement = "SELECT * FROM known_clients WHERE hostname='$source'";
-    my $res = $main::known_clients_db->select_dbentry($sql_statement);
-    if( 1 != keys(%$res) ) {
-        &main::daemon_log("DEBUG: clMessages.pm: LOGOUT: no or more hits found in known_clients_db for host '$source'");
-        return;
-    }
-
-    my $act_login = $res->{'1'}->{'login'};
-    $act_login =~ s/$login,?//gi;
-
-    if( $act_login eq "" ){ $act_login = "nobody"; }
-
-    $sql_statement = "UPDATE known_clients SET login='$act_login' WHERE hostname='$source'";
-    $res = $main::known_clients_db->update_dbentry($sql_statement);
+    
+    my $sql_statement = "DELETE FROM $main::login_users_tn WHERE (client='$source' AND user='$login')"; 
+    my $res =  $main::login_users_db->del_dbentry($sql_statement);
+    &main::daemon_log("$session_id INFO: delete user '$login' at client '$source' from login_user_db", 5); 
     
     return;
 }
