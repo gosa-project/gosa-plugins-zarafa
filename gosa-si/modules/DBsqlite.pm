@@ -177,22 +177,35 @@ sub select_dbentry {
     my ($self, $sql)= @_;
     my $error= 0;
     my $answer= {};
-    
     my $db_answer= &exec_statement($self, $sql); 
+    my @column_list;
 
     # fetch column list of db and create a hash with column_name->column_value of the select query
-    $sql =~ /FROM ([\S]*?)( |$)/g;
-    my $table = $1;
-    my $column_list = &get_table_columns($self, $table);    
-    my $list_len = @{ $column_list } ;
+    $sql =~ /SELECT ([\S\s]*?) FROM ([\S]*?)( |$)/g;
+    my $selected_cols = $1;
+    my $table = $2;
+
+    # all columns are used for creating answer
+    if ($selected_cols eq '*') {
+        @column_list = @{ &get_table_columns($self, $table) };    
+
+    # specific columns are used for creating answer
+    } else {
+        # remove all blanks and split string to list of column names
+        $selected_cols =~ s/ //g;          
+        @column_list = split(/,/, $selected_cols);
+    }
+
+    # create answer
     my $hit_counter = 0;
-    foreach my $hit ( @{ $db_answer }) {
+    my $list_len = @column_list;
+    foreach my $hit ( @{$db_answer} ){
         $hit_counter++;
         for ( my $i = 0; $i < $list_len; $i++) {
-            $answer->{ $hit_counter }->{ @{ $column_list }[$i] } = @{ $hit }[$i];
+            $answer->{ $hit_counter }->{ $column_list[$i] } = @{ $hit }[$i];
         }
     }
-    
+
     return $answer;  
 }
 

@@ -28,6 +28,7 @@ use Crypt::Rijndael;
 use Digest::MD5  qw(md5 md5_hex md5_base64);
 use MIME::Base64;
 use XML::Simple;
+use Data::Dumper;
 
 my $op_hash = {
     'eq' => '=',
@@ -283,7 +284,7 @@ sub get_select_statement {
     my $select = "*";
     if( exists $msg_hash->{'select'} ) {
         my $select_l = \@{$msg_hash->{'select'}};
-        $select = join(' AND ', @{$select_l});
+        $select = join(', ', @{$select_l});
     }
     return $select;
 }

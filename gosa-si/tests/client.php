@@ -85,6 +85,7 @@ if($sock->connected()){
 
 
 
+
     $sock->write($data);
     $answer = "nothing";
 	$answer = $sock->read();
