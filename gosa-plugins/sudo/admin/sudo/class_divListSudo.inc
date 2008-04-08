@@ -37,7 +37,6 @@ class divListSudo extends MultiSelectWindow
 
   /* Subsearch checkbox */
   var $SubSearch          = FALSE;
-
   var $parent             ;
   var $ui                 ;
 
