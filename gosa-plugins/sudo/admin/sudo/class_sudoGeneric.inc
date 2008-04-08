@@ -468,10 +468,7 @@ class sudo extends plugin
     $this->attrs['sudoRunAs']   = array_values($this->attrs['sudoRunAs']);
     $this->attrs['sudoUser']    = array_values($this->attrs['sudoUser']);
     $this->attrs['sudoCommand'] = array_values($this->attrs['sudoCommand']);
-    print_a($this->attrs);
     $this->cleanup();
-
-    print_a($this->attrs);
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
