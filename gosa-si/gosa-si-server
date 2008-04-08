@@ -968,6 +968,7 @@ sub _start {
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
+	$kernel->sig(USR2 => "create_packages_list_db");
 }
 
 sub sig_handler {
@@ -1904,10 +1905,15 @@ sub create_sources_list {
 sub create_packages_list_db {
     my ($ldap_handle, $sources_file) = @_ ;
 
-    if (not defined $ldap_handle) { 
-        daemon_log("0 ERROR: no ldap_handle available to create_packages_list_db", 1);
-        return;
-    }
+	if (not defined $ldap_handle) { 
+		$ldap_handle= &get_ldap_handle();
+
+		if (not defined $ldap_handle) {
+			daemon_log("0 ERROR: no ldap_handle available to create_packages_list_db", 1);
+			return;
+		}
+	}
+
     if (not defined $sources_file) { 
         $sources_file = &create_sources_list($ldap_handle);
     }
