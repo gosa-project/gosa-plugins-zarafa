@@ -127,9 +127,9 @@ class divListSudo extends MultiSelectWindow
     if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+        "&nbsp;"._("Copy")."|"."multiple_copy_sudo|\n";
 #      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
-#        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+#        "&nbsp;"._("Cut")."|"."multiple_cut_sudo|\n";
 
       if($this->parent->CopyPasteHandler->entries_queued()){
         $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";

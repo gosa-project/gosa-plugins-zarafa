@@ -499,8 +499,10 @@ class sudoOption extends plugin
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
-    $this->attrs['sudoOption'] = $source['sudoOption'];
-    $this->load_options();
+    if(isset($source['sudoOption'])){
+      $this->attrs['sudoOption'] = $source['sudoOption'];
+      $this->load_options();
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

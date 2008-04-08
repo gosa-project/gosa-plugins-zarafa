@@ -106,10 +106,12 @@ class sudoManagement extends plugin
       $s_action = $_POST['menu_action'];
     }
 
-
+    /* handle C&P from layers menu */
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_sudo/",$_POST['menu_action'])){
+      $s_action = "copy_multiple";
+    }
 
     $smarty= get_smarty();
-
 
     /********************
       Copy & Paste Handling  ...
