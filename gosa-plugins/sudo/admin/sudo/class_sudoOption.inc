@@ -44,41 +44,41 @@ class sudoOption extends plugin
       Create a list of known options
      ****/
     $options = array();
-    $option['long_otp_prompt']= array('NAME' =>'long_otp_prompt' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['ignore_dot']=  array('NAME' =>'ignore_dot' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['mail_always']= array('NAME' =>'mail_always' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['mail_badpass']=  array('NAME' =>'mail_badpass' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['mail_no_user']=  array('NAME' =>'mail_no_user' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['mail_no_host']=  array('NAME' =>'mail_no_host' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['mail_no_perms']= array('NAME' =>'mail_no_perms' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['tty_tickets']= array('NAME' =>'tty_tickets' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['authenticate']=  array('NAME' =>'authenticate' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['root_sudo']= array('NAME' =>'root_sudo' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['log_host']=  array('NAME' =>'log_host' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['log_year']=  array('NAME' =>'log_year' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['shell_noargs']=  array('NAME' =>'shell_noargs' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['set_home']=  array('NAME' =>'set_home' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['always_set_home']= array('NAME' =>'always_set_home' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['path_info']= array('NAME' =>'path_info' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['preserve_groups']= array('NAME' =>'preserve_groups' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['fqdn']=  array('NAME' =>'fqdn' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['insults']= array('NAME' =>'insults' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['requiretty']=  array('NAME' =>'requiretty' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['env_editor']=  array('NAME' =>'env_editor' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['rootpw']=  array('NAME' =>'rootpw' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['runaspw']= array('NAME' =>'runaspw' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['targetpw']=  array('NAME' =>'targetpw' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['set_logname']= array('NAME' =>'set_logname' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['stay_setuid']= array('NAME' =>'stay_setuid' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['env_reset']= array('NAME' =>'env_reset' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['use_loginclass']=  array('NAME' =>'use_loginclass' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['noexec']=  array('NAME' =>'noexec' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['ignore_local_sudoers']=  array('NAME' =>'ignore_local_sudoers' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => '');
-    $option['passwd_tries']=  array('NAME' =>'passwd_tries' ,  'TYPE' => 'INTEGER' ,   'DEFAULT' => '');
-    $option['loglinelen']=  array('NAME' =>'loglinelen' ,  'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => '');
-    $option['timestamp_timeout']= array('NAME' =>'timestamp_timeout' ,   'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => '');
-    $option['passwd_timeout']=  array('NAME' =>'passwd_timeout' ,  'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => '');
-    $option['umask']= array('NAME' =>'umask' ,   'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => '');
+    $option['long_otp_prompt']= array('NAME' =>'long_otp_prompt' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['ignore_dot']=  array('NAME' =>'ignore_dot' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['mail_always']= array('NAME' =>'mail_always' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['mail_badpass']=  array('NAME' =>'mail_badpass' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['mail_no_user']=  array('NAME' =>'mail_no_user' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['mail_no_host']=  array('NAME' =>'mail_no_host' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['mail_no_perms']= array('NAME' =>'mail_no_perms' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['tty_tickets']= array('NAME' =>'tty_tickets' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['authenticate']=  array('NAME' =>'authenticate' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['root_sudo']= array('NAME' =>'root_sudo' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['log_host']=  array('NAME' =>'log_host' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['log_year']=  array('NAME' =>'log_year' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['shell_noargs']=  array('NAME' =>'shell_noargs' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['set_home']=  array('NAME' =>'set_home' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['always_set_home']= array('NAME' =>'always_set_home' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['path_info']= array('NAME' =>'path_info' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['preserve_groups']= array('NAME' =>'preserve_groups' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['fqdn']=  array('NAME' =>'fqdn' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['insults']= array('NAME' =>'insults' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['requiretty']=  array('NAME' =>'requiretty' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['env_editor']=  array('NAME' =>'env_editor' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['rootpw']=  array('NAME' =>'rootpw' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['runaspw']= array('NAME' =>'runaspw' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['targetpw']=  array('NAME' =>'targetpw' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['set_logname']= array('NAME' =>'set_logname' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['stay_setuid']= array('NAME' =>'stay_setuid' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['env_reset']= array('NAME' =>'env_reset' ,   'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['use_loginclass']=  array('NAME' =>'use_loginclass' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['noexec']=  array('NAME' =>'noexec' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['ignore_local_sudoers']=  array('NAME' =>'ignore_local_sudoers' ,  'TYPE' => 'BOOLEAN' ,   'DEFAULT' => 'TRUE');
+    $option['passwd_tries']=  array('NAME' =>'passwd_tries' ,  'TYPE' => 'INTEGER' ,   'DEFAULT' => 0);
+    $option['loglinelen']=  array('NAME' =>'loglinelen' ,  'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => 0);
+    $option['timestamp_timeout']= array('NAME' =>'timestamp_timeout' ,   'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => 0);
+    $option['passwd_timeout']=  array('NAME' =>'passwd_timeout' ,  'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => 0);
+    $option['umask']= array('NAME' =>'umask' ,   'TYPE' => 'BOOL_INTEGER' ,  'DEFAULT' => 0);
     $option['mailsub']= array('NAME' =>'mailsub' ,   'TYPE' => 'STRING' ,   'DEFAULT' => '');
     $option['badpass_message']= array('NAME' =>'badpass_message' ,   'TYPE' => 'STRING' ,   'DEFAULT' => '');
     $option['timestampdir']=  array('NAME' =>'timestampdir' ,  'TYPE' => 'STRING' ,   'DEFAULT' => '');
@@ -130,6 +130,15 @@ class sudoOption extends plugin
           $value  = preg_replace("/^[^=]*+=/","",$opt);
           $opt    = preg_replace("/=.*$/","",$opt);
         }
+
+        /* Special chars are escaped, remove escape char now.
+            \\ => \
+            \: => :
+            \, => ,
+            \= => = 
+         */
+        $value = preg_replace(array("/\\\\\\\\/","/\\\\,/","/\\\\:/","/\\\\=/"),
+                              array("\\",",",":","="),$value);
 
         /* Check if the given value is part of our options list.
            If it is not, add it as type STRING and display a warning.  
@@ -365,6 +374,9 @@ class sudoOption extends plugin
         $value  = $opt['VALUE'];
         $option = "";
 
+        /* Escape special chars */
+        $value = addcslashes($value,"\\:,:=");
+
         /****
           Save LISTS 
          ****/
@@ -438,6 +450,23 @@ class sudoOption extends plugin
   function check()
   {
     $message = plugin::check();
+
+    foreach($this->sudoOption as $name => $options){
+      foreach($options as $id => $option){
+        switch($this->options[$name]['TYPE']){
+
+          /* Check for a valid integer value */
+          case 'INTEGER' : 
+            {
+              if(!preg_match("/^[0-9]*$/",$option['VALUE'])){
+                $message[] = msgPool::invalid($name,$option['VALUE'],"/[0-9]/");
+              }
+            } break;
+
+        }
+      }
+    }
+
     return ($message);
   }
 }
