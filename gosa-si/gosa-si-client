@@ -162,7 +162,7 @@ sub read_configfile {
     foreach my $section (keys %cfg_defaults) {
         foreach my $param (keys %{$cfg_defaults{ $section }}) {
             my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+           ${@$pinfo[ 0 ]} = (defined($cfg))?$cfg->val( $section, $param, @$pinfo[ 1 ] ):${@$pinfo[ 0 ]} = @$pinfo[ 1 ];
         }
     }
 }
@@ -221,7 +221,7 @@ sub sig_int_handler {
     my ($signal) = @_;
 	
     daemon_log("shutting down gosa-si-client", 1);
-    system("killall gosa-si-client");
+    system("kill `ps -C gosa-si-client -o pid=`");
 }
 $SIG{INT} = \&sig_int_handler;
 
@@ -1268,7 +1268,7 @@ $default_server_key = $server_key;
 
 # add gosa-si-server address from config file at first position of server list
 my $server_check_cfg = Config::IniFiles->new( -file => $cfg_file );
-my $server_check = $server_check_cfg->val( "server", "ip");
+my $server_check = (defined($server_check_cfg))?$server_check_cfg->val( "server", "ip"):undef;
 if( defined $server_check ) {
 	unshift(@servers, $server_address);
 	my $servers_string = join(", ", @servers);
