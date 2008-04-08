@@ -567,8 +567,8 @@ class sudo extends plugin
     }
 
     /* Check name */
-    if(!preg_match("/^[a-z]*$/i",$this->cn)){
-      $message[] = msgPool::invalid(_("Name"),$this->cn,"/[a-z]/i");
+    if(!preg_match("/^[a-z\@]*$/i",$this->cn)){
+      $message[] = msgPool::invalid(_("Name"),$this->cn,"/[a-z\@]/i");
     }
 
     /* Check if this entry will cause duplicated ldap entries */
