@@ -169,8 +169,8 @@ class divListSudo extends MultiSelectWindow
 
       $display = $val['cn'][0].$desc;
      
-      /* Highlight default entry */ 
-      if(preg_match("/^default$/i",$val['cn'][0])){
+      /* Highlight defaults entry */ 
+      if(preg_match("/^defaults$/i",$val['cn'][0])){
         $display = "<b>$display</b>";
       }
 

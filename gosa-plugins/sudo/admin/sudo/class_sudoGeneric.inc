@@ -115,7 +115,7 @@ class sudo extends plugin
 
     }
 
-    if(preg_match("/^default$/i",$this->cn)){
+    if(preg_match("/^defaults$/i",$this->cn)){
       $this->is_default = TRUE;
     }
 
@@ -329,7 +329,11 @@ class sudo extends plugin
     $smarty = get_smarty();
     $smarty->assign("is_default",$this->is_default);
     foreach($this->attributes as $attr){
-      $smarty->assign($attr,$this->$attr);
+      if(is_string($this->$attr)){
+        $smarty->assign($attr,htmlentities($this->$attr));
+      }else{
+        $smarty->assign($attr,$this->$attr);
+      }
       $smarty->assign($attr."ACL",$this->getacl($attr));
     }
 
@@ -455,7 +459,7 @@ class sudo extends plugin
     plugin::save_object();
     
     if($this->is_default){
-      $this->cn = "default";
+      $this->cn = "defaults";
     }  
 
     if(is_object($this->dialog)){
@@ -558,7 +562,7 @@ class sudo extends plugin
     }
 
     /* Check if name is reserved */
-    if(!$this->is_default && preg_match("/^default$/i",$this->cn)){
+    if(!$this->is_default && preg_match("/^defaults$/i",$this->cn)){
       $message[] = msgPool::reserved(_("Name"));
     }
 
@@ -646,12 +650,12 @@ class sudo extends plugin
 
 
   /*! \brief Force this entry to be handled and saved as 'default'
-      @param  BOOL  TRUE -force default   FALSE -normal
+      @param  BOOL  TRUE -force defaults   FALSE -normal
    */
   public function set_default($state)
   {
     $this->is_default = TRUE;
-    $this->cn = "default";
+    $this->cn = "defaults";
   }
 
 
