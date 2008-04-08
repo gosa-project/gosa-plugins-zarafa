@@ -173,9 +173,7 @@ class sudoOption extends plugin
         }
 
         /* Append values */
-        if(!isset($this->sudoOption[$opt])){
-          $this->sudoOption[$opt][] = $option;
-        }
+        $this->sudoOption[$opt][] = $option;
       }
     }
   }
@@ -371,7 +369,7 @@ class sudoOption extends plugin
           Save LISTS 
          ****/
         if($type=="LISTS"){
-          if(empty($value)){
+          if($value == ""){
             $option = $name;
           }else{
             $option = $name."=".$value;
@@ -395,7 +393,7 @@ class sudoOption extends plugin
           Save STRING / INTEGER
          ****/
         if(in_array($type,array("STRING","INTEGER"))){ 
-          if(!empty($value)){
+          if($value != ""){
             $option = $name."=".$value;
           }else{
             $option = $name; 
@@ -414,7 +412,7 @@ class sudoOption extends plugin
           }elseif($value == "TRUE"){
             $option = $name;
           }else{
-            if(!empty($value)){
+            if($value != ""){
               $option = $name."=".$value;
             }else{
               $option = $name; 

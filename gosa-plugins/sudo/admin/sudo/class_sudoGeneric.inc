@@ -392,8 +392,8 @@ class sudo extends plugin
     }
 
     foreach(array("sudoUser") as $attr){
-      $img1 = "<img src='images/select_user.png'   alt='"._("User")."'>";
-      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."'>";
+      $img1 = "<img src='images/select_user.png'   alt='"._("User")."' class='center'>";
+      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."' class='center'>";
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
           $neg = "";
@@ -519,6 +519,7 @@ class sudo extends plugin
     $this->attrs['sudoRunAs']   = array_values($this->attrs['sudoRunAs']);
     $this->attrs['sudoUser']    = array_values($this->attrs['sudoUser']);
     $this->attrs['sudoCommand'] = array_values($this->attrs['sudoCommand']);
+
     $this->cleanup();
 
     $ldap = $this->config->get_ldap_link();
