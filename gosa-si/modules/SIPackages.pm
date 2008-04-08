@@ -365,7 +365,7 @@ sub import_events {
 
         eval{ require $event; };
         if( $@ ) {
-            &main::daemon_log("import of event module '$event' failed", 1);
+            &main::daemon_log("S ERROR: import of event module '$event' failed", 1);
             &main::daemon_log("$@", 8);
             next;
         }

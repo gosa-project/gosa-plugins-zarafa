@@ -5,12 +5,11 @@ my @events = (
     "get_events",
     "show_log_by_mac",
     "show_log_by_date",
-#    "show_log_by_date_and_mac",
-#    "get_log_by_date",
-#    "get_log_by_mac",
-#    "get_log_by_date_and_mac",
-#    "get_recent_log_by_mac",
-#    "delete_log_by_date_and_mac",
+    "show_log_by_date_and_mac",
+    "show_log_files_by_date_and_mac",
+    "get_log_file_by_date_and_mac",
+    "get_recent_log_by_mac",
+    "delete_log_by_date_and_mac",
     );
 @EXPORT = @events;
 
@@ -19,6 +18,7 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use File::Spec;
+use MIME::Base64;
 
 BEGIN {}
 
@@ -35,13 +35,11 @@ sub get_events {
 sub show_log_by_date {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{header}}[0];
-    $header =~ s/gosa_//;
     my $target = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
-
     my $date_l =  $msg_hash->{date};
-	#my $date_h;
-	#map {$date_h->{$_}++} @{$date_l};
+
+    $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
         &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
@@ -51,36 +49,30 @@ sub show_log_by_date {
     # build out_msg
     my $out_hash = &create_xml_hash($header, $target, $source);
     
-    # fetch mac directory
+    # read mac directory
     opendir(DIR, $main::client_fai_log_dir); 
     my @avail_macs = readdir(DIR);
     closedir(DIR);   
- 
- 	# goto each mac directory
-	# select all dates which matches the parameter dates
-	my %res_h;
-	foreach my $date ( @{$date_l} ) {
-		
-		# go through all mac addresses 
-		foreach my $mac (@avail_macs) {
-            if ($mac eq ".." || $mac eq ".") { next; }
+    foreach my $avail_mac (@avail_macs) {
+        # check mac address 
+        if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
 
-            # read all installations dates
-			my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $mac);
-			opendir(DIR, $mac_dir);
-			my @avail_dates = readdir(DIR);
-			closedir(DIR);
-			
-			# go through all dates of one mac address
-			foreach my $avail_date (@avail_dates) {
+        # read install dates directory
+        my $mac_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        opendir(DIR, $mac_dir);
+        my @avail_dates = readdir(DIR);
+        closedir(DIR);
+        foreach my $date ( @{$date_l} ) {    # multiple date selection is allowed
+            foreach my $avail_date (@avail_dates) {
+                # check install date
                 if ($avail_date eq ".." || $avail_date eq ".") { next; }
-				if ($avail_date =~ /$date/i) {
-                    #$mac =~ s/:/_/g;
-                    &add_content2xml_hash($out_hash, $avail_date, $mac); 
-                }
-			}
-		}
-	}
+                if (not $avail_date =~ /$date/i) { next; }
+
+                # add content to out_msg
+                &add_content2xml_hash($out_hash, $avail_date, $avail_mac); 
+            }
+        }
+    }
 
     my $out_msg = &create_xml_string($out_hash);
     return ($out_msg);
@@ -89,39 +81,43 @@ sub show_log_by_date {
 sub show_log_by_mac {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{header}}[0];
-    $header =~ s/gosa_//;
     my $target = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
     my $mac_l = $msg_hash->{mac};
+
+    $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
         &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
         return;
     }
 
-    # fetch mac directory
+    # build out_msg
+    my $out_hash = &create_xml_hash($header, $target, $source);
+
+    # read mac directory
     opendir(DIR, $main::client_fai_log_dir); 
     my @avail_macs = readdir(DIR);
     closedir(DIR);   
-
-    # build out_msg
-    my $out_hash = &create_xml_hash($header, $target, $source);
-    foreach my $mac (@{$mac_l}) {
+    foreach my $mac (@{$mac_l}) {   # multiple mac selection is allowed
         foreach my $avail_mac ( @avail_macs ) {
+            # check mac address
             if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
-            if ($avail_mac =~ /$mac/i) {
-                my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
-                if (not -d $act_log_dir) { next; }
-                $avail_mac =~ s/:/_/g;
+            if (not $avail_mac =~ /$mac/i) { next; }
+            
+            # read install dates directory
+            my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+            if (not -d $act_log_dir) { next; }
+            opendir(DIR, $act_log_dir); 
+            my @avail_dates = readdir(DIR);
+            closedir(DIR);   
+            $avail_mac =~ s/:/_/g;   # make mac address XML::Simple valid
+            foreach my $avail_date (@avail_dates) {
+                # check install date
+                if ($avail_date eq ".." || $avail_date eq ".") { next; }
 
-                # fetch mac directory
-                opendir(DIR, $act_log_dir); 
-                my @install_dates = readdir(DIR);
-                closedir(DIR);   
-                foreach my $date (@install_dates) {
-                    if ($date eq ".." || $date eq ".") { next; }
-                    &add_content2xml_hash($out_hash, "mac_$avail_mac", $date);
-                }
+                # add content to out_msg
+                &add_content2xml_hash($out_hash, "mac_$avail_mac", $avail_date);
             }
         }
     }
@@ -133,54 +129,256 @@ sub show_log_by_mac {
 
 sub show_log_by_date_and_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
-    my $date_l = $msg_hash->{date};
-    my $mac_l = $msg_hash->{mac};
-
-    print STDERR "###########################################################\n"; 
-    print STDERR "date:".Dumper($date_l); 
-    print STDERR "mac: ".Dumper($mac_l); 
-    print STDERR "client_fai_log_dir: $main::client_fai_log_dir\n"; 
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $date = @{$msg_hash->{date}}[0];
+    my $mac = @{$msg_hash->{mac}}[0];
+    $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
         &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
         return;
     }
 
-    # fetch mac directory
+    # build out_msg
+    my $out_hash = &create_xml_hash($header, $target, $source);
+
+    # read mac directory
     opendir(DIR, $main::client_fai_log_dir); 
     my @avail_macs = readdir(DIR);
     closedir(DIR);   
+    foreach my $avail_mac ( @avail_macs ) {
+        # check mac address
+        if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
+        if (not $avail_mac =~ /$mac/i) { next; }
+        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
     
-    foreach my $avail_mac (@avail_macs) {
-        if (not $avail_mac =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) { 
-            next; 
-        }
+        # read install date directory
+        opendir(DIR, $act_log_dir); 
+        my @install_dates = readdir(DIR);
+        closedir(DIR);   
+        foreach my $avail_date (@install_dates) {
+            # check install date
+            if ($avail_date eq ".." || $avail_date eq ".") { next; }
+            if (not $avail_date =~ /$date/i) { next; }
 
-        print STDERR "mac: $avail_mac\n"; 
-        # fetch date directory
-        my $mac_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
-        opendir(DIR, $mac_log_dir); 
-        my @avail_dates = readdir(DIR);
-        closedir(DIR);
-        #print STDERR "\@avail_dates:".Dumper(@avail_dates); 
+            # add content to out_msg
+            &add_content2xml_hash($out_hash, $avail_date, $avail_mac);
+        }
     }
 
-    return;
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
 }
 
 
-sub get_log_by_date {}
-sub get_log_by_mac {}
-sub get_log_by_date_and_mac {}
-sub fetch_log {}
+sub show_log_files_by_date_and_mac {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $date = @{$msg_hash->{date}}[0];
+    my $mac = @{$msg_hash->{mac}}[0];
+    $header =~ s/gosa_//;
 
+    my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $mac, $date);
+    if (not -d $act_log_dir) {
+        &main::daemon_log("$session_id ERROR: client fai log directory '$act_log_dir' do not exist", 1); 
+        return;
+    }
+
+    # build out_msg
+    my $out_hash = &create_xml_hash($header, $target, $source);
+
+    # read mac / install date directory
+    opendir(DIR, $act_log_dir); 
+    my @log_files = readdir(DIR);
+    closedir(DIR);   
+
+    foreach my $log_file (@log_files) {
+        if ($log_file eq ".." || $log_file eq ".") { next; }
+
+        # add content to out_msg
+        &add_content2xml_hash($out_hash, $header, $log_file);
+    }
+
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
+}
+
+
+sub get_log_file_by_date_and_mac {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $date = @{$msg_hash->{date}}[0];
+    my $mac = @{$msg_hash->{mac}}[0];
+    my $log_file = @{$msg_hash->{log_file}}[0];
+    $header =~ s/gosa_//;
+ 
+    # sanity check
+    my $act_log_file = File::Spec->catfile($main::client_fai_log_dir, $mac, $date, $log_file);
+    if (not -f $act_log_file) {
+        &main::daemon_log("$session_id ERROR: client fai log file '$act_log_file' do not exist or could not be read", 1); 
+        return;
+    }
+    
+    # read log file
+    my $log_content;
+    open(FILE, "<$act_log_file");
+    my @log_lines = <FILE>;
+    close(FILE);
+
+    # prepare content for xml sending
+    $log_content = join("", @log_lines); 
+    $log_content = &encode_base64($log_content);
+
+    # build out_msg and send
+    my $out_hash = &create_xml_hash($header, $target, $source);
+    &add_content2xml_hash($out_hash, $log_file, $log_content);
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
+}
+
+
+# sorting function for fai log directory names
+# used by get_recent_log_by_mac
+sub transform {
+    my $a = shift;
+    $a =~ /_(\d{8}?)_(\d{6}?)$/ || return 0;
+    return int("$1$2");
+}
+sub by_log_date {
+    &transform($a) <=> &transform($b);
+}
 sub get_recent_log_by_mac {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $mac = @{$msg_hash->{mac}}[0];
+    $header =~ s/gosa_//;
 
+    # sanity check
+    if (not -d $main::client_fai_log_dir) {
+        my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist";
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        my $out_hash = &create_xml_hash($header, $target, $source, $error_string);
+        my $out_msg = &create_xml_string($out_hash);
+        return $out_msg;
+    }
+    
+    opendir (DIR, $main::client_fai_log_dir);
+    my @avail_macs = readdir(DIR);
+    closedir(DIR);
+    my $act_log_dir;
+    my $act_mac;
+    foreach my $avail_mac (@avail_macs) { 
+        if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
+        if (not $avail_mac =~ /$mac/i) { next; }
+        $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+        $act_mac = $avail_mac;
+    }
+    if (not defined $act_log_dir) {
+        my $error_string = "do not find mac '$mac' in directory '$main::client_fai_log_dir'";
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        my $out_hash = &create_xml_hash($header, $target, $source, $error_string);
+        my $out_msg = &create_xml_string($out_hash);
+        return $out_msg;
+    }
+
+    # read mac directory
+    opendir(DIR, $act_log_dir); 
+    my @avail_dates = readdir(DIR);
+    closedir(DIR);   
+
+    # search for the latest log 
+    my @sorted_dates = sort by_log_date @avail_dates;
+    my $latest_log = pop(@sorted_dates);
+
+    # build out_msg
+    my $out_hash = &create_xml_hash($header, $target, $source);
+
+    # read latest log directory
+    my $latest_log_dir = File::Spec->catdir($main::client_fai_log_dir, $act_mac, $latest_log);
+    opendir(DIR, $latest_log_dir); 
+    my @log_files = readdir(DIR);
+    closedir(DIR);   
+
+    # add all log_files to out_msg
+    foreach my $log_file (@log_files) {
+        if ($log_file eq ".." || $log_file eq ".") { next; }
+        &add_content2xml_hash($out_hash, $latest_log, $log_file);
+    }
+
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
 }
 
 
 sub delete_log_by_date_and_mac {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
+    my $date = @{$msg_hash->{date}}[0];
+    my $mac = @{$msg_hash->{mac}}[0];
+    $header =~ s/gosa_//;
 
+    # sanity check
+    if (not -d $main::client_fai_log_dir) {
+        &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
+        return;
+    }
+    if ((not defined $date) && (not defined $mac)) {
+        my $err_string = "deleting all log files from gosa-si-server by an empty delete message is not permitted";
+        &main::daemon_log("$session_id INFO: $err_string", 5);
+        my $out_hash = &create_xml_hash($header, $target, $source, $err_string);
+        my $out_msg = &create_xml_string($out_hash);
+        return $out_msg;
+    }
+    if (not defined $date) { $date = "."; }   # set date to a regular expression matching to everything
+    if (not defined $mac) { $mac = "."; }     # set mac to a regular expression matching to everything
+ 
+    # build out_msg
+    my $out_hash = &create_xml_hash($header, $target, $source);
+
+    # read mac directory
+    opendir(DIR, $main::client_fai_log_dir); 
+    my @avail_macs = readdir(DIR);
+    closedir(DIR);   
+    foreach my $avail_mac ( @avail_macs ) {
+        # check mac address
+        if ($avail_mac eq ".." || $avail_mac eq ".") { next; }
+        if (not $avail_mac =~ /$mac/i) { next; }
+        my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $avail_mac);
+    
+        # read install date directory
+        opendir(DIR, $act_log_dir); 
+        my @install_dates = readdir(DIR);
+        closedir(DIR);   
+        foreach my $avail_date (@install_dates) {
+            # check install date
+            if ($avail_date eq ".." || $avail_date eq ".") { next; }
+            if (not $avail_date =~ /$date/i) { next; }
+            
+            # delete directory and reptorting
+            my $dir_to_delete = File::Spec->catdir($main::client_fai_log_dir, $avail_mac, $avail_date);
+            #my $error = rmdir($dir_to_delete);
+            my $error = 0;
+            if ($error == 1) {
+                &main::daemon_log("$session_id ERROR: log directory '$dir_to_delete' cannot be deleted: $!", 1); 
+            } else {
+                &main::daemon_log("$session_id INFO: log directory '$dir_to_delete' deleted", 5); 
+                &add_content2xml_hash($out_hash, $avail_date, $avail_mac);
+            }
+        }
+    }
+
+    my $out_msg = &create_xml_string($out_hash);
+    return $out_msg;
 }
 
 1;
