@@ -193,9 +193,13 @@ class sudo extends plugin
     if(isset($_POST['SaveMultiSelectWindow']) && $this->dialog instanceof target_list_users){
       if($this->acl_is_writeable("sudoUser")){
         foreach($this->dialog->save() as $entry){
-          $cn = trim($entry['uid'][0]);
-          if(!in_array($cn,$this->sudoUser) && !in_array("!".$cn,$this->sudoUser)){
-            $this->sudoUser[] = $cn;
+          if(in_array("posixGroup",$entry['objectClass'])){
+            $name = trim("%".$entry['cn'][0]);
+          }else{
+            $name = trim($entry['uid'][0]);
+          }
+          if(!in_array($name,$this->sudoUser) && !in_array("!".$name,$this->sudoUser)){
+            $this->sudoUser[] = $name;
           }
         }   
       }
@@ -368,19 +372,56 @@ class sudo extends plugin
     $neg_img= "<img src='images/negate.png' alt='!' class='center'>"; 
     $option = "<input type='image' src='images/negate.png'     name='neg_%ATTR%_%KEY%' class='center'>"; 
     $option.= "<input type='image' src='images/edittrash.png'  name='del_%ATTR%_%KEY%' class='center'>"; 
-    foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunAs") as $attr){
+    foreach(array("sudoCommand","sudoHost","sudoRunAs") as $attr){
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
-          $entry = preg_replace("/^!/",$neg_img,$entry);
+          $neg = "";
+          if(preg_match("/^!/",$entry)){
+            $neg = $neg_img;
+          }
+          $entry = preg_replace("/^!/","",$entry);
           $list_name = "divlist_".$attr;
           $$list_name->AddEntry(
               array(
+                array("string" => $neg,"attach" => "style='width:18px;'"),
                 array("string" => $entry),
                 array("string" => preg_replace(array("/%KEY%/","/%ATTR%/"),array($key,$attr),$option),
                   "attach" => "style='width:40px; border-right: 0px;'")));
         }
       }
     }
+
+    foreach(array("sudoUser") as $attr){
+      $img1 = "<img src='images/select_user.png'   alt='"._("User")."'>";
+      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."'>";
+      if($this->acl_is_readable($attr)){
+        foreach($this->$attr as $key => $entry){
+          $neg = "";
+          if(preg_match("/^!/",$entry)){
+            $neg = $neg_img;
+          }
+          $entry = preg_replace("/^!/","",$entry);
+
+          $img = $img1;
+          if(preg_match("/^%/",$entry)){
+            $img = $img2;
+          }
+          $entry = preg_replace("/^%/","",$entry);
+  
+          $list_name = "divlist_".$attr;
+          $$list_name->AddEntry(
+              array(
+                array("string" => $neg,"attach" => "style='width:18px;'"),
+                array("string" => $img,"attach" => "style='width:18px;'"),
+                array("string" => $entry),
+                array("string" => preg_replace(array("/%KEY%/","/%ATTR%/"),array($key,$attr),$option),
+                  "attach" => "style='width:40px; border-right: 0px;'")));
+        }
+      }
+    }
+
+
+
 
     /* Tell smarty about our divlists 
      */

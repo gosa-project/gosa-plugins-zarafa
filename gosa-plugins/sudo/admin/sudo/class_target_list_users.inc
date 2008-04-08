@@ -35,6 +35,7 @@ class target_list_users extends MultiSelectWindow
 
   /* CheckBoxes, to change default values modify $this->AddCheckBox */
   var $user       ;
+  var $group      ;
 
 
   /* Subsearch checkbox */
@@ -61,6 +62,12 @@ class target_list_users extends MultiSelectWindow
 
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Object name"), "attach" => "style=''"));
+
+    $this->AddCheckBox("user",    _("Select to see users") ,_("Show users"), true);
+    $this->AddCheckBox("group",   _("Select to see groups"),_("Show groups"), true);
+
+    /* Add SubSearch checkbox */
+    $this->AddCheckBox(SEPERATOR);
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), msgPool::selectToView("","subsearch_small"), false);
@@ -174,7 +181,14 @@ class target_list_users extends MultiSelectWindow
         $desc = " - [ ".$val['description'][0]." ]";
       }
 
-      $img = "<img src='images/select_user.png' alt='"._("Use")."' ".$title.">";
+      $img1 = "<img src='images/select_user.png'  alt='"._("User")."'  ".$title.">";
+      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."' ".$title.">";
+
+      if(in_array("posixGroup",$val['objectClass'])){
+        $img = $img2;
+      }else{
+        $img = $img1;
+      }
 
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
@@ -218,11 +232,35 @@ class target_list_users extends MultiSelectWindow
     $filter= "(&(cn=".$Regex.")(|".$filter."))";
 
     if($this->SubSearch){
-      $res= get_sub_list($filter, array("users"), array(get_people_ou()),$base, 
-            array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH);
+      $res = array();
+      if($this->user){
+        $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_sub_list($filter, array("users"), array(get_people_ou()),$base, 
+              array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
+      }
+      if($this->group){
+        $filter   = "(objectClass=posixGroup)";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_sub_list($filter, array("groups"), array(get_groups_ou()),$base, 
+              array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
+      }
     }else{
       $res= get_list($filter, array("users"), get_people_ou().$base, 
             array("cn","uid","objectClass","description"), GL_SIZELIMIT );
+      $res = array();
+      if($this->user){
+        $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_list($filter, array("users"), get_people_ou().$base, 
+              array("cn","uid","objectClass","description"), GL_SIZELIMIT ));
+      }
+      if($this->group){
+        $filter   = "(objectClass=posixGroup)";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_list($filter, array("groups"), get_groups_ou().$base, 
+              array("cn","uid","objectClass","description"), GL_SIZELIMIT ));
+      }
     }
 
     $this->list= $res;
