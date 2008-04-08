@@ -55,7 +55,7 @@ sub read_configfile {
     my ($cfg_file, %cfg_defaults) = @_;
     my $cfg;
 
-    if( defined( $cfg_file) && ( length($cfg_file) > 0 )) {
+    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
         if( -r $cfg_file ) {
             $cfg = Config::IniFiles->new( -file => $cfg_file );
         } else {

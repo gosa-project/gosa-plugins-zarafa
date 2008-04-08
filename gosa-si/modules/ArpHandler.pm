@@ -60,7 +60,7 @@ my %cfg_defaults =
 #===============================================================================
 sub read_configfile {
 	my $cfg;
-	if( defined( $main::cfg_file) && ( length($main::cfg_file) > 0 )) {
+	if( defined( $main::cfg_file) && ( (-s $main::cfg_file) > 0 )) {
 		if( -r $main::cfg_file ) {
 			$cfg = Config::IniFiles->new( -file => $main::cfg_file );
 		} else {
