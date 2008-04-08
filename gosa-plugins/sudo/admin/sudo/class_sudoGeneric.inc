@@ -43,7 +43,7 @@ class sudo extends plugin
   var $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs","accessTo","trustModel");
 
   var $is_account = TRUE;
-
+  var $is_default = FALSE;
   var $dialog;
 
   /*! \brief  Returns to the base department for sudo roles.
@@ -112,6 +112,10 @@ class sudo extends plugin
         }
       }
 
+    }
+
+    if(preg_match("/^default$/i",$this->cn)){
+      $this->is_default = TRUE;
     }
 
     /* Get global filter config */
@@ -318,6 +322,7 @@ class sudo extends plugin
      *********************/
 
     $smarty = get_smarty();
+    $smarty->assign("is_default",$this->is_default);
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
       $smarty->assign($attr."ACL",$this->getacl($attr));
@@ -499,6 +504,27 @@ class sudo extends plugin
   function check()
   {
     $message = plugin::check();
+
+    /* Is a name given? */
+    if(empty($this->cn)){
+      $message[] = msgPool::required(_("Name"));
+    }
+
+    /* Check name */
+    if(!preg_match("/^[a-z]*$/i",$this->cn)){
+      $message[] = msgPool::invalid(_("Name"),$this->cn,"/[a-z]/i");
+    }
+
+    /* Check if this entry will cause duplicated ldap entries */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->get_sudoers_ou($this->config));
+    $ldap->search("(&(objectClass=sudoRole)(cn=".$this->cn."))");
+    while($attrs = $ldap->fetch()){
+      if($attrs['dn'] != $this->dn){
+        $message[] = msgPool::duplicated(_("Name"));
+      }
+    }
+
     return ($message);
   }
 

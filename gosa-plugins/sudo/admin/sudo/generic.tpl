@@ -1,7 +1,35 @@
+{if $is_default}
+
+<h2>{t}Sudo generic{/t} - {t}Global defaults{/t}</h2>
+<table> 
+ <tr>
+  <td>
+   {t}Name{/t}
+  </td>
+  <td>
+   {render acl=$cnACL}
+   <input type="text" name="cn" value="{$cn}">
+   {/render}
+  </td>
+ </tr>
+ <tr>
+  <td>
+   {t}Description{/t}
+  </td>
+  <td>
+   {render acl=$descriptionACL}
+   <input type="text" name="description" value="{$description}">
+   {/render}
+  </td>
+ </tr>
+</table>
+
+{else}
+
 <table style="width: 90%;">
  <tr>
   <td style="vertical-align:top;width:50%">
-   <h2>Sudo generic</h2>
+   <h2>{t}Sudo generic{/t}</h2>
    <table> 
     <tr>
      <td>
@@ -116,3 +144,4 @@
   </td>
  </tr>
 </table>
+{/if}

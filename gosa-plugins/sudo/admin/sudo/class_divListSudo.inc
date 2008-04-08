@@ -167,6 +167,12 @@ class divListSudo extends MultiSelectWindow
       }
 
       $display = $val['cn'][0].$desc;
+     
+      /* Highlight default entry */ 
+      if(preg_match("/^default$/i",$val['cn'][0])){
+        $display = "<b>$display</b>";
+      }
+
       $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
       $field2 = array("string" => sprintf($userimg,$val['dn']), 
