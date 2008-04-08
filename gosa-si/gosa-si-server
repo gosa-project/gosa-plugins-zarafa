@@ -253,7 +253,7 @@ sub read_configfile {
     foreach my $section (keys %cfg_defaults) {
         foreach my $param (keys %{$cfg_defaults{ $section }}) {
             my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+            ${@$pinfo[ 0 ]} = (defined($cfg))?$cfg->val( $section, $param, @$pinfo[ 1 ] ):@$pinfo[ 1 ];
         }
     }
 }
