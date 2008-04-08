@@ -7,9 +7,7 @@
    {t}Name{/t}
   </td>
   <td>
-   {render acl=$cnACL}
-   <input type="text" name="cn" value="{$cn}">
-   {/render}
+   <input type="text" name="dummy" value="{$cn}" disabled>
   </td>
  </tr>
  <tr>

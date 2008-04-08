@@ -35,9 +35,10 @@ class sudo extends plugin
   var $sudoHost   = array("ALL");
   var $sudoRunAs  = array("ALL");
 
-  var $accessTo       = array();
-  var $trustModel     = "";
-  var $show_ws_dialog = FALSE;
+  var $accessTo         = array();
+  var $trustModel       = "";
+  var $show_ws_dialog   = FALSE;
+  var $was_trust_account= FALSE;
 
   var $objectclasses = array("top","sudoRole");
   var $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs","accessTo","trustModel");
@@ -411,6 +412,10 @@ class sudo extends plugin
   function save_object()
   {
     plugin::save_object();
+    
+    if($this->is_default){
+      $this->cn = "default";
+    }  
 
     if(is_object($this->dialog)){
       $this->dialog->save_object();
@@ -510,6 +515,11 @@ class sudo extends plugin
       $message[] = msgPool::required(_("Name"));
     }
 
+    /* Check if name is reserved */
+    if(!$this->is_default && preg_match("/^default$/i",$this->cn)){
+      $message[] = msgPool::reserved(_("Name"));
+    }
+
     /* Check name */
     if(!preg_match("/^[a-z]*$/i",$this->cn)){
       $message[] = msgPool::invalid(_("Name"),$this->cn,"/[a-z]/i");
@@ -590,6 +600,13 @@ class sudo extends plugin
     $smarty->assign("apply",        apply_filter());
     $display= $smarty->fetch (get_template_path('trust_machines.tpl', TRUE, dirname(__FILE__)));
     return ($display);
+  }
+
+
+  public function set_default($state)
+  {
+    $this->is_default = TRUE;
+    $this->cn = "default";
   }
 
 

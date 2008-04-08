@@ -87,7 +87,7 @@ class sudoManagement extends plugin
       } 
     }
 
-    if(isset($_POST['menu_action']) && in_array($_POST['menu_action'],array("new_role","del_role"))){
+    if(isset($_POST['menu_action']) && in_array($_POST['menu_action'],array("new_role","del_role","new_default"))){
       $s_action = $_POST['menu_action'];
     }
 
@@ -99,7 +99,7 @@ class sudoManagement extends plugin
      ********************/
 
     /* New sudo? */
-    if ($s_action=="new_role"){
+    if ($s_action=="new_role" || $s_action == "new_default"){
 
       /* Check create permissions */
       $acl = $this->ui->get_permissions($this->base,"sudo/sudo");
@@ -114,6 +114,11 @@ class sudoManagement extends plugin
 
         /* Set up the sudo ACL's for this 'dn' */
         $this->sudotabs->set_acl_base($this->base);
+
+        /* This entry will become the default entry */
+        if($s_action == "new_default"){
+          $this->sudotabs->set_default(TRUE);
+        }
       }
     }
 

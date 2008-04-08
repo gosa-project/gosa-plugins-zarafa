@@ -28,6 +28,13 @@ class sudotabs extends tabs
     $this->addSpecialTabs();
   }
 
+  function set_default($state)
+  {
+    if(isset($this->by_object['sudo'])){
+      $this->by_object['sudo']->set_default($state);
+    }
+  }
+
   function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['sudo'];
