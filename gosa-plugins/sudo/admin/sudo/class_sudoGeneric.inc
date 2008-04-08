@@ -113,6 +113,15 @@ class sudo extends plugin
       }
 
     }
+
+    /* Get global filter config */
+    if (!session::is_set("sysfilter")){
+      $ui= get_userinfo();
+      $base= get_base_from_people($ui->dn);
+      $sysfilter= array( "depselect"       => $base,
+          "regex"           => "*");
+      session::set("sysfilter", $sysfilter);
+    }
   }
 
 
@@ -159,7 +168,7 @@ class sudo extends plugin
 
     /* Show ws dialog */
     if ($this->show_ws_dialog){
-      $this->display_trust_add_dialog();
+      return($this->display_trust_add_dialog());
     }
 
 
@@ -532,12 +541,14 @@ class sudo extends plugin
     $regex= $sysfilter['regex'];
     $filter= "(&(|(objectClass=goServer)(objectClass=gotoWorkstation)(objectClass=gotoTerminal))$exclude(cn=*)(cn=$regex))";
 
-    $deps_a = array(get_ou("serverou"),
-        get_ou("terminalou"),
-        get_ou("workstationou"));
+    $res = array();
+    $res= array_merge($res,get_sub_list($filter, array("terminal"), get_ou("terminalou"),
+        get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));
+    $res= array_merge($res,get_sub_list($filter, array("server"), get_ou("serverou"), 
+        get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));
+    $res= array_merge($res,get_sub_list($filter, array("workstation"), get_ou("workstationou"),
+        get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));
 
-    $res= get_sub_list($filter, array("terminal","server","workstation"), $deps_a, 
-        get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT);
     $wslist= array();
     foreach ($res as $attrs){
       $wslist[]= preg_replace('/\$/', '', $attrs['cn'][0]);
@@ -579,7 +590,8 @@ class sudo extends plugin
             "sudoUser"          => _("Users"),
             "sudoHost"          => _("Host"),
             "sudoCommand"       => _("Command"),
-            "sudoRunAs"         => _("Run as user"))
+            "sudoRunAs"         => _("Run as user"),
+            "trustModel"        => _("Access control list"))
         ));
   }
 }

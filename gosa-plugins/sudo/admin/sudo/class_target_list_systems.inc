@@ -101,7 +101,12 @@ class target_list_systems extends MultiSelectWindow
     }
 
     /* Load possible departments */
-    $tdeps= $ui->get_module_departments(array("server","terminal","workstation"));
+    $tdeps= array();
+    $tdeps= array_merge($tdeps,$ui->get_module_departments("server"));
+    $tdeps= array_merge($tdeps,$ui->get_module_departments("terminal"));
+    $tdeps= array_merge($tdeps,$ui->get_module_departments("workstation"));
+    $tdeps = array_unique($tdeps); 
+ 
     $ids = $this->config->idepartments;
     $first = "";
     $found = FALSE;
@@ -225,37 +230,48 @@ class target_list_systems extends MultiSelectWindow
     $filter   = "";
     $Regex    = $this->Regex;
 
-    $chk = array(
-        "terminal"     => "(objectClass=gotoTerminal)",
-        "server"       => "(objectClass=goServer)" ,
-        "workstation"  => "(objectClass=gotoWorkstation)");
-
-    /* Create filter */
-    foreach($chk as $chkBox => $FilterPart){
-      if($this->$chkBox){
-        $filter .=  $FilterPart;
-      }
-    }
     $filter= "(&(cn=".$Regex.")(|".$filter."))";
 
     if($this->SubSearch){
-      $res= get_list($filter, array("terminal","workstation","server"), $base, 
-            array("cn","objectClass","gosaGroupObjects","description"), GL_SIZELIMIT | GL_SUBSEARCH);
+      $res= array();
+      if($this->terminal){
+        $filter = "(objectClass=gotoTerminal)";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_sub_list($filter,"terminal",get_ou('terminalou'),$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
+      }
+      if($this->workstation){
+        $filter = "(objectClass=gotoWorkstation)";  
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_sub_list($filter, "workstation",  get_ou('workstationou'),$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
+      }
+      if($this->server){
+        $filter = "(objectClass=goServer)";
+        $filter = "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_sub_list($filter, "server", get_ou('serverou'),$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
+      }
     }else{
-      $res= get_list($filter, "terminal", get_ou('terminalou').$base, 
-            array("cn","objectClass","description"), GL_SIZELIMIT );
-      $res= array_merge($res,get_list($filter, "workstation",  get_ou('workstationou').$base, 
-            array("cn","objectClass","description"), GL_SIZELIMIT ));
-      $res= array_merge($res,get_list($filter, "server", get_ou('serverou').$base, 
-            array("cn","objectClass","description"), GL_SIZELIMIT ));
-
-      $deps_a = array(
-          get_ou("workstationou"),
-          get_ou("terminalou"),
-          get_ou("serverou"));
-
-      $res = get_sub_list($filter,array("server","terminal","workstation"), 
-                  $deps_a,get_ou("systemsou").$base,array("cn","objectClass","description"),GL_SIZELIMIT);
+      $res= array();
+      if($this->terminal){
+        $filter = "(objectClass=gotoTerminal)";
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_list($filter,"terminal", get_ou('terminalou').$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT ));
+      }
+      if($this->workstation){
+        $filter = "(objectClass=gotoWorkstation)";  
+        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_list($filter, "workstation",  get_ou('workstationou').$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT ));
+      }
+      if($this->server){
+        $filter = "(objectClass=goServer)";
+        $filter = "(&(cn=".$Regex.")(|".$filter."))";
+        $res= array_merge($res,get_list($filter, "server", get_ou('serverou').$base, 
+              array("cn","objectClass","description"), GL_SIZELIMIT ));
+      }
     }
 
     $this->list= $res;
