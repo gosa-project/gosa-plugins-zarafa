@@ -65,9 +65,12 @@ class divListSudo extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 54;
     if($this->parent->snapshotEnabled()){
-      $action_col_size += 38;
+      $action_col_size += 32;
+    }
+    if($this->parent->CopyPasteHandler){
+      $action_col_size += 20;
     }
 
     /* Toggle all selected / deselected */
@@ -120,6 +123,24 @@ class divListSudo extends MultiSelectWindow
         "&nbsp;"._("Remove")."|"."del_role|\n";
     }
 
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
+      $s.= "..|---|\n";
+      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
+#      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+#        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+
+      if($this->parent->CopyPasteHandler->entries_queued()){
+        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+      }else{
+        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      }
+    }
+
+
     /* Add snapshot icons */
     if(preg_match("/(c.*w|w.*c)/",$acl)){
       $s .= "..|---|\n";
@@ -151,9 +172,12 @@ class divListSudo extends MultiSelectWindow
     $userimg  = "<img class='center' src='images/select_sudo.png' alt='Sudo' title='%s'>";
     $ui       = get_userinfo();
 
-    $action_col_size = 50;
+    $action_col_size = 54;
     if($this->parent->snapshotEnabled()){
-      $action_col_size += 38;
+      $action_col_size += 32;
+    }
+    if($this->parent->CopyPasteHandler){
+      $action_col_size += 20;
     }
 
     // Test Every Entry and generate divlist Array
@@ -164,6 +188,16 @@ class divListSudo extends MultiSelectWindow
 
       /* Add edit icon */
       $actions = "";
+
+      $actions= "";
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
+#        $actions.= "<input class='center' type='image'
+#          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $actions.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+
+
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
 
@@ -189,6 +223,16 @@ class divListSudo extends MultiSelectWindow
       /* Highlight defaults entry */ 
       if(preg_match("/^defaults$/i",$val['cn'][0])){
         $display = "<b>$display</b>";
+      }
+
+      /* Cutted objects should be displayed in light grey */
+      if($this->parent->CopyPasteHandler){
+        foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+          if($queue_data['dn'] == $val['dn']) {
+            $display = "<font color='#999999'>".$display."</font>";
+            break;
+          }
+        }
       }
 
       $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,

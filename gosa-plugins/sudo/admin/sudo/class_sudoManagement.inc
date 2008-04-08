@@ -34,6 +34,8 @@ class sudoManagement extends plugin
   private $DivListSudo    = NULL;
   private $sudotabs       = NULL;
   private $base           = "";
+
+  private $start_pasting_copied_objects = FALSE;
  
   /*! \brief */ 
   public function __construct(&$config, &$ui)
@@ -42,6 +44,11 @@ class sudoManagement extends plugin
     $this->config = &$config;
     $this->ui     = &$ui;
     $this->base   = sudo::get_sudoers_ou($this->config);
+
+    /* Copy & Paste enabled ?*/
+    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
+    }
 
     /* Create dialog object */
     $this->DivListSudo = new divListSudo($this->config,$this);
@@ -61,7 +68,7 @@ class sudoManagement extends plugin
 
     /* Store these posts if the current object is locked (used by somebody else)*/
     session::set('LOCK_VARS_TO_USE',array(
-          "/^act$/","/^id$/","/^sudo_edit_/",
+          "/^act$/","/^id$/","/^sudo_edit_/","/^cut_/","/^copy_/",
           "/^sudo_del_/","/^item_selected/","/menu_action/"));
 
 
@@ -76,6 +83,14 @@ class sudoManagement extends plugin
       if(preg_match("/^sudo_del_/",$name)){
         $s_action = "del_role";
         $s_entry  = preg_replace("/^sudo_del_([0-9]*).*$/","\\1",$name);
+      }elseif(preg_match("/^editPaste.*/i",$name)){
+        $s_action="editPaste";
+      }elseif(preg_match("/^copy_.*/",$name)){
+        $s_action="copy";
+        $s_entry  = preg_replace("/^copy_([0-9]*).*$/i","\\1",$name);
+#      }elseif(preg_match("/^cut_.*/",$name)){
+#        $s_action="cut";
+#        $s_entry  = preg_replace("/^cut_([0-9]*).*$/i","\\1",$name);
       }
     }
 
@@ -87,11 +102,24 @@ class sudoManagement extends plugin
       } 
     }
 
-    if(isset($_POST['menu_action']) && in_array($_POST['menu_action'],array("new_role","del_role","new_default"))){
+    if(isset($_POST['menu_action']) && in_array($_POST['menu_action'],array("new_role","del_role","new_default","editPaste"))){
       $s_action = $_POST['menu_action'];
     }
 
+
+
     $smarty= get_smarty();
+
+
+    /********************
+      Copy & Paste Handling  ...
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
+    }
 
 
     /********************
@@ -371,6 +399,9 @@ class sudoManagement extends plugin
   public function save_object()
   {
     $this->DivListSudo->save_object();
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
   
@@ -404,8 +435,70 @@ class sudoManagement extends plugin
     }
   }
 
-  function get_used_snapshot_bases(){
+  function get_used_snapshot_bases()
+  {
     return(array(sudo::get_sudoers_ou($this->config)));
+  }
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->list[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"sudotabs","SUDOTABS","sudo");
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->list[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","sudotabs","SUDOTABS","sudo");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","sudotabs","SUDOTABS","sudo");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListSudo->selectedBase);
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

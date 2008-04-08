@@ -683,6 +683,71 @@ class sudo extends plugin
             "trustModel"        => _("Access control list"))
         ));
   }
+
+
+  /*! \brief  This function will be called if an object gets copied.
+              This function adapts attributes from the source object.
+      @param  Array The source object.
+   */
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    foreach(array("sudoUser","sudoCommand","sudoHost","sudoRunAs") as $attr){
+      $this->$attr = array();
+      if(isset($source[$attr])){
+        $tmp = array();
+        for($i = 0 ; $i < $source[$attr]['count']; $i++){
+          $tmp[] = $source[$attr][$i];
+        }
+        $this->$attr = $tmp;
+      }
+    }
+
+    /* Is this account a trustAccount? */
+    if (isset($source['trustModel'])){
+      $this->trustModel= $source['trustModel'][0];
+      $this->was_trust_account= TRUE;
+    } else {
+      $this->was_trust_account= FALSE;
+      $this->trustModel= "";
+    }
+
+    $this->accessTo = array();
+    if (isset($source['accessTo'])){
+      for ($i= 0; $i<$source['accessTo']['count']; $i++){
+        $tmp= $source['accessTo'][$i];
+        $this->accessTo[$tmp]= $tmp;
+      }
+    }
+  }
+
+
+  /*! \brief  Used for copy & paste.
+              Returns a HTML input mask, which allows to change the cn of this entry.
+      @param  Array   Array containing current status && a HTML template.              
+   */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  /*! \brief  Used for copy & paste.
+              Some entries must be renamed to avaoid duplicate entries.
+   */
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = get_post('cn');
+    }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

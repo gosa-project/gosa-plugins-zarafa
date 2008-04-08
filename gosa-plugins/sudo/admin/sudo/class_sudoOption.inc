@@ -105,6 +105,13 @@ class sudoOption extends plugin
     ksort($option);
     $this->options = $option;
 
+    $this->load_options();
+  }
+
+
+  private function load_options()
+  {
+
     /****
       Parse given sudoOption attributes 
      ****/
@@ -186,6 +193,7 @@ class sudoOption extends plugin
       }
     }
   }
+
 
 
   /*! \brief  Create HTML output for this plugin 
@@ -459,7 +467,7 @@ class sudoOption extends plugin
     $ldap->modify($this->attrs);;
   }
 
-  
+
   /*! \brief  Checks input validity
    */
   function check()
@@ -477,12 +485,22 @@ class sudoOption extends plugin
                 $message[] = msgPool::invalid($name,$option['VALUE'],"/[0-9]/");
               }
             } break;
-
         }
       }
     }
-
     return ($message);
+  }
+
+
+  /*! \brief  This function will be called if an object gets copied.
+              This function adapts attributes from the source object.
+      @param  Array The source object.
+   */
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    $this->attrs['sudoOption'] = $source['sudoOption'];
+    $this->load_options();
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
