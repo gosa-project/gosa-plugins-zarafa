@@ -65,7 +65,10 @@ class divListSudo extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 80;
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
 
     /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
@@ -117,6 +120,13 @@ class divListSudo extends MultiSelectWindow
         "&nbsp;"._("Remove")."|"."del_role|\n";
     }
 
+    /* Add snapshot icons */
+    if(preg_match("/(c.*w|w.*c)/",$acl)){
+      $s .= "..|---|\n";
+      $s .= $this->get_snapshot_header(TRUE);
+    }
+
+
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
@@ -141,7 +151,10 @@ class divListSudo extends MultiSelectWindow
     $userimg  = "<img class='center' src='images/select_sudo.png' alt='Sudo' title='%s'>";
     $ui       = get_userinfo();
 
-    $action_col_size = 80;
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
 
     // Test Every Entry and generate divlist Array
     foreach($list as $key => $val){
@@ -153,6 +166,10 @@ class divListSudo extends MultiSelectWindow
       $actions = "";
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
+
+      if(preg_match("/(c.*w|w.*c)/",$acl)){
+        $actions.= $this->GetSnapShotActions($val['dn']);
+      }
 
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'

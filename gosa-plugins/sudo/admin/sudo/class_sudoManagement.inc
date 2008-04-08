@@ -307,6 +307,11 @@ class sudoManagement extends plugin
       return ($display);
     }
 
+    /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog(sudo::get_sudoers_ou($this->config),$this->get_used_snapshot_bases())){
+      return($str);
+    }
+
     /* Display dialog with sudo list */
     $this->DivListSudo->execute();
     $this->reload ();
@@ -397,6 +402,10 @@ class sudoManagement extends plugin
     if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
       del_lock($this->dns);
     }
+  }
+
+  function get_used_snapshot_bases(){
+    return(array(sudo::get_sudoers_ou($this->config)));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
