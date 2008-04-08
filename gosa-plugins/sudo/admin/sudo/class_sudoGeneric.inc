@@ -645,6 +645,9 @@ class sudo extends plugin
   }
 
 
+  /*! \brief Force this entry to be handled and saved as 'default'
+      @param  BOOL  TRUE -force default   FALSE -normal
+   */
   public function set_default($state)
   {
     $this->is_default = TRUE;

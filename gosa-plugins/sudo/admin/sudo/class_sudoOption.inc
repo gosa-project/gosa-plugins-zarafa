@@ -271,9 +271,24 @@ class sudoOption extends plugin
     $smarty->assign("map",  array("STRING" => _("string"), "BOOLEAN" => _("bool"),
       "INTEGER" => _("integer") , "BOOL_INTEGER" => _("integer")."-"._("bool") ,
       "STRING_BOOL" => _("string")."-"._("bool"),"LISTS" => _("list")));
-    $smarty->assign("sudoOption",$this->sudoOption);
+    $smarty->assign("sudoOption",$this->prepare_for_html($this->sudoOption));
     $smarty->assign("options",$this->options);
     return($smarty->fetch(get_template_path('options.tpl', TRUE)));
+  }
+
+
+  /*! \brief  Prepare options array to be used in HTML.
+      @param  Array   The options array ($this->sudoOption) 
+      @return Array   HTML ready sudoOption. Can now be used in smarty templates
+   */
+  function prepare_for_html($a_options)
+  {
+    foreach($a_options as $name => $options){
+      foreach($options as $key => $option){
+        $a_options[$name][$key]['VALUE'] = htmlentities($option['VALUE']);
+      }
+    }
+    return($a_options);
   }
 
 
