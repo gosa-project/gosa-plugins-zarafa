@@ -139,7 +139,6 @@ class sudoManagement extends plugin
           if ($this->dn != "new"){
             del_lock ($this->dn);
           }
-
           unset ($this->sudotabs);
           $this->sudotabs= NULL;
           session::un_set('objectinfo');
@@ -185,28 +184,30 @@ class sudoManagement extends plugin
      ********************/
 
     if ($s_action=="del_role"){
-
       $ids = $this->list_get_selected_items();
-
       if(!count($ids) && $s_entry!=""){
         $ids = array($s_entry);
       }
 
       if(count($ids)){
+
+        /* Create list of entries to delete */
         $this->dns = array();
+        $dns_names = array();
         foreach($ids as $id){
           $dn = $this->list[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
           $this->dns[$id] = $dn;
-        }
-
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names[] =@LDAP::fix($dn);
         }
+      
+        /* Check locking of entries */
+        $users = get_multiple_locks($this->dns);
+        if(count($users)){
+          return(gen_locked_message($users,$this->dns));
+        }
+    
+        /* Add locks */
+        add_lock($this->dns,$this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
         $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Sudo role")));
@@ -257,10 +258,8 @@ class sudoManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_sudo_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+      del_lock ($this->dns);
+      unset($this->dns);
     }
 
     /********************
@@ -268,7 +267,7 @@ class sudoManagement extends plugin
      ********************/
 
     /* Cancel dialogs */
-    if (isset($_POST['edit_cancel'])){
+    if (isset($_POST['edit_cancel']) && is_object($this->sudotabs)){
       if(isset($this->sudotabs->dn)){
         del_lock ($this->sudotabs->dn);
       }
@@ -283,7 +282,7 @@ class sudoManagement extends plugin
      ********************/
 
     /* Show tab dialog if object is present */
-    if (isset($this->sudotabs->config)){
+    if (is_object($this->sudotabs)){
       $display= $this->sudotabs->execute();
 
       /* Don't show buttons if tab dialog requests this */
@@ -304,7 +303,6 @@ class sudoManagement extends plugin
     }
 
     /* Display dialog with sudo list */
-    $this->DivListSudo->parent = &$this;
     $this->DivListSudo->execute();
     $this->reload ();
     $this->DivListSudo->setEntries($this->list);
@@ -388,8 +386,11 @@ class sudoManagement extends plugin
    */
   public function remove_lock()
   {
-    if (isset($this->sudotabs->dn)){
+    if (is_object($this->sudotabs) && $this->sudotabs->dn != "new"){
       del_lock ($this->sudotabs->dn);
+    }
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock($this->dns);
     }
   }
 }
