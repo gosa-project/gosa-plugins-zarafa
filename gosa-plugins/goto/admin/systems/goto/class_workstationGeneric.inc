@@ -466,12 +466,12 @@ class workgeneric extends plugin
       }
     }else{
       /* Warn the user, that this host is currently installing */
-      if($this->currently_installing && !$this->currently_installing_warned){
+      if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".normalizePreg(get_ou("incomingou"))."/",$this->orig_dn)){
         $this->currently_installing_warned = TRUE;
         $message[] = _("This host is currently installing, if you really want to save it, save again.");
       }
     }
-  
+ 
     return ($message);
   }
 
