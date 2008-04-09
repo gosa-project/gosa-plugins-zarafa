@@ -2191,6 +2191,7 @@ $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 
 # connect to fai_server_db and fai_release_db
+unlink($fai_server_file_name);
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
 $fai_server_db->create_table($fai_release_tn, \@fai_release_col_names);
