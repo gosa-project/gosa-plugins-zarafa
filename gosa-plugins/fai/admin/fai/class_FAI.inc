@@ -158,7 +158,34 @@ class FAI
           $addObj['diff'] = FALSE;
         }
       } 
+    }else{
+#     $ldap = $config->get_ldap_link();
+#     $ldap->cd($config->current['BASE']);
+#     $ldap->cat(FAI::get_parent_release_object($Current_DN,TRUE));
+#
+#     $attrs = $ldap->fetch();
+#     if($attrs){
+#       $cn    = $attrs['cn'][0];
+#    
+#       $profiles = FAI::get_all_objects_for_given_base(FAI::get_release_dn($Current_DN),"(&(objectClass=FAIprofile)(FAIclass=".$cn."))"); 
+#       print_a($profiles); 
+#       foreach($profiles as $dn){
+#
+#         $ldap->cat($dn);
+#         $attrs = FAI::prepare_ldap_fetch_to_be_saved($ldap->fetch());
+#           print_a($attrs);
+#         if($attrs){
+#         
+#           if(in_array($cn,$attrs['FAIclass'])){
+#
+#           }
+#         }
+#       }
+#     }
     }
+
+
+
     $FAI_objects_to_save = session::get('FAI_objects_to_save') ;
     $FAI_objects_to_save[$Current_DN] =  $addObj;
     session::set('FAI_objects_to_save',$FAI_objects_to_save);
