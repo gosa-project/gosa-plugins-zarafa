@@ -1889,11 +1889,13 @@ sub create_sources_list {
 				);
 		if($mesg->count) {
 			foreach my $entry(@{$mesg->{'entries'}}) {
-				my ($server, $tag, $release, $sections)= split /\|/, $entry->get_value('FAIrepository');
-				my $line = "deb $server $release";
-				$sections =~ s/,/ /g;
-				$line.= " $sections";
-				print $fh $line."\n";
+				foreach my $value(@{$entry->get_value('FAIrepository', asref => 1)}) {
+					my ($server, $tag, $release, $sections)= split /\|/, $value;
+					my $line = "deb $server $release";
+					$sections =~ s/,/ /g;
+					$line.= " $sections";
+					print $fh $line."\n";
+				}
 			}
 		}
 	}
