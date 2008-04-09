@@ -37,27 +37,25 @@ class target_list_users extends MultiSelectWindow
   var $user       ;
   var $group      ;
 
-
   /* Subsearch checkbox */
   var $SubSearch          ;
   var $parent             ;
   var $ui                 ;
- 
- 
+
   function target_list_users(&$config,$Targets_used)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Targetselection", array("users"));
 
-    $this->Targets_used = $Targets_used;
-    
+    $this->Targets_used  = $Targets_used;
+
     $this->SetInformation(  _("Select the target objects"));
     $this->SetTitle(        _("Available targets"));
     $this->SetSummary(      _("Available targets"));
     $this->SetHeadpageMode(FALSE);
-    
+
     /* set Page header */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
-               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+      onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
 
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
@@ -92,7 +90,7 @@ class target_list_users extends MultiSelectWindow
     $tmp = array();
     $tmp[] = array("dn"=>$this->config->current['BASE']);
     $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
+          array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
     $deps = array();
     foreach($tmp as $tm){
@@ -158,10 +156,10 @@ class target_list_users extends MultiSelectWindow
     return($this->Draw());
   }
 
-  
+
   function SetEntries($list)
   {
-      /* Add Copy & Paste buttons if copy&paste is enabled
+    /* Add Copy & Paste buttons if copy&paste is enabled
      */
     // Defining Links
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
@@ -192,17 +190,17 @@ class target_list_users extends MultiSelectWindow
 
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
-                      "attach" => "style='width:20px;'");
+          "attach" => "style='width:20px;'");
       $field1 = array("string" => $img, 
-                      "attach" => "style='text-   align:center;width: 20px;'");
+          "attach" => "style='text-   align:center;width: 20px;'");
       $field2 = array("string" => $val['cn'][0].$desc, 
-                      "attach" => "style='border-right:0px;' ".$title);
+          "attach" => "style='border-right:0px;' ".$title);
 
       $this->AddElement(array($field0,$field1,$field2));
     }
   }
 
-  
+
   function save()
   { 
     $ret = array();
@@ -219,45 +217,43 @@ class target_list_users extends MultiSelectWindow
     MultiSelectWindow::save_object();
   }
 
-  
+
   function reload()
   {
     /* Set base for all searches && initialise some vars */
     $this->list= array();
     $base     = $this->selectedBase;
-    $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";
     $Regex    = $this->Regex;
 
     /* Create filter */
-    $filter= "(&(cn=".$Regex.")(|".$filter."))";
 
     if($this->SubSearch){
       $res = array();
       if($this->user){
         $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";
-        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $filter= "(&(|(cn=".$Regex.")(uid=".$Regex."))(|".$filter."))";
         $res= array_merge($res,get_sub_list($filter, array("users"), array(get_people_ou()),$base, 
               array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
       if($this->group){
         $filter   = "(objectClass=posixGroup)";
-        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $filter= "(&(|(cn=".$Regex.")(uid=".$Regex."))(|".$filter."))";
         $res= array_merge($res,get_sub_list($filter, array("groups"), array(get_groups_ou()),$base, 
               array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
     }else{
       $res= get_list($filter, array("users"), get_people_ou().$base, 
-            array("cn","uid","objectClass","description"), GL_SIZELIMIT );
+          array("cn","uid","objectClass","description"), GL_SIZELIMIT );
       $res = array();
       if($this->user){
         $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";
-        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $filter= "(&(|(cn=".$Regex.")(uid=".$Regex."))(|".$filter."))";
         $res= array_merge($res,get_list($filter, array("users"), get_people_ou().$base, 
               array("cn","uid","objectClass","description"), GL_SIZELIMIT ));
       }
       if($this->group){
         $filter   = "(objectClass=posixGroup)";
-        $filter= "(&(cn=".$Regex.")(|".$filter."))";
+        $filter= "(&(|(cn=".$Regex.")(uid=".$Regex."))(|".$filter."))";
         $res= array_merge($res,get_list($filter, array("groups"), get_groups_ou().$base, 
               array("cn","uid","objectClass","description"), GL_SIZELIMIT ));
       }
@@ -290,7 +286,6 @@ class target_list_users extends MultiSelectWindow
     return($ids);
   }
 }
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
