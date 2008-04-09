@@ -70,7 +70,7 @@ class faiHookEntry extends plugin
         msg_dialog::display(_("Error"), _("Uploaded file is empty!"), ERROR_DIALOG);
       }else{
         $str = utf8_encode(file_get_contents($_FILES['ImportFile']['tmp_name']));
-        $this->FAIscript = $str;
+        $this->FAIscript = addslashes ($str);
       }
     }
 
