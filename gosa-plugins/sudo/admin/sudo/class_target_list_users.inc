@@ -22,25 +22,24 @@
 
 class target_list_users extends MultiSelectWindow
 {
-  var $config;
-  var $list         =array();
-  var $Targets_used =array();
+  public $config;
+  private $list         =array();
+  private $Targets_used =array();
 
   /* Current base */
-  var $selectedBase       = "";
-  var $departments        = array();
+  private $departments        = array();
 
   /* Regex */
-  var $Regex              = "*";
+  protected $Regex              = "*";
 
   /* CheckBoxes, to change default values modify $this->AddCheckBox */
-  var $user       ;
-  var $group      ;
+  protected $user       ;
+  protected $group      ;
 
   /* Subsearch checkbox */
-  var $SubSearch          ;
-  var $parent             ;
-  var $ui                 ;
+  protected $SubSearch          ;
+  protected $parent             ;
+  protected $ui                 ;
 
   function target_list_users(&$config,$Targets_used)
   {
@@ -242,8 +241,6 @@ class target_list_users extends MultiSelectWindow
               array("cn","uid","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
     }else{
-      $res= get_list($filter, array("users"), get_people_ou().$base, 
-          array("cn","uid","objectClass","description"), GL_SIZELIMIT );
       $res = array();
       if($this->user){
         $filter   = "(&(objectClass=person)(objectClass=gosaAccount))";

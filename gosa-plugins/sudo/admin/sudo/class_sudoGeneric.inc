@@ -26,26 +26,25 @@
  */
 class sudo extends plugin
 {
-  /* Group attributes */
-  var $cn= "";
-  var $description= "";
 
-  var $sudoUser   = array("ALL");
-  var $sudoCommand= array();
-  var $sudoHost   = array("ALL");
-  var $sudoRunAs  = array("ALL");
+  protected $cn= "";
+  protected $description= "";
 
-  var $accessTo         = array();
-  var $trustModel       = "";
-  var $show_ws_dialog   = FALSE;
-  var $was_trust_account= FALSE;
+  protected $sudoUser   = array("ALL");
+  protected $sudoCommand= array();
+  protected $sudoHost   = array("ALL");
+  protected $sudoRunAs  = array("ALL");
+  protected $accessTo         = array();
+  protected $trustModel       = "";
 
-  var $objectclasses = array("top","sudoRole");
-  var $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs","accessTo","trustModel");
+  private $is_default = FALSE;
+  private $show_ws_dialog   = FALSE;
+  private $was_trust_account= FALSE;
 
-  var $is_account = TRUE;
-  var $is_default = FALSE;
-  var $dialog;
+  public $objectclasses = array("top","sudoRole");
+  public $attributes    = array("cn","description","sudoUser","sudoCommand","sudoHost","sudoRunAs","accessTo","trustModel");
+
+  public $ignore_account = TRUE;
 
   /*! \brief  Returns to the base department for sudo roles.
               This department is then used to store new roles.
@@ -97,7 +96,7 @@ class sudo extends plugin
       }
 
       /* Is this account a trustAccount? */
-      if ($this->is_account && isset($this->attrs['trustModel'])){
+      if (isset($this->attrs['trustModel'])){
         $this->trustModel= $this->attrs['trustModel'][0];
         $this->was_trust_account= TRUE;
       } else {
@@ -106,7 +105,7 @@ class sudo extends plugin
       }
 
       $this->accessTo = array();
-      if ($this->is_account && isset($this->attrs['accessTo'])){
+      if (isset($this->attrs['accessTo'])){
         for ($i= 0; $i<$this->attrs['accessTo']['count']; $i++){
           $tmp= $this->attrs['accessTo'][$i];
           $this->accessTo[$tmp]= $tmp;
@@ -528,6 +527,7 @@ class sudo extends plugin
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
+
     if($this->is_new){
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
@@ -736,6 +736,12 @@ class sudo extends plugin
     $ret['string'] = $str;
     $ret['status'] = "";
     return($ret);
+  }
+
+
+  public function get_cn()
+  {
+    return($this->cn);
   }
 
 

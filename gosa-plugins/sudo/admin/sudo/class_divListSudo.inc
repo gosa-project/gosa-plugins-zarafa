@@ -28,17 +28,16 @@ class divListSudo extends MultiSelectWindow
 {
 
   /* Current base */
-  var $selectedBase       = "";
-  var $departments        = array();
+  private $departments        = array();
 
   /* Regex */
-  var $Regex              = "*";
-  var $UserRegex          = "*";
+  public $Regex              = "*";
+  public $UserRegex          = "*";
 
   /* Subsearch checkbox */
-  var $SubSearch          = FALSE;
-  var $parent             ;
-  var $ui                 ;
+  public $SubSearch          = FALSE;
+  protected $parent             ;
+  public $ui                 ;
 
 
   /*! \brief  Initialize this class 

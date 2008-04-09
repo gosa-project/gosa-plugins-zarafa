@@ -22,27 +22,26 @@
 
 class target_list_systems extends MultiSelectWindow
 {
-  var $config;
-  var $list         =array();
-  var $Targets_used =array();
+  public $config;
+  protected $list         =array();
+  private $Targets_used =array();
 
   /* Current base */
-  var $selectedBase       = "";
-  var $departments        = array();
+  private $departments       = array();
 
   /* Regex */
-  var $Regex              = "*";
+  protected $Regex           = "*";
 
   /* CheckBoxes, to change default values modify $this->AddCheckBox */
-  var $servers        ;
-  var $workstations   ;
-  var $terminals      ;
+  protected $servers        ;
+  protected $workstations   ;
+  protected $terminals      ;
 
 
   /* Subsearch checkbox */
-  var $SubSearch          ;
-  var $parent             ;
-  var $ui                 ;
+  protected $SubSearch       ;
+  protected $parent          ;
+  public $ui                 ;
  
  
   function target_list_systems(&$config,$Targets_used)

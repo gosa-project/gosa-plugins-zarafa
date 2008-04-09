@@ -27,10 +27,10 @@
 class sudoOption extends plugin
 {
   /* Group attributes */
-  var $sudoOption = array();
-  var $attributes    = array("sudoOption");
-  var $is_account = TRUE;
-  var $options = array();
+  protected $sudoOption = array();
+  public $attributes    = array("sudoOption");
+  private $options = array();
+  public $ignore_account = TRUE;
 
   /*! \brief  Initializes this class
         @param  Object $config  The GOsa configuration object.
