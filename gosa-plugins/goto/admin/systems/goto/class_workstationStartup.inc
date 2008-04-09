@@ -942,6 +942,14 @@ class workstartup extends plugin
           if(!empty($mac)){
             $macs[] = $mac;
           }          
+        }elseif(isset($this->parent->by_object['servgeneric']->netConfigDNS->macAddress)){
+
+          /* We are a server. Add current mac.
+           */
+          $mac = $this->parent->by_object['servgeneric']->netConfigDNS->macAddress;
+          if(!empty($mac)){
+            $macs[] = $mac;
+          }          
         }
 
         /* Trigger event for all member objects 
