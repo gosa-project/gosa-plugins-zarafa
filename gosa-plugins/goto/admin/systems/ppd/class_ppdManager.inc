@@ -146,10 +146,12 @@ class ppdManager
 		}elseif(!is_writeable(preg_replace("#(^.*/).*$#","\\1",$ppdFile.".tmp"))){
 			msg_dialog::display(_("PPD manager error"), sprintf(_("The temporary file '%s' cannot be opened for writing."),$ppdFile.".tmp"), ERROR_DIALOG);
 		}else{
-			foreach ($properties as $name => $section){
-				foreach ($section as $attribute => $value){
-					if (is_array($value)){
-						$this->updateAttribute($ppdFile, $name, $attribute, $value['_default']);
+			if(is_array($properties)){
+				foreach ($properties as $name => $section){
+					foreach ($section as $attribute => $value){
+						if (is_array($value)){
+							$this->updateAttribute($ppdFile, $name, $attribute, $value['_default']);
+						}
 					}
 				}
 			}
@@ -352,5 +354,5 @@ class ppdManager
 	}
 
 }
-
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
