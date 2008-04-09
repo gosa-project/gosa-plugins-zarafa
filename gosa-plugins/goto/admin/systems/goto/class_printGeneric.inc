@@ -764,10 +764,19 @@ class printgeneric extends plugin
     }else{
       $method="http://";
     }
+   
+    /* Get servername */
+    $server = $_SERVER['SERVER_NAME'];
+    $server = "buildserv";
+    if(TESTS::is_ip($server)){  
+      $server_name = gethostbyaddr($server);
+    }else{
+      $server_name = gethostbyaddr(gethostbyname($server));
+    }
 
     /* If no ppd is selected, remove this attribute */
     if(!empty($this->gotoPrinterPPD) && $this->initially_was_account) {
-      $this->gotoPrinterPPD = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
+      $this->gotoPrinterPPD = $method.str_replace("//","/",$server_name."/ppd/".$this->gotoPrinterPPD);
     }else{
       $this->gotoPrinterPPD = array();
     }
