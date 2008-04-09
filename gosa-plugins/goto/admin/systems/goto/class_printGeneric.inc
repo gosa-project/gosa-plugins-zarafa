@@ -718,10 +718,19 @@ class printgeneric extends plugin
       if($this->parent->by_object['workgeneric']->cn == "wdefault"){
         return;
       }
+
+      /* Adapt IP & mac from parent object */
+      $this->netConfigDNS->ipHostNumber = $this->parent->by_object['workgeneric']->netConfigDNS->ipHostNumber;
+      $this->netConfigDNS->macAddress = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
+
     }elseif(isset($this->parent->by_object['termgeneric'])){
       if($this->parent->by_object['termgeneric']->cn == "default"){
         return;
       }
+    
+      /* Adapt IP & mac from parent object */
+      $this->netConfigDNS->ipHostNumber = $this->parent->by_object['termgeneric']->netConfigDNS->ipHostNumber;
+      $this->netConfigDNS->macAddress = $this->parent->by_object['termgeneric']->netConfigDNS->macAddress;
     }
 
     /* If type is still unknown, the initialisation of this printer failed, abort. */
@@ -858,11 +867,11 @@ class printgeneric extends plugin
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
 
-    if(preg_match("/printer/i",$this->BelongsTo)){
+    #if(preg_match("/printer/i",$this->BelongsTo)){
       $this->netConfigDNS->cn = $this->cn;
       $this->netConfigDNS->dn = $this->dn;
       $this->netConfigDNS->save();
-    }
+    #}
   }
 
   function generateList(){
