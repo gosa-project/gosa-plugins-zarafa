@@ -376,7 +376,7 @@ class faiScript extends plugin
       /* Check if we are allowed to view this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_decode($key)."'>".$name['name']."</a>"),
+        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&amp;act=edit&amp;id=".base64_encode($key)."'>".$name['name']."</a>"),
               array("string"=>$name['FAIpriority'] , "attach" => "style='width:100px;'"),
               array("string"=>$down , "attach" => "style='width:100px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
