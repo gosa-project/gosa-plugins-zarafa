@@ -26,24 +26,39 @@ END {}
 
 ### Start ######################################################################
 
-#&main::read_configfile($main::cfg_file, %cfg_defaults);
 
+#===  FUNCTION  ================================================================
+#         NAME:  get_events
+#   PARAMETERS:  none
+#      RETURNS:  reference of exported events
+#  DESCRIPTION:  tells the caller which functions are available
+#===============================================================================
 sub get_events {
     return \@events
 }
 
+
+#===  FUNCTION  ================================================================
+#         NAME: show_log_by_date
+#  DESCRIPTION: reporting installed hosts matching to regex of date
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string
+#===============================================================================
 sub show_log_by_date {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{header}}[0];
     my $target = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
     my $date_l =  $msg_hash->{date};
-
+    my $out_msg;
     $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
-        &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
-        return;
+        my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist";
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
     # build out_msg
@@ -74,10 +89,19 @@ sub show_log_by_date {
         }
     }
 
-    my $out_msg = &create_xml_string($out_hash);
+    $out_msg = &create_xml_string($out_hash);
     return ($out_msg);
 }
 
+
+#===  FUNCTION  ================================================================
+#         NAME: show_log_by_mac
+#  DESCRIPTION: reporting installation dates matching to regex of mac address
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string 
+#===============================================================================
 sub show_log_by_mac {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{header}}[0];
@@ -88,8 +112,9 @@ sub show_log_by_mac {
     $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
-        &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
-        return;
+        my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist";
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
     # build out_msg
@@ -127,6 +152,14 @@ sub show_log_by_mac {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME: show_log_by_date_and_mac
+#  DESCRIPTION: reporting host and installation dates matching to regex of date and regex of mac address
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string 
+#===============================================================================
 sub show_log_by_date_and_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
@@ -137,8 +170,9 @@ sub show_log_by_date_and_mac {
     $header =~ s/gosa_//;
 
     if (not -d $main::client_fai_log_dir) {
-        &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
-        return;
+        my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist"; 
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
     # build out_msg
@@ -173,6 +207,14 @@ sub show_log_by_date_and_mac {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME: show_log_files_by_date_and_mac
+#  DESCRIPTION: reporting installation log files matching exatly to date and mac address
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string 
+#===============================================================================
 sub show_log_files_by_date_and_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
@@ -184,8 +226,9 @@ sub show_log_files_by_date_and_mac {
 
     my $act_log_dir = File::Spec->catdir($main::client_fai_log_dir, $mac, $date);
     if (not -d $act_log_dir) {
-        &main::daemon_log("$session_id ERROR: client fai log directory '$act_log_dir' do not exist", 1); 
-        return;
+        my $error_string = "client fai log directory '$act_log_dir' do not exist";
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
     # build out_msg
@@ -208,6 +251,14 @@ sub show_log_files_by_date_and_mac {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME: get_log_file_by_date_and_mac
+#  DESCRIPTION: returning the given log file, base64 coded, matching exactly to date and mac address
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string 
+#===============================================================================
 sub get_log_file_by_date_and_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
@@ -221,8 +272,9 @@ sub get_log_file_by_date_and_mac {
     # sanity check
     my $act_log_file = File::Spec->catfile($main::client_fai_log_dir, $mac, $date, $log_file);
     if (not -f $act_log_file) {
-        &main::daemon_log("$session_id ERROR: client fai log file '$act_log_file' do not exist or could not be read", 1); 
-        return;
+        my $error_string = "client fai log file '$act_log_file' do not exist or could not be read"; 
+        &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
     
     # read log file
@@ -253,6 +305,14 @@ sub transform {
 sub by_log_date {
     &transform($a) <=> &transform($b);
 }
+#===  FUNCTION  ================================================================
+#         NAME: get_recent_log_by_mac
+#  DESCRIPTION: reporting the latest installation date matching to regex of mac address
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string 
+#===============================================================================
 sub get_recent_log_by_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
@@ -265,9 +325,7 @@ sub get_recent_log_by_mac {
     if (not -d $main::client_fai_log_dir) {
         my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist";
         &main::daemon_log("$session_id ERROR: $error_string", 1); 
-        my $out_hash = &create_xml_hash($header, $target, $source, $error_string);
-        my $out_msg = &create_xml_string($out_hash);
-        return $out_msg;
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
     
     opendir (DIR, $main::client_fai_log_dir);
@@ -284,9 +342,7 @@ sub get_recent_log_by_mac {
     if (not defined $act_log_dir) {
         my $error_string = "do not find mac '$mac' in directory '$main::client_fai_log_dir'";
         &main::daemon_log("$session_id ERROR: $error_string", 1); 
-        my $out_hash = &create_xml_hash($header, $target, $source, $error_string);
-        my $out_msg = &create_xml_string($out_hash);
-        return $out_msg;
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
     # read mac directory
@@ -318,6 +374,15 @@ sub get_recent_log_by_mac {
 }
 
 
+#===  FUNCTION  ================================================================
+#         NAME: delete_log_by_date_and_mac
+#  DESCRIPTION: delete installation date directory matching to regex of date and regex of mac address
+#               missing date or mac is substitutet with regex '.'; if both is missing, deleting is rejected
+#   PARAMETERS: [$msg]        original incoming message
+#               [$msg_hash]   incoming message transformed to hash concerning XML::Simple
+#               [$session_id] POE session id 
+#      RETURNS: gosa-si valid answer string
+#===============================================================================
 sub delete_log_by_date_and_mac {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
@@ -329,15 +394,14 @@ sub delete_log_by_date_and_mac {
 
     # sanity check
     if (not -d $main::client_fai_log_dir) {
-        &main::daemon_log("$session_id ERROR: client fai log directory '$main::client_fai_log_dir' do not exist", 1); 
-        return;
+        my $error_string = "client fai log directory '$main::client_fai_log_dir' do not exist";
+        &main::daemon_log("$session_id ERROR: $session_id", 1); 
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
     if ((not defined $date) && (not defined $mac)) {
-        my $err_string = "deleting all log files from gosa-si-server by an empty delete message is not permitted";
-        &main::daemon_log("$session_id INFO: $err_string", 5);
-        my $out_hash = &create_xml_hash($header, $target, $source, $err_string);
-        my $out_msg = &create_xml_string($out_hash);
-        return $out_msg;
+        my $error_string = "deleting all log files from gosa-si-server by an empty delete message is not permitted";
+        &main::daemon_log("$session_id INFO: $error_string", 5);
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
     if (not defined $date) { $date = "."; }   # set date to a regular expression matching to everything
     if (not defined $mac) { $mac = "."; }     # set mac to a regular expression matching to everything
