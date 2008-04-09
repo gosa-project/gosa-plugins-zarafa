@@ -1,6 +1,12 @@
 <h2>Used sudo role options</h2>
 
 <table style="width:650px;">
+ <tr>
+  <td style="width: 140px;"><b>{t}Option name{/t}</b></td>
+  <td style="width: 20px;"></td>
+  <td><b>{t}Value{/t}</b></td>
+  <td><b>{t}Options{/t}</b></td>
+ </tr>
 {foreach from=$sudoOption item=item key=key}
   {foreach from=$item item=entry key=entry_key} 
    <tr>
@@ -61,7 +67,7 @@
           {if $entry.VALUE == "FALSE" ||  $entry.VALUE == "TRUE"} disabled {/if}>
     {/if}
     </td>
-    <td style='width: 40px;'>
+    <td style='width: 40px; text-align:right;'>
      <input type='image' src='images/negate.png'     name='negOption_{$key}_{$entry_key}' class='center'>
      <input type='image' src='images/edittrash.png'  name='delOption_{$key}_{$entry_key}' class='center'>
     </td>
