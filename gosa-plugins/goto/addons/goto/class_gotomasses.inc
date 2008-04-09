@@ -406,8 +406,14 @@ class gotomasses extends plugin
           class='center' alt='"._("Remove")."'>";
       }
 
+      /* Create entry display name and tooltip */
       $color = "";
       $display = $task['MACADDRESS'];
+      $tooltip = "";
+      if(isset($task['TARGETTAG'])){
+        $display = $task['TARGETTAG'];
+        $tooltip = " title='".$task['MACADDRESS']."' ";
+      }
       $display2= $task['HEADERTAG'];
      
       /* Check if this event exists as Daemon class 
@@ -463,7 +469,7 @@ class gotomasses extends plugin
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$task['ID']."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;".$color."'");
       $field1 = array("string" => $display,
-                      "attach" => "style='".$color."'");
+                      "attach" => $tooltip."style='".$color."'");
       $field1a= array("string" => $display2,
                       "attach" => "style='".$color.";width:120px;'");
       $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:100px;'");
