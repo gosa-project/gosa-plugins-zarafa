@@ -412,9 +412,6 @@ class termstartup extends plugin
       }
     }
 
-    /* Check if LDAP server has changed */
-    $ldap_changed= ($this->attrs['gotoLdapServer'] != $this->saved_attributes['gotoLdapServer']);
-
     /* Strip out 'default' values */
     foreach(array("gotoBootKernel") as $value){
       if (!isset($this->attrs[$value]) || $this->attrs[$value] == "default"){
@@ -445,18 +442,23 @@ class termstartup extends plugin
     }
     $this->handle_post_events("modify");
 
-    /* Send ldap configuration update
-     */
-    if ($ldap_changed && class_available("DaemonEvent")){
-      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENTS);
+    /* Check if LDAP server has changed */
+    if (isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent")){
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
         $evt = $events['TRIGGERED']['DaemonEvent_reload_ldap_config'];
-        $tmp = new $evt['CLASS_NAME']($this->config);
-        $tmp->set_type(TRIGGERED_EVENT);
-        $tmp->add_targets(array($this->parent->by_object['termgeneric']->netConfigDNS->macAddress));
-        if(!$o_queue->append($tmp)){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        $macs = array($this->parent->by_object['termgeneric']->netConfigDNS->macAddress);
+  
+        /* Trigger event for all member objects 
+         */
+        foreach($macs as $mac){
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->add_targets(array($mac));
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
         }
       }
     }
