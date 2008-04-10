@@ -116,7 +116,7 @@ class termgeneric extends plugin
       $ui= get_userinfo();
       $this->base= dn2base($ui->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,[^,]+,[^,]+,/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("terminalou"))."/", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
