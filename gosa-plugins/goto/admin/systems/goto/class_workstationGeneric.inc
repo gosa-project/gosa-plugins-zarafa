@@ -30,6 +30,7 @@ class workgeneric extends plugin
   var $cn= "";
   var $l= "";
   var $orig_dn= "";
+  var $orig_cn= "";
 
   /* Plugin side filled */
   var $modes= array();
@@ -151,6 +152,7 @@ class workgeneric extends plugin
 
     /* Save 'dn' for later referal */
     $this->orig_dn= $this->dn;
+    $this->orig_cn= $this->cn;
   }
 
 
@@ -356,6 +358,9 @@ class workgeneric extends plugin
         unset($og->member[$this->dn]);
         $og->save ();
       }
+
+      /* Remove all accessTo/trust dependencies */
+      update_accessTo($this->cn,"");
     }
 
     /* Clean queue form entries with this mac 
@@ -544,7 +549,9 @@ class workgeneric extends plugin
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       if ($this->orig_dn != $this->dn){
-        $this->move($this->orig_dn, $this->dn);
+
+        /* Remove all accessTo/trust dependencies */
+        update_accessTo($this->orig_cn,$this->cn);
       }
       $ldap->cd($this->dn);
       $this->cleanup();
@@ -553,7 +560,6 @@ class workgeneric extends plugin
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
       }
       new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 

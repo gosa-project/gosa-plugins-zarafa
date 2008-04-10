@@ -59,6 +59,13 @@ class termtabs extends tabs
     $this->dn= "cn=".$baseobject->cn.",".get_ou('terminalou').$baseobject->base;
     $baseobject->dn= $this->dn;
 
+    if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
+
+      /* Udpate acls */
+      $baseobject->update_acls($baseobject->orig_dn,$this->dn);
+      $baseobject->move($baseobject->orig_dn,$this->dn);
+    }
+
     foreach ($this->by_object as $key => $obj){
       $this->by_object[$key]->dn= $this->dn;
       $this->by_object[$key]->cn= $baseobject->cn;

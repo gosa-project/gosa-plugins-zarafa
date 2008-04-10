@@ -441,12 +441,6 @@ class termgeneric extends plugin
   /* Save to LDAP */
   function save()
   {
-
-    /* Move object if requested */
-    if( $this->orig_dn != 'new' && $this->dn != $this->orig_dn){
-      $this->move($this->orig_dn, $this->dn);
-    }
-
     /* Detect mode changes */
     $activate= (isset($this->saved_attributes['gotoMode']) &&
         $this->gotoMode != $this->saved_attributes['gotoMode'] &&
