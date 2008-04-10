@@ -144,8 +144,7 @@ class sudoOption extends plugin
             \, => ,
             \= => = 
          */
-        $value = preg_replace(array("/\\\\\\\\/","/\\\\,/","/\\\\:/","/\\\\=/"),
-                              array("\\",",",":","="),$value);
+        $value = $this->unescape_command($value);
 
         /* Check if the given value is part of our options list.
            If it is not, add it as type STRING and display a warning.  
@@ -398,7 +397,7 @@ class sudoOption extends plugin
         $option = "";
 
         /* Escape special chars */
-        $value = addcslashes($value,"\\:,:=");
+        $value = $this->escape_command($value);
 
         /****
           Save LISTS 
@@ -503,6 +502,40 @@ class sudoOption extends plugin
       $this->attrs['sudoOption'] = $source['sudoOption'];
       $this->load_options();
     }
+  }
+
+
+  /*!  \brief   Escape special chars in function parameters.
+       @param   String the string to that must be escaped.
+   */
+  private function escape_command($str)
+  {
+    /* Check if given value is a command (/[a-z]/ ..)
+     */
+    if(preg_match("/^\//",$str)){
+      $cmd = preg_replace("/^([^ ]*).*$/","\\1",$str);
+      $val = preg_replace("/^[^ ]*(.*)$/","\\1",$str);
+      $str = $cmd.addcslashes($val,":.,\\");
+    }
+    return($str);
+  }
+
+
+  /*!  \brief   Unescape special chars in function parameters.
+       @param   String the string to that must be unescaped.
+   */
+  private function unescape_command($str)
+  {
+    /* Check if given value is a command (/[a-z]/ ..)
+     */
+    if(preg_match("/^\//",$str)){
+      $cmd = preg_replace("/^([^ ]*).*$/","\\1",$str);
+      $val = preg_replace("/^[^ ]*(.*)$/","\\1",$str);
+      $val = preg_replace(array("/\\\\\\\\/","/\\\\,/","/\\\\:/","/\\\\=/"),
+                              array("\\",",",":","="),$val);
+      $str = $cmd.$val;
+    }
+    return($str);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
