@@ -67,9 +67,6 @@ class faiPartitionTableEntry extends plugin
 
           if (preg_match('/^_/', $disk['partitions'][$name]['FAIfsType'])){
             $disk['partitions'][$name]['FAIfsType']= preg_replace('/^_/', '', $disk['partitions'][$name]['FAIfsType']);
-            $disk['partitions'][$name]['FAIencrypted']= true;
-          } else {
-            $disk['partitions'][$name]['FAIencrypted']= false;
           }
         }
       }
@@ -146,7 +143,6 @@ class faiPartitionTableEntry extends plugin
         $tmp[$attr]                = "";     
       }
       $tmp["old_cn"]               = "";     
-      $tmp["FAIencrypted"] = FALSE;     
       $tmp['status']="new";
       $this->partitions[count($this->partitions)+1]=$tmp;
     }
@@ -196,7 +192,6 @@ class faiPartitionTableEntry extends plugin
       $str .= "<td><b>"._("Mount options")."</b></td>";
       $str .= "<td><b>"._("FS option")."</b></td>";
       $str .= "<td><b>"._("Preserve")."</b></td>";
-      $str .= "<td><b>"._("Encrypted")."</b></td>";
       $str .= "<td>&nbsp;</td>";
       $str .= "</tr>";
     }
@@ -287,18 +282,8 @@ class faiPartitionTableEntry extends plugin
           }else{
             $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' ".$changeState." ".$disableALL."></td>";
           }
-          if($part['FAIencrypted']!=false){
-            $str .= "\n<td><input type='checkbox' name='FAIencrypted_".$key."' value='encrypted' checked></td>";
-          }else{
-            $str .= "\n<td><input type='checkbox' name='FAIencrypted_".$key."' value='encrypted'></td>";
-          }
         }else{
           if($part['FAIpartitionFlags']!=false){
-            $str .= "<td>"._("False")."</td>";
-          }else{
-            $str .= "<td>"._("True")."</td>";
-          }
-          if($part['FAIencrypted']!=false){
             $str .= "<td>"._("False")."</td>";
           }else{
             $str .= "<td>"._("True")."</td>";
@@ -327,10 +312,6 @@ class faiPartitionTableEntry extends plugin
 
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
-      if (isset($this->partitions[$key]['FAIencrypted']) && $this->partitions[$key]['FAIencrypted']){
-        unset ($this->partitions[$key]['FAIencrypted']);
-        $this->partitions[$key]['FAIfsType']= "_".$this->partitions[$key]['FAIfsType'];
-      }
       $this->partitions[$key]['FAIpartitionNr']=$key;
     }
 
@@ -369,15 +350,6 @@ class faiPartitionTableEntry extends plugin
             }else{
               $this->partitions[$key][$attrs] = false;
             }
-          }
-        }
-
-        if($this->acl_is_writeable("FAIencrypted")){
-
-          if(isset($_POST["FAIencrypted_".$key])){
-            $this->partitions[$key]["FAIencrypted"] = $_POST["FAIencrypted_".$key];
-          }else{
-            $this->partitions[$key]["FAIencrypted"] = false;
           }
         }
 
@@ -504,7 +476,6 @@ class faiPartitionTableEntry extends plugin
             "FAIpartitionSize"  => _("Partition size"),
             "FAImountOptions"   => _("Mount options"),
             "FAIfsOptions"      => _("File system options"),
-            "FAIencrypted"      => _("File system encryption"),
             "FAIpartitionFlags" => _("Partition flags"))
           ));
   }
