@@ -83,8 +83,8 @@ class termgeneric extends plugin
     $this->gotoNtpServer= array();
     if(isset($this->attrs['gotoNtpServer'])){
       $this->inheritTimeServer = false;
-      unset($this->attrs['gotoNtpServer']['count']);
-      foreach($this->attrs['gotoNtpServer'] as $server){
+      for($i = 0 ; $i < $this->attrs['gotoNtpServer']['count']; $i++ ){
+        $server = $this->attrs['gotoNtpServer'][$i];
         $this->gotoNtpServer[$server] = $server;
       }
     }
