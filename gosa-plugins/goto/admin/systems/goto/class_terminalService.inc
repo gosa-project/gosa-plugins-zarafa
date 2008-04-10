@@ -438,14 +438,6 @@ class termservice extends plugin
   {
     new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     $this->handle_post_events("remove");
-
-    plugin::remove_from_parent();
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->modify($this->attrs);
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
-    }
   }
 
 
