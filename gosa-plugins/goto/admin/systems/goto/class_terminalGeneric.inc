@@ -29,6 +29,7 @@ class termgeneric extends plugin
   var $cn= "";
   var $description= "";
   var $orig_dn= "";
+  var $orig_cn= "";
 
   var $inheritTimeServer = true;
 
@@ -130,6 +131,7 @@ class termgeneric extends plugin
     }
 
     $this->orig_dn= $this->dn;
+    $this->orig_cn= $this->cn;
   }
 
   function set_acl_base($base)
@@ -330,6 +332,9 @@ class termgeneric extends plugin
           unset($og->member[$this->dn]);
           $og->save ();
         }
+
+        /* Remove all accessTo/trust dependencies */
+        update_accessTo($this->cn,"");
       }
 
       /* Clean queue form entries with this mac 
@@ -503,6 +508,11 @@ class termgeneric extends plugin
       $ldap->modify ($this->attrs); 
       new log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
+
+      /* Update all accessTo/trust dependencies */
+      if($this->orig_cn != $this->cn){
+        update_accessTo($this->orig_cn,$this->cn);
+      }
     }
     
     /* cn=default and macAddress=- indicates that this is a template */
