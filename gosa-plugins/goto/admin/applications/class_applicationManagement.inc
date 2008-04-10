@@ -628,8 +628,12 @@ class applicationManagement extends plugin
     }
   }
 
-  function save_object() {
+  function save_object() 
+  {
     $this->DivListApplication->save_object();
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
   function check() {}

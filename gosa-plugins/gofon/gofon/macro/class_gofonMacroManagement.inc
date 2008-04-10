@@ -528,6 +528,9 @@ class goFonMacro extends plugin
   function save_object()
   {
     $this->DivListMacro->save_object();
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
 

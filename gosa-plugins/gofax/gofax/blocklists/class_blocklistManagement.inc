@@ -403,6 +403,9 @@ class blocklist extends plugin
   function save_object()
   {
     $this->DivListBlocklist->save_object();
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
 
