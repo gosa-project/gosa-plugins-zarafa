@@ -162,6 +162,9 @@ class faiPackage extends plugin
     if($this->dn == "new"){
       $this->is_new =TRUE;
     }
+
+    /* Generate package list */
+    $this->list= $this->genPkgs(TRUE);
   }
 
 
