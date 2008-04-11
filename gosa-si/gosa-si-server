@@ -124,6 +124,7 @@ my @job_queue_col_names = ("id INTEGER",
 		"targettag DEFAULT 'none'", 
 		"xmlmessage DEFAULT 'none'", 
 		"macaddress DEFAULT 'none'",
+		"plainname DEFAULT 'none'",
 		);
 
 # holds all other gosa-sd as well as the gosa-sd-bus

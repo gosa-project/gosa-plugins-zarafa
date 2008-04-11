@@ -324,6 +324,7 @@ sub process_job_msg {
 
     my $header = @{$msg_hash->{'header'}}[0];
     $header =~ s/job_//;
+	my $target = @{$msg_hash->{'target'}}[0];
     
     # if no timestamp is specified, use 19700101000000
     my $timestamp = "19700101000000";
@@ -348,12 +349,12 @@ sub process_job_msg {
             "</xml>";
     }
     
-	# if mac address is already known in ldap, set targettag to 'cn'
-    my $target;
+	# if mac address is already known in ldap, set plain_name to 'cn'
+    my $plain_name;
 	my $ldap_handle = &main::get_ldap_handle($session_id); 
 	if( not defined $ldap_handle ) {
 		&main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
-		$target = "none"; 
+		$plain_name = "none"; 
 		
 	# try to fetch a 'real name'		
 	} else {
@@ -364,10 +365,10 @@ sub process_job_msg {
 						filter => "(macAddress=$macaddress)");
 		if($mesg->code) {
 			&main::daemon_log($mesg->error, 1);
-			$target = "none";
+			$plain_name = "none";
 		} else {
 			my $entry= $mesg->entry(0);
-			$target = $entry->get_value("cn");
+			$plain_name = $entry->get_value("cn");
 		}
 	}
 
@@ -383,6 +384,7 @@ sub process_job_msg {
             targettag=>$target,
             xmlmessage=>$msg,
             macaddress=>$macaddress,
+			plainname=>$plain_name,
         };
 
         my $res = $main::job_db->add_dbentry($func_dic);
