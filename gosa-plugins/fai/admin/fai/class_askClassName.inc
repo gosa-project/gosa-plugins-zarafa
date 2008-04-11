@@ -45,30 +45,40 @@ class askClassName extends plugin
       $base = $faifilter['branch'];
     }
     $ldap = $this->config->get_ldap_link();
-    
-    $res= get_list("(&(objectClass=organizationalUnit)(!(objectClass=FAIbranch)))", "fai", $base,
-                   array("cn","description","objectClass"), GL_SIZELIMIT );
+
+
+    $type_acl_mapping = array(
+        "FAIpartitionTable"  => "faiPartitionTable",
+        "FAIpackageList"     => "faiPackage",
+        "FAIscript"          => "faiScript",
+        "FAIvariable"        => "faiVariable",
+        "FAIhook"            => "faiHook",
+        "FAIprofile"         => "faiProfile",
+        "FAItemplate"        => "faiTemplate");
+
+    $filter = "";
+    foreach($type_acl_mapping as $map){
+      $filter .= "(objectClass=".$map.")";
+    }
+
+    $res = FAI::get_all_objects_for_given_base($base,"(|".$filter.")",TRUE);
 
     $delete = array();
     $used   = array();
-    foreach($res as $objecttypes){
-      $res2= get_list("(objectClass=*)", "fai", $objecttypes['dn'],
-                      array("cn","description","objectClass","FAIclass","FAIstate"), GL_SIZELIMIT | GL_CONVERT );
-      foreach($res2 as $object){
+    foreach($res as $object){
 
-        /* skip class names with this name */ 
-        if(in_array($this->objectClass,$object['objectClass']) || in_array("FAIprofile",$object['objectClass'])){
-          if(isset($object['FAIstate'][0]) && preg_match("/removed$/",$object['FAIstate'][0])){
-            continue;
-          }
-          $delete[] = $object['cn'][0];
+      /* skip class names with this name */ 
+      if(in_array($this->objectClass,$object['objectClass']) || in_array("FAIprofile",$object['objectClass'])){
+        if(isset($object['FAIstate'][0]) && preg_match("/removed$/",$object['FAIstate'][0])){
+          continue;
         }
-    
-        /* Skip profiles */
-        if(!in_array("FAIprofile",$object['objectClass'])){
-          if(isset($object['cn'])){
-            $used[$object['cn'][0]]= $object['cn'][0];
-          }
+        $delete[] = $object['cn'][0];
+      }
+
+      /* Skip profiles */
+      if(!in_array("FAIprofile",$object['objectClass'])){
+        if(isset($object['cn'])){
+          $used[$object['cn'][0]]= $object['cn'][0];
         }
       }
     }
