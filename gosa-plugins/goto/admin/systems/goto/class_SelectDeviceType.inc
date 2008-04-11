@@ -25,6 +25,7 @@ class SelectDeviceType extends plugin
     while($attrs = $ldap->fetch()){
       $this->ObjectGroups[$attrs['dn']]= $attrs['cn'][0];
     }
+    asort($this->ObjectGroups);
 
     $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
   }
