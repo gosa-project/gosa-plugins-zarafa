@@ -21,7 +21,7 @@ class faiPackageConfiguration extends plugin
 
     /* Read pkg debconf info */
     $q = new gosaSupportDaemon();
-    $ret = $q->FAI_get_packages($this->release,array("*"),$this->obj);
+    $ret = $q->FAI_get_packages($this->release,array("template"),array($this->obj));
     $tpl = "";
     if(isset($ret['ANSWER1']) && isset($ret['ANSWER1']['TEMPLATE'])){
       $tpl = base64_decode($ret['ANSWER1']['TEMPLATE']);
