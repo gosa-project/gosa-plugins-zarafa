@@ -49,7 +49,7 @@ class dhcpNewSectionDialog extends plugin
     asort($t_sections);
     $ui = get_userinfo();
     $smarty->assign("sections", $t_sections);
-    $display.= $smarty->fetch(get_template_path('dhcpNewSection.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('dhcpNewSection.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
