@@ -43,7 +43,7 @@
      				</td>
      				<td width="99%">
      					<input type='text' name='searchStrPKG' maxlength='40' style='width:99%' value='{$searchStrPKG}' id='filter' 
-					     title='{t}Regular expression for matching object names{/t}'> 
+					     title='{t}Regular expression for matching object names{/t}' onClick="mainform.filter.value='';" onChange="mainform.submit()"> 
     	 			</td>
      			</tr>
      		</table>
