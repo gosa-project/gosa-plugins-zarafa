@@ -202,7 +202,7 @@ class faiHook extends plugin
       if(isset($this->SubObjects[base64_decode($_GET['getFAIHook'])])){
         $obj = $this->SubObjects[base64_decode($_GET['getFAIHook'])];
         $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIhook");
+        send_binary_content(stripslashes($obj['FAIhook']),$obj['cn'].".FAIhook");
       }
     }
 
@@ -453,6 +453,21 @@ class faiHook extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
+    /* Ensure that we do not overwrite an allready existing entry 
+     */
+    if($this->is_new){
+      $new_dn= 'cn='.$this->cn.",".get_ou('faihookou').get_ou('faiou').session::get('CurrentMainBase');
+      $faifilter = session::get('faifilter');
+      if($faifilter['branch']!="main"){
+        $new_dn ='cn='.$this->cn.",".get_ou('faihookou').$faifilter['branch'];
+      }
+
+      $res = faiManagement::check_class_name("FAIhook",$this->cn,$new_dn);
+      if(isset($res[$this->cn])){
+        $message[] = msgPool::duplicated(_("Name"));
+      }
+    }
+
     return ($message);
   }
 
@@ -584,6 +599,34 @@ class faiHook extends plugin
             "cn"                => _("Name")." ("._("Read only").")",
             "description"       => _("Description"))
           ));
+  }
+
+
+  /*! \brief  Used for copy & paste.
+    Returns a HTML input mask, which allows to change the cn of this entry.
+    @param  Array   Array containing current status && a HTML template.
+   */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn", htmlentities($this->cn));
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  /*! \brief  Used for copy & paste.
+    Some entries must be renamed to avaoid duplicate entries.
+   */
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = get_post('cn');
+    }
   }
 }
 

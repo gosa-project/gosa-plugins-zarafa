@@ -1189,6 +1189,21 @@ class faiManagement extends plugin
   }
 
 
+  /* Check if the given FAI class is used in this release 
+   */
+  static function check_class_name($oc,$name,$dn)
+  {
+    $base = FAI::get_release_dn($dn);
+    $res  = FAI::get_all_objects_for_given_base($base,"(objectClass=".$oc.")",TRUE);
+    $delete = array();
+    $used   = array();
+    foreach($res as $object){
+      $used[$object['cn'][0]]= $object['cn'][0];
+    }
+    return($used);
+  }
+
+
   /* Return plugin informations for acl handling */ 
   static function plInfo()
   {
