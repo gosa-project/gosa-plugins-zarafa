@@ -21,11 +21,13 @@ class SelectDeviceType extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->config->current['BASE']);
     $ldap->search("(&(objectClass=gosaGroupOfNames)(cn=*))",array("cn"));
-    $this->ObjectGroups['none']=_("none");
+    $tmp= array();
     while($attrs = $ldap->fetch()){
-      $this->ObjectGroups[$attrs['dn']]= $attrs['cn'][0];
+      $tmp[$attrs['dn']]= $attrs['cn'][0];
     }
-    asort($this->ObjectGroups);
+    asort($tmp, SORT_LOCALE_STRING);
+    $tmpa['none']=_("none");
+    $this->ObjectGroups= array_merge($tmpa, $tmp);
 
     $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
   }
