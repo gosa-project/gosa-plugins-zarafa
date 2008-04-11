@@ -159,29 +159,70 @@ class FAI
         }
       } 
     }else{
-#     $ldap = $config->get_ldap_link();
-#     $ldap->cd($config->current['BASE']);
-#     $ldap->cat(FAI::get_parent_release_object($Current_DN,TRUE));
-#
-#     $attrs = $ldap->fetch();
-#     if($attrs){
-#       $cn    = $attrs['cn'][0];
-#    
-#       $profiles = FAI::get_all_objects_for_given_base(FAI::get_release_dn($Current_DN),"(&(objectClass=FAIprofile)(FAIclass=".$cn."))"); 
-#       print_a($profiles); 
-#       foreach($profiles as $dn){
-#
-#         $ldap->cat($dn);
-#         $attrs = FAI::prepare_ldap_fetch_to_be_saved($ldap->fetch());
-#           print_a($attrs);
-#         if($attrs){
-#         
-#           if(in_array($cn,$attrs['FAIclass'])){
-#
-#           }
-#         }
-#       }
-#     }
+
+      /* If this is the last CLASS of a specific name (e.g. DEPOTSERVER)
+          we have to remove this name from all profiles in this release.
+      */
+      $ldap = $config->get_ldap_link();
+      $ldap->cd($config->current['BASE']);
+      $obj_dn = FAI::get_parent_release_object($Current_DN,TRUE);
+
+      /* Dont't try to modify non FAIclasses  
+       */
+      if(!preg_match("/[^,]+,".normalizePreg(get_ou("faiou"))."/",$obj_dn)){
+        echo "PLEASE check fai class handling in ".__LINE__." -> ".__FILE__;        
+      }else{
+
+        /* Get source object and check if it is a base FAIclass
+         */
+        $ldap->cat($obj_dn);
+        $attrs = $ldap->fetch();
+        $classes = array("FAIprofile","FAIscript","FAIpackage","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
+        if(count(array_intersect($classes,$attrs['objectClass']))){
+          $cn    = $attrs['cn'][0];
+
+          /* Check if this is the last with this name in the current release.
+              In this case we have to remove the package name 
+              from all profiles in this release.
+           */
+          $classes = FAI::get_all_objects_for_given_base(FAI::get_release_dn($Current_DN),
+              "(&(objectClass=FAIclass)(cn=".$cn."))"); 
+
+          /* Check if this is the last class with this name.
+           */
+          if(count($classes) == 1){
+
+            /* Get all FAI Profiles 
+             */
+            $profiles = FAI::get_all_objects_for_given_base(FAI::get_release_dn($Current_DN),
+                "(&(objectClass=FAIprofile)(FAIclass=*))"); 
+
+            /* Walk though all profiles and remove the source class name
+             */
+            foreach($profiles as $dn){
+              $ldap->cat($dn['dn']);
+              $attrs = $ldap->fetch();
+
+              $attrs = array('FAIclass' => $attrs['FAIclass'][0]);
+
+              /* Check if this Profile uses the source class ($cn)
+               */
+              if(preg_match("/".normalizePreg($cn)."/",$attrs['FAIclass'])){
+                $attrs['FAIclass'] = preg_replace("/[ ]*".normalizePreg($cn)."[ ]*/i"," ",$attrs['FAIclass']);
+                if(empty($attrs['FAIclass'])){
+                  $attrs['FAIclass'] = array();
+                }
+                $ldap->cd($dn['dn']);
+                $ldap->modify($attrs);
+
+                if (!$ldap->success()){
+                  msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
 
