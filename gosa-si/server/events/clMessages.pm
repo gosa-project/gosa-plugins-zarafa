@@ -366,6 +366,7 @@ sub TASKBEGIN {
 					targettag=>$source,
 					xmlmessage=>'none',
 					macaddress=>$macaddress,
+					plain_name=>'none',
 			};
 			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
 			if ($err != 0)  {

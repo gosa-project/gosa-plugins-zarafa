@@ -882,6 +882,7 @@ sub hardware_config {
 				targettag=>$address,
 				xmlmessage=>'none',
 				macaddress=>$macaddress,
+				plainname=>'none',
 		};
 		my $hd_res = $main::job_db->add_dbentry($func_dic);
 		&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);
