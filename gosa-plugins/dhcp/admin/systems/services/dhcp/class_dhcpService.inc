@@ -165,7 +165,9 @@ class dhcpService extends dhcpPlugin
     $ldap= $config->get_ldap_link();
     $ldap->cat($this->dhcpPrimaryDN, array('cn'));
     $res= $ldap->fetch();
-    $server_name= $res['cn'][0];
+    if(isset($res['cn'][0])){
+      $server_name= $res['cn'][0];
+    }
     
     dhcpPlugin::save();
 
