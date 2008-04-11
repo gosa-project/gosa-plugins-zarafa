@@ -166,7 +166,7 @@ class faiPackageEntry extends plugin
   {
     $this->pkgs = array(); 
     $q          = new gosaSupportDaemon();
-    $filter     = preg_replace("/\*/","%",$this->searchStrPKG);
+    $filter     = preg_replace("/\*/","%",array($this->searchStrPKG));
     $attrs      = array("distribution", "package","version", "section", "description", "timestamp");
     $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter);
     if($q->is_error()){

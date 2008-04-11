@@ -210,9 +210,6 @@ class faiPackage extends plugin
       $smarty->assign($attrs,$this->$attrs);
     }
 
-    /* Generate package list */
-    $this->list= $this->genPkgs();
-
     /* + was pressed to open the package dialog */
     if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
       $this->dialog = new faiPackageEntry($this->config, $this->FAIdebianRelease,$this->usedPackages);
@@ -227,6 +224,9 @@ class faiPackage extends plugin
             unset($this->usedPackages[$del]);
           }
         }
+
+        /* Generate package list */
+        $this->list= $this->genPkgs(TRUE);
       }
     }
 
@@ -250,6 +250,9 @@ class faiPackage extends plugin
           $this->dialog = false;
           $this->is_dialog=false;
           ksort($this->usedPackages);
+
+          /* Generate package list */
+          $this->list= $this->genPkgs(TRUE);
         }
       }else{
         $this->dialog = false;
@@ -280,8 +283,12 @@ class faiPackage extends plugin
               $pkg= preg_replace('/^/', '-', $pkg);
             }
             $this->usedPackages[$pkg]= $pkg;
+
           }
         }
+
+        /* Generate package list */
+        $this->list= $this->genPkgs(TRUE);
       }
     }
 
@@ -397,21 +404,16 @@ class faiPackage extends plugin
     return ($message);
   }
 
-  function printUsedPackages(){
+
+  function printUsedPackages()
+  {
     $a_ret=array(); 
-    if(is_array($this->usedPackages)) {
+    if(is_array($this->usedPackages)){
       foreach($this->usedPackages as $usedName){
 
-        $config = 0;
-
-        foreach($this->ConfiguredPackages as $name => $value){
-          if($name == $usedName){
-            $config ++;
-          }
-        }
-
+        /* Append message if package is configured */
         $c_str ="";
-        if($config){
+        if(isset($this->ConfiguredPackages[$usedName])){
           $c_str = " - "._("package is configured");
         }
 
@@ -419,14 +421,13 @@ class faiPackage extends plugin
         $dsc= "";
         if (preg_match('/^-/', $usedName)){
           $dsc= " - "._("Package marked for removal");
-          // Generally a bad idea here, because the toggel triggers on -, not on !
-          //$usedName= preg_replace('/^-/', '! ', $usedName);
         }else{
           $usedName2= $usedName;
         }
 
-        if(isset($this->list[$usedName][1])){
-          $a_ret[$usedName] = $usedName2." [".$this->list[$usedName][1]."]".$c_str.$dsc;
+        /* Append version string, if available */
+        if(isset($this->list[$usedName]['VERSION'])){
+          $a_ret[$usedName] = $usedName2." [".$this->list[$usedName]['VERSION']."]".$c_str.$dsc;
         }else{
           $a_ret[$usedName] = $usedName2.$c_str.$dsc;
         }
@@ -436,24 +437,20 @@ class faiPackage extends plugin
   }
 
 
-  function genPkgs()
+  function genPkgs($force = false)
   {
-    $start = microtime(1);
-    if($this->buffer === NULL || !count($this->buffer)){
-      $this->buffer = array();
+    if(!count($this->buffer) || $force){
       $q = new gosaSupportDaemon();
       $attrs = array("distribution", "package","version", "section", "description", "timestamp");
-      $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs);
+      $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$this->usedPackages);
       if($q->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
       }else{
         foreach($ret as $attr){
-          $this->buffer[$attr['PACKAGE']] = array($attr['PACKAGE'],$attr['VERSION'],$attr['SECTION'],$attr['DESCRIPTION']);
+          $this->buffer[$attr['PACKAGE']] = $attr;
         }
       }
     }
-    
-#    printf("%0.6f",(microtime(1) - $start));
     return $this->buffer;
   }
 
