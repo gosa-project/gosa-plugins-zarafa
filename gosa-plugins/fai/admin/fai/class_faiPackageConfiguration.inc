@@ -35,6 +35,7 @@ class faiPackageConfiguration extends plugin
     }
   }
 
+
   function execute()
   {
     /* Call parent execute */

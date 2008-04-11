@@ -107,7 +107,7 @@ class faiPackageEntry extends plugin
       $divlist->AddEntry(array(array("string"=>$chkbox, "attach" => "style='text-align:center;width:20px;'"),
             array("string"=>$pkg['PACKAGE'], "attach" => "style='width:180px;'"),
             array("string"=>htmlentities($pkg['VERSION'])),
-            array("string"=>htmlentities($pkg['DESCRIPTION']), "attach" => "style='width:221px;border-right:0px;text-align:left;'")));
+            array("string"=>htmlentities($pkg['DESCRIPTION']), "attach" => "style='width:240px;border-right:0px;text-align:left;'")));
     }
 
     $smarty->assign("Section_boxes"          , $Section_boxes);
