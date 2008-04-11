@@ -33,7 +33,7 @@
 			</p>
    		</div>
    		<div class="contentboxb"> 
-	 	 	{$CHKS}
+	 	 	{$Section_boxes}
 		</div>
 		<div class="contentboxb">
      		<table summary=""  style="width:100%;">
@@ -43,7 +43,7 @@
      				</td>
      				<td width="99%">
      					<input type='text' name='searchStrPKG' maxlength='40' style='width:99%' value='{$searchStrPKG}' id='filter' 
-					     title='{t}Regular expression for matching object names{/t}' onClick="mainform.filter.value='';" onChange="mainform.submit()">
+					     title='{t}Regular expression for matching object names{/t}'> 
     	 			</td>
      			</tr>
      		</table>

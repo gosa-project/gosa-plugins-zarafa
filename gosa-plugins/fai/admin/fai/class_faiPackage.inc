@@ -215,7 +215,7 @@ class faiPackage extends plugin
 
     /* + was pressed to open the package dialog */
     if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
-      $this->dialog = new faiPackageEntry($this->config, $this->dn,$this->list,$this->usedPackages);
+      $this->dialog = new faiPackageEntry($this->config, $this->FAIdebianRelease,$this->usedPackages);
       $this->is_dialog =true;
     }
 
@@ -302,6 +302,7 @@ class faiPackage extends plugin
 
     /* Display dialog */ 
     if($this->is_dialog){
+      $this->dialog->save_object();
       return $this->dialog->execute();
     }
 
@@ -441,7 +442,7 @@ class faiPackage extends plugin
     if($this->buffer === NULL || !count($this->buffer)){
       $this->buffer = array();
       $q = new gosaSupportDaemon();
-      $attrs = array("distribution", "package","version", "section", "description", "timestamp","template=''");
+      $attrs = array("distribution", "package","version", "section", "description", "timestamp");
       $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs);
       if($q->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);

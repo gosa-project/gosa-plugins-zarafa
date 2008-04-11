@@ -6,30 +6,52 @@ class faiPackageEntry extends plugin
   var $ignore_account= TRUE;
   var $attributes   = array();
   var $objectclasses= array();
-  var $pkgs        = array();  
+  var $pkgs         = array();  
 
-  var $buffer       = array();
-  var $categories   = array();
-  var $searchStrPKG = "";
-  var $selected     = array();
+  var $package_sections   = array();
+  var $searchStrPKG       = "*";
+  var $selected           = array();
 
   /* Array with available class names */
   var $FAIAllclasses        = array();
+  var $FAIdebianRelease ="";
 
-  function faiPackageEntry (&$config, $dn= NULL,$pkgs,$selected=array())
+  function faiPackageEntry (&$config,$release, $used_packages=array())
   {
-    plugin::plugin ($config, $dn);
-    
-    $this->pkgs=$pkgs;
+    plugin::plugin ($config, NULL);
 
-    if(session::is_set('searchStrPKG')){
-      $this->searchStrPKG = session::get('searchStrPKG');
-    }
-    $this->selected=$selected;
+    $this->FAIdebianRelease = $release;
+    $this->selected         = $used_packages;
+    $this->initializeSections();
 
-    $this->searchStrPKG= _("Please enter your search string here");
+    /* Get old search filter, if there is one*/ 
+    $this->searchStrPKG     = _("Please enter your search string here");
+    if(session::is_set("searchStrPKG")){
+      $this->searchStrPKG = session::get("searchStrPKG");
+    }    
   }
 
+
+  /*! \brief  Load all release seactions from GOsa support daemon
+   */  
+  function initializeSections()
+  {
+    $this->package_sections = array();
+    $q = new gosaSupportDaemon();
+    $ret = $q->FAI_get_packages($this->FAIdebianRelease,array("distinct section"));
+    if($q->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
+    }else{
+      foreach($ret as $entry){
+        $this->package_sections[array_pop($entry)] = TRUE; 
+      }
+    }
+  }
+
+
+  /*! \brief  Create HTML for this plugin.
+      @return String The html code for this plugin.
+   */
   function execute()
   {
     /* Call parent execute */
@@ -39,6 +61,31 @@ class faiPackageEntry extends plugin
     $smarty     = get_smarty();
     $display = "";
 
+
+    /* Create section checkboxes 
+     */ 
+    $Section_boxes = "<input type='hidden' value='chkchange' name='chkchange'><table summary=''><tr>";
+    $i = 0;
+    foreach($this->package_sections as $cat => $selected){
+      if($i == 3){
+        $Section_boxes .="</tr><tr>";
+        $i = 0;
+      }
+      if($selected){
+        $Section_boxes .="<td><input type='checkbox' value='1' name='CAT".$cat."' checked ".
+          "onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
+      }else{
+        $Section_boxes .="<td><input type='checkbox' value='1' name='CAT".$cat."' ".
+          "onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
+      }
+      $i ++ ;
+    }
+    $Section_boxes .= "</tr></table>";
+
+    /* Create List && fill it with packages
+     */
+    $cnt = 0; 
+    $this->reload();
     $divlist = new divlist("PackageEntry");
     $divlist->SetPluginMode();
     $divlist->SetSummary(_("This list displays all assigned package names for this repository settings."));
@@ -49,101 +96,21 @@ class faiPackageEntry extends plugin
                               array("string" => "Version", "attach" ),
                               array("string" => "Description", "attach" => "style='width:240px;border-right:0px;text-align:left;'")));
 
-    if(isset($_GET['search'])){
-      $this->searchStrPKG= $_GET['search']."*";
-    }
-    
-    $pkgs= $this->pkgs;
-
-    unset($this->categories);
-    foreach($pkgs as $name => $entry){
-      $cat = $entry[2];
-      if(!empty($cat)){
-        if(!isset($this->categories[$cat])){  
-          $this->categories[$cat] = true;
-        }
-        if(isset($_POST['chkchange'])){
-          $this->searchStrPKG = $_POST['searchStrPKG'];
-          if(isset($_POST['CAT'.$cat])){
-            $this->categories[$cat]=true;
-          }else{
-            $this->categories[$cat]=false;
-          }
-        }
-      } 
-    }
-
-    $this->searchStrPKG = preg_replace("/^\+/","",$this->searchStrPKG);
-    if(empty($this->searchStrPKG)){
-      $this->searchStrPKG = "*";
-    }
-
-    @ksort($this->categories);
-
-$CHKS = "<input type='hidden' value='chkchange' name='chkchange'><table summary=''><tr>";
-    $i = 0;
-    if(is_array($this->categories)) 
-    foreach($this->categories as $cat => $selected){
-      if($i == 3){
-        $CHKS .="</tr><tr>";
-        $i = 0;
-      }
-      $i ++ ;
-      if($selected){
-        $CHKS .="<td><input type='checkbox' value='1' name='CAT".$cat."' checked onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
+    foreach($this->pkgs as $pkg){
+      if(in_array($pkg['PACKAGE'],$this->selected)){
+        $check = " checked ";
       }else{
-        $CHKS .="<td><input type='checkbox' value='1' name='CAT".$cat."' onclick='document.mainform.submit()'>&nbsp;".$cat."&nbsp;</td>";
+        $check = "";
       }
-    }
-    $CHKS .= "</tr></table>";
-
-
-    foreach($_POST as $name => $value){
-      if(preg_match("/^wasonpage_/i",$name)){
-        $name = preg_replace("/^wasonpage_/","",$name);
-        $n =base64_decode($name);
-
-        if(isset($_POST['use_'.$name])){
-          $this->selected[$n] = $n; 
-        }else{
-          if(isset($this->selected[$n])){
-            unset($this->selected[$n]);
-          }
-        }
-
-      }
+      $chkbox = "<input type='checkbox' value='1' name='use_".base64_encode($pkg['PACKAGE'])."' ".$check.">
+        <input type='hidden' value='1' name='wasonpage_".base64_encode($pkg['PACKAGE'])."'>";
+      $divlist->AddEntry(array(array("string"=>$chkbox, "attach" => "style='text-align:center;width:20px;'"),
+            array("string"=>$pkg['PACKAGE'], "attach" => "style='width:180px;'"),
+            array("string"=>htmlentities($pkg['VERSION'])),
+            array("string"=>htmlentities($pkg['DESCRIPTION']), "attach" => "style='width:221px;border-right:0px;text-align:left;'")));
     }
 
-    /* Prepare search filter */
-    $search_str = preg_replace("/\\\\\*/",".*",normalizePreg($this->searchStrPKG));
-
-    $cnt = 0; 
-    foreach($pkgs as $pkg){
-      if($cnt > 200) {
-        msg_dialog::display(_("Error"), _("Search returned too many results - showing the first 200 matches, only!"), ERROR_DIALOG);
-        break;
-      }
-      if((preg_match("/^".$search_str."/i",$pkg[0]))||
-         (preg_match("/^".$search_str."/i",$pkg[3]))){
-        if($this->categories[$pkg[2]]){
-          if(in_array($pkg[0],$this->selected)){
-            $check = " checked ";
-          }else{
-            $check = "";
-          }
-          $cnt ++ ;
-          $chkbox = "<input type='checkbox' value='1' name='use_".base64_encode($pkg[0])."' ".$check.">
-                   <input type='hidden' value='1' name='wasonpage_".base64_encode($pkg[0])."'>";
-          $divlist->AddEntry(array(array("string"=>$chkbox, "attach" => "style='text-align:center;width:20px;'"),
-                               array("string"=>$pkg[0], "attach" => "style='width:180px;'"),
-                               array("string"=>htmlentities($pkg[1])),
-                               array("string"=>htmlentities($pkg[3]), "attach" => "style='width:221px;border-right:0px;text-align:left;'")));
-        }
-      }
-    }
-
-    session::set('searchStrPKG',$this->searchStrPKG);
-    $smarty->assign("CHKS"          , $CHKS);
+    $smarty->assign("Section_boxes"          , $Section_boxes);
     $smarty->assign("searchStrPKG"  , $this->searchStrPKG);
     $smarty->assign("faihead"       , "");
     $smarty->assign("failist"       , $divlist->DrawList());
@@ -157,9 +124,12 @@ $CHKS = "<input type='hidden' value='chkchange' name='chkchange'><table summary=
     return($display);
   }
 
-  /* Save data to object */
+
+  /*! \brief  Save HTML POST data to object 
+   */
   function save_object()
   {
+    /* Keep sections selected */
     foreach($_POST as $name => $value){
       if(preg_match("/^wasonpage_/i",$name)){
         $name = preg_replace("/^wasonpage_/","",$name);
@@ -175,17 +145,43 @@ $CHKS = "<input type='hidden' value='chkchange' name='chkchange'><table summary=
       }
     }
 
+    /* Get Posted search filter 
+     */
+    if(isset($_POST['searchStrPKG'])){
+      $this->searchStrPKG = get_post("searchStrPKG");
+    }
+    if(isset($_GET['search'])){
+      $this->searchStrPKG= $_GET['search']."*";
+    }
+    if(empty($this->searchStrPKG)){
+      $this->searchStrPKG = "*";
+    }
+    session::set('searchStrPKG',$this->searchStrPKG);
   }
 
-  /* Check supplied data */
-  function check()
+
+  /*! \brief  Reload list of displayed packages 
+   */
+  function reload()
   {
-    /* Call common method to give check the hook */
-    $message= plugin::check();
-        
-    return ($message);
+    $this->pkgs = array(); 
+    $q          = new gosaSupportDaemon();
+    $filter     = preg_replace("/\*/","%",$this->searchStrPKG);
+    $attrs      = array("distribution", "package","version", "section", "description", "timestamp");
+    $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter);
+    if($q->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
+    }else{
+      foreach($ret as $attr){
+        $this->pkgs[$attr['PACKAGE']] = $attr;
+      }
+    }
   }
 
+
+  /*! \brief  Return all selected packages 
+      @return Array  All selected package names
+   */  
   function save()
   {
     return($this->selected);
