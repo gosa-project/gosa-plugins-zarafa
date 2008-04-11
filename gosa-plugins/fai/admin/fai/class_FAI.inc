@@ -170,7 +170,9 @@ class FAI
       /* Dont't try to modify non FAIclasses  
        */
       if(!preg_match("/[^,]+,".normalizePreg(get_ou("faiou"))."/",$obj_dn)){
-        echo "PLEASE check fai class handling in ".__LINE__." -> ".__FILE__;        
+        trigger_error("PLEASE check fai class handling in ".__LINE__." -> ".__FILE__);        
+        echo "<br>-->".$Current_DN."<br>";
+        echo "<br>-->".$obj_dn."<br>";
       }else{
 
         /* Get source object and check if it is a base FAIclass

@@ -82,6 +82,10 @@ class faiVariable extends plugin
       }
 
     }
+    $this->is_new = FALSE;
+    if($this->dn == "new"){
+      $this->is_new =TRUE;
+    }
     $this->ui = get_userinfo();
   }
 

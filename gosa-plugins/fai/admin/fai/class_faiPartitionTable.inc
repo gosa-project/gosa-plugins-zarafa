@@ -96,6 +96,10 @@ class faiPartitionTable extends plugin
         }  
       }
     }
+    $this->is_new = FALSE;
+    if($this->dn == "new"){
+      $this->is_new =TRUE;
+    }
     ksort($this->disks);
   }
 

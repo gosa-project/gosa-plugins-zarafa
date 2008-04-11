@@ -82,6 +82,10 @@ class faiTemplate extends plugin
         $this->SubObjects[$objects['cn']] = $objects;
       }
     }
+    $this->is_new = FALSE;
+    if($this->dn == "new"){
+      $this->is_new =TRUE;
+    }
     $this->ui = get_userinfo();
   }
 

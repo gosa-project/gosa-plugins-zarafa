@@ -158,6 +158,10 @@ class faiPackage extends plugin
     if ($this->dn != "new"){
       $this->newDialogShown= true;
     }
+    $this->is_new = FALSE;
+    if($this->dn == "new"){
+      $this->is_new =TRUE;
+    }
   }
 
 
