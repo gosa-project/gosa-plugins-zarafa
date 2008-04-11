@@ -292,6 +292,10 @@ class FAI
 
     /* check which objects must be saved */
     $FAI_objects_to_save = session::get('FAI_objects_to_save');
+    if(!is_array($FAI_objects_to_save)) {
+      trigger_error("Can't save FAI objects, no array given.");
+      return;
+    }
     foreach($FAI_objects_to_save as $Current_DN => $object){
       if($object['diff']){
         $sub_name = $Current_DN;
