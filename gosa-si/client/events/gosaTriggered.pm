@@ -96,7 +96,7 @@ sub trigger_action_reboot {
         close(FILE);
     }
     else {
-    	system( "/sbin/shutdown -r +$timeout &" );
+    	#system( "/sbin/shutdown -r +$timeout &" );
     }
 
     return;

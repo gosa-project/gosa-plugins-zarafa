@@ -64,6 +64,7 @@ my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
 my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
+my ($messaging_db_loop_delay);
 my ($known_modules);
 my ($pid_file, $procid, $pid, $log_file);
 my ($arp_activ, $arp_fifo);
@@ -162,7 +163,7 @@ my $arch = "i386";
 # holds all messages which should be delivered to a user
 our $messaging_db;
 our $messaging_tn = "messaging"; 
-our @messaging_col_names = ('subject', 'from', 'to', 'flag', 'direction', 'delivery_time', 'message', 'timestamp', 'id INTEGER', );
+our @messaging_col_names = ('subject', 'message_from', 'message_to', 'flag', 'direction', 'delivery_time', 'message', 'timestamp', 'id INTEGER' );
 my $messaging_file_name;
 
 # path to directory to store client install log files
@@ -203,6 +204,7 @@ my $max_children = 2;
     "port" => [\$gosa_port, "20082"],
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
+    "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
     },
 "SIPackages" => {
@@ -1235,6 +1237,8 @@ sub trigger_db_loop {
 	my ($kernel) = @_ ;
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
+    $kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
+    $kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
 }
 
 sub watch_for_done_jobs {
@@ -1331,6 +1335,87 @@ sub watch_for_new_jobs {
 	}
 
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
+}
+
+
+sub watch_for_new_messages {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+    my @coll_user_msg;   # collection list of outgoing messages
+    
+    # check messaging_db for new incoming messages with executable timestamp
+    my $timestamp = &get_time();
+    #my $sql_statement = "SELECT * FROM $messaging_tn WHERE (CAST (delivery_time AS INTEGER) + 120) < $timestamp";
+    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( (CAST(timestamp AS INTEGER))<$timestamp AND flag='n' AND direction='in' )";
+    my $res = $messaging_db->exec_statement( $sql_statement );
+
+ 	foreach my $hit (@{$res}) {
+
+        # create outgoing messages
+        my $message_to = @{$hit}[2];
+
+        # translate message_to to plain login name
+        my @reciever_l = ($message_to);  
+        my $message_id = @{$hit}[8];
+
+        #add each outgoing msg to messaging_db
+        my $reciever;
+        foreach $reciever (@reciever_l) {
+            my $sql_statement = "INSERT INTO $messaging_tn (subject, message_from, message_to, flag, direction, delivery_time, message, timestamp, id) ".
+                "VALUES ('".
+                @{$hit}[0]."', '".   # subject
+                @{$hit}[1]."', '".   # message_from
+                $reciever."', '".    # message_to
+                "none"."', '".       # flag
+                "out"."', '".        # direction
+                @{$hit}[5]."', '".   # delivery_time
+                @{$hit}[6]."', '".   # message
+                $timestamp."', '".   # timestamp
+                @{$hit}[8].          # id
+                "')";
+            &daemon_log("M DEBUG: $sql_statement", 1);
+            my $res = $messaging_db->exec_statement($sql_statement);
+            &daemon_log("M INFO: message '".@{$hit}[8]."' is prepared for delivery to reciever '$reciever'", 5);
+        }
+
+        # send outgoing messages
+        my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' )";
+        my $res = $messaging_db->exec_statement( $sql_statement );
+        foreach my $hit (@{$res}) {
+            # add subject, from, to and message to list coll_user_msg
+            my @user_msg = [@{$hit}[0], @{$hit}[1], $reciever, @{$hit}[6]];
+            push( @coll_user_msg, \@user_msg);
+        }
+
+        # send outgoing list to myself (gosa-si-server) to deliver each message to user
+        # reason for this workaround: if to much messages have to be delivered, it can come to 
+        # denial of service problems of the server. so, the incoming message list can be processed
+        # by a forked child and gosa-si-server is always ready to work. 
+        my $collection_out_msg = &create_xml_hash("collection_user_messages", $server_address, $server_address);
+        # add to hash 'msg1' => [subject, from, to, message]
+        # hash to string
+        # send msg to myself
+# TODO
+
+        # set incoming message to flag d=deliverd
+        $sql_statement = "UPDATE $messaging_tn SET flag='p' WHERE id='$message_id'"; 
+        &daemon_log("M DEBUG: $sql_statement", 7);
+        $res = $messaging_db->update_dbentry($sql_statement);
+        &daemon_log("M INFO: message '".@{$hit}[8]."' is set to flag 'p' (processed)", 5);
+
+    }
+    
+    $kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay); 
+
+
+    return;
+}
+
+
+sub watch_for_done_messages {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    $kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay); 
+    return;
 }
 
 
@@ -2234,6 +2319,8 @@ POE::Session->create(
 	inline_states => {
 		_start => \&_start,
 		sig_handler => \&sig_handler,
+        watch_for_new_messages => \&watch_for_new_messages,
+        watch_for_done_messages => \&watch_for_done_messages,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
         create_packages_list_db => \&run_create_packages_list_db,

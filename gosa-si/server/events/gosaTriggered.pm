@@ -55,6 +55,57 @@ sub get_events {
 
 sub send_user_msg {
     my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+
+    #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
+    my $subject = @{$msg_hash->{'subject'}}[0];
+    my $from = @{$msg_hash->{'from'}}[0];
+    my $to = @{$msg_hash->{'to'}}[0];
+    my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
+    #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
+    my $message = @{$msg_hash->{'message'}}[0];
+    
+    # keep job queue uptodate if necessary 
+    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+    if( defined $jobdb_id) {
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id='$jobdb_id'";
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+        my $res = $main::job_db->exec_statement($sql_statement);
+    }
+
+    # error handling
+    if (not $delivery_time =~ /^\d{14}$/) {
+        my $error_string = "delivery_time '$delivery_time' is not a valid timestamp, please use format 'yyyymmddhhmmss'";
+        &main::daemon_log("$session_id ERROR: $error_string", 1);
+        return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
+    }
+
+    # add incoming message to messaging_db
+    my $func_dic = {table=>$main::messaging_tn,
+        primkey=>['id'],
+        subject=>$subject,
+        message_from=>$from,
+        message_to=>$to,
+        flag=>"n",
+        direction=>"in",
+        delivery_time=>$delivery_time,
+        message=>$message,
+        timestamp=>&get_time(),
+    };
+    my $res = $main::messaging_db->add_dbentry($func_dic);
+    if (not $res == 0) {
+        &main::daemon_log("$session_id ERROR: gosaTriggered.pm: cannot add message to message_db: $res", 1);
+    } else {
+        &main::daemon_log("$session_id INFO: gosaTriggered.pm: message with subject '$subject' successfully added to message_db", 5);
+    }
+
+    return;
+}
+
+sub send_user_msg_OLD {
+    my ($msg, $msg_hash, $session_id) = @_ ;
     my @out_msg_l;
     my @user_list;
     my @group_list;
@@ -86,16 +137,14 @@ sub send_user_msg {
 
     }
 
-    my $ldap_handle = &main::get_ldap_handle($session_id);
     # resolve groups to users
+    my $ldap_handle = &main::get_ldap_handle($session_id);
     if( @group_list ) {
-        # build ldap connection
         if( not defined $ldap_handle ) {
             &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
             return ();
         } 
-        foreach my $group (@group_list) {
-            # Perform search
+        foreach my $group (@group_list) {   # Perform search
             my $mesg = $ldap_handle->search( 
                     base => $main::ldap_base,
                     scope => 'sub',
