@@ -116,7 +116,7 @@ class divListFai extends MultiSelectWindow
 
     /* Add additional seperator */
     if($add_sep){
-      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+      $listhead .=" <img class='center' src='images/lists/seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
 
     $s  = ".|"._("Actions")."|\n";

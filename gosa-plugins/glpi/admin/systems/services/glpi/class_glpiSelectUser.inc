@@ -175,7 +175,7 @@ class glpiSelectUser extends plugin
       " <input class='center' type='image' align='middle' 
       src='images/lists/home.png' title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/lists/reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
+" <img class='center' src='images/lists/seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
     " <select name='depselect' onChange='mainform.submit()' class='center'>$options</select>".
     " <input class='center' type='image' src='images/list_submit.png' align='middle'
         title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;".
