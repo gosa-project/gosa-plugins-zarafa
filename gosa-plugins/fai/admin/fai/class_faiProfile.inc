@@ -253,7 +253,7 @@ class faiProfile extends plugin
     }
 
     if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
-      $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses);
+      $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses,$this->parent->parent->fai_release);
       $this->is_dialog  =true;
     }
 

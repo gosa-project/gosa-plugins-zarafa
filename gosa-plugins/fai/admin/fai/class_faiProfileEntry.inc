@@ -11,13 +11,11 @@ class faiProfileEntry extends plugin
   var $FAIAllclasses        = array();
   var $ui;
 
-  function faiProfileEntry (&$config, $dn= NULL,$used=array(),$objects=false)
+  function faiProfileEntry (&$config, $dn= NULL,$used=array(),$base)
   {
     plugin::plugin ($config, $dn);
 
     /* Search only in fai tree */
- 
-    $base = $this->parent->parent->fai_release; 
     $this->ui = get_userinfo();
 
     $filter = "(|(objectClass=FAIscript)(objectClass=FAItemplate)(objectClass=FAIhook)".
