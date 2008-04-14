@@ -229,7 +229,8 @@ class divListFai extends MultiSelectWindow
     }
 
     /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
+    if(!($this->parent->lock_type == "freeze" && !$this->parent->allow_freeze_object_attach) && 
+      preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
       $s .= "..|---|\n";
       if($this->parent->CopyPasteHandler->entries_queued()){
         $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";

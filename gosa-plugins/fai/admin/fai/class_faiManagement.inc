@@ -46,6 +46,10 @@ class faiManagement extends plugin
   var $CopyPasteHandler = FALSE;
   var $base = "";
 
+  /* Allow inserting of new elements if freezed releases 
+  */
+  var $allow_freeze_object_attach = FALSE;
+
   var $no_save;
 
 	/* construction/reconstruction 
@@ -884,10 +888,10 @@ class faiManagement extends plugin
     }
 
     /* Display dialog with system list */
+    $this->reload();
     $this->DivListFai->parent = $this;
     $this->DivListFai->execute();
     $this->DivListFai->AddDepartments($this->DivListFai->selectedBase,4,1);
-    $this->reload();
     $this->DivListFai->setEntries($this->objects);
     return($this->DivListFai->Draw());
 	}
@@ -1162,7 +1166,7 @@ class faiManagement extends plugin
     }
 
     /* Start pasting entries */
-    if($s_action == "editPaste"){
+    if($s_action == "editPaste" && !($this->lock_type == "freeze" && !$this->allow_freeze_object_attach)){
       $this->start_pasting_copied_objects = TRUE;
     }
 
