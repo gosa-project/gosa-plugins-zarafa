@@ -38,7 +38,7 @@ class faiPackageEntry extends plugin
   {
     $this->package_sections = array();
     $q = new gosaSupportDaemon();
-    $ret = $q->FAI_get_packages($this->FAIdebianRelease,array("distinct section"));
+    $ret = $q->FAI_get_package_sections($this->FAIdebianRelease);
     if($q->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
     }else{
@@ -168,7 +168,7 @@ class faiPackageEntry extends plugin
     $q          = new gosaSupportDaemon();
     $filter     = preg_replace("/\*/","%",array($this->searchStrPKG));
     $attrs      = array("distribution", "package","version", "section", "description", "timestamp");
-    $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter);
+    $ret        = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$filter,0,200);
     if($q->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
     }else{
