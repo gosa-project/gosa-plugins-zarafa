@@ -457,7 +457,7 @@ class addressbook extends plugin
             </a>
             &nbsp;</td>
             <td>
-            <a href=\"getvcard.php?dn=".base64_encode($attrs['dn'])."\">
+            <a href=\"addressbook/getvcard.php?dn=".base64_encode($attrs['dn'])."\">
             <img align=\"top\" border=0 src=\"images/save.png\" alt=\"vcf\" title=\"".sprintf(_("Save contact for %s as vcard"), $attrs['givenName'][0]." ".$attrs['sn'][0])."\">
             </a>";
 
