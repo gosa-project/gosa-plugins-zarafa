@@ -60,7 +60,7 @@ class printerPPDDialog extends plugin
       if(($ppdfile!== NULL)&&(strlen($ppdfile)>0)){
         $ppdfile = preg_replace("#".$this->pathToModified."#","",$ppdfile);
         if(!file_exists($this->pathToPPD.$this->pathToModified.$ppdfile)){
-          msg_dialog(_("PPD error"), sprintf(_("Cannot open PPD '%s'!"), $ppdfile), ERROR_DIALOG);
+          msg_dialog::display(_("PPD error"), sprintf(_("Cannot open PPD '%s'!"), $ppdfile), ERROR_DIALOG);
         }else{
           $res  = $this->ppdManager->loadDescription($this->pathToPPD.$this->pathToModified.$ppdfile);
           if($res){
