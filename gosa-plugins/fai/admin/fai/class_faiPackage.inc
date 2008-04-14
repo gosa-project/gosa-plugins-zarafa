@@ -89,38 +89,41 @@ class faiPackage extends plugin
       }
       $PackageFilter = "(&(objectClass=FAIdebconfInfo)(|".$PackageFilter."))";
 
-      /* Search for configuration objects */ 
+      $res = FAI::get_all_objects_for_given_base(FAI::get_release_dn($dn),$PackageFilter);
       $ldap = $this->config->get_ldap_link();
-      $ldap->cd($this->dn);
-      $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType",
-            "FAIvariableContent","FAIpackage","FAIdebianSection","FAIstate"));
+      $ldap->cd($this->config->current['BASE']);
+      foreach($res as $dn_v){
+        if(preg_match("/".normalizePreg($dn)."$/",$dn_v['dn'])){
 
-      /* Walk through configurations and append them to our list of ConfiguredPackages 
-       */
-      while($attr = $ldap->fetch()){
+          $ldap->cat($dn_v['dn']);
+          $attr = $ldap->fetch();
 
-        /* Skip objects, that are tagged as removed */
-        if(isset($object['FAIstate'][0])){
-          if(preg_match("/removed$/",$attr['FAIstate'][0])){
-            continue;
-          }
-        }
+          /* Walk through configurations and append them to our list of ConfiguredPackages 
+           */
 
-        $tmp =array(); 
-        $tmp['Name']  = $attr['FAIvariable'][0];
-        $tmp['Type']  = $attr['FAIvariableType'][0];
-
-        if (isset($attr['FAIvariableContent'][0])){
-          if(!in_array($attr['FAIvariableType'],array("multiselect"))){
-            $tmp['Value'] = $attr['FAIvariableContent'][0];
-          }else{
-            $content = array();        
-            unset($attr['FAIvariableContent']['count']);
-            foreach($attr['FAIvariableContent'] as $attr){
-              $tmp['Value'][] = $attr;
+          /* Skip objects, that are tagged as removed */
+          if(isset($object['FAIstate'][0])){
+            if(preg_match("/removed$/",$attr['FAIstate'][0])){
+              continue;
             }
           }
-          $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
+
+          $tmp =array(); 
+          $tmp['Name']  = $attr['FAIvariable'][0];
+          $tmp['Type']  = $attr['FAIvariableType'][0];
+
+          if (isset($attr['FAIvariableContent'][0])){
+            if(!in_array($attr['FAIvariableType'],array("multiselect"))){
+              $tmp['Value'] = $attr['FAIvariableContent'][0];
+            }else{
+              $content = array();        
+              unset($attr['FAIvariableContent']['count']);
+              foreach($attr['FAIvariableContent'] as $attr){
+                $tmp['Value'][] = $attr;
+              }
+            }
+            $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
+          }
         }
       }
 
