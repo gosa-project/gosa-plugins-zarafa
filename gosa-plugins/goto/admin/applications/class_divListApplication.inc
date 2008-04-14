@@ -297,7 +297,7 @@ class divListApplication extends MultiSelectWindow
   
     $str = "<img class='center' src='images/select_application.png' 
               title='".$num_app_str."' alt='".$num_app_str."'>&nbsp;".$num_apps."&nbsp;&nbsp;&nbsp;&nbsp;";
-    $str.= "<img class='center' src='images/folder.png' 
+    $str.= "<img class='center' src='images/lists/folder.png' 
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
 
     $this->set_List_Bottom_Info($str);

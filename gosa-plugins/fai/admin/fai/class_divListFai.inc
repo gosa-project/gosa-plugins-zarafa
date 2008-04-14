@@ -394,7 +394,7 @@ class divListFai extends MultiSelectWindow
        title='".$template_str."' alt='".$template_str."'>&nbsp;".$cnts['FAItemplate']."&nbsp;&nbsp;&nbsp;&nbsp;";
      $str.= "<img class='center' src='".$objects['FAIpackageList']['IMG']."'
        title='".$package_str."' alt='".$package_str."'>&nbsp;".$cnts['FAIpackageList']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='images/folder.png'
+     $str.= "<img class='center' src='images/lists/folder.png'
        title='".$dep_str."' alt='".$dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
      $this->set_List_Bottom_Info($str);
   }

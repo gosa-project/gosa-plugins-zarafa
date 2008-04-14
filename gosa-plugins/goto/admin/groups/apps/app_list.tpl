@@ -64,7 +64,7 @@
 					</div>
 				{else}
 					<div style="height:20px;width:20px; overflow:hidden">
-					<img class="center" src='images/folder.png' alt='{t}Folder{/t}'>
+					<img class="center" src='images/lists/folder.png' alt='{t}Folder{/t}'>
 					</div>
 				{/if}
 			</td>
