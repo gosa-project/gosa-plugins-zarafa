@@ -267,7 +267,7 @@ sub get_where_statement {
                 push(@phrase_l, "$tag$operator'$val'");
             }
             my $clause_str .= join(" $connector ", @phrase_l);
-            push(@clause_l, $clause_str);
+            push(@clause_l, "($clause_str)");
         }
 
         if( not 0 == @clause_l ) {
