@@ -124,25 +124,30 @@ class divListFai extends MultiSelectWindow
       "&nbsp;"._("Create")."|\n";
 
     $acl = $ui->get_permissions($this->parent->fai_base,"fai/faiProfile");
-    if(preg_match("/c/",$acl)){
-      $s.= "...|<input class='center' type='image' src='images/fai_new_profile.png' alt=''>".
-        "&nbsp;"._("Profile")."|Create_profile|\n";
-    }
+    if($this->parent->lock_type == "freeze" && !$this->parent->allow_freeze_object_attach){
+      $s.= "...|<input class='center' type='image' src='images/freeze.png' alt=''>".
+        "&nbsp;"._("Freezed")."|\n";
+    }else{
+      if(preg_match("/c/",$acl)){
+        $s.= "...|<input class='center' type='image' src='images/fai_new_profile.png' alt=''>".
+          "&nbsp;"._("Profile")."|Create_profile|\n";
+      }
 
-    /* Append create icons for each fai component */
-    $arr = array(
-        array("images/fai_new_partitionTable.png" , _("Partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
-        array("images/fai_new_script.png"         , _("Scripts")          ,"Create_script"    , _("S")  , "faiScript"),
-        array("images/fai_new_hook.png"           , _("Hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
-        array("images/fai_new_variable.png"       , _("Variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
+      /* Append create icons for each fai component */
+      $arr = array(
+          array("images/fai_new_partitionTable.png" , _("Partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
+          array("images/fai_new_script.png"         , _("Scripts")          ,"Create_script"    , _("S")  , "faiScript"),
+          array("images/fai_new_hook.png"           , _("Hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
+          array("images/fai_new_variable.png"       , _("Variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
         array("images/fai_new_template.png"       , _("Templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
         array("images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
 
-    foreach($arr as $ar){
-      $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
-      if(preg_match("/c/",$acl)){
-        $s.= "...|<input class='center' type='image' src='".$ar[0]."' alt=''>".
-          "&nbsp;".$ar[1]."|".$ar[2]."|\n";
+      foreach($arr as $ar){
+        $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
+        if(preg_match("/c/",$acl)){
+          $s.= "...|<input class='center' type='image' src='".$ar[0]."' alt=''>".
+            "&nbsp;".$ar[1]."|".$ar[2]."|\n";
+        }
       }
     }
 
