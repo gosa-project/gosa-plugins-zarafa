@@ -518,11 +518,16 @@ class faiPackage extends plugin
         $pkgattrs['FAIvariableContent']   = $attr['Value'];
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
 
-	/* Tag object */
-	$this->tag_attrs($pkgattrs, $pkgdn, $this->gosaUnitTag);
+        /* Tag object */
+        $this->tag_attrs($pkgattrs, $pkgdn, $this->gosaUnitTag);
 
         if(in_array($pkgattrs['FAIvariableType'],array("boolean","multiselect","password","select","string","text"))){
-          FAI::prepare_to_save_FAI_object($pkgdn,$pkgattrs);
+
+          if($pkgattrs['FAIvariableType'] == "text" && $pkgattrs['FAIvariableContent'] == ""){
+            gosa_log("Skipped saving FAIvariable '$name' empty string can't be saved.");
+          }else{
+            FAI::prepare_to_save_FAI_object($pkgdn,$pkgattrs);
+          }
         }
       }
     }
