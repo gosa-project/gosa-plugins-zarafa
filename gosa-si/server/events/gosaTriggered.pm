@@ -29,6 +29,7 @@ my @events = (
     "trigger_action_wake",
     "recreate_fai_server_db",
     "send_user_msg", 
+	"get_available_kernel",
     );
 @EXPORT = @events;
 
@@ -642,5 +643,32 @@ sub trigger_action_wake {
     return @out_msg_l;
 }
 
+
+sub get_available_kernel {
+        my ($msg, $msg_hash, $session_id) = @_;
+
+        my $source = @{$msg_hash->{'source'}}[0];
+        my $target = @{$msg_hash->{'target'}}[0];
+        my $server = @{$msg_hash->{'server'}}[0];
+
+        # Get available Releases for server
+        my $sql_statement = "SELECT * FROM $main::fai_server_tn WHERE server LIKE '%$server%'";
+        my $res_hash = $main::fai_server_db->select_dbentry($sql_statement);
+
+        my @kernel;
+        foreach my $release (keys %{$res_hash}) {
+                # Get Kernel packages for release
+                my $sql_statement = "SELECT * FROM $main::packages_list_tn WHERE distribution='".$res_hash->{$release}->{'release'}."' AND package LIKE 'linux\-image\-%'";
+                my $hash = $main::packages_list_db->select_dbentry($sql_statement);
+                foreach my $package (keys %{$hash}) {
+                        push @kernel, (%{$res_hash}->{$release}->{'release'})."|".(%{$hash}->{$package}->{'package'});
+                }
+        }
+
+        my %data = ('available-kernel' => \@kernel);
+
+        my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
+        return ( $out_msg );
+}
 
 1;
