@@ -176,8 +176,8 @@ class faiPackage extends plugin
     if(!$this->is_account){
 
       /* Assemble release name */
-      $faifilter = session::get('faifilter');
-      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiou')).'.*$/', '', $faifilter['branch']);
+      $release = $this->parent->parent->fai_release;
+      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiou')).'.*$/', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "";
@@ -345,24 +345,14 @@ class faiPackage extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-
-    $faifilter = session::get('faifilter');
-    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $this->dn);
-    if($faifilter['branch'] == "main"){
-      $use_dn = $this->dn;
-    }
-
+    $release = $this->parent->parent->fai_release;
+    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
     FAI::prepare_to_save_FAI_object($use_dn,array(),true);
-
     new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
-
     foreach($this->ConfiguredPackages as $pkgname => $attrs){
       foreach($attrs as $name => $attr){
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
-        $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $pkgdn);
-        if($faifilter['branch'] == "main"){
-          $use_dn = $obj['dn'];
-        }
+        $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $pkgdn);
         FAI::prepare_to_save_FAI_object($use_dn,array(),true);
       }
     }
@@ -398,12 +388,8 @@ class faiPackage extends plugin
     /* Ensure that we do not overwrite an allready existing entry 
      */
     if($this->is_new){
-      $new_dn= 'cn='.$this->cn.",".get_ou('faipackageou').get_ou('faiou').session::get('CurrentMainBase');
-      $faifilter = session::get('faifilter');
-      if($faifilter['branch']!="main"){
-        $new_dn ='cn='.$this->cn.",".get_ou('faipackageou').$faifilter['branch'];
-      }
-
+      $release = $this->parent->parent->fai_filter;
+      $new_dn= 'cn='.$this->cn.",".get_ou('faipackageou').get_ou('faiou').$release;
       $res = faiManagement::check_class_name("FAIpackageList",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
         $message[] = msgPool::duplicated(_("Name"));
@@ -476,8 +462,9 @@ class faiPackage extends plugin
 
     /* Assemble release name */
     if($this->FAIdebianRelease == "ClearFromCopyPaste"){
-      $faifilter = session::get('faifilter');
-      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiou')).'.*$/', '', $faifilter['branch']);
+
+      $current_release  = $this->parent->parent->fai_release;
+      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiou')).'.*$/', '', $current_release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "";

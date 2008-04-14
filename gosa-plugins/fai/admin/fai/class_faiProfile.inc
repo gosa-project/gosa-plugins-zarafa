@@ -363,13 +363,8 @@ class faiProfile extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-
-    $faifilter = session::get('faifilter');
-    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $this->dn);
-    if($faifilter['branch'] == "main"){
-      $use_dn = $this->dn;
-    }
-
+    $release = $this->parent->parent->fai_release;
+    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
     new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
     FAI::prepare_to_save_FAI_object($use_dn,array(),true);
     $this->handle_post_events("remove");    
@@ -401,11 +396,8 @@ class faiProfile extends plugin
     /* Ensure that we do not overwrite an allready existing entry 
      */
     if($this->dn == "new" || $this->cn != $this->old_cn){
-      $new_dn= 'cn='.$this->cn.",".get_ou('faiprofileou').get_ou('faiou').session::get('CurrentMainBase');
-      $faifilter = session::get('faifilter');
-      if($faifilter['branch']!="main"){
-        $new_dn ='cn='.$this->cn.",".get_ou('faiprofileou').$faifilter['branch'];
-      }
+      $release = $this->parent->parent->fai_filter;
+      $new_dn= 'cn='.$this->cn.",".get_ou('faiprofileou').get_ou('faiou').$release;
       $res = faiManagement::check_class_name("FAIprofile",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
         $message[] = msgPool::duplicated(_("Name"));

@@ -44,13 +44,14 @@ class faiManagement extends plugin
   var $DivListFai;
   var $start_pasting_copied_objects = FALSE;
   var $CopyPasteHandler = FALSE;
-  var $base = "";
 
   /* Allow inserting of new elements if freezed releases 
   */
   var $allow_freeze_object_attach = FALSE;
 
   var $no_save;
+  var $fai_base     ="";
+  var $fai_release  ="";
 
 	/* construction/reconstruction 
 	 */
@@ -65,15 +66,26 @@ class faiManagement extends plugin
     $this->DivListFai = new divListFai($this->config,$this);
 
     /* Copy & Paste handler */
-    if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){
+    if ($this->config->boolValueIsTrue($this->fai_base, "enableCopyPaste")){
       $this->CopyPasteHandler= new CopyPasteHandler($this->config);
     }
+
+    /* Set default release */
+    $this->fai_base = get_ou("faiou")."ou=Direktorium,".$this->config->current['BASE'];
+    if(!session::is_set("fai_filter")){
+      session::set("fai_filter",array("fai_release" => $this->fai_base));
+    }
+
+    $fai_filter = session::get("fai_filter");
+    $this->fai_release = $fai_filter['fai_release'];
 	}
 
 	function execute()
 	{
     /* Call parent execute */
     plugin::execute();
+
+    print_a(array($this->fai_base,$this->fai_release));
 
     /* Initialise vars and smarty */
 		$smarty 	= get_smarty();
@@ -305,6 +317,7 @@ class faiManagement extends plugin
         if(preg_match("/d/",$acl)){
 
           $this->dialog = new $type[0]($this->config, $this->config->data['TABS'][$type[2]], $dn,"fai");
+          $this->dialog->parent = &$this;
           $this->dialog->set_acl_base($dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
@@ -377,6 +390,7 @@ class faiManagement extends plugin
 
           $this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
           $this->dialog->set_acl_base($this->dn);
+          $this->dialog->parent = &$this;
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
           $this->dialog= FALSE;
@@ -419,7 +433,7 @@ class faiManagement extends plugin
 			add_lock ($this->dn, $this->ui->dn);
 
 			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-
+      $this->dialog->parent = &$this;
       $this->dialog->set_acl_base($this->dn);
 			$this->is_dialog  = true;
 
@@ -441,7 +455,7 @@ class faiManagement extends plugin
     /* Remove branch 
      */
     if($s_action == "remove_branch"){
-      $base= $this->DivListFai->selectedBranch;
+      $base= $this->fai_release;
 
       /* Check if we have a post remove method configured
        *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
@@ -451,7 +465,7 @@ class faiManagement extends plugin
            we're allowed to remove this 'dn' */
         if($this->acl_is_removeable()){
 
-          $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->DivListFai->selectedBranch),_("FAI branch/freeze")));
+          $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->fai_release),_("FAI branch/freeze")));
           return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
         } else {
           msg_dialog::display(_("Permission error"), _("You have no permission to delete this release!"), ERROR_DIALOG);
@@ -471,7 +485,7 @@ class faiManagement extends plugin
        */
       if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
 
-        $bb =  $this->DivListFai->selectedBranch;
+        $bb =  $this->fai_release;
         if(!isset($ldap)){
           $ldap = $this->config->get_ldap_link();
         }
@@ -484,7 +498,7 @@ class faiManagement extends plugin
           $ldap->recursive_remove();
           $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
           $ldap->recursive_remove();
-          $this->DivListFai->selectedBranch = "main";
+          $this->fai_release = $this->fai_base;
 
           /* Post remove */
           $this->lock_name   = $name;
@@ -514,7 +528,7 @@ class faiManagement extends plugin
       $name = $_POST['BranchName'];
       $is_ok = true;
       $smarty->assign("BranchName",$name);
-      $base= get_ou('faiou').$this->DivListFai->selectedBase;
+      $base= $this->fai_base;
 
       /* Check used characters */
       if(preg_match("/[^0-9a-z \ö\ä\ü\.-_:,]/i",$name)){
@@ -523,7 +537,7 @@ class faiManagement extends plugin
       }
 
       /* Check if this name is already in use */
-      if(!$this->CheckNewBranchName($_POST['BranchName'],$this->DivListFai->selectedBranch)){
+      if(!$this->CheckNewBranchName($_POST['BranchName'],$this->fai_release)){
         msg_dialog::display(_("Error"), msgPool::duplicated(_("Name")), ERROR_DIALOG);
         $is_ok = false;
       }
@@ -569,17 +583,17 @@ class faiManagement extends plugin
         $ldap = $this->config->get_ldap_link();
 
         $baseToUse = $base;
-        if($this->DivListFai->selectedBranch != "main" ){
-          $baseToUse = $this->DivListFai->selectedBranch;
+        if($this->fai_release !=  $this->fai_base){
+          $baseToUse = $this->fai_release;
         }
 
         /* Create new Release name to be able to set faidebianRelease for FAIpackageList */
 
         $CurrentReleases  = $this->getBranches();
         $NewReleaseName   = $name;
-        if(isset($CurrentReleases[$this->DivListFai->selectedBranch])) {
-          if($this->DivListFai->selectedBranch != "main"){
-            $NewReleaseName = $CurrentReleases[$this->DivListFai->selectedBranch]."/".$name;
+        if(isset($CurrentReleases[$this->fai_release])) {
+          if($this->fai_release != $this->fai_base){
+            $NewReleaseName = $CurrentReleases[$this->fai_release]."/".$name;
             $NewReleaseName = preg_replace("#\/#","/",$NewReleaseName); 
           }else{
             $NewReleaseName   = $name;
@@ -616,7 +630,7 @@ class faiManagement extends plugin
 
         /* Duplicate group application releases 
          */
-        FAI::copy_FAI_group_releases($CurrentReleases[$this->DivListFai->selectedBranch],$name,$type);
+        FAI::copy_FAI_group_releases($CurrentReleases[$this->fai_release],$name,$type);
 
         /* Duplicate applications 
          */
@@ -737,9 +751,10 @@ class faiManagement extends plugin
                     "new_package"       =>  _("package list"));
 
     if(isset($types[$s_action])){
-      $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/".$type_acl_mapping[$types[$s_action]]);
+      $acl = $this->ui->get_permissions($this->fai_base,"fai/".$type_acl_mapping[$types[$s_action]]);
       if(preg_match("/c/",$acl)){
         $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
+        $this->dialog->parent = &$this;
       }else{
         msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), $types_i18n[$s_action]), ERROR_DIALOG);
       }
@@ -749,11 +764,12 @@ class faiManagement extends plugin
     if($s_action == "new_profile"){
       $this->dn = "new" ;
 
-      $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/faiProfile");
+      $acl = $this->ui->get_permissions($this->fai_base,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
         $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
         $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
         $this->dialog->set_acl_base($this->base);
+        $this->dialog->parent = &$this;
 
         $this->is_dialog = false;
       }else{
@@ -781,6 +797,7 @@ class faiManagement extends plugin
           $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
           $this->dialog->set_acl_base($this->base);
           $this->dialog->by_object[$a_setup[1]]->cn = $name;
+          $this->dialog->parent = &$this;
           $this->is_dialog = true;
         }
       }		
@@ -882,7 +899,7 @@ class faiManagement extends plugin
      ****************/
 
     /* Check if there is a snapshot dialog open */
-    $base = $this->DivListFai->selectedBase;
+    $base = $this->fai_base;
     if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
@@ -891,7 +908,6 @@ class faiManagement extends plugin
     $this->reload();
     $this->DivListFai->parent = $this;
     $this->DivListFai->execute();
-    $this->DivListFai->AddDepartments($this->DivListFai->selectedBase,4,1);
     $this->DivListFai->setEntries($this->objects);
     return($this->DivListFai->Draw());
 	}
@@ -903,11 +919,7 @@ class faiManagement extends plugin
     $tmp = array();
     $types = array("faipartitionou","faiscriptou","faitemplateou","faihookou","faiprofileou","faivariableou","faipackageou");
     foreach($types as $type){
-      if($this->DivListFai->selectedBranch == "main"){
-        $tmp[] = get_ou($type).get_ou('faiou').$this->DivListFai->selectedBase;
-      }else{
-        $tmp[] = get_ou($type).$this->DivListFai->selectedBranch;
-      }
+      $tmp[] = get_ou($type).$this->fai_release;
     }
     return($tmp);
   }
@@ -916,10 +928,10 @@ class faiManagement extends plugin
   /* Get available branches for current base */
   function getBranches($base = false,$prefix = "")
   {
-    $ret = array("/"=>"main");
+    $ret = array("/"=>$this->fai_base);
     $ldap = $this->config->get_ldap_link();
     if(!$base){
-      $base = session::get('CurrentMainBase');
+      $base = $this->fai_base;
     }
     $tmp = FAI::get_all_releases_from_base($base,true);
     foreach($tmp as $dn => $name){
@@ -954,13 +966,13 @@ class faiManagement extends plugin
     $this->objects  = array();
 
     /* Get base */
-    $base = get_ou('faiou').$this->DivListFai->selectedBase;
-    if($this->DivListFai->selectedBranch != "main"){
+    $base = $this->fai_base;
+    if($this->fai_release != $this->fai_base){
       $br = $this->getBranches();
-      if(isset($br[$this->DivListFai->selectedBranch])){
-        $base = $this->DivListFai->selectedBranch;
+      if(isset($br[$this->fai_release])){
+        $base = $this->fai_release;
       }else{
-        $base = get_ou('faiou').$this->DivListFai->selectedBase;
+        $base = $this->fai_base;
       }
     }
     $this->base = $base;
@@ -1097,7 +1109,7 @@ class faiManagement extends plugin
 
   function CheckNewBranchName($name,$base)
   {
-    $f = $this->DivListFai->selectedBranch;
+    $f = $this->fai_release;
     if($name == ""){
       return(false);
     }elseif(in_array($name,$this->getBranches($f))) {
@@ -1112,6 +1124,16 @@ class faiManagement extends plugin
   {
     $this->DivListFai->save_object();
 
+    /* Get posted release */
+    $r_releases = array_flip($this->getBranches());
+    if(isset($_POST['fai_release']) && isset($r_releases[get_post('fai_release')])){
+      $this->fai_release = $r_releases[get_post('fai_release')];
+
+      $fai_filter = session::get("fai_filter");
+      $fai_filter['fai_release'] = $this->fai_release;
+      session::set("fai_filter",$fai_filter);
+    }
+
     if(is_object($this->CopyPasteHandler)){
       $this->CopyPasteHandler->save_object();
     }
@@ -1125,10 +1147,6 @@ class faiManagement extends plugin
       return("");
     }
 
-    $base = $this->DivListFai->selectedBranch;
-    if($base == "main"){
-      $base = $this->DivListFai->selectedBase;
-    }
 
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
@@ -1175,7 +1193,6 @@ class faiManagement extends plugin
 
       /* Get dialog */
       $data = $this->CopyPasteHandler->execute();
-      $this->CopyPasteHandler->SetVar("base",$base);
 
       FAI::save_release_changes_now();
 

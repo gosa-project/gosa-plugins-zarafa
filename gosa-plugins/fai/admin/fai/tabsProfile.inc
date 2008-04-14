@@ -3,6 +3,7 @@
 class tabsProfile extends tabs
 {
   var $base= "";
+  var $parent;
 
   function tabsProfile($config, $data, $dn,$category)
   {
@@ -21,13 +22,7 @@ class tabsProfile extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiProfile'];
-
-	$new_dn= 'cn='.$baseobject->cn.",".get_ou('faiprofileou').get_ou('faiou').session::get('CurrentMainBase');
-
-	$faifilter = session::get('faifilter');
-	if($faifilter['branch']!="main"){
-		$new_dn ='cn='.$baseobject->cn.",".get_ou('faiprofileou').$faifilter['branch'];
-	}
+	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiprofileou').$this->parent->fai_release;
 			
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

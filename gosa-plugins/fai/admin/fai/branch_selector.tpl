@@ -6,8 +6,8 @@
      <tr>
       <td>
     {t}Current release{/t}&nbsp;
-    <select name="selectedBranch" onChange="document.mainform.submit();">
-        {html_options options=$branches selected=$selectedBranch}
+    <select name="fai_release" onChange="document.mainform.submit();">
+        {html_options output=$fai_releases values=$fai_releases selected=$fai_release}
     </select>
       </td>
      </tr>
@@ -29,14 +29,14 @@
 		{t}Create new locked branch{/t}
     {/if}
 
-    {if $selectedBranch != "main" && $allow_remove}
+    {if $fai_release != $fai_base && $allow_remove}
     <br>
         <input class="center" type="image" name="remove_branch" src="images/lists/trash.png">
 	    <a href="?plug={$plug_id}&act=remove_branch">{t}Delete current release{/t}</a>
     {/if}
       </td>
      </tr>
-        </table>
+   </table>
    </div>
 <br>
 

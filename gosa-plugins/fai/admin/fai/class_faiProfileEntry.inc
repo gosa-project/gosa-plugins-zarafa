@@ -16,12 +16,8 @@ class faiProfileEntry extends plugin
     plugin::plugin ($config, $dn);
 
     /* Search only in fai tree */
-    $base = get_ou('faiou').session::get('CurrentMainBase');
-    $faifilter = session::get('faifilter');
-    if($faifilter['branch']!="main"){
-      $base = $faifilter['branch'];
-    }
-  
+ 
+    $base = $this->parent->parent->fai_release; 
     $this->ui = get_userinfo();
 
     $filter = "(|(objectClass=FAIscript)(objectClass=FAItemplate)(objectClass=FAIhook)".

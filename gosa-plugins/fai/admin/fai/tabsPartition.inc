@@ -3,6 +3,7 @@
 class tabsPartition extends tabs
 {
   var $base= "";
+  var $parent;
 
   function tabsPartition($config, $data, $dn,$category)
   {
@@ -22,12 +23,7 @@ class tabsPartition extends tabs
   {
   	$baseobject= $this->by_object['faiPartitionTable'];
 
-	$new_dn= 'cn='.$baseobject->cn.",".get_ou('faipartitionou').get_ou('faiou').session::get('CurrentMainBase');
-
-	$faifilter = session::get('faifilter');	
-	if($faifilter['branch']!="main"){
-		$new_dn ='cn='.$baseobject->cn.",".get_ou('faipartitionou').$faifilter['branch'];
-	}
+	$new_dn ='cn='.$baseobject->cn.",".get_ou('faipartitionou').$this->parent->fai_release;
 
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

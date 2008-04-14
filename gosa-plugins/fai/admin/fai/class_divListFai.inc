@@ -2,12 +2,6 @@
 
 class divListFai extends MultiSelectWindow
 {
-  /* Current base */
-  var $selectedBase       = "";
-  var $selectedBranch     = "main";
-  var $AvailableBranches  = array();
-  var $departments        = array();
-
   /* Regex */
   var $Regex              = "*";
   var $ShowProfiles;
@@ -24,8 +18,6 @@ class divListFai extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  var $SaveAdditionalVars = array("selectedBranch");
-
   function divListFai (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Fai", "fai");
@@ -33,14 +25,8 @@ class divListFai extends MultiSelectWindow
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
 
-    /* Set default base */
-    if(!session::is_set('CurrentMainBase')){
-      session::set('CurrentMainBase',$this->config->current['BASE']);
-    }
-    $this->selectedBase  = session::get('CurrentMainBase');
-
     /* Set list strings */
-    $this->SetTitle(_("List of classes"));
+    $this->SetTitle(  _("List of classes"));
     $this->SetSummary(_("List of deployment classes and packages"));
 
     /* Result page will look like a headpage */
@@ -54,9 +40,6 @@ class divListFai extends MultiSelectWindow
 
     /* Dynamic action col, depending on snapshot icons */
     $action_col_size = 120;
-#   if($this->parent->snapshotEnabled()){
-#     $action_col_size += 32;
-#   }
 
     /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
@@ -97,11 +80,13 @@ class divListFai extends MultiSelectWindow
       $c = $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'));
 
       $smarty = get_smarty();
+      $releases = $this->parent->getBranches();
       $smarty->assign("allow_create", $c);
       $smarty->assign("allow_remove", $r);
-      $smarty->assign("selectedBranch",$this->selectedBranch);
+      $smarty->assign("fai_release" , $releases[$this->parent->fai_release]);
+      $smarty->assign("fai_base"    , $releases[$this->parent->fai_base]);
       $smarty->assign("branchimage","images/branch.png");
-      $smarty->assign("branches",$this->AvailableBranches);
+      $smarty->assign("fai_releases", $releases);
       $plug_id = 0;       
       if(isset($_GET['plug'])){
         $plug_id = $_GET['plug'];
@@ -114,66 +99,17 @@ class divListFai extends MultiSelectWindow
 
   function GenHeader()
   {
-    /* Prepare departments,
-       which are shown in the listbox on top of the listbox
-     */
-    $options= "";
-
     /* Get all departments within this subtree */
     $ui= get_userinfo();
     $first = "";
     $found = FALSE;
     $base = $this->config->current['BASE'];
 
-    /* Add base */
-    $tmp = array();
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
-
-    $deps = array();
-    foreach($tmp as $tm){
-      $deps[$tm['dn']] = $tm['dn'];
-    }
-
-    /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("fai");
-    $ids = $this->config->idepartments;
-    $first = "";
-    $found = FALSE;
-    foreach($ids as $dep => $name){
-      if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
-
-        /* Keep first base dn in mind, we could need this
-         *  info if no valid base was found
-         */
-        if(empty($first)) {
-          $first = $dep['dn'];
-        }
-
-        $value = $ids[$dep];
-        if ($this->selectedBase == $dep){
-          $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
-        } else {
-          $options.= "<option value='".$dep."'>$value</option>";
-        }
-      }
-    }
-
-    /* The currently used base is not visible with your acl setup.
-     * Set base to first useable base.
-     */
-    if(!$found){
-      $this->selectedBase = $first;
-    }
-
     /* Add seperator */
     $add_sep = false;
 
     /* Get complete fai acls, to be able to check if we must show or hide the snapshot abilities */ 
-    $acl_all = $ui->has_complete_category_acls($this->selectedBase,$this->module);
+    $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
@@ -183,16 +119,11 @@ class divListFai extends MultiSelectWindow
       $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
 
-    $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle'
-      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
-
-
     $s  = ".|"._("Actions")."|\n";
     $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
 
-    $acl = $ui->get_permissions($this->selectedBase,"fai/faiProfile");
+    $acl = $ui->get_permissions($this->parent->fai_base,"fai/faiProfile");
     if(preg_match("/c/",$acl)){
       $s.= "...|<input class='center' type='image' src='images/fai_new_profile.png' alt=''>".
         "&nbsp;"._("Profile")."|Create_profile|\n";
@@ -208,7 +139,7 @@ class divListFai extends MultiSelectWindow
         array("images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
 
     foreach($arr as $ar){
-      $acl = $ui->get_permissions($this->selectedBase,"fai/".$ar[4]);
+      $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
       if(preg_match("/c/",$acl)){
         $s.= "...|<input class='center' type='image' src='".$ar[0]."' alt=''>".
           "&nbsp;".$ar[1]."|".$ar[2]."|\n";
@@ -319,7 +250,7 @@ class divListFai extends MultiSelectWindow
        /* Add copy & cut icons */
        $ui = get_userinfo();
        $action ="";
-       $acl_all = $ui->has_complete_category_acls($this->selectedBase,$this->module);
+       $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
        if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
          $action .= "<input class='center' type='image'
            src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
@@ -408,9 +339,6 @@ class divListFai extends MultiSelectWindow
   {
     /* Save automatic created POSTs like regex, checkboxes */
     MultiSelectWindow::save_object(); 
-    $faifilter = session::get('faifilter');
-    $faifilter['branch'] = $this->selectedBranch; 
-    session::set('faifilter',$faifilter);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

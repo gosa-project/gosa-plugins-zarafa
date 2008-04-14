@@ -11,15 +11,13 @@ class askClassName extends plugin
   var $forbidden          = array();
   var $ClassName          = "";  
   var $ClassAlreadyExists = false;
+  var $parent;
 
   function askClassName (&$config,$dn,$ui,$objectClass)
   {
     $this->ui = $ui;
     $this->objectClass = $objectClass;
     plugin::plugin ($config, $dn);
-    if(!session::is_set('CurrentMainBase')){
-      session::set('CurrentMainBase',$this->config->current['BASE']);
-    }
   }
 
   function execute()
@@ -31,25 +29,16 @@ class askClassName extends plugin
     $smarty = get_smarty();
     $display= "";
 
-    /* The faifilter contais 
-     * The base for all fai objects 
-     */
-    $faifilter  = session::get('faifilter');
-
     /* First search for every ou, in given fai base
      * With a second search detect all object that belong to the different ous. 
      */
 
-    $base = get_ou('faiou').session::get('CurrentMainBase');
-    if($faifilter['branch'] != "main"){
-      $base = $faifilter['branch'];
-    }
+    $base = $this->parent->fai_release;
     $ldap = $this->config->get_ldap_link();
-
 
     $type_acl_mapping = array(
         "FAIpartitionTable"  => "faiPartitionTable",
-        "FAIpackageList"     => "faiPackage",
+        "FAIpackageList"     => "faiPackageList",
         "FAIscript"          => "faiScript",
         "FAIvariable"        => "faiVariable",
         "FAIhook"            => "faiHook",

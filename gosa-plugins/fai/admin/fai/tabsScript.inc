@@ -3,6 +3,7 @@
 class tabsScript extends tabs
 {
   var $base= "";
+  var $parent;
 
   function tabsScript($config, $data, $dn,$category)
   {
@@ -21,14 +22,7 @@ class tabsScript extends tabs
   function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiScript'];
-
-	$new_dn= 'cn='.$baseobject->cn.",".get_ou('faiscriptou').get_ou('faiou').session::get('CurrentMainBase');
-
-	$faifilter = session::get('faifilter');
-
-	if($faifilter['branch']!="main"){
-		$new_dn ='cn='.$baseobject->cn.",".get_ou('faiscriptou').$faifilter['branch'];
-	}
+	$new_dn ='cn='.$baseobject->cn.",".get_ou('faiscriptou').$this->parent->fai_release;
 	
  	if ($this->dn != $new_dn && $this->dn != "new"){
 		

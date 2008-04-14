@@ -412,27 +412,20 @@ class faiHook extends plugin
    */
   function remove_from_parent()
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->dn);
-
-    $faifilter = session::get('faifilter');
-    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $this->dn);
-    if($faifilter['branch'] == "main"){
-      $use_dn = $this->dn;
-    }
-
-    FAI::prepare_to_save_FAI_object($use_dn,array(),true);
-
-    new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
-
-    foreach($this->SubObjects as $name => $obj){
-      $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $faifilter['branch'], $obj['dn']);
-      if($faifilter['branch'] == "main"){
-        $use_dn = $obj['dn'];
-      }
+    if($this->acl_is_removeable()){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->dn);
+      $release = $this->parent->parent->fai_release;
+      $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
+      new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
       FAI::prepare_to_save_FAI_object($use_dn,array(),true);
+
+      foreach($this->SubObjects as $name => $obj){
+        $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $obj['dn']);
+        FAI::prepare_to_save_FAI_object($use_dn,array(),true);
+      }
+      $this->handle_post_events("remove");
     }
-    $this->handle_post_events("remove");    
   }
 
 
@@ -460,12 +453,8 @@ class faiHook extends plugin
     /* Ensure that we do not overwrite an allready existing entry 
      */
     if($this->is_new){
-      $new_dn= 'cn='.$this->cn.",".get_ou('faihookou').get_ou('faiou').session::get('CurrentMainBase');
-      $faifilter = session::get('faifilter');
-      if($faifilter['branch']!="main"){
-        $new_dn ='cn='.$this->cn.",".get_ou('faihookou').$faifilter['branch'];
-      }
-
+      $release = $this->parent->parent->fai_release;
+      $new_dn= 'cn='.$this->cn.",".get_ou('faihookou').get_ou('faiou').$release;
       $res = faiManagement::check_class_name("FAIhook",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
         $message[] = msgPool::duplicated(_("Name"));
