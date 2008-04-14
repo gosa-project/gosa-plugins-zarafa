@@ -97,7 +97,7 @@ class printerPPDDialog extends plugin
       /* Check if path is write/readable*/
       $is_r = @is_readable($path);  
       if(((!is_dir($path))||(empty($path)) || (!$is_r)) && (!@mkdir($path))){
-        msg_dialog(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and writing!"), $path), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and writing!"), $path), ERROR_DIALOG);
 
         /* Print out template */
         $display.= $smarty->fetch(get_template_path('printerPPDDialog.tpl', TRUE,dirname(__FILE__)));
@@ -115,7 +115,7 @@ class printerPPDDialog extends plugin
           $this->SelectPPD($name); 
         }
       }else{
-        msg_dialog(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
+        msg_dialog::display(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }
     }
 
@@ -498,7 +498,7 @@ class printerPPDDialog extends plugin
             $str  .=  "</select>\n";
 
           }else{
-            msg_dialog(_("PPD error"), sprintf(_("PPD type '%s' is not supported!"), $type), ERROR_DIALOG);
+            msg_dialog::display(_("PPD error"), sprintf(_("PPD type '%s' is not supported!"), $type), ERROR_DIALOG);
           }
           $str .= "</td></tr>\n";
         }
@@ -515,13 +515,13 @@ class printerPPDDialog extends plugin
     if(file_exists($path)){
       if(is_writeable($path)){
         if(!@unlink($path)){
-          msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
+          msg_dialog::display(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
         }
       }else{
-        msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
+        msg_dialog::display(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
       }
     }else{
-      msg_dialog(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
+      msg_dialog::display(_("PPD error"), msgPool::cannotDeleteFile($path), ERROR_DIALOG);
     }
   }
 
