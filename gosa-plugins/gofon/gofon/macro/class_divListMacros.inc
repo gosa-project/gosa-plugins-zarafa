@@ -156,7 +156,7 @@ class divListMacro extends MultiSelectWindow
         $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
       }else{
-        $img = "<img border='0' class='center' src='images/cant_lists/paste.png' alt=''>";
+        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."\n";
       }
     }
