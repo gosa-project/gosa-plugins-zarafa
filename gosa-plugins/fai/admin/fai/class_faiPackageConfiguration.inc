@@ -12,6 +12,14 @@ class faiPackageConfiguration extends plugin
   var $obj;
   var $release;
 
+
+  /*! \brief  Configure a FAI package entry.
+      @param  Object  $config GOsa configuration object;
+      @param  String  The DN of the current package.
+      @param  String  The package name (e.g. apache)
+      @param  String  The release name (e.g. edge)
+      @param  Array   The current package configuration.
+   */
   function faiPackageConfiguration (&$config, $dn= NULL,$obj,$release,$pkg_config)
   {
     plugin::plugin ($config, $dn);
@@ -19,16 +27,23 @@ class faiPackageConfiguration extends plugin
     $this->release = $release;
     $this->pkg_config = $pkg_config;
 
-    /* Read pkg debconf info */
+    /* Read pkg debconf info from gosaSupportDaemon
+     */
     $q = new gosaSupportDaemon();
     $ret = $q->FAI_get_packages($this->release,array("package","template"),array($this->obj));
     if($q->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
     }
+
+    /* If we do not get a useable answer, use an empty template 
+     */
     $tpl = "";
     if(isset($ret['ANSWER1']) && isset($ret['ANSWER1']['TEMPLATE'])){
       $tpl = base64_decode($ret['ANSWER1']['TEMPLATE']);
     }
+
+    /* Create package configuration mask
+     */
     $this->Debconf_handle = new debconf(preg_replace('/_.*$/', '', get_browser_language()));
     $this->Debconf_handle->load_from_string($tpl);
     if($this->Debconf_handle->has_template()){
@@ -39,6 +54,10 @@ class faiPackageConfiguration extends plugin
   }
 
 
+  /*! \brief  Returns a html interface, that allow to modify 
+               the package attributes.
+      @return String  HTML content/ui for this plugin
+   */
   function execute()
   {
     /* Call parent execute */
@@ -51,6 +70,7 @@ class faiPackageConfiguration extends plugin
     $smarty->assign("Config",$this->Debconf_handle->get_dialog());
     return($smarty->fetch(get_template_path('faiPackageConfiguration.tpl', TRUE)));
   }
+
 
   /* Save data to object */
   function save_object()
@@ -65,6 +85,10 @@ class faiPackageConfiguration extends plugin
     return ($message);
   }
 
+
+  /*! \brief  Returns an array with all configured attributes 
+      @return Array   All configured attributes.
+   */
   function save()
   {
     $this->Debconf_handle->PostCheck();

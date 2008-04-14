@@ -1,5 +1,8 @@
 <?php
 
+/*! \brief  See contructor
+
+*/
 class faiPackageEntry extends plugin
 {
   /* attribute list for save action */
@@ -16,6 +19,13 @@ class faiPackageEntry extends plugin
   var $FAIAllclasses        = array();
   var $FAIdebianRelease ="";
 
+  
+  /*! \brief  Allows to select a set of packages for a specific release.
+              The packages are loaded from the GOsa si daemon directly
+      @param  Object    The GOsa configuration object
+      @param  String    The release name for which the packages will be loaded
+      @param  Array     Packages that schould be marked as selected.
+   */
   function faiPackageEntry (&$config,$release, $used_packages=array())
   {
     plugin::plugin ($config, NULL);
@@ -90,7 +100,6 @@ class faiPackageEntry extends plugin
     $divlist->SetPluginMode();
     $divlist->SetSummary(_("This list displays all assigned package names for this repository settings."));
     $divlist->SetEntriesPerPage(0);
-    #$divlist->SetHeight("650px;");
     $divlist->SetHeader(array(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"),
                               array("string" => "Name", "attach" => "style='width:180px;'"),
                               array("string" => "Version", "attach"=>"style='width:240px;'" ),
@@ -105,9 +114,12 @@ class faiPackageEntry extends plugin
       $chkbox = "<input type='checkbox' value='1' name='use_".base64_encode($pkg['PACKAGE'])."' ".$check.">
         <input type='hidden' value='1' name='wasonpage_".base64_encode($pkg['PACKAGE'])."'>";
       $divlist->AddEntry(array(array("string"=>$chkbox, "attach" => "style='text-align:center;width:20px;'"),
-            array("string"=>$pkg['PACKAGE'], "attach" => "style='width:180px;'"),
-            array("string"=>"<div style='width:238px; overflow:hidden;'>".htmlentities($pkg['VERSION']),   "attach" => "style='width:240px'"),
-            array("string"=>htmlentities($pkg['DESCRIPTION']), "attach" => "style='border-right:0px;text-align:left;'")));
+            array("string"=>"<div style='width:178px; overflow:hidden;'>".$pkg['PACKAGE']."</div>", 
+              "attach" => "style='width:180px;' title='".$pkg['PACKAGE']." (".$pkg['VERSION'].")'"),
+            array("string"=>"<div style='width:238px; overflow:hidden;'>".htmlentities($pkg['VERSION'])."</div>",   
+              "attach" => "style='width:240px' title='".$pkg['PACKAGE']." (".$pkg['VERSION'].")'"),
+            array("string"=>htmlentities($pkg['DESCRIPTION']), 
+              "attach" => "style='border-right:0px;text-align:left;'")));
     }
 
     $smarty->assign("Section_boxes"          , $Section_boxes);
