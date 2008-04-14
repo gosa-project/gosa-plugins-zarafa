@@ -396,7 +396,7 @@ class faiProfile extends plugin
     /* Ensure that we do not overwrite an allready existing entry 
      */
     if($this->dn == "new" || $this->cn != $this->old_cn){
-      $release = $this->parent->parent->fai_filter;
+      $release = $this->parent->parent->fai_release;
       $new_dn= 'cn='.$this->cn.",".get_ou('faiprofileou').get_ou('faiou').$release;
       $res = faiManagement::check_class_name("FAIprofile",$this->cn,$new_dn);
       if(isset($res[$this->cn])){
