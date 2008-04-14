@@ -11,9 +11,7 @@
   		</div>
   		<div style='height:4px;'>
 		</div>
-  		<div class="contentboxb" style="border-top:1px solid #B0B0B0;">
-      		{$failist}
-    		<input type="hidden" name="edit_helper">
+  		<div class="contentboxb" style="border-top:1px solid #B0B0B0;">{$failist}<input type="hidden" name="edit_helper">
   		</div>
   	</td>
   	<td style="vertical-align:top;">
