@@ -243,7 +243,7 @@ class servrepository extends goService
    
     /* Hide delete icon, if delete is not allowed */ 
     if($this->acl_is_removeable()){
-      $delete = "<input type='image' value='%s' name='delete_%s' src='images/edittrash.png'>";
+      $delete = "<input type='image' value='%s' name='delete_%s' src='images/lists/trash.png'>";
     }else{
       $delete = "<img src='images/empty.png' alt='&nbsp;'>";
     }

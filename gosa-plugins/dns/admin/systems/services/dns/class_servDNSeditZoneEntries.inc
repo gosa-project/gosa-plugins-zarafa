@@ -449,7 +449,7 @@ class servDNSeditZoneEntries extends plugin
         </td>
         <td style='width:75px;text-align:right;'>
           <input type='image' name='AddRecord_".$name."'   src='images/list_new.png' alt='"._("Add")."' title='"._("Add")."'>
-          <input type='image' name='RemoveRecord_".$name."' src='images/edittrash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
+          <input type='image' name='RemoveRecord_".$name."' src='images/lists/trash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
         ";
 
       $str.=

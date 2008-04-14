@@ -205,7 +205,7 @@ class fonreport extends plugin
     $report_list= array();
     
     /* Restricted attributes will not be displayed, this will be displayed instead */
-    $no_acl = "<img class='center' src='images/closedlock.png'
+    $no_acl = "<img class='center' src='images/lists/locked.png'
       title='".msgPool::permView()."' alt='"._("Insufficient permissions")."'>";
 
     $no_acl = "&nbsp;";

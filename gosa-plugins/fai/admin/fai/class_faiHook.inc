@@ -328,7 +328,7 @@ class faiHook extends plugin
       }else{
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
         if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("Delete")."' alt='"._("Delete")."'>";
+          $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("Delete")."' alt='"._("Delete")."'>";
         }
       }
 

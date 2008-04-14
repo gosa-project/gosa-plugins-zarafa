@@ -336,7 +336,7 @@ class servdnseditZone extends plugin
     $oneup    = "<input name='MXup_%s'    type='image' src='images/sort_up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
     $onedown  = "<input name='MXdown_%s'  type='image' src='images/sort_down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
     $onedel   = "<img src='images/empty.png' width='20' class='center'>
-                 <input name='MXdel_%s'   type='image' src='images/edittrash.png'  title='"._("Delete")."'  class='center'>"; 
+                 <input name='MXdel_%s'   type='image' src='images/lists/trash.png'  title='"._("Delete")."'  class='center'>"; 
 
     foreach($recs as $key => $rec){
       $div ->AddEntry(array(

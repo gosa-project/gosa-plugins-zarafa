@@ -639,7 +639,7 @@ class sieveManagement extends plugin
       $field4 = array("string" => _("Script length").":&nbsp;".strlen($script['SCRIPT']));
 
       if($this->parent->acl_is_writeable("sieveManagement")){
-        $del = "<input type='image' name='delscript_".$key."' src='images/edittrash.png'
+        $del = "<input type='image' name='delscript_".$key."' src='images/lists/trash.png'
                   title='"._("Remove script")."'>";
       }else{
         $del = "<img src='images/empty.png' alt=' '>";

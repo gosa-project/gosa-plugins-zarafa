@@ -300,7 +300,7 @@ class gotomasses extends plugin
     }
     if($this->acl_is_removeable()){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
+      $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
     }
     if(preg_match("/w/",$this->getacl(""))){
       $s.= "..|---|\n";
@@ -324,7 +324,7 @@ class gotomasses extends plugin
     if($this->sort_by == "Action"){ $sort_img_4 = $sort_img; } else { $sort_img_4 = "" ;}
 
     /* Create divlist */
-    $divlist->SetListHeader("<input type='image' src='images/list_reload.png' title='"._("Reload")."'>");
+    $divlist->SetListHeader("<input type='image' src='images/lists/reload.png' title='"._("Reload")."'>");
 
     $plug  = $_GET['plug'];
     $chk = "<input type='checkbox' id='select_all' name='select_all'
@@ -398,11 +398,11 @@ class gotomasses extends plugin
       /* If WAITING or ERROR add remove action
        */  
       if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error","processed"))){
-        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
+        $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
           class='center' alt='"._("Remove")."'>";
       }
       if(in_array($task['STATUS'],array("processing")) && !preg_match("/install/",$task['HEADERTAG'])){
-        $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' 
+        $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
           class='center' alt='"._("Remove")."'>";
       }
 

@@ -181,7 +181,7 @@
 			onChange="document.mainform.submit();">
        {html_options options=$XMethods selected=$gotoXMethod_select}
       </select>
-	  <input type="image" src="images/list_reload.png" alt="{t}Reload{/t}" title="{t}Reload{/t}" class="center">
+	  <input type="image" src="images/lists/reload.png" alt="{t}Reload{/t}" title="{t}Reload{/t}" class="center">
 {/render}
      </td>
     </tr>

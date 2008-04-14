@@ -236,7 +236,7 @@ class faiProfileEntry extends plugin
     $smarty->assign("faihead"       , "");
     $smarty->assign("failist"       , $divlist->DrawList());
     $smarty->assign("infoimage"     , get_template_path('images/info_small.png'));
-    $smarty->assign("launchimage"   , get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage"   , get_template_path('images/lists/action.png'));
     $smarty->assign("alphabet"      , generate_alphabet());
     $smarty->assign("apply"         , apply_filter(TRUE));
     $smarty->assign("search_image"  , get_template_path('images/search.png'));

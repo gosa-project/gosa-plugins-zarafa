@@ -202,7 +202,7 @@ class glpiAttachmentPool extends plugin
     $divlist->SetEntriesPerPage(0);
 
     $editdel = "<input type='image' name='editAttach_%s' src='images/edit.png'>";
-    $editdel.= "<input type='image' name='delAttach_%s'  src='images/edittrash.png'>";
+    $editdel.= "<input type='image' name='delAttach_%s'  src='images/lists/trash.png'>";
 
     /* Add all given attachments to divlist 
      */ 
@@ -264,7 +264,7 @@ class glpiAttachmentPool extends plugin
     $smarty->assign("searchu_image",    get_template_path('images/search_user.png'));
     $smarty->assign("tree_image",       get_template_path('images/tree.png'));
     $smarty->assign("infoimage",        get_template_path('images/info_small.png'));
-    $smarty->assign("launchimage",      get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage",      get_template_path('images/lists/action.png'));
     $smarty->assign("apply",            apply_filter());
     $smarty->assign("alphabet",         generate_alphabet());
     $smarty->assign("attachment_regex", $GlpiAttachmentFilter['filter']);

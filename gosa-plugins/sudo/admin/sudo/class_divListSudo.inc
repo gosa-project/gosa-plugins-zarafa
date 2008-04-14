@@ -118,23 +118,23 @@ class divListSudo extends MultiSelectWindow
     /* Append multiple remove */
     if(preg_match("/d/",$acl)){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
+      $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Remove")."|"."del_role|\n";
     }
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/editcopy.png' alt='' border='0' class='center'>".
+      $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_sudo|\n";
-#      $s.= "..|<img src='images/editcut.png' alt='' border='0' class='center'>".
+#      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
 #        "&nbsp;"._("Cut")."|"."multiple_cut_sudo|\n";
 
       if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/editpaste.png' alt=''>";
+        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
       }else{
-        $img = "<img border='0' class='center' src='images/cant_editpaste.png' alt=''>";
+        $img = "<img border='0' class='center' src='images/cant_lists/paste.png' alt=''>";
         $s.="..|".$img."&nbsp;"._("Paste")."\n";
       }
     }
@@ -191,9 +191,9 @@ class divListSudo extends MultiSelectWindow
       $actions= "";
       if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
 #        $actions.= "<input class='center' type='image'
-#          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+#          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
-          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
 
@@ -206,7 +206,7 @@ class divListSudo extends MultiSelectWindow
 
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
-          src='images/edittrash.png' alt='".msgPool::delButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
+          src='images/lists/trash.png' alt='".msgPool::delButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";

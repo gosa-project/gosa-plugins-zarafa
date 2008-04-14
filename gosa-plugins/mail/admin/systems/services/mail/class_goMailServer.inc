@@ -381,7 +381,7 @@ class goMailServer extends goService{
       }
 
       if($this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/edittrash.png' name='TranslationDel_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/trash.png' name='TranslationDel_".$key."' class='center'>&nbsp;";      
       }
       $field1 = array("string"=> $entry['src']);
       $field2 = array("string"=> $entry['dst']);
@@ -410,7 +410,7 @@ class goMailServer extends goService{
       }
 
       if($this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/edittrash.png' name='SenderRestrictDel_".$key."' class='center'>&nbsp;";     
+        $img.= "<input type='image' src='images/lists/trash.png' name='SenderRestrictDel_".$key."' class='center'>&nbsp;";     
       }
  
       $field1 = array("string"=> $entry['src']);
@@ -440,7 +440,7 @@ class goMailServer extends goService{
       }
 
       if($this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/edittrash.png' name='RecipientRestrictDel_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/trash.png' name='RecipientRestrictDel_".$key."' class='center'>&nbsp;";      
       }
       $field1 = array("string"=> $entry['src']);
       $field2 = array("string"=> $entry['dst']);

@@ -7,7 +7,7 @@
 {if $readable}
  <tr>
 	<td style="padding-left:5px;padding-top:5px;padding-bottom:12px;border-bottom:1px solid #B0B0B0">
-		<input type="image" src="images/list_reload.png" name="reloadList" class="center">	
+		<input type="image" src="images/lists/reload.png" name="reloadList" class="center">	
 		{t}Reload class and release configuration from parent object.{/t}
 	</td>
  </tr>

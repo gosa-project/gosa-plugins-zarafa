@@ -596,7 +596,7 @@ class glpiPrinterAccount extends plugin
     $divlist-> SetHeight(120);
     $atts = $this->getUsedAttachments(true);
     $downlink = "<a href='?plug=".$_GET['plug']."&get_attachment=%s'>%s</a>";
-    $del_link = "<input type='image' src='images/edittrash.png' name='delAttachment_%s'>";
+    $del_link = "<input type='image' src='images/lists/trash.png' name='delAttachment_%s'>";
     foreach($atts as $id => $attachment){
       $divlist->AddEntry
           (

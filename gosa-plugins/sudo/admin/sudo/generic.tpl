@@ -52,7 +52,7 @@
    </table>
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h2><img alt="" class="center" align="middle" src="images/closedlock.png" />&nbsp; {t}System trust{/t}</h2>
+   <h2><img alt="" class="center" align="middle" src="images/lists/locked.png" />&nbsp; {t}System trust{/t}</h2>
     {t}Trust mode{/t}&nbsp; 
     {render acl=$trustModelACL}
         <select name="trustmode" id="trustmode" size=1

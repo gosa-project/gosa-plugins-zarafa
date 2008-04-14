@@ -323,11 +323,11 @@ class servdhcp extends goService
      */
     $editImgIns = "<input type='image' src='images/list_new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
       "<input type='image' src='images/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
-      "<input type='image' src='images/edittrash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
+      "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
     $editImgInsNoDel = "<input type='image' src='images/list_new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
       "<input type='image' src='images/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>";
     $editImg = "<input type='image' src='images/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
-      "<input type='image' src='images/edittrash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
+      "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
       	
     $tmp = new dhcpNewSectionDialog(NULL);
     foreach($this->dhcpSections as $section => $values ){

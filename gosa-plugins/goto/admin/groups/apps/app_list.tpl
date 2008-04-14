@@ -77,7 +77,7 @@
 				<input title="{t}Move down{/t}" class="center" type='image' 
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
-					name='del_{$item.UNIQID}' src='images/edittrash.png'>
+					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
 					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
 			</td>
@@ -98,7 +98,7 @@
                 <input title="{t}Move down{/t}" class="center" type='image'
                     name='down_{$item.UNIQID}' src='images/move_object_down.png'>
                 <input title="{t}Remove{/t}"    class="center" type='image'
-                    name='del_{$item.UNIQID}' src='images/edittrash.png'>
+                    name='del_{$item.UNIQID}' src='images/lists/trash.png'>
 				<img src="images/empty.png" style="width:16px;" alt=" ">
             </td>
 		</tr>
@@ -123,7 +123,7 @@
 				<input title="{t}Move down{/t}" class="center" type='image' 
 					name='down_{$item.UNIQID}' src='images/move_object_down.png'>
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
-					name='del_{$item.UNIQID}' src='images/edittrash.png'>
+					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
 					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
 			</td>

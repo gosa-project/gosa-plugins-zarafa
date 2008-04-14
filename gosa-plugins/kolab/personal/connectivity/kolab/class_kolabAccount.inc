@@ -283,7 +283,7 @@ class kolabAccount extends plugin
         $button= "<input type='image' name=\"add_inv_".$nr."\" src='images/list_new.png' id='add".$nr."' ".$dis.">";
       }
       if ($nr != 0) {
-        $button.= "<input type='image' name=\"del_inv_".$nr."\" src='images/edittrash.png' id='remove".$nr."' ".$dis.">";
+        $button.= "<input type='image' name=\"del_inv_".$nr."\" src='images/lists/trash.png' id='remove".$nr."' ".$dis.">";
       }
       
       $invitation.= "</select>&nbsp;</td>

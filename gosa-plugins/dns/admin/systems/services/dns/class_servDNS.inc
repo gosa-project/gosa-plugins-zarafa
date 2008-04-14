@@ -266,7 +266,7 @@ class servdns extends goService
      */
     $editImg = "<input type='image' src='images/edit.png' name='editZone_%s'>";
     if($this->acl_is_removeable()){
-      $editImg.= "<input type='image' src='images/edittrash.png' name='delZone_%s'>";
+      $editImg.= "<input type='image' src='images/lists/trash.png' name='delZone_%s'>";
     }
 
     $link = "<a href='?plug=".$_GET['plug']."&act=edit&id=%s'>%s</a>";

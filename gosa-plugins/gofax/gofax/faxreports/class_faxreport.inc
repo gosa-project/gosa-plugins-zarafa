@@ -312,7 +312,7 @@ class faxreport extends plugin
         }
 
         /* Restricted attributes will not be displayed, this will be displayed instead */
-        $no_acl = "<img class='center' src='images/closedlock.png' 
+        $no_acl = "<img class='center' src='images/lists/locked.png' 
                     title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
 
         /* Create date */ 

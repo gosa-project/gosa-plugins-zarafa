@@ -300,7 +300,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/certs.png" />&nbsp;{t}Access options{/t}</h2>
+<h2><img class="center" alt="" align="middle" src="images/lists/key.png" />&nbsp;{t}Access options{/t}</h2>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>

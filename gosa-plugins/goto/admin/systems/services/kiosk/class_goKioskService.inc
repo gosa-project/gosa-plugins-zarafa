@@ -163,7 +163,7 @@ class goKioskService extends goService{
     foreach($this->gotoKioskProfiles as $key => $val ){
       $divlist->AddEntry(array(
             array("string"=>"<a href='?plug=".$_GET['plug']."&getkiosk=".$val['name']."'>".$val['name']."</a>"),
-            array("string"=>"<input type='image' src='images/edittrash.png'
+            array("string"=>"<input type='image' src='images/lists/trash.png'
               class='center' alt='delete' name='delkiosk_".$key."'>" ,
               "attach"=>" style='border-right: 0px;width:24px; text-align:center;' ")
             ));

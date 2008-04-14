@@ -26,13 +26,13 @@
 	<input name="search" value="{t}Search{/t}" type="submit">
 			</td>
 			<td style="border-left:1px solid #A0A0A0; text-align:right;">&nbsp;
-				<input name="del_all"  src="images/edittrash.png"			value="{t}Remove all messages{/t}" 		type="image" 
+				<input name="del_all"  src="images/lists/trash.png"			value="{t}Remove all messages{/t}" 		type="image" 
 					title="{t}Remove all messages from selected servers queue{/t}">
 				<input name="hold_all"    src="images/mailq_hold.png"			value="{t}Hold all messages{/t}" 		type="image"
 					title="{t}Hold all messages in selected servers queue{/t}">
 				<input name="unhold_all"    src="images/mailq_unhold.png"		value="{t}Release all messages{/t}" 	type="image"
 					title="{t}Release all messages in selected servers queue{/t}">
-				<input name="requeue_all" src="images/mailq_requeue.png"		value="{t}Requeue all messages{/t}" 	type="image"
+				<input name="requeue_all" src="images/lists/reload.png"		value="{t}Requeue all messages{/t}" 	type="image"
 					title="{t}Requeue all messages in selected servers queue{/t}">
    			</td>
 		</tr>
@@ -91,7 +91,7 @@
 		<td >{$entries[$key].Error}</td>
 		<td style="text-align:right">
 			<a href="{$plug}&amp;act=del&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
-				<img class="center" src="images/edittrash.png" border=0 alt="{t}delete{/t}" title="{t}Delete this message{/t}">
+				<img class="center" src="images/lists/trash.png" border=0 alt="{t}delete{/t}" title="{t}Delete this message{/t}">
 			</a>
 		{if $entries[$key].Hold == true}
 			<a href="{$plug}&amp;act=unhold&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
@@ -103,7 +103,7 @@
 			</a>
 		{/if}
 			<a href="{$plug}&amp;act=requeue&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
-				<img class="center" src="images/mailq_requeue.png" border=0 alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
+				<img class="center" src="images/lists/reload.png" border=0 alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
 			</a>
 			<a href="{$plug}&amp;act=header&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/mailq_header.png" border=0 alt="{t}header{/t}" title="{t}Display header from this message{/t}">

@@ -299,7 +299,7 @@ class faiProfile extends plugin
     $objTypes['FAIpartitionTable']  = "<img src='images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>";
 
     /* Delete button */
-    $actions = "<input type='image' src='images/edittrash.png' title='"._("Remove class from profile")."' name='DEL_%KEY%'>"; 
+    $actions = "<input type='image' src='images/lists/trash.png' title='"._("Remove class from profile")."' name='DEL_%KEY%'>"; 
     
     /* Up down buttons */
     $linkupdown = "&nbsp;<input type='image' name='sortup_%s'   alt='up'    title='"._("Up")."'   src='images/sort_up.png' align='top' >";

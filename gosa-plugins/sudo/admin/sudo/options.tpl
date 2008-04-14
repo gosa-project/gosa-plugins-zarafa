@@ -69,7 +69,7 @@
     </td>
     <td style='width: 40px; text-align:right;'>
      <input type='image' src='images/negate.png'     name='negOption_{$key}_{$entry_key}' class='center'>
-     <input type='image' src='images/edittrash.png'  name='delOption_{$key}_{$entry_key}' class='center'>
+     <input type='image' src='images/lists/trash.png'  name='delOption_{$key}_{$entry_key}' class='center'>
     </td>
    </tr>
   {/foreach}

@@ -830,7 +830,7 @@ class sieve_if
   function execute()
   {
     /* Create title */
-    $name  = "<img alt='' src='images/small_filter.png' class='center'>";
+    $name  = "<img alt='' src='images/lists/action.png' class='center'>";
     $name .= "<b>"._("Condition")."</b>";
     if($this->TYPE == "if"){
       $name .= "&nbsp;-&nbsp;"._("If");

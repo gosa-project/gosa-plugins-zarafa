@@ -374,7 +374,7 @@ class sudo extends plugin
      */
     $neg_img= "<img src='images/negate.png' alt='!' class='center'>"; 
     $option = "<input type='image' src='images/negate.png'     name='neg_%ATTR%_%KEY%' class='center'>"; 
-    $option.= "<input type='image' src='images/edittrash.png'  name='del_%ATTR%_%KEY%' class='center'>"; 
+    $option.= "<input type='image' src='images/lists/trash.png'  name='del_%ATTR%_%KEY%' class='center'>"; 
     foreach(array("sudoCommand","sudoHost","sudoRunAs") as $attr){
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
@@ -637,7 +637,7 @@ class sudo extends plugin
       $smarty->assign("$type", $sysfilter[$type]);
     }
     $smarty->assign("search_image", get_template_path('images/search.png'));
-    $smarty->assign("launchimage",  get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage",  get_template_path('images/lists/action.png'));
     $smarty->assign("tree_image",   get_template_path('images/tree.png'));
     $smarty->assign("deplist",      $this->config->idepartments);
     $smarty->assign("alphabet",     generate_alphabet());

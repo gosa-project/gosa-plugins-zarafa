@@ -168,13 +168,13 @@ class glpiSelectUser extends plugin
     }
 
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
-      " <input class='center' type='image' src='images/list_root.png' 
+      " <input class='center' type='image' src='images/lists/root.png' 
       align='middle' title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/list_back.png' title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
+      src='images/lists/back.png' title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/list_home.png' title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
-      " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      src='images/lists/home.png' title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
+      " <input class='center' type='image' src='images/lists/reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
 " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
     " <select name='depselect' onChange='mainform.submit()' class='center'>$options</select>".
     " <input class='center' type='image' src='images/list_submit.png' align='middle'
@@ -189,7 +189,7 @@ class glpiSelectUser extends plugin
     $smarty->assign("searchu_image", get_template_path('images/search_user.png'));
     $smarty->assign("tree_image", get_template_path('images/tree.png'));
     $smarty->assign("infoimage", get_template_path('images/info_small.png'));
-    $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("users_regex", $filter['users_regex']);

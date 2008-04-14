@@ -304,7 +304,7 @@ class faiTemplate extends plugin
       }else{
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
         if(preg_match("/d/",$acl)){
-          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+          $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
         }
       }
 

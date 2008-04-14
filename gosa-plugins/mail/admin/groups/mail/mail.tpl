@@ -82,7 +82,7 @@
 			</select>
 		{/if}
 			{if !$JS}
-				<input type='image' src='images/list_reload.png' class='center' alt='{t}Reload{/t}'>
+				<input type='image' src='images/lists/reload.png' class='center' alt='{t}Reload{/t}'>
 			{/if}
 		</td>
 	</tr>

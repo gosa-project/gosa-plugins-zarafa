@@ -92,7 +92,7 @@ class servRepositorySetup  extends plugin
     $divlist = new divSelectBox("servRepositorySetup");
     $divlist->setHeight("220");
 
-    $dellink = "<input type='image' src='images/edittrash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
+    $dellink = "<input type='image' src='images/lists/trash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
 
     foreach($this->Sections as $sec){
       $divlist->AddEntry(array(

@@ -21,7 +21,7 @@
 <br>
 <p class="seperator">&nbsp;</p>
 <br>
-<h2><img class="center" alt="" src="images/editpaste.png" align="middle" title="{t}Partition entries{/t}">&nbsp;{t}Partition entries{/t}</h2>
+<h2><img class="center" alt="" src="images/lists/paste.png" align="middle" title="{t}Partition entries{/t}">&nbsp;{t}Partition entries{/t}</h2>
 {$setup}
 <br>
 {if $sub_object_is_createable}

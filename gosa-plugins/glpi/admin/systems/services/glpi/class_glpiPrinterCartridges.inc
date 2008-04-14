@@ -161,7 +161,7 @@ class glpiPrinterCartridges extends plugin
     /* Links for editing,adding.... */
     $edit =     "<a href='?plug=".$_GET['plug']."&amp;act=edit_cartridge&amp;id=%s'>%s</a>";
     $editdel =  "<a href='?plug=".$_GET['plug']."&amp;act=edit_cartridge&amp;id=%s'><img src='images/edit.png' alt='"._("Edit")."' border=0></a>";
-    $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_cartridge&amp;id=%s'><img src='images/edittrash.png' alt='"._("Delete")."' border=0></a>";
+    $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_cartridge&amp;id=%s'><img src='images/lists/trash.png' alt='"._("Delete")."' border=0></a>";
    
     /* Checkbox for selection of some cartridges */ 
     $useCartridge = "<input type='hidden' name='wasOnPage_%s' value='%s'><input type='checkbox' value='%s' name='useCartridge_%s' %CHECKED%>";
@@ -214,7 +214,7 @@ class glpiPrinterCartridges extends plugin
     $smarty->assign("searchu_image", get_template_path('images/search_user.png'));
     $smarty->assign("tree_image", get_template_path('images/tree.png'));
     $smarty->assign("infoimage", get_template_path('images/info_small.png'));
-    $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("cartridge_regex", $filter);

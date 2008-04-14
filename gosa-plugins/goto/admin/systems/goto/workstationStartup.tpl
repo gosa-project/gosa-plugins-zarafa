@@ -31,7 +31,7 @@
 	onClick="document.mainform.submit();" class='center'>
 &nbsp;{t}inherit from group{/t})
 {if !$JS}
-	<input type='image' src="images/list_reload.png" alt='{t}Reload{/t}' class='center'>
+	<input type='image' src="images/lists/reload.png" alt='{t}Reload{/t}' class='center'>
 {/if}
 {/if}
 {/render}

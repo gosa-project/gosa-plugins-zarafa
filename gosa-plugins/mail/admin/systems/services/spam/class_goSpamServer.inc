@@ -184,7 +184,7 @@ class gospamserver extends goService{
     
       $actions = "<input type='image' src='images/edit.png'      name='editRule_%s'>";
       if($this->acl_is_writeable("saRule")){
-        $actions.= "<input type='image' src='images/edittrash.png' name='delRule_%s'>";
+        $actions.= "<input type='image' src='images/lists/trash.png' name='delRule_%s'>";
       }
     }
 

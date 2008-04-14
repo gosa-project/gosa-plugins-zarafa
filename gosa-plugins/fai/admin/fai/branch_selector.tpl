@@ -31,7 +31,7 @@
 
     {if $selectedBranch != "main" && $allow_remove}
     <br>
-        <input class="center" type="image" name="remove_branch" src="images/edittrash.png">
+        <input class="center" type="image" name="remove_branch" src="images/lists/trash.png">
 	    <a href="?plug={$plug_id}&act=remove_branch">{t}Delete current release{/t}</a>
     {/if}
       </td>

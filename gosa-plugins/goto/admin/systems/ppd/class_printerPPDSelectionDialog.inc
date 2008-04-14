@@ -133,7 +133,7 @@ class printerPPDSelectionDialog extends plugin
                  </a>";
     $uselink  = "<a href='?plug=".$_GET['plug']."&amp;act=use&amp;id=%s'>%s</a>";
     $dellink  = "<a href='?plug=".$_GET['plug']."&amp;act=del&amp;id=%s'>
-                  <img src='images/edittrash.png' alt='"._("delete")."' border=0>
+                  <img src='images/lists/trash.png' alt='"._("delete")."' border=0>
                  </a>"; 
 
     if(empty($this->Vendor)){
@@ -166,7 +166,7 @@ class printerPPDSelectionDialog extends plugin
 
     $smarty->assign("List",         $div -> DrawList());
     $smarty->assign("search_image", get_template_path('images/search.png'));
-    $smarty->assign("launchimage",  get_template_path('images/small_filter.png'));
+    $smarty->assign("launchimage",  get_template_path('images/lists/action.png'));
     $smarty->assign("tree_image",   get_template_path('images/tree.png'));
     $smarty->assign("alphabet",     generate_alphabet());
     $smarty->assign("apply",        apply_filter());

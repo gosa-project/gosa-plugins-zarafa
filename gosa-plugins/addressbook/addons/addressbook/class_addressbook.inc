@@ -635,9 +635,9 @@ class addressbook extends plugin
     $smarty->assign ('personal_image', get_template_path('images/addr_personal.png'));
     $smarty->assign ('home_image', get_template_path('images/addr_home.png'));
     $smarty->assign ('company_image', get_template_path('images/addr_company.png'));
-    $smarty->assign ('add_image', get_template_path('images/editpaste.png'));
+    $smarty->assign ('add_image', get_template_path('images/lists/paste.png'));
     $smarty->assign ('edit_image', get_template_path('images/edit.png'));
-    $smarty->assign ('delete_image', get_template_path('images/editdelete.png'));
+    $smarty->assign ('delete_image', get_template_path('images/lists/delete.png'));
     return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
   }
 

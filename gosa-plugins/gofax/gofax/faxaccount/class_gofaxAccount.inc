@@ -383,7 +383,7 @@ class gofaxAccount extends plugin
       $smarty->assign("usearch_image", get_template_path('images/search_user.png'));
       $smarty->assign("tree_image", get_template_path('images/tree.png'));
       $smarty->assign("infoimage", get_template_path('images/info.png'));
-      $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
+      $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
       $smarty->assign("departments", $this->config->idepartments);
       $smarty->assign("list", $list);
       if (isset($_POST['depselect'])){

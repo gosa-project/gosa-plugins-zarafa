@@ -762,7 +762,7 @@ class environment extends plugin
             title='"._("Reset password hash")."'>";
           $img.= "&nbsp;";
         }
-        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/edittrash.png' alt='".msgPool::delButton()."' 
+        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/lists/trash.png' alt='".msgPool::delButton()."' 
           title='"._("Delete share entry")."'>";
         $field1 = array("string" => $value , "attach" => "style='".$color."'");
         $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
