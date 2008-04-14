@@ -33,19 +33,13 @@ class faiPackage extends plugin
   var $FAIdebianRelease          = ""; // The selected release
   var $FAIdebianSection          = array(); // selected section
   var $FAIinstallMethod          = "aptitude"; // hard coded
-  var $mirror                    = ""; // selected mirror
 
-  var $servers          = array();  // All available servers
-  var $releases         = array();  // All possible releases 
   var $sections         = array();  // All section types
 
   var $list             = NULL;
 
-  var $mirrors          = array();  // The combination of server/release/section
-  var $confDir          = "";
   var $usedPackages     = array();
   var $buffer           = NULL; 
-  var $strID            ="";
   var $newDialogShown   =false;
 
   var $FAIstate         = "";
@@ -130,20 +124,13 @@ class faiPackage extends plugin
         }
       }
 
-      if (isset($this->attrs['FAIdebianSection']['count'])){
-        unset($this->attrs['FAIdebianSection']['count']);
-      }
-      if((isset($this->attrs['FAIdebianSection']))&&(is_array($this->attrs['FAIdebianSection']))){
-        $this->FAIdebianSection = array();
-        foreach($this->attrs['FAIdebianSection'] as $sec){
+      $this->FAIdebianSection = array();
+      if(isset($this->attrs['FAIdebianSection'])){
+        for($i = 0 ; $i < $this->attrs['FAIdebianSection']['count'] ; $i++ ){ 
+          $sec = $this->attrs['FAIdebianSection'][$i];
           $this->FAIdebianSection[$sec]=$sec;
         }
       }
-
-      if((isset($this->attrs['FAIdebianSection']))&&(is_string($this->attrs['FAIdebianSection']))){
-        $this->FAIdebianSection=array($this->attrs['FAIdebianSection']=>$this->attrs['FAIdebianSection']) ;
-      }
-      $this->confDir = CONFIG_DIR."/fai/";
       $this->FAIpackage = array();
 
     } // ENDE  dn != new  
@@ -182,8 +169,10 @@ class faiPackage extends plugin
     $smarty= get_smarty();
     $display= "";
 
-    $smarty->assign( "FAIinstallMethods", $this->FAIinstallMethods );
-
+    /******
+     * Initialize a new Package List with release and section name
+     ******/
+    
     if(!$this->is_account){
 
       /* Assemble release name */
@@ -207,11 +196,11 @@ class faiPackage extends plugin
       /* Assign Repository settings*/ 
       $this->is_account     = true;
     }
+    
 
-    /* Assign variables */
-    foreach($this->attributes as $attrs){
-      $smarty->assign($attrs,$this->$attrs);
-    }
+    /******
+     * Add && Remove Packages 
+     ******/
 
     /* + was pressed to open the package dialog */
     if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
@@ -263,6 +252,11 @@ class faiPackage extends plugin
       }
     }
 
+
+    /******
+     * Configure Packages  
+     ******/
+
     /* Configuration dialog open*/
     if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'][0])) && $this->acl_is_writeable("FAIdebconfInfo")){
       $pkg_config = array();
@@ -286,10 +280,8 @@ class faiPackage extends plugin
               $pkg= preg_replace('/^/', '-', $pkg);
             }
             $this->usedPackages[$pkg]= $pkg;
-
           }
         }
-
         /* Generate package list */
         $this->list= $this->genPkgs(TRUE);
       }
@@ -316,6 +308,17 @@ class faiPackage extends plugin
       return $this->dialog->execute();
     }
 
+
+    /******
+     * Display UI / HTML / smarty 
+     ******/
+
+    /* Assign variables */
+    foreach($this->attributes as $attrs){
+      $smarty->assign($attrs,$this->$attrs);
+    }
+    $smarty->assign( "FAIinstallMethods", $this->FAIinstallMethods );
+
     /* Assign section to smarty */
     $strsec = "";
     foreach($this->FAIdebianSection as $sec){
@@ -327,7 +330,6 @@ class faiPackage extends plugin
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/",$this->FAIstate)));
     }
 
-    $smarty->assign("releases",$this->releases);
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
@@ -336,7 +338,8 @@ class faiPackage extends plugin
     return($display);
   }
 
-  /* Delete me, and all my subtrees
+
+  /*! \brief  Removes this packageList from the ldap database 
    */
   function remove_from_parent()
   {
@@ -367,7 +370,7 @@ class faiPackage extends plugin
   }
 
 
-  /* Save data to object 
+  /*! \brief  Collect all relevant POST vars for this plugin 
    */
   function save_object()
   {
@@ -376,7 +379,9 @@ class faiPackage extends plugin
   }
 
 
-  /* Check supplied data */
+  /*! \brief  Check given inputs for this package list
+      @return Array Containing all error messages, or an empty array if no error occured
+   */
   function check()
   {
     /* Call common method to give check the hook */
@@ -408,6 +413,9 @@ class faiPackage extends plugin
   }
 
 
+  /*! \brief  Returns all selected packages in a printable format 
+      @return Array   Containing all package infos.
+   */
   function printUsedPackages()
   {
     $a_ret=array(); 
@@ -440,6 +448,9 @@ class faiPackage extends plugin
   }
 
 
+  /*! \brief  Reload the list of cached packages.
+      @return Returns the currently cached list of packages. 
+   */
   function genPkgs($force = false)
   {
     if(!count($this->buffer) || $force){
@@ -458,7 +469,8 @@ class faiPackage extends plugin
   }
 
 
-  /* Save to LDAP */
+  /*! \brief Save packages and their configuration to ldap 
+   */
   function save()
   {
 
@@ -533,7 +545,10 @@ class faiPackage extends plugin
     }
   }
 
-  /* Return plugin informations for acl handling */ 
+
+  /*! \brief  Return plugin informations for acl handling 
+      @return Array ACL infos of this plugin.
+   */ 
   static function plInfo()
   {
     return (array( 
@@ -556,8 +571,9 @@ class faiPackage extends plugin
   }
 
 
-
-
+  /*! \brief prepares this plugin to be inserted after it was copied or cut.
+      @param Array  All attributes from the source object. 
+   */
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
@@ -629,6 +645,9 @@ class faiPackage extends plugin
   }
 
 
+  /*! \brief  Returns a list of all configured servers with repositories.
+      @return Array  All repository server 
+   */
   function getServerInfos()
   {
     $ret = array();
