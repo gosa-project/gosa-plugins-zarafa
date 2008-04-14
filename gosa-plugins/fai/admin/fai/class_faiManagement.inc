@@ -71,7 +71,7 @@ class faiManagement extends plugin
     }
 
     /* Set default release */
-    $this->fai_base = get_ou("faiou")."ou=Direktorium,".$this->config->current['BASE'];
+    $this->fai_base = get_ou("faiou").$this->config->current['BASE'];
     if(!session::is_set("fai_filter")){
       session::set("fai_filter",array("fai_release" => $this->fai_base));
     }
@@ -84,8 +84,6 @@ class faiManagement extends plugin
 	{
     /* Call parent execute */
     plugin::execute();
-
-    print_a(array($this->fai_base,$this->fai_release));
 
     /* Initialise vars and smarty */
 		$smarty 	= get_smarty();
