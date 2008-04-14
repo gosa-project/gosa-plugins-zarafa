@@ -918,7 +918,11 @@ sub hardware_config {
 
 sub server_matches {
 	my $target = shift;
-	my $target_ip = sprintf("%s", $target =~ /^([0-9\.]*?):.*$/);
+	my $target_ip = ($1) if $target =~ /^([0-9\.]*?):.*$/;
+	if(!defined($target_ip) or length($target_ip) == 0) {
+		return;
+	}
+
 	my $result = 0;
 
 	if($server_ip eq $target_ip) {
