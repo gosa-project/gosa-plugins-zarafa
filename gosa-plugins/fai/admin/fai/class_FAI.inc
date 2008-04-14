@@ -179,7 +179,7 @@ class FAI
          */
         $ldap->cat($obj_dn);
         $attrs = $ldap->fetch();
-        $classes = array("FAIprofile","FAIscript","FAIpackage","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
+        $classes = array("FAIprofile","FAIscript","FAIpackageList","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
         if(count(array_intersect($classes,$attrs['objectClass']))){
           $cn    = $attrs['cn'][0];
 
@@ -275,9 +275,12 @@ class FAI
   {
     foreach($ar1 as $ak1 => $av1){
       if(!isset($ar2[$ak1]) || (!($av1 === $ar2[$ak1]))){
-        return(true);
+        return(TRUE);    
       }elseif(is_array($av1)){
-        return(FAI::arr_diff($av1,$ar2[$ak1]));
+        $ret = (FAI::arr_diff($av1,$ar2[$ak1]));
+        if($ret) {
+          return(TRUE);
+        }
       }
     }
     return(FALSE);
@@ -295,9 +298,11 @@ class FAI
     /* check which objects must be saved */
     $FAI_objects_to_save = session::get('FAI_objects_to_save');
     if(!is_array($FAI_objects_to_save)) {
+      print_a(array(session::get('FAI_objects_to_save')));
       trigger_error("Can't save FAI objects, no array given.");
       return;
     }
+  
     foreach($FAI_objects_to_save as $Current_DN => $object){
       if($object['diff']){
         $sub_name = $Current_DN;
@@ -320,6 +325,7 @@ class FAI
       }
     }
     $to_save = $tmp;
+
 
     /* Save objects and manage the correct release behavior*/
     foreach($to_save as $save){
