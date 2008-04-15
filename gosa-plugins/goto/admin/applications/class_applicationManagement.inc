@@ -86,8 +86,6 @@ class applicationManagement extends plugin
       $this->app_base     = $app_filter['app_base'];
       $this->app_release  = $app_filter['app_release'];
     }
-    $this->app_base   = "ou=apps,o=Landeshauptstadt München,c=de";
-    $this->app_release= $this->app_base;
   }
 
 
@@ -673,8 +671,14 @@ class applicationManagement extends plugin
       if(isset($releases[$sel_rel])){
         $this->app_release = $releases[$sel_rel];
       }
+      $app_filter     = session::get("app_filter");
+      $app_filter['app_release'] = $this->app_release;
+      session::set("app_filter",$app_filter);
     }elseif(!$this->IsReleaseManagementActivated()){
       $this->app_base = get_ou("applicationou").$this->DivListApplication->selectedBase;
+      $app_filter     = session::get("app_filter");
+      $app_filter['app_base'] = $this->app_base;
+      session::set("app_filter",$app_filter);
     }
   }
 
