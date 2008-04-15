@@ -324,9 +324,9 @@ class faiHook extends plugin
 
       /* Check if this object is freezed, in this case hide the delete icon */
       if(preg_match("/^freeze/", $this->FAIstate)){
-        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
+        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
       }else{
-        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
+        $act .= "<input type='image' src='images/lists/edit.png'      name='editscript_%s'    title='"._("Edit")."' alt='"._("Edit")."'>";
         if(preg_match("/d/",$acl)){
           $act .="<input type='image' src='images/lists/trash.png' name='deletescript_%s'  title='"._("Delete")."' alt='"._("Delete")."'>";
         }

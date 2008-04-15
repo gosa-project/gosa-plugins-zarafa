@@ -228,7 +228,7 @@ class divListDevices extends MultiSelectWindow
       }
 
       $actions.= "<input class='center' type='image'
-        src='images/edit.png' alt='"._("edit")."' name='device_edit_%KEY%' title='"._("Edit this entry")."'>";
+        src='images/lists/edit.png' alt='"._("edit")."' name='device_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add delete button */
       if(preg_match("/d/",$acl)){

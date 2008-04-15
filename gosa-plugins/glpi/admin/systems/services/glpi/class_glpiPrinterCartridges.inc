@@ -160,7 +160,7 @@ class glpiPrinterCartridges extends plugin
 
     /* Links for editing,adding.... */
     $edit =     "<a href='?plug=".$_GET['plug']."&amp;act=edit_cartridge&amp;id=%s'>%s</a>";
-    $editdel =  "<a href='?plug=".$_GET['plug']."&amp;act=edit_cartridge&amp;id=%s'><img src='images/edit.png' alt='"._("Edit")."' border=0></a>";
+    $editdel =  "<a href='?plug=".$_GET['plug']."&amp;act=edit_cartridge&amp;id=%s'><img src='images/lists/edit.png' alt='"._("Edit")."' border=0></a>";
     $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_cartridge&amp;id=%s'><img src='images/lists/trash.png' alt='"._("Delete")."' border=0></a>";
    
     /* Checkbox for selection of some cartridges */ 

@@ -391,7 +391,7 @@ class gotomasses extends plugin
       /* If PAUSED or WAITING add edit action
        */  
       if(in_array($task['STATUS'],array("waiting"))){
-        $action.= "<input type='image' src='images/edit.png' name='edit_task_".$key."' 
+        $action.= "<input type='image' src='images/lists/edit.png' name='edit_task_".$key."' 
           class='center' alt='"._("Edit")."'>";
       }
 

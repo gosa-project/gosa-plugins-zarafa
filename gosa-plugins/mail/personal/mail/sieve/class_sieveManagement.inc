@@ -652,7 +652,7 @@ class sieveManagement extends plugin
                        title='"._("Activate script")."'>";
       }
 
-      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/edit.png'
+      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/lists/edit.png'
                         title='"._("Edit script")."'>".$del,
                       "attach" => "style='border-right:0px; width:70px;'");
       $List->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 

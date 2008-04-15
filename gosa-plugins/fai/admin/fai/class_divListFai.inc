@@ -265,12 +265,12 @@ class divListFai extends MultiSelectWindow
 
        if(preg_match("/^freeze/", $value['FAIstate'])){
          $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-         $action.=  "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action.=  "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
            name='entry_freeze_edit_%KEY%' title='"._("Edit class")."'>";
          $action.=  "<img src='images/lists/locked.png' alt='F' class='center'>";
        }else{
          $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action.= "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          if(preg_match("/d/",$value['acl'])){
            $action.= "<input class='center' type='image' src='images/lists/trash.png' alt='"._("delete")."'

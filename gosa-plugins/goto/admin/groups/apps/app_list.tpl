@@ -79,7 +79,7 @@
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
 					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
-					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
+					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
 			</td>
 		</tr>
 	{elseif $item.TYPE == "SEPERATOR"}
@@ -125,7 +125,7 @@
 				<input title="{t}Remove{/t}" 	class="center" type='image' 
 					name='del_{$item.UNIQID}' src='images/lists/trash.png'>
 				<input title="{t}Edit{/t}" 	 	class="center" type='image' 
-					name='app_entry_edit{$item.UNIQID}' src='images/edit.png'>
+					name='app_entry_edit{$item.UNIQID}' src='images/lists/edit.png'>
 			</td>
 		</tr>
 	{/if}

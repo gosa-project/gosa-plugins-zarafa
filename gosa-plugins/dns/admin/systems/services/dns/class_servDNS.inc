@@ -264,7 +264,7 @@ class servdns extends goService
 
     /* Add entries to divlist
      */
-    $editImg = "<input type='image' src='images/edit.png' name='editZone_%s'>";
+    $editImg = "<input type='image' src='images/lists/edit.png' name='editZone_%s'>";
     if($this->acl_is_removeable()){
       $editImg.= "<input type='image' src='images/lists/trash.png' name='delZone_%s'>";
     }

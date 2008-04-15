@@ -207,7 +207,7 @@ class divListBlocklist extends MultiSelectWindow
       }  
 
       /* Edit link ; requires read access */
-      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
+      $action= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
 
       
       /* Create snapshot ; requires write access && create access */

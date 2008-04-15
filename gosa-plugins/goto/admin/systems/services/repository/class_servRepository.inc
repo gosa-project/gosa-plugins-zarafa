@@ -239,7 +239,7 @@ class servrepository extends goService
 
 
     $link   = "<a href='?plug=".$_GET['plug']."&amp;act=open_repository&amp;id=%s'>%s</a>";
-    $edit   = "<input type='image' value='%s' name='edit_%s'   src='images/edit.png'>&nbsp;";
+    $edit   = "<input type='image' value='%s' name='edit_%s'   src='images/lists/edit.png'>&nbsp;";
    
     /* Hide delete icon, if delete is not allowed */ 
     if($this->acl_is_removeable()){

@@ -215,7 +215,7 @@ class divListConference extends MultiSelectWindow
       }
 
       /* Add edit icon - This is allowed when we have at least read access. */
-      $actions.= "<input class='center' type='image' src='images/edit.png'     
+      $actions.= "<input class='center' type='image' src='images/lists/edit.png'     
                     alt='"._("edit")."'    name='conference_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon - This is allowed when we have create and write access for the current entry */

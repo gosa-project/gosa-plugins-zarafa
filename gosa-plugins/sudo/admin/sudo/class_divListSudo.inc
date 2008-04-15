@@ -198,7 +198,7 @@ class divListSudo extends MultiSelectWindow
 
 
       $actions.= "<input class='center' type='image'
-        src='images/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
+        src='images/lists/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       if(preg_match("/(c.*w|w.*c)/",$acl)){
         $actions.= $this->GetSnapShotActions($val['dn']);

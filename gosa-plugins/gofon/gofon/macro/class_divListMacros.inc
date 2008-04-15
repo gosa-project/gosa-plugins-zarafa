@@ -214,7 +214,7 @@ class divListMacro extends MultiSelectWindow
           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
-      $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+      $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     
         name='goFonMacro_edit_%KEY%' title='"._("Edit macro")."'>";
 
       if(preg_match("/c/",$sacl) && preg_match("/w/",$sacl)){

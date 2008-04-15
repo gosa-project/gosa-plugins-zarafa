@@ -201,7 +201,7 @@ class glpiAttachmentPool extends plugin
     $divlist->SetSummary(_("This table displays all available attachments."));
     $divlist->SetEntriesPerPage(0);
 
-    $editdel = "<input type='image' name='editAttach_%s' src='images/edit.png'>";
+    $editdel = "<input type='image' name='editAttach_%s' src='images/lists/edit.png'>";
     $editdel.= "<input type='image' name='delAttach_%s'  src='images/lists/trash.png'>";
 
     /* Add all given attachments to divlist 

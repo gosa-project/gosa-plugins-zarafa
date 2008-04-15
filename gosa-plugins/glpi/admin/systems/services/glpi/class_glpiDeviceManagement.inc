@@ -184,7 +184,7 @@ class glpiDeviceManagement extends plugin
           array("string" => _("Actions"), "attach" => "style='width:60px;border-right:0px;text-align:right;'" )));
 
     $edit = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'>%s</a>";
-    $editdel = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'><img src='images/edit.png' alt='"._("Edit")."' border=0></a>";
+    $editdel = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'><img src='images/lists/edit.png' alt='"._("Edit")."' border=0></a>";
     $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_device&amp;id=%s'><img src='images/lists/trash.png' alt='"._("Delete")."' border=0></a>";
     
     $useDevice = "<input type='hidden' name='wasOnPage_%s' value='%s'><input type='checkbox' value='%s' name='useDevice_%s' %USE%>";

@@ -242,7 +242,7 @@ class divListApplication extends MultiSelectWindow
 
       /* Add edit icon */
       $actions.= "<input class='center' type='image'
-        src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
+        src='images/lists/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
 
 
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
