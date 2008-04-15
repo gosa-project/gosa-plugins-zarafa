@@ -81,6 +81,7 @@ class divListFai extends MultiSelectWindow
 
       $smarty = get_smarty();
       $releases = $this->parent->getBranches();
+      
       $smarty->assign("allow_create", $c);
       $smarty->assign("allow_remove", $r);
       $smarty->assign("fai_release" , $releases[$this->parent->fai_release]);

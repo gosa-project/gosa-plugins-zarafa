@@ -71,8 +71,8 @@ class faiManagement extends plugin
     }
 
     /* Set default release */
-    $this->fai_base = get_ou("faiou").$this->config->current['BASE'];
-    if(!session::is_set("fai_filter")){
+    $this->fai_base = get_ou("faiou")."ou=Direktorium,".$this->config->current['BASE'];
+    if(session::is_set("fai_filter")){
       session::set("fai_filter",array("fai_release" => $this->fai_base));
     }
 
@@ -904,7 +904,7 @@ class faiManagement extends plugin
 
     /* Display dialog with system list */
     $this->reload();
-    $this->DivListFai->parent = $this;
+    $this->DivListFai->parent = &$this;
     $this->DivListFai->execute();
     $this->DivListFai->setEntries($this->objects);
     return($this->DivListFai->Draw());
@@ -940,7 +940,7 @@ class faiManagement extends plugin
 
     /* Ensure that we have a valid release selected */
     if(!in_array($this->fai_release,$ret)){
-      $this->fai_release = $this->fai_base;
+     # $this->fai_release = $this->fai_base;
     }
 
     return ($ret);
