@@ -2010,7 +2010,7 @@ sub create_packages_list_db {
 	}
 
     if (not defined $sources_file) { 
-        $sources_file = &create_sources_list($ldap_handle);
+        $sources_file = &create_sources_list;
     }
 
     my $line;
