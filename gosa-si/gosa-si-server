@@ -1601,9 +1601,11 @@ sub change_goto_state {
 sub create_fai_server_db {
     my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
 	my $result;
+
+	if (not defined $session_id) { $session_id = 0; }
     my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
-		daemon_log("INFO: create_fai_server_db: start", 5);
+		daemon_log("$session_id INFO: create_fai_server_db: start", 5);
 		my $mesg= $ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
@@ -1630,7 +1632,7 @@ sub create_fai_server_db {
 				   }
 			   }
 		   }
-		daemon_log("INFO: create_fai_server_db: finished", 5);
+		daemon_log("$session_id INFO: create_fai_server_db: finished", 5);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
 		if(!defined($dont_create_packages_list)) {

@@ -206,7 +206,7 @@ sub recreate_fai_server_db {
     }
 
     $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
-    &main::create_fai_server_db("new_fai_server",undef,"dont");
+    &main::create_fai_server_db("new_fai_server",undef,"dont", $session_id);
     $main::fai_server_db->move_table("new_fai_server", $main::fai_server_tn);
 
     my @out_msg_l = ( $out_msg );
