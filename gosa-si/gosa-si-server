@@ -1598,7 +1598,7 @@ sub change_goto_state {
 
 
 sub create_fai_server_db {
-    my ($table_name, $kernel) = @_;
+    my ($table_name, $kernel, $dont_create_packages_list) = @_;
 	my $result;
     my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
@@ -1632,7 +1632,9 @@ sub create_fai_server_db {
 		daemon_log("INFO: create_fai_server_db: finished", 5);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
-		&create_packages_list_db($ldap_handle);
+		if(!defined($dont_create_packages_list)) {
+			&create_packages_list_db($ldap_handle);
+		}
 	}	
     
     $ldap_handle->disconnect;
@@ -1704,6 +1706,8 @@ sub create_fai_release_db {
     $ldap_handle->disconnect;
 	return $result;
 }
+
+
 sub run_create_fai_release_db {
     my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
     my $task = POE::Wheel::Run->new(

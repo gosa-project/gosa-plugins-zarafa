@@ -28,6 +28,7 @@ my @events = (
     "trigger_action_rescan",
     "trigger_action_wake",
     "recreate_fai_server_db",
+    "recreate_fai_release_db",
     "send_user_msg", 
 	"get_available_kernel",
     );
@@ -205,8 +206,28 @@ sub recreate_fai_server_db {
     }
 
     $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
-    &main::create_fai_server_db("new_fai_server");
+    &main::create_fai_server_db("new_fai_server",undef,"dont");
     $main::fai_server_db->move_table("new_fai_server", $main::fai_server_tn);
+
+    my @out_msg_l = ( $out_msg );
+    return @out_msg_l;
+}
+
+
+sub recreate_fai_release_db {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $out_msg;
+
+    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+    if( defined $jobdb_id) {
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id='$jobdb_id'";
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+        my $res = $main::job_db->exec_statement($sql_statement);
+    }
+
+    $main::fai_server_db->create_table("new_fai_release", \@main::fai_release_col_names);
+    &main::create_fai_release_db("new_fai_release");
+    $main::fai_server_db->move_table("new_fai_release", $main::fai_release_tn);
 
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
