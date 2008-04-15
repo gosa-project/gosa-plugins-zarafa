@@ -1633,7 +1633,7 @@ sub create_fai_server_db {
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
 		if(!defined($dont_create_packages_list)) {
-			&create_packages_list_db($ldap_handle);
+			&create_packages_list_db;
 		}
 	}	
     
@@ -1963,7 +1963,7 @@ sub session_run_done {
 }
 
 sub create_sources_list {
-    my ($ldap_handle) = @_;
+    my $ldap_handle = &get_ldap_handle;
 	my $result="/tmp/gosa_si_tmp_sources_list";
 
 	# Remove old file
@@ -1998,7 +1998,7 @@ sub create_sources_list {
 }
 
 sub create_packages_list_db {
-    my ($ldap_handle, $sources_file) = @_ ;
+    my ($ldap_handle, $sources_file);
 
 	if (not defined $ldap_handle) { 
 		$ldap_handle= &get_ldap_handle();
