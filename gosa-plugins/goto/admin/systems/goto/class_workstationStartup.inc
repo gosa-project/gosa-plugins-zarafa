@@ -1195,15 +1195,14 @@ class workstartup extends plugin
 
     /* Get list of available kernel for this release 
      */
+    $force = TRUE;
     if($force || !isset($this->cache['KERNELS'][$release])){
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_kernels($release);
       $this->cache['KERNELS'][$release] = array();
-
       foreach($this->gotoBootKernels as $name => $default){
         $this->cache['KERNELS'][$release][$name] = $default;
       }
-
       foreach($tmp as $kernel){
         if(empty($kernel)) continue;
         $this->cache['KERNELS'][$release][$kernel]=$kernel;
