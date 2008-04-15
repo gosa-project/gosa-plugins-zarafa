@@ -1599,7 +1599,7 @@ sub change_goto_state {
 
 
 sub create_fai_server_db {
-    my ($table_name, $kernel, $dont_create_packages_list) = @_;
+    my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
 	my $result;
     my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
