@@ -2001,7 +2001,7 @@ sub create_sources_list {
 }
 
 sub create_packages_list_db {
-    my ($ldap_handle, $sources_file);
+    my ($ldap_handle, $sources_file, $session_id);
 
 	if (not defined $ldap_handle) { 
 		$ldap_handle= &get_ldap_handle();
@@ -2011,10 +2011,10 @@ sub create_packages_list_db {
 			return;
 		}
 	}
-
     if (not defined $sources_file) { 
         $sources_file = &create_sources_list;
     }
+	if (not defined $session_id) { $session_id = 0; }
 
     my $line;
     daemon_log("INFO: create_packages_list_db: start", 5); 
