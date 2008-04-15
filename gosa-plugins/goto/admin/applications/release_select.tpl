@@ -6,8 +6,8 @@
   <tr>
    <td>
     {t}Current release{/t}&nbsp;
-    <select name="selectedRelease" onChange="document.mainform.submit();">
-     {html_options options=$releases selected=$selectedRelease}
+    <select name="app_release" onChange="document.mainform.submit();">
+        {html_options output=$app_releases values=$app_releases selected=$app_release}
     </select>
    </td>
   </tr>

@@ -2,7 +2,7 @@
 
 class apptabs extends tabs
 {
-  var $Release= "";
+  var $parent = FALSE;
 
   function apptabs($config, $data, $dn,$category)
   {
@@ -12,28 +12,14 @@ class apptabs extends tabs
     $this->addSpecialTabs();
   }
 
-  function set_release($newRelease)
-  {
-    $this->Release= preg_replace('/,'.get_ou('applicationou').'.*$/', '', $newRelease);
-    if ($this->Release != ""){
-      $this->Release= ",".$this->Release;
-    }
-  }
-
   function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['application'];
 
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    $appfilter = session::get('appfilter');
-    if((!empty($tmp)) && (isset($appfilter['release']))){
-      if(!$baseobject->isReleaseApplikation){
-        $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationou').$baseobject->base;
-      }else{
-        $new_dn ="cn=".$baseobject->cn.",".$appfilter['release'];
-      }
+    if($this->parent->IsReleaseManagementActivated()){
+      $new_dn= "cn=".$baseobject->cn.",".$this->parent->app_release;
     }else{
       $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationou').$baseobject->base;
     }

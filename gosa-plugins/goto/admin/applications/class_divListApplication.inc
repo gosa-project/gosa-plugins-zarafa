@@ -3,9 +3,6 @@
 class divListApplication extends MultiSelectWindow
 {
   /* Current base */
-  var $selectedBase       = "";
-  var $selectedRelease    = "main";
-  var $AvailableReleases  = array();
   var $departments        = array();
   var $parent               ;
   var $ui                   ;
@@ -15,15 +12,12 @@ class divListApplication extends MultiSelectWindow
 
   /* Subsearch checkbox */
   var $SubSearch;
-
-  var $SaveAdditionalVars = array("selectedRelease");
+  var $selectedBase ="";
 
   function divListApplication (&$config,&$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config,"Application", "application");
-   
-    $this->selectedRelease = get_ou('applicationou').session::get('CurrentMainBase');
- 
+  
     $this->parent       = &$parent;
     $this->ui           = get_userinfo();
 
@@ -64,17 +58,22 @@ class divListApplication extends MultiSelectWindow
     $this->AddRegex   ("Regex",     _("Display users matching"),"*" , true);
   }
 
-  function AddUserBoxToFilter($position){
+
+  function AddUserBoxToFilter($position)
+  {
     $str = "";
     if(($position  == 2) && ($this->parent->IsReleaseManagementActivated($this->config))){
       $smarty = get_smarty();
-      $smarty->assign("selectedRelease",$this->selectedRelease);
+      $releases = $this->parent->getReleases();
+      $smarty->assign("app_release" , $releases[$this->parent->app_release]);
+      $smarty->assign("app_base"    , $releases[$this->parent->app_base]);
       $smarty->assign("branchimage","images/branch.png");
-      $smarty->assign("releases",$this->AvailableReleases);
+      $smarty->assign("app_releases", $releases);
       $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE));
     }
     return($str);
   }
+
 
   function GenHeader()
   {
@@ -83,65 +82,69 @@ class divListApplication extends MultiSelectWindow
     */
     $options= "";
 
-    /* Get all departments within this subtree */
-    $base = $this->config->current['BASE'];
+    /* Add default header */
+    $listhead = MultiSelectWindow::get_default_header();
 
-    /* Add base */
-    $tmp = array();
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
+    if(!$this->parent->IsReleaseManagementActivated()){
+      
+      /* Get all departments within this subtree */
+      $base = $this->config->current['BASE'];
 
-    $deps = array();
-    foreach($tmp as $tm){
-      $deps[$tm['dn']] = $tm['dn'];
-    }
+      /* Add base */
+      $tmp = array();
+      $tmp[] = array("dn"=>$this->config->current['BASE']);
+      $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                      array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
-    /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("application");
-    $ids = $this->config->idepartments;
-    $first = "";
-    $found = FALSE;
-    foreach($ids as $dep => $name){
-      if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
+      $deps = array();
+      foreach($tmp as $tm){
+        $deps[$tm['dn']] = $tm['dn'];
+      }
 
-        /* Keep first base dn in mind, we could need this
-         *  info if no valid base was found
-         */
-        if(empty($first)) {
-          $first = $dep['dn'];
-        }
+      /* Load possible departments */
+      $ui= get_userinfo();
+      $tdeps= $ui->get_module_departments("application");
+      $ids = $this->config->idepartments;
+      $first = "";
+      $found = FALSE;
+      foreach($ids as $dep => $name){
+        if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
 
-        $value = $ids[$dep];
-        if ($this->selectedBase == $dep){
-          $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
-        } else {
-          $options.= "<option value='".$dep."'>$value</option>";
+          /* Keep first base dn in mind, we could need this
+           *  info if no valid base was found
+           */
+          if(empty($first)) {
+            $first = $dep['dn'];
+          }
+
+          $value = $ids[$dep];
+          if ($this->selectedBase == $dep){
+            $found = TRUE;
+            $options.= "<option selected='selected' value='".$dep."'>$value</option>";
+          } else {
+            $options.= "<option value='".$dep."'>$value</option>";
+          }
         }
       }
-    }
 
-    /* The currently used base is not visible with your acl setup.
-     * Set base to first useable base.
-     */
-    if(!$found){
-      $this->selectedBase = $first;
+      /* The currently used base is not visible with your acl setup.
+       * Set base to first useable base.
+       */
+      if(!$found){
+        $this->selectedBase = $first;
+      }
+
+
+      /* And the rest, a base selection box */
+      $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+        " <input class='center' type='image' src='images/list_submit.png' align='middle' 
+          title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
     }
 
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
-    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"application");
-
-    /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
-
-    /* And the rest, a base selection box */
-    $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-        title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+    $acl      = $ui->get_permissions("cn=dummy,".$this->parent->app_base,"application/application");
+    $acl_all  = $ui->has_complete_category_acls($this->parent->app_base,"application");
 
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
@@ -184,17 +187,17 @@ class divListApplication extends MultiSelectWindow
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
-
     $this->SetListHeader($listhead);
   }
+
 
   /* so some basic settings */
   function execute()
   {
     $this->ClearElementsList();
     $this->GenHeader();
-    $this->AvailableReleases = $this->parent->getReleases($this->selectedBase);
   }
+
 
   function setEntries($list)
   {
@@ -312,9 +315,6 @@ class divListApplication extends MultiSelectWindow
   {
     /* Save automatic created POSTs like regex, checkboxes */
     MultiSelectWindow::save_object(); 
-    $appfilter = session::get('appfilter');
-    $appfilter['release']  = $this->selectedRelease;
-    session::set('appfilter',$appfilter);
   }
 
 }

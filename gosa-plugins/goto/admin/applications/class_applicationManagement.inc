@@ -33,6 +33,9 @@ class applicationManagement extends plugin
   var $enableReleaseManagement  = false;
   var $start_pasting_copied_objects = FALSE;
 
+  var $app_base     ="";
+  var $app_release  ="";
+
   function IsReleaseManagementActivated()
   {
     /* Check if we should enable the release selection */
@@ -40,8 +43,8 @@ class applicationManagement extends plugin
     if(!empty($tmp)){
       return(true);
     }
-    return(false);
   }
+
 
   function applicationManagement (&$config, &$ui)
   {
@@ -64,20 +67,40 @@ class applicationManagement extends plugin
       /* Hide SubSearch checkbox */
       $this->DivListApplication->DisableCheckBox("SubSearch");
     }
+
+    /* Set default release */
+    if(!$this->IsReleaseManagementActivated()){
+      $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
+      if(!session::is_set("app_filter")){
+        session::set("app_filter",array("app_base" => $this->app_base));
+      }
+      $app_filter     = session::get("app_filter");
+      $this->app_base = $app_filter['app_base'];
+    }else{
+      $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
+      if(!session::is_set("app_filter")){
+        session::set("app_filter",array("app_base" => $this->app_base,"app_release" => $this->app_base));
+      }
+      $app_filter         = session::get("app_filter");
+      $this->app_base     = $app_filter['app_base'];
+      $this->app_release  = $app_filter['app_release'];
+    }
+    $this->app_base   = "ou=apps,ou=Direktorium,o=Landeshauptstadt München,c=de";
+    $this->app_release= $this->app_base;
   }
 
-  function getReleases($base)
+
+  function getReleases()
   {
-    $ldap                   = $this->config->get_ldap_link();
-    $dn                     = get_ou('applicationou').$base;
-    $ret                    = array();
-    $ret [get_ou('applicationou').$base] = "/";
+    $ldap = $this->config->get_ldap_link();
+    $ret  = array();
+    $base = $this->app_base; 
 
-    $ldap->cd($dn);
-    $ldap->search("objectClass=organizationalUnit",array("ou"));
-
+    $ret[$this->app_base] = "/";
+    $ldap->cd($base);
+    $ldap->search("(&(objectClass=organizationalUnit)(objectClass=FAIbranch))",array("ou"));
     while($attrs = $ldap->fetch()){
-      $str = str_replace($dn,"",$attrs['dn']);
+      $str = str_replace($base,"",$attrs['dn']);
       $tmp = array_reverse( split("ou=",$str));
       $str = "";
       foreach($tmp as $val){
@@ -195,7 +218,8 @@ class applicationManagement extends plugin
 
       /* Create new usertab object */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
-      $this->apptabs->set_acl_base($this->DivListApplication->selectedBase);
+      $this->apptabs->parent = &$this;
+      $this->apptabs->set_acl_base($this->app_base);
     }
 
 
@@ -230,7 +254,6 @@ class applicationManagement extends plugin
       if (count($message) == 0){
 
         /* Save data data to ldap */
-        $this->apptabs->set_release($this->DivListApplication->selectedRelease);
         $this->apptabs->save();
 
         if (!isset($_POST['edit_apply'])){
@@ -273,6 +296,7 @@ class applicationManagement extends plugin
 
       /* Register apptabs to trigger edit dialog */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+      $this->apptabs->parent = &$this;
       $this->apptabs->set_acl_base($this->dn);
       session::set('objectinfo',$this->dn);
     }
@@ -326,6 +350,7 @@ class applicationManagement extends plugin
 
           /* Delete request is permitted, perform LDAP action */
           $this->apptabs= new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn,"application");
+          $this->apptabs->parent = &$this;
           $this->apptabs->set_acl_base($dn);
           $this->apptabs->delete ();
           unset ($this->apptabs);
@@ -409,6 +434,7 @@ class applicationManagement extends plugin
 
         /* Delete request is permitted, perform LDAP action */
         $this->apptabs= new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+        $this->apptabs->parent = &$this;
         $this->apptabs->set_acl_base($this->dn);
         $this->apptabs->delete ();
         unset ($this->apptabs);
@@ -462,15 +488,21 @@ class applicationManagement extends plugin
      ****************/
 
     /* Check if there is a snapshot dialog open */
-    $base = $this->DivListApplication->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases($base))){
+    if($this->IsReleaseManagementActivated()){
+      $base = $this->app_release;  
+    }else{
+      $base = $this->app_base;  
+    }
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
 
     /* Display dialog with system list */
     $this->DivListApplication->parent = $this;
     $this->DivListApplication->execute();
-    $this->DivListApplication->AddDepartments($this->DivListApplication->selectedBase,3,1);
+    if(!$this->IsReleaseManagementActivated()){
+      $this->DivListApplication->AddDepartments($this->DivListApplication->selectedBase,3,1);
+    } 
     $this->reload();
     $this->DivListApplication->setEntries($this->applications);
     return($this->DivListApplication->Draw());
@@ -478,11 +510,12 @@ class applicationManagement extends plugin
 
 
   /* Return departments, that will be included within snapshot detection */
-  function get_used_snapshot_bases(){
-    if($this->DivListApplication->selectedRelease == "main"){
-      return(array($this->DivListApplication->selectedBase));
+  function get_used_snapshot_bases()
+  {
+    if($this->IsReleaseManagementActivated()){
+      return(array($this->app_release));  
     }else{
-      return(array($this->DivListApplication->selectedRelease));
+      return(array($this->app_base));  
     }
   }
 
@@ -492,23 +525,16 @@ class applicationManagement extends plugin
     $this->applications= array();
 
     /* Set base for all searches */
-    $base       = $this->DivListApplication->selectedBase;
-    $release    = $this->DivListApplication->selectedRelease;
     $Regex      = $this->DivListApplication->Regex;
     $SubSearch  = $this->DivListApplication->SubSearch; 
     $Flags      =  GL_NONE | GL_SIZELIMIT;
     $Filter     = "(&(cn=".$Regex.")(objectClass=gosaApplication))";
     $tmp        = array();
-    $Releases   = $this->getReleases($base);
 
-    if(!$this->enableReleaseManagement){
-      $use_base = get_ou('applicationou').$base;
+    if(!$this->IsReleaseManagementActivated()){
+      $use_base = $this->app_base;
     }else{
-      if(isset($Releases[$release])){
-        $use_base  = $release;
-      }else{
-        $use_base  = get_ou('applicationou').$base;
-      }
+      $use_base = $this->app_release;
     }
 
     if($SubSearch){
@@ -584,7 +610,8 @@ class applicationManagement extends plugin
 
 
       /* Get dialog */
-      $this->CopyPasteHandler->SetVar("base",$this->DivListApplication->selectedBase);
+      $this->CopyPasteHandler->SetVar("base",$this->app_base);
+      $this->CopyPasteHandler->SetVar("parent",&$this);
       $data = $this->CopyPasteHandler->execute();
 
       /* Return dialog data */
@@ -633,6 +660,16 @@ class applicationManagement extends plugin
     $this->DivListApplication->save_object();
     if(is_object($this->CopyPasteHandler)){
       $this->CopyPasteHandler->save_object();
+    }
+    
+    if($this->IsReleaseManagementActivated() && isset($_POST['app_release'])){
+      $sel_rel = get_post('app_release');
+      $releases = array_flip($this->getReleases());
+      if(isset($releases[$sel_rel])){
+        $this->app_release = $releases[$sel_rel];
+      }
+    }elseif(!$this->IsReleaseManagementActivated()){
+      $this->app_base = get_ou("applicationou").$this->DivListApplication->selectedBase;
     }
   }
 
