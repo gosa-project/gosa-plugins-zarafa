@@ -86,7 +86,7 @@ class applicationManagement extends plugin
       $this->app_base     = $app_filter['app_base'];
       $this->app_release  = $app_filter['app_release'];
     }
-    $this->app_base   = "ou=apps,ou=Direktorium,o=Landeshauptstadt München,c=de";
+    $this->app_base   = "ou=apps,o=Landeshauptstadt München,c=de";
     $this->app_release= $this->app_base;
   }
 
