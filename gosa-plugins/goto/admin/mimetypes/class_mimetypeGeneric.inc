@@ -299,24 +299,24 @@ class mimetype extends plugin
 
 
     if($this->acl_is_writeable("gotoMimeFilePattern")){
-      $Pattern_Actions= " <input type='image' src='images/sort_up.png' 	class='center'	name='Pattern_SortUp_%s' >&nbsp;
-      <input type='image' src='images/sort_down.png' 	class='center'  name='Pattern_SortDown_%s'>&nbsp;
+      $Pattern_Actions= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Pattern_SortUp_%s' >&nbsp;
+      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Pattern_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='Pattern_Remove_%s'>";
     }else{
       $Pattern_Actions= "";	
     }
 
     if($this->acl_is_writeable("gotoMimeApplication")){
-      $Apps_Actions 	= " <input type='image' src='images/sort_up.png' 	class='center'	name='Apps_SortUp_%s' >&nbsp;
-      <input type='image' src='images/sort_down.png' 	class='center'  name='Apps_SortDown_%s'>&nbsp;
+      $Apps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Apps_SortUp_%s' >&nbsp;
+      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Apps_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='Apps_Remove_%s'>";
     }else{
       $Apps_Actions= "";	
     }
 
     if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
-      $EApps_Actions 	= " <input type='image' src='images/sort_up.png' 	class='center'	name='EApps_SortUp_%s' >&nbsp;
-      <input type='image' src='images/sort_down.png' 	class='center'  name='EApps_SortDown_%s'>&nbsp;
+      $EApps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='EApps_SortUp_%s' >&nbsp;
+      <input type='image' src='images/lists/sort-down.png' 	class='center'  name='EApps_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='EApps_Remove_%s'>";
     }else{
       $EApps_Actions= "";	

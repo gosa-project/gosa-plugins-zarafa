@@ -313,9 +313,9 @@ class gotomasses extends plugin
     $divlist->SetDropDownHeaderMenu($s);
 
     if($this->sort_dir == "up"){
-      $sort_img = "<img src='images/sort_up.png' alt='/\' border=0>";
+      $sort_img = "<img src='images/lists/sort-up.png' alt='/\' border=0>";
     }else{
-      $sort_img = "<img src='images/sort_down.png' alt='\/' border=0>";
+      $sort_img = "<img src='images/lists/sort-down.png' alt='\/' border=0>";
     }
 
     if($this->sort_by == "TargetName"){ $sort_img_1 = $sort_img; } else { $sort_img_1 = "" ;}

@@ -567,8 +567,8 @@ class workstartup extends plugin
       $SelectBoxLdapServer->AddEntry(
           array(array("string" => $server),
             array("string" => 
-              "<input class='center' type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/lists/sort-up.png' name='sort_ldap_up_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
               "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
     }    
@@ -637,8 +637,8 @@ class workstartup extends plugin
 
       $div = new divSelectBox("WSFAIscriptClasses");
       $div -> SetHeight("110");
-      $str_up     = " &nbsp;<input type='image' src='images/sort_up.png'    name='sort_up_%s'    value='%s'>";
-      $str_down   = " &nbsp;<input type='image' src='images/sort_down.png'  name='sort_down_%s'  value='%s'>";
+      $str_up     = " &nbsp;<input type='image' src='images/lists/sort-up.png'    name='sort_up_%s'    value='%s'>";
+      $str_down   = " &nbsp;<input type='image' src='images/lists/sort-down.png'  name='sort_down_%s'  value='%s'>";
       $str_remove = " &nbsp;<input type='image' src='images/lists/trash.png'  name='fai_remove_%s' value='%s'>";
       $str_empty  = " &nbsp;<img src='images/empty.png' alt=\"\" width='7'>"; 
 

@@ -289,9 +289,9 @@ class mailqueue extends plugin
 
         /* Display sort arrow */
         if($this->SortType == "up"){
-          $smarty->assign("SortType","<img src='images/sort_up.png' alt='"._("up")."' border='0'>");
+          $smarty->assign("SortType","<img src='images/lists/sort-up.png' alt='"._("up")."' border='0'>");
         }else{
-          $smarty->assign("SortType","<img src='images/sort_down.png' alt='"._("down")."' border='0'>");
+          $smarty->assign("SortType","<img src='images/lists/sort-down.png' alt='"._("down")."' border='0'>");
         }
       }
     }

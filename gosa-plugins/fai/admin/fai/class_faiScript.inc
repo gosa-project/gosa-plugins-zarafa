@@ -331,9 +331,9 @@ class faiScript extends plugin
     $plug = $_GET['plug'];
    
     if($this->sort_order == "up"){
-      $dir = "<img src='images/sort_up.png' title='"._("Sort direction")."' alt='\/' border=0>";
+      $dir = "<img src='images/lists/sort-up.png' title='"._("Sort direction")."' alt='\/' border=0>";
     }else{
-      $dir = "<img src='images/sort_down.png' title='"._("Sort direction")."' alt='/\' border=0>";
+      $dir = "<img src='images/lists/sort-down.png' title='"._("Sort direction")."' alt='/\' border=0>";
     }
  
     if($this->sort_by == "name"){

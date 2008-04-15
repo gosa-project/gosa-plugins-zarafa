@@ -370,12 +370,12 @@ class goMailServer extends goService{
       $img = "";
 
       if($key != 0 && $this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/sort_up.png' name='TranslationUp_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-up.png' name='TranslationUp_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }
       if(($key+1) < count($this->postfixTransportTable) && $this->acl_is_writeable("postfixTransportTable")){
-        $img.= "<input type='image' src='images/sort_down.png' name='TranslationDown_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-down.png' name='TranslationDown_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }
@@ -399,12 +399,12 @@ class goMailServer extends goService{
       $img ="";
 
       if($key != 0 && $this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/sort_up.png' name='SenderRestrictUp_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-up.png' name='SenderRestrictUp_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }
       if(($key+1) < count($this->postfixSenderRestrictions) && $this->acl_is_writeable("postfixSenderRestrictions")){
-        $img.= "<input type='image' src='images/sort_down.png' name='SenderRestrictDown_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-down.png' name='SenderRestrictDown_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }
@@ -429,12 +429,12 @@ class goMailServer extends goService{
     foreach($this->postfixRecipientRestrictions as $key => $entry){
       $img = "";
       if($key != 0 && $this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/sort_up.png' name='RecipientRestrictUp_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-up.png' name='RecipientRestrictUp_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }
       if(($key+1) < count($this->postfixRecipientRestrictions) && $this->acl_is_writeable("postfixRecipientRestrictions")){
-        $img.= "<input type='image' src='images/sort_down.png' name='RecipientRestrictDown_".$key."' class='center'>&nbsp;";      
+        $img.= "<input type='image' src='images/lists/sort-down.png' name='RecipientRestrictDown_".$key."' class='center'>&nbsp;";      
       }else{
         $img.= "<img src='images/empty.png' style='width:10px;'>";
       }

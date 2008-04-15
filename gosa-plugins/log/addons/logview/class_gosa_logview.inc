@@ -210,10 +210,10 @@ class gosa_logview extends plugin
     /* Prepare order setting */
     if ($this->sort_direction == "down"){
       $desc= "DESC";
-      $sort_sign = "<img src='images/sort_down.png' alt='\/' class='center' title='down' border=0>";
+      $sort_sign = "<img src='images/lists/sort-down.png' alt='\/' class='center' title='down' border=0>";
     } else {
       $desc= "";
-      $sort_sign = "<img src='images/sort_up.png' alt='/\' class='center' title='up' border=0>";
+      $sort_sign = "<img src='images/lists/sort-up.png' alt='/\' class='center' title='up' border=0>";
     }
 
     /****

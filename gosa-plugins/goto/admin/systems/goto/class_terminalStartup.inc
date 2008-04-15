@@ -280,8 +280,8 @@ class termstartup extends plugin
       $SelectBoxLdapServer->AddEntry(
           array(array("string" => $server),
             array("string" =>
-              "<input class='center' type='image' src='images/sort_up.png' name='sort_ldap_up_".$key."'>&nbsp;".
-              "<input class='center' type='image' src='images/sort_down.png' name='sort_ldap_down_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/lists/sort-up.png' name='sort_ldap_up_".$key."'>&nbsp;".
+              "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
               "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
     }

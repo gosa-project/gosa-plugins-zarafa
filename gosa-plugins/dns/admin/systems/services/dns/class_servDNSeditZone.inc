@@ -333,8 +333,8 @@ class servdnseditZone extends plugin
     $div->setHeight(120);
     $recs = $this->mXRecords;
 
-    $oneup    = "<input name='MXup_%s'    type='image' src='images/sort_up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
-    $onedown  = "<input name='MXdown_%s'  type='image' src='images/sort_down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
+    $oneup    = "<input name='MXup_%s'    type='image' src='images/lists/sort-up.png'    title='"._("Up")."'      class='center'>&nbsp;"; 
+    $onedown  = "<input name='MXdown_%s'  type='image' src='images/lists/sort-down.png'  title='"._("Down")."'    class='center'>&nbsp;"; 
     $onedel   = "<img src='images/empty.png' width='20' class='center'>
                  <input name='MXdel_%s'   type='image' src='images/lists/trash.png'  title='"._("Delete")."'  class='center'>"; 
 

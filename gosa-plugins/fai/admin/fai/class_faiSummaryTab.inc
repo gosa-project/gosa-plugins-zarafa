@@ -228,13 +228,13 @@ class faiSummaryTab extends plugin{
         $str .= "<tr>
                   <td colspan=2>
                    <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>
-                    <img border=0 class='center' src='images/expand.png' alt='"._("Open")."'>&nbsp;";
+                    <img border=0 class='center' src='images/lists/expand.png' alt='"._("Open")."'>&nbsp;";
         $str .=     $image."&nbsp;";
         $str .= "   <b>".$this->objs[$key]['Name']."</b></a></td></tr>";
       }else{
         $str .= "<tr><td colspan=2>
                     <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>
-                   <img border=0 class='center' src='images/sort_down.png' alt='"._("Close")."'>&nbsp;";
+                   <img border=0 class='center' src='images/lists/sort-down.png' alt='"._("Close")."'>&nbsp;";
         $str .= $image."&nbsp;";
         $str .= "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
    
