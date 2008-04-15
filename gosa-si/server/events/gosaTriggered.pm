@@ -676,11 +676,12 @@ sub get_available_kernel {
         # Get Kernel packages for release
         my $sql_statement = "SELECT * FROM $main::packages_list_tn WHERE distribution='$release' AND package LIKE 'linux\-image\-%'";
         my $res_hash = $main::packages_list_db->select_dbentry($sql_statement);
-        foreach my $package (keys %{$res_hash}) {
-                push @kernel, %{$res_hash}->{$package}->{'package'};
-        }
+        my %data;
+        my $i=1;
 
-        my %data = ('available-kernel' => \@kernel);
+        foreach my $package (keys %{$res_hash}) {
+                $data{"answer".$i++}= ${$res_hash}{$package}->{'package'};
+        }
 
         my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
         return ( $out_msg );
