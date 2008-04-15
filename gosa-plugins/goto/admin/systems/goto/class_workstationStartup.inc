@@ -261,35 +261,35 @@ class workstartup extends plugin
       }
     }
 
-    /* Get list of boot kernels */
-    if (isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "KERNELS",array('tabs'));
-      if (!check_command($command)){
-        $message[]= sprintf(_("Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to exist."), $command,
-            get_class($this));
-      } else {
-        $fh= popen($command, "r");
-        while (!feof($fh)) {
-          $buffer= trim(fgets($fh, 256));
-          if(!empty($buffer)){
-            $name=$value = $buffer;
-            if(preg_match("/:/",$buffer)){
-              $name = preg_replace("/:.*$/","",$buffer);
-              $value= preg_replace("/^.*:/","",$buffer);
-              $this->gotoBootKernels[$name]= $name.":".$value;
-            }else{
-              $this->gotoBootKernels[$name]= $value;
-            }
-          }
-        }
-        pclose($fh);
-      }
-    }
-
-    /* Turn to default, if we've nothing to inherit */
-    if (!isset($this->gotoBootKernels['default-inherited']) && $this->gotoBootKernel == "default-inherited"){
-      $this->gotoBootKernel= "default";
-    }
+#   /* Get list of boot kernels */
+#   if (isset($this->config->data['TABS'])){
+#     $command= $this->config->search(get_class($this), "KERNELS",array('tabs'));
+#     if (!check_command($command)){
+#       $message[]= sprintf(_("Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to exist."), $command,
+#           get_class($this));
+#     } else {
+#       $fh= popen($command, "r");
+#       while (!feof($fh)) {
+#         $buffer= trim(fgets($fh, 256));
+#         if(!empty($buffer)){
+#           $name=$value = $buffer;
+#           if(preg_match("/:/",$buffer)){
+#             $name = preg_replace("/:.*$/","",$buffer);
+#             $value= preg_replace("/^.*:/","",$buffer);
+#             $this->gotoBootKernels[$name]= $name.":".$value;
+#           }else{
+#             $this->gotoBootKernels[$name]= $value;
+#           }
+#         }
+#       }
+#       pclose($fh);
+#     }
+#   }
+#
+#    /* Turn to default, if we've nothing to inherit */
+#    if (!isset($this->gotoBootKernels['default-inherited']) && $this->gotoBootKernel == "default-inherited"){
+#      $this->gotoBootKernel= "default";
+#    }
   }
 
   
@@ -623,6 +623,16 @@ class workstartup extends plugin
       $smarty->assign("FAIrelease"  , $this->FAIrelease);
       $smarty->assign("FAIclasses"  , $this->selectable_classes());
 
+      /* Get classes for release from cache.
+       * Or build cache
+       */
+      if($this->FAIdebianMirror == "inherited"){
+        $release = $this->InheritedFAIrelease;
+      }else{
+        $release = $this->FAIrelease;
+      }
+
+      $smarty->assign("gotoBootKernels",$this->cache['KERNELS'][$release]);
       $smarty->assign("InheritedFAIrelease",$this->InheritedFAIrelease);
 
       $div = new divSelectBox("WSFAIscriptClasses");
@@ -1182,7 +1192,23 @@ class workstartup extends plugin
         }
       }
     }
-#    echo sprintf("Took %.6f <br> ",microtime(1) - $start);
+
+    /* Get list of available kernel for this release 
+     */
+    if($force || !isset($this->cache['KERNELS'][$release])){
+      $o_queue = new gosaSupportDaemon();
+      $tmp = $o_queue->FAI_get_kernels($release);
+      $this->cache['KERNELS'][$release] = array();
+
+      foreach($this->gotoBootKernels as $name => $default){
+        $this->cache['KERNELS'][$release][$name] = $default;
+      }
+
+      foreach($tmp as $kernel){
+        if(empty($kernel)) continue;
+        $this->cache['KERNELS'][$release][$kernel]=$kernel;
+      }
+    }
   }
 
 

@@ -10,7 +10,7 @@
 {render acl=$gotoBootKernelACL}
         <select id="gotoBootKernel" name="gotoBootKernel">
          {html_options options=$gotoBootKernels selected=$gotoBootKernel}
-	</select>
+		</select>
 {/render}
       </td>
     </tr>
