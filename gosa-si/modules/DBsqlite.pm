@@ -44,7 +44,8 @@ sub create_table {
 
     $col_names->{ $table_name } = $col_names_ref;
     my $col_names_string = join("', '", @col_names);
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
+    my $sql_statement = "CREATE TABLE $table_name ( '$col_names_string' )"; 
+    $self->{dbh}->do("DROP TABLE IF EXISTS $table_name");
     $self->{dbh}->do($sql_statement);
     return 0;
 }
@@ -267,6 +268,8 @@ sub move_table {
 
     my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
     my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
+	$self->{dbh}->do($sql_statement_drop);
+	$self->{dbh}->do($sql_statement_alter);
 
     return;
 } 
