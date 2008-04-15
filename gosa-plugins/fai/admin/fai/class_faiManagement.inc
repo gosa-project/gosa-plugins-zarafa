@@ -938,6 +938,11 @@ class faiManagement extends plugin
     ksort($ret);
     $ret = array_flip($ret);
 
+    /* Ensure that we have a valid release selected */
+    if(!in_array($this->fai_release,$ret)){
+      $this->fai_release = $this->fai_base;
+    }
+
     return ($ret);
   }
   
