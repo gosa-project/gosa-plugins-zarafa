@@ -1636,7 +1636,8 @@ sub create_fai_server_db {
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
 		if(!defined($dont_create_packages_list)) {
-			&create_packages_list_db;
+			#&create_packages_list_db;
+			&create_packages_list_db(undef, undef, $session_id);
 		}
 	}	
     
@@ -1700,7 +1701,8 @@ sub create_fai_release_db {
 					}
 				}
 			}
-			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",6);
+
+			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",9);
 			if(@sql_list) {
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_server_db->exec_statementlist(\@sql_list);
@@ -2044,7 +2046,7 @@ sub create_packages_list_db {
             my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
             my $section;
             foreach $section (split(' ', $sections)){
-                &parse_package_info( $baseurl, $dist, $section );
+                &parse_package_info( $baseurl, $dist, $section, $session_id );
             }
         }
     }
@@ -2067,7 +2069,7 @@ sub run_create_packages_list_db {
 }
 
 sub parse_package_info {
-  my ($baseurl, $dist, $section)= @_;
+  my ($baseurl, $dist, $section, $session_id)= @_;
   my ($package);
 
   my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
@@ -2076,9 +2078,9 @@ sub parse_package_info {
   foreach $package ("Packages.gz"){
     daemon_log("DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
     get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section" );
-    parse_package( "$outdir/$dist/$section", $dist, $path );
+    parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
   }
-  find(\&cleanup_and_extract, keys( %repo_dirs ) );
+  find(\&cleanup_and_extract($session_id), keys( %repo_dirs ));
 }
 
 sub get_package {
@@ -2098,19 +2100,20 @@ sub get_package {
 }
 
 sub parse_package {
-    my ($path, $dist, $srv_path)= @_;
+    my ($path, $dist, $srv_path, $session_id)= @_;
+	if (not defined $session_id) { $session_id = 0;}
     my ($package, $version, $section, $description);
     my @sql_list;
     my $PACKAGES;
 
     if(not stat("$path.in")) {
-        daemon_log("ERROR: create_packages_list: parse_package: file '$path.in' is not readable",1);
+        daemon_log("$session_id ERROR: create_packages_list: parse_package: file '$path.in' is not readable",1);
         return;
     }
 
     open($PACKAGES, "<$path.in");
 	if(not defined($PACKAGES)) {
-        daemon_log("ERROR: create_packages_list_db: parse_package: can not open '$path.in'",1); 
+        daemon_log("$session_id ERROR: create_packages_list_db: parse_package: can not open '$path.in'",1); 
         return;
     }
 
@@ -2182,6 +2185,7 @@ sub store_fileinfo {
 }
 
 sub cleanup_and_extract {
+	my ($session_id) = @_ ;
   my $fileinfo = $repo_files{ $File::Find::name };
 
   if( defined $fileinfo ) {
@@ -2196,7 +2200,7 @@ sub cleanup_and_extract {
 
     if( -f "$dir/DEBIAN/templates" ) {
 
-      daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
+      daemon_log("$session_id DEBUG: Found debconf templates in '$package' - $newver", 5);
 
       my $tmpl= "";
       {
