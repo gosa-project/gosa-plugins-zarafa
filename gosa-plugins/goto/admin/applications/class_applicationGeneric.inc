@@ -20,22 +20,12 @@ class application extends plugin
   /* attribute list for save action */
   var $attributes= array("cn", "description", "gosaApplicationExecute", "gosaApplicationName","gosaApplicationIcon",
       "gosaApplicationFlags","gotoLogonScript");
-  var $objectclasses= array("top", "gosaApplication");
 
-  var $isReleaseApplikation = false;
+  var $objectclasses= array("top", "gosaApplication");
 
   function application (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-
-    $appfilter = session::get('appfilter')    ;
-
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)) {
-      if(!preg_match("/^".get_ou('applicationou')."/",$appfilter['release'])){
-        $this->isReleaseApplikation = true;  
-      }
-    }
 
     /* Load icon */
     $ldap= $config->get_ldap_link();
@@ -61,12 +51,7 @@ class application extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-
-      if($this->isReleaseApplikation){
-        $this->base = preg_replace("/^.*,".get_ou('applicationou')."/","",$this->dn);
-      }else{
-        $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
-      }
+      $this->base= preg_replace ("/^[^,]+,".get_ou('applicationou')."/", "", $this->dn);
     }
   }
 
@@ -158,7 +143,11 @@ class application extends plugin
 
     /* Fill templating stuff */
     $smarty->assign("cn", $this->cn);
-    $smarty->assign("bases", $this->get_allowed_bases());
+    if(!$this->is_release()){
+      $smarty->assign("bases", $this->get_allowed_bases());
+    }else{
+      $smarty->assign("bases", array());
+    }
     if ($this->dn == "new"){
       $smarty->assign("selectmode", "");
       $smarty->assign("namemode", "");
@@ -217,7 +206,7 @@ class application extends plugin
       }
     }
 
-    $smarty->assign("isReleaseApplikation" , $this->isReleaseApplikation);
+    $smarty->assign("isReleaseApplikation" ,$this->is_release());
     $smarty->assign("gotoLogonScript",htmlentities($this->gotoLogonScript, ENT_COMPAT, 'UTF-8'));
     $smarty->assign("base_select", $this->base);
     /* Show main page */
@@ -389,7 +378,7 @@ class application extends plugin
         $this->set_picture($_FILES['picture_file']['tmp_name']);
       }	
 
-      if(!$this->isReleaseApplikation){
+      if(!$this->is_release()){
         $tmp = $this->get_allowed_bases();
         if(isset($_POST['base'])){
           if(isset($tmp[$_POST['base']])){
@@ -441,24 +430,18 @@ class application extends plugin
     $ldap->cd($this->config->current["BASE"]);
 
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    $appfilter = session::get('appfilter');
-    if((!empty($tmp)) && (isset($appfilter['release']))){
-      $baseDn = str_replace($this->config->current['BASE'],$this->base,$appfilter['release']);
-      $baseDn = preg_replace("/".get_ou('applicationou').".*/",get_ou('applicationou').$this->base,$appfilter['release']);
-      $ldap->ls("(&(objectClass=gosaApplication)(cn=".$this->cn."))",$baseDn,array("cn"));
-      if($ldap->count()){
-        $attrs = $ldap->fetch();
-        if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicated("cn");
-        }
-      }
+
+    if($this->is_release()){
+      $base = $this->parent->parent->app_release;
     }else{
-      $ldap->ls("(&(objectClass=gosaApplication)(cn=".$this->cn."))",get_ou('applicationou').$this->base,array("cn"));
-      if ($ldap->count()){
-        $attrs = $ldap->fetch();
-        if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicated("cn");
-        }
+      $base = get_ou('applicationou').$this->base;
+    }
+
+    $ldap->ls("(&(objectClass=gosaApplication)(cn=".$this->cn."))",$base,array("cn"));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+      if($this->dn != $attrs['dn']) {
+        $message[]= msgPool::duplicated("cn");
       }
     }
     return $message;
@@ -509,6 +492,22 @@ class application extends plugin
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()), ERROR_DIALOG);
     }
   }
+
+  
+  function is_release()
+  {
+    if(isset($this->parent->parent)){
+      return($this->parent->parent->IsReleaseManagementActivated());
+    }else{
+      /* Check if we should enable the release selection */
+      $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+      if(!empty($tmp)){
+        return(true);
+      }
+    }
+    return(FALSE);
+  }
+
 
   function set_picture($filename)
   {
