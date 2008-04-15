@@ -348,7 +348,7 @@ class servrepository extends goService
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);        
       if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_server_db'])){
         $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_server_db']; 
-        $tmp = new $evt['CLASS_NAME']($config);
+        $tmp = new $evt['CLASS_NAME']($this->config);
         $tmp->set_type(TRIGGERED_EVENT);
         $tmp->add_targets(array("GOsa"));
         $o_queue = new gosaSupportDaemon();
