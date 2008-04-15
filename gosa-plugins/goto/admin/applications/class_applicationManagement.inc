@@ -534,15 +534,19 @@ class applicationManagement extends plugin
 
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->app_base;
+      if($SubSearch){
+        $use_base = preg_replace("/^".normalizePreg(get_ou("applicationou"))."/","",$use_base);
+      }
     }else{
       $use_base = $this->app_release;
+      $SubSearch= FALSE;
     }
-
-    if($SubSearch){
-      $Flags    |= GL_SUBSEARCH;  
+  
+    if($SubSearch){ 
+      $res= get_sub_list($Filter, "application",get_ou("applicationou"), $use_base, array("cn","description","dn","objectClass"), $Flags);
+    }else{
+      $res= get_list($Filter, "application",$use_base, array("cn","description","dn","objectClass"), $Flags);
     }
-   
-    $res= get_list($Filter, "application", $use_base, array("cn","description","dn","objectClass"), $Flags);
     $tmp2 = array();
     foreach ($res as $val){
       $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
