@@ -4,8 +4,6 @@ class divListMimeTypes extends MultiSelectWindow
 {
   /* Current base */
   var $selectedBase       = "";
-  var $selectedRelease    = "main";
-  var $AvailableReleases  = array();
   var $departments        = array();
   var $parent               ;
   var $ui                   ;
@@ -16,20 +14,14 @@ class divListMimeTypes extends MultiSelectWindow
   /* Subsearch checkbox */
   var $SubSearch;
 
-  /* These vars should be saved too */
-  var $SaveAdditionalVars = array("selectedRelease");
-
-
   function divListMimeTypes (&$config, &$parent)
   {
     /* Create divlist and setup */
     MultiSelectWindow::MultiSelectWindow($config, "Mimetypes", "mimetypes");
   
     /* initialize required attributes */ 
-    $this->selectedRelease  = get_ou('mimetypeou').session::get('CurrentMainBase');
     $this->parent           = &$parent;
     $this->ui               = get_userinfo();
-    $this->AvailableReleases= $this->parent->getReleases($this->selectedBase);
 
     /* Set list strings */
     $this->SetTitle       (_("List of defined mime types"));
@@ -67,16 +59,17 @@ class divListMimeTypes extends MultiSelectWindow
   }
 
 
-  /* This function allows us to add a user defined filter part at position $position*/
   function AddUserBoxToFilter($position)
   {
     $str = "";
     if(($position  == 2) && ($this->parent->IsReleaseManagementActivated($this->config))){
       $smarty = get_smarty();
-      $smarty->assign("selectedRelease",$this->selectedRelease);
+      $releases = $this->parent->getReleases();
+      $smarty->assign("mime_release" , $releases[$this->parent->mime_release]);
+      $smarty->assign("mime_base"    , $releases[$this->parent->mime_base]);
       $smarty->assign("branchimage","images/branch.png");
-      $smarty->assign("releases",$this->AvailableReleases);
-      $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE,dirname(__FILE__)));
+      $smarty->assign("mime_releases", $releases);
+      $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE));
     }
     return($str);
   }
@@ -85,65 +78,78 @@ class divListMimeTypes extends MultiSelectWindow
   /* Create list header, with create / copy & paste etc*/
   function GenHeader()
   {
-    /* Prepare departments,
-       which are shown in the listbox on top of the listbox
-     */
-    $options= "";
 
-    /* Get all departments within this subtree */
-    $ui= get_userinfo();
-    $first = "";
-    $found = FALSE;
-    $base = $this->config->current['BASE'];
 
-    /* Add base */
-    $tmp = array();
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
+    /* Add default header */
+    $listhead = MultiSelectWindow::get_default_header();
+    if(!$this->parent->IsReleaseManagementActivated()){
 
-    $deps = array();
-    foreach($tmp as $tm){
-      $deps[$tm['dn']] = $tm['dn'];
-    }
+      /* Prepare departments,
+         which are shown in the listbox on top of the listbox
+       */
+      $options= "";
 
-    /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments($this->module);
-    $ids = $this->config->idepartments;
-    $first = "";
-    $found = FALSE;
-    foreach($ids as $dep => $name){
-      if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
+      /* Get all departments within this subtree */
+      $ui= get_userinfo();
+      $first = "";
+      $found = FALSE;
+      $base = $this->config->current['BASE'];
 
-        /* Keep first base dn in mind, we could need this
-         *  info if no valid base was found
-         */
-        if(empty($first)) {
-          $first = $dep['dn'];
-        }
+      /* Add base */
+      $tmp = array();
+      $tmp[] = array("dn"=>$this->config->current['BASE']);
+      $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+            array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
-        $value = $ids[$dep];
-        if ($this->selectedBase == $dep){
-          $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
-        } else {
-          $options.= "<option value='".$dep."'>$value</option>";
+      $deps = array();
+      foreach($tmp as $tm){
+        $deps[$tm['dn']] = $tm['dn'];
+      }
+
+      /* Load possible departments */
+      $ui= get_userinfo();
+      $tdeps= $ui->get_module_departments($this->module);
+      $ids = $this->config->idepartments;
+      $first = "";
+      $found = FALSE;
+      foreach($ids as $dep => $name){
+        if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
+
+          /* Keep first base dn in mind, we could need this
+           *  info if no valid base was found
+           */
+          if(empty($first)) {
+            $first = $dep['dn'];
+          }
+
+          $value = $ids[$dep];
+          if ($this->selectedBase == $dep){
+            $found = TRUE;
+            $options.= "<option selected='selected' value='".$dep."'>$value</option>";
+          } else {
+            $options.= "<option value='".$dep."'>$value</option>";
+          }
         }
       }
-    }
 
-    /* The currently used base is not visible with your acl setup.
-     * Set base to first useable base.
-     */
-    if(!$found){
-      $this->selectedBase = $first;
+      /* The currently used base is not visible with your acl setup.
+       * Set base to first useable base.
+       */
+      if(!$found){
+        $this->selectedBase = $first;
+      }
+
+      /* And at least add a department selection box */
+      $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+        " <input class='center' type='image' src='images/list_submit.png' align='middle' 
+        title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+
     }
 
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions("cn=dummy,".get_ou('mimetypeou').$this->selectedBase,"mimetypes/mimetype");
-    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"mimetypes") ;
+    $acl      = $ui->get_permissions("cn=dummy,".$this->parent->mime_base,"mimetypes/mimetype");
+    $acl_all  = $ui->has_complete_category_acls($this->parent->mime_base,"mimetypes") ;
 
 
     /* If this is true we add an additional seperator. Just look a few lines below */  
@@ -156,13 +162,6 @@ class divListMimeTypes extends MultiSelectWindow
       $add_sep = true;
     }
 
-    /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
-
-    /* And at least add a department selection box */
-    $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-        title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
 
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
@@ -327,16 +326,6 @@ class divListMimeTypes extends MultiSelectWindow
   {
     /* Save automatic created POSTs like regex, checkboxes */
     MultiSelectWindow::save_object(); 
-
-    /* check if returned selectedRelease is a valid release.
-        If it isn't set to a valid release */
-    $this->AvailableReleases = $this->parent->getReleases($this->selectedBase);
-    if(!isset($this->AvailableReleases[$this->selectedRelease])){
-      $this->selectedRelease =key($this->AvailableReleases);
-    }
-    $mimefilter = session::get('mimefilter');
-    $mimefilter['release']  = $this->selectedRelease;
-    session::set('mimefilter',$mimefilter);
   }
 
 }

@@ -33,6 +33,20 @@ class mimetypeManagement extends plugin
   var $CopyPasteHandler               = NULL;
   var $start_pasting_copied_objects = FALSE;
 
+  var $mime_base    = "";
+  var $mime_release = "";
+
+
+  function IsReleaseManagementActivated()
+  {
+    /* Check if we should enable the release selection */
+    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+    if(!empty($tmp)){
+      return(true);
+    }
+    return(false);
+  }
+
 
   function mimetypeManagement (&$config, &$ui)
   {
@@ -57,22 +71,39 @@ class mimetypeManagement extends plugin
       $this->DivListMimeTypes->DisableCheckBox("SubSearch");
     }
 
+
+    /* Set default release */
+    if(!$this->IsReleaseManagementActivated()){
+      $this->mime_base = get_ou("mimetypeou").$this->config->current['BASE'];
+      if(!session::is_set("mime_filter")){
+        session::set("mime_filter",array("mime_base" => $this->mime_base));
+      }
+      $mime_filter     = session::get("mime_filter");
+      $this->mime_base = $mime_filter['mime_base'];
+    }else{
+      $this->mime_base = get_ou("mimetypeou").$this->config->current['BASE'];
+      if(!session::is_set("mime_filter")){
+        session::set("mime_filter",array("mime_base" => $this->mime_base,"mime_release" => $this->mime_base));
+      }
+      $mime_filter         = session::get("mime_filter");
+      $this->mime_base     = $mime_filter['mime_base'];
+      $this->mime_release  = $mime_filter['mime_release'];
+    }
   }
 
 
   /* Get all releases */
-  function getReleases($base)
+  function getReleases()
   {
     $ldap                   = $this->config->get_ldap_link();
-    $dn                     = get_ou('mimetypeou').$base;
     $ret                    = array();
-    $ret [get_ou('mimetypeou').$base] = "/";    
+    $ret [$this->mime_base] = "/";    
 
-    $ldap->cd($dn);
-    $ldap->search("objectClass=organizationalUnit",array("ou"));
+    $ldap->cd($this->mime_base);
+    $ldap->search("(&(objectClass=FAIbranch)(objectClass=organizationalUnit))",array("ou"));
 
     while($attrs = $ldap->fetch()){
-      $str = str_replace($dn,"",$attrs['dn']);
+      $str = str_replace($this->mime_base,"",$attrs['dn']);
       $tmp = array_reverse( split("ou=",$str));
       $str = "";
       foreach($tmp as $val){
@@ -87,6 +118,7 @@ class mimetypeManagement extends plugin
     asort($ret);
     return($ret);
   }
+
 
   function execute()
   {
@@ -185,7 +217,7 @@ class mimetypeManagement extends plugin
 
     /* New mime type? */
     $ui = get_userinfo();
-    $acl = $ui->get_permissions($this->DivListMimeTypes->selectedBase,"mimetypes/mimetype");
+    $acl = $ui->get_permissions($this->mime_base,"mimetypes/mimetype");
     if (($s_action=="new") && preg_match("/c/",$acl)){
 
       /* By default we set 'dn' to 'new', all relevant plugins will
@@ -194,7 +226,8 @@ class mimetypeManagement extends plugin
 
       /* Create new usertab object */
       $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
-      $this->mimetabs->set_acl_base($this->DivListMimeTypes->selectedBase);
+      $this->mimetabs->parent = &$this;
+      $this->mimetabs->set_acl_base($this->mime_base);
     }   
 
 
@@ -227,7 +260,7 @@ class mimetypeManagement extends plugin
       if (count($message) == 0){
 
         /* Save data data to ldap */
-        $this->mimetabs->set_release($this->DivListMimeTypes->selectedRelease);
+        $this->mimetabs->set_release($this->mime_base);
         $this->mimetabs->save();
 
         if (!isset($_POST['edit_apply'])){
@@ -270,6 +303,7 @@ class mimetypeManagement extends plugin
 
       /* Register mimetabs to trigger edit dialog */
       $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
+      $this->mimetabs->parent = &$this;
       $this->mimetabs->set_acl_base($this->dn);
       session::set('objectinfo',$this->dn);
     }
@@ -326,6 +360,7 @@ class mimetypeManagement extends plugin
 
           /* Delete request is permitted, perform LDAP action */
           $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
+          $this->mimetabs->parent = &$this;
           $this->mimetabs->set_acl_base($dn);
           $this->mimetabs->delete ();
           unset ($this->mimetabs);
@@ -409,6 +444,7 @@ class mimetypeManagement extends plugin
 
         /* Delete request is permitted, perform LDAP action */
         $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
+        $this->mimetabs->parent = &$this;
         $this->mimetabs->set_acl_base($this->dn);
         $this->mimetabs->delete ();
         unset ($this->mimetabs);
@@ -461,8 +497,12 @@ class mimetypeManagement extends plugin
       Dialog display
      ****************/
 
-        /* Check if there is a snapshot dialog open */
-    $base = $this->DivListMimeTypes->selectedBase;
+    /* Check if there is a snapshot dialog open */
+    if($this->IsReleaseManagementActivated()){
+      $base = $this->mime_release;
+    }else{
+      $base = $this->mime_base;
+    }
     if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
@@ -470,7 +510,9 @@ class mimetypeManagement extends plugin
     /* Display dialog with system list */
     $this->DivListMimeTypes->parent = $this;
     $this->DivListMimeTypes->execute();
-    $this->DivListMimeTypes->AddDepartments($this->DivListMimeTypes->selectedBase,3,1);
+    if(!$this->IsReleaseManagementActivated()){
+      $this->DivListMimeTypes->AddDepartments($this->DivListMimeTypes->selectedBase,3,1);
+    }
     $this->reload();
     $this->DivListMimeTypes->setEntries($this->mimetypes);
     return($this->DivListMimeTypes->Draw());
@@ -480,9 +522,12 @@ class mimetypeManagement extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array($this->DivListMimeTypes->selectedRelease));
+    if($this->IsReleaseManagementActivated()){
+      return(array($this->mime_release));
+    }else{
+      return(array($this->mime_base));
+    }
   }
-
 
 
   function reload()
@@ -490,38 +535,31 @@ class mimetypeManagement extends plugin
     $this->mimetypes= array();
 
     /* Set base for all searches */
-    $base       = $this->DivListMimeTypes->selectedBase;
-    $release    = $this->DivListMimeTypes->selectedRelease;
+    $base       = $this->mime_base;
     $Regex      = $this->DivListMimeTypes->Regex;
     $SubSearch  = $this->DivListMimeTypes->SubSearch; 
     $Flags      =  GL_NONE | GL_SIZELIMIT;
     $Filter     = "(&(|(cn=".$Regex.")(description=".$Regex."))(objectClass=gotoMimeType))";
     $tmp        = array();
-    $Releases   = $this->getReleases($base);
+    $Releases   = $this->getReleases();
 
-
-    /* If release management is enabled, use release as base. */
-    if(!$this->enableReleaseManagement){
-      $use_base = $base;
-    }else{
-      if(isset($Releases[$release])){
-        $use_base  = $release;
-      }else{
-        $use_base  = $base;
+    if(!$this->IsReleaseManagementActivated()){
+      $use_base = $this->mime_base;
+      if($SubSearch){
+        $use_base = preg_replace("/^".normalizePreg(get_ou("mimeou"))."/","",$use_base);
       }
+    }else{
+      $use_base = $this->mime_release;
+      $SubSearch= FALSE;
     }
 
-    /* In case of subsearch, add the subsearch flag */
     if($SubSearch){
-      $Flags    |= GL_SUBSEARCH;  
+      $res= get_sub_list($Filter, "mimetypes",get_ou("mimeou"), $use_base, array("cn","description","dn","objectClass"), $Flags);
     }else{
-      if(!$this->enableReleaseManagement){
-        $use_base = get_ou('mimetypeou').$use_base;
-      }
+      $res= get_list($Filter, "mimetypes",$use_base, array("cn","description","dn","objectClass"), $Flags);
     }
-  
-    /* Get results and create index */ 
-    $res= get_sub_list($Filter, "mimetypes",get_ou('mimetypeou'), $use_base, array("cn","description","dn","objectClass"), $Flags);
+
+
     $tmp2 = array();
     foreach ($res as $val){
       $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
@@ -607,18 +645,6 @@ class mimetypeManagement extends plugin
   }
 
 
-  /* Check if the release management is activated. */
-  function IsReleaseManagementActivated()
-  {
-    /* Check if we should enable the release selection */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
-      return(true);
-    }
-    return(false);
-  }
-
-
   function list_get_selected_items()
   {
     $ids = array();
@@ -646,12 +672,30 @@ class mimetypeManagement extends plugin
     }
   }
 
-  function save_object() {
+  function save_object() 
+  {
     $this->DivListMimeTypes->save_object();
     if(is_object($this->CopyPasteHandler)){
       $this->CopyPasteHandler->save_object();
     }
+
+    if($this->IsReleaseManagementActivated() && isset($_POST['mime_release'])){
+      $sel_rel = get_post('mime_release');
+      $releases = array_flip($this->getReleases());
+      if(isset($releases[$sel_rel])){
+        $this->mime_release = $releases[$sel_rel];
+      }
+      $mime_filter     = session::get("mime_filter");
+      $mime_filter['mime_release'] = $this->mime_release;
+      session::set("mime_filter",$mime_filter);
+    }elseif(!$this->IsReleaseManagementActivated()){
+      $this->mime_base = get_ou("mimetypeou").$this->DivListMimeTypes->selectedBase;
+      $mime_filter     = session::get("mime_filter");
+      $mime_filter['mime_base'] = $this->mime_base;
+      session::set("mime_filter",$mime_filter);
+    }
   }
+
 
   function check() {}
   function adapt_from_template($dn, $skip= array()) {}

@@ -3,6 +3,7 @@
 class mimetabs extends tabs
 {
   var $Release= "";
+  var $parent = FALSE;
 
   function mimetabs($config, $data, $dn,$category)
   {
@@ -26,18 +27,10 @@ class mimetabs extends tabs
 
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-
-    $mimefilter = session::get('mimefilter');
-
-    if((!empty($tmp)) && (isset($mimefilter['release']))){
-      if(!$baseobject->isReleaseMimeType){
-        $new_dn= "cn=".$baseobject->cn.",".get_ou('mimetypeou').$baseobject->base;
-      }else{
-        $new_dn ="cn=".$baseobject->cn.",".$mimefilter['release'];
-      }
+    if($this->parent->IsReleaseManagementActivated()){
+      $new_dn= "cn=".$baseobject->cn.",".$this->parent->mime_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou('mimetypeou').$baseobject->base;
+      $new_dn= "cn=".$baseobject->cn.",".get_ou('mimeou').$baseobject->base;
     }
 
     /* Move group? */
