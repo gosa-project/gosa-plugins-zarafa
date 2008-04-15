@@ -292,6 +292,7 @@ class FAI
   /* check which objects must be saved, and save them */
   static function save_release_changes_now()
   {
+    global $config;
     /* Variable init*/
     $to_save = array();
 
@@ -335,7 +336,6 @@ class FAI
       $objectAttrs= $save['objectAttrs'];
 
       /* Get ldap object */ 
-      global $config;
       $ldap = $config->get_ldap_link();
       $ldap->cd($config->current['BASE']);
 
@@ -468,7 +468,26 @@ class FAI
           }
         }
       }
-    } 
+    }
+
+    /* Reload GOsa si FAI DB/cache
+     */
+    if(count($to_save)){
+      if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+        $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);        
+        if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'])){
+          $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_release_db']; 
+          $tmp = new $evt['CLASS_NAME']($config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->add_targets(array("GOsa"));
+          $o_queue = new gosaSupportDaemon();
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+      }
+    }
+
     session::set('FAI_objects_to_save',array());
   }
 
