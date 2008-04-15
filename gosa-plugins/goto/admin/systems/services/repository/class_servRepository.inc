@@ -307,14 +307,19 @@ class servrepository extends goService
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs);       
-
       $this->handle_post_events("modify");
+      if(count($this->attrs)){
+        $this->trigger_si_fai_server_reload();
+      }
     }else{
       $ldap->cd ($this->config->current['BASE']);
       $ldap->create_missing_trees($this->dn);
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
+      if(count($this->attrs)){
+        $this->trigger_si_fai_server_reload();
+      }
     }
 
     if($this->initially_was_account){
@@ -332,6 +337,33 @@ class servrepository extends goService
     $fields['AllowEdit']  = true;
     $fields['AllowStart'] = $fields['AllowStop'] = $fields['AllowRestart'] = false;
     return($fields);
+  }
+
+
+  function trigger_si_fai_server_reload()
+  {
+    /* Reload GOsa si FAI DB/cache
+     */
+    if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);        
+      if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_server_db'])){
+        $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_server_db']; 
+        $tmp = new $evt['CLASS_NAME']($config);
+        $tmp->set_type(TRIGGERED_EVENT);
+        $tmp->add_targets(array("GOsa"));
+        $o_queue = new gosaSupportDaemon();
+        if(!$o_queue->append($tmp)){
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        }
+      }
+    }
+  }
+
+
+  function remove_from_parent()
+  {
+    goService::remove_from_parent();
+    $this->trigger_si_fai_server_reload();
   }
 
   /* Return plugin informations for acl handling */
