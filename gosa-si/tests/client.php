@@ -53,7 +53,6 @@ if($sock->connected()){
 #$data = "<xml> <header>job_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>GOSA</source> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>22220101000000</timestamp></xml>";
 
 
-
 # trigger jobs at client
 #$data = "<xml> <header>gosa_detect_hardware</header> <target>10.89.1.31:20083</target> <source>10.89.1.31:20081</source> </xml>";
 #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
@@ -73,13 +72,14 @@ if($sock->connected()){
 
 # recreate_fai_server_db
 #$data = "<xml> <header>gosa_recreate_fai_server_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
+$data = "<xml> <header>gosa_recreate_fai_release_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
 
 ###########
 # messaging 
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>susi</user> <user>harald</user> <user>susi</user> <group>gosa-admins-all</group> </xml>"; 
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <group>gosa-admins-all</group> <usrmesg>kaffeepause</usrmesg> </xml>"; 
 #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <user>rettenbe</user> <message>kaffeepause</message> </xml>"; 
-$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>me</from> <to>you</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
+#$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>me</from> <to>you</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
 
 
 ################
@@ -95,7 +95,6 @@ $data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source
 # exact date and mac are required as input
 #$data = "<xml> <header>gosa_show_log_files_by_date_and_mac</header> <target>GOSA</target> <source>GOSA</source> <date>install_20080311_090900</date> <mac>00:01:6c:9d:b9:fa</mac> </xml>"; 
 #$data = "<xml> <header>gosa_get_log_file_by_date_and_mac</header> <target>GOSA</target> <source>GOSA</source> <date>install_20080311_090900</date> <mac>00:01:6c:9d:b9:fa</mac> <log_file>boot.log</log_file></xml>"; 
-
 
 
     $sock->write($data);

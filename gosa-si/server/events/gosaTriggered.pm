@@ -226,7 +226,7 @@ sub recreate_fai_release_db {
     }
 
     $main::fai_server_db->create_table("new_fai_release", \@main::fai_release_col_names);
-    &main::create_fai_release_db("new_fai_release");
+    &main::create_fai_release_db("new_fai_release", $session_id);
     $main::fai_server_db->move_table("new_fai_release", $main::fai_release_tn);
 
     my @out_msg_l = ( $out_msg );

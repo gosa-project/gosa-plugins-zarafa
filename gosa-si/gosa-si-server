@@ -1656,12 +1656,15 @@ sub run_create_fai_server_db {
 
 
 sub create_fai_release_db {
-	my ($table_name) = @_;
+	my ($table_name, $session_id) = @_;
 	my $result;
+
+    # used for logging
+    if (not defined $session_id) { $session_id = "0"; }
 
     my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
-		daemon_log("INFO: create_fai_release_db: start",5);
+		daemon_log("$session_id INFO: create_fai_release_db: start",5);
 		my $mesg= $ldap_handle->search(
 			base   => $ldap_base,
 			scope  => 'sub',
@@ -1694,14 +1697,14 @@ sub create_fai_release_db {
 					}
 				}
 			}
-			daemon_log("DEBUG: Inserting ".scalar @sql_list." entries to DB",6);
+			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",6);
 			if(@sql_list) {
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_server_db->exec_statementlist(\@sql_list);
 			}
-			daemon_log("DEBUG: Done with inserting",6);
+			daemon_log("$session_id DEBUG: Done with inserting",6);
 		}
-		daemon_log("INFO: create_fai_release_db: finished",5);
+		daemon_log("$session_id INFO: create_fai_release_db: finished",5);
 	}
     $ldap_handle->disconnect;
 	return $result;
