@@ -1426,6 +1426,7 @@ sub get_ldap_handle {
 	my $ldap_handle;
 
 	if (not defined $session_id ) { $session_id = 0 };
+	if ($session_id =~ /[^0-9]*/) { $session_id = 0 };
 
 	if ($session_id == 0) {
 		daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
