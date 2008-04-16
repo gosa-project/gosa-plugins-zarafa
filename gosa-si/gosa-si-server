@@ -1047,7 +1047,7 @@ sub process_task {
 
     daemon_log("", 5); 
     daemon_log("$session_id INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
-    daemon_log("$session_id DEBUG: Incoming msg:\n$input", 9);
+    #daemon_log("$session_id DEBUG: Incoming msg:\n$input", 9);
 
     ####################
     # check incoming msg
