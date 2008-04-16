@@ -1654,11 +1654,6 @@ sub create_fai_server_db {
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
 		if(not defined($dont_create_packages_list)) {
-			#&create_packages_list_db;
-
-			# it should not be possible to trigger a recreation of packages_list_db
-			# while packages_list_db is under construction, so set flag packages_list_under_construction
-			# which is tested befor recreation can be started
 			&create_packages_list_db(undef, undef, $session_id);
 		}
 	}	
@@ -1705,7 +1700,7 @@ sub create_fai_release_db {
 			my @sql_list;
 			my $timestamp= &get_time();
 			foreach my $ou (@{$mesg->{entries}}) {
-				my $tmp_classes= resolve_fai_classes($ou->dn, $ldap_handle);
+				my $tmp_classes= resolve_fai_classes($ou->dn, $ldap_handle, $session_id);
 				if(defined($tmp_classes) && ref($tmp_classes) eq 'HASH') {
 					my @tmp_array=get_fai_release_entries($tmp_classes);
 					if(@tmp_array) {
@@ -1773,20 +1768,21 @@ sub get_fai_state {
 }
 
 sub resolve_fai_classes {
-	my ($fai_base, $ldap_handle) = @_;
+	my ($fai_base, $ldap_handle, $session_id) = @_;
+	if (not defined $session_id) { $session_id = 0; }
 	my $result;
 	my @possible_fai_classes= ("FAIscript", "FAIhook", "FAIpartitionTable", "FAItemplate", "FAIvariable", "FAIprofile", "FAIpackageList");
 	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
 	my $fai_classes;
 
-	daemon_log("DEBUG: Searching for FAI entries in base $fai_base",6);
+	daemon_log("$session_id DEBUG: Searching for FAI entries in base $fai_base",6);
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
 		scope  => 'sub',
 		attrs  => ['cn','objectClass','FAIstate'],
 		filter => $fai_filter,
 	);
-	daemon_log("DEBUG: Found ".$mesg->count()." FAI entries",6);
+	daemon_log("$session_id DEBUG: Found ".$mesg->count()." FAI entries",6);
 
 	if($mesg->{'resultCode'} == 0 &&
 		$mesg->count != 0) {
@@ -2043,8 +2039,10 @@ sub create_packages_list_db {
         $sources_file = &create_sources_list;
     }
 
+	# it should not be possible to trigger a recreation of packages_list_db
+	# while packages_list_db is under construction, so set flag packages_list_under_construction
+	# which is tested befor recreation can be started
 	if ($packages_list_under_construction) {
-			daemon_log("#########################################################################################\n\n\n\n\n");
 			daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait untill this process is finished", 3);
 			return;
 	} else {
