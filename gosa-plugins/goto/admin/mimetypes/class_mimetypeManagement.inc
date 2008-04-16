@@ -331,7 +331,7 @@ class mimetypeManagement extends plugin
         }
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Mime type")));
+        $smarty->assign("intro", msgPool::deleteInfo($dns_names,_("Mime type")));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }

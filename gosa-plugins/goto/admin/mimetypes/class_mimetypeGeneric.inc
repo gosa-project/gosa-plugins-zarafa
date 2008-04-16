@@ -37,9 +37,6 @@ class mimetype extends plugin
   var $DivApps							            = NULL;
   var $DivEApps							            = NULL;
 
-  /* Mime type release mode */
-  var $isReleaseMimeType 					      = false;
-
   /* These vars will be copied too, if you use copy&paste mode */
   var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData",
                                     "gotoMimeLeftClickAction_I","gotoMimeLeftClickAction_E","gotoMimeLeftClickAction_Q","use_gotoMimeIcon");
@@ -118,12 +115,6 @@ class mimetype extends plugin
         $use_attr = "use_".$attr;
         $this->$use_attr = $tmp;
       }
-    }
-
-    /* Check if release Management is enabled */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)) {
-      $this->isReleaseMimeType= true;
     }
 
     /* Set base */	
@@ -350,7 +341,7 @@ class mimetype extends plugin
     }			
     $smarty->assign("bases", 						$this->get_allowed_bases());		
     $smarty->assign("base_select", 					$this->base);		
-    $smarty->assign("isReleaseMimeType",			$this->isReleaseMimeType);
+    $smarty->assign("isReleaseMimeType",			$this->is_release());
     $smarty->assign("gotoMimeFilePatterns",			$DivPatterns->DrawList());
     $smarty->assign("gotoMimeApplications",			$DivApps->DrawList());
     $smarty->assign("gotoMimeEmbeddedApplications",	$DivEApps->DrawList());
@@ -386,7 +377,7 @@ class mimetype extends plugin
       $this->base = $base_tmp;
   
       /* Only save base if we are not in release mode */
-      if(!$this->isReleaseMimeType){
+      if(!$this->is_release()){
 
         /* Set new base if allowed */
         $tmp = $this->get_allowed_bases();
@@ -543,7 +534,7 @@ class mimetype extends plugin
     if($this->is_release()){
       $base = $this->parent->parent->mime_release;
     }else{
-      $base = $this->base;
+      $base = get_ou("mimetypeou").$this->base;
     }
 
     $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",$base,array("cn"));
