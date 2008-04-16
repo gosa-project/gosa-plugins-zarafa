@@ -122,12 +122,11 @@ class printgeneric extends plugin
       /* $this->members contains all members */
       $this->member[$type]=array();
 
-      if (isset($this->attrs[$attr]['count'])) {
-        unset($this->attrs[$attr]['count']);
-      }
-
       if(isset($this->attrs[$attr])){
-        foreach($this->attrs[$attr] as $mem){
+        $ldap->cd($this->config->current['BASE']) ;
+        for($i = 0 ;  $i < $this->attrs[$attr]['count']; $i++){
+        
+          $mem = $this->attrs[$attr][$i];
           if(preg_match("/Group/",$type)){
             $ldap->search("(&(objectClass=posixGroup)(cn=".$mem."))",array("cn","description"));
             if($ldap->count()){
