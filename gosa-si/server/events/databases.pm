@@ -56,7 +56,7 @@ sub query_db {
         $db = $main::fai_server_db;
     } elsif( $header =~ /query_fai_release/ ) {
         $table = $main::fai_release_tn;
-        $db = $main::fai_server_db;
+        $db = $main::fai_release_db;
     }
 
    
