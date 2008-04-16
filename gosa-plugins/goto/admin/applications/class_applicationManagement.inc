@@ -319,7 +319,7 @@ class applicationManagement extends plugin
           return(gen_locked_message($user,$this->dns));
         }
 
-        $dns_names[] = array();
+        $dns_names = array();
         foreach($this->dns as $dn){
           add_lock ($dn, $this->ui->dn);
           $dns_names[] =@LDAP::fix($dn);
