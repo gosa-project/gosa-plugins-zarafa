@@ -732,8 +732,8 @@ sub new_ldap_config {
 	}
 
 	# Do we need to look at an object class?
-	if (length(@servers) < 1){
-        $mesg = $ldap_handle->search( base   => $ldap_base,
+	if (not defined @servers){
+	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
