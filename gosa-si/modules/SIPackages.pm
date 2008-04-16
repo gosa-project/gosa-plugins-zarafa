@@ -700,8 +700,7 @@ sub new_ldap_config {
     $mesg = $ldap_handle->search( base   => $ldap_base,
 		scope  => 'sub',
 		attrs => ['dn', 'gotoLdapServer', 'gosaUnitTag', 'FAIclass'],
-		filter => "(&(objectClass=GOhard)(macaddress=$macaddress)(gotoLdapServer=*))");
-	#$mesg->code && die $mesg->error;
+		filter => "(&(objectClass=GOhard)(!(objectClass=gotoPrinter))(macaddress=$macaddress)(gotoLdapServer=*))");
 	if($mesg->code) {
 		&main::daemon_log("$session_id ".$mesg->error, 1);
 		return;
