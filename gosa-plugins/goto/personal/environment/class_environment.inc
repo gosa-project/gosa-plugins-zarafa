@@ -1173,6 +1173,7 @@ class environment extends plugin
       }
 
       /* Remove old entries */
+      $ldap->cd($this->config->current['BASE']);;
       $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."Printer=".$this->$useVar."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
@@ -1182,6 +1183,7 @@ class environment extends plugin
         $printerObj->by_object['printgeneric']->save();
       }
 
+      $ldap->cd($this->config->current['BASE']);;
       $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."AdminPrinter=".$this->$useVar."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
