@@ -106,8 +106,8 @@ $ping_timeout = 5;
 
 $no_bus = 0;
 $bus_activ = "true";
-
 $no_arp = 0;
+my $packages_list_under_construction = 0;
 
 our $prg= basename($0);
 
@@ -150,7 +150,10 @@ our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
 my $fai_server_file_name;
 our @fai_server_col_names = ('timestamp', 'server', 'release', 'sections', 'tag'); 
+
+our $fai_release_db;
 our $fai_release_tn = "fai_release"; 
+my $fai_release_file_name;
 our @fai_release_col_names = ('timestamp', 'release', 'class', 'type', 'state'); 
 
 # holds all packages available from different repositories
@@ -188,7 +191,8 @@ my $max_children = 2;
     "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
     "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
-    "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai.db'],
+    "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai_server.db'],
+    "fai-release" => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
     "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
     "messaging" => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
     "source-list" => [\$sources_list, '/etc/apt/sources.list'],
@@ -1598,6 +1602,21 @@ sub change_goto_state {
 }
 
 
+sub run_create_fai_server_db {
+    my ($kernel, $session, $heap, $table_name) = @_[KERNEL, SESSION, HEAP, ARG0];
+    my $session_id = $session->ID;
+    my $task = POE::Wheel::Run->new(
+            Program => sub { &create_fai_server_db($table_name,$kernel, undef, $session_id) },
+            StdoutEvent  => "session_run_result",
+            StderrEvent  => "session_run_debug",
+            CloseEvent   => "session_run_done",
+            );
+
+    $heap->{task}->{ $task->ID } = $task;
+    return;
+}
+
+
 sub create_fai_server_db {
     my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
 	my $result;
@@ -1635,8 +1654,12 @@ sub create_fai_server_db {
 		daemon_log("$session_id INFO: create_fai_server_db: finished", 5);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
-		if(!defined($dont_create_packages_list)) {
+		if(not defined($dont_create_packages_list)) {
 			#&create_packages_list_db;
+
+			# it should not be possible to trigger a recreation of packages_list_db
+			# while packages_list_db is under construction, so set flag packages_list_under_construction
+			# which is tested befor recreation can be started
 			&create_packages_list_db(undef, undef, $session_id);
 		}
 	}	
@@ -1645,10 +1668,12 @@ sub create_fai_server_db {
    	return $result;
 }
 
-sub run_create_fai_server_db {
-    my ($kernel, $session, $heap, $table_name) = @_[KERNEL, SESSION, HEAP, ARG0];
+
+sub run_create_fai_release_db {
+    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
+	my $session_id = $session->ID;
     my $task = POE::Wheel::Run->new(
-            Program => sub { &create_fai_server_db($table_name,$kernel) },
+            Program => sub { &create_fai_release_db($table_name, $session_id) },
             StdoutEvent  => "session_run_result",
             StderrEvent  => "session_run_debug",
             CloseEvent   => "session_run_done",
@@ -1664,7 +1689,7 @@ sub create_fai_release_db {
 	my $result;
 
     # used for logging
-    if (not defined $session_id) { $session_id = "0"; }
+    if (not defined $session_id) { $session_id = 0; }
 
     my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
@@ -1702,10 +1727,10 @@ sub create_fai_release_db {
 				}
 			}
 
-			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",9);
+			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
 				unshift @sql_list, "DELETE FROM $table_name";
-				$fai_server_db->exec_statementlist(\@sql_list);
+				$fai_release_db->exec_statementlist(\@sql_list);
 			}
 			daemon_log("$session_id DEBUG: Done with inserting",6);
 		}
@@ -1713,20 +1738,6 @@ sub create_fai_release_db {
 	}
     $ldap_handle->disconnect;
 	return $result;
-}
-
-
-sub run_create_fai_release_db {
-    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
-    my $task = POE::Wheel::Run->new(
-            Program => sub { &create_fai_release_db($table_name) },
-            StdoutEvent  => "session_run_result",
-            StderrEvent  => "session_run_debug",
-            CloseEvent   => "session_run_done",
-            );
-
-    $heap->{task}->{ $task->ID } = $task;
-    return;
 }
 
 sub get_fai_types {
@@ -2002,27 +2013,50 @@ sub create_sources_list {
 	return $result;
 }
 
+
+sub run_create_packages_list_db {
+    my ($session, $heap) = @_[SESSION, HEAP];
+	my $session_id = $session->ID;
+
+	my $task = POE::Wheel::Run->new(
+					Program => sub {&create_packages_list_db(undef, undef, $session_id)},
+					StdoutEvent  => "session_run_result",
+					StderrEvent  => "session_run_debug",
+					CloseEvent   => "session_run_done",
+					);
+	$heap->{task}->{ $task->ID } = $task;
+}
+
+
 sub create_packages_list_db {
     my ($ldap_handle, $sources_file, $session_id);
 
+	if ($packages_list_under_construction) {
+		daemon_log("#########################################################################################\n\n\n\n\n");
+		daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait untill this process is finished", 3);
+		return;
+	}
+	# set packages_list_under_construction to true
+	$packages_list_under_construction = 1;
+
+	if (not defined $session_id) { $session_id = 0; }
 	if (not defined $ldap_handle) { 
 		$ldap_handle= &get_ldap_handle();
 
 		if (not defined $ldap_handle) {
-			daemon_log("0 ERROR: no ldap_handle available to create_packages_list_db", 1);
+			daemon_log("$session_id ERROR: no ldap_handle available to create_packages_list_db", 1);
 			return;
 		}
 	}
     if (not defined $sources_file) { 
         $sources_file = &create_sources_list;
     }
-	if (not defined $session_id) { $session_id = 0; }
 
     my $line;
-    daemon_log("INFO: create_packages_list_db: start", 5); 
+    daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
 
     open(CONFIG, "<$sources_file") or do {
-        daemon_log( "ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
+        daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
         return;
     };
     
@@ -2053,38 +2087,33 @@ sub create_packages_list_db {
 
     close (CONFIG);
 
-    daemon_log("INFO: create_packages_list_db: finished", 5); 
+    daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
+	# set packages_list_under_construction to false
+	$packages_list_under_construction = 0;
+
     return;
 }
 
-sub run_create_packages_list_db {
-    my ($session, $heap) = @_[SESSION, HEAP];
-    my $task = POE::Wheel::Run->new(
-            Program => sub {&create_packages_list_db},
-            StdoutEvent  => "session_run_result",
-            StderrEvent  => "session_run_debug",
-            CloseEvent   => "session_run_done",
-            );
-    $heap->{task}->{ $task->ID } = $task;
-}
 
 sub parse_package_info {
   my ($baseurl, $dist, $section, $session_id)= @_;
   my ($package);
-
+	if (not defined $session_id) { $session_id = 0; }
   my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
   $repo_dirs{ "${repo_path}/pool" } = 1;
 
   foreach $package ("Packages.gz"){
-    daemon_log("DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
-    get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section" );
+    daemon_log("$session_id DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
+    get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
     parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
   }
-  find(\&cleanup_and_extract($session_id), keys( %repo_dirs ));
+  find(\&cleanup_and_extract, keys( %repo_dirs ));
 }
 
+
 sub get_package {
-  my ($url, $dest)= @_;
+  my ($url, $dest, $session_id)= @_;
+  if (not defined $session_id) { $session_id = 0; }
 
   my $tpath = dirname($dest);
   -d "$tpath" || mkpath "$tpath";
@@ -2092,9 +2121,11 @@ sub get_package {
   # This is ugly, but I've no time to take a look at "how it works in perl"
   if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
       system("gunzip -cd '$dest' > '$dest.in'");
-      unlink($dest);
+	  daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 5);
+#      unlink($dest);
+	  daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
   } else {
-      daemon_log("ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
+      daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
   }
   return 0;
 }
@@ -2113,7 +2144,7 @@ sub parse_package {
 
     open($PACKAGES, "<$path.in");
 	if(not defined($PACKAGES)) {
-        daemon_log("$session_id ERROR: create_packages_list_db: parse_package: can not open '$path.in'",1); 
+        daemon_log("$session_id ERROR: create_packages_list_db: parse_package: cannot open '$path.in'",1); 
         return;
     }
 
@@ -2167,7 +2198,7 @@ sub parse_package {
     }
 
     close( $PACKAGES );
-    unlink( "$path.in" );
+#    unlink( "$path.in" );
     
     $packages_list_db->exec_statementlist(\@sql_list);
 }
@@ -2185,40 +2216,41 @@ sub store_fileinfo {
 }
 
 sub cleanup_and_extract {
-	my ($session_id) = @_ ;
-  my $fileinfo = $repo_files{ $File::Find::name };
+	my ($session_id) = @_;
+	if (not defined $session_id) { $session_id  = 0; }		
+		my $fileinfo = $repo_files{ $File::Find::name };
 
-  if( defined $fileinfo ) {
+		if( defined $fileinfo ) {
 
-    my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-    my $sql;
-    my $package = $fileinfo->{ 'package' };
-    my $newver = $fileinfo->{ 'version' };
+				my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
+				my $sql;
+				my $package = $fileinfo->{ 'package' };
+				my $newver = $fileinfo->{ 'version' };
 
-    mkpath($dir);
-    system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
+				mkpath($dir);
+				system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
 
-    if( -f "$dir/DEBIAN/templates" ) {
+				if( -f "$dir/DEBIAN/templates" ) {
 
-      daemon_log("$session_id DEBUG: Found debconf templates in '$package' - $newver", 5);
+						daemon_log("$session_id DEBUG: Found debconf templates in '$package' - $newver", 5);
 
-      my $tmpl= "";
-      {
-	  local $/=undef;
-	  open FILE, "$dir/DEBIAN/templates";
-	  $tmpl = &encode_base64(<FILE>);
-	  close FILE;
-      }
-      rmtree("$dir/DEBIAN/templates");
+						my $tmpl= "";
+						{
+								local $/=undef;
+								open FILE, "$dir/DEBIAN/templates";
+								$tmpl = &encode_base64(<FILE>);
+								close FILE;
+						}
+						rmtree("$dir/DEBIAN/templates");
 
-      $sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
+						$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
 
-    } else {
-      $sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
-    }
+				} else {
+						$sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
+				}
 
-    my $res= $main::packages_list_db->update_dbentry($sql);
-  }
+				my $res= $main::packages_list_db->update_dbentry($sql);
+		}
 }
 
 
@@ -2294,7 +2326,10 @@ $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 unlink($fai_server_file_name);
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
-$fai_server_db->create_table($fai_release_tn, \@fai_release_col_names);
+
+unlink($fai_release_file_name);
+$fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
+$fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
 
 # connect to packages_list_db
 unlink($packages_list_file_name);
