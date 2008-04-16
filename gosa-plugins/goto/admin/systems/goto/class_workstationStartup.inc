@@ -925,7 +925,7 @@ class workstartup extends plugin
     $this->handle_post_events("modify");
 
     /* Check if LDAP server has changed */
-    if (isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent")){
+    if ((isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent"))){
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
@@ -964,14 +964,15 @@ class workstartup extends plugin
 
         /* Trigger event for all member objects 
          */
-        foreach($macs as $mac){
-          $tmp = new $evt['CLASS_NAME']($this->config);
-          $tmp->set_type(TRIGGERED_EVENT);
-          $tmp->add_targets(array($mac));
-          if(!$o_queue->append($tmp)){
-            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-          }
-        }
+print_a ($macs);
+#        foreach($macs as $mac){
+#          $tmp = new $evt['CLASS_NAME']($this->config);
+#          $tmp->set_type(TRIGGERED_EVENT);
+#          $tmp->add_targets(array($mac));
+#          if(!$o_queue->append($tmp)){
+#            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+#          }
+#        }
       }
     }
   }
