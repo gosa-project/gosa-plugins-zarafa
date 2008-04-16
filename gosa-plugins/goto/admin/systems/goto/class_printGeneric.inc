@@ -767,7 +767,7 @@ class printgeneric extends plugin
    
     /* Get servername */
     $server = $_SERVER['SERVER_NAME'];
-    if(TESTS::is_ip($server)){  
+    if(tests::is_ip($server)){  
       $server_name = gethostbyaddr($server);
     }else{
       $server_name = gethostbyaddr(gethostbyname($server));
