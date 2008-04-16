@@ -3,7 +3,7 @@
 class tabsProfile extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsProfile($config, $data, $dn,$category)
   {

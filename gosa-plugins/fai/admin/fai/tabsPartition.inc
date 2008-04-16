@@ -3,7 +3,7 @@
 class tabsPartition extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsPartition($config, $data, $dn,$category)
   {

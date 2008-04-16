@@ -3,7 +3,7 @@
 class tabsScript extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsScript($config, $data, $dn,$category)
   {

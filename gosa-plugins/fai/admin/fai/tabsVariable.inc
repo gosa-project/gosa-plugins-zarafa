@@ -3,7 +3,7 @@
 class tabsVariable extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsVariable($config, $data, $dn,$category)
   {

@@ -3,7 +3,7 @@
 class tabsTemplate extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsTemplate($config, $data, $dn,$category)
   {

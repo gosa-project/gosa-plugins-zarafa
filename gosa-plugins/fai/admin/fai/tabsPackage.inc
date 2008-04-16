@@ -3,7 +3,7 @@
 class tabsPackage extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsPackage($config, $data, $dn,$category)
   {

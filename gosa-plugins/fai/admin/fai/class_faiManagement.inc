@@ -1195,6 +1195,7 @@ class faiManagement extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
+      $this->CopyPasteHandler->SetVar("parent",&$this);
       $data = $this->CopyPasteHandler->execute();
 
       FAI::save_release_changes_now();

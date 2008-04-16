@@ -3,7 +3,7 @@
 class tabsHook extends tabs
 {
   var $base= "";
-  var $parent;
+  var $parent ="";
 
   function tabsHook($config, $data, $dn,$category)
   {
