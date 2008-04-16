@@ -25,6 +25,7 @@ use Data::Dumper;
 
 my $log_file = "/home/hickert/log.gosa-si-server"; 
 #my $log_file = "/var/log/gosa-si-server.log"; 
+
 my $within_session = 0;
 my $within_incoming = 0;
 my $within_header = 0;
@@ -80,11 +81,8 @@ sub check_session {
 	
 	if ($line =~ /gosa-si-server (\d+) / ) {
 		if ((defined $1) && ($1 eq $session)) {
-			$within_session = 1;	
 			return $line;
-		} else { $within_session = 0; }
-	} else {
-		if ($within_session == 1) { return $line; } 
+		}
 	}
 	return;
 }

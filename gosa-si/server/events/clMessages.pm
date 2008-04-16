@@ -354,7 +354,10 @@ sub TASKBEGIN {
 				}
 			}
 		
-			# in case of no and more than one running jobs in queue, add on single job
+			# in case of no and more than one running jobs in queue, add one single job
+
+# TODO
+			# resolve plain name for host $macaddress
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
 			my $func_dic = {table=>$main::job_queue_tn,
 					primkey=>['id'],
@@ -366,7 +369,7 @@ sub TASKBEGIN {
 					targettag=>$source,
 					xmlmessage=>'none',
 					macaddress=>$macaddress,
-					plain_name=>'none',
+					plainname=>'none',
 			};
 			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
 			if ($err != 0)  {

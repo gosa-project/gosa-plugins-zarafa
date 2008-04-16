@@ -66,7 +66,7 @@ sub add_dbentry {
     }
     my $primkeys = $arg->{'primkey'};
     my $prim_statement="";
-    if( 0 != @$primkeys ) { 
+    if( 0 != @$primkeys ) {   # more than one primkey exist in list
         my @prim_list;
         foreach my $primkey (@$primkeys) {
             if($primkey eq 'id') {
@@ -98,9 +98,9 @@ sub add_dbentry {
     my $sql_statement = "SELECT * FROM $table $prim_statement";
     my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
 
-    if ($res == 0) {
-        # primekey is unique
 
+	# primekey is unique
+    if ($res == 0) {
         # fetch column names of table
         my $col_names = &get_table_columns($self, $table);
 
@@ -121,8 +121,8 @@ sub add_dbentry {
             return (4, $sql_statement);
         } 
 
+	# entry already exists, so update it 
     } else  {
-        # entry already exists, so update it 
         my @update_l;
         while( my ($pram, $val) = each %{$arg} ) {
             if( $pram eq 'table' ) { next; }
@@ -134,7 +134,6 @@ sub add_dbentry {
 
         my $sql_statement= "UPDATE $table $update_str $prim_statement";
         my $db_res = &update_dbentry($self, $sql_statement );
-
     }
 
     return 0;
