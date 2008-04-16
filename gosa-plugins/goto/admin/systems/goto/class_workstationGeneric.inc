@@ -24,6 +24,7 @@ class workgeneric extends plugin
   var $gotoLastUser= "-";
   var $FAIscript= "";
   var $view_logged = FALSE;
+  var $auto_activate= FALSE;
 
   /* Needed values and lists */
   var $base= "";
@@ -494,7 +495,7 @@ class workgeneric extends plugin
     $activate= (isset($this->saved_attributes['gotoMode']) &&
         $this->gotoMode != $this->saved_attributes['gotoMode'] &&
         $this->gotoMode == "active" &&
-        tests::is_ip($this->netConfigDNS->ipHostNumber));
+        tests::is_ip($this->netConfigDNS->ipHostNumber)) || $this->auto_activate;
     plugin::save();
 
     /* Strip out 'default' values */
