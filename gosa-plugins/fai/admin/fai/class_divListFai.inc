@@ -161,8 +161,6 @@ class divListFai extends MultiSelectWindow
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
     }
 
     /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
@@ -259,8 +257,6 @@ class divListFai extends MultiSelectWindow
        $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
        if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
          $action .= "<input class='center' type='image'
-           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-         $action.= "<input class='center' type='image'
            src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
        }
 

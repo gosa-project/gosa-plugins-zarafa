@@ -114,7 +114,6 @@ class faiManagement extends plugin
                     "/^multiple_copy_fai/" => "copy_multiple", 
                     "/^multiple_cut_fai/" => "cut_multiple", 
                     "/^copy/" => "copy",
-                    "/^cut/" => "cut",
                     "/^remove_multiple_fai_objects/" => "del_multiple");
 
 		foreach($_POST as $name => $value){
@@ -1152,7 +1151,7 @@ class faiManagement extends plugin
 
 
     /* Add a single entry to queue */
-    if($s_action == "cut" || $s_action == "copy"){
+    if($s_action == "copy"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
@@ -1163,7 +1162,7 @@ class faiManagement extends plugin
     }
 
     /* Add entries to queue */
-    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+    if($s_action == "copy_multiple"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
@@ -1179,9 +1178,6 @@ class faiManagement extends plugin
 
         if($s_action == "copy_multiple"){
           $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
-        }
-        if($s_action == "cut_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
         }
       }
     }
