@@ -540,30 +540,22 @@ class mimetype extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current["BASE"]);
 
-    $mimefilter = session::get('mimefilter');
-  
-    if($this->isReleaseMimeType && (isset($mimefilter['release']))){
-      $baseDn = str_replace($this->config->current['BASE'],$this->base,$mimefilter['release']);
-      $baseDn = preg_replace("/".get_ou('mimetypeou').".*/",get_ou('mimetypeou').$this->base,$mimefilter['release']);
-      $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",$baseDn,array("cn"));
-      if($ldap->count()){
-        $attrs = $ldap->fetch();
-        if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicated(_("Name"));
-        }
-      }
+    if($this->is_release()){
+      $base = $this->parent->parent->mime_release;
     }else{
-      $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",get_ou('mimetypeou').$this->base,array("cn"));
-      if ($ldap->count()){
-        $attrs = $ldap->fetch();
-        if($this->dn != $attrs['dn']) {
-          $message[]= msgPool::duplicated(_("Name"));
-        }
-      }
+      $base = $this->base;
     }
 
+    $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",$base,array("cn"));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+      if($this->dn != $attrs['dn']) {
+        $message[]= msgPool::duplicated("cn");
+      }
+    }
     return($message);
   }
+
 
   /** Helper functions **/
 
@@ -733,6 +725,22 @@ class mimetype extends plugin
           ));
 
   }
+
+
+  function is_release()
+  {
+    if(is_object($this->parent->parent)){
+      return($this->parent->parent->IsReleaseManagementActivated());
+    }else{
+      /* Check if we should enable the release selection */
+      $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+      if(!empty($tmp)){
+        return(true);
+      }
+    }
+    return(FALSE);
+  }
+
 
   function PrepareForCopyPaste($source)
   {

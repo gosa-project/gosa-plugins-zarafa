@@ -27,11 +27,11 @@ class mimetypeManagement extends plugin
   /* Dialog attributes */
   var $ui                             = NULL;
   var $DivListMimeTypes               = NULL;
-  var $enableReleaseManagement        = false;
   var $mimetabs                       = NULL;
   var $snapDialog                     = NULL;
   var $CopyPasteHandler               = NULL;
-  var $start_pasting_copied_objects = FALSE;
+  var $start_pasting_copied_objects   = FALSE;
+  var $enableReleaseManagement        = false;
 
   var $mime_base    = "";
   var $mime_release = "";
@@ -70,7 +70,6 @@ class mimetypeManagement extends plugin
       /* Hide SubSearch checkbox */
       $this->DivListMimeTypes->DisableCheckBox("SubSearch");
     }
-
 
     /* Set default release */
     if(!$this->IsReleaseManagementActivated()){
@@ -132,7 +131,8 @@ class mimetypeManagement extends plugin
 
     /* These vars will be stored if you try to open a locked mime, 
         to be able to perform your last requests after showing a warning message */
-    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^mime_edit_/","/^mime_del_/","/^item_selected/","/^remove_multiple_mimetypes/"));
+    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^mime_edit_/","/^mime_del_/",
+          "/^item_selected/","/^remove_multiple_mimetypes/"));
 
     $smarty       = get_smarty();             // Smarty instance
     $s_action     = "";                       // Contains the action to proceed
@@ -177,8 +177,6 @@ class mimetypeManagement extends plugin
 
     $s_entry  = preg_replace("/_.$/","",$s_entry);
 
-
- 
     /* handle C&P from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
       $s_action = "copy_multiple";
@@ -199,6 +197,7 @@ class mimetypeManagement extends plugin
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
     }
+
 
     /**************** 
       Copy & Paste handling  
@@ -260,7 +259,6 @@ class mimetypeManagement extends plugin
       if (count($message) == 0){
 
         /* Save data data to ldap */
-        $this->mimetabs->set_release($this->mime_base);
         $this->mimetabs->save();
 
         if (!isset($_POST['edit_apply'])){
@@ -300,7 +298,6 @@ class mimetypeManagement extends plugin
          above dialog */
       add_lock ($this->dn, $this->ui->dn);
 
-
       /* Register mimetabs to trigger edit dialog */
       $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
       $this->mimetabs->parent = &$this;
@@ -339,8 +336,6 @@ class mimetypeManagement extends plugin
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
-
-
 
 
     /********************
@@ -541,7 +536,6 @@ class mimetypeManagement extends plugin
     $Flags      =  GL_NONE | GL_SIZELIMIT;
     $Filter     = "(&(|(cn=".$Regex.")(description=".$Regex."))(objectClass=gotoMimeType))";
     $tmp        = array();
-    $Releases   = $this->getReleases();
 
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->mime_base;
@@ -575,6 +569,7 @@ class mimetypeManagement extends plugin
     reset ($this->mimetypes);
   }
 
+
   function remove_from_parent()
   {
     /* Optionally execute a command after we're done */
@@ -594,17 +589,16 @@ class mimetypeManagement extends plugin
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
-      $this->start_pasting_copied_objects = FALSE;
       $dn = $this->mimetypes[$s_entry]['dn'];
       $this->CopyPasteHandler->add_to_queue($dn,$s_action,"mimetabs","MIMETABS","mimetypes");
     }
+
 
     /* Add entries to queue */
     if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
-      $this->start_pasting_copied_objects = FALSE;
   
       /* Add new entries to CP queue */
       foreach($this->list_get_selected_items() as $id){
@@ -628,8 +622,9 @@ class mimetypeManagement extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
+      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".normalizePreg(get_ou("mimetypeou"))."/","",$this->mime_base));
+      $this->CopyPasteHandler->SetVar("parent",&$this);
       $data = $this->CopyPasteHandler->execute();
-      $this->CopyPasteHandler->SetVar("base",$this->DivListMimeTypes->selectedBase);
 
       /* Return dialog data */
       if(!empty($data)){
@@ -638,9 +633,9 @@ class mimetypeManagement extends plugin
     }
 
     /* Automatically disable status for pasting */
-    #if(!$this->CopyPasteHandler->entries_queued()){
-    #  $this->start_pasting_copied_objects = FALSE;
-    #}
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
     return("");
   }
 

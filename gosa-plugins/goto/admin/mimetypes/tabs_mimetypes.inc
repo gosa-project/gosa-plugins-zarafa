@@ -2,7 +2,6 @@
 
 class mimetabs extends tabs
 {
-  var $Release= "";
   var $parent = FALSE;
 
   function mimetabs($config, $data, $dn,$category)
@@ -11,14 +10,6 @@ class mimetabs extends tabs
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
-  }
-
-  function set_release($newRelease)
-  {
-    $this->Release= preg_replace('/,'.get_ou('mimetypeou').'.*$/', '', $newRelease);
-    if ($this->Release != ""){
-      $this->Release= ",".$this->Release;
-    }
   }
 
   function save($ignore_account= FALSE)
@@ -30,7 +21,7 @@ class mimetabs extends tabs
     if($this->parent->IsReleaseManagementActivated()){
       $new_dn= "cn=".$baseobject->cn.",".$this->parent->mime_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou('mimeou').$baseobject->base;
+      $new_dn= "cn=".$baseobject->cn.",".get_ou('mimetypeou').$baseobject->base;
     }
 
     /* Move group? */
