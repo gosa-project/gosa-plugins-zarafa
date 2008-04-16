@@ -230,6 +230,7 @@ sub exec_statement {
     my $self = shift;
     my $sql_statement = shift;
 
+	$self->{dbh}->do("ANALYZE");
     my @db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
 
     return \@db_answer;
