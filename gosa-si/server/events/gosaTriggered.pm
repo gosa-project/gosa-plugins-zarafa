@@ -398,7 +398,7 @@ sub set_activated_for_installation {
     my $target = @{$msg_hash->{target}}[0];
 	my @out_msg_l;
 
-	# create set_activated_for_installation message
+	# update status of job 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id='$jobdb_id'";
@@ -406,17 +406,13 @@ sub set_activated_for_installation {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
+	# create set_activated_for_installation message for delivery
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
     if( defined $jobdb_id ) { 
         &add_content2xml_hash($out_hash, 'jobdb_id', $jobdb_id); 
     }
     my $out_msg = &create_xml_string($out_hash);
 	push(@out_msg_l, $out_msg); 
-
-	# create new_ldap_config message, client is waiting for that piece of information
-	my $new_ldap_config_out = &main::new_ldap_config($source, $session_id);
-	push(@out_msg_l, $new_ldap_config_out);
-
 
     return @out_msg_l;
 }
