@@ -1267,7 +1267,7 @@ sub watch_for_new_jobs {
 
 	# check gosa job queue for jobs with executable timestamp
 	my $timestamp = &get_time();
-	my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER) + 120) < $timestamp ORDER BY timestamp";
+	my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER)) < $timestamp ORDER BY timestamp";
 	my $res = $job_db->exec_statement( $sql_statement );
 
 	# Merge all new jobs that would do the same actions
@@ -1349,7 +1349,6 @@ sub watch_for_new_messages {
     
     # check messaging_db for new incoming messages with executable timestamp
     my $timestamp = &get_time();
-    #my $sql_statement = "SELECT * FROM $messaging_tn WHERE (CAST (delivery_time AS INTEGER) + 120) < $timestamp";
     my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( (CAST(timestamp AS INTEGER))<$timestamp AND flag='n' AND direction='in' )";
     my $res = $messaging_db->exec_statement( $sql_statement );
 
