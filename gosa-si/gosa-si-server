@@ -285,6 +285,7 @@ sub daemon_log {
             print STDERR "cannot open $log_file: $!";
             return }
             chomp($msg);
+			$msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
             if($level <= $verbose){
                 my ($seconds, $minutes, $hours, $monthday, $month,
                         $year, $weekday, $yearday, $sommertime) = localtime(time);
