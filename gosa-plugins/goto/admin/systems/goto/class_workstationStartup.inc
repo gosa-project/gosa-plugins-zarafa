@@ -964,15 +964,14 @@ class workstartup extends plugin
 
         /* Trigger event for all member objects 
          */
-print_a ($macs);
-#        foreach($macs as $mac){
-#          $tmp = new $evt['CLASS_NAME']($this->config);
-#          $tmp->set_type(TRIGGERED_EVENT);
-#          $tmp->add_targets(array($mac));
-#          if(!$o_queue->append($tmp)){
-#            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-#          }
-#        }
+        foreach($macs as $mac){
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->add_targets(array($mac));
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
       }
     }
   }
