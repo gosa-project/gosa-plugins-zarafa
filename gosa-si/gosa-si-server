@@ -2030,14 +2030,6 @@ sub run_create_packages_list_db {
 sub create_packages_list_db {
     my ($ldap_handle, $sources_file, $session_id);
 
-	if ($packages_list_under_construction) {
-		daemon_log("#########################################################################################\n\n\n\n\n");
-		daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait untill this process is finished", 3);
-		return;
-	}
-	# set packages_list_under_construction to true
-	$packages_list_under_construction = 1;
-
 	if (not defined $session_id) { $session_id = 0; }
 	if (not defined $ldap_handle) { 
 		$ldap_handle= &get_ldap_handle();
@@ -2051,8 +2043,16 @@ sub create_packages_list_db {
         $sources_file = &create_sources_list;
     }
 
-    my $line;
-    daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
+	if ($packages_list_under_construction) {
+			daemon_log("#########################################################################################\n\n\n\n\n");
+			daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait untill this process is finished", 3);
+			return;
+	} else {
+			daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
+			# set packages_list_under_construction to true
+			$packages_list_under_construction = 1;
+	}
+	my $line;
 
     open(CONFIG, "<$sources_file") or do {
         daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
