@@ -1,5 +1,5 @@
 {if $is_account ne 'true'}
- <img alt="" class="center" src="images/stop.png" align="middle">
+ <img alt="" class="center" src="images/small-error.png" align="middle">
  {t}The environment extension is currently disabled.{/t}
 {else}
 

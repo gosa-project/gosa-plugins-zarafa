@@ -112,7 +112,7 @@ if (!$remove_lock){
 
       if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/sambaAccount"))){
 
-        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
+        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png')."\"> ".
                 msgPool::clickEditToChange();
         $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
       }

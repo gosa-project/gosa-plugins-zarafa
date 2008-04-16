@@ -293,7 +293,7 @@ class gotomasses extends plugin
     $divlist->EnableSaveButton(FALSE);
     $divlist->SetHeadpageMode();
     $s = ".|"._("Actions")."|\n";
-    $s.= "..|<img src='images/list_new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
+    $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
 
     foreach($this->events['SCHEDULED'] as $name =>  $event){
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
@@ -453,7 +453,7 @@ class gotomasses extends plugin
 
         /* Show activation? */
         if ($percent == "goto-activation"){
-          $status = "<img class='center' src='images/status_stopped.png' alt=''>&nbsp;"._("Locked");
+          $status = "<img class='center' src='images/lists/off.png' alt=''>&nbsp;"._("Locked");
 
         /* Show hardware detect? */
         } elseif ($percent == "goto-hardware-detection") {

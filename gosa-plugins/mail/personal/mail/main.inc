@@ -110,7 +110,7 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
              "\"> ".$ui->dn."&nbsp;";
       
-        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
+        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
             "\"> ".msgPool::clickEditToChange();
 
         if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){

@@ -108,7 +108,7 @@ if (!$remove_lock){
              "\"> ".$ui->dn."&nbsp;";
 
       if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/scalix"))){
-        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
+        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png')."\"> ".
                 _("Click the 'Edit' button below to change informations in this dialog");
 
         $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";

@@ -150,7 +150,7 @@ class target_list extends MultiSelectWindow
 
     /* Add department selector */
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle'
+      " <input class='center' type='image' src='images/lists/submit.png' align='middle'
       title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
     $listhead .="</div>";
 

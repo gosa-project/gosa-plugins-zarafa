@@ -31,8 +31,8 @@ class DaemonEvent_wakeup extends DaemonEvent
     $this->s_Schedule_Action= "job_trigger_action_wake";
     $this->s_Trigger_Action = "gosa_trigger_action_wake";
     $this->s_Queued_Action  = "trigger_action_wake";
-    $this->s_Menu_Image = "images/status_running.png";
-    $this->s_List_Image = "images/status_running.png";
+    $this->s_Menu_Image = "images/lists/on.png";
+    $this->s_List_Image = "images/lists/on.png";
   }
 
   public function execute()

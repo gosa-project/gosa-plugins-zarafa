@@ -121,7 +121,7 @@ class divListFai extends MultiSelectWindow
     }
 
     $s  = ".|"._("Actions")."|\n";
-    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
 
     $acl = $ui->get_permissions($this->parent->fai_base,"fai/faiProfile");

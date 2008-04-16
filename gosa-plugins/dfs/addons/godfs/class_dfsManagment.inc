@@ -213,7 +213,7 @@ class dfsManagment extends plugin {
          " <input class='center' type='image' src='images/dtree.png' align='middle' alt='"._("Create new dfsshare")."' name='dfs_new'>&nbsp;".
          " <img class='center' src='images/lists/seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
          _("Base")."&nbsp;<select name='depselect' onChange='mainform.submit()' class='center'>$options</select>".
-         " <input class='center' type='image' src='images/list_submit.png' align='middle' title='"._("Submit department")."' name='submit_department' alt='"._("Submit").
+         " <input class='center' type='image' src='images/lists/submit.png' align='middle' title='"._("Submit department")."' name='submit_department' alt='"._("Submit").
          "'>&nbsp;</div>";
 
 

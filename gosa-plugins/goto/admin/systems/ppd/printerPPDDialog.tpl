@@ -14,7 +14,7 @@
 </table>
 {if $showOptions eq 1}
 <p class="seperator">&nbsp;</p>
-<h2><img alt="L" class="center" src="images/lamp.png" align="middle">&nbsp;{t}Options{/t}</h2>
+<h2><img alt="L" class="center" src="images/lists/on.png" align="middle">&nbsp;{t}Options{/t}</h2>
 {$properties}
 {/if}
 <p class="plugbottom">

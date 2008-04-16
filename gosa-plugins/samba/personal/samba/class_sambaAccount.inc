@@ -213,7 +213,7 @@ class sambaAccount extends plugin
     }
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL){
-      $display= "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
+      $display= "<img alt=\"\"src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
         msgPool::noValidExtension(_("Samba"))."</b>";
       $display.= back_to_main();
       return ($display);

@@ -71,7 +71,7 @@ class connectivity extends plugin
         }
       }
       if (!$enabled){
-        $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
+        $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
           msgPool::noValidExtension()."</b>";
         $display.= back_to_main();
         return ($display);

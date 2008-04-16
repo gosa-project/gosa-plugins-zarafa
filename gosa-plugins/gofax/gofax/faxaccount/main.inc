@@ -97,7 +97,7 @@ if (!$remove_lock){
 			$info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png')."\"> ".$ui->dn."&nbsp;";
 
 			if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/gofaxAccount"))){
-				$info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\">"._("Click the 'Edit' button below to change informations in this dialog");
+				$info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png')."\">"._("Click the 'Edit' button below to change informations in this dialog");
 				$display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">";
 			}
 			$display.= "<input type=\"hidden\" name=\"ignore\">\n";

@@ -89,7 +89,7 @@
 
 <p class="plugbottom" style="height:4px; margin-bottom:0px;">&nbsp;</p>
 
-<h2><img src="images/lamp.png" alt="{t}Options{/t}" align="middle">&nbsp;{t}Options{/t}</h2>
+<h2><img src="images/lists/on.png" alt="{t}Options{/t}" align="middle">&nbsp;{t}Options{/t}</h2>
 <table summary="" style="width:100%;">
   <tr>
     <td style="width:50%;border-right:1px solid #B0B0B0; vertical-align:top">

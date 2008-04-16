@@ -321,10 +321,10 @@ class servdhcp extends goService
 
     /* Add entries to divlist
      */
-    $editImgIns = "<input type='image' src='images/list_new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
+    $editImgIns = "<input type='image' src='images/lists/new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
       "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
       "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";
-    $editImgInsNoDel = "<input type='image' src='images/list_new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
+    $editImgInsNoDel = "<input type='image' src='images/lists/new.png' name='insertDhcp_%s' title='"._("Insert new DHCP section")."'>".
       "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>";
     $editImg = "<input type='image' src='images/lists/edit.png' name='editDhcp_%s' title='"._("Edit DHCP section")."'>".
       "<input type='image' src='images/lists/trash.png' name='delDhcp_%s' title='"._("Remove DHCP section")."'>";

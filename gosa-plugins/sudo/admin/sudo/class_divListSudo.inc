@@ -106,7 +106,7 @@ class divListSudo extends MultiSelectWindow
     
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
-    $s .= "..|<img src='images/list_new.png' alt='' border='0' class='center'>".
+    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
 
     /* Append create options */

@@ -280,7 +280,7 @@ class kolabAccount extends plugin
       /* Assign buttons */
       $button= "";
       if ($nr == count($this->kolabInvitationPolicy)-1){
-        $button= "<input type='image' name=\"add_inv_".$nr."\" src='images/list_new.png' id='add".$nr."' ".$dis.">";
+        $button= "<input type='image' name=\"add_inv_".$nr."\" src='images/lists/new.png' id='add".$nr."' ".$dis.">";
       }
       if ($nr != 0) {
         $button.= "<input type='image' name=\"del_inv_".$nr."\" src='images/lists/trash.png' id='remove".$nr."' ".$dis.">";
