@@ -490,7 +490,7 @@ class gotomasses extends plugin
                                     "200"=> "200",
                                     "9999" => "*"));
 
-    $count = $this->o_queue->number_of_queued_entries();
+    $count = $this->o_queue->number_of_queued_entries($this->event_tags);
     if(!$count) $count = $this->range;
     $divlist->SetListFooter(range_selector($count, $this->start, $this->range,"range"));
     $smarty->assign("range",$this->range);
@@ -726,6 +726,7 @@ class gotomasses extends plugin
     /* Assign entries by id.
      */
     $this->entries = array();
+    //print_a($entries);
     foreach($entries as $entry){
       $this->entries[$entry['ID']]= $entry;
     }
@@ -765,7 +766,7 @@ class gotomasses extends plugin
     }
 
     /* Check start stop and reset if necessary */
-    $count = $this->o_queue->number_of_queued_entries();
+    $count = $this->o_queue->number_of_queued_entries($this->event_tags);
     if($this->start >= $count){
       $this->start = $count -1;
     }
