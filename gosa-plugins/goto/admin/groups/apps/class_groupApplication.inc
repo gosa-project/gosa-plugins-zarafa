@@ -533,6 +533,8 @@ class appgroup extends plugin
 
   function check()
   {
+    $message = plugin::check();
+    return($message);
   }
 
 
@@ -1107,6 +1109,7 @@ class appgroup extends plugin
           }
         }
       }
+
  
       if($entry['STATUS'] == "LOADED"){
         continue;
@@ -1125,6 +1128,8 @@ class appgroup extends plugin
         $Actions['Add'][$cur_dn] = $attrs;
       }
     }
+
+    print_a($Actions);
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -1184,6 +1189,17 @@ class appgroup extends plugin
 
   function PrepareForCopyPaste($source)
   {
+    plugin::PrepareForCopyPaste($source);
+   
+    $tmp = new appgroup($this->config,$source['dn']);
+    $this->is_account = TRUE;
+    $this->a_Structure = $tmp->a_Structure;
+    $all = $this->_get_all_entries();
+    foreach($all as &$entry){
+      if(isset($entry['STATUS'])){
+        $entry['STATUS'] = "ADDED";
+      }
+    }
   }
 
 
