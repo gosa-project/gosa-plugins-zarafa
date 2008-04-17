@@ -1129,8 +1129,6 @@ class appgroup extends plugin
       }
     }
 
-    print_a($Actions);
-
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     foreach($Actions['Remove'] as $dn){
