@@ -732,7 +732,7 @@ sub new_ldap_config {
 	}
 
 	# Do we need to look at an object class?
-	if (not defined @servers){
+	if (not @servers){
 	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
