@@ -295,6 +295,8 @@ class FAI
     global $config;
     /* Variable init*/
     $to_save = array();
+    
+    $reload_fai_classes = FALSE;
 
     /* check which objects must be saved */
     $FAI_objects_to_save = session::get('FAI_objects_to_save');
@@ -378,6 +380,12 @@ class FAI
           }else{
             $objectAttrs['FAIstate'][0] = "|removed";
           }
+
+          /* Force reload of FAI classes */
+          $classes = array("FAIprofile","FAIscript","FAIpackageList","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
+          if(count(array_intersect($classes,$objectAttrs['objectClass']))){
+            $reload_fai_classes = TRUE;
+          }
         }
       }
 
@@ -390,6 +398,13 @@ class FAI
           print_a($objectAttrs);
         }
         FAI::save_FAI_object($Current_DN,$objectAttrs);
+
+        /* Force reload of FAI classes */
+        $classes = array("FAIprofile","FAIscript","FAIpackageList","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
+        if(count(array_intersect($classes,$objectAttrs['objectClass']))){
+          $reload_fai_classes = TRUE;
+        }
+
       }else{
 
         /* This object is inherited by some sub releases */  
@@ -403,6 +418,12 @@ class FAI
 
         /* New objects require special handling */
         if($is_new){
+
+          /* Force reload of FAI classes */
+          $classes = array("FAIprofile","FAIscript","FAIpackageList","FAIpartitionTable","FAIHook","FAIvariable","FAItemplate");
+          if(count(array_intersect($classes,$objectAttrs['objectClass']))){
+            $reload_fai_classes = TRUE;
+          }
 
           /* check if there is already an entry named like this,
              in one of our parent releases */
@@ -472,8 +493,8 @@ class FAI
 
     /* Reload GOsa si FAI DB/cache
      */
-    if(count($to_save)){
-      if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+    if($reload_fai_classes){
+      if( class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);        
         if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'])){
           $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_release_db']; 
