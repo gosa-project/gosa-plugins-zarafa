@@ -286,7 +286,7 @@ sub new_ldap_config {
     }
 
     # Write shell based config
-    my $cfg_name= dirname($ldap_config)."/ldap-shell.conf";
+    my $cfg_name= "/etc/ldap/ldap-shell.conf";
 
     # Get first LDAP server
     my $ldap_server= $ldap_uris[0];
