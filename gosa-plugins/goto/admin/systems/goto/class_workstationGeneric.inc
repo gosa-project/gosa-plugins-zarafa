@@ -467,7 +467,10 @@ class workgeneric extends plugin
      */
     if($this->gotoMode == "active" && $this->initial_gotoMode != "active"){
 
-      if(isset($this->parent->by_object['workstartup']) && !count($this->parent->by_object['workstartup']->gotoLdapServers)){
+      if(isset($this->parent->by_object['workstartup']) &&
+          !count($this->parent->by_object['workstartup']->gotoLdapServers) && 
+          !$this->parent->by_object['workstartup']->gotoLdap_inherit){
+
         $message[] = _("In order to activate this system a valid ldap handle is required, please select at least one ldap URI in the workstation startup tab.");
       }
     }else{
