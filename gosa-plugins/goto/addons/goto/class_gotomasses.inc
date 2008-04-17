@@ -726,7 +726,7 @@ class gotomasses extends plugin
     /* Assign entries by id.
      */
     $this->entries = array();
-    //print_a($entries);
+    
     foreach($entries as $entry){
       $this->entries[$entry['ID']]= $entry;
     }
