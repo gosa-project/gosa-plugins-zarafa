@@ -35,8 +35,8 @@ class workstartup extends plugin
  
   /* FAI class selection */ 
   var $FAIclass           = array();  // The currently selected classes 
-  var $FAIrelease         = "";
-  var $FAIdebianMirror    = "auto";
+  var $FAIrelease           = "";
+  var $FAIdebianMirror      = "auto";
   var $si_active            = FALSE;
   var $si_fai_action_failed = FALSE;
 
@@ -187,6 +187,8 @@ class workstartup extends plugin
     /* Handle inheritance value "default" */
     if ($this->member_of_ogroup){
       $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']'); 
+    }else{
+      $this->gotoBootKernels= array("default-inherited" => _("default")); 
     }
 
     /* If we are member in an object group,
@@ -1195,7 +1197,6 @@ class workstartup extends plugin
 
     /* Get list of available kernel for this release 
      */
-    $force = TRUE;
     if($force || !isset($this->cache['KERNELS'][$release])){
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_kernels($release);
