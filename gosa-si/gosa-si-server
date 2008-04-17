@@ -131,43 +131,44 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
-my @known_server_col_names = ('hostname', 'status', 'hostkey', 'timestamp');
+my @known_server_col_names = ("hostname", "status", "hostkey", "timestamp");
 
 # holds all registrated clients
 our $known_clients_db;
 our $known_clients_tn = "known_clients";
 my $known_clients_file_name;
-my @known_clients_col_names = ('hostname', 'status', 'hostkey', 'timestamp', 'macaddress', 'events');
+my @known_clients_col_names = ("hostname", "status", "hostkey", "timestamp", "macaddress", "events");
 
 # holds all logged in user at each client 
 our $login_users_db;
 our $login_users_tn = "login_users";
 my $login_users_file_name;
-my @login_users_col_names = ('client', 'user', 'timestamp');
+my @login_users_col_names = ("client", "user", "timestamp");
 
 # holds all fai server, the debian release and tag
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
 my $fai_server_file_name;
-our @fai_server_col_names = ('timestamp', 'server', 'release', 'sections', 'tag'); 
+our @fai_server_col_names = ("timestamp", "server", "release", "sections", "tag"); 
 
 our $fai_release_db;
 our $fai_release_tn = "fai_release"; 
 my $fai_release_file_name;
-our @fai_release_col_names = ('timestamp', 'release', 'class', 'type', 'state'); 
+our @fai_release_col_names = ("timestamp", "release", "class", "type", "state"); 
 
 # holds all packages available from different repositories
 our $packages_list_db;
 our $packages_list_tn = "packages_list";
 my $packages_list_file_name;
-our @packages_list_col_names = ('distribution', 'package', 'version', 'section', 'description', 'template', 'timestamp');
+our @packages_list_col_names = ("distribution", "package", "version", "section", "description", "template", "timestamp");
 my $outdir = "/tmp/packages_list_db";
 my $arch = "i386"; 
 
 # holds all messages which should be delivered to a user
 our $messaging_db;
 our $messaging_tn = "messaging"; 
-our @messaging_col_names = ('subject', 'message_from', 'message_to', 'flag', 'direction', 'delivery_time', 'message', 'timestamp', 'id INTEGER' );
+our @messaging_col_names = ("id INTEGER", "subject", "message_from", "message_to", 
+        "flag", "direction", "delivery_time", "message", "timestamp" );
 my $messaging_file_name;
 
 # path to directory to store client install log files
@@ -1352,34 +1353,33 @@ sub watch_for_new_messages {
     my $timestamp = &get_time();
     my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( (CAST(timestamp AS INTEGER))<$timestamp AND flag='n' AND direction='in' )";
     my $res = $messaging_db->exec_statement( $sql_statement );
-
  	foreach my $hit (@{$res}) {
 
         # create outgoing messages
-        my $message_to = @{$hit}[2];
+        my $message_to = @{$hit}[3];
 
         # translate message_to to plain login name
         my @reciever_l = ($message_to);  
-        my $message_id = @{$hit}[8];
+        my $message_id = @{$hit}[0];
 
         #add each outgoing msg to messaging_db
         my $reciever;
         foreach $reciever (@reciever_l) {
-            my $sql_statement = "INSERT INTO $messaging_tn (subject, message_from, message_to, flag, direction, delivery_time, message, timestamp, id) ".
+            my $sql_statement = "INSERT INTO $messaging_tn (id, subject, message_from, message_to, flag, direction, delivery_time, message, timestamp) ".
                 "VALUES ('".
-                @{$hit}[0]."', '".   # subject
-                @{$hit}[1]."', '".   # message_from
-                $reciever."', '".    # message_to
-                "none"."', '".       # flag
-                "out"."', '".        # direction
-                @{$hit}[5]."', '".   # delivery_time
-                @{$hit}[6]."', '".   # message
-                $timestamp."', '".   # timestamp
-                @{$hit}[8].          # id
-                "')";
+                $message_id."', '".    # id
+                @{$hit}[1]."', '".     # subject
+                @{$hit}[2]."', '".     # message_from
+                $reciever."', '".      # message_to
+                "none"."', '".         # flag
+                "out"."', '".          # direction
+                @{$hit}[6]."', '".     # delivery_time
+                @{$hit}[7]."', '".     # message
+                $timestamp."'".     # timestamp
+                ")";
             &daemon_log("M DEBUG: $sql_statement", 1);
             my $res = $messaging_db->exec_statement($sql_statement);
-            &daemon_log("M INFO: message '".@{$hit}[8]."' is prepared for delivery to reciever '$reciever'", 5);
+            &daemon_log("M INFO: message '".@{$hit}[0]."' is prepared for delivery to reciever '$reciever'", 5);
         }
 
         # send outgoing messages
@@ -1387,7 +1387,7 @@ sub watch_for_new_messages {
         my $res = $messaging_db->exec_statement( $sql_statement );
         foreach my $hit (@{$res}) {
             # add subject, from, to and message to list coll_user_msg
-            my @user_msg = [@{$hit}[0], @{$hit}[1], $reciever, @{$hit}[6]];
+            my @user_msg = [@{$hit}[1], @{$hit}[2], $reciever, @{$hit}[7]];
             push( @coll_user_msg, \@user_msg);
         }
 
@@ -1405,7 +1405,7 @@ sub watch_for_new_messages {
         $sql_statement = "UPDATE $messaging_tn SET flag='p' WHERE id='$message_id'"; 
         &daemon_log("M DEBUG: $sql_statement", 7);
         $res = $messaging_db->update_dbentry($sql_statement);
-        &daemon_log("M INFO: message '".@{$hit}[8]."' is set to flag 'p' (processed)", 5);
+        &daemon_log("M INFO: message '$message_id' is set to flag 'p' (processed)", 5);
 
     }
     
