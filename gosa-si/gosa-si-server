@@ -115,12 +115,12 @@ our $prg= basename($0);
 our $job_db;
 our $job_queue_tn = 'jobs';
 my $job_queue_file_name;
-my @job_queue_col_names = ("id INTEGER", 
-		"timestamp", 
+my @job_queue_col_names = ("id INTEGER PRIMARY KEY", 
+		"timestamp DEFAULT 'none'", 
 		"status DEFAULT 'none'", 
 		"result DEFAULT 'none'", 
 		"progress DEFAULT 'none'", 
-        	"headertag DEFAULT 'none'", 
+        "headertag DEFAULT 'none'", 
 		"targettag DEFAULT 'none'", 
 		"xmlmessage DEFAULT 'none'", 
 		"macaddress DEFAULT 'none'",

@@ -17,7 +17,7 @@ if($sock->connected()){
 
 # jobdb add
 #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
-#$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><target>00:01:6c:9d:b9:fa</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133900</timestamp> </xml>";
+$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><target>00:01:6c:9d:b9:fa</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133908</timestamp> </xml>";
 #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>19700101000000</timestamp> </xml>";
 
 
@@ -70,9 +70,11 @@ if($sock->connected()){
 # get_client_for_login_usr
 #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>harald</usr></xml>";
 
-# recreate_fai_server_db
+##################
+# recreate fai dbs
 #$data = "<xml> <header>gosa_recreate_fai_server_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
-$data = "<xml> <header>gosa_recreate_fai_release_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
+#$data = "<xml> <header>gosa_recreate_fai_release_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
+#$data = "<xml> <header>gosa_recreate_packages_list_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
 
 ###########
 # messaging 

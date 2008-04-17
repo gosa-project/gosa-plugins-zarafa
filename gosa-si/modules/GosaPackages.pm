@@ -375,7 +375,7 @@ sub process_job_msg {
     if( $error == 0 ) {
         # add job to job queue
         my $func_dic = {table=>$main::job_queue_tn, 
-            primkey=>['id'],
+            primkey=>[],
             timestamp=>$timestamp,
             status=>'waiting', 
             result=>'none',
@@ -386,7 +386,6 @@ sub process_job_msg {
             macaddress=>$macaddress,
 			plainname=>$plain_name,
         };
-
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {
             &main::daemon_log("$session_id ERROR: GosaPackages: process_job_msg: $res", 1);

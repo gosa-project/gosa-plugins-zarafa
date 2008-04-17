@@ -22,7 +22,7 @@ sub new {
 		unlink($lock);
 	}
     my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
-    my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name");
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
     $self->{dbh} = $dbh;
     $self->{db_name} = $db_name;
     $self->{db_lock} = $lock;
@@ -31,20 +31,14 @@ sub new {
     return($self);
 }
 
+
 sub create_table {
     my $self = shift;
     my $table_name = shift;
     my $col_names_ref = shift;
-    my @col_names;
-    foreach my $col_name (@$col_names_ref) {
-        my @t = split(" ", $col_name);
-        $col_name = $t[0];
-        push(@col_names, $col_name);
-    }
+    my $col_names_string = join(", ", @{$col_names_ref});
+    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ($col_names_string )"; 
 
-    $col_names->{ $table_name } = $col_names_ref;
-    my $col_names_string = join("', '", @col_names);
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
     $self->{dbh}->do($sql_statement);
     return 0;
 }
@@ -53,6 +47,7 @@ sub create_table {
 sub add_dbentry {
     my $self = shift;
     my $arg = shift;
+    my $res = 0;   # default value
 
     # if dbh not specified, return errorflag 1
     my $table = $arg->{table};
@@ -60,46 +55,31 @@ sub add_dbentry {
         return 1 ; 
     }
 
-    # specify primary key in table
-    if (not exists $arg->{primkey}) {
-        return (2, "a hash key 'primkey' with at least an empty list as value is necessary for add_dbentry");
+    # if timestamp is not provided, add timestamp   
+    if( not exists $arg->{timestamp} ) {
+        $arg->{timestamp} = &get_time;
     }
+
+    # check primkey and run insert or update
     my $primkeys = $arg->{'primkey'};
     my $prim_statement="";
     if( 0 != @$primkeys ) {   # more than one primkey exist in list
         my @prim_list;
         foreach my $primkey (@$primkeys) {
-            if($primkey eq 'id') {
-                # if primkey is id, fetch max id from table and give new job id=  max(id)+1
-                my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
-                my $max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
-                my $id;
-                if( defined $max_id) {
-                    $id = $max_id + 1; 
-                } else {
-                    $id = 1;
-                }
-                $arg->{id} = $id;
-            }
             if( not exists $arg->{$primkey} ) {
                 return (3, "primkey '$primkey' has no value for add_dbentry");
             }
            push(@prim_list, "$primkey='".$arg->{$primkey}."'");
         }
         $prim_statement = "WHERE ".join(" AND ", @prim_list);
+
+        # check wether primkey is unique in table, otherwise return errorflag
+        my $sql_statement = "SELECT * FROM $table $prim_statement";
+        $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+
     }
- 
-    # if timestamp is not provided, add timestamp   
-    if( not exists $arg->{timestamp} ) {
-        $arg->{timestamp} = &get_time;
-    }
 
-    # check wether primkey is unique in table, otherwise return errorflag
-    my $sql_statement = "SELECT * FROM $table $prim_statement";
-    my $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
-
-
-	# primekey is unique
+	# primekey is unique or no primkey specified -> run insert
     if ($res == 0) {
         # fetch column names of table
         my $col_names = &get_table_columns($self, $table);
@@ -110,18 +90,18 @@ sub add_dbentry {
         foreach my $col_name (@{$col_names}) {
             # use function parameter for column values
             if (exists $arg->{$col_name}) {
-                push(@col_list, $col_name);
-				push(@val_list, $arg->{$col_name});
-            }
+                    push(@col_list, "'".$col_name."'");
+                    push(@val_list, "'".$arg->{$col_name}."'");
+                }
         }    
 
-        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES ('".join("', '", @val_list)."')";
+        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
         my $db_res = $self->{dbh}->do($sql_statement);
         if( $db_res != 1 ) {
             return (4, $sql_statement);
         } 
 
-	# entry already exists, so update it 
+	# entry already exists -> run update
     } else  {
         my @update_l;
         while( my ($pram, $val) = each %{$arg} ) {
@@ -215,7 +195,6 @@ sub show_table {
 
     my $sql_statement= "SELECT * FROM $table_name ORDER BY timestamp";
     my $res= &exec_statement($self, $sql_statement);
-
     my @answer;
     foreach my $hit (@{$res}) {
         push(@answer, "hit: ".join(', ', @{$hit}));
