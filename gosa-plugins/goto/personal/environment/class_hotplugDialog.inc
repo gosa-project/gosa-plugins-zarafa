@@ -110,6 +110,7 @@ class hotplugDialog extends plugin
         $this->hotplugDeviceList[$attr['cn'][0]]=$tmp2;
       }
     }
+    uksort($a_return,"strnatcasecmp");
     return($a_return);
   }
 }
