@@ -179,7 +179,7 @@ class target_list_users extends MultiSelectWindow
       }
 
       $img1 = "<img src='images/select_user.png'  alt='"._("User")."'  ".$title.">";
-      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."' ".$title.">";
+      $img2 = "<img src='plugins/groups/images/groups.png' alt='"._("Group")."' ".$title.">";
 
       if(in_array("posixGroup",$val['objectClass'])){
         $img = $img2;

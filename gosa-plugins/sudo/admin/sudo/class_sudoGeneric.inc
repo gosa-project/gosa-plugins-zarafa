@@ -396,7 +396,7 @@ class sudo extends plugin
 
     foreach(array("sudoUser") as $attr){
       $img1 = "<img src='images/select_user.png'   alt='"._("User")."' class='center'>";
-      $img2 = "<img src='images/select_groups.png' alt='"._("Group")."' class='center'>";
+      $img2 = "<img src='plugins/groups/images/groups.png' alt='"._("Group")."' class='center'>";
       if($this->acl_is_readable($attr)){
         foreach($this->$attr as $key => $entry){
           $neg = "";

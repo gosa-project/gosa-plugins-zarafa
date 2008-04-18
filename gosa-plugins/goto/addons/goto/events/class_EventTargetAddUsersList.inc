@@ -170,7 +170,7 @@ class EventTargetAddUserList extends MultiSelectWindow
       if(in_array("gosaAccount",$obj['objectClass'])){
         $img = '<img class="center" src="images/select_user.png" alt="U" title="'._("User").'">';
       }elseif(in_array("posixGroup",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_groups.png" alt="G" title="'._("Group").'">';
+        $img = '<img class="center" src="plugins/groups/images/groups.png" alt="G" title="'._("Group").'">';
       }
 
       $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>",
