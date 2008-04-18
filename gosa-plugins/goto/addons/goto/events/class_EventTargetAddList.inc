@@ -65,7 +65,7 @@ class EventTargetAddList extends MultiSelectWindow
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("System / Department")));
 
-    //$name,$string,$value,$conn,$image="images/search.png")
+    //$name,$string,$value,$conn,$image="images/lists/search.png")
     $this->AddRegex("regex" ,"regex"  ,"*"                , TRUE);
     $this->AddRegex("ipfrom","ipfrom" ,"0.0.0.0"          , FALSE);
     $this->AddRegex("ipto"  ,"ipto"   ,"255.255.255.255"  , FALSE);

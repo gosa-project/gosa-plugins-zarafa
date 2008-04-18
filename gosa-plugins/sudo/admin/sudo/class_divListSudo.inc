@@ -87,7 +87,7 @@ class divListSudo extends MultiSelectWindow
     $this->AddRegex   ("Regex"    , _("Regular expression for matching role names")       , 
       "*" , true);
     $this->AddRegex   ("UserRegex", _("Regular expression for matching role member names"),
-      "*" , FALSE,"images/search_user.png");
+      "*" , FALSE,"images/lists/search-user.png");
   }
 
 

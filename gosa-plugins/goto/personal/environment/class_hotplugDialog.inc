@@ -44,7 +44,7 @@ class hotplugDialog extends plugin
     $smarty->assign("depselectHot",$this->depselect);
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
-    $smarty->assign("search_image", get_template_path('images/search.png'));
+    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("tree_image", get_template_path('images/tree.png'));
     $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
     $smarty->assign("deplist", $this->config->idepartments);

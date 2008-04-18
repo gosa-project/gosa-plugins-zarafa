@@ -89,7 +89,7 @@ class selectPrinterDialog extends plugin
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("subtrees", $this->subtreesearch?"checked":"");
-    $smarty->assign("search_image", get_template_path('images/search.png'));
+    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("tree_image", get_template_path('images/tree.png'));
     $smarty->assign("infoimage", get_template_path('images/info.png'));
     $smarty->assign("launchimage", get_template_path('images/lists/action.png'));

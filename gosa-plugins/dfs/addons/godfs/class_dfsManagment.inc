@@ -220,7 +220,7 @@ class dfsManagment extends plugin {
       /* Use the smarty templating engine here... */
 
       $smarty->assign('tree', $tree_html);
-      $smarty->assign('search_image', get_template_path('images/search.png'));
+      $smarty->assign('search_image', get_template_path('images/lists/search.png'));
       $smarty->assign('infoimage', get_template_path('images/info.png'));
       $smarty->assign('launchimage', get_template_path('images/launch.png'));
       $smarty->assign('alphabet', generate_alphabet());

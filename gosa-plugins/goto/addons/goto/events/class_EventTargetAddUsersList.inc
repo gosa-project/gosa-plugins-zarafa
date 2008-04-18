@@ -59,7 +59,7 @@ class EventTargetAddUserList extends MultiSelectWindow
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("System / Department")));
 
-    //$name,$string,$value,$conn,$image="images/search.png")
+    //$name,$string,$value,$conn,$image="images/lists/search.png")
     $this->AddRegex("regex" ,"regex"  ,"*"                , TRUE);
 
     $this->AddCheckBox("display_users"  ,"1", _("Display users"),TRUE);

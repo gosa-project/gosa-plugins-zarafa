@@ -636,7 +636,7 @@ class sudo extends plugin
     foreach( array("depselect","regex") as $type){
       $smarty->assign("$type", $sysfilter[$type]);
     }
-    $smarty->assign("search_image", get_template_path('images/search.png'));
+    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("launchimage",  get_template_path('images/lists/action.png'));
     $smarty->assign("tree_image",   get_template_path('images/tree.png'));
     $smarty->assign("deplist",      $this->config->idepartments);

@@ -7,7 +7,7 @@
 	<table width="100%" summary="">
 		<tr>
 			<td>
-	<img class="center" alt="{t}Search{/t}" src="images/search.png" align="middle" border="0">
+	<img class="center" alt="{t}Search{/t}" src="images/lists/search.png" align="middle" border="0">
 	 &nbsp;{t}Search for{/t}
     <input name="search_for" size="12" maxlength="60" value="{$search_for}" title="{t}Please enter a search string here.{/t}" onchange="mainform.submit()">
  	 &nbsp;in 

@@ -145,7 +145,7 @@ class fonreport extends plugin
 
     $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
     $smarty->assign("launchimage",    get_template_path('images/launch.png'));
-    $smarty->assign("search_image",   get_template_path('images/search.png'));
+    $smarty->assign("search_image",   get_template_path('images/lists/search.png'));
     $smarty->assign("search_for",     $this->search_for);
     $smarty->assign("bases",          $bases);
     $smarty->assign("base_select",    $this->search_base);
