@@ -1731,7 +1731,7 @@ sub create_fai_release_db {
 				unshift @sql_list, "DELETE FROM $table_name";   # at first, clear db
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
-			daemon_log("$session_id DEBUG: Done with inserting",6);
+			daemon_log("$session_id DEBUG: Done with inserting",7);
 		}
 		daemon_log("$session_id INFO: create_fai_release_db: finished",5);
 	}
@@ -1780,14 +1780,14 @@ sub resolve_fai_classes {
 	my $fai_filter= "(|(&(objectClass=FAIclass)(|(objectClass=".join(")(objectClass=", @possible_fai_classes).")))(objectClass=FAIbranch))";
 	my $fai_classes;
 
-	daemon_log("$session_id DEBUG: Searching for FAI entries in base $fai_base",6);
+	daemon_log("$session_id DEBUG: Searching for FAI entries in base $fai_base",7);
 	my $mesg= $ldap_handle->search(
 		base   => $fai_base,
 		scope  => 'sub',
 		attrs  => ['cn','objectClass','FAIstate'],
 		filter => $fai_filter,
 	);
-	daemon_log("$session_id DEBUG: Found ".$mesg->count()." FAI entries",6);
+	daemon_log("$session_id DEBUG: Found ".$mesg->count()." FAI entries",7);
 
 	if($mesg->{'resultCode'} == 0 &&
 		$mesg->count != 0) {
@@ -1979,16 +1979,22 @@ sub session_run_done {
 }
 
 sub create_sources_list {
+    my ($session_id) = @_;
     my $ldap_handle = &get_ldap_handle;
 	my $result="/tmp/gosa_si_tmp_sources_list";
 
 	# Remove old file
 	if(stat($result)) {
 		unlink($result);
+        &main::daemon_log("$session_id DEBUG: remove an old version of '$result'", 7); 
 	}
 
 	my $fh;
-	open($fh, ">$result") or return undef;
+	open($fh, ">$result");
+    if (not defined $fh) {
+        &main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
+        return undef;
+    }
 	if(defined($ldap_server_dn) and length($ldap_server_dn) > 0) {
 		my $mesg=$ldap_handle->search(
 				base	=> $ldap_server_dn,
@@ -2007,7 +2013,9 @@ sub create_sources_list {
 				}
 			}
 		}
-	}
+	} else {
+        &main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$ldap_server_dn', abort create_soureces_list", 1); 
+    }
 	close($fh);
 
 	return $result;
@@ -2029,7 +2037,7 @@ sub run_create_packages_list_db {
 
 
 sub create_packages_list_db {
-    my ($ldap_handle, $sources_file, $session_id);
+    my ($ldap_handle, $sources_file, $session_id) = @_;
 
 	if (not defined $session_id) { $session_id = 0; }
 	if (not defined $ldap_handle) { 
@@ -2041,7 +2049,13 @@ sub create_packages_list_db {
 		}
 	}
     if (not defined $sources_file) { 
-        $sources_file = &create_sources_list;
+        &main::daemon_log("$session_id INFO: no sources_file given for creating packages list so trigger creation of it", 5); 
+        $sources_file = &create_sources_list($session_id);
+    }
+
+    if (not defined $sources_file) {
+        &main::daemon_log("$session_id ERROR: no sources_file given under '$sources_file', skip create_packages_list_db", 1); 
+
     }
 
 	# it should not be possible to trigger a recreation of packages_list_db
@@ -2080,6 +2094,9 @@ sub create_packages_list_db {
         # Interpret deb line
         if ($line =~ /^deb [^\s]+\s[^\s]+\s[^\s]+/){
             my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
+print STDERR "baseurl: $baseurl\n";             
+print STDERR "dist: $dist\n";             
+print STDERR "sections: $sections\n";             
             my $section;
             foreach $section (split(' ', $sections)){
                 &parse_package_info( $baseurl, $dist, $section, $session_id );
@@ -2109,7 +2126,7 @@ sub parse_package_info {
     get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
     parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
   }
-  find(\&cleanup_and_extract, keys( %repo_dirs ));
+  find(\&cleanup_and_extract($session_id), keys( %repo_dirs ));
 }
 
 
@@ -2124,7 +2141,7 @@ sub get_package {
   if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
       system("gunzip -cd '$dest' > '$dest.in'");
 	  daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 5);
-#      unlink($dest);
+      unlink($dest);
 	  daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
   } else {
       daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
@@ -2201,7 +2218,9 @@ sub parse_package {
 
     close( $PACKAGES );
 #    unlink( "$path.in" );
-    
+    &main::daemon_log("$session_id DEBUG: unlink '$path.in'", 1); 
+    my $len_sql_list = @sql_list;
+    &main::daemon_log("$session_id DEBUG: add $len_sql_list insert-statements to packages_list_db", 5); 
     $packages_list_db->exec_statementlist(\@sql_list);
 }
 
