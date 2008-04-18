@@ -461,7 +461,11 @@ class gotomasses extends plugin
 
         /* Real percent */
         } else {
-          $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
+         if (preg_match('/install/', $task['HEADERTAG'])){
+            $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
+          } else {
+            $status = preg_replace('/ /', '&nbsp;', _("in progress"));
+          }
         }
       }
 
