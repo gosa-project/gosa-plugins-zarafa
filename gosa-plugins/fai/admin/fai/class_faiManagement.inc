@@ -528,8 +528,8 @@ class faiManagement extends plugin
       $base= $this->fai_base;
 
       /* Check used characters */
-      if(preg_match("/[^0-9a-z \ö\ä\ü\.-_:,]/i",$name)){
-        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z \ö\ä\ü\.-_:,]/i"), ERROR_DIALOG);
+      if(!preg_match("/^[0-9a-z \ö\ä\ü\.\-_:,]*$/i",$name)){
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z \ö\ä\ü\.\-_:,]/i"), ERROR_DIALOG);
         $is_ok = false;
       }
 
@@ -719,7 +719,7 @@ class faiManagement extends plugin
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
         if(!$this->acl_is_createable()){
-        msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
+          msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
           $this->dispNewFreeze = true;
           $smarty->assign("iframe",false);
