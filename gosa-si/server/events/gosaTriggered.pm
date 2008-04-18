@@ -234,9 +234,9 @@ sub recreate_fai_release_db {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    $main::fai_server_db->create_table("new_fai_release", \@main::fai_release_col_names);
+    $main::fai_release_db->create_table("new_fai_release", \@main::fai_release_col_names);
     &main::create_fai_release_db("new_fai_release", $session_id);
-    $main::fai_server_db->move_table("new_fai_release", $main::fai_release_tn);
+    $main::fai_release_db->move_table("new_fai_release", $main::fai_release_tn);
 
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;

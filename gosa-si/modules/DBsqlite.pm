@@ -38,8 +38,7 @@ sub create_table {
     my $col_names_ref = shift;
     my $col_names_string = join(", ", @{$col_names_ref});
     my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ($col_names_string )"; 
-
-    $self->{dbh}->do($sql_statement);
+    my $res = $self->{dbh}->do($sql_statement);
     return 0;
 }
 
@@ -219,6 +218,7 @@ sub exec_statementlist {
     my $sql_list = shift;
     my @db_answer;
 
+	$self->{dbh}->do("ANALYZE");
     foreach my $sql (@$sql_list) {
         @db_answer = @{$self->{dbh}->selectall_arrayref($sql)};
     }

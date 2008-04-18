@@ -77,12 +77,12 @@ if($sock->connected()){
 ##################
 # recreate fai dbs
 #$data = "<xml> <header>gosa_recreate_fai_server_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
-#$data = "<xml> <header>gosa_recreate_fai_release_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
+$data = "<xml> <header>gosa_recreate_fai_release_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
 #$data = "<xml> <header>gosa_recreate_packages_list_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
 
 ###########
 # messaging 
-$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>me</from> <to>you</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
+#$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>admin</from> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
 
 
 ################

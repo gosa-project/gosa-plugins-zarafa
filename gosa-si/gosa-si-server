@@ -1090,7 +1090,10 @@ sub process_task {
         if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
             daemon_log("$session_id DEBUG: $module: Got answer from module: \n".$answer_str,8);
+        } else {
+            daemon_log("$session_id DEBUG: $module: Got no answer from module!" ,8);
         }
+
     }
     if( !$answer_l ) { $error++ };
 
@@ -1359,6 +1362,7 @@ sub watch_for_new_messages {
         my $message_to = @{$hit}[3];
 
         # translate message_to to plain login name
+# TODO implement reciever translation
         my @reciever_l = ($message_to);  
         my $message_id = @{$hit}[0];
 
@@ -1724,7 +1728,7 @@ sub create_fai_release_db {
 
 			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
-				unshift @sql_list, "DELETE FROM $table_name";
+				unshift @sql_list, "DELETE FROM $table_name";   # at first, clear db
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
 			daemon_log("$session_id DEBUG: Done with inserting",6);
