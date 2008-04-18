@@ -880,7 +880,7 @@ class workstartup extends plugin
       }
     }
 
-    if (($this->attrs['gotoBootKernel'] == "default-inherited") || ($this->attrs['gotoBootKernel'] == "%default%")){
+    if ($this->attrs['gotoBootKernel'] == "default-inherited"){
       $this->attrs['gotoBootKernel']= array();
     }
 
@@ -1207,6 +1207,7 @@ class workstartup extends plugin
         $this->cache['KERNELS'][$release][$kernel]=$kernel;
       }
     }
+    ksort($this->cache['KERNELS'][$release]);
   }
 
 
