@@ -103,6 +103,8 @@ class workstartup extends plugin
         $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
       }
     } 
+    natcasesort($this->gotoLdapServerList);
+
     if(!count($this->gotoLdapServers) && $this->member_of_ogroup){ 
       $this->gotoLdap_inherit = TRUE;
     }
