@@ -495,6 +495,8 @@ class faiManagement extends plugin
           $ldap->recursive_remove();
           $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
           $ldap->recursive_remove();
+          $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('mimetypeou'), $bb));
+          $ldap->recursive_remove();
           $this->fai_release = $this->fai_base;
 
           /* Post remove */
