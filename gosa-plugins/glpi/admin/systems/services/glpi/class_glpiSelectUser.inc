@@ -187,7 +187,7 @@ class glpiSelectUser extends plugin
     $smarty->assign("users", $divlist->DrawList());
     $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("searchu_image", get_template_path('images/lists/search-user.png'));
-    $smarty->assign("tree_image", get_template_path('images/tree.png'));
+    $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
     $smarty->assign("infoimage", get_template_path('images/info_small.png'));
     $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
     $smarty->assign("apply", apply_filter());

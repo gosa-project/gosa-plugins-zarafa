@@ -492,7 +492,7 @@ class addressbook extends plugin
     $smarty->assign("organizational", $phonefilter['organizational']);
     $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("obj_image", get_template_path('images/list_ogroup.png'));
-    $smarty->assign("tree_image", get_template_path('images/tree.png'));
+    $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
     $smarty->assign("infoimage", get_template_path('images/info.png'));
     $smarty->assign("actionimage", get_template_path('images/action.png'));
     $smarty->assign("launchimage", get_template_path('images/launch.png'));
