@@ -685,8 +685,9 @@ sub get_available_kernel {
         my $i=1;
 
         foreach my $package (keys %{$res_hash}) {
-                $data{"answer".$i++}= ${$res_hash}{$package}->{'package'};
+                $data{"answer".$i++}= $data{"answer".$i++}= ${$res_hash}{$package}->{'package'};
         }
+        $data{"answer".$i++}= "default";
 
         my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
         return ( $out_msg );
