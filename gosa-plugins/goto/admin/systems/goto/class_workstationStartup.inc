@@ -187,8 +187,6 @@ class workstartup extends plugin
     /* Handle inheritance value "default" */
     if ($this->member_of_ogroup){
       $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']'); 
-    }else{
-      $this->gotoBootKernels= array("default-inherited" => _("default")); 
     }
 
     /* If we are member in an object group,
