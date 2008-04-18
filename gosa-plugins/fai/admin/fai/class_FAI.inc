@@ -299,6 +299,9 @@ class FAI
     $reload_fai_classes = FALSE;
 
     /* check which objects must be saved */
+    if(!session::is_set('FAI_objects_to_save')){
+      return;
+    }
     $FAI_objects_to_save = session::get('FAI_objects_to_save');
     if(!is_array($FAI_objects_to_save)) {
       print_a(array(session::get('FAI_objects_to_save')));
