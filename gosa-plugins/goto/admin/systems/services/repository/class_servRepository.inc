@@ -153,40 +153,13 @@ class servrepository extends goService
           $value = base64_decode(preg_replace("/_.$/","",$value));
 
           if(isset($this->repositories[$value])){
+            $once = true;
+            $obj = $this->repositories[$value];
 
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd ($this->config->current['BASE']);
-
-            $url = $this->repositories[$value]['Url'];
-            $release = $this->repositories[$value]['Release'];
-
-            $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
-            if ($ldap->count() != 0){
-              $found = false;
-              $obj= array();
-              while($attrs = $ldap->fetch()){
-                foreach($attrs['FAIclass'] as $class){
-                  if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
-                    $found = true;
-                    $obj[$ldap->getDN()]= $attrs['cn'][0];
-                  }
-                }
-              }
-
-              if($found){
-                msg_dialog::display(_("Warning"), msgPool::stillInUse(_("FAI release"), msgPool::buildList($obj)), WARNING_DIALOG);
-              }
-            } 
-
-            if(isset($this->repositories[$value])){
-              $once = true;
-              $obj = $this->repositories[$value];
-
-              /* to be able to detect if this was renamed */
-              $obj['initialy_was'] = $obj['Release'];
-              $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-              $this->dialog->parent = $this;
-            }
+            /* to be able to detect if this was renamed */
+            $obj['initialy_was'] = $obj['Release'];
+            $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
+            $this->dialog->parent = $this;
           }
         }
       }
