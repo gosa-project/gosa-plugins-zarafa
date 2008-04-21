@@ -36,9 +36,29 @@ sub create_table {
     my $self = shift;
     my $table_name = shift;
     my $col_names_ref = shift;
-    my $col_names_string = join(", ", @{$col_names_ref});
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ($col_names_string )"; 
-    my $res = $self->{dbh}->do($sql_statement);
+    my @col_names;
+    foreach my $col_name (@$col_names_ref) {
+        my @t = split(" ", $col_name);
+        $col_name = $t[0];
+        push(@col_names, $col_name);
+    }
+
+    $col_names->{ $table_name } = $col_names_ref;
+    my $col_names_string = join("', '", @col_names);
+    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
+	eval {
+		my $res = $self->{dbh}->do($sql_statement);
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+	}
+	eval {
+		my $res = $self->{dbh}->do($sql_statement);
+	};
+	if($@) {
+		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+	}
+
     return 0;
 }
 
@@ -65,6 +85,30 @@ sub add_dbentry {
     if( 0 != @$primkeys ) {   # more than one primkey exist in list
         my @prim_list;
         foreach my $primkey (@$primkeys) {
+            if($primkey eq 'id') {
+                # if primkey is id, fetch max id from table and give new job id=  max(id)+1
+                my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
+				my $max_id;
+				eval {
+					$max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+				};
+				if($@) {
+					$self->{dbh}->do("ANALYZE");
+					eval {
+						$max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+					};
+					if($@) {
+						&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+					}
+				}
+                my $id;
+                if( defined $max_id) {
+                    $id = $max_id + 1; 
+                } else {
+                    $id = 1;
+                }
+                $arg->{id} = $id;
+            }
             if( not exists $arg->{$primkey} ) {
                 return (3, "primkey '$primkey' has no value for add_dbentry");
             }
@@ -72,11 +116,21 @@ sub add_dbentry {
         }
         $prim_statement = "WHERE ".join(" AND ", @prim_list);
 
-        # check wether primkey is unique in table, otherwise return errorflag
-        my $sql_statement = "SELECT * FROM $table $prim_statement";
-        $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
-
-    }
+    # check wether primkey is unique in table, otherwise return errorflag
+    my $sql_statement = "SELECT * FROM $table $prim_statement";
+	my $res;
+	eval {
+		$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		}
+	}
 
 	# primekey is unique or no primkey specified -> run insert
     if ($res == 0) {
@@ -94,8 +148,22 @@ sub add_dbentry {
                 }
         }    
 
-        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
-        my $db_res = $self->{dbh}->do($sql_statement);
+        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES ('".join("', '", @val_list)."')";
+		&main::daemon_log("DEBUG: $sql_statement", 7);
+		my $db_res;
+		eval {
+    		$db_res = $self->{dbh}->do($sql_statement);
+		};
+		if($@) {
+			$self->{dbh}->do("ANALYZE");
+			eval {
+    			$db_res = $self->{dbh}->do($sql_statement);
+			};
+			if($@) {
+				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+			}
+		}
+
         if( $db_res != 1 ) {
             return (4, $sql_statement);
         } 
@@ -137,15 +205,27 @@ sub get_table_columns {
     my $table = shift;
     my @column_names;
     
-    if(exists $col_names->{$table}) {
-        @column_names = @{$col_names->{$table}};
-    } else {
-        my @res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
+	if(exists $col_names->{$table}) {
+		@column_names = @{$col_names->{$table}};
+	} else {
+		my @res;
+		eval {
+			@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
+		};
+		if($@) {
+			$self->{dbh}->do("ANALYZE");
+			eval {
+				@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
+			};
+			if($@) {
+				&main::daemon_log("ERROR: pragma table_info('$table') failed with $@", 1);
+			}
+		}
 
-        foreach my $column (@res) {
-            push(@column_names, @$column[1]);
-        }
-    }
+		foreach my $column (@res) {
+			push(@column_names, @$column[1]);
+		}
+	}
     return \@column_names;
 
 }
@@ -198,6 +278,7 @@ sub show_table {
     foreach my $hit (@{$res}) {
         push(@answer, "hit: ".join(', ', @{$hit}));
     }
+
     return join("\n", @answer);
 }
 
@@ -205,9 +286,20 @@ sub show_table {
 sub exec_statement {
     my $self = shift;
     my $sql_statement = shift;
+    my @db_answer;
 
-	$self->{dbh}->do("ANALYZE");
-    my @db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+	eval {
+    	@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		}
+	}
 
     return \@db_answer;
 }
@@ -220,7 +312,18 @@ sub exec_statementlist {
 
 	$self->{dbh}->do("ANALYZE");
     foreach my $sql (@$sql_list) {
-        @db_answer = @{$self->{dbh}->selectall_arrayref($sql)};
+		eval {
+        	push @db_answer, @{$self->{dbh}->selectall_arrayref($sql)};
+		};
+		if($@) {
+			$self->{dbh}->do("ANALYZE");
+			eval {
+        		push @db_answer, @{$self->{dbh}->selectall_arrayref($sql)};
+			};
+			if($@) {
+				&main::daemon_log("ERROR: $sql failed with $@", 1);
+			}
+		}
     }
 
     return \@db_answer;
@@ -239,16 +342,39 @@ sub count_dbentries {
 }
 
 
-
 sub move_table {
-    my ($self, $from, $to) = @_;
+	my ($self, $from, $to) = @_;
 
-    my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
-    my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
-	$self->{dbh}->do($sql_statement_drop);
-	$self->{dbh}->do($sql_statement_alter);
+	my $sql_statement_drop = "DROP TABLE IF EXISTS $to";
+	my $sql_statement_alter = "ALTER TABLE $from RENAME TO $to";
 
-    return;
+	eval {
+		$self->{dbh}->do($sql_statement_drop);
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do($sql_statement_drop);
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement_drop failed with $@", 1);
+		}
+	}
+
+	eval {
+		$self->{dbh}->do($sql_statement_alter);
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do($sql_statement_alter);
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement_alter failed with $@", 1);
+		}
+	}
+
+	return;
 } 
 
 
