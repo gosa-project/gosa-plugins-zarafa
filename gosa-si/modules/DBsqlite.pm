@@ -286,15 +286,16 @@ sub exec_statementlist {
     my $sql_list = shift;
     my @db_answer;
 
-	$self->{dbh}->do("ANALYZE");
     foreach my $sql (@$sql_list) {
 		eval {
-        	push @db_answer, @{$self->{dbh}->selectall_arrayref($sql)};
+        	my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+			push @db_answer, @answer;
 		};
 		if($@) {
 			$self->{dbh}->do("ANALYZE");
 			eval {
-        		push @db_answer, @{$self->{dbh}->selectall_arrayref($sql)};
+        		my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+				push @db_answer, @answer;
 			};
 			if($@) {
 				&main::daemon_log("ERROR: $sql failed with $@", 1);
