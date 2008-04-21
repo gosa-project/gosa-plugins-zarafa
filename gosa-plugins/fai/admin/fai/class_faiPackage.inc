@@ -177,14 +177,14 @@ class faiPackage extends plugin
 
       /* Assemble release name */
       $release = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiou')).'.*$/', '', $release);
+      $tmp= preg_replace('/[,]*'.normalizePreg(get_ou('faiou')).'.*$/', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
-      $this->FAIdebianRelease= "";
+      $this->FAIdebianRelease= "/";
       foreach ($rev as $part){
         $this->FAIdebianRelease.= "/$part";
       }
-      $this->FAIdebianRelease= preg_replace('#^/#', '', $this->FAIdebianRelease);
+      $this->FAIdebianRelease= preg_replace('#^[/]*#', '', $this->FAIdebianRelease);
 
       /* Assemble sections */
       $repos= $this->getServerInfos();
@@ -196,7 +196,7 @@ class faiPackage extends plugin
       /* Assign Repository settings*/ 
       $this->is_account     = true;
     }
-    
+  
 
     /******
      * Add && Remove Packages 
