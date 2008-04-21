@@ -33,9 +33,12 @@ class appgroup extends plugin
 
     $this->Releases   = $this->getReleases();
     $this->FAIrelease = "/";
-    $this->curbase = $this->config->current['BASE'];
+    $this->curbase    = $this->config->current['BASE'];
     $this->reload();
-  
+ 
+    /* If we have at least one assigned application-
+       Enable this account.
+     */ 
     $this->is_account = FALSE;
     if(count($this->_get_all_entries()) > 1){
       $this->is_account= TRUE;
@@ -44,15 +47,21 @@ class appgroup extends plugin
   }
 
 
-  /*! \brief Reload the list of applications for the currently selected release 
+  /*! \brief Reload the list of applications for the currently selected release.
+             If necessary, maybe the list is already cached.
    */
   function reload()
   {
     $ret = array();
     $release_info = $this->Releases[$this->FAIrelease];
 
+    /* Check if the available application were already been fetched.
+       If not, build up a list of available applications.
+     */  
     if(!isset($this->_cache['ReleaseApps'][$release_info['suffix']])){
 
+      /* First of all, get all application departments to search in.
+       */  
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
       $ldap->search("ou=apps",array("dn"));
@@ -61,6 +70,8 @@ class appgroup extends plugin
         $app_deps[] = $attrs['dn'];
       }
 
+      /* Search all release departments for the above fetched application departments
+       */
       foreach($app_deps as $dep){
         $ldap->cd($dep);
         $ldap->search("objectClass=FAIbranch",array("dn"));
@@ -69,12 +80,18 @@ class appgroup extends plugin
         }
       }
 
+      /* Filter out those releases that match the currently selected release, 
+          and fetch all applications from those departments.
+       */
       foreach($app_deps as $dep){
         if(preg_match("/^".normalizePreg($release_info['suffix'])."/",$dep)){
           $ret = array_merge($ret,get_list("(objectClass=gosaApplication)","application",$dep,array("*"),GL_NONE));
         }
       }
 
+      /* Create a new array containing all fetch apps for the currently selected release,
+          sort it and store results in cache. 
+       */ 
       $tmp = array();
       foreach($ret as $key => $app){
         $tmp[$key] = $app['cn'][0];
@@ -92,23 +109,48 @@ class appgroup extends plugin
 
   
   
-  
   /*! \brief generate a list of available releases
       @return return an array with all available releases.
+
+      e.g.
+
+      /     "name"    /
+            "found"   1
+            "parts"   Array (empty)
+            "suffix"  ou=apps,
+
+      halut "name"    halut
+            "found"   1
+            "FAIstate"  
+            "dn"      ou=halut,ou=apps,ou=Direktorium,o=Landeshauptstadt München,c=de
+            "parts"   0 halut
+            "suffix"  ou=halut,ou=apps,
+
+      This will be used as base for the application menu structure.
+      If there is a menu assigned for a release, this menu will be 
+       appended with the index 'ENTRIES';
     */
   function getReleases()
   {
     $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou('applicationou')));
     if($this->enableReleaseManagement){
 
-      /* Only display those releases that we are able to read */
+      /* Only display those releases that we are able to read 
+       */
       $dn     = get_ou("applicationou").$this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
-      $res    = get_sub_list($filter,array("application","fai"), array(get_ou("applicationou"),get_ou("faiou")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
+      $res    = get_sub_list($filter,array("application","fai"), 
+          array(get_ou("applicationou"),get_ou("faiou")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
-
+      /* Go through all departments and check which department is a valid 
+          department release.
+       */
       foreach($res as $attrs){
         if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
+
+          /* Parse all returned departments dns into a useable type.
+             (ou=1.0.0,ou=halut,ou=apps  ==> halue/1.0.0)
+           */
           $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
           $parts  = array_reverse(split("ou=",$bb));
 
@@ -126,11 +168,14 @@ class appgroup extends plugin
           if(empty($name)) {
             $name ="/";
           }
+
           $FAIstate = "";
           if(isset($attrs['FAIstate'])){
             $FAIstate = $attrs['FAIstate'][0];
           }
 
+          /* Check if this department has a menu structure assigned 
+           */
           $all = $this->_get_all_entries();
           $found = FALSE;
           foreach($all as $entry){
@@ -140,7 +185,6 @@ class appgroup extends plugin
             }
           }
 
-          $cnt = 0;
           $ret[$name] = array("name"     => $name, 
               "found"    => $found,
               "FAIstate" => $FAIstate,
@@ -154,15 +198,31 @@ class appgroup extends plugin
   }
 
 
-  /*! \brief Load the menu structure from ldap and create a multi dimensional array
+  /*! \brief Load the menu structure from ldap and create a multi dimensional array.
+
+      This will create a multidimensional array.
+      e.g.:
+
+      $this->a_Structure =
+  
+      [0]['TYPE']   = "BASE"
+      [0]['ENTRIES']  [0]['TYPE']   = "RELEASE"
+                      [0]['NAME']   = "halut"
+                      [0]['ENTRIES']= array()
+                      ...
+      [0]['ENTRIES']  [1]['TYPE']   = "RELEASE"
+                      [1]['NAME']   = "halut/1.0.0"
+                      [1]['ENTRIES']  [0]['TYPE']   = "TYPE"
+                                      [0]['NAME']   = "Programme"
+                                      [0]['ENTRIES'][0]['TYPE'] = "ENTRY"
+                                                    [0]['NAME'] = "konqueror"
+                                                    [1]['TYPE'] = "ENTRY"
+                                                    [1]['NAME'] = "firefox"
    */
   function _load_menu_structure()
   {
-    $this->a_Structure  = array();
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->search("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",array("*"));
-
+    /* Create the base object
+     */
     $base =  array();
     $base['UNIQID'] = uniqid();
     $base['PARENT'] = 0; 
@@ -171,18 +231,38 @@ class appgroup extends plugin
     $base['ENTRIES']= array();
     $base['STATUS'] = "LOADED";
     
+    $this->a_Structure  = array();
     $this->a_Structure[0] = $base;
 
+    /* Search for all Releases/Menu Folders and Menu Entries,
+        to append them to our structure array.
+     */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->search("(|(objectClass=gotoSubmenuEntry)(objectClass=FAIbranch)(objectClass=gotoMenuEntry))",array("*"));
     while($attrs = $ldap->fetch()){
-      $cur = &$this->a_Structure[0]['ENTRIES'];
+
+      /* Find the correct position where to add this entry.
+          e.g. If we have cn=firefox,cn=Programme,ou=halut...
+
+          1. get a pointer to the halut array ($this->a_Structure['0'][ENTRIES''][]['halut'])
+          2. then get a pointer to the halut['ENTRIES'][]['Programme'] array. 
+          3. append 'firefox' to the 'ENTRIES' of our "Programme" pointer.
+       */
+      $cur          = &$this->a_Structure[0]['ENTRIES'];
       $parent_id    = $base['UNIQID'];
       $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
       $sub_dn_array = split("\,",$sub_dn);
 
+      /* Walk through our menu structure array while we have found 
+          the correct position where to add this object. 
+       */
       $found = true;
       for($i = (count($sub_dn_array)-1) ; $i >= 0 ; $i--){
         $name = preg_replace("/^[^=]*+=/","",$sub_dn_array[$i]);
         
+        /* We haven't found the end node where this object has to be added
+         */
         if($i > 0){
           $found =FALSE;
           foreach($cur as $key => $entry){
@@ -198,6 +278,10 @@ class appgroup extends plugin
           if(!$found){
             break;
           }
+
+          /* Get application priority.
+             And ensure that each priority exists once.
+           */
           $priority = 1;
           if(isset($attrs['gosaApplicationPriority'])){
             $priority= $attrs['gosaApplicationPriority'][0];
@@ -206,7 +290,15 @@ class appgroup extends plugin
             $priority ++;
           }
 
+          /* Create the data object that should be added 
+             * Folder
+             * Entry
+             * Release
+           */
           $data = array();
+    
+          /* Add a menu folder 
+           */
           if(in_array("gotoSubmenuEntry",$attrs['objectClass'])){
             $type = "FOLDER";
 
@@ -215,6 +307,8 @@ class appgroup extends plugin
               $data['ICON'] = $ldap->get_attribute($attrs['dn'],"gosaApplicationIcon");
             }
 
+          /* Add a menu entry 
+           */
           }elseif(in_array("gotoMenuEntry",$attrs['objectClass'])){
 
             $type = "ENTRY";
@@ -232,8 +326,10 @@ class appgroup extends plugin
                 }
               }
             }
-          }elseif(in_array("FAIbranch",$attrs['objectClass'])){
 
+          /* Add a release
+           */
+          }elseif(in_array("FAIbranch",$attrs['objectClass'])){
             $type = "RELEASE";
             if(isset($attrs['FAIstate'][0])){
               $data['FAIstate'] = $attrs['FAIstate'][0];
@@ -242,6 +338,8 @@ class appgroup extends plugin
             }
           }
 
+          /* Create object and append it to the current structure pointer 
+           */
           $data['LDAP_ATTRS'] = $attrs;
           $data['DN']       = $attrs['dn'];
           $data['NAME']     = $name;
@@ -447,7 +545,8 @@ class appgroup extends plugin
   }
 
 
-  /*! \brief Save the currently edited entry */
+  /*! \brief Save the currently edited entry 
+    */
   function _save_entry_edit()
   {
     $all    = $this->_get_all_entries();
@@ -468,6 +567,7 @@ class appgroup extends plugin
 
 
   /*! \brief prepare the entry with the given ID, to be edited.
+              Read application Parameter from ldap.
    */
   function _edit_entry_edit($id)
   {
@@ -512,6 +612,8 @@ class appgroup extends plugin
   }
 
 
+  /*! \brief Removes the menu structure from ldap 
+   */
   function remove_from_parent()
   {
     $ldap = $this->config->get_ldap_link();
@@ -577,6 +679,10 @@ class appgroup extends plugin
 
 
 
+  /*! \brief Moves a given object ($id) in a specified direction ($dir).
+      @param  String The object ID of the object we want to move
+      @dir    String Move "up" or "down"
+   */
   function _move_entry($id,$dir)
   {
     $all   = $this->_get_all_entries();
@@ -599,7 +705,6 @@ class appgroup extends plugin
       $o_to  = $all[$to]; 
     }
  
- 
     /* Target is ENTRY && same BASE, just switch */
     if($o_to['PARENT'] == $o_from['PARENT'] ){
       $parent = $all[$o_to['PARENT']];
@@ -621,7 +726,10 @@ class appgroup extends plugin
   }
 
 
- 
+   
+  /*! \brief  Returns the railing object ID of the given object.
+      @return String  The id of the trailing object.
+   */ 
   function _get_last($id)
   {
     $all_l = array_reverse($this->_get_entries_for_release($this->FAIrelease));
@@ -646,7 +754,10 @@ class appgroup extends plugin
     return($all_l[$i]['UNIQID']);
   }
 
- 
+
+  /*! \brief  Returns the following object ID of the given object.
+      @return String  The id of the following object.
+   */ 
   function _get_next($id,$parent = 0)
   {
     $all_l = $this->_get_entries_for_release($this->FAIrelease);
@@ -819,7 +930,7 @@ class appgroup extends plugin
   }
 
 
-  /* !\brief Remove the given id from the menu structure.
+  /* !\brief  Remove the given id from the menu structure.
       @param  String  ID to of the entry we want to remove.
       @return Boolean TRUE on success
    */
@@ -835,9 +946,10 @@ class appgroup extends plugin
   }
 
   
-  /* !\brief Remove the given id from the menu structure.
-      @param  String  ID to of the entry we want to remove.
-      @return Boolean TRUE on success
+  /* !\brief  Adds an object to a given folder.
+      @param  String  The folder where we should add the entry
+      @param  Array   The entry we want to add.
+      @param  Array   The position in the destination entry array.
    */
   function _add_entry($folder_id,$entry,$pos = 0)
   {
@@ -848,21 +960,30 @@ class appgroup extends plugin
       return;
     }
 
+    /* Check if the folder exists 
+     */
     if(isset($all[$folder_id])){
 
+      /* Check if the entry we want to add, 
+          contains su objects.
+       */
       if(!isset($entry['ENTRIES'])){
         $entries = array();
       }else{
         $entries = $entry['ENTRIES'];
       }
-
       $folder  = &$all[$folder_id];
 
+      /* Prepare the entry to be added.
+       */
       $entry['UNIQID'] = uniqid();     
       $entry['PARENT'] = $folder_id;
       $entry['ENTRIES']= array();
       $entry['STATUS'] = "ADDED";
-      
+     
+      /* Append the ebtry to the given folder 
+          and to the given position \$pos
+       */ 
       $cnt = 0; 
       $new = array();
       $added =FALSE;
@@ -880,8 +1001,10 @@ class appgroup extends plugin
       if(!$added){
         $new[] = $entry;
       }
-  
       $all[$folder_id]['ENTRIES'] = &$new;
+ 
+      /* Add sub entries too.
+       */ 
       foreach($entries as $sub){
         $this->_add_entry($entry['UNIQID'],$sub,-1);
       }
@@ -944,8 +1067,9 @@ class appgroup extends plugin
   }
 
 
-  /*! \brief  Return all entries linear. 
+  /*! \brief  Return all entries linear. ($this->a_Structure is a multidimensional array) 
       @param  Boolean   $add_tags  If TRUE, OPEN/CLOSE Tags will be appended.
+                        Used in the smarty template to display logical sperations.
       @param  &Array    Start here, Pointer to an array.
    */ 
   function _get_all_entries($add_tags = FALSE, $skip_release = FALSE, &$cur = NULL)
@@ -954,8 +1078,10 @@ class appgroup extends plugin
     if($cur == NULL){
       $cur = &$this->a_Structure;
     }
-    foreach($cur as $key => $entry){
 
+    /* Walk through all entries and append them to our return array 
+     */
+    foreach($cur as $key => $entry){
       if($skip_release && $entry['TYPE'] == "RELEASE"){
         continue;
       }    
@@ -974,9 +1100,15 @@ class appgroup extends plugin
           $entry['INFO'] = "<font color='red'>"._("Not available in release.")."</font>";
         }
       }
-      
 
       $tmp = $entry;
+  
+      /* Recursive resolution of the subentries  
+         There are two methods.
+            - Just add sub entries  
+            - Add sub entries and additionaly add OPEN / CLOSE tags to be able 
+                to display logical seperators in the smarty template.
+       */ 
       if(!$add_tags){
         $ret[$tmp['UNIQID']] = &$cur[$key];
         if(isset($entry['ENTRIES']) && count($entry['ENTRIES'])){
@@ -1011,6 +1143,9 @@ class appgroup extends plugin
   }
 
 
+  /*! \brief Save this plugin data to ldap.
+             Save the current menu structure to ldap.
+   */
   function save()
   {
     $ldap = $this->config->get_ldap_link();
@@ -1018,12 +1153,18 @@ class appgroup extends plugin
     $prio = 0;
     $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
 
+
+    /* Walk through the menu structure and build up the ldap data object, 
+        the entry dn and the entry priority.
+     */
     $sep_id = 0;
     foreach($all as $entry){
       $prio ++;
       $cur = $entry;
       $dn = "";
 
+      /* Build entry dn
+       */
       do{  
         if($cur['TYPE'] == "SEPERATOR"){
           $sep_id ++;
@@ -1044,9 +1185,10 @@ class appgroup extends plugin
       }while(is_array($cur));
 
       $cur_dn = $dn.$this->dn;
-
       $attrs = array();
 
+      /* Build entry data object.
+       */
       switch($entry['TYPE']){
         case "SEPERATOR"    :
         { 
@@ -1062,7 +1204,6 @@ class appgroup extends plugin
           $attrs['cn']          = $entry['NAME'];
           $attrs['gosaApplicationPriority'] = $prio;
           $attrs['gosaApplicationParameter'] = array(); 
-          
           
           foreach($entry['PARAMETER'] as $name => $value){
             $attrs['gosaApplicationParameter'][] = $name.":".$value; 
@@ -1100,7 +1241,8 @@ class appgroup extends plugin
         break;
       }
  
-      /* Append missing ObjectClasses,  ...  Tagging */
+      /* Append missing ObjectClasses,  ...  Tagging 
+       */
       if(isset($entry['LDAP_ATTRS'])){
         for($i = 0 ; $i < $entry['LDAP_ATTRS']['objectClass']['count']; $i ++){
           $oc = $entry['LDAP_ATTRS']['objectClass'][$i];
@@ -1109,8 +1251,9 @@ class appgroup extends plugin
           }
         }
       }
-
- 
+  
+      /* Create an array containing all operations sorted by type. (add,remove...)
+       */
       if($entry['STATUS'] == "LOADED"){
         continue;
       }
@@ -1129,6 +1272,8 @@ class appgroup extends plugin
       }
     }
 
+    /* First remove entries
+     */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     foreach($Actions['Remove'] as $dn){
@@ -1141,6 +1286,9 @@ class appgroup extends plugin
         }
       }
     }
+    
+    /* Add new entries
+     */
     foreach($Actions['Add'] as $dn => $data){
       $ldap->cd($dn);
       $ldap->cat($dn);
@@ -1151,6 +1299,9 @@ class appgroup extends plugin
         }
       }
     }
+
+    /* Modify entries
+     */
     foreach($Actions['Edit'] as $dn => $data){
       $ldap->cd($dn);
       $ldap->cat($dn);
@@ -1166,7 +1317,9 @@ class appgroup extends plugin
   }
 
 
-  /* Return plugin informations for acl handling  */ 
+  /*! \brief  Return plugin informations for acl handling  
+      @return Array containing all plugin ACL informations
+   */ 
   static function plInfo()
   {
     return (array(
@@ -1185,6 +1338,11 @@ class appgroup extends plugin
   }
 
 
+  /* \brief   Prepare this plugin to be copied.
+              Adapt all required attributes from the source object.
+              In this case, update the menu structure too, mark all elements
+               as newly added, so they will be saved in save();
+   */
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
@@ -1201,6 +1359,8 @@ class appgroup extends plugin
   }
 
 
+  /*! \brief  Save HTML posts in multiple edit mode
+   */
   function multiple_save_object()
   {
     if(isset($_POST['group_apps_multi'])){
@@ -1217,6 +1377,11 @@ class appgroup extends plugin
   }
   
 
+  /*! \brief  Return values used in multiple edit mode.
+              Some values can be modified for multiple 
+              groups at the same time.
+      @return Array  All values that support multiple edit.
+   */
   function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
