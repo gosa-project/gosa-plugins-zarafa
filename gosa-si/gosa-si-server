@@ -2094,9 +2094,6 @@ sub create_packages_list_db {
         # Interpret deb line
         if ($line =~ /^deb [^\s]+\s[^\s]+\s[^\s]+/){
             my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
-print STDERR "baseurl: $baseurl\n";             
-print STDERR "dist: $dist\n";             
-print STDERR "sections: $sections\n";             
             my $section;
             foreach $section (split(' ', $sections)){
                 &parse_package_info( $baseurl, $dist, $section, $session_id );
