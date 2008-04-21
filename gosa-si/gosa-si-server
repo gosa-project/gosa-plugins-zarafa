@@ -2214,7 +2214,7 @@ sub parse_package {
     }
 
     close( $PACKAGES );
-#    unlink( "$path.in" );
+    unlink( "$path.in" );
     &main::daemon_log("$session_id DEBUG: unlink '$path.in'", 1); 
     my $len_sql_list = @sql_list;
     &main::daemon_log("$session_id DEBUG: add $len_sql_list insert-statements to packages_list_db", 5); 
@@ -2233,42 +2233,43 @@ sub store_fileinfo {
   $repo_files{ "${srvdir}/$file" } = \%fileinfo;
 }
 
+
 sub cleanup_and_extract {
-	my ($session_id) = @_;
-	if (not defined $session_id) { $session_id  = 0; }		
-		my $fileinfo = $repo_files{ $File::Find::name };
+	my $fileinfo = $repo_files{ $File::Find::name };
 
-		if( defined $fileinfo ) {
+	if( defined $fileinfo ) {
 
-				my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-				my $sql;
-				my $package = $fileinfo->{ 'package' };
-				my $newver = $fileinfo->{ 'version' };
+		my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
+		my $sql;
+		my $package = $fileinfo->{ 'package' };
+		my $newver = $fileinfo->{ 'version' };
 
-				mkpath($dir);
-				system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
+		mkpath($dir);
+		system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
 
-				if( -f "$dir/DEBIAN/templates" ) {
+		if( -f "$dir/DEBIAN/templates" ) {
 
-						daemon_log("$session_id DEBUG: Found debconf templates in '$package' - $newver", 5);
+			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
 
-						my $tmpl= "";
-						{
-								local $/=undef;
-								open FILE, "$dir/DEBIAN/templates";
-								$tmpl = &encode_base64(<FILE>);
-								close FILE;
-						}
-						rmtree("$dir/DEBIAN/templates");
+			my $tmpl= "";
+			{
+				local $/=undef;
+				open FILE, "$dir/DEBIAN/templates";
+				$tmpl = &encode_base64(<FILE>);
+				close FILE;
+			}
+			rmtree("$dir/DEBIAN/templates");
 
-						$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
+			$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
 
-				} else {
-						$sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
-				}
-
-				my $res= $main::packages_list_db->update_dbentry($sql);
+		} else {
+			$sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
 		}
+
+		my $res= $main::packages_list_db->update_dbentry($sql);
+	}
+
+	return;
 }
 
 
