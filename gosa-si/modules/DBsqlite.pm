@@ -125,7 +125,7 @@ sub add_dbentry {
                 }
         }    
 
-        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES ('".join("', '", @val_list)."')";
+        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
 		&main::daemon_log("DEBUG: $sql_statement", 7);
 		my $db_res;
 		eval {
