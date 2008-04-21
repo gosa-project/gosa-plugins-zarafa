@@ -2123,7 +2123,7 @@ sub parse_package_info {
     get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
     parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
   }
-  find(\&cleanup_and_extract($session_id), keys( %repo_dirs ));
+  find(\&cleanup_and_extract, keys( %repo_dirs ));
 }
 
 
