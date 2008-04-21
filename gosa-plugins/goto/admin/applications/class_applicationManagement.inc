@@ -614,7 +614,7 @@ class applicationManagement extends plugin
 
       /* Get dialog */
       $this->CopyPasteHandler->SetVar("base",$this->app_base);
-      $this->CopyPasteHandler->SetVar("parent",&$this);
+      $this->CopyPasteHandler->SetVar("parent",$this);
       $data = $this->CopyPasteHandler->execute();
 
       /* Return dialog data */

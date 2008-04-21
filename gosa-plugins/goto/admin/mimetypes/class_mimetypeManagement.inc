@@ -623,7 +623,7 @@ class mimetypeManagement extends plugin
 
       /* Get dialog */
       $this->CopyPasteHandler->SetVar("base",preg_replace("/^".normalizePreg(get_ou("mimetypeou"))."/","",$this->mime_base));
-      $this->CopyPasteHandler->SetVar("parent",&$this);
+      $this->CopyPasteHandler->SetVar("parent",$this);
       $data = $this->CopyPasteHandler->execute();
 
       /* Return dialog data */
