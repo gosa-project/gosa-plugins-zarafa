@@ -2112,46 +2112,49 @@ sub create_packages_list_db {
 
 
 sub parse_package_info {
-  my ($baseurl, $dist, $section, $session_id)= @_;
-  my ($package);
-	if (not defined $session_id) { $session_id = 0; }
-  my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
-  $repo_dirs{ "${repo_path}/pool" } = 1;
+    my ($baseurl, $dist, $section, $session_id)= @_;
+    my ($package);
+    if (not defined $session_id) { $session_id = 0; }
+    my ($path) = ($baseurl =~ m%://[^/]*(.*)$%);
+    $repo_dirs{ "${repo_path}/pool" } = 1;
 
-  foreach $package ("Packages.gz"){
-    daemon_log("$session_id DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
-    get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
-    parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
-  }
-  find(\&cleanup_and_extract, keys( %repo_dirs ));
+    foreach $package ("Packages.gz"){
+        daemon_log("$session_id DEBUG: create_packages_list: fetch $baseurl, $dist, $section", 7);
+        get_package( "$baseurl/dists/$dist/$section/binary-$arch/$package", "$outdir/$dist/$section", $session_id );
+        parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
+    }
+    
+    find(\&cleanup_and_extract, keys( %repo_dirs ));
 }
 
 
 sub get_package {
-  my ($url, $dest, $session_id)= @_;
-  if (not defined $session_id) { $session_id = 0; }
+    my ($url, $dest, $session_id)= @_;
+    if (not defined $session_id) { $session_id = 0; }
 
-  my $tpath = dirname($dest);
-  -d "$tpath" || mkpath "$tpath";
+    my $tpath = dirname($dest);
+    -d "$tpath" || mkpath "$tpath";
 
-  # This is ugly, but I've no time to take a look at "how it works in perl"
-  if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
-      system("gunzip -cd '$dest' > '$dest.in'");
-	  daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 5);
-      unlink($dest);
-	  daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
-  } else {
-      daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
-  }
-  return 0;
+    # This is ugly, but I've no time to take a look at "how it works in perl"
+    if(0 == system("wget '$url' -O '$dest' 2>/dev/null") ) {
+        system("gunzip -cd '$dest' > '$dest.in'");
+        daemon_log("$session_id DEBUG: run command: gunzip -cd '$dest' > '$dest.in'", 5);
+        unlink($dest);
+        daemon_log("$session_id DEBUG: delete file '$dest'", 5); 
+    } else {
+        daemon_log("$session_id ERROR: create_packages_list_db: get_packages: fetching '$url' failed!", 1);
+    }
+    return 0;
 }
+
 
 sub parse_package {
     my ($path, $dist, $srv_path, $session_id)= @_;
-	if (not defined $session_id) { $session_id = 0;}
+    if (not defined $session_id) { $session_id = 0;}
     my ($package, $version, $section, $description);
     my @sql_list;
     my $PACKAGES;
+    my $timestamp = &get_time();
 
     if(not stat("$path.in")) {
         daemon_log("$session_id ERROR: create_packages_list: parse_package: file '$path.in' is not readable",1);
@@ -2159,7 +2162,7 @@ sub parse_package {
     }
 
     open($PACKAGES, "<$path.in");
-	if(not defined($PACKAGES)) {
+    if(not defined($PACKAGES)) {
         daemon_log("$session_id ERROR: create_packages_list_db: parse_package: cannot open '$path.in'",1); 
         return;
     }
@@ -2172,7 +2175,7 @@ sub parse_package {
 
         # Use empty lines as a trigger
         if ($line =~ /^\s*$/){
-            my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '0')";
+            my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '$timestamp')";
             push(@sql_list, $sql);
             $package = "none";
             $version = "none";
@@ -2205,12 +2208,12 @@ sub parse_package {
             next;
         }
 
-	# Trigger for filename
-	if ($line =~ /^Filename:\s/){
-		my ($filename) = ($line =~ /^Filename: (.*)$/);
-		store_fileinfo( $package, $filename, $dist, $srv_path, $version, $repo_path );
-		next;
-	}
+        # Trigger for filename
+        if ($line =~ /^Filename:\s/){
+            my ($filename) = ($line =~ /^Filename: (.*)$/);
+            store_fileinfo( $package, $filename, $dist, $srv_path, $version, $repo_path );
+            next;
+        }
     }
 
     close( $PACKAGES );
@@ -2221,55 +2224,56 @@ sub parse_package {
     $packages_list_db->exec_statementlist(\@sql_list);
 }
 
+
 sub store_fileinfo {
-  my( $package, $file, $dist, $path, $vers, $srvdir) = @_;
+    my( $package, $file, $dist, $path, $vers, $srvdir) = @_;
 
-  my %fileinfo = (
-    'package' => $package,
-    'dist' => $dist,
-    'version' => $vers,
-  );
+    my %fileinfo = (
+        'package' => $package,
+        'dist' => $dist,
+        'version' => $vers,
+    );
 
-  $repo_files{ "${srvdir}/$file" } = \%fileinfo;
+    $repo_files{ "${srvdir}/$file" } = \%fileinfo;
 }
 
 
 sub cleanup_and_extract {
-	my $fileinfo = $repo_files{ $File::Find::name };
+    my $fileinfo = $repo_files{ $File::Find::name };
 
-	if( defined $fileinfo ) {
+    if( defined $fileinfo ) {
 
-		my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-		my $sql;
-		my $package = $fileinfo->{ 'package' };
-		my $newver = $fileinfo->{ 'version' };
+        my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
+        my $sql;
+        my $package = $fileinfo->{ 'package' };
+        my $newver = $fileinfo->{ 'version' };
 
-		mkpath($dir);
-		system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
+        mkpath($dir);
+        system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
 
-		if( -f "$dir/DEBIAN/templates" ) {
+        if( -f "$dir/DEBIAN/templates" ) {
 
-			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
+            daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
 
-			my $tmpl= "";
-			{
-				local $/=undef;
-				open FILE, "$dir/DEBIAN/templates";
-				$tmpl = &encode_base64(<FILE>);
-				close FILE;
-			}
-			rmtree("$dir/DEBIAN/templates");
+            my $tmpl= "";
+            {
+                local $/=undef;
+                open FILE, "$dir/DEBIAN/templates";
+                $tmpl = &encode_base64(<FILE>);
+                close FILE;
+            }
+            rmtree("$dir/DEBIAN/templates");
 
-			$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
+            $sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
 
-		} else {
-			$sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
-		}
+        } else {
+            $sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
+        }
 
-		my $res= $main::packages_list_db->update_dbentry($sql);
-	}
+        my $res= $main::packages_list_db->update_dbentry($sql);
+    }
 
-	return;
+    return;
 }
 
 
