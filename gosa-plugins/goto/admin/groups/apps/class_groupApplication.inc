@@ -881,7 +881,7 @@ class appgroup extends plugin
         $new[] = $entry;
       }
   
-      $all[$folder_id]['ENTRIES'] = $new;
+      $all[$folder_id]['ENTRIES'] = &$new;
       foreach($entries as $sub){
         $this->_add_entry($entry['UNIQID'],$sub,-1);
       }
