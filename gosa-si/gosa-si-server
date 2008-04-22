@@ -108,7 +108,7 @@ $no_bus = 0;
 $bus_activ = "true";
 $no_arp = 0;
 my $packages_list_under_construction = 0;
-my $watch_for_new_job_in_progress = 0;
+my $watch_for_new_jobs_in_progress = 0;
 
 our $prg= basename($0);
 
