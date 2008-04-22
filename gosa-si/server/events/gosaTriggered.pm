@@ -29,6 +29,7 @@ my @events = (
     "trigger_action_wake",
     "recreate_fai_server_db",
     "recreate_fai_release_db",
+    "recreate_packages_list_db",
     "send_user_msg", 
 	"get_available_kernel",
     );
@@ -240,6 +241,24 @@ sub recreate_fai_release_db {
 
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
+}
+
+
+sub recreate_packages_list_db {
+	my ($msg, $msg_hash, $session_id) = @_ ;
+	my $out_msg;
+
+	my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+	if( defined $jobdb_id) {
+		my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id='$jobdb_id'";
+		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+		my $res = $main::job_db->exec_statement($sql_statement);
+	}
+
+	&main::create_packages_list_db;
+
+	my @out_msg_l = ( $out_msg );
+	return @out_msg_l;
 }
 
 
