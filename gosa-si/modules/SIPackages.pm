@@ -871,10 +871,10 @@ sub hardware_config {
 		&main::daemon_log("Host was not found in LDAP!", 1);
 
 		# set status = hardware_detection at jobqueue if entry exists
-# TODO
+		# TODO
 		# resolve plain name for host
 		my $func_dic = {table=>$main::job_queue_tn,
-				primkey=>['id'],
+				primkey=>[],
 				timestamp=>&get_time,
 				status=>'processing',
 				result=>'none',

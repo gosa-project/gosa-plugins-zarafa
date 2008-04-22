@@ -360,7 +360,7 @@ sub TASKBEGIN {
 			# resolve plain name for host $macaddress
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
 			my $func_dic = {table=>$main::job_queue_tn,
-					primkey=>['id'],
+					primkey=>[],
 					timestamp=>&get_time,
 					status=>'processing',
 					result=>"$header $content",
