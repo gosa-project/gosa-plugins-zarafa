@@ -194,7 +194,6 @@ class gotomasses extends plugin
         if(count($ids)){
           $ret = $this->o_queue->ids_exist($ids);
           $ret = $this->o_queue->get_entries_by_id($ret);
-
           $tmp = "";
           foreach($ret as $task){
 
@@ -410,8 +409,8 @@ class gotomasses extends plugin
       $color = "";
       $display = $task['MACADDRESS'];
       $tooltip = "";
-      if(isset($task['TARGETTAG'])){
-        $display = $task['TARGETTAG'];
+      if(isset($task['PLAINNAME'])){
+        $display = $task['PLAINNAME'];
         $tooltip = " title='".$task['MACADDRESS']."' ";
       }
       $display2= $task['HEADERTAG'];
