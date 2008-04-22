@@ -337,7 +337,6 @@ sub confirm_new_key {
 
 sub detect_hardware {
 
-
     &write_to_file('goto-hardware-detection-start', $fai_logpath);
 
 	my $hwinfo= `which hwinfo`;

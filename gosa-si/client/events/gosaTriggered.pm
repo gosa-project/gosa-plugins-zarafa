@@ -12,7 +12,6 @@ my @events = (
     "trigger_action_update",
     "trigger_action_instant_update",
     "trigger_action_sysinfo",
-    "trigger_action_rescan",
     );
 @EXPORT = @events;
 
