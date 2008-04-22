@@ -281,9 +281,6 @@ class servrepository extends goService
       $this->cleanup();
       $ldap->modify ($this->attrs);       
       $this->handle_post_events("modify");
-      if(count($this->attrs)){
-        $this->trigger_si_fai_server_reload();
-      }
     }else{
       $ldap->cd ($this->config->current['BASE']);
       $ldap->create_missing_trees($this->dn);
