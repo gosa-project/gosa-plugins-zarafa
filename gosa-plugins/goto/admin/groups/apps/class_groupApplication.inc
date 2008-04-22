@@ -16,7 +16,9 @@ class appgroup extends plugin
   var $app_parameter = array();
   var $edit_entry    = array();
   var $enableReleaseManagement = FALSE;
-  
+
+  var $copied_release = ""; 
+   
 
   public function __construct(&$config, $dn= NULL, $parent= NULL)
   {
@@ -473,7 +475,14 @@ class appgroup extends plugin
             ));
     }
 
-    
+    /* Assign copy / paste values 
+     */
+    if(!empty($this->copied_release)){
+      $smarty->assign("copied", TRUE);
+      $smarty->assign("copy_source", $this->copied_release);
+    }else{
+      $smarty->assign("copied", FALSE);
+    }
     $smarty->assign("enableReleaseManagement",$this->enableReleaseManagement);
     $smarty->assign("FAIrelease",$this->FAIrelease);
     $smarty->assign("app_list",$div->DrawList());
@@ -793,6 +802,26 @@ class appgroup extends plugin
   function save_object()
   {
     foreach($_POST as $name => $value){
+
+      if(preg_match("/^menu_copy_/",$name)){
+        $this->copied_release = $this->FAIrelease;
+        break;
+      }
+      if(preg_match("/^menu_paste_/",$name)){
+        $source_rel   = $this->_get_release_key($this->copied_release); 
+        $current_rel  = $this->_get_release_key($this->FAIrelease);
+
+        $all = $this->_get_all_entries();
+        $menu = $all[$source_rel]['ENTRIES'];
+    
+        foreach($menu as $entry){
+          if(in_array($entry['TYPE'],array("FOLDER","ENTRY","SEPERATOR"))){
+            $this->_add_entry($current_rel,$entry,-1);
+          }
+        }
+        break;
+      }
+
       if(preg_match("/del_/",$name)){
         $id = preg_replace("/^del_/","",$name);
         $id = preg_replace("/_(x|y)$/","",$id);
