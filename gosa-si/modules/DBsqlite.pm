@@ -296,29 +296,34 @@ sub exec_statement {
 
 
 sub exec_statementlist {
-    my $self = shift;
-    my $sql_list = shift;
-    my @db_answer;
+	my $self = shift;
+	my $sql_list = shift;
+	my @db_answer;
 
-    foreach my $sql (@$sql_list) {
-		eval {
-        	my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
-			push @db_answer, @answer;
-		};
-		if($@) {
-			$self->{dbh}->do("ANALYZE");
+	foreach my $sql (@$sql_list) {
+		if(defined($sql) && length($sql) > 0) {
 			eval {
-        		my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+				my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
 				push @db_answer, @answer;
 			};
 			if($@) {
-				&main::daemon_log("ERROR: $sql failed with $@", 1);
+				$self->{dbh}->do("ANALYZE");
+				eval {
+					my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+					push @db_answer, @answer;
+				};
+				if($@) {
+					&main::daemon_log("ERROR: $sql failed with $@", 1);
+				}
 			}
+		} else {
+			next;
 		}
-    }
+	}
 
-    return \@db_answer;
+	return \@db_answer;
 }
+
 
 sub count_dbentries {
     my ($self, $table)= @_;

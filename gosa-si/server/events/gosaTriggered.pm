@@ -247,6 +247,9 @@ sub recreate_fai_release_db {
 sub recreate_packages_list_db {
 	my ($msg, $msg_hash, $session_id) = @_ ;
 	my $out_msg;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+	my $target = @{$msg_hash->{'target'}}[0];
 
 	my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
 	if( defined $jobdb_id) {
@@ -255,7 +258,7 @@ sub recreate_packages_list_db {
 		my $res = $main::job_db->exec_statement($sql_statement);
 	}
 
-	&main::create_packages_list_db;
+	&main::create_packages_list_db(undef,undef,undef);
 
 	my @out_msg_l = ( $out_msg );
 	return @out_msg_l;

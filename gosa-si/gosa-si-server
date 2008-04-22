@@ -107,7 +107,8 @@ $ping_timeout = 5;
 $no_bus = 0;
 $bus_activ = "true";
 $no_arp = 0;
-my $packages_list_under_construction = 0;
+my $packages_list_under_construction = "/tmp/packages_list_creation_in_progress";
+my @packages_list_statements;
 my $watch_for_new_jobs_in_progress = 0;
 
 our $prg= basename($0);
@@ -1248,9 +1249,10 @@ sub trigger_db_loop {
 	my ($kernel) = @_ ;
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
-    $kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
-    $kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
+	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
+	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
 }
+
 
 sub watch_for_done_jobs {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
@@ -1267,6 +1269,7 @@ sub watch_for_done_jobs {
 
     $kernel->delay_set('watch_for_done_jobs',$job_queue_loop_delay);
 }
+
 
 sub watch_for_new_jobs {
 	if($watch_for_new_jobs_in_progress == 0) {
@@ -1993,30 +1996,31 @@ sub session_run_done {
     delete $heap->{task}->{$task_id};
 }
 
+
 sub create_sources_list {
-    my ($session_id) = @_;
-    my $ldap_handle = &get_ldap_handle;
+	my $session_id = shift;
+	my $ldap_handle = &main::get_ldap_handle;
 	my $result="/tmp/gosa_si_tmp_sources_list";
 
 	# Remove old file
 	if(stat($result)) {
 		unlink($result);
-        &main::daemon_log("$session_id DEBUG: remove an old version of '$result'", 7); 
+		&main::daemon_log("$session_id DEBUG: remove an old version of '$result'", 7); 
 	}
 
 	my $fh;
 	open($fh, ">$result");
-    if (not defined $fh) {
-        &main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
-        return undef;
-    }
-	if(defined($ldap_server_dn) and length($ldap_server_dn) > 0) {
+	if (not defined $fh) {
+		&main::daemon_log("$session_id DEBUG: cannot open '$result' for writing", 7); 
+		return undef;
+	}
+	if(defined($main::ldap_server_dn) and length($main::ldap_server_dn) > 0) {
 		my $mesg=$ldap_handle->search(
-				base	=> $ldap_server_dn,
-				scope	=> 'base',
-				attrs	=> 'FAIrepository',
-				filter	=> 'objectClass=FAIrepositoryServer'
-				);
+			base	=> $main::ldap_server_dn,
+			scope	=> 'base',
+			attrs	=> 'FAIrepository',
+			filter	=> 'objectClass=FAIrepositoryServer'
+		);
 		if($mesg->count) {
 			foreach my $entry(@{$mesg->{'entries'}}) {
 				foreach my $value(@{$entry->get_value('FAIrepository', asref => 1)}) {
@@ -2029,8 +2033,8 @@ sub create_sources_list {
 			}
 		}
 	} else {
-        &main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$ldap_server_dn', abort create_sources_list", 1); 
-    }
+		&main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$main::ldap_server_dn', abort create_sources_list", 1); 
+	}
 	close($fh);
 
 	return $result;
@@ -2052,7 +2056,20 @@ sub run_create_packages_list_db {
 
 
 sub create_packages_list_db {
-    my ($ldap_handle, $sources_file, $session_id) = @_;
+	my ($ldap_handle, $sources_file, $session_id) = @_;
+	
+	# it should not be possible to trigger a recreation of packages_list_db
+	# while packages_list_db is under construction, so set flag packages_list_under_construction
+	# which is tested befor recreation can be started
+	if (-r $packages_list_under_construction) {
+		daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait until this process is finished", 3);
+		return;
+	} else {
+		daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
+		# set packages_list_under_construction to true
+		system("touch $packages_list_under_construction");
+		@packages_list_statements=undef;
+	}
 
 	if (not defined $session_id) { $session_id = 0; }
 	if (not defined $ldap_handle) { 
@@ -2060,69 +2077,61 @@ sub create_packages_list_db {
 
 		if (not defined $ldap_handle) {
 			daemon_log("$session_id ERROR: no ldap_handle available to create_packages_list_db", 1);
+    			unlink($packages_list_under_construction);
 			return;
 		}
 	}
-    if (not defined $sources_file) { 
-        &main::daemon_log("$session_id INFO: no sources_file given for creating packages list so trigger creation of it", 5); 
-        $sources_file = create_sources_list($session_id);
-    }
-
-    if (not defined $sources_file) {
-        &main::daemon_log("$session_id ERROR: no sources_file given under '$sources_file', skip create_packages_list_db", 1); 
-
-    }
-
-	# it should not be possible to trigger a recreation of packages_list_db
-	# while packages_list_db is under construction, so set flag packages_list_under_construction
-	# which is tested befor recreation can be started
-	if ($packages_list_under_construction) {
-			daemon_log("$session_id WARNING: packages_list_db is right now under construction, please wait untill this process is finished", 3);
-			return;
-	} else {
-			daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
-			# set packages_list_under_construction to true
-			$packages_list_under_construction = 1;
+	if (not defined $sources_file) { 
+		&main::daemon_log("$session_id INFO: no sources_file given for creating packages list so trigger creation of it", 5); 
+		$sources_file = &create_sources_list($session_id);
 	}
+
+	if (not defined $sources_file) {
+		&main::daemon_log("$session_id ERROR: no sources_file given under '$sources_file', skip create_packages_list_db", 1); 
+    		unlink($packages_list_under_construction);
+		return;
+	}
+
 	my $line;
 
-    open(CONFIG, "<$sources_file") or do {
-        daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
-        return;
-    };
-    
-    # Read lines
-    while ($line = <CONFIG>){
-        # Unify
-        chop($line);
-        $line =~ s/^\s+//;
-        $line =~ s/^\s+/ /;
+	open(CONFIG, "<$sources_file") or do {
+		daemon_log( "$session_id ERROR: create_packages_list_db: Failed to open '$sources_file'", 1);
+    		unlink($packages_list_under_construction);
+		return;
+	};
 
-        # Strip comments
-        $line =~ s/#.*$//g;
+	# Read lines
+	while ($line = <CONFIG>){
+		# Unify
+		chop($line);
+		$line =~ s/^\s+//;
+		$line =~ s/^\s+/ /;
 
-        # Skip empty lines
-        if ($line =~ /^\s*$/){
-            next;
-        }
+		# Strip comments
+		$line =~ s/#.*$//g;
 
-        # Interpret deb line
-        if ($line =~ /^deb [^\s]+\s[^\s]+\s[^\s]+/){
-            my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
-            my $section;
-            foreach $section (split(' ', $sections)){
-                &parse_package_info( $baseurl, $dist, $section, $session_id );
-            }
-        }
-    }
+		# Skip empty lines
+		if ($line =~ /^\s*$/){
+			next;
+		}
 
-    close (CONFIG);
+		# Interpret deb line
+		if ($line =~ /^deb [^\s]+\s[^\s]+\s[^\s]+/){
+			my( $baseurl, $dist, $sections ) = ($line =~ /^deb\s([^\s]+)\s+([^\s]+)\s+(.*)$/);
+			my $section;
+			foreach $section (split(' ', $sections)){
+				&parse_package_info( $baseurl, $dist, $section, $session_id );
+			}
+		}
+	}
 
-    daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
-	# set packages_list_under_construction to false
-	$packages_list_under_construction = 0;
+	close (CONFIG);
 
-    return;
+    	find(\&cleanup_and_extract, keys( %repo_dirs ));
+	$packages_list_db->exec_statementlist(\@packages_list_statements);
+    	unlink($packages_list_under_construction);
+	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
+	return;
 }
 
 
@@ -2139,7 +2148,6 @@ sub parse_package_info {
         parse_package( "$outdir/$dist/$section", $dist, $path, $session_id );
     }
     
-    find(\&cleanup_and_extract, keys( %repo_dirs ));
 }
 
 
@@ -2167,7 +2175,6 @@ sub parse_package {
     my ($path, $dist, $srv_path, $session_id)= @_;
     if (not defined $session_id) { $session_id = 0;}
     my ($package, $version, $section, $description);
-    my @sql_list;
     my $PACKAGES;
     my $timestamp = &get_time();
 
@@ -2191,7 +2198,7 @@ sub parse_package {
         # Use empty lines as a trigger
         if ($line =~ /^\s*$/){
             my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '$timestamp')";
-            push(@sql_list, $sql);
+            push(@packages_list_statements, $sql);
             $package = "none";
             $version = "none";
             $section = "none";
@@ -2234,9 +2241,6 @@ sub parse_package {
     close( $PACKAGES );
     unlink( "$path.in" );
     &main::daemon_log("$session_id DEBUG: unlink '$path.in'", 1); 
-    my $len_sql_list = @sql_list;
-    &main::daemon_log("$session_id DEBUG: add $len_sql_list insert-statements to packages_list_db", 5); 
-    $packages_list_db->exec_statementlist(\@sql_list);
 }
 
 
@@ -2285,7 +2289,7 @@ sub cleanup_and_extract {
             $sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
         }
 
-        my $res= $main::packages_list_db->update_dbentry($sql);
+        push @packages_list_statements, $sql;
     }
 
     return;
@@ -2371,6 +2375,7 @@ $fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
 
 # connect to packages_list_db
 unlink($packages_list_file_name);
+unlink($packages_list_under_construction);
 $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
 
