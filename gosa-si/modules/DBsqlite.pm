@@ -64,38 +64,38 @@ sub create_table {
 
 
 sub add_dbentry {
-    my $self = shift;
-    my $arg = shift;
-    my $res = 0;   # default value
+	my $self = shift;
+	my $arg = shift;
+	my $res = 0;   # default value
 
-    # if dbh not specified, return errorflag 1
-    my $table = $arg->{table};
-    if( not defined $table ) { 
-        return 1 ; 
-    }
+	# if dbh not specified, return errorflag 1
+	my $table = $arg->{table};
+	if( not defined $table ) { 
+		return 1 ; 
+	}
 
-    # if timestamp is not provided, add timestamp   
-    if( not exists $arg->{timestamp} ) {
-        $arg->{timestamp} = &get_time;
-    }
+	# if timestamp is not provided, add timestamp   
+	if( not exists $arg->{timestamp} ) {
+		$arg->{timestamp} = &get_time;
+	}
 
-    # check primkey and run insert or update
-    my $primkeys = $arg->{'primkey'};
-    my $prim_statement="";
-    if( 0 != @$primkeys ) {   # more than one primkey exist in list
-        my @prim_list;
+	# check primkey and run insert or update
+	my $primkeys = $arg->{'primkey'};
+	my $prim_statement="";
+	if( 0 != @$primkeys ) {   # more than one primkey exist in list
+		my @prim_list;
 		foreach my $primkey (@$primkeys) {
 			if( not exists $arg->{$primkey} ) {
 				return (3, "primkey '$primkey' has no value for add_dbentry");
 			}
 			push(@prim_list, "$primkey='".$arg->{$primkey}."'");
 		}
-        $prim_statement = "WHERE ".join(" AND ", @prim_list);
+		$prim_statement = "WHERE ".join(" AND ", @prim_list);
 
-        # check wether primkey is unique in table, otherwise return errorflag
-        my $sql_statement = "SELECT * FROM $table $prim_statement";
+		# check wether primkey is unique in table, otherwise return errorflag
+		my $sql_statement = "SELECT * FROM $table $prim_statement";
 		eval {
-	        $res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+			$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
 		};
 		if($@) {
 			$self->{dbh}->do("ANALYZE");
@@ -107,60 +107,74 @@ sub add_dbentry {
 			}
 		}
 
-    }
+	}
 
-	# primekey is unique or no primkey specified -> run insert
-    if ($res == 0) {
-        # fetch column names of table
-        my $col_names = &get_table_columns($self, $table);
+	# primkey is unique or no primkey specified -> run insert
+	if ($res == 0) {
+		# fetch column names of table
+		my $col_names = &get_table_columns($self, $table);
 
-        # assign values to column name variables
-        my @col_list;
+		my $create_id=0;
+		foreach my $col_name (@{$col_names}) {
+			if($col_name eq "id" && (! exists $arg->{$col_name})) {
+				&main::daemon_log("DEBUG: id field found without value! Creating autoincrement statement!");
+				$create_id=1;
+			}
+		}
+
+		# assign values to column name variables
+		my @col_list;
 		my @val_list;
-        foreach my $col_name (@{$col_names}) {
-            # use function parameter for column values
-            if (exists $arg->{$col_name}) {
-                    push(@col_list, "'".$col_name."'");
-                    push(@val_list, "'".$arg->{$col_name}."'");
-                }
-        }    
+		foreach my $col_name (@{$col_names}) {
+			# use function parameter for column values
+			if (exists $arg->{$col_name}) {
+				push(@col_list, "'".$col_name."'");
+				push(@val_list, "'".$arg->{$col_name}."'");
+			}
+		}    
 
-        my $sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
+		my $sql_statement;
+		if($create_id==1) {
+			$sql_statement = "INSERT INTO $table ('id', ".join(", ", @col_list).") VALUES ((select coalesce(max(id), 0)+1 from $table), ".join(", ", @val_list).")";
+		} else {
+			$sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
+		}
 		my $db_res;
 		eval {
-    		$db_res = $self->{dbh}->do($sql_statement);
+			$db_res = $self->{dbh}->do($sql_statement);
 		};
 		if($@) {
 			$self->{dbh}->do("ANALYZE");
 			eval {
-    			$db_res = $self->{dbh}->do($sql_statement);
+				$db_res = $self->{dbh}->do($sql_statement);
 			};
 			if($@) {
 				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 			}
 		}
 
-        if( $db_res != 1 ) {
-            return (4, $sql_statement);
-        } 
+		if( $db_res != 1 ) {
+			return (4, $sql_statement);
+		} 
 
-	# entry already exists -> run update
-    } else  {
-        my @update_l;
-        while( my ($pram, $val) = each %{$arg} ) {
-            if( $pram eq 'table' ) { next; }
-            if( $pram eq 'primkey' ) { next; }
-            push(@update_l, "$pram='$val'");
-        }
-        my $update_str= join(", ", @update_l);
-        $update_str= " SET $update_str";
+		# entry already exists -> run update
+	} else  {
+		my @update_l;
+		while( my ($pram, $val) = each %{$arg} ) {
+			if( $pram eq 'table' ) { next; }
+			if( $pram eq 'primkey' ) { next; }
+			push(@update_l, "$pram='$val'");
+		}
+		my $update_str= join(", ", @update_l);
+		$update_str= " SET $update_str";
 
-        my $sql_statement= "UPDATE $table $update_str $prim_statement";
-        my $db_res = &update_dbentry($self, $sql_statement );
-    }
+		my $sql_statement= "UPDATE $table $update_str $prim_statement";
+		my $db_res = &update_dbentry($self, $sql_statement );
+	}
 
-    return 0;
+	return 0;
 }
+
 
 sub update_dbentry {
     my ($self, $sql)= @_;
