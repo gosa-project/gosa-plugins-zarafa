@@ -274,18 +274,14 @@ class environment extends plugin
 
     $error = false;
     if(!in_array($this->gotoKioskProfile_Server, $this->gotoKioskProfiles['SERVERS'])){
-      $this->gotoKioskProfile_Server = key($this->gotoKioskProfiles['SERVERS']);
       $error = true;
-    }
-  
-    if(!in_array($this->gotoKioskProfile_Profile, $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
-      $this->gotoKioskProfile_Profile = $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server][0];
+    }elseif(!in_array($this->gotoKioskProfile_Profile, $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
       $error = true;
     }
     if($error && !empty($this->gotoKioskProfile)){
+      msg_dialog::display(_("Warning"), sprintf(_("Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk profile will be disabled!"), $this->gotoKioskProfile_Profile, $this->gotoKioskProfile_Server), WARNING_DIALOG);
       $this->gotoKioskProfile_Server ="none";
       $this->gotoKioskProfile_Profile="";
-      msg_dialog::display(_("Warning"), sprintf(_("Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk profile will be disabled!"), $this->gotoKioskProfile_Profile, $this->gotoKioskProfile_Server), WARNING_DIALOG);
     }
   }
 
