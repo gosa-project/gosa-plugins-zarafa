@@ -335,7 +335,7 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=TaskID'>"._("Task").$sort_img_2."</a>",
                                       "attach"=>"style='width:120px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Schedule'>"._("Schedule").$sort_img_3."</a>",
-                                      "attach"=>"style='width:100px;'"));
+                                      "attach"=>"style='width:140px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
                                       "attach"=>"style='width:80px;'"));
     $divlist->AddHeader(array("string"=>_("Action"),
@@ -475,7 +475,7 @@ class gotomasses extends plugin
                       "attach" => $tooltip."style='".$color."'");
       $field1a= array("string" => $display2,
                       "attach" => "style='".$color.";width:120px;'");
-      $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:100px;'");
+      $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
       $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
