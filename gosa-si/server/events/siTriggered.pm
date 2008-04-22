@@ -221,7 +221,7 @@ sub detected_hardware {
 				if(defined($entry->get_value($attribute))) {
 					$entry->delete($attribute);
 				}
-				foreach my $array_entry (@{$msg_hash->{detected_hardware}[0]->{$attribute}}) {
+				foreach my $array_entry (keys %{{map { $_ => 1 } sort(@{$msg_hash->{detected_hardware}[0]->{$attribute}}) }}) {
 					$entry->add($attribute => $array_entry);
 				}
 			}
