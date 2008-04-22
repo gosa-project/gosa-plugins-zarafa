@@ -1295,7 +1295,7 @@ sub watch_for_new_jobs {
 	foreach my $macaddress (keys %{$hits}) {
 		foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
 			my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
-			if(defined($job_db_id)) {
+			if(defined($jobdb_id)) {
 				my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
 				my $res = $job_db->exec_statement( $sql_statement );
 				foreach my $hit (@{$res}) {
