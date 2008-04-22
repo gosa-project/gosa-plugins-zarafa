@@ -27,9 +27,9 @@ class DaemonEvent_rescan extends DaemonEvent
     DaemonEvent::__construct($config,$data);
     $this->s_Menu_Name  = _("Rescan hardware"); 
     $this->s_Event_Name = _("Rescan hardware"); 
-    $this->s_Schedule_Action= "job_trigger_action_rescan";
-    $this->s_Trigger_Action = "gosa_trigger_action_rescan";
-    $this->s_Queued_Action  = "trigger_action_rescan";
+    $this->s_Schedule_Action= "job_detect_hardware";
+    $this->s_Trigger_Action = "gosa_detect_hardware";
+    $this->s_Queued_Action  = "detect_hardware";
     $this->s_Menu_Image = "images/snd_hardware.png";
     $this->s_List_Image = "images/snd_hardware.png";
   }
