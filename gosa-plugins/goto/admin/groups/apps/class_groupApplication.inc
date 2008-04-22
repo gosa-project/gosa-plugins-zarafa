@@ -807,6 +807,11 @@ class appgroup extends plugin
         $this->copied_release = $this->FAIrelease;
         break;
       }
+      if(preg_match("/^menu_delete/",$name)){
+        $current_rel  = $this->_get_release_key($this->FAIrelease); 
+        $this->_remove_entry_id($current_rel);
+        break;
+      }
       if(preg_match("/^menu_paste_/",$name)){
         $source_rel   = $this->_get_release_key($this->copied_release); 
         $current_rel  = $this->_get_release_key($this->FAIrelease);
@@ -819,6 +824,7 @@ class appgroup extends plugin
             $this->_add_entry($current_rel,$entry,-1);
           }
         }
+        $this->copied_release = "";
         break;
       }
 

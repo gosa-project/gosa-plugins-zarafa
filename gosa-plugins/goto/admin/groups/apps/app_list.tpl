@@ -14,6 +14,7 @@
 			{else}
 				<input type='image' src='images/lists/paste-grey.png' class='center'>
 			{/if}
+			<input type='image' src='images/lists/delete.png' class='center' name='menu_delete'>
 		</td>
 	</tr>
 	{/if}
