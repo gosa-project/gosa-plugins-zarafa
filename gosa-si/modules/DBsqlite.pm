@@ -84,12 +84,36 @@ sub add_dbentry {
     my $prim_statement="";
     if( 0 != @$primkeys ) {   # more than one primkey exist in list
         my @prim_list;
-        foreach my $primkey (@$primkeys) {
-            if( not exists $arg->{$primkey} ) {
-                return (3, "primkey '$primkey' has no value for add_dbentry");
-            }
-           push(@prim_list, "$primkey='".$arg->{$primkey}."'");
-        }
+		foreach my $primkey (@$primkeys) {
+			if($primkey eq 'id') {
+				# if primkey is id, fetch max id from table and give new job id=  max(id)+1
+				my $sql_statement = "SELECT MAX(CAST(id AS INTEGER)) FROM $table";
+				my $max_id;
+				eval {
+					$max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+				};
+				if($@) {
+					$self->{dbh}->do("ANALYZE");
+					eval {
+						$max_id = @{ @{ $self->{dbh}->selectall_arrayref($sql_statement) }[0] }[0];
+					};
+					if($@) {
+						&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+					}
+				}
+				my $id;
+				if( defined $max_id) {
+					$id = $max_id + 1;
+				} else {
+					$id = 1;
+				}
+				$arg->{id} = $id;
+			}
+			if( not exists $arg->{$primkey} ) {
+				return (3, "primkey '$primkey' has no value for add_dbentry");
+			}
+			push(@prim_list, "$primkey='".$arg->{$primkey}."'");
+		}
         $prim_statement = "WHERE ".join(" AND ", @prim_list);
 
         # check wether primkey is unique in table, otherwise return errorflag
