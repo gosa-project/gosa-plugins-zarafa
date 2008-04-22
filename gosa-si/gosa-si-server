@@ -2065,7 +2065,7 @@ sub create_packages_list_db {
 	}
     if (not defined $sources_file) { 
         &main::daemon_log("$session_id INFO: no sources_file given for creating packages list so trigger creation of it", 5); 
-        $sources_file = &create_sources_list($session_id);
+        $sources_file = create_sources_list($session_id);
     }
 
     if (not defined $sources_file) {
