@@ -236,7 +236,7 @@ sub get_host_from_ldap {
 	my $mac=shift;
 	my $result={};
 		
-    my $ldap_handle = &get_ldap_handle();     
+    my $ldap_handle = &main::get_ldap_handle();     
 	if(defined($ldap_handle)) {
 		my $ldap_result= &search_ldap_entry(
 			$ldap_handle,

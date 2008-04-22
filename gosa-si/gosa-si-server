@@ -1281,7 +1281,11 @@ sub watch_for_new_jobs {
 	foreach my $hit (reverse @{$res} ) {
 		my $macaddress= lc @{$hit}[8];
 		my $headertag= @{$hit}[5];
-		if(defined($hits->{$macaddress}->{$headertag})) {
+		if(
+			defined($hits->{$macaddress}) &&
+			defined($hits->{$macaddress}->{$headertag}) &&
+			defined($hits->{$macaddress}->{$headertag}[0])
+		) {
 			push @drops, "DELETE FROM $job_queue_tn WHERE id = '$hits->{$macaddress}->{$headertag}[0]'";
 		}
 		$hits->{$macaddress}->{$headertag}= $hit;
@@ -1291,10 +1295,14 @@ sub watch_for_new_jobs {
 	foreach my $macaddress (keys %{$hits}) {
 		foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
 			my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
-			my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
-			my $res = $job_db->exec_statement( $sql_statement );
-			foreach my $hit (@{$res}) {
-				push @drops, "DELETE FROM $job_queue_tn WHERE id = '$jobdb_id'";
+			if(defined($job_db_id)) {
+				my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
+				my $res = $job_db->exec_statement( $sql_statement );
+				foreach my $hit (@{$res}) {
+					push @drops, "DELETE FROM $job_queue_tn WHERE id = '$jobdb_id'";
+				}
+			} else {
+				daemon_log("J ERROR: Job without id exists for macaddress $macaddress!", 1);
 			}
 		}
 	}
@@ -2014,7 +2022,7 @@ sub create_sources_list {
 			}
 		}
 	} else {
-        &main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$ldap_server_dn', abort create_soureces_list", 1); 
+        &main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$ldap_server_dn', abort create_sources_list", 1); 
     }
 	close($fh);
 
