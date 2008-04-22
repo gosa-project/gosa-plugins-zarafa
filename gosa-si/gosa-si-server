@@ -108,6 +108,7 @@ $no_bus = 0;
 $bus_activ = "true";
 $no_arp = 0;
 my $packages_list_under_construction = 0;
+my $watch_for_new_job_in_progress = 0;
 
 our $prg= basename($0);
 
@@ -1268,91 +1269,97 @@ sub watch_for_done_jobs {
 }
 
 sub watch_for_new_jobs {
-	my ($kernel,$heap) = @_[KERNEL, HEAP];
+	if($watch_for_new_jobs_in_progress == 0) {
+		$watch_for_new_jobs_in_progress = 1;
+		my ($kernel,$heap) = @_[KERNEL, HEAP];
 
-	# check gosa job queue for jobs with executable timestamp
-	my $timestamp = &get_time();
-	my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER)) < $timestamp ORDER BY timestamp";
-	my $res = $job_db->exec_statement( $sql_statement );
-
-	# Merge all new jobs that would do the same actions
-	my @drops;
-	my $hits;
-	foreach my $hit (reverse @{$res} ) {
-		my $macaddress= lc @{$hit}[8];
-		my $headertag= @{$hit}[5];
-		if(
-			defined($hits->{$macaddress}) &&
-			defined($hits->{$macaddress}->{$headertag}) &&
-			defined($hits->{$macaddress}->{$headertag}[0])
-		) {
-			push @drops, "DELETE FROM $job_queue_tn WHERE id = '$hits->{$macaddress}->{$headertag}[0]'";
-		}
-		$hits->{$macaddress}->{$headertag}= $hit;
-	}
-
-	# Delete new jobs with a matching job in state 'processing'
-	foreach my $macaddress (keys %{$hits}) {
-		foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
-			my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
-			if(defined($jobdb_id)) {
-				my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
-				my $res = $job_db->exec_statement( $sql_statement );
-				foreach my $hit (@{$res}) {
-					push @drops, "DELETE FROM $job_queue_tn WHERE id = '$jobdb_id'";
-				}
-			} else {
-				daemon_log("J ERROR: Job without id exists for macaddress $macaddress!", 1);
-			}
-		}
-	}
-
-	# Commit deletion
-	$job_db->exec_statementlist(\@drops);
-
-	# Look for new jobs that could be executed
-	foreach my $macaddress (keys %{$hits}) {
-
-		# Look if there is an executing job
-		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='processing'";
+		# check gosa job queue for jobs with executable timestamp
+		my $timestamp = &get_time();
+		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER)) < $timestamp ORDER BY timestamp";
 		my $res = $job_db->exec_statement( $sql_statement );
 
-		# Skip new jobs for host if there is a processing job
-		if(defined($res) and defined @{$res}[0]) {
-			next;
+		# Merge all new jobs that would do the same actions
+		my @drops;
+		my $hits;
+		foreach my $hit (reverse @{$res} ) {
+			my $macaddress= lc @{$hit}[8];
+			my $headertag= @{$hit}[5];
+			if(
+				defined($hits->{$macaddress}) &&
+				defined($hits->{$macaddress}->{$headertag}) &&
+				defined($hits->{$macaddress}->{$headertag}[0])
+			) {
+				push @drops, "DELETE FROM $job_queue_tn WHERE id = '$hits->{$macaddress}->{$headertag}[0]'";
+			}
+			$hits->{$macaddress}->{$headertag}= $hit;
 		}
 
-		foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
-			my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
-			my $job_msg = @{$hits->{$macaddress}->{$jobdb_headertag}}[7];
-
-			daemon_log("J DEBUG: its time to execute $job_msg", 7);
-			my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$macaddress'";
-			my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
-
-			# expect macaddress is unique!!!!!!
-			my $target = $res_hash->{1}->{hostname};
-
-			# change header
-			$job_msg =~ s/<header>job_/<header>gosa_/;
-
-			# add sqlite_id
-			$job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
-
-			$job_msg =~ /<header>(\S+)<\/header>/;
-			my $header = $1 ;
-			my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");
-
-			# update status in job queue to 'processing'
-			$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
-			my $res = $job_db->update_dbentry($sql_statement);
-
-			# We don't want parallel processing
-			last;
+		# Delete new jobs with a matching job in state 'processing'
+		foreach my $macaddress (keys %{$hits}) {
+			foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
+				my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
+				if(defined($jobdb_id)) {
+					my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
+					my $res = $job_db->exec_statement( $sql_statement );
+					foreach my $hit (@{$res}) {
+						push @drops, "DELETE FROM $job_queue_tn WHERE id = '$jobdb_id'";
+					}
+				} else {
+					daemon_log("J ERROR: Job without id exists for macaddress $macaddress!", 1);
+				}
+			}
 		}
+
+		# Commit deletion
+		$job_db->exec_statementlist(\@drops);
+
+		# Look for new jobs that could be executed
+		foreach my $macaddress (keys %{$hits}) {
+
+			# Look if there is an executing job
+			my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='processing'";
+			my $res = $job_db->exec_statement( $sql_statement );
+
+			# Skip new jobs for host if there is a processing job
+			if(defined($res) and defined @{$res}[0]) {
+				next;
+			}
+
+			foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
+				my $jobdb_id = @{$hits->{$macaddress}->{$jobdb_headertag}}[0];
+				if(defined($jobdb_id)) {
+					my $job_msg = @{$hits->{$macaddress}->{$jobdb_headertag}}[7];
+
+					daemon_log("J DEBUG: its time to execute $job_msg", 7);
+					my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$macaddress'";
+					my $res_hash = $known_clients_db->select_dbentry( $sql_statement );
+
+					# expect macaddress is unique!!!!!!
+					my $target = $res_hash->{1}->{hostname};
+
+					# change header
+					$job_msg =~ s/<header>job_/<header>gosa_/;
+
+					# add sqlite_id
+					$job_msg =~ s/<\/xml>$/<jobdb_id>$jobdb_id<\/jobdb_id><\/xml>/;
+
+					$job_msg =~ /<header>(\S+)<\/header>/;
+					my $header = $1 ;
+					my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");
+
+					# update status in job queue to 'processing'
+					$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
+					my $res = $job_db->update_dbentry($sql_statement);
+
+					# We don't want parallel processing
+					last;
+				}
+			}
+		}
+
+		$watch_for_new_jobs_in_progress = 0;
+		$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	}
-
-	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 }
 
 
