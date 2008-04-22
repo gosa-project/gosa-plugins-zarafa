@@ -201,6 +201,8 @@ class logview extends plugin
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       } else {
 
+        @timezone::get_default_timezone();
+
         /* Assemble time query */
         switch ($logfilter['time']){
           case '0':
