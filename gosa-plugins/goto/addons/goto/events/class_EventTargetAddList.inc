@@ -41,7 +41,7 @@ class EventTargetAddList extends MultiSelectWindow
     MultiSelectWindow::MultiSelectWindow($config, "EventTargetAddList", 
         array("server",
           "workstation",
-          "ogroup"));
+          "ogroups"));
 
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
