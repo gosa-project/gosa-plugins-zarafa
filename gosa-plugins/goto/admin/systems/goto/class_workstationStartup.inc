@@ -371,7 +371,7 @@ class workstartup extends plugin
         }
 
         if((isset($this->FAIclassInfo[$_POST['FAIclassesSel']]['FAIpartitionTable']))&&($found>0)){
-          msg_dialog(_("Error"), _("There is already a profile containing a partition table in your configuration!") , ERROR_DIALOG);
+          msg_dialog::display(_("Error"), _("There is already a profile containing a partition table in your configuration!") , ERROR_DIALOG);
         }else{
           $this->FAIclass[$_POST['FAIclassesSel']]=$_POST['FAIclassesSel'];
         }
@@ -479,7 +479,7 @@ class workstartup extends plugin
     if((isset($_POST['gotoShareAdd'])) && ($this->acl_is_writeable("gotoShare"))) {
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
-        msg_dialog(_("Error"), msgPool::required(_("Mount point")), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::required(_("Mount point")), ERROR_DIALOG);
       }else{
         if(count($this->gotoAvailableShares)){
           $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
@@ -1320,9 +1320,9 @@ class workstartup extends plugin
       $res = shell_exec($cmd);
       $res2 = trim($res);
       if((!$res)){
-        msg_dialog(_("Configuration error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd), ERROR_DIALOG);
       }elseif(empty($res2)){
-        msg_dialog(_("Configuration error"), _("REPOSITORY_HOOK returned no result!"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), _("REPOSITORY_HOOK returned no result!"), ERROR_DIALOG);
       }else{
         $tmp = split("\n",$res);
         foreach($tmp as $line){

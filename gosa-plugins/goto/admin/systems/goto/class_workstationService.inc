@@ -76,7 +76,7 @@ class workservice extends plugin
         }
         //natcasesort($this->gotoXResolutions);
       }else{
-        msg_dialog(_("Configuration error"), msgPool::cannotReadFile($file), WARNING_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::cannotReadFile($file), WARNING_DIALOG);
       }
     }
 
