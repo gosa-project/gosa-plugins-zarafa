@@ -273,13 +273,16 @@ class environment extends plugin
     $this->gotoKioskProfile_Profile= preg_replace("/^.*\//","",$this->gotoKioskProfile);
 
     $error = false;
-    if(!in_array($this->gotoKioskProfile_Server, $this->gotoKioskProfiles['SERVERS'])){
+    if(!isset($this->gotoKioskProfiles['SERVERS'][$this->gotoKioskProfile_Server])){
       $error = true;
     }elseif(!in_array($this->gotoKioskProfile_Profile, $this->gotoKioskProfiles['BY_SERVER'][$this->gotoKioskProfile_Server])){
       $error = true;
     }
     if($error && !empty($this->gotoKioskProfile)){
       msg_dialog::display(_("Warning"), sprintf(_("Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk profile will be disabled!"), $this->gotoKioskProfile_Profile, $this->gotoKioskProfile_Server), WARNING_DIALOG);
+      $this->gotoKioskProfile_Server ="none";
+      $this->gotoKioskProfile_Profile="";
+    }elseif(empty($this->gotoKioskProfile)){
       $this->gotoKioskProfile_Server ="none";
       $this->gotoKioskProfile_Profile="";
     }
