@@ -6,18 +6,23 @@ my @events = (
     "krb5_list_principals",
     "krb5_list_policies",
     "krb5_get_principal",
-    "krb5_set_principal",
+    "krb5_create_principal",
+    "krb5_modify_principal",
+    "krb5_set_password",
     "krb5_del_principal",
     "krb5_get_policy",
-    "krb5_set_policy",
+    "krb5_create_policy",
+    "krb5_modify_policy",
     "krb5_del_policy",
     "answer_krb5_list_principals",
     "answer_krb5_list_policies",
     "answer_krb5_get_principal",
-    "answer_krb5_set_principal",
+    "answer_krb5_create_principal",
+    "answer_krb5_modify_principal",
     "answer_krb5_del_principal",
     "answer_krb5_get_policy",
-    "answer_krb5_set_policy",
+    "answer_krb5_create_policy",
+    "answer_krb5_modify_policy",
     "answer_krb5_del_policy",
    );
 @EXPORT = @events;
@@ -119,7 +124,13 @@ sub answer_krb5_get_principal {
     return ($msg);
 }
 
-sub answer_krb5_set_principal {
+sub answer_krb5_create_principal {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
+    return ($msg);
+}
+
+sub answer_krb5_modify_principal {
     my ($msg, $msg_hash, $session_id) = @_ ;
     $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
     return ($msg);
@@ -143,7 +154,13 @@ sub answer_krb5_get_policy {
     return ($msg);
 }
 
-sub answer_krb5_set_policy {
+sub answer_krb5_create_policy {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
+    return ($msg);
+}
+
+sub answer_krb5_modify_policy {
     my ($msg, $msg_hash, $session_id) = @_ ;
     $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
     return ($msg);
