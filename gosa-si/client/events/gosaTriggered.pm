@@ -70,6 +70,7 @@ sub trigger_action_localboot {
 
 sub trigger_action_faireboot {
     my ($msg, $msg_hash) = @_;
+	&main::daemon_log("DEBUG: run /usr/sbin/faireboot\n", 7); 
     system("/usr/sbin/faireboot");
     return;
 }
@@ -95,7 +96,7 @@ sub trigger_action_reboot {
         close(FILE);
     }
     else {
-    	#system( "/sbin/shutdown -r +$timeout &" );
+    	system( "/sbin/shutdown -r +$timeout &" );
     }
 
     return;
