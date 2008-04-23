@@ -45,7 +45,14 @@ sub krb5_list_principals {
 }
 
 
-sub krb5_set_principal {
+sub krb5_create_principal {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_modify_principal {
         my ($msg, $msg_hash, $session_id) = @_;
         $msg =~ s/gosa_krb5/krb5/g;
         return ( $msg );
@@ -80,7 +87,14 @@ sub krb5_get_policy {
 }
 
 
-sub krb5_set_policy {
+sub krb5_create_policy {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_modify_policy {
         my ($msg, $msg_hash, $session_id) = @_;
         $msg =~ s/gosa_krb5/krb5/g;
         return ( $msg );
