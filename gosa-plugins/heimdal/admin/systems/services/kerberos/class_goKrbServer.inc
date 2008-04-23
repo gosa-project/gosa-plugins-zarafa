@@ -8,7 +8,7 @@ class goKrbServer extends goService{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goKrbServer");
-  var $attributes       = array("goKrbRealm", "goKrbAdmin","goKrbPassword");
+  var $attributes       = array("goKrbRealm");
   var $StatusFlag       = "goKrbServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */
@@ -17,11 +17,11 @@ class goKrbServer extends goService{
   var $DisplayName      = "";
   var $dn               = NULL;
   var $goKrbServerStatus= "";
-  var $cn               ="";
-  var $goKrbRealm     = "";
-  var $goKrbAdmin     = "";
-  var $goKrbPassword  ="";  
-  var $view_logged  =FALSE;
+  var $cn               = "";
+  var $goKrbRealm       = "";
+  var $view_logged      = FALSE;
+
+  var $policies         = array();
  
   function goKrbServer(&$config,$dn)
   {
@@ -47,6 +47,25 @@ class goKrbServer extends goService{
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    $o = new gosaSupportDaemon();
+#    print_a($o->krb5_list_policies("00:01:6c:9d:aa:16"));
+#    print_a($o->krb5_list_principals("00:01:6c:9d:aa:16"));
+
+    $divlist = new divSelectBox("Kerberos Policies");
+    $action  = "<input type='image' src='images/lists/edit.png' class='center' name='policy_edit_%id'>";
+    $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
+    foreach($this->policies as $key => $policy){
+      $actions = preg_replace("/%id/",$key,$action);
+      $field1 = array("string" => $policy);
+      $field2 = array("string" => $policy);
+      $field3 = array("string" => $actions, 
+                      "attach"=>"style='width:40px; text-align:right; border:0px;'");
+
+      $divlist->AddEntry(array($field1,$field2,$field3));
+    }
+
+    $smarty->assign("divlist",$divlist->DrawList());
     return($smarty->fetch(get_template_path("goKrbServer.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -62,17 +81,9 @@ class goKrbServer extends goService{
   function check()
   { 
     $message = plugin::check();
-    /* goKrbPassword is a must field, if goKrbServer is used as objectClass */
-    if (empty($this->goKrbPassword)){
-      $message[]= msgPool::required(_("Password"));
-    }
-    if (empty($this->goKrbAdmin)){
-      $message[]= msgPool::required(_("Admin"));
-    }
     if (empty($this->goKrbRealm)){
       $message[]= msgPool::required(_("Realm"));
     }
-
     return($message);
   }
   
@@ -81,6 +92,29 @@ class goKrbServer extends goService{
   {
     if(isset($_POST['goKrbServerPosted'])){
       plugin::save_object();
+    }
+
+    /* */
+    if(isset($_POST['policy_add'])){
+      echo "add";
+      // $this->dialog = new krb5_policy($this->config,array());
+    }
+    foreach($_POST as $name => $value){
+      if(preg_match("/^policy_del/",$name)){
+        $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
+        if(isset($this->policies[$id])){
+          unset($this->policies[$id]);
+        }
+        break;
+      }
+      if(preg_match("/^policy_edit/",$name)){
+        $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
+        if(isset($this->policies[$id])){
+          echo "edit $id";
+        // $this->dialog = new krb5_policy($this->config,$this->policies[$id]);
+        }
+        break;
+      }
     }
   } 
 
@@ -97,9 +131,8 @@ class goKrbServer extends goService{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "goKrbRealm"    => _("Realm"), 
-            "goKrbAdmin"    => _("Admin"),
-            "goKrbPassword" => _("Password"))
+            "goKrbPolicy"   => _("Policies"),
+            "goKrbRealm"    => _("Realm")) 
           ));
   }
 }
