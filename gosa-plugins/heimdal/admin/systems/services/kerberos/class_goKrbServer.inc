@@ -27,6 +27,19 @@ class goKrbServer extends goService{
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Kerberos service");
+
+    /* Get configured policies 
+     */ 
+    $o = new gosaSupportDaemon();
+    $tmp = $o->krb5_list_policies("00:01:6c:9d:aa:16");
+    if($o->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+    }else{
+      $this->policies = array();
+      foreach($tmp as $policy){
+        $this->policies[] = array("NAME" => $policy,"STATUS" => "LOADED");
+      }
+    }
   }
 
 
@@ -48,15 +61,12 @@ class goKrbServer extends goService{
       $smarty->assign($attr,$this->$attr);
     }
 
-    $o = new gosaSupportDaemon();
-    $this->policies = $o->krb5_list_policies("00:01:6c:9d:aa:16");
-
     $divlist = new divSelectBox("Kerberos Policies");
     $action  = "<input type='image' src='images/lists/edit.png' class='center' name='policy_edit_%id'>";
     $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
     foreach($this->policies as $key => $policy){
       $actions = preg_replace("/%id/",$key,$action);
-      $field1 = array("string" => $policy);
+      $field1 = array("string" => $policy['NAME']);
       $field3 = array("string" => $actions, 
                       "attach"=>"style='width:40px; text-align:right; border:0px;'");
 
