@@ -958,7 +958,7 @@ sub update_jobdb_status_for_send_msgs {
             if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
-                    "WHERE id='$jobdb_id'";
+                    "WHERE id=$jobdb_id";
                 my $res = $job_db->update_dbentry($sql_statement);
             }
 
@@ -966,7 +966,7 @@ sub update_jobdb_status_for_send_msgs {
         } else {
             my $sql_statement = "UPDATE $job_queue_tn ".
                 "SET status='done' ".
-                "WHERE id='$jobdb_id' AND status='processed'";
+                "WHERE id=$jobdb_id AND status='processed'";
             my $res = $job_db->update_dbentry($sql_statement);
         }
     }
@@ -1263,8 +1263,8 @@ sub watch_for_done_jobs {
 
     while( my ($id, $hit) = each %{$res} ) {
         my $jobdb_id = $hit->{id};
-        my $sql_statement = "DELETE FROM $job_queue_tn WHERE id='$jobdb_id'"; 
-        my $res = $job_db->del_dbentry($sql_statement);
+        my $sql_statement = "DELETE FROM $job_queue_tn WHERE id=$jobdb_id"; 
+        my $res = $job_db->del_dbentry($sql_statement);	
     }
 
     $kernel->delay_set('watch_for_done_jobs',$job_queue_loop_delay);
@@ -1305,7 +1305,7 @@ sub watch_for_new_jobs {
 					my $sql_statement = "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND headertag='$jobdb_headertag' AND status='processing'";
 					my $res = $job_db->exec_statement( $sql_statement );
 					foreach my $hit (@{$res}) {
-						push @drops, "DELETE FROM $job_queue_tn WHERE id = '$jobdb_id'";
+						push @drops, "DELETE FROM $job_queue_tn WHERE id=$jobdb_id";
 					}
 				} else {
 					daemon_log("J ERROR: Job without id exists for macaddress $macaddress!", 1);
@@ -1351,8 +1351,9 @@ sub watch_for_new_jobs {
 					my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");
 
 					# update status in job queue to 'processing'
-					$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id='$jobdb_id'";
+					$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id=$jobdb_id";
 					my $res = $job_db->update_dbentry($sql_statement);
+# TODO: abfangen ob alles in ordnung ist oder nicht, wenn nicht error schmeißen					
 
 					# We don't want parallel processing
 					last;
