@@ -81,7 +81,7 @@ class divListMimeTypes extends MultiSelectWindow
 
 
     /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
+    $listhead = MultiSelectWindow::get_default_header(false);
     if(!$this->parent->IsReleaseManagementActivated()){
 
       /* Prepare departments,

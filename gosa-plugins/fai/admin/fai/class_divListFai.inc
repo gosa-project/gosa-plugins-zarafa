@@ -113,7 +113,7 @@ class divListFai extends MultiSelectWindow
     $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
 
     /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
+    $listhead = MultiSelectWindow::get_default_header(false);
 
     /* Add additional seperator */
     if($add_sep){
