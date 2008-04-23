@@ -8,13 +8,13 @@
 				<option value="{$key}" {if $key == $FAIrelease} selected {/if}>{$item.name} </option>
 			{/foreach}
 			</select>
-			<input type='image' src='images/lists/copy.png' class='center' name='menu_copy'>
+			<input type='image' src='images/lists/copy.png' title='{t}Copy menu{/t}' class='center' name='menu_copy'>
 			{if $copied}
-				<input type='image' src='images/lists/paste.png' title='{t}Paste menu structure{/t}&nbsp;- {$copy_source}' class='center' name='menu_paste'>
+				<input type='image' src='images/lists/paste.png' title='{t}Paste menu from{/t}&nbsp;{$copy_source}' class='center' name='menu_paste'>
 			{else}
 				<input type='image' src='images/lists/paste-grey.png' class='center'>
 			{/if}
-			<input type='image' src='images/lists/delete.png' class='center' name='menu_delete'>
+			<input type='image' src='images/lists/delete.png' title='{t}Delete menu{/t}' class='center' name='menu_delete'>
 		</td>
 	</tr>
 	{/if}
