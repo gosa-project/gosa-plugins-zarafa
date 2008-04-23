@@ -37,7 +37,7 @@ class goKrbServer extends goService{
     }else{
       $this->policies = array();
       foreach($tmp as $policy){
-        $this->policies[] = array("NAME" => $policy,"STATUS" => "LOADED");
+        $this->policies[] = array("NAME" => $policy,"STATUS" => "LOADED","DATA" => array());
       }
     }
   }
@@ -47,10 +47,73 @@ class goKrbServer extends goService{
   { 
     $smarty = get_smarty(); 
 
-    if($this->is_account && !$this->view_logged){
+    if(!$this->view_logged){
       $this->view_logged = TRUE;
       new log("view","server/".get_class($this),$this->dn);
     }
+
+    /*******  
+      Display sub dialogs
+     *******/
+
+    /* Add new Policy requested 
+     */
+    if(isset($_POST['policy_add'])){
+      $this->dialog = new krb5_policy($this->config,array());
+    }
+
+
+    /* Walk through POSTs an check for image-button posts 
+     */
+    foreach($_POST as $name => $value){
+
+      /* Remove policy requested 
+       */
+      if(preg_match("/^policy_del/",$name)){
+        $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
+        if(isset($this->policies[$id])){
+          $this->policies[$id]['STATUS'] = "REMOVED";
+        }
+        break;
+      }
+
+      /* Edit Policy requested 
+       */
+      if(preg_match("/^policy_edit/",$name)){
+        $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
+        if(isset($this->policies[$id])){
+           
+          /* Load policy information, if not done before 
+           */ 
+          if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
+            $o = new gosaSupportDaemon();
+            $this->policies[$id]['DATA'] = $o->krb5_get_policy("00:01:6c:9d:aa:16",$this->policies[$id]['NAME']);
+          }
+
+          /* Open dialog */ 
+          $this->dialog = new krb5_policy($this->config,$this->policies[$id]);
+        }
+        break;
+      }
+    }
+
+  
+    if(isset($_POST['cancel_policy'])){
+      $this->dialog = NULL;
+    }
+    if(isset($_POST['save_policy'])){
+      $this->dialog->save_object();
+      echo "NYI";
+      $this->dialog = NULL;
+    }
+    if($this->dialog instanceof krb5_policy){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    } 
+
+    /*******
+      Create HTML output for this plugin
+     *******/  
 
     $tmp = $this->plinfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
@@ -101,32 +164,10 @@ class goKrbServer extends goService{
     if(isset($_POST['goKrbServerPosted'])){
       plugin::save_object();
     }
-
-    /* */
-    if(isset($_POST['policy_add'])){
-      echo "add";
-      // $this->dialog = new krb5_policy($this->config,array());
-    }
-    foreach($_POST as $name => $value){
-      if(preg_match("/^policy_del/",$name)){
-        $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
-        if(isset($this->policies[$id])){
-          unset($this->policies[$id]);
-        }
-        break;
-      }
-      if(preg_match("/^policy_edit/",$name)){
-        $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
-        if(isset($this->policies[$id])){
-          echo "edit $id";
-        // $this->dialog = new krb5_policy($this->config,$this->policies[$id]);
-        }
-        break;
-      }
-    }
   } 
 
-    /* Return plugin informations for acl handling */
+
+  /* Return plugin informations for acl handling */
   static function plInfo()
   {
     return (array(
