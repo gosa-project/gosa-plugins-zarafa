@@ -208,7 +208,7 @@ sub detected_hardware {
 			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
 				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
 				if(defined($entry->get_value($attribute))) {
-					$entry->delete($attribute);
+					$entry->delete($attribute => []);
 				}
 				&main::daemon_log("INFO: Adding attribute $attribute with value ".$msg_hash->{detected_hardware}[0]->{$attribute},5);
 				$entry->add($attribute => $msg_hash->{detected_hardware}[0]->{$attribute});	
@@ -219,7 +219,7 @@ sub detected_hardware {
 			if(defined($msg_hash->{detected_hardware}[0]->{$attribute}) &&
 				length($msg_hash->{detected_hardware}[0]->{$attribute}) >0 ) {
 				if(defined($entry->get_value($attribute))) {
-					$entry->delete($attribute);
+					$entry->delete($attribute => []);
 				}
 				foreach my $array_entry (keys %{{map { $_ => 1 } sort(@{$msg_hash->{detected_hardware}[0]->{$attribute}}) }}) {
 					$entry->add($attribute => $array_entry);
