@@ -56,12 +56,11 @@ class goKrbServer extends goService{
     $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
     foreach($this->policies as $key => $policy){
       $actions = preg_replace("/%id/",$key,$action);
-      $field1 = array("string" => $policy['POLICY']);
-      $field2 = array("string" => "Fasel bla ");
+      $field1 = array("string" => $policy);
       $field3 = array("string" => $actions, 
                       "attach"=>"style='width:40px; text-align:right; border:0px;'");
 
-      $divlist->AddEntry(array($field1,$field2,$field3));
+      $divlist->AddEntry(array($field1,$field3));
     }
 
     $smarty->assign("divlist",$divlist->DrawList());
