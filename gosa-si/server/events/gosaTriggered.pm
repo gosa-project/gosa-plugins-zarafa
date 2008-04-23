@@ -31,7 +31,15 @@ my @events = (
     "recreate_fai_release_db",
     "recreate_packages_list_db",
     "send_user_msg", 
-	"get_available_kernel",
+    "get_available_kernel",
+    "krb5_list_principals",
+    "krb5_list_policies",
+    "krb5_get_principal",
+    "krb5_set_principal",
+    "krb5_del_principal",
+    "krb5_get_policy",
+    "krb5_set_policy",
+    "krb5_del_policy",
     );
 @EXPORT = @events;
 
@@ -247,9 +255,6 @@ sub recreate_fai_release_db {
 sub recreate_packages_list_db {
 	my ($msg, $msg_hash, $session_id) = @_ ;
 	my $out_msg;
-	my $header = @{$msg_hash->{'header'}}[0];
-	my $source = @{$msg_hash->{'source'}}[0];
-	my $target = @{$msg_hash->{'target'}}[0];
 
 	my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
 	if( defined $jobdb_id) {
@@ -258,7 +263,7 @@ sub recreate_packages_list_db {
 		my $res = $main::job_db->exec_statement($sql_statement);
 	}
 
-	&main::create_packages_list_db(undef,undef,undef);
+	&main::create_packages_list_db;
 
 	my @out_msg_l = ( $out_msg );
 	return @out_msg_l;
@@ -713,6 +718,62 @@ sub get_available_kernel {
 
         my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
         return ( $out_msg );
+}
+
+
+sub krb5_list_principals {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_set_principal {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_get_principal {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_del_principal {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_list_policies {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_get_policy {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_set_policy {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+
+sub krb5_del_policy {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
 }
 
 
