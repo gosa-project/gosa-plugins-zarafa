@@ -42,7 +42,7 @@ class divListApplication extends MultiSelectWindow
 
 
     /* Toggle all selected / deselected */
-    $chk = "<input type='checkbox' id='select_all' name='select_all'
+    $chk = "<input type='checkbox' id='select_all' name='select_all' title="._("Select all")."
                onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
 
     /* set Page header */
@@ -83,7 +83,7 @@ class divListApplication extends MultiSelectWindow
     $options= "";
 
     /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
+    $listhead = MultiSelectWindow::get_default_header(false);
 
     if(!$this->parent->IsReleaseManagementActivated()){
       
@@ -186,7 +186,6 @@ class divListApplication extends MultiSelectWindow
     }
 
     $this->SetDropDownHeaderMenu($s);
-    $this->SetListHeader($listhead);
     $this->SetListHeader($listhead);
   }
 
