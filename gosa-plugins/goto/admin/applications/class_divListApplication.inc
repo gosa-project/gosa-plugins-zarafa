@@ -42,7 +42,7 @@ class divListApplication extends MultiSelectWindow
 
 
     /* Toggle all selected / deselected */
-    $chk = "<input type='checkbox' id='select_all' name='select_all' title="._("Select all")."
+    $chk = "<input type='checkbox' id='select_all' name='select_all' title='"._("Select all")."'
                onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
 
     /* set Page header */
