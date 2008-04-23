@@ -7,7 +7,8 @@ class krb5_policy extends plugin
   var $data   = array();
   var $is_new = TRUE;
   var $config;
-  var $attributes = array("MASK","POLICY_REFCNT","PW_HISTORY_NUM","PW_MAX_LIFE","PW_MIN_CLASSES","PW_MIN_LENGTH","PW_MIN_LIFE");
+  var $attributes = array("MASK","POLICY","PW_HISTORY_NUM","PW_MAX_LIFE",
+      "PW_MIN_CLASSES","PW_MIN_LENGTH","PW_MIN_LIFE","REF_COUNT");
 
 	public function __construct($config,$entry = array())
 	{
