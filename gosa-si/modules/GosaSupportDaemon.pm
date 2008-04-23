@@ -264,7 +264,12 @@ sub get_where_statement {
                 my @xml_tags = keys %{$phrase};
                 my $tag = $xml_tags[0];
                 my $val = $phrase->{$tag}[0];
-                push(@phrase_l, "$tag$operator'$val'");
+				# integer columns do not have to have single quotes besides the value
+				if ($tag eq "id") {
+						push(@phrase_l, "$tag$operator$val");
+				} else {
+						push(@phrase_l, "$tag$operator'$val'");
+				}
             }
             my $clause_str .= join(" $connector ", @phrase_l);
             push(@clause_l, "($clause_str)");

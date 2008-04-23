@@ -10,7 +10,7 @@ for($count = 1; $count <= $zahl; $count++)
 {
 
   $sock = new Socket_Client("127.0.0.1","20081",TRUE,1);
-  $sock->setEncryptionKey("secret-gosa-password");
+  $sock->setEncryptionKey("UldOjon9gra");
 
   if($sock->connected()){
 
@@ -21,7 +21,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>19700101000000</timestamp> </xml>";
 
     # jobdb delete
-    #$data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>1</id></phrase></clause></where></xml>";
+    $data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
     # smbhash
     #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
@@ -99,7 +99,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     #########
     # Kerberos test query
-    $data = "<xml> <header>gosa_krb5_list_principals</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source></xml>"; 
+    #$data = "<xml> <header>gosa_krb5_list_principals</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source></xml>"; 
 
     $sock->write($data);
     $answer = "nothing";
