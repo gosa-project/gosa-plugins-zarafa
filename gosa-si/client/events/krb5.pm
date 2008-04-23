@@ -1,4 +1,4 @@
-package kerberos;
+package krb5;
 use Exporter;
 @ISA = qw(Exporter);
 my @events = (
