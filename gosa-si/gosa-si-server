@@ -1292,7 +1292,7 @@ sub watch_for_new_jobs {
 				defined($hits->{$macaddress}->{$headertag}) &&
 				defined($hits->{$macaddress}->{$headertag}[0])
 			) {
-				push @drops, "DELETE FROM $job_queue_tn WHERE id = '$hits->{$macaddress}->{$headertag}[0]'";
+				push @drops, "DELETE FROM $job_queue_tn WHERE id = $hits->{$macaddress}->{$headertag}[0]";
 			}
 			$hits->{$macaddress}->{$headertag}= $hit;
 		}
