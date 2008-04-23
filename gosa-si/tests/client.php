@@ -9,7 +9,7 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  $sock = new Socket_Client("127.0.0.1","20081",TRUE,1);
+  $sock = new Socket_Client("10.3.67.111","20081",TRUE,5);
   $sock->setEncryptionKey("UldOjon9gra");
 
   if($sock->connected()){
@@ -99,7 +99,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     #########
     # Kerberos test query
-    #$data = "<xml> <header>gosa_krb5_list_principals</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source></xml>"; 
+    $data = "<xml> <header>gosa_krb5_get_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>cajus@WIRECARD.SYS</principal><source>GOSA</source></xml>"; 
 
     $sock->write($data);
     $answer = "nothing";
