@@ -30,7 +30,7 @@ sub get_events {
     return \@events;
 }
 
-
+    
 sub krb5_list_principals {
         my ($msg, $msg_hash, $session_id) = @_;
         $msg =~ s/gosa_krb5/krb5/g;
