@@ -83,7 +83,6 @@ for($count = 1; $count <= $zahl; $count++)
     # messaging 
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>admin</from> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
 
-
     ################
     # logHandling.pm
     # all date and mac parameter accept regular expression as input unless other instructions are given
@@ -99,11 +98,8 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_get_log_file_by_date_and_mac</header> <target>GOSA</target> <source>GOSA</source> <date>install_20080311_090900</date> <mac>00:01:6c:9d:b9:fa</mac> <log_file>boot.log</log_file></xml>"; 
 
     #########
-    # testing
-    #$data = "<xml> <header>gosa_query_packages_list</header><source>GOSA</source> <target>GOSA</target></xml>";
-
     # Kerberos test query
-    $data = "<xml> <header>gosa_krb5_list_principals</header> <target>00:0C:29:DD:CD:2A</target> <source>GOSA</source></xml>"; 
+    $data = "<xml> <header>gosa_krb5_list_principals</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source></xml>"; 
 
     $sock->write($data);
     $answer = "nothing";

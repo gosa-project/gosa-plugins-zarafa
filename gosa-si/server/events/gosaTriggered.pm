@@ -32,14 +32,6 @@ my @events = (
     "recreate_packages_list_db",
     "send_user_msg", 
     "get_available_kernel",
-    "krb5_list_principals",
-    "krb5_list_policies",
-    "krb5_get_principal",
-    "krb5_set_principal",
-    "krb5_del_principal",
-    "krb5_get_policy",
-    "krb5_set_policy",
-    "krb5_del_policy",
     );
 @EXPORT = @events;
 
@@ -718,62 +710,6 @@ sub get_available_kernel {
 
         my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
         return ( $out_msg );
-}
-
-
-sub krb5_list_principals {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_set_principal {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_get_principal {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_del_principal {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_list_policies {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_get_policy {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_set_policy {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
-}
-
-
-sub krb5_del_policy {
-        my ($msg, $msg_hash, $session_id) = @_;
-        $msg =~ s/gosa_krb5/krb5/g;
-        return ( $msg );
 }
 
 

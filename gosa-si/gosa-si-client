@@ -916,7 +916,7 @@ sub import_events {
 
     while (defined (my $event = readdir (DIR))) {
         if( $event eq "." || $event eq ".." ) { next; }    
-
+        daemon_log("INFO: found event module: $event", 5); 
         eval{ require $event; };
         if( $@ ) {
             daemon_log("ERROR: import of event module '$event' failed", 1);
