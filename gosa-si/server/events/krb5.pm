@@ -24,6 +24,7 @@ my @events = (
     "answer_krb5_create_policy",
     "answer_krb5_modify_policy",
     "answer_krb5_del_policy",
+    "answer_krb5_set_password",
    );
 @EXPORT = @events;
 
@@ -44,6 +45,12 @@ sub get_events {
 
     
 sub krb5_list_principals {
+        my ($msg, $msg_hash, $session_id) = @_;
+        $msg =~ s/gosa_krb5/krb5/g;
+        return ( $msg );
+}
+
+sub krb5_set_password {
         my ($msg, $msg_hash, $session_id) = @_;
         $msg =~ s/gosa_krb5/krb5/g;
         return ( $msg );
@@ -167,6 +174,12 @@ sub answer_krb5_modify_policy {
 }
 
 sub answer_krb5_del_policy {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
+    return ($msg);
+}
+
+sub answer_krb5_set_password {
     my ($msg, $msg_hash, $session_id) = @_ ;
     $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/g;
     return ($msg);
