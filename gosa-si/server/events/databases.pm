@@ -119,7 +119,7 @@ sub delete_jobdb_entry {
     my $table= $main::job_queue_tn;
     my $where= &get_where_statement($msg, $msg_hash);
     my $sql_statement = "DELETE FROM $table $where";
-    
+   	&main::daemon_log("$session_id DEBUG: $sql_statement",7);
     # execute db query
     my $db_res = $main::job_db->del_dbentry($sql_statement);
 
