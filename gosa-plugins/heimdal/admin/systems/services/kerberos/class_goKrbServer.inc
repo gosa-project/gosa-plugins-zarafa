@@ -49,16 +49,15 @@ class goKrbServer extends goService{
     }
 
     $o = new gosaSupportDaemon();
-#    print_a($o->krb5_list_policies("00:01:6c:9d:aa:16"));
-#    print_a($o->krb5_list_principals("00:01:6c:9d:aa:16"));
+    $this->policies = $o->krb5_list_policies("00:01:6c:9d:aa:16");
 
     $divlist = new divSelectBox("Kerberos Policies");
     $action  = "<input type='image' src='images/lists/edit.png' class='center' name='policy_edit_%id'>";
     $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
     foreach($this->policies as $key => $policy){
       $actions = preg_replace("/%id/",$key,$action);
-      $field1 = array("string" => $policy);
-      $field2 = array("string" => $policy);
+      $field1 = array("string" => $policy['POLICY']);
+      $field2 = array("string" => "Fasel bla ");
       $field3 = array("string" => $actions, 
                       "attach"=>"style='width:40px; text-align:right; border:0px;'");
 
