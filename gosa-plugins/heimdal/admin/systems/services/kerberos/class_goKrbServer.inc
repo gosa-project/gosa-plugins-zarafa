@@ -22,6 +22,7 @@ class goKrbServer extends goService{
   var $view_logged      = FALSE;
 
   var $policies         = array();
+  var $id               = -1;
  
   function goKrbServer(&$config,$dn)
   {
@@ -56,56 +57,27 @@ class goKrbServer extends goService{
       Display sub dialogs
      *******/
 
-    /* Add new Policy requested 
+    /*  CANCEL Policy dialog 
      */
-    if(isset($_POST['policy_add'])){
-      $this->dialog = new krb5_policy($this->config,array());
-    }
-
-
-    /* Walk through POSTs an check for image-button posts 
-     */
-    foreach($_POST as $name => $value){
-
-      /* Remove policy requested 
-       */
-      if(preg_match("/^policy_del/",$name)){
-        $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
-        if(isset($this->policies[$id])){
-          $this->policies[$id]['STATUS'] = "REMOVED";
-        }
-        break;
-      }
-
-      /* Edit Policy requested 
-       */
-      if(preg_match("/^policy_edit/",$name)){
-        $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
-        if(isset($this->policies[$id])){
-           
-          /* Load policy information, if not done before 
-           */ 
-          if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
-            $o = new gosaSupportDaemon();
-            $this->policies[$id]['DATA'] = $o->krb5_get_policy("00:01:6c:9d:aa:16",$this->policies[$id]['NAME']);
-          }
-
-          /* Open dialog */ 
-          $this->dialog = new krb5_policy($this->config,$this->policies[$id]);
-        }
-        break;
-      }
-    }
-
-  
     if(isset($_POST['cancel_policy'])){
       $this->dialog = NULL;
     }
-    if(isset($_POST['save_policy'])){
+    
+    /*  SAVE Policy dialog 
+     */
+    if($this->dialog instanceof krb5_policy && isset($_POST['save_policy'])){
       $this->dialog->save_object();
-      echo "NYI";
-      $this->dialog = NULL;
+      $msgs = $this->dialog->check();
+      if(count($msgs)){
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $this->AddPolicy($this->id,$this->dialog->save());
+        $this->dialog = NULL;
+      }
     }
+
+    /* DISPLAY policy dialog
+     */
     if($this->dialog instanceof krb5_policy){
       $this->dialog->save_object();
       return($this->dialog->execute());
@@ -128,6 +100,8 @@ class goKrbServer extends goService{
     $action  = "<input type='image' src='images/lists/edit.png' class='center' name='policy_edit_%id'>";
     $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
     foreach($this->policies as $key => $policy){
+      if($policy['STATUS'] == "REMOVED") continue;
+  
       $actions = preg_replace("/%id/",$key,$action);
       $field1 = array("string" => $policy['NAME']);
       $field3 = array("string" => $actions, 
@@ -159,10 +133,122 @@ class goKrbServer extends goService{
   }
   
 
+
+  function AddPolicy($id,$policy)
+  {
+    if($id != -1 && $this->policies[$id]['NAME'] == $policy['NAME']){
+
+      /* Policy was edited 
+       */
+      if($this->policies[$id]['STATUS'] == "LOADED"){
+        $policy['STATUS'] = "EDITED";
+      }else{
+        $policy['STATUS'] = $this->policies[$id]['STATUS'];
+      }
+      $this->policies[$this->id] = $policy;
+
+    }elseif($id != -1 && $this->policies[$id]['NAME'] != $policy['NAME']){
+
+      /* Policy was renamed, remove old and add new policy  
+       */
+      $this->RemovePolicy($id);
+      $this->AddPolicy(-1,$policy);
+    }else{
+
+      /* Policy was added 
+       */
+      $name = $policy['NAME'];
+    
+      /* Check if there is already a policy with this name 
+          which was removed before
+       */
+      foreach($this->policies as $pid => $entry){
+        if($entry['NAME'] == $name && $entry['STATUS'] == "REMOVED"){
+          $id = $pid;
+          break;
+        }
+      }
+       
+      /* Update existing policy or create new one
+       */ 
+      if(isset($this->policies[$id])){
+        $policy['STATUS'] = "EDITED";
+        $this->policies[$id] = $policy;
+      }else{
+        $policy['STATUS'] = "ADDED";
+        $this->policies[] = $policy;
+      }
+    }
+  }
+
+
+  function getPolicyNames()
+  {
+    $ret = array();
+    foreach($this->policies as $policy){
+      if($policy['STATUS'] == "REMOVED") continue;
+      $ret[] = $policy['NAME'];
+    }
+    return($ret);
+  }
+
+  
+  function RemovePolicy($id)
+  {
+    if($this->policies[$id]['STATUS'] == "ADDED"){
+      unset($this->policies[$id]);
+    }else{
+      $this->policies[$id]['STATUS'] = "REMOVED";
+    }
+  }  
+  
+
   function save_object()
   {
     if(isset($_POST['goKrbServerPosted'])){
       plugin::save_object();
+
+      /* Add new Policy requested 
+       */
+      if(isset($_POST['policy_add'])){
+        $this->dialog = new krb5_policy($this->config,array(),&$this);
+        $this->id = -1;
+      }
+
+      /* Walk through POSTs an check for image-button posts 
+       */
+      foreach($_POST as $name => $value){
+
+        /* Remove policy requested 
+         */
+        if(preg_match("/^policy_del/",$name)){
+          $id = preg_replace("/^policy_del_([0-9]*)_.*/i","\\1",$name);
+          if(isset($this->policies[$id])){
+            $this->RemovePolicy($id);
+          }
+          break;
+        }
+
+        /* Edit Policy requested 
+         */
+        if(preg_match("/^policy_edit/",$name)){
+          $id = preg_replace("/^policy_edit_([0-9]*)_.*/i","\\1",$name);
+          if(isset($this->policies[$id])){
+
+            /* Load policy information, if not done before 
+             */ 
+            if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
+              $o = new gosaSupportDaemon();
+              $this->policies[$id]['DATA'] = $o->krb5_get_policy("00:01:6c:9d:aa:16",$this->policies[$id]['NAME']);
+            }
+
+            /* Open dialog */
+            $this->id = $id;
+            $this->dialog = new krb5_policy($this->config,$this->policies[$id],&$this);
+          }
+          break;
+        }
+      }
     }
   } 
 
