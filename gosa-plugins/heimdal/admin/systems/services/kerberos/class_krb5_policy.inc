@@ -20,6 +20,10 @@ class krb5_policy extends plugin
       $this->is_new =FALSE;
       $this->name = $entry['NAME'];
       $this->data = $entry['DATA'];
+    }else{
+      foreach($this->attributes as $attr){
+        $this->data[$attr] = 0;
+      }
     }
     $this->init_name = $this->name;
 	}

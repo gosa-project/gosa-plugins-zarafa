@@ -23,8 +23,9 @@ class goKrbServer extends goService{
 
   var $policies         = array();
   var $id               = -1;
+  var $macAddress       = "00:01:6c:9d:aa:16" ;
  
-  function goKrbServer(&$config,$dn)
+  public function goKrbServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Kerberos service");
@@ -32,9 +33,9 @@ class goKrbServer extends goService{
     /* Get configured policies 
      */ 
     $o = new gosaSupportDaemon();
-    $tmp = $o->krb5_list_policies("00:01:6c:9d:aa:16");
+    $tmp = $o->krb5_list_policies($this->macAddress);
     if($o->is_error()){
-      msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
     }else{
       $this->policies = array();
       foreach($tmp as $policy){
@@ -44,7 +45,10 @@ class goKrbServer extends goService{
   }
 
 
-  function execute()
+  /*! \brief Create HTML output
+      @return String HMTL output.
+   */
+  public function execute()
   { 
     $smarty = get_smarty(); 
 
@@ -115,7 +119,10 @@ class goKrbServer extends goService{
   }
 
 
-  function getListEntry()
+  /* \brief  Return serice informations, which will be shown in the service overview.
+     @return  Array  Some service information.
+   */
+  public function getListEntry()
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Kerberos service (kadmin access informations)");
@@ -123,7 +130,11 @@ class goKrbServer extends goService{
     return($fields);
   }
 
-  function check()
+  
+  /*! \brief Checks if all given values are valid 
+      @return Array   An array containing all error messages.
+   */
+  public function check()
   { 
     $message = plugin::check();
     if (empty($this->goKrbRealm)){
@@ -133,8 +144,11 @@ class goKrbServer extends goService{
   }
   
 
-
-  function AddPolicy($id,$policy)
+  /*! \brief Adds or updated a given policy.
+      @param  Integer ID  The policy to update, or -1 if it is a new one.
+      @param  Array  The policy settings.
+   */
+  public function AddPolicy($id,$policy)
   {
     if($id != -1 && $this->policies[$id]['NAME'] == $policy['NAME']){
 
@@ -182,7 +196,10 @@ class goKrbServer extends goService{
   }
 
 
-  function getPolicyNames()
+  /*! \brief  Returns all used policy names.
+      @return Array A list of used policy names.
+   */
+  public function getPolicyNames()
   {
     $ret = array();
     foreach($this->policies as $policy){
@@ -192,8 +209,11 @@ class goKrbServer extends goService{
     return($ret);
   }
 
-  
-  function RemovePolicy($id)
+ 
+  /*! \brief  Marks a policy as remvoed 
+      @param  Integer the Id of the policy to remove 
+   */ 
+  public function RemovePolicy($id)
   {
     if($this->policies[$id]['STATUS'] == "ADDED"){
       unset($this->policies[$id]);
@@ -203,7 +223,9 @@ class goKrbServer extends goService{
   }  
   
 
-  function save_object()
+  /*! \brief  Save POSTed html variables
+   */
+  public function save_object()
   {
     if(isset($_POST['goKrbServerPosted'])){
       plugin::save_object();
@@ -239,7 +261,7 @@ class goKrbServer extends goService{
              */ 
             if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
               $o = new gosaSupportDaemon();
-              $this->policies[$id]['DATA'] = $o->krb5_get_policy("00:01:6c:9d:aa:16",$this->policies[$id]['NAME']);
+              $this->policies[$id]['DATA'] = $o->krb5_get_policy($this->macAddress,$this->policies[$id]['NAME']);
             }
 
             /* Open dialog */
@@ -253,7 +275,53 @@ class goKrbServer extends goService{
   } 
 
 
-  /* Return plugin informations for acl handling */
+  /*! \brief Save changes to ldap
+   */
+  public function save()
+  {
+    goService::save();
+
+    /* Send policy changes back to the si daemon 
+     */
+    $actions = array("del" => array(),"add" => array(),"edit"=>array());
+    foreach($this->policies as $policy){
+      switch($policy['STATUS']){
+        case "REMOVED" : $actions['del'] [] = $policy;break; 
+        case "ADDED"   : $actions['add'] [] = $policy;break; 
+        case "EDITED"  : $actions['edit'][] = $policy;break; 
+      }
+    }
+
+    $o = new gosaSupportDaemon();
+    /* Send remove policy event  
+     */
+    foreach($actions['del'] as $policy){
+      if(!$o->krb5_del_policy($this->macAddress,$policy['NAME'])){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }
+    }
+    
+    /* Send add new policy event
+     */
+    foreach($actions['add'] as $policy){
+      if(!$o->krb5_add_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }
+    }
+    
+    /* Send update policy event
+     */
+    foreach($actions['edit'] as $policy){
+      if(!$o->krb5_set_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }
+    }
+  }
+
+
+  /*! \brief Return plugin informations for acl handling 
+      @return Array   ACL infos.
+   */
   static function plInfo()
   {
     return (array(
