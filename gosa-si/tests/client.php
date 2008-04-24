@@ -9,8 +9,10 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  $sock = new Socket_Client("10.3.67.111","20081",TRUE,5);
-  $sock->setEncryptionKey("UldOjon9gra");
+  $sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
+  $sock->setEncryptionKey("secret-gosa-password");
+  #$sock = new Socket_Client("10.3.67.111","20081",TRUE,5);
+  #$sock->setEncryptionKey("UldOjon9gra");
 
   if($sock->connected()){
 
@@ -21,7 +23,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>19700101000000</timestamp> </xml>";
 
     # jobdb delete
-    $data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>3</id></phrase></clause></where></xml>";
+    #$data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
     # smbhash
     #$data = "<xml> <header>gosa_gen_smb_hash</header> <source>GOSA</source><target>GOSA</target><password>tester</password></xml>";
@@ -81,7 +83,8 @@ for($count = 1; $count <= $zahl; $count++)
 
     ###########
     # messaging 
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>eine wichtige nachricht</subject> <from>admin</from> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>kaffeepause</message> </xml>"; 
+
+    $data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <to>polle</to> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
 
     ################
     # logHandling.pm
@@ -99,7 +102,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     #########
     # Kerberos test query
-    $data = "<xml> <header>gosa_krb5_get_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>cajus@WIRECARD.SYS</principal><source>GOSA</source></xml>"; 
+    #$data = "<xml> <header>gosa_krb5_get_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>cajus@WIRECARD.SYS</principal><source>GOSA</source></xml>"; 
 
     $sock->write($data);
     $answer = "nothing";

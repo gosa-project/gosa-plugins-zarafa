@@ -3,6 +3,7 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
+    "usr_msg",
     "trigger_action_localboot",
     "trigger_action_halt",
     "trigger_action_faireboot",
@@ -18,6 +19,8 @@ my @events = (
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
+use Data::Dumper;
+use MIME::Base64;
 
 BEGIN {}
 
@@ -25,6 +28,31 @@ END {}
 
 
 sub get_events { return \@events; }
+
+sub usr_msg {
+    my ($msg, $msg_hash) = @_;
+
+
+    my $to = @{$msg_hash->{'usr'}}[0];
+    my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
+    my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
+
+print STDERR "\n\n\n##############################\n"; 
+print STDERR "message to: $to\n"; 
+print STDERR "subject: $subject\n"; 
+print STDERR "message: $message\n"; 
+print STDERR "##############################\n\n\n"; 
+# do, what ever you want
+# konch
+# kdialog
+# ...
+
+
+
+    # give gosa-si-server feedback, that msg was received
+    $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
+    return $msg;
+}
 
 
 sub trigger_action_localboot {

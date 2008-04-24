@@ -65,7 +65,7 @@ sub send_user_msg {
     #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $subject = @{$msg_hash->{'subject'}}[0];
     my $from = @{$msg_hash->{'from'}}[0];
-    my $to = @{$msg_hash->{'to'}}[0];
+    my @to = @{$msg_hash->{'to'}};
     my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
     #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
     my $message = @{$msg_hash->{'message'}}[0];
@@ -99,7 +99,7 @@ sub send_user_msg {
         id=>$new_msg_id,
         subject=>$subject,
         message_from=>$from,
-        message_to=>$to,
+        message_to=>join(",",@to),
         flag=>"n",
         direction=>"in",
         delivery_time=>$delivery_time,

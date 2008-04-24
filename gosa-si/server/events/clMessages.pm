@@ -2,6 +2,7 @@ package clMessages;
 use Exporter;
 @ISA = qw(Exporter);
 my @events = (
+    "confirm_usr_msg",
     "PROGRESS",
     "FAIREBOOT",
     "TASKSKIP",
@@ -49,6 +50,23 @@ my %cfg_defaults = (
 sub get_events {
     return \@events;
 }
+
+
+sub confirm_usr_msg {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $message = @{$msg_hash->{'message'}}[0];
+    my $subject = @{$msg_hash->{'subject'}}[0];
+    my $usr = @{$msg_hash->{'usr'}}[0];
+
+    # set update for this message
+    my $sql = "UPDATE $main::messaging_tn SET flag='s' WHERE (message='$message' AND subject='$subject' AND message_to='$usr')"; 
+    &main::daemon_log("$session_id DEBUG: $sql", 7);
+    my $res = $main::messaging_db->exec_statement($sql); 
+
+
+    return;
+}
+
 
 
 sub read_configfile {

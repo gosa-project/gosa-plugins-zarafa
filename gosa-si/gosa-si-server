@@ -1250,6 +1250,7 @@ sub trigger_db_loop {
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
+    $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
 }
 
@@ -1382,7 +1383,7 @@ sub watch_for_new_messages {
 
         # translate message_to to plain login name
 # TODO implement reciever translation
-        my @reciever_l = ($message_to);  
+        my @reciever_l = split(/,/, $message_to);  
         my $message_id = @{$hit}[0];
 
         #add each outgoing msg to messaging_db
@@ -1405,42 +1406,88 @@ sub watch_for_new_messages {
             &daemon_log("M INFO: message '".@{$hit}[0]."' is prepared for delivery to reciever '$reciever'", 5);
         }
 
-        # send outgoing messages
-        my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' )";
-        my $res = $messaging_db->exec_statement( $sql_statement );
-        foreach my $hit (@{$res}) {
-            # add subject, from, to and message to list coll_user_msg
-            my @user_msg = [@{$hit}[1], @{$hit}[2], $reciever, @{$hit}[7]];
-            push( @coll_user_msg, \@user_msg);
-        }
-
-        # send outgoing list to myself (gosa-si-server) to deliver each message to user
-        # reason for this workaround: if to much messages have to be delivered, it can come to 
-        # denial of service problems of the server. so, the incoming message list can be processed
-        # by a forked child and gosa-si-server is always ready to work. 
-        my $collection_out_msg = &create_xml_hash("collection_user_messages", $server_address, $server_address);
-        # add to hash 'msg1' => [subject, from, to, message]
-        # hash to string
-        # send msg to myself
-# TODO
-
         # set incoming message to flag d=deliverd
         $sql_statement = "UPDATE $messaging_tn SET flag='p' WHERE id='$message_id'"; 
         &daemon_log("M DEBUG: $sql_statement", 7);
         $res = $messaging_db->update_dbentry($sql_statement);
         &daemon_log("M INFO: message '$message_id' is set to flag 'p' (processed)", 5);
-
     }
-    
+
     $kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay); 
+    return;
+}
 
+sub watch_for_delivery_messages {
+    my ($kernel, $heap) = @_[KERNEL, HEAP];
 
+    # select outgoing messages
+    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( flag='p' AND direction='out' )";
+    #&daemon_log("0 DEBUG: $sql", 7);
+    my $res = $messaging_db->exec_statement( $sql_statement );
+    
+    # build out msg for each    usr
+    foreach my $hit (@{$res}) {
+        my $receiver = @{$hit}[3];
+        my $msg_id = @{$hit}[0];
+        my $subject = @{$hit}[1];
+        my $message = @{$hit}[7];
+
+        # resolve usr -> host where usr is logged in
+        my $sql = "SELECT * FROM $login_users_tn WHERE (user='$receiver')"; 
+        #&daemon_log("0 DEBUG: $sql", 7);
+        my $res = $login_users_db->exec_statement($sql);
+
+        # reciver is logged in nowhere
+        if (not ref(@$res[0]) eq "ARRAY") { next; }    
+
+        # receiver is logged in at host
+        my $receiver_host = @{@{$res}[0]}[0];
+
+        # fetch key to encrypt msg propperly for usr/host
+        $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$receiver_host')";
+        &daemon_log("0 DEBUG: $sql", 7);
+        $res = $known_clients_db->exec_statement($sql);
+        my $receiver_key = @{@{$res}[0]}[2];
+
+        my %data = ('subject' => $subject, 'message' => $message, 'usr' => $receiver);
+        my $out_msg = &build_msg("usr_msg", $server_address, $receiver_host, \%data ); 
+        my $error_state = &send_msg_to_target($out_msg, $receiver_host, $receiver_key, "usr_msg", 0); 
+
+        if ($error_state == 0) {
+            # set outgoing msg at db to deliverd
+            my $sql = "UPDATE $messaging_tn SET flag='d' WHERE (id='$msg_id' AND direction='out' AND message_to='$receiver')"; 
+            &daemon_log("0 DEBUG: $sql", 7);
+            my $res = $messaging_db->exec_statement($sql); 
+        }
+    }
+
+    $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay); 
     return;
 }
 
 
 sub watch_for_done_messages {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    my $sql = "SELECT * FROM $messaging_tn WHERE (flag='p' AND direction='in')"; 
+    #&daemon_log("0 DEBUG: $sql", 7);
+    my $res = $messaging_db->exec_statement($sql); 
+
+    foreach my $hit (@{$res}) {
+        my $msg_id = @{$hit}[0];
+
+        my $sql = "SELECT * FROM $messaging_tn WHERE (id='$msg_id' AND direction='out' AND (NOT flag='s'))"; 
+        #&daemon_log("0 DEBUG: $sql", 7); 
+        my $res = $messaging_db->exec_statement($sql);
+
+        # not all usr msgs have been seen till now
+        if ( ref(@$res[0]) eq "ARRAY") { next; }
+        
+        $sql = "DELETE FROM $messaging_tn WHERE (id='$msg_id')"; 
+        #&daemon_log("0 DEBUG: $sql", 7);
+        $res = $messaging_db->exec_statement($sql);
+    
+    }
 
     $kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay); 
     return;
@@ -2423,6 +2470,7 @@ POE::Session->create(
 		_start => \&_start,
 		sig_handler => \&sig_handler,
         watch_for_new_messages => \&watch_for_new_messages,
+        watch_for_delivery_messages => \&watch_for_delivery_messages,
         watch_for_done_messages => \&watch_for_done_messages,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
