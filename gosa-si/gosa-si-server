@@ -1747,8 +1747,8 @@ sub create_fai_release_db {
 
 			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
+				unshift @sql_list, "VACUUM";
 				unshift @sql_list, "DELETE FROM $table_name";
-				unshift @sql_list, "VACUUM";   # at first vacuum the logs and clear the db
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
 			daemon_log("$session_id DEBUG: Done with inserting",7);
@@ -2133,9 +2133,11 @@ sub create_packages_list_db {
 
 	close (CONFIG);
 
-    	find(\&cleanup_and_extract, keys( %repo_dirs ));
+	find(\&cleanup_and_extract, keys( %repo_dirs ));
+	unshift @packages_list_statements, "VACUUM";
+	unshift @packages_list_statements, "DELETE FROM $packages_list_tn";
 	$packages_list_db->exec_statementlist(\@packages_list_statements);
-    	unlink($packages_list_under_construction);
+	unlink($packages_list_under_construction);
 	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
 	return;
 }
