@@ -2034,7 +2034,11 @@ sub create_sources_list {
 			}
 		}
 	} else {
-		&main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$main::ldap_server_dn', abort create_sources_list", 1); 
+		if (defined $main::ldap_server_dn){
+			&main::daemon_log("$session_id ERROR: something wrong with ldap_server_dn '$main::ldap_server_dn', abort create_sources_list", 1); 
+		} else {
+			&main::daemon_log("$session_id ERROR: no ldap_server_dn found, abort create_sources_list", 1);
+		}
 	}
 	close($fh);
 
