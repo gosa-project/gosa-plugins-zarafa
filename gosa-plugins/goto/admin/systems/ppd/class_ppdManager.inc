@@ -10,7 +10,9 @@ class ppdManager
 	{
 		if(is_dir($path)){
 			$this->path= $path;
-		}else{
+		}elseif(is_link($path) && (is_dir(readlink($path)))) {
+		    $this->path= $path;
+		} else {
 			msg_dialog::display(_("PPD manager error"), sprintf(_("The specified path '%s' does not exist."),$path), ERROR_DIALOG);
 			return (false);
 		}
@@ -31,13 +33,14 @@ class ppdManager
 			}
 
 			/* Recurse through all "common" directories */
-			if(is_dir($path.'/'.$file)){
-				$list= array_merge($list, $this->findPPD($path.'/'.$file));
+			$check_path= $path.'/'.$file;
+			if(is_dir($check_path) || (is_link($check_path) && (is_dir(readlink($check_path))))){
+				$list= array_merge($list, $this->findPPD($check_path));
 				continue;
 			}
 
 			/* Check for PPD extension */
-			if (preg_match('/\.ppd$/i', $file)){
+			if (preg_match('/\.ppd(.gz)?$/i', $file)){
 				$list[]= $path.'/'.$file;
 			}
 		}
@@ -55,13 +58,13 @@ class ppdManager
 		$section= preg_replace('/^\*/', '', $section);
 		$attribute= preg_replace('/^\*/', '', $attribute);
 
-		$rp= @fopen($file, "r");
-		$wp= @fopen("$file.tmp", "w");
+		$rp= @gzopen($file, "r");
+		$wp= @gzopen("$file.tmp", "w");
 
 		
 
-		while (!feof($rp)){
-			$lines[]= fgets($rp, 1024);
+		while (!gzeof($rp)){
+			$lines[]= gzgets($rp, 1024);
 		}
 
 		$ret = "";
@@ -129,10 +132,10 @@ class ppdManager
 			$ret .=$line; 
 		}
 
-		fwrite($wp,$ret);
+		gzwrite($wp,$ret);
 		
-		fclose($wp);
-		fclose($rp);
+		gzclose($wp);
+		gzclose($rp);
 
 		copy("$file.tmp", "$file");
 		unlink("$file.tmp");
@@ -164,11 +167,11 @@ class ppdManager
 		$option= "";
 		$properties= array();
 
-		$fh= fopen ($ppdFile, 'r');
-		while (!feof($fh)) {
+		$fh= gzopen ($ppdFile, 'r');
+		while (!gzeof($fh)) {
 
 			/* Read line */
-			$line= fgets($fh, 256);
+			$line= gzgets($fh, 256);
 			if (strlen($line) >= 256){
 				trigger_error(_('Parsing PPD file %s failed - line too long. Trailing characters have been ignored'), E_USER_WARNING);
 			}
@@ -282,7 +285,7 @@ class ppdManager
 				}
 			}
 		}
-		fclose ($fh);
+		gzclose ($fh);
 		return ($properties);
 	}
 
@@ -301,11 +304,11 @@ class ppdManager
 		/* Remember modified timestamp, to speed up next request */
 		$this->timestamps[$ppdFile] = filemtime($ppdFile);
 
-		$fh= fopen ($ppdFile, 'r');
-		while ((!feof($fh))&&($fh)) {
+		$fh= gzopen ($ppdFile, 'r');
+		while ((!gzeof($fh))&&($fh)) {
 
 			/* Read line */
-			$line= fgets($fh, 256);
+			$line= gzgets($fh, 256);
 			if (strlen($line) >= 256){
 				trigger_error(_('Parsing PPD file %s failed - line too long. Trailing characters have been ignored'), E_USER_WARNING);
 			}
@@ -323,7 +326,7 @@ class ppdManager
 				break;
 			}
 		}
-		fclose ($fh);
+		gzclose ($fh);
 
 		/* Write out a notice that the PPD file seems to be broken if we can't
 		   extract any usefull informations */
