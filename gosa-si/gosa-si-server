@@ -1747,7 +1747,8 @@ sub create_fai_release_db {
 
 			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
-				unshift @sql_list, "DELETE FROM $table_name";   # at first, clear db
+				unshift @sql_list, "VACUUM $table_name";   # at first vacuum the logs and clear the db
+				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
 			daemon_log("$session_id DEBUG: Done with inserting",7);
@@ -2202,8 +2203,10 @@ sub parse_package {
 
         # Use empty lines as a trigger
         if ($line =~ /^\s*$/){
+            my $sql2 = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '$timestamp')";
             my $sql = "INSERT INTO packages_list VALUES ('$dist', '$package', '$version', '$section', '', 'none', '$timestamp')";
             push(@packages_list_statements, $sql);
+            push(@packages_list_statements, $sql2);
             $package = "none";
             $version = "none";
             $section = "none";
