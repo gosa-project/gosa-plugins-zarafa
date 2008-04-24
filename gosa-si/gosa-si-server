@@ -2073,7 +2073,7 @@ sub create_packages_list_db {
 		daemon_log("$session_id INFO: create_packages_list_db: start", 5); 
 		# set packages_list_under_construction to true
 		system("touch $packages_list_under_construction");
-		@packages_list_statements=undef;
+		@packages_list_statements=();
 	}
 
 	if (not defined $session_id) { $session_id = 0; }
