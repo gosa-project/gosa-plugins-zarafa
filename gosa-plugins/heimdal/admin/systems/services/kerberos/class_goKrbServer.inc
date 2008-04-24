@@ -233,7 +233,7 @@ class goKrbServer extends goService{
       /* Add new Policy requested 
        */
       if(isset($_POST['policy_add'])){
-        $this->dialog = new krb5_policy($this->config,array(),&$this);
+        $this->dialog = new krb5_policy($this->config,array(),$this);
         $this->id = -1;
       }
 
@@ -266,7 +266,7 @@ class goKrbServer extends goService{
 
             /* Open dialog */
             $this->id = $id;
-            $this->dialog = new krb5_policy($this->config,$this->policies[$id],&$this);
+            $this->dialog = new krb5_policy($this->config,$this->policies[$id], $this);
           }
           break;
         }
