@@ -102,18 +102,18 @@ class passwordMethodMIT extends passwordMethod
       /* Create Realm/Server/Principal mapping.
        */
       foreach($principals as $principal){
-        $this->map["PRINCIPAL_SERVER"][$principal] => $attrs['cn'][0];
-        $this->map["PRINCIPAL_REALM"] [$principal] => $attrs['goKrbRealm'][0];
+        $this->map["PRINCIPAL_SERVER"][$principal] = $attrs['cn'][0];
+        $this->map["PRINCIPAL_REALM"] [$principal] = $attrs['goKrbRealm'][0];
       }
-      $this->map["SERVER_REALM"] [$attrs['cn'][0]] => $attrs['goKrbRealm'][0];
-      $this->map["REALM_SERVER"] [$attrs['goKrbRealm'][0]] => $attrs['cn'][0];
+      $this->map["SERVER_REALM"][$attrs['cn'][0]] = $attrs['goKrbRealm'][0];
+      $this->map["REALM_SERVER"][$attrs['goKrbRealm'][0]] = $attrs['cn'][0];
 
       /* Create Server list
        */
       $this->server_list[$attrs['cn'][0]] = array("macAddress" => $attrs['macAddress'][0],
                                                   "description"=> $attrs['description'][0],
                                                   "dn"         => $attrs['dn'],
-                                                  "principals" => $principals
+                                                  "principals" => $principals,
                                                   "goKrbRealm" => $attrs['goKrbRealm'][0],
                                                   "cn"         => $attrs['cn'][0]);
     }
@@ -210,7 +210,7 @@ class passwordMethodMIT extends passwordMethod
 
   function remove_from_parent()
   {
-    if(!empty($this->principal && $this->goKrbRealm)){
+    if(!empty($this->principal) && $this->goKrbRealm){
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
       $o = new gosaSupportDaemon();
       if(!$o->krb5_del_principal($this->server_list[$server]['macAddress'],$this->principal)){
@@ -222,7 +222,7 @@ class passwordMethodMIT extends passwordMethod
 
   function set_password($password)
   {
-    if(!empty($this->principal && $this->goKrbRealm)){
+    if(!empty($this->principal) && $this->goKrbRealm){
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
       $o = new gosaSupportDaemon();
 
