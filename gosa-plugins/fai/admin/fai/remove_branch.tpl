@@ -9,7 +9,7 @@
 <p>
  {t}So - if you're sure - press 'Delete' to continue or 'Cancel' to abort.{/t}
 </p>
-
+<input type='hidden' name='release_hidden' value='{$release_hidden}'>
 <p class="plugbottom">
   <input type=submit name="delete_branch_confirm" value="{msgPool type=delButton}">
   &nbsp;

@@ -461,7 +461,7 @@ class faiManagement extends plugin
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
         if($this->acl_is_removeable()){
-
+          $smarty->assign("release_hidden",base64_encode($this->fai_release));
           $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->fai_release),_("FAI branch/freeze")));
           return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
         } else {
@@ -482,33 +482,35 @@ class faiManagement extends plugin
        */
       if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
 
-        $bb =  $this->fai_release;
-        if(!isset($ldap)){
-          $ldap = $this->config->get_ldap_link();
-        }
+        if(!isset($_POST['release_hidden']) || base64_decode($_POST['release_hidden']) != $this->fai_release){
+          msg_dialog::display(_("Warning"),_("Release remove aborted, release name check failed."));
+        }else{
 
-        $br = $this->getBranches();
+          $bb =  $this->fai_release;
+          if(!isset($ldap)){
+            $ldap = $this->config->get_ldap_link();
+          }
 
-        if(isset($br[$bb]) && $this->acl_is_removeable()){
-          $name = $br[$bb];
+          $br = $this->getBranches();
 
-          echo $bb." <br>";
-          echo $name." <br>";
+          if(isset($br[$bb]) && $this->acl_is_removeable()){
+            $name = $br[$bb];
 
-          $ldap->cd($bb);
-          $ldap->recursive_remove();
-          $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
-          $ldap->recursive_remove();
-          $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('mimetypeou'), $bb));
-          $ldap->recursive_remove();
-          $this->fai_release = $this->fai_base;
+            $ldap->cd($bb);
+            $ldap->recursive_remove();
+            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
+            $ldap->recursive_remove();
+            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('mimetypeou'), $bb));
+            $ldap->recursive_remove();
+            $this->fai_release = $this->fai_base;
 
-          /* Post remove */
-          $this->lock_name   = $name;
-          $this->lock_dn     = $bb;
-          $this->postremove();
+            /* Post remove */
+            $this->lock_name   = $name;
+            $this->lock_dn     = $bb;
+            $this->postremove();
 
-          new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
+            new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
+          }
         }
       }
     }
