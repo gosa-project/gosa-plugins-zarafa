@@ -21,7 +21,7 @@ class servrepository extends goService
 
   function servrepository (&$config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn,$parent->parent);
 
     $this->DisplayName = _("Repository service");
 
