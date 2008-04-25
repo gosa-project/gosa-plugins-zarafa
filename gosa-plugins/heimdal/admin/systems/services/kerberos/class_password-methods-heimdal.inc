@@ -110,6 +110,14 @@ class passwordMethodheimdal extends passwordMethod
 	function is_available()
 	{
     global $config;
+
+    /* If we have a running SI-Server which support kerberos support
+        skip this ldap based method.
+    */
+    if(class_available("passwordMethodMIT") && passwordMethodMIT::is_available()){
+      return(FALSE);
+    }
+
     $cmd = "";
     if(isset($config->current['HEIMDAL_KEYGEN'])){
       $cmd = $config->current['HEIMDAL_KEYGEN'];
