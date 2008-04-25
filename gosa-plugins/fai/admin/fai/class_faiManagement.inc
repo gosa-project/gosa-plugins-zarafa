@@ -491,6 +491,10 @@ class faiManagement extends plugin
 
         if(isset($br[$bb]) && $this->acl_is_removeable()){
           $name = $br[$bb];
+
+          echo $bb." <br>";
+          echo $name." <br>";
+
           $ldap->cd($bb);
           $ldap->recursive_remove();
           $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
@@ -505,17 +509,7 @@ class faiManagement extends plugin
           $this->postremove();
 
           new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
-          trigger_error("Should be removed");
-        }else{
-          if(!isset($br[$bb])){
-            trigger_error("Invalid release ".$bb);
-          }
-          if(!$this->acl_is_removeable()){
-            trigger_error("Invalid permission");
-          }
         }
-      }else{
-        trigger_error("No remove Hook");
       }
     }
 
@@ -949,11 +943,6 @@ class faiManagement extends plugin
     ksort($ret);
     $ret = array_flip($ret);
 
-    /* Ensure that we have a valid release selected */
-    if(!isset($ret[$this->fai_release])){
-      $this->fai_release = $this->fai_base;
-    }
-
     return ($ret);
   }
   
@@ -1141,7 +1130,17 @@ class faiManagement extends plugin
     /* Get posted release */
     $r_releases = array_flip($this->getBranches());
     if(isset($_POST['fai_release']) && isset($r_releases[get_post('fai_release')])){
-      $this->fai_release = $r_releases[get_post('fai_release')];
+
+      /* Ensure that we have a valid release selected */
+      if(!isset($r_releases[get_post('fai_release')])){
+        msg_dialog::display(_("Warning"),_("The selected release is not available anymore. All triggered actions are skipped."));
+        $_POST = array();
+        $plug =$_GET['plug'];
+        $_GET  = array("plug" => $plug);
+        $this->fai_release = $this->fai_base;
+      }else{
+        $this->fai_release = $r_releases[get_post('fai_release')];
+      }
 
       $fai_filter = session::get("fai_filter");
       $fai_filter['fai_release'] = $this->fai_release;
