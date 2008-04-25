@@ -505,7 +505,17 @@ class faiManagement extends plugin
           $this->postremove();
 
           new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
+          trigger_error("Should be removed");
+        }else{
+          if(!isset($br[$bb])){
+            trigger_error("Invalid release ".$bb);
+          }
+          if(!$this->acl_is_removeable()){
+            trigger_error("Invalid permission");
+          }
         }
+      }else{
+        trigger_error("No remove Hook");
       }
     }
 
