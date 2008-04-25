@@ -23,23 +23,34 @@ class goKrbServer extends goService{
 
   var $policies         = array();
   var $id               = -1;
-  var $macAddress       = "00:01:6c:9d:aa:16" ;
+  var $macAddress       = "" ;
+
  
-  public function goKrbServer(&$config,$dn)
+  public function goKrbServer(&$config,$dn,$parent)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Kerberos service");
+    $this->parent = $parent;
+
+    /* Detect macAddress of this device 
+     */
+    $this->macAddress = "";
+    if(isset($this->parent->parent->netConfigDNS->macAddress)){
+      $this->macAddress = &$this->parent->parent->netConfigDNS->macAddress;
+    }
 
     /* Get configured policies 
      */ 
-    $o = new gosaSupportDaemon();
-    $tmp = $o->krb5_list_policies($this->macAddress);
-    if($o->is_error()){
-      msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
-    }else{
-      $this->policies = array();
-      foreach($tmp as $policy){
-        $this->policies[] = array("NAME" => $policy,"STATUS" => "LOADED","DATA" => array());
+    if(!empty($this->macAddress) && $this->is_account){
+      $o = new gosaSupportDaemon();
+      $tmp = $o->krb5_list_policies($this->macAddress);
+      if($o->is_error()){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }else{
+        $this->policies = array();
+        foreach($tmp as $policy){
+          $this->policies[] = array("NAME" => $policy,"STATUS" => "LOADED","DATA" => array());
+        }
       }
     }
   }
@@ -139,6 +150,9 @@ class goKrbServer extends goService{
     $message = plugin::check();
     if (empty($this->goKrbRealm)){
       $message[]= msgPool::required(_("Realm"));
+    }
+    if(count($this->policies) && (empty($this->macAddress) || !tests::is_mac($this->macAddress))){
+      $message[] = _("In order to save policy changes, the server reqiures a valid mac address.");
     }
     return($message);
   }
