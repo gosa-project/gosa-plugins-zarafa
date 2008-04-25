@@ -21,12 +21,13 @@ use Fcntl;
 use GOSA::GosaSupportDaemon;
 use File::Basename;
 
-my ($ldap_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
+my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
 
 my %cfg_defaults = (
     "client" => {
         "ldap" => [\$ldap_enabled, 1],
+        "offline-ldap" => [\$offline_enabled, 0],
         "ldap-config" => [\$ldap_config, "/etc/ldap/ldap.conf"],
         "pam-config" => [\$pam_config, "/etc/pam_ldap.conf"],
         "nss-config" => [\$nss_config, "/etc/libnss-ldap.conf"],
@@ -303,6 +304,24 @@ sub new_ldap_config {
     print file1 "UNIT_TAG_FILTER=\"".(defined $unit_tag ? "(gosaUnitTag=$unit_tag)" : "")."\"\n";
     close(file1);
     daemon_log("wrote $cfg_name", 5);
+
+    # Write offline config
+    if ($offline_enabled){
+	    $cfg_name= "/etc/ldap/ldap-offline.conf";
+
+	    # Get first LDAP server
+	    open(file1, "> $cfg_name");
+	    print file1 "LDAP_BASE=\"$ldap_base\"\n";
+	    print file1 "LDAP_SERVER=\"127.0.0.1\"\n";
+	    print file1 "LDAP_URIS=\"ldap://127.0.0.1\"\n";
+	    print file1 "ADMIN_BASE=\"$admin_base\"\n";
+	    print file1 "DEPARTMENT=\"$department\"\n";
+	    print file1 "RELEASE=\"$release\"\n";
+	    print file1 "UNIT_TAG=\"".(defined $unit_tag ? "$unit_tag" : "")."\"\n";
+	    print file1 "UNIT_TAG_FILTER=\"".(defined $unit_tag ? "(gosaUnitTag=$unit_tag)" : "")."\"\n";
+	    close(file1);
+	    daemon_log("wrote $cfg_name", 5);
+    }
 
     return;
 }
