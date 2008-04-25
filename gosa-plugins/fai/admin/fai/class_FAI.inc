@@ -979,7 +979,7 @@ class FAI
    *  @param $is_first          Boolean Use to identify the first func. call when recursivly called.
    *  @param $depth             Integer Current depth of recursion.
    */
-  function copy_FAI_resource_recursive($sourcedn,$destinationdn,$destinationName,$type="branch",$is_first = true,$depth=0)
+  static function copy_FAI_resource_recursive($sourcedn,$destinationdn,$destinationName,$type="branch",$is_first = true,$depth=0)
   {
     global $config;
     error_reporting(E_ALL | E_STRICT);
