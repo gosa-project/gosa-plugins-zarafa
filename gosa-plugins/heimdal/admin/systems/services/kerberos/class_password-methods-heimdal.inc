@@ -113,9 +113,11 @@ class passwordMethodheimdal extends passwordMethod
 
     /* If we have a running SI-Server which support kerberos support
         skip this ldap based method.
+       Only method can win.
     */
-    if(class_available("passwordMethodMIT") && passwordMethodMIT::is_available()){
-      return(FALSE);
+    if(class_available("passwordMethodMIT")){
+      $tmp = new passwordMethodMIT($config);
+      if($tmp->is_available()) return(FALSE);
     }
 
     $cmd = "";
