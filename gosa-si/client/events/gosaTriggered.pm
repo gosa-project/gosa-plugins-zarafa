@@ -36,18 +36,7 @@ sub usr_msg {
     my $to = @{$msg_hash->{'usr'}}[0];
     my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
-
-print STDERR "\n\n\n##############################\n"; 
-print STDERR "message to: $to\n"; 
-print STDERR "subject: $subject\n"; 
-print STDERR "message: $message\n"; 
-print STDERR "##############################\n\n\n"; 
-# do, what ever you want
-# konch
-# kdialog
-# ...
-
-
+    system( "/usr/bin/goto-notify user-message '$to' '$subject' '$message'" );
 
     # give gosa-si-server feedback, that msg was received
     $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
