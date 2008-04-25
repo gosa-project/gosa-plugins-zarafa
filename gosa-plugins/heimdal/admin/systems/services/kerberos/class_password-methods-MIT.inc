@@ -59,6 +59,10 @@ class passwordMethodMIT extends passwordMethod
   var $is_account             = FALSE;
 
   var $server_list = array();
+  var $map = array(); 
+
+  var $goKrbRealm = "";
+  var $principal  = ""; 
 
 	function __construct(&$config,$dn = "new")  
 	{
@@ -92,11 +96,25 @@ class passwordMethodMIT extends passwordMethod
     while($attrs = $ldap->fetch()){
       if(!isset($attrs['macAddress'][0])) continue;
       if(!isset($attrs['description'][0])) $attrs['description'][0] ="";
+  
+      $principals = $this->load_principals_for_server($attrs['macAddress'][0]);
+
+      /* Create Realm/Server/Principal mapping.
+       */
+      foreach($principals as $principal){
+        $this->map["PRINCIPAL_SERVER"][$principal] => $attrs['cn'][0];
+        $this->map["PRINCIPAL_REALM"] [$principal] => $attrs['goKrbRealm'][0];
+      }
+      $this->map["SERVER_REALM"] [$attrs['cn'][0]] => $attrs['goKrbRealm'][0];
+      $this->map["REALM_SERVER"] [$attrs['goKrbRealm'][0]] => $attrs['cn'][0];
+
+      /* Create Server list
+       */
       $this->server_list[$attrs['cn'][0]] = array("macAddress" => $attrs['macAddress'][0],
                                                   "description"=> $attrs['description'][0],
                                                   "dn"         => $attrs['dn'],
-                                                  "principals" => $this->load_principals_for_server($attrs['macAddress'][0]),
-                                                  "goKrbRealm" => array($attrs['goKrbRealm'][0]),
+                                                  "principals" => $principals
+                                                  "goKrbRealm" => $attrs['goKrbRealm'][0],
                                                   "cn"         => $attrs['cn'][0]);
     }
 
@@ -113,13 +131,14 @@ class passwordMethodMIT extends passwordMethod
    
         /* Try to detect server our principal is configured on
          */
-        foreach($this->server_list as $server => $data){
-          if(in_array($p_name,$data['principals'])){
-            $info = $this->load_principal($data['macAddress'],$p_name);
-            if(!count($info)){
-            }
-            break;
-          }
+        if($this->map['PRINCIPAL_SERVER'][$p_name]){
+          $server= $this->map['PRINCIPAL_SERVER'][$p_name];
+          $this->goKrbRealm = $this->map['SERVER_REALM'][$server];
+          $this->principal  = $p_name;
+
+          $info = $this->load_principal($this->server_list[$server]['macAddress'],$p_name);
+          echo "Found principal, implement krb_get_principal";
+          break;
         }
       }
     }
@@ -185,20 +204,17 @@ class passwordMethodMIT extends passwordMethod
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
       $mode= "sasl";
     }
-    return "{".$mode."}".$this->attrs['uid'][0]."@".$cfg= $this->config->data['SERVERS']['KERBEROS']['REALM'];
+    return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
 	}
 
 
   function remove_from_parent()
   {
-    if($this->is_account && $this->dn != "new"){
-      $ldap = $this->config->get_ldap_link();
-      $ldap->cat($this->dn,array("dn"));
-      if($ldap->count()){
-        $ldap->rmdir($this->dn);
-        if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
-        }
+    if(!empty($this->principal && $this->goKrbRealm)){
+      $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
+      $o = new gosaSupportDaemon();
+      if(!$o->krb5_del_principal($this->server_list[$server]['macAddress'],$this->principal)){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
       }
     }
   }
@@ -206,37 +222,16 @@ class passwordMethodMIT extends passwordMethod
 
   function set_password($password)
   {
-    #TODO
-    # Add or modify kerberos entry below $this->dn
-    # See https://oss.gonicus.de/labs/gosa/ticket/223
-    # Order: create entries, then call the heimdal_keygen hook with the realm (returned by generate_hash)
-    #        to let it add the missing kerberos keys.
+    if(!empty($this->principal && $this->goKrbRealm)){
+      $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
+      $o = new gosaSupportDaemon();
 
-    global $config;
-    $cmd = "";
-    if(isset($config->current['HEIMDAL_KEYGEN'])){
-      $cmd = $config->current['HEIMDAL_KEYGEN'];
-      if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
-      }
-    }
-    if(isset($this->config->data['MAIN']['HEIMDAL_KEYGEN'])){
-      $cmd = $this->config->data['MAIN']['HEIMDAL_KEYGEN'];
-      if(!check_command($cmd)){
-        new msg_dialog(_("Heimdal"), msgPool::cmdinvalid("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
-      }
-    }
-    if ($cmd != ""){
+      echo "Not implemented yet";
+      $attrs = array("password" => $password);
 
-      /* Display in error message */
-      $cmdd = $cmd." '".$this->generate_hash($password)."' 'PASSWORD'";
-
-      /* Execute command and check return value */
-      $cmd  = $cmd." '".$this->generate_hash($password)."' '".$password."'" ;
-      exec($cmd,$out,$res);
-      if($res != 0){
-        new msg_dialog(_("Heimdal"), msgPool::cmdexecfailed("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
-      }
+#      if(!$o->krb5_set_principal($this->server_list[$server]['macAddress'],$this->principal,$attrs)){
+#        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
+#      }
     }
   }
 
@@ -264,7 +259,7 @@ class passwordMethodMIT extends passwordMethod
     /* Cancel heimdal options */
     if (isset($_POST['pw_abort']) || $this->display == FALSE){
       $this->display = FALSE;
-      return "";
+      return("");
     }
 
     /* Cancel heimdal options */
@@ -451,16 +446,18 @@ class passwordMethodMIT extends passwordMethod
         $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
       }
 
-      /* Add / Updated data */
-      $ldap->cd($dn);
-      if(!$this->is_account){ 
-        $ldap->add($data);
-      }else{
-        $ldap->modify($data);
-      }
-      if (!$ldap->success()){
-        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
-      }
+      echo "Save missing";
+
+#     /* Add / Updated data */
+#     $ldap->cd($dn);
+#     if(!$this->is_account){ 
+#       $ldap->add($data);
+#     }else{
+#       $ldap->modify($data);
+#     }
+#     if (!$ldap->success()){
+#       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
+#     }
     }
   }
 }
