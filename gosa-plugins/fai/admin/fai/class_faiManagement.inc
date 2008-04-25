@@ -502,9 +502,45 @@ class faiManagement extends plugin
             $ldap->recursive_remove();
             $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('mimetypeou'), $bb));
             $ldap->recursive_remove();
-            $this->fai_release = $this->fai_base;
+
+            /* Search for all groups with configured application menus.
+              - First search all groups, to ensure that we only remove entries form whithin groups. 
+              - The search für menu configuration for the specified release and collect all those dns.
+              - Remove entries
+             */
+            $release_ou = preg_replace("/".normalizePreg(get_ou("faiou")).".*$/","",$bb);
+            $ldap->cd($this->config->current['BASE']);
+            $ldap->search("(objectClass=posixGroup)",array("dn"));
+          
+            /* Collect all group dns 
+             */
+            $groups = array();
+            while($attrs = $ldap->fetch()){
+              $groups[] = $attrs['dn'];
+            }
+
+            /* Collect all group menu release dns that match the release we have removed 
+             */
+            $dns = array();
+            foreach($groups as $dn){
+              $ldap->cd($dn);
+              $ldap->search("(objectClass=FAIbranch)",array("dn"));
+              while($attrs = $ldap->fetch()){
+                if(preg_match("/^".normalizePreg($release_ou)."/",$attrs['dn'])){
+                  $dns[] = $attrs['dn'];
+                }
+              }
+            }
+            
+            /* Finally remove collected release dns 
+             */
+            foreach($dns as $dn){
+              $ldap->cd($dn);
+              $ldap->recursive_remove();
+            }
 
             /* Post remove */
+            $this->fai_release = $this->fai_base;
             $this->lock_name   = $name;
             $this->lock_dn     = $bb;
             $this->postremove();
