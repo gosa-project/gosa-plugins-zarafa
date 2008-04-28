@@ -464,18 +464,19 @@ class faiTemplate extends plugin
      * After deletion, we perform add and modify 
      */
     $Objects = array();
-    foreach($this->SubObjects as $name => $obj){
+    $tmp = $this->SubObjects;
+    foreach($tmp as $name => $obj){
       if($obj['status'] == "FreshLoaded"){
-        unset($this->SubObjects[$name]);
+        unset($tmp[$name]);
       }
     }
 
-    foreach($this->SubObjects as $name => $obj){
+    foreach($tmp as $name => $obj){
       if($obj['status'] == "delete"){
         $Objects[$name] = $obj; 
       }
     }
-    foreach($this->SubObjects as $name => $obj){
+    foreach($tmp as $name => $obj){
       if($obj['status'] != "delete"){
         $Objects[$name] = $obj; 
       }
@@ -519,7 +520,6 @@ class faiTemplate extends plugin
         FAI::prepare_to_save_FAI_object($sub_dn,$tmp);
         $this->handle_post_events("add");
       }
-
     }
   }
 
