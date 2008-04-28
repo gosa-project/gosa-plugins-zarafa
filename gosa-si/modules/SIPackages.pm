@@ -677,7 +677,7 @@ sub new_ldap_config {
 	# check hit
 	my $hit_counter = keys %{$res};
 	if( not $hit_counter == 1 ) {
-		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query by '$address'", 1);
+		&main::daemon_log("$session_id ERROR: more or no hit found in known_clients_db by query '$sql_statement'", 1);
 	}
 
     $address = $res->{1}->{hostname};
