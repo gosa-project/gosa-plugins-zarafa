@@ -409,7 +409,7 @@ class gotomasses extends plugin
       $color = "";
       $display = $task['MACADDRESS'];
       $tooltip = "";
-      if(isset($task['PLAINNAME'])){
+      if(isset($task['PLAINNAME']) && !preg_match("/none/i",$task['PLAINNAME'])){
         $display = $task['PLAINNAME'];
         $tooltip = " title='".$task['MACADDRESS']."' ";
       }
