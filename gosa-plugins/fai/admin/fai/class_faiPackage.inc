@@ -76,7 +76,8 @@ class faiPackage extends plugin
       if(isset($this->attrs['FAIpackage'])){
         unset($this->attrs['FAIpackage']['count']);
         foreach($this->attrs['FAIpackage'] as $pkg){
-          $this->usedPackages[$pkg] = $pkg;
+          $name = preg_replace("/^\-/","",$pkg);
+          $this->usedPackages[$name] = $pkg;
         }
         ksort($this->usedPackages);
       }  
@@ -84,7 +85,7 @@ class faiPackage extends plugin
       /* Fetch all package configurations from ldap 
        */
       $PackageFilter = "";
-      foreach($this->usedPackages as $name){
+      foreach($this->usedPackages as $name => $value){
         $PackageFilter .= "(FAIpackage=".$name.")";
       }
       $PackageFilter = "(&(objectClass=FAIdebconfInfo)(|".$PackageFilter."))";
@@ -199,7 +200,7 @@ class faiPackage extends plugin
   
 
     /******
-     * Add && Remove Packages 
+     * Add 
      ******/
 
     /* + was pressed to open the package dialog */
@@ -208,17 +209,57 @@ class faiPackage extends plugin
       $this->is_dialog =true;
     }
 
-    /* Delete selected package */ 
-    if(isset($_POST['Delpkg']) && $this->acl_is_writeable("FAIpackage")){
-      if(!preg_match("/^freeze/", $this->FAIstate)){
-        foreach($_POST['usedPackages'] as $del){
-          if(isset($this->usedPackages[$del])){
-            unset($this->usedPackages[$del]);
-          }
-        }
+    /* Check image Posts 
+     */
+    foreach($_POST as $name => $value){
 
-        /* Generate package list */
-        $this->list= $this->genPkgs(TRUE);
+      /******
+       * Mark as removed  
+       ******/
+      
+      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^removal_package_/",$name)){
+        $id = @base64_decode(preg_replace("/^removal_package_(.*)_[xy]*$/","\\1",$name));
+        if(isset($this->usedPackages[$id])){
+          $pkg = $this->usedPackages[$id]; 
+          if (preg_match('/^-/', $pkg)){
+            $pkg= preg_replace('/^-/', '', $pkg);
+          } else {
+            $pkg= preg_replace('/^/', '-', $pkg);
+          }
+          $this->usedPackages[$id] = $pkg;
+        }
+        break;
+      }
+
+      /******
+       * Delete Pkgs   
+       ******/
+      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^remove_package_/",$name)){
+        $id = @base64_decode(preg_replace("/^remove_package_(.*)_[xy]*$/","\\1",$name));
+         
+        if(isset($this->usedPackages[$id])){
+          $this->usedPackages[$id];
+        }
+        break;
+      }
+
+      /******
+       * Configure Pkgs   
+       ******/
+      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^configure_package_/",$name)){
+        $pkg = @base64_decode(preg_replace("/^configure_package_(.*)_[xy]*$/","\\1",$name));
+         
+        if(isset($this->usedPackages[$pkg])){
+
+          /* Configuration dialog open*/
+          $pkg_config = array();
+          if(isset($this->ConfiguredPackages[$pkg])){
+            $pkg_config = $this->ConfiguredPackages[$pkg];
+          }
+          $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $this->FAIdebianRelease , $pkg_config);
+          $this->is_dialog =true;
+        }
+        break;
       }
     }
 
@@ -252,41 +293,6 @@ class faiPackage extends plugin
       }
     }
 
-
-    /******
-     * Configure Packages  
-     ******/
-
-    /* Configuration dialog open*/
-    if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'][0])) && $this->acl_is_writeable("FAIdebconfInfo")){
-      $pkg_config = array();
-      $pkg = $_POST['usedPackages'][0];
-      if(isset($this->ConfiguredPackages[$pkg])){
-        $pkg_config = $this->ConfiguredPackages[$pkg];
-      }
-      $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $this->FAIdebianRelease , $pkg_config);
-      $this->is_dialog =true;
-    }
-
-    /* Configuration dialog open*/
-    if(preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
-      if((isset($_POST['Markpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages']))){
-        foreach($_POST['usedPackages'] as $pkg){
-          if (isset($this->usedPackages[$pkg])){
-            unset($this->usedPackages[$pkg]);
-            if (preg_match('/^-/', $pkg)){
-              $pkg= preg_replace('/^-/', '', $pkg);
-            } else {
-              $pkg= preg_replace('/^/', '-', $pkg);
-            }
-            $this->usedPackages[$pkg]= $pkg;
-          }
-        }
-        /* Generate package list */
-        $this->list= $this->genPkgs(TRUE);
-      }
-    }
-
     /* Save Configuration */
     if(isset($_POST['SaveObjectConfig'])){
       if(!preg_match("/^freeze/", $this->FAIstate)){
@@ -313,6 +319,56 @@ class faiPackage extends plugin
      * Display UI / HTML / smarty 
      ******/
 
+    /* Create divlist to display a list of all currently used packages
+     */
+    $divlist = new divSelectBox("faiPackages");
+
+    ksort($this->usedPackages);
+    if(is_array($this->usedPackages)){
+      foreach($this->usedPackages as $usedName => $name){
+
+        /* Append message if package is configured */
+        $configured = "<img src='images/empty.png' alt=' '  class='center'>";
+        if(isset($this->ConfiguredPackages[$usedName])){
+          $configured = "<img src='images/package_configure.png' alt='"._("Configured")."'
+                      title='"._("Configured")."' class='center'>";
+        }
+
+        /* Adapt used name if we're marked for removal */
+        $removal = "<img src='images/empty.png' alt=' '  class='center'>";
+        if (preg_match('/^-/', $name)){
+          $removal = "<img src='images/negate.png' alt='"._("Package marked for removal")."'
+                      title='"._("Package marked for removal")."' class='center'>";
+        }
+
+        /* Get Version */
+        $version = "";
+        if(isset($this->list[$usedName]['VERSION'])){
+          $version = $this->list[$usedName]['VERSION'];
+        }
+    
+        /* Get description */
+        $description = "";
+        if(isset($this->list[$usedName]['DESCRIPTION'])){
+          $description = $this->list[$usedName]['DESCRIPTION'];
+        }
+        
+        $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
+                      src='images/negate.png' name='removal_package_".base64_encode($usedName)."' >";
+        $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
+                      src='images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
+        $actions.= "&nbsp;<input type='image' class='center' title='"._("Remove this package")."' 
+                      src='images/lists/trash.png' name='remove_package_".base64_encode($usedName)."' >";
+
+        $field1 = array("string" => $configured."&nbsp;".$removal,"attach" => "style='width:40px;'");
+        $field2 = array("string" => $usedName ,"attach" => "style='width:200px;'");
+        $field3 = array("string" => $version);
+        $field4 = array("string" => $description);
+        $field5 = array("string" => $actions ,"attach" => "style='width:60px; border-right:0px;'");
+        $divlist->AddEntry(array($field1,$field2,$field3,$field4,$field5));
+      }
+    }
+
     /* Assign variables */
     foreach($this->attributes as $attrs){
       $smarty->assign($attrs,$this->$attrs);
@@ -330,10 +386,10 @@ class faiPackage extends plugin
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/",$this->FAIstate)));
     }
 
+    $smarty->assign("divlist",$divlist->DrawList());
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
     $smarty->assign("section" ,$strsec);
-    $smarty->assign("usedPackages",$this->printUsedPackages());
     $display.= $smarty->fetch(get_template_path('faiPackage.tpl', TRUE));
     return($display);
   }
@@ -399,41 +455,6 @@ class faiPackage extends plugin
   }
 
 
-  /*! \brief  Returns all selected packages in a printable format 
-      @return Array   Containing all package infos.
-   */
-  function printUsedPackages()
-  {
-    $a_ret=array(); 
-    if(is_array($this->usedPackages)){
-      foreach($this->usedPackages as $usedName){
-
-        /* Append message if package is configured */
-        $c_str ="";
-        if(isset($this->ConfiguredPackages[$usedName])){
-          $c_str = " - "._("package is configured");
-        }
-
-        /* Adapt used name if we're marked for removal */
-        $dsc= "";
-        if (preg_match('/^-/', $usedName)){
-          $dsc= " - "._("Package marked for removal");
-        }else{
-          $usedName2= $usedName;
-        }
-
-        /* Append version string, if available */
-        if(isset($this->list[$usedName]['VERSION'])){
-          $a_ret[$usedName] = $usedName2." [".$this->list[$usedName]['VERSION']."]".$c_str.$dsc;
-        }else{
-          $a_ret[$usedName] = $usedName2.$c_str.$dsc;
-        }
-      }
-    }
-    return($a_ret);
-  }
-
-
   /*! \brief  Reload the list of cached packages.
       @return Returns the currently cached list of packages. 
    */
@@ -442,7 +463,10 @@ class faiPackage extends plugin
     if(!count($this->buffer) || $force){
       $q = new gosaSupportDaemon();
       $attrs = array("distribution", "package","version", "section", "description", "timestamp");
-      $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$this->usedPackages);
+
+      $packages = array_keys($this->usedPackages);
+
+      $ret = $q->FAI_get_packages($this->FAIdebianRelease,$attrs,$packages);
       if($q->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($q->get_error()),ERROR_DIALOG);
       }else{
@@ -479,7 +503,7 @@ class faiPackage extends plugin
     $ldap = $this->config->get_ldap_link();
 
     $this->attrs['FAIpackage'] = array();
-    foreach($this->usedPackages as $pkg => $obj){
+    foreach($this->usedPackages as $pkg){
       $this->attrs['FAIpackage'][] = $pkg;
     } 
 

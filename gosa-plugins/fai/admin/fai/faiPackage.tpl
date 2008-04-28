@@ -69,11 +69,7 @@
 	<tr>
 		<td> 
 			<h2><img class="center" alt="" src="images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h2>
-			<br>
-			<select id="usedPackages" name="usedPackages[]" title="{t}Choosen packages{/t}" multiple style="width:100%;height:300px;">
-       			{html_options options=$usedPackages}
-				<option value="">&nbsp;</option>
-      		</select>
+			{$divlist}
 			<br>
 {render acl=$FAIpackageACL}
 			<input type="submit" name="Addpkg" value="{msgPool type=addButton}">
