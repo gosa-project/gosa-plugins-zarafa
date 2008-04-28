@@ -236,9 +236,8 @@ class faiPackage extends plugin
        ******/
       if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^remove_package_/",$name)){
         $id = @base64_decode(preg_replace("/^remove_package_(.*)_[xy]*$/","\\1",$name));
-         
         if(isset($this->usedPackages[$id])){
-          $this->usedPackages[$id];
+          unset($this->usedPackages[$id]);
         }
         break;
       }
@@ -352,13 +351,19 @@ class faiPackage extends plugin
         if(isset($this->list[$usedName]['DESCRIPTION'])){
           $description = $this->list[$usedName]['DESCRIPTION'];
         }
-        
-        $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
-                      src='images/negate.png' name='removal_package_".base64_encode($usedName)."' >";
-        $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
-                      src='images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
-        $actions.= "&nbsp;<input type='image' class='center' title='"._("Remove this package")."' 
-                      src='images/lists/trash.png' name='remove_package_".base64_encode($usedName)."' >";
+ 
+        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
+          $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
+            src='images/negate.png' name='removal_package_".base64_encode($usedName)."' >";
+        }
+        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
+          $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
+            src='images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
+        }
+        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
+          $actions.= "&nbsp;<input type='image' class='center' title='"._("Remove this package")."' 
+            src='images/lists/trash.png' name='remove_package_".base64_encode($usedName)."' >";
+        }
 
         $field1 = array("string" => $configured."&nbsp;".$removal,"attach" => "style='width:40px;'");
         $field2 = array("string" => $usedName ,"attach" => "style='width:200px;'");
