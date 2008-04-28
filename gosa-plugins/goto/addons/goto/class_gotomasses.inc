@@ -40,7 +40,7 @@ class gotomasses extends plugin
   var $event_tags     = array();
 
   var $sort_by  = "Schedule";
-  var $sort_dir = "down";
+  var $sort_dir = "up";
   var $entries  = array();
   var $range    = 25;
   var $start    = 0;
@@ -56,6 +56,20 @@ class gotomasses extends plugin
     $this->event_tags = array("none");
     foreach($this->events['SCHEDULED'] as $evt){
       $this->event_tags[] = $evt['s_Queued_Action'];
+    }
+
+    /* Load filter settings */
+    if(!session::is_set("gotomasses_filter")){
+      $gotomasses_filter = 
+        array(
+            "range" => $this->range,
+            "sort_by" => $this->sort_by,
+            "sort_dir" => $this->sort_dir);
+      session::set("gotomasses_filter",$gotomasses_filter);
+    }
+    $gotomasses_filter = session::get("gotomasses_filter");
+    foreach(array("range","sort_by","sort_dir") as $attr) {
+      $this->$attr = $gotomasses_filter[$attr];
     }
   }
 
@@ -759,7 +773,14 @@ class gotomasses extends plugin
     if(isset($_POST['range']) && is_numeric($_POST['range'])){
       $this->range = $_POST['range'];
     }
-    
+  
+    /* Save filter settings */ 
+    $gotomasses_filter = session::get("gotomasses_filter");
+    foreach(array("range","sort_by","sort_dir") as $attr){
+      $gotomasses_filter[$attr] = $this->$attr;
+    }
+    session::set("gotomasses_filter",$gotomasses_filter);
+ 
     /* Page changed. */
     if(isset($_GET['start'])){
       $start = $_GET['start'];
