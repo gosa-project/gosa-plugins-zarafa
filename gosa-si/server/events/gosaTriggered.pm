@@ -98,7 +98,7 @@ sub send_user_msg {
 
     # add incoming message to messaging_db
     my $new_msg_id = 1;
-    my $new_msg_id_sql = "SELECT MAX(id) FROM $main::messaging_tn"; 
+	my $new_msg_id_sql = "SELECT MAX(CAST(id AS INTEGER)) FROM $main::messaging_tn";
     my $new_msg_id_res = $main::messaging_db->exec_statement($new_msg_id_sql);
     if (defined @{@{$new_msg_id_res}[0]}[0] ) {
         $new_msg_id = int(@{@{$new_msg_id_res}[0]}[0]);
