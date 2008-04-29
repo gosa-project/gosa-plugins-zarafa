@@ -2095,10 +2095,11 @@ sub create_sources_list {
 
 
 sub run_create_packages_list_db {
-    my ($session, $heap) = @_[SESSION, HEAP];
+    my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
 	my $session_id = $session->ID;
 
 	my $task = POE::Wheel::Run->new(
+					Priority => +20,
 					Program => sub {&create_packages_list_db(undef, undef, $session_id)},
 					StdoutEvent  => "session_run_result",
 					StderrEvent  => "session_run_debug",
@@ -2181,12 +2182,114 @@ sub create_packages_list_db {
 	close (CONFIG);
 
 	find(\&cleanup_and_extract, keys( %repo_dirs ));
+	&main::strip_packages_list_statements();
 	unshift @packages_list_statements, "VACUUM";
-	unshift @packages_list_statements, "DELETE FROM $packages_list_tn";
 	$packages_list_db->exec_statementlist(\@packages_list_statements);
 	unlink($packages_list_under_construction);
 	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
 	return;
+}
+
+# This function should do some intensive task to minimize the db-traffic
+sub strip_packages_list_statements {
+    my @existing_entries= @{$packages_list_db->exec_statement("SELECT * FROM $main::packages_list_tn")};
+	my @new_statement_list=();
+	my $hash;
+	my $insert_hash;
+	my $update_hash;
+	my $delete_hash;
+	my $local_timestamp=get_time();
+
+	foreach my $existing_entry (@existing_entries) {
+		$hash->{@{$existing_entry}[0]}->{@{$existing_entry}[1]}->{@{$existing_entry}[2]}= $existing_entry;
+	}
+
+	foreach my $statement (@packages_list_statements) {
+		if($statement =~ /^INSERT/i) {
+			# Assign the values from the insert statement
+			my ($distribution,$package,$version,$section,$description,$template,$timestamp) = ($1,$2,$3,$4,$5,$6,$7) if $statement =~ 
+			/^INSERT\s+?INTO\s+?$main::packages_list_tn\s+?VALUES\s*?\('(.*?)',\s*?'(.*?)',\s*?'(.*?)',\s*?'(.*?)',\s*?'(.*?)',\s*?'(.*?)',\s*?'(.*?)'\s*?\)$/si;
+			if(exists($hash->{$distribution}->{$package}->{$version})) {
+				# If section or description has changed, update the DB
+				if( 
+					(! (@{$hash->{$distribution}->{$package}->{$version}}[3] eq $section)) or 
+					(! (@{$hash->{$distribution}->{$package}->{$version}}[4] eq $description))
+				) {
+					@{$update_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section,$description,undef);
+				}
+			} else {
+				# Insert a non-existing entry to db
+				@{$insert_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section,$description,$template);
+			}
+		} elsif ($statement =~ /^UPDATE/i) {
+			my ($template,$package,$version) = ($1,$2,$3) if $statement =~
+			/^update\s+?$main::packages_list_tn\s+?set\s+?template\s*?=\s*?'(.*?)'\s+?where\s+?package\s*?=\s*?'(.*?)'\s+?and\s+?version\s*?=\s*?'(.*?)'\s*?;$/si;
+			foreach my $distribution (keys %{$hash}) {
+				if(exists($insert_hash->{$distribution}->{$package}->{$version})) {
+					# update the insertion hash to execute only one query per package (insert instead insert+update)
+					@{$insert_hash->{$distribution}->{$package}->{$version}}[5]= $template;
+				} elsif(exists($hash->{$distribution}->{$package}->{$version})) {
+					if( ! (@{$hash->{$distribution}->{$package}->{$version}}[5] eq $template)) {
+						my $section;
+						my $description;
+						if(defined(@{$update_hash->{$distribution}->{$package}->{$version}}[3]) and
+							length(@{$update_hash->{$distribution}->{$package}->{$version}}[3]) > 0 ) {
+							$section= @{$update_hash->{$distribution}->{$package}->{$version}}[3];
+						}
+						if(defined(@{$update_hash->{$distribution}->{$package}->{$version}}[4])) {
+							$description= @{$update_hash->{$distribution}->{$package}->{$version}}[4];
+						}
+						@{$update_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section,$description,$template);
+					}
+				}
+			}
+		}
+	}
+
+	# TODO: Check for orphaned entries
+
+	# unroll the insert_hash
+	foreach my $distribution (keys %{$insert_hash}) {
+		foreach my $package (keys %{$insert_hash->{$distribution}}) {
+			foreach my $version (keys %{$insert_hash->{$distribution}->{$package}}) {
+				push @new_statement_list, "INSERT INTO $main::packages_list_tn VALUES ('$distribution','$package','$version',"
+				."'@{$insert_hash->{$distribution}->{$package}->{$version}}[3]',"
+				."'@{$insert_hash->{$distribution}->{$package}->{$version}}[4]',"
+				."'@{$insert_hash->{$distribution}->{$package}->{$version}}[5]',"
+				."'$local_timestamp')";
+			}
+		}
+	}
+
+	# unroll the update hash
+	foreach my $distribution (keys %{$update_hash}) {
+		foreach my $package (keys %{$update_hash->{$distribution}}) {
+			foreach my $version (keys %{$update_hash->{$distribution}->{$package}}) {
+				my $set = "";
+				if(defined(@{$update_hash->{$distribution}->{$package}->{$version}}[3])) {
+					$set .= "section = '@{$update_hash->{$distribution}->{$package}->{$version}}[3]', ";
+				}
+				if(defined(@{$update_hash->{$distribution}->{$package}->{$version}}[4])) {
+					$set .= "description = '@{$update_hash->{$distribution}->{$package}->{$version}}[4]', ";
+				}
+				if(defined(@{$update_hash->{$distribution}->{$package}->{$version}}[5])) {
+					$set .= "template = '@{$update_hash->{$distribution}->{$package}->{$version}}[5]', ";
+				}
+				if(defined($set) and length($set) > 0) {
+					$set .= "timestamp = '$local_timestamp'";
+				} else {
+					next;
+				}
+				push @new_statement_list, 
+					"UPDATE $main::packages_list_tn SET $set WHERE"
+					." distribution = '$distribution'"
+					." AND package = '$package'"
+					." AND version = '$version'";
+			}
+		}
+	}
+
+	@packages_list_statements = @new_statement_list;
 }
 
 
@@ -2275,7 +2378,7 @@ sub parse_package {
 
         # Trigger for description
         if ($line =~ /^Description:\s/){
-            ($description)= ($line =~ /^Description: (.*)$/);
+            ($description)= &encode_base64(($line =~ /^Description: (.*)$/));
             next;
         }
 
@@ -2325,26 +2428,22 @@ sub cleanup_and_extract {
         mkpath($dir);
         system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
 
-        if( -f "$dir/DEBIAN/templates" ) {
+		if( -f "$dir/DEBIAN/templates" ) {
 
-            daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
+			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
 
-            my $tmpl= "";
-            {
-                local $/=undef;
-                open FILE, "$dir/DEBIAN/templates";
-                $tmpl = &encode_base64(<FILE>);
-                close FILE;
-            }
-            rmtree("$dir/DEBIAN/templates");
+			my $tmpl= "";
+			{
+				local $/=undef;
+				open FILE, "$dir/DEBIAN/templates";
+				$tmpl = &encode_base64(<FILE>);
+				close FILE;
+			}
+			rmtree("$dir/DEBIAN/templates");
 
-            $sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
-
-        } else {
-            $sql= "update $main::packages_list_tn set template = '' where package = '$package' and version = '$newver';";
-        }
-
-        push @packages_list_statements, $sql;
+			$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
+        	push @packages_list_statements, $sql;
+		}
     }
 
     return;
@@ -2429,7 +2528,7 @@ $fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
 $fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
 
 # connect to packages_list_db
-unlink($packages_list_file_name);
+#unlink($packages_list_file_name);
 unlink($packages_list_under_construction);
 $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
