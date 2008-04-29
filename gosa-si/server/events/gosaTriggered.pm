@@ -57,6 +57,16 @@ sub get_events {
 }
 
 sub send_user_msg {
+
+# msg from gosa
+# <xml><header>gosa_send_user_msg</header><source>GOSA</source><target>GOSA</target>
+# <timestamp>20080429151605</timestamp>
+# <users>andreas.rettenberger</users>
+# <subject>hallo</subject>
+# <message>test</message>
+# <macaddress>GOSA</macaddress>
+# </xml>
+
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
@@ -65,7 +75,8 @@ sub send_user_msg {
     #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $subject = @{$msg_hash->{'subject'}}[0];
     my $from = @{$msg_hash->{'from'}}[0];
-    my @to = @{$msg_hash->{'to'}};
+    my @users = @{$msg_hash->{'users'}};
+	my @groups = @{$msg_hash->{'groups'}}[0];
     my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
     #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
     my $message = @{$msg_hash->{'message'}}[0];
@@ -94,12 +105,18 @@ sub send_user_msg {
         $new_msg_id += 1;
     }
 
+	# highlight user name and group name
+	@users = map("u_", @users);
+	my $users_list = join(",", @users);
+	@groups = map("g_", @groups);
+	my $groups_list = join(",", @groups);
+
     my $func_dic = {table=>$main::messaging_tn,
         primkey=>[],
         id=>$new_msg_id,
         subject=>$subject,
         message_from=>$from,
-        message_to=>join(",",@to),
+        message_to=>"$users_list,$groups_list",
         flag=>"n",
         direction=>"in",
         delivery_time=>$delivery_time,

@@ -1382,19 +1382,32 @@ sub watch_for_new_messages {
         my $message_to = @{$hit}[3];
 
         # translate message_to to plain login name
-# TODO implement reciever translation
-        my @reciever_l = split(/,/, $message_to);  
+        my @message_to_l = split(/,/, $message_to);  
+		my %receiver_h; 
+		foreach my $receiver (@message_to_l) {
+			if ($receiver =~ /^u_([\s\S]*)$/) {
+				$receiver_h{$1} = 0;
+			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
+# TODO implement receiver translation
+			} else {
+				my $sbjct = &encode_base64(@{$hit}[1]);
+				my $msg = &encode_base64(@{$hit}[7]);
+				&daemon_log("M WARNING: unknown receiver '$receiver' for a user-message 'sbjct - msg'", 3); 
+			}
+		}
+		my @receiver_l = keys(%receiver_h);
+
         my $message_id = @{$hit}[0];
 
         #add each outgoing msg to messaging_db
-        my $reciever;
-        foreach $reciever (@reciever_l) {
+        my $receiver;
+        foreach $receiver (@receiver_l) {
             my $sql_statement = "INSERT INTO $messaging_tn (id, subject, message_from, message_to, flag, direction, delivery_time, message, timestamp) ".
                 "VALUES ('".
                 $message_id."', '".    # id
                 @{$hit}[1]."', '".     # subject
                 @{$hit}[2]."', '".     # message_from
-                $reciever."', '".      # message_to
+                $receiver."', '".      # message_to
                 "none"."', '".         # flag
                 "out"."', '".          # direction
                 @{$hit}[6]."', '".     # delivery_time
@@ -1403,7 +1416,7 @@ sub watch_for_new_messages {
                 ")";
             &daemon_log("M DEBUG: $sql_statement", 1);
             my $res = $messaging_db->exec_statement($sql_statement);
-            &daemon_log("M INFO: message '".@{$hit}[0]."' is prepared for delivery to reciever '$reciever'", 5);
+            &daemon_log("M INFO: message '".@{$hit}[0]."' is prepared for delivery to receiver '$receiver'", 5);
         }
 
         # set incoming message to flag d=deliverd
