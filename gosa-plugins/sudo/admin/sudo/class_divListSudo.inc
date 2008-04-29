@@ -102,7 +102,7 @@ class divListSudo extends MultiSelectWindow
     $acl   = $this->ui->get_category_permissions($base,"sudo"); 
  
     /* Add default header */
-    $listhead = MultiSelectWindow::get_default_header();
+    $listhead = MultiSelectWindow::get_default_header(false);
     
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
