@@ -373,9 +373,30 @@ sub TASKBEGIN {
 			}
 		
 			# in case of no and more than one running jobs in queue, add one single job
-
-# TODO
 			# resolve plain name for host $macaddress
+			my $plain_name;
+			my $ldap_handle = &main::get_ldap_handle($session_id);
+			if( not defined $ldap_handle ) {
+				&main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
+				$plain_name = "none";
+
+			# try to fetch a 'real name'
+			} else {
+				my $mesg = $ldap_handle->search(
+						base => $main::ldap_base,
+						scope => 'sub',
+						attrs => ['cn'],
+						filter => "(macAddress=$macaddress)");
+				if($mesg->code) {
+					&main::daemon_log($mesg->error, 1);
+					$plain_name = "none";
+				} else {
+					my $entry= $mesg->entry(0);
+					$plain_name = $entry->get_value("cn");
+				}
+			}
+
+
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
 			my $func_dic = {table=>$main::job_queue_tn,
 					primkey=>[],
@@ -387,7 +408,7 @@ sub TASKBEGIN {
 					targettag=>$source,
 					xmlmessage=>'none',
 					macaddress=>$macaddress,
-					plainname=>'none',
+					plainname=>$plain_name,
 			};
 			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
 			if ($err != 0)  {
