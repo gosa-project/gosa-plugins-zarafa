@@ -341,15 +341,15 @@ class faiPackage extends plugin
         }
 
         /* Get Version */
-        $version = " ";
+        $version = "&nbsp;";
         if(isset($this->list[$usedName]['VERSION'])){
           $version = $this->list[$usedName]['VERSION'];
         }
     
         /* Get description */
-        $description = " ";
+        $description = "&nbsp;";
         if(isset($this->list[$usedName]['DESCRIPTION'])){
-          $description = $this->list[$usedName]['DESCRIPTION'];
+          $description = base64_decode($this->list[$usedName]['DESCRIPTION']);
         }
  
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){

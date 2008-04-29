@@ -111,9 +111,10 @@ class faiPackageEntry extends plugin
       }else{
         $check = "";
       }
-
-      if(!isset($pkg['DESCRIPTION'])){
-        $pkg['DESCRIPTION'] = "&nbsp;";
+  
+      $desc = " ";
+      if(isset($pkg['DESCRIPTION'])){
+        $desc = base64_decode($pkg['DESCRIPTION']);
       }
 
       $chkbox = "<input type='checkbox' value='1' name='use_".base64_encode($pkg['PACKAGE'])."' ".$check.">
@@ -123,7 +124,7 @@ class faiPackageEntry extends plugin
               "attach" => "style='width:180px;' title='".$pkg['PACKAGE']." (".$pkg['VERSION'].")'"),
             array("string"=>"<div style='width:238px; overflow:hidden;'>".htmlentities($pkg['VERSION'])."</div>",   
               "attach" => "style='width:240px' title='".$pkg['PACKAGE']." (".$pkg['VERSION'].")'"),
-            array("string"=>htmlentities($pkg['DESCRIPTION']), 
+            array("string"=>htmlentities($desc), 
               "attach" => "style='border-right:0px;text-align:left;'")));
     }
 
