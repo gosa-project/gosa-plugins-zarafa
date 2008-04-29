@@ -408,13 +408,9 @@ sub trigger_reload_ldap_config {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    my $out_hash = &create_xml_hash("reload_ldap_config", $main::server_address, $main::server_address, $target);
-    if( defined ) { 
-        &add_content2xml_hash($out_hash, 'jobdb_id', $jobdb_id); 
-    }
-    my $out_msg = &create_xml_string($out_hash);
-    my @out_msg_l;
-    push(@out_msg_l, $out_msg);
+	my $out_msg = &SIPackages::new_ldap_config($target, $session_id);
+	my @out_msg_l = ( $out_msg );
+
     return @out_msg_l;
 }
 
