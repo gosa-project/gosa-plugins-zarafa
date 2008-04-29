@@ -106,9 +106,9 @@ sub send_user_msg {
     }
 
 	# highlight user name and group name
-	@users = map("u_", @users);
+	@users = map("u_$_", @users);
 	my $users_list = join(",", @users);
-	@groups = map("g_", @groups);
+	@groups = map("g_$_", @groups);
 	my $groups_list = join(",", @groups);
 
     my $func_dic = {table=>$main::messaging_tn,
