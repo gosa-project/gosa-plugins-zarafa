@@ -217,7 +217,6 @@ sub krb5_get_principal {
         &add_content2xml_hash($out_hash, "last_pwd_change", $data->last_pwd_change);
         &add_content2xml_hash($out_hash, "last_success", $data->last_success);
         &add_content2xml_hash($out_hash, "mod_date", $data->mod_date);
-        &add_content2xml_hash($out_hash, "mod_name", $data->mod_name);
         &add_content2xml_hash($out_hash, "princ_expire_time", $data->princ_expire_time);
         &add_content2xml_hash($out_hash, "pw_expiration", $data->pw_expiration);
       }
