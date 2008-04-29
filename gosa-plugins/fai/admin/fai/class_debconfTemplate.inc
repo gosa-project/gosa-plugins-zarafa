@@ -61,9 +61,8 @@ class debconf
       }
 
       /* Get description */
-      if (!$got_local_description && preg_match("/^Description: /", $line)){
-        $this->template[$post_name]['Description']= "";
-        $description= trim(preg_replace("/^Description: (.*)$/", "\\1", $line));
+      if (!$got_local_description && preg_match("/^Description: /i", $line)){
+        $description= trim(preg_replace("/^Description: (.*)$/i", "\\1", $line));
         $this->template[$post_name]['Topic']= $description;
         $this->template[$post_name]['Description']= "";
         $in_description= TRUE;
@@ -78,8 +77,8 @@ class debconf
       }
 
       /* Get local description */
-      if (preg_match("/^Description-$langcode: /", $line)){
-        $description= trim(preg_replace("/^Description-$langcode: (.*)$/", "\\1", $line));
+      if (preg_match("/^Description-$langcode: /i", $line)){
+        $description= trim(preg_replace("/^Description-$langcode: (.*)$/i", "\\1", $line));
         $this->template[$post_name]['Topic']= $description;
         $in_description= TRUE;
         $got_local_description= TRUE;
@@ -212,7 +211,6 @@ class debconf
 
   function render_boolean($data)
   {
-
     $post_name= $data['post_name'];
     $result="
       <tr>
