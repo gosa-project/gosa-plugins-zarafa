@@ -341,13 +341,13 @@ class faiPackage extends plugin
         }
 
         /* Get Version */
-        $version = "&nbsp;";
+        $version = " ";
         if(isset($this->list[$usedName]['VERSION'])){
           $version = $this->list[$usedName]['VERSION'];
         }
     
         /* Get description */
-        $description = "&nbsp;";
+        $description = " ";
         if(isset($this->list[$usedName]['DESCRIPTION'])){
           $description = $this->list[$usedName]['DESCRIPTION'];
         }
