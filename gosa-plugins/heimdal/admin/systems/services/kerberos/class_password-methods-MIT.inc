@@ -19,62 +19,200 @@
  */
 
 
+/*
+
+   ATTRIBUTE INFORMATIONS taken from 
+   http://www.mit.edu/~kerberos/krb5-1.5/krb5-1.5/doc/krb5-admin/Adding-or-Modifying-Principals.html
+
+   expire date          
+   -Sets the expiration date of the principal to 
+   date.
+
+   pwexpire date        
+   -Sets the expiration date of the password to 
+   date.
+
+   maxlife maxlife      
+   -Sets the maximum ticket life of the principal 
+   to maxlife.
+
+   maxrenewlife maxrenewlife
+   -Sets the maximum renewable life of tickets 
+   for the principal to maxrenewlife.
+
+   kvno number
+   -Explicity sets the key version number to number. 
+   MIT does not recommend doing this unless there 
+   is a specific reason.
+
+   policy policy
+   -Sets the policy used by this principal. (See Policies.) 
+   With modify_principal, the current policy assigned to 
+   the principal is set or changed. With add_principal, 
+   if this option is not supplied, the -clearpolicy is 
+   not specified, and the policy "default" exists, that 
+   policy is assigned. If a principal is created with no 
+   policy, kadmin will print a warning message.
+
+   clearpolicy
+   -For modify_principal, removes the current policy from a 
+   principal. For add_principal, suppresses the automatic 
+   assignment of the policy "default".
+
+
+   {-|+}allow_postdated
+
+   The "-allow_postdated" option prohibits this principal 
+   from obtaining postdated tickets. "+allow_postdated" 
+   clears this flag. In effect, "-allow_postdated" sets the 
+   KRB5_KDB_DISALLOW_POSTDATED flag on the principal in the 
+   database.
+
+   {-|+}allow_forwardable
+   The "-allow_forwardable" option prohibits this principal 
+   from obtaining forwardable tickets. "+allow_forwardable" 
+   clears this flag. In effect, "-allow_forwardable" sets the 
+   KRB5_KDB_DISALLOW_FORWARDABLE flag on the principal in the 
+   database.
+
+   {-|+}allow_renewable
+   The "-allow_renewable" option prohibits this principal 
+   from obtaining renewable tickets. "+allow_renewable" 
+   clears this flag. In effect, "-allow_renewable" sets the 
+   KRB5_KDB_DISALLOW_RENEWABLE flag on the principal in the 
+   database.
+
+   {-|+}allow_proxiable
+   The "-allow_proxiable" option prohibits this principal 
+   from obtaining proxiable tickets. "+allow_proxiable" 
+   clears this flag. In effect, "-allow_proxiable" sets 
+   the KRB5_KDB_DISALLOW_PROXIABLE flag. on the principal 
+   in the database.
+
+   {-|+}allow_dup_skey
+The "-allow_dup_skey" option disables user-to-user 
+authentication for this principal by prohibiting this 
+principal from obtaining a session key for another user. 
+"+allow_dup_skey" clears this flag. In effect, "-allow_dup_skey" 
+sets the KRB5_KDB_DISALLOW_DUP_SKEY flag on the principal 
+in the database.
+
+{-|+}requires_preauth
+The "+requires_preauth" option requires this principal 
+to preauthenticate before being allowed to kinit. 
+-requires_preauth clears this flag. In effect, +requires_preauth 
+sets the KRB5_KDB_REQUIRES_PRE_AUTH flag on the principal 
+in the database.
+
+{-|+}requires_hwauth
+The "+requires_hwauth" flag requires the principal to 
+preauthenticate using a hardware device before being 
+allowed to kinit. "-requires_hwauth" clears this flag. 
+In effect, "+requires_hwauth" sets the KRB5_KDB_REQUIRES_HW_AUTH 
+flag on the principal in the database.
+
+{-|+}allow_svr
+The "-allow_svr" flag prohibits the issuance of service 
+tickets for this principal. "+allow_svr" clears this flag. 
+In effect, "-allow_svr" sets the KRB5_KDB_DISALLOW_SVR flag 
+on the principal in the database.
+
+{-|+}allow_tgs_req
+The "-allow_tgs_req" option specifies that a Ticket-Granting 
+Service (TGS) request for a service ticket for this principal 
+is not permitted. You will probably never need to use this option. 
+"+allow_tgs_req" clears this flag. The default is "+allow_tgs_req". 
+In effect, "-allow_tgs_req" sets the KRB5_KDB_DISALLOW_TGT_BASED 
+flag on the principal in the database.
+
+{-|+}allow_tix
+The "-allow_tix" option forbids the issuance of any tickets for 
+this principal. "+allow_tix" clears this flag. The default is 
+"+allow_tix". In effect, "-allow_tix" sets the KRB5_KDB_DISALLOW_ALL_TIX 
+flag on the principal in the database.
+
+{-|+}needchange
+The "+needchange" option sets a flag in attributes field to force a 
+password change; "-needchange" clears it. The default is "-needchange". 
+In effect, "+needchange" sets the KRB5_KDB_REQUIRES_PWCHANGE 
+flag on the principal in the database.
+
+{-|+}password_changing_service
+The "+password_changing_service" option sets a flag in 
+the attributes field marking this principal as a password 
+change service. (Again, you will probably never need to use 
+    this option.) "-password_changing_service" clears the flag. 
+The default is "-password_changing_service". In effect, the 
+"+password_changing_service" option sets the KRB5_KDB_PWCHANGE_SERVICE 
+flag on the principal in the database.
+
+-randkey
+Sets the key for the principal to a random value (add_principal only). 
+MIT recommends using this option for host keys.
+
+-pw password
+Sets the key of the principal to the specified string and does not
+prompt for a password (add_principal only). MIT does not recommend 
+using this option.
+
+*/
+
+
+
 class passwordMethodMIT extends passwordMethod
 {
 
-  var $krb5MaxLife      = "";
-  var $krb5MaxRenew     = "";
-  var $krb5ValidStart   = "";
-  var $krb5ValidEnd     = "";
-  var $krb5PasswordEnd  = "";
-  var $krb5ValidStart_clear   = TRUE;
-  var $krb5ValidEnd_clear     = TRUE;
-  var $krb5PasswordEnd_clear  = TRUE;
-
-  var $display = TRUE;
-
-  var $flag_list = array(
-      "0"=>"initial" , 
-      "1"=>"forwardable" , 
-      "2"=>"proxiable" , 
-      "3"=>"renewable" , 
-      "4"=>"postdate" , 
-      "5"=>"server" , 
-      "6"=>"client" , 
-      "7"=>"invalid" , 
-      "8"=>"require-preauth" , 
-      "9"=>"change-pw" , 
-      "10"=>"require-hwauth" , 
-      "11"=>"ok-as-delegate" , 
-      "12"=>"user-to-user" , 
-      "13"=>"immutable");
-
-  var $krb5KDCFlags     = 123;
-
-  var $dn                     = "new";
-  var $parent_dn              = "new";
-  var $attributes             = array("krb5MaxLife","krb5MaxRenew","krb5KDCFlags",
-                                      "krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
-  var $attrs                  = array();
-  var $is_account             = FALSE;
-
+  var $is_account  = FALSE;
   var $server_list = array();
-  var $map = array(); 
+  var $map         = array();
+  var $goKrbRealm  = "";
+  var $principal   = "";
+  var $dn          = "new";
+  var $parent_dn   = "new";
+  var $values = array("EXPIRE","PWEXPIRE","MAXLIFE","MAXRENEWLIFE","POLICY");
+  var $flags = array(
+      "B5_KDB_DISALLOW_POSTDATED"  ,
+      "KRB5_KDB_DISALLOW_FORWARDABLE",
+      "KRB5_KDB_DISALLOW_RENEWABLE"  ,
+      "KRB5_KDB_DISALLOW_PROXIABLE"  ,
+      "KRB5_KDB_DISALLOW_DUP_SKEY"   ,
+      "KRB5_KDB_REQUIRES_PRE_AUTH"   ,
+      "KRB5_KDB_REQUIRES_HW_AUTH"    ,
+      "KRB5_KDB_DISALLOW_SVR"        ,
+      "KRB5_KDB_DISALLOW_TGT_BASED"  ,
+      "KRB5_KDB_DISALLOW_ALL_TIX"    ,
+      "KRB5_KDB_REQUIRES_PWCHANGE"   ,
+      "KRB5_KDB_PWCHANGE_SERVICE"    );
 
-  var $goKrbRealm = "";
-  var $principal  = ""; 
 
-	function __construct(&$config,$dn = "new")  
-	{
+  var $EXPIRE                 = 0;
+  var $PWEXPIRE               = 0;
+  var $EXPIRE_clear           = TRUE;
+  var $PWEXPIRE_clear         = TRUE;
+  var $MAXLIFE                = 0;
+  var $MAXRENEWLIFE           = 0;
+
+  var $POLICY                 = "";
+
+  var $B5_KDB_DISALLOW_POSTDATED;
+  var $KRB5_KDB_DISALLOW_FORWARDABLE;
+  var $KRB5_KDB_DISALLOW_RENEWABLE;
+  var $KRB5_KDB_DISALLOW_PROXIABLE;
+  var $KRB5_KDB_DISALLOW_DUP_SKEY;
+  var $KRB5_KDB_REQUIRES_PRE_AUTH;
+  var $KRB5_KDB_REQUIRES_HW_AUTH;
+  var $KRB5_KDB_DISALLOW_SVR;
+  var $KRB5_KDB_DISALLOW_TGT_BASED;
+  var $KRB5_KDB_DISALLOW_ALL_TIX;
+  var $KRB5_KDB_REQUIRES_PWCHANGE;
+  var $KRB5_KDB_PWCHANGE_SERVICE;
+
+
+
+  function __construct(&$config,$dn = "new")  
+  {
     $this->config= $config;
     $this->parent_dn = $dn;
-
-    $this->is_account = FALSE;
-    $this->krb5MaxLife    = 86400;
-    $this->krb5MaxRenew   = 604800;
-    $this->krb5ValidStart = date("Ymd",time())."0000Z";
-    $this->krb5ValidEnd   = date("Ymd",time())."0000Z";
-    $this->krb5PasswordEnd= date("Ymd",time())."0000Z;";
 
     if(!is_object($config)){
       return;
@@ -96,7 +234,7 @@ class passwordMethodMIT extends passwordMethod
     while($attrs = $ldap->fetch()){
       if(!isset($attrs['macAddress'][0])) continue;
       if(!isset($attrs['description'][0])) $attrs['description'][0] ="";
-  
+
       $principals = $this->load_principals_for_server($attrs['macAddress'][0]);
 
       /* Create Realm/Server/Principal mapping.
@@ -111,11 +249,11 @@ class passwordMethodMIT extends passwordMethod
       /* Create Server list
        */
       $this->server_list[$attrs['cn'][0]] = array("macAddress" => $attrs['macAddress'][0],
-                                                  "description"=> $attrs['description'][0],
-                                                  "dn"         => $attrs['dn'],
-                                                  "principals" => $principals,
-                                                  "goKrbRealm" => $attrs['goKrbRealm'][0],
-                                                  "cn"         => $attrs['cn'][0]);
+          "description"=> $attrs['description'][0],
+          "dn"         => $attrs['dn'],
+          "principals" => $principals,
+          "goKrbRealm" => $attrs['goKrbRealm'][0],
+          "cn"         => $attrs['cn'][0]);
     }
 
     /* Load object data from ldap && initialize this class  
@@ -128,7 +266,7 @@ class passwordMethodMIT extends passwordMethod
       if(isset($this->attrs['userPassword'])){
 
         $p_name = preg_replace("/^\{".$this->get_hash_name()."\}/","",$this->attrs['userPassword'][0]);
-   
+
         /* Try to detect server our principal is configured on
          */
         if($this->map['PRINCIPAL_SERVER'][$p_name]){
@@ -137,8 +275,16 @@ class passwordMethodMIT extends passwordMethod
           $this->principal  = $p_name;
 
           $info = $this->load_principal($this->server_list[$server]['macAddress'],$p_name);
-          echo "Found principal, implement krb_get_principal";
-          break;
+          foreach($this->flags as $attr){
+            if(isset($info[$attr])){
+              $this->$attr = $info[$attr];
+            }
+          }
+          foreach($this->values as $attr){
+            if(isset($info[$attr])){
+              $this->$attr = $info[$attr];
+            }
+          }
         }
       }
     }
@@ -146,26 +292,24 @@ class passwordMethodMIT extends passwordMethod
 
 
   /*! \brief get list of all configured principals
-        for a given server. 
-       The results will cached.  
+    for a given server. 
+    The results will cached.  
    */
   public function load_principal($server,$name)
   {
-    return(array());
     $o = new gosaSupportDaemon();
     $tmp = array();
     $tmp = $o->krb5_get_principal($server,$name);
     if($o->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
     }
-
     return($tmp); 
   }
 
 
   /*! \brief get list of all configured principals
-        for a given server. 
-       The results will cached.  
+    for a given server. 
+    The results will cached.  
    */
   public function load_principals_for_server($server)
   {
@@ -181,31 +325,30 @@ class passwordMethodMIT extends passwordMethod
     }
     return($cache[$server]);
   }
- 
+
 
   /*! \brief Check if this password method is useable. 
-             This is the case if there is at least one si server which provides 
-              kerberos support. 
+    This is the case if there is a si server running and at least one server configured.
+    kerberos support. 
    */ 
-	function is_available()
-	{
-    foreach($this->server_list as $server => $data){
-      if(count($data['principals'])){
-        return(TRUE);
-      }
+  function is_available()
+  {
+    $o = new gosaSupportDaemon(FALSE);
+    if(count($this->server_list) && $o->connect()){
+      return TRUE; 
     }
-    return(FALSE);
+    return(FALSE);  
   }
 
 
-	function generate_hash($pwd)
-	{
+  function generate_hash($pwd)
+  {
     $mode= "kerberos";
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
       $mode= "sasl";
     }
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
-	}
+  }
 
 
   function remove_from_parent()
@@ -256,25 +399,6 @@ class passwordMethodMIT extends passwordMethod
   {
     $this->save_object();
 
-    /* Cancel heimdal options */
-    if (isset($_POST['pw_abort']) || $this->display == FALSE){
-      $this->display = FALSE;
-      return("");
-    }
-
-    /* Cancel heimdal options */
-    if (isset($_POST['pw_save'])){
-      $msgs = $this->check();
-      if(count($msgs)){
-        foreach($msgs as $msg){
-          msg_dialog::display(_("Heimdal"),$msg,WARNING_DIALOG);
-        }
-      }else{
-        $this->display = FALSE;
-        return "";
-      }
-    }
-
     $years = array();
     $start = date("Y")-1;
     for($i = $start; $i < ($start +20) ; $i++){
@@ -296,7 +420,27 @@ class passwordMethodMIT extends passwordMethod
     for($i = 0; $i <= 59  ; $i++){
       $minutes[str_pad($i,2,"0",STR_PAD_LEFT)] = $i;
     }
-  
+
+
+    /* Cancel heimdal options */
+    if (isset($_POST['pw_abort']) || $this->display == FALSE){
+      $this->display = FALSE;
+      return("");
+    }
+
+    /* Cancel heimdal options */
+    if (isset($_POST['pw_save'])){
+      $msgs = $this->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          msg_dialog::display(_("Heimdal"),$msg,WARNING_DIALOG);
+        }
+      }else{
+        $this->display = FALSE;
+        return "";
+      }
+    }
+
 
     $smarty = get_smarty();
     $smarty->assign("years",$years);
@@ -305,7 +449,14 @@ class passwordMethodMIT extends passwordMethod
     $smarty->assign("hours",$hours);
     $smarty->assign("minutes",$minutes);
 
-    $date_values = array("krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+    foreach($this->values as $attr){
+      $smarty->assign($attr ,$this->$attr);
+    }
+    foreach($this->flags as $attr){
+      $smarty->assign($attr,$this->$attr);
+    }
+
+    $date_values = array("EXPIRE","PWEXPIRE");
     foreach($date_values as $date_val){
       $clear = $date_val."_clear";
       $smarty->assign($date_val."_clear",$this->$clear);
@@ -316,27 +467,26 @@ class passwordMethodMIT extends passwordMethod
       $smarty->assign($date_val."_i",substr($this->$date_val,10,2));
     }
 
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr ,$this->$attr);
-    }
-    foreach($this->flag_list as $key => $name){
-      $val = pow(2,$key);
-      if($this->krb5KDCFlags & $val){
-        $smarty->assign("krb5KDCFlags_".$key,TRUE);
-      }else{
-        $smarty->assign("krb5KDCFlags_".$key,FALSE);
-      }
-    }
 
-    return($smarty->fetch(get_template_path("pwd_heimdal.tpl")));
+    return($smarty->fetch(get_template_path("pwd_kerberos_mit.tpl")));
   }
 
-  
+
   function save_object()
   {
     if(isset($_POST['pwd_heimdal_posted'])){
 
-      $date_values = array("krb5ValidStart","krb5ValidEnd","krb5PasswordEnd");
+      foreach($this->flags as $attr){
+        $this->$attr = isset($_POST[$attr]);
+      }
+
+      foreach(array("MAXLIFE","MAXRENEWLIFE","POLICY") as $attr){
+        if(isset($_POST[$attr])){
+          $this->$attr = get_post($attr);
+        }
+      }
+
+      $date_values = array("PWEXPIRE","EXPIRE");
       foreach($date_values as $date_value){
         $clear = $date_value."_clear";
         if(isset($_POST[$date_value."_clear"])){
@@ -352,42 +502,13 @@ class passwordMethodMIT extends passwordMethod
           $this->$date_value = $str."Z";
         }
       }
-
-      foreach($this->attributes as $attr){
-        if(isset($_POST[$attr])){
-          $this->$attr = get_post($attr);
-        }
-      }
-  
-      $int = "";
-      foreach($this->flag_list as $key => $name){
-        $post = "krb5KDCFlags_".$key;
-        if(isset($_POST[$post])){
-          $int |= pow(2,$key);
-        }
-      }
-      $this->krb5KDCFlags = $int;
     }
   }
 
   function check()
   {
     $message = array();
-    if(!is_numeric($this->krb5MaxLife) && !empty($this->krb5MaxLife)){
-      $message[] = msgPool::invalid(_("Max life"),$this->krb5MaxLife,"/[0-9]/");
-    }
-    if(!is_numeric($this->krb5MaxRenew) && !empty($this->krb5MaxRenew)){
-      $message[] = msgPool::invalid(_("Max renew"),$this->krb5MaxRenew,"/[0-9]/");
-    }
-   if(!$this->krb5ValidStart_clear && !$this->chk_times($this->krb5ValidStart)){
-     $message[] = msgPool::invalid(_("Valid start"),$this->krb5ValidStart,"/[0-9]/");
-   }
-   if(!$this->krb5ValidEnd_clear && !$this->chk_times($this->krb5ValidEnd)){
-     $message[] = msgPool::invalid(_("Valid end"),$this->krb5ValidEnd,"/[0-9]/");
-   }
-   if(!$this->krb5PasswordEnd_clear && !$this->chk_times($this->krb5PasswordEnd)){
-     $message[] = msgPool::invalid(_("Valid password"),$this->krb5PasswordEnd,"/[0-9]/");
-   }
+    echo "Checks missing";
     return($message);
   }
 
@@ -399,8 +520,8 @@ class passwordMethodMIT extends passwordMethod
     }
     return(false);
   }
- 
- 
+
+
   function save($dn)
   {
     $realm = $this->config->data['SERVERS']['KERBEROS']['REALM'];
@@ -413,51 +534,15 @@ class passwordMethodMIT extends passwordMethod
 
       $uid  = $attrs['uid'][0];
       $name = $uid."@".strtoupper($realm); 
-      $dn   = "krb5PrincipalName=".$name.",".$dn;
 
-      $data = array();
-      $data['krb5PrincipalName'] = $name;
-      $data['objectClass']  = array("top","account","krb5Principal","krb5KDCEntry");
-      $data['krb5PrincipalName'] =$name;
-      $data['uid'] = $uid;
-      $data['krb5KeyVersionNumber'] = rand(100000,99999999);
-
-      if($this->is_account){ 
-        foreach($this->attributes as $attr){
-          $data[$attr] = array();
-        }
-      }
-
-      /* Append Flags */
-      $data['krb5KDCFlags']   = $this->krb5KDCFlags;
-      if(!empty($this->krb5MaxLife)){
-        $data['krb5MaxLife']    = $this->krb5MaxLife;
-      }
-      if(!empty($this->krb5MaxRenew)){
-        $data['krb5MaxRenew']   = $this->krb5MaxRenew;
-      }
-      if(!$this->krb5ValidStart_clear){
-        $data['krb5ValidStart'] = $this->krb5ValidStart;
-      }
-      if(!$this->krb5ValidEnd_clear){
-        $data['krb5ValidEnd']   = $this->krb5ValidEnd;
-      }
-      if(!$this->krb5PasswordEnd_clear){
-        $data['krb5PasswordEnd']= $this->krb5PasswordEnd;
+      foreach($this->attributes as $attr){
+        $data[$attr] = array();
       }
 
       echo "Save missing";
 
-#     /* Add / Updated data */
-#     $ldap->cd($dn);
-#     if(!$this->is_account){ 
-#       $ldap->add($data);
-#     }else{
-#       $ldap->modify($data);
-#     }
-#     if (!$ldap->success()){
-#       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
-#     }
+      print_a($data);
+      exit();
     }
   }
 }
