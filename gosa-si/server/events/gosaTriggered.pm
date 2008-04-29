@@ -106,17 +106,20 @@ sub send_user_msg {
     }
 
 	# highlight user name and group name
-	@users = map("u_$_", @users);
-	my $users_list = join(",", @users);
-	@groups = map("g_$_", @groups);
-	my $groups_list = join(",", @groups);
+	my @receiver_l;
+	@users = map(push(@receiver_l, "u_$_"), @users);
+	#@groups = map(push(@receiver_l, "g_$_"), @groups);
+# TODO
+# handling, was passiert wenn in einer liste nix drin steht
+# handling von groups hinzufügen
+	
 
     my $func_dic = {table=>$main::messaging_tn,
         primkey=>[],
         id=>$new_msg_id,
         subject=>$subject,
         message_from=>$from,
-        message_to=>"$users_list,$groups_list",
+        message_to=>join(",", @receiver_l),
         flag=>"n",
         direction=>"in",
         delivery_time=>$delivery_time,
