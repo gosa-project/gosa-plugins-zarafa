@@ -111,6 +111,11 @@ class faiPackageEntry extends plugin
       }else{
         $check = "";
       }
+
+      if(!isset($pkg['DESCRIPTION'])){
+        $pkg['DESCRIPTION'] = "&nbsp;";
+      }
+
       $chkbox = "<input type='checkbox' value='1' name='use_".base64_encode($pkg['PACKAGE'])."' ".$check.">
         <input type='hidden' value='1' name='wasonpage_".base64_encode($pkg['PACKAGE'])."'>";
       $divlist->AddEntry(array(array("string"=>$chkbox, "attach" => "style='text-align:center;width:20px;'"),
