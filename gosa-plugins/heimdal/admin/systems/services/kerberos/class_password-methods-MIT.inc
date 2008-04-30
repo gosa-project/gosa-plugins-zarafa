@@ -287,7 +287,6 @@ class passwordMethodMIT extends passwordMethod
    */ 
   function is_available()
   {
-    return(TRUE);
     $o = new gosaSupportDaemon(FALSE);
     if(count($this->server_list) && $o->connect()){
       return TRUE; 
@@ -452,6 +451,10 @@ class passwordMethodMIT extends passwordMethod
        Here we hanlde those requests.
      */
     if(isset($_POST['retry_si'])){
+      $this->si_error= FALSE;
+      $this->si_error_msg= "";
+      session::un_set("MIT_PRINCIPAL_CACHE");
+      session::un_set("MIT_POLICY_CACHE");
       $this->__construct($this->config,$this->parent_dn);
     }
 
