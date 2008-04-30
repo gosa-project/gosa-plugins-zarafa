@@ -31,6 +31,9 @@ class passwordMethodMIT extends passwordMethod
   var $principal   = "";        // The principals name (e.g. user@MY-DOMAIN.SYS)
   var $is_new      = TRUE;      // Is TRUE if principal is new 
 
+  var $si_error        = FALSE;
+  var $si_error_msg    = "";
+
   var $values = array(
       "PRINC_EXPIRE_TIME",      // Expiry date of this principal
       "PW_EXPIRATION",          // Password expiration 
@@ -186,6 +189,9 @@ class passwordMethodMIT extends passwordMethod
     $tmp = array();
     $tmp = $o->krb5_get_principal($server,$name);
     if($o->is_error()){
+
+      $this->si_error     = TRUE;
+      $this->si_error_msg = $o->get_error(); 
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
     }else{
 
@@ -231,7 +237,13 @@ class passwordMethodMIT extends passwordMethod
     if(!isset($cache[$server])){
       $o = new gosaSupportDaemon();
       $tmp = $o->krb5_list_principals($server);
-      $cache[$server] = $tmp;
+      if($o->is_error()){
+        $this->si_error     = TRUE;
+        $this->si_error_msg = $o->get_error(); 
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }else{
+        $cache[$server] = $tmp;
+      }
       session::set("MIT_PRINCIPAL_CACHE",$cache);
     }
     return($cache[$server]);
@@ -248,15 +260,21 @@ class passwordMethodMIT extends passwordMethod
       session::set("MIT_POLICY_CACHE",array());
     }
     $cache = session::get("MIT_POLICY_CACHE");
-    if(1 | !isset($cache[$server])){
+    if(!isset($cache[$server])){
       $o = new gosaSupportDaemon();
       $tmp = $o->krb5_list_policies($server);
-      $cache[$server] = array();
-      $cache[$server]["_none_"] = _("none"); 
-      foreach($tmp as $policy){
-        $cache[$server][$policy] = $policy;
+      if($o->is_error()){
+        $this->si_error     = TRUE;
+        $this->si_error_msg = $o->get_error();
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+      }else{
+        $cache[$server] = array();
+        $cache[$server]["_none_"] = _("none"); 
+        foreach($tmp as $policy){
+          $cache[$server][$policy] = $policy;
+        }
+        ksort($cache[$server]);
       }
-      ksort($cache[$server]);
       session::set("MIT_POLICY_CACHE",$cache);
     }
     return($cache[$server]);
@@ -269,6 +287,7 @@ class passwordMethodMIT extends passwordMethod
    */ 
   function is_available()
   {
+    return(TRUE);
     $o = new gosaSupportDaemon(FALSE);
     if(count($this->server_list) && $o->connect()){
       return TRUE; 
@@ -293,6 +312,8 @@ class passwordMethodMIT extends passwordMethod
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
       $o = new gosaSupportDaemon();
       if(!$o->krb5_del_principal($this->server_list[$server]['macAddress'],$this->principal)){
+        $this->si_error     = TRUE;
+        $this->si_error_msg = $o->get_error();
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
       }
     }
@@ -379,6 +400,10 @@ class passwordMethodMIT extends passwordMethod
 
 
     $smarty = get_smarty();
+
+    $smarty->assign("si_error",$this->si_error);
+    $smarty->assign("si_error_msg",$this->si_error_msg);
+  
     $smarty->assign("years",$years);
     $smarty->assign("month",$month);
     $smarty->assign("days",$days);
@@ -422,6 +447,16 @@ class passwordMethodMIT extends passwordMethod
 
   function save_object()
   {
+    /* If the communication with the si server failed, 
+        you are able to retry to connect to the server.
+       Here we hanlde those requests.
+     */
+    if(isset($_POST['retry_si'])){
+      $this->__construct($this->config,$this->parent_dn);
+    }
+
+    /* Only handle posts for this plugin, it its content was posted
+     */
     if(isset($_POST['pwd_heimdal_posted'])){
 
       if(isset($_POST['goKrbRealm'])){
@@ -523,6 +558,8 @@ class passwordMethodMIT extends passwordMethod
         $o->krb5_set_principal($server_mac,$principal,$entry);
       }
       if($o->is_error()){
+        $this->si_error     = TRUE;
+        $this->si_error_msg = $o->get_error();
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
       }
     }
