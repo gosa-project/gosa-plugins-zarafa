@@ -29,10 +29,17 @@ class DaemonEvent_notify extends DaemonEvent
 
   var $message = "";
   var $subject = "";
+  var $from    = "";
 
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
+
+    $ui = get_userinfo();
+    $this->from = $ui->cn; 
+ 
+    $this->message = base64_decode($this->message);
+
     $this->s_Menu_Name  = _("Send message");
     $this->s_Event_Name = _("Send message");
 
@@ -57,8 +64,6 @@ class DaemonEvent_notify extends DaemonEvent
     $display = $this->get_header();
     $tmp = $this->data;
     $smarty = get_smarty();
-    $smarty->assign("subject" ,"subject");
-    $smarty->assign("message" ,"message");
     $smarty->assign("data"        , $this->data);
     $smarty->assign("is_new"      , $this->is_new);
     $smarty->assign("timestamp"   , $this->get_time_select());
@@ -69,6 +74,7 @@ class DaemonEvent_notify extends DaemonEvent
     $smarty->assign("add_str", msgPool::addButton(_("Target")));
     $smarty->assign("del_str", msgPool::delButton(_("Target")));
 
+    $smarty->assign("from",    xmlentities($this->from));
     $smarty->assign("subject", xmlentities($this->subject));
     $smarty->assign("message", xmlentities($this->message));
 
@@ -86,6 +92,9 @@ class DaemonEvent_notify extends DaemonEvent
     }
     if(empty($this->message)){
       $msgs[] = msgPool::required(_("Message"));
+    }
+    if(empty($this->from)){
+      $msgs[] = msgPool::required(_("From"));
     }
     if(!count($this->groups) && !count($this->users)){
       $msgs[] = msgPool::required(_("Target"));
@@ -118,6 +127,9 @@ class DaemonEvent_notify extends DaemonEvent
     }
     if(isset($_POST['message'])){
       $this->message = get_post('message');
+    }
+    if(isset($_POST['from'])){
+      $this->from = get_post('from');
     }
   }
 
@@ -187,7 +199,8 @@ class DaemonEvent_notify extends DaemonEvent
     $ret['users']   = array_values($this->users);
     $ret['groups']  = array_values($this->groups);
     $ret['subject'] = $this->subject;
-    $ret['message'] = $this->message;
+    $ret['from']    = $this->from;
+    $ret['message'] = base64_encode($this->message);
     return($ret);
   }
 } 

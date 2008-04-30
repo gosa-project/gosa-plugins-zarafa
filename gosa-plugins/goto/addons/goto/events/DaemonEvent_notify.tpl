@@ -7,6 +7,10 @@
 	  <b>{t}Message settings{/t}</b>
 	  <table style="width:100%;">
 		<tr>
+			<td>{t}Sender{/t}</td>
+			<td><input type='text' name="from" value="{$from}" style="width:100%;"></td>
+		</tr>
+		<tr>
 			<td>{t}Subject{/t}</td>
 			<td><input type='text' name="subject" value="{$subject}" style="width:100%;"></td>
 		</tr>
