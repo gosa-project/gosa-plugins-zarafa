@@ -39,6 +39,7 @@ class DaemonEvent_notify extends DaemonEvent
     $this->from = $ui->cn; 
  
     $this->message = base64_decode($this->message);
+    $this->subject = base64_decode($this->subject);
 
     $this->s_Menu_Name  = _("Send message");
     $this->s_Event_Name = _("Send message");
@@ -198,7 +199,7 @@ class DaemonEvent_notify extends DaemonEvent
     $ret = DaemonEvent::save();
     $ret['users']   = array_values($this->users);
     $ret['groups']  = array_values($this->groups);
-    $ret['subject'] = $this->subject;
+    $ret['subject'] = base64_encode($this->subject);
     $ret['from']    = $this->from;
     $ret['message'] = base64_encode($this->message);
     return($ret);
