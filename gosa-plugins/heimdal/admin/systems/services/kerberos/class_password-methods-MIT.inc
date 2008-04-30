@@ -203,6 +203,7 @@ class passwordMethodMIT extends passwordMethod
 
 
   var $POLICY                   = "";
+  var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
 
   var $PRINC_EXPIRE_TIME        = 0;
   var $PW_EXPIRATION            = 0;
@@ -299,6 +300,13 @@ class passwordMethodMIT extends passwordMethod
           $server= $this->map['PRINCIPAL_SERVER'][$p_name];
           $this->goKrbRealm = $this->map['SERVER_REALM'][$server];
           $this->principal  = $p_name;
+
+          /* Load policies */
+          $server_name = $this->map['REALM_SERVER'][$this->goKrbRealm];
+          $server_mac  = $this->server_list[$server_name]['macAddress'];
+          $this->POLICIES = $this->load_policies_for_server($server_mac);
+
+          /* Load principal */
           $this->load_principal($this->server_list[$server]['macAddress'],$p_name);
         }
       }
@@ -354,18 +362,40 @@ class passwordMethodMIT extends passwordMethod
    */
   public function load_principals_for_server($server)
   {
-    if(!session::is_set("MIT_CACHE")){
-      session::set("MIT_CACHE",array());
+    if(!session::is_set("MIT_PRINCIPAL_CACHE")){
+      session::set("MIT_PRINCIPAL_CACHE",array());
     }
-    $cache = session::get("MIT_CACHE");
+    $cache = session::get("MIT_PRINCIPAL_CACHE");
     if(!isset($cache[$server])){
       $o = new gosaSupportDaemon();
       $tmp = $o->krb5_list_principals($server);
       $cache[$server] = $tmp;
-      session::set("MIT_CACHE",$cache);
+      session::set("MIT_PRINCIPAL_CACHE",$cache);
     }
     return($cache[$server]);
   }
+
+
+  /*! \brief get list of all configured policies
+    for a given server. 
+    The results will cached.  
+   */
+  public function load_policies_for_server($server)
+  {
+    if(!session::is_set("MIT_POLICY_CACHE")){
+      session::set("MIT_POLICY_CACHE",array());
+    }
+    $cache = session::get("MIT_POLICY_CACHE");
+    if(!isset($cache[$server])){
+      $o = new gosaSupportDaemon();
+      $tmp = $o->krb5_list_policies($server);
+      $cache[$server] = $tmp;
+      session::set("MIT_POLICY_CACHE",$cache);
+    }
+    return($cache[$server]);
+  }
+
+
 
 
   /*! \brief Check if this password method is useable. 
@@ -490,6 +520,15 @@ class passwordMethodMIT extends passwordMethod
     $smarty->assign("hours",$hours);
     $smarty->assign("minutes",$minutes);
 
+    $smarty->assign("server_list",$this->server_list);
+    $smarty->assign("POLICY"  ,$this->POLICY);
+    $smarty->assign("goKrbRealm" , $this->goKrbRealm);
+
+    $server_name = $this->map['REALM_SERVER'][$this->goKrbRealm];
+    $server_mac  = $this->server_list[$server_name]['macAddress'];
+    $this->POLICIES = $this->load_policies_for_server($server_mac);
+    $smarty->assign("POLICIES"  ,$this->POLICIES);
+   
     foreach($this->values as $attr){
       $smarty->assign($attr ,$this->$attr);
     }
@@ -519,6 +558,10 @@ class passwordMethodMIT extends passwordMethod
   function save_object()
   {
     if(isset($_POST['pwd_heimdal_posted'])){
+
+      if(isset($_POST['goKrbRealm'])){
+        $this->goKrbRealm = get_post("goKrbRealm");
+      }
 
       foreach($this->flags as $attr){
         $this->$attr = isset($_POST[$attr]);
