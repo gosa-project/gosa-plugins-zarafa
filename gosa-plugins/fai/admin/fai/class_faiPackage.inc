@@ -76,7 +76,7 @@ class faiPackage extends plugin
       if(isset($this->attrs['FAIpackage'])){
         unset($this->attrs['FAIpackage']['count']);
         foreach($this->attrs['FAIpackage'] as $pkg){
-          $name = preg_replace("/^\-/","",$pkg);
+          $name = preg_replace("/\-$/","",$pkg);
           $this->usedPackages[$name] = $pkg;
         }
         ksort($this->usedPackages);
@@ -221,10 +221,10 @@ class faiPackage extends plugin
         $id = @base64_decode(preg_replace("/^removal_package_(.*)_[xy]*$/","\\1",$name));
         if(isset($this->usedPackages[$id])){
           $pkg = $this->usedPackages[$id]; 
-          if (preg_match('/^-/', $pkg)){
-            $pkg= preg_replace('/^-/', '', $pkg);
+          if (preg_match('/\-$/', $pkg)){
+            $pkg= preg_replace('/\-$/', '', $pkg);
           } else {
-            $pkg= preg_replace('/^/', '-', $pkg);
+            $pkg= preg_replace('/$/', '-', $pkg);
           }
           $this->usedPackages[$id] = $pkg;
         }
@@ -335,7 +335,7 @@ class faiPackage extends plugin
 
         /* Adapt used name if we're marked for removal */
         $removal = "<img src='images/empty.png' alt=' '  class='center'>";
-        if (preg_match('/^-/', $name)){
+        if (preg_match('/\-$/', $name)){
           $removal = "<img src='images/negate.png' alt='"._("Package marked for removal")."'
                       title='"._("Package marked for removal")."' class='center'>";
         }
