@@ -8,11 +8,11 @@ my @events = (
     "trigger_action_halt",
     "trigger_action_faireboot",
     "trigger_action_reboot",
-    "trigger_action_memcheck",
+#    "trigger_action_memcheck",   # not yet implemented
     "trigger_action_reinstall",
     "trigger_action_update",
     "trigger_action_instant_update",
-    "trigger_action_sysinfo",
+#    "trigger_action_sysinfo",    # not yet implemented
     );
 @EXPORT = @events;
 

@@ -6,11 +6,11 @@ my @events = (
     "registered",
     "new_ldap_config",
     "new_key",
-    "generate_hw_digest",
+    "generate_hw_digest",     # no implementations
     "detect_hardware",
     "confirm_new_key",
     "ping",
-    "import_events",
+    "import_events",    # no implementations
     );
 @EXPORT = @events;
 
