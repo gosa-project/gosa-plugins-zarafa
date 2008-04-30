@@ -1,7 +1,7 @@
 <?php
 /*
    This code is part of GOsa (https://gosa.gonicus.de)
-   Copyright (C) 2007 Cajus Pollmeier
+   Copyright (C) 2008 Fabian Hickert
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,147 +18,6 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-/*
-
-   ATTRIBUTE INFORMATIONS taken from 
-   http://www.mit.edu/~kerberos/krb5-1.5/krb5-1.5/doc/krb5-admin/Adding-or-Modifying-Principals.html
-
-   expire date          
-   -Sets the expiration date of the principal to 
-   date.
-
-   pwexpire date        
-   -Sets the expiration date of the password to 
-   date.
-
-   maxlife maxlife      
-   -Sets the maximum ticket life of the principal 
-   to maxlife.
-
-   maxrenewlife maxrenewlife
-   -Sets the maximum renewable life of tickets 
-   for the principal to maxrenewlife.
-
-   kvno number
-   -Explicity sets the key version number to number. 
-   MIT does not recommend doing this unless there 
-   is a specific reason.
-
-   policy policy
-   -Sets the policy used by this principal. (See Policies.) 
-   With modify_principal, the current policy assigned to 
-   the principal is set or changed. With add_principal, 
-   if this option is not supplied, the -clearpolicy is 
-   not specified, and the policy "default" exists, that 
-   policy is assigned. If a principal is created with no 
-   policy, kadmin will print a warning message.
-
-   clearpolicy
-   -For modify_principal, removes the current policy from a 
-   principal. For add_principal, suppresses the automatic 
-   assignment of the policy "default".
-
-
-   {-|+}allow_postdated
-
-   The "-allow_postdated" option prohibits this principal 
-   from obtaining postdated tickets. "+allow_postdated" 
-   clears this flag. In effect, "-allow_postdated" sets the 
-   DISALLOW_POSTDATED flag on the principal in the 
-   database.
-
-   {-|+}allow_forwardable
-   The "-allow_forwardable" option prohibits this principal 
-   from obtaining forwardable tickets. "+allow_forwardable" 
-   clears this flag. In effect, "-allow_forwardable" sets the 
-   DISALLOW_FORWARDABLE flag on the principal in the 
-   database.
-
-   {-|+}allow_renewable
-   The "-allow_renewable" option prohibits this principal 
-   from obtaining renewable tickets. "+allow_renewable" 
-   clears this flag. In effect, "-allow_renewable" sets the 
-   DISALLOW_RENEWABLE flag on the principal in the 
-   database.
-
-   {-|+}allow_proxiable
-   The "-allow_proxiable" option prohibits this principal 
-   from obtaining proxiable tickets. "+allow_proxiable" 
-   clears this flag. In effect, "-allow_proxiable" sets 
-   the DISALLOW_PROXIABLE flag. on the principal 
-   in the database.
-
-   {-|+}allow_dup_skey
-The "-allow_dup_skey" option disables user-to-user 
-authentication for this principal by prohibiting this 
-principal from obtaining a session key for another user. 
-"+allow_dup_skey" clears this flag. In effect, "-allow_dup_skey" 
-sets the DISALLOW_DUP_SKEY flag on the principal 
-in the database.
-
-{-|+}requires_preauth
-The "+requires_preauth" option requires this principal 
-to preauthenticate before being allowed to kinit. 
--requires_preauth clears this flag. In effect, +requires_preauth 
-sets the REQUIRES_PRE_AUTH flag on the principal 
-in the database.
-
-{-|+}requires_hwauth
-The "+requires_hwauth" flag requires the principal to 
-preauthenticate using a hardware device before being 
-allowed to kinit. "-requires_hwauth" clears this flag. 
-In effect, "+requires_hwauth" sets the REQUIRES_HW_AUTH 
-flag on the principal in the database.
-
-{-|+}allow_svr
-The "-allow_svr" flag prohibits the issuance of service 
-tickets for this principal. "+allow_svr" clears this flag. 
-In effect, "-allow_svr" sets the DISALLOW_SVR flag 
-on the principal in the database.
-
-{-|+}allow_tgs_req
-The "-allow_tgs_req" option specifies that a Ticket-Granting 
-Service (TGS) request for a service ticket for this principal 
-is not permitted. You will probably never need to use this option. 
-"+allow_tgs_req" clears this flag. The default is "+allow_tgs_req". 
-In effect, "-allow_tgs_req" sets the DISALLOW_TGT_BASED 
-flag on the principal in the database.
-
-{-|+}allow_tix
-The "-allow_tix" option forbids the issuance of any tickets for 
-this principal. "+allow_tix" clears this flag. The default is 
-"+allow_tix". In effect, "-allow_tix" sets the DISALLOW_ALL_TIX 
-flag on the principal in the database.
-
-{-|+}needchange
-The "+needchange" option sets a flag in attributes field to force a 
-password change; "-needchange" clears it. The default is "-needchange". 
-In effect, "+needchange" sets the REQUIRES_PWCHANGE 
-flag on the principal in the database.
-
-{-|+}password_changing_service
-The "+password_changing_service" option sets a flag in 
-the attributes field marking this principal as a password 
-change service. (Again, you will probably never need to use 
-    this option.) "-password_changing_service" clears the flag. 
-The default is "-password_changing_service". In effect, the 
-"+password_changing_service" option sets the PWCHANGE_SERVICE 
-flag on the principal in the database.
-
--randkey
-Sets the key for the principal to a random value (add_principal only). 
-MIT recommends using this option for host keys.
-
--pw password
-Sets the key of the principal to the specified string and does not
-prompt for a password (add_principal only). MIT does not recommend 
-using this option.
-
-*/
-
-
-
 class passwordMethodMIT extends passwordMethod
 {
 
@@ -170,6 +29,7 @@ class passwordMethodMIT extends passwordMethod
 
   var $goKrbRealm  = "";        // The realm name this principal belongs to
   var $principal   = "";        // The principals name (e.g. user@MY-DOMAIN.SYS)
+  var $is_new      = TRUE;      // Is TRUE if principal is new 
 
   var $values = array(
       "PRINC_EXPIRE_TIME",      // Expiry date of this principal
@@ -192,7 +52,7 @@ class passwordMethodMIT extends passwordMethod
       "DISALLOW_ALL_TIX"    ,   // Forbid ticket issuance
       "REQUIRES_PWCHANGE"   ,   // Force a password change
       "PWCHANGE_SERVICE"    );  // Password change service 
-  
+
   var $readonly = array(
       "FAIL_AUTH_COUNT",        // The number of failed logins 
       "KVNO",                   // Key version number
@@ -239,7 +99,7 @@ class passwordMethodMIT extends passwordMethod
     $this->parent_dn = $dn;
 
     /* No config object given, this may be the case 
-        if there is only a is_available() request triggered.
+       if there is only a is_available() request triggered.
      */
     if(!is_object($config)){
       return;
@@ -252,7 +112,7 @@ class passwordMethodMIT extends passwordMethod
     }
 
     /* Get a list of all kerberos servers, defined in ldap
-        and get a list of principals they are providing. 
+       and get a list of principals they are providing. 
      */
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -285,6 +145,7 @@ class passwordMethodMIT extends passwordMethod
 
     /* Load object data from ldap && initialize this class  
      */
+    $this->is_new = TRUE;
     if($dn != "new" && $dn != ""){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($dn);
@@ -308,6 +169,7 @@ class passwordMethodMIT extends passwordMethod
 
           /* Load principal */
           $this->load_principal($this->server_list[$server]['macAddress'],$p_name);
+          $this->is_new = FALSE;
         }
       }
     }
@@ -315,8 +177,8 @@ class passwordMethodMIT extends passwordMethod
 
 
   /*! \brief  Load this plugin with the values of the given principal
-      @param  String  The macAddress of the kerberos server.
-      @param  String  The name of the principal to load.
+    @param  String  The macAddress of the kerberos server.
+    @param  String  The name of the principal to load.
    */
   public function load_principal($server,$name)
   {
@@ -386,16 +248,19 @@ class passwordMethodMIT extends passwordMethod
       session::set("MIT_POLICY_CACHE",array());
     }
     $cache = session::get("MIT_POLICY_CACHE");
-    if(!isset($cache[$server])){
+    if(1 | !isset($cache[$server])){
       $o = new gosaSupportDaemon();
       $tmp = $o->krb5_list_policies($server);
-      $cache[$server] = $tmp;
+      $cache[$server] = array();
+      $cache[$server]["_none_"] = _("none"); 
+      foreach($tmp as $policy){
+        $cache[$server][$policy] = $policy;
+      }
+      ksort($cache[$server]);
       session::set("MIT_POLICY_CACHE",$cache);
     }
     return($cache[$server]);
   }
-
-
 
 
   /*! \brief Check if this password method is useable. 
@@ -528,7 +393,7 @@ class passwordMethodMIT extends passwordMethod
     $server_mac  = $this->server_list[$server_name]['macAddress'];
     $this->POLICIES = $this->load_policies_for_server($server_mac);
     $smarty->assign("POLICIES"  ,$this->POLICIES);
-   
+
     foreach($this->values as $attr){
       $smarty->assign($attr ,$this->$attr);
     }
@@ -619,20 +484,49 @@ class passwordMethodMIT extends passwordMethod
     $attrs = $ldap->fetch();
     if(isset($attrs['uid'][0])){
 
-      $uid  = $attrs['uid'][0];
-      $name = $uid."@".strtoupper($realm); 
+      /* Get servers mac */
+      $server_name = $this->map['REALM_SERVER'][$this->goKrbRealm];
+      $server_mac  = $this->server_list[$server_name]['macAddress'];
 
-      foreach($this->attributes as $attr){
-        $data[$attr] = array();
+      $uid       = $attrs['uid'][0];
+      $principal = $uid."@".strtoupper($this->goKrbRealm); 
+      $policy    = $this->POLICY;
+
+      /* Collect flags */
+      $flags = array();
+      $entry = array();
+      foreach($this->flags as $flag){
+        if($this->$flag){
+          $flags[] = $flag;
+        }
+      }
+      if(count($flags)){
+        $entry['ATTRIBUTES'] = $flags;
       }
 
-      echo "Save missing";
+      /* Append other values */
+      foreach($this->values as $attr){
+        if($attr == "POLICY") continue;
+        $entry[$attr] = $this->$attr;
+      }
 
-      print_a($data);
-      exit();
+      /* Prepare entry to be saved */
+      if($policy != "_none_"){
+        $entry['POLICY'] = $policy;
+      }
+
+      /* Save principal changes */
+      $o = new gosaSupportDaemon();
+      if($this->is_new){
+        $o->krb5_add_principal($server_mac,$principal,$entry);
+      }else{
+        $o->krb5_set_principal($server_mac,$principal,$entry);
+      }
+      if($o->is_error()){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
+      }
     }
   }
 }
-
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
