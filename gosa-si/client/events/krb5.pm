@@ -124,10 +124,22 @@ sub krb5_create_principal {
       if(not defined $principal) {
         &add_content2xml_hash($out_hash, "error", "Illegal principal name");
       } else {
-        if ( $kadm5->get_principal($principal) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error)){
+        if ( $kadm5->get_principal($principal)){
           &add_content2xml_hash($out_hash, "error", "Principal exists");
           return &create_xml_string($out_hash);
         }
+
+        my $princ= Authen::Krb5::Admin::Principal->new;
+        foreach ('mask', 'attributes', 'aux_attributes', 'max_life', 'max_renewable_life', 
+                 'policy', 'princ_expire_time', 'pw_expiration'){
+
+          if (defined @{$msg_hash->{$_}}[0]){
+            $princ->$_(@{$msg_hash->{$_}}[0]);
+          }
+        }
+
+        $princ->principal($principal);
+        $kadm5->create_principal($princ, join '', map { chr rand(255) + 1 } 1..256) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
       }
     }
 
@@ -163,10 +175,22 @@ sub krb5_modify_principal {
       if(not defined $principal) {
         &add_content2xml_hash($out_hash, "error", "Illegal principal name");
       } else {
-        if ( $kadm5->get_principal($principal) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error)){
-          &add_content2xml_hash($out_hash, "error", "Principal exists");
+        if (not $kadm5->get_principal($principal)){
+          &add_content2xml_hash($out_hash, "error", "Principal does not exists");
           return &create_xml_string($out_hash);
         }
+
+        my $princ= Authen::Krb5::Admin::Principal->new;
+        foreach ('mask', 'attributes', 'aux_attributes', 'max_life', 'max_renewable_life', 
+                 'policy', 'princ_expire_time', 'pw_expiration'){
+
+          if (defined @{$msg_hash->{$_}}[0]){
+            $princ->$_(@{$msg_hash->{$_}}[0]);
+          }
+        }
+
+        $princ->principal($principal);
+        $kadm5->modify_principal($princ) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
       }
     }
 
@@ -206,7 +230,6 @@ sub krb5_get_principal {
         &add_content2xml_hash($out_hash, "principal", @{$msg_hash->{'principal'}}[0]);
         &add_content2xml_hash($out_hash, "mask", $data->mask);
         &add_content2xml_hash($out_hash, "attributes", $data->attributes);
-        &add_content2xml_hash($out_hash, "aux_attributes", $data->aux_attributes);
         &add_content2xml_hash($out_hash, "kvno", $data->kvno);
         &add_content2xml_hash($out_hash, "max_life", $data->max_life);
         &add_content2xml_hash($out_hash, "max_renewable_life", $data->max_renewable_life);
@@ -336,14 +359,47 @@ sub krb5_create_policy {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
 
+    # Build return message
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    # Sanity check
+    if (not defined @{$msg_hash->{'policy'}}[0]){
+      &add_content2xml_hash($out_hash, "error", "No policy specified");
+      return &create_xml_string($out_hash);
+    }
+    &add_content2xml_hash($msg_hash, "name", @{$msg_hash->{'policy'}}[0]);
+
+    # Authenticate
+    my $kadm5 = Authen::Krb5::Admin->init_with_password($krb_admin, $krb_password);
+    if (not defined $kadm5){
+      &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
+    } else {
+      if ( $kadm5->get_policy(@{$msg_hash->{'policy'}}[0]) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error)){
+        &add_content2xml_hash($out_hash, "error", "Policy exists");
+        return &create_xml_string($out_hash);
+      }
+
+      my $pol = Authen::Krb5::Admin::Policy->new;
+
+      # Move information from xml message to modifyer
+      foreach ('name', 'mask', 'pw_history_num', 'pw_max_life', 'pw_min_classes',
+                'pw_min_length', 'pw_min_life'){
+
+        if (defined @{$msg_hash->{$_}}[0]){
+          $pol->$_(@{$msg_hash->{$_}}[0]);
+        }
+      }
+
+      # Create info
+      $kadm5->create_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
+    }
+
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_krb5_list_principals", $target, $source);
     my $out_msg = &create_xml_string($out_hash);
 
     # return message
     return $out_msg;
-
-
 }
 
 
@@ -354,14 +410,42 @@ sub krb5_modify_policy {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
 
+    # Build return message
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    # Sanity check
+    if (not defined @{$msg_hash->{'policy'}}[0]){
+      &add_content2xml_hash($out_hash, "error", "No policy specified");
+      return &create_xml_string($out_hash);
+    }
+    &add_content2xml_hash($msg_hash, "name", @{$msg_hash->{'policy'}}[0]);
+
+    # Authenticate
+    my $kadm5 = Authen::Krb5::Admin->init_with_password($krb_admin, $krb_password);
+    if (not defined $kadm5){
+      &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
+    } else {
+      my $pol = Authen::Krb5::Admin::Policy->new;
+
+      # Move information from xml message to modifyer
+      foreach ('name', 'mask', 'pw_history_num', 'pw_max_life', 'pw_min_classes',
+                'pw_min_length', 'pw_min_life'){
+
+        if (defined @{$msg_hash->{$_}}[0]){
+          $pol->$_(@{$msg_hash->{$_}}[0]);
+        }
+      }
+
+      # Create info
+      $kadm5->modify_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
+    }
+
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_krb5_list_principals", $target, $source);
     my $out_msg = &create_xml_string($out_hash);
 
     # return message
     return $out_msg;
-
-
 }
 
 
