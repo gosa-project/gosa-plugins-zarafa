@@ -197,7 +197,7 @@ class gotomasses extends plugin
       $type = FALSE;
       if(isset($this->entries[$id])){
         $event = $this->entries[$s_entry];
-        $this->dialog = new goto_log_view($this->config,$event,&$this);
+        $this->dialog = new goto_log_view($this->config,$event,$this);
       }
     }
 
