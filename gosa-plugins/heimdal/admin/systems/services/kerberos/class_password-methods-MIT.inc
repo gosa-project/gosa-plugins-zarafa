@@ -160,8 +160,10 @@ class passwordMethodMIT extends passwordMethod
       $ldap->cd($dn);
       $ldap->cat($dn);
       $this->attrs = $ldap->fetch();
-      if(isset($this->attrs['userPassword']) && preg_match("/".$this->get_hash_name()."/",$this->attrs['userPassword'][0])){
+      if(isset($this->attrs['userPassword']) && preg_match("/^\{".$this->get_hash_name()."\}/",$this->attrs['userPassword'][0])){
 
+        /* Extract principal name out of userPassword attribute 
+         */
         $p_name = preg_replace("/^\{".$this->get_hash_name()."\}/","",$this->attrs['userPassword'][0]);
 
         /* Try to detect server our principal is configured on
