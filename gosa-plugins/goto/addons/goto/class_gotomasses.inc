@@ -414,7 +414,7 @@ class gotomasses extends plugin
       /* Add logview button, currently ever.
        */  
       if(TRUE){
-        $action .= "<input type='image' src='images/lists/new.png' name='log_view_".$key."' 
+        $action .= "<input type='image' src='images/fai_hook.png' name='log_view_".$key."' 
           class='center' alt='"._("Log view")."'>&nbsp;";
       }
 
