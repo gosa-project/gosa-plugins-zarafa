@@ -136,6 +136,12 @@ class passwordMethodMIT extends passwordMethod
       $this->map["SERVER_REALM"][$attrs['cn'][0]] = $attrs['goKrbRealm'][0];
       $this->map["REALM_SERVER"][$attrs['goKrbRealm'][0]] = $attrs['cn'][0];
 
+      /* Set first realm as selected.  
+       */
+      if($this->goKrbRealm == ""){
+        $this->goKrbRealm = $attrs['goKrbRealm'][0];
+      }
+
       /* Create Server list
        */
       $this->server_list[$attrs['cn'][0]] = array("macAddress" => $attrs['macAddress'][0],
@@ -154,7 +160,7 @@ class passwordMethodMIT extends passwordMethod
       $ldap->cd($dn);
       $ldap->cat($dn);
       $this->attrs = $ldap->fetch();
-      if(isset($this->attrs['userPassword'])){
+      if(isset($this->attrs['userPassword']) && preg_match("/".$this->get_hash_name()."/",$this->attrs['userPassword'][0])){
 
         $p_name = preg_replace("/^\{".$this->get_hash_name()."\}/","",$this->attrs['userPassword'][0]);
 
