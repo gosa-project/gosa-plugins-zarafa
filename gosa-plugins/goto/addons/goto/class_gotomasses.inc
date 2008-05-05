@@ -94,6 +94,7 @@ class gotomasses extends plugin
         "/^prio_down_/"   => "prio_down",
 
         "/^edit_task_/"             =>  "edit",
+        "/^log_view_/"              =>  "logview",
         "/^remove_task_/"           =>  "remove",
         "/^new_task_/"              =>  "new_task");;
 
@@ -185,6 +186,21 @@ class gotomasses extends plugin
         }
       }
     }
+
+    
+    /************
+     * LOG VIEW
+     ************/
+
+    if($s_action == "logview"){  
+      $id =  $s_entry;
+      $type = FALSE;
+      if(isset($this->entries[$id])){
+        $event = $this->entries[$s_entry];
+        $this->dialog = new goto_log_view($this->config,$event,&$this);
+      }
+    }
+
 
     /************
      * REMOVE 
@@ -353,7 +369,7 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=Action'>"._("Status").$sort_img_4."</a>",
                                       "attach"=>"style='width:80px;'"));
     $divlist->AddHeader(array("string"=>_("Action"),
-                                      "attach"=>"style='border-right:0px;width:120px;'"));
+                                      "attach"=>"style='border-right:0px;width:140px;'"));
 
 
     /* Reload the list of entries */
@@ -363,6 +379,7 @@ class gotomasses extends plugin
 
       $prio_actions="";
       $action = "";
+
 
       /* If WAITING add priority action
        */  
@@ -387,13 +404,6 @@ class gotomasses extends plugin
           title='"._("Resume job")."' name='resume_".$key."'>&nbsp;";
       }
 
-      /* If PROCESSING add abort action
-       */  
-      if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
-        $prio_actions.= "<input class='center' type='image' src='images/small_error.png' 
-          title='"._("Abort execution")."' name='abort_process_".$key."'>";
-      }
-
       /* If PAUSED or WAITING add execution action
        */  
       if(in_array($task['STATUS'],array("paused","waiting"))){
@@ -401,11 +411,26 @@ class gotomasses extends plugin
           title='"._("Force execution now!")."' name='execute_process_".$key."'>&nbsp;";
       }
 
+      /* Add logview button, currently ever.
+       */  
+      if(TRUE){
+        $action .= "<input type='image' src='images/lists/new.png' name='log_view_".$key."' 
+          class='center' alt='"._("Log view")."'>&nbsp;";
+      }
+
       /* If PAUSED or WAITING add edit action
        */  
       if(in_array($task['STATUS'],array("waiting"))){
         $action.= "<input type='image' src='images/lists/edit.png' name='edit_task_".$key."' 
           class='center' alt='"._("Edit")."'>";
+      }
+
+      /* If PROCESSING add abort action
+       */  
+      if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
+        $action.= "<img src='images/empty.png'>";
+        $action.= "<input class='center' type='image' src='images/small_error.png' 
+          title='"._("Abort execution")."' name='abort_process_".$key."'>";
       }
 
       /* If WAITING or ERROR add remove action
@@ -491,7 +516,7 @@ class gotomasses extends plugin
                       "attach" => "style='".$color.";width:120px;'");
       $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
       $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
-      $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:120px;border-right:0px;'");
+      $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:140px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
     }
 
