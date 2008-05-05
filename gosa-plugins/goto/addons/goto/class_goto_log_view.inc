@@ -14,27 +14,48 @@ class goto_log_view extends plugin
   var $selected_date;
   var $selected_file = 0;
 
-  var $attributes = array("selected_file","selected_date");
+  var $attributes = array("macAddress");
+  var $macAddress = "";
+
+  var $sort_by  = "file";
+  var $sort_dir = 1; // 1 => up, 0 => down
+  
+  var $ignore_account = TRUE;
  
-  function __construct($config,$event,&$parent)
+  function __construct(&$config,$dn,$parent)
   {
     $this->config = $config;
-    $this->event = $event;
     $this->parent = $parent;
-    
+
     /* Try to fetch logs for the given event (mac)
      */
     $this->o_queue = new gosaSupportDaemon();
 
-    /* Fetch logs for this event (mac)
+    /* Load ldap object if given 
+        and use this macAddress.
+     */
+    if(is_object($parent) && $dn != "" && $dn != "new"){
+      plugin::plugin($config,$dn,$parent);
+    } 
+
+    /* Get correct macAddress.
+        Check if an event is given or a ldap object.
      */      
-    if(isset($this->event['MACADDRESS'])){
-      $this->mac = $this->event['MACADDRESS'];
+    if(is_array($this->parent) && isset($this->parent['MACADDRESS'])){
+      $this->mac = $this->parent['MACADDRESS'];
+    }elseif(isset($parent->attrs['macAddress'][0])){
+      $this->mac = $parent->attrs['macAddress'][0];
     }
+
+    /* Query for log files
+     */
     $res = $this->o_queue->get_log_info_for_mac($this->mac);
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
     }
+
+    /* Check if there is at least one log file 
+     */
     if(!isset($res[$this->mac]) || !is_array($res[$this->mac])){
       $this->logs = array();
     }else{
@@ -42,6 +63,7 @@ class goto_log_view extends plugin
       $this->logs = $res;
     }
   }
+
 
   function execute()
   {
@@ -52,13 +74,73 @@ class goto_log_view extends plugin
     $smarty->assign("selected_file",$this->selected_file);
     $smarty->assign("selected_date",$this->selected_date);
     $smarty->assign("log_file", $this->get_log($this->mac,$this->selected_date,$this->selected_file));        
-    return($smarty->fetch(get_template_path('log_view.tpl', TRUE)));
+
+    $divlist = new divlist("log_view");
+
+    /* Create sort direction images 
+     */
+    if($this->sort_dir){
+      $img = "<img src='images/down-arrow.png' border='0' alt='\\/'>";
+    }else{
+      $img = "<img src='images/up-arrow.png' border='0' alt='/\\'";
+    }
+
+    /* Create list header 
+     */
+    $divlist->SetHeader(array(
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("Log file")." ".$img."</a>",
+                "attach"=>"width='200px;'"),
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Log date")." ".$img."</a>",
+                "attach" => "style='border-right:none;'"),
+          ));
+
+    /* Create divlist list 
+     */
+    $divlist->SetEntriesPerPage(0);
+    $divlist->SetHeight(150); 
+
+    /* Create sortable array
+     */ 
+    $link = "<a href='?plug=".$_GET['plug']."&time=%time%&file=%file%&mac=%mac%'>%str%</a>";
+    $to_add = array();
+    $sort_by = $this->sort_by;
+    foreach($this->logs as $mac => $times){
+      foreach($times as $time => $data){
+        $rtime = $data['REAL_DATE'];
+        foreach($data['FILES'] as $file){
+          $use_link = preg_replace(array("/%mac%/","/%time%/","/%file%/"),array($mac,$time,$file),$link);
+          $to_add[$$sort_by.$file.$time] = array(
+            array("string" => preg_replace("/%str%/",$file,$use_link),
+                  "attach" => "style='width:200px;'"),
+            array("string" => preg_replace("/%str%/",date("d.m.Y H:i:s",$rtime),$use_link),
+                  "attach" => "style='border-right:none;'"),
+            );
+        }
+      }
+    }
+
+    /* Sort entries 
+     */
+    if(!$this->sort_dir){
+      uksort($to_add, "strnatcasecmp");
+    }else{
+      uksort($to_add, "strnatcasecmp");
+      $to_add = array_reverse($to_add);
+    }
+
+    /* Append entries to list 
+     */
+    foreach($to_add as $entry){
+      $divlist->AddEntry($entry);
+    }
+
+    $smarty->assign("divlist",$divlist->DrawList());
+    return($smarty->fetch(get_template_path('log_view.tpl', TRUE,dirname(__FILE__))));
   }
 
 
   function get_log($mac,$date,$file)
   {
-    $this->mac = "00:01:6c:9d:b9:fa";
     $res = $this->o_queue->get_log_file($mac,$date,$file);
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
@@ -70,18 +152,18 @@ class goto_log_view extends plugin
   
   function save_object()
   {
-    plugin::save_object();
-    foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
-        $this->$attr = get_post($attr);
+    foreach(array("time"=>"selected_date","file"=>"selected_file") as $attr => $dest){
+      if(isset($_GET[$attr])){
+        $this->$dest = $_GET[$attr];
       }
     }
+    if(isset($_GET['sort_by']) && in_array($_GET['sort_by'],array("file","time"))){
+      if($_GET['sort_by'] == $this->sort_by){
+        $this->sort_dir = !$this->sort_dir;
+      }
+      $this->sort_by = $_GET['sort_by'];
+    }
   }
-
 }
-
-
-
-
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
