@@ -194,9 +194,8 @@ class passwordMethodMIT extends passwordMethod
     $tmp = $o->krb5_get_principal($server,$name);
   
     if($o->is_error()){
-
       $this->si_error     = TRUE;
-      $this->si_error_msg = $o->get_error(); 
+      $this->si_error_msg = sprintf(_("While loading principal for '%s', from server '%s'."),$name,$server).":&nbsp;<br>".$o->get_error(); 
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
     }else{
 
@@ -250,7 +249,7 @@ class passwordMethodMIT extends passwordMethod
       $tmp = $o->krb5_list_principals($server);
       if($o->is_error()){
         $this->si_error     = TRUE;
-        $this->si_error_msg = $o->get_error(); 
+        $this->si_error_msg = sprintf(_("While loading principals from server '%s'."),$server).":&nbsp;<br>".$o->get_error(); 
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
         return(array());
       }else{
@@ -277,7 +276,7 @@ class passwordMethodMIT extends passwordMethod
       $tmp = $o->krb5_list_policies($server);
       if($o->is_error()){
         $this->si_error     = TRUE;
-        $this->si_error_msg = $o->get_error();
+        $this->si_error_msg = sprintf(_("While loading policies from server '%s'."),$server).":&nbsp;<br>".$o->get_error(); 
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
         return(array());
       }else{
