@@ -170,7 +170,7 @@ class passwordMethodMIT extends passwordMethod
 
         /* Try to detect server our principal is configured on
          */
-        if($this->map['PRINCIPAL_SERVER'][$p_name]){
+        if(isset($this->map['PRINCIPAL_SERVER'][$p_name])){
           $server= $this->map['PRINCIPAL_SERVER'][$p_name];
           $this->goKrbRealm = $this->map['SERVER_REALM'][$server];
           $this->principal  = $p_name;
@@ -198,6 +198,9 @@ class passwordMethodMIT extends passwordMethod
     $o = new gosaSupportDaemon();
     $tmp = array();
     $tmp = $o->krb5_get_principal($server,$name);
+  
+    print_a($tmp);    
+
     if($o->is_error()){
 
       $this->si_error     = TRUE;
@@ -207,19 +210,19 @@ class passwordMethodMIT extends passwordMethod
 
       /* Load flags 
        */
-      if(isset($tmp['ATTRIBUTES'])){
-        foreach($this->flags as $flag){
-          if(in_array($flag,$tmp['ATTRIBUTES'])){
-            $this->$flag = TRUE;
-          }
-        } 
-      }
+#     if(isset($tmp['ATTRIBUTES'])){
+#       foreach($this->flags as $flag){
+#         if(in_array($flag,$tmp['ATTRIBUTES'])){
+#           $this->$flag = TRUE;
+#         }
+#       } 
+#     }
 
       /* Load readonly attributes 
        */
       foreach($this->readonly as $attr){
         if(isset($tmp[$attr])){
-          $this->$flag = $tmp[$attr];
+          $this->$attr = $tmp[$attr];
         }
       } 
 
@@ -227,7 +230,7 @@ class passwordMethodMIT extends passwordMethod
        */
       foreach($this->values as $attr){
         if(isset($tmp[$attr])){
-          $this->$flag = $tmp[$attr];
+          $this->$attr = $tmp[$attr];
         }
       } 
     }
@@ -552,7 +555,7 @@ class passwordMethodMIT extends passwordMethod
         }
       }
       if(count($flags)){
-        $entry['ATTRIBUTES'] = $flags;
+        $entry['ATTRIBUTES'] = "23";
       }
 
       /* Append other values */
@@ -564,6 +567,12 @@ class passwordMethodMIT extends passwordMethod
       /* Prepare entry to be saved */
       if($policy != "_none_"){
         $entry['POLICY'] = $policy;
+      }
+
+      foreach(array("PRINC_EXPIRE_TIME","PW_EXPIRATION") as $times){
+        if(!empty($entry[$times])) {
+          $entry[$times] = strtotime($entry[$times]);
+        }
       }
 
       /* Save principal changes */
