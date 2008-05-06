@@ -385,9 +385,9 @@ class gotomasses extends plugin
        */  
       if(in_array($task['STATUS'],array("waiting"))){
         $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' 
-          title='"._("Move up in execution queue")."' name='prio_up_".$key."'>&nbsp;";
+          title='"._("Move up")."' name='prio_up_".$key."'>&nbsp;";
         $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' 
-          title='"._("Move down in execution queue")."' name='prio_down_".$key."'>&nbsp;";
+          title='"._("Move down")."' name='prio_down_".$key."'>&nbsp;";
       }
     
       /* If WAITING add pause action
@@ -408,21 +408,21 @@ class gotomasses extends plugin
        */  
       if(in_array($task['STATUS'],array("paused","waiting"))){
         $prio_actions.= "<input class='center' type='image' src='images/rocket.png' 
-          title='"._("Force execution now!")."' name='execute_process_".$key."'>&nbsp;";
+          title='"._("Execute now")."' name='execute_process_".$key."'>&nbsp;";
       }
 
       /* Add logview button, currently ever.
        */  
       if(TRUE){
         $action .= "<input type='image' src='images/fai_hook.png' name='log_view_".$key."' 
-          class='center' alt='"._("Log view")."'>&nbsp;";
+          class='center' title='"._("View logs")."' alt='"._("Log view")."'>&nbsp;";
       }
 
       /* If PAUSED or WAITING add edit action
        */  
       if(in_array($task['STATUS'],array("waiting"))){
         $action.= "<input type='image' src='images/lists/edit.png' name='edit_task_".$key."' 
-          class='center' alt='"._("Edit")."'>";
+          class='center' title='"._("Edit")."' alt='"._("Edit")."'>";
       }
 
       /* If PROCESSING add abort action
@@ -430,18 +430,18 @@ class gotomasses extends plugin
       if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
         $action.= "<img src='images/empty.png'>";
         $action.= "<input class='center' type='image' src='images/small_error.png' 
-          title='"._("Abort execution")."' name='abort_process_".$key."'>";
+          title='"._("Abort job")."' name='abort_process_".$key."'>";
       }
 
       /* If WAITING or ERROR add remove action
        */  
       if( $this->acl_is_removeable() && in_array($task['STATUS'],array("waiting","error","processed"))){
         $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
-          class='center' alt='"._("Remove")."'>";
+          class='center' title='"._("Remove")."' alt='"._("Remove")."'>";
       }
       if(in_array($task['STATUS'],array("processing")) && !preg_match("/install/",$task['HEADERTAG'])){
         $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
-          class='center' alt='"._("Remove")."'>";
+          class='center' title='"._("Remove")."' alt='"._("Remove")."'>";
       }
 
       /* Create entry display name and tooltip */
