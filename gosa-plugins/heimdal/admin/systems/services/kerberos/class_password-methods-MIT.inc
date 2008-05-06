@@ -42,19 +42,25 @@ class passwordMethodMIT extends passwordMethod
       "MAX_RENEWABLE_LIFE",     // Max ticket lifetime when renewed
       "POLICY");                // The policy used by this principal
 
+  var $used_flags = 0;          // Flags, see below
+
   var $flags = array(
-      "DISALLOW_POSTDATED"  ,   // Pohibit postdated tickets
-      "DISALLOW_FORWARDABLE",   // Prohibit forwardable tickets
-      "DISALLOW_RENEWABLE"  ,   // Prohibit renewable tickets
-      "DISALLOW_PROXIABLE"  ,   // Disallow proxiable tickets
-      "DISALLOW_DUP_SKEY"   ,   // Disallow user to user authentification
-      "REQUIRES_PRE_AUTH"   ,   // Preauthentication required
-      "REQUIRES_HW_AUTH"    ,   // Hardware preauthentication
-      "DISALLOW_SVR"        ,   // Prohibit issuance of service tickets
-      "DISALLOW_TGT_BASED"  ,   // Disallow Ticket-Granting Service
-      "DISALLOW_ALL_TIX"    ,   // Forbid ticket issuance
-      "REQUIRES_PWCHANGE"   ,   // Force a password change
-      "PWCHANGE_SERVICE"    );  // Password change service 
+      "DISALLOW_POSTDATED"    =>0x00000001 ,  // Pohibit postdated tickets
+      "DISALLOW_FORWARDABLE"  =>0x00000002 ,  // Prohibit forwardable tickets
+      "DISALLOW_TGT_BASED"    =>0x00000004 ,  // Disallow Ticket-Granting Service
+      "DISALLOW_RENEWABLE"    =>0x00000008 ,  // Prohibit renewable tickets
+      "DISALLOW_PROXIABLE"    =>0x00000010 ,  // Disallow proxiable tickets
+      "DISALLOW_DUP_SKEY"     =>0x00000020 ,  // Disallow user to user authentification
+      "DISALLOW_ALL_TIX"      =>0x00000040 ,  // Forbid ticket issuance
+      "REQUIRES_PRE_AUTH"     =>0x00000080 ,  // Preauthentication required
+      "REQUIRES_HW_AUTH"      =>0x00000100 ,  // Hardware preauthentication
+      "REQUIRES_PWCHANGE"     =>0x00000200 ,  // Force a password change
+      "UNKNOWN_0x00000400"    =>0x00000400 ,  // ? 
+      "UNKNOWN_0x00000800"    =>0x00000800 ,  // ?
+      "DISALLOW_SVR"          =>0x00001000 ,  // Prohibit issuance of service tickets
+      "PWCHANGE_SERVICE"      =>0x00002000 ,  // Password change service
+      "SUPPORT_DESMD5"        =>0x00004000 ,  // ?
+      "NEW_PRINC"             =>0x00008000 ); // ?
 
   var $readonly = array(
       "FAIL_AUTH_COUNT",        // The number of failed logins 
@@ -75,19 +81,6 @@ class passwordMethodMIT extends passwordMethod
   var $MAX_LIFE                 = 0;
   var $MAX_RENEWABLE_LIFE       = 0;
   var $MASK                     = "";
-
-  var $DISALLOW_POSTDATED       = FALSE;
-  var $DISALLOW_FORWARDABLE     = FALSE;
-  var $DISALLOW_RENEWABLE       = FALSE;
-  var $DISALLOW_PROXIABLE       = FALSE;
-  var $DISALLOW_DUP_SKEY        = FALSE;
-  var $REQUIRES_PRE_AUTH        = FALSE;
-  var $REQUIRES_HW_AUTH         = FALSE;
-  var $DISALLOW_SVR             = FALSE;
-  var $DISALLOW_TGT_BASED       = FALSE;
-  var $DISALLOW_ALL_TIX         = FALSE;
-  var $REQUIRES_PWCHANGE        = FALSE;
-  var $PWCHANGE_SERVICE         = FALSE;
 
   var $FAIL_AUTH_COUNT          = 0;
   var $KVNO                     = "";
@@ -208,13 +201,9 @@ class passwordMethodMIT extends passwordMethod
 
       /* Load flags 
        */
-#     if(isset($tmp['ATTRIBUTES'])){
-#       foreach($this->flags as $flag){
-#         if(in_array($flag,$tmp['ATTRIBUTES'])){
-#           $this->$flag = TRUE;
-#         }
-#       } 
-#     }
+     if(isset($tmp['ATTRIBUTES'])){
+       $this->used_flags = $tmp['ATTRIBUTES'];
+     }
 
       /* Load readonly attributes 
        */
@@ -443,8 +432,8 @@ class passwordMethodMIT extends passwordMethod
     foreach($this->readonly as $attr){
       $smarty->assign($attr ,$this->$attr);
     }
-    foreach($this->flags as $attr){
-      $smarty->assign($attr,$this->$attr);
+    foreach($this->flags as $attr => $hex){
+      $smarty->assign($attr, ($this->used_flags & $hex ));
     }
 
     $date_values = array("PRINC_EXPIRE_TIME","PW_EXPIRATION");
@@ -488,8 +477,11 @@ class passwordMethodMIT extends passwordMethod
         $this->goKrbRealm = get_post("goKrbRealm");
       }
 
-      foreach($this->flags as $attr){
-        $this->$attr = isset($_POST[$attr]);
+      $this->used_flags = 0;
+      foreach($this->flags as $attr => $hex){
+        if(isset($_POST[$attr])){
+          $this->used_flags |= $hex; 
+        }
       }
 
       foreach(array("MAX_LIFE","MAX_RENEWABLE_LIFE","POLICY") as $attr){
@@ -556,14 +548,8 @@ class passwordMethodMIT extends passwordMethod
       /* Collect flags */
       $flags = array();
       $entry = array();
-      foreach($this->flags as $flag){
-        if($this->$flag){
-          $flags[] = $flag;
-        }
-      }
-      if(count($flags)){
-        $entry['ATTRIBUTES'] = "23";
-      }
+
+      $entry['ATTRIBUTES'] = $this->used_flags;
 
       /* Append other values */
       foreach($this->values as $attr){
