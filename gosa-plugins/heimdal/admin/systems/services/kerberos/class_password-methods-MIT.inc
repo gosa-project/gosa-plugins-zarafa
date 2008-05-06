@@ -514,7 +514,13 @@ class passwordMethodMIT extends passwordMethod
   function check()
   {
     $message = array();
-    echo "Checks missing";
+
+    if(!preg_match("/^[0-9]*$/",$this->MAX_LIFE)){
+      $message[] = msgPool::invalid(_("Ticket max life"),$this->MAX_LIFE,"/[0-9]/");
+    }
+    if(!preg_match("/^[0-9]*$/",$this->MAX_RENEWABLE_LIFE)){
+      $message[] = msgPool::invalid(_("Ticket max renew"),$this->MAX_RENEWABLE_LIFE,"/[0-9]/");
+    }
     return($message);
   }
 
