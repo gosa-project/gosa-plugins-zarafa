@@ -360,6 +360,12 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  function get_description()
+  {
+    return(_("Daemon based"));
+  }
+
+
   function configure()
   {
     $this->save_object();
