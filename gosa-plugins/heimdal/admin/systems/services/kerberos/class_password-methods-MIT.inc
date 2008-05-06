@@ -199,8 +199,6 @@ class passwordMethodMIT extends passwordMethod
     $tmp = array();
     $tmp = $o->krb5_get_principal($server,$name);
   
-    print_a($tmp);    
-
     if($o->is_error()){
 
       $this->si_error     = TRUE;
@@ -233,6 +231,16 @@ class passwordMethodMIT extends passwordMethod
           $this->$attr = $tmp[$attr];
         }
       } 
+
+      /* Update time checkboxes 
+       */
+      $date_values = array("PW_EXPIRATION","PRINC_EXPIRE_TIME");
+      foreach($date_values as $value){
+        if(!empty($this->$value)){
+          $clear = $value."_clear";
+          $this->$clear = FALSE;
+        }
+      }
     }
   }
 
@@ -316,7 +324,6 @@ class passwordMethodMIT extends passwordMethod
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
       $mode= "sasl";
     }
-    echo "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
   }
 
@@ -340,13 +347,9 @@ class passwordMethodMIT extends passwordMethod
     if(!empty($this->principal) && $this->goKrbRealm){
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
       $o = new gosaSupportDaemon();
-
-      echo "Not implemented yet";
-      $attrs = array("password" => $password);
-
-#      if(!$o->krb5_set_principal($this->server_list[$server]['macAddress'],$this->principal,$attrs)){
-#        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
-#      }
+      if(!$o->krb5_set_password($this->server_list[$server]['macAddress'],$this->principal,$password)){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
+      }
     }
   }
 
@@ -446,13 +449,16 @@ class passwordMethodMIT extends passwordMethod
 
     $date_values = array("PRINC_EXPIRE_TIME","PW_EXPIRATION");
     foreach($date_values as $date_val){
+
+
+
       $clear = $date_val."_clear";
       $smarty->assign($date_val."_clear",$this->$clear);
-      $smarty->assign($date_val."_y",substr($this->$date_val,0,4));
-      $smarty->assign($date_val."_m",substr($this->$date_val,4,2));
-      $smarty->assign($date_val."_d",substr($this->$date_val,6,2));
-      $smarty->assign($date_val."_h",substr($this->$date_val,8,2));
-      $smarty->assign($date_val."_i",substr($this->$date_val,10,2));
+      $smarty->assign($date_val."_y",date("Y",$this->$date_val));
+      $smarty->assign($date_val."_m",date("m",$this->$date_val));
+      $smarty->assign($date_val."_d",date("d",$this->$date_val));
+      $smarty->assign($date_val."_h",date("h",$this->$date_val));
+      $smarty->assign($date_val."_i",date("i",$this->$date_val));
     }
 
 
@@ -499,17 +505,18 @@ class passwordMethodMIT extends passwordMethod
           $this->$clear = TRUE;
         }else{
           $this->$clear = FALSE;
-          $str = "";
-          foreach(array("y","m","d","h","i") as $val){
-            if(isset($_POST[$date_value."_".$val])){
-              $str .= $_POST[$date_value."_".$val]; 
-            }
-          }
-          $this->$date_value = $str."Z";
+          $this->$date_value = gmmktime(  
+              $_POST[$date_value."_h"],
+              $_POST[$date_value."_i"],
+              0,
+              $_POST[$date_value."_m"],
+              $_POST[$date_value."_d"],
+              $_POST[$date_value."_y"]);
         }
       }
     }
   }
+
 
   function check()
   {
@@ -569,11 +576,16 @@ class passwordMethodMIT extends passwordMethod
         $entry['POLICY'] = $policy;
       }
 
-      foreach(array("PRINC_EXPIRE_TIME","PW_EXPIRATION") as $times){
-        if(!empty($entry[$times])) {
-          $entry[$times] = strtotime($entry[$times]);
+      /* Set date values 
+       */
+      $date_values = array("PW_EXPIRATION","PRINC_EXPIRE_TIME");
+      foreach($date_values as $value){
+        $clear = $value."_clear";
+        if($this->$clear){
+          $entry[$value] = 0;
         }
-      }
+      }    
+
 
       /* Save principal changes */
       $o = new gosaSupportDaemon();
