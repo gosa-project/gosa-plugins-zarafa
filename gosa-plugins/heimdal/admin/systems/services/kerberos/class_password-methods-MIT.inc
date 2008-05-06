@@ -112,6 +112,8 @@ class passwordMethodMIT extends passwordMethod
      */
     if($dn != "new" && $dn != ""){
       session::un_set("MIT_CACHE");
+      session::un_set("MIT_PRINCIPAL_CACHE");
+      session::un_set("MIT_POLICY_CACHE");
     }
 
     /* Get a list of all kerberos servers, defined in ldap
@@ -249,6 +251,7 @@ class passwordMethodMIT extends passwordMethod
         $this->si_error     = TRUE;
         $this->si_error_msg = $o->get_error(); 
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+        return(array());
       }else{
         $cache[$server] = $tmp;
       }
@@ -275,6 +278,7 @@ class passwordMethodMIT extends passwordMethod
         $this->si_error     = TRUE;
         $this->si_error_msg = $o->get_error();
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+        return(array());
       }else{
         $cache[$server] = array();
         $cache[$server]["_none_"] = _("none"); 
@@ -309,6 +313,7 @@ class passwordMethodMIT extends passwordMethod
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
       $mode= "sasl";
     }
+    echo "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
   }
 
@@ -563,6 +568,10 @@ class passwordMethodMIT extends passwordMethod
 
       /* Save principal changes */
       $o = new gosaSupportDaemon();
+      if(in_array($principal,$this->server_list[$server_name]['principals'])){
+        $this->is_new = FALSE;
+      }
+
       if($this->is_new){
         $o->krb5_add_principal($server_mac,$principal,$entry);
       }else{
