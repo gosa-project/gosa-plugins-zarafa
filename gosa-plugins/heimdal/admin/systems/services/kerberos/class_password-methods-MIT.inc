@@ -21,18 +21,18 @@
 class passwordMethodMIT extends passwordMethod
 {
 
-  var $dn          = "new";     // DN of the current object
-  var $parent_dn   = "new";     // parents DN
-  var $is_account  = FALSE;     // This is TRUE if this object already has a krb extension
-  var $server_list = array();   // A list with all configured servers
-  var $map         = array();   // Mapping array, maps SERVER-REALM, REALM-SERVER ...
+  var $dn             = "new";   // DN of the current object
+  var $parent_dn      = "new";   // parents DN
+  var $is_account     = FALSE;   // This is TRUE if this object already has a krb extension
+  var $server_list    = array(); // A list with all configured servers
+  var $map            = array(); // Mapping array, maps SERVER-REALM, REALM-SERVER ...
 
-  var $goKrbRealm  = "";        // The realm name this principal belongs to
-  var $principal   = "";        // The principals name (e.g. user@MY-DOMAIN.SYS)
-  var $is_new      = TRUE;      // Is TRUE if principal is new 
+  var $goKrbRealm     = "";      // The realm name this principal belongs to
+  var $principal      = "";      // The principals name (e.g. user@MY-DOMAIN.SYS)
+  var $is_new         = TRUE;    // Is TRUE if principal is new 
 
-  var $si_error        = FALSE;
-  var $si_error_msg    = "";
+  var $si_error       = FALSE;   // TRUE is daemon communication failed
+  var $si_error_msg   = "";      // The last error message if above attribute is TRUE.
 
   var $values = array(
       "PRINC_EXPIRE_TIME",      // Expiry date of this principal
@@ -42,7 +42,13 @@ class passwordMethodMIT extends passwordMethod
       "MAX_RENEWABLE_LIFE",     // Max ticket lifetime when renewed
       "POLICY");                // The policy used by this principal
 
-  var $used_flags = 0;          // Flags, see below
+  var $PRINC_EXPIRE_TIME        = 0;
+  var $PW_EXPIRATION            = 0;
+  var $PRINC_EXPIRE_TIME_clear  = TRUE;
+  var $PW_EXPIRATION_clear      = TRUE;
+  var $MAX_LIFE                 = 36000;
+  var $MAX_RENEWABLE_LIFE       = 604800;
+  var $MASK                     = 0;
 
   var $flags = array(
       "DISALLOW_POSTDATED"    =>0x00000001 ,  // Pohibit postdated tickets
@@ -61,6 +67,8 @@ class passwordMethodMIT extends passwordMethod
       "PWCHANGE_SERVICE"      =>0x00002000 ,  // Password change service
       "SUPPORT_DESMD5"        =>0x00004000 ,  // ?
       "NEW_PRINC"             =>0x00008000 ); // ?
+  
+  var $used_flags = 128;        // Flags, see below
 
   var $readonly = array(
       "FAIL_AUTH_COUNT",        // The number of failed logins 
@@ -70,24 +78,17 @@ class passwordMethodMIT extends passwordMethod
       "LAST_SUCCESS",           // Last successful login 
       "MOD_DATE");              // Last modification time
 
-
-  var $POLICY                   = "";
-  var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
-
-  var $PRINC_EXPIRE_TIME        = 0;
-  var $PW_EXPIRATION            = 0;
-  var $PRINC_EXPIRE_TIME_clear  = TRUE;
-  var $PW_EXPIRATION_clear      = TRUE;
-  var $MAX_LIFE                 = 0;
-  var $MAX_RENEWABLE_LIFE       = 0;
-  var $MASK                     = "";
-
   var $FAIL_AUTH_COUNT          = 0;
   var $KVNO                     = "";
   var $LAST_FAILED              = 0;
   var $LAST_PWD_CHANGE          = 0;
   var $LAST_SUCCESS             = 0;
   var $MOD_DATE                 = 0;
+
+  var $POLICY                   = "";
+  var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
+
+
 
   function __construct(&$config,$dn = "new")  
   {
@@ -529,12 +530,11 @@ class passwordMethodMIT extends passwordMethod
 
   function save($dn)
   {
-    $realm = $this->config->data['SERVERS']['KERBEROS']['REALM'];
-
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($dn);
     $ldap->cat($dn,array('uid'));
     $attrs = $ldap->fetch();
+
     if(isset($attrs['uid'][0])){
 
       /* Get servers mac */
