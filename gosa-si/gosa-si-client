@@ -41,7 +41,10 @@ use File::Spec;
 # Workaround: need pure perl to make it work with UTF-8 :-(
 $XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
 
-my $client_version = "$HeadURL$:$Rev$";
+my $client_version = '$HeadURL$:$Rev$';
+my $client_headURL;
+my $client_revision;
+my $client_status;
 my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
@@ -733,6 +736,8 @@ sub register_at_gosa_si_server {
 			&add_content2xml_hash($register_hash, "new_passwd", $server_key);
 			&add_content2xml_hash($register_hash, "mac_address", $local_mac);
 			&add_content2xml_hash($register_hash, "events", $events);
+            &add_content2xml_hash($register_hash, "client_status", $client_status);
+            &add_content2xml_hash($register_hash, "client_revision", $client_revision);
 			&add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
 
 			# Add $HOSTNAME from ENV if force-hostname is set
@@ -1207,8 +1212,7 @@ if( ! $foreground ) {
     $pid = fork;
     setsid                    or die "Can't start a new session: $!";
     umask 0;
-} 
-else { 
+} else { 
     $pid = $$; 
 }
 
@@ -1222,8 +1226,22 @@ if( 0 != $pid ) {
     };
 }
 
+# parse head url and revision from svn
+my $client_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
+$client_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+$client_headURL = defined $1 ? $1 : 'unknown' ;
+$client_revision = defined $2 ? $2 : 'unknown' ;
+if ($client_headURL =~ /\/tag\// || 
+        $client_headURL =~ /\/branches\// ) {
+    $client_status = "stable"; 
+} else {
+    $client_status = "developmental" ;
+}
+
 daemon_log(" ", 1);
 daemon_log("$prg started!", 1);
+daemon_log("status: $client_status", 1);
+daemon_log($client_status_hash->{$client_status}.": $client_revision", 1); 
 
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
