@@ -164,6 +164,12 @@ class passwordMethodMIT extends passwordMethod
       $ldap->cd($dn);
       $ldap->cat($dn);
       $this->attrs = $ldap->fetch();
+
+      /* Set initial pwd hash which take effect if no password method was set yet.  
+         Will be overwritten by the following lines, if the user has already a valid principal.
+       */
+      $this->principal = $this->attrs['uid'][0]."@".$this->goKrbRealm;
+
       if(isset($this->attrs['userPassword']) && preg_match("/^\{".$this->get_hash_name()."\}/",$this->attrs['userPassword'][0])){
 
         /* Extract principal name out of userPassword attribute 
@@ -321,7 +327,7 @@ class passwordMethodMIT extends passwordMethod
       @param  String  The password -in this case unusued.             
       @return String  The generated hash
    */
-  function generate_hash($pwd)
+  function generate_hash($pwd = "")
   {
     $mode= "kerberos";
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
@@ -484,7 +490,7 @@ class passwordMethodMIT extends passwordMethod
       $smarty->assign($date_val."_i",date("i",$this->$date_val));
     }
 
-    return($smarty->fetch(get_template_path("pwd_kerberos_mit.tpl")));
+    return($smarty->fetch(get_template_path("pwd_kerberos_mit.tpl",TRUE,dirname(__FILE__))));
   }
 
 
