@@ -5,7 +5,6 @@ use Exporter;
 
 # Each module has to have a function 'process_incoming_msg'. This function works as a interface to gosa-sd and receives the msg hash from gosa-sd. 'process_incoming_function checks, wether it has a function to process the incoming msg and forward the msg to it. 
 
-
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
@@ -511,6 +510,8 @@ sub here_i_am {
     my $source = @{$msg_hash->{source}}[0];
     my $mac_address = @{$msg_hash->{mac_address}}[0];
 	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
+    my $client_status = @{$msg_hash->{client_status}}[0];
+    my $client_revision = @{$msg_hash->{client_revision}}[0];
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
@@ -608,6 +609,9 @@ sub here_i_am {
 	if( $hardware_config_out ) {
 		push(@out_msg_l, $hardware_config_out);
 	}
+
+    &main::daemon_log("$session_id INFO: register client $source ($mac_address)", 5);
+    &main::daemon_log("$session_id INFO: client version: $client_status - $client_revision", 5); 
 
     return @out_msg_l;
 }

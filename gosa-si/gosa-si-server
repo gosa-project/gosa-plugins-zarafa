@@ -52,7 +52,11 @@ use Net::LDAP::Util qw(:escape);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
-my $server_version = "$HeadURL$:$Rev$";
+my $server_version = '$HeadURL$:$Rev$';
+my $server_headURL;
+my $server_revision;
+my $server_status;
+
 
 # TODO es gibt eine globale funktion get_ldap_handle
 # - ist in einer session dieses ldap handle schon vorhanden, wird es zurückgegeben
@@ -2518,8 +2522,23 @@ if( 0 != $pid ) {
     };
 }
 
+# parse head url and revision from svn
+my $server_status_hash = { 'developmental'=>'revision', 'stable'=>'release'};
+$server_version =~ /^\$HeadURL: (\S+) \$:\$Rev: (\d+) \$$/;
+$server_headURL = defined $1 ? $1 : 'unknown' ;
+$server_revision = defined $2 ? $2 : 'unknown' ;
+if ($server_headURL =~ /\/tag\// || 
+        $server_headURL =~ /\/branches\// ) {
+    $server_status = "stable"; 
+} else {
+    $server_status = "developmental" ;
+}
+
+
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
+daemon_log("status: $server_status", 1);
+daemon_log($server_status_hash->{$server_status}.": $server_revision", 1); 
 
 if ($no_bus > 0) {
     $bus_activ = "false"
