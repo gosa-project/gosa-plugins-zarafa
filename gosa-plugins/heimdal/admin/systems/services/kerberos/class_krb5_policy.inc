@@ -1,5 +1,22 @@
 <?php
+/*
+   This code is part of GOsa (https://gosa.gonicus.de)
+   Copyright (C) 2008 Fabian Hickert
 
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 class krb5_policy extends plugin
 {
@@ -12,6 +29,12 @@ class krb5_policy extends plugin
   var $attributes = array("MASK","POLICY_REFCNT","PW_HISTORY_NUM","PW_MAX_LIFE",
       "PW_MIN_CLASSES","PW_MIN_LENGTH","PW_MIN_LIFE");
 
+  
+  /*! \brief Initializes the policy class.
+      @param Object The GOsa configuration object. 
+      @param Array  The policy data array to edit or an empty array()
+      @param Object The parent object.
+   */
 	public function __construct($config,$entry,$parent)
 	{
     $this->config = $config;
@@ -32,6 +55,11 @@ class krb5_policy extends plugin
     $this->init_name = $this->name;
 	}
 
+  
+  /*! \brief  Returns a HTML ui which allows 
+                configuring this policy 
+      @return String a HTML interface.
+   */
   public function execute()
   {
     $display = plugin::execute();
@@ -45,6 +73,8 @@ class krb5_policy extends plugin
   }
 
 
+  /*! \brief  Saves the HTML posted variables 
+   */
   public function save_object()
   {
     if(isset($_POST['Policy_Posted'])){
@@ -59,7 +89,10 @@ class krb5_policy extends plugin
     }
   }
    
-  
+ 
+  /*! \brief Checks the given input 
+      @return Array   Containing errors about incorrect values.
+   */ 
   public function check()
   {
     $message = array();
@@ -120,6 +153,9 @@ class krb5_policy extends plugin
   }
    
 
+  /*! \brief  Returns object data of the currently edited policy 
+      @return Array   A multidimensional array containing policy informations.
+   */
   public function save()
   {
     $ret = array();
