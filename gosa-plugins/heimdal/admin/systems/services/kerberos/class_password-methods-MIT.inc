@@ -89,8 +89,7 @@ class passwordMethodMIT extends passwordMethod
   var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
 
 
-
-  function __construct(&$config,$dn = "new")  
+  public function __construct(&$config,$dn = "new")  
   {
     $this->config= $config;
     $this->parent_dn = $dn;
@@ -313,7 +312,7 @@ class passwordMethodMIT extends passwordMethod
     This is the case if there is a si server running and at least one server configured.
     kerberos support. 
    */ 
-  function is_available()
+  public function is_available()
   {
     $o = new gosaSupportDaemon(FALSE);
     if(count($this->server_list) && $o->connect()){
@@ -327,7 +326,7 @@ class passwordMethodMIT extends passwordMethod
       @param  String  The password -in this case unusued.             
       @return String  The generated hash
    */
-  function generate_hash($pwd = "")
+  public function generate_hash($pwd = "")
   {
     $mode= "kerberos";
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
@@ -339,7 +338,7 @@ class passwordMethodMIT extends passwordMethod
 
   /*! \brief  Removes this principal.
    */
-  function remove_from_parent()
+  public function remove_from_parent()
   {
     if(!empty($this->principal) && $this->goKrbRealm){
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
@@ -356,7 +355,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Set a new password for this principal 
       @param  String The new password.
    */
-  function set_password($password)
+  public function set_password($password)
   {
     if(!empty($this->principal) && $this->goKrbRealm){
       $server = $this->map['REALM_SERVER'][$this->goKrbRealm];
@@ -371,7 +370,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Return the hash name of this mehtod,  e.g. to identify methods.
       @return String  The hash used by this method.
     */
-  function get_hash_name()
+  public function get_hash_name()
   {
     $mode= "kerberos";
     if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
@@ -384,7 +383,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Returns TRUE if this method is configurable else FALSE
       @retrun Boolena TRUE if configurable, else FALSE.
    */
-  function is_configurable()
+  public function is_configurable()
   {
     return TRUE;
   }
@@ -393,7 +392,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Additional info displayed in the users password method drop down.
       @retunr String  Additional password method info.
    */
-  function get_description()
+  public function get_description()
   {
     return(_("Daemon based"));
   }
@@ -402,7 +401,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Display a HTML based configuration dialog for this plugin
       @return String  HTML.
    */
-  function configure()
+  public function configure()
   {
     $this->save_object();
 
@@ -448,22 +447,17 @@ class passwordMethodMIT extends passwordMethod
       }
     }
 
-
     $smarty = get_smarty();
-
     $smarty->assign("si_error",$this->si_error);
     $smarty->assign("si_error_msg",$this->si_error_msg);
-  
     $smarty->assign("years",$years);
     $smarty->assign("month",$month);
     $smarty->assign("days",$days);
     $smarty->assign("hours",$hours);
     $smarty->assign("minutes",$minutes);
-
     $smarty->assign("server_list",$this->server_list);
     $smarty->assign("POLICY"  ,$this->POLICY);
     $smarty->assign("goKrbRealm" , $this->goKrbRealm);
-
     $server_name = $this->map['REALM_SERVER'][$this->goKrbRealm];
     $server_mac  = $this->server_list[$server_name]['macAddress'];
     $this->POLICIES = $this->load_policies_for_server($server_mac);
@@ -496,7 +490,7 @@ class passwordMethodMIT extends passwordMethod
 
   /*! \brief  Saves all relevant HTML posts for this plugin
    */
-  function save_object()
+  public function save_object()
   {
     /* If the communication with the si server failed, 
         you are able to retry to connect to the server.
@@ -554,7 +548,7 @@ class passwordMethodMIT extends passwordMethod
   /*! \brief  Checks the values specified in the configuration dialog. 
       @return Array Containing all error messages.
    */
-  function check()
+  public function check()
   {
     $message = array();
 
@@ -570,7 +564,7 @@ class passwordMethodMIT extends passwordMethod
 
   /*! \brief Saves changes back to the SI daemon.
    */
-  function save($dn)
+  public function save($dn)
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($dn);
@@ -606,7 +600,7 @@ class passwordMethodMIT extends passwordMethod
 
       /* Set date values 
        */
-      $date_values = array("PW_EXPIRATION","PRINC_EXPIRE_TIME");
+     $date_values = array("PW_EXPIRATION","PRINC_EXPIRE_TIME");
       foreach($date_values as $value){
         $clear = $value."_clear";
         if($this->$clear){
