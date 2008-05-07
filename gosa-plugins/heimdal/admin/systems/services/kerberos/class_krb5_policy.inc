@@ -69,6 +69,8 @@ class krb5_policy extends plugin
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->data[$attr]);
     }
+
+    $smarty->assign("POLICY_REFCNT", sprintf("<i>"._("This policy is referenced %d times.")."</i>", $this->data["POLICY_REFCNT"]));
     return($smarty->fetch(get_template_path("krb5_policy.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -98,45 +100,45 @@ class krb5_policy extends plugin
     $message = array();
     $names = $this->parent->getPolicyNames();
     if($this->name != $this->init_name && in_array($this->name,$names)){
-      $message[] = msgPool::duplicated(_("Name"));
+      $message[] = msgPool::duplicated(_("Policy name"));
     }
     if(empty($this->name)){
-      $message[] = msgPool::required(_("Name"));
+      $message[] = msgPool::required(_("Policy name"));
     }
   
     if(!preg_match("/^[a-z0-9\@\.\-_]*$/i",$this->name)){
-      $message[] = msgPool::invalid(_("Name"),$this->name,"/[a-z0-9]/i");
+      $message[] = msgPool::invalid(_("Policy name"),$this->name,"/[a-z0-9]/i");
     }
 
     /* Check password history */
     if(!is_numeric($this->data['PW_HISTORY_NUM'])){
-      $message[] = msgPool::invalid(_("Password history"));
+      $message[] = msgPool::invalid(_("Password history size"));
     }elseif($this->data['PW_HISTORY_NUM'] <= 0){
-      $message[] = msgPool::toosmall(_("Password history"));
+      $message[] = msgPool::toosmall(_("Password history size"));
     }
 
     /* Check password minimum length */
     if(!is_numeric($this->data['PW_MIN_LENGTH'])){
-      $message[] = msgPool::invalid(_("Password minimum length"));
+      $message[] = msgPool::invalid(_("Minimum password length"));
     }elseif($this->data['PW_MIN_LENGTH'] <= 0){
-      $message[] = msgPool::toosmall(_("Password minimum length"));
+      $message[] = msgPool::toosmall(_("Minimum password length"));
     }
 
     /* Check password different character classes */
     if(!is_numeric($this->data['PW_MIN_CLASSES'])){
-      $message[] = msgPool::invalid(_("Password min characters"));
+      $message[] = msgPool::invalid(_("Required different characters"));
     }elseif($this->data['PW_MIN_CLASSES'] <= 0){
-      $message[] = msgPool::toosmall(_("Password min characters"));
+      $message[] = msgPool::toosmall(_("Required different characters"));
     }elseif($this->data['PW_MIN_CLASSES'] > $this->data['PW_MIN_LENGTH']){
       $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
-        _("Password min characters"),_("Password minimum length"));
+        _("Required different characters"),_("Minimum password length"));
     }
 
     /* Check password min lifetime */
     if(!is_numeric($this->data['PW_MIN_LIFE'])){
-      $message[] = msgPool::invalid(_("Password minimum lifetime"));
+      $message[] = msgPool::invalid(_("Minimum password lifetime"));
     }elseif($this->data['PW_MIN_LIFE'] <= 0){
-      $message[] = msgPool::toosmall(_("Password minimum lifetime"));
+      $message[] = msgPool::toosmall(_("Minimum password lifetime"));
     }
 
     /* Check password lifetime */
@@ -146,7 +148,7 @@ class krb5_policy extends plugin
       $message[] = msgPool::toosmall(_("Password lifetime"));
     }elseif($this->data['PW_MAX_LIFE'] < $this->data['PW_MIN_LIFE']){
       $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
-        _("Password minimum lifetime"),_("Password lifetime"));
+        _("Minimum password lifetime"),_("Password lifetime"));
     }
 
     return($message);
