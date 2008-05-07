@@ -287,9 +287,11 @@ class servrepository extends goService
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
-      if(count($this->attrs)){
-        $this->trigger_si_fai_server_reload();
-      }
+    }
+
+    # If there were changes, just tell the server to reload information
+    if(count($this->attrs)){
+	    $this->trigger_si_fai_server_reload();
     }
 
     if($this->initially_was_account){
