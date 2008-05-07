@@ -375,7 +375,7 @@ sub krb5_create_policy {
     if (not defined $kadm5){
       &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
     } else {
-      if ( $kadm5->get_policy(@{$msg_hash->{'policy'}}[0]) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error)){
+      if ( $kadm5->get_policy(@{$msg_hash->{'policy'}}[0])) {
         &add_content2xml_hash($out_hash, "error", "Policy exists");
         return &create_xml_string($out_hash);
       }
@@ -468,7 +468,7 @@ sub krb5_del_policy {
 
     # Authenticate
     my $kadm5 = Authen::Krb5::Admin->init_with_password($krb_admin, $krb_password);
-    my $policy;
+    my $policy= @{$msg_hash->{'policy'}}[0];
     if (not defined $kadm5){
       &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
     } else {
