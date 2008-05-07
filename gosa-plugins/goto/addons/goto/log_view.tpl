@@ -5,7 +5,7 @@
 	<div style="width:99%;border: solid 1px #CCCCCC;">{$divlist}</div>
   <br>
   <p class="seperator"></p>
-	<h2>{t}Selected log{/t}: {$selected_log} fabian, fill the selected log here: name, date</h2>
+	<h2>{t}Selected log{/t}: {$selected_log}</h2>
 	<div style="width:99%;height:350px;padding:3px;background-color:white; overflow-y: scroll;border: solid 1px;">
 		{$log_file}
 	</div>

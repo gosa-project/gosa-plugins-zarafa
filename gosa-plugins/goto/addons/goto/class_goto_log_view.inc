@@ -17,10 +17,11 @@ class goto_log_view extends plugin
   var $attributes = array("macAddress");
   var $macAddress = "";
 
-  var $sort_by  = "file";
+  var $sort_by  = "time";
   var $sort_dir = 1; // 1 => up, 0 => down
   
   var $ignore_account = TRUE;
+  var $standalone = FALSE;
  
   function __construct(&$config,$dn,$parent)
   {
@@ -43,8 +44,10 @@ class goto_log_view extends plugin
      */      
     if(is_array($this->parent) && isset($this->parent['MACADDRESS'])){
       $this->mac = $this->parent['MACADDRESS'];
+      $this->standalone = TRUE;
     }elseif(isset($parent->attrs['macAddress'][0])){
       $this->mac = $parent->attrs['macAddress'][0];
+      $this->standalone = FALSE;
     }
 
     /* Query for log files
@@ -74,6 +77,11 @@ class goto_log_view extends plugin
     $smarty->assign("selected_file",$this->selected_file);
     $smarty->assign("selected_date",$this->selected_date);
     $smarty->assign("log_file", $this->get_log($this->mac,$this->selected_date,$this->selected_file));        
+    $smarty->assign("standalone",$this->standalone);
+
+    $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);
+    $file = $this->selected_file;
+    $smarty->assign("selected_log",$file.", ".$date);
 
     $divlist = new divlist("log_view");
 
@@ -108,12 +116,18 @@ class goto_log_view extends plugin
       foreach($times as $time => $data){
         $rtime = $data['REAL_DATE'];
         foreach($data['FILES'] as $file){
+
+          $highlight = "";
+          if($file == $this->selected_file && $time == $this->selected_date && $mac == $this->mac){
+            $highlight = "background-color:#CCCCCC";
+          }
+
           $use_link = preg_replace(array("/%mac%/","/%time%/","/%file%/"),array($mac,$time,$file),$link);
           $to_add[$$sort_by.$file.$time] = array(
             array("string" => preg_replace("/%str%/",$file,$use_link),
-                  "attach" => "style='width:200px;'"),
+                  "attach" => "style='width:200px; $highlight'"),
             array("string" => preg_replace("/%str%/",date("d.m.Y H:i:s",$rtime),$use_link),
-                  "attach" => "style='border-right:none;'"),
+                  "attach" => "style='border-right:none; $highlight'"),
             );
         }
       }
