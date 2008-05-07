@@ -506,9 +506,15 @@ class deviceManagement extends plugin
     }
 
     /* Get results and create index */
-    $res= get_sub_list($Filter,"devices",get_ou('deviceou'), $base, array("cn","description","dn","objectClass"), $Flags);
+    $res= get_sub_list($Filter,"devices",get_ou('deviceou'), $base, array("cn","gotoHotplugDevice","description","dn","objectClass"), $Flags);
     $tmp2 = array();
     foreach ($res as $val){
+      if (!isset($val['description']) && isset($val['gotoHotplugDevice'][0])) {
+        $dsc= preg_replace("/\|.*$/", "", $val['gotoHotplugDevice'][0]);
+        if ($dsc != ""){
+          $val['description']= array("count" => 1, 0 => $dsc);
+        }
+      }
       $tmp2[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']] = strtolower($val['cn'][0]).$val['cn'][0].$val['dn'];
       $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
     }
