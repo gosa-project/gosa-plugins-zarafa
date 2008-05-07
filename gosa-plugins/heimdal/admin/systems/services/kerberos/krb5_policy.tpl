@@ -1,9 +1,11 @@
+<h2>{t}Policy options{/t}</h2>
 <table>
 	<tr>
 		<td>{t}Policy name{/t}</td>
 		<td><input type="text" name="name" value="{$name}"></td>
 	</tr>
-<!--	<tr>
+<!--
+	<tr>
 		<td>{t}Mask{/t}</td>
 		<td><input type="text" name="MASK" value="{$MASK}"></td>
 	</tr>
@@ -18,11 +20,11 @@
 	</tr>
 	<tr>
 		<td>{t}Password minimum lifetime{/t}</td>
-		<td><input type="text" name="PW_MIN_LIFE" value="{$PW_MIN_LIFE}">{t}seconds{/t}</td>
+		<td><input type="text" name="PW_MIN_LIFE" value="{$PW_MIN_LIFE}">&nbsp;{t}seconds{/t}</td>
 	</tr>
 	<tr>
 		<td>{t}Password lifetime{/t}</td>
-		<td><input type="text" name="PW_MAX_LIFE" value="{$PW_MAX_LIFE}">{t}seconds{/t}</td>
+		<td><input type="text" name="PW_MAX_LIFE" value="{$PW_MAX_LIFE}">&nbsp;{t}seconds{/t}</td>
 	</tr>
 	<tr>
 		<td>{t}Password min characters{/t}</td>
