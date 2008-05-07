@@ -1471,7 +1471,7 @@ sub watch_for_delivery_messages {
 				my %data = ('subject' => $subject, 'message' => $message, 'usr' => $receiver);
 				my $out_msg = &build_msg("usr_msg", $server_address, $receiver_host, \%data ); 
 				my $error = &send_msg_to_target($out_msg, $receiver_host, $receiver_key, "usr_msg", 0); 
-				if ($error != 0 ) {
+				if ($error == 0 ) {
 				 	$send_succeed++ ;
 				}
 		}
