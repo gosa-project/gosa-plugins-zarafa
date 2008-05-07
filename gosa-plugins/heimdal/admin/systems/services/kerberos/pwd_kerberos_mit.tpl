@@ -19,7 +19,6 @@
 	<tr>
 		<td style="width:50%;vertical-align:top;">
 			<h2>{t}Heimdal options{/t}</h2>
-			<i>{t}Use empty values for infinite{/t}</i>
 			<table style="width:100%;">
 				<tr>
 					<td>
