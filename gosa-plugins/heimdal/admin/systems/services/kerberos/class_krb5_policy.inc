@@ -21,9 +21,13 @@ class krb5_policy extends plugin
       $this->name = $entry['NAME'];
       $this->data = $entry['DATA'];
     }else{
-      foreach($this->attributes as $attr){
-        $this->data[$attr] = 0;
-      }
+      $this->data['MASK']           = 0;
+      $this->data['POLICY_REFCNT']  = 0;
+      $this->data['PW_HISTORY_NUM'] = 5;
+      $this->data['PW_MAX_LIFE']    = 604800;
+      $this->data['PW_MIN_CLASSES'] = 3;
+      $this->data['PW_MIN_LENGTH']  = 6;
+      $this->data['PW_MIN_LIFE']    = 36000;
     }
     $this->init_name = $this->name;
 	}
@@ -58,12 +62,40 @@ class krb5_policy extends plugin
   
   public function check()
   {
-    $messages = array();
+    $message = array();
     $names = $this->parent->getPolicyNames();
     if($this->name != $this->init_name && in_array($this->name,$names)){
-      $messages[] = msgPool::duplicated(_("Name"));
+      $message[] = msgPool::duplicated(_("Name"));
     }
-    return($messages);
+    if(empty($this->name)){
+      $message[] = msgPool::required(_("Name"));
+    }
+  
+    if(!preg_match("/^[a-z0-9\@\.\-_]*$/i",$this->name)){
+      $message[] = msgPool::invalid(_("Name"),$this->name,"/[a-z0-9]/i");
+    }
+
+    /* Check password history */
+    if(!is_numeric($this->data['PW_HISTORY_NUM'])){
+      $message[] = msgPool::invalid(_("Password history"));
+    }elseif($this->data['PW_HISTORY_NUM'] <= 0){
+      $message[] = msgPool::toosmall(_("Password history"));
+    }
+
+    /* Check password  */
+    if(!is_numeric($this->data['PW_MIN_LENGTH'])){
+      $message[] = msgPool::invalid(_("Password minimum length"));
+    }elseif($this->data['PW_MIN_LENGTH'] <= 0){
+      $message[] = msgPool::toosmall(_("Password minimum length"));
+    }
+
+    /* Check password history */
+    if(!is_numeric($this->data['PW_MIN_LENGTH'])){
+      $message[] = msgPool::invalid(_("Password minimum length"));
+    }elseif($this->data['PW_MIN_LENGTH'] <= 0){
+      $message[] = msgPool::toosmall(_("Password minimum length"));
+    }
+    return($message);
   }
    
 

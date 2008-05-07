@@ -301,33 +301,36 @@ class goKrbServer extends goService{
     foreach($this->policies as $policy){
       switch($policy['STATUS']){
         case "REMOVED" : $actions['del'] [] = $policy;break; 
-        case "ADDED"   : $actions['add'] [] = $policy;break; 
-        case "EDITED"  : $actions['edit'][] = $policy;break; 
+        case "ADDED"   : 
+        case "EDITED"  : $actions['add_edit'] [] = $policy;break; 
       }
     }
 
     $o = new gosaSupportDaemon();
+    $policies = $o->krb5_list_policies($this->macAddress);
+
     /* Send remove policy event  
      */
     foreach($actions['del'] as $policy){
+      if(!in_array($policy['NAME'],$policies)) continue;
       if(!$o->krb5_del_policy($this->macAddress,$policy['NAME'])){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
       }
     }
     
-    /* Send add new policy event
+    /* Send add new/edit policy event
      */
-    foreach($actions['add'] as $policy){
-      if(!$o->krb5_add_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
-        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
-      }
-    }
-    
-    /* Send update policy event
-     */
-    foreach($actions['edit'] as $policy){
-      if(!$o->krb5_set_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
-        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+    foreach($actions['add_edit'] as $policy){
+      if(in_array($policy['NAME'],$policies)){
+        if(!$o->krb5_set_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+        }
+      }else{
+        unset($policy['DATA']['MASK']);
+        unset($policy['DATA']['POLICY_REFCNT']);
+        if(!$o->krb5_add_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+        }
       }
     }
   }
