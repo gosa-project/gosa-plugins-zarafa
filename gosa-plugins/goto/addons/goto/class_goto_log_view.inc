@@ -88,17 +88,25 @@ class goto_log_view extends plugin
     /* Create sort direction images 
      */
     if($this->sort_dir){
-      $img = "<img src='images/down-arrow.png' border='0' alt='\\/'>";
+      $img = "<img src='images/lists/sort-down.png' border='0' alt='\\/'>";
     }else{
-      $img = "<img src='images/up-arrow.png' border='0' alt='/\\'";
+      $img = "<img src='images/lists/sort-up.png' border='0' alt='/\\'";
     }
+    if($this->sort_by == "file"){
+      $img1 = $img;
+      $img2 = "";
+    }else{
+      $img1 = "";
+      $img2 = $img;
+    }
+
 
     /* Create list header 
      */
     $divlist->SetHeader(array(
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("Log file")." ".$img."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("Log file")." ".$img1."</a>",
                 "attach"=>"width='200px;'"),
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Log date")." ".$img."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Log date")." ".$img2."</a>",
                 "attach" => "style='border-right:none;'"),
           ));
 
