@@ -52,6 +52,7 @@ use Net::LDAP::Util qw(:escape);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
+my $server_version = "$HeadURL$:$Rev$";
 
 # TODO es gibt eine globale funktion get_ldap_handle
 # - ist in einer session dieses ldap handle schon vorhanden, wird es zurückgegeben
