@@ -15,6 +15,7 @@
 
 {if $standalone}
 <br>
+<input type="hidden" name="ignore" value="1">
 <p class='seperator'></p>
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
 	<input type='submit' name='abort_event_dialog' value='{msgPool type=backButton}'>
