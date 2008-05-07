@@ -297,7 +297,7 @@ class goKrbServer extends goService{
 
     /* Send policy changes back to the si daemon 
      */
-    $actions = array("del" => array(),"add" => array(),"edit"=>array());
+    $actions = array("del" => array(),"add_edit" => array());
     foreach($this->policies as $policy){
       switch($policy['STATUS']){
         case "REMOVED" : $actions['del'] [] = $policy;break; 
