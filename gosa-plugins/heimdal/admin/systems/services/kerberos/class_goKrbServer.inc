@@ -299,6 +299,11 @@ class goKrbServer extends goService{
      */
     $actions = array("del" => array(),"add_edit" => array());
     foreach($this->policies as $policy){
+
+      /* Unset not used vars */
+      if(isset($policy['DATA']['MASK']))          unset($policy['DATA']['MASK']);
+      if(isset($policy['DATA']['POLICY_REFCNT'])) unset($policy['DATA']['POLICY_REFCNT']);
+
       switch($policy['STATUS']){
         case "REMOVED" : $actions['del'] [] = $policy;break; 
         case "ADDED"   : 
@@ -326,8 +331,6 @@ class goKrbServer extends goService{
           msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
         }
       }else{
-        unset($policy['DATA']['MASK']);
-        unset($policy['DATA']['POLICY_REFCNT']);
         if(!$o->krb5_add_policy($this->macAddress,$policy['NAME'],$policy['DATA'])){
           msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
         }

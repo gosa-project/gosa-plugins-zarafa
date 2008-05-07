@@ -3,10 +3,11 @@
 		<td>{t}Policy name{/t}</td>
 		<td><input type="text" name="name" value="{$name}"></td>
 	</tr>
-	<tr>
+<!--	<tr>
 		<td>{t}Mask{/t}</td>
 		<td><input type="text" name="MASK" value="{$MASK}"></td>
 	</tr>
+-->
 	<tr>
 		<td>{t}Password minimum length{/t}</td>
 		<td><input type="text" name="PW_MIN_LENGTH" value="{$PW_MIN_LENGTH}"></td>
