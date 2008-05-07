@@ -102,12 +102,15 @@ class passwordMethodMIT extends passwordMethod
       return;
     }  
 
-    /* Keep cache until we try to configure a principal 
+    /* Keep the cached valued and skip loading principals 
+        from si until this method gets configured.
      */
+    $skip_si_access = TRUE;
     if($dn != "new" && $dn != ""){
       session::un_set("MIT_CACHE");
       session::un_set("MIT_PRINCIPAL_CACHE");
       session::un_set("MIT_POLICY_CACHE");
+      $skip_si_access = FALSE;
     }
 
     /* Get a list of all kerberos servers, defined in ldap
@@ -121,7 +124,11 @@ class passwordMethodMIT extends passwordMethod
       if(!isset($attrs['macAddress'][0])) continue;
       if(!isset($attrs['description'][0])) $attrs['description'][0] ="";
 
-      $principals = $this->load_principals_for_server($attrs['macAddress'][0]);
+      if($skip_si_access){
+        $principals = array();
+      }else{
+        $principals = $this->load_principals_for_server($attrs['macAddress'][0]);
+      }
 
       /* Create Realm/Server/Principal mapping.
        */
@@ -148,10 +155,11 @@ class passwordMethodMIT extends passwordMethod
           "cn"         => $attrs['cn'][0]);
     }
 
-    /* Load object data from ldap && initialize this class  
+    /*  If this methods is initialized with a valid object dn then 
+         load the object data from ldap and the SI daemon && initialize this class.
      */
     $this->is_new = TRUE;
-    if($dn != "new" && $dn != ""){
+    if(!$skip_si_access){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($dn);
       $ldap->cat($dn);
@@ -183,7 +191,8 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
-  /*! \brief  Load this plugin with the values of the given principal
+  /*! \brief  Load a specific principal from the si daemon 
+               and initialize this plugin with it.
     @param  String  The macAddress of the kerberos server.
     @param  String  The name of the principal to load.
    */
@@ -201,9 +210,9 @@ class passwordMethodMIT extends passwordMethod
 
       /* Load flags 
        */
-     if(isset($tmp['ATTRIBUTES'])){
-       $this->used_flags = $tmp['ATTRIBUTES'];
-     }
+      if(isset($tmp['ATTRIBUTES'])){
+        $this->used_flags = $tmp['ATTRIBUTES'];
+      }
 
       /* Load readonly attributes 
        */
@@ -234,9 +243,10 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
-  /*! \brief get list of all configured principals
-    for a given server. 
-    The results will cached.  
+  /*! \brief  Get the list of all configured principals for a given server.
+      @param  String The servers mac address.
+      @return Array A list with all principals
+      The results will cached.  
    */
   public function load_principals_for_server($server)
   {
@@ -307,6 +317,10 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief Create the password hash. In this case: {kerberos/sasl}name@RELAM 
+      @param  String  The password -in this case unusued.             
+      @return String  The generated hash
+   */
   function generate_hash($pwd)
   {
     $mode= "kerberos";
@@ -317,6 +331,8 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Removes this principal.
+   */
   function remove_from_parent()
   {
     if(!empty($this->principal) && $this->goKrbRealm){
@@ -331,6 +347,9 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Set a new password for this principal 
+      @param  String The new password.
+   */
   function set_password($password)
   {
     if(!empty($this->principal) && $this->goKrbRealm){
@@ -343,6 +362,9 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Return the hash name of this mehtod,  e.g. to identify methods.
+      @return String  The hash used by this method.
+    */
   function get_hash_name()
   {
     $mode= "kerberos";
@@ -353,18 +375,27 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Returns TRUE if this method is configurable else FALSE
+      @retrun Boolena TRUE if configurable, else FALSE.
+   */
   function is_configurable()
   {
     return TRUE;
   }
 
 
+  /*! \brief  Additional info displayed in the users password method drop down.
+      @retunr String  Additional password method info.
+   */
   function get_description()
   {
     return(_("Daemon based"));
   }
 
 
+  /*! \brief  Display a HTML based configuration dialog for this plugin
+      @return String  HTML.
+   */
   function configure()
   {
     $this->save_object();
@@ -444,9 +475,6 @@ class passwordMethodMIT extends passwordMethod
 
     $date_values = array("PRINC_EXPIRE_TIME","PW_EXPIRATION");
     foreach($date_values as $date_val){
-
-
-
       $clear = $date_val."_clear";
       $smarty->assign($date_val."_clear",$this->$clear);
       $smarty->assign($date_val."_y",date("Y",$this->$date_val));
@@ -456,11 +484,12 @@ class passwordMethodMIT extends passwordMethod
       $smarty->assign($date_val."_i",date("i",$this->$date_val));
     }
 
-
     return($smarty->fetch(get_template_path("pwd_kerberos_mit.tpl")));
   }
 
 
+  /*! \brief  Saves all relevant HTML posts for this plugin
+   */
   function save_object()
   {
     /* If the communication with the si server failed, 
@@ -516,6 +545,9 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Checks the values specified in the configuration dialog. 
+      @return Array Containing all error messages.
+   */
   function check()
   {
     $message = array();
@@ -530,15 +562,8 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
-  function chk_times($str)
-  {
-    if(preg_match("/^([0-9]){12,12}[a-z]$/i",$str)){
-      return(true);
-    }
-    return(false);
-  }
-
-
+  /*! \brief Saves changes back to the SI daemon.
+   */
   function save($dn)
   {
     $ldap = $this->config->get_ldap_link();
