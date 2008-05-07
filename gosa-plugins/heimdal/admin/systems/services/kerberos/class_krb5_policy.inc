@@ -82,19 +82,40 @@ class krb5_policy extends plugin
       $message[] = msgPool::toosmall(_("Password history"));
     }
 
-    /* Check password  */
+    /* Check password minimum length */
     if(!is_numeric($this->data['PW_MIN_LENGTH'])){
       $message[] = msgPool::invalid(_("Password minimum length"));
     }elseif($this->data['PW_MIN_LENGTH'] <= 0){
       $message[] = msgPool::toosmall(_("Password minimum length"));
     }
 
-    /* Check password history */
-    if(!is_numeric($this->data['PW_MIN_LENGTH'])){
-      $message[] = msgPool::invalid(_("Password minimum length"));
-    }elseif($this->data['PW_MIN_LENGTH'] <= 0){
-      $message[] = msgPool::toosmall(_("Password minimum length"));
+    /* Check password different character classes */
+    if(!is_numeric($this->data['PW_MIN_CLASSES'])){
+      $message[] = msgPool::invalid(_("Password min characters"));
+    }elseif($this->data['PW_MIN_CLASSES'] <= 0){
+      $message[] = msgPool::toosmall(_("Password min characters"));
+    }elseif($this->data['PW_MIN_CLASSES'] > $this->data['PW_MIN_LENGTH']){
+      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
+        _("Password min characters"),_("Password minimum length"));
     }
+
+    /* Check password min lifetime */
+    if(!is_numeric($this->data['PW_MIN_LIFE'])){
+      $message[] = msgPool::invalid(_("Password minimum lifetime"));
+    }elseif($this->data['PW_MIN_LIFE'] <= 0){
+      $message[] = msgPool::toosmall(_("Password minimum lifetime"));
+    }
+
+    /* Check password lifetime */
+    if(!is_numeric($this->data['PW_MAX_LIFE'])){
+      $message[] = msgPool::invalid(_("Password lifetime"));
+    }elseif($this->data['PW_MAX_LIFE'] <= 0){
+      $message[] = msgPool::toosmall(_("Password lifetime"));
+    }elseif($this->data['PW_MAX_LIFE'] < $this->data['PW_MIN_LIFE']){
+      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
+        _("Password minimum lifetime"),_("Password lifetime"));
+    }
+
     return($message);
   }
    
