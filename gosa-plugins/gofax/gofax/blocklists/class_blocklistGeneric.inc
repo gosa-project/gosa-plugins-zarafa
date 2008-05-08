@@ -153,6 +153,7 @@ class blocklistGeneric extends plugin
     $smarty->assign("bases", $this->get_allowed_bases());
     $smarty->assign("types", array(BLOCK_LIST_SEND => _("send"), BLOCK_LIST_RECEIVE => _("receive")));
     $smarty->assign("type", $this->type);
+    $smarty->assign("dn", $this->dn);
     return($smarty->fetch(get_template_path('generic.tpl', TRUE)));
   }
 

@@ -147,6 +147,12 @@ class blocklist extends plugin
           $this->dn= "";
           $this->dialog = NULL;
           session::un_set('objectinfo');
+        }else{
+
+          /* Reinitialize tab */
+          if($this->dialog instanceof tabs){
+            $this->dialog->re_init();
+          }
         }
       } else {
         /* Errors found, show message */

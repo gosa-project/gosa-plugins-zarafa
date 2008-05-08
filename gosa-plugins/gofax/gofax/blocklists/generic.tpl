@@ -97,7 +97,9 @@
 
 <p class="plugbottom">
   <input type=submit name="edit_finish" style="width:80px" value="{msgPool type=okButton}">
-  <input type=submit name="edit_apply" value="{msgPool type=applyButton}">
+	{if $dn != "new"}
+	  <input type=submit name="edit_apply" value="{msgPool type=applyButton}">
+	{/if}
   <input type=submit name="edit_cancel" value="{msgPool type=cancelButton}">
 </p>
 <input type='hidden' name='blocklist_posted' value="1">
