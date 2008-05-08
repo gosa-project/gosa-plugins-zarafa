@@ -81,7 +81,10 @@ class goto_log_view extends plugin
 
     $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);
     $file = $this->selected_file;
-    $smarty->assign("selected_log",$file.", ".$date);
+    $smarty->assign("selected_log",_("none"));
+    if(!empty($file)){
+      $smarty->assign("selected_log",$file.", ".$date);
+    }
 
     $divlist = new divlist("log_view");
 
