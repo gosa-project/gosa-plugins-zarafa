@@ -882,6 +882,12 @@ class faiManagement extends plugin
           $this->dialog=FALSE;
           $this->is_dialog=false;
           session::un_set('objectinfo');
+        }else{
+
+          /* Reinitialize tab */
+          if($this->dialog instanceof tabs){
+            $this->dialog->re_init();
+          }
         }
 			}
 		}

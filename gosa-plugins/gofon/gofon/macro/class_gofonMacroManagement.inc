@@ -196,6 +196,12 @@ class goFonMacro extends plugin
           unset ($this->macrotabs);
           $this->macrotabs= NULL;
           session::un_set('objectinfo');
+        }else{
+
+          /* Reinitialize tab */
+          if($this->macrotabs instanceof tabs){
+            $this->macrotabs->re_init();
+          }
         }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,

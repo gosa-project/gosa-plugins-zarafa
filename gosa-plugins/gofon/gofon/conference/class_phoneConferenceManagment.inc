@@ -340,12 +340,18 @@ class phoneConferenceManagment extends plugin
           if ($this->dn != "new"){
             del_lock ($this->dn);
           }
-        }
+          del_lock ($this->conftab->dn);;
+          unset ($this->conftab);
+          $this->conftab= NULL;
+          session::un_set('objectinfo');
+        }else{
 
-        del_lock ($this->conftab->dn);;
-        unset ($this->conftab);
-        $this->conftab= NULL;
-        session::un_set('objectinfo');
+          /* Reinitialize tab */
+          if($this->conftab instanceof tabs){
+            $this->conftab->re_init();
+          }
+        } 
+
       } else {
         msg_dialog::displayChecks($message);
       }
