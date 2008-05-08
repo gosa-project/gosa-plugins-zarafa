@@ -225,16 +225,16 @@ class blocklistGeneric extends plugin
   /* Save to LDAP */
   function save()
   {
-    plugin::save();
-
     /* Type selection */
     if ($this->type == BLOCK_LIST_SEND){
       $type= "goFaxSBlocklist";
-      $this->attrs['objectClass']= "goFaxSBlock";
+      $this->objectclasses = array("goFaxSBlock");
     } else {
       $type= "goFaxRBlocklist";
-      $this->attrs['objectClass']= "goFaxRBlock";
+      $this->objectclasses = array("goFaxRBlock");
     }
+
+    plugin::save();
 
     /* Add list */
     if (count($this->goFaxBlocklist)){
@@ -262,6 +262,7 @@ class blocklistGeneric extends plugin
       new log("create","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
+
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }
