@@ -269,6 +269,12 @@ class mimetypeManagement extends plugin
           unset ($this->mimetabs);
           $this->mimetabs= NULL;
           session::un_set('objectinfo');
+        }else{
+
+          /* Reinitialize tab */
+          if($this->mimetabs instanceof tabs){
+            $this->mimetabs->re_init();
+          }
         }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,

@@ -177,6 +177,12 @@ class deviceManagement extends plugin
           unset ($this->devicetabs);
           $this->devicetabs= NULL;
           session::un_set('objectinfo');
+        }else{
+
+          /* Reinitialize tab */
+          if($this->devicetabs instanceof tabs){
+            $this->devicetabs->re_init();
+          }
         }
       } else {
        /* Ok. There seem to be errors regarding to the tab data,

@@ -178,9 +178,11 @@ class sudoManagement extends plugin
           $this->sudotabs= NULL;
           session::un_set('objectinfo');
         }else{
-          $this->dn = $this->sudotabs->dn;
-          $this->sudotabs= new sudotabs($this->config, $this->config->data['TABS']['SUDOTABS'], $this->dn);
-          session::set('objectinfo',$this->dn);
+
+          /* Reinitialize tab */
+          if($this->sudotabs instanceof tabs){
+            $this->sudotabs->re_init();
+          }
         }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
