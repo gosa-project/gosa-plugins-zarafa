@@ -142,7 +142,7 @@ class goKrbServer extends goService{
     $action .= "<input type='image' src='images/lists/trash.png' class='center' name='policy_del_%id'>";
     foreach($this->policies as $key => $policy){
       if($policy['STATUS'] == "REMOVED") continue;
-  
+
       $actions = preg_replace("/%id/",$key,$action);
       $field1 = array("string" => $policy['NAME']);
       $field3 = array("string" => $actions, 
@@ -255,11 +255,21 @@ class goKrbServer extends goService{
    */ 
   public function RemovePolicy($id)
   {
-    if($this->policies[$id]['STATUS'] == "ADDED"){
-      unset($this->policies[$id]);
-    }else{
-      $this->policies[$id]['STATUS'] = "REMOVED";
+    /* Load policy information, if not done before 
+     */ 
+    if($this->policies[$id]['STATUS'] == "LOADED" && empty($this->policies[$id]['DATA'])){
+      $o = new gosaSupportDaemon();
+      $this->policies[$id]['DATA'] = $o->krb5_get_policy($this->macAddress,$this->policies[$id]['NAME']);
     }
+    if($this->policies[$id]['DATA']['POLICY_REFCNT']){
+      msg_dialog::display(_("Remove"),msgPool::stillInUse(_("Policy")),ERROR_DIALOG) ;
+    }else{
+      if($this->policies[$id]['STATUS'] == "ADDED"){
+        unset($this->policies[$id]);
+      }else{
+        $this->policies[$id]['STATUS'] = "REMOVED";
+      }
+    } 
   }  
   
 
