@@ -327,7 +327,7 @@ class application extends plugin
 
         if (!function_exists("imagick_blob2image")){
           /* Get temporary file name for conversation */
-          $fname = tempnam ("/var/spool/gosa/", "GOsa");
+          $fname = tempnam (CACHE_DIR, "GOsa");
 
           /* Open file and write out photoData */
           $fp = fopen ($fname, "w");
