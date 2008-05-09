@@ -393,9 +393,11 @@ sub process_incoming_msg {
     my $host_name;
     my $host_key;
     my @out_msg_l = ("nohandler");
+    my $sql_events;
 
     # process incoming msg
     my $header = @{$msg_hash->{header}}[0]; 
+    my $source = @{$msg_hash->{source}}[0]; 
     my @target_l = @{$msg_hash->{target}};
 
     # skip PREFIX
@@ -411,8 +413,6 @@ sub process_incoming_msg {
     if( 1 == length @target_l) {
         my $target = $target_l[0];
 		if(&server_matches($target)) {
-
-
             if ($header eq 'new_key') {
                 @out_msg_l = &new_key($msg_hash)
             } elsif ($header eq 'here_i_am') {
@@ -423,6 +423,31 @@ sub process_incoming_msg {
                     &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
                     no strict 'refs';
                     @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+                } else {
+                    $sql_events = "SELECT * FROM $main::known_clients_tn WHERE ( (macaddress LIKE '$source') OR (hostname='$source') )"; 
+                    my $res = $main::known_clients_db->select_dbentry( $sql_events );
+                    my $l = keys(%$res);
+
+                    # set error if no or more than 1 hits are found for sql query
+                    if ( $l != 1) {
+                        @out_msg_l = ('knownclienterror');
+
+                    # found exact 1 hit in db
+                    } else {
+                        my $client_events = $res->{'1'}->{'events'};
+
+                        # client is registered for this event, deliver this message to client
+                        $header =~ s/^answer_//;
+                        if ($client_events =~ /,$header,/) {
+                            $msg =~ s/<header>answer_/<header>/;
+                            $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/;
+                            @out_msg_l = ( $msg );
+
+                        # client is not registered for this event, set error
+                        } else {
+                            @out_msg_l = ('noeventerror');
+                        }
+                    }
                 }
             }
 
@@ -432,7 +457,17 @@ sub process_incoming_msg {
             } elsif( $out_msg_l[0] eq 'nohandler') {
                 &main::daemon_log("$session_id ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
                 @out_msg_l = ();
-            } 
+            }  elsif ($out_msg_l[0] eq 'knownclienterror') {
+                &main::daemon_log("$session_id ERROR: no or more than 1 hits are found at known_clients_db with sql query: '$sql_events'", 1);
+                &main::daemon_log("$session_id WARNING: processing is aborted and message will not be forwarded");
+                @out_msg_l = ();
+            } elsif ($out_msg_l[0] eq 'noeventerror') {
+                &main::daemon_log("$session_id WARNING: client '$target' is not registered for event '$header', processing is aborted", 1); 
+                @out_msg_l = ();
+            }
+
+
+
 
         }
 		else {

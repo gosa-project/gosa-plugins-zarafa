@@ -293,25 +293,59 @@ sub process_gosa_msg {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $out_msg;
     my @out_msg_l = ('nohandler');
-    
+    my $sql_events;
+
     my $header = @{$msg_hash->{'header'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
     $header =~ s/gosa_//;
 
+    # check local installed events
     if( exists $event_hash->{$header} ) {
         # a event exists with the header as name
         &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
         no strict 'refs';
-        @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+        @out_msg_l = &{$event_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id );
+
+    # check client registered events
+    } else {
+        $sql_events = "SELECT * FROM $main::known_clients_tn WHERE ( (macaddress LIKE '$target') OR (hostname='$target') )"; 
+        my $res = $main::known_clients_db->select_dbentry( $sql_events );
+        my $l = keys(%$res);
+        
+        # set error if no or more than 1 hits are found for sql query
+        if ( $l != 1) {
+            @out_msg_l = ('knownclienterror');
+        
+        # found exact 1 hit in db
+        } else {
+            my $client_events = $res->{'1'}->{'events'};
+
+            # client is registered for this event, deliver this message to client
+            if ($client_events =~ /,$header,/) {
+                $msg =~ s/<header>gosa_/<header>/;
+                @out_msg_l = ( $msg );
+
+            # client is not registered for this event, set error
+            } else {
+                @out_msg_l = ('noeventerror');
+            }
+        }
     }
 
     # if delivery not possible raise error and return 
-    if( not defined $out_msg_l[0] ) {
-#        &main::daemon_log("WARNING: GosaPackages got no answer from event handler '$header'", 3);
+    if (not defined $out_msg_l[0]) {
         @out_msg_l = ();
-    } elsif( $out_msg_l[0] eq 'nohandler') {
+    } elsif ($out_msg_l[0] eq 'nohandler') {
         &main::daemon_log("$session_id ERROR: GosaPackages: no event handler or core function defined for '$header'", 1);
         @out_msg_l = ();
-    } 
+    } elsif ($out_msg_l[0] eq 'knownclienterror') {
+        &main::daemon_log("$session_id ERROR: no or more than 1 hits are found at known_clients_db with sql query: '$sql_events'", 1);
+        &main::daemon_log("$session_id WARNING: processing is aborted and message will not be forwarded");
+        @out_msg_l = ();
+    } elsif ($out_msg_l[0] eq 'noeventerror') {
+        &main::daemon_log("$session_id WARNING: client '$target' is not registered for event '$header', processing is aborted", 1); 
+        @out_msg_l = ();
+    }
 
     return @out_msg_l;
 }
