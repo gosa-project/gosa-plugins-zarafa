@@ -439,8 +439,11 @@ sub process_incoming_msg {
                         # client is registered for this event, deliver this message to client
                         $header =~ s/^answer_//;
                         if ($client_events =~ /,$header,/) {
-                            $msg =~ s/<header>answer_/<header>/;
-                            $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/;
+                            # answer message finally arrived destination server, so forward messages to GOsa
+                            if ($target eq $main::server_address) {        
+                                $msg =~ s/<header>answer_/<header>/;
+                                $msg =~ s/<target>\S+<\/target>/<target>GOSA<\/target>/;
+                            }
                             @out_msg_l = ( $msg );
 
                         # client is not registered for this event, set error
