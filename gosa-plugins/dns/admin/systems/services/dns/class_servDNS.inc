@@ -290,7 +290,7 @@ class servdns extends goService
 
   /* Delete specified zone
    */
-  function RemoveZone($id)
+  function RemoveZone($id,$force = FALSE)
   {
     $zones =  $this->getUsedZoneNames();
 
@@ -322,7 +322,7 @@ class servdns extends goService
     /* There are still entries using this configuration
      *  Abort deletion
      */
-    if(count($used)){
+    if(count($used) && !$force){
       $i = 2;
       $str ="";
       foreach($used as $dn){
@@ -371,9 +371,8 @@ class servdns extends goService
       $bool = true;
       $this->is_account = FALSE;
       foreach($this->Zones as $key => $zone){
-        $bool= $bool & $this->RemoveZone($key);
+        $bool= $bool & $this->RemoveZone($key,TRUE);
       }
-
       if($bool){
         $this->save();
       }
