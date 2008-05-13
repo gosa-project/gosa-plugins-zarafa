@@ -32,6 +32,7 @@ class phoneAccount extends plugin
   var $goFonHomeServers       = array();        // Contains all available server configurations 
 
   var $context                = "default";
+  var $voice_context          = "default";
 
   /* attribute list for save action */
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
@@ -279,17 +280,26 @@ class phoneAccount extends plugin
       if($r_con){
         $r_db  =  @mysql_select_db($cur_cfg['DB'],$r_con);
   
-        $query_tmp = "SELECT ".$cur_cfg['SIP_TABLE'].".context,".$cur_cfg['VOICE_TABLE'].".password FROM  ".$cur_cfg['VOICE_TABLE'].", ".
-                     $cur_cfg['SIP_TABLE']."  WHERE customer_id = sip_users.mailbox AND name='".$this->uid."'";
+        $query_tmp = "SELECT ".$cur_cfg['VOICE_TABLE'].".context as 'v_context', 
+                             ".$cur_cfg['SIP_TABLE'].".context, 
+                             ".$cur_cfg['VOICE_TABLE'].".password 
+                       FROM  ".$cur_cfg['VOICE_TABLE'].", 
+                             ".$cur_cfg['SIP_TABLE']." 
+                       WHERE customer_id = sip_users.mailbox AND name='".$this->uid."'";
+
 
         $res = mysql_query($query_tmp);
         $vp  = mysql_fetch_assoc($res);
+  
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
         if((isset($vp['password']))&&(!empty($vp['password']))){
           $this->goFonPINVoice = $vp['password'];
         }
         if((isset($vp['context']))&&(!empty($vp['context']))){
           $this->context = $vp['context'];
+        }
+        if((isset($vp['v_context']))&&(!empty($vp['v_context']))){
+          $this->voice_context = $vp['v_context'];
         }
       }
     }
@@ -637,6 +647,7 @@ class phoneAccount extends plugin
           "mailbox"     => $customer_id,
           "password"    => $this->goFonVoicemailPIN,
           "fullname"    => $CNname,
+          "context"     => $this->voice_context,
           "email"       => $s_mail);
 
       /* Set pager number if available */
@@ -676,7 +687,7 @@ class phoneAccount extends plugin
         /********************** 
          * Insert Voice mail entry  
          **********************/
-        $voice_data_array['context'] = "default";
+        $voice_data_array['context'] = $this->voice_context;
   
         /* There is currently no voice mail entry for this user. 
          * We should create one 
@@ -918,6 +929,7 @@ class phoneAccount extends plugin
     /* Assign contexts */
     $smarty->assign("contexts",$this->get_asterisk_contexts());
     $smarty->assign("context" ,$this->context);
+    $smarty->assign("voice_context" ,$this->voice_context);
     $smarty->assign("goFonContextACL", $this->getacl("context"));
 
     /* check if there is a FON server created */
@@ -1145,6 +1157,14 @@ class phoneAccount extends plugin
           $this->is_modified= TRUE;
         }
         $this->context= $_POST['context'];
+      }
+
+      /* Save voice context */
+      if(isset($_POST['voice_context'])){
+        if($this->voice_context != $_POST['voice_context']){
+          $this->is_modified= TRUE;
+        }
+        $this->voice_context= $_POST['voice_context'];
       }
 
       if(is_array($this->phoneNumbers)){
