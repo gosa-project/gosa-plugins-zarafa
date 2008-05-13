@@ -63,6 +63,16 @@
 {/render}
         </td>
       </tr>
+    <tr>
+     <td>{t}Context{/t}
+     </td>
+     <td>
+      <select name='context' title='{t}Select the accounts context{/t}' {$goFonContextACL}>
+        {html_options values=$contexts output=$contexts selected=$context}
+      </select>
+     </td>
+    </tr>
+
       <tr>
        <td>
         <label for="goFonVoicemailPIN">{t}Voicemail PIN{/t}{$must}</label>

@@ -31,6 +31,8 @@ class phoneAccount extends plugin
   var $init_HomeServer        = "0";            // Contains the dn of the server that manage this account 
   var $goFonHomeServers       = array();        // Contains all available server configurations 
 
+  var $context                = "default";
+
   /* attribute list for save action */
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
                                       "hardware_list","used_hardware");
@@ -62,6 +64,9 @@ class phoneAccount extends plugin
         $this->has_mailAccount= TRUE;
       }
     }
+
+    /* Set parent object to tab object */
+    $this->parent = $parent->parent;
 
     /* Set uid */
     if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
@@ -264,18 +269,27 @@ class phoneAccount extends plugin
      * This means, the PIN in the DB is up to date
      */
     // Connect to DB server
-    if((is_callable("mysql_pconnect"))&&(isset($cur_cfg))&&(isset($cur_cfg['SERVER']))&&(isset($cur_cfg['LOGIN']))&&(isset($cur_cfg['PASSWORD']))){
+    if( (is_callable("mysql_pconnect"))&&
+        (isset($cur_cfg))&&
+        (isset($cur_cfg['SERVER']))&&
+        (isset($cur_cfg['LOGIN']))&&
+        (isset($cur_cfg['PASSWORD']))){
+
       $r_con =  @mysql_pconnect($cur_cfg['SERVER'],$cur_cfg['LOGIN'],$cur_cfg['PASSWORD']);
       if($r_con){
         $r_db  =  @mysql_select_db($cur_cfg['DB'],$r_con);
   
-        $query_tmp = "SELECT ".$cur_cfg['VOICE_TABLE'].".password FROM  ".$cur_cfg['VOICE_TABLE'].", ".
+        $query_tmp = "SELECT ".$cur_cfg['SIP_TABLE'].".context,".$cur_cfg['VOICE_TABLE'].".password FROM  ".$cur_cfg['VOICE_TABLE'].", ".
                      $cur_cfg['SIP_TABLE']."  WHERE customer_id = sip_users.mailbox AND name='".$this->uid."'";
 
-        $vp = mysql_fetch_row(mysql_query($query_tmp));
+        $res = mysql_query($query_tmp);
+        $vp  = mysql_fetch_assoc($res);
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
-        if((isset($vp[0]))&&(!empty($vp[0]))){
-          $this->goFonPINVoice = $vp[0];
+        if((isset($vp['password']))&&(!empty($vp['password']))){
+          $this->goFonPINVoice = $vp['password'];
+        }
+        if((isset($vp['context']))&&(!empty($vp['context']))){
+          $this->context = $vp['context'];
         }
       }
     }
@@ -536,6 +550,7 @@ class phoneAccount extends plugin
         $sip_data_array['type']         = $s_type ;
         $sip_data_array['username']     = $this->uid;
         $sip_data_array['ipaddr']       = $s_ip;
+        $sip_data_array['context']      = $this->context;
 
         /* Remove not changed attributes, to avoid updating table with same values */
         foreach($sip_data_array as $name => $value){
@@ -565,7 +580,7 @@ class phoneAccount extends plugin
         $sip_data_array['amaflags']     = NULL;
         $sip_data_array['callgroup']    = NULL;
         $sip_data_array['canreinvite']  = "no";
-        $sip_data_array['context']      = "default";
+        $sip_data_array['context']      = $this->context;
         $sip_data_array['defaultip']    = NULL;
         $sip_data_array['fromuser']     = NULL;
         $sip_data_array['fromdomain']   = NULL;
@@ -900,6 +915,11 @@ class phoneAccount extends plugin
     $smarty->assign("macros",$this->macros);   
     $smarty->assign("macro", $this->macro);   
 
+    /* Assign contexts */
+    $smarty->assign("contexts",$this->get_asterisk_contexts());
+    $smarty->assign("context" ,$this->context);
+    $smarty->assign("goFonContextACL", $this->getacl("context"));
+
     /* check if there is a FON server created */
     if(!count($this->goFonHomeServer)){
       msg_dialog::display(_("Configuration error"), msgPool::noserver(_("GOfon")), WARNING_DIALOG);
@@ -1117,6 +1137,14 @@ class phoneAccount extends plugin
 
       if(isset($_POST['macro']) && $_POST['macro'] != $this->macro){
         $this->is_modified =true;
+      }
+
+      /* Save context */
+      if(isset($_POST['context'])){
+        if($this->context != $_POST['context']){
+          $this->is_modified= TRUE;
+        }
+        $this->context= $_POST['context'];
       }
 
       if(is_array($this->phoneNumbers)){
@@ -1642,6 +1670,27 @@ class phoneAccount extends plugin
       $ret['macros'] = $this->macros;
     }
     return($ret);
+  }
+
+
+  /* Return asterisk contexts
+   * Additionaly read contexts from file.
+   */
+  function get_asterisk_contexts()
+  {
+    $contexts = array();
+    $contexts[] = "default";
+    $contexts[] = "parkedcalls";
+    $contexts[] = "from-sip";
+    $contexts[] = "from-capi";
+    $file = "/etc/gosa/asterisk_contexts.conf";
+    if(file_exists($file) && is_readable($file)){
+      foreach(file($file) as $context){
+        $contexts[] = trim($context);
+      }
+    }
+    array_unique($contexts);
+    return($contexts);
   }
 }
 
