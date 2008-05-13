@@ -906,8 +906,13 @@ class workstartup extends plugin
         $this->attrs['FAIclass']        = array();
         $this->attrs['FAIdebianMirror'] = array();
       }
-    }
+    }else{
 
+      /* Don't touch FAI objects if something went wrong with the si daemon.
+       */
+      if(isset($this->attrs['FAIclass'])) unset($this->attrs['FAIclass']);
+      if(isset($this->attrs['FAIdebianMirror'])) unset($this->attrs['FAIdebianMirror']);
+    }
 
     /* prepare share settings */
     $tmp = array();
