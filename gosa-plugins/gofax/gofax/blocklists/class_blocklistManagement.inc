@@ -8,7 +8,7 @@ class blocklist extends plugin
   var $blocklists       = array();
   var $DivListBlocklist = NULL;
   var $CopyPasteHandler = NULL;
-
+  var $dns              = array();
   var $start_pasting_copied_objects = FALSE;
   
   function blocklist (&$config, $ui)
