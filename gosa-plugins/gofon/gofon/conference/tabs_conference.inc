@@ -28,7 +28,7 @@ class conferencetabs extends tabs
 		$this->dn=$new_dn;
 	}
 
-	if($this->dn != $new_dn){
+	if($this->dn != $new_dn && $this->dn != "new"){
 		$baseobject->recursive_move($this->dn, $new_dn);
 	}
 	$this->dn= $new_dn;
