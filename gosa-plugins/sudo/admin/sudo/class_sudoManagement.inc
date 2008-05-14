@@ -172,7 +172,7 @@ class sudoManagement extends plugin
 
           /* Sudo has been saved successfully, remove lock from LDAP. */
           if ($this->dn != "new"){
-            del_lock ($this->dn);
+            $this->remove_lock();
           }
           unset ($this->sudotabs);
           $this->sudotabs= NULL;
@@ -282,10 +282,11 @@ class sudoManagement extends plugin
           msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
           new log("security","sudo/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -295,8 +296,8 @@ class sudoManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_sudo_cancel'])){
-      del_lock ($this->dns);
-      unset($this->dns);
+      $this->remove_lock();
+      $this->dns = array();
     }
 
     /********************
@@ -305,10 +306,7 @@ class sudoManagement extends plugin
 
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel']) && is_object($this->sudotabs)){
-      if(isset($this->sudotabs->dn)){
-        del_lock ($this->sudotabs->dn);
-      }
-      unset ($this->sudotabs);
+      $this->remove_lock();
       $this->sudotabs= NULL;
       session::un_set('objectinfo');
     }
