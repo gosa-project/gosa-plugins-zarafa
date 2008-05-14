@@ -43,7 +43,7 @@ class deviceManagement extends plugin
 
     /* These vars will be stored if you try to open a locked device,
         to be able to perform your last requests after showing a warning message */
-    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^device_edit_/",
+    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^device_edit_/","/^menu_action/",
                                           "/^device_del_/","/^item_selected/","/^remove_multiple_devices/"));
 
     $smarty       = get_smarty();             // Smarty instance
@@ -143,8 +143,7 @@ class deviceManagement extends plugin
 
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel']) && is_object($this->devicetabs)){
-      del_lock ($this->devicetabs->dn);
-      unset ($this->devicetabs);
+      $this->remove_lock();
       $this->devicetabs= NULL;
       session::un_set('objectinfo');
     }
@@ -166,13 +165,13 @@ class deviceManagement extends plugin
       if (count($message) == 0){
 
         /* Save data data to ldap */
-#        $this->devicetabs->set_release($this->DivListDevices->selectedRelease);
         $this->devicetabs->save();
 
         if (!isset($_POST['edit_apply'])){
+
           /* device type has been saved successfully, remove lock from LDAP. */
           if ($this->dn != "new"){
-            del_lock ($this->dn);
+            $this->remove_lock();
           }
           unset ($this->devicetabs);
           $this->devicetabs= NULL;
@@ -228,19 +227,21 @@ class deviceManagement extends plugin
 
       if(count($ids)){
 
+        /* collect entries */
         foreach($ids as $id){
-          $dn = $this->devices[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
-          $this->dns[$id] = $dn;
+          $this->dns[$id] = $this->devices[$id]['dn'];
+        }
+
+        /* Check locks */
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
         }
 
         $dns_names = array();
         foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names[] =@LDAP::fix($dn);
         }
+        add_lock ($this->dns, $this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
         $smarty->assign("intro", msgPool::deleteInfo($dns_names),_("device"));
@@ -278,10 +279,11 @@ class deviceManagement extends plugin
           msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
           new log("security","devices/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -291,10 +293,10 @@ class deviceManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_device_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -364,7 +366,8 @@ class deviceManagement extends plugin
       }
 
       /* Remove lock file after successfull deletion */
-      del_lock ($this->dn);
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -374,9 +377,9 @@ class deviceManagement extends plugin
 
     /* Delete device canceled? */
     if (isset($_POST['delete_cancel'])){
-      del_lock ($this->dn);
+      $this->remove_lock();
       session::un_set('objectinfo');
-  }
+    }
 
     /* Show tab dialog if object is present */
     if (($this->devicetabs) && (isset($this->devicetabs->config))){
@@ -537,8 +540,11 @@ class deviceManagement extends plugin
 
   function remove_lock()
   {
-    if (isset($this->devicetabs->dn)){
-      del_lock ($this->devicetabs->dn);
+    if (isset($this->dn) && !empty($this->dn)){
+      del_lock ($this->dn);
+    }
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock ($this->dns);
     }
   }
 

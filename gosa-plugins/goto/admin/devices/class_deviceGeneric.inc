@@ -99,9 +99,9 @@ class deviceGeneric extends plugin
     if(empty($this->vendor) || !$this->is_2byteHex($this->vendor)){
       $message[]= msgPool::invalid(_("Vendor ID"),"","","0x1234");
     }
-   
+  
     /* Check if entry already exists */ 
-    if($this->cn != $this->orig_cn){
+    if($this->cn != $this->orig_cn || $this->dn == "new"){
       $ldap = $this->config->get_ldap_link();
       $ldap->search("(&(objectClass=gotoDevice)(cn=".$this->cn."*))",array("cn"));
       if($ldap->count()){
