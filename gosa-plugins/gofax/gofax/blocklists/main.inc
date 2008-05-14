@@ -2,7 +2,7 @@
 if ($remove_lock){
         if(session::is_set('blocklist')){
                 $blocklist = session::get('blocklist');
-                del_lock ($ui->dn);
+                $blocklist->remove_lock ($ui->dn);
                 session::un_set ('blocklist');
         }
 } else {

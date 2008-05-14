@@ -31,7 +31,7 @@ class blocklist extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    session::set('LOCK_VARS_TO_USE',array("/^goFaxBlocklist_/","/^act$/","/^id$/","/^remove_multiple_blocklists/","/^item_selected/"));
+    session::set('LOCK_VARS_TO_USE',array("/^menu_action/","/^goFaxBlocklist_/","/^act$/","/^id$/","/^remove_multiple_blocklists/","/^item_selected/"));
 
     /***************
       Init vars 
@@ -122,7 +122,7 @@ class blocklist extends plugin
         isset($_POST['delete_blocklist_cancel']) ||
         isset($_POST['delete_lock'])){
 
-      del_lock ($this->dn);
+      $this->remove_lock();
       $this->dialog = NULL;
       session::un_set('objectinfo');
     }
@@ -143,7 +143,7 @@ class blocklist extends plugin
         $this->dialog->save ();
 
         if (!isset($_POST['edit_apply'])){
-          del_lock ($this->dn);
+          $this->remove_lock();
           $this->dn= "";
           $this->dialog = NULL;
           session::un_set('objectinfo');
@@ -212,19 +212,19 @@ class blocklist extends plugin
       $ids = $this->list_get_selected_items();
 
       if(count($ids)){
+
         foreach($ids as $id){
-          $dn = $this->blocklists[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
-          $this->dns[$id] = $dn;
+          $this->dns[$id]  = $this->blocklists[$id]['dn'];
+        }
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
         }
 
         $dns_names = array();
         foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names[]=@LDAP::fix( $dn);
         }
+        add_lock ($this->dns, $this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
         $smarty->assign("info", msgPool::deleteInfo($dns_names,_("blocklist")));
@@ -252,9 +252,9 @@ class blocklist extends plugin
           msg_dialog::display(_("Permission error"), msgPool::permDelete($dn), ERROR_DIALOG);
         }
         /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+      $this->remove_lock();
+      $this->dns = array();
       $this->reload();
     }
 
@@ -266,7 +266,7 @@ class blocklist extends plugin
     /* Remove lock */
     if(isset($_POST['delete_multiple_blocklist_cancel'])){
       foreach($this->dns as $key => $dn){
-        del_lock ($dn);
+        $this->remove_lock();
         unset($this->dns[$key]);
       }
     }
@@ -305,7 +305,7 @@ class blocklist extends plugin
         $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
         $this->dialog->delete();
         $this->dialog = NULL;
-        del_lock ($this->dn);
+        $this->remove_lock();
       } else {
         msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
       }
@@ -477,6 +477,14 @@ class blocklist extends plugin
     return("");
   }
 
+
+  /*! \brief Remove entry locks if the plugin was aborted. 
+   */
+  function remove_lock()
+  {
+    if($this->dn) del_lock($this->dn);
+    if(is_array($this->dns) && count($this->dns)) del_lock($this->dns);
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
