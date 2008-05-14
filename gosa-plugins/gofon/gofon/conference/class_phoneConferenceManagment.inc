@@ -184,9 +184,10 @@ class phoneConferenceManagment extends plugin
         foreach($this->dns as $dn){
           $dns_names[] = @LDAP::fix($dn);
         }
-        add_lock ($this->dns, $this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
+        add_lock ($this->dns, $this->ui->dn);
+
         $smarty->assign("info", msgPool::deleteInfo($dns_names,_("conference")));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
@@ -211,6 +212,7 @@ class phoneConferenceManagment extends plugin
           msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
         }
       }
+
       /* Remove lock file after successfull deletion */
       $this->remove_lock();
       $this->dns = array();
@@ -337,7 +339,6 @@ class phoneConferenceManagment extends plugin
 
         if (!isset($_POST['edit_apply'])){
           $this->remove_lock();
-          unset ($this->conftab);
           $this->conftab= NULL;
           session::un_set('objectinfo');
         }else{
