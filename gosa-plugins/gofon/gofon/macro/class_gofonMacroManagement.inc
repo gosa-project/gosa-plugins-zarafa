@@ -33,6 +33,8 @@ class goFonMacro extends plugin
   var $CopyPasteHandler = NULL;
   var $start_pasting_copied_objects = FALSE;
 
+  var $dns              = array();
+
   function gofonMacro(&$config, $ui)
   {
     /* Save configuration for internal use */
