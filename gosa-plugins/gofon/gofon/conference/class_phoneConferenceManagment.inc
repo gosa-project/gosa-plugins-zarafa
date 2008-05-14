@@ -33,8 +33,9 @@ class phoneConferenceManagment extends plugin
   var $ui                 = NULL;
   var $DivListConference  = NULL;
 
-  var $CopyPasteHandler = NULL;
+  var $CopyPasteHandler   = NULL;
   var $start_pasting_copied_objects = FALSE;
+  var $dns                = array();
 
   /* Initialise Class */
   function phoneConferenceManagment (&$config, $ui)
@@ -57,7 +58,7 @@ class phoneConferenceManagment extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    session::set('LOCK_VARS_TO_USE',array("/^id$/","/^act$/","/^conference_/","/^item_selected/","/^remove_multiple_conferences/"));
+    session::set('LOCK_VARS_TO_USE',array("/^menu_action/","/^id$/","/^act$/","/^conference_/","/^item_selected/","/^remove_multiple_conferences/"));
 
     /***************
       Variable initialisation
@@ -140,10 +141,7 @@ class phoneConferenceManagment extends plugin
   
     /* Reset requested? */
     if (isset($_POST['edit_cancel'])){
-      if (isset($this->conftab)){
-        del_lock ($this->conftab->dn);
-        unset ($this->conftab);
-      }
+      $this->remove_lock();
       $this->conftab= NULL;
       $this->lognames= array();;
       $this->cn= "";
@@ -171,19 +169,22 @@ class phoneConferenceManagment extends plugin
 
       if(count($ids)){
 
+        /* Collect dns */
         foreach($ids as $id){
-          $dn = $this->conferences[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
-          $this->dns[$id] = $dn;
+          $this->dns[$id] = $this->conferences[$id]['dn'];
         }
 
+        /* Check locks */
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
+        }
+
+        /* Prepare entry list to be displayed */
         $dns_names = array();
         foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names[] = @LDAP::fix($dn);
         }
+        add_lock ($this->dns, $this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
         $smarty->assign("info", msgPool::deleteInfo($dns_names,_("conference")));
@@ -209,10 +210,10 @@ class phoneConferenceManagment extends plugin
         } else {
           msg_dialog::display(_("Permission error"), _("You have not permission to delete this entry!"), ERROR_DIALOG);
         }
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -222,10 +223,8 @@ class phoneConferenceManagment extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_conference_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+      $this->remove_lock();
+      $this->dns =array();
     }
 
 
@@ -337,10 +336,7 @@ class phoneConferenceManagment extends plugin
         gosa_log ("goFonConference object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
-          if ($this->dn != "new"){
-            del_lock ($this->dn);
-          }
-          del_lock ($this->conftab->dn);;
+          $this->remove_lock();
           unset ($this->conftab);
           $this->conftab= NULL;
           session::un_set('objectinfo');
@@ -526,10 +522,15 @@ class phoneConferenceManagment extends plugin
     $this->DivListConference->save_object();
   }
 
+
+  /*! \brief Remove entry locks if the plugin was aborted. 
+   */
   function remove_lock()
   {
-    if (isset($this->dn)){
-      del_lock ($this->dn);
+    if($this->dn) del_lock($this->dn);
+    if(is_array($this->dns) && count($this->dns)) del_lock($this->dns);
+    if(isset($this->conftab) && isset($this->conftab->dn)){
+      del_lock ($this->conftab->dn);
     }
   }
 

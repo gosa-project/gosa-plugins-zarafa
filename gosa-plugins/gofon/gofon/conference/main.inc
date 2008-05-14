@@ -22,7 +22,6 @@ if ($remove_lock){
         if(session::is_set('conference')){
                 $conference = session::get('conference');
                 $conference->remove_lock();
-                del_lock ($ui->dn);
                 session::un_set ('conference');
         }
 } else {
