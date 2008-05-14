@@ -201,6 +201,7 @@ class passwordMethodheimdal extends passwordMethod
         new msg_dialog(_("Heimdal"), msgPool::cmdexecfailed("HEIMDAL_KEYGEN",$cmd,_("Heimdal")),WARNING_DIALOG);
       }
     }
+    return(TRUE);
   }
 
 

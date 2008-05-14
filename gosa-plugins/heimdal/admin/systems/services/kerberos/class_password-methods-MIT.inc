@@ -362,8 +362,10 @@ class passwordMethodMIT extends passwordMethod
       $o = new gosaSupportDaemon();
       if(!$o->krb5_set_password($this->server_list[$server]['macAddress'],$this->principal,$password)){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);      
+        return(FALSE);
       }
     }
+    return(TRUE);
   }
 
 
