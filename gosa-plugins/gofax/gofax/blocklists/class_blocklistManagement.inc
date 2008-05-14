@@ -220,7 +220,7 @@ class blocklist extends plugin
           $this->dns[$id] = $dn;
         }
 
-        $dns_names[] = array();
+        $dns_names = array();
         foreach($this->dns as $dn){
           add_lock ($dn, $this->ui->dn);
           $dns_names[]=@LDAP::fix( $dn);
@@ -243,8 +243,8 @@ class blocklist extends plugin
 
       /* Remove user by user and check acls before removeing them */
       foreach($this->dns as $key => $dn){
+        $this->dn = $dn;
         if (preg_match("/d/",$this->ui->get_permissions($this->dn,"gofaxlist/blocklistGeneric"))){
-          $this->dn = $dn;
           $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
           $this->dialog->delete();
           $this->dialog = NULL;
