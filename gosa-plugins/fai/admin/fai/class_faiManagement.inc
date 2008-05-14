@@ -333,11 +333,11 @@ class faiManagement extends plugin
           msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
           new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
-
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -347,10 +347,8 @@ class faiManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_fai_object_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+      $this->dns = array();
+      $this->remove_lock();
     }
 
 
@@ -360,7 +358,7 @@ class faiManagement extends plugin
 
 		/* Delete canceled? */
 		if (isset($_POST['delete_cancel'])){
-			del_lock ($this->dn);
+      $this->remove_lock();
 		}
 
 
@@ -409,8 +407,9 @@ class faiManagement extends plugin
       }else{
         msg_dialog::display(_("Error"), sprintf(_("Cannot delete '%s': object does not exist!"), $this->dn) , ERROR_DIALOG);
       }
+
       /* Remove lock file after successfull deletion */
-      del_lock ($this->dn);
+      $this->remove_lock();
     }
 
 
@@ -850,11 +849,10 @@ class faiManagement extends plugin
      ****************/
 
 		if(isset($_POST['edit_cancel'])){
-			unset($this->dialog);
 			$this->dialog=FALSE;
 			$this->is_dialog = false;
 			session::un_set('objectinfo');
-			del_lock ($this->dn);
+      $this->remove_lock();
 		}
 
 
@@ -877,8 +875,7 @@ class faiManagement extends plugin
 				$this->dialog->save();
         FAI::save_release_changes_now();
         if (!isset($_POST['edit_apply'])){
-          del_lock ($this->dn);
-          unset($this->dialog);
+          $this->remove_lock();
           $this->dialog=FALSE;
           $this->is_dialog=false;
           session::un_set('objectinfo');
@@ -1127,6 +1124,9 @@ class faiManagement extends plugin
 		if (isset($this->dn)){
 			del_lock ($this->dn);
 		}
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock ($this->dns);
+    }
 	}
 
 	function get_type($array){
