@@ -20,22 +20,21 @@
 
 if ($remove_lock){
   if(session::is_set('macroManagement')){
-    $macroManagment = session::get('macroManagment');
-    $macroManagment->remove_lock();
-    del_lock ($ui->dn);
-    session::un_set ('macroManagment');
+    $macroManagement = session::get('macroManagement');
+    $macroManagement->remove_lock();
+    session::un_set ('macroManagement');
   }
 } else {
 
-  /* Create macroManagment object on demand */
-  if (!session::is_set('macroManagment') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-    session::set('macroManagment',new goFonMacro ($config, $ui));
+  /* Create macroManagement object on demand */
+  if (!session::is_set('macroManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+    session::set('macroManagement',new goFonMacro ($config, $ui));
   }
 
   /* Get object */
-  $macroManagment = session::get('macroManagment');
-  $macroManagment->save_object();
-  $output= $macroManagment->execute();
+  $macroManagement = session::get('macroManagement');
+  $macroManagement->save_object();
+  $output= $macroManagement->execute();
 
   /* Page header*/
   if (session::is_set('objectinfo')){
@@ -50,12 +49,12 @@ if ($remove_lock){
   /* Reset requested? */
   if (isset($_GET['reset']) && $_GET['reset'] == 1){
     del_lock ($ui->dn);
-    session::un_set ('macroManagment');
+    session::un_set ('macroManagement');
   }
 
   /* Show and save dialog */
   $display.= $output;
-  session::set('macroManagment',$macroManagment);
+  session::set('macroManagement',$macroManagement);
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

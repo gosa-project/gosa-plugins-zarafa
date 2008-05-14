@@ -52,7 +52,7 @@ class goFonMacro extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    session::set('LOCK_VARS_TO_USE',array("/^goFonMacro_/","/^act$/","/^id$/","/^item_selected/","/^remove_multiple_macros/"));
+    session::set('LOCK_VARS_TO_USE',array("/^menu_action/","/^goFonMacro_/","/^act$/","/^id$/","/^item_selected/","/^remove_multiple_macros/"));
 
     /*****************
       Variable initialisation
@@ -159,7 +159,7 @@ class goFonMacro extends plugin
 
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel'])){
-      del_lock ($this->macrotabs->dn);
+      $this->remove_lock();
       unset ($this->macrotabs);
       $this->macrotabs= NULL;
       session::un_set('objectinfo');
@@ -190,7 +190,7 @@ class goFonMacro extends plugin
           /* macro has been saved successfully, remove lock from
              LDAP. */
           if ($this->dn != "new"){
-            del_lock ($this->dn);
+            $this->remove_lock();
           }
 
           unset ($this->macrotabs);
@@ -232,6 +232,7 @@ class goFonMacro extends plugin
         /* Lock the current entry, so everyone will get the
            above dialog */
         add_lock ($this->dn, $this->ui->dn);
+
         /* Register macrotabs to trigger edit dialog */
         $this->macrotabs= new macrotabs($this->config,
             $this->config->data['TABS']['MACROTABS'], $this->dn,"gofonmacro");
@@ -250,19 +251,23 @@ class goFonMacro extends plugin
 
       if(count($ids)){
 
+        /* Collect dns */
         foreach($ids as $id){
-          $dn = $this->macros[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
-          $this->dns[$id] = $dn;
+          $this->dns[$id] = $this->macros[$id]['dn'];
+        }
+
+        /* Check locks */
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
         }
 
         $dns_names = array();
         foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names[] = @LDAP::fix($dn);
         }
+
+        /* Add entry locks */
+        add_lock ($this->dns, $this->ui->dn);
 
         /* Lock the current entry, so nobody will edit it during deletion */
         $smarty->assign("intro", msgPool::deleteInfo($dns_names,("macro")));
@@ -295,10 +300,11 @@ class goFonMacro extends plugin
           msg_dialog::display(_("Permission error"),msgPool::permDelete(), ERROR_DIALOG);
         }
 
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -308,10 +314,8 @@ class goFonMacro extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_macro_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -373,8 +377,9 @@ class goFonMacro extends plugin
         msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
         new log("security","gofonmacro/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
       }
+
       /* Remove lock file after successfull deletion */
-      del_lock ($this->dn);
+      $this->remove_lock();
     }
 
 
@@ -552,6 +557,13 @@ class goFonMacro extends plugin
     return($ids);
   }
 
+  /*! \brief Remove entry locks if the plugin was aborted. 
+   */
+  function remove_lock()
+  {
+    if($this->dn) del_lock($this->dn);
+    if(is_array($this->dns) && count($this->dns)) del_lock($this->dns);
+  }
 
   function adapt_from_template($dn, $skip= array())  { }
   function check() { }
