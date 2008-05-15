@@ -1300,7 +1300,7 @@ msgstr "Fortschritt"
 #: addons/goto/events/class_DaemonEvent_notify.inc:36
 #: addons/goto/events/class_DaemonEvent_notify.inc:37
 msgid "Send message"
-msgstr "Sende Nachricht"
+msgstr "Nachricht senden"
 
 #: admin/ogroups/goto/termgroup.tpl:2
 msgid ""
