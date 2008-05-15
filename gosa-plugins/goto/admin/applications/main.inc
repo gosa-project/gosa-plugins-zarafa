@@ -22,7 +22,6 @@ if ($remove_lock){
         if(session::is_set('applicationManagement')){
                 $applicationManagement = session::get('applicationManagement');
                 $applicationManagement->remove_lock();
-                del_lock ($ui->dn);
                 session::un_set ('applicationManagement');
         }
 } else {

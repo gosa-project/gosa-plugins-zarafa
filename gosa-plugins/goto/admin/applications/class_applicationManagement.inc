@@ -36,6 +36,8 @@ class applicationManagement extends plugin
   var $app_base     ="";
   var $app_release  ="";
 
+  var $dns = array();
+
   function IsReleaseManagementActivated()
   {
     /* Check if we should enable the release selection */
@@ -127,7 +129,7 @@ class applicationManagement extends plugin
 
     /* These vars will be stored if you try to open a locked app, 
         to be able to perform your last requests after showing a warning message */
-    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^appl_edit_/","/^appl_del_/","/^item_selected/","/^remove_multiple_applications/"));
+    session::set('LOCK_VARS_TO_USE',array("/^act$/","/^id$/","/^appl_edit_/","/^appl_del_/","/^item_selected/","/^remove_multiple_applications/","/^menu_action/"));
 
     $smarty       = get_smarty();             // Smarty instance
     $s_action     = "";                       // Contains the action to proceed
@@ -228,8 +230,7 @@ class applicationManagement extends plugin
 
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
-      del_lock ($this->apptabs->dn);
-      unset ($this->apptabs);
+      $this->remove_lock();
       $this->apptabs= NULL;
       session::un_set('objectinfo');
     }
@@ -259,9 +260,8 @@ class applicationManagement extends plugin
           /* Application has been saved successfully, remove lock from
              LDAP. */
           if ($this->dn != "new"){
-            del_lock ($this->dn);
+            $this->remove_lock();
           }
-          unset ($this->apptabs);
           $this->apptabs= NULL;
           session::un_set('objectinfo');
         }else{
@@ -367,10 +367,11 @@ class applicationManagement extends plugin
           msg_dialog::display(_("Permission error"), msgPool::permDelete(), INFO_DIALOG);
           new log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
-        /* Remove lock file after successfull deletion */
-        del_lock ($dn);
-        unset($this->dns[$key]);
       }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
 
@@ -380,10 +381,10 @@ class applicationManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_application_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
+
+      /* Remove lock file after successfull deletion */
+      $this->remove_lock();
+      $this->dns = array();
     }
 
     /**************** 
@@ -454,7 +455,7 @@ class applicationManagement extends plugin
       }
 
       /* Remove lock file after successfull deletion */
-      del_lock ($this->dn);
+      $this->remove_lock();
     }
 
 
@@ -464,7 +465,7 @@ class applicationManagement extends plugin
 
     /* Delete application canceled? */
     if (isset($_POST['delete_cancel'])){
-      del_lock ($this->dn);
+      $this->remove_lock();
       session::un_set('objectinfo');
     }
 
@@ -657,12 +658,20 @@ class applicationManagement extends plugin
     $this->postcreate();
   }
 
+
   function remove_lock()
   {
     if (isset($this->apptabs->dn)){
       del_lock ($this->apptabs->dn);
     }
+    if(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+      del_lock($this->dn);
+    }
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock($this->dns);
+    }
   }
+
 
   function save_object() 
   {
