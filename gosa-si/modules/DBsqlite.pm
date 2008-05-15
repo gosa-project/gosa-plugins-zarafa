@@ -290,6 +290,11 @@ sub exec_statement {
 			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 		}
 	}
+	# TODO : maybe an error handling and an erro feedback to invoking function
+	#my $error = @$self->{dbh}->err;
+	#if ($error) {
+	#	my $error_string = @$self->{dbh}->errstr;
+	#}
 
     return \@db_answer;
 }
