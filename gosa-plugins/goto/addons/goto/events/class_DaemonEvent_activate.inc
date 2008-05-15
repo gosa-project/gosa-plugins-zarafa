@@ -20,14 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class DaemonEvent_activate extends DaemonEvent
+class DaemonEvent_unlock extends DaemonEvent
 {
   var $visible_for = SYSTEM_EVENT;
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Activate"); 
-    $this->s_Event_Name = _("Activate"); 
+    $this->s_Menu_Name  = _("Unlock"); 
+    $this->s_Event_Name = _("Unlock"); 
     $this->s_Schedule_Action = "job_trigger_action_activate";
     $this->s_Trigger_Action= "gosa_trigger_action_activate";
     $this->s_Queued_Action= "trigger_action_activate";
@@ -53,7 +53,7 @@ class DaemonEvent_activate extends DaemonEvent
     $smarty->assign("target_list" , $this->get_target_list());
     $smarty->assign("is_new"      , $this->is_new);
     $smarty->assign("timestamp"   , $this->get_time_select());
-    $display.= $smarty->fetch(get_template_path('DaemonEvent_activate.tpl', TRUE, dirname(__FILE__)));
+    $display.= $smarty->fetch(get_template_path('DaemonEvent_unlock.tpl', TRUE, dirname(__FILE__)));
     $display.= $this->get_footer();
     return($display);
   }
