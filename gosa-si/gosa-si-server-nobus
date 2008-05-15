@@ -122,6 +122,7 @@ my $incoming_file_name;
 my @incoming_col_names = ("id INTEGER PRIMARY KEY", 
         "timestamp DEFAULT 'none'", 
         "headertag DEFAULT 'none'",
+		"targettag DEFAULT 'none'",
         "xmlmessage DEFAULT 'none'",
         "module DEFAULT 'none'",
         );
@@ -1043,18 +1044,21 @@ sub msg_to_decrypt {
         $error++;
     }
     
-    # schiebe sie in incoming_db
+    # add message to incoming_db
     if( $error == 0) {
         my $header = @{$msg_hash->{'header'}}[0];
+        my $target = @{$msg_hash->{'target'}}[0];
         my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
                 primkey=>[],
                 headertag=>$header,
+				targettag=>$target,
                 xmlmessage=>$msg,
                 timestamp=>&get_time,
                 module=>$module,
                 } );
         if ($res != 0) {
-            &daemon_log(); 
+			# TODO ist das mit $! so ok???
+            #&daemon_log("$session_id ERROR: cannot add message to incoming.db: $!", 1); 
         }
     }
 
@@ -1118,49 +1122,19 @@ sub process_task {
     daemon_log("$session_id INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
     #daemon_log("$session_id DEBUG: Incoming msg:\n$input", 9);
 
-#    ####################
-#    # check incoming msg
-#    # msg is from a new client or gosa
-#    ($msg, $msg_hash, $module) = &input_from_unknown_host($input, $session_id);
-#    # msg is from a gosa-si-server or gosa-si-bus
-#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-#        ($msg, $msg_hash, $module) = &input_from_known_server($input, $heap->{'remote_ip'}, $session_id);
-#    }
-#    # msg is from a gosa-si-client
-#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-#        ($msg, $msg_hash, $module) = &input_from_known_client($input, $heap->{'remote_ip'}, $session_id);
-#    }
-#    # an error occurred
-#    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-#        # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
-#        # could not understand a msg from its server the client cause a re-registering process
-#        daemon_log("$session_id INFO cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}."' to cause a re-registering of the client if necessary", 5);
-#        my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
-#        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-#        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-#            my $host_name = $hit->{'hostname'};
-#            my $host_key = $hit->{'hostkey'};
-#            my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
-#            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping", $session_id);
-#            &update_jobdb_status_for_send_msgs($ping_msg, $error);
-#        }
-#        $error++;
-#    }
-
-
+	##################################################
+	# fetch first unprocessed message from incoming_db
     # sometimes the program is faster than sqlite, so wait until informations are present at db
     my $id_sql;
     my $id_res;
     my $message_id;
+# TODO : das hier ist sehr sehr unschön	
     while (1) {
         $id_sql = "SELECT min(id) FROM $incoming_tn WHERE (NOT headertag LIKE 'answer%')"; 
         $id_res = $incoming_db->exec_statement($id_sql);
         $message_id = @{@$id_res[0]}[0];
         if (defined $message_id) { last }
     }
-
-print STDERR "min(id): $message_id\n"; 
-
 
     # fetch new message from incoming_db
     my $sql = "SELECT * FROM $incoming_tn WHERE id=$message_id"; 
@@ -1205,8 +1179,6 @@ print STDERR "min(id): $message_id\n";
     if( $error == 0 ) {
 
         foreach my $answer ( @{$answer_l} ) {
-            # for each answer in answer list
-            
             # check outgoing msg to xml validity
             my $answer_hash = &check_outgoing_xml_validity($answer);
             if( not defined $answer_hash ) {
@@ -1489,6 +1461,62 @@ sub watch_for_new_messages {
 				$receiver_h{$1} = 0;
 			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
 # TODO implement receiver translation
+				# fetch all group members from ldap
+				my $ldap_handle = &get_ldap_handle($session_id);
+				my $mesg = $ldap_handle->search(
+								base => $ldap_base,
+								scope => 'sub',
+								attrs => ['memberUid'],
+								filter => "cn=$1"; 
+								);
+				if ($mesg->count) {
+					my @entries = $mesg->entries;
+					foreach my $entry (@entries) {
+							my @receivers= $entry->get_value("memberUid");
+							foreach my $receiver (@receivers) { 
+									$receiver_h{$1} = 0;
+							}
+					}
+				}
+#	  if ($mesg->count) {
+#		  my @entries = $mesg->entries;
+#		  foreach my $entry (@entries) {
+#			  # Only modify entry if it is not set to '$state'
+#			  if ($entry->get_value("FAIstate") ne "$state"){
+#				  daemon_log("$session_id INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
+#				  my $result;
+#				  my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
+#				  if (exists $tmp{'FAIobject'}){
+#					  if ($state eq ''){
+#						  $result= $ldap_handle->modify($entry->dn, changes => [
+#							  delete => [ FAIstate => [] ] ]);
+#					  } else {
+#						  $result= $ldap_handle->modify($entry->dn, changes => [
+#							  replace => [ FAIstate => $state ] ]);
+#					  }
+#				  } elsif ($state ne ''){
+#					  $result= $ldap_handle->modify($entry->dn, changes => [
+#						  add     => [ objectClass => 'FAIobject' ],
+#						  add     => [ FAIstate => $state ] ]);
+#				  }
+#
+#				  # Errors?
+#				  if ($result->code){
+#					  daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
+#				  }
+#			  } else {
+#				  daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
+#			  }  
+#		  }
+#	  }
+#    # if no ldap handle defined
+#    } else {
+#        daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
+#    }
+#
+
+				# add each member to receiver hash
+
 			} else {
 				my $sbjct = &encode_base64(@{$hit}[1]);
 				my $msg = &encode_base64(@{$hit}[7]);
