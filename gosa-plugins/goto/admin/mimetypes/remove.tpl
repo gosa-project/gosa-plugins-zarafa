@@ -2,7 +2,7 @@
   <img alt="" src="images/warning.png" align=top>&nbsp;{t}Warning{/t}
 </div>
 <p>
- {$intro}
+ {$info}
  {t}This may be used by several groups. Please double check if your really want to do this since there is no way for GOsa to get your data back.{/t}
 </p>
 <p>

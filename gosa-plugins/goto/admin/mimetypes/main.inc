@@ -19,39 +19,39 @@
  */
 
 if ($remove_lock){
-		if(session::is_set('MimeTypeManagement')){
-				$MimeTypeManagement = session::get('MimeTypeManagement');
-				$MimeTypeManagement->remove_lock();
-				del_lock ($ui->dn);
-				session::un_set ('MimeTypeManagement');
-		}
+  if(session::is_set('MimeTypeManagement')){
+    $MimeTypeManagement = session::get('MimeTypeManagement');
+    $MimeTypeManagement->remove_lock();
+    session::un_set ('MimeTypeManagement');
+  }
 } else {
 
-		/* Create MimeTypeManagement object on demand */
-		if (!session::is_set('MimeTypeManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-			session::set('MimeTypeManagement',new mimetypeManagement ($config, $ui));
-		}
+  /* Create MimeTypeManagement object on demand */
+  if (!session::is_set('MimeTypeManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+    session::set('MimeTypeManagement',new mimetypeManagement ($config, $ui));
+  }
 
-		/* Get object */
-		$MimeTypeManagement = session::get('MimeTypeManagement');
-		$MimeTypeManagement->save_object();
-		$output= $MimeTypeManagement->execute();
+  /* Get object */
+  $MimeTypeManagement = session::get('MimeTypeManagement');
+  $MimeTypeManagement->save_object();
+  $output= $MimeTypeManagement->execute();
 
-		/* Page header*/
-		if (session::is_set('objectinfo')){
-				$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
-		} else {
-				$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
-		}
+  /* Page header*/
+  if (session::is_set('objectinfo')){
+    $display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
+  } else {
+    $display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
+  }
 
-		/* Reset requested? */
-		if (isset($_GET['reset']) && $_GET['reset'] == 1){
-				del_lock ($ui->dn);
-				session::un_set ('MimeTypeManagement');
-		}
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    del_lock ($ui->dn);
+    session::un_set ('MimeTypeManagement');
+  }
 
-		/* Show and save dialog */
-		$display.= $output;
-		session::set('MimeTypeManagement',$MimeTypeManagement);
+  /* Show and save dialog */
+  $display.= $output;
+  session::set('MimeTypeManagement',$MimeTypeManagement);
 }
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
