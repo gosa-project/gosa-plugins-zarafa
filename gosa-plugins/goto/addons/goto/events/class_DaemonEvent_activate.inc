@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class DaemonEvent_unlock extends DaemonEvent
+class DaemonEvent_activate extends DaemonEvent
 {
   var $visible_for = SYSTEM_EVENT;
   public function __construct($config,$data = array())
