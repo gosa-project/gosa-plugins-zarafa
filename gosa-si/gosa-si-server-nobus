@@ -1460,67 +1460,37 @@ sub watch_for_new_messages {
 			if ($receiver =~ /^u_([\s\S]*)$/) {
 				$receiver_h{$1} = 0;
 			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
-# TODO implement receiver translation
-				# fetch all group members from ldap
+				my $group_name = $1;
+				# fetch all group members from ldap and add them to receiver hash
 				my $ldap_handle = &get_ldap_handle($session_id);
-				my $mesg = $ldap_handle->search(
-								base => $ldap_base,
-								scope => 'sub',
-								attrs => ['memberUid'],
-								filter => "cn=$1"; 
-								);
-				if ($mesg->count) {
-					my @entries = $mesg->entries;
-					foreach my $entry (@entries) {
-							my @receivers= $entry->get_value("memberUid");
-							foreach my $receiver (@receivers) { 
-									$receiver_h{$1} = 0;
-							}
-					}
+				if (defined $ldap_handle) {
+						my $mesg = $ldap_handle->search(
+										base => $ldap_base,
+										scope => 'sub',
+										attrs => ['memberUid'],
+										filter => "cn=$group_name"; 
+										);
+						if ($mesg->count) {
+								my @entries = $mesg->entries;
+								foreach my $entry (@entries) {
+										my @receivers= $entry->get_value("memberUid");
+										foreach my $receiver (@receivers) { 
+												$receiver_h{$1} = 0;
+										}
+								}
+						} 
+						# translating errors ?
+						if ($mesg->code) {
+								daemon_log("$session_id ERROR: unable to translate group '$group_name' to user list for message delivery: $mesg->error", 1);
+						}
+				# ldap handle error ?		
+				} else {
+					daemon_log("$session_id ERROR: unable to translate group '$group_name' to user list for message delivery: no ldap handle available", 1);
 				}
-#	  if ($mesg->count) {
-#		  my @entries = $mesg->entries;
-#		  foreach my $entry (@entries) {
-#			  # Only modify entry if it is not set to '$state'
-#			  if ($entry->get_value("FAIstate") ne "$state"){
-#				  daemon_log("$session_id INFO: Setting FAIstate to '$state' for ".$entry->dn, 5);
-#				  my $result;
-#				  my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
-#				  if (exists $tmp{'FAIobject'}){
-#					  if ($state eq ''){
-#						  $result= $ldap_handle->modify($entry->dn, changes => [
-#							  delete => [ FAIstate => [] ] ]);
-#					  } else {
-#						  $result= $ldap_handle->modify($entry->dn, changes => [
-#							  replace => [ FAIstate => $state ] ]);
-#					  }
-#				  } elsif ($state ne ''){
-#					  $result= $ldap_handle->modify($entry->dn, changes => [
-#						  add     => [ objectClass => 'FAIobject' ],
-#						  add     => [ FAIstate => $state ] ]);
-#				  }
-#
-#				  # Errors?
-#				  if ($result->code){
-#					  daemon_log("$session_id Error: Setting FAIstate to '$state' for ".$entry->dn. "failed: ".$result->error, 1);
-#				  }
-#			  } else {
-#				  daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
-#			  }  
-#		  }
-#	  }
-#    # if no ldap handle defined
-#    } else {
-#        daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
-#    }
-#
-
-				# add each member to receiver hash
-
 			} else {
 				my $sbjct = &encode_base64(@{$hit}[1]);
 				my $msg = &encode_base64(@{$hit}[7]);
-				&daemon_log("M WARNING: unknown receiver '$receiver' for a user-message 'sbjct - msg'", 3); 
+				&daemon_log("M WARNING: unknown receiver '$receiver' for a user-message '$sbjct - $msg'", 3); 
 			}
 		}
 		my @receiver_l = keys(%receiver_h);
