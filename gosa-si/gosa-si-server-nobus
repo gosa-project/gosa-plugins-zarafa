@@ -1129,6 +1129,7 @@ sub process_task {
     my $id_res;
     my $message_id;
 # TODO : das hier ist sehr sehr unschön	
+# to be tested: speed enhancement with usleep 100000???
     while (1) {
         $id_sql = "SELECT min(id) FROM $incoming_tn WHERE (NOT headertag LIKE 'answer%')"; 
         $id_res = $incoming_db->exec_statement($id_sql);
