@@ -16,6 +16,7 @@ class deviceManagement extends plugin
   var $CopyPasteHandler               = NULL;
   var $start_pasting_copied_objects;
   var $dn ="";
+  var $dns = array();
 
   function deviceManagement(&$config, $dn= NULL)
   {
