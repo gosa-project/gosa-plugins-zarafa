@@ -316,10 +316,9 @@ class applicationManagement extends plugin
       $ids = $this->list_get_selected_items();
 
       if(count($ids)){
-
+        $this->dns = array();
         foreach($ids as $id){
-          $dn = $this->applications[$id]['dn'];
-          $this->dns[$id] = $dn;
+          $this->dns[$id] = $this->applications[$id]['dn'];
         }
         if ($user= get_multiple_locks($this->dns)){
           return(gen_locked_message($user,$this->dns));

@@ -229,6 +229,7 @@ class deviceManagement extends plugin
       if(count($ids)){
 
         /* collect entries */
+        $this->dns = array();
         foreach($ids as $id){
           $this->dns[$id] = $this->devices[$id]['dn'];
         }
