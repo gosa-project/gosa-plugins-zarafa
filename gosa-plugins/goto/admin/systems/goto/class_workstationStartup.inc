@@ -586,7 +586,7 @@ class workstartup extends plugin
       if(!in_array($entry,$this->gotoLdapServers)){
 
         /* Convert old style entry */
-        if (!preg_match('%:ldap://%', $entry)){
+        if (!preg_match('%:ldap[s]*://%', $entry)){
           $entry= "ldap://".preg_replace('/^([^:]+):/', '\1/', $entry);
 
         /* Beautify new style entries */
