@@ -8,6 +8,7 @@ my @events = (
     "gen_smb_hash",
     "trigger_reload_ldap_config",
     "ping",
+    "new_ping",
     "network_completition",
     "set_activated_for_installation",
     "new_key_for_client",
@@ -43,6 +44,7 @@ use Crypt::SmbHash;
 use Net::ARP;
 use Net::Ping;
 use Socket;
+use Time::HiRes qw( usleep);
 
 BEGIN {}
 
@@ -353,6 +355,59 @@ sub ping {
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }
+sub new_ping {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my ($sql, $res);
+    my $out_msg = $msg;
+    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+    if( defined $jobdb_id) {
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+        my $res = $main::job_db->exec_statement($sql_statement);
+    }
+
+    $out_msg =~ s/<header>gosa_/<header>/;
+
+    # send message
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+
+    $sql = "SELECT * FROM $main::known_clients_tn WHERE ((hostname='$target') || (macaddress LIKE '$target'))"; 
+    #&main::daemon_log("$sql",1);     
+    $res = $main::known_clients_db->exec_statement($sql);
+    #&main::daemon_log(Dumper($res), 1);    
+    my $host_name = @{@$res[0]}[0];
+    $out_msg =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/;
+    $out_msg =~ s/<source>\S+<\/source>/<source>$main::server_address<\/source>/;
+    $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/; 
+    my $host_key = @{@$res[0]}[2];
+
+    my $error = &main::send_msg_to_target($out_msg, $host_name, $host_key, $header, $session_id);
+    #if ($error != 0) {}
+
+    my $message_id;
+    while (1) {
+        $sql = "SELECT * FROM $main::incoming_tn WHERE headertag='answer_$session_id'";
+        $res = $main::incoming_db->exec_statement($sql);
+        if (ref @$res[0] eq "ARRAY") { 
+            $message_id = @{@$res[0]}[0];
+            last;
+        }
+        usleep(100000);
+    }
+    my $answer_xml = @{@$res[0]}[3];
+    my %data = ( 'answer_xml'  => 'bin noch da' );
+    my $answer_msg = &build_msg("got_ping", "$main::server_address", "GOSA", \%data);
+
+    $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
+    $res = $main::incoming_db->exec_statement($sql);
+
+
+    my @answer_msg_l = ( $answer_msg );
+    return @answer_msg_l;
+}
+
+
 
 sub gen_smb_hash {
      my ($msg, $msg_hash, $session_id) = @_ ;

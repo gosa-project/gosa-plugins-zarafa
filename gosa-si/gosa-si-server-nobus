@@ -53,6 +53,7 @@ use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
+use Time::HiRes qw( usleep);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -464,7 +465,7 @@ sub sig_int_handler {
     
 
     daemon_log("shutting down gosa-si-server", 1);
-    system("kill `ps -C gosa-si-server -o pid=`");
+    system("kill `ps -C gosa-si-server-nobus -o pid=`");
 }
 $SIG{INT} = \&sig_int_handler;
 
@@ -594,7 +595,7 @@ sub input_from_known_server {
         }
         my $host_key = $hit->{hostkey};
         daemon_log("$session_id DEBUG: input_from_known_server: host_name: $host_name", 7);
-        daemon_log("DEBUG: input_from_known_server: host_key: $host_key", 7);
+        daemon_log("$session_id DEBUG: input_from_known_server: host_key: $host_key", 7);
 
         # check if module can open msg envelope with module key
         my ($tmp_msg, $tmp_msg_hash) = &check_key_and_xml_validity($input, $host_key, $session_id);
@@ -1067,17 +1068,15 @@ sub msg_to_decrypt {
 
 sub next_task {
     my ($session, $heap) = @_[SESSION, HEAP];
-#    if (keys( %{ $heap->{task} } ) < $max_children ) {
-        my $task = POE::Wheel::Run->new(
-                Program => sub { process_task($session, $heap) },
-                StdioFilter => POE::Filter::Reference->new(),
-                StdoutEvent  => "task_result",
-                StderrEvent  => "task_debug",
-                CloseEvent   => "task_done",
-               );
+    my $task = POE::Wheel::Run->new(
+            Program => sub { process_task($session, $heap) },
+            StdioFilter => POE::Filter::Reference->new(),
+            StdoutEvent  => "task_result",
+            StderrEvent  => "task_debug",
+            CloseEvent   => "task_done",
+            );
 
-        $heap->{task}->{ $task->ID } = $task;
-#    }
+    $heap->{task}->{ $task->ID } = $task;
 }
 
 sub handle_task_result {
@@ -1118,10 +1117,6 @@ sub process_task {
     my ($answer_header, @answer_target_l, $answer_source);
     my $client_answer = "";
 
-    daemon_log("", 5); 
-    daemon_log("$session_id INFO: Incoming msg with session ID $session_id from '".$heap->{'remote_ip'}."'", 5);
-    #daemon_log("$session_id DEBUG: Incoming msg:\n$input", 9);
-
 	##################################################
 	# fetch first unprocessed message from incoming_db
     # sometimes the program is faster than sqlite, so wait until informations are present at db
@@ -1135,6 +1130,7 @@ sub process_task {
         $id_res = $incoming_db->exec_statement($id_sql);
         $message_id = @{@$id_res[0]}[0];
         if (defined $message_id) { last }
+        usleep(100000);
     }
 
     # fetch new message from incoming_db
@@ -1142,9 +1138,9 @@ sub process_task {
     my $res = $incoming_db->exec_statement($sql);
 
     # prepare all variables needed to process message
-    my $msg = @{@$res[0]}[3];
+    my $msg = @{@$res[0]}[4];
     my $incoming_id = @{@$res[0]}[0];
-    my $module = @{@$res[0]}[4];
+    my $module = @{@$res[0]}[5];
     my $header =  @{@$res[0]}[2];
     my $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
@@ -1160,16 +1156,19 @@ sub process_task {
     ######################
     # process incoming msg
     if( $error == 0) {
-        daemon_log("$session_id INFO: Incoming msg with header '".@{$msg_hash->{'header'}}[0].
+        daemon_log("$session_id INFO: Incoming msg (session_id=$session_id) with header '".@{$msg_hash->{'header'}}[0].
 				"' from '".$heap->{'remote_ip'}."'", 5); 
         daemon_log("$session_id DEBUG: Processing module ".$module, 7);
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {
             my $answer_str = join("\n", @{$answer_l});
-            daemon_log("$session_id DEBUG: $module: Got answer from module: \n".$answer_str,8);
+            while ($answer_str =~ /<header>(\w+)<\/header>/g) {
+                daemon_log("$session_id INFO: got answer message with header '$1'", 5);
+            }
+            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,8);
         } else {
-            daemon_log("$session_id DEBUG: $module: Got no answer from module!" ,8);
+            daemon_log("$session_id DEBUG: $module: got no answer from module!" ,8);
         }
 
     }
@@ -1182,9 +1181,7 @@ sub process_task {
         foreach my $answer ( @{$answer_l} ) {
             # check outgoing msg to xml validity
             my $answer_hash = &check_outgoing_xml_validity($answer);
-            if( not defined $answer_hash ) {
-                next;
-            }
+            if( not defined $answer_hash ) { next; }
             
             $answer_header = @{$answer_hash->{'header'}}[0];
             @answer_target_l = @{$answer_hash->{'target'}};
@@ -1463,13 +1460,13 @@ sub watch_for_new_messages {
 			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
 				my $group_name = $1;
 				# fetch all group members from ldap and add them to receiver hash
-				my $ldap_handle = &get_ldap_handle($session_id);
+				my $ldap_handle = &get_ldap_handle();
 				if (defined $ldap_handle) {
 						my $mesg = $ldap_handle->search(
 										base => $ldap_base,
 										scope => 'sub',
 										attrs => ['memberUid'],
-										filter => "cn=$group_name"; 
+										filter => "cn=$group_name",
 										);
 						if ($mesg->count) {
 								my @entries = $mesg->entries;
@@ -1482,11 +1479,11 @@ sub watch_for_new_messages {
 						} 
 						# translating errors ?
 						if ($mesg->code) {
-								daemon_log("$session_id ERROR: unable to translate group '$group_name' to user list for message delivery: $mesg->error", 1);
+								daemon_log("M ERROR: unable to translate group '$group_name' to user list for message delivery: $mesg->error", 1);
 						}
 				# ldap handle error ?		
 				} else {
-					daemon_log("$session_id ERROR: unable to translate group '$group_name' to user list for message delivery: no ldap handle available", 1);
+					daemon_log("M ERROR: unable to translate group '$group_name' to user list for message delivery: no ldap handle available", 1);
 				}
 			} else {
 				my $sbjct = &encode_base64(@{$hit}[1]);
@@ -2691,8 +2688,8 @@ POE::Component::Server::TCP->new(
         my ($kernel, $input) = @_[KERNEL, ARG0];
         push(@tasks, $input);
         push(@msgs_to_decrypt, $input);
-        $kernel->yield("next_task");
         $kernel->yield("msg_to_decrypt");
+        $kernel->yield("next_task");
         },
     InlineStates => {
         next_task => \&next_task,
