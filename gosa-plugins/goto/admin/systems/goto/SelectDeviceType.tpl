@@ -6,10 +6,19 @@
 </p>
 <p class="seperator">
 <br>
+{if $dns_cnt == 1}
 <b>{t}Please select a system type and an optional bundle of predefined settings to be inherited.{/t}</b>
+{else}
+<b>{t}Please select a system type and an bundle of predefined settings to be inherited.{/t}</b>
+{/if}
 <br>
 <br>
 </p>
+<pre>
+{foreach from=$dns item=item}
+	{$item}
+{/foreach}
+</pre>
 <br>
 <table summary="" style='width:100%'>
  <tr>

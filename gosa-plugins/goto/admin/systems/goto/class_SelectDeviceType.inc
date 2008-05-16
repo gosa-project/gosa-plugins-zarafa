@@ -13,9 +13,17 @@ class SelectDeviceType extends plugin
   var $ObjectGroup    = "";
   var $SystemType        = "";
 
+  var $dn;
+
   function SelectDeviceType  (&$config, $dn= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, NULL);
+
+    if(!is_array($dn)){
+      $this->dns = array($dn);
+    }else{
+      $this->dns = $dn;
+    }
 
     /* Get object groups */
     $ldap = $this->config->get_ldap_link();
@@ -26,8 +34,7 @@ class SelectDeviceType extends plugin
       $tmp[$attrs['dn']]= $attrs['cn'][0];
     }
     asort($tmp, SORT_LOCALE_STRING);
-    $tmpa['none']=_("none");
-    $this->ObjectGroups= array_merge($tmpa, $tmp);
+    $this->ObjectGroups= $tmp;
 
     $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
   }
@@ -41,8 +48,21 @@ class SelectDeviceType extends plugin
     $smarty= get_smarty();
     $display= "";
 
-    $smarty->assign("ObjectGroups"    ,$this->ObjectGroups);
-    $smarty->assign("ObjectGroupKeys" ,array_flip($this->ObjectGroups));
+    $smarty->assign("dns"     , $this->dns);
+    $smarty->assign("dns_cnt" , count($this->dns));
+
+    /* Add none to the list of object groups, if there is only one 
+        object that currently edited. This will allow to modify attributes manually and 
+        skip object group inherit.
+     */
+    $ogs = $this->ObjectGroups;
+    if(count($this->dns) == 1){
+      $tmpa['none']=_("none");
+      $ogs = array_merge($tmpa,$ogs);
+    }
+
+    $smarty->assign("ObjectGroups"    ,$ogs);
+    $smarty->assign("ObjectGroupKeys" ,array_flip($ogs));
     $smarty->assign("SystemTypes"     ,$this->SystemTypes);
     $smarty->assign("SystemTypeKeys"  ,array_flip($this->SystemTypes)); 
 
