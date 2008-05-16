@@ -1,49 +1,174 @@
-#: admin/sudo/class_divListSudo.inc:48 admin/sudo/class_divListSudo.inc:49
+#: admin/sudo/class_target_list_systems.inc:53
+msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:54
+#: admin/sudo/class_target_list_systems.inc:55
+#: admin/sudo/class_target_list_users.inc:51
+#: admin/sudo/class_target_list_users.inc:52
+msgid "Available targets"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:64
+#: admin/sudo/class_target_list_users.inc:61
+msgid "Object name"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:67
+msgid "Select to see terminals"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:67
+msgid "Show terminals"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:68
+msgid "Select to see servers"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:68
+msgid "Show servers"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:69
+msgid "Select to see workstations"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:69
+msgid "Show workstations"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:76
+#: admin/sudo/class_target_list_users.inc:73
+msgid "Regular expression for matching group names"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:143
+#: admin/sudo/class_target_list_users.inc:140
+msgid "Base"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:145
+#: admin/sudo/class_target_list_users.inc:142
+msgid "Submit department"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:145
+#: admin/sudo/class_target_list_users.inc:142
+msgid "Submit"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:187
+msgid "Server"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:189
+msgid "Workstation"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:191
+msgid "Terminal"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:154
+msgid "Unknown option"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:155
+#, php-format
+msgid "The sudo option '%s' is invalid!"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
+msgid "string"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
+#: admin/sudo/class_sudoOption.inc:280
+msgid "bool"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:279
+msgid "integer"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:280
+msgid "list"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:55 admin/sudo/class_divListSudo.inc:56
 msgid "List of sudo roles"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:69 admin/sudo/class_sudoGeneric.inc:283
-#: admin/sudo/generic.tpl:8
+#: admin/sudo/class_divListSudo.inc:76
+msgid "Select all"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:82 admin/sudo/class_sudoGeneric.inc:561
+#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:571
+#: admin/sudo/class_sudoGeneric.inc:580 admin/sudo/class_sudoGeneric.inc:677
+#: admin/sudo/paste_generic.tpl:5 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
 msgid "Name"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:69
+#: admin/sudo/class_divListSudo.inc:82
 msgid "Department"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:70 admin/sudo/class_divListSudo.inc:93
+#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:108
 msgid "Actions"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:74
+#: admin/sudo/class_divListSudo.inc:87
 msgid "Regular expression for matching role names"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:76
+#: admin/sudo/class_divListSudo.inc:89
 msgid "Regular expression for matching role member names"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:95
+#: admin/sudo/class_divListSudo.inc:110
 msgid "Create"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:99
+#: admin/sudo/class_divListSudo.inc:114
 msgid "Role"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:106
+#: admin/sudo/class_divListSudo.inc:115
+msgid "Default"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:122
 msgid "Remove"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:139
+#: admin/sudo/class_divListSudo.inc:129
+msgid "Copy"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:135 admin/sudo/class_divListSudo.inc:138
+msgid "Paste"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:196
+msgid "copy"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:196
+msgid "Copy this entry"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:201
 msgid "Edit this entry"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:143
+#: admin/sudo/class_divListSudo.inc:209
 msgid "Delete this entry"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:169
+#: admin/sudo/class_divListSudo.inc:251
 msgid "Number of listed roles"
 msgstr ""
 
@@ -63,77 +188,151 @@ msgstr ""
 msgid "Manage sudo roles"
 msgstr ""
 
-#: admin/sudo/class_sudoManagement.inc:211
-#: admin/sudo/class_sudoGeneric.inc:275 admin/sudo/class_sudoGeneric.inc:280
+#: admin/sudo/class_sudoManagement.inc:248
+#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/class_sudoGeneric.inc:674
 msgid "Sudo role"
 msgstr ""
 
-#: admin/sudo/class_sudoManagement.inc:243
+#: admin/sudo/class_sudoManagement.inc:280
 msgid "Permission error"
 msgstr ""
 
-#: admin/sudo/class_sudoOptions.inc:133
-msgid "Unknown option"
-msgstr ""
-
-#: admin/sudo/class_sudoOptions.inc:134
-#, php-format
-msgid "The sudo option '%s' is invalid!"
-msgstr ""
-
-#: admin/sudo/class_sudoOptions.inc:254 admin/sudo/class_sudoOptions.inc:256
-msgid "string"
-msgstr ""
-
-#: admin/sudo/class_sudoOptions.inc:254 admin/sudo/class_sudoOptions.inc:255
-#: admin/sudo/class_sudoOptions.inc:256
-msgid "bool"
-msgstr ""
-
-#: admin/sudo/class_sudoOptions.inc:255
-msgid "integer"
-msgstr ""
-
-#: admin/sudo/class_sudoOptions.inc:256
-msgid "list"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:171
+#: admin/sudo/class_sudoGeneric.inc:309
 msgid "Error"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:274
+#: admin/sudo/class_sudoGeneric.inc:351
+msgid "disabled"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:352
+msgid "full access"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:353
+msgid "allow access to these hosts"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:398
+#: admin/sudo/class_target_list_users.inc:181
+msgid "User"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:399
+#: admin/sudo/class_target_list_users.inc:182
+msgid "Group"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:547
+msgid "LDAP error"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:668
 msgid "Sudo"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:284 admin/sudo/generic.tpl:16
+#: admin/sudo/class_sudoGeneric.inc:678 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44
 msgid "Description"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:285
+#: admin/sudo/class_sudoGeneric.inc:679
 msgid "Users"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:286
+#: admin/sudo/class_sudoGeneric.inc:680
 msgid "Host"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:287
+#: admin/sudo/class_sudoGeneric.inc:681
 msgid "Command"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:288
+#: admin/sudo/class_sudoGeneric.inc:682
 msgid "Run as user"
 msgstr ""
 
-#: admin/sudo/options.tpl:75
+#: admin/sudo/class_sudoGeneric.inc:683
+msgid "Access control list"
+msgstr ""
+
+#: admin/sudo/options.tpl:5
+msgid "Option name"
+msgstr ""
+
+#: admin/sudo/options.tpl:7
+msgid "Value"
+msgstr ""
+
+#: admin/sudo/options.tpl:8
+msgid "Options"
+msgstr ""
+
+#: admin/sudo/options.tpl:81
 msgid "Available options"
 msgstr ""
 
-#: admin/sudo/generic.tpl:29 admin/sudo/generic.tpl:41
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:30
+msgid "Sudo generic"
+msgstr ""
+
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+msgid "Global defaults"
+msgstr ""
+
+#: admin/sudo/generic.tpl:55
+msgid "System trust"
+msgstr ""
+
+#: admin/sudo/generic.tpl:56
+msgid "Trust mode"
+msgstr ""
+
+#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
 msgstr ""
 
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 msgid "Sudo role administration"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:50
+msgid "Select the target objects"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:63
+msgid "Select to see users"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:63
+msgid "Show users"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:64
+msgid "Select to see groups"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:64
+msgid "Show groups"
+msgstr ""
+
+#: admin/sudo/trust_machines.tpl:6
+msgid "Select systems to add"
+msgstr ""
+
+#: admin/sudo/trust_machines.tpl:26
+msgid "Display systems of department"
+msgstr ""
+
+#: admin/sudo/trust_machines.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr ""
+
+#: admin/sudo/trust_machines.tpl:30
+msgid "Display systems matching"
+msgstr ""
+
+#: admin/sudo/trust_machines.tpl:31
+msgid "Regular expression for matching addresses"
 msgstr ""

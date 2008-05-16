@@ -14,12 +14,6 @@
 <br>
 <br>
 </p>
-<pre>
-{foreach from=$dns item=item}
-	{$item}
-{/foreach}
-</pre>
-<br>
 <table summary="" style='width:100%'>
  <tr>
   <td style='width:49%'>

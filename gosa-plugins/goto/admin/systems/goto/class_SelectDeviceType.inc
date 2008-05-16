@@ -17,12 +17,12 @@ class SelectDeviceType extends plugin
 
   function SelectDeviceType  (&$config, $dn= NULL)
   {
-    plugin::plugin ($config, NULL);
-
     if(!is_array($dn)){
       $this->dns = array($dn);
+      plugin::plugin ($config, NULL);
     }else{
       $this->dns = $dn;
+      plugin::plugin ($config, $dn);
     }
 
     /* Get object groups */
@@ -48,7 +48,6 @@ class SelectDeviceType extends plugin
     $smarty= get_smarty();
     $display= "";
 
-    $smarty->assign("dns"     , $this->dns);
     $smarty->assign("dns_cnt" , count($this->dns));
 
     /* Add none to the list of object groups, if there is only one 
