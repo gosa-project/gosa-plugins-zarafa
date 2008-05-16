@@ -558,7 +558,7 @@ class workstartup extends plugin
       }
 
       /* Convert old style entry */
-      if (!preg_match('%:ldap://%', $server)){
+      if (!preg_match('%:ldaps?://%', $server)){
         $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
 
       /* Beautify new style entries */
