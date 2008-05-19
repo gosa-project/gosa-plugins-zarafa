@@ -92,7 +92,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 			filter => "(macaddress=$main::server_mac_address)"
 		);
 
-		if ($mesg->count == 1) {
+		if ((! $main::server_mac_address eq "00:00:00:00:00:00") and $mesg->count == 1) {
 			my $entry= $mesg->entry(0);
 			my $unit_tag= $entry->get_value("gosaUnitTag");
 			$main::ldap_server_dn= $mesg->entry(0)->dn;
