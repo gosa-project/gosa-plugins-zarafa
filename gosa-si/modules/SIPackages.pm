@@ -25,7 +25,6 @@ END {}
 my ($server_ip, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
-my $event_hash;
 my $network_interface;
 my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
@@ -64,7 +63,19 @@ if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
 $network_interface= &get_interface_for_ip($server_ip);
 $main::server_mac_address= &get_mac($network_interface);
 
-&import_events();
+
+# import local events
+my ($error, $result, $event_hash) = &import_events($event_dir);
+if ($error == 0) {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 INFO: SIPackages - $log_line", 5);
+    }
+} else {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 ERROR: SIPackages - $log_line", 1);
+    }
+
+}
 
 # Unit tag can be defined in config
 if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
@@ -72,7 +83,7 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
         
     my $ldap_handle = &main::get_ldap_handle(); 
     if( defined($ldap_handle) ) {
-		&main::daemon_log("INFO: Searching for servers gosaUnitTag with mac address $main::server_mac_address",5);
+		&main::daemon_log("0 INFO: Searching for servers gosaUnitTag with mac address $main::server_mac_address",5);
 		# Perform search for Unit Tag
 		$mesg = $ldap_handle->search(
 			base   => $ldap_base,
@@ -86,14 +97,14 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 			my $unit_tag= $entry->get_value("gosaUnitTag");
 			$main::ldap_server_dn= $mesg->entry(0)->dn;
 			if(defined($unit_tag) && length($unit_tag) > 0) {
-				&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
+				&main::daemon_log("0 INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 				$main::gosa_unit_tag= $unit_tag;
 			}
 		} else {
 			# Perform another search for Unit Tag
 			my $hostname= `hostname -f`;
 			chomp($hostname);
-			&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
+			&main::daemon_log("0 INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
 			$mesg = $ldap_handle->search(
 				base   => $ldap_base,
 				scope  => 'sub',
@@ -105,14 +116,14 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 				my $unit_tag= $entry->get_value("gosaUnitTag");
 			        $main::ldap_server_dn= $mesg->entry(0)->dn;
 				if(defined($unit_tag) && length($unit_tag) > 0) {
-					&main::daemon_log("INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
+					&main::daemon_log("0 INFO: Detected gosaUnitTag $unit_tag for creating entries", 5);
 					$main::gosa_unit_tag= $unit_tag;
 				}
 			} else {
 				# Perform another search for Unit Tag
 				$hostname= `hostname -s`;
 				chomp($hostname);
-				&main::daemon_log("INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
+				&main::daemon_log("0 INFO: Searching for servers gosaUnitTag with hostname $hostname",5);
 				$mesg = $ldap_handle->search(
 					base   => $ldap_base,
 					scope  => 'sub',
@@ -128,12 +139,12 @@ if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
 						$main::gosa_unit_tag= $unit_tag;
 					}
 				} else {
-					&main::daemon_log("WARNING: No gosaUnitTag detected. Not using gosaUnitTag", 3);
+					&main::daemon_log("0 WARNING: No gosaUnitTag detected. Not using gosaUnitTag", 3);
 				}
 			}
 		}
 	} else {
-		&main::daemon_log("INFO: Using gosaUnitTag from config-file: $main::gosa_unit_tag",5);
+		&main::daemon_log("0 INFO: Using gosaUnitTag from config-file: $main::gosa_unit_tag",5);
 	}
 }
 
@@ -352,33 +363,35 @@ sub register_at_bus {
 }
 
 
-sub import_events {
-    if (not -e $event_dir) {
-        &main::daemon_log("S ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-    }
-    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
 
-    while (defined (my $event = readdir (DIR))) {
-        if( $event eq "." || $event eq ".." ) { next; }  
-        if( $event eq "gosaTriggered.pm" ) { next; }    # only GOsa specific events
-
-        eval{ require $event; };
-        if( $@ ) {
-            &main::daemon_log("S ERROR: import of event module '$event' failed", 1);
-            &main::daemon_log("$@", 8);
-            next;
-        }
-
-        $event =~ /(\S*?).pm$/;
-        my $event_module = $1;
-        my $events_l = eval( $1."::get_events()") ;
-        foreach my $event_name (@{$events_l}) {
-            $event_hash->{$event_name} = $event_module;
-        }
-        my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("S DEBUG: SIPackages imported events $events_string", 8);
-    }
-}
+# outcommented from rettenbe: moved to GosaSupportDaemon.pm
+#sub import_events {
+#    if (not -e $event_dir) {
+#        &main::daemon_log("S ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+#    }
+#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+#
+#    while (defined (my $event = readdir (DIR))) {
+#        if( $event eq "." || $event eq ".." ) { next; }  
+#        if( $event eq "gosaTriggered.pm" ) { next; }    # only GOsa specific events
+#
+#        eval{ require $event; };
+#        if( $@ ) {
+#            &main::daemon_log("S ERROR: import of event module '$event' failed", 1);
+#            &main::daemon_log("$@", 8);
+#            next;
+#        }
+#
+#        $event =~ /(\S*?).pm$/;
+#        my $event_module = $1;
+#        my $events_l = eval( $1."::get_events()") ;
+#        foreach my $event_name (@{$events_l}) {
+#            $event_hash->{$event_name} = $event_module;
+#        }
+#        my $events_string = join( ", ", @{$events_l});
+#        &main::daemon_log("S DEBUG: SIPackages imported events $events_string", 8);
+#    }
+#}
 
 
 #===  FUNCTION  ================================================================

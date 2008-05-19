@@ -24,9 +24,6 @@ my ($server_ip, $server_port, $server_passwd, $max_clients);
 my ($gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
 my ($job_queue_timeout, $job_queue_file_name);
 
-my $gosa_server;
-my $event_hash;
-
 my %cfg_defaults = (
 "server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
@@ -60,9 +57,18 @@ my $gosa_address = "$gosa_ip:$gosa_port";
 #y $gosa_cipher = &create_ciphering($gosa_passwd);
 my $xml = new XML::Simple();
 
+# import local events
+my ($error, $result, $event_hash) = &import_events($event_dir);
+if ($error == 0) {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 INFO: GosaPackages - $log_line", 5);
+    }
+} else {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 ERROR: GosaPackages - $log_line", 1);
+    }
+}
 
-# import events
-&import_events();
 
 ## FUNCTIONS #################################################################
 
@@ -221,34 +227,34 @@ sub get_ip {
 }
 
 
-sub import_events {
-    if (not -e $event_dir) {
-        &main::daemon_log("G ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-    }
-    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
-
-    while (defined (my $event = readdir (DIR))) {
-        if( $event eq "." || $event eq ".." ) { next; }   
-        if( $event eq "siTriggered.pm" ) { next; }                  # SI specific events not needed in GosaPackages.pm
-        if( $event eq "clMessages.pm" ) { next; }                   # SI specific events not needed in GosaPackages.pm
-
-        eval{ require $event; };
-        if( $@ ) {
-            &main::daemon_log("G ERROR: import of event module '$event' failed", 1);
-            &main::daemon_log("$@", 1);
-            next;
-        }
-
-        $event =~ /(\S*?).pm$/;
-        my $event_module = $1;
-        my $events_l = eval( $1."::get_events()") ;
-        foreach my $event_name (@{$events_l}) {
-            $event_hash->{$event_name} = $event_module;
-        }
-        my $events_string = join( ", ", @{$events_l});
-        &main::daemon_log("G DEBUG: GosaPackages from '$1' imported events $events_string", 8);
-    }
-}
+#sub import_events {
+#    if (not -e $event_dir) {
+#        &main::daemon_log("G ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+#    }
+#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+#
+#    while (defined (my $event = readdir (DIR))) {
+#        if( $event eq "." || $event eq ".." ) { next; }   
+#        if( $event eq "siTriggered.pm" ) { next; }                  # SI specific events not needed in GosaPackages.pm
+#        if( $event eq "clMessages.pm" ) { next; }                   # SI specific events not needed in GosaPackages.pm
+#
+#        eval{ require $event; };
+#        if( $@ ) {
+#            &main::daemon_log("G ERROR: import of event module '$event' failed", 1);
+#            &main::daemon_log("$@", 1);
+#            next;
+#        }
+#
+#        $event =~ /(\S*?).pm$/;
+#        my $event_module = $1;
+#        my $events_l = eval( $1."::get_events()") ;
+#        foreach my $event_name (@{$events_l}) {
+#            $event_hash->{$event_name} = $event_module;
+#        }
+#        my $events_string = join( ", ", @{$events_l});
+#        &main::daemon_log("G DEBUG: GosaPackages from '$1' imported events $events_string", 8);
+#    }
+#}
 
 
 #===  FUNCTION  ================================================================

@@ -21,6 +21,7 @@ my @functions = (
     "get_server_addresses",
     "get_logged_in_users",
     "import_events",
+    "del_doubles",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -59,7 +60,11 @@ sub daemon_log {
     return;
 }
 
-
+sub del_doubles { 
+    my %all; 
+    $all{$_}=0 for @_; 
+    return (keys %all); 
+}
 
 
 #===  FUNCTION  ================================================================
@@ -465,10 +470,10 @@ sub get_logged_in_users {
 
 
 sub import_events {
-    my ($event_dir)= @_;
+    my ($event_dir) = @_;
+    my $event_hash;
     my $error = 0;
     my @result = ();
-
     if (not -e $event_dir) {
         $error++;
         push(@result, "cannot find directory or directory is not readable: $event_dir");   
@@ -485,7 +490,6 @@ sub import_events {
     if ($error == 0) {
         while (defined (my $event = readdir (DIR))) {
             if( $event eq "." || $event eq ".." ) { next; }  
-            if ($event ne "server_server_com.pm") { next; }
 
             # try to import event module
             eval{ require $event; };
@@ -507,7 +511,7 @@ sub import_events {
         }
     }
 
-    return ($error, \@result);
+    return ($error, \@result, $event_hash);
 
 }
 

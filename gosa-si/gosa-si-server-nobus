@@ -2772,6 +2772,9 @@ if ( !$server_domain) {
 foreach my $server (@tmp_servers) { 
     unshift(@foreign_server_list, $server); 
 }
+# eliminate duplicate entries
+@foreign_server_list = &del_doubles(@foreign_server_list);
+
 my $all_foreign_server = join(", ", @foreign_server_list);
 daemon_log("0 INFO: found foreign server in config file and DNS: $all_foreign_server", 5);
 
@@ -2783,7 +2786,7 @@ foreach my $foreign_server (@foreign_server_list) {
     print STDERR "foreign_server: $foreign_server\n"; 
     my %data= ('known_clients' => "",
             'key' => "",
-    );
+            );
     my $foreign_server_msg = &build_msg('new_server', $server_address, $foreign_server, \%data);
     my $error = &send_msg_to_target($foreign_server_msg, $foreign_server, $foreign_server_key, "new_server", 0); 
     if ($error != 0 ) {

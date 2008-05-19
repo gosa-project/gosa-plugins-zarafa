@@ -66,7 +66,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>19700101000000</timestamp> </xml>";
     #$data = "<xml> <header>job_trigger_action_instant_update</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp> </xml>";
-    #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
+    $data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
 
     # get_login_usr_for_client
@@ -83,7 +83,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     ###########
     # messaging 
-
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <to>polle</to> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <to>polle</to> <to>rettenbe</to> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
 
     ################
@@ -102,8 +102,8 @@ for($count = 1; $count <= $zahl; $count++)
 
     #########
     # Kerberos test query
-#    $data = "<xml> <header>gosa_krb5_create_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
-    $data = "<xml> <header>gosa_krb5_modify_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
+    #$data = "<xml> <header>gosa_krb5_create_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
+    #$data = "<xml> <header>gosa_krb5_modify_principal</header> <target>00:01:6c:9d:b9:fa</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
 
     $sock->write($data);
     $answer = "nothing";

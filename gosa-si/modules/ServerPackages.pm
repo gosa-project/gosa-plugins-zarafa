@@ -26,13 +26,23 @@ END {}
 
 ### START #####################################################################
 
-# read configfile and import variables
-#&read_configfile();
+# import local events
+my ($error, $result, $event_hash) = &import_events($event_dir);
+if ($error == 0) {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 INFO: ServerPackages - $log_line", 5);
+    }
+} else {
+    foreach my $log_line (@$result) {
+        &main::daemon_log("0 ERROR: ServerPackages - $log_line", 1);
+    }
+}
+
+### FUNCTIONS #####################################################################
 
 sub get_module_info {
-    my @info = ($server_address,
-                $SIPackages_key,
-                );
+    my @info = ($main::server_address,
+            );
     return \@info;
 }
 
