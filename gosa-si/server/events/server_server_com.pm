@@ -24,7 +24,7 @@ sub get_events {
 
 
 sub new_server {
-
+print STDERR "hier kommt die logik von new_server\n"; 
 }
 
 1;

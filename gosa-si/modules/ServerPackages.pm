@@ -42,9 +42,30 @@ if ($error == 0) {
 
 sub get_module_info {
     my @info = ($main::server_address,
+            $main::foreign_server_key,            
             );
     return \@info;
 }
 
+sub process_incoming_msg {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $source = @{$msg_hash->{source}}[0]; 
+    my @target_l = @{$msg_hash->{target}};
+
+    my @msg_l;
+    my @out_msg_l;
+
+    &main::daemon_log("$session_id DEBUG: ServerPackages: msg to process '$header'", 7);
+    if( exists $event_hash->{$header} ) {
+        # a event exists with the header as name
+        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+        no strict 'refs';
+        @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+    } else {
+    }
+
+    return @out_msg_l;
+}
 
 1;

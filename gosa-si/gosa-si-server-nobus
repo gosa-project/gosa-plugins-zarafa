@@ -85,7 +85,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $server_ip, $server_port, $ClientPackages_key, 
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
-    $foreign_server_string, $server_domain, $foreign_server_key
+    $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
 );
 
 # additional variable which should be globaly accessable
@@ -239,7 +239,8 @@ my $max_children = 2;
 "ServerPackages"=> {
     "address"      => [\$foreign_server_string, ""],
     "domain"  => [\$server_domain, ""],
-    "key"     => [\$foreign_server_key, "none"],
+    "key"     => [\$ServerPackages_key, "none"],
+    "key-lifetime" => [\$foreign_servers_register_delay, 600],
 }
 );
 
@@ -670,8 +671,8 @@ sub input_from_unknown_host {
     my $error_string;
     
 	my %act_modules = %$known_modules;
-
-	while( my ($mod, $info) = each(%act_modules)) {
+	
+    while( my ($mod, $info) = each(%act_modules)) {
 
         # check a key exists for this module
         my $module_key = ${$mod."_key"};
@@ -954,7 +955,7 @@ sub send_msg_to_target {
         if( $act_status eq "down" ) {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
             $res = $known_server_db->del_dbentry($sql_statement);
-            daemon_log("$session_id WARNING: failed 2x to a send msg to host '$address', delete host from known_server", 3);
+            daemon_log("$session_id WARNING: failed 2x to send a message to host '$address', delete host from known_server", 3);
         } 
         else { 
             $sql_statement = "UPDATE known_server SET status='$new_status' WHERE hostname='$address'";
@@ -999,6 +1000,7 @@ sub _start {
     my ($kernel) = $_[KERNEL];
     &trigger_db_loop($kernel);
     $global_kernel = $kernel;
+    $kernel->yield('register_at_foreign_servers');
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
 	$kernel->sig(USR1 => "sig_handler");
@@ -2575,6 +2577,36 @@ sub cleanup_and_extract {
 }
 
 
+sub register_at_foreign_servers {   
+    my ($kernel) = $_[KERNEL];
+
+    # hole alle bekannten server aus known_server_db
+    my $sql = "SELECT * FROM $known_server_tn";
+    my $res = $known_server_db->exec_statement($sql);
+
+    # no entries in known_server_db
+    if (not ref(@$res[0]) eq "ARRAY") { 
+        # TODO
+    }
+
+    foreach my $hit (@$res) {
+        my $hostname = @$hit[0];
+        my $hostkey = &create_passwd;
+
+        my %data= ('known_clients' => "",
+                'key' => $hostkey,
+                );
+        my $foreign_server_msg = &build_msg('new_server', $server_address, $hostname, \%data);
+        my $error = &send_msg_to_target($foreign_server_msg, $hostname, $ServerPackages_key, "new_server", 0); 
+
+        
+    }
+    
+    $kernel->delay_set("register_at_foreign_servers", $foreign_servers_register_delay); 
+    return;
+}
+
+
 #==== MAIN = main ==============================================================
 #  parse commandline options
 Getopt::Long::Configure( "bundling" );
@@ -2656,6 +2688,7 @@ $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
 
 # connect to known_server_db
+unlink($known_server_file_name);
 $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
 $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 
@@ -2686,59 +2719,10 @@ $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
 
-# create socket for incoming xml messages
 
-POE::Component::Server::TCP->new(
-	Port => $server_port,
-	ClientInput => sub {
-        my ($kernel, $input) = @_[KERNEL, ARG0];
-        push(@tasks, $input);
-        push(@msgs_to_decrypt, $input);
-        $kernel->yield("msg_to_decrypt");
-        $kernel->yield("next_task");
-        },
-    InlineStates => {
-        next_task => \&next_task,
-        msg_to_decrypt => \&msg_to_decrypt,
-        task_result => \&handle_task_result,
-        task_done   => \&handle_task_done,
-        task_debug  => \&handle_task_debug,
-        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
-    }
-);
-
-daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
-
-# create session for repeatedly checking the job queue for jobs
-POE::Session->create(
-	inline_states => {
-		_start => \&_start,
-		sig_handler => \&sig_handler,
-        watch_for_new_messages => \&watch_for_new_messages,
-        watch_for_delivery_messages => \&watch_for_delivery_messages,
-        watch_for_done_messages => \&watch_for_done_messages,
-		watch_for_new_jobs => \&watch_for_new_jobs,
-        watch_for_done_jobs => \&watch_for_done_jobs,
-        create_packages_list_db => \&run_create_packages_list_db,
-        create_fai_server_db => \&run_create_fai_server_db,
-        create_fai_release_db => \&run_create_fai_release_db,
-        session_run_result => \&session_run_result,
-        session_run_debug => \&session_run_debug,
-        session_run_done => \&session_run_done,
-        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
-	}
-);
-
-
-# import all modules
-&import_modules;
-
-# TODO
-# check wether all modules are gosa-si valid passwd check
-
-#############################################
-# send registration message to foreign server
+# foreign servers 
 my @foreign_server_list;
+
 # add foreign server from cfg file
 if ($foreign_server_string ne "") {
     my @cfg_foreign_server_list = split(",", $foreign_server_string);
@@ -2774,25 +2758,71 @@ foreach my $server (@tmp_servers) {
 }
 # eliminate duplicate entries
 @foreign_server_list = &del_doubles(@foreign_server_list);
-
 my $all_foreign_server = join(", ", @foreign_server_list);
 daemon_log("0 INFO: found foreign server in config file and DNS: $all_foreign_server", 5);
 
-# build messages
+# add all found foreign servers to known_server
+my $act_timestamp = &get_time();
 foreach my $foreign_server (@foreign_server_list) {
-    # do not send myself a 'new_server' registration!!!
-    if ($foreign_server eq $server_address) { next;}
-
-    print STDERR "foreign_server: $foreign_server\n"; 
-    my %data= ('known_clients' => "",
-            'key' => "",
-            );
-    my $foreign_server_msg = &build_msg('new_server', $server_address, $foreign_server, \%data);
-    my $error = &send_msg_to_target($foreign_server_msg, $foreign_server, $foreign_server_key, "new_server", 0); 
-    if ($error != 0 ) {
-        daemon_log("0 WARNING: sending of 'new_server'-message to $foreign_server failed!", 3); 
-    }
+    my $res = $known_server_db->add_dbentry( {table=>$known_server_tn, 
+            primkey=>['hostname'],
+            hostname=>$foreign_server,
+            status=>'not_jet_registered',
+            hostkey=>"none",
+            timestamp=>$act_timestamp,
+            } );
 }
+
+
+POE::Component::Server::TCP->new(
+	Port => $server_port,
+	ClientInput => sub {
+        my ($kernel, $input) = @_[KERNEL, ARG0];
+        push(@tasks, $input);
+        push(@msgs_to_decrypt, $input);
+        $kernel->yield("msg_to_decrypt");
+        $kernel->yield("next_task");
+        },
+    InlineStates => {
+        next_task => \&next_task,
+        msg_to_decrypt => \&msg_to_decrypt,
+        task_result => \&handle_task_result,
+        task_done   => \&handle_task_done,
+        task_debug  => \&handle_task_debug,
+        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
+    }
+);
+
+daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
+
+# create session for repeatedly checking the job queue for jobs
+POE::Session->create(
+	inline_states => {
+		_start => \&_start,
+        register_at_foreign_servers => \&register_at_foreign_servers,
+		sig_handler => \&sig_handler,
+        watch_for_new_messages => \&watch_for_new_messages,
+        watch_for_delivery_messages => \&watch_for_delivery_messages,
+        watch_for_done_messages => \&watch_for_done_messages,
+		watch_for_new_jobs => \&watch_for_new_jobs,
+        watch_for_done_jobs => \&watch_for_done_jobs,
+        create_packages_list_db => \&run_create_packages_list_db,
+        create_fai_server_db => \&run_create_fai_server_db,
+        create_fai_release_db => \&run_create_fai_release_db,
+        session_run_result => \&session_run_result,
+        session_run_debug => \&session_run_debug,
+        session_run_done => \&session_run_done,
+        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
+	}
+);
+
+
+# import all modules
+&import_modules;
+
+# TODO
+# check wether all modules are gosa-si valid passwd check
+
 
 
 POE::Kernel->run();

@@ -3,6 +3,7 @@ package GOSA::GosaSupportDaemon;
 use Exporter;
 @ISA = qw(Exporter);
 my @functions = (
+    "create_passwd",
     "create_xml_hash",
     "get_content_from_xml_hash",
     "add_content2xml_hash",
@@ -492,14 +493,14 @@ sub import_events {
 
     my $DIR;
     if ($error == 0) {
-        opendir (DIR, $event_dir) or sub { 
+        opendir ($DIR, $event_dir) or do { 
             $error++;
             push(@result, "cannot open directory '$event_dir' for reading: $!\n");
         }
     }
 
     if ($error == 0) {
-        while (defined (my $event = readdir (DIR))) {
+        while (defined (my $event = readdir ($DIR))) {
             if( $event eq "." || $event eq ".." ) { next; }  
 
             # try to import event module
@@ -520,6 +521,8 @@ sub import_events {
             my $events_string = join( ", ", @{$events_l});
             push(@result, "import of event module '$event' succeed: $events_string");
         }
+        
+        close $DIR;
     }
 
     return ($error, \@result, $event_hash);
