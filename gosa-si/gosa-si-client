@@ -34,7 +34,7 @@ use GOSA::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
-use Net::DNS;
+#use Net::DNS;    # no longer used because function moved to GosaSupportDaemon.pm : rettenbe : 16.05.2008
 use File::Basename;
 use File::Spec;
 
@@ -551,42 +551,43 @@ sub decrypt_msg {
 }
 
 
-sub get_server_addresses {
-    my $domain= shift;
-    my @result;
- 
-    my $error = 0;
-    my $res   = Net::DNS::Resolver->new;
-    my $query = $res->send("_gosa-si._tcp.".$domain, "SRV");
-    my @hits;
-
-    if ($query) {
-        foreach my $rr ($query->answer) {
-            push(@hits, $rr->target.":".$rr->port);
-        }
-    }
-    else {
-        #warn "query failed: ", $res->errorstring, "\n";
-        $error++;
-    }
-
-    if( $error == 0 ) {
-        foreach my $hit (@hits) {
-            my ($hit_name, $hit_port) = split(/:/, $hit);
-			chomp($hit_name);
-			chomp($hit_port);
-
-            my $address_query = $res->send($hit_name);
-            if( 1 == length($address_query->answer) ) {
-                foreach my $rr ($address_query->answer) {
-                    push(@result, $rr->address.":".$hit_port);
-                }
-            }
-        }
-    }
-
-    return @result;
-}
+# moved to GosaSupportDaemon: rettenbe: 16.05.2008
+#sub get_server_addresses {
+#    my $domain= shift;
+#    my @result;
+# 
+#    my $error = 0;
+#    my $res   = Net::DNS::Resolver->new;
+#    my $query = $res->send("_gosa-si._tcp.".$domain, "SRV");
+#    my @hits;
+#
+#    if ($query) {
+#        foreach my $rr ($query->answer) {
+#            push(@hits, $rr->target.":".$rr->port);
+#        }
+#    }
+#    else {
+#        #warn "query failed: ", $res->errorstring, "\n";
+#        $error++;
+#    }
+#
+#    if( $error == 0 ) {
+#        foreach my $hit (@hits) {
+#            my ($hit_name, $hit_port) = split(/:/, $hit);
+#			chomp($hit_name);
+#			chomp($hit_port);
+#
+#            my $address_query = $res->send($hit_name);
+#            if( 1 == length($address_query->answer) ) {
+#                foreach my $rr ($address_query->answer) {
+#                    push(@result, $rr->address.":".$hit_port);
+#                }
+#            }
+#        }
+#    }
+#
+#    return @result;
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -1276,7 +1277,7 @@ daemon_log("start socket for incoming xml messages at port '$client_port' ", 1);
 if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
 ############################################################
 # to change
-if( $server_ip eq "127.0.1.1" ) { $server_ip = "127.0.0.1" } 
+#if( $server_ip eq "127.0.1.1" ) { $server_ip = "127.0.0.1" } 
 ############################################################
 if (defined $server_ip && defined $server_port) {
     $server_address = $server_ip.":".$server_port;

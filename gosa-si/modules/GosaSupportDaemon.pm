@@ -18,7 +18,9 @@ my @functions = (
     "get_limit_statement",
     "get_orderby_statement",
     "get_dns_domains",
+    "get_server_addresses",
     "get_logged_in_users",
+    "import_events",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -29,6 +31,8 @@ use Digest::MD5  qw(md5 md5_hex md5_base64);
 use MIME::Base64;
 use XML::Simple;
 use Data::Dumper;
+use Net::DNS;
+
 
 my $op_hash = {
     'eq' => '=',
@@ -173,6 +177,9 @@ sub get_time {
 #===============================================================================
 sub build_msg ($$$$) {
 	my ($header, $from, $to, $data) = @_;
+
+    # data is of form, i.e.
+    # %data= ('ip' => $address, 'mac' => $mac);
 
 	my $out_hash = &create_xml_hash($header, $from, $to);
 
@@ -395,6 +402,47 @@ sub get_dns_domains() {
 }
 
 
+#############################################
+# moved from gosa-si-client: rettenbe, 16.05.2008
+# outcommented at gosa-si-client
+sub get_server_addresses {
+    my $domain= shift;
+    my @result;
+
+    my $error = 0;
+    my $res   = Net::DNS::Resolver->new;
+    my $query = $res->send("_gosa-si._tcp.".$domain, "SRV");
+    my @hits;
+
+    if ($query) {
+        foreach my $rr ($query->answer) {
+            push(@hits, $rr->target.":".$rr->port);
+        }
+    }
+    else {
+        #warn "query failed: ", $res->errorstring, "\n";
+        $error++;
+    }
+
+    if( $error == 0 ) {
+        foreach my $hit (@hits) {
+            my ($hit_name, $hit_port) = split(/:/, $hit);
+            chomp($hit_name);
+            chomp($hit_port);
+
+            my $address_query = $res->send($hit_name);
+            if( 1 == length($address_query->answer) ) {
+                foreach my $rr ($address_query->answer) {
+                    push(@result, $rr->address.":".$hit_port);
+                }
+            }
+        }
+    }
+
+    return @result;
+}
+
+
 sub get_logged_in_users {
     my $result = qx(/usr/bin/w -hs);
     my @res_lines;
@@ -414,5 +462,54 @@ sub get_logged_in_users {
     return @logged_in_user_list;
 
 }
+
+
+sub import_events {
+    my ($event_dir)= @_;
+    my $error = 0;
+    my @result = ();
+
+    if (not -e $event_dir) {
+        $error++;
+        push(@result, "cannot find directory or directory is not readable: $event_dir");   
+    }
+
+    my $DIR;
+    if ($error == 0) {
+        opendir (DIR, $event_dir) or sub { 
+            $error++;
+            push(@result, "cannot open directory '$event_dir' for reading: $!\n");
+        }
+    }
+
+    if ($error == 0) {
+        while (defined (my $event = readdir (DIR))) {
+            if( $event eq "." || $event eq ".." ) { next; }  
+            if ($event ne "server_server_com.pm") { next; }
+
+            # try to import event module
+            eval{ require $event; };
+            if( $@ ) {
+                $error++;
+                push(@result, "import of event module '$event' failed: $@");
+                next;
+            }
+
+            # fetch all single events
+            $event =~ /(\S*?).pm$/;
+            my $event_module = $1;
+            my $events_l = eval( $1."::get_events()") ;
+            foreach my $event_name (@{$events_l}) {
+                $event_hash->{$event_name} = $event_module;
+            }
+            my $events_string = join( ", ", @{$events_l});
+            push(@result, "import of event module '$event' succeed: $events_string");
+        }
+    }
+
+    return ($error, \@result);
+
+}
+
 
 1;

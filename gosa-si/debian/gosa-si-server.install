@@ -2,10 +2,11 @@ gosa-si-server			usr/sbin
 gosa-si-bus			usr/sbin
 server.conf			etc/gosa-si
 bus.conf			etc/gosa-si
-modules/SIPackages.pm		usr/lib/gosa-si/modules
-modules/GosaPackages.pm         usr/lib/gosa-si/modules
-modules/ArpHandler.pm		usr/lib/gosa-si/modules
-modules/oui.txt			usr/lib/gosa-si/modules
+modules/SIPackages.pm		          usr/lib/gosa-si/modules
+modules/GosaPackages.pm           usr/lib/gosa-si/modules
+modules/ArpHandler.pm		          usr/lib/gosa-si/modules
+modules/oui.txt		                usr/lib/gosa-si/modules
+modules/ServerPackages.pm         usr/lib/gosa-si/modules
 server/events/gosaTriggered.pm 		  usr/lib/gosa-si/server/events
 server/events/siTriggered.pm        usr/lib/gosa-si/server/events
 server/events/clMessages.pm         usr/lib/gosa-si/server/events

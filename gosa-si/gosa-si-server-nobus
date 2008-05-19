@@ -85,6 +85,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $server_ip, $server_port, $SIPackages_key, 
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
+    $foreign_server_string, $server_domain, $foreign_server_key
 );
 
 # additional variable which should be globaly accessable
@@ -207,22 +208,22 @@ my $max_children = 2;
     },
 "server" => {
     "port" => [\$server_port, "20081"],
-    "known-clients" => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
-    "known-servers" => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
-    "incoming"      => [\$incoming_file_name, '/var/lib/gosa-si/incoming.db'],
-    "login-users" => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
-    "fai-server" => [\$fai_server_file_name, '/var/lib/gosa-si/fai_server.db'],
-    "fai-release" => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
-    "packages-list" => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
-    "messaging" => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
-    "source-list" => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path" => [\$repo_path, '/srv/www/repository'],
-    "ldap-uri" => [\$ldap_uri, ""],
-    "ldap-base" => [\$ldap_base, ""],
-    "ldap-admin-dn" => [\$ldap_admin_dn, ""],
-    "ldap-admin-password" => [\$ldap_admin_password, ""],
-    "gosa-unit-tag" => [\$gosa_unit_tag, ""],
-    "max-clients" => [\$max_clients, 10],
+    "known-clients"        => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
+    "known-servers"        => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
+    "incoming"             => [\$incoming_file_name, '/var/lib/gosa-si/incoming.db'],
+    "login-users"          => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
+    "fai-server"           => [\$fai_server_file_name, '/var/lib/gosa-si/fai_server.db'],
+    "fai-release"          => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
+    "packages-list"        => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
+    "messaging"            => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
+    "source-list"          => [\$sources_list, '/etc/apt/sources.list'],
+    "repo-path"            => [\$repo_path, '/srv/www/repository'],
+    "ldap-uri"             => [\$ldap_uri, ""],
+    "ldap-base"            => [\$ldap_base, ""],
+    "ldap-admin-dn"        => [\$ldap_admin_dn, ""],
+    "ldap-admin-password"  => [\$ldap_admin_password, ""],
+    "gosa-unit-tag"        => [\$gosa_unit_tag, ""],
+    "max-clients"          => [\$max_clients, 10],
     },
 "GOsaPackages" => {
     "ip" => [\$gosa_ip, "0.0.0.0"],
@@ -235,6 +236,11 @@ my $max_children = 2;
 "SIPackages" => {
     "key" => [\$SIPackages_key, "none"],
     },
+"foreign-server"=> {
+    "address"      => [\$foreign_server_string, ""],
+    "domain"  => [\$server_domain, ""],
+    "key"     => [\$foreign_server_key, "none"],
+}
 );
 
 
@@ -415,7 +421,7 @@ sub import_modules {
     daemon_log(" ", 1);
 
     if (not -e $modules_path) {
-        daemon_log("ERROR: cannot find directory or directory is not readable: $modules_path", 1);   
+        daemon_log("0 ERROR: cannot find directory or directory is not readable: $modules_path", 1);   
     }
 
     opendir (DIR, $modules_path) or die "ERROR while loading modules from directory $modules_path : $!\n";
@@ -433,7 +439,7 @@ sub import_modules {
         
         eval { require $file; };
         if ($@) {
-            daemon_log("ERROR: gosa-si-server could not load module $file", 1);
+            daemon_log("0 ERROR: gosa-si-server could not load module $file", 1);
             daemon_log("$@", 5);
 		} else {
 			my $info = eval($mod_name.'::get_module_info()');
@@ -441,7 +447,7 @@ sub import_modules {
 			if( $info ) {
 				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
 				$known_modules->{$mod_name} = $info;
-				daemon_log("INFO: module $mod_name loaded", 5);
+				daemon_log("0 INFO: module $mod_name loaded", 5);
 			}
 		}
     }   
@@ -2727,7 +2733,64 @@ POE::Session->create(
 # import all modules
 &import_modules;
 
+# TODO
 # check wether all modules are gosa-si valid passwd check
+
+#############################################
+# send registration message to foreign server
+my @foreign_server_list;
+# add foreign server from cfg file
+if ($foreign_server_string ne "") {
+    my @cfg_foreign_server_list = split(",", $foreign_server_string);
+    foreach my $foreign_server (@cfg_foreign_server_list) {
+        push(@foreign_server_list, $foreign_server);
+    }
+}
+
+# add foreign server from dns
+my @tmp_servers;
+if ( !$server_domain) {
+    # Try our DNS Searchlist
+    for my $domain(get_dns_domains()) {
+        chomp($domain);
+        my @tmp_domains= &get_server_addresses($domain);
+        if(@tmp_domains) {
+            for my $tmp_server(@tmp_domains) {
+                push @tmp_servers, $tmp_server;
+            }
+        }
+    }
+    if(@tmp_servers && length(@tmp_servers)==0) {
+        daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+    }
+} else {
+    @tmp_servers = &get_server_addresses($server_domain);
+    if( 0 == @tmp_servers ) {
+        daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+    }
+}
+foreach my $server (@tmp_servers) { 
+    unshift(@foreign_server_list, $server); 
+}
+my $all_foreign_server = join(", ", @foreign_server_list);
+daemon_log("0 INFO: found foreign server in config file and DNS: $all_foreign_server", 5);
+
+# build messages
+foreach my $foreign_server (@foreign_server_list) {
+    # do not send myself a 'new_server' registration!!!
+    if ($foreign_server eq $server_address) { next;}
+
+    print STDERR "foreign_server: $foreign_server\n"; 
+    my %data= ('known_clients' => "",
+            'key' => "",
+    );
+    my $foreign_server_msg = &build_msg('new_server', $server_address, $foreign_server, \%data);
+    my $error = &send_msg_to_target($foreign_server_msg, $foreign_server, $foreign_server_key, "new_server", 0); 
+    if ($error != 0 ) {
+        daemon_log("0 WARNING: sending of 'new_server'-message to $foreign_server failed!", 3); 
+    }
+}
+
 
 POE::Kernel->run();
 exit;
