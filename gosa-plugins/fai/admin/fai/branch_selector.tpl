@@ -1,5 +1,5 @@
  <div class="contentboxh" style="border-bottom:1px solid #B0B0B0;">
-    <p class="contentboxh"><img src="{$branchimage}" align="right" alt="[F]">{t}Branches{/t}</p>
+    <p class="contentboxh"><img src="{$branchimage}" align="right" alt="[F]">{t}Releases{/t}</p>
    </div>
    <div class="contentboxb">
         <table summary="" style="width:100%;border-bottom:1px solid #B0B0B0;">
@@ -17,16 +17,16 @@
       <td>
     {if $allow_create}
         <input class="center" type="image" name="branch_branch" src="images/branch_small.png">
-        <a href="?plug={$plug_id}&act=branch_branch">{t}Create new branch{/t}</a>
+        <a href="?plug={$plug_id}&act=branch_branch">{t}Create release{/t}</a>
         <br>
         <input class="center" type="image" name="freeze_branch" src="images/freeze.png">
-		<a href="?plug={$plug_id}&act=freeze_branch">{t}Create new locked branch{/t}</a>
+		<a href="?plug={$plug_id}&act=freeze_branch">{t}Create read-only release{/t}</a>
     {else}
-        <img src="images/branch_small_grey.png" alt='{t}Branch{/t}' class='center'>
-        {t}Create new branch{/t}
+        <img src="images/branch_small_grey.png" alt='{t}Release{/t}' class='center'>
+        {t}Create release{/t}
         <br>
         <img src="images/freeze_grey.png" alt='{t}Freeze{/t}' class='center'>
-		{t}Create new locked branch{/t}
+		{t}Create read-only release{/t}
     {/if}
 
     {if $fai_release != $fai_base && $allow_remove}
