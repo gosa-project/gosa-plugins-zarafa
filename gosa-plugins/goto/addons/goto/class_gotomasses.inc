@@ -333,10 +333,10 @@ class gotomasses extends plugin
     }
     if(preg_match("/w/",$this->getacl(""))){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/status_start.png' alt='' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
-      $s.= "..|<img src='images/status_pause.png' alt='' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
-      $s.= "..|<img src='images/small_error.png'  alt='' border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
-      $s.= "..|<img src='images/rocket.png'       alt='' border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
+      $s.= "..|<img alt='"._("Resume")."' src='images/status_start.png' border='0' class='center'>&nbsp;"._("Resume")."|resume_all\n";
+      $s.= "..|<img alt='"._("Pause")."' src='images/status_pause.png' border='0' class='center'>&nbsp;"._("Pause")."|pause_all\n";
+      $s.= "..|<img alt='"._("Abort")."' src='images/small_error.png'  border='0' class='center'>&nbsp;"._("Abort")."|abort_process_all\n";
+      $s.= "..|<img alt='"._("Execute")."' src='images/rocket.png'       border='0' class='center'>&nbsp;"._("Execute")."|execute_process_all\n";
     }
 
     $divlist->SetDropDownHeaderMenu($s);
@@ -428,7 +428,7 @@ class gotomasses extends plugin
       /* If PROCESSING add abort action
        */  
       if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
-        $action.= "<img src='images/empty.png'>";
+        $action.= "<img src='images/empty.png' alt=''>";
         $action.= "<input class='center' type='image' src='images/small_error.png' 
           title='"._("Abort job")."' name='abort_process_".$key."'>";
       }
@@ -500,7 +500,9 @@ class gotomasses extends plugin
         /* Real percent */
         } else {
          if (preg_match('/install/', $task['HEADERTAG'])){
-            $status = "<img src='progress.php?x=80&amp;y=13&amp;p=".$percent."' alt='".$percent."&nbsp;%'>";
+            $status = "<iframe style='border:0px;width:80px;height:13px; margin:0px; padding:0px;' 
+                          src='getFAIstatus.php?mac=".$task['MACADDRESS']."'>
+                        </iframe>";
           } else {
             $status = preg_replace('/ /', '&nbsp;', _("in progress"));
           }
