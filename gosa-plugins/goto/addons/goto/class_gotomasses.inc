@@ -500,9 +500,8 @@ class gotomasses extends plugin
         /* Real percent */
         } else {
          if (preg_match('/install/', $task['HEADERTAG'])){
-            $status = "<iframe style='border:0px;width:80px;height:13px; margin:0px; padding:0px;' 
-                          src='getFAIstatus.php?mac=".$task['MACADDRESS']."'>
-                        </iframe>";
+            $status = "<img src='progress.php?x=80&y=13&p=".$task['PROGRESS']."' alt=''
+                          id='progress_".preg_replace("/:/","_",$task['MACADDRESS'])."'>";
           } else {
             $status = preg_replace('/ /', '&nbsp;', _("in progress"));
           }
