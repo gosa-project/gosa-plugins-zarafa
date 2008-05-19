@@ -500,14 +500,15 @@ sub generate_hw_digest {
 }
 
 
-sub create_passwd {
-    my $new_passwd = "";
-    for(my $i=0; $i<31; $i++) {
-        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
-    }
-
-    return $new_passwd;
-}
+# moved to GosaSupportDaemon: rettenbe, 19.05.2008
+#sub create_passwd {
+#    my $new_passwd = "";
+#    for(my $i=0; $i<31; $i++) {
+#        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
+#    }
+#
+#    return $new_passwd;
+#}
 
 
 sub create_ciphering {

@@ -60,6 +60,17 @@ sub daemon_log {
     return;
 }
 
+
+sub create_passwd {
+    my $new_passwd = "";
+    for(my $i=0; $i<31; $i++) {
+        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
+    }
+
+    return $new_passwd;
+}
+
+
 sub del_doubles { 
     my %all; 
     $all{$_}=0 for @_; 
