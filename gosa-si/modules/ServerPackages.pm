@@ -17,8 +17,8 @@ use GOSA::GosaSupportDaemon;
 #use Socket;
 #use Net::hostent;
 
-my $event_dir = "/usr/lib/gosa-si/server/events";
-use lib "/usr/lib/gosa-si/server/events";
+my $event_dir = "/usr/lib/gosa-si/server/ServerPackages";
+use lib "/usr/lib/gosa-si/server/ServerPackages";
 
 BEGIN{}
 END {}
@@ -30,7 +30,7 @@ END {}
 my ($error, $result, $event_hash) = &import_events($event_dir);
 if ($error == 0) {
     foreach my $log_line (@$result) {
-        &main::daemon_log("0 INFO: ServerPackages - $log_line", 5);
+        &main::daemon_log("0 DEBUG: ServerPackages - $log_line", 7);
     }
 } else {
     foreach my $log_line (@$result) {

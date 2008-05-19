@@ -14,8 +14,8 @@ use Data::Dumper;
 use GOSA::DBsqlite;
 use MIME::Base64;
 
-my $event_dir = "/usr/lib/gosa-si/server/events";
-use lib "/usr/lib/gosa-si/server/events";
+my $event_dir = "/usr/lib/gosa-si/server/GosaPackages";
+use lib "/usr/lib/gosa-si/server/GosaPackages";
 
 BEGIN{}
 END{}
@@ -61,7 +61,7 @@ my $xml = new XML::Simple();
 my ($error, $result, $event_hash) = &import_events($event_dir);
 if ($error == 0) {
     foreach my $log_line (@$result) {
-        &main::daemon_log("0 INFO: GosaPackages - $log_line", 5);
+        &main::daemon_log("0 DEBUG: GosaPackages - $log_line", 7);
     }
 } else {
     foreach my $log_line (@$result) {

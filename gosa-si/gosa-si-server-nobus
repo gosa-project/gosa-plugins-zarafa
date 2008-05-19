@@ -82,7 +82,7 @@ my $repo_path;
 my %repo_dirs=();
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
-    $server_ip, $server_port, $SIPackages_key, 
+    $server_ip, $server_port, $ClientPackages_key, 
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
     $foreign_server_string, $server_domain, $foreign_server_key
@@ -233,10 +233,10 @@ my $max_children = 2;
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
     },
-"SIPackages" => {
-    "key" => [\$SIPackages_key, "none"],
+"ClientPackages" => {
+    "key" => [\$ClientPackages_key, "none"],
     },
-"foreign-server"=> {
+"ServerPackages"=> {
     "address"      => [\$foreign_server_string, ""],
     "domain"  => [\$server_domain, ""],
     "key"     => [\$foreign_server_key, "none"],
@@ -613,7 +613,7 @@ sub input_from_known_server {
         else {
             $msg = $tmp_msg;
             $msg_hash = $tmp_msg_hash;
-            $module = "SIPackages";
+            $module = "ClientPackages";
             last;
         }
     }
@@ -650,7 +650,7 @@ sub input_from_known_client {
             next;
         }
         else {
-            $module = "SIPackages";
+            $module = "ClientPackages";
             last;
         }
     }

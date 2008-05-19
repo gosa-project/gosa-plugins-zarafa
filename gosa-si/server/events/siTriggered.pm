@@ -70,7 +70,7 @@ sub reload_ldap_config {
     my $header = @{$msg_hash->{header}}[0];
     my $target = @{$msg_hash->{$header}}[0];
 
-    my $out_msg = &SIPackages::new_ldap_config($target, $session_id);
+    my $out_msg = &ClientPackages::new_ldap_config($target, $session_id);
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }

@@ -1,4 +1,4 @@
-package SIPackages;
+package ClientPackages;
 
 use Exporter;
 @ISA = ("Exporter");
@@ -16,13 +16,13 @@ use Net::LDAP;
 use Socket;
 use Net::hostent;
 
-my $event_dir = "/usr/lib/gosa-si/server/events";
-use lib "/usr/lib/gosa-si/server/events";
+my $event_dir = "/usr/lib/gosa-si/server/ClientPackages";
+use lib "/usr/lib/gosa-si/server/ClientPackages";
 
 BEGIN{}
 END {}
 
-my ($server_ip, $server_port, $SIPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
+my ($server_ip, $server_port, $ClientPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
 my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
@@ -47,8 +47,8 @@ my %cfg_defaults = (
     "ldap-admin-password" => [\$ldap_admin_password, ""],
     "max-clients" => [\$max_clients, 100],
     },
-"SIPackages" => {
-    "key" => [\$SIPackages_key, ""],
+"ClientPackages" => {
+    "key" => [\$ClientPackages_key, ""],
     },
 );
 
@@ -68,11 +68,11 @@ $main::server_mac_address= &get_mac($network_interface);
 my ($error, $result, $event_hash) = &import_events($event_dir);
 if ($error == 0) {
     foreach my $log_line (@$result) {
-        &main::daemon_log("0 INFO: SIPackages - $log_line", 5);
+        &main::daemon_log("0 DEBUG: ClientPackages - $log_line", 7);
     }
 } else {
     foreach my $log_line (@$result) {
-        &main::daemon_log("0 ERROR: SIPackages - $log_line", 1);
+        &main::daemon_log("0 ERROR: ClientPackages - $log_line", 1);
     }
 
 }
@@ -177,7 +177,7 @@ my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
         primkey=>['hostname'],
         hostname=>$server_address,
         status=>'myself',
-        hostkey=>$SIPackages_key,
+        hostkey=>$ClientPackages_key,
         timestamp=>&get_time,
         } );
 
@@ -188,7 +188,7 @@ my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
 
 sub get_module_info {
     my @info = ($server_address,
-                $SIPackages_key,
+                $ClientPackages_key,
                 );
     return \@info;
 }
@@ -389,7 +389,7 @@ sub register_at_bus {
 #            $event_hash->{$event_name} = $event_module;
 #        }
 #        my $events_string = join( ", ", @{$events_l});
-#        &main::daemon_log("S DEBUG: SIPackages imported events $events_string", 8);
+#        &main::daemon_log("S DEBUG: ClientPackages imported events $events_string", 8);
 #    }
 #}
 
@@ -416,7 +416,7 @@ sub process_incoming_msg {
     # skip PREFIX
     $header =~ s/^CLMSG_//;
 
-    &main::daemon_log("$session_id DEBUG: SIPackages: msg to process: $header", 7);
+    &main::daemon_log("$session_id DEBUG: ClientPackages: msg to process: $header", 7);
 
     if( 0 == length @target_l){     
         &main::daemon_log("$session_id ERROR: no target specified for msg $header", 1);
@@ -471,7 +471,7 @@ sub process_incoming_msg {
             if( not defined $out_msg_l[0] ) {
                 @out_msg_l = ();
             } elsif( $out_msg_l[0] eq 'nohandler') {
-                &main::daemon_log("$session_id ERROR: SIPackages: no event handler or core function defined for '$header'", 1);
+                &main::daemon_log("$session_id ERROR: ClientPackages: no event handler or core function defined for '$header'", 1);
                 @out_msg_l = ();
             }  elsif ($out_msg_l[0] eq 'knownclienterror') {
                 &main::daemon_log("$session_id ERROR: no or more than 1 hits are found at known_clients_db with sql query: '$sql_events'", 1);
