@@ -83,6 +83,9 @@ function handleContent()
 		for (var i = 0; i < data.length; i++) {
 			var mac 	= data[i].replace(/\|.*$/,"");
 			var progress= data[i].replace(/^.*\|/,"");
+
+			// DEBUG 
+			//progress = parseInt(Math.random() * 100);
 	
 			/* Walk through progress images and check if the 
 				progress status has changed 
