@@ -45,6 +45,8 @@ class gotomasses extends plugin
   var $range    = 25;
   var $start    = 0;
 
+  var $recently_removed = array();
+
   function gotomasses(&$config, $dn= NULL)
   {
     /* Include config object */
@@ -681,6 +683,8 @@ class gotomasses extends plugin
       $tmp = new DaemonEvent_faireboot($this->config);
       $tmp->add_targets($update_ids);
       $tmp->set_type(TRIGGERED_EVENT);
+      $this->recently_removed = $update_ids;
+      
       if(!$this->o_queue->append($tmp)){
         msg_dialog::display(_("Error"), sprintf(_("Cannot update queue entry: %s"),$id) , ERROR_DIALOG);
         return(FALSE);
@@ -771,8 +775,14 @@ class gotomasses extends plugin
     $this->entries = array();
     
     foreach($entries as $entry){
+    
+      /* Skip entries which will be removed within the next seconds */
+      if(isset($entry['MACADDRESS']) && in_array($entry['MACADDRESS'],$this->recently_removed)){
+        continue;
+      }
       $this->entries[$entry['ID']]= $entry;
     }
+    $this->recently_removed = array();
   }
 
 
