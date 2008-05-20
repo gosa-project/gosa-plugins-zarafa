@@ -3,6 +3,7 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     'new_server',
+    'confirm_new_server',
     );
 @EXPORT = @events;
 
@@ -55,9 +56,26 @@ sub new_server {
     
 
     # build confirm_new_server message
-    my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source);
-    my $error =  &main::send_msg_to_target($out_msg, $source, $key, 'confirm_new_server', 0); 
+    my %data = ( key=>$key );
+    my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
+    my $error =  &main::send_msg_to_target($out_msg, $source, $main::Serverpackages_key, 'confirm_new_server', $session_id); 
     
+
+}
+
+
+sub confirm_new_server {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+
+print STDERR Dumper($msg_hash);
+
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $key = @{$msg_hash->{'key'}}[0];
+
+    my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key' WHERE hostname='$source'"; 
+    my $res = $main::known_server_db->update_dbentry($sql);
+
 
 }
 

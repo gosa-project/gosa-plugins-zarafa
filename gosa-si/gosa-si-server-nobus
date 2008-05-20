@@ -614,7 +614,7 @@ sub input_from_known_server {
         else {
             $msg = $tmp_msg;
             $msg_hash = $tmp_msg_hash;
-            $module = "ClientPackages";
+            $module = "ServerPackages";
             last;
         }
     }
@@ -914,7 +914,7 @@ sub send_msg_to_target {
         print $socket $crypted_msg."\n";
 
         daemon_log("$session_id INFO: send ".$header."msg to $address", 5);
-        #daemon_log("DEBUG: message:\n$msg", 9);
+        daemon_log("DEBUG: message:\n$msg", 9);
         
     }
 
