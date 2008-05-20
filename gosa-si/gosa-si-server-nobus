@@ -157,6 +157,12 @@ our $known_clients_tn = "known_clients";
 my $known_clients_file_name;
 my @known_clients_col_names = ("hostname", "status", "hostkey", "timestamp", "macaddress", "events");
 
+# holds all registered clients at a foreign server
+our $foreign_clients_db;
+our $foreign_clients_tn = "foreign_clients"; 
+my $foreign_clients_file_name;
+my @foreign_clients_col_names = ("hostname", "macaddress", "regserver", "timestamp");
+
 # holds all logged in user at each client 
 our $login_users_db;
 our $login_users_tn = "login_users";
@@ -216,6 +222,7 @@ my $max_children = 2;
     "fai-release"          => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
     "packages-list"        => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
     "messaging"            => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
+    "foreign-clients"      => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
     "source-list"          => [\$sources_list, '/etc/apt/sources.list'],
     "repo-path"            => [\$repo_path, '/srv/www/repository'],
     "ldap-uri"             => [\$ldap_uri, ""],
@@ -950,7 +957,6 @@ sub send_msg_to_target {
     # known_server
     $sql_statement = "SELECT * FROM $known_server_tn WHERE hostname='$address'";
     $res = $known_server_db->select_dbentry($sql_statement);
-print STDERR Dumper($res);    
     if( keys(%$res) > 0 ) {
         $act_status = $res->{1}->{'status'};
         if ($act_status eq "down" && $new_status eq "down") {
@@ -2582,25 +2588,31 @@ sub register_at_foreign_servers {
     my ($kernel) = $_[KERNEL];
 
     # hole alle bekannten server aus known_server_db
-    my $sql = "SELECT * FROM $known_server_tn";
-    my $res = $known_server_db->exec_statement($sql);
+    my $server_sql = "SELECT * FROM $known_server_tn";
+    my $server_res = $known_server_db->exec_statement($server_sql);
 
     # no entries in known_server_db
-    if (not ref(@$res[0]) eq "ARRAY") { 
+    if (not ref(@$server_res[0]) eq "ARRAY") { 
         # TODO
     }
 
-    foreach my $hit (@$res) {
+    # detect already connected clients
+    my $client_sql = "SELECT * FROM $known_clients_tn"; 
+    my $client_res = $known_clients_db->exec_statement($client_sql);
+
+    # send my server details to all other gosa-si-server within the network
+    foreach my $hit (@$server_res) {
         my $hostname = @$hit[0];
         my $hostkey = &create_passwd;
 
-        my %data= ('known_clients' => "",
-                'key' => $hostkey,
-                );
-        my $foreign_server_msg = &build_msg('new_server', $server_address, $hostname, \%data);
-        my $error = &send_msg_to_target($foreign_server_msg, $hostname, $ServerPackages_key, "new_server", 0); 
-
+        # add already connected clients to registration message 
+        my $myhash = &create_xml_hash('new_server', $server_address, $hostname);
+        &add_content2xml_hash($myhash, 'key', $hostkey);
+        map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
         
+        # build registration message and send it
+        my $foreign_server_msg = &create_xml_string($myhash);
+        my $error = &send_msg_to_target($foreign_server_msg, $hostname, $ServerPackages_key, "new_server", 0); 
     }
     
     $kernel->delay_set("register_at_foreign_servers", $foreign_servers_register_delay); 
@@ -2687,6 +2699,10 @@ $job_db->create_table($job_queue_tn, \@job_queue_col_names);
 # connect to known_clients_db
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
+
+# connect to foreign_clients_db
+$foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
+$foreign_clients_db->create_table($foreign_clients_tn, \@foreign_clients_col_names);
 
 # connect to known_server_db
 unlink($known_server_file_name);

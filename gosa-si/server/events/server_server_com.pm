@@ -30,12 +30,12 @@ sub new_server {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
-    my $clients = @{$msg_hash->{'clients'}}[0];
-    
+    my @clients = @{$msg_hash->{'client'}};
+
     # sanity check
     if (ref $key eq 'HASH') {
         &main::daemon_log("$session_id ERROR: 'new_server'-message from host '$source' contains no key!", 1);
-        #return;
+        return;
     }
 
     # add foreign server to known_server_db
@@ -53,8 +53,26 @@ sub new_server {
     }
 
     # add clients of foreign server to known_foreign_clients_db
-    
+    my @sql_list;
+    foreach my $client (@clients) {
+        my @client_details = split(/,/, $client);
 
+        # workaround to avoid double entries in foreign_clients_db
+        my $del_sql = "DELTE FROM $main::foreign_clients_tn WHERE hostname='".$client_details[0]."'";
+        push(@sql_list, $del_sql);
+
+        my $sql = "INSERT INTO $main::foreign_clients_tn VALUES ("
+            ."'".$client_details[0]."',"   # hostname
+            ."'".$client_details[1]."',"   # macaddress
+            ."'".$source."',"              # regserver
+            ."'".&get_time()."')";         # timestamp
+        push(@sql_list, $sql);
+    }
+    if (@sql_list) {
+        &main::daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to foreign_clients_db", 8);
+        my $res = $main::foreign_clients_db->exec_statementlist(\@sql_list);
+    }
+            
     # build confirm_new_server message
     my %data = ( key=>$key );
     my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);

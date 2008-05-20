@@ -431,11 +431,13 @@ sub process_incoming_msg {
             } elsif ($header eq 'here_i_am') {
                 @out_msg_l = &here_i_am($msg, $msg_hash, $session_id)
             } else {
+                # a event exists with the header as name
                 if( exists $event_hash->{$header} ) {
-                    # a event exists with the header as name
                     &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
                     no strict 'refs';
                     @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+
+                # if no event handler is implemented   
                 } else {
                     $sql_events = "SELECT * FROM $main::known_clients_tn WHERE ( (macaddress LIKE '$source') OR (hostname='$source') )"; 
                     my $res = $main::known_clients_db->select_dbentry( $sql_events );
@@ -557,7 +559,6 @@ sub here_i_am {
     my ($msg, $msg_hash, $session_id) = @_;
     my @out_msg_l;
     my $out_hash;
-
     my $source = @{$msg_hash->{source}}[0];
     my $mac_address = @{$msg_hash->{mac_address}}[0];
 	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
@@ -594,11 +595,8 @@ sub here_i_am {
     # new client accepted
     my $new_passwd = @{$msg_hash->{new_passwd}}[0];
 
-    # create entry in known_clients
-    my $events = @{$msg_hash->{events}}[0];
-    
-
     # add entry to known_clients_db
+    my $events = @{$msg_hash->{events}}[0];
     my $act_timestamp = &get_time;
     my $res = $main::known_clients_db->add_dbentry( {table=>'known_clients', 
                                                 primkey=>['hostname'],
@@ -618,21 +616,24 @@ sub here_i_am {
     # return acknowledgement to client
     $out_hash = &create_xml_hash("registered", $server_address, $source);
 
-    # notify registered client to bus
-    if( $bus_activ eq "on") {
-        # fetch actual bus key
-        my $sql_statement= "SELECT * FROM known_server WHERE status='bus'";
-        my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-        my $hostkey = $query_res->{1}->{'hostkey'};
 
-        # send update msg to bus
-        $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-        &add_content2xml_hash($out_hash, "macaddress", $mac_address);
-        &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
-        my $new_client_out = &create_xml_string($out_hash);
-        push(@out_msg_l, $new_client_out);
-        &main::daemon_log("$session_id INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
-    }
+
+
+#    # notify registered client to all other server
+#    if( $bus_activ eq "on") {
+#        # fetch actual bus key
+#        my $sql_statement= "SELECT * FROM known_server WHERE status='bus'";
+#        my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+#        my $hostkey = $query_res->{1}->{'hostkey'};
+#
+#        # send update msg to bus
+#        $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
+#        &add_content2xml_hash($out_hash, "macaddress", $mac_address);
+#        &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
+#        my $new_client_out = &create_xml_string($out_hash);
+#        push(@out_msg_l, $new_client_out);
+#        &main::daemon_log("$session_id INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
+#    }
 
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
@@ -661,9 +662,13 @@ sub here_i_am {
 		push(@out_msg_l, $hardware_config_out);
 	}
 
+    # notify registered client to all other server
+    my %mydata = ( 'client' => $source, 'macaddress' => $mac_address);
+    my $mymsg = &build_msg('new_foreign_client', $main::server_address, "KNOWN_SERVER", \%mydata);
+    push(@out_msg_l, $mymsg);
+
     &main::daemon_log("$session_id INFO: register client $source ($mac_address)", 5);
     &main::daemon_log("$session_id INFO: client version: $client_status - $client_revision", 5); 
-
     return @out_msg_l;
 }
 
