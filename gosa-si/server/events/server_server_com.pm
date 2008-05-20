@@ -58,7 +58,7 @@ sub new_server {
     # build confirm_new_server message
     my %data = ( key=>$key );
     my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
-    my $error =  &main::send_msg_to_target($out_msg, $source, $main::Serverpackages_key, 'confirm_new_server', $session_id); 
+    my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
     
 
 }
@@ -66,9 +66,6 @@ sub new_server {
 
 sub confirm_new_server {
     my ($msg, $msg_hash, $session_id) = @_ ;
-
-print STDERR Dumper($msg_hash);
-
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];

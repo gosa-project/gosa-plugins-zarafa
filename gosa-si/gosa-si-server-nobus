@@ -932,7 +932,7 @@ sub send_msg_to_target {
     $res = $known_clients_db->select_dbentry($sql_statement);
     if( keys(%$res) > 0) {
         $act_status = $res->{1}->{'status'};
-        if( $act_status eq "down" ) {
+        if ($act_status eq "down" && $new_status eq "down") {
             $sql_statement = "DELETE FROM known_clients WHERE hostname='$address'";
             $res = $known_clients_db->del_dbentry($sql_statement);
             daemon_log("$session_id WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
@@ -948,11 +948,12 @@ sub send_msg_to_target {
     }
 
     # known_server
-    $sql_statement = "SELECT * FROM known_server WHERE hostname='$address'";
+    $sql_statement = "SELECT * FROM $known_server_tn WHERE hostname='$address'";
     $res = $known_server_db->select_dbentry($sql_statement);
+print STDERR Dumper($res);    
     if( keys(%$res) > 0 ) {
         $act_status = $res->{1}->{'status'};
-        if( $act_status eq "down" ) {
+        if ($act_status eq "down" && $new_status eq "down") {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
             $res = $known_server_db->del_dbentry($sql_statement);
             daemon_log("$session_id WARNING: failed 2x to send a message to host '$address', delete host from known_server", 3);
