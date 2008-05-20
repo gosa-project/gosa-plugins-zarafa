@@ -124,6 +124,19 @@ class gotomasses extends plugin
 
 
     /************
+     * Import CSV file  
+     ************/
+    
+    if($s_action == "import_file"){
+      $this->dialog = new goto_import_file($this->config,$this);
+    }
+  
+    if(isset($_POST['import_abort'])){
+      $this->dialog = FALSE;
+    }
+
+
+    /************
      * Handle Priority modifications  
      ************/
 
@@ -331,6 +344,7 @@ class gotomasses extends plugin
     }
     if($this->acl_is_removeable()){
       $s.= "..|---|\n";
+      $s.= "..|<img src='images/alternatemail.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
       $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
     }
     if(preg_match("/w/",$this->getacl(""))){
