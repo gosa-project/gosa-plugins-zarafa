@@ -3,11 +3,11 @@
 <table>
 	<tr>	
 		<td>
-			{t}Select the file to import{/t}
+			{t}Select the semicolon seperated list to import{/t}
 		</td>
 		<td>
 			<input type='file' name='file' value="{t}Browse{/t}">
-			<input type='submit' name='import' value='{t}Load{/t}'>
+			<input type='submit' name='import' value='{t}Upload{/t}'>
 		</td>
 	</tr>
 	{if  $count}

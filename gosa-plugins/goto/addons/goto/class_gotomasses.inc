@@ -344,7 +344,7 @@ class gotomasses extends plugin
     }
     if($this->acl_is_removeable()){
       $s.= "..|---|\n";
-      $s.= "..|<img src='images/alternatemail.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
+      $s.= "..|<img src='images/lists/import.png' alt='' border='0' class='center'>&nbsp;"._("Import")."|import_file\n";
       $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>&nbsp;"._("Remove")."|remove_multiple\n";
     }
     if(preg_match("/w/",$this->getacl(""))){
