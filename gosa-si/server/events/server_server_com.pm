@@ -58,7 +58,7 @@ sub new_server {
         my @client_details = split(/,/, $client);
 
         # workaround to avoid double entries in foreign_clients_db
-        my $del_sql = "DELTE FROM $main::foreign_clients_tn WHERE hostname='".$client_details[0]."'";
+        my $del_sql = "DELETE FROM $main::foreign_clients_tn WHERE hostname='".$client_details[0]."'";
         push(@sql_list, $del_sql);
 
         my $sql = "INSERT INTO $main::foreign_clients_tn VALUES ("
@@ -69,7 +69,9 @@ sub new_server {
         push(@sql_list, $sql);
     }
     if (@sql_list) {
-        &main::daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to foreign_clients_db", 8);
+		my $len = @sql_list;
+		$len /= 2;
+        &main::daemon_log("$session_id DEBUG: Inserting ".$len." entries to foreign_clients_db", 8);
         my $res = $main::foreign_clients_db->exec_statementlist(\@sql_list);
     }
             
@@ -93,5 +95,19 @@ sub confirm_new_server {
 
 
 }
+
+
+sub new_foreign_client {
+		my ($msg, $msg_hash, $session_id) = @_ ;
+		my $header = @{$msg_hash->{'header'}}[0];
+		my $source = @{$msg_hash->{'source'}}[0];
+		my $new_client = @{$msg_hash->{'client'}}[0];
+
+		my $func_dic = ();
+		
+
+		return;
+}
+
 
 1;

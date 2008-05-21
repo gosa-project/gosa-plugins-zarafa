@@ -172,16 +172,6 @@ if($bus_activ eq "on") {
     &register_at_bus();
 }
 
-# add myself to known_server_db
-my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
-        primkey=>['hostname'],
-        hostname=>$server_address,
-        status=>'myself',
-        hostkey=>$ClientPackages_key,
-        timestamp=>&get_time,
-        } );
-
-
 
 ### functions #################################################################
 
