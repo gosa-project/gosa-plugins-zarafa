@@ -13,8 +13,8 @@ class goto_import_file extends plugin
     $this->daemon_events  = DaemonEvent::get_event_types( SYSTEM_EVENT);
 
     $this->csv_fields = array(
-        "0" => "MAC",  "1" => "HEADER", "2" => "OGROUP",
-        "3" => "BASE", "4" => "FQDN",   "5" => "IP",     "6" => "DHCP");
+        "0"=>"TIMESTAMP","1" => "MAC",  "2" => "HEADER", "3" => "OGROUP",
+        "4" => "BASE", "5" => "FQDN",   "6" => "IP",     "7" => "DHCP");
   }
 
 
@@ -107,6 +107,7 @@ class goto_import_file extends plugin
           /* Update values like fqdn a.s.o 
            */
           foreach($this->csv_fields as $name){
+            if($name == "TIMESTAMP" && empty($event[$name])) continue;
             $object->set_value($name,$event[$name]);
           }
 

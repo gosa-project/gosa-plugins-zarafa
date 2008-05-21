@@ -27,6 +27,7 @@
 		<div style='width:100%; height:300px; overflow: scroll;'>
 		<table cellpadding="3" cellspacing="0" style='width:100%; background-color: #CCCCCC; border: solid 1px #CCCCCC;'>
 			<tr>
+				<td><b>{t}Timestamp{/t}</b></td>
 				<td><b>{t}Mac{/t}</b></td>
 				<td><b>{t}Event{/t}</b></td>
 				<td><b>{t}Object group{/t}</b></td>
@@ -38,6 +39,7 @@
 		{foreach from=$info item=item key=key}
 			{if $item.ERROR}
 				<tr style='background-color: #F0BBBB;'>
+					<td>{$item.TIMESTAMP}</td>
 					<td>{$item.MAC}</td>
 					<td>{$item.HEADER}</td>
 					<td>{$item.OGROUP}</td>
@@ -55,8 +57,8 @@
 				{else}
 					<tr class="rowxp1"> 
 				{/if}
-
-					<td>{$item.MAC}</td>
+					<td>{$item.TIMESTAMP}</td>
+					<td style='border-left: solid 1px #BBBBBB;'>{$item.MAC}</td>
 					<td style='border-left: solid 1px #BBBBBB;'>{$item.HEADER}</td>
 					<td style='border-left: solid 1px #BBBBBB;'>{$item.OGROUP}</td>
 					<td style='border-left: solid 1px #BBBBBB;'>{$item.BASE}</td>
