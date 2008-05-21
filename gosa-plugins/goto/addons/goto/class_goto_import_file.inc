@@ -103,6 +103,13 @@ class goto_import_file extends plugin
           $object = new $class($this->config);
           $object->set_type(TRIGGERED_EVENT);
           $object->add_targets(array($event['MAC']));
+
+          /* Update values like fqdn a.s.o 
+           */
+          foreach($this->csv_fields as $name){
+            $object->set_value($name,$event[$name]);
+          }
+
           if(!$this->parent->o_queue->append($object)){
             msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->parent->o_queue->get_error()),ERROR_DIALOG);
             $fail ++;

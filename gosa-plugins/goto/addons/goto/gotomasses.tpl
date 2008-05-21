@@ -129,7 +129,7 @@ function handleContent()
 			   This means it was removed from the queue.
 			 */
 			if(!found){
-				document.location.reload();				
+				document.mainform.submit();				
 			}
 		}
 		timer=setTimeout('loadContent()',3000);
