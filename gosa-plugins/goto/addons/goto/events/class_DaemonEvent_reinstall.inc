@@ -71,12 +71,6 @@ class DaemonEvent_reinstall extends DaemonEvent
     $display.= $this->get_footer();
     return($display);
   }
-
-  public function save()
-  {
-    $ret = DaemonEvent::save();
-    return($ret);
-  } 
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

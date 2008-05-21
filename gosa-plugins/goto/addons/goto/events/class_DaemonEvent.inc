@@ -68,6 +68,8 @@ class DaemonEvent
   protected $server_list          = array();  // Used as cache in the target list.
 
   protected $visible_for          = HIDDEN_EVENT;
+
+  protected $attributes           = array();
  
   function set_type($type)
   {
@@ -409,7 +411,7 @@ class DaemonEvent
     return($this->s_Schedule_Action);
   }
 
-  //
+
   /*! \brief  Returns the event tag to schedule a new action 
     @param    Returns the event e.g. 'trigger_action_wake'
    */
@@ -418,13 +420,19 @@ class DaemonEvent
     return($this->s_Trigger_Action);
   }
 
+
   /*! brief  Returns an array containig all attributes \
     That should be written.
     @return Array e.g. 'status' => 'bla blub'  
    */ 
   public function save()
   {
-    return(array("timestamp" => $this->_timestamp_to_event($this->timestamp)));
+    $ret = array();
+    foreach($this->attributes as $attr){
+      $ret[$attr] = $this->$attr;
+    }
+    $ret['timestamp'] = $this->_timestamp_to_event($this->timestamp);
+    return($ret);
   }
 
 
@@ -485,6 +493,16 @@ class DaemonEvent
   public function check()
   {
     return(array());
+  }
+
+
+  /*! \brief Update a class variable from outside 
+   */
+  public function set_value($name,$value)
+  {
+    if(isset($this->$name) && in_array($name,$this->attributes)){
+      $this->$name = $value;
+    }
   }
 }
 

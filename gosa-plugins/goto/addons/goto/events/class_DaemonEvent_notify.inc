@@ -31,6 +31,8 @@ class DaemonEvent_notify extends DaemonEvent
   var $subject = "";
   var $from    = "";
 
+  var $attributes = array("from","users","groups","message","subject");
+
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
@@ -197,11 +199,10 @@ class DaemonEvent_notify extends DaemonEvent
   public function save()
   {
     $ret = DaemonEvent::save();
-    $ret['users']   = array_values($this->users);
-    $ret['groups']  = array_values($this->groups);
-    $ret['subject'] = base64_encode($this->subject);
-    $ret['from']    = $this->from;
-    $ret['message'] = base64_encode($this->message);
+    $ret['users']   = array_values( $ret['users']);
+    $ret['groups']  = array_values( $ret['groups']);
+    $ret['subject'] = base64_encode($ret['subject']);
+    $ret['message'] = base64_encode($ret['message']);
     return($ret);
   }
 } 
