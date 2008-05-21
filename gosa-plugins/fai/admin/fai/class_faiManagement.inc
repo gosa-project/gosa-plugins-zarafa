@@ -544,6 +544,10 @@ class faiManagement extends plugin
             $this->lock_dn     = $bb;
             $this->postremove();
 
+            $fai_filter = session::get("fai_filter");
+            $fai_filter['fai_release'] = $this->fai_release;
+            session::set("fai_filter",$fai_filter);
+
             new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
           }
         }
