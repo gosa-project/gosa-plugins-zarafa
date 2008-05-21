@@ -946,7 +946,7 @@ class FAI
     $to_copy = array();
     foreach($source_dns as $dn => $attrs){
       $ldap->cd($dn);
-      $ldap->ls("(objectClass=gotoSubmenuEntry)(objectClass=gotoMenuEntry)",$dn,array("dn"));
+      $ldap->ls("(|(objectClass=gotoSubmenuEntry)(objectClass=gotoMenuEntry))",$dn,array("dn"));
       while($attrs = $ldap->fetch()){
         $destination = preg_replace("/".normalizePreg($dn)."$/","ou=".$destination_name.",".$dn,$attrs['dn']);
         $to_copy[$attrs['dn']] = $destination;
