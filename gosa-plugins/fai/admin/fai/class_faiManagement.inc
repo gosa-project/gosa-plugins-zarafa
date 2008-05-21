@@ -47,7 +47,7 @@ class faiManagement extends plugin
 
   /* Allow inserting of new elements if freezed releases 
   */
-  var $allow_freeze_object_attach = FALSE;
+  var $allow_freeze_object_attach = TRUE;
 
   var $no_save;
   var $fai_base     ="";
@@ -1096,12 +1096,23 @@ class faiManagement extends plugin
            * entry is of type 'freeze' or 'branch'
            */
           if(!isset($object['FAIstate'])){
-            $obj['FAIstate'] = $this->lock_type;
+            
+            /* Is this entry inherited from an earlier release? 
+               In this case inherit the FAIstate from the release container.
+               If this is a newly created entry (allow_freeze_object_attach == TRUE) 
+                then allow to edit this entry by setting its FAIstate manually to branch. 
+             */
+            if($this->allow_freeze_object_attach && preg_match("/".normalizePreg($this->fai_release)."$/i",$object['dn'])){
+              $obj['FAIstate'] = "branch|overridden_by_management_reload";
+            }else{
+              $obj['FAIstate'] = $this->lock_type;
+            }
+  
           }else{
             $obj['FAIstate'] = $object['FAIstate'][0]; 
           }
 
-          if($force_freezed){
+          if($force_freezed && !$this->allow_freeze_object_attach){
             $obj['FAIstate'] = "freeze";
           }
 
