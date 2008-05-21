@@ -69,7 +69,7 @@ class DaemonEvent
 
   protected $visible_for          = HIDDEN_EVENT;
 
-  protected $attributes           = array();
+  protected $attributes           = array("timestamp");
  
   function set_type($type)
   {
@@ -500,6 +500,7 @@ class DaemonEvent
    */
   public function set_value($name,$value)
   {
+    $name = strtolower($name);
     if(isset($this->$name) && in_array($name,$this->attributes)){
       $this->$name = $value;
     }
