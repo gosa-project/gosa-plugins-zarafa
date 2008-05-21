@@ -199,6 +199,7 @@ class DaemonEvent_notify extends DaemonEvent
   public function save()
   {
     $ret = DaemonEvent::save();
+    $ret['delivery_time'] = $ret['timestamp'];
     $ret['users']   = array_values( $ret['users']);
     $ret['groups']  = array_values( $ret['groups']);
     $ret['subject'] = base64_encode($ret['subject']);
