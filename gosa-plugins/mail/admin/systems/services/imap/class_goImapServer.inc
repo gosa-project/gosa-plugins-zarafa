@@ -150,6 +150,36 @@ class goImapServer extends goService {
   }
 
 
+  /* Save service */
+  function save()
+  {
+    /* Move cn to sieve server */
+    $this->goImapSieveServer= $this->cn;
+
+    plugin::save();
+    /* Check if this is a new entry ... add/modify */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat($this->dn,array("objectClass"));
+    if($ldap->count()){
+      $ldap->cd($this->dn);
+      $ldap->modify($this->attrs);
+    }else{
+      $ldap->cd($this->dn);
+      $ldap->add($this->attrs);
+    }
+    if($this->initially_was_account){
+      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      $this->handle_post_events("modify");
+    }else{
+      $this->handle_post_events("add");
+      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
+  }
+
+
   /* Return plugin informations for acl handling */
   static function plInfo()
   {
