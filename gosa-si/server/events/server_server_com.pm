@@ -4,6 +4,7 @@ use Exporter;
 my @events = (
     'new_server',
     'confirm_new_server',
+    'new_foreign_client',
     );
 @EXPORT = @events;
 
@@ -101,10 +102,36 @@ sub new_foreign_client {
 		my ($msg, $msg_hash, $session_id) = @_ ;
 		my $header = @{$msg_hash->{'header'}}[0];
 		my $source = @{$msg_hash->{'source'}}[0];
-		my $new_client = @{$msg_hash->{'client'}}[0];
+		my $hostname = @{$msg_hash->{'client'}}[0];
+        my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
-		my $func_dic = ();
-		
+        my $func_dic = { table => $main::foreign_clients_tn,
+            primkey => ['hostname'],
+            hostname =>   $hostname,
+            macaddress => $macaddress,
+            regserver =>  $source,
+            timestamp =>  &get_time(),
+        };
+
+        
+        my $res = $main::foreign_clients_db->add_dbentry($func_dic);
+        if (not $res == 0) {
+            &main::daemon_log("$session_id ERROR: server_server_com.pm: cannot add server to foreign_clients_db: $res", 1);
+        } else {
+            &main::daemon_log("$session_id INFO: server_server_com.pm: client '$hostname' successfully added to foreign_clients_db", 5);
+        }
+
+
+#
+#		 my $func_dic = {table=>$main::known_server_tn,
+#        primkey=>['hostname'],
+#        hostname => $source,
+#        hostkey => $key,
+#        timestamp=>&get_time(),
+#    };
+#    my $res = $main::known_server_db->add_dbentry($func_dic);
+#
+
 
 		return;
 }
