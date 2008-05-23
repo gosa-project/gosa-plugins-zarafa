@@ -161,16 +161,33 @@ if( $bus_ip eq "127.0.1.1" ) { $bus_ip = "127.0.0.1" }
 my $bus_address = "$bus_ip:$bus_port";
 $main::bus_address = $bus_address;
 
-# create general settings for this module
-my $xml = new XML::Simple();
 
-# register at bus
-if ($main::no_bus > 0) {
-    $bus_activ = "off"
+my $hostkey = &create_passwd;
+my $res = $main::known_server_db->add_dbentry( {table=>$main::known_server_tn, 
+            primkey=>['hostname'],
+            hostname=>$main::server_address,
+            status=>'myself',
+            hostkey=>$hostkey,
+            timestamp=>&get_time(),
+            } );
+if (not $res == 0) {
+    &main::daemon_log("0 ERROR: cannot add server to known_server_db: $res", 1);
+} else {
+    &main::daemon_log("0 INFO: '$main::server_address' successfully added to known_server_db", 5);
 }
-if($bus_activ eq "on") {
-    &register_at_bus();
-}
+
+
+
+## create general settings for this module
+#my $xml = new XML::Simple();
+#
+## register at bus
+#if ($main::no_bus > 0) {
+#    $bus_activ = "off"
+#}
+#if($bus_activ eq "on") {
+#    &register_at_bus();
+#}
 
 
 ### functions #################################################################
