@@ -30,7 +30,7 @@ sub new_server {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
-    my @clients = @{$msg_hash->{'client'}};
+    my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
 
     # sanity check
     if (ref $key eq 'HASH') {
