@@ -2210,13 +2210,24 @@ sub create_packages_list_db {
 	close (CONFIG);
 
 	find(\&cleanup_and_extract, keys( %repo_dirs ));
-	&main::strip_packages_list_statements();
+	eval {
+		&main::strip_packages_list_statements();
+	};
+	if($@) {
+		daemon_log("$session_id ERROR: Preparation of statement list failed with '$@'!", 1);
+	}
 	unshift @packages_list_statements, "VACUUM";
-	$packages_list_db->exec_statementlist(\@packages_list_statements);
+	eval {
+		$packages_list_db->exec_statementlist(\@packages_list_statements);
+	};
+	if($@) {
+		daemon_log("$session_id ERROR: Updating package_list_db failed with '$@'!", 1);
+	}
 	unlink($packages_list_under_construction);
 	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
 	return;
 }
+
 
 # This function should do some intensive task to minimize the db-traffic
 sub strip_packages_list_statements {
