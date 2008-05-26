@@ -244,7 +244,8 @@ sub daemon_log {
     if(not defined $msg) { return }
     if(not defined $level) { $level = 1 }
     if(defined $log_file){
-        open(LOG_HANDLE, ">>$log_file", 0600);
+        open(LOG_HANDLE, ">>$log_file");
+        chmod 0600, $log_file;
         if(not defined open( LOG_HANDLE, ">>$log_file" )) {
             print STDERR "cannot open $log_file: $!";
             return }
