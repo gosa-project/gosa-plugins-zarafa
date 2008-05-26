@@ -742,6 +742,7 @@ sub register_at_gosa_si_server {
             &add_content2xml_hash($register_hash, "client_status", $client_status);
             &add_content2xml_hash($register_hash, "client_revision", $client_revision);
 			&add_content2xml_hash($register_hash, "gotoHardwareChecksum", $gotoHardwareChecksum);
+            &add_content2xml_hash($register_hash, "key_lifetime", $server_key_lifetime);
 
 			# Add $HOSTNAME from ENV if force-hostname is set
 			if( defined($client_force_hostname) && $client_force_hostname eq "true") {

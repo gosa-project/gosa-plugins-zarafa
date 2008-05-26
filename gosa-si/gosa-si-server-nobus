@@ -155,7 +155,7 @@ my @known_server_col_names = ("hostname", "status", "hostkey", "timestamp");
 our $known_clients_db;
 our $known_clients_tn = "known_clients";
 my $known_clients_file_name;
-my @known_clients_col_names = ("hostname", "status", "hostkey", "timestamp", "macaddress", "events");
+my @known_clients_col_names = ("hostname", "status", "hostkey", "timestamp", "macaddress", "events", "keylifetime");
 
 # holds all registered clients at a foreign server
 our $foreign_clients_db;
@@ -1339,6 +1339,7 @@ sub trigger_db_loop {
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
+    $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 }
 
 
@@ -1573,7 +1574,7 @@ sub watch_for_delivery_messages {
 				# fetch key to encrypt msg propperly for usr/host
 				my $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$receiver_host')";
 				&daemon_log("0 DEBUG: $sql", 7);
-				my $res = $known_clients_db->exec_statement($sql);
+				my $res = $known_clients_db->select_dbentry($sql);
 
 				# host is already down
 				if (not ref(@$res[0]) eq "ARRAY") { next; }
@@ -1629,6 +1630,29 @@ sub watch_for_done_messages {
 }
 
 
+sub watch_for_old_known_clients {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    my $sql_statement = "SELECT * FROM $known_clients_tn";
+    my $res = $known_clients_db->select_dbentry( $sql_statement );
+
+    my $act_time = int(&get_time());
+    while ( my ($hit_num, $hit) = each %$res) {
+        my $expired_timestamp = int($hit->{'timestamp'}) + (2 * int($hit->{'keylifetime'}));
+        if ($act_time > $expired_timestamp) {
+            my $hostname = $hit->{'hostname'};
+            my $del_sql = "DELETE FROM $known_clients_tn WHERE hostname='$hostname'"; 
+            my $del_res = $known_clients_db->exec_statement($del_sql);
+
+            &main::daemon_log("0 INFO: timestamp of client '$hostname' is expired, client will be deleted from known_clients_db", 5);
+        }
+
+    }
+
+    $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
+}
+
+
 sub get_ldap_handle {
 	my ($session_id) = @_;
 	my $heap;
@@ -1640,7 +1664,7 @@ sub get_ldap_handle {
 	if ($session_id == 0) {
 		daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
 		$ldap_handle = Net::LDAP->new( $ldap_uri );
-		$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password); 
+		$ldap_handle->bind($ldap_admin_dn, apassword => $ldap_admin_password); 
 
 	} else {
 		my $session_reference = $global_kernel->ID_id_to_session($session_id);
@@ -2824,6 +2848,7 @@ POE::Session->create(
         watch_for_done_messages => \&watch_for_done_messages,
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
+        watch_for_old_known_clients => \&watch_for_old_known_clients,
         create_packages_list_db => \&run_create_packages_list_db,
         create_fai_server_db => \&run_create_fai_server_db,
         create_fai_release_db => \&run_create_fai_release_db,

@@ -571,6 +571,7 @@ sub here_i_am {
 	my $gotoHardwareChecksum = @{$msg_hash->{gotoHardwareChecksum}}[0];
     my $client_status = @{$msg_hash->{client_status}}[0];
     my $client_revision = @{$msg_hash->{client_revision}}[0];
+    my $key_lifetime = @{$msg_hash->{key_lifetime}}[0];
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
@@ -613,6 +614,7 @@ sub here_i_am {
                                                 status=>'registered',
                                                 hostkey=>$new_passwd,
                                                 timestamp=>$act_timestamp,
+                                                keylifetime=>$key_lifetime,
                                                 } );
 
     if ($res != 0)  {
