@@ -247,7 +247,7 @@ my $max_children = 2;
     "address"      => [\$foreign_server_string, ""],
     "domain"  => [\$server_domain, ""],
     "key"     => [\$ServerPackages_key, "none"],
-    "key-lifetime" => [\$foreign_servers_register_delay, 600],
+    "key-lifetime" => [\$foreign_servers_register_delay, 120],
 }
 );
 
