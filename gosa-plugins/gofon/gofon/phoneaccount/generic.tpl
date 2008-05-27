@@ -48,7 +48,9 @@
 			{t}Telephone{/t}
 		</td>
         <td>
+		{render acl=$goFonHardwareACL checkbox=$multiple_support checked=$use_goFonHardware}
 			{$hardware_list}
+		{/render}
 		</td>
        </tr>
 	   {/if}
@@ -67,18 +69,22 @@
      <td>{t}Context{/t}
      </td>
      <td>
-      <select name='context' title='{t}Select the accounts context{/t}' {$goFonContextACL}>
+{render acl=$goFonContextACL checkbox=$multiple_support checked=$use_goFonContext}
+      <select name='context' title='{t}Select the accounts context{/t}'>
         {html_options values=$contexts output=$contexts selected=$context}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td>{t}Voicemail context{/t}
      </td>
      <td>
-      <select name='voice_context' title='{t}Select the accounts context{/t}' {$goFonContextACL}>
+{render acl=$goFonVoiceMailContextACL checkbox=$multiple_support checked=$use_goFonVoiceMailContext}
+      <select name='voice_context' title='{t}Select the accounts context{/t}'>
         {html_options values=$contexts output=$contexts selected=$voice_context}
       </select>
+{/render}
      </td>
     </tr>
 

@@ -38,7 +38,7 @@ class phoneAccount extends plugin
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
                                       "hardware_list","used_hardware");
 
-  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer",
+  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer","goFonContext","goFonVoiceMailContext",
       "goFonHardware","goFonPIN","goFonVoicemailPIN","telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
@@ -930,7 +930,6 @@ class phoneAccount extends plugin
     $smarty->assign("contexts",$this->get_asterisk_contexts());
     $smarty->assign("context" ,$this->context);
     $smarty->assign("voice_context" ,$this->voice_context);
-    $smarty->assign("goFonContextACL", $this->getacl("context"));
 
     /* check if there is a FON server created */
     if(!count($this->goFonHomeServer)){
@@ -1555,9 +1554,9 @@ class phoneAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 7,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gofonreport" => array("description" => _("GOfon reports"),
-              "objectClass" => "")),
+          "plSection"         => array("personal" => _("My account")),
+          "plCategory"        => array("users"),
+
 
           "plOptions"       => array(),
 
@@ -1566,6 +1565,8 @@ class phoneAccount extends plugin
             "goFonHomeServer"     => _("Home server"),
             "goFonMacro"          => _("Macro settings"),
             "goFonHardware"       => _("Phone hardware"),
+            "goFonContext"          => _("Phone context"),
+            "goFonVoiceMailContext" => _("Voice mail context"),
             "goFonPIN"            => _("Telephone pin"),
             "goFonVoicemailPIN"   => _("Voicemail pin"))
           ));
