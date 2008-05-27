@@ -317,23 +317,39 @@ class applicationManagement extends plugin
 
       if(count($ids)){
         $this->dns = array();
+
+        $disallowed = array();
         foreach($ids as $id){
-          $this->dns[$id] = $this->applications[$id]['dn'];
-        }
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
-        }
-
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
-          $dns_names[] =@LDAP::fix($dn);
+          $dn = $this->applications[$id]['dn'];
+          $acl = $this->ui->get_permissions($dn, "application/application");
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
         }
 
-        /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("intro",  msgPool::deleteInfo($dns_names,_("application")));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+        }
+
+        if(count($this->dns)){
+
+          if ($user= get_multiple_locks($this->dns)){
+            return(gen_locked_message($user,$this->dns));
+          }
+
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            add_lock ($dn, $this->ui->dn);
+            $dns_names[] =@LDAP::fix($dn);
+          }
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          $smarty->assign("intro",  msgPool::deleteInfo($dns_names,_("application")));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
       }
     }
 
@@ -579,13 +595,20 @@ class applicationManagement extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
+
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->applications[$s_entry]['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"apptabs","APPSTABS","application");
+      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"application"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"apptabs","APPSTABS","application");
+      }
+      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"application"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"apptabs","APPSTABS","application");
+      }
     }
 
 
@@ -599,10 +622,10 @@ class applicationManagement extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->applications[$id]['dn'];
 
-        if($s_action == "copy_multiple"){
+        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"application"))){
           $this->CopyPasteHandler->add_to_queue($dn,"copy","apptabs","APPSTABS","application");
         }
-        if($s_action == "cut_multiple"){
+        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"application"))){
           $this->CopyPasteHandler->add_to_queue($dn,"cut","apptabs","APPSTABS","application");
         }
       }
