@@ -137,35 +137,37 @@ class divListBlocklist extends MultiSelectWindow
 
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
-    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Create")."|\n";
 
     /* Append create options */
     if(preg_match("/c/",$acl)) {
+      $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Create")."|\n";
       $s.= "...|<input class='center' type='image' src='images/list_new_blocklist.png' alt=''>".
         "&nbsp;"._("Blocklist")."|goFaxBlocklist_new|\n";
+      $s.= "..|---|\n";
     }
 
     /* Multiple options */
-    $s.= "..|---|\n";
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
-    /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
-
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      if(is_object($this->parent->CopyPasteHandler) && preg_match("/(r.*d|d.*r)/",$acl_all)){
+        $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
+          "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
       }
+    }
+
+    /* Copy & paste icons */
+    if(is_object($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler->entries_queued()){
+      $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+    }else{
+      $img = "<img border='0' class='center' src='images/lists/paste-grey.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."\n";
     }
 
     /* Add snapshot icons */
@@ -174,8 +176,8 @@ class divListBlocklist extends MultiSelectWindow
       $s .= $this->get_snapshot_header(TRUE);
     }
 
-    $this->SetDropDownHeaderMenu($s);
 
+    $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
 
@@ -202,27 +204,37 @@ class divListBlocklist extends MultiSelectWindow
     foreach($list as $key => $val){
 
       $acl = $ui->get_permissions($val['dn'],"gofaxlist/blocklist");
+      $acl_all  = $ui->has_complete_category_acls($val['dn'],"gofaxlist");
+
       if(!preg_match("/r/",$acl)){
         continue;
       }  
 
-      /* Edit link ; requires read access */
-      $action= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
-
-      
-      /* Create snapshot ; requires write access && create access */
-      if(preg_match("/w/",$acl) && preg_match("/c/",$acl)){
-        $action.= $this->GetSnapShotActions($val['dn']);
-      }
-     
-      /* Add copy & cut icons */
-      if(preg_match("/(c.*w|w.*c)/",$acl) && $this->parent->CopyPasteHandler){
+      $action ="";
+      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-        $action.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
+      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action.= "<input class='center' type='image'
+          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
+
+      /* Edit link ; requires read access */
+      $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
+
+      /* Add snapshot icon */
+      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
  
       /* Delete entry ; requires remove access */
       if(preg_match("/d/",$acl)){
