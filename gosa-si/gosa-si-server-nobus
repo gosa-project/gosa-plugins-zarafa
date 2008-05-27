@@ -54,6 +54,7 @@ use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 use Time::HiRes qw( usleep);
+use DateTime;
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -66,14 +67,14 @@ my $server_status;
 our $prg= basename($0);
 
 our $global_kernel;
-my (%cfg_defaults, $foreground, $verbose, $ping_timeout);
+my ($foreground, $ping_timeout);
 my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
 my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($messaging_db_loop_delay);
 my ($known_modules);
-my ($pid_file, $procid, $pid, $log_file);
-my ($arp_activ, $arp_fifo);
+my ($procid, $pid);
+my ($arp_fifo);
 my ($xml);
 my $sources_list;
 my $max_clients;
@@ -955,14 +956,12 @@ sub send_msg_to_target {
                 daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
             }
         }
-    } else {
-        daemon_log("$session_id WARNING: no or more hits found for host '$address' in known_server_db", 3);
     }
 
     # known_server
     $sql_statement = "SELECT * FROM $known_server_tn WHERE hostname='$address'";
     $res = $known_server_db->select_dbentry($sql_statement);
-    if( keys(%$res) > 0 ) {
+    if( keys(%$res) == 1) {
         $act_status = $res->{1}->{'status'};
         if ($act_status eq "down" && $new_status eq "down") {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
@@ -1079,14 +1078,14 @@ sub msg_to_decrypt {
 
 sub next_task {
     my ($session, $heap, $task) = @_[SESSION, HEAP, ARG0];
-    my $task = POE::Wheel::Run->new(
+    my $running_task = POE::Wheel::Run->new(
             Program => sub { process_task($session, $heap, $task) },
             StdioFilter => POE::Filter::Reference->new(),
             StdoutEvent  => "task_result",
             StderrEvent  => "task_debug",
             CloseEvent   => "task_done",
             );
-    $heap->{task}->{ $task->ID } = $task;
+    $heap->{task}->{ $running_task->ID } = $running_task;
 }
 
 sub handle_task_result {
@@ -1133,6 +1132,13 @@ sub process_task {
     my $header =  $task->{'headertag'};
     my $session_id = $task->{'sessionid'};
     my $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+    my $source = @{$msg_hash->{'source'}}[0];
+    
+    # set timestamp of incoming client uptodate, so client will not 
+    # be deleted from known_clients because of expiration
+    my $act_time = &get_time();
+    my $sql = "UPDATE $known_clients_tn SET timestamp='$act_time' WHERE hostname='$source'"; 
+    my $res = $known_clients_db->exec_statement($sql);
 
     ######################
     # process incoming msg
@@ -1612,14 +1618,26 @@ sub watch_for_old_known_clients {
     my $res = $known_clients_db->select_dbentry( $sql_statement );
 
     my $act_time = int(&get_time());
+
     while ( my ($hit_num, $hit) = each %$res) {
-        my $expired_timestamp = int($hit->{'timestamp'}) + (2 * int($hit->{'keylifetime'}));
+        my $expired_timestamp = int($hit->{'timestamp'});
+        $expired_timestamp =~ /(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/;
+        my $dt = DateTime->new( year   => $1,
+                month  => $2,
+                day    => $3,
+                hour   => $4,
+                minute => $5,
+                second => $6,
+                );
+
+        $dt->add( seconds => 2 * int($hit->{'keylifetime'}) );
+        $expired_timestamp = $dt->ymd('').$dt->hms('')."\n";
         if ($act_time > $expired_timestamp) {
             my $hostname = $hit->{'hostname'};
             my $del_sql = "DELETE FROM $known_clients_tn WHERE hostname='$hostname'"; 
             my $del_res = $known_clients_db->exec_statement($del_sql);
 
-            &main::daemon_log("0 INFO: timestamp of client '$hostname' is expired, client will be deleted from known_clients_db", 5);
+            &main::daemon_log("0 INFO: timestamp '".$hit->{'timestamp'}."' of client '$hostname' is expired('$expired_timestamp'), client will be deleted from known_clients_db", 5);
         }
 
     }
