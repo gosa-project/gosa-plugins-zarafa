@@ -99,7 +99,8 @@ class divListSudo extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $base  = sudo::get_sudoers_ou($this->config);
-    $acl   = $this->ui->get_category_permissions($base,"sudo"); 
+    $acl    = $this->ui->get_permissions($base,"sudo/sudo"); 
+    $acl_all= $this->ui->get_category_permissions($base,"sudo"); 
  
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header(false);
@@ -122,31 +123,27 @@ class divListSudo extends MultiSelectWindow
         "&nbsp;"._("Remove")."|"."del_role|\n";
     }
 
-    /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Copy")."|"."multiple_copy_sudo|\n";
-#      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-#        "&nbsp;"._("Cut")."|"."multiple_cut_sudo|\n";
-
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
-      }
+        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
     }
 
+    /* Copy & paste icons */
+    if(is_object($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler->entries_queued()){
+      $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+    }else{
+      $img = "<img border='0' class='center' src='images/lists/paste-grey.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."\n";
+    }
 
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl)){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $s .= "..|---|\n";
       $s .= $this->get_snapshot_header(TRUE);
     }
-
-
+    
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
   }
@@ -184,25 +181,28 @@ class divListSudo extends MultiSelectWindow
     
       /* Create action icons - copy & paste icons */
       $acl    = $ui->get_permissions($val['dn'],"sudo/sudo");
+      $acl_all= $this->ui->get_category_permissions($val['dn'],"sudo"); 
 
       /* Add edit icon */
-      $actions = "";
-
       $actions= "";
-      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
-#        $actions.= "<input class='center' type='image'
-#          src='images/lists/cut.png' alt='"._("Cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
         $actions.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("Copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
-
 
       $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";
 
-      if(preg_match("/(c.*w|w.*c)/",$acl)){
+      /* Add snapshot icon */
+      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
         $actions.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
+
 
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
