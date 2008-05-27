@@ -148,52 +148,46 @@ class divListMimeTypes extends MultiSelectWindow
 
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions("cn=dummy,".$this->parent->mime_base,"mimetypes/mimetype");
+    $acl      = $ui->get_permissions($this->parent->mime_base,"mimetypes/mimetype");
     $acl_all  = $ui->has_complete_category_acls($this->parent->mime_base,"mimetypes") ;
 
 
     /* If this is true we add an additional seperator. Just look a few lines below */  
     $add_sep = false;
  
-    /* Get copy & paste icon */
-    $Copy_Paste ="";
-    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-      $add_sep = true;
-    }
-
-
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
-    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Create")."|\n";
 
     /* Append create options */
     if(preg_match("/c/",$acl)) {
+      $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Create")."|\n";
       $s.= "...|<input class='center' type='image' src='images/list_new_mime.png' alt=''>".
         "&nbsp;"._("Mime type")."|mime_new|\n";
+      $s.= "..|---|\n";
     }
 
     /* Multiple options */
-    $s.= "..|---|\n";
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
-    /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
-
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      if(is_object($this->parent->CopyPasteHandler) && preg_match("/(r.*d|d.*r)/",$acl_all)){
+        $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
+          "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
       }
+    }
+
+    /* Copy & paste icons */
+    if(is_object($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler->entries_queued()){
+      $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+    }else{
+      $img = "<img border='0' class='center' src='images/lists/paste-grey.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."\n";
     }
 
     /* Add snapshot icons */
@@ -244,29 +238,38 @@ class divListMimeTypes extends MultiSelectWindow
       $acl      = $ui->get_permissions($val['dn'],"mimetypes/mimetype");
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"mimetypes") ;
 
-      /* Create action icons */
-      $actions = "";
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $actions .= $this->GetSnapShotActions($val['dn']);
-      }
-
-      /* Get copy Paste icons */
-      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $actions.= "<input class='center' type='image'
+      $action = "";
+      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action.= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-        $actions.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
-      $actions.= "<input class='center' type='image'
+      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action.= "<input class='center' type='image'
+          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
+
+      $action.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";
+
+      /* Add snapshot icon */
+      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
 
       /* Add delete button */
       if(preg_match("/d/",$acl)){
-        $actions.= "<input class='center' type='image'
+        $action.= "<input class='center' type='image'
           src='images/lists/trash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
       }else{
-        $actions.= "<img src='images/empty.png' alt='&nbsp;' class='center'>";
+        $action.= "<img src='images/empty.png' alt='&nbsp;' class='center'>";
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
@@ -294,7 +297,7 @@ class divListMimeTypes extends MultiSelectWindow
                       "attach" => "style='width:20px;'");
       $field1 = array("string" => sprintf($mimeimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' ".$title);
-      $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", $key, $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement(array($field0,$field1,$field2,$field3));
     }
 
