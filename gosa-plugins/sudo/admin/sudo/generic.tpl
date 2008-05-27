@@ -1,6 +1,6 @@
 {if $is_default}
 
-<h2>{t}Sudo generic{/t} - {t}Global defaults{/t}</h2>
+<h2>{t}Generic{/t} - {t}global defaults{/t}</h2>
 <table> 
  <tr>
   <td>
@@ -27,7 +27,7 @@
 <table style="width: 90%;">
  <tr>
   <td style="vertical-align:top;width:50%">
-   <h2>{t}Sudo generic{/t}</h2>
+   <h2>{t}Generic{/t}</h2>
    <table> 
     <tr>
      <td>

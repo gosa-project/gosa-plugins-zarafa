@@ -139,7 +139,7 @@ class target_list_users extends MultiSelectWindow
     /* Add department selector */
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/lists/submit.png' align='middle'
-      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+      title='"._("Apply")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
     $listhead .="</div>";
 
     $this->SetListHeader($listhead);

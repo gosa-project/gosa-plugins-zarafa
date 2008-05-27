@@ -130,7 +130,7 @@ class krb5_policy extends plugin
     }elseif($this->data['PW_MIN_CLASSES'] <= 0){
       $message[] = msgPool::toosmall(_("Required different characters"));
     }elseif($this->data['PW_MIN_CLASSES'] > $this->data['PW_MIN_LENGTH']){
-      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
+      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'!"),
         _("Required different characters"),_("Minimum password length"));
     }
 
@@ -147,7 +147,7 @@ class krb5_policy extends plugin
     }elseif($this->data['PW_MAX_LIFE'] <= 0){
       $message[] = msgPool::toosmall(_("Password lifetime"));
     }elseif($this->data['PW_MAX_LIFE'] < $this->data['PW_MIN_LIFE']){
-      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'."),
+      $message[] = sprintf(_("The value specified for '%s' must be smaller than the value specified for '%s'!"),
         _("Minimum password lifetime"),_("Password lifetime"));
     }
 

@@ -1,11 +1,11 @@
 
 {if $si_error}
 
-	<h2>{t}Heimdal options{/t}</h2>
+	<h2>{t}Kerberos options{/t}</h2>
 	<p>
 		{msgPool type=siError p1=$si_error_msg}
 	</p>
-	<input type="submit" value="{t}retry{/t}" name="retry_si">
+	<input type="submit" value="{t}Retry{/t}" name="retry_si">
 	<br>
 	<br>
 
@@ -18,7 +18,7 @@
 <table style="width:100%;">
 	<tr>
 		<td style="width:50%;vertical-align:top;">
-			<h2>{t}Heimdal options{/t}</h2>
+			<h2>{t}Kerberos options{/t}</h2>
 			<table style="width:100%;">
 				<tr>
 					<td>
@@ -129,7 +129,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="PW_EXPIRATION">{t}Password end{/t}</label>
+						<label for="PW_EXPIRATION">{t}Password expires{/t}</label>
 					</td>
 					<td>
 						<input type="checkbox" name="PW_EXPIRATION_clear" 

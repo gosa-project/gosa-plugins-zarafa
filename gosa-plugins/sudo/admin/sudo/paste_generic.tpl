@@ -1,4 +1,4 @@
-<h2>{t}Sudo generic{/t} - {t}Global defaults{/t}</h2>
+<h2>{t}Generic{/t} - {t}global defaults{/t}</h2>
 <table> 
  <tr>
   <td>

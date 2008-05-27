@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-05-27 10:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,57 +20,67 @@ msgstr ""
 msgid "Kerberos kadmin access"
 msgstr ""
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:4
-msgid "Kerberos Realm"
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+msgid "Kerberos Realms"
 msgstr ""
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:12
-msgid "Admin user"
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
 msgstr ""
 
-#: admin/systems/services/kerberos/goKrbServer.tpl:20
-#: admin/systems/services/kerberos/class_goKrbServer.inc:67
-#: admin/systems/services/kerberos/class_goKrbServer.inc:102
-msgid "Password"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:29
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
 msgid "Kerberos service"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:57
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+msgid "Service infrastructure"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
 msgid "Kerberos service (kadmin access informations)"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:70
-#: admin/systems/services/kerberos/class_goKrbServer.inc:101
-msgid "Admin"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:73
-#: admin/systems/services/kerberos/class_goKrbServer.inc:100
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
 msgid "Realm"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:91
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+msgid ""
+"In order to save policy changes, the server reqiures a valid mac address."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Kerberos access information"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_goKrbServer.inc:92
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Services"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:117
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:123
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:173
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:179
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:191
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:227
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:133
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:183
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:201
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:238
 msgid "Heimdal"
 msgstr ""
 
@@ -81,27 +91,87 @@ msgid ""
 "found for '%s'."
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:153
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:414
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:163
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:425
 msgid "LDAP error"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:334
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
 msgid "Max life"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:337
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:348
 msgid "Max renew"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:340
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:351
 msgid "Valid start"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:343
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:354
 msgid "Valid end"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:346
+#: admin/systems/services/kerberos/class_password-methods-heimdal.inc:357
 msgid "Valid password"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:5
+msgid "Heimdal options"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:6
+msgid "Use empty values for infinite"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:10
+msgid "Ticket max life"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:18
+msgid "Ticket max renew"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:32
+msgid "infinite"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:34
+msgid "Hour"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:36
+msgid "Minute"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:38
+msgid "Day"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:40
+msgid "Month"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:42
+msgid "Year"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:47
+msgid "Valid ticket start time"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:87
+msgid "Valid ticket end time"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:127
+msgid "Password end"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:198
+msgid "Save"
+msgstr ""
+
+#: admin/systems/services/kerberos/pwd_heimdal.tpl:200
+msgid "Cancel"
 msgstr ""

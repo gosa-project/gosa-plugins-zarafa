@@ -1,73 +1,100 @@
-#: admin/sudo/class_target_list_systems.inc:53
-msgid "Select the target objects for your scheduled action."
+#: admin/sudo/trust_machines.tpl:6
+msgid "Select systems to add"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:54
-#: admin/sudo/class_target_list_systems.inc:55
-#: admin/sudo/class_target_list_users.inc:51
-#: admin/sudo/class_target_list_users.inc:52
-msgid "Available targets"
+#: admin/sudo/trust_machines.tpl:26
+msgid "Display systems of department"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:64
-#: admin/sudo/class_target_list_users.inc:61
-msgid "Object name"
+#: admin/sudo/trust_machines.tpl:27
+msgid "Choose the department the search will be based on"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:67
-msgid "Select to see terminals"
+#: admin/sudo/trust_machines.tpl:30
+msgid "Display systems matching"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:67
-msgid "Show terminals"
+#: admin/sudo/trust_machines.tpl:31
+msgid "Regular expression for matching addresses"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:68
-msgid "Select to see servers"
+#: admin/sudo/class_sudoManagement.inc:31
+msgid "Sudo roles"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:68
-msgid "Show servers"
+#: admin/sudo/class_sudoManagement.inc:32
+msgid "Manage sudo roles"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:69
-msgid "Select to see workstations"
+#: admin/sudo/class_sudoManagement.inc:250
+#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/class_sudoGeneric.inc:674
+msgid "Sudo role"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:69
-msgid "Show workstations"
+#: admin/sudo/class_sudoManagement.inc:282
+msgid "Permission error"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:76
-#: admin/sudo/class_target_list_users.inc:73
-msgid "Regular expression for matching group names"
+#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
+msgid "Sudo role administration"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:143
-#: admin/sudo/class_target_list_users.inc:140
-msgid "Base"
+#: admin/sudo/options.tpl:5
+msgid "Option name"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:145
-#: admin/sudo/class_target_list_users.inc:142
-msgid "Submit department"
+#: admin/sudo/options.tpl:7
+msgid "Value"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:145
-#: admin/sudo/class_target_list_users.inc:142
-msgid "Submit"
+#: admin/sudo/options.tpl:8
+msgid "Options"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:187
-msgid "Server"
+#: admin/sudo/options.tpl:81
+msgid "Available options"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:189
-msgid "Workstation"
+#: admin/sudo/remove.tpl:2
+msgid "Warning"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:191
-msgid "Terminal"
+#: admin/sudo/remove.tpl:9
+msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
+#: admin/sudo/paste_generic.tpl:1
+msgid "Generic"
+msgstr ""
+
+#: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
+msgid "global defaults"
+msgstr ""
+
+#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
+#: admin/sudo/class_divListSudo.inc:82 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_sudoGeneric.inc:561 admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:571 admin/sudo/class_sudoGeneric.inc:580
+#: admin/sudo/class_sudoGeneric.inc:677
+msgid "Name"
+msgstr ""
+
+#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
+#: admin/sudo/class_sudoGeneric.inc:678
+msgid "Description"
+msgstr ""
+
+#: admin/sudo/generic.tpl:55
+msgid "System trust"
+msgstr ""
+
+#: admin/sudo/generic.tpl:56
+msgid "Trust mode"
+msgstr ""
+
+#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
+msgid "Add from list"
 msgstr ""
 
 #: admin/sudo/class_sudoOption.inc:154
@@ -96,20 +123,113 @@ msgstr ""
 msgid "list"
 msgstr ""
 
+#: admin/sudo/class_target_list_users.inc:50
+msgid "Select the target objects"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:51
+#: admin/sudo/class_target_list_users.inc:52
+#: admin/sudo/class_target_list_systems.inc:54
+#: admin/sudo/class_target_list_systems.inc:55
+msgid "Available targets"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:61
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Object name"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:63
+msgid "Select to see users"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:63
+msgid "Show users"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:64
+msgid "Select to see groups"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:64
+msgid "Show groups"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:73
+#: admin/sudo/class_target_list_systems.inc:76
+msgid "Regular expression for matching group names"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:140
+#: admin/sudo/class_target_list_systems.inc:143
+msgid "Base"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:142
+msgid "Apply"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:142
+#: admin/sudo/class_target_list_systems.inc:145
+msgid "Submit"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:181
+#: admin/sudo/class_sudoGeneric.inc:398
+msgid "User"
+msgstr ""
+
+#: admin/sudo/class_target_list_users.inc:182
+#: admin/sudo/class_sudoGeneric.inc:399
+msgid "Group"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:53
+msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:67
+msgid "Select to see terminals"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:67
+msgid "Show terminals"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:68
+msgid "Select to see servers"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:68
+msgid "Show servers"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:69
+msgid "Select to see workstations"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:69
+msgid "Show workstations"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:187
+msgid "Server"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:189
+msgid "Workstation"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:191
+msgid "Terminal"
+msgstr ""
+
 #: admin/sudo/class_divListSudo.inc:55 admin/sudo/class_divListSudo.inc:56
 msgid "List of sudo roles"
 msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:76
 msgid "Select all"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:82 admin/sudo/class_sudoGeneric.inc:561
-#: admin/sudo/class_sudoGeneric.inc:566 admin/sudo/class_sudoGeneric.inc:571
-#: admin/sudo/class_sudoGeneric.inc:580 admin/sudo/class_sudoGeneric.inc:677
-#: admin/sudo/paste_generic.tpl:5 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34
-msgid "Name"
 msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:82
@@ -144,16 +264,12 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:129
+#: admin/sudo/class_divListSudo.inc:129 admin/sudo/class_divListSudo.inc:196
 msgid "Copy"
 msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:135 admin/sudo/class_divListSudo.inc:138
 msgid "Paste"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:196
-msgid "copy"
 msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:196
@@ -172,31 +288,6 @@ msgstr ""
 msgid "Number of listed roles"
 msgstr ""
 
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr ""
-
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:31
-msgid "Sudo roles"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:32
-msgid "Manage sudo roles"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:248
-#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/class_sudoGeneric.inc:674
-msgid "Sudo role"
-msgstr ""
-
-#: admin/sudo/class_sudoManagement.inc:280
-msgid "Permission error"
-msgstr ""
-
 #: admin/sudo/class_sudoGeneric.inc:309
 msgid "Error"
 msgstr ""
@@ -213,27 +304,12 @@ msgstr ""
 msgid "allow access to these hosts"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:398
-#: admin/sudo/class_target_list_users.inc:181
-msgid "User"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:399
-#: admin/sudo/class_target_list_users.inc:182
-msgid "Group"
-msgstr ""
-
 #: admin/sudo/class_sudoGeneric.inc:547
 msgid "LDAP error"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:668
 msgid "Sudo"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:678 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44
-msgid "Description"
 msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:679
@@ -254,85 +330,4 @@ msgstr ""
 
 #: admin/sudo/class_sudoGeneric.inc:683
 msgid "Access control list"
-msgstr ""
-
-#: admin/sudo/options.tpl:5
-msgid "Option name"
-msgstr ""
-
-#: admin/sudo/options.tpl:7
-msgid "Value"
-msgstr ""
-
-#: admin/sudo/options.tpl:8
-msgid "Options"
-msgstr ""
-
-#: admin/sudo/options.tpl:81
-msgid "Available options"
-msgstr ""
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-#: admin/sudo/generic.tpl:30
-msgid "Sudo generic"
-msgstr ""
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-msgid "Global defaults"
-msgstr ""
-
-#: admin/sudo/generic.tpl:55
-msgid "System trust"
-msgstr ""
-
-#: admin/sudo/generic.tpl:56
-msgid "Trust mode"
-msgstr ""
-
-#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
-msgid "Add from list"
-msgstr ""
-
-#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
-msgid "Sudo role administration"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:50
-msgid "Select the target objects"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:63
-msgid "Select to see users"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:63
-msgid "Show users"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:64
-msgid "Select to see groups"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:64
-msgid "Show groups"
-msgstr ""
-
-#: admin/sudo/trust_machines.tpl:6
-msgid "Select systems to add"
-msgstr ""
-
-#: admin/sudo/trust_machines.tpl:26
-msgid "Display systems of department"
-msgstr ""
-
-#: admin/sudo/trust_machines.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr ""
-
-#: admin/sudo/trust_machines.tpl:30
-msgid "Display systems matching"
-msgstr ""
-
-#: admin/sudo/trust_machines.tpl:31
-msgid "Regular expression for matching addresses"
 msgstr ""
