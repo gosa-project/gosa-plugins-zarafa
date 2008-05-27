@@ -333,7 +333,7 @@ msgstr "Fehler"
 
 #: admin/sudo/class_sudoGeneric.inc:351
 msgid "disabled"
-msgstr "abgeschaltet"
+msgstr "deaktiviert"
 
 #: admin/sudo/class_sudoGeneric.inc:352
 msgid "full access"
