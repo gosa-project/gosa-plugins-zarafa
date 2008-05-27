@@ -341,7 +341,7 @@ msgstr "Vollzugriff"
 
 #: admin/sudo/class_sudoGeneric.inc:353
 msgid "allow access to these hosts"
-msgstr "Zugriff auf diese Hosts erlauben"
+msgstr "erlaube Zugriff auf diese Hosts"
 
 #: admin/sudo/class_sudoGeneric.inc:547
 msgid "LDAP error"
