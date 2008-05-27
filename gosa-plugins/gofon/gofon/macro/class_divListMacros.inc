@@ -120,7 +120,8 @@ class divListMacro extends MultiSelectWindow
       $this->selectedBase = $first;
     }
 
-    $acls  = $ui->get_permissions($this->selectedBase,"gofonmacro/macro");
+    $acl    = $ui->get_permissions($this->selectedBase,"gofonmacro/macro");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"gofonmacro");
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
@@ -130,48 +131,47 @@ class divListMacro extends MultiSelectWindow
     
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
-    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Create")."|\n";
 
     /* Append create options */
-    if(preg_match("/c/",$acls)){
+    if(preg_match("/c/",$acl)){
+      $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Create")."|\n";
       $s.= "...|<input class='center' type='image' src='images/list_new_macro.png' alt=''>".
         "&nbsp;"._("Macro")."|goFonMacro_new|\n";
+      $s.= "..|---|\n";
     }
 
     /* Multiple options */
-    $s.= "..|---|\n";
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
-    /* Add multiple copy & cut icons */
-    if(preg_match("/(c.*w|w.*c)/",$acls) && is_object( $this->parent->CopyPasteHandler)){
+
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
-
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
+      if(is_object($this->parent->CopyPasteHandler) && preg_match("/(r.*d|d.*r)/",$acl_all)){
+        $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
+          "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
       }
     }
 
+    /* Copy & paste icons */
+    if(is_object($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler->entries_queued()){
+      $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+    }else{
+      $img = "<img border='0' class='center' src='images/lists/paste-grey.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."\n";
+    }
+
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acls)){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $s .= "..|---|\n";
       $s .= $this->get_snapshot_header(TRUE);
     }
 
     $this->SetDropDownHeaderMenu($s);
-
-
-
-
     $this->SetListHeader($listhead);
   }
 
@@ -200,28 +200,41 @@ class divListMacro extends MultiSelectWindow
 
     foreach($list as $key => $val){
        
-      $sacl  = $ui->get_permissions($val['dn'],"gofonmacro/macro");
+      $acl    = $ui->get_permissions($val['dn'],"gofonmacro/macro");
+      $acl_all= $ui->has_complete_category_acls($val['dn'],"gofonmacro");
 
       $action = "";
-      if(!preg_match("/r/",$sacl)){
+      if(!preg_match("/r/",$acl)){
         continue;
       }
 
-      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$sacl)){
-        $action.= "<input class='center' type='image'
+      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action .= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
+
+      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
         $action.= "<input class='center' type='image'
           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
       $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     
         name='goFonMacro_edit_%KEY%' title='"._("Edit macro")."'>";
 
-      if(preg_match("/c/",$sacl) && preg_match("/w/",$sacl)){
-        $action.= $this->GetSnapShotActions($val['dn']); 
+      /* Add snapshot icon */
+      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
-      if(preg_match("/d/",$sacl)){
+
+      if(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image' src='images/lists/trash.png' alt='"._("delete")."'   
           name='goFonMacro_del_%KEY%' title='"._("Delete macro")."'>";
       }
