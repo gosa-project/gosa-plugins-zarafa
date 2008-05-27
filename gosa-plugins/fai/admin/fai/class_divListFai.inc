@@ -140,8 +140,8 @@ class divListFai extends MultiSelectWindow
           array("images/fai_new_script.png"         , _("Scripts")          ,"Create_script"    , _("S")  , "faiScript"),
           array("images/fai_new_hook.png"           , _("Hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
           array("images/fai_new_variable.png"       , _("Variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
-        array("images/fai_new_template.png"       , _("Templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
-        array("images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
+          array("images/fai_new_template.png"       , _("Templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
+          array("images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
 
       foreach($arr as $ar){
         $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
@@ -156,8 +156,8 @@ class divListFai extends MultiSelectWindow
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
-    /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler)){
+
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
@@ -255,7 +255,7 @@ class divListFai extends MultiSelectWindow
        $ui = get_userinfo();
        $action ="";
        $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
-       if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
+       if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
          $action .= "<input class='center' type='image'
            src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
        }
