@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 10:57+0200\n"
+"POT-Creation-Date: 2008-05-27 13:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,8 +111,24 @@ msgstr ""
 msgid "Trust mode"
 msgstr ""
 
+#: admin/sudo/generic.tpl:87
+msgid "Users and groups"
+msgstr ""
+
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
+msgstr ""
+
+#: admin/sudo/generic.tpl:102
+msgid "Systems"
+msgstr ""
+
+#: admin/sudo/generic.tpl:120
+msgid "Commands"
+msgstr ""
+
+#: admin/sudo/generic.tpl:132
+msgid "Run as"
 msgstr ""
 
 #: admin/sudo/class_sudoOption.inc:154
@@ -147,9 +163,7 @@ msgstr ""
 
 #: admin/sudo/class_target_list_users.inc:51
 #: admin/sudo/class_target_list_users.inc:52
-#: admin/sudo/class_target_list_systems.inc:54
-#: admin/sudo/class_target_list_systems.inc:55
-msgid "Available targets"
+msgid "Available members"
 msgstr ""
 
 #: admin/sudo/class_target_list_users.inc:61
@@ -204,6 +218,11 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:53
 msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:54
+#: admin/sudo/class_target_list_systems.inc:55
+msgid "Available systems"
 msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:67
