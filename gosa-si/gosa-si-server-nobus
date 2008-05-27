@@ -891,6 +891,7 @@ sub send_msg_to_target {
     my ($msg, $address, $encrypt_key, $msg_header, $session_id) = @_ ;
     my $error = 0;
     my $header;
+    my $timestamp = &get_time();
     my $new_status;
     my $act_status;
     my ($sql_statement, $res);
@@ -945,7 +946,7 @@ sub send_msg_to_target {
             $res = $known_clients_db->del_dbentry($sql_statement);
             daemon_log("$session_id WARNING: failed 2x to send msg to host '$address', delete host from known_clients", 3);
         } else { 
-            $sql_statement = "UPDATE known_clients SET status='$new_status' WHERE hostname='$address'";
+            $sql_statement = "UPDATE known_clients SET status='$new_status', timestamp='$timestamp' WHERE hostname='$address'";
             $res = $known_clients_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
                 daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
@@ -966,7 +967,7 @@ sub send_msg_to_target {
             daemon_log("$session_id WARNING: failed 2x to send a message to host '$address', delete host from known_server", 3);
         } 
         else { 
-            $sql_statement = "UPDATE known_server SET status='$new_status' WHERE hostname='$address'";
+            $sql_statement = "UPDATE known_server SET status='$new_status', timestamp='$timestamp' WHERE hostname='$address'";
             $res = $known_server_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
                 daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);

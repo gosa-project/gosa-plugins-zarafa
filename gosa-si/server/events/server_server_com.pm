@@ -54,8 +54,8 @@ sub new_server {
     }
 
     # delete all entries at foreign_clients_db coresponding to this server
-    my $sql = "DELETE FROM $main::foreign_clients_tn WHERE regserver='$source' ";
-    my $res = $main::foreign_clients_db->exec_statement($sql);
+    my $del_sql = "DELETE FROM $main::foreign_clients_tn WHERE regserver='$source' ";
+    my $del_res = $main::foreign_clients_db->exec_statement($del_sql);
 
     # add clients of foreign server to known_foreign_clients_db
     my @sql_list;

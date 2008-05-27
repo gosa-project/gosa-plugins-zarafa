@@ -117,7 +117,7 @@ sub add_dbentry {
 		my $create_id=0;
 		foreach my $col_name (@{$col_names}) {
 			if($col_name eq "id" && (! exists $arg->{$col_name})) {
-				&main::daemon_log("0 DEBUG: id field found without value! Creating autoincrement statement!", 7);
+				#&main::daemon_log("0 DEBUG: id field found without value! Creating autoincrement statement!", 7);
 				$create_id=1;
 			}
 		}
