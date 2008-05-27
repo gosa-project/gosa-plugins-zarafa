@@ -48,8 +48,8 @@ class target_list_users extends MultiSelectWindow
     $this->Targets_used  = $Targets_used;
 
     $this->SetInformation(  _("Select the target objects"));
-    $this->SetTitle(        _("Available targets"));
-    $this->SetSummary(      _("Available targets"));
+    $this->SetTitle(        _("Available members"));
+    $this->SetSummary(      _("Available members"));
     $this->SetHeadpageMode(FALSE);
 
     /* set Page header */

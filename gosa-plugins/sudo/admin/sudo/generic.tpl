@@ -84,7 +84,7 @@
  <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
  <tr>
   <td style="width:50%;padding-right:5px;">
-   <h2><img src="images/select_user.png" alt="" class="center">&nbsp;User / Groups</h2>
+   <h2><img src="images/select_user.png" alt="" class="center">&nbsp;{t}Users and groups{/t}</h2>
    {render acl=$sudoUserACL}
    {$divlist_sudoUser}
    {/render}
@@ -99,7 +99,7 @@
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h2><img src="images/select_workstation.png" alt="" class="center">&nbsp;Hosts</h2>
+   <h2><img src="images/select_workstation.png" alt="" class="center">&nbsp;{t}Systems{/t}</h2>
    {render acl=$sudoHostACL}
    {$divlist_sudoHost}
    {/render}
@@ -117,7 +117,7 @@
  <tr><td style="width:100%;"colspan="2"><p class="seperator">&nbsp;</p></td></tr>
  <tr>
   <td style="padding-right:5px;">
-   <h2><img src="images/rocket.png" alt="" class="center">&nbsp;Commands</h2>
+   <h2><img src="images/rocket.png" alt="" class="center">&nbsp;{t}Commands{/t}</h2>
    {render acl=$sudoCommandACL}
    {$divlist_sudoCommand}
    {/render}
@@ -129,7 +129,7 @@
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h2><img src="images/select_user.png" alt="" class="center">&nbsp;Run as</h2>
+   <h2><img src="images/select_user.png" alt="" class="center">&nbsp;{t}Run as{/t}</h2>
    {render acl=$sudoRunAsACL}
    {$divlist_sudoRunAs}
    {/render}

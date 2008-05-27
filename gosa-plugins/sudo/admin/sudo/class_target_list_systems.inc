@@ -51,8 +51,8 @@ class target_list_systems extends MultiSelectWindow
     $this->Targets_used = $Targets_used;
     
     $this->SetInformation(  _("Select the target objects for your scheduled action."));
-    $this->SetTitle(        _("Available targets"));
-    $this->SetSummary(      _("Available targets"));
+    $this->SetTitle(        _("Available systems"));
+    $this->SetSummary(      _("Available systems"));
     $this->SetHeadpageMode(FALSE);
     
     /* set Page header */
