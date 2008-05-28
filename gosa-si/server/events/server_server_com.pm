@@ -43,6 +43,7 @@ sub new_server {
     my $func_dic = {table=>$main::known_server_tn,
         primkey=>['hostname'],
         hostname => $source,
+        status => "new_server",
         hostkey => $key,
         timestamp=>&get_time(),
     };

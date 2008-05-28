@@ -66,7 +66,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>19700101000000</timestamp> </xml>";
     #$data = "<xml> <header>job_trigger_action_instant_update</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp> </xml>";
-    $data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
 
     # get_login_usr_for_client
@@ -104,6 +104,8 @@ for($count = 1; $count <= $zahl; $count++)
     # Kerberos test query
     #$data = "<xml> <header>gosa_krb5_create_principal</header> <target>00:01:6c:9d:aa:16</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
     #$data = "<xml> <header>gosa_krb5_modify_principal</header> <target>00:01:6c:9d:b9:fa</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
+
+    $data = "<xml> <header>new_ping</header> <target>10.89.1.131:20081</target> <source>GOSA</source> <forward_to_gosa></forward_to_gosa> </xml>";
 
     $sock->write($data);
     $answer = "nothing";

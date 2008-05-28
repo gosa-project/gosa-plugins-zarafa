@@ -51,7 +51,7 @@ $gosa_mac_address= &get_mac($network_interface);
 if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); } 
 our $server_address = "$server_ip:$server_port";
 if( inet_aton($gosa_ip) ){ $gosa_ip = inet_ntoa(inet_aton($gosa_ip)); }
-my $gosa_address = "$gosa_ip:$gosa_port";
+$main::gosa_address = "$gosa_ip:$gosa_port";
 
 # create general settings for this module
 #y $gosa_cipher = &create_ciphering($gosa_passwd);
@@ -73,7 +73,7 @@ if ($error == 0) {
 ## FUNCTIONS #################################################################
 
 sub get_module_info {
-    my @info = ($gosa_address,
+    my @info = ($main::gosa_address,
                 $gosa_passwd,
                 );
     return \@info;

@@ -939,10 +939,10 @@ sub send_msg_to_target {
 
 
     # known_clients
-    $sql_statement = "SELECT * FROM known_clients WHERE hostname='$address'";
+    $sql_statement = "SELECT * FROM $known_clients_tn WHERE hostname='$address'";
     $res = $known_clients_db->select_dbentry($sql_statement);
     if( keys(%$res) == 1) {
-        $act_status = $res->{1}->{'status'};
+        $act_status = exists $res->{1}->{'status'} ? $res->{1}->{'status'} : "";
         if ($act_status eq "down" && $new_status eq "down") {
             $sql_statement = "DELETE FROM known_clients WHERE hostname='$address'";
             $res = $known_clients_db->del_dbentry($sql_statement);
@@ -962,7 +962,7 @@ sub send_msg_to_target {
     $sql_statement = "SELECT * FROM $known_server_tn WHERE hostname='$address'";
     $res = $known_server_db->select_dbentry($sql_statement);
     if( keys(%$res) == 1) {
-        $act_status = $res->{1}->{'status'};
+        $act_status = exists $res->{1}->{'status'} ? $res->{1}->{'status'} : "";
         if ($act_status eq "down" && $new_status eq "down") {
             $sql_statement = "DELETE FROM known_server WHERE hostname='$address'";
             $res = $known_server_db->del_dbentry($sql_statement);
@@ -973,8 +973,7 @@ sub send_msg_to_target {
             $res = $known_server_db->update_dbentry($sql_statement);
             if($new_status eq "down"){
                 daemon_log("$session_id WARNING: set '$address' from status '$act_status' to '$new_status'", 3);
-            }
-            else {
+            } else {
                 daemon_log("$session_id INFO: set '$address' from status '$act_status' to '$new_status'", 5);
             }
         }
@@ -1041,7 +1040,8 @@ sub msg_to_decrypt {
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
         # could not understand a msg from its server the client cause a re-registering process
-        daemon_log("$session_id INFO cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}."' to cause a re-registering of the client if necessary", 5);
+        daemon_log("$session_id INFO cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
+                "' to cause a re-registering of the client if necessary", 5);
         my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
@@ -1054,25 +1054,97 @@ sub msg_to_decrypt {
         $error++;
     }
     
-    # add message to incoming_db
-    if( $error == 0) {
-        my $header = @{$msg_hash->{'header'}}[0];
-        my $target = @{$msg_hash->{'target'}}[0];
-        my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
-                primkey=>[],
-                headertag=>$header,
-				targettag=>$target,
-                xmlmessage=>$msg,
-                timestamp=>&get_time,
-                module=>$module,
-                sessionid=>$session_id,
-                } );
-        if ($res != 0) {
-			# TODO ist das mit $! so ok???
-            #&daemon_log("$session_id ERROR: cannot add message to incoming.db: $!", 1); 
-        }
-    }
+    my $header;
+    my $target;
+    my $done = 0;
+    my $sql;
+    my $res;
+    # check whether this message should be processed here
+    if ($error == 0) {
+        $header = @{$msg_hash->{'header'}}[0];
+        $target = @{$msg_hash->{'target'}}[0];
 
+        # target is own address without forward_to_gosa-tag -> process here
+        if (not $done) {
+            if (($target eq $server_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
+                $done = 1;
+            }
+        }
+
+        # target is a client address in known_clients -> process here
+        if (not $done) {
+            $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
+            $res = $known_clients_db->select_dbentry($sql);
+            if (keys(%$res) > 0) {
+                $done = 1;
+            }
+        }
+
+        # if message should be processed here -> add message to incoming_db
+        if ($done) {
+            my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+                    primkey=>[],
+                    headertag=>$header,
+                    targettag=>$target,
+                    xmlmessage=>$msg,
+                    timestamp=>&get_time,
+                    module=>$module,
+                    sessionid=>$session_id,
+                    } );
+
+        }
+
+        # target is own address with forward_to_gosa-tag -> forward to gosa
+        if (not $done) {
+            if (($target eq $server_address) && (exists $msg_hash->{'forward_to_gosa'})){
+                if( $msg =~ s/session_id=(\d+)$// ) {
+                    my $session_id = $1 ;
+                }
+                if( defined $session_id ) {
+                    my $session_reference = $kernel->ID_id_to_session($session_id);
+                    if( defined $session_reference ) {
+                        $heap = $session_reference->get_heap();
+                    }
+                }
+                if(exists $heap->{'client'}) {
+                    $msg = &encrypt_msg($msg, $GosaPackages_key);
+                    $heap->{'client'}->put($msg);
+                }
+                $done = 1;
+            }
+        }
+
+        # target is a client address in foreign_clients -> forward to registration server
+        if (not $done) {
+            $sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
+            $res = $foreign_clients_db->select_dbentry($sql);
+            if (keys(%$res) > 0) {
+                my $regserver = $res->{1}->{'regserver'};
+                my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$regserver'"; 
+                my $res = $known_server_db->select_dbentry($sql);
+                if (keys(%$res) > 0) {
+                    my $regserver_key = $res->{1}->{'hostkey'};
+                    $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
+                    &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
+                }
+                $done = 1;
+            }
+        }
+
+        # target is a server address -> forward to server
+        if (not $done) {
+            $sql = "SELECT * FROM $known_server_tn WHERE hostname='$target'";
+            $res = $known_server_db->select_dbentry($sql);
+            if (keys(%$res) > 0) {
+                my $hostkey = $res->{1}->{'hostkey'};
+                &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
+                $done = 1;
+            }
+        }
+
+
+    }
+    return;
 }
 
 
