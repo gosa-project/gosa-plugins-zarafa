@@ -5,6 +5,8 @@ class deviceGeneric extends plugin
   public $dn            = "";
   public $cn            = "";
   public $orig_cn       = "";
+  public $orig_base     = "";
+  public $orig_dn       = "";
   public $description   = "";
   public $vendor        = "";
   public $dev_id        = "";
@@ -56,6 +58,8 @@ class deviceGeneric extends plugin
     } else {
       $this->base =preg_replace ("/^[^,]+,".get_ou('deviceou')."/","",$this->dn);
     }
+    $this->orig_base = $this->base;
+    $this->orig_dn   = $this->dn;
   }
 
 
@@ -107,6 +111,14 @@ class deviceGeneric extends plugin
       if($ldap->count()){
         $message[]= msgPool::duplicated(_("Name"));
       }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return($message);
