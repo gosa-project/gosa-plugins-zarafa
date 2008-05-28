@@ -17,6 +17,9 @@ class application extends plugin
   var $last_sorting= "invalid";
   var $applications= array();
 
+  var $orig_base = "";
+  var $orig_cn = "";
+
   /* attribute list for save action */
   var $attributes= array("cn", "description", "gosaApplicationExecute", "gosaApplicationName","gosaApplicationIcon",
       "gosaApplicationFlags","gotoLogonScript");
@@ -53,6 +56,9 @@ class application extends plugin
     } else {
       $this->base= preg_replace ("/^[^,]+,".get_ou('applicationou')."/", "", $this->dn);
     }
+
+    $this->orig_cn = $this->cn;
+    $this->orig_base = $this->base;
   }
 
 
@@ -444,6 +450,15 @@ class application extends plugin
         $message[]= msgPool::duplicated("cn");
       }
     }
+
+    /* Check if we are allowed to create or move this object 
+     */
+    if($this->dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->cn != $this->orig_cn || $this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+
     return $message;
   }
 
