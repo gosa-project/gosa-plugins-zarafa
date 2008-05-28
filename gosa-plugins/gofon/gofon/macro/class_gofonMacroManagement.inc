@@ -251,30 +251,44 @@ class goFonMacro extends plugin
     if ($s_action=="del_multiple"){
       $ids = $this->list_get_selected_items();
 
+
+      $this->dns = array();
       if(count($ids)){
-
-        /* Collect dns */
+        $disallowed = array();
         foreach($ids as $id){
-          $this->dns[$id] = $this->macros[$id]['dn'];
+          $dn = $this->macros[$id]['dn'];
+          $acl = $this->ui->get_permissions($dn, "gofonmacro/macro");
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
         }
 
-        /* Check locks */
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
         }
 
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          $dns_names[] = @LDAP::fix($dn);
+        if(count($this->dns)){
+
+          /* Check locks */
+          if ($user= get_multiple_locks($this->dns)){
+            return(gen_locked_message($user,$this->dns));
+          }
+
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            $dns_names[] = @LDAP::fix($dn);
+          }
+
+          /* Add entry locks */
+          add_lock ($this->dns, $this->ui->dn);
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          $smarty->assign("intro", msgPool::deleteInfo($dns_names,("macro")));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
-
-        /* Add entry locks */
-        add_lock ($this->dns, $this->ui->dn);
-
-        /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("intro", msgPool::deleteInfo($dns_names,("macro")));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
 
@@ -441,13 +455,21 @@ class goFonMacro extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
+
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->macros[$s_entry]['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"macrotabs","MACROTABS","gofonmacro");
+
+      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"gofonmacro"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"macrotabs","MACROTABS","gofonmacro");
+      }
+      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"gofonmacro"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"macrotabs","MACROTABS","gofonmacro");
+      }
     }
 
     /* Add entries to queue */
@@ -460,10 +482,10 @@ class goFonMacro extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->macros[$id]['dn'];
 
-        if($s_action == "copy_multiple"){
+        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"gofonmacro"))){
           $this->CopyPasteHandler->add_to_queue($dn,"copy","macrotabs","MACROTABS","gofonmacro");
         }
-        if($s_action == "cut_multiple"){
+        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"gofonmacro"))){
           $this->CopyPasteHandler->add_to_queue($dn,"cut","macrotabs","MACROTABS","gofonmacro");
         }
       }
