@@ -49,6 +49,7 @@ class mimetype extends plugin
 
   /* Orig_Dn is used to verify if this object is new or only edited */		
   var $orig_dn			= "";
+  var $orig_base	  = "";
 
   function mimetype(&$config,$dn= NULL)
   {
@@ -140,6 +141,7 @@ class mimetype extends plugin
     }
     session::set('binary',$this->iconData);
     session::set('binarytype',"image/jpeg");
+    $this->orig_base = $this->base;
   }
 
 
@@ -544,6 +546,15 @@ class mimetype extends plugin
         $message[]= msgPool::duplicated("cn");
       }
     }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+
     return($message);
   }
 
