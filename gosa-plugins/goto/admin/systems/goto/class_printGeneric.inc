@@ -15,6 +15,8 @@ class printgeneric extends plugin
   var $gotoPrinterPPD   = "";
   var $initial_PPD      = "";
   var $orig_dn          = "";
+  var $orig_cn          = "";
+  var $orig_base        = "";
 
   var $UserMember       ="";
   var $UserMembers      =array();
@@ -143,6 +145,8 @@ class printgeneric extends plugin
         }
       }
     }
+    $this->orig_cn    = $this->cn;
+    $this->orig_base  = $this->base;
   }
 
   function set_acl_base($base)
@@ -693,6 +697,14 @@ class printgeneric extends plugin
           }
         }
       }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return ($message);

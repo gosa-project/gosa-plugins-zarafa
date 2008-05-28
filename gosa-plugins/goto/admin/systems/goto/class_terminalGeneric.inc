@@ -30,6 +30,7 @@ class termgeneric extends plugin
   var $description= "";
   var $orig_dn= "";
   var $orig_cn= "";
+  var $orig_base= "";
 
   var $inheritTimeServer = true;
 
@@ -132,6 +133,7 @@ class termgeneric extends plugin
 
     $this->orig_dn= $this->dn;
     $this->orig_cn= $this->cn;
+    $this->orig_base= $this->base;
   }
 
   function set_acl_base($base)
@@ -437,6 +439,14 @@ class termgeneric extends plugin
     /* Check for valid ntpServer selection */
     if((!$this->inheritTimeServer) && (!count($this->gotoNtpServer))){
       $message[]= msgPool::required(_("NTP server"));
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return ($message);
