@@ -38,6 +38,8 @@ class macro extends plugin
   var $attributes     = array("cn","base", "description","displayName","goFonMacroContent","goFonMacroVisible");
   var $view_logged = FALSE;
   var $orig_cn = ""; 
+  var $orig_base = ""; 
+  var $orig_dn = ""; 
   /*! Objectclasses that this calls handles */
   var $objectclasses  = array("top", "goFonMacro");
 
@@ -62,7 +64,7 @@ class macro extends plugin
       }
     } else {
       $this->orig_cn=$this->cn;
-      $this->base= preg_replace ("/^[^,]+,[^,]+,[^,]+,[^,]+,[^,]+,/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("macroou"))."/i", "", $this->dn);
     }
 
     /* Check server configurations
@@ -79,6 +81,9 @@ class macro extends plugin
         unset($this->goFonHomeServers[0]);  
       }
     }
+    
+    $this->orig_base = $this->base;
+    $this->orig_dn = $this->dn;
   }
 
 
@@ -435,6 +440,15 @@ class macro extends plugin
     if(empty($this->goFonMacroContent)){
       $message[] = _("Macro is empty!");
     }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+
     return $message;
   }
 
