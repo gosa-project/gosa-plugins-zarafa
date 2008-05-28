@@ -30,6 +30,10 @@ class wingeneric extends plugin
   var $sambaPwdLastSet="";
   var $sambaAcctFlags="";
   var $netConfigDNS;
+
+  var $orig_cn;
+  var $orig_base;
+
   /* attribute list for save action */
   var $ignore_account= TRUE;
   var $attributes   = array("cn", "description","shadowLastChange",
@@ -54,10 +58,12 @@ class wingeneric extends plugin
       $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_winstations_ou())."/", "", $this->dn);
     }
 
+    $this->cn= preg_replace("/\\\$\$/","",$this->cn);
+
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
-
-    $this->cn= preg_replace("/\\\$\$/","",$this->cn);
+    $this->orig_base= $this->base;
+    $this->orig_cn= $this->cn;
   }
 
 
@@ -219,6 +225,14 @@ class wingeneric extends plugin
           }
         }
       }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return ($message);
