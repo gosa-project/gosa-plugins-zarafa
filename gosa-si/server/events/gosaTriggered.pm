@@ -373,9 +373,7 @@ sub new_ping {
     my $target = @{$msg_hash->{target}}[0];
 
     $sql = "SELECT * FROM $main::known_clients_tn WHERE ((hostname='$target') || (macaddress LIKE '$target'))"; 
-    #&main::daemon_log("$sql",1);     
     $res = $main::known_clients_db->exec_statement($sql);
-    #&main::daemon_log(Dumper($res), 1);    
     my $host_name = @{@$res[0]}[0];
     $out_msg =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/;
     $out_msg =~ s/<source>\S+<\/source>/<source>$main::server_address<\/source>/;
@@ -397,7 +395,7 @@ sub new_ping {
     }
     my $answer_xml = @{@$res[0]}[3];
     my %data = ( 'answer_xml'  => 'bin noch da' );
-    my $answer_msg = &build_msg("got_ping", "$main::server_address", "GOSA", \%data);
+    my $answer_msg = &build_msg("got_new_ping", "$main::server_address", "GOSA", \%data);
 
     $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
     $res = $main::incoming_db->exec_statement($sql);

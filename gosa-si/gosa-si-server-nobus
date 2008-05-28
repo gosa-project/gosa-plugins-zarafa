@@ -925,7 +925,7 @@ sub send_msg_to_target {
         print $socket $crypted_msg."\n";
 
         daemon_log("$session_id INFO: send ".$header."msg to $address", 5);
-        daemon_log("DEBUG: message:\n$msg", 9);
+        daemon_log("$session_id DEBUG: message:\n$msg", 9);
         
     }
 
@@ -1311,24 +1311,30 @@ sub session_start {
     $kernel->yield('watch_for_next_tasks');
 	$kernel->sig(USR1 => "sig_handler");
 	$kernel->sig(USR2 => "create_packages_list_db");
-}
-
-sub trigger_db_loop {
-	my ($kernel) = @_ ;
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
+
+}
+
+sub trigger_db_loop {
+	my ($kernel) = @_ ;
+#	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
+#	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
+#	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
+#    $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
+#	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
+#    $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 }
 
 
 sub watch_for_done_jobs {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
 
-    my $sql_statement = "SELECT * FROM ".$job_queue_tn.
-        " WHERE status='done'";
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE status='done'";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
     while( my ($id, $hit) = each %{$res} ) {
@@ -1648,7 +1654,7 @@ sub watch_for_old_known_clients {
 
 sub watch_for_next_tasks {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
-    
+
     my $sql = "SELECT * FROM $incoming_tn";
     my $res = $incoming_db->select_dbentry($sql);
 
