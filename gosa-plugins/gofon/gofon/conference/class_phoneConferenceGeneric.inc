@@ -66,6 +66,9 @@ class conference extends plugin
 
   var $objectclasses= array("top", "goFonConference");
 
+  var $orig_dn ="";
+  var $orig_base = "";
+
   function conference (&$config, $dn, $plugin= NULL)
   {
     plugin::plugin($config, $dn, $plugin);
@@ -146,6 +149,9 @@ class conference extends plugin
     $this->old_dn = $this->dn;
     $this->old_cn = $this->cn;
     $this->old_base = $this->base;
+    $this->orig_base = $this->base;
+    $this->orig_dn = $this->dn;
+  
   }
 
 
@@ -404,6 +410,15 @@ class conference extends plugin
         $message[] = msgPool::duplicated(_("Name"));
       }
     }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+
     return $message;
   }
 
