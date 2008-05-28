@@ -46,6 +46,8 @@ class sudo extends plugin
 
   public $ignore_account = TRUE;
 
+  public $orig_dn;
+
   /*! \brief  Returns to the base department for sudo roles.
               This department is then used to store new roles.
       @param  Object  GOsa configuration object.
@@ -126,6 +128,8 @@ class sudo extends plugin
           "regex"           => "*");
       session::set("sysfilter", $sysfilter);
     }
+
+    $this->orig_dn = $this->dn;
   }
 
 
@@ -579,6 +583,12 @@ class sudo extends plugin
       if($attrs['dn'] != $this->dn){
         $message[] = msgPool::duplicated(_("Name"));
       }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->get_sudoers_ou($this->config))){
+      $message[] = msgPool::permCreate();
     }
 
     return ($message);
