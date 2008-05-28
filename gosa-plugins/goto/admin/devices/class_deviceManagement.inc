@@ -456,6 +456,8 @@ class deviceManagement extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
+
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
 
