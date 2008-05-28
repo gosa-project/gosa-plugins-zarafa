@@ -522,8 +522,8 @@ class phoneConferenceManagment extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
-      $data = $this->CopyPasteHandler->execute();
       $this->CopyPasteHandler->SetVar("base",$this->DivListConference->selectedBase);
+      $data = $this->CopyPasteHandler->execute();
 
       /* Return dialog data */
       if(!empty($data)){
