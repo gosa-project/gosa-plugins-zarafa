@@ -11,6 +11,8 @@ class phoneGeneric extends plugin
   var $cn               = "";
   var $description      = "";
   var $orig_dn          = "";
+  var $orig_cn          = "";
+  var $orig_base        = "";
   var $goFonType        = "";
   var $goFonDmtfMode    = "";
   var $goFonHost        = "";
@@ -88,6 +90,8 @@ class phoneGeneric extends plugin
 
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
+    $this->orig_base= $this->base;
+    $this->orig_cn= $this->cn;
   }
 
   function set_acl_base($base)
@@ -359,6 +363,14 @@ class phoneGeneric extends plugin
           }
         }
       }
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return ($message);
