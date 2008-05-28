@@ -20,6 +20,10 @@ class blocklistGeneric extends plugin
   var $attributes = array("cn","description");
 
   var $ignore_account = TRUE;
+
+   var $orig_base = "";
+   var $orig_dn = "";
+
   
   function __construct($config,$dn = "new")
   {
@@ -63,6 +67,9 @@ class blocklistGeneric extends plugin
     } else {
       $this->base =preg_replace ("/^[^,]+,[^,]+,[^,]+,/","",$this->dn);
     }
+    
+    $this->orig_base = $this->base;
+    $this->orig_dn   = $this->dn;
   }
 
   public function execute()
@@ -219,6 +226,15 @@ class blocklistGeneric extends plugin
         }
       }
     }
+    
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
+    }
+  
     return $message;
   }
 
