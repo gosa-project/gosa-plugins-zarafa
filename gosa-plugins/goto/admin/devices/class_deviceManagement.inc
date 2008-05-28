@@ -228,27 +228,39 @@ class deviceManagement extends plugin
 
       if(count($ids)){
 
-        /* collect entries */
-        $this->dns = array();
+        $disallowed = array();
         foreach($ids as $id){
-          $this->dns[$id] = $this->devices[$id]['dn'];
+          $dn = $this->devices[$id]['dn'];
+          $acl = $this->ui->get_permissions($dn, "devices/deviceGeneric");
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
         }
 
-        /* Check locks */
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
         }
 
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          $dns_names[] =@LDAP::fix($dn);
-        }
-        add_lock ($this->dns, $this->ui->dn);
+        if(count($this->dns)){
 
-        /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("intro", msgPool::deleteInfo($dns_names),_("device"));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+          /* Check locks */
+          if ($user= get_multiple_locks($this->dns)){
+            return(gen_locked_message($user,$this->dns));
+          }
+
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            $dns_names[] =@LDAP::fix($dn);
+          }
+          add_lock ($this->dns, $this->ui->dn);
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          $smarty->assign("intro", msgPool::deleteInfo($dns_names),_("device"));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
       }
     }
 
@@ -450,7 +462,12 @@ class deviceManagement extends plugin
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->devices[$s_entry]['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"devicetabs","DEVICETABS","devices");
+      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"devices"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"devicetabs","DEVICETABS","devices");
+      }
+      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"devices"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"devicetabs","DEVICETABS","devices");
+      }
     }
 
     /* Add entries to queue */
@@ -463,10 +480,10 @@ class deviceManagement extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->devices[$id]['dn'];
 
-        if($s_action == "copy_multiple"){
+        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"devices"))){
           $this->CopyPasteHandler->add_to_queue($dn,"copy","devicetabs","DEVICETABS","devices");
         }
-        if($s_action == "cut_multiple"){
+        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"devices"))){
           $this->CopyPasteHandler->add_to_queue($dn,"cut","devicetabs","DEVICETABS","devices");
         }
       }
