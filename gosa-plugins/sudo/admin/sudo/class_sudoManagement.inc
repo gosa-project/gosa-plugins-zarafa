@@ -107,7 +107,7 @@ class sudoManagement extends plugin
     }
 
     /* handle C&P from layers menu */
-    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_sudo/",$_POST['menu_action'])){
+    if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
       $s_action = "copy_multiple";
     }
 
@@ -226,29 +226,38 @@ class sudoManagement extends plugin
         $ids = array($s_entry);
       }
 
+      $this->dns = array();
       if(count($ids)){
-
-        /* Create list of entries to delete */
-        $this->dns = array();
-        $dns_names = array();
+        $disallowed = array();
         foreach($ids as $id){
           $dn = $this->list[$id]['dn'];
-          $this->dns[$id] = $dn;
-          $dns_names[] =@LDAP::fix($dn);
+          $acl = $this->ui->get_permissions($dn, "sudo/sudo");
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
         }
-      
-        /* Check locking of entries */
-        $users = get_multiple_locks($this->dns);
-        if(count($users)){
-          return(gen_locked_message($users,$this->dns));
-        }
-    
-        /* Add locks */
-        add_lock($this->dns,$this->ui->dn);
 
-        /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Sudo role")));
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+        }
+
+        if(count($this->dns)){
+
+          /* Check locking of entries */
+          $users = get_multiple_locks($this->dns);
+          if(count($users)){
+            return(gen_locked_message($users,$this->dns));
+          }
+
+          /* Add locks */
+          add_lock($this->dns,$this->ui->dn);
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Sudo role")));
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
       }
     }
 
@@ -450,13 +459,21 @@ class sudoManagement extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
+
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
 
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->list[$s_entry]['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"sudotabs","SUDOTABS","sudo");
+
+      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"sudo"))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"sudotabs","SUDOTABS","sudo");
+      }
+#      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"sudo"))){
+#        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"sudotabs","SUDOTABS","sudo");
+#      }
     }
 
     /* Add entries to queue */
@@ -469,12 +486,12 @@ class sudoManagement extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->list[$id]['dn'];
 
-        if($s_action == "copy_multiple"){
+        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"sudo"))){
           $this->CopyPasteHandler->add_to_queue($dn,"copy","sudotabs","SUDOTABS","sudo");
         }
-        if($s_action == "cut_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut","sudotabs","SUDOTABS","sudo");
-        }
+#        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"sudo"))){
+#          $this->CopyPasteHandler->add_to_queue($dn,"cut","sudotabs","SUDOTABS","sudo");
+#        }
       }
     }
 

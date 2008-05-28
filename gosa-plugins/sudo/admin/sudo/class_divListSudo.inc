@@ -117,7 +117,7 @@ class divListSudo extends MultiSelectWindow
     }
 
     /* Append multiple remove */
-    if(preg_match("/d/",$acl)){
+    if(preg_match("/r/",$acl)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Remove")."|"."del_role|\n";
