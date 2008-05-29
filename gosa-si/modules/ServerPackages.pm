@@ -63,6 +63,8 @@ sub process_incoming_msg {
         no strict 'refs';
         @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
     } else {
+        &main::daemon_Log("$session_id ERROR: ServerPackages: no event handler defined for '$header'", 1);
+        @out_msg_l = ();
     }
 
     return @out_msg_l;

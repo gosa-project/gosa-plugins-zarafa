@@ -1068,6 +1068,7 @@ sub msg_to_decrypt {
         if (not $done) {
             if (($target eq $server_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
                 $done = 1;
+                print STDERR "target is own address without forward_to_gosa-tag -> process here\n";
             }
         }
 
@@ -1077,6 +1078,7 @@ sub msg_to_decrypt {
             $res = $known_clients_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
                 $done = 1;
+                print STDERR "target is a client address in known_clients -> process here\n";
             }
         }
 
@@ -1111,7 +1113,9 @@ sub msg_to_decrypt {
                     $heap->{'client'}->put($msg);
                 }
                 $done = 1;
+                print STDERR "target is own address with forward_to_gosa-tag -> forward to gosa\n";
             }
+
         }
 
         # target is a client address in foreign_clients -> forward to registration server
@@ -1128,6 +1132,7 @@ sub msg_to_decrypt {
                     &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
                 }
                 $done = 1;
+                print STDERR "target is a client address in foreign_clients -> forward to registration server\n";
             }
         }
 
@@ -1139,6 +1144,7 @@ sub msg_to_decrypt {
                 my $hostkey = $res->{1}->{'hostkey'};
                 &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
                 $done = 1;
+                print STDERR "target is a server address -> forward to server\n";
             }
         }
 
@@ -1217,6 +1223,11 @@ sub process_task {
     if( $error == 0) {
         daemon_log("$session_id INFO: Incoming msg (session_id=$session_id) with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
         daemon_log("$session_id DEBUG: Processing module ".$module, 7);
+
+        known_modules
+    }
+
+    if ($error == 0) { 
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {
@@ -1264,12 +1275,12 @@ sub process_task {
                 # targets of msg are all gosa-si-server in known_server_db
                 elsif( $answer_target eq "KNOWN_SERVER" ) {
                     # answer is for all server in known_server
-                    my $sql_statement= "SELECT * FROM known_server";
+                    my $sql_statement= "SELECT * FROM $known_server_tn";
                     my $query_res = $known_server_db->select_dbentry( $sql_statement ); 
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
-                        $answer =~ s/KNOWN_SERVER/$host_name/g;
+                        $answer =~ s/<target>KNOWN_SERVER<\/target>/<target>$host_name<\/target>/g;
                         my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
                         &update_jobdb_status_for_send_msgs($answer, $error);
                     }
