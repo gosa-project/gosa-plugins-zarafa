@@ -86,7 +86,7 @@ sub new_server {
     my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
     my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
     
-
+    return;
 }
 
 
@@ -99,7 +99,7 @@ sub confirm_new_server {
     my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key' WHERE hostname='$source'"; 
     my $res = $main::known_server_db->update_dbentry($sql);
 
-
+    return;
 }
 
 

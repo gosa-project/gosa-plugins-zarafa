@@ -8,6 +8,7 @@ use Exporter;
 use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
+use Data::Dumper;
 
 #use IO::Socket::INET;
 #use XML::Simple;
@@ -55,7 +56,7 @@ sub process_incoming_msg {
     my $sql_events;
 
     my @msg_l;
-    my @out_msg_l;
+    my @out_msg_l = ( 'nohandler' );
 
     &main::daemon_log("$session_id DEBUG: ServerPackages: msg to process '$header'", 7);
     if( exists $event_hash->{$header} ) {
@@ -68,7 +69,10 @@ sub process_incoming_msg {
         $sql_events = "SELECT * FROM $main::known_clients_tn WHERE ( (macaddress LIKE '$target') OR (hostname='$target') )"; 
         my $res = $main::known_clients_db->select_dbentry( $sql_events );
         my $l = keys(%$res);
-        
+
+
+# TODO
+# $l == 1, knownclienterror wird eigentlich nicht gebraucht. hier soll nohandler anspringen
         # set error if no or more than 1 hits are found for sql query
         if ( $l != 1) {
             @out_msg_l = ('knownclienterror');
