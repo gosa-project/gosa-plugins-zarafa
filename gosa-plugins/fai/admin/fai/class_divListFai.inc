@@ -157,24 +157,8 @@ class divListFai extends MultiSelectWindow
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
 
-    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$acl_all)){
-      $s.= "..|---|\n";
-      $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-    }
-
-    /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
-    if(!($this->parent->lock_type == "freeze" && !$this->parent->allow_freeze_object_attach) && 
-      preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
-      $s .= "..|---|\n";
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
-      }
-    }
+    /* Add Copy & Paste header */
+    $s .= $this->parent->get_copypaste_header($this->selectedBase,$this->module,TRUE,FALSE);
 
 #   /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
 #   $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
