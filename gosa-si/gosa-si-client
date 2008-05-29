@@ -49,8 +49,8 @@ my $event_dir = "/usr/lib/gosa-si/client/events";
 use lib "/usr/lib/gosa-si/client/events";
 
 my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $fai_logpath);
-my ($server_ip, $server_port, $server_key, $server_timeout, $server_domain, $server_key_lifetime);
-my ($client_ip, $client_port, $client_mac_address, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
+my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
+my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
 my $default_server_key;
 my $event_hash;
@@ -61,6 +61,7 @@ my %files_to_watch;
 $verbose= 1;
 
 # globalise variables which are used in imported events
+our $global_kernel;
 our $cfg_file;
 our $opts_file;
 our $server_address;
@@ -628,6 +629,8 @@ sub send_msg_to_target {
     my $socket = &open_socket($address);
     if( !$socket ) {
         daemon_log("ERROR: cannot send ".$msg_header."msg to $address , host not reachable", 1);
+        $REGISTERED = 0;        # if server is not available, cause reregistering
+        #$global_kernel->yield('register_at_gosa_si_server');
         $error++;
     }
     
@@ -717,13 +720,18 @@ sub register_at_gosa_si_server {
 
     	my $events = join( ",", keys %{$event_hash} );
     	while(1) {
-      		# fetch first gosa-si-server from @servers
-			my $server = shift(@servers);
+            $try_to_register++;
 
-      		# append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
-      		# a registration never occured
-      		push( @servers, $server );
+ 			# after one complete round through all server, stop trying to register           
+            if( $try_to_register > @servers )  { last; }
 
+            # fetch first gosa-si-server from @servers
+            # append shifted gosa-si-server at the end of @servers, so looking for servers never stop if
+            # a registration never occured
+            my $server = shift(@servers);
+            push( @servers, $server );
+
+            # Check if our ip is resolvable - if not: don't try to register
 			if(!(defined($server) && $server =~ m/^[0-9\.]*?:.*$/)) {
 				&main::daemon_log("ERROR: Server with address '".defined($server)?$server:""."' is invalid!", 1);
 				if (length(@servers) == 1) {
@@ -763,11 +771,9 @@ sub register_at_gosa_si_server {
 
       		# send xml hash to server with general server passwd
 			my $res = &send_msg_hash_to_target($register_hash, $server, $default_server_key);
-	  
-			if( $try_to_register >= @servers )  { last; }
 
 	  		# if delivery of registration msg succeed
-			if($res == 0) {
+			if($res eq "0") {
         		# reset try_to_register
 				$try_to_register = 0;
 
@@ -780,14 +786,12 @@ sub register_at_gosa_si_server {
 
 	  		# delivery of registration msg failed	
 			} else {
-				$try_to_register++;
         		# wait 1 sec until trying to register again
 				sleep(1);
 				next;
 			}
 
     } # end of while
-
 	# one circle through all servers finished and no registration succeed
 	if ( $try_to_register >= @servers )  {
 			&write_to_file("gosa-si-no-server-available", $fai_logpath);
@@ -988,14 +992,6 @@ sub trigger_logged_in_users_report {
 }
 
 
-#sub generic_file_reset {
-#    my ( $heap, $wheel_id ) = @_[ HEAP, ARG0 ];
-#
-#    my $service = $heap->{services}->{$wheel_id};
-#    daemon_log("INFO: '$service' watching reset", 5);
-#    return;
-#}
-
 sub generic_file_error {
     my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
       @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
@@ -1083,6 +1079,7 @@ sub save_fai_log {
 sub _start {
     my ($kernel, $heap) = @_[KERNEL, HEAP];
     $kernel->alias_set('client_session');
+    $global_kernel = $kernel;       # this is used to throw events at each point of the skript
     
     # force a registration at a gosa-si-server
     $kernel->yield('register_at_gosa_si_server');
