@@ -52,8 +52,8 @@ my (%cfg_defaults, $foreground, $verbose, $pid_file, $procid, $pid, $log_file, $
 my ($server_ip, $server_port, $server_timeout, $server_domain, $server_key_lifetime);
 my ($client_port, $ldap_enabled, $ldap_config, $pam_config, $nss_config);
 my $xml;
-my $default_server_key;
 my $event_hash;
+my $default_server_key;
 my @servers;
 my $gotoHardwareChecksum;
 my $gosa_si_client_fifo;
@@ -691,7 +691,7 @@ sub open_socket {
     if(not defined $socket) {
         return;
     }
-    &daemon_log("open_socket: $PeerAddr", 7);
+    &daemon_log("DEBUG: open_socket: $PeerAddr", 7);
     return $socket;
 }
 
@@ -1249,8 +1249,8 @@ if ($client_headURL =~ /\/tag\// ||
 
 daemon_log(" ", 1);
 daemon_log("$prg started!", 1);
-daemon_log("status: $client_status", 1);
-daemon_log($client_status_hash->{$client_status}.": $client_revision", 1); 
+daemon_log("INFO: status: $client_status", 1);
+daemon_log("INFO: ".$client_status_hash->{$client_status}.": $client_revision", 1); 
 
 # delete old DBsqlite lock files
 system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
@@ -1259,17 +1259,27 @@ system('rm -f /tmp/gosa_si_lock*gosa-si-client*');
 $client_address = $client_ip.":".$client_port;
 my $network_interface= &get_interface_for_ip($client_ip);
 $client_mac_address= &get_mac($network_interface);
-daemon_log("gosa-si-client ip address detected: $client_ip", 1);
-daemon_log("gosa-si-client mac address detected: $client_mac_address", 1);
+daemon_log("INFO: ip address detected: $client_ip", 1);
+daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
 
 
 # import events
-&import_events($event_dir);
+my ($error, $result, $tmp_hash) = &import_events($event_dir);
+$event_hash = $tmp_hash;
+if ($error == 0) {
+    foreach my $log_line (@$result) {
+        daemon_log("DEBUG: $log_line", 7);
+    }
+} else {
+    foreach my $log_line (@$result) {
+        daemon_log("ERROR: $log_line", 1);
+    }
+}
 
 
 # compute hardware checksum
 $gotoHardwareChecksum= &generate_hw_digest();
-daemon_log("gosa-si-client gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
+daemon_log("INFO: gotoHardwareChecksum detected: $gotoHardwareChecksum", 1);
 
 
 # create socket for incoming xml messages
@@ -1278,7 +1288,7 @@ POE::Component::Server::TCP->new(
 	Port => $client_port,
 	ClientInput => \&server_input,
 );
-daemon_log("start socket for incoming xml messages at port '$client_port' ", 1);
+daemon_log("INFO: start socket for incoming xml messages at port '$client_port' ", 1);
 
 
 # prepare variables
