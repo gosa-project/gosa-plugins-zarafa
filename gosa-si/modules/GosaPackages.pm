@@ -227,36 +227,6 @@ sub get_ip {
 }
 
 
-#sub import_events {
-#    if (not -e $event_dir) {
-#        &main::daemon_log("G ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-#    }
-#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
-#
-#    while (defined (my $event = readdir (DIR))) {
-#        if( $event eq "." || $event eq ".." ) { next; }   
-#        if( $event eq "siTriggered.pm" ) { next; }                  # SI specific events not needed in GosaPackages.pm
-#        if( $event eq "clMessages.pm" ) { next; }                   # SI specific events not needed in GosaPackages.pm
-#
-#        eval{ require $event; };
-#        if( $@ ) {
-#            &main::daemon_log("G ERROR: import of event module '$event' failed", 1);
-#            &main::daemon_log("$@", 1);
-#            next;
-#        }
-#
-#        $event =~ /(\S*?).pm$/;
-#        my $event_module = $1;
-#        my $events_l = eval( $1."::get_events()") ;
-#        foreach my $event_name (@{$events_l}) {
-#            $event_hash->{$event_name} = $event_module;
-#        }
-#        my $events_string = join( ", ", @{$events_l});
-#        &main::daemon_log("G DEBUG: GosaPackages from '$1' imported events $events_string", 8);
-#    }
-#}
-
-
 #===  FUNCTION  ================================================================
 #         NAME:  process_incoming_msg
 #   PARAMETERS:  crypted_msg - string - incoming crypted message

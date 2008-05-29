@@ -1054,7 +1054,8 @@ sub msg_to_decrypt {
         }
         $error++;
     }
-    
+
+
     my $header;
     my $target;
     my $source;
@@ -1067,6 +1068,12 @@ sub msg_to_decrypt {
         $target = @{$msg_hash->{'target'}}[0];
         $source = @{$msg_hash->{'source'}}[0];
 
+        # target and source is equal to GOSA -> process here
+        if (not $done) {
+            if ($target eq "GOSA" && $source eq "GOSA") {
+                $done = 1;                    
+            }
+        }
 
         # target is own address without forward_to_gosa-tag -> process here
         if (not $done) {
@@ -1087,6 +1094,7 @@ sub msg_to_decrypt {
                 print STDERR "target is a client address in known_clients -> process here\n";
             }
         }
+
 
         # if message should be processed here -> add message to incoming_db
         if ($done) {
@@ -1160,8 +1168,11 @@ sub msg_to_decrypt {
             }
         }
 
-
+        if (not $done) {
+            daemon_log("$session_id ERROR: do not know what to do with this message: $msg", 1);
+        }
     }
+
     return;
 }
 
