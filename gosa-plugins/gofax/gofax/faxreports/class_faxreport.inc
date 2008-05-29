@@ -239,7 +239,7 @@ class faxreport extends plugin
           "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
           "(title=$s)))";
   
-      $res = get_list($filter, "users", $this->search_base, array("uid"), GL_SUBSEARCH | GL_NO_ACL_CHECK);
+      $res = get_list($filter, "users", $this->search_base, array("uid"), GL_SUBSEARCH );
 
       /* Check if we are allowed to collect fax data */
       $fax_users= array();
