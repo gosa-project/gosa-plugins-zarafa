@@ -1077,7 +1077,9 @@ sub msg_to_decrypt {
             $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
             $res = $known_clients_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
-                $done = 1;
+                $done = 1; 
+                my $hostname = $res->{1}->{'hostname'};
+                $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
                 print STDERR "target is a client address in known_clients -> process here\n";
             }
         }
@@ -1123,12 +1125,14 @@ sub msg_to_decrypt {
             $sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
             $res = $foreign_clients_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
+                my $hostname = $res->{1}->{'hostname'};
                 my $regserver = $res->{1}->{'regserver'};
                 my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$regserver'"; 
                 my $res = $known_server_db->select_dbentry($sql);
                 if (keys(%$res) > 0) {
                     my $regserver_key = $res->{1}->{'hostkey'};
                     $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
+                    $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
                     &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
                 }
                 $done = 1;

@@ -52,6 +52,7 @@ sub process_incoming_msg {
     my $header = @{$msg_hash->{header}}[0];
     my $source = @{$msg_hash->{source}}[0]; 
     my $target = @{$msg_hash->{target}}[0];
+    my $sql_events;
 
     my @msg_l;
     my @out_msg_l;
@@ -103,7 +104,7 @@ sub process_incoming_msg {
         @out_msg_l = ();
     }
       
-    return @out_msg_l;
+    return \@out_msg_l;
 }
 
 1;
