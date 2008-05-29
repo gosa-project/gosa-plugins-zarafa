@@ -197,20 +197,10 @@ class divListDevices extends MultiSelectWindow
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"devices") ;
 
       $actions = "";
-      if($ui->is_cutable($val['dn'],"devices","deviceGeneric") && $this->parent->CopyPasteHandler){
-        $actions .= "<input class='center' type='image'
-          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
-      if($ui->is_copyable($val['dn'],"devices","deviceGeneric") && $this->parent->CopyPasteHandler){
-        $actions.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
+      
+      /* Add copy & cut functionality */
+      $actions.= $this->parent->get_copypaste_action($val['dn'],"devices","deviceGeneric");
+      
       $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='device_edit_%KEY%' title='"._("Edit this entry")."'>";
 

@@ -213,20 +213,8 @@ class divListApplication extends MultiSelectWindow
       /* Create action icons */
       $actions= "";
 
-      /* Add Copy & Paste icon */
-      if($ui->is_cutable($val['dn'],"application","application") && $this->parent->CopyPasteHandler){
-        $actions .= "<input class='center' type='image'
-          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
-      if($ui->is_copyable($val['dn'],"application","application") && $this->parent->CopyPasteHandler){
-        $actions.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      /* Add copy & cut functionality */
+      $actions.= $this->parent->get_copypaste_action($val['dn'],"application","application");
 
       /* Add edit icon */
       $actions.= "<input class='center' type='image'

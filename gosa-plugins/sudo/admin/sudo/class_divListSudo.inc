@@ -168,14 +168,8 @@ class divListSudo extends MultiSelectWindow
       $acl    = $ui->get_permissions($val['dn'],"sudo/sudo");
       $acl_all= $this->ui->get_category_permissions($val['dn'],"sudo"); 
 
-      /* Add edit icon */
-      $actions= "";
-      if($ui->is_copyable($val['dn'],"sudo","sudo") && $this->parent->CopyPasteHandler){
-        $actions.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      /* Add copy & cut functionality */
+      $actions = $this->parent->get_copypaste_action($val['dn'],"sudo","sudo",TRUE,FALSE);
 
       $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='".msgPool::editButton()."' name='sudo_edit_%KEY%' title='"._("Edit this entry")."'>";

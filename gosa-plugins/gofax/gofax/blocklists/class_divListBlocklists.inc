@@ -191,19 +191,9 @@ class divListBlocklist extends MultiSelectWindow
       }  
 
       $action ="";
-      if($ui->is_cutable($val['dn'],"gofaxlist","blocklist") && $this->parent->CopyPasteHandler){
-        $action .= "<input class='center' type='image'
-          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
 
-      if($ui->is_copyable($val['dn'],"gofaxlist","blocklist") && $this->parent->CopyPasteHandler){
-        $action.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      /* Add copy & cut functionality */
+      $action.= $this->parent->get_copypaste_action($val['dn'],"gofaxlist","blocklist");
 
       /* Edit link ; requires read access */
       $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";

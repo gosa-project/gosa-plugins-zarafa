@@ -189,20 +189,9 @@ class divListMacro extends MultiSelectWindow
         continue;
       }
 
-      if($ui->is_cutable($val['dn'],"gofonmacro","macro") && $this->parent->CopyPasteHandler){
-        $action .= "<input class='center' type='image'
-          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
-      if($ui->is_copyable($val['dn'],"gofonmacro","macro") && $this->parent->CopyPasteHandler){
-        $action.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
+      /* Add copy & cut functionality */
+      $action.= $this->parent->get_copypaste_action($val['dn'],"gofonmacro","macro");
+  
       $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     
         name='goFonMacro_edit_%KEY%' title='"._("Edit macro")."'>";
 

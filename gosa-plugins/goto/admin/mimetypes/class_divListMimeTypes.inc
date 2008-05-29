@@ -220,19 +220,9 @@ class divListMimeTypes extends MultiSelectWindow
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"mimetypes") ;
 
       $action = "";
-      if($ui->is_cutable($val['dn'],"mimetypes","mimetype") && $this->parent->CopyPasteHandler){
-        $action .= "<input class='center' type='image'
-          src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
 
-      if($ui->is_copyable($val['dn'],"mimetypes","mimetype") && $this->parent->CopyPasteHandler){
-        $action.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      /* Add copy & cut functionality */
+      $action.= $this->parent->get_copypaste_action($val['dn'],"mimetypes","mimetype");
 
       $action.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";

@@ -234,10 +234,9 @@ class divListFai extends MultiSelectWindow
        $ui = get_userinfo();
        $action ="";
        $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
-       if($ui->is_copyable($value['dn'],"fai",$value['class']) && $this->parent->CopyPasteHandler){
-         $action .= "<input class='center' type='image'
-           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-       }
+
+       /* Add copy & cut functionality */
+       $action.= $this->parent->get_copypaste_action($value['dn'],"fai",$value['class'],TRUE,FALSE);
 
        if(preg_match("/^freeze/", $value['FAIstate'])){
          $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
