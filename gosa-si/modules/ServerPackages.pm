@@ -58,6 +58,12 @@ sub process_incoming_msg {
     my @msg_l;
     my @out_msg_l = ( 'nohandler' );
 
+
+    # if message is being forwarded from another server, strip of header prefixes
+    $header =~ s/^gosa_|job_//;
+    $msg =~ s/<header>gosa_(\w+)<\/header>|<header>job_(\w+)<\/header>/<header>$1<\/header>/;
+    
+
     &main::daemon_log("$session_id DEBUG: ServerPackages: msg to process '$header'", 7);
     if( exists $event_hash->{$header} ) {
         # a event exists with the header as name
