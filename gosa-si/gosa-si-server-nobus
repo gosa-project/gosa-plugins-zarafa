@@ -1223,11 +1223,6 @@ sub process_task {
     if( $error == 0) {
         daemon_log("$session_id INFO: Incoming msg (session_id=$session_id) with header '".@{$msg_hash->{'header'}}[0]."'", 5); 
         daemon_log("$session_id DEBUG: Processing module ".$module, 7);
-
-        known_modules
-    }
-
-    if ($error == 0) { 
         $answer_l = &{ $module."::process_incoming_msg" }($msg, $msg_hash, $session_id);
 
         if ( 0 < @{$answer_l} ) {

@@ -346,10 +346,10 @@ sub process_gosa_msg {
         @out_msg_l = ();
     } elsif ($out_msg_l[0] eq 'knownclienterror') {
         &main::daemon_log("$session_id ERROR: no or more than 1 hits are found at known_clients_db with sql query: '$sql_events'", 1);
-        &main::daemon_log("$session_id WARNING: processing is aborted and message will not be forwarded");
+        &main::daemon_log("$session_id WARNING: processing is aborted and message will not be forwarded", 3);
         @out_msg_l = ();
     } elsif ($out_msg_l[0] eq 'noeventerror') {
-        &main::daemon_log("$session_id WARNING: client '$target' is not registered for event '$header', processing is aborted", 1); 
+        &main::daemon_log("$session_id WARNING: client '$target' is not registered for event '$header', processing is aborted", 3); 
         @out_msg_l = ();
     }
 
