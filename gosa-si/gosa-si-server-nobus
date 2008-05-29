@@ -320,27 +320,28 @@ sub daemon_log {
         chmod 0600, $log_file;
         if(not defined open( LOG_HANDLE, ">>$log_file" )) {
             print STDERR "cannot open $log_file: $!";
-            return }
-            chomp($msg);
-			$msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
-            if($level <= $verbose){
-                my ($seconds, $minutes, $hours, $monthday, $month,
-                        $year, $weekday, $yearday, $sommertime) = localtime(time);
-                $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-                $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-                $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-                my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-                $month = $monthnames[$month];
-                $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-                $year+=1900;
-                my $name = $prg;
+            return 
+        }
+        chomp($msg);
+        $msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
+        if($level <= $verbose){
+            my ($seconds, $minutes, $hours, $monthday, $month,
+                    $year, $weekday, $yearday, $sommertime) = localtime(time);
+            $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+            $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+            $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+            my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+            $month = $monthnames[$month];
+            $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+            $year+=1900;
+            my $name = $prg;
 
-                my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
-                print LOG_HANDLE $log_msg;
-                if( $foreground ) { 
-                    print STDERR $log_msg;
-                }
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds $name $msg\n";
+            print LOG_HANDLE $log_msg;
+            if( $foreground ) { 
+                print STDERR $log_msg;
             }
+        }
         close( LOG_HANDLE );
     }
 }

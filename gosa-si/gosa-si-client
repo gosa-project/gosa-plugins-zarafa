@@ -240,7 +240,7 @@ $SIG{INT} = \&sig_int_handler;
 #  DESCRIPTION: 
 #===============================================================================
 sub daemon_log {
-    # log into log_file
+# log into log_file
     my( $msg, $level ) = @_;
     if(not defined $msg) { return }
     if(not defined $level) { $level = 1 }
@@ -249,25 +249,26 @@ sub daemon_log {
         chmod 0600, $log_file;
         if(not defined open( LOG_HANDLE, ">>$log_file" )) {
             print STDERR "cannot open $log_file: $!";
-            return }
-            chomp($msg);
-            if($level <= $verbose){
-                my ($seconds, $minutes, $hours, $monthday, $month,
-                        $year, $weekday, $yearday, $sommertime) = localtime(time);
-                $hours = $hours < 10 ? $hours = "0".$hours : $hours;
-                $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
-                $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
-                my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-                $month = $monthnames[$month];
-                $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
-                $year+=1900;
+            return 
+        }
+        chomp($msg);
+        if($level <= $verbose){
+            my ($seconds, $minutes, $hours, $monthday, $month,
+                    $year, $weekday, $yearday, $sommertime) = localtime(time);
+            $hours = $hours < 10 ? $hours = "0".$hours : $hours;
+            $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
+            $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
+            my @monthnames = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+            $month = $monthnames[$month];
+            $monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
+            $year+=1900;
 
-                my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
-                print LOG_HANDLE $log_msg;
-                if( $foreground ) { 
-                    print STDERR $log_msg;
-                }
+            my $log_msg = "$month $monthday $hours:$minutes:$seconds $prg $msg\n";
+            print LOG_HANDLE $log_msg;
+            if( $foreground ) { 
+                print STDERR $log_msg;
             }
+        }
         close( LOG_HANDLE );
     }
 }
@@ -621,16 +622,16 @@ sub send_msg_to_target {
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
 
-	# xxxxxxxxxxxxxx
-
-	
-
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
         daemon_log("ERROR: cannot send ".$msg_header."msg to $address , host not reachable", 1);
-        $REGISTERED = 0;        # if server is not available, cause reregistering
-        #$global_kernel->yield('register_at_gosa_si_server');
+        if ($REGISTERED == 1) {
+            $REGISTERED = 0;        # if server is not available, cause reregistering
+            daemon_log("INFO: cause reregistering at gosa-si-server", 5); 
+            $global_kernel->yield('register_at_gosa_si_server');
+
+        }
         $error++;
     }
     
@@ -638,7 +639,7 @@ sub send_msg_to_target {
     if( $error == 0 ) {
         print $socket $crypted_msg."\n";
         daemon_log("INFO: send ".$msg_header."msg to $address", 5);
-        daemon_log("DEBUG: message:\n$msg", 8);
+        daemon_log("DEBUG: message:\n$msg", 9);
     }
 
     # close socket in any case
@@ -818,7 +819,7 @@ sub check_key_and_xml_validity {
     my $msg_hash;
     eval{
         $msg = &decrypt_msg($crypted_msg, $module_key);
-        &main::daemon_log("decrypted_msg: \n$msg", 8);
+        &main::daemon_log("decrypted_msg: \n$msg", 9);
 
         $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
@@ -1117,7 +1118,7 @@ sub server_input {
     
 
     daemon_log("INFO: Incoming msg from '$remote_ip'", 5);
-    daemon_log("DEBUG: Incoming msg:\n$input\n", 8);
+    daemon_log("DEBUG: Incoming msg:\n$input\n", 9);
 
     my ($msg, $msg_hash) = &check_key_and_xml_validity($input, $server_key);
     if( (!$msg) || (!$msg_hash) ) {
@@ -1149,12 +1150,12 @@ sub server_input {
         if( exists $event_hash->{$header} ) {
 
             # a event exists with the header as name
-            daemon_log("DEBUG: found event '$header' at event-module '".$event_hash->{$header}."'", 7);
+            daemon_log("INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
             no strict 'refs';
             $answer = &{$event_hash->{$header}."::$header"}($msg, $msg_hash);
         }
         else {
-            daemon_log("WARNING: no event '$header' found in event modules under $event_dir", 1);
+            daemon_log("WARNING: no event '$header' found in event modules under $event_dir", 3);
         }
     }
 
