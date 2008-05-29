@@ -487,10 +487,10 @@ class phoneConferenceManagment extends plugin
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->conferences[$s_entry]['dn'];
 
-      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"gofonconference"))){
+      if($s_action == "copy" && $ui->is_copyable($dn,"gofonconference","conference")){ 
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,"conferencetabs","CONFERENCETABS","gofonconference");
       }
-      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"gofonconference"))){
+      if($s_action == "cut" && $ui->is_cutable($dn,"gofonconference","conference")){
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,"conferencetabs","CONFERENCETABS","gofonconference");
       }
     }
@@ -505,10 +505,10 @@ class phoneConferenceManagment extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->conferences[$id]['dn'];
 
-        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"gofonconference"))){
+        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"gofonconference","conference")){ 
           $this->CopyPasteHandler->add_to_queue($dn,"copy","conferencetabs","CONFERENCETABS","gofonconference");
         }
-        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"gofonconference"))){
+        if($s_action == "cut_multiple" && $ui->is_cutable($dn,"gofonconference","conference")){
           $this->CopyPasteHandler->add_to_queue($dn,"cut","conferencetabs","CONFERENCETABS","gofonconference");
         }
       }

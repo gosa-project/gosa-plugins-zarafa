@@ -1089,6 +1089,7 @@ class faiManagement extends plugin
           $obj['cn'] 			      = $object['cn'][0];
           $obj['dn'] 			      = $object['dn'];
           $obj['acl'] 			    = $acl;
+          $obj['class'] 			  = $rest ['ACL'];
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
 
@@ -1219,6 +1220,7 @@ class faiManagement extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
 
     /* Add a single entry to queue */
     if($s_action == "copy"){
@@ -1228,7 +1230,10 @@ class faiManagement extends plugin
       $entry    = $this->objects[$s_entry];
       $a_setup  = $this->get_type($entry);
       $dn = $entry['dn'];
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+
+      if($ui->is_copyable($dn,"fai",$a_setup[1])){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+      }
     }
 
     /* Add entries to queue */
@@ -1245,8 +1250,7 @@ class faiManagement extends plugin
         $a_setup  = $this->get_type($entry);
         $dn = $entry['dn'];
 
-
-        if($s_action == "copy_multiple"){
+        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"fai",$a_setup[1])){
           $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
         }
       }

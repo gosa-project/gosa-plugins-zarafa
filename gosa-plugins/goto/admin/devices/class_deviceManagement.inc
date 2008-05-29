@@ -464,10 +464,10 @@ class deviceManagement extends plugin
       /* Cleanup object queue */
       $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->devices[$s_entry]['dn'];
-      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,"devices"))){
+      if($s_action == "copy" && $ui->is_copyable($dn,"devices","deviceGeneric")){ 
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,"devicetabs","DEVICETABS","devices");
       }
-      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"devices"))){
+      if($s_action == "cut" && $ui->is_cutable($dn,"devices","deviceGeneric")){ 
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,"devicetabs","DEVICETABS","devices");
       }
     }
@@ -482,10 +482,10 @@ class deviceManagement extends plugin
       foreach($this->list_get_selected_items() as $id){
         $dn = $this->devices[$id]['dn'];
 
-        if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,"devices"))){
+        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"devices","deviceGeneric")){ 
           $this->CopyPasteHandler->add_to_queue($dn,"copy","devicetabs","DEVICETABS","devices");
         }
-        if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,"devices"))){
+        if($s_action == "cut_multiple" && $ui->is_cutable($dn,"devices","deviceGeneric")){
           $this->CopyPasteHandler->add_to_queue($dn,"cut","devicetabs","DEVICETABS","devices");
         }
       }

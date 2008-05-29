@@ -194,6 +194,8 @@ class divListConference extends MultiSelectWindow
       $action_col_size += 20;
     }
 
+    $ui = get_userinfo();
+
     /* Insert conferneces*/
     foreach($list as $conferencekey => $conference ){
 
@@ -207,15 +209,14 @@ class divListConference extends MultiSelectWindow
       }
 
       $actions ="";
-
-      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
+      if($ui->is_cutable($conference['dn'],"gofonconference","conference") && $this->parent->CopyPasteHandler){
         $actions .= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
       }else{
         $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
-      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
+      if($ui->is_copyable($conference['dn'],"gofonconference","conference") && $this->parent->CopyPasteHandler){
         $actions.= "<input class='center' type='image'
           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }else{
