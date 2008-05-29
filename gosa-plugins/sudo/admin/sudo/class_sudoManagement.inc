@@ -255,7 +255,7 @@ class sudoManagement extends plugin
           add_lock($this->dns,$this->ui->dn);
 
           /* Lock the current entry, so nobody will edit it during deletion */
-          $smarty->assign("info", msgPool::deleteInfo($dns_names,_("Sudo role")));
+          $smarty->assign("info", msgPool::deleteInfo($this->dns,_("Sudo role")));
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
         }
       }

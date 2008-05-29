@@ -189,10 +189,7 @@ class divListMimeTypes extends MultiSelectWindow
     }
 
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
-    }
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -255,12 +252,7 @@ class divListMimeTypes extends MultiSelectWindow
         src='images/lists/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon */
-      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
-        $action.= $this->GetSnapShotActions($val['dn']);
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
 
       /* Add delete button */
       if(preg_match("/d/",$acl)){

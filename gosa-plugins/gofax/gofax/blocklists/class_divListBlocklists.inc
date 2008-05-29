@@ -169,11 +169,7 @@ class divListBlocklist extends MultiSelectWindow
     }
 
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
-    }
-
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -227,12 +223,7 @@ class divListBlocklist extends MultiSelectWindow
       $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
 
       /* Add snapshot icon */
-      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
-        $action.= $this->GetSnapShotActions($val['dn']);
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
  
       /* Delete entry ; requires remove access */
       if(preg_match("/d/",$acl)){

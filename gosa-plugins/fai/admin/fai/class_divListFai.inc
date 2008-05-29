@@ -177,12 +177,7 @@ class divListFai extends MultiSelectWindow
     }
 
 #   /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
-#   if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
-#     if($this->parent->snapshotEnabled()){
-#       $s .= "..|---|\n";
-#       $s .= $this->get_snapshot_header(TRUE);
-#     }
-#   }
+#   $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -274,6 +269,8 @@ class divListFai extends MultiSelectWindow
              name='entry_delete_%KEY%' title='"._("Delete class")."'>";
          }
        }
+
+#      $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
 
        /* Cutted objects should be displayed in light grey */
        $display = $value['cn'].$desc;

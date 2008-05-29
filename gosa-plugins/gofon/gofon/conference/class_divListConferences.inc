@@ -165,11 +165,7 @@ class divListConference extends MultiSelectWindow
       $s.="..|".$img."&nbsp;"._("Paste")."\n";
     }
 
-    /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
-    }
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -228,12 +224,7 @@ class divListConference extends MultiSelectWindow
                     alt='"._("edit")."'    name='conference_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon */
-      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
-        $actions.= $this->GetSnapShotActions($conference['dn']);
-      }else{
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-        $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
+      $actions.= $this->parent->get_snapshot_action($conference['dn'],$this->module);
 
       /* Create delete link - Only if we are allowed to delete this entry */
       if(preg_match("/d/",$acl)){

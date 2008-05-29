@@ -165,10 +165,7 @@ class divListDevices extends MultiSelectWindow
     }
 
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
-    }
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
                                                                        
@@ -231,13 +228,7 @@ class divListDevices extends MultiSelectWindow
       $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='device_edit_%KEY%' title='"._("Edit this entry")."'>";
 
-#     /* Add snapshot icon */
-#     if(preg_match("/(r.*w|w.*r)/",$acl_all)){
-#       $actions.= $this->GetSnapShotActions($val['dn']);
-#     }else{
-#       $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-#       $actions.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-#     }
+      $actions.= $this->parent->get_snapshot_action($val['dn'],$this->module);
 
       /* Add delete button */
       if(preg_match("/d/",$acl)){
