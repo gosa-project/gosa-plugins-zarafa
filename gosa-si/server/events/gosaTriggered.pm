@@ -789,7 +789,6 @@ sub trigger_activate_new {
 	my $source = @{$msg_hash->{'source'}}[0];
 	my $target = @{$msg_hash->{'target'}}[0];
 	my $header= @{$msg_hash->{'header'}}[0];
-	&main::daemon_log(Dumper($msg_hash));
 	my $mac= (defined($msg_hash->{'mac'}))?@{$msg_hash->{'mac'}}[0]:undef;
 	my $ogroup= (defined($msg_hash->{'ogroup'}))?@{$msg_hash->{'ogroup'}}[0]:undef;
 	my $timestamp= (defined($msg_hash->{'timestamp'}))?@{$msg_hash->{'timestamp'}}[0]:undef;
@@ -868,17 +867,21 @@ sub trigger_activate_new {
 				$ldap_entry->replace(
 					'FAIstate' => 'install'
 				);
+				my $faistate_mesg = $ldap_entry->update($ldap_handle);
+				if ($faistate_mesg->code() != 0) {
+					&main::daemon_log("ERROR: Updating the FAIstate for '".$ldap_entry->dn()."' failed (code '".$faistate_mesg->code()."') with '$@'!", 1);
+				}
 			}
 		} else {
 			$ldap_entry->add(
 				'FAIstate' => 'install'
 			);
+			my $faistate_mesg = $ldap_entry->update($ldap_handle);
+			if ($faistate_mesg->code() != 0) {
+				&main::daemon_log("ERROR: Updating the FAIstate for '".$ldap_entry->dn()."' failed (code '".$faistate_mesg->code()."') with '$@'!", 1);
+			}
 		}
 
-		my $faistate_mesg = $ldap_entry->update($ldap_handle);
-		if ($faistate_mesg->code() != 0) {
-			&main::daemon_log("ERROR: Updating the FAIstate for '".$ldap_entry->dn()."' failed (code '".$faistate_mesg->code()."') with '$@'!", 1);
-		}
 
 	} elsif ($ldap_mesg->count == 0) {
 		# TODO: Create a new entry
@@ -903,7 +906,6 @@ sub trigger_activate_new {
 		my $ogroup_result = $ogroup_entry->update($ldap_handle);
 		if ($ogroup_result->code() != 0) {
 			&main::daemon_log("ERROR: Updating the ObjectGroup '$ogroup' failed (code '".$ogroup_result->code()."') with '".$ogroup_result->{'errorMessage'}."'!", 1);
-			&main::daemon_log(Dumper($ogroup_result));
 		}
 	}
 
