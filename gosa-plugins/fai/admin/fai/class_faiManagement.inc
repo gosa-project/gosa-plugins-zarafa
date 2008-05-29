@@ -53,6 +53,8 @@ class faiManagement extends plugin
   var $fai_base     ="";
   var $fai_release  ="";
 
+  var $acl_module = array("fai");
+
 	/* construction/reconstruction 
 	 */
 	function faiManagement (&$config, $ui)
@@ -948,7 +950,7 @@ class faiManagement extends plugin
 
     /* Check if there is a snapshot dialog open */
     $base = $this->fai_base;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

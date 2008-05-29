@@ -36,6 +36,7 @@ class mimetypeManagement extends plugin
   var $mime_base    = "";
   var $mime_release = "";
 
+  var $acl_module = array("mimetypes");
 
   function IsReleaseManagementActivated()
   {
@@ -518,7 +519,7 @@ class mimetypeManagement extends plugin
     }else{
       $base = $this->mime_base;
     }
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

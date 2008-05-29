@@ -35,6 +35,7 @@ class applicationManagement extends plugin
 
   var $app_base     ="";
   var $app_release  ="";
+  var $acl_module   = array("application");  
 
   var $dns = array();
 
@@ -514,7 +515,7 @@ class applicationManagement extends plugin
     }else{
       $base = $this->app_base;  
     }
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

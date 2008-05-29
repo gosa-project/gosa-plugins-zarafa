@@ -18,6 +18,8 @@ class deviceManagement extends plugin
   var $dn ="";
   var $dns = array();
 
+  var $acl_module = array("devices");
+
   function deviceManagement(&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -421,7 +423,7 @@ class deviceManagement extends plugin
 
         /* Check if there is a snapshot dialog open */
     $base = $this->DivListDevices->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

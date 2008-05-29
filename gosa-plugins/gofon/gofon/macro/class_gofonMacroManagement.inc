@@ -35,6 +35,8 @@ class goFonMacro extends plugin
 
   var $dns              = array();
 
+  var $acl_module = array("gofonmacro");
+
   function gofonMacro(&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -429,7 +431,7 @@ class goFonMacro extends plugin
 
     /* Check if there is a snapshot dialog open */
     $base = $this->DivListMacro->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

@@ -10,6 +10,8 @@ class blocklist extends plugin
   var $CopyPasteHandler = NULL;
   var $dns              = array();
   var $start_pasting_copied_objects = FALSE;
+
+  var $acl_module = array("gofaxlist");
   
   function blocklist (&$config, $ui)
   {
@@ -331,7 +333,7 @@ class blocklist extends plugin
 
     /* Check if there is a snapshot dialog open */
     $base = $this->DivListBlocklist->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 

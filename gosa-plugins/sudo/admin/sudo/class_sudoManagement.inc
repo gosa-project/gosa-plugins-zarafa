@@ -36,6 +36,8 @@ class sudoManagement extends plugin
   private $base           = "";
 
   private $start_pasting_copied_objects = FALSE;
+
+  public $acl_module = array("sudo");
  
   /*! \brief */ 
   public function __construct(&$config, &$ui)
@@ -347,7 +349,7 @@ class sudoManagement extends plugin
     }
 
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog(sudo::get_sudoers_ou($this->config),$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog(sudo::get_sudoers_ou($this->config),$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 
