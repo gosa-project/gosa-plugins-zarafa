@@ -724,6 +724,14 @@ sub register_at_gosa_si_server {
       		# a registration never occured
       		push( @servers, $server );
 
+			if(!(defined($server) && $server =~ m/^[0-9\.]*?:.*$/)) {
+				&main::daemon_log("ERROR: Server with address '".defined($server)?$server:""."' is invalid!", 1);
+				if (length(@servers) == 1) {
+					&main::daemon_log("ERROR: No valid servers found!", 1);
+					exit(1);
+				}
+			}
+
       		# Check if our ip is resolvable - if not: don't try to register
       		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
       		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
@@ -917,37 +925,37 @@ sub check_outgoing_xml_validity {
 }
 
 
-sub import_events {
-
-    if (not -e $event_dir) {
-        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-    }
-    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
-
-    while (defined (my $event = readdir (DIR))) {
-        if( $event eq "." || $event eq ".." ) { next; }    
-        daemon_log("INFO: found event module: $event", 5); 
-        eval{ require $event; };
-        if( $@ ) {
-            daemon_log("ERROR: import of event module '$event' failed", 1);
-            daemon_log("$@", 1);
-            next;
-        }
-
-        $event =~ /(\S*?).pm$/;
-        my $event_module = $1;
-        my $events_l = eval( $1."::get_events()") ;
-        foreach my $event_name (@{$events_l}) {
-            $event_hash->{$event_name} = $event_module;
-        }
-
-    }
-
-    my @all_events = keys %$event_hash;
-    my $all_events_string = join(", ", @all_events);
-    
-    daemon_log("INFO: imported events: $all_events_string", 5);
-}
+#sub import_events {
+#
+#    if (not -e $event_dir) {
+#        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
+#    }
+#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
+#
+#    while (defined (my $event = readdir (DIR))) {
+#        if( $event eq "." || $event eq ".." ) { next; }    
+#        daemon_log("INFO: found event module: $event", 5); 
+#        eval{ require $event; };
+#        if( $@ ) {
+#            daemon_log("ERROR: import of event module '$event' failed", 1);
+#            daemon_log("$@", 1);
+#            next;
+#        }
+#
+#        $event =~ /(\S*?).pm$/;
+#        my $event_module = $1;
+#        my $events_l = eval( $1."::get_events()") ;
+#        foreach my $event_name (@{$events_l}) {
+#            $event_hash->{$event_name} = $event_module;
+#        }
+#
+#    }
+#
+#    my @all_events = keys %$event_hash;
+#    my $all_events_string = join(", ", @all_events);
+#    
+#    daemon_log("INFO: imported events: $all_events_string", 5);
+#}
 
 sub trigger_new_key {
     my ($kernel) = $_[KERNEL] ;   
@@ -1259,7 +1267,7 @@ daemon_log("gosa-si-client mac address detected: $client_mac_address", 1);
 
 
 # import events
-&import_events();
+&import_events($event_dir);
 
 
 # compute hardware checksum
