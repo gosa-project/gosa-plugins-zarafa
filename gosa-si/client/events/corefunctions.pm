@@ -497,7 +497,6 @@ sub new_ping {
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $out_msg;
     my $out_hash;
@@ -513,6 +512,7 @@ sub new_ping {
         &add_content2xml_hash($out_hash, "session_id", $session_id);
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }

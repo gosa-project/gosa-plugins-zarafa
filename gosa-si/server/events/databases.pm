@@ -69,8 +69,14 @@ sub query_db {
     my $res_hash = $db->select_dbentry($sql_statement);
     
     my $out_xml = &db_res2si_msg($res_hash, $header, $target, $source);
-    $out_xml =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
+    #$out_xml =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
     my @out_msg_l = ( $out_xml );
+
     return @out_msg_l;
 }
     
@@ -106,6 +112,12 @@ sub count_db {
 
     my $count = keys(%{$res_hash});
     my $out_xml= "<xml><header>answer</header><source>$target</source><target>$source</target><count>$count</count><session_id>$session_id</session_id></xml>";
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }
@@ -132,6 +144,12 @@ sub delete_jobdb_entry {
 
     # prepare xml answer
     my $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>$res</answer1><session_id>$session_id</session_id></xml>";
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 
@@ -155,6 +173,12 @@ sub clear_jobdb {
     if( $error == 0 ) {
         $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>0</answer1><session_id>$session_id</session_id></xml>";
     }
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+   
     my @out_msg_l = ( $out_xml );
     return @out_msg_l;
 }
@@ -201,6 +225,11 @@ sub update_status_jobdb_entry {
     }
     
     my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>%s</target>%s<session_id>$session_id</session_id></xml>", $target, $source, $out_xml);
+    if (defined $forward_to_gosa) {
+        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+     
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }

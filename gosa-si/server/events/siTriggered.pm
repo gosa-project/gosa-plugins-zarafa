@@ -112,6 +112,10 @@ sub got_ping {
     my $out_hash = &create_xml_hash($header, $source, "GOSA");
     &add_content2xml_hash($out_hash, "session_id", $session_id);
     $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
     push(@out_msg_l, $out_msg);
     
     return @out_msg_l;

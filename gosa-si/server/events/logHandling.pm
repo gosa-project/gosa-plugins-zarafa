@@ -90,6 +90,11 @@ sub show_log_by_date {
     }
 
     $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return ($out_msg);
 }
 
@@ -148,6 +153,11 @@ sub show_log_by_mac {
     }
 
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return ($out_msg);
 }
 
@@ -203,6 +213,11 @@ sub show_log_by_date_and_mac {
     }
 
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return $out_msg;
 }
 
@@ -247,6 +262,11 @@ sub show_log_files_by_date_and_mac {
     }
 
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return $out_msg;
 }
 
@@ -291,6 +311,11 @@ sub get_log_file_by_date_and_mac {
     my $out_hash = &create_xml_hash($header, $target, $source);
     &add_content2xml_hash($out_hash, $log_file, $log_content);
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return $out_msg;
 }
 
@@ -370,6 +395,11 @@ sub get_recent_log_by_mac {
     }
 
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return $out_msg;
 }
 
@@ -442,6 +472,11 @@ sub delete_log_by_date_and_mac {
     }
 
     my $out_msg = &create_xml_string($out_hash);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
     return $out_msg;
 }
 

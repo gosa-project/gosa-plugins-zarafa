@@ -139,92 +139,92 @@ sub send_user_msg {
     return;
 }
 
-sub send_user_msg_OLD {
-    my ($msg, $msg_hash, $session_id) = @_ ;
-    my @out_msg_l;
-    my @user_list;
-    my @group_list;
-
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $message = @{$msg_hash->{'message'}}[0];
-    if( exists $msg_hash->{'user'} ) { @user_list = @{$msg_hash->{'user'}}; }
-    if( exists $msg_hash->{'group'} ) { @group_list = @{$msg_hash->{'group'}}; }
-
-    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
-    if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
-        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
-        my $res = $main::job_db->exec_statement($sql_statement);
-    }
-
-    # error handling
-    if( not @user_list && not @group_list ) {
-        &main::daemon_log("$session_id WARNING: no user-tag or a group-tag specified in 'send_user_msg'", 3); 
-        return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
-                "<error_string>no user-tag or a group-tag specified in 'send_user_msg'</error_string></xml>");
-    }
-    if( not defined $message ) {
-        &main::daemon_log("$session_id WARNING: no message-tag specified in 'send_user_msg'", 3); 
-        return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
-                "<error_string>no message-tag specified in 'send_user_msg'</error_string></xml>");
-
-    }
-
-    # resolve groups to users
-    my $ldap_handle = &main::get_ldap_handle($session_id);
-    if( @group_list ) {
-        if( not defined $ldap_handle ) {
-            &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
-            return ();
-        } 
-        foreach my $group (@group_list) {   # Perform search
-            my $mesg = $ldap_handle->search( 
-                    base => $main::ldap_base,
-                    scope => 'sub',
-                    attrs => ['memberUid'],
-                    filter => "(&(objectClass=posixGroup)(cn=$group)(memberUid=*))");
-            if($mesg->code) {
-                &main::daemon_log($mesg->error, 1);
-                return ();
-            }
-            my $entry= $mesg->entry(0);
-            my @users= $entry->get_value("memberUid");
-            foreach my $user (@users) { push(@user_list, $user); }
-        }
-    }
-
-    # drop multiple users in @user_list
-    my %seen = ();
-    foreach my $user (@user_list) {
-        $seen{$user}++;
-    }
-    @user_list = keys %seen;
-
-    # build xml messages sended to client where user is logged in
-    foreach my $user (@user_list) {
-        my $sql_statement = "SELECT * FROM $main::login_users_tn WHERE user='$user'"; 
-        my $db_res = $main::login_users_db->select_dbentry($sql_statement);
-
-        if(0 == keys(%{$db_res})) {
-
-        } else {
-            while( my($hit, $content) = each %{$db_res} ) {
-                my $out_hash = &create_xml_hash('send_user_msg', $main::server_address, $content->{'client'});
-                &add_content2xml_hash($out_hash, 'message', $message);
-                &add_content2xml_hash($out_hash, 'user', $user);
-                if( exists $msg_hash->{'jobdb_id'} ) { 
-                    &add_content2xml_hash($out_hash, 'jobdb_id', @{$msg_hash->{'jobdb_id'}}[0]); 
-                }
-                my $out_msg = &create_xml_string($out_hash);
-                push(@out_msg_l, $out_msg);
-            }
-        }
-    }
-
-    return @out_msg_l;
-}
+#sub send_user_msg_OLD {
+#    my ($msg, $msg_hash, $session_id) = @_ ;
+#    my @out_msg_l;
+#    my @user_list;
+#    my @group_list;
+#
+#    my $header = @{$msg_hash->{'header'}}[0];
+#    my $source = @{$msg_hash->{'source'}}[0];
+#    my $target = @{$msg_hash->{'target'}}[0];
+#    my $message = @{$msg_hash->{'message'}}[0];
+#    if( exists $msg_hash->{'user'} ) { @user_list = @{$msg_hash->{'user'}}; }
+#    if( exists $msg_hash->{'group'} ) { @group_list = @{$msg_hash->{'group'}}; }
+#
+#    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+#    if( defined $jobdb_id) {
+#        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+#        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+#        my $res = $main::job_db->exec_statement($sql_statement);
+#    }
+#
+#    # error handling
+#    if( not @user_list && not @group_list ) {
+#        &main::daemon_log("$session_id WARNING: no user-tag or a group-tag specified in 'send_user_msg'", 3); 
+#        return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
+#                "<error_string>no user-tag or a group-tag specified in 'send_user_msg'</error_string></xml>");
+#    }
+#    if( not defined $message ) {
+#        &main::daemon_log("$session_id WARNING: no message-tag specified in 'send_user_msg'", 3); 
+#        return ("<xml><header>$header</header><source>GOSA</source><target>GOSA</target>".
+#                "<error_string>no message-tag specified in 'send_user_msg'</error_string></xml>");
+#
+#    }
+#
+#    # resolve groups to users
+#    my $ldap_handle = &main::get_ldap_handle($session_id);
+#    if( @group_list ) {
+#        if( not defined $ldap_handle ) {
+#            &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
+#            return ();
+#        } 
+#        foreach my $group (@group_list) {   # Perform search
+#            my $mesg = $ldap_handle->search( 
+#                    base => $main::ldap_base,
+#                    scope => 'sub',
+#                    attrs => ['memberUid'],
+#                    filter => "(&(objectClass=posixGroup)(cn=$group)(memberUid=*))");
+#            if($mesg->code) {
+#                &main::daemon_log($mesg->error, 1);
+#                return ();
+#            }
+#            my $entry= $mesg->entry(0);
+#            my @users= $entry->get_value("memberUid");
+#            foreach my $user (@users) { push(@user_list, $user); }
+#        }
+#    }
+#
+#    # drop multiple users in @user_list
+#    my %seen = ();
+#    foreach my $user (@user_list) {
+#        $seen{$user}++;
+#    }
+#    @user_list = keys %seen;
+#
+#    # build xml messages sended to client where user is logged in
+#    foreach my $user (@user_list) {
+#        my $sql_statement = "SELECT * FROM $main::login_users_tn WHERE user='$user'"; 
+#        my $db_res = $main::login_users_db->select_dbentry($sql_statement);
+#
+#        if(0 == keys(%{$db_res})) {
+#
+#        } else {
+#            while( my($hit, $content) = each %{$db_res} ) {
+#                my $out_hash = &create_xml_hash('send_user_msg', $main::server_address, $content->{'client'});
+#                &add_content2xml_hash($out_hash, 'message', $message);
+#                &add_content2xml_hash($out_hash, 'user', $user);
+#                if( exists $msg_hash->{'jobdb_id'} ) { 
+#                    &add_content2xml_hash($out_hash, 'jobdb_id', @{$msg_hash->{'jobdb_id'}}[0]); 
+#                }
+#                my $out_msg = &create_xml_string($out_hash);
+#                push(@out_msg_l, $out_msg);
+#            }
+#        }
+#    }
+#
+#    return @out_msg_l;
+#}
 
 
 sub recreate_fai_server_db {
@@ -241,7 +241,7 @@ sub recreate_fai_server_db {
     $main::fai_server_db->create_table("new_fai_server", \@main::fai_server_col_names);
     &main::create_fai_server_db("new_fai_server",undef,"dont", $session_id);
     $main::fai_server_db->move_table("new_fai_server", $main::fai_server_tn);
-
+    
     my @out_msg_l = ( $out_msg );
     return @out_msg_l;
 }
@@ -415,7 +415,12 @@ sub gen_smb_hash {
      my $password = @{$msg_hash->{password}}[0];
 
      my %data= ('hash' => join(q[:], ntlmgen $password));
-     my $out_msg = &build_msg("gen_smb_hash", $target, 'GOSA', \%data );
+     my $out_msg = &build_msg("gen_smb_hash", $target, $source, \%data );
+     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+     if (defined $forward_to_gosa) {
+         $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+     }
+
      return ( $out_msg );
 }
 
@@ -441,8 +446,12 @@ sub network_completition {
 	     %data= ('ip' => '', 'mac' => '');
      }
 
-     my $out_msg = &build_msg("network_completition", $target, 'GOSA', \%data );
-    
+     my $out_msg = &build_msg("network_completition", $target, $source, \%data );
+     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+     if (defined $forward_to_gosa) {
+         $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+     }
+
      return ( $out_msg );
 }
 
@@ -778,7 +787,12 @@ sub get_available_kernel {
         }
         $data{"answer".$i++}= "default";
 
-        my $out_msg = &build_msg("get_available_kernel", $target, "GOSA", \%data);
+        my $out_msg = &build_msg("get_available_kernel", $target, $source, \%data);
+        my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+        if (defined $forward_to_gosa) {
+            $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+        }
+
         return ( $out_msg );
 }
 
@@ -928,7 +942,12 @@ sub trigger_activate_new {
 
 
 	my %data;
-	my $out_msg = &build_msg("activate_new", $target, "GOSA", \%data);
+	my $out_msg = &build_msg("activate_new", $target, $source, \%data);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
+
 	return ( $out_msg );
 }
 
