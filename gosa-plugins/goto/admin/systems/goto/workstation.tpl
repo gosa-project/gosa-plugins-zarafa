@@ -45,6 +45,9 @@
      </td>
     </tr>
    </table>
+
+	{$host_key}
+
 {if $member_of_ogroup}
    <br>
    <br>

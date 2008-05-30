@@ -59,6 +59,8 @@ class workgeneric extends plugin
   var $currently_installing = FALSE;
   var $currently_installing_warned = FALSE;
 
+  var $kerberos_key_service = NULL;
+
   function workgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
@@ -67,6 +69,10 @@ class workgeneric extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    if(class_available("krb_host_keys")){
+      $this->kerberos_key_service = new krb_host_keys($this->config,$this);
+    }
 
     if(!isset($this->parent->by_object['ogroup'])){
       $ldap = $this->config->get_ldap_link();
@@ -333,6 +339,12 @@ class workgeneric extends plugin
     }
     $smarty->assign("netconfig", $str);
 
+    /* Display kerberos host key options */
+    $smarty->assign("host_key","");
+    if(is_object($this->kerberos_key_service)){
+      $smarty->assign("host_key",$this->kerberos_key_service->execute());
+    }
+
     /* Show main page */
     $smarty->assign("currently_installing", $this->currently_installing);
     return($smarty->fetch (get_template_path('workstation.tpl', TRUE, dirname(__FILE__))));
@@ -411,6 +423,11 @@ class workgeneric extends plugin
     
     if(isset($_POST["inheritAll"])){
       $this->set_everything_to_inherited();
+    }
+
+    /* Hanle kerberos host key plugin */
+    if(is_object($this->kerberos_key_service)){
+      $this->kerberos_key_service->save_object();
     }
   }
 
