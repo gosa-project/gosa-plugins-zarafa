@@ -68,7 +68,7 @@ sub query_db {
     my $sql_statement= "SELECT $select FROM $table $where $orderby $limit";
     my $res_hash = $db->select_dbentry($sql_statement);
     
-    my $out_xml = &db_res2si_msg($res_hash, $header, $target, $source);
+    my $out_xml = &db_res2si_msg($res_hash, $header, $source, $target);
     #$out_xml =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {

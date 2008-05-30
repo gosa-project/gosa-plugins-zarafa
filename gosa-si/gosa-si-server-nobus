@@ -1114,6 +1114,13 @@ sub msg_to_decrypt {
 
         # if message should be processed here -> add message to incoming_db
         if ($done) {
+
+            # if a job or a gosa message comes from a foreign server, fake module to GosaPackages
+            # so gosa-si-server knows how to process this kind of messages
+            if ($header =~ /^gosa_/ || $header =~ /job_/) {
+                $module = "GosaPackages";
+            }
+
             my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
                     primkey=>[],
                     headertag=>$header,

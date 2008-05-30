@@ -106,8 +106,8 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_krb5_modify_principal</header> <target>00:01:6c:9d:b9:fa</target> <principal>horst@WIRECARD.SYS</principal><source>GOSA</source><max_life>666</max_life></xml>"; 
 
     #$data = "<xml><header>gosa_query_fai_server</header><source>GOSA</source> <target>10.89.1.131:20081</target></xml>";
-    $data = "<xml><header>gosa_query_fai_server</header><source>GOSA</source> <target>10.89.1.31:20081</target></xml>";
     #$data = "<xml> <header>gosa_new_ping</header> <target>00:0c:29:02:e5:4d</target> <source>GOSA</source> </xml>";
+    $data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:0c:29:02:e5:4d</target> <macaddress>00:0c:29:02:e5:4d</macaddress><timestamp>29700101000000</timestamp> </xml>";
 
     $sock->write($data);
     $answer = "nothing";
