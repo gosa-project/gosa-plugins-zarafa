@@ -225,6 +225,7 @@ sub update_status_jobdb_entry {
     }
     
     my $out_msg = sprintf("<xml><header>answer</header><source>%s</source><target>%s</target>%s<session_id>$session_id</session_id></xml>", $target, $source, $out_xml);
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
         $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
