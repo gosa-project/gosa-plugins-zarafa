@@ -892,14 +892,12 @@ sub trigger_activate_new {
 			# Set FAIstate
 			if(defined($ldap_entry->get_value('FAIstate'))) {
 				if(!($ldap_entry->get_value('FAIstate') eq 'install')) {
-					$ldap_entry->changetype('modify');
 					$ldap_entry->replace(
 						'FAIstate' => 'install'
 					);
 					my $replace_result = $ldap_entry->update($ldap_handle);
 				}
 			} else {
-				$ldap_entry->changetype('add');
 				$ldap_entry->add(
 					'FAIstate' => 'install'
 				);
