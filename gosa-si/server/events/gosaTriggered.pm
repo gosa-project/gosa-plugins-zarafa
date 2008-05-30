@@ -815,9 +815,10 @@ sub trigger_activate_new {
 	my $ldap_handle = &main::get_ldap_handle();
 	my $ldap_entry;
 	my $ogroup_entry;
+	my $changed_attributes_counter = 0;
+	
+	eval {
 
-	# build the base, use optional base parameter or take it from ogroup
-	if(!(defined($base) && (length($base) > 0))) {
 		my $ldap_mesg= $ldap_handle->search(
 			base => $main::ldap_base,
 			scope => 'sub',
@@ -825,121 +826,135 @@ sub trigger_activate_new {
 		);
 		if($ldap_mesg->count == 1) {
 			$ogroup_entry= $ldap_mesg->pop_entry();
-
-			# Subtract the ObjectGroup cn
-			$base = $1 if $ogroup_entry->dn =~ /cn=$ogroup,ou=groups,(.*)$/;
 		} elsif ($ldap_mesg->count == 0) {
 			&main::daemon_log("ERROR: A GosaGroupOfNames with cn '$ogroup' was not found in base '".$main::ldap_base."'!", 1);
 		} else {
 			&main::daemon_log("ERROR: More than one ObjectGroups with cn '$ogroup' was found in base '".$main::ldap_base."'!", 1);
 		}
-	}
 
-	# prepend ou=systems
-	$base = "ou=systems,".$base;
+		# build the base, use optional base parameter or take it from ogroup
+		if(!(defined($base) && (length($base) > 0))) {
+				# Subtract the ObjectGroup cn
+				$base = $1 if $ogroup_entry->dn =~ /cn=$ogroup,ou=groups,(.*)$/;
+		}
 
-	# Search for an existing entry (should be in ou=incoming)
-	my $ldap_mesg= $ldap_handle->search(
-		base => $main::ldap_base,
-		scope => 'sub',
-		filter => "(&(objectClass=GOhard)(|(macAddress=$mac)(dhcpHWaddress=$mac)))",
-	);
+		# prepend ou=systems
+		$base = "ou=systems,".$base;
 
-	# TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
+		# Search for an existing entry (should be in ou=incoming)
+		my $ldap_mesg= $ldap_handle->search(
+			base => $main::ldap_base,
+			scope => 'sub',
+			filter => "(&(objectClass=GOhard)(|(macAddress=$mac)(dhcpHWaddress=$mac)))",
+		);
 
-	if($ldap_mesg->count == 1) {
-		&main::daemon_log("NOTICE: One system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
-		# Get the entry from LDAP
-		$ldap_entry= $ldap_mesg->pop_entry();
+		# TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
 
-		if(!($ldap_entry->dn() eq "cn=".$ldap_entry->get_value('cn').",$base")) {
+		if($ldap_mesg->count == 1) {
+			&main::daemon_log("DEBUG: One system with mac address '$mac' was found in base '".$main::ldap_base."'!", 6);
+			# Get the entry from LDAP
+			$ldap_entry= $ldap_mesg->pop_entry();
+
+			if(!($ldap_entry->dn() eq "cn=".$ldap_entry->get_value('cn').",$base")) {
 				# Move the entry to the new ou
 				$ldap_entry->changetype('moddn');
 				$ldap_entry->add(
-					'newrdn' => "cn=".$ldap_entry->get_value('cn'),
-					'deleteoldrdn' => "1",
-					'newsuperior' => $base,
+					newrdn => "cn=".$ldap_entry->get_value('cn'),
+					deleteoldrdn => 1,
+					newsuperior => $base,
 				);
-				my $mesg = $ldap_entry->update($ldap_handle);
-				if($mesg->code() != 0) {
-					&main::daemon_log("ERROR: Updating the dn for system with mac address '$mac' failed (code ".$mesg->code().") with '".$mesg->{'errorMessage'}."'!", 1);
+			}
+
+		} 
+
+		$ldap_mesg= $ldap_handle->search(
+			base => $main::ldap_base,
+			scope => 'sub',
+			filter => "(&(objectClass=GOhard)(|(macAddress=$mac)(dhcpHWaddress=$mac)))",
+		);
+
+		# TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
+
+		if($ldap_mesg->count == 1) {
+			$ldap_entry= $ldap_mesg->pop_entry();
+			# Check for needed objectClasses
+			my $oclasses = $ldap_entry->get_value('objectClass', asref => 1);
+			foreach my $oclass ("FAIobject", "GOhard") {
+				if(!(scalar grep $_ eq $oclass, map {$_ => 1} @$oclasses)) {
+					&main::daemon_log("Adding objectClass $oclass", 1);
+					$ldap_entry->add(
+						objectClass => $oclass,
+					);
+					my $oclass_result = $ldap_entry->update($ldap_handle);
 				}
 			}
-		# Check for needed objectClasses
-		my $oclasses = $ldap_entry->get_value('objectClass', asref => 1);
-		foreach my $oclass ("FAIobject", "GOhard") {
-			if(!(scalar grep $_ eq $oclass, map {$_ => 1} @$oclasses)) {
+
+			# Set FAIstate
+			if(defined($ldap_entry->get_value('FAIstate'))) {
+				if(!($ldap_entry->get_value('FAIstate') eq 'install')) {
+					$ldap_entry->changetype('modify');
+					$ldap_entry->replace(
+						'FAIstate' => 'install'
+					);
+					my $replace_result = $ldap_entry->update($ldap_handle);
+				}
+			} else {
+				$ldap_entry->changetype('add');
 				$ldap_entry->add(
-					objectClass => $oclass,
+					'FAIstate' => 'install'
 				);
+				my $add_result = $ldap_entry->update($ldap_handle);
+			}
+
+
+		} elsif ($ldap_mesg->count == 0) {
+			# TODO: Create a new entry
+			# $ldap_entry = Net::LDAP::Entry->new();
+			# $ldap_entry->dn("cn=$mac,$base");
+			&main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
+			$main::job_db->exec_statement("UPDATE jobs SET status = 'waiting', timestamp = '".&get_time()."' WHERE id = $jobdb_id");
+		} else {
+			&main::daemon_log("ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
+		}
+
+		# Add to ObjectGroup
+		if(!(scalar grep $_, map {$_ => 1} $ogroup_entry->get_value('member', asref => 1))) {
+			$ogroup_entry->add (
+				'member' => $ldap_entry->dn(),
+			);
+			my $ogroup_result = $ogroup_entry->update($ldap_handle);
+			if ($ogroup_result->code() != 0) {
+				&main::daemon_log("ERROR: Updating the ObjectGroup '$ogroup' failed (code '".$ogroup_result->code()."') with '".$ogroup_result->{'errorMessage'}."'!", 1);
 			}
 		}
 
-		# Set FAIstate
-		if(defined($ldap_entry->get_value('FAIstate'))) {
-			if(!($ldap_entry->get_value('FAIstate') eq 'install')) {
+		# Finally set gotoMode to active
+		if(defined($ldap_entry->get_value('gotoMode'))) {
+			if(!($ldap_entry->get_value('gotoMode') eq 'active')) {
 				$ldap_entry->replace(
-					'FAIstate' => 'install'
+					'gotoMode' => 'active'
 				);
-				my $faistate_mesg = $ldap_entry->update($ldap_handle);
-				if ($faistate_mesg->code() != 0) {
-					&main::daemon_log("ERROR: Updating the FAIstate for '".$ldap_entry->dn()."' failed (code '".$faistate_mesg->code()."') with '$@'!", 1);
+				my $activate_result = $ldap_entry->update($ldap_handle);
+				if ($activate_result->code() != 0) {
+					&main::daemon_log("ERROR: Activating system '".$ldap_entry->dn()."' failed (code '".$activate_result->code()."') with '".$activate_result->{'errorMessage'}."'!", 1);
 				}
 			}
 		} else {
 			$ldap_entry->add(
-				'FAIstate' => 'install'
-			);
-			my $faistate_mesg = $ldap_entry->update($ldap_handle);
-			if ($faistate_mesg->code() != 0) {
-				&main::daemon_log("ERROR: Updating the FAIstate for '".$ldap_entry->dn()."' failed (code '".$faistate_mesg->code()."') with '$@'!", 1);
-			}
-		}
-
-
-	} elsif ($ldap_mesg->count == 0) {
-		# TODO: Create a new entry
-		# $ldap_entry = Net::LDAP::Entry->new();
-		# $ldap_entry->dn("cn=$mac,$base");
-		&main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
-		$main::job_db->select_dbentry("UPDATE jobs SET state = 'waiting', timestamp = '".&get_time()."' WHERE header = 'trigger_activate_new' AND mac_address LIKE '$mac'");
-	} else {
-		&main::daemon_log("ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
-	}
-
-	my $update_mesg = $ldap_entry->update($ldap_handle);
-	if ($update_mesg->code() != 0) {
-		&main::daemon_log("ERROR: Updating attributes for '".$ldap_entry->dn()."' failed (code '".$update_mesg->code()."') with '".$update_mesg->{'errorMessage'}."'!", 1);
-	}
-
-	# Add to ObjectGroup
-	if(!(scalar grep $_, map {$_ => 1} $ogroup_entry->get_value('member', asref => 1))) {
-		$ogroup_entry->add (
-			'member' => $ldap_entry->dn(),
-		);
-		my $ogroup_result = $ogroup_entry->update($ldap_handle);
-		if ($ogroup_result->code() != 0) {
-			&main::daemon_log("ERROR: Updating the ObjectGroup '$ogroup' failed (code '".$ogroup_result->code()."') with '".$ogroup_result->{'errorMessage'}."'!", 1);
-		}
-	}
-
-	# Finally set gotoMode to active
-	if(defined($ldap_entry->get_value('gotoMode'))) {
-		if(!($ldap_entry->get_value('gotoMode') eq 'active')) {
-			$ldap_entry->replace(
 				'gotoMode' => 'active'
 			);
+			my $activate_result = $ldap_entry->update($ldap_handle);
+			if ($activate_result->code() != 0) {
+				&main::daemon_log("ERROR: Activating system '".$ldap_entry->dn()."' failed (code '".$activate_result->code()."') with '".$activate_result->{'errorMessage'}."'!", 1);
+			}
 		}
-	} else {
-		$ldap_entry->add(
-			'gotoMode' => 'active'
-		);
-	}
-	my $activate_result = $ldap_entry->update($ldap_handle);
-	if ($activate_result->code() != 0) {
-		&main::daemon_log("ERROR: Activating system '".$ldap_entry->dn()."' failed (code '".$activate_result->code()."') with '".$activate_result->{'errorMessage'}."'!", 1);
+	};
+	if($@) {
+		&main::daemon_log("ERROR: activate_new failed with '$@'!", 1);
 	}
 
+	# Delete job
+	$main::job_db->exec_statement("DELETE FROM jobs WHERE id =  $jobdb_id");
 
 	my %data;
 	my $out_msg = &build_msg("activate_new", $target, $source, \%data);
