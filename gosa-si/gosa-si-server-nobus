@@ -1079,6 +1079,9 @@ sub msg_to_decrypt {
         if (not $done) {
             if (($target eq $server_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
                 $done = 1;
+                if ($source eq "GOSA") {
+                    $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
+                }
                 print STDERR "target is own address without forward_to_gosa-tag -> process here\n";
             }
         }
@@ -1095,6 +1098,19 @@ sub msg_to_decrypt {
             }
         }
 
+        # target ist own address with forward_to_gosa-tag not pointing to myself -> process here
+        if (not $done) {
+            my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
+            my $gosa_at;
+            my $gosa_session_id;
+            if (($target eq $server_address) && (defined $forward_to_gosa)){
+                my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
+                if ($gosa_at ne $server_address) {
+                    $done = 1;
+                    print STDERR "target is own address with forward_to_gosa-tag not pointing to myself -> process here\n"; 
+                }
+            }
+        }
 
         # if message should be processed here -> add message to incoming_db
         if ($done) {
@@ -1110,25 +1126,25 @@ sub msg_to_decrypt {
 
         }
 
-        # target is own address with forward_to_gosa-tag -> forward to gosa
+        # target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa
         if (not $done) {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
+            my $gosa_at;
+            my $gosa_session_id;
             if (($target eq $server_address) && (defined $forward_to_gosa)){
-                #if( $msg =~ s/session_id=(\d+)$// ) {
-                #    my $session_id = $1 ;
-                #}
-                #if( defined $session_id ) {
-                    my $session_reference = $kernel->ID_id_to_session($forward_to_gosa);
+                my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
+                if ($gosa_at eq $server_address) {
+                    my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
                     if( defined $session_reference ) {
                         $heap = $session_reference->get_heap();
                     }
-                #}
-                if(exists $heap->{'client'}) {
-                    $msg = &encrypt_msg($msg, $GosaPackages_key);
-                    $heap->{'client'}->put($msg);
+                    if(exists $heap->{'client'}) {
+                        $msg = &encrypt_msg($msg, $GosaPackages_key);
+                        $heap->{'client'}->put($msg);
+                    }
+                    $done = 1;
+                    print STDERR "target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa\n";
                 }
-                $done = 1;
-                print STDERR "target is own address with forward_to_gosa-tag -> forward to gosa\n";
             }
 
         }
@@ -1147,7 +1163,7 @@ sub msg_to_decrypt {
                     $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
                     $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
                     if ($source eq "GOSA") {
-                        $msg =~ s/<\/xml>/<forward_to_gosa>$session_id<\/forward_to_gosa><\/xml>/;
+                        $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
                     }
                     &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
                 }
@@ -1162,10 +1178,19 @@ sub msg_to_decrypt {
             $res = $known_server_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
                 my $hostkey = $res->{1}->{'hostkey'};
+
+                if ($source eq "GOSA") {
+                    $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
+                    $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
+
+                }
+
                 &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
                 $done = 1;
                 print STDERR "target is a server address -> forward to server\n";
             }
+
+
         }
 
         if (not $done) {

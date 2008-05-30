@@ -11,6 +11,7 @@ server/events/gosaTriggered.pm 		  usr/lib/gosa-si/server/GosaPackages
 server/events/siTriggered.pm        usr/lib/gosa-si/server/ClientPackages
 server/events/clMessages.pm         usr/lib/gosa-si/server/ClientPackages
 server/events/databases.pm          usr/lib/gosa-si/server/GosaPackages
+server/events/databases.pm          usr/lib/gosa-si/server/ServerPackages
 server/events/krb5.pm               usr/lib/gosa-si/server/GosaPackages
 server/events/logHandling.pm        usr/lib/gosa-si/server/ClientPackages
 server/events/server_server_com.pm  usr/lib/gosa-si/server/ServerPackages
