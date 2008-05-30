@@ -1122,6 +1122,13 @@ class workstartup extends plugin
       }
     }
 
+    /* Ensure that our selection is valid, else we get several PHP warnings 
+        if there is no FAI configuration at all.
+     */
+    if(!isset($this->cache['SERVERS'][$this->FAIdebianMirror])){
+      $this->cache['SERVERS'][$this->FAIdebianMirror][''] ='';
+    }
+
     /* Build up arrays, without checks */
     if(!$first_call){
 
