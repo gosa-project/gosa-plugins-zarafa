@@ -82,6 +82,7 @@ my %repo_dirs=();
 # variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $SIPackages_key, 
+	$ClientPackages_key, $ServerPackages_key,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
 );
@@ -223,6 +224,12 @@ my $max_children = 2;
 "SIPackages" => {
     "key" => [\$SIPackages_key, "none"],
     },
+"ClientPackages" => {
+	"key" => [\$ClientPackages_key, "none"],
+	},
+"ServerPackages" => {
+	"key" => [\$ServerPackages_key, "none"],
+	},
 );
 
 
