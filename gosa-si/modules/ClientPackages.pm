@@ -626,24 +626,6 @@ sub here_i_am {
     $out_hash = &create_xml_hash("registered", $server_address, $source);
 
 
-
-
-#    # notify registered client to all other server
-#    if( $bus_activ eq "on") {
-#        # fetch actual bus key
-#        my $sql_statement= "SELECT * FROM known_server WHERE status='bus'";
-#        my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
-#        my $hostkey = $query_res->{1}->{'hostkey'};
-#
-#        # send update msg to bus
-#        $out_hash = &create_xml_hash("new_client", $server_address, $bus_address, $source);
-#        &add_content2xml_hash($out_hash, "macaddress", $mac_address);
-#        &add_content2xml_hash($out_hash, "timestamp", $act_timestamp);
-#        my $new_client_out = &create_xml_string($out_hash);
-#        push(@out_msg_l, $new_client_out);
-#        &main::daemon_log("$session_id INFO: send bus msg that client '$source' has registered at server '$server_address'", 5);
-#    }
-
     # give the new client his ldap config
     # Workaround: Send within the registration response, if the client will get an ldap config later
 	my $new_ldap_config_out = &new_ldap_config($source, $session_id);

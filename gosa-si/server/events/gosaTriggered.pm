@@ -340,23 +340,12 @@ sub get_client_for_login_usr {
 }
 
 
-#sub ping {
-#    my ($msg, $msg_hash, $session_id) = @_ ;
-#    my $out_msg = $msg;
-#    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
-#    if( defined $jobdb_id) {
-#        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
-#        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
-#        my $res = $main::job_db->exec_statement($sql_statement);
-#    }
-#
-#    $out_msg =~ s/<header>gosa_/<header>/;
-#
-#    my @out_msg_l = ( $out_msg );
-#    return @out_msg_l;
-#}
 sub ping {
     my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{header}}[0];
+    my $target = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{target}}[0];
+
     my ($sql, $res);
     my $out_msg = $msg;
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
@@ -366,20 +355,15 @@ sub ping {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    $out_msg =~ s/<header>gosa_/<header>/;
-
     # send message
-    my $header = @{$msg_hash->{header}}[0];
-    my $target = @{$msg_hash->{target}}[0];
-
     $sql = "SELECT * FROM $main::known_clients_tn WHERE ((hostname='$target') || (macaddress LIKE '$target'))"; 
     $res = $main::known_clients_db->exec_statement($sql);
     my $host_name = @{@$res[0]}[0];
-    $out_msg =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/;
-    $out_msg =~ s/<source>\S+<\/source>/<source>$main::server_address<\/source>/;
-    $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/; 
     my $host_key = @{@$res[0]}[2];
 
+    my $client_hash = &create_xml_hash("ping", $main::server_address, $host_name);
+    &add_content2xml_hash($client_hash, 'session_id', $session_id); 
+    my $out_msg = &create_xml_string($out_hash);
     my $error = &main::send_msg_to_target($out_msg, $host_name, $host_key, $header, $session_id);
     #if ($error != 0) {}
 
@@ -395,11 +379,15 @@ sub ping {
     }
     my $answer_xml = @{@$res[0]}[3];
     my %data = ( 'answer_xml'  => 'bin noch da' );
-    my $answer_msg = &build_msg("got_new_ping", "$main::server_address", "GOSA", \%data);
+    my $answer_msg = &build_msg("got_ping", $target, $source, \%data);
 
     $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
     $res = $main::incoming_db->exec_statement($sql);
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+    }
 
     my @answer_msg_l = ( $answer_msg );
     return @answer_msg_l;
