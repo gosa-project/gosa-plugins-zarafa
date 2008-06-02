@@ -368,15 +368,21 @@ sub ping {
     #if ($error != 0) {}
 
     my $message_id;
+    my $i = 0;
     while (1) {
+        $i++;
         $sql = "SELECT * FROM $main::incoming_tn WHERE headertag='answer_$session_id'";
         $res = $main::incoming_db->exec_statement($sql);
         if (ref @$res[0] eq "ARRAY") { 
             $message_id = @{@$res[0]}[0];
             last;
         }
+
+        # do not run into a endless loop
+        if ($i > 100) { last; }
         usleep(100000);
     }
+
     my $answer_xml = @{@$res[0]}[3];
     my %data = ( 'answer_xml'  => 'bin noch da' );
     my $answer_msg = &build_msg("got_ping", $target, $source, \%data);
