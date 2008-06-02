@@ -490,7 +490,7 @@ class workgeneric extends plugin
           !count($this->parent->by_object['workstartup']->gotoLdapServers) && 
           !$this->parent->by_object['workstartup']->gotoLdap_inherit){
 
-        $message[] = _("In order to activate this system a valid ldap handle is required, please select at least one ldap URI in the workstation startup tab.");
+        $message[] = _("A valid LDAP server assignement is missing!");
       }
     }else{
       /* Warn the user, that this host is currently installing */
@@ -501,7 +501,7 @@ class workgeneric extends plugin
         $message[] = "";
         $this->currently_installing_warned = TRUE;
         msg_dialog::display(_("Software deployment"), 
-            _("This host is currently installing, if you really want to save it, press 'OK'."),
+            _("This host is currently installing. If you want to save it, press 'OK'."),
             CONFIRM_DIALOG);
       }
     }

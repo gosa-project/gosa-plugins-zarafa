@@ -25,7 +25,7 @@ class goto_import_file extends plugin
      */
     $lines = split("\n",$str);
     if(empty($str) || !count($lines)){
-      msg_dialog::display(_("Import"),_("Could not import file, it seems to be empty."),ERROR_DIALOG);
+      msg_dialog::display(_("Import"), msgPool::incorrectUpload(_("file is empty")),ERROR_DIALOG);
       return;
     }
 
@@ -86,7 +86,7 @@ class goto_import_file extends plugin
         }
         if($error){
           msg_dialog::display(_("Import"),
-              _("Entries marked as having errors will be skippen, do you still want to proceed?"),CONFIRM_DIALOG);
+              _("Selected entries will be skipped because of errors. Do you want to proceed?"),CONFIRM_DIALOG);
         }
       }
       if(!$error){
@@ -119,7 +119,7 @@ class goto_import_file extends plugin
             $success ++;
           }
         }
-        msg_dialog::display(_("Import"),sprintf(_("Import complete: %s events successfully send, %s failed."),$success,$fail),INFO_DIALOG);
+        msg_dialog::display(_("Import"),sprintf(_("Import complete: %s events successfully send, %s failed"),$success,$fail),INFO_DIALOG);
       }
     }
 
@@ -155,7 +155,7 @@ class goto_import_file extends plugin
     foreach($this->events as $key => $event){
       $this->events[$key]['ERROR'] = "";
       if(empty($event['MAC']) || !tests::is_mac($event['MAC'])){
-        $this->events[$key]['ERROR'] .=  msgPool::invalid(_("Mac")).", ";
+        $this->events[$key]['ERROR'] .=  msgPool::invalid(_("MAC")).", ";
       }
       if(empty($event['HEADER']) || !isset($this->daemon_events['QUEUED'][$event['HEADER']])){
         $this->events[$key]['ERROR'] .=  msgPool::invalid(_("Event")).", ";

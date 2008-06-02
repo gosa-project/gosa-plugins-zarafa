@@ -431,7 +431,7 @@ class gotomasses extends plugin
        */  
       if(TRUE){
         $action .= "<input type='image' src='images/fai_hook.png' name='log_view_".$key."' 
-          class='center' title='"._("View logs")."' alt='"._("Log view")."'>&nbsp;";
+          class='center' title='"._("View logs")."' alt='"._("View logs")."'>&nbsp;";
       }
 
       /* If PAUSED or WAITING add edit action

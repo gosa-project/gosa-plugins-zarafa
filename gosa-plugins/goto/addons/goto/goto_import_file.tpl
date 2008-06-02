@@ -28,7 +28,7 @@
 		<table cellpadding="3" cellspacing="0" style='width:100%; background-color: #CCCCCC; border: solid 1px #CCCCCC;'>
 			<tr>
 				<td><b>{t}Timestamp{/t}</b></td>
-				<td><b>{t}Mac{/t}</b></td>
+				<td><b>{t}MAC{/t}</b></td>
 				<td><b>{t}Event{/t}</b></td>
 				<td><b>{t}Object group{/t}</b></td>
 				<td><b>{t}Base{/t}</b></td>

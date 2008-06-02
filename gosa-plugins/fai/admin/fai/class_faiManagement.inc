@@ -484,7 +484,7 @@ class faiManagement extends plugin
       if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
 
         if(!isset($_POST['release_hidden']) || base64_decode($_POST['release_hidden']) != $this->fai_release){
-          msg_dialog::display(_("Warning"),_("Release remove aborted, release name check failed."));
+          msg_dialog::display(_("Warning"),_("Release remove aborted because the release name check failed!"));
         }else{
 
           $bb =  $this->fai_release;

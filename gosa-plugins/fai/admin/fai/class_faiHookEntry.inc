@@ -64,10 +64,10 @@ class faiHookEntry extends plugin
         
     if(isset($_POST['ImportUpload'])){
       if(($_FILES['ImportFile']['error']!=0)){
-        msg_dialog::display(_("Error"), _("Upload failed!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::incorrectUpload(), ERROR_DIALOG);
       }else
       if(($_FILES['ImportFile']['size']==0)){
-        msg_dialog::display(_("Error"), _("Uploaded file is empty!"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }else{
         $str = utf8_encode(file_get_contents($_FILES['ImportFile']['tmp_name']));
         $this->FAIscript = addslashes ($str);

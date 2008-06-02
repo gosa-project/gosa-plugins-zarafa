@@ -107,9 +107,9 @@ class goto_log_view extends plugin
     /* Create list header 
      */
     $divlist->SetHeader(array(
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("Log file")." ".$img1."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=file'>"._("File")." ".$img1."</a>",
                 "attach"=>"width='200px;'"),
-          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Log date")." ".$img2."</a>",
+          array("string"=>"<a href='?plug=".$_GET['plug']."&sort_by=time'>"._("Date")." ".$img2."</a>",
                 "attach" => "style='border-right:none;'"),
           ));
 

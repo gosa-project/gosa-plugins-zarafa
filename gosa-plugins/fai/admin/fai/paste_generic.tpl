@@ -1,8 +1,8 @@
-<h2>{t}Sudo generic{/t} - {t}Global defaults{/t}</h2>
+<h2>{t}FAI settings{/t}</h2>
 <table> 
  <tr>
   <td>
-   {t}Name{/t}
+   {t}Class name{/t}
   </td>
   <td>
    <input type="text" name="cn" value="{$cn}" >

@@ -1,6 +1,6 @@
 <br>
 <p class="seperator">
-{t}This is a new system which currently has no system type defined. Please choose a system type for this entry and press the 'continue' button. If this system should be added to a group of system settings, specify the preferred object group below.{/t}
+{t}This system has no system type configured. Please choose a system type for this object and an optional inheritance group. Press the 'continue' button to procreed.{/t}
 <br>
 <br>
 </p>
@@ -9,7 +9,7 @@
 {if $dns_cnt == 1}
 <b>{t}Please select a system type and an optional bundle of predefined settings to be inherited.{/t}</b>
 {else}
-<b>{t}Please select a system type and an bundle of predefined settings to be inherited.{/t}</b>
+<b>{t}Please select a system type and a bundle of predefined settings to be inherited.{/t}</b>
 {/if}
 <br>
 <br>
@@ -21,7 +21,7 @@
     <tr>
      <td> 
       {t}System type{/t}&nbsp;
-	  <select name="SystemType" title="{t}Choose a system type{/t}" style="width:120px;">
+	  <select name="SystemType" title="{t}System type{/t}" style="width:120px;">
        {html_options values=$SystemTypeKeys output=$SystemTypes selected=$SystemType}
       </select>
      </td>
@@ -33,7 +33,7 @@
     <tr>
      <td> 
       {t}Choose an object group as template{/t}&nbsp;
-	  <select name="ObjectGroup" title="{t}Choose an object group{/t}" style="width:120px;">
+	  <select name="ObjectGroup" title="{t}Object group{/t}" style="width:120px;">
        {html_options values=$ObjectGroupKeys output=$ObjectGroups selected=$ObjectGroup}
       </select>
      </td>

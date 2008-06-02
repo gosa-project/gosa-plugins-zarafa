@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-05-31 10:37+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,37 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:7
-#, fuzzy
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"在这个子树中包含了所有账号，系统等等。请再次检查您是否要这么做，因为 GOsa 没"
-"有办法将您的数据找回。"
-
-#: admin/systems/services/dns/servdns.tpl:14
-msgid "Following objects will be taken over"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:27
-#, fuzzy
-msgid "Take over DNS configuration from"
-msgstr "配置文件"
-
-#: admin/systems/services/dns/servdns.tpl:31
-#, fuzzy
-msgid "Take over"
-msgstr "主服务器"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "域"
 
 #: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
 msgid ""
@@ -71,11 +40,11 @@ msgid "Create a new DNS zone entry"
 msgstr "创建一个新 DNS zone 条目"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:240
+#: admin/systems/services/dns/class_servDNS.inc:184
+#: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
 #: admin/systems/services/dns/class_DNS.inc:606
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
 msgid "Error"
 msgstr "错误"
@@ -96,13 +65,13 @@ msgstr "删除"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:408
 #: admin/systems/services/dns/class_servDNSeditZone.inc:416
 #: admin/systems/services/dns/servdnseditzone.tpl:7
-#: admin/systems/services/dns/class_servDNS.inc:586
+#: admin/systems/services/dns/class_servDNS.inc:585
 msgid "Zone name"
 msgstr "域名称"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:412
 #: admin/systems/services/dns/class_servDNS.inc:276
-#: admin/systems/services/dns/class_servDNS.inc:587
+#: admin/systems/services/dns/class_servDNS.inc:586
 msgid "Reverse zone"
 msgstr "反向解析域"
 
@@ -113,13 +82,13 @@ msgid "Only lowercase allowed"
 msgstr "只有小写字符串被允许作为域名。"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:420
-#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNS.inc:589
 msgid "Serial"
 msgstr "串行"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:424
 #: admin/systems/services/dns/servdnseditzone.tpl:102
-#: admin/systems/services/dns/class_servDNS.inc:591
+#: admin/systems/services/dns/class_servDNS.inc:590
 msgid "Refresh"
 msgstr "刷新"
 
@@ -129,13 +98,13 @@ msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:432
 #: admin/systems/services/dns/servdnseditzone.tpl:120
-#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/class_servDNS.inc:592
 msgid "Expire"
 msgstr "过期"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:436
 #: admin/systems/services/dns/servdnseditzone.tpl:111
-#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/class_servDNS.inc:591
 msgid "Retry"
 msgstr "重试"
 
@@ -162,21 +131,6 @@ msgstr "网络地址"
 msgid "Add"
 msgstr "添加"
 
-#: admin/systems/services/dns/class_DNS.inc:161
-#, fuzzy, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, fuzzy, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
-
-#: admin/systems/services/dns/class_DNS.inc:606
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr ""
-
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "通用配置"
@@ -191,7 +145,7 @@ msgid "Zone is in use, network settings can't be modified."
 msgstr ""
 
 #: admin/systems/services/dns/servdnseditzone.tpl:48
-#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/class_servDNS.inc:594
 msgid "Zone records"
 msgstr "域记录"
 
@@ -212,7 +166,7 @@ msgid "Primary dns server for this zone"
 msgstr "这个域的主要 dns 服务器"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:80
-#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/class_servDNS.inc:588
 msgid "Mail address"
 msgstr "邮件地址"
 
@@ -222,7 +176,7 @@ msgstr "系列号（自增）"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:129
 #: admin/systems/services/dns/class_servDNS.inc:277
-#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/class_servDNS.inc:593
 msgid "TTL"
 msgstr "TTL"
 
@@ -235,9 +189,9 @@ msgid "Global zone records"
 msgstr "全局域记录"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
-#: admin/systems/services/dns/class_servDNS.inc:548
+#: admin/systems/services/dns/class_servDNS.inc:547
+#: admin/systems/services/dns/class_servDNS.inc:576
 #: admin/systems/services/dns/class_servDNS.inc:577
-#: admin/systems/services/dns/class_servDNS.inc:578
 #, fuzzy
 msgid "DNS service"
 msgstr "添加 DNS 服务"
@@ -280,22 +234,68 @@ msgstr "类"
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
 msgstr "不能删除所选的域，因为它仍然被这些条目使用 '%s'"
 
-#: admin/systems/services/dns/class_servDNS.inc:453
-#: admin/systems/services/dns/class_servDNS.inc:469
-#: admin/systems/services/dns/class_servDNS.inc:494
-#: admin/systems/services/dns/class_servDNS.inc:505
-#: admin/systems/services/dns/class_servDNS.inc:538
+#: admin/systems/services/dns/class_servDNS.inc:452
+#: admin/systems/services/dns/class_servDNS.inc:468
+#: admin/systems/services/dns/class_servDNS.inc:493
+#: admin/systems/services/dns/class_servDNS.inc:504
+#: admin/systems/services/dns/class_servDNS.inc:537
 msgid "LDAP error"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:578
+#: admin/systems/services/dns/class_servDNS.inc:577
 msgid "Services"
 msgstr "服务"
 
-#: admin/systems/services/dns/class_servDNS.inc:588
+#: admin/systems/services/dns/class_servDNS.inc:587
 #, fuzzy
 msgid "Primary dns server"
 msgstr "这个域的主要 dns 服务器"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"在这个子树中包含了所有账号，系统等等。请再次检查您是否要这么做，因为 GOsa 没"
+"有办法将您的数据找回。"
+
+#: admin/systems/services/dns/servdns.tpl:14
+msgid "Following objects will be taken over"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:27
+#, fuzzy
+msgid "Take over DNS configuration from"
+msgstr "配置文件"
+
+#: admin/systems/services/dns/servdns.tpl:31
+#, fuzzy
+msgid "Take over"
+msgstr "主服务器"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "域"
+
+#: admin/systems/services/dns/class_DNS.inc:161
+#, fuzzy, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, fuzzy, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
+
+#: admin/systems/services/dns/class_DNS.inc:606
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
 #, fuzzy, php-format

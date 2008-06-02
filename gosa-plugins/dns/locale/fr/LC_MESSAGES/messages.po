@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-05-31 10:37+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,39 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:7
-#, fuzzy
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
-"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
-"impossible pour GOsa de récupérer vos données."
-
-#: admin/systems/services/dns/servdns.tpl:14
-#, fuzzy
-msgid "Following objects will be taken over"
-msgstr "Les références suivantes seront mises à jour"
-
-#: admin/systems/services/dns/servdns.tpl:27
-#, fuzzy
-msgid "Take over DNS configuration from"
-msgstr "Création du fichier de configuration"
-
-#: admin/systems/services/dns/servdns.tpl:31
-#, fuzzy
-msgid "Take over"
-msgstr "Serveur de temps"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "Zones"
 
 #: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
 msgid ""
@@ -73,11 +40,11 @@ msgid "Create a new DNS zone entry"
 msgstr "Créer une nouvelle zone DNS"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:240
+#: admin/systems/services/dns/class_servDNS.inc:184
+#: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
 #: admin/systems/services/dns/class_DNS.inc:606
-#: admin/systems/services/dns/class_servDNS.inc:184
-#: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
 msgid "Error"
 msgstr "Erreur"
@@ -98,13 +65,13 @@ msgstr "Supprimer"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:408
 #: admin/systems/services/dns/class_servDNSeditZone.inc:416
 #: admin/systems/services/dns/servdnseditzone.tpl:7
-#: admin/systems/services/dns/class_servDNS.inc:586
+#: admin/systems/services/dns/class_servDNS.inc:585
 msgid "Zone name"
 msgstr "Nom de la zone"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:412
 #: admin/systems/services/dns/class_servDNS.inc:276
-#: admin/systems/services/dns/class_servDNS.inc:587
+#: admin/systems/services/dns/class_servDNS.inc:586
 msgid "Reverse zone"
 msgstr "Zone inverse"
 
@@ -115,13 +82,13 @@ msgid "Only lowercase allowed"
 msgstr "Seule les minuscules sont autorisées dans le nom de la zone."
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:420
-#: admin/systems/services/dns/class_servDNS.inc:590
+#: admin/systems/services/dns/class_servDNS.inc:589
 msgid "Serial"
 msgstr "Série"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:424
 #: admin/systems/services/dns/servdnseditzone.tpl:102
-#: admin/systems/services/dns/class_servDNS.inc:591
+#: admin/systems/services/dns/class_servDNS.inc:590
 msgid "Refresh"
 msgstr "Rafraîchir"
 
@@ -131,13 +98,13 @@ msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:432
 #: admin/systems/services/dns/servdnseditzone.tpl:120
-#: admin/systems/services/dns/class_servDNS.inc:593
+#: admin/systems/services/dns/class_servDNS.inc:592
 msgid "Expire"
 msgstr "Expirer"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:436
 #: admin/systems/services/dns/servdnseditzone.tpl:111
-#: admin/systems/services/dns/class_servDNS.inc:592
+#: admin/systems/services/dns/class_servDNS.inc:591
 msgid "Retry"
 msgstr "Réessayer"
 
@@ -164,25 +131,6 @@ msgstr "Adresse réseau"
 msgid "Add"
 msgstr "Ajouter"
 
-#: admin/systems/services/dns/class_DNS.inc:161
-#, fuzzy, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr ""
-"Impossible de trouver la zone inverse pour la zone dns '%s'. Arrêt de la "
-"lecture de la zone."
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, fuzzy, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr ""
-"Plus d'un zone inverse existe pour la zone dns '%s'. Arrêt de la lecture de "
-"la zone."
-
-#: admin/systems/services/dns/class_DNS.inc:606
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr ""
-
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "Informations"
@@ -196,7 +144,7 @@ msgid "Zone is in use, network settings can't be modified."
 msgstr ""
 
 #: admin/systems/services/dns/servdnseditzone.tpl:48
-#: admin/systems/services/dns/class_servDNS.inc:595
+#: admin/systems/services/dns/class_servDNS.inc:594
 msgid "Zone records"
 msgstr "Enregistrement de zone"
 
@@ -217,7 +165,7 @@ msgid "Primary dns server for this zone"
 msgstr "Serveur dns primaire pour cette zone"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:80
-#: admin/systems/services/dns/class_servDNS.inc:589
+#: admin/systems/services/dns/class_servDNS.inc:588
 msgid "Mail address"
 msgstr "Adresse de messagerie"
 
@@ -227,7 +175,7 @@ msgstr "Numéro de série (incrémenté automatiquement)"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:129
 #: admin/systems/services/dns/class_servDNS.inc:277
-#: admin/systems/services/dns/class_servDNS.inc:594
+#: admin/systems/services/dns/class_servDNS.inc:593
 msgid "TTL"
 msgstr "TTL"
 
@@ -240,9 +188,9 @@ msgid "Global zone records"
 msgstr "Enregistrements pour la zone globale"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
-#: admin/systems/services/dns/class_servDNS.inc:548
+#: admin/systems/services/dns/class_servDNS.inc:547
+#: admin/systems/services/dns/class_servDNS.inc:576
 #: admin/systems/services/dns/class_servDNS.inc:577
-#: admin/systems/services/dns/class_servDNS.inc:578
 msgid "DNS service"
 msgstr "Service DNS"
 
@@ -290,21 +238,73 @@ msgstr ""
 "Vous ne pouvez pas effacer cette zone car elle est encore utilisée par ces "
 "éléments/ éléments '%s'"
 
-#: admin/systems/services/dns/class_servDNS.inc:453
-#: admin/systems/services/dns/class_servDNS.inc:469
-#: admin/systems/services/dns/class_servDNS.inc:494
-#: admin/systems/services/dns/class_servDNS.inc:505
-#: admin/systems/services/dns/class_servDNS.inc:538
+#: admin/systems/services/dns/class_servDNS.inc:452
+#: admin/systems/services/dns/class_servDNS.inc:468
+#: admin/systems/services/dns/class_servDNS.inc:493
+#: admin/systems/services/dns/class_servDNS.inc:504
+#: admin/systems/services/dns/class_servDNS.inc:537
 msgid "LDAP error"
 msgstr ""
 
-#: admin/systems/services/dns/class_servDNS.inc:578
+#: admin/systems/services/dns/class_servDNS.inc:577
 msgid "Services"
 msgstr "Services"
 
-#: admin/systems/services/dns/class_servDNS.inc:588
+#: admin/systems/services/dns/class_servDNS.inc:587
 msgid "Primary dns server"
 msgstr "Serveur dns primaire"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
+"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
+"impossible pour GOsa de récupérer vos données."
+
+#: admin/systems/services/dns/servdns.tpl:14
+#, fuzzy
+msgid "Following objects will be taken over"
+msgstr "Les références suivantes seront mises à jour"
+
+#: admin/systems/services/dns/servdns.tpl:27
+#, fuzzy
+msgid "Take over DNS configuration from"
+msgstr "Création du fichier de configuration"
+
+#: admin/systems/services/dns/servdns.tpl:31
+#, fuzzy
+msgid "Take over"
+msgstr "Serveur de temps"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "Zones"
+
+#: admin/systems/services/dns/class_DNS.inc:161
+#, fuzzy, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+"Impossible de trouver la zone inverse pour la zone dns '%s'. Arrêt de la "
+"lecture de la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, fuzzy, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+"Plus d'un zone inverse existe pour la zone dns '%s'. Arrêt de la lecture de "
+"la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:606
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:218
 #, fuzzy, php-format
