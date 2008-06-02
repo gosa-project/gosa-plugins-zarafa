@@ -1330,7 +1330,7 @@ sub process_task {
                     while( my ($hit_num, $hit) = each %{ $query_res } ) {    
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
-                        $answer =~ s/<target>KNOWN_SERVER<\/target>/<target>$host_name<\/target>/g;
+                        $answer =~ s/<target>\w+<\/target>/<target>$host_name<\/target>/g;
                         my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
                         &update_jobdb_status_for_send_msgs($answer, $error);
                     }
