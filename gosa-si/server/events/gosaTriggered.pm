@@ -344,7 +344,7 @@ sub ping {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{header}}[0];
     my $target = @{$msg_hash->{target}}[0];
-    my $source = @{$msg_hash->{target}}[0];
+    my $source = @{$msg_hash->{source}}[0];
 
     my ($sql, $res);
     my $out_msg = $msg;
@@ -380,14 +380,13 @@ sub ping {
     my $answer_xml = @{@$res[0]}[3];
     my %data = ( 'answer_xml'  => 'bin noch da' );
     my $answer_msg = &build_msg("got_ping", $target, $source, \%data);
-
-    $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
-    $res = $main::incoming_db->exec_statement($sql);
-
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
     }
+
+    $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
+    $res = $main::incoming_db->exec_statement($sql);
 
     my @answer_msg_l = ( $answer_msg );
     return @answer_msg_l;
