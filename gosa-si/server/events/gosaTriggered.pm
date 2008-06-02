@@ -953,17 +953,10 @@ sub trigger_activate_new {
 	# Delete job
 	$main::job_db->exec_statement("DELETE FROM jobs WHERE id =  $jobdb_id");
 
-	my %data;
-	my $out_msg = &build_msg("activate_new", $target, $source, \%data);
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    if (defined $forward_to_gosa) {
-        $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
-    }
-
 	# create set_activated_for_installation message for delivery
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
     my $out_msg = &create_xml_string($out_hash);
-	my $out_msg_l = ($out_msg);
+	my @out_msg_l = ($out_msg);
 
     return @out_msg_l;
 }
