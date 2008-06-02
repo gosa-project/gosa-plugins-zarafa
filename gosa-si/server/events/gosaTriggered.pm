@@ -841,7 +841,7 @@ sub trigger_activate_new {
 		$base = "ou=systems,".$base;
 
 		# Search for an existing entry (should be in ou=incoming)
-		my $ldap_mesg= $ldap_handle->search(
+		$ldap_mesg= $ldap_handle->search(
 			base => $main::ldap_base,
 			scope => 'sub',
 			filter => "(&(objectClass=GOhard)(|(macAddress=$mac)(dhcpHWaddress=$mac)))",
