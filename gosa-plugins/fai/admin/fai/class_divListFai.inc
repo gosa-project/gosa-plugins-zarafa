@@ -39,7 +39,7 @@ class divListFai extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 120;
+    $action_col_size = 130;
 
     /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all' title='"._("Select all")."'
@@ -192,7 +192,7 @@ class divListFai extends MultiSelectWindow
 
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 120;
+    $action_col_size = 130;
 #   if($this->parent->snapshotEnabled()){
 #     $action_col_size += 32;
 #   }
