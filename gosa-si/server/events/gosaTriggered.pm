@@ -363,8 +363,8 @@ sub ping {
 
     my $client_hash = &create_xml_hash("ping", $main::server_address, $host_name);
     &add_content2xml_hash($client_hash, 'session_id', $session_id); 
-    my $out_msg = &create_xml_string($out_hash);
-    my $error = &main::send_msg_to_target($out_msg, $host_name, $host_key, $header, $session_id);
+    my $client_msg = &create_xml_string($client_hash);
+    my $error = &main::send_msg_to_target($client_msg, $host_name, $host_key, $header, $session_id);
     #if ($error != 0) {}
 
     my $message_id;
