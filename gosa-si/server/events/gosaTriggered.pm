@@ -960,7 +960,12 @@ sub trigger_activate_new {
         $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
     }
 
-	return ( $out_msg );
+	# create set_activated_for_installation message for delivery
+    my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
+    my $out_msg = &create_xml_string($out_hash);
+	my $out_msg_l = ($out_msg);
+
+    return @out_msg_l;
 }
 
 
