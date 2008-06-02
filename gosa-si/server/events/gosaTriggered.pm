@@ -8,7 +8,6 @@ my @events = (
     "gen_smb_hash",
     "trigger_reload_ldap_config",
     "ping",
-    "new_ping",
     "network_completition",
     "set_activated_for_installation",
     "new_key_for_client",
@@ -341,22 +340,22 @@ sub get_client_for_login_usr {
 }
 
 
+#sub ping {
+#    my ($msg, $msg_hash, $session_id) = @_ ;
+#    my $out_msg = $msg;
+#    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+#    if( defined $jobdb_id) {
+#        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+#        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+#        my $res = $main::job_db->exec_statement($sql_statement);
+#    }
+#
+#    $out_msg =~ s/<header>gosa_/<header>/;
+#
+#    my @out_msg_l = ( $out_msg );
+#    return @out_msg_l;
+#}
 sub ping {
-    my ($msg, $msg_hash, $session_id) = @_ ;
-    my $out_msg = $msg;
-    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
-    if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
-        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
-        my $res = $main::job_db->exec_statement($sql_statement);
-    }
-
-    $out_msg =~ s/<header>gosa_/<header>/;
-
-    my @out_msg_l = ( $out_msg );
-    return @out_msg_l;
-}
-sub new_ping {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my ($sql, $res);
     my $out_msg = $msg;
