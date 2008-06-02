@@ -92,6 +92,11 @@ sub krb5_list_principals {
       }
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # return message
     return &create_xml_string($out_hash);
 }
@@ -146,6 +151,11 @@ sub krb5_create_principal {
       }
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # return message
     return &create_xml_string($out_hash);
 }
@@ -195,6 +205,11 @@ sub krb5_modify_principal {
         $princ->principal($principal);
         $kadm5->modify_principal($princ) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
       }
+    }
+
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
     # return message
@@ -248,6 +263,11 @@ sub krb5_get_principal {
       }
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # return message
     return &create_xml_string($out_hash);
 }
@@ -284,6 +304,11 @@ sub krb5_del_principal {
       }
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # return message
     return &create_xml_string($out_hash);
 }
@@ -309,6 +334,11 @@ sub krb5_list_policies {
       for my $policy (@policies) {
         &add_content2xml_hash($out_hash, "policy", $policy);
       }
+    }
+
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
     # return message
@@ -348,6 +378,11 @@ sub krb5_get_policy {
       &add_content2xml_hash($out_hash, "pw_min_length", $data->pw_min_length);
       &add_content2xml_hash($out_hash, "pw_min_life", $data->pw_min_life);
       &add_content2xml_hash($out_hash, "policy_refcnt", $data->policy_refcnt);
+    }
+
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
     # return message
@@ -398,6 +433,11 @@ sub krb5_create_policy {
       $kadm5->create_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # build return message with twisted target and source
     my $out_msg = &create_xml_string($out_hash);
 
@@ -444,6 +484,11 @@ sub krb5_modify_policy {
       $kadm5->modify_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
     # build return message with twisted target and source
     my $out_msg = &create_xml_string($out_hash);
 
@@ -476,6 +521,11 @@ sub krb5_del_policy {
       &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
     } else {
       $kadm5->delete_policy($policy) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
+    }
+
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
     # return message
@@ -515,6 +565,11 @@ sub krb5_set_password {
       &add_content2xml_hash($out_hash, "error", "Illegal principal name");
     } else {
       $kadm5->chpass_principal($principal, @{$msg_hash->{'password'}}[0]) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
+    }
+
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    if (defined $forward_to_gosa) {
+        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
     # return message
