@@ -4,8 +4,8 @@
 	<tr>
 		<td>{t}Realm{/t}</td>
 		<td>
-			<select name="host_key_realm" title="{t}Select a realm{/t}">
-			{html_options options=$host_key_realms selected=$host_key_realm}
+			<select name="goKrbRealm" title="{t}Select a realm{/t}">
+			{html_options options=$Realms selected=$goKrbRealm}
 			</select>
 		</td>
 		<td><input type='submit' name="host_key_generate" value="{t}Generate{/t}"></td>
