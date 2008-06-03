@@ -152,10 +152,7 @@ class servapacheVhostEdit extends plugin
     if(isset($_POST['SaveVhostEntryChanges'])){
       $this->dialog->save_object();
       if(count($this->dialog->check())){
-        $msgs = $this->dialog->check();
-        foreach($msgs as $msg){
-          print_red($msg);
-        }
+         msg_dialog::displayChecks($this->dialog->check());
       }else{
         $this->dialog->save();
         $this->dialog = false;
@@ -282,7 +279,7 @@ class servapacheVhostEdit extends plugin
     /* Set apacheServerNames without server suffix */
       $smarty->assign("apacheServerName",$this->apacheServerName);
 
-    $div = new DivSelectBox("apacheServerAlias");
+    $div = new divSelectBox("apacheServerAlias");
     $div->setHeight(120);
     $recs = $this->apacheServerAlias;
 
@@ -328,7 +325,7 @@ class servapacheVhostEdit extends plugin
     $smarty->assign("apacheScriptAlias",  $div->DrawList());    
     
     /* Display template */
-    $display.= $smarty->fetch(get_template_path('servApacheVhostEdit.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servApacheVhostEdit.tpl', TRUE, dirname(__FILE__)));
     return($display);
   }
 
@@ -368,11 +365,11 @@ class servapacheVhostEdit extends plugin
       $message[] =sprintf(_("Please choose a valid Virtual Host Name."));
     }
 
-    if(!is_path($this->apacheDocumentRoot) || empty($this->apacheDocumentRoot)){
+    if(!tests::is_path($this->apacheDocumentRoot) || empty($this->apacheDocumentRoot)){
       $message[] = _("Please choose a valid Path as Virtual Host Document Root.");
     }
     
-  	if(!is_email($this->apacheServerAdmin) || empty($this->apacheServerAdmin)){
+  	if(!tests::is_email($this->apacheServerAdmin) || empty($this->apacheServerAdmin)){
       $message[] = _("Please choose a valid Email Account as Admin Mail address.");
     }
 

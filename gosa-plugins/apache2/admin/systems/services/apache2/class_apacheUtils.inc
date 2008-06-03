@@ -5,7 +5,7 @@ class apacheUtils extends plugin
 
 	/* This function returns the vhost entries specified for given host
 	 */
-	function getVhostEntries($config,$HostDn,$silent = false)
+	public static function getVhostEntries($config,$HostDn,$silent = false)
 	{
 
 	  $ldap = $config->get_ldap_link();
@@ -80,7 +80,7 @@ class apacheUtils extends plugin
 	 *   - rename, if a dn must be renamed, for example, the apacheServerName has changed
 	 *   - add,    if there is a new vhost entries created    
 	 */
-	function getVhostEntriesDiff($config,$newVhosts,$HostDn)
+	public static function getVhostEntriesDiff($config,$newVhosts,$HostDn)
 	{
 	  $oldVhosts = apacheUtils::getVhostEntries($config,$HostDn,true);
 
@@ -251,7 +251,7 @@ class apacheUtils extends plugin
 	  
 	/* Simple is domain check, it checks if the given string looks like "string.string.string"
 	   or string.string */
-	function GetVhostsDomain($str)
+	public static function GetVhostsDomain($str)
 	{
 	  return(preg_match("/[^\.\/]+\.[^\.\/]+$/",$str));
 	}

@@ -8,9 +8,8 @@ class servapache extends goService
   var $objectclasses    = array("whatever");
 
   var $RecordTypes      = array();
-  var $Vhosts            = array();
+  var $Vhosts           = array();
   var $dialog           = NULL;
-
   var $orig_dn          = "";
 
   var $APACHEinitially_was_account;
@@ -34,6 +33,9 @@ class servapache extends goService
       $this->is_account = true;
     }
     $this->APACHEinitially_was_account = $this->is_account;
+
+    /* Set service name */
+    $this->DisplayName = _("Apache service");
   }
 
 
@@ -48,29 +50,6 @@ class servapache extends goService
     $smarty= get_smarty();
     $display= "";
 
-    /* Do we need to flip is_account state? 
-     */
-    if (isset($_POST['modify_state'])){
-
-      /* Only change account state if allowed */
-      if($this->is_account && $this->acl == "#all#"){
-        $this->is_account= !$this->is_account;
-        $this->is_modified = true;
-      }elseif(!$this->is_account && chkacl($this->acl,"create") == ""){
-        $this->is_account= !$this->is_account;
-        $this->is_modified = true;
-      }
-    }
-
-    if ($this->is_account){
-      $display= $this->show_header(_("Remove Apache service"),
-          _("This server has Apache features enabled. You can disable them by clicking below."));
-    } else {
-      $display= $this->show_header(_("Add Apache service"),
-          _("This server has Apache features disabled. You can enable them by clicking below."));
-      return ($display);
-    }
-
     /* Edited or Added vhost 
      */
     if((isset($_POST['SaveVhostChanges'])) && is_object($this->dialog)){
@@ -79,9 +58,7 @@ class servapache extends goService
       /* Check for errors  
        */
       if(count($this->dialog->check())){
-        foreach($this->dialog->check() as $msgs){
-          print_red($msgs); 
-        }
+        msg_dialog::displayChecks($this->dialog->check());
       }else{
         /* add new/edited vhost 
          */
@@ -102,7 +79,7 @@ class servapache extends goService
 
     /* Add empty new vhost 
      */
-    if(isset($_POST['AddVhost']) && chkacl($this->acl,"servapache") == ""){
+    if(isset($_POST['AddVhost']) && $this->acl_is_writeable("VirtualHosts")){
       $this->dialog = new servapacheVhostEdit($this->config,$this->dn);
     }
 
@@ -113,7 +90,7 @@ class servapache extends goService
   	//user_error(print_r($this->Vhosts,true));
       /* check all post for edit request 
        */
-      if(preg_match("/^editVhost_/",$name)&&!$once && chkacl($this->acl,"servapache") == ""){
+      if(preg_match("/^editVhost_/",$name)&& !$once && $this->acl_is_writeable("VirtualHosts")){
         $once =true;
         $tmp = preg_replace("/^editVhost_/","",$name);
         $tmp = base64_decode(preg_replace("/_.*$/","",$tmp));
@@ -122,7 +99,7 @@ class servapache extends goService
 
       /* check posts for delete vhost 
        */
-      if(preg_match("/^delVhost_/",$name)&&!$once && chkacl($this->acl,"servapache") == ""){
+      if(preg_match("/^delVhost_/",$name)&&!$once && $this->acl_is_writeable("VirtualHosts")){
 
         $once =true;
         $tmp = preg_replace("/^delVhost_/","",$name);
@@ -157,13 +134,20 @@ class servapache extends goService
             array("string" => str_replace("%s",base64_encode($vhost),$editImg))
             ));
     }    
-  
-    $smarty->assign("servapacheACL",chkacl($this->acl,"servapache"));
+
+
+    /* Assign ACL to smarty 
+     */    
+    $info = $this->plInfo();
+    foreach($info['plProvidedAcls'] as $name => $desc){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
   
     /* Display template 
      */
     $smarty->assign("VhostList",$VhostList->DrawList());
-    $display.= $smarty->fetch(get_template_path('servApacheVhost.tpl', TRUE));
+    $display.= $smarty->fetch(get_template_path('servApacheVhost.tpl', TRUE , dirname(__FILE__)));
     return($display);
   }
 
@@ -225,6 +209,7 @@ class servapache extends goService
     }
 
     $tmp = apacheUtils::getVhostEntriesDiff($this->config,$this->Vhosts,$old_dn);
+    print_a($tmp);
 
     /* Updated vhost entries if reverser or forward name has changed  
      * Must be done before moving entries, else the given dn is invalid
@@ -233,7 +218,10 @@ class servapache extends goService
       foreach($tmp['vhostUpdates'] as $dn => $attrs){
         $ldap->cd($dn);
         $ldap->modify($attrs);
-        show_ldap_error("Vhost:".$ldap->get_error(), _("Updating Apache service failed"));
+
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+        }
       }
     }
 
@@ -242,7 +230,9 @@ class servapache extends goService
     foreach($tmp['del'] as $dn => $del){
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
-      show_ldap_error($ldap->get_error(), _("Removing Apache entries failed"));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+      }
     }
 
     /* move follwoing entries
@@ -264,8 +254,43 @@ class servapache extends goService
         $ldap->cd($dn);
         $ldap->add($attrs);
       }
-      show_ldap_error($ldap->get_error(), _("Saving apache entries failed"));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
+      }
     }
+  }
+
+
+  /*! \brief Returns the required information about this plugin for the 
+             service list 
+      @return Array  With information for the service plugin.
+    */
+  function getListEntry()
+  {
+    $fields = goService::getListEntry();
+    $fields['Message']    = _("Apache service");
+    $fields['AllowEdit']  = false;
+    return($fields);
+  }
+
+
+  /*  \brief Return plugin information used by the ACL handling.
+      @return Array ACL infos.
+   */  
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Apache service"),
+          "plDescription" => _("Apache virtual host service")." ("._("Services").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 88,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+              "VirtualHost"           => _("Virtual hosts"))
+            ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
