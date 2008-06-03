@@ -519,15 +519,15 @@ sub set_activated_for_installation {
 
 sub trigger_action_faireboot {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $macaddress = @{$msg_hash->{target}}[0];
+    my $macaddress = @{$msg_hash->{macaddress}}[0];
     my $source = @{$msg_hash->{source}}[0];
 
     my @out_msg_l;
     $msg =~ s/<header>gosa_trigger_action_faireboot<\/header>/<header>trigger_action_faireboot<\/header>/;
     push(@out_msg_l, $msg);
 
-    &main::change_goto_state('locked', \@{$msg_hash->{target}}, $session_id);
-	&main::change_fai_state('install', \@{$msg_hash->{target}}, $session_id); 
+    &main::change_goto_state('locked', \@{$msg_hash->{macaddress}}, $session_id);
+	&main::change_fai_state('install', \@{$msg_hash->{macaddress}}, $session_id); 
 
     # delete all jobs from jobqueue which correspond to fai
     my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
@@ -540,10 +540,10 @@ sub trigger_action_faireboot {
 
 sub trigger_action_lock {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $macaddress = @{$msg_hash->{target}}[0];
+    my $macaddress = @{$msg_hash->{macaddress}}[0];
     my $source = @{$msg_hash->{source}}[0];
 
-    &main::change_goto_state('locked', \@{$msg_hash->{target}}, $session_id);
+    &main::change_goto_state('locked', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -558,10 +558,10 @@ sub trigger_action_lock {
 
 sub trigger_action_activate {
     my ($msg, $msg_hash, $session_id) = @_;
-    my $macaddress = @{$msg_hash->{target}}[0];
+    my $macaddress = @{$msg_hash->{macaddress}}[0];
     my $source = @{$msg_hash->{source}}[0];
 
-    &main::change_goto_state('active', \@{$msg_hash->{target}}, $session_id);
+    &main::change_goto_state('active', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -582,7 +582,7 @@ sub trigger_action_activate {
 sub trigger_action_localboot {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_localboot<\/header>/<header>trigger_action_localboot<\/header>/;
-    &main::change_fai_state('localboot', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('localboot', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -599,7 +599,7 @@ sub trigger_action_halt {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_halt<\/header>/<header>trigger_action_halt<\/header>/;
 
-    &main::change_fai_state('halt', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('halt', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -616,7 +616,7 @@ sub trigger_action_reboot {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_reboot<\/header>/<header>trigger_action_reboot<\/header>/;
 
-    &main::change_fai_state('reboot', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('reboot', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -633,7 +633,7 @@ sub trigger_action_memcheck {
     my ($msg, $msg_hash, $session_id) = @_ ;
     $msg =~ s/<header>gosa_trigger_action_memcheck<\/header>/<header>trigger_action_memcheck<\/header>/;
 
-    &main::change_fai_state('memcheck', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('memcheck', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -650,9 +650,9 @@ sub trigger_action_reinstall {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_reinstall<\/header>/<header>trigger_action_reinstall<\/header>/;
 
-    &main::change_fai_state('reinstall', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('reinstall', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
@@ -663,9 +663,9 @@ sub trigger_action_update {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_update<\/header>/<header>trigger_action_update<\/header>/;
 
-    &main::change_fai_state('update', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('update', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
@@ -676,7 +676,7 @@ sub trigger_action_instant_update {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_instant_update<\/header>/<header>trigger_action_instant_update<\/header>/;
 
-    &main::change_fai_state('update', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('update', \@{$msg_hash->{macaddress}}, $session_id);
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
@@ -685,7 +685,7 @@ sub trigger_action_instant_update {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
@@ -696,7 +696,7 @@ sub trigger_action_sysinfo {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_sysinfo<\/header>/<header>trigger_action_sysinfo<\/header>/;
 
-    &main::change_fai_state('sysinfo', \@{$msg_hash->{target}}, $session_id);
+    &main::change_fai_state('sysinfo', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -753,7 +753,7 @@ sub trigger_action_wake {
     }
 
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{target}} );
+    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $out_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     my @out_msg_l = ($out_msg);  
     return @out_msg_l;

@@ -101,8 +101,6 @@ our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 
-# Where should new systems be placed
-our $new_systems_ou;
 
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
@@ -243,7 +241,6 @@ my $max_children = 2;
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
-	"new-systems-ou" => [\$new_systems_ou, "ou=systems"],
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],
@@ -1267,6 +1264,7 @@ sub process_task {
     my $client_answer = "";
 
     # prepare all variables needed to process message
+    #my $msg = $task->{'xmlmessage'};
     my $msg = &decode_base64($task->{'xmlmessage'});
     my $incoming_id = $task->{'id'};
     my $module = $task->{'module'};
@@ -1902,6 +1900,10 @@ sub change_fai_state {
 
 	  if ($mesg->count) {
 		  my @entries = $mesg->entries;
+		  if (0 == @entries) {
+				  daemon_log("$session_id ERROR: ldap search failed: ldap_base=$ldap_base, filter=$search", 1); 
+		  }
+
 		  foreach my $entry (@entries) {
 			  # Only modify entry if it is not set to '$state'
 			  if ($entry->get_value("FAIstate") ne "$state"){
@@ -1930,12 +1932,16 @@ sub change_fai_state {
 				  daemon_log("$session_id DEBUG FAIstate at host '".$entry->dn."' already at state '$st'", 7); 
 			  }  
 		  }
+	  } else {
+		daemon_log("$session_id ERROR: LDAP search failed: ldap_base=$ldap_base, filter=$search", 1);
 	  }
+
     # if no ldap handle defined
     } else {
         daemon_log("$session_id ERROR: no LDAP handle defined for update FAIstate", 1); 
     }
 
+	return;
 }
 
 
@@ -1988,7 +1994,9 @@ sub change_goto_state {
 
           }
         }
-      }
+      } else {
+		daemon_log("$session_id ERROR: LDAP search failed: ldap_base=$ldap_base, filter=$search", 1);
+	  }
 
     }
 }
