@@ -23,20 +23,20 @@ BEGIN{}
 END {}
 
 my ($server_ip, $server_port, $ClientPackages_key, $max_clients, $ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $server_interface);
-my ($bus_activ, $bus_key, $bus_ip, $bus_port);
+#my ($bus_activ, $bus_key, $bus_ip, $bus_port);
 my $server;
 my $network_interface;
-my $no_bus;
+#my $no_bus;
 my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 my $mesg;
 
 my %cfg_defaults = (
-"bus" => {
-    "activ" => [\$bus_activ, "on"],
-    "key" => [\$bus_key, ""],
-    "ip" => [\$bus_ip, ""],
-    "port" => [\$bus_port, "20080"],
-    },
+#"bus" => {
+#    "activ" => [\$bus_activ, "on"],
+#    "key" => [\$bus_key, ""],
+#    "ip" => [\$bus_ip, ""],
+#    "port" => [\$bus_port, "20080"],
+#    },
 "server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
     "mac-address" => [\$main::server_mac_address, "00:00:00:00:00"],
@@ -153,28 +153,28 @@ my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
 
 
-if( inet_aton($bus_ip) ){ $bus_ip = inet_ntoa(inet_aton($bus_ip)); } 
-######################################################
-# to change
-if( $bus_ip eq "127.0.1.1" ) { $bus_ip = "127.0.0.1" }
-######################################################
-my $bus_address = "$bus_ip:$bus_port";
-$main::bus_address = $bus_address;
+#if( inet_aton($bus_ip) ){ $bus_ip = inet_ntoa(inet_aton($bus_ip)); } 
+#######################################################
+## to change
+#if( $bus_ip eq "127.0.1.1" ) { $bus_ip = "127.0.0.1" }
+#######################################################
+#my $bus_address = "$bus_ip:$bus_port";
+#$main::bus_address = $bus_address;
 
 
-my $hostkey = &create_passwd;
-my $res = $main::known_server_db->add_dbentry( {table=>$main::known_server_tn, 
-            primkey=>['hostname'],
-            hostname=>$main::server_address,
-            status=>'myself',
-            hostkey=>$hostkey,
-            timestamp=>&get_time(),
-            } );
-if (not $res == 0) {
-    &main::daemon_log("0 ERROR: cannot add server to known_server_db: $res", 1);
-} else {
-    &main::daemon_log("0 INFO: '$main::server_address' successfully added to known_server_db", 5);
-}
+#my $hostkey = &create_passwd;
+#my $res = $main::known_server_db->add_dbentry( {table=>$main::known_server_tn, 
+#            primkey=>['hostname'],
+#            hostname=>$main::server_address,
+#            status=>'myself',
+#            hostkey=>$hostkey,
+#            timestamp=>&get_time(),
+#            } );
+#if (not $res == 0) {
+#    &main::daemon_log("0 ERROR: cannot add server to known_server_db: $res", 1);
+#} else {
+#    &main::daemon_log("0 INFO: '$main::server_address' successfully added to known_server_db", 5);
+#}
 
 
 
@@ -252,61 +252,63 @@ sub read_configfile {
 
 }
 
+# moved to GosaSupportDaemon: 03-06-2008 rettenbe
 #===  FUNCTION  ================================================================
 #         NAME:  get_interface_for_ip
 #   PARAMETERS:  ip address (i.e. 192.168.0.1)
 #      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
 #  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
 #===============================================================================
-sub get_interface_for_ip {
-	my $result;
-	my $ip= shift;
-	if ($ip && length($ip) > 0) {
-		my @ifs= &get_interfaces();
-		if($ip eq "0.0.0.0") {
-			$result = "all";
-		} else {
-			foreach (@ifs) {
-				my $if=$_;
-				if(&main::get_ip($if) eq $ip) {
-					$result = $if;
-				}
-			}	
-		}
-	}	
-	return $result;
-}
+#sub get_interface_for_ip {
+#	my $result;
+#	my $ip= shift;
+#	if ($ip && length($ip) > 0) {
+#		my @ifs= &get_interfaces();
+#		if($ip eq "0.0.0.0") {
+#			$result = "all";
+#		} else {
+#			foreach (@ifs) {
+#				my $if=$_;
+#				if(&main::get_ip($if) eq $ip) {
+#					$result = $if;
+#				}
+#			}	
+#		}
+#	}	
+#	return $result;
+#}
 
+# moved to GosaSupportDaemon: 03-06-2008 rettenbe
 #===  FUNCTION  ================================================================
 #         NAME:  get_interfaces 
 #   PARAMETERS:  none
 #      RETURNS:  (list of interfaces) 
 #  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
 #===============================================================================
-sub get_interfaces {
-	my @result;
-	my $PROC_NET_DEV= ('/proc/net/dev');
-
-	open(PROC_NET_DEV, "<$PROC_NET_DEV")
-		or die "Could not open $PROC_NET_DEV";
-
-	my @ifs = <PROC_NET_DEV>;
-
-	close(PROC_NET_DEV);
-
-	# Eat first two line
-	shift @ifs;
-	shift @ifs;
-
-	chomp @ifs;
-	foreach my $line(@ifs) {
-		my $if= (split /:/, $line)[0];
-		$if =~ s/^\s+//;
-		push @result, $if;
-	}
-
-	return @result;
-}
+#sub get_interfaces {
+#	my @result;
+#	my $PROC_NET_DEV= ('/proc/net/dev');
+#
+#	open(PROC_NET_DEV, "<$PROC_NET_DEV")
+#		or die "Could not open $PROC_NET_DEV";
+#
+#	my @ifs = <PROC_NET_DEV>;
+#
+#	close(PROC_NET_DEV);
+#
+#	# Eat first two line
+#	shift @ifs;
+#	shift @ifs;
+#
+#	chomp @ifs;
+#	foreach my $line(@ifs) {
+#		my $if= (split /:/, $line)[0];
+#		$if =~ s/^\s+//;
+#		push @result, $if;
+#	}
+#
+#	return @result;
+#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_mac 
@@ -352,22 +354,22 @@ sub get_mac {
 #      RETURNS:  nothing
 #  DESCRIPTION:  creates an entry in known_daemons and send a 'here_i_am' msg to bus
 #===============================================================================
-sub register_at_bus {
-
-    # add bus to known_server_db
-    my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
-                                                    primkey=>['hostname'],
-                                                    hostname=>$bus_address,
-                                                    status=>'bus',
-                                                    hostkey=>$bus_key,
-                                                    timestamp=>&get_time,
-                                                } );
-    my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
-    my $msg = &create_xml_string($msg_hash);
-
-    &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
-    return $msg;
-}
+#sub register_at_bus {
+#
+#    # add bus to known_server_db
+#    my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
+#                                                    primkey=>['hostname'],
+#                                                    hostname=>$bus_address,
+#                                                    status=>'bus',
+#                                                    hostkey=>$bus_key,
+#                                                    timestamp=>&get_time,
+#                                                } );
+#    my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
+#    my $msg = &create_xml_string($msg_hash);
+#
+#    &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
+#    return $msg;
+#}
 
 
 
