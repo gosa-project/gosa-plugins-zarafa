@@ -71,13 +71,8 @@ reload|force-reload|restart) log_daemon_msg "Restarting GOsa support infrastruct
 		stop_client
 	fi
 	if [ -x /usr/sbin/gosa-si-server ]; then
-		if [ "$START_BUS" == "1" ]; then
-			stop_server
-			start_server
-		else
-			stop_server
-			start_server
-		fi
+		stop_server
+		start_server
 	fi
 	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
 		start_client
