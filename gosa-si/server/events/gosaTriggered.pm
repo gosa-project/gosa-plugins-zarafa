@@ -830,8 +830,8 @@ sub trigger_activate_new {
 				$base = $1 if $ogroup_entry->dn =~ /cn=$ogroup,ou=groups,(.*)$/;
 		}
 
-		# prepend ou=systems
-		$base = "ou=systems,".$base;
+		# prepend ou=systems (configurable through config)
+		$base = $main::new_systems_ou.",".$base;
 
 		# Search for an existing entry (should be in ou=incoming)
 		$ldap_mesg= $ldap_handle->search(
