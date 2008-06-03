@@ -10,7 +10,7 @@ class goto_import_file extends plugin
   {
     plugin::plugin($config,NULL);
     $this->parent = $parent;
-    $this->daemon_events  = DaemonEvent::get_event_types( SYSTEM_EVENT);
+    $this->daemon_events  = DaemonEvent::get_event_types( SYSTEM_EVENT | HIDDEN_EVENT);
 
     $this->csv_fields = array(
         "0"=>"TIMESTAMP","1" => "MAC",  "2" => "HEADER", "3" => "OGROUP",
@@ -99,10 +99,18 @@ class goto_import_file extends plugin
             $fail ++;
             continue;
           }
+
+          /* Create event 
+           */
           $class= $this->daemon_events['QUEUED'][$event['HEADER']];
+          $o_data = $this->daemon_events['BY_CLASS'][$class];
           $object = new $class($this->config);
-          $object->set_type(TRIGGERED_EVENT);
           $object->add_targets(array($event['MAC']));
+          if($o_data['s_Schedule_Action'] == $event['HEADER']){
+            $object->set_type(SCHEDULED_EVENT);
+          }else{
+            $object->set_type(TRIGGERED_EVENT);
+          }
 
           /* Update values like fqdn a.s.o 
            */
