@@ -1069,7 +1069,9 @@ sub msg_to_decrypt {
         $target = @{$msg_hash->{'target'}}[0];
         $source = @{$msg_hash->{'source'}}[0];
         my ($target_ip, $target_port) = split(':', $target);
-        my $server_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
+		if ($target ne "GOSA") {
+			my $server_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
+		}
 
         # target and source is equal to GOSA -> process here
         if (not $done) {
