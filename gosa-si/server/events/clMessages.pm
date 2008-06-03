@@ -342,6 +342,11 @@ sub TASKBEGIN {
         # set fai_state to localboot
         &main::change_fai_state('localboot', \@{$msg_hash->{'macaddress'}}, $session_id);
 
+	# TASKBEGIN eq chboot
+	} elsif ($content eq 'chboot') {
+		# just ignor this client message
+		# do nothing
+
 	# other TASKBEGIN msgs
     } else {
 		# select processing jobs for host

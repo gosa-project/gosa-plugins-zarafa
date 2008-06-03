@@ -1069,7 +1069,7 @@ sub msg_to_decrypt {
         $target = @{$msg_hash->{'target'}}[0];
         $source = @{$msg_hash->{'source'}}[0];
         my ($target_ip, $target_port) = split(':', $target);
-		if ($target ne "GOSA") {
+		if ($target =~ /^\d+\.\d+\.\d+\.\d+:\d+$/) {
 			my $server_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
 		}
 
