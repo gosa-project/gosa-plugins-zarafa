@@ -63,7 +63,7 @@ binary-indep: install
 	#dh_installdebconf
 	dh_installinit --init-script=gosa-si -- start 00 2 3 4 5 . stop 29 1 .
 
-	chmod 640 debian/gosa-si-server/etc/gosa-si/server.conf debian/gosa-si-client/etc/gosa-si/client.conf debian/gosa-si-server/etc/gosa-si/bus.conf
+	chmod 640 debian/gosa-si-server/etc/gosa-si/server.conf debian/gosa-si-client/etc/gosa-si/client.conf
 
 	dh_link
 	dh_strip

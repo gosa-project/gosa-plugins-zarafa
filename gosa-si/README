@@ -19,7 +19,6 @@ client-events:
 /usr/lib/gosa-si/client
 
 config-files: /etc/gosa-si/
-- bus.conf
 - client.conf
 - server.conf
 
