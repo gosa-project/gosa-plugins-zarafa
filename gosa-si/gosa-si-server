@@ -1130,7 +1130,7 @@ sub msg_to_decrypt {
                     primkey=>[],
                     headertag=>$header,
                     targettag=>$target,
-                    xmlmessage=>$msg,
+                    xmlmessage=>&encode_base64($msg),
                     timestamp=>&get_time,
                     module=>$module,
                     sessionid=>$session_id,
@@ -1264,7 +1264,7 @@ sub process_task {
     my $client_answer = "";
 
     # prepare all variables needed to process message
-    my $msg = $task->{'xmlmessage'};
+    my $msg = &decode_base64($task->{'xmlmessage'});
     my $incoming_id = $task->{'id'};
     my $module = $task->{'module'};
     my $header =  $task->{'headertag'};
