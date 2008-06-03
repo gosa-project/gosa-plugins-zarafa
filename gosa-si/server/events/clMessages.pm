@@ -516,7 +516,7 @@ sub HOOK {
 
     # test whether content is an empty hash or a string which is required
 	my $content = @{$msg_hash->{$header}}[0];
-    if(ref($content) eq "HASH") { $content = ""; }
+    if(not ref($content) eq "STRING") { $content = ""; }
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='processing', result='$header "."$content' ".
