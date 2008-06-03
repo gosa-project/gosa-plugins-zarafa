@@ -9,10 +9,10 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  #$sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
-  #$sock->setEncryptionKey("secret-gosa-password");
-  $sock = new Socket_Client("10.89.1.30","20081",TRUE,5);
+  $sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
   $sock->setEncryptionKey("secret-gosa-password");
+  #$sock = new Socket_Client("10.89.1.30","20081",TRUE,5);
+  #$sock->setEncryptionKey("secret-gosa-password");
 
   if($sock->connected()){
 
@@ -52,7 +52,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_count_fai_release</header><source>GOSA</source> <target>GOSA</target></xml>";
 
     # jobdb clear
-    #$data = "<xml> <header>gosa_clear_jobdb</header> <source>GOSA</source> <target>GOSA</target></xml>";
+    $data = "<xml> <header>gosa_clear_jobdb</header> <source>GOSA</source> <target>GOSA</target></xml>";
 
     # set gosa-si-client to 'activated'
     #$data = "<xml> <header>job_set_activated_for_installation</header> <target>10.89.1.31:20083</target> <source>GOSA</source> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>22220101000000</timestamp></xml>";
@@ -64,7 +64,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp></xml>";
     #$data = "<xml> <header>gosa_trigger_action_faireboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_trigger_action_reboot</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
-    $data = "<xml> <header>gosa_trigger_action_halt</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_action_halt</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_trigger_action_reinstall</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> <timestamp>19700101000000</timestamp> </xml>";
     #$data = "<xml> <header>job_trigger_action_instant_update</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp> </xml>";
     #$data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";

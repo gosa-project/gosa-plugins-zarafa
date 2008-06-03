@@ -68,7 +68,6 @@ our $prg= basename($0);
 
 our $global_kernel;
 my ($foreground, $ping_timeout);
-my ($bus_activ, $bus, $msg_to_bus, $bus_cipher);
 my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($messaging_db_loop_delay);
@@ -92,9 +91,7 @@ our (%cfg_defaults, $log_file, $pid_file,
 # additional variable which should be globaly accessable
 our $server_address;
 our $server_mac_address;
-our $bus_address;
 our $gosa_address;
-our $no_bus;
 our $no_arp;
 our $verbose;
 our $forground;
@@ -111,8 +108,6 @@ $foreground = 0 ;
 # specifies the timeout seconds while checking the online status of a registrating client
 $ping_timeout = 5;
 
-$no_bus = 0;
-$bus_activ = "true";
 $no_arp = 0;
 my $packages_list_under_construction = "/tmp/packages_list_creation_in_progress";
 my @packages_list_statements;
@@ -147,7 +142,7 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 		"plainname DEFAULT 'none'",
 		);
 
-# holds all other gosa-sd as well as the gosa-sd-bus
+# holds all other gosa-si-server
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
@@ -211,9 +206,6 @@ my $max_children = 2;
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
     "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
-"bus" => {
-    "activ" => [\$bus_activ, "true"],
-    },
 "server" => {
     "port" => [\$server_port, "20081"],
     "known-clients"        => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
@@ -268,7 +260,6 @@ usage: $prg [-hvf] [-c config]
            -c <file> : config file
            -f        : foreground, process will not be forked to background
            -v        : be verbose (multiple to increase verbosity)
-           -no-bus   : starts $prg without connection to bus
            -no-arp   : starts $prg without connection to arp module
  
 EOF
@@ -1030,7 +1021,7 @@ sub msg_to_decrypt {
 
     # msg is from a new client or gosa
     ($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
-    # msg is from a gosa-si-server or gosa-si-bus
+    # msg is from a gosa-si-server
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         ($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
     }
@@ -1380,19 +1371,6 @@ sub process_task {
                     }   
                     if( $found_ip_flag == 0) {
                         daemon_log("$session_id WARNING: no host found in known_clients with mac address '$answer_target'", 3);
-                        if( $bus_activ eq "true" ) { 
-                            daemon_log("$session_id INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
-                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                            while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                                my $bus_address = $hit->{hostname};
-                                my $bus_key = $hit->{hostkey};
-                                my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header, $session_id);
-                                &update_jobdb_status_for_send_msgs($answer, $error);
-                                last;
-                            }
-                        }
-
                     }
 
                 #  answer is for one specific host   
@@ -1400,25 +1378,8 @@ sub process_task {
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);
                     if( not defined $encrypt_key ) {
-                        # unknown target, forward msg to bus
+                        # unknown target
                         daemon_log("$session_id WARNING: unknown target '$answer_target'", 3);
-                        if( $bus_activ eq "true" ) { 
-                            daemon_log("$session_id INFO: try to forward msg '$answer_header' to bus '$bus_address'", 5);
-                            my $sql_statement = "SELECT * FROM known_server WHERE hostname='$bus_address'";
-                            my $query_res = $known_server_db->select_dbentry( $sql_statement );
-                            my $res_length = keys( %{$query_res} );
-                            if( $res_length == 0 ){
-                                daemon_log("$session_id WARNING: send '$answer_header' to '$bus_address' failed, ".
-                                        "no bus found in known_server", 3);
-                            }
-                            else {
-                                while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-                                    my $bus_key = $hit->{hostkey};
-                                    my $error = &send_msg_to_target($answer, $bus_address, $bus_key, $answer_header,$session_id );
-                                    &update_jobdb_status_for_send_msgs($answer, $error);
-                                }
-                            }
-                        }
                         next;
                     }
                     my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header,$session_id);
@@ -1700,7 +1661,7 @@ sub watch_for_delivery_messages {
 				# fetch key to encrypt msg propperly for usr/host
 				my $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$receiver_host')";
 				&daemon_log("0 DEBUG: $sql", 7);
-				my $res = $known_clients_db->select_dbentry($sql);
+				my $res = $known_clients_db->exec_statement($sql);
 
 				# host is already down
 				if (not ref(@$res[0]) eq "ARRAY") { next; }
@@ -2823,7 +2784,6 @@ GetOptions("h|help" => \&usage,
         "c|config=s" => \$cfg_file,
         "f|foreground" => \$foreground,
         "v|verbose+" => \$verbose,
-        "no-bus+" => \$no_bus,
         "no-arp+" => \$no_arp,
            );
 
@@ -2878,10 +2838,6 @@ daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
 daemon_log("status: $server_status", 1);
 daemon_log($server_status_hash->{$server_status}.": $server_revision", 1); 
-
-if ($no_bus > 0) {
-    $bus_activ = "false"
-}
 
 # connect to incoming_db
 unlink($incoming_file_name);
