@@ -117,6 +117,35 @@ class krb_host_keys extends plugin
   }
 
 
+  public function create_key($id,$name)
+  {
+    $this->o_queue->krb5_add_principal($id,$name,array());
+    if($this->o_queue->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+    }else{
+      $this->recreate_key($id,$name);
+    }
+  }  
+
+
+  public function recreate_key($id,$name)
+  {
+    $this->o_queue->krb5_ramdomize_key($id,  $name);
+    if($this->o_queue->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+    }
+  }  
+
+
+  public function delete_key($id,$name)
+  {
+    $this->o_queue->krb5_del_principal($id,  $name);
+    if($this->o_queue->is_error()){
+      msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+    }
+  }  
+
+
   public function save_object()
   {
 
@@ -124,15 +153,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^create_/",$name)){
         $id = preg_replace("/^create_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        $this->o_queue->krb5_add_principal($id,  $this->namingAttr."@".$realm, array());
-        if($this->o_queue->is_error()){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-        }
-        echo "Not implemented yet.";
-#        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr."@".$realm);
-#        if($this->o_queue->is_error()){
-#          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-#        }
+        $this->create_key($id,$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
@@ -141,11 +162,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^recreate_/",$name)){
         $id = preg_replace("/^recreate_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        echo "Not implemented yet.";
-#        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr."@".$realm);
-#        if($this->o_queue->is_error()){
-#          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-#        }
+        $this->recreate_key($id,$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
@@ -154,10 +171,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^remove_/",$name)){
         $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        $this->o_queue->krb5_del_principal($id,  $this->namingAttr."@".$realm);
-        if($this->o_queue->is_error()){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-        }
+        $this->delete_key($id,$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
