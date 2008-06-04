@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Start/stop the GOsa support daemon infrastructure.
 #
 ### BEGIN INIT INFO
@@ -33,15 +33,15 @@ start_server() {
 
 stop_client() {
 	start-stop-daemon --stop --retry 5 --quiet --pidfile /var/run/gosa-si-client.pid --name gosa-si-client
-	kill `ps -C gosa-si-client -o pid=` &> /dev/null
-	ps -C gosa-si-client -o pid= &> /dev/null
+	kill `ps -C gosa-si-client -o pid=` > /dev/null 2>&1
+	ps -C gosa-si-client -o pid= > /dev/null 2>&1
 }
 
 
 stop_server() {
 	start-stop-daemon --stop --retry 5 --quiet --pidfile /var/run/gosa-si-server.pid --name gosa-si-server
-	kill `ps -C gosa-si-server -o pid=` &> /dev/null
-	ps -C gosa-si-server -o pid= &> /dev/null
+	kill `ps -C gosa-si-server -o pid=` > /dev/null 2>&1
+	ps -C gosa-si-server -o pid= > /dev/null 2>&1
 }
 
 
@@ -51,14 +51,14 @@ start)  log_daemon_msg "Starting GOsa support infrastructure"
 		log_progress_msg "daemon"
 		start_server
 	fi
-	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
+	if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
 		log_progress_msg "client"
 		start_client
 	fi
         log_end_msg $?
 	;;
 stop)   log_daemon_msg "Stopping GOsa support infrastructure"
-	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
+	if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
 		log_progress_msg "client"
 		stop_client
 	fi
@@ -69,14 +69,14 @@ stop)   log_daemon_msg "Stopping GOsa support infrastructure"
         log_end_msg $?
         ;;
 reload|force-reload|restart) log_daemon_msg "Restarting GOsa support infrastructure" 
-	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
+	if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
 		stop_client
 	fi
 	if [ -x /usr/sbin/gosa-si-server ]; then
 		stop_server
 		start_server
 	fi
-	if [ "$START_CLIENT" == "1" -a -x /usr/sbin/gosa-si-client ]; then
+	if [ "$START_CLIENT" = "1" -a -x /usr/sbin/gosa-si-client ]; then
 		start_client
 	fi
 	log_progress_msg "done"
