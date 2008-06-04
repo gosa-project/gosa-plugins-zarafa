@@ -1801,7 +1801,7 @@ sub watch_for_next_tasks {
         my $res = $incoming_db->exec_statement($sql);
     }
 
-    $kernel->delay_set('watch_for_next_tasks', 1); 
+    $kernel->delay_set('watch_for_next_tasks', 0.1); 
 }
 
 

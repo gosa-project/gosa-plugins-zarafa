@@ -331,7 +331,10 @@ sub TASKBEGIN {
     $header =~ s/CLMSG_//g;
 
     # TASKBEGIN eq finish or faiend 
-    if (($content eq 'finish') || ($content eq 'faiend')){
+    if (($content eq 'finish') 
+			|| ($content eq 'faiend')
+			|| ($content eq 'savelog')
+			) {
         my $sql_statement = "UPDATE $main::job_queue_tn ".
             "SET status='done', result='$header "."$content' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
@@ -343,7 +346,10 @@ sub TASKBEGIN {
         &main::change_fai_state('localboot', \@{$msg_hash->{'macaddress'}}, $session_id);
 
 	# TASKBEGIN eq chboot
-	} elsif ($content eq 'chboot') {
+	} elsif (($content eq 'chboot')
+		|| ($content eq 'test')
+		|| ($content eq 'confdir')
+		) {
 		# just ignor this client message
 		# do nothing
 
