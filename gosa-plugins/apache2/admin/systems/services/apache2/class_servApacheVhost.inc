@@ -280,7 +280,8 @@ class servapache extends goService
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("Apache service");
-    $fields['AllowEdit']  = false;
+    $fields['AllowEdit']  = TRUE;
+    $fields['AllowRemove']= TRUE;
     return($fields);
   }
 
