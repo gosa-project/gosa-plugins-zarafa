@@ -109,6 +109,7 @@ class passwordMethodMIT extends passwordMethod
       session::un_set("MIT_CACHE");
       session::un_set("MIT_PRINCIPAL_CACHE");
       session::un_set("MIT_POLICY_CACHE");
+      $this->clear_cache();
       $skip_si_access = FALSE;
     }
 
@@ -193,6 +194,14 @@ class passwordMethodMIT extends passwordMethod
         }
       }
     }
+  }
+
+
+  public static function clear_cache()
+  {
+    session::un_set("MIT_CACHE");
+    session::un_set("MIT_PRINCIPAL_CACHE");
+    session::un_set("MIT_POLICY_CACHE");
   }
 
 

@@ -58,7 +58,10 @@ class krb_host_keys extends plugin
 
       $this->namingAttr = "host/".$this->object->cn;
 
+      /* Create password handle, it has already a working principal parsing 
+       */
       $this->pwd_handle = new passwordMethodMIT($this->config);
+      $this->pwd_handle->clear_cache();
 
       /* Get a list of all kerberos servers, defined in ldap
          and get a list of principals they are providing.
@@ -100,12 +103,6 @@ class krb_host_keys extends plugin
         $this->kerberos_support = TRUE;
       }
     }
-
-
-    $this->server_list['00:00:00:00:00:00']['REALM']  ="gonicus.de";
-    $this->server_list['00:00:00:00:00:00']['MAC']    ="00:00:00:00:00:00";
-    $this->server_list['00:00:00:00:00:00']['CN']  ="test";
-    $this->server_list['00:00:00:00:00:00']['PRINCIPAL']  = FALSE;
   }
 
 
@@ -114,7 +111,6 @@ class krb_host_keys extends plugin
     /* Skip if there is no kerberos support available 
      */
     if(!$this->kerberos_support) return("");
-
     $smarty = get_smarty(); 
     $smarty->assign("server_list",$this->server_list);
     return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
@@ -125,39 +121,44 @@ class krb_host_keys extends plugin
   {
 
     foreach($_POST as $name => $value){
-
       if(preg_match("/^create_/",$name)){
         $id = preg_replace("/^create_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-
-    
-        print_a(array($id,$realm,$this->namingAttr."@".$realm));
-
         $this->o_queue->krb5_add_principal($id,  $this->namingAttr."@".$realm, array());
         if($this->o_queue->is_error()){
           msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
         }
-    
-        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr);
-        if($this->o_queue->is_error()){
-          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-        }
-  
+        echo "Not implemented yet.";
+#        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr."@".$realm);
+#        if($this->o_queue->is_error()){
+#          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+#        }
+        $this->init();
         break;
       }
+
+      /* Recreate host key */
       if(preg_match("/^recreate_/",$name)){
         $id = preg_replace("/^recreate_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        print_a(array($id,$realm,$this->namingAttr."@".$realm));
-        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr."@".$realm);
+        echo "Not implemented yet.";
+#        $this->o_queue->krb5_ramdomize_key($id,  $this->namingAttr."@".$realm);
+#        if($this->o_queue->is_error()){
+#          msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+#        }
+        $this->init();
+        break;
+      }
+
+      /* Remove a host principal */
+      if(preg_match("/^remove_/",$name)){
+        $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
+        $realm = $this->server_list[$id]['REALM'];
+        $this->o_queue->krb5_del_principal($id,  $this->namingAttr."@".$realm);
         if($this->o_queue->is_error()){
           msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
         }
-        break;
-      }
-      if(preg_match("/^remove_/",$name)){
-        $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
-        echo $id; 
+        $this->init();
         break;
       }
     }  
