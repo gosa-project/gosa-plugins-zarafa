@@ -33,7 +33,7 @@ class servapache extends goService
   var $dialog           = NULL;
   var $orig_dn          = "";
 
-  var $APACHEinitially_was_account;
+  var $initially_was_account;
 
 
   function servapache ($config, $dn= NULL, $parent= NULL)
@@ -53,7 +53,7 @@ class servapache extends goService
     }else{
       $this->is_account = true;
     }
-    $this->APACHEinitially_was_account = $this->is_account;
+    $this->initially_was_account = $this->is_account;
 
     /* Set service name */
     $this->DisplayName = _("Apache service");
@@ -200,17 +200,10 @@ class servapache extends goService
    */
   function remove_from_parent()
   {
-    if($this->APACHEinitially_was_account){
-      $bool = true;
-      foreach($this->Vhosts as $key => $vhost){
-        $bool= $bool & $this->RemoveVhost($key);
-      }
-
-      if($bool){
-        $this->save();
-      }
-      return($bool);
+    foreach($this->Vhosts as $key => $vhost){
+      $this->RemoveVhost($key);
     }
+    $this->save();
   }
 
 
