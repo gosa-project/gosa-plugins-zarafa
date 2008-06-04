@@ -34,7 +34,7 @@ class servapache extends goService
   var $orig_dn          = "";
 
   var $initially_was_account;
-
+  var $krb_service_prefix = "HTTP/";
 
   function servapache ($config, $dn= NULL, $parent= NULL)
   {
