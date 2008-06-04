@@ -4,19 +4,19 @@
 		<td style="width:50%;vertical-align:top;border-right:1px	solid	#b0b0b0;">
 			<table summary="">
 				<tr>
-					<td>{t}Virtual Host Name{/t}{$must}
+					<td>{t}Virtual host name{/t}{$must}
 					</td>
 					<td><input type="text" name="apacheServerName" value="{$apacheServerName}" {if $NotNew} disabled {/if}>
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Virtual Host Document Root{/t}{$must}
+					<td>{t}Document root{/t}{$must}
 					</td>
 					<td><input type="text" name="apacheDocumentRoot" value="{$apacheDocumentRoot}">
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Admin Mail address{/t}{$must}
+					<td>{t}Admin mail address{/t}{$must}
 					</td>
 					<td><input type="text" name="apacheServerAdmin" value="{$apacheServerAdmin}">
 					</td>

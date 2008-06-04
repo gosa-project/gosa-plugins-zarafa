@@ -248,13 +248,6 @@ class apacheUtils extends plugin
 	  }
 	  return($zones);
 	}
-	  
-	/* Simple is domain check, it checks if the given string looks like "string.string.string"
-	   or string.string */
-	public static function GetVhostsDomain($str)
-	{
-	  return(preg_match("/[^\.\/]+\.[^\.\/]+$/",$str));
-	}
 }
 
 ?>

@@ -1,5 +1,26 @@
 <?php
 
+/*
+ * This code is part of GOsa (http://www.gosa-project.org)
+ * Copyright (C) 2003-2008 GONICUS GmbH
+ *
+ * ID: $$Id: class_gosaSupportDaemon.inc 10788 2008-05-06 11:15:57Z hickert $$
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 class servapache extends goService
 {
   /* attribute list for save action */
@@ -87,7 +108,7 @@ class servapache extends goService
      */
     $once = false;
     foreach( $_POST as $name => $value){
-  	//user_error(print_r($this->Vhosts,true));
+
       /* check all post for edit request 
        */
       if(preg_match("/^editVhost_/",$name)&& !$once && $this->acl_is_writeable("VirtualHosts")){
@@ -123,18 +144,17 @@ class servapache extends goService
      */
     $VhostList = new divSelectBox("apacheConfigs");
     $VhostList -> SetHeight(254);
-    
+
     /* Add entries to divlist
      */
-    $editImg = "<input type='image' src='images/edit.png' name='editVhost_%s'>
-      <input type='image' src='images/edittrash.png' name='delVhost_%s'>";
+    $editImg = "<input type='image' src='images/lists/edit.png' name='editVhost_%s'>
+      <input type='image' src='images/lists/trash.png' name='delVhost_%s'>";
     foreach($this->Vhosts as $vhost => $values ){
       $VhostList->AddEntry(array(
             array("string" => $vhost),
             array("string" => str_replace("%s",base64_encode($vhost),$editImg))
             ));
     }    
-
 
     /* Assign ACL to smarty 
      */    
@@ -176,7 +196,7 @@ class servapache extends goService
   }
 
 
-    /* Remove apache service
+  /* Remove apache service
    */
   function remove_from_parent()
   {
@@ -209,7 +229,6 @@ class servapache extends goService
     }
 
     $tmp = apacheUtils::getVhostEntriesDiff($this->config,$this->Vhosts,$old_dn);
-    print_a($tmp);
 
     /* Updated vhost entries if reverser or forward name has changed  
      * Must be done before moving entries, else the given dn is invalid
@@ -245,7 +264,6 @@ class servapache extends goService
      */
     foreach($tmp['add'] as $dn => $attrs){
       $ldap->cd($dn);
-//      user_error(print_r($dn,true));
       $ldap->cat($dn, array('dn'));
       if(count($ldap->fetch())){
         $ldap->cd($dn);
