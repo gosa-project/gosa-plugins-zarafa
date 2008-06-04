@@ -155,8 +155,7 @@ class termgroup extends plugin
       foreach ($this->members as $cn => $macAddress){
         $macaddresses[]= $macAddress;
       }
-
-      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], "255.255.255.255", $macaddresses);
+      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $macaddresses);
     }
 
 
