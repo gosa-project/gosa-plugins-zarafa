@@ -81,6 +81,9 @@ sub new_server {
         my $res = $main::foreign_clients_db->exec_statementlist(\@sql_list);
     }
             
+    # fetch all registered clients
+    
+
     # build confirm_new_server message
     my %data = ( key=>$key );
     my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);

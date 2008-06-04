@@ -1059,10 +1059,13 @@ sub msg_to_decrypt {
         $header = @{$msg_hash->{'header'}}[0];
         $target = @{$msg_hash->{'target'}}[0];
         $source = @{$msg_hash->{'source'}}[0];
+        my $local_address;
         my ($target_ip, $target_port) = split(':', $target);
 		if ($target =~ /^\d+\.\d+\.\d+\.\d+:\d+$/) {
-			my $server_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
-		}
+			$local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
+		} else {
+            $local_address = $server_address;
+        }
 
         # target and source is equal to GOSA -> process here
         if (not $done) {
@@ -1073,10 +1076,10 @@ sub msg_to_decrypt {
 
         # target is own address without forward_to_gosa-tag -> process here
         if (not $done) {
-            if (($target eq $server_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
+            if (($target eq $local_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
                 $done = 1;
                 if ($source eq "GOSA") {
-                    $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
+                    $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
                 }
                 print STDERR "target is own address without forward_to_gosa-tag -> process here\n";
             }
@@ -1099,9 +1102,9 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if (($target eq $server_address) && (defined $forward_to_gosa)){
+            if (($target eq $local_address) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
-                if ($gosa_at ne $server_address) {
+                if ($gosa_at ne $local_address) {
                     $done = 1;
                     print STDERR "target is own address with forward_to_gosa-tag not pointing to myself -> process here\n"; 
                 }
@@ -1134,9 +1137,9 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if (($target eq $server_address) && (defined $forward_to_gosa)){
+            if (($target eq $local_address) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
-                if ($gosa_at eq $server_address) {
+                if ($gosa_at eq $local_address) {
                     my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
                     if( defined $session_reference ) {
                         $heap = $session_reference->get_heap();
@@ -1163,10 +1166,10 @@ sub msg_to_decrypt {
                 my $res = $known_server_db->select_dbentry($sql);
                 if (keys(%$res) > 0) {
                     my $regserver_key = $res->{1}->{'hostkey'};
-                    $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
+                    $msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
                     $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
                     if ($source eq "GOSA") {
-                        $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
+                        $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
                     }
                     &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
                 }
@@ -1183,8 +1186,8 @@ sub msg_to_decrypt {
                 my $hostkey = $res->{1}->{'hostkey'};
 
                 if ($source eq "GOSA") {
-                    $msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/;
-                    $msg =~ s/<\/xml>/<forward_to_gosa>$server_address,$session_id<\/forward_to_gosa><\/xml>/;
+                    $msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
+                    $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
 
                 }
 
@@ -1198,7 +1201,21 @@ sub msg_to_decrypt {
 
         if (not $done) {
             daemon_log("$session_id ERROR: do not know what to do with this message: $msg", 1);
+            if ($source eq "GOSA") {
+                my %data = ('error_msg' => &encode_base64($msg), 'error_string' => "Do not know what to do with this message!");
+                my $error_msg = &build_msg("error", $local_address, "GOSA", \%data ); 
+
+                my $session_reference = $kernel->ID_id_to_session($session_id);
+                if( defined $session_reference ) {
+                    $heap = $session_reference->get_heap();
+                }
+                if(exists $heap->{'client'}) {
+                    $error_msg = &encrypt_msg($error_msg, $GosaPackages_key);
+                    $heap->{'client'}->put($error_msg);
+                }
+            }
         }
+
     }
 
     return;
@@ -1403,7 +1420,6 @@ sub process_task {
 
 sub session_start {
     my ($kernel) = $_[KERNEL];
-    &trigger_db_loop($kernel);
     $global_kernel = $kernel;
     $kernel->yield('register_at_foreign_servers');
 	$kernel->yield('create_fai_server_db', $fai_server_tn );
@@ -1418,16 +1434,6 @@ sub session_start {
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 
-}
-
-sub trigger_db_loop {
-	my ($kernel) = @_ ;
-#	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
-#	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
-#	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
-#    $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
-#	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
-#    $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 }
 
 
