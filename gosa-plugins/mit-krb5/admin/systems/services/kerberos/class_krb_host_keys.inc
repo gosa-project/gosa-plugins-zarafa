@@ -129,17 +129,16 @@ class krb_host_keys extends plugin
     $this->o_queue->krb5_add_principal($id,$name,array());
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
-    }else{
-      $this->recreate_key($id,$name);
+      return(FALSE);
     }
+    return(TRUE);
   }  
 
 
   public function recreate_key($id,$name)
   {
-    $this->o_queue->krb5_ramdomize_key($id,  $name);
-    if($this->o_queue->is_error()){
-      msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+    if($this->delete_key($id,$name)){
+      $this->create_key($id,$name);
     }
   }  
 
@@ -149,7 +148,9 @@ class krb_host_keys extends plugin
     $this->o_queue->krb5_del_principal($id,  $name);
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
+      return(FALSE);
     }
+    return(TRUE);
   }  
 
 
