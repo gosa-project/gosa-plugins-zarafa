@@ -37,15 +37,18 @@ class krb_host_keys extends plugin
   private $namingAttr       = "";
   private $is_service_key   = FALSE;
 
-  public function __construct($config,$object)
+  private $prefix           = "host/";
+
+  public function __construct($config,$object,$prefix = "host/")
   {
     plugin::plugin($config, NULL);
     $this->object = $object;
+    $this->prefix = $prefix;
     $this->o_queue = new gosaSupportDaemon();
 
     /*  Create principal name, to detect whether there is a valid host key or not
      */
-    $this->init_namingAttr = $this->namingAttr = "host/".$this->object->cn;
+    $this->init_namingAttr = $this->namingAttr = $this->prefix.$this->object->cn;
     $this->init();
   }
 
@@ -57,7 +60,7 @@ class krb_host_keys extends plugin
     $this->kerberos_support = FALSE;
     if(class_available("passwordMethodMIT")){
 
-      $this->namingAttr = "host/".$this->object->cn;
+      $this->namingAttr = $this->prefix.$this->object->cn;
 
       /* Create password handle, it has already a working principal parsing 
        */
@@ -111,6 +114,8 @@ class krb_host_keys extends plugin
   {
     /* Skip if there is no kerberos support available 
      */
+    echo $this->namingAttr."<br>";
+
     if(!$this->kerberos_support) return("");
     $smarty = get_smarty(); 
     $smarty->assign("server_list",$this->server_list);
