@@ -1,4 +1,6 @@
+{if !$is_service_key}
 <p class="seperator">&nbsp;</p>
+{/if}
 <h2><img class="center" alt="" src="images/lists/locked.png" align="middle">	{t}Host key{/t}</h2>
 <table style="">
 {foreach from=$server_list item=item key=key}
@@ -21,3 +23,6 @@
 	</tr>
 {/foreach}
 </table>
+{if $is_service_key}
+<p class="seperator">&nbsp;</p>
+{/if}

@@ -35,6 +35,7 @@ class krb_host_keys extends plugin
 
   private $init_namingAttr  = "";
   private $namingAttr       = "";
+  private $is_service_key   = FALSE;
 
   public function __construct($config,$object)
   {
@@ -113,6 +114,7 @@ class krb_host_keys extends plugin
     if(!$this->kerberos_support) return("");
     $smarty = get_smarty(); 
     $smarty->assign("server_list",$this->server_list);
+    $smarty->assign("is_service_key" , $this->is_service_key);
     return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
   }
 
@@ -177,6 +179,12 @@ class krb_host_keys extends plugin
       }
     }  
   } 
+
+
+  public function ServiceKey($bool = TRUE)
+  {
+    $this->is_service_key = $bool;
+  }
 }
 
 
