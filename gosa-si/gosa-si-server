@@ -1054,11 +1054,15 @@ sub msg_to_decrypt {
     my $done = 0;
     my $sql;
     my $res;
+
     # check whether this message should be processed here
     if ($error == 0) {
         $header = @{$msg_hash->{'header'}}[0];
         $target = @{$msg_hash->{'target'}}[0];
         $source = @{$msg_hash->{'source'}}[0];
+		my $not_found_in_known_clients_db = 0;
+		my $not_found_in_known_server_db = 0;
+		my $not_found_in_foreign_clients_db = 0;
         my $local_address;
         my ($target_ip, $target_port) = split(':', $target);
 		if ($target =~ /^\d+\.\d+\.\d+\.\d+:\d+$/) {
@@ -1086,17 +1090,19 @@ sub msg_to_decrypt {
         }
 
         # target is a client address in known_clients -> process here
-        if (not $done) {
-            $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
-            $res = $known_clients_db->select_dbentry($sql);
-            if (keys(%$res) > 0) {
-                $done = 1; 
-                my $hostname = $res->{1}->{'hostname'};
-                $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-                print STDERR "target is a client address in known_clients -> process here\n";
-            }
-        }
-
+		if (not $done) {
+				$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
+				$res = $known_clients_db->select_dbentry($sql);
+				if (keys(%$res) > 0) {
+						$done = 1; 
+						my $hostname = $res->{1}->{'hostname'};
+						$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
+						print STDERR "target is a client address in known_clients -> process here\n";
+				} else {
+						$not_found_in_known_clients_db = 1;
+				}
+		}
+	
         # target ist own address with forward_to_gosa-tag not pointing to myself -> process here
         if (not $done) {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
@@ -1112,25 +1118,23 @@ sub msg_to_decrypt {
         }
 
         # if message should be processed here -> add message to incoming_db
-        if ($done) {
+		if ($done) {
+				# if a job or a gosa message comes from a foreign server, fake module to GosaPackages
+				# so gosa-si-server knows how to process this kind of messages
+				if ($header =~ /^gosa_/ || $header =~ /job_/) {
+						$module = "GosaPackages";
+				}
 
-            # if a job or a gosa message comes from a foreign server, fake module to GosaPackages
-            # so gosa-si-server knows how to process this kind of messages
-            if ($header =~ /^gosa_/ || $header =~ /job_/) {
-                $module = "GosaPackages";
-            }
-
-            my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
-                    primkey=>[],
-                    headertag=>$header,
-                    targettag=>$target,
-                    xmlmessage=>&encode_base64($msg),
-                    timestamp=>&get_time,
-                    module=>$module,
-                    sessionid=>$session_id,
-                    } );
-
-        }
+				my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+								primkey=>[],
+								headertag=>$header,
+								targettag=>$target,
+								xmlmessage=>&encode_base64($msg),
+								timestamp=>&get_time,
+								module=>$module,
+								sessionid=>$session_id,
+								} );
+		}
 
         # target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa
         if (not $done) {
@@ -1175,7 +1179,9 @@ sub msg_to_decrypt {
                 }
                 $done = 1;
                 print STDERR "target is a client address in foreign_clients -> forward to registration server\n";
-            }
+            } else {
+				$not_found_in_foreign_clients_db = 1;
+			}
         }
 
         # target is a server address -> forward to server
@@ -1194,10 +1200,28 @@ sub msg_to_decrypt {
                 &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
                 $done = 1;
                 print STDERR "target is a server address -> forward to server\n";
-            }
-
-
+            } else {
+				$not_found_in_known_server_db = 1;
+			}
         }
+
+		
+		# target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here
+		if ( $not_found_in_foreign_clients_db 
+						&& $not_found_in_known_server_db
+						&& $not_found_in_known_clients_db) {
+				my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+								primkey=>[],
+								headertag=>$header,
+								targettag=>$target,
+								xmlmessage=>&encode_base64($msg),
+								timestamp=>&get_time,
+								module=>$module,
+								sessionid=>$session_id,
+								} );
+				$done = 1;
+		}
+
 
         if (not $done) {
             daemon_log("$session_id ERROR: do not know what to do with this message: $msg", 1);
