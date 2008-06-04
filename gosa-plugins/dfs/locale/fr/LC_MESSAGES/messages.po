@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-04 09:22+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,6 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: addons/godfs/class_dfsManagment.inc:8
-#, fuzzy
 msgid "DFS Management"
 msgstr "Gestion DFS"
 
@@ -26,11 +25,11 @@ msgstr "Ceci fait quelque chose"
 #: addons/godfs/class_dfsManagment.inc:148
 #: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
-msgstr "Pas d'entrée DFS trouvée"
+msgstr "Pas d'entrée DFS trouvées"
 
 #: addons/godfs/class_dfsManagment.inc:211
 msgid "Go up one dfsshare"
@@ -42,7 +41,7 @@ msgstr "Au dessus"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
-msgstr "Aller au répertoire de base de DFS"
+msgstr "Aller au répertoire racine de DFS"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
@@ -130,32 +129,3 @@ msgstr "Expression régulière pour sélectionner les partages dfs"
 msgid "Distributed File System Administration"
 msgstr "Administration du systèmes de fichiers distribués DFS"
 
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Removing of DFS share with dn '%s' failed."
-#~ msgstr "La suppression du partage DFS avec le dn '%s' à échoué."
-
-#~ msgid "Dfs share already exists."
-#~ msgstr "Le partage dfs indiqué existe déjà."
-
-#~ msgid "Required Field \"Name of dfs Share\" is not set."
-#~ msgstr "Le champ obligatoire \"Nom du partage DFS\" n'est pas rempli."
-
-#~ msgid "Required Field \"Description\" is not set."
-#~ msgstr "Le champ obligatoire \"Description\" n'est pas rempli."
-
-#~ msgid "Required Field \"Fileserver\" is not set."
-#~ msgstr "Le champ obligatoire \"Serveur de fichiers\"' n'est pas rempli."
-
-#~ msgid "Required Field \"Share on fileserver\" is not set."
-#~ msgstr "Le champ obligatoire \"Partage sur le serveur\" n'est pas rempli."
-
-#~ msgid "Required Field \"Location\" is not set."
-#~ msgstr "Le champ obligatoire \"Endroit\" n'est pas rempli."
-
-#~ msgid "Saving dfs/generic with dn '%s' failed."
-#~ msgstr "La sauvegarde du type dfs/générique avec le dn '%s' à échoué."
-
-#~ msgid "Removing dfs/generic with dn '%s' failed."
-#~ msgstr "La suppression du type dfs/générique avec le dn '%s' à échoué."

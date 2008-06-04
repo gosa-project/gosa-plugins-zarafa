@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-04 18:51+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -80,13 +80,12 @@ msgstr "Créer un compte FAX"
 #: gofax/faxreports/class_faxreport.inc:297
 #: gofax/blocklists/class_blocklistGeneric.inc:122
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:241
 #: gofax/blocklists/class_blocklistGeneric.inc:122
-#, fuzzy
 msgid "Phone number"
-msgstr "Numéros bloqués"
+msgstr "Numéro de téléphone"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:452
 #: gofax/faxaccount/class_gofaxAccount.inc:534
@@ -98,7 +97,7 @@ msgstr "retour"
 #: gofax/blocklists/class_blocklistGeneric.inc:193
 #: gofax/blocklists/class_blocklistGeneric.inc:266
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:674
 #: gofax/faxaccount/class_gofaxAccount.inc:678
@@ -108,12 +107,11 @@ msgstr "Numéro de fax"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:686
 msgid "Mail delivery is requested without target address!"
-msgstr ""
+msgstr "L'envoi d'un message à été demandé alors que l'adresse du destinataire n'est pas défini !"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:688
-#, fuzzy
 msgid "Mail address"
-msgstr "L'adresse de messagerie introduite est incorrecte."
+msgstr "Adresse de messagerie"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:688
 msgid "your-name@your-domain.com"
@@ -121,7 +119,7 @@ msgstr ""
 
 #: gofax/faxaccount/class_gofaxAccount.inc:694
 msgid "Printing is requested without a target printer!"
-msgstr ""
+msgstr "L'impression à été demandé alors que l'imprimante n'est pas définie !"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:862
 #: gofax/faxaccount/paste_generic.tpl:8 gofax/faxaccount/generic.tpl:10
@@ -194,7 +192,7 @@ msgstr "Les numéros de fax alternatif ne seront pas copiés"
 
 #: gofax/faxaccount/generic.tpl:13
 msgid "Multiple edit"
-msgstr ""
+msgstr "Edition multiple"
 
 #: gofax/faxaccount/generic.tpl:29
 msgid "Specify the GOfax communication language for fax to mail gateway"
@@ -260,50 +258,48 @@ msgstr "Rapports des Fax"
 
 #: gofax/faxreports/class_faxreport.inc:115
 msgid "No fax server found!"
-msgstr ""
+msgstr "Pas de serveur de FAX !"
 
 #: gofax/faxreports/class_faxreport.inc:118
 #: gofax/faxreports/class_faxreport.inc:281
 msgid "Configuration error"
-msgstr ""
+msgstr "Erreur de configuration"
 
 #: gofax/faxreports/class_faxreport.inc:118
 #: gofax/faxreports/class_faxreport.inc:281
 #, php-format
 msgid "Missing %s PHP extension!"
-msgstr ""
+msgstr "Extension PHP %s manquante !"
 
 #: gofax/faxreports/class_faxreport.inc:125
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot connect to %s database!"
-msgstr ""
-"Impossible de se connecter à la base de données des fax, aucun rapport ne "
-"peut être affiché!"
+msgstr "Impossible de se connecter à la base de données %s !"
 
 #: gofax/faxreports/class_faxreport.inc:129
 #, php-format
 msgid "Cannot select %s database!"
-msgstr ""
+msgstr "Impossible de sélectionner la base de données %s !"
 
 #: gofax/faxreports/class_faxreport.inc:134
 #: gofax/faxreports/class_faxreport.inc:157
 #: gofax/faxreports/class_faxreport.inc:297
 #, php-format
 msgid "Cannot query %s database!"
-msgstr ""
+msgstr "Impossible d'intérroger la base de données !"
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
 #: gofax/blocklists/class_blocklistManagement.inc:246
 #: gofax/blocklists/class_blocklistManagement.inc:304
 msgid "Permission error"
-msgstr ""
+msgstr "Erreur de permissions"
 
 #: gofax/faxreports/class_faxreport.inc:166
 #: gofax/faxreports/class_faxreport.inc:176
 #, fuzzy
 msgid "You have no permission to view this fax id!"
-msgstr "Vous n'avez pas l'autorisation de supprimer cette liste rouge."
+msgstr "Vous n'avez pas l'autorisation de voir ce fax !"
 
 #: gofax/faxreports/class_faxreport.inc:207
 #: gofax/faxreports/class_faxreport.inc:322
@@ -454,13 +450,11 @@ msgid "Status message"
 msgstr "Statut"
 
 #: gofax/blocklists/class_blocklistManagement.inc:5
-#, fuzzy
 msgid "FAX blocklists"
 msgstr "Liste Rouge des Fax"
 
 #: gofax/blocklists/class_blocklistManagement.inc:224
 #: gofax/blocklists/class_blocklistManagement.inc:285
-#, fuzzy
 msgid "blocklist"
 msgstr "Listes Rouges"
 
@@ -545,14 +539,12 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: gofax/blocklists/class_divListBlocklists.inc:158
-#, fuzzy
 msgid "Copy"
-msgstr "copier"
+msgstr "Copier"
 
 #: gofax/blocklists/class_divListBlocklists.inc:160
-#, fuzzy
 msgid "Cut"
-msgstr "couper"
+msgstr "Couper"
 
 #: gofax/blocklists/class_divListBlocklists.inc:164
 #: gofax/blocklists/class_divListBlocklists.inc:167
@@ -593,19 +585,17 @@ msgstr "Supprimer un utilisateur"
 
 #: gofax/blocklists/class_divListBlocklists.inc:266
 #: gofax/blocklists/class_divListBlocklists.inc:267
-#, fuzzy, php-format
+#, php-format
 msgid "Number of listed '%s'"
-msgstr "Nom de la liste rouge"
+msgstr "Nombre de '%s'"
 
 #: gofax/blocklists/class_divListBlocklists.inc:266
-#, fuzzy
 msgid "blocklists"
 msgstr "Listes Rouges"
 
 #: gofax/blocklists/class_divListBlocklists.inc:267
-#, fuzzy
 msgid "departments"
-msgstr "Département"
+msgstr "département"
 
 #: gofax/blocklists/paste_generic.tpl:3 gofax/blocklists/generic.tpl:8
 msgid "List name"
@@ -629,8 +619,7 @@ msgstr "Type"
 
 #: gofax/blocklists/generic.tpl:43
 msgid "Select wether to filter incoming or outgoing calls"
-msgstr ""
-"Veuillez sélectionner si il faut filtrer sur les appels entrants ou sortants"
+msgstr "Veuillez sélectionner si il faut filtrer sur les appels entrants ou sortants"
 
 #: gofax/blocklists/generic.tpl:51
 #: gofax/blocklists/class_blocklistGeneric.inc:366
@@ -711,180 +700,3 @@ msgstr "Services"
 msgid "Login name"
 msgstr "Nom d'utilisateur"
 
-#, fuzzy
-#~ msgid "Faxi number"
-#~ msgstr "Numéro de fax"
-
-#~ msgid "This account has no fax extensions."
-#~ msgstr "Ce compte n'a pas d'extensions FAX."
-
-#~ msgid ""
-#~ "This account has fax features enabled. You can disable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Le fax est activée pour ce compte, vous pouvez le désactiver en cliquant "
-#~ "sur le bouton ci-dessous."
-
-#~ msgid ""
-#~ "This account has fax features disabled. You can enable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Le fax est désactivé pour ce compte, vous pouvez l'activer en cliquant "
-#~ "sur  le bouton ci-dessous."
-
-#, fuzzy
-#~ msgid "Fax is empty!"
-#~ msgstr "Rapports des Fax"
-
-#~ msgid "Blocklist name"
-#~ msgstr "Nom de la liste rouge"
-
-#~ msgid "Select to see send blocklists"
-#~ msgstr "Sélectionnez afin d'afficher les numéros d'appels de la liste rouge"
-
-#~ msgid "Select to see receive blocklists"
-#~ msgstr "Sélectionnez afin de voir les listes rouges de correspondants"
-
-#~ msgid "Select to search within subtrees"
-#~ msgstr "Sélectionner pour chercher dans le sous arbre"
-
-#~ msgid "Search in subtrees"
-#~ msgstr "Chercher dans les sous arbre"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "The attribute user is empty or contains invalid characters."
-#~ msgstr ""
-#~ "L'attribut utilisateur est vide ou contient des caractères invalides."
-
-#~ msgid "The attribute password is empty or contains invalid characters."
-#~ msgstr ""
-#~ "Le mot de passe de l'attribut est vide ou contient des caractères "
-#~ "invalides."
-
-#~ msgid "Back"
-#~ msgstr "Retour"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#, fuzzy
-#~ msgid "Name contains invalid characters!"
-#~ msgstr "Le champ obligatoire 'Nom' contient des caractères invalides"
-
-#, fuzzy
-#~ msgid "Name is already in use!"
-#~ msgstr "Le nom spécifié est déjà utilisé."
-
-#~ msgid ""
-#~ "This menu allows you to create, delete and edit selected blocklists. "
-#~ "Having a large size of lists, you might prefer the range selectors on top "
-#~ "of the select box."
-#~ msgstr ""
-#~ "Ce menu vous permet de d'ajouter, supprimer et éditer les listes rouges "
-#~ "sélectionnés. Si vous avez un grand nombre de liste rouges il est "
-#~ "conseillé d'utiliser les filtres."
-
-#, fuzzy
-#~ msgid "Number of listed departments"
-#~ msgstr "Nom du département"
-
-#~ msgid "You're about to delete the following blocklists(s) %s"
-#~ msgstr "Vous êtes sur le point de supprimer les listes rouges suivantes %s"
-
-#, fuzzy
-#~ msgid "You have not permission to delete '%s'!"
-#~ msgstr "Vous n'avez pas l'autorisation de supprimer cette liste rouge."
-
-#~ msgid "You're about to delete the blocklist '%s'."
-#~ msgstr "Vous êtes sur le point de supprimer la liste rouge '%s'."
-
-#, fuzzy
-#~ msgid "You have not permission to delete this entry!"
-#~ msgstr "Vous n'avez pas l'autorisation de supprimer cette liste rouge."
-
-#~ msgid "Removing of user/fax account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte fax de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Saving of user/fax account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte fax de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Removing of blocklist with dn '%s' failed."
-#~ msgstr "La suppression de la liste rouge avec le dn '%s' à échoué."
-
-#~ msgid "Saving of blocklist with dn '%s' failed."
-#~ msgstr "La sauvegarde de la liste rouge avec le dn '%s' à échoué."
-
-#~ msgid "You're trying to add an invalid phone number."
-#~ msgstr "Vous essayez d'ajouter un numéro de téléphone invalide."
-
-#~ msgid "The required field 'Fax' is not set."
-#~ msgstr "Le champ obligatoire 'Fax' n'est pas renseigné."
-
-#~ msgid "Please enter a valid telephone number in the 'Fax' field."
-#~ msgstr "Veuillez entrer un numéro de téléphone valide dans le champ 'Fax'."
-
-#~ msgid "Mail delivery is checked, but no address has been specified."
-#~ msgstr ""
-#~ "La livraison par messagerie est activée, mais aucune adresse est "
-#~ "spécifiée."
-
-#~ msgid ""
-#~ "Deliver fax to printer, is only possible if valid printer is given. "
-#~ "Please correct your choice."
-#~ msgstr ""
-#~ "La réception d'un fax sur une imprimante ne fonctionnera que si une "
-#~ "imprimante valable est mentionnée. Veuillez corriger votre choix."
-
-#~ msgid ""
-#~ "No fax extension defined in your server configuration, no reports can be "
-#~ "shown!"
-#~ msgstr ""
-#~ "Pas d'extension fax définie dans la configuration de votre serveur, aucun "
-#~ "rapport ne peut être montré!"
-
-#~ msgid "There is no mysql extension available, please check your php setup."
-#~ msgstr ""
-#~ "Il n'y a pas d'extension mysql disponible, vérifiez votre configuration "
-#~ "php."
-
-#~ msgid "Can't select fax database for report generation!"
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données fax pour la génération de "
-#~ "rapports!"
-
-#~ msgid "Can't query fax table 'faxlog' for report generation!"
-#~ msgstr ""
-#~ "Impossible d'interroger la table 'faxlog' pour la génération de rapports!"
-
-#~ msgid "Query for fax database failed!"
-#~ msgstr "La requête sur la base de données des fax a échoué!"
-
-#~ msgid "You have no permission to retrieve informations about this fax id!"
-#~ msgstr ""
-#~ "Vous n'avez pas l'autorisation de récupérer les informations à propos de "
-#~ "l'identifiant de ce fax!"
-
-#~ msgid "You are not allowed to delete the blocklist '%s'!"
-#~ msgstr "Vous n'êtes pas autorisé à supprimer cette liste rouge '%s' !"
-
-#~ msgid "Please specify a valid phone number."
-#~ msgstr "Veuillez entrer un numéro de téléphone valide."
-
-#~ msgid "Required field 'Name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom' n'est pas rempli."

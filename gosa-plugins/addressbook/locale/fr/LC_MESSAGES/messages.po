@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-04 08:50+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,17 +34,15 @@ msgid "Error"
 msgstr "Erreur"
 
 #: addons/addressbook/class_addressbook.inc:178
-#, fuzzy
-msgid ""
-"You need to set your personal phone number in order to perform direct dials."
+msgid "You need to set your personal phone number in order to perform direct dials."
 msgstr ""
 "Vous n'avez pas de numéro de téléphone personnel indiqué. Veuillez rectifier "
-"cela en vue de pouvoir faire des appels directs."
+"cela afin de pouvoir faire des appels directs."
 
 #: addons/addressbook/class_addressbook.inc:206
 #: addons/addressbook/class_addressbook.inc:769
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: addons/addressbook/class_addressbook.inc:444
 #: addons/addressbook/class_addressbook.inc:451
@@ -125,7 +123,6 @@ msgid "Phone"
 msgstr "Téléphone"
 
 #: addons/addressbook/class_addressbook.inc:689
-#, fuzzy
 msgid "Telephone number"
 msgstr "Numéro de téléphone"
 
@@ -154,8 +151,7 @@ msgid "Email"
 msgstr "Adresse de messagerie"
 
 #: addons/addressbook/class_addressbook.inc:718
-msgid ""
-"Cannot create a unique DN for your entry. Please fill more formular fields."
+msgid "Cannot create a unique DN for your entry. Please fill more formular fields."
 msgstr ""
 "Impossible de créer un DN unique pour cette entrée. Veuillez remplir plus de "
 "champs."
@@ -316,8 +312,7 @@ msgstr "Afficher les entrées de l'organisation"
 
 #: addons/addressbook/contents.tpl:76
 msgid "Select to see users in addressbook"
-msgstr ""
-"Sélectionner pour afficher les utilisateurs présent dans le carnet d'adresse"
+msgstr "Sélectionner pour afficher les utilisateurs présent dans le carnet d'adresse"
 
 #: addons/addressbook/contents.tpl:76
 msgid "Show addressbook entries"
@@ -406,58 +401,3 @@ msgstr "Pays"
 msgid "FAX"
 msgstr "FAX"
 
-#~ msgid "You're about to delete the entry %s."
-#~ msgstr "Vous êtes sur le point de supprimer l'entrée %s."
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Address book"
-#~ msgstr "Carnet d'adresses"
-
-#~ msgid "Removing of addressbook entry '%s' failed."
-#~ msgstr "La suppression de l'entrée du carnet d'adresses '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Permission error"
-#~ msgstr "Permissions"
-
-#, fuzzy
-#~ msgid "You have no permission to delete this entry!"
-#~ msgstr ""
-#~ "Vous n'avez pas les droits nécessaires pour supprimer ce département."
-
-#~ msgid "The required field 'Name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom' n'est pas rempli."
-
-#~ msgid "The required field 'Given name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom Complet' n'est pas rempli."
-
-#~ msgid "The field 'Name' contains invalid characters."
-#~ msgstr "Le champ 'Nom' contient des caractères invalides."
-
-#~ msgid "The field 'Given name' contains invalid characters."
-#~ msgstr "Le champ 'Nom complet' contient des caractères invalides."
-
-#~ msgid "The field 'Phone' contains an invalid phone number."
-#~ msgstr "Le champ 'Téléphone' contient un numéro invalide."
-
-#~ msgid "The field 'Fax' contains an invalid phone number."
-#~ msgstr "Le champ 'Fax' contient un numéro invalide."
-
-#~ msgid "The field 'Mobile' contains an invalid phone number."
-#~ msgstr "Le champ 'GSM' contient un numéro invalide."
-
-#~ msgid "The field 'Pager' contains an invalid phone number."
-#~ msgstr "Le champ 'Bip' contient un numéro invalide."
-
-#~ msgid "Please enter a valid email address in 'Primary address' field."
-#~ msgstr ""
-#~ "Veuillez entrer une adresse de messagerie valide dans le champ 'Adresse "
-#~ "Principale'."

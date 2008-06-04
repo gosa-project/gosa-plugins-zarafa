@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-04 18:59+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,8 @@ msgstr ""
 #: admin/ogroups/gofon/class_phonequeue.inc:91
 #: gofon/phoneaccount/class_phoneAccount.inc:106
 #: gofon/conference/class_phoneConferenceGeneric.inc:100
-#, fuzzy
 msgid "Obsolete entry"
-msgstr "Supprimer cette entrée"
+msgstr "Entrée obsolète"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
 #: gofon/phoneaccount/class_phoneAccount.inc:106
@@ -60,9 +59,8 @@ msgstr "Supprimer la queue téléphonique de ce compte"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:211
 #: admin/ogroups/gofon/class_phonequeue.inc:214
-#, fuzzy
 msgid "phone queue"
-msgstr "Créer une queue téléphonique"
+msgstr "queue téléphonique"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:213
 msgid "Create phone queue"
@@ -100,9 +98,8 @@ msgid "Retry"
 msgstr "Réessayer"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:317
-#, fuzzy
 msgid "Queue length"
-msgstr "Taille maximale de la queue"
+msgstr "taille de la queue"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:320
 #: admin/ogroups/gofon/class_phonequeue.inc:930
@@ -113,15 +110,13 @@ msgstr "Fréquence du message d'annonce"
 #: admin/ogroups/gofon/class_phonequeue.inc:323
 #: gofon/conference/class_phoneConferenceGeneric.inc:386
 #: gofon/conference/class_divListConferences.inc:56
-#, fuzzy
 msgid "Number"
-msgstr "Nom - numéro"
+msgstr "Numéro"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:346
 #: admin/ogroups/gofon/class_phonequeue.inc:394
-#, fuzzy
 msgid "asterisk"
-msgstr "Coller"
+msgstr ""
 
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
@@ -138,20 +133,19 @@ msgstr ""
 
 #: admin/ogroups/gofon/class_phonequeue.inc:437
 msgid "Cannot find old queue entry!"
-msgstr ""
+msgstr "Impossible de trouver l'entrée dans l'ancienne queue !"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:523
 #, php-format
 msgid ""
 "Found more than one entry named '%s' in queue table. Please inform your "
 "system administrator!"
-msgstr ""
+msgstr "J'ai trouvé plus d'une entrée nommée '%s' dans la queue. Veuillez informer votre administrateur système !"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:764
 #: admin/ogroups/gofon/class_phonequeue.inc:766
-#, fuzzy
 msgid "telephone number"
-msgstr "Numéro de téléphone"
+msgstr "numéro de téléphone"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:823
 #: admin/ogroups/gofon/class_phonequeue.inc:865
@@ -170,7 +164,7 @@ msgstr "Numéro de téléphone"
 #: gofon/macro/class_gofonMacro.inc:453 gofon/macro/class_gofonMacro.inc:462
 #: gofon/macro/class_gofonMacro.inc:500
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:838
 #: admin/ogroups/gofon/class_phonequeue.inc:893
@@ -184,7 +178,7 @@ msgstr ""
 #: gofon/macro/class_gofonMacro.inc:521
 #: gofon/macro/class_gofonMacroParameters.inc:401
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:901
 #: gofon/conference/paste_generic.tpl:15 gofon/conference/generic.tpl:118
@@ -300,8 +294,7 @@ msgid "Announce"
 msgstr "Annonce"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid ""
-"Only users with the same asterisk home server will be included to this queue."
+msgid "Only users with the same asterisk home server will be included to this queue."
 msgstr ""
 "Seulement les utilisateurs avec le même serveur asterisk seront inclus dans "
 "cette queue."
@@ -400,13 +393,12 @@ msgid "VoIP service"
 msgstr "Service VOIP"
 
 #: admin/systems/services/gofon/class_goFonServer.inc:65
-#, fuzzy
 msgid "Asterisk management"
-msgstr "Gestion des macros d'Asterisk"
+msgstr "Gestion Asterisk"
 
 #: admin/systems/services/gofon/class_goFonServer.inc:74
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: admin/systems/services/gofon/class_goFonServer.inc:77
 #: admin/systems/services/gofon/class_goFonServer.inc:179
@@ -420,7 +412,6 @@ msgid "Local dial prefix"
 msgstr "Préfixe local"
 
 #: admin/systems/services/gofon/class_goFonServer.inc:83
-#, fuzzy
 msgid "Country prefix"
 msgstr "Préfixe du pays"
 
@@ -478,9 +469,8 @@ msgid "Country dial prefix"
 msgstr "Préfixe du pays"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:119
-#, fuzzy
 msgid "phone"
-msgstr "Téléphone"
+msgstr "téléphone"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:230
 #: gofon/macro/class_divListMacros.inc:189
@@ -504,12 +494,12 @@ msgstr "Configuration réseau"
 #: gofon/macro/class_gofonMacro.inc:453
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr ""
+msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:326
 #: admin/systems/gofon/class_phoneGeneric.inc:329
 msgid "IP address"
-msgstr ""
+msgstr "Adresse ip"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:335
 #: admin/systems/gofon/class_phoneGeneric.inc:339
@@ -781,7 +771,7 @@ msgstr "Ceci fait quelque chose"
 #: gofon/phoneaccount/class_phoneAccount.inc:1377
 #: gofon/macro/class_gofonMacro.inc:466
 msgid "Configuration error"
-msgstr ""
+msgstr "Erreur de configuration"
 
 #: gofon/fonreports/class_fonreport.inc:209
 msgid "Insufficient permissions"
@@ -824,12 +814,8 @@ msgstr "non défini"
 #: gofon/phoneaccount/class_phoneAccount.inc:446
 #: gofon/phoneaccount/class_phoneAccount.inc:464
 #: gofon/phoneaccount/class_phoneAccount.inc:471
-#, fuzzy
 msgid "Abort saving entries to keep the database consistent."
-msgstr ""
-"Impossible de sélectionner la base de données %s sur %s. Abandon de la "
-"sauvegarde des données pour garder la base de données consistante, veuillez "
-"vérifier les journaux systèmes de GOsa pour les erreurs mysql."
+msgstr "Abandon de la sauvegarde des données pour garder la base de données consistante."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:873
 msgid "Remove phone account"
@@ -842,11 +828,11 @@ msgstr "Créer un compte téléphone"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:878
 msgid "User uid"
-msgstr ""
+msgstr "id utilisateur"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:896
 msgid "Selected macro is not available anymore!"
-msgstr ""
+msgstr "la macro sélectionnée n'est plus disponible !"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:915
 msgid "Parameter"
@@ -871,9 +857,8 @@ msgid "Voicemail PIN"
 msgstr "Code PIN de la boite vocale"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1179
-#, fuzzy
 msgid "Between 1-4 charactes"
-msgstr "Le code pin de la boîte vocale doit être entre 1-4 caractères."
+msgstr "Entre 1-4 caractères."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1187
 #: gofon/phoneaccount/paste_generic.tpl:40 gofon/phoneaccount/generic.tpl:78
@@ -881,9 +866,9 @@ msgid "Phone PIN"
 msgstr "Code PIN du téléphone"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1205
-#, fuzzy, php-format
+#, php-format
 msgid "macro parameter %s"
-msgstr "Contenu et paramètre des macros"
+msgstr "paramètre de la macro %s"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1410
 #: gofon/conference/headpage.tpl:20 gofon/macro/headpage.tpl:20
@@ -892,7 +877,7 @@ msgid "Information"
 msgstr "Information"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1410
-#, fuzzy, php-format
+#, php-format
 msgid "User '%s' has been removed from phone queue '%s'."
 msgstr "L'utilisateur '%s' à été enlevé de la queue '%s'."
 
@@ -938,27 +923,23 @@ msgstr "Code PIN de la boite vocale"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1603
 msgid "There is currently no asterisk server defined!"
-msgstr ""
+msgstr "Il n'y a pas de serveur asterisk défini !"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1607
 msgid "Asterisk server is invalid!"
-msgstr ""
+msgstr "Le serveur Asterisk est non valide !"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1613
-#, fuzzy
 msgid "Voicemail PIN must be 4 characters long!"
-msgstr "Le code pin de la boîte vocale doit être entre 1-4 caractères."
+msgstr "Le code pin de la boîte vocale doit être long de 4 caractères."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1616
-#, fuzzy
 msgid "Voicemail PIN contains invalid characters!"
-msgstr "Le code pin de la boîte vocale doit être entre 1-4 caractères."
+msgstr "Le code pin de la boîte vocale contient des caractères non valides !"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1621
-#, fuzzy
 msgid "Phone pin contains invalid characters!"
-msgstr ""
-"Le mot de passe de l'attribut est vide ou contient des caractères invalides."
+msgstr "Le mot de passe contient des caractères invalides."
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1628
 #, php-format
@@ -1006,8 +987,7 @@ msgstr ""
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:373
 #, fuzzy, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
+msgid "The previously selected asterisk home server '%s' is no longer available!"
 msgstr ""
 "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
 "disponible."
@@ -1551,556 +1531,3 @@ msgstr "Valeur par défaut"
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "Vous n'êtes pas autorisé à voir les paramètres de cette macro."
 
-#, fuzzy
-#~ msgid "Cannot select %s database!"
-#~ msgstr "Impossible de sélectionner la base de données %s située sur %s."
-
-#~ msgid "Insufficient permissions to view this attribute"
-#~ msgstr "Permissions insuffisantes, vous ne pouvez pas voir l'attribut"
-
-#~ msgid "This account has no phone extensions."
-#~ msgstr "Ce compte n'est pas d'extension téléphoniques."
-
-#~ msgid ""
-#~ "This account has phone features enabled. You can disable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Une extension téléphone existe pour cet utilisateur. Vous pouvez la "
-#~ "supprimer en cliquant sur le bouton ci-dessous."
-
-#~ msgid ""
-#~ "This account has phone features disabled. You can't enable them while no "
-#~ "uid is set."
-#~ msgstr ""
-#~ "Aucun extension téléphone n'existe pour cet utilisateur. Vous ne pouvez "
-#~ "pas l'activer lorsque aucun uid n'est indiqué."
-
-#~ msgid ""
-#~ "This account has phone features disabled. You can enable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Aucun extension téléphone n'existe pour cet utilisateur. Vous pouvez en "
-#~ "créer une en cliquant sur le bouton ci-dessous."
-
-#, fuzzy
-#~ msgid "Cannot connect to %s database on server '%s'!"
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données '%s' située sur le serveur "
-#~ "'%s'."
-
-#, fuzzy
-#~ msgid "Cannot select %s database on server '%s'!"
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données '%s' située sur le serveur "
-#~ "'%s'."
-
-#, fuzzy
-#~ msgid "Lifetime is not valid!"
-#~ msgstr "Durée (en jours)"
-
-#, fuzzy
-#~ msgid "Cannot query %s database on server '%s'!"
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données '%s' située sur le serveur "
-#~ "'%s'."
-
-#~ msgid "Name - Number"
-#~ msgstr "Nom - numéro"
-
-#~ msgid "Select to search within subtrees"
-#~ msgstr "Sélectionner pour chercher dans le sous arbre"
-
-#~ msgid "Search in subtrees"
-#~ msgstr "Chercher dans les sous arbre"
-
-#, fuzzy
-#~ msgid "Number of listed conferences"
-#~ msgstr "Supprimer les conférences sélectionnées"
-
-#, fuzzy
-#~ msgid "Number of listed departments"
-#~ msgstr "Nom du département"
-
-#, fuzzy
-#~ msgid "Cannot insert new macro on server '%s'!"
-#~ msgstr "L'insertion de la nouvelle macro à échoué pour le serveur '%s'."
-
-#, fuzzy
-#~ msgid "Display name is not set!"
-#~ msgstr "Nom à afficher"
-
-#~ msgid "This 'dn' is no phone macro."
-#~ msgstr "Ce 'dn' n'est pas une macro téléphonique."
-
-#~ msgid "You're about to delete the following user(s) %s"
-#~ msgstr ""
-#~ "Vous êtes sur le point de supprimer le(s) utilisateur(s) suivant(s) %s"
-
-#~ msgid "You're about to delete the whole LDAP subtree placed under '%s'."
-#~ msgstr ""
-#~ "Vous êtes sur le point de supprimer la branche complète de l'annuaire "
-#~ "LDAP placé sous '%s'."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"
-
-#, fuzzy
-#~ msgid "You're about to delete the following macro(s) %s"
-#~ msgstr ""
-#~ "Vous êtes sur le point de supprimer le(s) utilisateur(s) suivant(s) %s"
-
-#~ msgid "You're about to delete the macro '%s'."
-#~ msgstr "Vous êtes sur le point de supprimer la macro '%s'."
-
-#~ msgid "This 'dn' has no phone features."
-#~ msgstr "Ce 'dn' n'a pas d'extensions téléphoniques."
-
-#, fuzzy
-#~ msgid "'0' is a reserved name and cannot be used!"
-#~ msgstr "Le 'Nom du téléphone' '0' est réservé et ne peut pas être utilisé."
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "VoIP service - Asterisk management"
-#~ msgstr "Service VOIP - Administration d'Asterisk"
-
-#~ msgid "The attribute DB user is empty or contains invalid characters."
-#~ msgstr ""
-#~ "La valeur utilisateur de la base de données est vide ou contient des "
-#~ "caractères invalides."
-
-#~ msgid "The attribute password is empty or contains invalid characters."
-#~ msgstr ""
-#~ "Le mot de passe de l'attribut est vide ou contient des caractères "
-#~ "invalides."
-
-#~ msgid ""
-#~ "The attribute local dial prefix is empty or contains invalid characters."
-#~ msgstr ""
-#~ "L'attribut préfixe local est vide ou contient des caractères invalides."
-
-#~ msgid ""
-#~ "The attribute country dial prefix is empty or contains invalid characters."
-#~ msgstr ""
-#~ "L'attribut préfixe national est vide ou contient des caractères invalides."
-
-#~ msgid ""
-#~ "Phone queue is enabled for this group. You can disable it by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Une queue téléphonique existe pour ce groupe. Vous pouvez la désactiver "
-#~ "en cliquant sur le bouton ci-dessous."
-
-#~ msgid ""
-#~ "For this group the phone queues are disabled. You can enable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "Les queues téléphoniques sont désactivées pour ce groupe. Vous pouvez les "
-#~ "activer en cliquant sur le bouton ci-dessous."
-
-#~ msgid "Please select a valid goFonHomeServer."
-#~ msgstr ""
-#~ "Veuillez sélectionner un serveur de téléphonique valide (goFonHomeServer)."
-
-#~ msgid "Timeout must be numeric"
-#~ msgstr "Le délai d'attente doit être un nombre"
-
-#~ msgid "Retry must be numeric"
-#~ msgstr "Le délai de rappel automatique doit être un nombre"
-
-#~ msgid "Max queue length must be numeric"
-#~ msgstr "La taille maximale de la queue doit être un nombre"
-
-#~ msgid "Announce frequency must be numeric"
-#~ msgstr "La fréquence du message d'annonce doit être un nombre"
-
-#~ msgid "There must be least one queue number defined."
-#~ msgstr "Il doit y avoir au moins un numéro de queue définie."
-
-#, fuzzy
-#~ msgid "Cannot remove queue entries from database!"
-#~ msgstr ""
-#~ "Une erreur s'est produite lors de l'effacement des entrées de l'ancienne "
-#~ "queue."
-
-#~ msgid "Mysql query failed."
-#~ msgstr "La requête Mysql à échoué."
-
-#~ msgid "Please have a look a the gosa logfiles."
-#~ msgstr "Veuillez regarder les journaux systèmes de GOsa."
-
-#~ msgid "Saving phone queue failed"
-#~ msgstr "La sauvegarde de la queue téléphonique à échoué"
-
-#~ msgid "Removing phone queue failed"
-#~ msgstr "La suppression de la queue téléphonique à échoué"
-
-#, fuzzy
-#~ msgid "Updating gofon home server failed for '%s'."
-#~ msgstr "La mise à jour du système serveur/dns avec le dn '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Removing of system phone/generic with dn '%s' failed!"
-#~ msgstr ""
-#~ "La suppression du système téléphone/générique avec le dn '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Saving of phone/generic with dn '%s' failed!"
-#~ msgstr ""
-#~ "La sauvegarde du système téléphone/générique avec le dn '%s' à échoué."
-
-#~ msgid ""
-#~ "The MySQL Server '%s' isn't reachable as user '%s'. Abort saving entries "
-#~ "to keep the database consistent, check GOsa log for mysql error."
-#~ msgstr ""
-#~ "Le serveur MySQL '%s' n'est pas joignable avec l'utilisateur '%s'. "
-#~ "Abandon de la sauvegarde des données pour garder la consistance de la "
-#~ "base de données, veuillez vérifier les journaux systèmes GOsa pour les "
-#~ "erreurs mysql."
-
-#~ msgid ""
-#~ "The old MySQL home server '%s' isn't reachable as user '%s'. Abort saving "
-#~ "entries to keep the database consistent, check GOsa log for mysql error."
-#~ msgstr ""
-#~ "L'ancien serveur MySQL primaire '%s' n'est pas joignable avec "
-#~ "l'utilisateur '%s'. Abandon des sauvegardes pour garder la consistance de "
-#~ "la base de données, veuillez vérifier les journaux systèmes GOsa pour les "
-#~ "erreurs mysql."
-
-#, fuzzy
-#~ msgid "Phone number is invalid!"
-#~ msgstr "Numéros de téléphones"
-
-#~ msgid ""
-#~ "The specified Voicemail PIN contains invalid characters, only numeric "
-#~ "values are allowed here."
-#~ msgstr ""
-#~ "Le code pin de la boîte vocale contient des caractères invalides, seul "
-#~ "les chiffres sont autorisés."
-
-#~ msgid ""
-#~ "The specified phone PIN contains invalid characters, only aphanumeric "
-#~ "values are allowed here."
-#~ msgstr ""
-#~ "Le code pin du téléphone contient des caractères invalides. Seul les "
-#~ "chiffres et les lettres sont autorisés."
-
-#~ msgid "You need to specify at least one phone number!"
-#~ msgstr "Vous devez au moins indiquer un numéro de téléphone !"
-
-#~ msgid "Saving of user/phone account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/téléphonique de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#~ msgid "Removing of user/phone account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/téléphonique de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#, fuzzy
-#~ msgid "Saving of goFonConference/generic with dn '%s' failed!"
-#~ msgstr ""
-#~ "La sauvegarde du type goFonConférence/générique avec le dn '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Removing of goFonMacro/generic account with dn '%s' failed!"
-#~ msgstr ""
-#~ "La suppression du compte goFonMacro/générqiue de l'utilisateur avec le dn "
-#~ "'%s' à échoué."
-
-#~ msgid "Saving of goFonMacro/generic account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte goFonMacro/générique de l'utilisateur avec le dn "
-#~ "'%s' à échoué."
-
-#~ msgid "Removing of goFonMacro/generic account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte goFonMacro/générqiue de l'utilisateur avec le dn "
-#~ "'%s' à échoué."
-
-#~ msgid ""
-#~ "The specified home server '%s' is not available in GOsa server "
-#~ "configuration. Saving this account will create a new entry on the server "
-#~ "'%s'. Use cancel if you do not want to create a new entry while ignoring "
-#~ "old accounts."
-#~ msgstr ""
-#~ "Le serveur primaire spécifié '%s' n'est pas disponible dans la "
-#~ "configuration serveur de GOsa. La sauvegarde de ce compte va créer une "
-#~ "nouvelle entrée dans le serveur '%s'. Utilisez annuler si vous ne voulez "
-#~ "pas créer un nouveau compte en ignorant les anciens comptes."
-
-#~ msgid ""
-#~ "Can't save any changes to asterisk database, there is currently no mysql "
-#~ "extension available in your php setup."
-#~ msgstr ""
-#~ "Impossible de sauver les changement dans votre base de données asterisk, "
-#~ "il n'y a pas d'extension mysql disponible dans votre configuration php."
-
-#~ msgid ""
-#~ "The MySQL home server '%s' isn't reachable as user '%s', check GOsa log "
-#~ "for mysql error."
-#~ msgstr ""
-#~ "Le serveur MySQL primaire '%s' n'est pas joignable avec l'utilisateur '%"
-#~ "s', veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
-
-#~ msgid ""
-#~ "The MySQL initial home server '%s' isn't reachable as user '%s', check "
-#~ "GOsa log for mysql error."
-#~ msgstr ""
-#~ "Le serveur MySQL primaire '%s' n'est pas joignable avec l'utilisateur '%"
-#~ "s', veuillez vérifier les journaux systèmes GOsa pour les erreurs mysql."
-
-#~ msgid "Can't select database '%s' on initial home server '%s'."
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données '%s' située sur le serveur "
-#~ "initial '%s'."
-
-#~ msgid ""
-#~ "There is currently no asterisk server defined. Possibly you are missing a "
-#~ "server that handles the asterisk management (goFonServer). Your settings "
-#~ "can't be saved to asterisk database."
-#~ msgstr ""
-#~ "Il n'y a pas de serveur asterisk défini. Probablement qu'il vous manque "
-#~ "un serveur qui gère asterisk (goFonServer).Vos préférences ne peuvent pas "
-#~ "être sauvées dans la base de données d'asterisk."
-
-#~ msgid "Could not detect old queue entry, query failed."
-#~ msgstr ""
-#~ "Impossible de détecter les entrées de l'ancienne queue, la requête à "
-#~ "échoué."
-
-#~ msgid ""
-#~ "More than one entry in queue table found, that uses the name ('%s'). "
-#~ "Please fix this issue manually first."
-#~ msgstr ""
-#~ "Plus d'une entrée dans la table queue utilisent le nom ('%s'). Veuillez "
-#~ "d'abord régler ce problème manuellement."
-
-#, fuzzy
-#~ msgid ""
-#~ "Can't delete because there are users which are depending on this phone. "
-#~ "One of them is user '%s'."
-#~ msgstr ""
-#~ "Impossible d'effacer ce téléphone parce que certains utilisateurs "
-#~ "l'utilisent. Un de ces utilisateur est '%s'."
-
-#~ msgid "The required field IP address is empty."
-#~ msgstr "Le champ obligatoire adresse IP n'est pas rempli."
-
-#~ msgid "The field IP address contains an invalid address."
-#~ msgstr "Le champ adresse IP contient une adresse invalide."
-
-#, fuzzy
-#~ msgid "Please specify a valid name for this object."
-#~ msgstr "Veuillez spécifier un nom valide pour ce type mime."
-
-#~ msgid "The required field 'Phone name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom du téléphone' n'est pas rempli."
-
-#~ msgid "There is already an entry '%s' in the base choosen by you"
-#~ msgstr "Une entrée '%s' existe déjà dans la base sélectionnée"
-
-#~ msgid "Can't connect to phone database, no reports can be shown!"
-#~ msgstr ""
-#~ "Impossible de se connecter à la base de données des téléphones, aucun "
-#~ "rapport ne peut être affiché !"
-
-#~ msgid "There is no mysql extension available, please check your php setup."
-#~ msgstr ""
-#~ "Il n'y a pas d'extension mysql disponible, vérifiez votre configuration "
-#~ "php."
-
-#~ msgid "Can't select phone database for report generation!"
-#~ msgstr ""
-#~ "Impossible de sélectionner la base de données des téléphones pour la "
-#~ "génération de rapports !"
-
-#~ msgid "Query for phone database failed!"
-#~ msgstr "La requête sur la base de données des téléphones a échoué !"
-
-#~ msgid ""
-#~ "The specified goFonHomeServer '%s' is not available in GOsa server "
-#~ "configuration. Saving this account will create a new entry on the server "
-#~ "'%s'. Use cancel if you do not want to create a new entry ignoring old "
-#~ "accounts."
-#~ msgstr ""
-#~ "Le serveur goFonHomeServer '%s' n'est pas disponible dans la "
-#~ "configuration serveur de GOsa. La sauvegarde de ce compte va créer une "
-#~ "nouvelle entrée dans le serveur '%s'. Utilisez annuler si vous ne voulez "
-#~ "pas créer un nouveau compte en ignorant les ancien comptes."
-
-#~ msgid ""
-#~ "Can't save any changes to asterisk database, there is no mysql extension "
-#~ "available."
-#~ msgstr ""
-#~ "Impossible de sauvegarde les changements dans votre base de données "
-#~ "asterisk, l'extension mysql n'est pas disponible."
-
-#~ msgid "Error while performing query:"
-#~ msgstr "Une erreur s'est produite lors de la requête:"
-
-#~ msgid ""
-#~ "The macro you selected, is no longer available for you, please choose "
-#~ "another one."
-#~ msgstr ""
-#~ "La macro que vous aviez choisi dans le passé n'est plus disponible, "
-#~ "veuillez en choisir une autre."
-
-#~ msgid "Please enter a valid phone number!"
-#~ msgstr "Veuillez entrer un numéro de téléphone valide !"
-
-#~ msgid ""
-#~ "The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for "
-#~ "mysql error."
-#~ msgstr ""
-#~ "Le serveur MySQL '%s' n'est pas joignable avec l'utilisateur '%s', "
-#~ "veuillez vérifier les journaux système GOsa pour les erreurs mysql."
-
-#~ msgid ""
-#~ "Can't remove phone account, the mysql extension is not present in php "
-#~ "configuration."
-#~ msgstr ""
-#~ "Impossible de supprimer le compte téléphonique, l'extension mysql n'est "
-#~ "pas présente dans la configuration php."
-
-#~ msgid ""
-#~ "Could not remove the conference entry from database on home server (%s). "
-#~ "Please check your asterisk database configuration."
-#~ msgstr ""
-#~ "Impossible d'effacer la conférence de la base de données primaire sur le "
-#~ "serveur (%s). Veuillez vérifier la configuration de votre base de données "
-#~ "asterisk."
-
-#~ msgid "Please enter a PIN."
-#~ msgstr " Veuillez entrer un code pin."
-
-#~ msgid "Please enter a name for the conference."
-#~ msgstr "Veuillez entrer un nom pour la conférence."
-
-#~ msgid "Only numeric chars are allowed in Number field."
-#~ msgstr "Seul des chiffres sont permis dans le champ numéro."
-
-#~ msgid "Only numbers are allowed in Lifetime."
-#~ msgstr "Seul des nombres sont autorisés dans la durée."
-
-#~ msgid "There is already a conference with this name in the current tree."
-#~ msgstr "Il y a déjà une conférence avec ce nom dans l'annuaire."
-
-#~ msgid ""
-#~ "Can not check if there are already some entries with given telephone "
-#~ "number and/or cn in the destination home server."
-#~ msgstr ""
-#~ "Impossible de vérifier si il y a déjà des entrées avec ce numéro de "
-#~ "téléphone et/ou cn dans le serveur primaire."
-
-#~ msgid ""
-#~ "Can not remove entries with some telephone number and/or cn from "
-#~ "destination home server."
-#~ msgstr ""
-#~ "Impossible d'effacer des entrées avec certains numéro de téléphone et/ou "
-#~ "cn dans le serveur primaire."
-
-#~ msgid ""
-#~ "Can not check if entry exists in old database. Please have a look a the "
-#~ "gosa logfiles."
-#~ msgstr ""
-#~ "Impossible de vérifier si l'entrée existe dans l'ancienne  base de "
-#~ "données. Veuillez vérifier les journaux systèmes GOsa."
-
-#~ msgid ""
-#~ "Can not remove old entries from initial home server. Please have a look a "
-#~ "the gosa logfiles."
-#~ msgstr ""
-#~ "Impossible d'effacer les anciennes entrées de l'ancien serveur primaire. "
-#~ "Veuillez vérifier les journaux systèmes de GOsa."
-
-#~ msgid "Removing macro from '%s' failed. Check GOsa log for mysql error."
-#~ msgstr ""
-#~ "L'effacement de la macro depuis '%s' à échoué. Veuillez vérifier les "
-#~ "journaux système de GOsa pour les erreurs mysql."
-
-#~ msgid "More than one '(' is currently not supported. Line : '%s'."
-#~ msgstr "Plus d'un '(' n'est actuellement pas supporté. Ligne : '%s'."
-
-#~ msgid "More than one ')' is currently not supported. Line : '%s'."
-#~ msgstr "Plus d'une ')' n'est actuellement pas supporté, Ligne : '%s'."
-
-#~ msgid "There is no extension type given in line : '%s'."
-#~ msgstr "Il n'y a pas de type d'extension indiquée à la ligne : '%s'."
-
-#~ msgid ""
-#~ "There must be at least one server with an asterisk database to save this "
-#~ "phone macro."
-#~ msgstr ""
-#~ "Il doit y avoir au moins un serveur avec la base de donnée asterisk pour "
-#~ "sauver cette macro."
-
-#~ msgid "The given cn '%s' already exists."
-#~ msgstr "Le cn indiqué '%s' existe déjà."
-
-#~ msgid "You must specify the 'Display Name' in order to save this macro"
-#~ msgstr ""
-#~ "Vous devez spécifier le 'Nom d'affichage' pour pouvoir sauver cette macro"
-
-#~ msgid "The given cn is too long, to create a Makro entry, maximum 20 chars."
-#~ msgstr ""
-#~ "Le cn introduit est trop long, pour créer une macro le maximum est de 20 "
-#~ "caractères."
-
-#~ msgid ""
-#~ "This macro is still in use. It is necessary to mark this macro as visible "
-#~ "for users."
-#~ msgstr ""
-#~ "Cette macro est toujours utilisée. Il est nécessaire de marquer cette "
-#~ "macro comme visible pour tout les utilisateurs."
-
-#~ msgid "Makro length must be lower than 100 lines"
-#~ msgstr "La longueur de la macro doit être plus petite que 100 lignes"
-
-#~ msgid "You can't save an empty macro."
-#~ msgstr "Impossible de sauver des macros vides."
-
-#~ msgid ""
-#~ "This macro is still in use. To delete this Macro ensure that nobody has "
-#~ "selected it."
-#~ msgstr ""
-#~ "Cette macro est toujours utilisée. Pour effacer cette macro, assurez vous "
-#~ "que personne ne la sélectionnée."
-
-#~ msgid ""
-#~ "Could not remove the macro entry from asterisk databases. Please check "
-#~ "your asterisk database configurations."
-#~ msgstr ""
-#~ "Impossible d'effacer la macro de la base de données asterisk. Veuillez "
-#~ "vérifier la configuration de la base de donnée asterisk."
-
-#~ msgid "The parameter %s has incorrect value for type bool."
-#~ msgstr ""
-#~ "Le paramètre %s à des valeurs incorrectes par rapport au type booléen."
-
-#~ msgid ""
-#~ "Parameter count of the macro changed, you must update each user which are "
-#~ "using this macro '%s'."
-#~ msgstr ""
-#~ "Le nombre de paramètres de la macro à change, vous devez mettre à jour "
-#~ "chaque utilisateur qui utilise la macro '%s'."
-
-#~ msgid "You are not allowed to delete this macro!"
-#~ msgstr "Vous n'êtes pas autorisé à supprimer cette macro!"

@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-04 18:45+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,8 +27,7 @@ msgid "Information"
 msgstr "Information"
 
 #: admin/systems/services/glpi/glpiSelectUser.tpl:23
-msgid ""
-"This dialog allows you to select a user as technical responsible person."
+msgid "This dialog allows you to select a user as technical responsible person."
 msgstr ""
 "Ce dialogue vous permet de désigner un utilisateur comme personne "
 "responsable."
@@ -190,12 +189,12 @@ msgstr ""
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:198
 #: admin/systems/services/glpi/class_glpiAccount.inc:181
 msgid "Download of attachment failed. Attachment was not found on server."
-msgstr ""
+msgstr "Le téléchargement de la pièce jointe à échoué. La pièce jointe n'est pas présente sur le serveur."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:201
 #: admin/systems/services/glpi/class_glpiAccount.inc:184
 msgid "Download of attachment failed. Not a valid attachment id."
-msgstr ""
+msgstr "Le téléchargement de la pièce jointe à échoué. Numéro id non valide."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:229
 #: admin/systems/services/glpi/class_glpiAccount.inc:593
@@ -229,14 +228,12 @@ msgstr ""
 msgid ""
 "Can't rename given printer type to '%s', because this type name already "
 "exists."
-msgstr ""
-"Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
+msgstr "Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:308
 #, php-format
 msgid "Can't delete printer type, it is still in use by '%s'."
-msgstr ""
-"Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
+msgstr "Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:633
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:648
@@ -544,8 +541,7 @@ msgid "List of devices"
 msgstr "Liste des périphériques"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
-msgid ""
-"This dialog allows you to attach a device to your currently edited computer."
+msgid "This dialog allows you to attach a device to your currently edited computer."
 msgstr ""
 "Ce menu vous permet d'attacher un périphérique à votre ordinateur en cours "
 "d'édition."
@@ -579,9 +575,8 @@ msgstr "Erreur interne, impossible de créer le périphérique de type '%s'"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:108
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:110
-#, fuzzy
 msgid "glpi device"
-msgstr "périphériques"
+msgstr "périphérique glpi"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:112
 msgid "Can't detect object name."
@@ -589,8 +584,7 @@ msgstr "Impossible de détecter le nom de l'objet."
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:133
 #, php-format
-msgid ""
-"You can't delete this device, it is still in use by these system(s) '%s'"
+msgid "You can't delete this device, it is still in use by these system(s) '%s'"
 msgstr ""
 "Vous ne pouvez pas effacer ce périphérique, il est utilisé actuellement par "
 "ces système(s) '%s'"
@@ -828,9 +822,8 @@ msgid "Regular expression for matching cartridge types"
 msgstr "Expression régulière pour sélectionner les cartouches correspondantes"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:92
-#, fuzzy
 msgid "cartridge"
-msgstr "Cartouches"
+msgstr "cartouche"
 
 #: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:111
 #, php-format
@@ -901,13 +894,11 @@ msgstr "Cette fonctionnalité n'est pas encore implémentée."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:312
 msgid "Adding new sytem type failed, this system type name is already used."
-msgstr ""
-"L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
+msgstr "L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:332
 #, php-format
-msgid ""
-"You can't delete this system type, it is still in use by these system(s) '%s'"
+msgid "You can't delete this system type, it is still in use by these system(s) '%s'"
 msgstr ""
 "Vous ne pouvez pas effacer ce type de système, il est utilisé actuellement "
 "par les sytème(s) '%s'"
@@ -1079,14 +1070,12 @@ msgid "Submit department"
 msgstr "Soumettre le département"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:68
-#, fuzzy
 msgid "attachment"
-msgstr "Document lié"
+msgstr "pièce jointe"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:107
 #, php-format
-msgid ""
-"You can't delete this attachment, it is still in use by these system(s) '%s'"
+msgid "You can't delete this attachment, it is still in use by these system(s) '%s'"
 msgstr ""
 "Impossible d'effacer ce fichier attaché, tant qu'il est utilisé par ce(s) "
 "système(s) '%s'."
@@ -1170,8 +1159,7 @@ msgstr "L'attribut utilisateur est vide ou contient des caractères invalides."
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:70
 msgid "The attribute database is empty or contains invalid characters."
-msgstr ""
-"L'attribut base de données est vide ou contient des caractères invalides."
+msgstr "L'attribut base de données est vide ou contient des caractères invalides."
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:88
 msgid "Services"
@@ -1193,20 +1181,3 @@ msgstr "Réessayer"
 msgid "Admin"
 msgstr "Administrateur"
 
-#~ msgid "You're about to delete the glpi attachment component '%s'."
-#~ msgstr "Vous êtes sur le point de supprimer le composant glpi attaché '%s'."
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "You're about to delete the glpi device '%s'."
-#~ msgstr "Vous êtes sur le point de supprimer le périphérique glpi '%s'."
-
-#~ msgid "You're about to delete the glpi cartridge type '%s'."
-#~ msgstr "Vous êtes sur le point de supprimer le type de toner glpi '%s'."
