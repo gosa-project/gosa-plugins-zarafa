@@ -108,6 +108,7 @@ sub krb5_create_principal {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -131,6 +132,9 @@ sub krb5_create_principal {
       } else {
         if ( $kadm5->get_principal($principal)){
           &add_content2xml_hash($out_hash, "error", "Principal exists");
+          if (defined $forward_to_gosa) {
+              &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+          }
           return &create_xml_string($out_hash);
         }
 
@@ -151,7 +155,6 @@ sub krb5_create_principal {
       }
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -167,6 +170,7 @@ sub krb5_modify_principal {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -174,8 +178,11 @@ sub krb5_modify_principal {
 
     # Sanity check
     if (not defined @{$msg_hash->{'principal'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No principal specified");
-      return &create_xml_string($out_hash);
+        &add_content2xml_hash($out_hash, "error", "No principal specified");
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        return &create_xml_string($out_hash);
     }
 
     # Authenticate
@@ -190,6 +197,9 @@ sub krb5_modify_principal {
       } else {
         if (not $kadm5->get_principal($principal)){
           &add_content2xml_hash($out_hash, "error", "Principal does not exists");
+          if (defined $forward_to_gosa) {
+              &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+          }
           return &create_xml_string($out_hash);
         }
 
@@ -207,7 +217,6 @@ sub krb5_modify_principal {
       }
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -223,6 +232,7 @@ sub krb5_get_principal {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -231,6 +241,9 @@ sub krb5_get_principal {
     # Sanity check
     if (not defined @{$msg_hash->{'principal'}}[0]){
       &add_content2xml_hash($out_hash, "error", "No principal specified");
+      if (defined $forward_to_gosa) {
+          &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+      }
       return &create_xml_string($out_hash);
     }
 
@@ -263,7 +276,6 @@ sub krb5_get_principal {
       }
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -279,6 +291,7 @@ sub krb5_del_principal {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -286,8 +299,11 @@ sub krb5_del_principal {
 
     # Sanity check
     if (not defined @{$msg_hash->{'principal'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No principal specified");
-      return &create_xml_string($out_hash);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        &add_content2xml_hash($out_hash, "error", "No principal specified");
+        return &create_xml_string($out_hash);
     }
 
     # Authenticate
@@ -304,7 +320,6 @@ sub krb5_del_principal {
       }
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -352,6 +367,7 @@ sub krb5_get_policy {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -359,8 +375,11 @@ sub krb5_get_policy {
 
     # Sanity check
     if (not defined @{$msg_hash->{'policy'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No policy specified");
-      return &create_xml_string($out_hash);
+        &add_content2xml_hash($out_hash, "error", "No policy specified");
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        return &create_xml_string($out_hash);
     }
 
     # Authenticate
@@ -380,7 +399,6 @@ sub krb5_get_policy {
       &add_content2xml_hash($out_hash, "policy_refcnt", $data->policy_refcnt);
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -396,6 +414,7 @@ sub krb5_create_policy {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # Build return message
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -403,20 +422,27 @@ sub krb5_create_policy {
 
     # Sanity check
     if (not defined @{$msg_hash->{'policy'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No policy specified");
-      return &create_xml_string($out_hash);
+        &add_content2xml_hash($out_hash, "error", "No policy specified");
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+
+        return &create_xml_string($out_hash);
     }
     &add_content2xml_hash($msg_hash, "name", @{$msg_hash->{'policy'}}[0]);
 
     # Authenticate
     my $kadm5 = Authen::Krb5::Admin->init_with_password($krb_admin, $krb_password);
     if (not defined $kadm5){
-      &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
+        &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
     } else {
-      if ( $kadm5->get_policy(@{$msg_hash->{'policy'}}[0])) {
-        &add_content2xml_hash($out_hash, "error", "Policy exists");
-        return &create_xml_string($out_hash);
-      }
+        if ( $kadm5->get_policy(@{$msg_hash->{'policy'}}[0])) {
+            &add_content2xml_hash($out_hash, "error", "Policy exists");
+            if (defined $forward_to_gosa) {
+                &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+            }
+            return &create_xml_string($out_hash);
+        }
 
       my $pol = Authen::Krb5::Admin::Policy->new;
 
@@ -433,7 +459,6 @@ sub krb5_create_policy {
       $kadm5->create_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -452,6 +477,7 @@ sub krb5_modify_policy {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # Build return message
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -459,8 +485,11 @@ sub krb5_modify_policy {
 
     # Sanity check
     if (not defined @{$msg_hash->{'policy'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No policy specified");
-      return &create_xml_string($out_hash);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        &add_content2xml_hash($out_hash, "error", "No policy specified");
+        return &create_xml_string($out_hash);
     }
     &add_content2xml_hash($msg_hash, "name", @{$msg_hash->{'policy'}}[0]);
 
@@ -484,7 +513,6 @@ sub krb5_modify_policy {
       $kadm5->modify_policy($pol) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -503,6 +531,7 @@ sub krb5_del_policy {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -510,8 +539,11 @@ sub krb5_del_policy {
 
     # Sanity check
     if (not defined @{$msg_hash->{'policy'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No policy specified");
-      return &create_xml_string($out_hash);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+        &add_content2xml_hash($out_hash, "error", "No policy specified");
+        return &create_xml_string($out_hash);
     }
 
     # Authenticate
@@ -523,7 +555,6 @@ sub krb5_del_policy {
       $kadm5->delete_policy($policy) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
@@ -538,6 +569,7 @@ sub krb5_set_password {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -545,12 +577,20 @@ sub krb5_set_password {
 
     # Sanity check
     if (not defined @{$msg_hash->{'principal'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No principal specified");
-      return &create_xml_string($out_hash);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+
+        &add_content2xml_hash($out_hash, "error", "No principal specified");
+        return &create_xml_string($out_hash);
     }
     if (not defined @{$msg_hash->{'password'}}[0]){
-      &add_content2xml_hash($out_hash, "error", "No password specified");
-      return &create_xml_string($out_hash);
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+        }
+
+        &add_content2xml_hash($out_hash, "error", "No password specified");
+        return &create_xml_string($out_hash);
     }
 
     # Authenticate
@@ -567,7 +607,6 @@ sub krb5_set_password {
       $kadm5->chpass_principal($principal, @{$msg_hash->{'password'}}[0]) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
     }
 
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
