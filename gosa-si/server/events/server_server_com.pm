@@ -82,11 +82,22 @@ sub new_server {
     }
             
     # fetch all registered clients
-    
+    my $client_sql = "SELECT * FROM $main::known_clients_tn"; 
+    my $client_res = $main::known_clients_db->exec_statement($client_sql);
+
+
+    # add already connected clients to registration message 
+    my $myhash = &create_xml_hash('confirm_new_server', $main::server_address, $source);
+    &add_content2xml_hash($myhash, 'key', $key);
+    map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
+
+    # build registration message and send it
+    my $out_msg = &create_xml_string($myhash);
+
 
     # build confirm_new_server message
-    my %data = ( key=>$key );
-    my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
+    #my %data = ( key=>$key );
+    #my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
     my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
     
     return;
@@ -98,9 +109,34 @@ sub confirm_new_server {
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
+    my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
 
     my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key' WHERE hostname='$source'"; 
     my $res = $main::known_server_db->update_dbentry($sql);
+
+    # add clients of foreign server to known_foreign_clients_db
+    my @sql_list;
+    foreach my $client (@clients) {
+        my @client_details = split(/,/, $client);
+
+        # workaround to avoid double entries in foreign_clients_db
+        my $del_sql = "DELETE FROM $main::foreign_clients_tn WHERE hostname='".$client_details[0]."'";
+        push(@sql_list, $del_sql);
+
+        my $sql = "INSERT INTO $main::foreign_clients_tn VALUES ("
+            ."'".$client_details[0]."',"   # hostname
+            ."'".$client_details[1]."',"   # macaddress
+            ."'".$source."',"              # regserver
+            ."'".&get_time()."')";         # timestamp
+        push(@sql_list, $sql);
+    }
+    if (@sql_list) {
+		my $len = @sql_list;
+		$len /= 2;
+        &main::daemon_log("$session_id DEBUG: Inserting ".$len." entries to foreign_clients_db", 8);
+        my $res = $main::foreign_clients_db->exec_statementlist(\@sql_list);
+    }
+
 
     return;
 }
