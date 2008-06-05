@@ -107,10 +107,14 @@ class krb_host_keys extends plugin
         $principals = $this->pwd_handle->load_principals_for_server($mac);
     
         $princ = "";
+        $present = FALSE;
         
         foreach($principals as $name){
           if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/i",$name)){
             $princ .= "<span style='cursor: pointer;' title='".$name."'>".preg_replace("/\/.*$/","",$name)."</div>&nbsp;";
+          }
+          if(preg_match("/^".normalizePreg($this->prefix.$this->namingAttr)."\@/i",$name)){
+            $present = TRUE;
           }
         }
     
@@ -118,6 +122,7 @@ class krb_host_keys extends plugin
         $this->server_list[$mac]['MAC']         = $mac;
         $this->server_list[$mac]['REALM']       = $realm;
         $this->server_list[$mac]['USED']        = $princ;
+        $this->server_list[$mac]['PRESENT']     = $present;
         $this->server_list[$mac]['PRINCIPALS']  = $principals;
 
         /* Set first realm as selected.

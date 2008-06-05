@@ -5,15 +5,14 @@
 <table style="">
 {foreach from=$server_list item=item key=key}
 	<tr>
-		<td>{$item.REALM}</td>
-		<td style="padding-left:50px;">
-			{if $item.USED != ""}
+		<td style="padding-right:50px;">{$item.REALM}</td>
+		<td>
+			{if $item.PRESENT}
 				<img src='images/empty.png' class="center">
 				<input type='image' class='center' name='recreate_{$key}'
 					src='images/lists/reload.png'>
 				<input type='image' class='center' name='remove_{$key}'
 					src='images/lists/trash.png'>
-				{$item.USED}
 			{else}
 				<input type='image' class='center' name='create_{$key}'
 					src='images/lists/new.png'>
@@ -21,6 +20,10 @@
 				<img src='images/empty.png' class="center">
 			{/if}
 		</td>
+	</tr>
+	<tr>
+		<td><i>{t}Keys for this realm{/t}:</i></td>
+		<td>{$item.USED}</td>
 	</tr>
 {/foreach}
 </table>
