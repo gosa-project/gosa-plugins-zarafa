@@ -1986,7 +1986,7 @@ sub change_goto_state {
           }
         }
       } else {
-		daemon_log("$session_id ERROR: LDAP search failed: ldap_base=$ldap_base, filter=$search", 1);
+		daemon_log("$session_id ERROR: LDAP search failed in function change_goto_state: ldap_base=$ldap_base, filter=$search", 1);
 	  }
 
     }

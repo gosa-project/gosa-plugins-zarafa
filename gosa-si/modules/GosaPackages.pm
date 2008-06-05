@@ -389,7 +389,7 @@ sub process_job_msg {
     if( $error == 0 ) {
         # add job to job queue
         my $func_dic = {table=>$main::job_queue_tn, 
-            primkey=>[],
+            primkey=>['macaddress', 'headertag'],
             timestamp=>$timestamp,
             status=>'waiting', 
             result=>'none',

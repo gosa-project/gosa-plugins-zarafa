@@ -157,7 +157,7 @@ sub add_dbentry {
 			return (4, $sql_statement);
 		} 
 
-		# entry already exists -> run update
+	# entry already exists -> run update
 	} else  {
 		my @update_l;
 		while( my ($pram, $val) = each %{$arg} ) {
