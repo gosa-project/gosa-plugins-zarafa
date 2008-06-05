@@ -296,7 +296,7 @@ class workgeneric extends plugin
     /* Check if workstation is online */
     if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
-                                       "update" => _("System update"),
+                                       "update" => _("Software update"),
                                        "reinstall" => _("Reinstall"),
                                        "rescan" => _("Rescan hardware"),
                                        "memcheck" => _("Memory test"),
@@ -305,7 +305,7 @@ class workgeneric extends plugin
     } else {
       $smarty->assign("actions", array("wake" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
-                                       "update" => _("System update"),
+                                       "update" => _("Software update"),
                                        "memcheck" => _("Memory test"),
                                        "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
