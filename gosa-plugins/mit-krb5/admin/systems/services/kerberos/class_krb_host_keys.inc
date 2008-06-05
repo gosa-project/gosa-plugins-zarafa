@@ -70,7 +70,7 @@ class krb_host_keys extends plugin
     if(!isset($this->object->cn)){
       trigger_error("Cannot initialize kerberos key service, invalid parent object given (Paramter 2). Should be of class 'plugin' with accessible class member variable 'cn'.");
     }else{
-      $this->init_namingAttr = $this->namingAttr = $this->prefix.$this->object->cn;
+      $this->init_namingAttr = $this->namingAttr = $this->object->cn;
       $this->init();
     }
   }
@@ -83,7 +83,7 @@ class krb_host_keys extends plugin
     $this->kerberos_support = FALSE;
     if(class_available("passwordMethodMIT")){
 
-      $this->namingAttr = $this->prefix.$this->object->cn;
+      $this->namingAttr = $this->object->cn;
 
       /* Create password handle, it has already a working principal parsing 
        */
@@ -106,18 +106,19 @@ class krb_host_keys extends plugin
         $cn         = $attrs['cn'][0];
         $principals = $this->pwd_handle->load_principals_for_server($mac);
     
-        $princ = FALSE;
+        $princ = "";
+        
         foreach($principals as $name){
-          if(preg_match("/^".normalizePreg($this->namingAttr)."\@/i",$name)){
-            $princ = TRUE;
-            break;
+          if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/i",$name)){
+            $princ .= "<span style='cursor: pointer;' title='".$name."'>".preg_replace("/\/.*$/","",$name)."</div>&nbsp;";
           }
         }
     
-        $this->server_list[$mac]['CN']    = $cn;
-        $this->server_list[$mac]['MAC']   = $mac;
-        $this->server_list[$mac]['REALM'] = $realm;
-        $this->server_list[$mac]['PRINCIPAL'] = $princ;
+        $this->server_list[$mac]['CN']          = $cn;
+        $this->server_list[$mac]['MAC']         = $mac;
+        $this->server_list[$mac]['REALM']       = $realm;
+        $this->server_list[$mac]['USED']        = $princ;
+        $this->server_list[$mac]['PRINCIPALS']  = $principals;
 
         /* Set first realm as selected.
          */
@@ -143,30 +144,36 @@ class krb_host_keys extends plugin
         in this case ask user if he wants to remove the old key
         if it exists.
      */
-    if($this->prefix.$this->object->cn != $this->namingAttr){
+    if($this->prefix.$this->object->cn != $this->prefix.$this->namingAttr){
 
       /* The confirm dialog was shown. Check if OK was pressed. 
        */
       if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
         if($this->confirm_box->is_confirmed()){
           foreach($this->server_list as $server => $data){
-            if($data['PRINCIPAL']){
-              if($this->delete_key($server, $this->namingAttr."@".$data['REALM'])){
-                $this->create_key($server, $this->prefix.$this->object->cn."@".$data['REALM']);
+            foreach($data['PRINCIPALS'] as $p_name){
+              if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+                $pre = preg_replace("/\/.*$/","/",$p_name);
+                $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
+                $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
               }
             }
           }
-        }else{
-          $this->init();
         }
+        $this->init();
         $this->confirm_box = NULL;
       }else{
 
         /* Updated needed on */
         $found = array();
         foreach($this->server_list as $server => $data){
-          if($data['PRINCIPAL']){
-            $found[] = "<b>".$this->namingAttr."@".$data['REALM']."</b> "._("updated to")." <b>".$this->prefix.$this->object->cn."@".$data['REALM']."</b>";
+          foreach($data['PRINCIPALS'] as $p_name){
+            if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+              $pre = preg_replace("/\/.*$/","/",$p_name);
+              $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
+                _("updated to").
+                " <b>".$pre.$this->object->cn."@".$data['REALM']."</b>";
+            }
           }
         }
         if(count($found)){
@@ -176,7 +183,6 @@ class krb_host_keys extends plugin
         }
       }
     }
-
 
     $smarty = get_smarty(); 
     $smarty->assign("server_list",$this->server_list);
@@ -198,6 +204,7 @@ class krb_host_keys extends plugin
 
   public function recreate_key($id,$name)
   {
+    echo "Recreate: ".$id." --> ".$name."<br>";
     if($this->delete_key($id,$name)){
       $this->create_key($id,$name);
     }
@@ -206,6 +213,7 @@ class krb_host_keys extends plugin
 
   public function delete_key($id,$name)
   {
+    echo "Removing: ".$id." --> ".$name."<br>";
     $this->o_queue->krb5_del_principal($id,  $name);
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
@@ -222,7 +230,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^create_/",$name)){
         $id = preg_replace("/^create_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        $this->create_key($id,$this->namingAttr."@".$realm);
+        $this->create_key($id,$this->prefix.$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
@@ -231,7 +239,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^recreate_/",$name)){
         $id = preg_replace("/^recreate_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        $this->recreate_key($id,$this->namingAttr."@".$realm);
+        $this->recreate_key($id,$this->prefix.$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
@@ -240,7 +248,7 @@ class krb_host_keys extends plugin
       if(preg_match("/^remove_/",$name)){
         $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
-        $this->delete_key($id,$this->namingAttr."@".$realm);
+        $this->delete_key($id,$this->prefix.$this->namingAttr."@".$realm);
         $this->init();
         break;
       }
