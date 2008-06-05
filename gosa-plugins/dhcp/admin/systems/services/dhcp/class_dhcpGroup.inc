@@ -35,7 +35,7 @@ class dhcpGroup extends dhcpPlugin
     $smarty->assign("cn", $this->cn);
 
     /* Show main page */
-    $display= $smarty->fetch (get_template_path('dhcp_group.tpl', TRUE)).$this->network->execute();
+    $display= $smarty->fetch (get_template_path('dhcp_group.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 
     /* Merge arrays for advanced view */
     $this->fix_options();

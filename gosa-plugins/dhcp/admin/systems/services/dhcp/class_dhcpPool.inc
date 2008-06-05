@@ -50,7 +50,7 @@ class dhcpPool extends dhcpPlugin
     $smarty->assign("range_stop", $this->range_stop);
 
     /* Show main page */
-    $display= $smarty->fetch(get_template_path('dhcp_pool.tpl', TRUE)).$this->network->execute();
+    $display= $smarty->fetch(get_template_path('dhcp_pool.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 
     /* Merge arrays for advanced view */
     $this->fix_options();
