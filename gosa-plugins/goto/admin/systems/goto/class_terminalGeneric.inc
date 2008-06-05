@@ -337,6 +337,11 @@ class termgeneric extends plugin
           msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
         }
 
+        /* Remove kerberos key dependencies too */
+        if(is_object($this->kerberos_key_service)){
+          $this->kerberos_key_service->remove_from_parent();
+        }
+
         /* Optionally execute a command after we're done */
         $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
