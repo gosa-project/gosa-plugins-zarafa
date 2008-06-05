@@ -63,6 +63,9 @@ class krb_host_keys extends plugin
     plugin::plugin($config, NULL);
     $this->object = $object;
     $this->prefix = $prefix;
+
+    /* Instantiate si class, to be able to communicate with the support daemon.
+     */
     $this->o_queue = new gosaSupportDaemon();
 
     /*  Create principal name, to detect whether there is a valid host key or not
@@ -76,6 +79,10 @@ class krb_host_keys extends plugin
   }
 
 
+  /*! \brief  Load/reload all key settings for the current host ($this->object).
+              This reloads the list of all kerberos realms and which keys 
+               are set for the current host.
+   */
   private function init()
   {
     /* Check if the SI based kerberos method is available 
@@ -83,6 +90,8 @@ class krb_host_keys extends plugin
     $this->kerberos_support = FALSE;
     if(class_available("passwordMethodMIT")){
 
+      /* Update the naming attribute.
+       */
       $this->namingAttr = $this->object->cn;
 
       /* Create password handle, it has already a working principal parsing 
@@ -101,6 +110,8 @@ class krb_host_keys extends plugin
         if(!isset($attrs['macAddress'][0])) continue;
         if(!isset($attrs['description'][0])) $attrs['description'][0] ="";
 
+        /* Get all required informations for each realm 
+         */
         $mac        = $attrs['macAddress'][0];
         $realm      = $attrs['goKrbRealm'][0];
         $cn         = $attrs['cn'][0];
@@ -108,7 +119,10 @@ class krb_host_keys extends plugin
     
         $princ = "";
         $present = FALSE;
-        
+       
+        /* Check if the current key is available ($this->prefix.$this->namingAttr) and if 
+            there are other service/host keys set for this host (e.g. ldap/... http/... host/... )
+         */ 
         foreach($principals as $name){
           if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/i",$name)){
             $princ .= "<span style='cursor: pointer;' title='".$name."'>".preg_replace("/\/.*$/","",$name)."</div>&nbsp;";
@@ -117,7 +131,9 @@ class krb_host_keys extends plugin
             $present = TRUE;
           }
         }
-    
+   
+        /* Create a list of all realms and their attributes.
+         */ 
         $this->server_list[$mac]['CN']          = $cn;
         $this->server_list[$mac]['MAC']         = $mac;
         $this->server_list[$mac]['REALM']       = $realm;
@@ -139,6 +155,11 @@ class krb_host_keys extends plugin
   }
 
 
+  /*! \brief  Create the HTML output used in the host generic dialogs 
+               or in server-services.
+              It also checks if the host cn has changed and asks the user 
+               if he want to update the keys to the current host name.
+  */
   public function execute()
   {
     /* Skip if there is no kerberos support available 
@@ -146,8 +167,7 @@ class krb_host_keys extends plugin
     if(!$this->kerberos_support) return("");
   
     /* Check if naming context has changed,
-        in this case ask user if he wants to remove the old key
-        if it exists.
+        in this case ask user if he wants to update the keys. 
      */
     if($this->prefix.$this->object->cn != $this->prefix.$this->namingAttr){
 
@@ -155,6 +175,9 @@ class krb_host_keys extends plugin
        */
       if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
         if($this->confirm_box->is_confirmed()){
+
+          /* Walk through each server and check which keys have to be updated.
+           */
           foreach($this->server_list as $server => $data){
             foreach($data['PRINCIPALS'] as $p_name){
               if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
@@ -169,10 +192,14 @@ class krb_host_keys extends plugin
         $this->confirm_box = NULL;
       }else{
 
-        /* Updated needed on */
+        /* The host name has changed, check if there are kerberos key which have to be updated 
+         */
         $found = array();
         foreach($this->server_list as $server => $data){
           foreach($data['PRINCIPALS'] as $p_name){
+
+            /* Collect all principals for the current host. 
+             */
             if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
               $pre = preg_replace("/\/.*$/","/",$p_name);
               $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
@@ -181,6 +208,9 @@ class krb_host_keys extends plugin
             }
           }
         }
+
+        /* If there is at leat one key that have to updated, then display a confirm dialog. 
+         */
         if(count($found)){
           $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
         }else{
@@ -196,6 +226,11 @@ class krb_host_keys extends plugin
   }
 
 
+  /*! \brief  This function creates a new host/service key for the given server and principal name 
+      @param  String  The servers mac address. (Must be available in $this->server_list)
+      @param  $name   The new principal name. (e.g. ldap/some.host@REALM.FASEL)
+      @retrun Boolean TRUE on success else FALSE.
+   */
   public function create_key($id,$name)
   {
     $this->o_queue->krb5_add_principal($id,$name,array());
@@ -207,18 +242,30 @@ class krb_host_keys extends plugin
   }  
 
 
+  /*! \brief  This function recreates a host/service key for the given server and principal name.
+              It remove the old key first and then tries to create a new one.
+      @param  String  The servers mac address. (Must be available in $this->server_list)
+      @param  $name   The new principal name. (e.g. ldap/some.host@REALM.FASEL)
+      @retrun Boolean TRUE on success else FALSE.
+   */
   public function recreate_key($id,$name)
   {
-    echo "Recreate: ".$id." --> ".$name."<br>";
     if($this->delete_key($id,$name)){
-      $this->create_key($id,$name);
+      if($this->create_key($id,$name)){
+        return(TRUE);
+      }
     }
+    return(FALSE);
   }  
 
 
+  /*! \brief  This function removes a host/service key for the given server and principal name.
+      @param  String  The servers mac address. (Must be available in $this->server_list)
+      @param  $name   The new principal name. (e.g. ldap/some.host@REALM.FASEL)
+      @retrun Boolean TRUE on success else FALSE.
+   */
   public function delete_key($id,$name)
   {
-    echo "Removing: ".$id." --> ".$name."<br>";
     $this->o_queue->krb5_del_principal($id,  $name);
     if($this->o_queue->is_error()){
       msg_dialog::display(_("Service infrastructure"),msgPool::siError($this->o_queue->get_error()),ERROR_DIALOG);
@@ -228,10 +275,15 @@ class krb_host_keys extends plugin
   }  
 
 
+  /*! \brief  This function acts on the HTML posts and ensures that our 
+                delete/create/recreate are executed. 
+    */
   public function save_object()
   {
 
     foreach($_POST as $name => $value){
+
+      /* Create a key */
       if(preg_match("/^create_/",$name)){
         $id = preg_replace("/^create_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
@@ -240,7 +292,7 @@ class krb_host_keys extends plugin
         break;
       }
 
-      /* Recreate host key */
+      /* Recreate host/service  key */
       if(preg_match("/^recreate_/",$name)){
         $id = preg_replace("/^recreate_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
@@ -249,7 +301,7 @@ class krb_host_keys extends plugin
         break;
       }
 
-      /* Remove a host principal */
+      /* Remove a host/service principal */
       if(preg_match("/^remove_/",$name)){
         $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
@@ -261,21 +313,13 @@ class krb_host_keys extends plugin
   } 
 
 
+  /*! \brief  Ensures that a service plugin suitable HTML output is generated.
+      @param  Boolean TRUE enables servie plugin output, FALSE diables it. 
+   */
   public function ServiceKey($bool = TRUE)
   {
     $this->is_service_key = $bool;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
