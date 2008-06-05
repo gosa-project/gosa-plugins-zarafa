@@ -78,6 +78,19 @@ class krb_host_keys extends plugin
     }
   }
 
+ 
+  /*! \brief  Reloads the list of available principals. 
+   */ 
+  public function reload_principals()
+  {
+    if($this->kerberos_support){
+      foreach($this->server_list as $mac => $data){
+        $principals = $this->pwd_handle->load_principals_for_server($mac);
+        $this->server_list[$mac]['PRINCIPALS'] = $principals;
+      }
+    }
+  }
+
 
   /*! \brief  Load/reload all key settings for the current host ($this->object).
               This reloads the list of all kerberos realms and which keys 
@@ -195,6 +208,7 @@ class krb_host_keys extends plugin
         /* The host name has changed, check if there are kerberos key which have to be updated 
          */
         $found = array();
+        $this->reload_principals();
         foreach($this->server_list as $server => $data){
           foreach($data['PRINCIPALS'] as $p_name){
 
@@ -306,6 +320,12 @@ class krb_host_keys extends plugin
         $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
         $realm = $this->server_list[$id]['REALM'];
         $this->delete_key($id,$this->prefix.$this->namingAttr."@".$realm);
+        $this->init();
+        break;
+      }
+
+      /* Reload krb key list */
+      if(preg_match("/^reload_krb_keys/",$name)){
         $this->init();
         break;
       }
