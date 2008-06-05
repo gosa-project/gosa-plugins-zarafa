@@ -21,6 +21,15 @@
  */
 
 
+/*! \brief   Allows the creation of service and host principals.
+              e.g.  host/server.intranet.company.de@COMPANY.DE
+              e.g.  ldap/server.intranet.company.de@COMPANY.DE
+             The is specified by the third parameter of the constructor, the   
+              hostname is specified by the parent object. ($parent->cn).
+    
+             The keys can be created and removed.
+             A running "GOsa support Daemon" with a krb5 module is required.
+*/
 class krb_host_keys extends plugin 
 {
 
@@ -38,9 +47,19 @@ class krb_host_keys extends plugin
   private $is_service_key   = FALSE;
 
   private $prefix           = "host/";
+  private $confirm_box      = NULL;
 
-  public function __construct($config,$object,$prefix = "host/")
+  /*! \brief  Initalizes the kerberos host/service key generation. 
+                (See class comment for more information)
+      @param  Object  The GOsa configuration class. 
+      @param  Object  The parent class (e.g. servgeneric) // $parent->cn MUST be set. 
+      @param  String  The service/host prefix, for hosts this is "host/" services have their own (e.g. ldap/).
+   */
+  public function __construct($config,&$object,$prefix = "host/")
   {
+  
+    /* Initialize this plugin 
+     */
     plugin::plugin($config, NULL);
     $this->object = $object;
     $this->prefix = $prefix;
@@ -48,8 +67,12 @@ class krb_host_keys extends plugin
 
     /*  Create principal name, to detect whether there is a valid host key or not
      */
-    $this->init_namingAttr = $this->namingAttr = $this->prefix.$this->object->cn;
-    $this->init();
+    if(!isset($this->object->cn)){
+      trigger_error("Cannot initialize kerberos key service, invalid parent object given (Paramter 2). Should be of class 'plugin' with accessible class member variable 'cn'.");
+    }else{
+      $this->init_namingAttr = $this->namingAttr = $this->prefix.$this->object->cn;
+      $this->init();
+    }
   }
 
 
@@ -114,9 +137,47 @@ class krb_host_keys extends plugin
   {
     /* Skip if there is no kerberos support available 
      */
-    echo $this->namingAttr."<br>";
-
     if(!$this->kerberos_support) return("");
+  
+    /* Check if naming context has changed,
+        in this case ask user if he wants to remove the old key
+        if it exists.
+     */
+    if($this->prefix.$this->object->cn != $this->namingAttr){
+
+      /* The confirm dialog was shown. Check if OK was pressed. 
+       */
+      if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
+        if($this->confirm_box->is_confirmed()){
+          foreach($this->server_list as $server => $data){
+            if($data['PRINCIPAL']){
+              if($this->delete_key($server, $this->namingAttr."@".$data['REALM'])){
+                $this->create_key($server, $this->prefix.$this->object->cn."@".$data['REALM']);
+              }
+            }
+          }
+        }else{
+          $this->init();
+        }
+        $this->confirm_box = NULL;
+      }else{
+
+        /* Updated needed on */
+        $found = array();
+        foreach($this->server_list as $server => $data){
+          if($data['PRINCIPAL']){
+            $found[] = "<b>".$this->namingAttr."@".$data['REALM']."</b> "._("updated to")." <b>".$this->prefix.$this->object->cn."@".$data['REALM']."</b>";
+          }
+        }
+        if(count($found)){
+          $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
+        }else{
+          $this->init();
+        }
+      }
+    }
+
+
     $smarty = get_smarty(); 
     $smarty->assign("server_list",$this->server_list);
     $smarty->assign("is_service_key" , $this->is_service_key);
