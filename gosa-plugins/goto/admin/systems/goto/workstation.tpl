@@ -48,12 +48,6 @@
 
 	{$host_key}
 
-{if $member_of_ogroup}
-   <br>
-   <br>
-   <br>
-   <input type='submit' name='inheritAll' value='{t}Inherit all{/t}'>
-{/if}
   </td>
   <td  style="vertical-align:top;border-left:1px solid #A0A0A0;">
    <table summary="">
@@ -134,6 +128,8 @@
 
 {if $fai_activated}
 <h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
+<table width="100%">
+<tr><td style="border-right:1px solid #AAA; width:50%">
 <table summary="">
  <tr>
   <td>
@@ -158,6 +154,13 @@
  </tr>
 </table>
 {/if}
+</td>
+<td>
+{if $member_of_ogroup}
+   <input type='submit' name='inheritAll' value='{t}Inherit all values from group{/t}'>
+{/if}
+</td>
+</tr></table>
 <input type="hidden" name="workgeneric_posted" value="1">
  {if $cn eq 'wdefault'}
 <!-- Place cursor -->
