@@ -332,6 +332,24 @@ class krb_host_keys extends plugin
     }  
   } 
 
+  
+  /*! \brief  Removes all key settings for the given host ($this->object->cn)
+   */
+  public function remove_from_parent()
+  {
+    if(!$this->kerberos_support)  return;
+    foreach($this->server_list as $server => $data){
+      foreach($data['PRINCIPALS'] as $p_name){
+
+        /* Detect all principals for the current host.
+         */
+        if(preg_match("/".normalizePreg($this->prefix.$this->namingAttr)."\@/",$p_name)){
+          $this->delete_key($server, $p_name);
+        }
+      }
+    }
+  }
+
 
   /*! \brief  Ensures that a service plugin suitable HTML output is generated.
       @param  Boolean TRUE enables servie plugin output, FALSE diables it. 
