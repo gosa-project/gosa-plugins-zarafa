@@ -150,8 +150,8 @@ sub krb5_create_principal {
         $princ->principal($principal);
         $kadm5->create_principal($princ, join '', map { chr rand(255) + 1 } 1..256) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
 
-	# Directly randomize key
-	$kadm5->randkey_principal($princ);
+        # Directly randomize key
+        $kadm5->randkey_principal($principal);
       }
     }
 
