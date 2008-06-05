@@ -410,7 +410,7 @@ sub TASKBEGIN {
 
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
 			my $func_dic = {table=>$main::job_queue_tn,
-					primkey=>[],
+					primkey=>['macaddress', 'headertag'],
 					timestamp=>&get_time,
 					status=>'processing',
 					result=>"$header $content",

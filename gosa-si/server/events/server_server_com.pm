@@ -12,6 +12,7 @@ use strict;
 use warnings;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
+use Time::HiRes qw( usleep);
 
 
 BEGIN {}
@@ -148,6 +149,52 @@ sub new_foreign_client {
     my $source = @{$msg_hash->{'source'}}[0];
     my $hostname = @{$msg_hash->{'client'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
+
+	# if new client is known in known_clients_db
+	my $check_sql = "SELECT * FROM $main::known_clients_tn WHERE (macaddress LIKE '$macaddress')"; 
+	my $check_res = $main::known_clients_db->select_dbentry($check_sql);
+
+	if( (keys(%$check_res) == 1) ) {
+			my $host_key = $check_res->{1}->{'hostkey'};
+
+			# check if new client is still alive
+			my $client_hash = &create_xml_hash("ping", $main::server_address, $hostname);
+			&add_content2xml_hash($client_hash, 'session_id', $session_id);
+			my $client_msg = &create_xml_string($client_hash);
+			my $error = &main::send_msg_to_target($client_msg, $hostname, $host_key, 'ping', $session_id);
+			my $message_id;
+			my $i = 0;
+			while (1) {
+					$i++;
+					my $sql = "SELECT * FROM $main::incoming_tn WHERE headertag='answer_$session_id'";
+					my $res = $main::incoming_db->exec_statement($sql);
+					if (ref @$res[0] eq "ARRAY") {
+							$message_id = @{@$res[0]}[0];
+							last;
+					}
+
+					# do not run into a endless loop
+					if ($i > 100) { last; }
+					usleep(100000);
+			}
+
+			# client is alive
+			# -> new_foreign_client will be ignored
+			if (defined $message_id) {
+				&main::daemon_log("$session_id ERROR: At new_foreign_clients: host '$hostname' is reported as a new foreign client, ".
+								"but the host is still registered at this server. So, the new_foreign_client-msg will be ignored: $msg", 1);
+			}
+
+	}
+
+	
+	# new client is not found in known_clients_db or
+	# new client is dead -> new_client-msg from foreign server is valid
+	# -> client will be deleted from known_clients_db 
+	# -> inserted to foreign_clients_db
+	
+	my $del_sql = "SELECT * FROM $main::known_clients_tn WHERE (hostname='$hostname')";
+	my $del_res = $main::known_clients_db->exec_statement($del_sql);
 
     my $func_dic = { table => $main::foreign_clients_tn,
         primkey => ['hostname'],

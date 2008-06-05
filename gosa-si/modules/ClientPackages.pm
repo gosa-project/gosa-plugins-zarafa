@@ -927,7 +927,7 @@ sub hardware_config {
 		# TODO
 		# resolve plain name for host
 		my $func_dic = {table=>$main::job_queue_tn,
-				primkey=>[],
+				primkey=>['macaddress', 'headertag'],
 				timestamp=>&get_time,
 				status=>'processing',
 				result=>'none',

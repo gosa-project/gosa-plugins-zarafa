@@ -2963,6 +2963,14 @@ daemon_log("0 INFO: found foreign server in config file and DNS: $all_foreign_se
 # add all found foreign servers to known_server
 my $act_timestamp = &get_time();
 foreach my $foreign_server (@foreign_server_list) {
+
+	#######################################
+	# TODO for jan
+	# do not add myself to known_server_db
+	# work around!!!
+	if ($foreign_server eq '172.16.2.89:20081') { next; }
+	######################################
+
     my $res = $known_server_db->add_dbentry( {table=>$known_server_tn, 
             primkey=>['hostname'],
             hostname=>$foreign_server,

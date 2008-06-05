@@ -125,6 +125,7 @@ sub got_ping {
 sub detected_hardware {
 	my ($msg, $msg_hash, $session_id) = @_ ;
 	my $address = $msg_hash->{source}[0];
+	my $header = $msg_hash->{header}[0];
 	my $gotoHardwareChecksum= $msg_hash->{detected_hardware}[0]->{gotoHardwareChecksum};
 
 	my $sql_statement= "SELECT * FROM known_clients WHERE hostname='$address'";
@@ -238,8 +239,12 @@ sub detected_hardware {
 		} else {
 			&main::daemon_log("INFO: Added Hardware configuration to LDAP", 5);
 		}
-
 	}
+
+	# if there is a job in job queue for this host and this macaddress, delete it, cause its no longer used
+	my $del_sql = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND headertag='$header')";
+	my $del_res = $main::job_db->exec_statement($del_sql);
+
 	return ;
 }
 
