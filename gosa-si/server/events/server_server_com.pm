@@ -149,7 +149,6 @@ sub new_foreign_client {
     my $source = @{$msg_hash->{'source'}}[0];
     my $hostname = @{$msg_hash->{'client'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
-
 	# if new client is known in known_clients_db
 	my $check_sql = "SELECT * FROM $main::known_clients_tn WHERE (macaddress LIKE '$macaddress')"; 
 	my $check_res = $main::known_clients_db->select_dbentry($check_sql);
@@ -174,7 +173,7 @@ sub new_foreign_client {
 					}
 
 					# do not run into a endless loop
-					if ($i > 100) { last; }
+					if ($i > 50) { last; }
 					usleep(100000);
 			}
 
@@ -184,7 +183,6 @@ sub new_foreign_client {
 				&main::daemon_log("$session_id ERROR: At new_foreign_clients: host '$hostname' is reported as a new foreign client, ".
 								"but the host is still registered at this server. So, the new_foreign_client-msg will be ignored: $msg", 1);
 			}
-
 	}
 
 	
@@ -193,9 +191,8 @@ sub new_foreign_client {
 	# -> client will be deleted from known_clients_db 
 	# -> inserted to foreign_clients_db
 	
-	my $del_sql = "SELECT * FROM $main::known_clients_tn WHERE (hostname='$hostname')";
+	my $del_sql = "DELETE FROM $main::known_clients_tn WHERE (hostname='$hostname')";
 	my $del_res = $main::known_clients_db->exec_statement($del_sql);
-
     my $func_dic = { table => $main::foreign_clients_tn,
         primkey => ['hostname'],
         hostname =>   $hostname,
