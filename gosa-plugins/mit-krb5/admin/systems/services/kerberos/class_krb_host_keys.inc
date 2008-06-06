@@ -69,7 +69,8 @@ class krb_host_keys extends plugin
     /*  Create principal name, to detect whether there is a valid host key or not
      */
     if(!isset($this->object->cn)){
-      trigger_error("Cannot initialize kerberos key service, invalid parent object given (Paramter 2). Should be of class 'plugin' with accessible class member variable 'cn'.");
+      trigger_error("Cannot initialize kerberos key service, invalid parent object given (Paramter 2).".
+          " Should be of class 'plugin' with accessible class member variable 'cn'.");
     }else{
       $this->init_namingAttr = $this->namingAttr = $this->object->cn;
       $this->init();
@@ -159,61 +160,61 @@ class krb_host_keys extends plugin
     /* Skip if there is no kerberos support available 
      */
     if(!$this->kerberos_support) return("");
-  
-#   /* Check if naming context has changed,
-#       in this case ask user if he wants to update the keys. 
-#    */
-#   if($this->prefix.$this->object->cn != $this->prefix.$this->namingAttr){
-#
-#     /* The confirm dialog was shown. Check if OK was pressed. 
-#      */
-#     if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
-#       if($this->confirm_box->is_confirmed()){
-#
-#         /* Walk through each server and check which keys have to be updated.
-#          */
-#         foreach($this->server_list as $server => $data){
-#           foreach($data['PRINCIPALS'] as $p_name){
-#             if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
-#               $pre = preg_replace("/\/.*$/","/",$p_name);
-#               $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
-#               $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
-#             }
-#           }
-#         }
-#       }
-#       $this->init();
-#       $this->confirm_box = NULL;
-#     }else{
-#
-#       /* The host name has changed, check if there are kerberos key which have to be updated 
-#        */
-#       $found = array();
-#       $this->reload_principals();
-#       foreach($this->server_list as $server => $data){
-#         foreach($data['PRINCIPALS'] as $p_name){
-#
-#           /* Collect all principals for the current host. 
-#            */
-#           if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
-#             $pre = preg_replace("/\/.*$/","/",$p_name);
-#             $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
-#               _("updated to").
-#               " <b>".$pre.$this->object->cn."@".$data['REALM']."</b>";
-#           }
-#         }
-#       }
-#
-#       /* If there is at leat one key that have to updated, then display a confirm dialog. 
-#        */
-#       if(count($found)){
-#         $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
-#       }else{
-#         $this->init();
-#       }
-#     }
-#   }
-#
+
+    /* Check if naming context has changed,
+       in this case ask user if he wants to update the keys. 
+     */
+    if($this->object->cn != $this->namingAttr){
+
+      /* The confirm dialog was shown. Check if OK was pressed. 
+       */
+      if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
+        if($this->confirm_box->is_confirmed()){
+
+          /* Walk through each server and check which keys have to be updated.
+           */
+          foreach($this->server_list as $server => $data){
+            foreach($data['PRINCIPALS'] as $p_name){
+              if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+                $pre = preg_replace("/\/.*$/","/",$p_name);
+                $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
+                $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
+              }
+            }
+          }
+        }
+        $this->init();
+        $this->confirm_box = NULL;
+      }else{
+
+        /* The host name has changed, check if there are kerberos key which have to be updated 
+         */
+        $found = array();
+        $this->reload_principals();
+        foreach($this->server_list as $server => $data){
+          foreach($data['PRINCIPALS'] as $p_name){
+
+            /* Collect all principals for the current host. 
+             */
+            if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+              $pre = preg_replace("/\/.*$/","/",$p_name);
+              $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
+                _("updated to").
+                " <b>".$pre.$this->object->cn."@".$data['REALM']."</b>";
+            }
+          }
+        }
+
+        /* If there is at leat one key that have to updated, then display a confirm dialog. 
+         */
+        if(count($found)){
+          $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
+        }else{
+          $this->init();
+        }
+      }
+    }
+
 
 
     $smarty = get_smarty(); 
