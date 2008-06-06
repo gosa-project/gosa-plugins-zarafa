@@ -240,25 +240,41 @@ class gotomasses extends plugin
           $ret = $this->o_queue->ids_exist($ids);
           $ret = $this->o_queue->get_entries_by_id($ret);
           $tmp = "";
+
+          $deleteable_jobs = array();      
+          $not_deleteable_jobs = array();      
           foreach($ret as $task){
+
+            /* Create a printable job name/description */
+            if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
+              $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
+              $evt = $this->events['BY_CLASS'][$evt_name];
+              $j_name = $task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
+            }else{
+              $j_name = $task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
+            }
 
             /* Only remove WAITING or ERROR entries */
             if(in_array($task['STATUS'],array("waiting","error","processed")) || 
-               ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
+                ($task['STATUS'] == "processing" && !preg_match("/install/",$task['HEADERTAG'])) ){
               $this->ids_to_remove[] = $task['ID'];
-              if(isset($this->events['QUEUED'][$task['HEADERTAG']])){
-                $evt_name = $this->events['QUEUED'][$task['HEADERTAG']];
-                $evt = $this->events['BY_CLASS'][$evt_name];
-                $tmp.= "\n".$task['ID']." - ".$evt['s_Menu_Name']."&nbsp;".$task['MACADDRESS'];
-              }else{
-                $tmp.= "\n".$task['ID']." - ".$task['HEADERTAG']."&nbsp;".$task['MACADDRESS'];
-              }
+              $deleteable_jobs[] = $j_name;
+            }else{
+              $not_deleteable_jobs[] = $j_name;
             }
           }
-          $smarty->assign("multiple", TRUE); 
-          $smarty->assign("info",msgPool::deleteInfo("<pre>".$tmp."</pre>"));
-          $this->current = $s_entry;
-          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+          if(count($not_deleteable_jobs)){
+            msg_dialog::display(_("Remove"),
+                sprintf(_("The following jobs couldn't be deleted, they have to be aborted: %s"),
+                  "<br>".msgPool::buildList($not_deleteable_jobs)),INFO_DIALOG);
+          }
+
+          if(count($this->ids_to_remove)){
+            $smarty->assign("multiple", TRUE); 
+            $smarty->assign("info",msgPool::deleteInfo($deleteable_jobs));
+            $this->current = $s_entry;
+            return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+          }
         }
       }
     }
