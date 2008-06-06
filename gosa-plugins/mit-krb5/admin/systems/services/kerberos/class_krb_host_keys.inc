@@ -39,30 +39,28 @@ class krb_host_keys extends plugin
   private $goKrbRealm = "disabled";
   private $kerberos_support= FALSE;
 
-  private $pwd_handle = NULL;
-  private $server_list;
+  private $pwd_handle   = NULL;
+  private $server_list  = array(); 
+  private $last_list    = array(); // The last array created for the smarty template
 
   private $init_namingAttr  = "";
   private $namingAttr       = "";
   private $is_service_key   = FALSE;
 
-  private $prefix           = "host/";
   private $confirm_box      = NULL;
 
   /*! \brief  Initalizes the kerberos host/service key generation. 
                 (See class comment for more information)
       @param  Object  The GOsa configuration class. 
       @param  Object  The parent class (e.g. servgeneric) // $parent->cn MUST be set. 
-      @param  String  The service/host prefix, for hosts this is "host/" services have their own (e.g. ldap/).
    */
-  public function __construct($config,&$object,$prefix = "host/")
+  public function __construct($config,&$object)
   {
   
     /* Initialize this plugin 
      */
     plugin::plugin($config, NULL);
     $this->object = $object;
-    $this->prefix = $prefix;
 
     /* Instantiate si class, to be able to communicate with the support daemon.
      */
@@ -130,28 +128,11 @@ class krb_host_keys extends plugin
         $cn         = $attrs['cn'][0];
         $principals = $this->pwd_handle->load_principals_for_server($mac);
     
-        $princ = "";
-        $present = FALSE;
-       
-        /* Check if the current key is available ($this->prefix.$this->namingAttr) and if 
-            there are other service/host keys set for this host (e.g. ldap/... http/... host/... )
-         */ 
-        foreach($principals as $name){
-          if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/i",$name)){
-            $princ .= "<span style='cursor: pointer;' title='".$name."'>".preg_replace("/\/.*$/","",$name)."</div>&nbsp;";
-          }
-          if(preg_match("/^".normalizePreg($this->prefix.$this->namingAttr)."\@/i",$name)){
-            $present = TRUE;
-          }
-        }
-   
         /* Create a list of all realms and their attributes.
          */ 
         $this->server_list[$mac]['CN']          = $cn;
         $this->server_list[$mac]['MAC']         = $mac;
         $this->server_list[$mac]['REALM']       = $realm;
-        $this->server_list[$mac]['USED']        = $princ;
-        $this->server_list[$mac]['PRESENT']     = $present;
         $this->server_list[$mac]['PRINCIPALS']  = $principals;
 
         /* Set first realm as selected.
@@ -173,70 +154,135 @@ class krb_host_keys extends plugin
               It also checks if the host cn has changed and asks the user 
                if he want to update the keys to the current host name.
   */
-  public function execute()
+  public function execute_by_prefix($prefix, $service_plugin =FALSE)
   {
     /* Skip if there is no kerberos support available 
      */
     if(!$this->kerberos_support) return("");
   
-    /* Check if naming context has changed,
-        in this case ask user if he wants to update the keys. 
-     */
-    if($this->prefix.$this->object->cn != $this->prefix.$this->namingAttr){
+#   /* Check if naming context has changed,
+#       in this case ask user if he wants to update the keys. 
+#    */
+#   if($this->prefix.$this->object->cn != $this->prefix.$this->namingAttr){
+#
+#     /* The confirm dialog was shown. Check if OK was pressed. 
+#      */
+#     if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
+#       if($this->confirm_box->is_confirmed()){
+#
+#         /* Walk through each server and check which keys have to be updated.
+#          */
+#         foreach($this->server_list as $server => $data){
+#           foreach($data['PRINCIPALS'] as $p_name){
+#             if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+#               $pre = preg_replace("/\/.*$/","/",$p_name);
+#               $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
+#               $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
+#             }
+#           }
+#         }
+#       }
+#       $this->init();
+#       $this->confirm_box = NULL;
+#     }else{
+#
+#       /* The host name has changed, check if there are kerberos key which have to be updated 
+#        */
+#       $found = array();
+#       $this->reload_principals();
+#       foreach($this->server_list as $server => $data){
+#         foreach($data['PRINCIPALS'] as $p_name){
+#
+#           /* Collect all principals for the current host. 
+#            */
+#           if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
+#             $pre = preg_replace("/\/.*$/","/",$p_name);
+#             $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
+#               _("updated to").
+#               " <b>".$pre.$this->object->cn."@".$data['REALM']."</b>";
+#           }
+#         }
+#       }
+#
+#       /* If there is at leat one key that have to updated, then display a confirm dialog. 
+#        */
+#       if(count($found)){
+#         $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
+#       }else{
+#         $this->init();
+#       }
+#     }
+#   }
+#
 
-      /* The confirm dialog was shown. Check if OK was pressed. 
+
+    $smarty = get_smarty(); 
+    $smarty->assign("keys"        ,$this->build_html($prefix,$service_plugin));
+    $smarty->assign("server_list" ,$this->server_list);
+    $smarty->assign("service_plugin" ,$service_plugin);
+    $smarty->assign("is_service_key" , $this->is_service_key);
+    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
+  }
+
+
+  /*! \brief Build up an array which is used to create the
+              HTML content for this plugin in the smarty template.
+   */
+  function build_html($prefix,$service_plugin)
+  {
+    $ret = array();
+  
+    $princ_id = 0; // Used in posts
+    $ret = array();
+    foreach($this->server_list as $mac => $server){
+      $realm = $server['REALM'];
+
+      /* Check if the given prefix is configured for every realm
+         If it is configured display the recreate and remove button 
+         if not display the create button. 
        */
-      if(is_object($this->confirm_box) && $this->confirm_box instanceof msg_dialog){
-        if($this->confirm_box->is_confirmed()){
+      $found        = FALSE;
 
-          /* Walk through each server and check which keys have to be updated.
-           */
-          foreach($this->server_list as $server => $data){
-            foreach($data['PRINCIPALS'] as $p_name){
-              if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
-                $pre = preg_replace("/\/.*$/","/",$p_name);
-                $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
-                $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
-              }
-            }
-          }
+      // The master principal is specified by the $prefix parameter of this function.
+      $master_princ = $prefix.$this->namingAttr."@".$realm;
+
+      foreach($server['PRINCIPALS'] as $id => $princ){
+        if(preg_match("/^".normalizePreg($master_princ)."$/i",$princ)){
+          $found = TRUE;
+          break;
         }
-        $this->init();
-        $this->confirm_box = NULL;
+      }      
+
+      /* Display buttons to "create" or to "remove/recreate" wheteher the prefix esists or not 
+       */
+      $princ_id ++;
+      if($found){
+        $ret[$princ_id]['USED'] = TRUE;
       }else{
+        $ret[$princ_id]['USED'] = FALSE;
+      }
+      $ret[$princ_id]['REALM']  = $realm;
+      $ret[$princ_id]['MAC']    = $mac;
+      $ret[$princ_id]['NAME']   = $master_princ;
 
-        /* The host name has changed, check if there are kerberos key which have to be updated 
-         */
-        $found = array();
-        $this->reload_principals();
-        foreach($this->server_list as $server => $data){
-          foreach($data['PRINCIPALS'] as $p_name){
-
-            /* Collect all principals for the current host. 
-             */
-            if(preg_match("/\/".normalizePreg($this->namingAttr)."\@/",$p_name)){
-              $pre = preg_replace("/\/.*$/","/",$p_name);
-              $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
-                _("updated to").
-                " <b>".$pre.$this->object->cn."@".$data['REALM']."</b>";
-            }
-          }
-        }
-
-        /* If there is at leat one key that have to updated, then display a confirm dialog. 
-         */
-        if(count($found)){
-          $this->confirm_box = new msg_dialog(_("Kerberos"),sprintf(_("The principal name of this system has changed. Do you want to update your principals? The affected principals are listed below: %s"),"<br>".msgPool::buildList($found)),OK_CANCEL_DIALOG); 
-        }else{
-          $this->init();
+      /* Get all additionally configured service host keys, this are all keys that 
+         do not match the master_princ.
+       */
+      if(!$service_plugin){
+        foreach($server['PRINCIPALS'] as $id => $princ){
+          if(preg_match("/".normalizePreg("/".$this->namingAttr."@")."/i",$princ) &&
+              !preg_match("/^".normalizePreg($prefix)."/",$princ)){
+            $princ_id ++;
+            $ret[$princ_id]['USED']  = TRUE;
+            $ret[$princ_id]['REALM'] = $realm;
+            $ret[$princ_id]['MAC']   = $mac;
+            $ret[$princ_id]['NAME']  = $princ;
+          } 
         }
       }
     }
-
-    $smarty = get_smarty(); 
-    $smarty->assign("server_list",$this->server_list);
-    $smarty->assign("is_service_key" , $this->is_service_key);
-    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
+    $this->last_list[$prefix] = $ret;
+    return($ret);
   }
 
 
@@ -292,50 +338,45 @@ class krb_host_keys extends plugin
   /*! \brief  This function acts on the HTML posts and ensures that our 
                 delete/create/recreate are executed. 
     */
-  public function save_object()
+  public function save_object_by_prefix($prefix)
   {
+    if(!isset($this->last_list[$prefix])) return; // No posts for us 
 
     foreach($_POST as $name => $value){
-
-      /* Create a key */
       if(preg_match("/^create_/",$name)){
-        $id = preg_replace("/^create_([a-z0-9\:]*)_.*/i","\\1",$name);
-        $realm = $this->server_list[$id]['REALM'];
-        $this->create_key($id,$this->prefix.$this->namingAttr."@".$realm);
-        $this->init();
+        $id = preg_replace("/^create_([0-9]*)_.*$/","\\1",$name);
+        if(isset($this->last_list[$prefix][$id])){
+          $data = $this->last_list[$prefix][$id]; 
+          $this->create_key($data['MAC'],$data['NAME']);
+          $this->init();
+        }
         break;
       }
-
-      /* Recreate host/service  key */
       if(preg_match("/^recreate_/",$name)){
-        $id = preg_replace("/^recreate_([a-z0-9\:]*)_.*/i","\\1",$name);
-        $realm = $this->server_list[$id]['REALM'];
-        $this->recreate_key($id,$this->prefix.$this->namingAttr."@".$realm);
-        $this->init();
+        $id = preg_replace("/^recreate_([0-9]*)_.*$/","\\1",$name);
+        if(isset($this->last_list[$prefix][$id])){
+          $data = $this->last_list[$prefix][$id]; 
+          $this->recreate_key($data['MAC'],$data['NAME']);
+          $this->init();
+        }
         break;
       }
-
-      /* Remove a host/service principal */
       if(preg_match("/^remove_/",$name)){
-        $id = preg_replace("/^remove_([a-z0-9\:]*)_.*/i","\\1",$name);
-        $realm = $this->server_list[$id]['REALM'];
-        $this->delete_key($id,$this->prefix.$this->namingAttr."@".$realm);
-        $this->init();
+        $id = preg_replace("/^remove_([0-9]*)_.*$/","\\1",$name);
+        if(isset($this->last_list[$prefix][$id])){
+          $data = $this->last_list[$prefix][$id]; 
+          $this->delete_key($data['MAC'],$data['NAME']);
+          $this->init();
+        }
         break;
       }
-
-      /* Reload krb key list */
-      if(preg_match("/^reload_krb_keys/",$name)){
-        $this->init();
-        break;
-      }
-    }  
+    }    
   } 
 
   
   /*! \brief  Removes all key settings for the given host ($this->object->cn)
    */
-  public function remove_from_parent()
+  public function remove_from_parent_by_prefix($prefix)
   {
     if(!$this->kerberos_support)  return;
     foreach($this->server_list as $server => $data){
@@ -343,7 +384,7 @@ class krb_host_keys extends plugin
 
         /* Detect all principals for the current host.
          */
-        if(preg_match("/".normalizePreg($this->prefix.$this->namingAttr)."\@/",$p_name)){
+        if(preg_match("/".normalizePreg($prefix.$this->namingAttr)."\@/",$p_name)){
           $this->delete_key($server, $p_name);
         }
       }
