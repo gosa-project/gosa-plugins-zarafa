@@ -1,16 +1,7 @@
 {if !$service_plugin}
 <p class="seperator">&nbsp;</p>
 {/if}
-<h2><img class="center" alt="" src="images/lists/locked.png" align="middle">	{t}Kerberos keys{/t}</h2>
-
-{t}Reload key list{/t} &nbsp;<input type='image' name='reload_krb_keys' src='images/lists/reload.png' alt='{t}Reload{/t}' class='center'>
-
-
-<br>
-<br>
-<b>{t}Realms{/t}</b>: &nbsp;
-<br>
-
+<h2><img class="center" alt="" src="images/lists/locked.png" align="middle">	{t}Kerberos keys{/t} </h2>
 <table>
 {foreach from=$keys key=ID item=data}
 	<tr>
