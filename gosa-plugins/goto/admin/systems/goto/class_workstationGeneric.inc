@@ -432,7 +432,7 @@ class workgeneric extends plugin
 
     /* Hanle kerberos host key plugin */
     if(is_object($this->kerberos_key_service)){
-      $this->kerberos_key_service->save_object_by_prefix("host");
+      $this->kerberos_key_service->save_object_by_prefix("host/");
     }
   }
 
