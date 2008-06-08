@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:35+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,24 +25,21 @@ msgstr "Ceci fait quelque chose"
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:167
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:172
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:180
-#, fuzzy
 msgid "Configuration error"
-msgstr "Le fichier de configuration peut être écrit"
+msgstr "Erreur de configuration"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:172
-#, fuzzy
 msgid "Open Groupware database"
-msgstr "Compte Opengroupware"
+msgstr "Base de données Opengroupware"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:180
-#, fuzzy
 msgid "Open Groupware"
-msgstr "OpenGroupware"
+msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:338
 #: personal/connectivity/opengroupware/opengw.tpl:1
 msgid "Opengroupware"
-msgstr "OpenGroupware"
+msgstr ""
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:339
 msgid "Open groupware account settings"
@@ -76,10 +73,3 @@ msgstr "Verrouillé"
 msgid "Teams"
 msgstr "Equipes"
 
-#, fuzzy
-#~ msgid "%s database configuration is missing!"
-#~ msgstr "Configuration de la base de données des fax"
-
-#, fuzzy
-#~ msgid "Cannot connect to %s database!"
-#~ msgstr "Impossible de se connecter au serveur de base de données !"

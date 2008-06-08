@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:40+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Ceci fait quelque chose"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
 #: personal/connectivity/pureftpd/pureftpd.tpl:21
@@ -38,9 +38,8 @@ msgid "Download bandwidth"
 msgstr "Bande passante descendante"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
-#, fuzzy
 msgid "Quota file"
-msgstr "Taille du Quota"
+msgstr "Taille du nombre de fichiers"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
 #, fuzzy
@@ -50,7 +49,7 @@ msgstr "Taille du Quota"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:204
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:272
 msgid "Upload ratio"
-msgstr "Ratio de Téléchargerment"
+msgstr "Ratio de Téléchargerment (montée)"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:207
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:274
@@ -63,7 +62,7 @@ msgstr ""
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 msgid "Pure ftp account"
-msgstr "Créer un compte Pure ftp"
+msgstr "Compte Pure ftp"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:262
 msgid "Connectivity addon"
@@ -75,7 +74,7 @@ msgstr "Mon Compte"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:271
 msgid "Quota files"
-msgstr "Taille du Quota"
+msgstr "Taille du Quota pour les fichiers"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:273
 msgid "Quota MBytes"
@@ -112,7 +111,7 @@ msgstr "Quota"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:49
 msgid "Files"
-msgstr "Fichier"
+msgstr "Fichiers"
 
 #: personal/connectivity/pureftpd/pureftpd.tpl:57
 msgid "Size"
@@ -142,38 +141,3 @@ msgstr "Cliquez ici pour désactivez l'accès FTP"
 msgid "Temporary disable FTP access"
 msgstr "Désactiver temporairement l'accès FTP"
 
-#~ msgid "Removing of user/pureftpd account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/pureftpd de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#~ msgid "Value specified as 'Upload ratio' is not valid."
-#~ msgstr ""
-#~ "La valeur spécifiée dans le champ 'Bande passante en montée' n'est pas "
-#~ "valide."
-
-#~ msgid "Saving of user/pureftpd account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/pureftpd de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#~ msgid "Value specified as 'Upload bandwidth' is not valid."
-#~ msgstr ""
-#~ "La valeur spécifiée dans le champ 'Bande passante en montée' n'est pas "
-#~ "valide."
-
-#~ msgid "Value specified as 'Download bandwidth' is not valid."
-#~ msgstr ""
-#~ "La valeur spécifiée dans le champ 'Bande passante en descente' n'est pas "
-#~ "valide."
-
-#~ msgid "Value specified as 'Quota files' is not valid."
-#~ msgstr "La valeur spécifiée dans le champ 'Quota Fichier' n'est pas valide."
-
-#~ msgid "Value specified as 'Quota size' is not valid."
-#~ msgstr "La valeur spécifiée dans le champ 'Taille du Quota' est non valide."
-
-#~ msgid "Value specified as 'Download ratio' is not valid."
-#~ msgstr ""
-#~ "La valeur spécifiée dans le champ 'Bande passante en descente' n'est pas "
-#~ "valide."

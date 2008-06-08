@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:50+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,12 +36,8 @@ msgid "Salix mailbox class"
 msgstr "Type de compte de messagerie Scalix"
 
 #: personal/scalix/generic.tpl:19
-#, fuzzy
-msgid ""
-"Limited users can not make use of the group calendar functionality in Scalix"
-msgstr ""
-"Les utilisateurs limites ne peuvent pas utiliser les fonctionnalité de "
-"calendrier de groupe de scalix"
+msgid "Limited users can not make use of the group calendar functionality in Scalix"
+msgstr "Les utilisateurs limites ne peuvent pas utiliser les fonctionnalité de calendrier de groupe de Scalix"
 
 #: personal/scalix/generic.tpl:26
 msgid "Scalix server language"
@@ -61,9 +57,7 @@ msgstr "Administrateur Scalix"
 
 #: personal/scalix/generic.tpl:50
 msgid "Select for mailbox admin capability."
-msgstr ""
-"Sélectionnez pour ajouter les droits d'administration sur les comptes de "
-"messagerie."
+msgstr "Sélectionnez pour ajouter les droits d'administration sur les comptes de messagerie."
 
 #: personal/scalix/generic.tpl:50
 msgid "Scalix Mailbox Administrator"
@@ -83,13 +77,11 @@ msgstr "Limiter la taille des comptes de messagerie"
 
 #: personal/scalix/generic.tpl:67
 msgid "MB"
-msgstr "MB"
+msgstr ""
 
 #: personal/scalix/generic.tpl:75
 msgid "As sanction on mailbox quota overuse, stop user from sending mail."
-msgstr ""
-"Comme sanction pour dépassement du quota du compte de messagerie, empêcher "
-"l'utilisateur d'envoyer des messages."
+msgstr "Comme sanction pour dépassement du quota du compte de messagerie, empêcher l'utilisateur d'envoyer des messages."
 
 #: personal/scalix/generic.tpl:75
 msgid "Limit Outbound Mail"
@@ -107,9 +99,7 @@ msgstr "Limiter les messages en entrée"
 
 #: personal/scalix/generic.tpl:85
 msgid "As sanction on mailbox quota overuse, notify the user by eMail."
-msgstr ""
-"Comme sanction pour dépassement du quota du compte de messagerie, avertir "
-"l'utilisateur par email."
+msgstr "Comme sanction pour dépassement du quota du compte de messagerie, avertir l'utilisateur par email."
 
 #: personal/scalix/generic.tpl:85
 msgid "Notify User"
@@ -125,7 +115,7 @@ msgstr "Ceci fait quelque chose"
 
 #: personal/scalix/class_scalixAccount.inc:120
 msgid "This account has no scalix extensions."
-msgstr "Ce compte n'a pas d'extensions scalix."
+msgstr "Ce compte n'a pas d'extension scalix."
 
 #: personal/scalix/class_scalixAccount.inc:129
 msgid "Remove scalix account"
@@ -135,15 +125,14 @@ msgstr "Supprimer le compte scalix"
 msgid ""
 "This account has scalix synchronization enabled. You can disable it by "
 "clicking below."
-msgstr ""
-"Ce compte possède l'extension scalix. Vous pouvez le supprimer en cliquant "
-"sur le bouton ci-dessous."
+msgstr "Ce compte possède l'extension scalix. Vous pouvez le supprimer en cliquant sur le bouton ci-dessous."
 
 #: personal/scalix/class_scalixAccount.inc:132
 msgid "Create scalix account"
 msgstr "Créer un compte scalix"
 
 #: personal/scalix/class_scalixAccount.inc:132
+#, fuzzy
 msgid ""
 "This account has scalix synchronization disabled. You can enable it by "
 "clicking below."
@@ -154,7 +143,7 @@ msgstr ""
 #: personal/scalix/class_scalixAccount.inc:226
 #: personal/scalix/class_scalixAccount.inc:329
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/scalix/class_scalixAccount.inc:249
 #: personal/scalix/class_scalixAccount.inc:256
@@ -167,41 +156,35 @@ msgstr "Erreur"
 
 #: personal/scalix/class_scalixAccount.inc:249
 #: personal/scalix/class_scalixAccount.inc:485
-#, fuzzy
 msgid "Cannot add invalid mail address!"
-msgstr "Vous essayez d'ajouter une adresse de messagerie non valide "
+msgstr "Impossible d'ajouter une adresse de messagerie non valide !"
 
 #: personal/scalix/class_scalixAccount.inc:256
 #: personal/scalix/class_scalixAccount.inc:273
-#, fuzzy
 msgid "You have no permission to modify these addresses."
-msgstr "Vous n'avez pas les droits nécessaires pour supprimer ce département."
+msgstr "Vous n'avez pas les droits nécessaires pour modifier ces adresses."
 
 #: personal/scalix/class_scalixAccount.inc:263
 #: personal/scalix/class_scalixAccount.inc:494
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot add mail address: it is already used by user '%s'."
-msgstr "L'adresse entrée est déjà utilisée par un utilisateur"
+msgstr "Impossible d'ajouter l'adresse de messagerie. L'adresse est déjà utilisée par l'utilisateur '%s'."
 
 #: personal/scalix/class_scalixAccount.inc:351
-#, fuzzy
 msgid "Mailnode"
-msgstr "Noeud de mail Scalix"
+msgstr "Noeud de messagerie Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:354
-#, fuzzy
 msgid "Scalix object"
-msgstr "Compte scalix"
+msgstr "Objet Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:363
-#, fuzzy
 msgid "Email address"
-msgstr "Adresse de messagerie Scalix"
+msgstr "Adresse de messagerie"
 
 #: personal/scalix/class_scalixAccount.inc:370
-#, fuzzy
 msgid "Limit Mailbox"
-msgstr "Limiter la taille des comptes de messagerie"
+msgstr "Limiter la taille du compte de messagerie"
 
 #: personal/scalix/class_scalixAccount.inc:445
 msgid "Scalix account"
@@ -229,15 +212,15 @@ msgstr "Administrateur"
 
 #: personal/scalix/class_scalixAccount.inc:459
 msgid "Mailbox administrator"
-msgstr "Administrateur du compte de messagerie"
+msgstr "Administrateur des comptes de messagerie"
 
 #: personal/scalix/class_scalixAccount.inc:460
 msgid "Hide user entry in Scalix"
-msgstr "Cacher l'entrée de l'utilisateur sans Scalix"
+msgstr "Cacher l'entrée de l'utilisateur dans Scalix"
 
 #: personal/scalix/class_scalixAccount.inc:461
 msgid "Mailbox size limitations"
-msgstr "Limitation en taille du compte de messagerie"
+msgstr "Limitation de la taille du compte de messagerie"
 
 #: personal/scalix/class_scalixAccount.inc:462
 msgid "Limit outbound"
@@ -253,34 +236,9 @@ msgstr "Avertir l'utilisateur"
 
 #: personal/scalix/main.inc:112
 msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
-"cette boite de dialogue"
+msgstr "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans cette boite de dialogue"
 
 #: personal/scalix/main.inc:125
 msgid "Scalix settings"
 msgstr "Paramètres de Scalix"
 
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"
-
-#~ msgid "There is no scalix mailnode specified."
-#~ msgstr "Il n'y a pas de mailnode scalix spécifié."
-
-#~ msgid "scalixScalixObject must be set!"
-#~ msgstr "L'objet ScalixObject doit être présent!"
-
-#~ msgid "Value in 'Limit Mailbox size' is not valid."
-#~ msgstr "La valeur dans le champ 'Limit Mailbox size' n'est pas valide."

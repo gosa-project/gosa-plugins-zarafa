@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:45+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "Heure"
 #: personal/samba/class_sambaAccount.inc:243
 #: personal/samba/class_sambaAccount.inc:1173
 msgid "Samba"
-msgstr "Samba"
+msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:25
 msgid "This does something"
@@ -64,11 +64,11 @@ msgstr ""
 
 #: personal/samba/class_sambaAccount.inc:367
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: personal/samba/class_sambaAccount.inc:367
 msgid "Please select an entry!"
-msgstr ""
+msgstr "Veuillez sélectionner une entrée !"
 
 #: personal/samba/class_sambaAccount.inc:531
 msgid "disabled"
@@ -111,7 +111,7 @@ msgstr "du client précédent seulement"
 #: admin/systems/samba/class_winGeneric.inc:153
 #: admin/systems/samba/class_winGeneric.inc:273
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/samba/class_sambaAccount.inc:750
 #: personal/samba/class_sambaAccount.inc:1242 personal/samba/samba3.tpl:13
@@ -141,11 +141,8 @@ msgid "IDLE"
 msgstr "En attente"
 
 #: personal/samba/class_sambaAccount.inc:769
-#, fuzzy
 msgid "The windows usermanager allows eight clients at maximum!"
-msgstr ""
-"Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous "
-"en avez spécifiés plus de huit."
+msgstr "Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous en avez spécifiés plus de huit."
 
 #: personal/samba/class_sambaAccount.inc:958
 #: personal/samba/class_sambaAccount.inc:982
@@ -154,12 +151,11 @@ msgstr "Avertissement"
 
 #: personal/samba/class_sambaAccount.inc:958
 msgid "Undefined Samba SID detected. Please fix this problem manually!"
-msgstr ""
+msgstr "Détection d'un SID Samba non défini. Veuillez fixer ceci manuellement !"
 
 #: personal/samba/class_sambaAccount.inc:982
-msgid ""
-"Cannot convert primary group to samba group: group cannot be identified!"
-msgstr ""
+msgid "Cannot convert primary group to samba group: group cannot be identified!"
+msgstr "Impossible de convertir le groupe primaire en un groupe primaire samba : le groupe ne peut être identifié !"
 
 #: personal/samba/class_sambaAccount.inc:1174 personal/samba/main.inc:125
 msgid "Samba settings"
@@ -184,8 +180,7 @@ msgstr "Autoriser les utilisateurs à changer de mot de passe"
 #: personal/samba/class_sambaAccount.inc:1187 personal/samba/samba2.tpl:72
 #: personal/samba/samba3.tpl:316
 msgid "Login from windows client requires no password"
-msgstr ""
-"L'identification sur une station windows ne nécessite pas de mot de passe"
+msgstr "L'identification sur une station windows ne nécessite pas de mot de passe"
 
 #: personal/samba/class_sambaAccount.inc:1188 personal/samba/samba3.tpl:321
 msgid "Lock samba account"
@@ -239,9 +234,7 @@ msgstr "Permettre la connexion depuis"
 msgid ""
 "The windows user manager only allows eight clients. You've specified more "
 "than eight."
-msgstr ""
-"Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous "
-"en avez spécifiés plus de huit."
+msgstr "Le gestionnaire d'utilisateurs windows accepte seulement huit clients. Vous en avez spécifiés plus de huit."
 
 #: personal/samba/samba2.tpl:6 personal/samba/samba3.tpl:6
 msgid "Generic"
@@ -338,13 +331,12 @@ msgid "Allow connection from these workstations only"
 msgstr "Permet la connections depuis ces stations seulement"
 
 #: personal/samba/samba3.tpl:429
-#, fuzzy
 msgid "Used by all users"
-msgstr "ACL valide pour tout les utilisateurs"
+msgstr "Utilisé par tout les utilisateurs"
 
 #: personal/samba/samba3.tpl:432
 msgid "Used by some users"
-msgstr ""
+msgstr "Utilisé par certains utilisateurs"
 
 #: admin/systems/samba/wingeneric.tpl:6
 msgid "Machine name"
@@ -352,7 +344,7 @@ msgstr "Nom de la machine"
 
 #: admin/systems/samba/wingeneric.tpl:13
 msgid "Base"
-msgstr "Base"
+msgstr ""
 
 #: admin/systems/samba/wingeneric.tpl:15
 msgid "Choose subtree to place terminal in"
@@ -365,23 +357,23 @@ msgstr "Sélectionnez une base"
 #: admin/systems/samba/wingeneric.tpl:25
 #: admin/systems/samba/class_winGeneric.inc:295
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #: admin/systems/samba/class_winGeneric.inc:91
 msgid "network"
-msgstr ""
+msgstr "réseau"
 
 #: admin/systems/samba/class_winGeneric.inc:217
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: admin/systems/samba/class_winGeneric.inc:285
 msgid "Win generic"
-msgstr "Win informations"
+msgstr "Informations Windows"
 
 #: admin/systems/samba/class_winGeneric.inc:286
 msgid "Windows workstation generic"
-msgstr "Station de travail Windows"
+msgstr "Station de travail Windows générique"
 
 #: admin/systems/samba/class_winGeneric.inc:291
 msgid "Win workstation"
@@ -391,148 +383,3 @@ msgstr "Station de travail Windows"
 msgid "Workstation name"
 msgstr "Nom de la station de travail"
 
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"
-
-#~ msgid "This 'dn' has no network features."
-#~ msgstr "Ce 'dn' n'a pas d'extensions réseaux."
-
-#~ msgid "You have no permissions to create a component on this 'Base'."
-#~ msgstr ""
-#~ "Vous n'avez pas l'autorisation de créer un composant sur cette 'Base'."
-
-#~ msgid "There is already an entry '%s' in the base choosen by you"
-#~ msgstr "Une entrée '%s' existe déjà dans la base sélectionnée"
-
-#~ msgid "Sunday"
-#~ msgstr "Dimanche"
-
-#~ msgid "Monday"
-#~ msgstr "Lundi"
-
-#~ msgid "Tuesday"
-#~ msgstr "Mardi"
-
-#~ msgid "Wednesday"
-#~ msgstr "Mercredi"
-
-#~ msgid "Thursday"
-#~ msgstr "Jeudi"
-
-#~ msgid "Friday"
-#~ msgstr "Vendredi"
-
-#~ msgid "Saturday"
-#~ msgstr "Samedi"
-
-#~ msgid "This account has no samba extensions."
-#~ msgstr "Aucune extension samba pour cet utilisateur."
-
-#~ msgid "Remove samba account"
-#~ msgstr "Supprimer le compte Samba"
-
-#~ msgid ""
-#~ "This account has samba features enabled. You can disable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Une extension samba existe pour cet utilisateur. Vous pouvez la supprimer "
-#~ "en cliquant sur le bouton ci-dessous."
-
-#~ msgid "Create samba account"
-#~ msgstr "Créer un compte Samba"
-
-#~ msgid ""
-#~ "This account has samba features disabled. You can enable them by clicking "
-#~ "below."
-#~ msgstr ""
-#~ "Aucune extension samba n'existe pour cet utilisateur. Vous pouvez en "
-#~ "créer un en cliquant sur le bouton ci-dessous."
-
-#~ msgid ""
-#~ "This account has samba features disabled. Posix features are needed for "
-#~ "samba accounts, enable them first."
-#~ msgstr ""
-#~ "La création d'un compte samba nécessite, au préalable, que l'utilisateur "
-#~ "possède un compte Posix."
-
-#~ msgid "January"
-#~ msgstr "Janvier"
-
-#~ msgid "February"
-#~ msgstr "Février"
-
-#~ msgid "March"
-#~ msgstr "Mars"
-
-#~ msgid "April"
-#~ msgstr "Avril"
-
-#~ msgid "May"
-#~ msgstr "Mai"
-
-#~ msgid "June"
-#~ msgstr "Juin"
-
-#~ msgid "July"
-#~ msgstr "Juillet"
-
-#~ msgid "August"
-#~ msgstr "Août"
-
-#~ msgid "September"
-#~ msgstr "Septembre"
-
-#~ msgid "October"
-#~ msgstr "Octobre"
-
-#~ msgid "November"
-#~ msgstr "Novembre"
-
-#~ msgid "December"
-#~ msgstr "Décembre"
-
-#~ msgid "Removing of user/samba account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/samba de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "The value specified as '%s' contains invalid characters!"
-#~ msgstr "La valeur spécifiée comme '%s' contient des caractères invalides !"
-
-#~ msgid ""
-#~ "The timeout property '%s' is checked and contains invalid or no "
-#~ "characters!"
-#~ msgstr ""
-#~ "La propriété temps d'attente '%s' est activée et contient des caractères "
-#~ "invalides ou ne contient rien!"
-
-#~ msgid "Saving of user/samba account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/samba de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations "
-#~ "dans cette boite de dialogue"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"
-
-#~ msgid "Removing of system wingeneric/generic with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du système wingeneric/générique avec le dn '%s' à échoué."
-
-#~ msgid "Saving of system wingeneric/generic with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du système wingeneric/générique avec le dn '%s' à échoué."

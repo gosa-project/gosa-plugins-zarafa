@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-27 10:42+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 13:55+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,14 +19,13 @@ msgid "Kerberos kadmin access"
 msgstr "Accès kadmin Kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
 msgid "Kerberos Realms"
 msgstr "Realm Kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 msgid "Policies"
-msgstr ""
+msgstr "Politiques d'accès"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:58
 msgid "Kerberos service"
@@ -41,7 +40,7 @@ msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:165
 msgid "Kerberos service (kadmin access informations)"
-msgstr "Service Kerberos ( information accès kadmin Kerberos )"
+msgstr "Service Kerberos ( information accès kadmin )"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:178
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
@@ -49,21 +48,20 @@ msgid "Realm"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server reqiures a valid mac address."
-msgstr ""
+msgid "In order to save policy changes, the server reqiures a valid mac address."
+msgstr "Pour pouvoir changer la police de securité, le serveur nécessite un adresse mac valide."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
-msgstr ""
+msgstr "Enlever"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Policy"
-msgstr ""
+msgstr "Police"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
-msgstr "Kerberos"
+msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Kerberos access information"
@@ -80,29 +78,28 @@ msgstr "Services"
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:189
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:201
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:238
-#, fuzzy
 msgid "Heimdal"
-msgstr "Série"
+msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #, php-format
 msgid ""
 "Error loading heimdal configuration, more than one configuration entry was "
 "found for '%s'."
-msgstr ""
+msgstr "Il y a une erreur lors du chargement de la configuration Heimdal, plus d'un entrée de configuration à été trouvée pour '%s'."
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:163
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:425
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
 msgid "Max life"
-msgstr ""
+msgstr "Délai de vie max"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:348
 msgid "Max renew"
-msgstr ""
+msgstr "Délai de renouvellement maximum"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:351
 msgid "Valid start"
@@ -113,50 +110,48 @@ msgid "Valid end"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:357
-#, fuzzy
 msgid "Valid password"
-msgstr "Ancien mot de passe"
+msgstr "Mot de passe valide"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
-#, fuzzy
 msgid "Heimdal options"
-msgstr "Série"
+msgstr "Options Heimdal"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:6
 msgid "Use empty values for infinite"
-msgstr ""
+msgstr "Utiliser une valeur nulle pour infini"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:10
 msgid "Ticket max life"
-msgstr ""
+msgstr "Le délai de vie maximum du ticket"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:18
 msgid "Ticket max renew"
-msgstr ""
+msgstr "Le délai maximum de renouvellement"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:32
 msgid "infinite"
-msgstr ""
+msgstr "infini"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:34
 msgid "Hour"
-msgstr ""
+msgstr "Heure"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:36
 msgid "Minute"
-msgstr ""
+msgstr "Minutes"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:38
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:40
 msgid "Month"
-msgstr ""
+msgstr "Moi"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:42
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
@@ -167,9 +162,8 @@ msgid "Valid ticket end time"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:127
-#, fuzzy
 msgid "Password end"
-msgstr "Mot de passe"
+msgstr "Fin du mot de passe"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:198
 msgid "Save"
@@ -179,29 +173,3 @@ msgstr "Enregistrer"
 msgid "Cancel"
 msgstr "Annuler"
 
-#~ msgid "Admin user"
-#~ msgstr "Administrateur"
-
-#~ msgid "Admin"
-#~ msgstr "Administrateur"
-
-#, fuzzy
-#~ msgid "Please specify a numeric value for %s."
-#~ msgstr "Veuillez spécifier un nombre pour la durée du ttl."
-
-#~ msgid "The specified kerberos password is empty."
-#~ msgstr "Le mot de passe Kerberos est vide."
-
-#~ msgid "The specified kerberos admin is empty."
-#~ msgstr "L'admin kerberos spécifié est vide."
-
-#~ msgid "The specified kerberos realm is empty."
-#~ msgstr "Le realm kerberos spécifié est vide."
-
-#, fuzzy
-#~ msgid "Tried to remove heimdal extension."
-#~ msgstr "Enlever l'extension d'environnement"
-
-#, fuzzy
-#~ msgid "Could not add or update heimdal extensions."
-#~ msgstr "Impossible de sauvegarder l'image to %s."

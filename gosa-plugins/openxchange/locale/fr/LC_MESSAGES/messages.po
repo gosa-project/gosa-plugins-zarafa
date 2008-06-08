@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:36+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
 msgid "Open-Xchange"
-msgstr "Open-Xchange"
+msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
 msgid "This does something"
@@ -36,35 +36,30 @@ msgstr "Erreur"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy
 msgid "Open-Xchange database"
-msgstr "Compte Open Xchange"
+msgstr "Base de données Open Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, fuzzy
 msgid "Configuration error"
-msgstr "Le fichier de configuration peut être écrit"
+msgstr "Erreur de configuration"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#, fuzzy
 msgid "Open-Xchange account name"
-msgstr "Compte Open Xchange"
+msgstr "Nom du compte Open Xchange"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-#, fuzzy
 msgid "Cannot save Open-Xchange account!"
-msgstr "Compte Open Xchange"
+msgstr "Impossible de sauver le compte Open Xchange !"
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
 msgid "Open-Xchange account settings"
 msgstr "Paramètres du compte Open Xchange"
 
@@ -129,28 +124,3 @@ msgstr "Information Utilisateur"
 msgid "User Timezone"
 msgstr "Zone Horaire de l'utilisateur"
 
-#, fuzzy
-#~ msgid "Cannot connect to %s database!"
-#~ msgstr "Impossible de se connecter au serveur de base de données !"
-
-#, fuzzy
-#~ msgid "%s database configuration is missing!"
-#~ msgstr "Configuration de la base de données des fax"
-
-#~ msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/oxchange de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#~ msgid "Saving of user/oxchange account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/oxchange de l'utilisateur avec le dn '%s' à "
-#~ "échoué."
-
-#~ msgid "Creating of user/oxchange account with dn '%s' failed."
-#~ msgstr ""
-#~ "La création du compte/oxchange de l'utilisateur avec le dn '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Open-Xchange account name is invalid!"
-#~ msgstr "Compte Open Xchange"

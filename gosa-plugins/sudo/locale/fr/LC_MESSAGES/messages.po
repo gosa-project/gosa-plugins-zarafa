@@ -1,6 +1,23 @@
+# translation of messages.po to Français
+# Header entry was created by KBabel!
+#
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Mime-Version: 1.0Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"PO-Revision-Date: 2008-06-08 15:54+0200\n"
+"Project-Id-Version: messages\n"
+"Language-Team: Français <fr@li.org>\n"
+"X-Generator: KBabel 1.11.4\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+
 #: admin/sudo/trust_machines.tpl:6
 msgid "Select systems to add"
-msgstr ""
+msgstr "Sélectionner les sytèmes à ajouter"
 
 #: admin/sudo/trust_machines.tpl:26
 msgid "Display systems of department"
@@ -350,3 +367,4 @@ msgstr ""
 #: admin/sudo/class_sudoGeneric.inc:683
 msgid "Access control list"
 msgstr ""
+

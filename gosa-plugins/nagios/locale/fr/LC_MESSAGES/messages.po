@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:33+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Ceci fait quelque chose"
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/nagios/class_nagiosAccount.inc:194
 #: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
@@ -40,7 +40,7 @@ msgstr "Alias de l'utilisateur"
 #: personal/nagios/class_nagiosAccount.inc:201
 #: personal/nagios/class_nagiosAccount.inc:205
 msgid "Mail"
-msgstr ""
+msgstr "Adresse de messagerie"
 
 #: personal/nagios/class_nagiosAccount.inc:274
 msgid "Nagios account settings"
@@ -52,7 +52,7 @@ msgstr "Mon Compte"
 
 #: personal/nagios/class_nagiosAccount.inc:285
 msgid "Pager number"
-msgstr "Numéro de page"
+msgstr "Numéro de bip"
 
 #: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
 msgid "Mail address"
@@ -154,58 +154,3 @@ msgstr "permettre les commandes sur tout les hôtes"
 msgid "Nagios settings"
 msgstr "Paramètres Nagios"
 
-#~ msgid "This account has no nagios extensions."
-#~ msgstr "Ce compte n'a pas d'extensions nagios."
-
-#~ msgid "Remove nagios account"
-#~ msgstr "Supprimer l'extension nagios"
-
-#~ msgid ""
-#~ "This account has nagios features enabled. You can disable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "L'extension nagios est activée pour ce compte, vous pouvez la désactiver "
-#~ "en cliquant sur le bouton ci-dessous."
-
-#~ msgid "Create nagios account"
-#~ msgstr "Créer un compte nagios"
-
-#~ msgid ""
-#~ "This account has nagios features disabled. You can enable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "L'extension nagios est désactivée pour ce compte, vous pouvez l'activer "
-#~ "en cliquant sur le bouton ci-dessous."
-
-#~ msgid "Saving of user/nagios account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/nagios de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "The required field 'NagiosAlias' is not set."
-#~ msgstr "Le champ obligatoire 'Alias de l'utilisateur' n'est pas rempli."
-
-#~ msgid "The required field 'NagiosMail' is not set."
-#~ msgstr "Le champ obligatoire 'adresse de messagerie' n'est pas rempli."
-
-#~ msgid "Please enter a valid email address in 'NagiosMail' field."
-#~ msgstr ""
-#~ "Veuillez entrer une adresse de messagerie valide dans le champ 'Adresse "
-#~ "de messagerie'."
-
-#~ msgid "Removing of user/nagios account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/nagios de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations "
-#~ "dans cette boite de dialogue"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"

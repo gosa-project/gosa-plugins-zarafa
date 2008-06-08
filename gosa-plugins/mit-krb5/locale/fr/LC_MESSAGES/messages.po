@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-27 10:39+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:212
 #, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
-msgstr ""
+msgstr "Impossible de charger le principal '%s', depuis le serveur '%s' !"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:213
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:268
@@ -35,12 +35,12 @@ msgstr ""
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:267
 #, php-format
 msgid "Cannot load principals from server '%s'!"
-msgstr ""
+msgstr "Impossible de charger le principal depuis '%s' !"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:294
 #, php-format
 msgid "Cannot load policies from server '%s'!"
-msgstr ""
+msgstr "Impossible de charger les polices de sécurité depuis '%s' !"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:299
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:177
@@ -49,7 +49,7 @@ msgstr ""
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:193
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:197
 msgid "none"
-msgstr ""
+msgstr "aucun"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:399
 msgid "Daemon based"
@@ -58,31 +58,30 @@ msgstr ""
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:444
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
 msgid "Kerberos"
-msgstr "Kerberos"
+msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:558
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
 msgid "Ticket max life"
-msgstr ""
+msgstr "Durée de vie maximum du ticket"
 
 #: admin/systems/services/kerberos/class_password-methods-MIT.inc:561
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
 msgid "Ticket max renew"
-msgstr ""
+msgstr "Durée de renouvellement maximum du ticket"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:1
 msgid "Kerberos kadmin access"
 msgstr "Accès kadmin Kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
 msgid "Kerberos Realms"
 msgstr "Realm Kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:16
 #: admin/systems/services/kerberos/class_goKrbServer.inc:393
 msgid "Policies"
-msgstr ""
+msgstr "polices de sécurité"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:58
 msgid "Kerberos service"
@@ -90,7 +89,7 @@ msgstr "Service Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:165
 msgid "Kerberos service (kadmin access informations)"
-msgstr "Service Kerberos ( information accès kadmin Kerberos )"
+msgstr "Service Kerberos ( accès information kadmin )"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:178
 #: admin/systems/services/kerberos/class_goKrbServer.inc:394
@@ -99,18 +98,17 @@ msgid "Realm"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"Cannot apply policy changes! The defined kerberos server has no mac address."
-msgstr ""
+msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
+msgstr "Impossible d'appliquer les changement de polices de sécurité ! Le serveur Kerberos défini n'a pas d'adresse MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
-msgstr ""
+msgstr "Enlever"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:41
 msgid "Policy"
-msgstr ""
+msgstr "Polices de sécurité"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Kerberos access information"
@@ -118,68 +116,66 @@ msgstr "Information d'accès Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Services"
-msgstr "Services"
+msgstr ""
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:1
 msgid "Policy settings"
-msgstr ""
+msgstr "Paramètres de polices de sécurité"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:7
 #: admin/systems/services/kerberos/class_krb5_policy.inc:103
 #: admin/systems/services/kerberos/class_krb5_policy.inc:106
 #: admin/systems/services/kerberos/class_krb5_policy.inc:110
 msgid "Policy name"
-msgstr ""
+msgstr "Nom de la police de sécurité"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:11
 #: admin/systems/services/kerberos/class_krb5_policy.inc:122
 #: admin/systems/services/kerberos/class_krb5_policy.inc:124
 #: admin/systems/services/kerberos/class_krb5_policy.inc:134
 msgid "Minimum password length"
-msgstr ""
+msgstr "Taille minimum du mot de passe"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:15
 #: admin/systems/services/kerberos/class_krb5_policy.inc:129
 #: admin/systems/services/kerberos/class_krb5_policy.inc:131
 #: admin/systems/services/kerberos/class_krb5_policy.inc:134
 msgid "Required different characters"
-msgstr ""
+msgstr "Necéssite des caractères différents"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:19
 #: admin/systems/services/kerberos/class_krb5_policy.inc:115
 #: admin/systems/services/kerberos/class_krb5_policy.inc:117
 msgid "Password history size"
-msgstr ""
+msgstr "Historique des tailles de mot de passe"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:28
 #: admin/systems/services/kerberos/class_krb5_policy.inc:139
 #: admin/systems/services/kerberos/class_krb5_policy.inc:141
 #: admin/systems/services/kerberos/class_krb5_policy.inc:151
 msgid "Minimum password lifetime"
-msgstr ""
+msgstr "Dureé de vie minimum du mot de passe"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:29
 #: admin/systems/services/kerberos/krb5_policy.tpl:33
 msgid "seconds"
-msgstr ""
+msgstr "secondes"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:32
 #: admin/systems/services/kerberos/class_krb5_policy.inc:146
 #: admin/systems/services/kerberos/class_krb5_policy.inc:148
 #: admin/systems/services/kerberos/class_krb5_policy.inc:151
-#, fuzzy
 msgid "Password lifetime"
-msgstr "Mot de passe"
+msgstr "Durée de vie du mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:4
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:21
-#, fuzzy
 msgid "Kerberos options"
-msgstr "Kerberos"
+msgstr "Options Kerberos"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:8
 msgid "Retry"
-msgstr ""
+msgstr "Réessayer"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:14
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:243
@@ -188,112 +184,112 @@ msgstr "Annuler"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:77
 msgid "infinite"
-msgstr ""
+msgstr "Infini"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:79
 msgid "Hour"
-msgstr ""
+msgstr "Heure"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:81
 msgid "Minute"
-msgstr ""
+msgstr "Minute"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:83
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:85
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:87
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:92
 msgid "Valid ticket end time"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:132
-#, fuzzy
 msgid "Password expires"
-msgstr "Mot de passe"
+msgstr "Expiration du mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:173
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:176
 msgid "Failed logins"
-msgstr ""
+msgstr "Connections échouées"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:180
 msgid "Key version number"
-msgstr ""
+msgstr "Numéro de version de la clef"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:184
 msgid "Last failed login"
-msgstr ""
+msgstr "Dernière connexion échouée"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:188
 msgid "Last password change"
-msgstr ""
+msgstr "Dernier changement de mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:192
 msgid "Last successful login"
-msgstr ""
+msgstr "Dernière connexion réussie"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:196
 msgid "Last modification date"
-msgstr ""
+msgstr "Dernière date de modification"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:209
 msgid "Prohibit issuance of service tickets"
-msgstr ""
+msgstr "Interdire l'emission de tickets de services"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:211
 msgid "Prohibit forwardable tickets"
-msgstr ""
+msgstr "Interdire les tickets transférables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:213
+#, fuzzy
 msgid "Disallow proxiable tickets"
-msgstr ""
+msgstr "Interdire les tickets proxiables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:215
 msgid "Prohibit renewable tickets"
-msgstr ""
+msgstr "Interdire les tickets renouvelables"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:217
 msgid "Pohibit postdated tickets"
-msgstr ""
+msgstr "Interdire les tickets ayant une date dans le futur"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:219
 msgid "Disallow Ticket-Granting Service"
-msgstr ""
+msgstr "Service D'interdiction d'émission de ticket"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:221
 msgid "Password change service"
-msgstr ""
+msgstr "Service de changement de mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:223
 msgid "Preauthentication required"
-msgstr ""
+msgstr "Pré authentification requise"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:225
 msgid "Force a password change"
-msgstr ""
+msgstr "Forcer un changement de mot de passe"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:227
 msgid "Hardware preauthentication"
-msgstr ""
+msgstr "Pré authentification hardware"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:229
 msgid "Disallow user to user authentification"
-msgstr ""
+msgstr "Interdire l'authentification utilisateur à utilisateur"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:231
 msgid "Forbid ticket issuance"
-msgstr ""
+msgstr "Interdire l'emission de tickets"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:241
 msgid "Save"
@@ -302,7 +298,7 @@ msgstr "Enregistrer"
 #: admin/systems/services/kerberos/class_krb5_policy.inc:73
 #, php-format
 msgid "This policy is referenced %d times."
-msgstr ""
+msgstr "Cette politique de sécurité est référencée %d fois."
 
 #: admin/systems/services/kerberos/class_krb5_policy.inc:133
 #: admin/systems/services/kerberos/class_krb5_policy.inc:150
@@ -310,47 +306,5 @@ msgstr ""
 msgid ""
 "The value specified for '%s' must be smaller than the value specified for '%"
 "s'!"
-msgstr ""
+msgstr "La valeur spécifiée pour '%s' doit être plus petite que la valeur spécifiée pour '%s' !"
 
-#, fuzzy
-#~ msgid "Heimdal"
-#~ msgstr "Série"
-
-#, fuzzy
-#~ msgid "Heimdal options"
-#~ msgstr "Série"
-
-#, fuzzy
-#~ msgid "Password end"
-#~ msgstr "Mot de passe"
-
-#~ msgid "Admin user"
-#~ msgstr "Administrateur"
-
-#~ msgid "Admin"
-#~ msgstr "Administrateur"
-
-#, fuzzy
-#~ msgid "Valid password"
-#~ msgstr "Ancien mot de passe"
-
-#, fuzzy
-#~ msgid "Please specify a numeric value for %s."
-#~ msgstr "Veuillez spécifier un nombre pour la durée du ttl."
-
-#~ msgid "The specified kerberos password is empty."
-#~ msgstr "Le mot de passe Kerberos est vide."
-
-#~ msgid "The specified kerberos admin is empty."
-#~ msgstr "L'admin kerberos spécifié est vide."
-
-#~ msgid "The specified kerberos realm is empty."
-#~ msgstr "Le realm kerberos spécifié est vide."
-
-#, fuzzy
-#~ msgid "Tried to remove heimdal extension."
-#~ msgstr "Enlever l'extension d'environnement"
-
-#, fuzzy
-#~ msgid "Could not add or update heimdal extensions."
-#~ msgstr "Impossible de sauvegarder l'image to %s."

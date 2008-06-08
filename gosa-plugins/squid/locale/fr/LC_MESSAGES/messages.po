@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:51+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Accès au proxy autorisé durant la plage horaire suivante"
 #: personal/connectivity/squid/proxy.tpl:100
 #: personal/connectivity/squid/class_proxyAccount.inc:334
 msgid "Restrict proxy usage by quota"
-msgstr "Restreindre la quantité de données téléchargeables"
+msgstr "Restreindre la quantité de données téléchargeables par quota"
 
 #: personal/connectivity/squid/proxy.tpl:115
 msgid "per"
@@ -39,7 +39,7 @@ msgstr "par"
 #: personal/connectivity/squid/class_proxyAccount.inc:5
 #: personal/connectivity/squid/class_proxyAccount.inc:322
 msgid "Proxy"
-msgstr "Proxy"
+msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:6
 msgid "This does something"
@@ -47,15 +47,15 @@ msgstr "Ceci fait quelque chose"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:92
 msgid "KB"
-msgstr "KB"
+msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:92
 msgid "MB"
-msgstr "MB"
+msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:92
 msgid "GB"
-msgstr "GB"
+msgstr ""
 
 #: personal/connectivity/squid/class_proxyAccount.inc:93
 msgid "hour"
@@ -76,12 +76,12 @@ msgstr "mois"
 #: personal/connectivity/squid/class_proxyAccount.inc:175
 #: personal/connectivity/squid/class_proxyAccount.inc:301
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:196
 #: personal/connectivity/squid/class_proxyAccount.inc:198
 msgid "Quota Setting"
-msgstr ""
+msgstr "Paramètres du quota"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:323
 msgid "Connectivity addon"
@@ -99,16 +99,3 @@ msgstr "Filtrer le contenu non désiré"
 msgid "Limit proxy access"
 msgstr "Accès au proxy autorisé durant la plage horaire suivante"
 
-#~ msgid "Removing of user/proxy account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Saving of user/proxy account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/proxy de l'utilisateur avec le dn '%s' à échoué."
-
-#~ msgid "Numerical value for Quota Setting is empty."
-#~ msgstr "La valeur pour le quota est vide."
-
-#~ msgid "Numerical value for Quota Setting is not valid."
-#~ msgstr "La valeur dans le champ 'Paramètres du quota' n'est pas valide."

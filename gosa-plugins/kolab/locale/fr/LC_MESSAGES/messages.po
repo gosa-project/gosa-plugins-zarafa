@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 14:01+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: personal/connectivity/kolab/class_kolabAccount.inc:512
 #: admin/systems/services/kolab/class_servKolab.inc:379
 msgid "Kolab"
-msgstr "Kolab"
+msgstr ""
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:6
 msgid "This does something"
@@ -32,11 +32,11 @@ msgstr "Erreur"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Mail address"
-msgstr ""
+msgstr "Adresse de messagerie"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:179
 msgid "Primary mail address"
-msgstr ""
+msgstr "Adresse de messagerie principale"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:204
 msgid "Always accept"
@@ -48,7 +48,7 @@ msgstr "Toujours rejeter"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:206
 msgid "Reject if conflicts"
-msgstr "Rejet si il y a conflit"
+msgstr "Rejeter si il y a conflit"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:207
 msgid "Manual if conflicts"
@@ -68,19 +68,17 @@ msgstr "Anonyme"
 #: admin/systems/services/kolab/class_servKolab.inc:210
 #: admin/systems/services/kolab/class_servKolab.inc:352
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
-#, fuzzy
 msgid "Free Busy future"
-msgstr "Nombre de jours a calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
-#, fuzzy
 msgid "Free Busy url"
-msgstr "Nombre de jours a calculer pour l'option de disponibilité"
+msgstr "Url pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:376
 #, php-format
@@ -92,7 +90,7 @@ msgstr "La politique d'invitation pour l'adresse '%s' n'est pas valide."
 msgid "There's no mail user with address '%s' for your invitation policy!"
 msgstr ""
 "Il n'y a pas d'utilisateur avec l'adresse de messagerie '%s' pour votre "
-"politique d'invitation!"
+"politique d'invitation !"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:513
 msgid "Kolab account settings"
@@ -108,9 +106,10 @@ msgstr "Mon Compte"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:522
 msgid "Free busy future"
-msgstr "Nombre de jours a calculer pour l'option de disponibilité"
+msgstr "Nombre de jours futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:523
+#, fuzzy
 msgid "Mail size restriction"
 msgstr "Limitation en taille du compte de messagerie"
 
@@ -122,7 +121,7 @@ msgstr "Information de disponibilité"
 #: personal/connectivity/kolab/kolab.tpl:51
 #: personal/connectivity/kolab/kolab.tpl:63
 msgid "Delegations"
-msgstr "Délégation"
+msgstr "Délégations"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:526
 #: personal/connectivity/kolab/kolab.tpl:119
@@ -140,11 +139,12 @@ msgid ""
 "you add a mail account."
 msgstr ""
 "L'extension Kolab est désactivée. Ces paramètres peuvent être ajustés si "
-"vous ajoutez un compte mail."
+"vous ajoutez un compte de messagerie."
 
 #: personal/connectivity/kolab/kolab.tpl:83
+#, fuzzy
 msgid "Mail size"
-msgstr "Taille des quota de messagerie"
+msgstr "Quota de messagerie"
 
 #: personal/connectivity/kolab/kolab.tpl:87
 msgid "No mail size restriction for this account"
@@ -182,22 +182,20 @@ msgstr ""
 
 #: admin/systems/services/kolab/class_servKolab.inc:180
 msgid "Internal error"
-msgstr ""
+msgstr "Erreur interne"
 
 #: admin/systems/services/kolab/class_servKolab.inc:180
-#, fuzzy
 msgid "Kolab account does not exist!"
-msgstr "Paramètres du compte Kolab"
+msgstr "Le compte kolab ,'existe pas !"
 
 #: admin/systems/services/kolab/class_servKolab.inc:184
 msgid "hostname"
-msgstr ""
+msgstr "Nom de l'hôte"
 
 #: admin/systems/services/kolab/class_servKolab.inc:263
 #: admin/systems/services/kolab/class_servKolab.inc:265
-#, fuzzy
 msgid "Future days"
-msgstr "Futur"
+msgstr "Jours dans le futur"
 
 #: admin/systems/services/kolab/class_servKolab.inc:269
 #: admin/systems/services/kolab/class_servKolab.inc:273
@@ -209,14 +207,13 @@ msgid "Please choose a value between 1 and 100 for Quota settings."
 msgstr "Veuillez choisir un nombre entre 1 et 100 pour les quotas."
 
 #: admin/systems/services/kolab/class_servKolab.inc:277
-#, fuzzy
 msgid "Privileged networks"
-msgstr "Réseaux SMTP privilégiés"
+msgstr "Réseaux privilégiés"
 
 #: admin/systems/services/kolab/class_servKolab.inc:369
 #: admin/systems/services/kolab/class_servKolab.inc:380
 msgid "Kolab mail service"
-msgstr "Service  de messagerie Kolab"
+msgstr "Service de messagerie Kolab"
 
 #: admin/systems/services/kolab/class_servKolab.inc:380
 #: admin/systems/services/kolab/servkolab.tpl:39
@@ -358,65 +355,5 @@ msgstr "Machine utilisée pour relayer les mails"
 
 #: admin/systems/services/kolab/servkolab.tpl:231
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
 
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Future days in Free/Busy settings must be set."
-#~ msgstr "Le paramètre journées futures doit être remplit."
-
-#~ msgid "Future days in Free/Busy settings must be a positive value."
-#~ msgstr "Le nombre de journées dans le futur doit être nombre positif."
-
-#~ msgid "The given Quota settings value must be a number."
-#~ msgstr "Les paramètres de Quota doivent être un nombre."
-
-#~ msgid "Future days must be a value."
-#~ msgstr "Le nombre de journées dans le futur doit être une nombre positif."
-
-#~ msgid "No SMTP privileged networks set."
-#~ msgstr "Pas de réseaux SMTP privilégiés indiqués."
-
-#~ msgid "Removing of user/kolab account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte/ de l'utilisateur Kolab avec le dn '%s' à échoué."
-
-#~ msgid "Saving of user/kolab account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde du compte/de l'utilisateur Kolab avec le dn '%s' à échoué."
-
-#~ msgid "Removing host entry from system server/kolab with dn '%s' failed."
-#~ msgstr ""
-#~ "L'effacement du système de système serveur/kolab avec le dn '%s' à échoué."
-
-#~ msgid "Saving system server/kolab with dn '%s' failed."
-#~ msgstr "La sauvegarde du système serveur/kolab avec le dn '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Cannot add invalid mail address!"
-#~ msgstr "Vous essayez d'ajouter une adresse de messagerie non valide "
-
-#, fuzzy
-#~ msgid "Primary mail address already in use by another user!"
-#~ msgstr "Adresse de messagerie principale pour ce répertoire partagé"
-
-#~ msgid "The value specified as Free Busy future needs to be an integer."
-#~ msgstr ""
-#~ "La valeur spécifiée comme information de disponibilité future doit être "
-#~ "un entier."
-
-#~ msgid "The value specified as Free Busy Information URL is invalid."
-#~ msgstr ""
-#~ "La valeur spécifiée comme information de disponibilité future est "
-#~ "invalide."

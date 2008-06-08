@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 14:13+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,9 +62,8 @@ msgid "User"
 msgstr "Utilisateur"
 
 #: addons/logview/gosa_log_contents.tpl:85
-#, fuzzy
 msgid "Object type"
-msgstr "Nom de l'objet"
+msgstr "Type de l'objet"
 
 #: addons/logview/gosa_log_contents.tpl:86
 msgid "Object"
@@ -81,7 +80,7 @@ msgstr "La recherche n'a renvoyé aucun résultat..."
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:415
 #: addons/logview/class_gosa_logview.inc:6
 msgid "System logs"
-msgstr "journaux systèmes"
+msgstr "Journaux systèmes"
 
 #: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
 msgid "This does something"
@@ -94,15 +93,14 @@ msgstr "Avertissement"
 
 #: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
-#, fuzzy
 msgid "Configuration error"
-msgstr "Le fichier de configuration peut être écrit"
+msgstr "Erreur de configuration"
 
 #: addons/logview/class_logview.inc:82
 #: addons/logview/class_gosa_logview.inc:123
 #, php-format
 msgid "Missing %s PHP extension!"
-msgstr ""
+msgstr "Extension PHP %s manquante !"
 
 #: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
 #: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
@@ -124,7 +122,7 @@ msgstr "Tout"
 #: addons/logview/class_logview.inc:155
 #: addons/logview/class_gosa_logview.inc:71
 msgid "one hour"
-msgstr "Une heure"
+msgstr "une heure"
 
 #: addons/logview/class_logview.inc:155
 #: addons/logview/class_gosa_logview.inc:71
@@ -187,21 +185,20 @@ msgstr "Affichage des journaux système"
 
 #: addons/logview/class_gosa_logview.inc:200
 msgid "You have insufficient permissions to view syslog entries."
-msgstr ""
-"Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
+msgstr "Vous n'avez pas l'autorisation pour voir les entrées des journaux systèmes."
 
 #: addons/logview/class_gosa_logview.inc:235
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
+msgstr "La table journaux systèmes (%s.%s) est manquante, mettez à jour vos schéma de base de données pour l'application des journaux systèmes de GOsa."
 
 #: admin/systems/services/log/gosaLogServer.tpl:1
 msgid "GOsa logging database"
-msgstr "Base de données des journaux systèmes"
+msgstr "Base de données des journaux systèmes GOsa"
 
 #: admin/systems/services/log/gosaLogServer.tpl:4
 msgid "Database user"
-msgstr "Base de données utilisateur"
+msgstr "Utilisateur de la base de donées"
 
 #: admin/systems/services/log/gosaLogServer.tpl:12
 #: admin/systems/services/log/class_gosaLogServer.inc:71
@@ -217,14 +214,13 @@ msgstr "Base de données"
 
 #: admin/systems/services/log/class_gosaLogServer.inc:27
 #: admin/systems/services/log/class_gosaLogServer.inc:55
-#, fuzzy
 msgid "GOsa MySQL logging service"
-msgstr "Service de journaux systèmes"
+msgstr "Service de journaux systèmes GOsa MySQL"
 
 #: admin/systems/services/log/class_gosaLogServer.inc:91
 #: admin/systems/services/log/class_gosaLogServer.inc:92
 msgid "GOsa logging service"
-msgstr "Service de journaux systèmes"
+msgstr "Service de journaux systèmes GOsa"
 
 #: admin/systems/services/log/class_gosaLogServer.inc:92
 msgid "Services"
@@ -234,23 +230,3 @@ msgstr "Services"
 msgid "Allow view of entries on this server"
 msgstr "Permet la visualisation d'entrées sur ce serveur"
 
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#, fuzzy
-#~ msgid "No %s servers defined!"
-#~ msgstr "Pas de serveurs de journaux systèmes définis!"
-
-#, fuzzy
-#~ msgid "Cannot connect to %s database!"
-#~ msgstr "Impossible de se connecter au serveur de base de données !"
-
-#, fuzzy
-#~ msgid "Cannot select %s database!"
-#~ msgstr "Impossible de sélectionner la base de données !"
-
-#~ msgid "Database query failed!"
-#~ msgstr "Echec des requêtes sur la base de données !"

@@ -1,11 +1,11 @@
 # translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-06-08 15:34+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: personal/netatalk/class_netatalk.inc:37
 msgid "Manage netatalk account"
-msgstr "Créer un compte Netatalk"
+msgstr "Gèrer un compte Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:170
 #: personal/netatalk/class_netatalk.inc:179
@@ -37,7 +37,7 @@ msgstr ""
 
 #: personal/netatalk/class_netatalk.inc:186
 msgid "netatalk or NFS share"
-msgstr ""
+msgstr "Partage netatalk ou NFS"
 
 #: personal/netatalk/class_netatalk.inc:221
 #: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
@@ -47,7 +47,7 @@ msgstr "Partage"
 #: personal/netatalk/class_netatalk.inc:287
 #: personal/netatalk/class_netatalk.inc:351
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
 
 #: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
@@ -65,50 +65,3 @@ msgstr "Chemin"
 msgid "Netatalk settings"
 msgstr "Configuration Netatalk"
 
-#~ msgid "This account has no netatalk extensions."
-#~ msgstr "Ce compte n'a pas d'extensions netatalk."
-
-#~ msgid "Remove netatalk account"
-#~ msgstr "Supprimer le compte netatalk"
-
-#~ msgid ""
-#~ "This account has netatalk features enabled. You can disable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "L'extension netatalk est activée pour ce compte, vous pouvez la "
-#~ "désactiver en cliquant sur le bouton ci-dessous."
-
-#~ msgid "Create netatalk account"
-#~ msgstr "Créer un compte netatalk"
-
-#~ msgid ""
-#~ "This account has netatalk features disabled. You can enable them by "
-#~ "clicking below."
-#~ msgstr ""
-#~ "L'extension netatalk est désactivée pour ce compte, vous pouvez l'activer "
-#~ "en cliquant sur le bouton ci-dessous."
-
-#~ msgid "You must select a share to use."
-#~ msgstr "Vous devez sélectionner un partage à utiliser."
-
-#~ msgid "Saving of user/netatalk account with dn '%s' failed."
-#~ msgstr ""
-#~ "La sauvegarde de l'utilisateur/compte netatalk avec le dn '%s' à échoué."
-
-#~ msgid "Removing of user/netatalk account with dn '%s' failed."
-#~ msgstr ""
-#~ "La suppression du compte utilisateur/netatalk avec le dn '%s' à échoué."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Click the 'Edit' button below to change informations in this dialog"
-#~ msgstr ""
-#~ "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations "
-#~ "dans cette boite de dialogue"
-
-#~ msgid "Edit"
-#~ msgstr "Editer"
