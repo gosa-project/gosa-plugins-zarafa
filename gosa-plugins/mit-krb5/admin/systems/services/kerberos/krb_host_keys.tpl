@@ -12,7 +12,7 @@
 			<img src='images/empty.png' class="center">
 			<input type='image' class='center' name='recreate_{$ID}'
 				alt='{t}Recreate key{/t}' title='{t}Recreate key{/t}'
-				src='images/crossref.png'>
+				src='images/lists/reload.png'>
 			<input type='image' class='center' name='remove_{$ID}'
 				alt='{t}Remove key{/t}' title='{t}Remove key{/t}'
 				src='images/lists/trash.png'>
