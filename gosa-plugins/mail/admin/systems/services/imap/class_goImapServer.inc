@@ -15,7 +15,7 @@ class goImapServer extends goService {
   var $dn               = NULL;
   var $StatusFlag       = "goImapServerStatus";
   var $attributes       = array("goImapName","goImapConnect","goImapAdmin","goImapPassword",
-                                "goImapSieveServer","goImapSievePort",
+                                "goImapSieveServer",
                                 "cyrusImap","cyrusImapSSL","cyrusPop3","cyrusPop3SSL");
 
   var $cn                   = "";
@@ -27,7 +27,6 @@ class goImapServer extends goService {
   
   var $goImapSieveServer    = "";
   var $goImapSievePort      = "";
-  
   var $goImapServerStatus   = "";
   
   var $cyrusImap            = false;
@@ -63,7 +62,7 @@ class goImapServer extends goService {
       $this->view_logged = TRUE;
       new log("view","server/".get_class($this),$this->dn);
     }
- 
+
     /* set new status */
     if(isset($_POST['ExecAction'])){
       if(isset($this->Actions[$_POST['action']])){
@@ -88,6 +87,7 @@ class goImapServer extends goService {
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
+
     $smarty->assign("Actions",$this->Actions);
     $smarty->assign("is_new",$this->dn);
     $smarty->assign("is_acc",$this->initially_was_account);
@@ -111,7 +111,17 @@ class goImapServer extends goService {
     }  
     if(empty($this->goImapConnect)){
       $message[] = msgPool::required(_("Connect URL"));
-    }  
+    }elseif(!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapConnect)){
+      $message[]= msgPool::invalid(_("Connect URL"),"","","{server-name:port/options}");
+    } 
+
+    if(empty($this->goImapSieveServer)){
+      $message[] = msgPool::required(_("Sieve connect URL"));
+    }elseif(!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapSieveServer)){
+      $message[]= msgPool::invalid(_("Sieve connect URL"),"","","{server-name:port/options}"."&nbsp;".
+          sprintf(_("Valid options are: %s"),"tls,notls"));
+    } 
+
     if(empty($this->goImapAdmin)){
       $message[] = msgPool::required(_("Admin user"));
     }  
@@ -119,13 +129,11 @@ class goImapServer extends goService {
       $message[] = msgPool::required(_("Password"));
     } 
 
-    /* Check connect string */
-    if (!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapConnect)){
-      $message[]= msgPool::invalid(_("Connect URL"),"","{server-name:port/options}");
-    }
-    if (!preg_match('/^[0-9]+$/', $this->goImapSievePort)){
-      $message[]= msgPool::invalid(_("Sieve port"),$this->goImapSievePort,"/[0-9]/");
-    }
+#   if(empty($this->goImapSievePort)){
+#     $message[] = msgPool::required(_("Sieve port"));
+#   }elseif (!preg_match('/^[0-9]+$/', $this->goImapSievePort)){
+#     $message[]= msgPool::invalid(_("Sieve port"),$this->goImapSievePort,"/[0-9]/");
+#   }
  
     return ($message);
   }
@@ -153,10 +161,11 @@ class goImapServer extends goService {
   /* Save service */
   function save()
   {
-    /* Move cn to sieve server */
-    $this->goImapSieveServer= $this->cn;
-
+    
     plugin::save();
+
+    $this->attrs['goImapSievePort']  = preg_replace("/^\{[^:]+:([0-9]*)\/.*$/","\\1",$this->goImapSieveServer);
+ 
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
     $ldap->cat($this->dn,array("objectClass"));
@@ -203,7 +212,8 @@ class goImapServer extends goService {
             "goImapConnect"     =>_("Connect URL"),
             "goImapAdmin"       =>_("Admin user"),
             "goImapPassword"    =>_("Admin password"),
-            "goImapSievePort"   =>_("Sieve port"),
+//            "goImapSievePort"   =>_("Sieve port"),
+            "goImapSieveServer"=>_("Sieve connect URL"),
             "cyrusImap"         =>_("Start IMAP service"),
             "cyrusImapSSL"      =>_("Start IMAP SSL service"),
             "cyrusPop3"         =>_("Start POP3 service"),

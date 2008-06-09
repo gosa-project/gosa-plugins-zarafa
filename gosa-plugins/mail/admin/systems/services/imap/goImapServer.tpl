@@ -40,11 +40,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Sieve port{/t}{$must}
+					<td>{t}Sieve connect URL{/t}{$must}
 					</td>
 					<td>
-{render acl=$goImapSievePortACL}
-						<input name="goImapSievePort" id="goImapSievePort" size=10 maxlength=30 value="{$goImapSievePort}">
+{render acl=$goImapSieveServerACL}
+						<input name="goImapSieveServer" id="goImapSieveServer" size=30 maxlength=60 value="{$goImapSieveServer}">
 {/render}
 					</td>
 				</tr>
