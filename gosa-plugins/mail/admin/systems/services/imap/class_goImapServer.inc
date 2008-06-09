@@ -117,7 +117,7 @@ class goImapServer extends goService {
 
     if(empty($this->goImapSieveServer)){
       $message[] = msgPool::required(_("Sieve connect URL"));
-    }elseif(!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapSieveServer)){
+    }elseif(!preg_match('/^\{[^:]+:[0-9]*\/(no|)tls\}$/', $this->goImapSieveServer)){
       $message[]= msgPool::invalid(_("Sieve connect URL"),"","","{server-name:port/options}"."&nbsp;".
           sprintf(_("Valid options are: %s"),"tls,notls"));
     } 
