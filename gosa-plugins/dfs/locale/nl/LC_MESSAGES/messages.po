@@ -6,13 +6,13 @@
 # Cajus Pollmeier <pollmeier@gonicus.de>, 2004.
 #
 # Translator:
-# Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>, 2005.
+# Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>, 2005,2006,2007,2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-04 09:23+0200\n"
-"PO-Revision-Date: 2006-06-02 16:58+0100\n"
+"PO-Revision-Date: 2008-06-09 18:01+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
@@ -20,18 +20,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: addons/godfs/class_dfsManagment.inc:8
-#, fuzzy
 msgid "DFS Management"
-msgstr "DFS Beheer"
+msgstr "DFS beheer"
 
 #: addons/godfs/class_dfsManagment.inc:9
 msgid "This does something"
 msgstr "Dit doet iets"
 
 #: addons/godfs/class_dfsManagment.inc:148
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#: addons/godfs/class_dfsgeneric.inc:171
+#: addons/godfs/class_dfsgeneric.inc:200
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP fout"
 
 #: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
@@ -47,7 +47,7 @@ msgstr "Omhoog"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Go to dfs root"
-msgstr "Ga naar DFS root"
+msgstr "Ga naar DFS basis"
 
 #: addons/godfs/class_dfsManagment.inc:212
 msgid "Root"
@@ -81,7 +81,8 @@ msgstr "DFS eigenschappen"
 msgid "Name of dfs Share"
 msgstr "Naam van DFS share"
 
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+#: addons/godfs/generic.tpl:12
+#: addons/godfs/generic.tpl:38
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -110,14 +111,8 @@ msgid "Information"
 msgstr "Informatie"
 
 #: addons/godfs/contents.tpl:26
-msgid ""
-"This menu allows you to create, delete and edit selected dfs shares. Having "
-"a large numbers of dfs shares, you might prefer the range selectors on top "
-"of the dfs share list."
-msgstr ""
-"Dit menu maakt het mogelijk om geselecteerde DFS shares toe te voegen, "
-"bewerken of verwijderen. Indien u veel DFS shares heeft is het aan te raden "
-"de selectie mogelijkheden te gebruiken."
+msgid "This menu allows you to create, delete and edit selected dfs shares. Having a large numbers of dfs shares, you might prefer the range selectors on top of the dfs share list."
+msgstr "Dit menu maakt het mogelijk om geselecteerde DFS shares toe te voegen, bewerken of verwijderen. Indien u veel DFS shares heeft is het aan te raden de selectie mogelijkheden te gebruiken."
 
 #: addons/godfs/contents.tpl:31
 msgid "Filters"
@@ -131,39 +126,8 @@ msgstr "Toon overeenkomende DFS shares"
 msgid "Regular expression for matching dfs share names"
 msgstr "Reguliere expressie voor overeenkomende DFS share namen"
 
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+#: addons/godfs/main.inc:27
+#: addons/godfs/main.inc:33
 msgid "Distributed File System Administration"
 msgstr "Distibuted File System Beheer"
 
-#~ msgid "Cancel"
-#~ msgstr "Annuleren"
-
-#, fuzzy
-#~ msgid "Removing of DFS share with dn '%s' failed."
-#~ msgstr "Het verwijderen van de DFS share is mislukt"
-
-#~ msgid "Dfs share already exists."
-#~ msgstr "De opgegeven DFS share bestaat al."
-
-#~ msgid "Required Field \"Name of dfs Share\" is not set."
-#~ msgstr "Vereist veld \"Naam van DFS share\" is leeg."
-
-#~ msgid "Required Field \"Description\" is not set."
-#~ msgstr "Vereist veld \"Omschrijving\" is leeg."
-
-#~ msgid "Required Field \"Fileserver\" is not set."
-#~ msgstr "Vereist veld \"Bestandserver\" is leeg."
-
-#~ msgid "Required Field \"Share on fileserver\" is not set."
-#~ msgstr "Vereist veld \"Share op bestandserver\" is leeg."
-
-#~ msgid "Required Field \"Location\" is not set."
-#~ msgstr "Vereist veld \"DFS locatie\" is leeg."
-
-#, fuzzy
-#~ msgid "Saving dfs/generic with dn '%s' failed."
-#~ msgstr "Het opslaan van het algemene gerbuikers account is mislukt"
-
-#, fuzzy
-#~ msgid "Removing dfs/generic with dn '%s' failed."
-#~ msgstr "Het verwijderen van een algemeen component is mislukt"
