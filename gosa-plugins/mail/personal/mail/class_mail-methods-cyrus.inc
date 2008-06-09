@@ -275,7 +275,7 @@ class mailMethodCyrus extends mailMethod
 
     /* Log into the mail server */
     $sieve= new sieve($cfg["sieve_server"], $cfg["sieve_port"], $user,
-        $cfg["password"], $cfg["admin"]);
+        $cfg["password"], $cfg["admin"],$cfg["sieve_option"]);
 
     if (!$sieve->sieve_login()){
       msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot log into SIEVE server: %s"), '<br><br><i>'.to_string($sieve->error_raw).'</i>'), ERROR_DIALOG);

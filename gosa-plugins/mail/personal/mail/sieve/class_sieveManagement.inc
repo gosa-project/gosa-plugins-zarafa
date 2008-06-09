@@ -143,7 +143,8 @@ class sieveManagement extends plugin
           $cfg["sieve_port"], 
           $this->parent->$uattrib, 
           $cfg["password"], 
-          $cfg["admin"]);
+          $cfg["admin"],
+          $cfg["sieve_option"]);
 
       /* Try to login */
       if (!@$this->sieve_handle->sieve_login()){

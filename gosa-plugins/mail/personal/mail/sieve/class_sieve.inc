@@ -82,6 +82,7 @@ class sieve
   var $error;
   var $error_raw;
   var $responses;
+  var $options = "";
 
   //maybe we should add an errorlvl that the user will pass to new sieve = sieve(,,,,E_WARN)
   //so we can decide how to handle certain errors?!?
@@ -199,7 +200,7 @@ class sieve
     } /* end else */   
   } /* end get_response() */
 
-  function sieve($host, $port, $user, $pass, $auth="", $auth_types="PLAIN DIGEST-MD5")
+  function sieve($host, $port, $user, $pass, $auth="",$options ="", $auth_types="PLAIN DIGEST-MD5")
   {
     $this->host=$host;
     $this->port=$port;
@@ -220,6 +221,7 @@ class sieve
     $this->loggedin=false;
     $this->error= "";
     $this->error_raw="";
+	$this->options = $options;
   }
 
   function parse_for_quotes($string)
@@ -477,8 +479,31 @@ class sieve
           return true;
   }
 
+
   function authenticate()
   {
+
+	/* Check if a TLS bases connection is required 
+     */
+	if(preg_match("/^tls$/",$this->options)){
+
+		/* Check if PHP supports TLS encryption for sockets 
+         */
+		if(function_exists("stream_socket_enable_crypto")){
+			
+			if (@ fputs ($this->fp, "STARTTLS\r\n") === false) {
+				$this->error_raw = "fputs() returned 'false'"; return (false);
+			} @ $linha = fgets ($this->fp, 1024); if ($linha === false) {
+				$this->error_raw = "fgets() returned 'false'"; return (false);
+			} if (! preg_match ("/\\s*OK\\s/i", $linha)) {
+				$this->error_raw = "expected an 'OK', but server replied: '" . trim ($linha) . "'"; return (false);
+			} if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+				$this->error_raw = "stream_socket_enable_crypto() returned 'false'"; return (false);
+			}else{
+				echo "Done";
+			}
+		}
+	}
 
     switch ($this->auth_in_use) {
     
