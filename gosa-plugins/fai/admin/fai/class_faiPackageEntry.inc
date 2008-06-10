@@ -74,10 +74,12 @@ class faiPackageEntry extends plugin
 
     /* Create section checkboxes 
      */ 
-    $Section_boxes = "<input type='hidden' value='chkchange' name='chkchange'><table summary=''><tr>";
+    $Section_boxes = "
+          <div style='height:450px; overflow:scroll;'> 
+            <input type='hidden' value='chkchange' name='chkchange'><table summary=''><tr>";
     $i = 0;
     foreach($this->package_sections as $cat => $selected){
-      if($i == 3){
+      if($i == 2){
         $Section_boxes .="</tr><tr>";
         $i = 0;
       }
@@ -90,7 +92,7 @@ class faiPackageEntry extends plugin
       }
       $i ++ ;
     }
-    $Section_boxes .= "</tr></table>";
+    $Section_boxes .= "</tr></table></div>";
 
     /* Create List && fill it with packages
      */
