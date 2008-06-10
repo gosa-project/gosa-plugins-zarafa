@@ -215,30 +215,32 @@ class krb_host_keys extends plugin
       }
     }
 
-
-
-    $smarty = get_smarty(); 
-    $smarty->assign("keys"        ,$this->build_html($prefix,$service_plugin));
-    $smarty->assign("server_list" ,$this->server_list);
-    $smarty->assign("service_plugin" ,$service_plugin);
-    $smarty->assign("is_service_key" , $this->is_service_key);
-    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
-  }
-
-
-  /*! \brief Build up an array which is used to create the
-              HTML content for this plugin in the smarty template.
-   */
-  function build_html($prefix,$service_plugin)
-  {
-    $ret = array();
-  
+    /* Create a divlist to list all key settings. 
+     */
+    $divlist = new divSelectBox("Kerberos_Host/Service_Keys");
+    $divlist->SetHeight(100);
     $princ_id = 0; // Used in posts
-    $ret = array();
+
+    $this->last_list[$prefix] = array();
+
+    /* Create actions */
+    $new = "<input type='image' class='center' name='create_%ID%'
+      alt='{t}Create key{/t}' title='{t}Create key{/t}' src='images/lists/new.png'>
+      <img src='images/empty.png' alt=' ' class='center'>
+      <img src='images/empty.png' alt=' ' class='center'>";
+    $rec ="
+      <img src='images/empty.png' alt=' ' class='center'>
+      <input type='image' class='center' name='recreate_%ID%'
+      alt='{t}Recreate key{/t}' title='{t}Recreate key{/t}' src='images/lists/reload.png'>
+      <input type='image' class='center' name='remove_%ID%'
+      alt='{t}Remove key{/t}' title='{t}Remove key{/t}' src='images/lists/trash.png'>";
+
     foreach($this->server_list as $mac => $server){
+
+      /* Recreate/Remove actions */
       $realm = $server['REALM'];
 
-      /* Check if the given prefix is configured for every realm
+      /* Check if the given prefix is configured for a realm
          If it is configured display the recreate and remove button 
          if not display the create button. 
        */
@@ -257,14 +259,23 @@ class krb_host_keys extends plugin
       /* Display buttons to "create" or to "remove/recreate" wheteher the prefix esists or not 
        */
       $princ_id ++;
+      $this->last_list[$prefix][$princ_id]['REALM']  = $realm;
+      $this->last_list[$prefix][$princ_id]['MAC']    = $mac;
+      $this->last_list[$prefix][$princ_id]['NAME']   = $master_princ;
+
+      $field1 = array('string' => $realm );
+      $field2 = array('string' => $master_princ);
       if($found){
-        $ret[$princ_id]['USED'] = TRUE;
+        $field3 = array('string' => _("installed"));
+        $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$rec),"attach" => "style='border:0px;'");
+        $this->last_list[$prefix][$princ_id]['USED'] = TRUE;
       }else{
-        $ret[$princ_id]['USED'] = FALSE;
+        $field3 = array('string' => "-");
+        $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$new),"attach" => "style='border:0px;'");
+        $this->last_list[$prefix][$princ_id]['USED'] = FALSE;
       }
-      $ret[$princ_id]['REALM']  = $realm;
-      $ret[$princ_id]['MAC']    = $mac;
-      $ret[$princ_id]['NAME']   = $master_princ;
+
+      $divlist->AddEntry(array($field1,$field2,$field3,$field4));
 
       /* Get all additionally configured service host keys, this are all keys that 
          do not match the master_princ.
@@ -273,17 +284,32 @@ class krb_host_keys extends plugin
         foreach($server['PRINCIPALS'] as $id => $princ){
           if(preg_match("/".normalizePreg("/".$this->namingAttr."@")."/i",$princ) &&
               !preg_match("/^".normalizePreg($prefix)."/",$princ)){
+
+            /* Display buttons to "create" or to "remove/recreate" wheteher the prefix esists or not 
+             */
             $princ_id ++;
-            $ret[$princ_id]['USED']  = TRUE;
-            $ret[$princ_id]['REALM'] = $realm;
-            $ret[$princ_id]['MAC']   = $mac;
-            $ret[$princ_id]['NAME']  = $princ;
+
+            $this->last_list[$prefix][$princ_id]['USED']  = TRUE;
+            $this->last_list[$prefix][$princ_id]['REALM'] = $realm;
+            $this->last_list[$prefix][$princ_id]['MAC']   = $mac;
+            $this->last_list[$prefix][$princ_id]['NAME']  = $princ;
+
+            $field1 = array('string' => $realm );
+            $field2 = array('string' => $princ);
+            $field3 = array('string' => _("installed"));
+            $field4 = array('string' => preg_replace("/%ID%/",$princ_id,$rec),"attach" => "style='border:0px;'");
+            $divlist->AddEntry(array($field1,$field2,$field3,$field4));
           } 
         }
       }
     }
-    $this->last_list[$prefix] = $ret;
-    return($ret);
+    
+    $smarty = get_smarty(); 
+    $smarty->assign("list",$divlist->DrawList());
+    $smarty->assign("server_list" ,$this->server_list);
+    $smarty->assign("service_plugin" ,$service_plugin);
+    $smarty->assign("is_service_key" , $this->is_service_key);
+    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
   }
 
 
