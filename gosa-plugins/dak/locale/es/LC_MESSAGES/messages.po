@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
 
 #: addons/dak/class_dak_repository.inc:40
 msgid "Repository"
@@ -29,9 +25,13 @@ msgstr ""
 msgid "DAK repository"
 msgstr ""
 
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
+
 #: addons/dak/class_dak_repository.inc:47
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #~ msgid "Addressbook"
 #~ msgstr "Libreta direcciones"

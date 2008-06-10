@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,21 +14,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
-
 #: addons/dak/class_dak_repository.inc:40
+#, fuzzy
 msgid "Repository"
-msgstr ""
+msgstr "Повторить"
 
 #: addons/dak/class_dak_repository.inc:41
+#, fuzzy
 msgid "DAK repository"
+msgstr "Каталог"
+
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:47
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #~ msgid "Addressbook"
 #~ msgstr "Адресная книга"

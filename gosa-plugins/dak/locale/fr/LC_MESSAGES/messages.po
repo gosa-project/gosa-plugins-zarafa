@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,21 +14,23 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
-
 #: addons/dak/class_dak_repository.inc:40
+#, fuzzy
 msgid "Repository"
-msgstr ""
+msgstr "Restaurer"
 
 #: addons/dak/class_dak_repository.inc:41
+#, fuzzy
 msgid "DAK repository"
+msgstr "Répertoire"
+
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:47
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #~ msgid "Addressbook"
 #~ msgstr "Carnet d'adresses"

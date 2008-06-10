@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,21 +16,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
-
 #: addons/dak/class_dak_repository.inc:40
+#, fuzzy
 msgid "Repository"
-msgstr ""
+msgstr "仓库"
 
 #: addons/dak/class_dak_repository.inc:41
+#, fuzzy
 msgid "DAK repository"
+msgstr "目录"
+
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:47
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #~ msgid "Addressbook"
 #~ msgstr "地址簿"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,16 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
-
 #: addons/dak/class_dak_repository.inc:40
 msgid "Repository"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:41
 msgid "DAK repository"
+msgstr ""
+
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:47

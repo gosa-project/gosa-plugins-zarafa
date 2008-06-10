@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 11:07+0200\n"
+"POT-Creation-Date: 2008-06-10 16:38+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,21 +14,23 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: addons/dak/main.inc:32 addons/dak/class_dak_repository.inc:46
-msgid "DAK"
-msgstr ""
-
 #: addons/dak/class_dak_repository.inc:40
+#, fuzzy
 msgid "Repository"
-msgstr ""
+msgstr "Odtwórz"
 
 #: addons/dak/class_dak_repository.inc:41
+#, fuzzy
 msgid "DAK repository"
+msgstr "Katalog"
+
+#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #: addons/dak/class_dak_repository.inc:47
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #~ msgid "Addressbook"
 #~ msgstr "Książka adresowa"
