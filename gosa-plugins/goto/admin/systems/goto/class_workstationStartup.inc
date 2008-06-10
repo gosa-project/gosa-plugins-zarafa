@@ -245,9 +245,8 @@ class workstartup extends plugin
         }
         $this->FAIdebianMirror = "auto";
         $this->FAIrelease = key($this->cache['SERVERS'][$this->FAIdebianMirror]);
-        $this->cache =array();
+        $this->cache['CLASSES'] = array();
         $this->update_fai_cache();
-        
       }
   
       /* Check if the current mirror is available 
@@ -258,7 +257,7 @@ class workstartup extends plugin
           msg_dialog::display(_("Error"), sprintf(_("FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"), $this->FAIrelease, $this->FAIdebianMirror,$new_release), ERROR_DIALOG);
         }
         $this->FAIrelease = $new_release;
-        $this->cache =array();
+        $this->cache['CLASSES'] = array();
         $this->update_fai_cache();
       }
     }
@@ -1107,7 +1106,7 @@ class workstartup extends plugin
       }
 
       $o_queue = new gosaSupportDaemon();
-      $tmp = $o_queue->FAI_get_server(); 
+      $tmp = $o_queue->FAI_get_server();
       if($o_queue->is_error()){
         msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
         $this->si_fai_action_failed = TRUE;
@@ -1155,7 +1154,7 @@ class workstartup extends plugin
       $release = $this->FAIrelease;
     }
 
-    if($force || !isset($this->cache['CLASSES'][$release])){
+    if($force || !isset($this->cache['CLASSES'][$release]) && $release != ""){
 
       /* Get the list of available servers and their releases.
        */
@@ -1209,7 +1208,7 @@ class workstartup extends plugin
 
     /* Get list of available kernel for this release 
      */
-    if($force || !isset($this->cache['KERNELS'][$release])){
+    if($force || !isset($this->cache['KERNELS'][$release]) && $release != ""){
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_kernels($release);
       $this->cache['KERNELS'][$release] = array();
@@ -1220,8 +1219,8 @@ class workstartup extends plugin
         if(empty($kernel)) continue;
         $this->cache['KERNELS'][$release][$kernel]=$kernel;
       }
+      ksort($this->cache['KERNELS'][$release]);
     }
-    ksort($this->cache['KERNELS'][$release]);
   }
 
 
