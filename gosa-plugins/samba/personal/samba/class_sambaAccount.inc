@@ -1122,12 +1122,27 @@ class sambaAccount extends plugin
   function adapt_from_template($dn, $skip= array())
   {
     plugin::adapt_from_template($dn, $skip);
+
+
     $this->sambaSID= "";
     $this->sambaPrimaryGroupSID= "";
 
-      /* Fill mungedDial field */
+    /* Fill mungedDial field */
     if ($this->samba3 && isset($this->attrs['sambaMungedDial']) && !in_array('sambaMungedDial', $skip)){
       $this->mungedObject->load($this->sambaMungedDial);
+    }
+
+    /* Adapt munged attributes */
+    foreach($this->ctxattributes as $attr){
+      if(isset($this->mungedObject->ctx[$attr]))
+        $val = $this->mungedObject->ctx[$attr];
+
+      foreach (array("sn", "givenName", "uid") as $repl){
+        if (preg_match("/%$repl/i", $val)){
+          $val= preg_replace ("/%$repl/i", $this->parent->$repl, $val);
+        }
+      }
+      $this->mungedObject->ctx[$attr] = $val;
     }
 
     /* Password expiery */
