@@ -413,14 +413,5 @@ sub process_job_msg {
     return @out_msg_l;
 }
 
+# vim:ts=4:shiftwidth:expandtab
 1;
-
-
-
-
-
-
-
-
-
-

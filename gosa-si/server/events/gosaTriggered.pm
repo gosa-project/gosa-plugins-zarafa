@@ -33,6 +33,7 @@ my @events = (
     "send_user_msg", 
     "get_available_kernel",
 	"trigger_activate_new",
+	"get_dak_keyring",
     );
 @EXPORT = @events;
 
@@ -854,4 +855,57 @@ sub trigger_activate_new {
 }
 
 
+sub get_dak_keyring {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $source = @{$msg_hash->{'source'}}[0];
+	my $target = @{$msg_hash->{'target'}}[0];
+	my $header= @{$msg_hash->{'header'}}[0];
+
+    my @keys;
+    my %data;
+
+    my $pubring = $main::dak_signing_keys_directory."/dot-gnupg/pubring.gpg";
+    my $secring = $main::dak_signing_keys_directory."/dot-gnupg/secring.gpg";
+
+    my $gpg_cmd = `which gpg`; chomp $gpg_cmd;
+    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $pubring --secret-keyring $secring";
+    
+    # Check if the keyrings are in place and readable
+    if(
+         &run_as($main::dak_user, "test -r $pubring") != 0 ||
+         &run_as($main::dak_user, "test -r $secring") != 0
+     ) {
+         &main::daemon_log("ERROR: Dak Keyrings are unreadable!");
+     } else {
+         my $command = "$gpg --list-keys";
+         my @output = &run_as($main::dak_user, $command);
+
+         my $i=0;
+         foreach (@output) {
+             if ($_ =~ m/^pub\s.*$/) {
+                 ($keys[$i]->{'pub'}->{'length'}, $keys[$i]->{'pub'}->{'uid'}, $keys[$i]->{'pub'}->{'valid'}) = ($1, $2, $3) 
+                 if $_ =~ m/^pub\s*?(\w*?)\/(\w*?)\s(\d{4}-\d{2}-\d{2})$/;
+             } elsif ($_ =~ m/^sub\s.*$/) {
+                 ($keys[$i]->{'sub'}->{'length'}, $keys[$i]->{'sub'}->{'uid'}, $keys[$i]->{'sub'}->{'valid'}) = ($1, $2, $3) 
+                 if $_ =~ m/^sub\s*?(\w*?)\/(\w*?)\s(\d{4}-\d{2}-\d{2})$/;
+             } elsif ($_ =~ m/^uid\s.*$/) {
+                 push @{$keys[$i]->{'uid'}}, $1 if $_ =~ m/^uid\s*?([^\s].*?)$/;
+             } elsif ($_ =~ m/^$/) {
+                 $i++;
+             }
+         }
+     }
+
+     my $i=0;
+     foreach my $key (@keys) {
+         $data{"answer".$i++}= $key;
+     }
+         
+     my $out_msg = &build_msg("get_dak_keyring", $target, $source, \%data);
+     my @out_msg_l = ($out_msg);
+     return @out_msg_l;
+}
+
+
+# vim:ts=4:shiftwidth:expandtab
 1;

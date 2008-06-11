@@ -146,7 +146,7 @@ sub detected_hardware {
 		return;
 	}
 	# Build LDAP connection
-  my $ldap_handle = &main::get_ldap_handle($session_id);
+  	my $ldap_handle = &main::get_ldap_handle($session_id);
 	if( not defined $ldap_handle ) {
 		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
 		return;

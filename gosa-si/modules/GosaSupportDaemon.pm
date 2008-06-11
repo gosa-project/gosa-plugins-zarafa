@@ -26,6 +26,7 @@ my @functions = (
     "get_ip",
     "get_interface_for_ip",
     "get_interfaces",
+	"run_as",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -615,6 +616,25 @@ sub get_interfaces {
 		push @result, $if;
 	}
 
+	return @result;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  run_as
+#   PARAMETERS:  uid, command
+#      RETURNS:  result of command
+#  DESCRIPTION:  Runs command as uid using the sudo utility.
+#===============================================================================
+sub run_as {
+	my ($uid, $command) = @_;
+	my $sudo_cmd = `which sudo`;
+	chomp($sudo_cmd);
+	if(! -x $sudo_cmd) {
+		&main::daemon_log("ERROR: The sudo utility is not available! Please fix this!");
+	}
+	open(PIPE, "$sudo_cmd su - $uid -c '$command' |");
+	my @result=<PIPE>;
 	return @result;
 }
 

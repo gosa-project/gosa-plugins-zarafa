@@ -98,6 +98,10 @@ our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 
+# dak variables
+our $dak_base_directory;
+our $dak_signing_keys_directory;
+our $dak_user;
 
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
@@ -233,6 +237,9 @@ my $max_children = 2;
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
+	"dak-base" => [\$dak_base_directory, "/srv/archive"],
+	"dak-keyring" => [\$dak_signing_keys_directory, "/srv/archive/s3kr1t"],
+	"dak-user" => [\$dak_user, "deb-dak"],
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],
@@ -1816,7 +1823,7 @@ sub get_ldap_handle {
 	if ($session_id == 0) {
 		daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
 		$ldap_handle = Net::LDAP->new( $ldap_uri );
-		$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password); 
+		$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or daemon_log("$session_id ERROR: Bind to LDAP $ldap_uri as $ldap_admin_dn failed!"); 
 
 	} else {
 		my $session_reference = $global_kernel->ID_id_to_session($session_id);
@@ -1833,7 +1840,7 @@ sub get_ldap_handle {
                 #       used handle is still valid - or if we've to reconnect...
 		#if (not exists $heap->{ldap_handle}) {
 			$ldap_handle = Net::LDAP->new( $ldap_uri );
-			$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password); 
+			$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or daemon_log("$session_id ERROR: Bind to LDAP $ldap_uri as $ldap_admin_dn failed!"); 
 			$heap->{ldap_handle} = $ldap_handle;
 		#}
 	}
@@ -2719,7 +2726,6 @@ sub parse_package {
 
     close( $PACKAGES );
     unlink( "$path.in" );
-    &main::daemon_log("$session_id DEBUG: unlink '$path.in'", 1); 
 }
 
 

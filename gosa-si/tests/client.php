@@ -108,7 +108,8 @@ for($count = 1; $count <= $zahl; $count++)
 
     #$data = "<xml><header>gosa_query_fai_server</header><source>GOSA</source> <target>10.89.1.131:20081</target></xml>";
     #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:aa:16</target> <source>GOSA</source> </xml>";
-    $data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fb</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fb</target> <source>GOSA</source> </xml>";
+    $data = "<xml> <header>gosa_get_dak_keyring</header> <target>GOSA</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:0c:29:02:e5:4d</target> <macaddress>00:0c:29:02:e5:4d</macaddress><timestamp>29700101000000</timestamp> </xml>";
 
     $sock->write($data);
