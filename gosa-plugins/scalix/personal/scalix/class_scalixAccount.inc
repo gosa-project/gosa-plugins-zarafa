@@ -34,6 +34,7 @@ class scalixAccount extends plugin
   var $scalixHideUserEntry= FALSE;
   var $scalixMailboxClass= "";
 
+  var $mail ="";
   var $uid  ="";
   var $default_permissions= "none";
   var $member_permissions= "post";
