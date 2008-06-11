@@ -626,7 +626,7 @@ class kolabAccount extends plugin
     /* Pull arrays */
     foreach(array("kolabDelegate", "kolabInvitationPolicy") as $attr){
 
-      if (in_array($val, $skip)){
+      if (in_array($attr, $skip)){
         continue;
       }
 
