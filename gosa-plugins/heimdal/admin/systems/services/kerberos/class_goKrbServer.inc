@@ -178,7 +178,7 @@ class goKrbServer extends goService{
       $message[]= msgPool::required(_("Realm"));
     }
     if(count($this->policies) && (empty($this->macAddress) || !tests::is_mac($this->macAddress))){
-      $message[] = _("In order to save policy changes, the server reqiures a valid mac address.");
+      $message[] = _("In order to save policy changes, the server requires a valid mac address.");
     }
     return($message);
   }

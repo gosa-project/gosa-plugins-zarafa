@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 10:42+0200\n"
+"POT-Creation-Date: 2008-06-12 09:08+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,69 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr ""
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
-msgid "Kerberos Realms"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:16
-#: admin/systems/services/kerberos/class_goKrbServer.inc:393
-msgid "Policies"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:58
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:358
-#: admin/systems/services/kerberos/class_goKrbServer.inc:367
-#: admin/systems/services/kerberos/class_goKrbServer.inc:371
-msgid "Service infrastructure"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:165
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Informazioni personali"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:178
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-#, fuzzy
-msgid "Realm"
-msgstr "Cognome"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server reqiures a valid mac address."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Remove"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Policy"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:384
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Informazioni personali"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Services"
-msgstr "Servizi"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -98,8 +35,9 @@ msgstr ""
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:163
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:425
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Errore LDAP"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
 msgid "Max life"
@@ -121,6 +59,20 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "Password"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr ""
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+#, fuzzy
+msgid "Kerberos Realms"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
+msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 #, fuzzy
@@ -144,24 +96,29 @@ msgid "infinite"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:34
+#, fuzzy
 msgid "Hour"
-msgstr ""
+msgstr "ora"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:36
+#, fuzzy
 msgid "Minute"
-msgstr ""
+msgstr "Stampante"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:38
+#, fuzzy
 msgid "Day"
-msgstr ""
+msgstr "giorno"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:40
+#, fuzzy
 msgid "Month"
-msgstr ""
+msgstr "mese"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:42
+#, fuzzy
 msgid "Year"
-msgstr ""
+msgstr "Cerca"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
@@ -183,6 +140,56 @@ msgstr "Salva"
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
 msgid "Cancel"
 msgstr "Annulla"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Seleziona per mostrare le applicazioni"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Informazioni personali"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+#, fuzzy
+msgid "Realm"
+msgstr "Cognome"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Informazioni personali"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Services"
+msgstr "Servizi"
 
 #, fuzzy
 #~ msgid "Admin"
