@@ -623,7 +623,8 @@ sub get_interfaces {
 #===  FUNCTION  ================================================================
 #         NAME:  run_as
 #   PARAMETERS:  uid, command
-#      RETURNS:  result of command
+#      RETURNS:  hash with keys 'resultCode' = resultCode of command and 
+#                'output' = program output
 #  DESCRIPTION:  Runs command as uid using the sudo utility.
 #===============================================================================
 sub run_as {
@@ -634,8 +635,9 @@ sub run_as {
 		&main::daemon_log("ERROR: The sudo utility is not available! Please fix this!");
 	}
 	open(PIPE, "$sudo_cmd su - $uid -c '$command' |");
-	my @result=<PIPE>;
-	return @result;
+	my $result = {'resultCode' => $?};
+	push @{$result->{'output'}}, <PIPE>;
+	return $result;
 }
 
 
