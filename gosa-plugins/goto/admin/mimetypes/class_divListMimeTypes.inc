@@ -197,7 +197,6 @@ class divListMimeTypes extends MultiSelectWindow
      ********************/
 
     /* Create links */
-    $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
     $userimg  = "<img class='center' src='plugins/groups/images/groups.png' alt='User'    title='%s'>";
     $mimeimg  = "<img class='center' src='images/select_mimetype.png' alt='A'  title='"._("Mime type")."'>";
