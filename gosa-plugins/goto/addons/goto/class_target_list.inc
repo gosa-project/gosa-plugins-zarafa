@@ -173,7 +173,6 @@ class target_list extends MultiSelectWindow
       /* Add Copy & Paste buttons if copy&paste is enabled
      */
     // Defining Links
-    $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     $ui = get_userinfo();
