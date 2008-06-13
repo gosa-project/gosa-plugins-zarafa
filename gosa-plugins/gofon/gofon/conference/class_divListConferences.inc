@@ -165,8 +165,6 @@ class divListConference extends MultiSelectWindow
 
   function setEntries($list)
   {
-    $linkopen= "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
-
     $userimg  = "<img class='center' src='images/select_conference.png' alt='User' title='%s'>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
