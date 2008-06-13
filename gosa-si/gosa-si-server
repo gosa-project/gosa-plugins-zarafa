@@ -101,6 +101,7 @@ our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_d
 # dak variables
 our $dak_base_directory;
 our $dak_signing_keys_directory;
+our $dak_queue_directory;
 our $dak_user;
 
 # specifies the verbosity of the daemon_log
@@ -238,7 +239,8 @@ my $max_children = 2;
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
 	"dak-base" => [\$dak_base_directory, "/srv/archive"],
-	"dak-keyring" => [\$dak_signing_keys_directory, "/srv/archive/s3kr1t"],
+	"dak-keyring" => [\$dak_signing_keys_directory, "/srv/archive/keyrings"],
+	"dak-queue" => [\$dak_queue_directory, "/srv/archive/queue"],
 	"dak-user" => [\$dak_user, "deb-dak"],
     },
 "ClientPackages" => {

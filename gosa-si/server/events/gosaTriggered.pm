@@ -36,6 +36,7 @@ my @events = (
 	"get_dak_keyring",
 	"import_dak_key",
 	"remove_dak_key",
+#    "get_dak_queue",
     );
 @EXPORT = @events;
 
@@ -867,16 +868,14 @@ sub get_dak_keyring {
     my @keys;
     my %data;
 
-    my $pubring = $main::dak_signing_keys_directory."/dot-gnupg/pubring.gpg";
-    my $secring = $main::dak_signing_keys_directory."/dot-gnupg/secring.gpg";
+    my $keyring = $main::dak_signing_keys_directory."/keyring.gpg";
 
     my $gpg_cmd = `which gpg`; chomp $gpg_cmd;
-    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $pubring --secret-keyring $secring";
+    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $keyring";
     
     # Check if the keyrings are in place and readable
     if(
-         &run_as($main::dak_user, "test -r $pubring")->{'resultCode'} != 0 ||
-         &run_as($main::dak_user, "test -r $secring")->{'resultCode'} != 0
+         &run_as($main::dak_user, "test -r $keyring")->{'resultCode'} != 0
      ) {
          &main::daemon_log("ERROR: Dak Keyrings are unreadable!");
      } else {
@@ -919,22 +918,21 @@ sub import_dak_key {
     
     my %data;
 
-    my $pubring = $main::dak_signing_keys_directory."/dot-gnupg/pubring.gpg";
-    my $secring = $main::dak_signing_keys_directory."/dot-gnupg/secring.gpg";
+    my $keyring = $main::dak_signing_keys_directory."/keyring.gpg";
 
     my $gpg_cmd = `which gpg`; chomp $gpg_cmd;
-    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $pubring --secret-keyring $secring";
+    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $keyring";
     
     # Check if the keyrings are in place and writable
     if(
-         &run_as($main::dak_user, "test -w $pubring")->{'resultCode'} != 0 ||
-         &run_as($main::dak_user, "test -w $secring")->{'resultCode'} != 0
+         &run_as($main::dak_user, "test -w $keyring")->{'resultCode'} != 0
      ) {
-         &main::daemon_log("ERROR: Dak Keyrings are not writable!");
+         &main::daemon_log("ERROR: Dak Keyring is not writable!");
      } else {
-         open(keyfile, ">/tmp/gosa_si_tmp_dak_key");
-         print keyfile $key;
-         close(keyfile);
+         my $keyfile;
+         open($keyfile, ">/tmp/gosa_si_tmp_dak_key");
+         print $keyfile $key;
+         close($keyfile);
          my $command = "$gpg --import /tmp/gosa_si_tmp_dak_key";
          my $output = &run_as($main::dak_user, $command);
          unlink("/tmp/gosa_si_tmp_dak_key");
@@ -959,16 +957,14 @@ sub remove_dak_key {
 
     my %data;
 
-    my $pubring = $main::dak_signing_keys_directory."/dot-gnupg/pubring.gpg";
-    my $secring = $main::dak_signing_keys_directory."/dot-gnupg/secring.gpg";
+    my $keyring = $main::dak_signing_keys_directory."/keyring.gpg";
 
     my $gpg_cmd = `which gpg`; chomp $gpg_cmd;
-    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $pubring --secret-keyring $secring";
+    my $gpg     = "$gpg_cmd --no-default-keyring --no-random-seed --keyring $keyring";
     
     # Check if the keyrings are in place and writable
     if(
-         &run_as($main::dak_user, "test -w $pubring")->{'resultCode'} != 0 ||
-         &run_as($main::dak_user, "test -w $secring")->{'resultCode'} != 0
+         &run_as($main::dak_user, "test -w $keyring")->{'resultCode'} != 0
      ) {
          &main::daemon_log("ERROR: Dak Keyrings are not writable!");
      } else {
@@ -985,6 +981,26 @@ sub remove_dak_key {
      my @out_msg_l = ($out_msg);
      return @out_msg_l;
 }
+
+
+#sub get_dak_queue {
+#    my ($msg, $msg_hash, $session_id) = @_;
+#    my %data;
+#    my $source = @{$msg_hash->{'source'}}[0];
+#    my $target = @{$msg_hash->{'target'}}[0];
+#    my $header= @{$msg_hash->{'header'}}[0];
+#
+#    my %data;
+#
+#    foreach my $dir ("unchecked", "new", "accepted") {
+#        foreach my $file(<"$main::dak_queue_directory/$dir/*.changes">) {
+#        }
+#    }
+#
+#    my $out_msg = &build_msg("get_dak_queue", $target, $source, \%data);
+#    my @out_msg_l = ($out_msg);
+#    return @out_msg_l;
+#}
 
 
 # vim:ts=4:shiftwidth:expandtab
