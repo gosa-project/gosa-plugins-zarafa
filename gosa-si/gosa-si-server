@@ -1459,7 +1459,7 @@ sub session_start {
 	$kernel->yield('create_fai_release_db', $fai_release_tn );
     $kernel->yield('watch_for_next_tasks');
 	$kernel->sig(USR1 => "sig_handler");
-	$kernel->sig(USR2 => "create_packages_list_db");
+	$kernel->sig(USR2 => "recreate_packages_db");
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
@@ -1999,6 +1999,16 @@ sub change_goto_state {
 	  }
 
     }
+}
+
+
+sub run_recreate_packages_db {
+    my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
+    my $session_id = $session->ID;
+	&main::daemon_log("$session_id INFO: Recreating FAI Packages DB ('$fai_release_tn', '$fai_server_tn', '$packages_list_tn')", 4);
+	$kernel->yield('create_fai_release_db');
+	$kernel->yield('create_fai_server_db');
+	return;
 }
 
 
@@ -3030,6 +3040,7 @@ POE::Session->create(
         create_packages_list_db => \&run_create_packages_list_db,
         create_fai_server_db => \&run_create_fai_server_db,
         create_fai_release_db => \&run_create_fai_release_db,
+		recreate_packages_db => \&run_recreate_packages_db,
         session_run_result => \&session_run_result,
         session_run_debug => \&session_run_debug,
         session_run_done => \&session_run_done,
