@@ -1099,12 +1099,6 @@ class workstartup extends plugin
      */
     if($force || !isset($this->cache['SERVERS'])){
 
-      /* Only add inherit option, if we are part in an object group
-       */
-      if($this->member_of_ogroup){
-        $this->cache['SERVERS']['inherited']=array();
-      }
-
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_server();
       if($o_queue->is_error()){
@@ -1117,6 +1111,8 @@ class workstartup extends plugin
           $rel = $entry['RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
           $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
+          uksort($this->cache['SERVERS']['auto'], 'strnatcasecmp');
+          uksort($this->cache['SERVERS'][$entry['SERVER']], 'strnatcasecmp');
         }
       }
     }
@@ -1203,6 +1199,13 @@ class workstartup extends plugin
             }
           }
         }
+      }
+      uksort($this->cache['SERVERS'], 'strnatcasecmp');
+
+      /* Only add inherit option, if we are part in an object group
+       */
+      if($this->member_of_ogroup){
+        $this->cache['SERVERS'] = array_merge(array('inherited' => array()),$this->cache['SERVERS']);
       }
     }
 
