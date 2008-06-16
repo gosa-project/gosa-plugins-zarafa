@@ -22,15 +22,137 @@
 
 class dak_keyring extends plugin
 {
-  public function __construct()
-  {
+  
+  private $Servers          = array();
+  private $selected_Server  = array();
 
+  private $list = array();
+  public $attributes = array("selected_Server");
+
+  public function __construct($config)
+  {
+    plugin::plugin($config,NULL);
+
+    /* Collect release servers and store them
+     */
+    $this->Servers = DAK::get_repositories_by_server($this->config);
+    if(count($this->Servers)){
+      $this->selected_Server  = key($this->Servers);
+    }
   }
 
   public function execute()
   {
+    if(isset($_POST['search'])){
+      $this->list =  DAK::get_queue_entries_for_servers($this->Servers[$this->selected_Server]['MAC']);
+    }
+
     $smarty= get_smarty();
-    return($smarty->fetch (get_template_path('dak_queue.tpl', TRUE, dirname(__FILE__))));
+    $smarty->assign("Servers"         , $this->Servers);
+    $smarty->assign("selected_Server" , $this->selected_Server);
+    $smarty->assign("list",$this->CreateList());
+    return($smarty->fetch (get_template_path('dak_keyring.tpl', TRUE, dirname(__FILE__))));
+  }
+
+
+  private function CreateList()
+  {
+    /* Get ring entries for the currently selected repository 
+     */
+
+    $divlist = new divlist("DAK_keyring");
+
+    $divlist->SetWidth("100%");
+    $divlist->SetEntriesPerPage(0);
+    $divlist->SetPluginMode(TRUE) ;
+
+    $s1 = "style='width:100px;'";
+    $s2 = "style='width:100px;'";
+    $s3 = "style='width:100px;'";
+    $s4 = "";
+    $s5 = "style='width:100px; border-right:0px;'";
+
+    $h1 = array("string" => _("Key ID"),   "attach" => $s1);
+    $h2 = array("string" => _("Length"),   "attach" => $s2);
+    $h3 = array("string" => _("Validity"), "attach" => $s2);
+    $h4 = array("string" => _("UID"),      "attach" => $s4);
+    $h5 = array("string" => _("Action"),   "attach" => $s5);
+
+    $divlist->SetHeader(array($h1,$h2,$h3,$h4,$h5));
+
+    foreach($this->list as $key => $entry){
+
+      if(!is_array($entry['UID'])){
+        $entry['UID'] = array($entry['UID']);
+      }
+      $key_id = $entry['ATTRIBUTES']['UID'];
+      $length = $entry['ATTRIBUTES']['LENGTH'];
+      $valid  = $entry['ATTRIBUTES']['VALID'];
+
+      $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='+' class='center'>&nbsp;";
+      $down = "<input type='image' name='details_".$key."' src='images/down-arrow.png' alt='+' class='center'>&nbsp;";
+
+      if(isset($entry['DETAILS']) && $entry['DETAILS'] == TRUE){
+        $first = TRUE;
+        foreach($entry['UID'] as $val){
+
+          $f1 = array("string" => "","attach" => $s1);
+          $f2 = array("string" => "","attach" => $s2);
+          $f3 = array("string" => "","attach" => $s3);
+          $f4 = array("string" => htmlentities($val) ,"attach" => $s4);
+          $f5 = array("string" => "","attach" => $s5);
+
+          if($first){
+            $first = FALSE;
+            $f1 = array("string" => $key_id ,"attach" => $s1);
+            $f2 = array("string" => $length       ,"attach" => $s2);
+            $f3 = array("string" => $valid        ,"attach" => $s3);
+            $f4 = array("string" => $hide.htmlentities($val) ,"attach" => $s4);
+            $f5 = array("string" => "Actions"     ,"attach" => $s5);
+          }
+          $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
+        }
+      }else{
+        $f1 = array("string" => $key_id, "attach" => $s1);
+        $f2 = array("string" => $length,       "attach" => $s2);
+        $f3 = array("string" => $valid,        "attach" => $s3);
+        $f4 = array("string" => $down.htmlentities($entry['UID'][0]), "attach" => $s4);
+        $f5 = array("string" => "Actions","attach" => $s5);
+        $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
+
+      }
+    }
+    return($divlist->DrawList());
+  }
+
+
+  public function save_object()
+  {
+    plugin::save_object();
+
+    /* Save html posts, like the selected repository server 
+     */
+    foreach($this->attributes as $attr){
+      if(isset($_POST[$attr])){
+        $this->$attr = get_post($attr);
+      }
+    }
+     
+    /* Display details icon was clicked
+     */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^details_/",$name)){
+        $id = preg_replace("/^details_([0-9]*)_.*$/","\\1",$name);
+        if(isset($this->list[$id])){
+          if(!isset($this->list[$id]['DETAILS']) || !$this->list[$id]['DETAILS']){
+            $this->list[$id]['DETAILS'] = TRUE;
+          }else{
+            $this->list[$id]['DETAILS'] = FALSE;
+          }
+          break;
+        }
+      }
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

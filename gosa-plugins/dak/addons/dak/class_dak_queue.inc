@@ -22,15 +22,32 @@
 
 class dak_queue extends plugin
 {
-  public function __construct()
+  var $attributes = array("selected_Repository");
+  var $selected_Repository = "";  
+ 
+  public function __construct($config)
   {
+    plugin::plugin($config,NULL);
 
   }
 
   public function execute()
   {
     $smarty= get_smarty();
+    $smarty->assign("Repositories"          , DAK::get_repositories($this->config));
+    $smarty->assign("selected_Repository" , $this->selected_Repository);
     return($smarty->fetch (get_template_path('dak_queue.tpl', TRUE, dirname(__FILE__))));
+  }
+
+  public function save_object()
+  {
+    plugin::save_object();
+
+    foreach($this->attributes as $attr){
+      if(isset($_POST[$attr])){
+        $this->$attr = get_post($attr);
+      }
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
