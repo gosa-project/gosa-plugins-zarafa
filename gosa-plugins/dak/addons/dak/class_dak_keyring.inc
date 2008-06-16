@@ -44,7 +44,7 @@ class dak_keyring extends plugin
   public function execute()
   {
     if(isset($_POST['search'])){
-      $this->list =  DAK::get_queue_entries_for_servers($this->Servers[$this->selected_Server]['MAC']);
+      $this->refresh_list();
     }
 
     $smarty= get_smarty();
@@ -54,6 +54,11 @@ class dak_keyring extends plugin
     return($smarty->fetch (get_template_path('dak_keyring.tpl', TRUE, dirname(__FILE__))));
   }
 
+
+  private function refresh_list()
+  {
+    $this->list =  DAK::get_queue_entries_for_servers($this->Servers[$this->selected_Server]['MAC']);
+  } 
 
   private function CreateList()
   {
@@ -85,9 +90,17 @@ class dak_keyring extends plugin
       if(!is_array($entry['UID'])){
         $entry['UID'] = array($entry['UID']);
       }
-      $key_id = $entry['ATTRIBUTES']['UID'];
-      $length = $entry['ATTRIBUTES']['LENGTH'];
-      $valid  = $entry['ATTRIBUTES']['VALID'];
+      $key_id = $length = $valid = "";
+
+      if(isset($entry['ATTRIBUTES']['UID'])){
+        $key_id = $entry['ATTRIBUTES']['UID'];
+      }
+      if(isset($entry['ATTRIBUTES']['LENGTH'])){
+        $length = $entry['ATTRIBUTES']['LENGTH'];
+      }
+      if(isset($entry['ATTRIBUTES']['VALID'])){
+        $valid  = $entry['ATTRIBUTES']['VALID'];
+      }
 
       $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='+' class='center'>&nbsp;";
       $down = "<input type='image' name='details_".$key."' src='images/down-arrow.png' alt='+' class='center'>&nbsp;";
@@ -137,7 +150,7 @@ class dak_keyring extends plugin
         $this->$attr = get_post($attr);
       }
     }
-     
+  
     /* Display details icon was clicked
      */
     foreach($_POST as $name => $value){
@@ -153,6 +166,23 @@ class dak_keyring extends plugin
         }
       }
     }
+
+    /* Import new keys 
+     */
+    if(isset($_POST['import_key']) && isset($_FILES['import'])){
+      if($_FILES['import']['size'] != 0){
+        $key = file_get_contents($_FILES['import']['tmp_name']);
+        if($this->import_key($key)){
+          $this->refresh_list();
+        }
+      }
+    }
+  }
+
+  private function import_key($key)
+  {
+    $mac = $this->Servers[$this->selected_Server]['MAC'];
+    return(DAK::import($mac,$key));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
