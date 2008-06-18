@@ -62,31 +62,34 @@ class dak_keyring extends plugin
 
   private function CreateList()
   {
-    /* Get ring entries for the currently selected repository 
-     */
-
     $divlist = new divlist("DAK_keyring");
-
     $divlist->SetWidth("100%");
     $divlist->SetEntriesPerPage(0);
     $divlist->SetPluginMode(TRUE) ;
 
+    /* Set default col styles 
+     */
     $s1 = "style='width:100px;'";
     $s2 = "style='width:100px;'";
     $s3 = "style='width:100px;'";
     $s4 = "";
     $s5 = "style='width:100px; border-right:0px;'";
 
+    /* Add header 
+     */
     $h1 = array("string" => _("Key ID"),   "attach" => $s1);
     $h2 = array("string" => _("Length"),   "attach" => $s2);
     $h3 = array("string" => _("Validity"), "attach" => $s2);
     $h4 = array("string" => _("UID"),      "attach" => $s4);
     $h5 = array("string" => _("Action"),   "attach" => $s5);
-
     $divlist->SetHeader(array($h1,$h2,$h3,$h4,$h5));
 
+    /* Add entries 
+     */
     foreach($this->list as $key => $entry){
 
+      /* Check if all attributes are given
+       */
       if(!is_array($entry['UID'])){
         $entry['UID'] = array($entry['UID']);
       }
@@ -102,9 +105,17 @@ class dak_keyring extends plugin
         $valid  = $entry['ATTRIBUTES']['VALID'];
       }
 
+      /* Create detail icon 
+       */  
       $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='+' class='center'>&nbsp;";
       $down = "<input type='image' name='details_".$key."' src='images/down-arrow.png' alt='+' class='center'>&nbsp;";
 
+      $actions = "<input type='image' class='center' alt='".msgPool::delButton()."' 
+                    src='images/lists/trash.png' name='remove_key_".$key."'>";
+
+      /* Add detailed entry 
+          (All UIDs are listed, each in a single column)
+       */
       if(isset($entry['DETAILS']) && $entry['DETAILS'] == TRUE){
         $first = TRUE;
         foreach($entry['UID'] as $val){
@@ -121,16 +132,19 @@ class dak_keyring extends plugin
             $f2 = array("string" => $length       ,"attach" => $s2);
             $f3 = array("string" => $valid        ,"attach" => $s3);
             $f4 = array("string" => $hide.htmlentities($val) ,"attach" => $s4);
-            $f5 = array("string" => "Actions"     ,"attach" => $s5);
+            $f5 = array("string" => $actions      ,"attach" => $s5);
           }
           $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
         }
       }else{
+
+        /* Add non detailed entries, just the first uid is displayed.
+         */
         $f1 = array("string" => $key_id, "attach" => $s1);
         $f2 = array("string" => $length,       "attach" => $s2);
         $f3 = array("string" => $valid,        "attach" => $s3);
         $f4 = array("string" => $down.htmlentities($entry['UID'][0]), "attach" => $s4);
-        $f5 = array("string" => "Actions","attach" => $s5);
+        $f5 = array("string" => $actions,"attach" => $s5);
         $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
 
       }
@@ -149,11 +163,17 @@ class dak_keyring extends plugin
       if(isset($_POST[$attr])){
         $this->$attr = get_post($attr);
       }
-    }
+      }
   
     /* Display details icon was clicked
      */
     foreach($_POST as $name => $value){
+      if(preg_match("/^remove_key_/",$name)){
+        $id = preg_replace("/^remove_key_([0-9]*)_.*$/","\\1",$name);
+        $this->remove_key($id);
+        break;
+      }
+
       if(preg_match("/^details_/",$name)){
         $id = preg_replace("/^details_([0-9]*)_.*$/","\\1",$name);
         if(isset($this->list[$id])){
@@ -179,10 +199,20 @@ class dak_keyring extends plugin
     }
   }
 
+    
+  private function remove_key($key)
+  {
+    if($this->list[$key]){
+      $mac = $this->Servers[$this->selected_Server]['MAC'];
+      return(DAK::remove_key($mac,$this->list[$key]['ATTRIBUTES']['UID']));
+    }
+  }
+  
+
   private function import_key($key)
   {
     $mac = $this->Servers[$this->selected_Server]['MAC'];
-    return(DAK::import($mac,$key));
+    return(DAK::import_key($mac,$key));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
