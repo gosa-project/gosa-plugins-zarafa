@@ -64,11 +64,13 @@ class dak_keyring extends plugin
   {
     $divlist = new divlist("DAK_keyring");
     $divlist->SetWidth("100%");
+    $divlist->SetHeight("450px");
     $divlist->SetEntriesPerPage(0);
-    $divlist->SetPluginMode(TRUE) ;
+#    $divlist->SetPluginMode(TRUE) ;
 
     /* Set default col styles 
      */
+    $s0 = "style='width:10px;'";
     $s1 = "style='width:100px;'";
     $s2 = "style='width:100px;'";
     $s3 = "style='width:100px;'";
@@ -77,12 +79,13 @@ class dak_keyring extends plugin
 
     /* Add header 
      */
+    $h0 = array("string" => "",            "attach" => $s0);
     $h1 = array("string" => _("Key ID"),   "attach" => $s1);
     $h2 = array("string" => _("Length"),   "attach" => $s2);
-    $h3 = array("string" => _("Validity"), "attach" => $s2);
+    $h3 = array("string" => _("Validity"), "attach" => $s3);
     $h4 = array("string" => _("UID"),      "attach" => $s4);
     $h5 = array("string" => _("Action"),   "attach" => $s5);
-    $divlist->SetHeader(array($h1,$h2,$h3,$h4,$h5));
+    $divlist->SetHeader(array($h0,$h1,$h2,$h3,$h4,$h5));
 
     /* Add entries 
      */
@@ -107,7 +110,7 @@ class dak_keyring extends plugin
 
       /* Create detail icon 
        */  
-      $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='+' class='center'>&nbsp;";
+      $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='-' class='center'>&nbsp;";
       $down = "<input type='image' name='details_".$key."' src='images/down-arrow.png' alt='+' class='center'>&nbsp;";
 
       $actions = "<input type='image' class='center' alt='".msgPool::delButton()."' 
@@ -120,6 +123,7 @@ class dak_keyring extends plugin
         $first = TRUE;
         foreach($entry['UID'] as $val){
 
+          $f0 = array("string" => "","attach" => $s0);
           $f1 = array("string" => "","attach" => $s1);
           $f2 = array("string" => "","attach" => $s2);
           $f3 = array("string" => "","attach" => $s3);
@@ -128,24 +132,30 @@ class dak_keyring extends plugin
 
           if($first){
             $first = FALSE;
-            $f1 = array("string" => $key_id ,"attach" => $s1);
+            $f0 = array("string" => $hide         ,"attach" => $s0);
+            $f1 = array("string" => $key_id       ,"attach" => $s1);
             $f2 = array("string" => $length       ,"attach" => $s2);
             $f3 = array("string" => $valid        ,"attach" => $s3);
-            $f4 = array("string" => $hide.htmlentities($val) ,"attach" => $s4);
+            $f4 = array("string" => htmlentities($val) ,"attach" => $s4);
             $f5 = array("string" => $actions      ,"attach" => $s5);
           }
-          $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
+          $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
         }
       }else{
 
         /* Add non detailed entries, just the first uid is displayed.
          */
-        $f1 = array("string" => $key_id, "attach" => $s1);
+        if(count($entry['UID']) > 1){
+          $f0 = array("string" => $down,         "attach" => $s0);
+        }else{
+          $f0 = array("string" => "",         "attach" => $s0);
+        }
+        $f1 = array("string" => $key_id,       "attach" => $s1);
         $f2 = array("string" => $length,       "attach" => $s2);
         $f3 = array("string" => $valid,        "attach" => $s3);
-        $f4 = array("string" => $down.htmlentities($entry['UID'][0]), "attach" => $s4);
+        $f4 = array("string" => htmlentities($entry['UID'][0]), "attach" => $s4);
         $f5 = array("string" => $actions,"attach" => $s5);
-        $divlist->AddEntry(array($f1,$f2,$f3,$f4,$f5));
+        $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
 
       }
     }
