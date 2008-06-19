@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dak_queue extends plugin
+class dakqueue extends plugin
 {
   var $attributes = array("selected_Repository");
   var $selected_Repository = "";  

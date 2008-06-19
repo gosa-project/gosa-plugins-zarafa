@@ -24,7 +24,7 @@
 /*! \brief  The DAK keyring class used to manage DAK keyrings.
             It provides remove/add key mehtods and lists all keys for a selected server.
  */
-class dak_keyring extends plugin
+class dakkeyring extends plugin
 {
   private $Servers          = array();
   private $selected_Server  = array();

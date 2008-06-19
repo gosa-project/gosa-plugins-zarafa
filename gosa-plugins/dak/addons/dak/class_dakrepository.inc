@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dak_repository extends plugin
+class dakrepository extends plugin
 {
   public function __construct()
   {
