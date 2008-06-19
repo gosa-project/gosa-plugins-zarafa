@@ -200,6 +200,7 @@ class dakkeyring extends plugin
       if(preg_match("/^remove_key_/",$name)){
         $id = preg_replace("/^remove_key_([0-9]*)_.*$/","\\1",$name);
         $this->remove_key($id);
+        $this->refresh_list();
         break;
       }
 
