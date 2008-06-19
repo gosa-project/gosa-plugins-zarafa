@@ -44,10 +44,11 @@ class DAK
       return;
     }
     $res = array();
-    $ldap = $config->get_ldap_link();
-    $ldap->cd($config->current['BASE']);
-    $ldap->search("(&(macAddress=*)(FAIrepository=*)(objectClass=FAIrepositoryServer))",array("cn","FAIrepository","macAddress"));
-    while($attrs = $ldap->fetch()){
+    $rest = get_sub_list("(&(macAddress=*)(FAIrepository=*)(objectClass=FAIrepositoryServer))",
+        "server",get_ou("serverou"),$config->current['BASE'],
+        array("cn","FAIrepository","macAddress"),GL_SUBSEARCH);
+
+    foreach($rest as $attrs){
       $serv = array();
       $serv['REPOSITORIES'] = array();
       for($i = 0 ; $i < $attrs['FAIrepository']['count'] ; $i ++){
