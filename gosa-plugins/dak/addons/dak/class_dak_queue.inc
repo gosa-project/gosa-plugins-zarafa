@@ -28,7 +28,6 @@ class dak_queue extends plugin
   public function __construct($config)
   {
     plugin::plugin($config,NULL);
-
   }
 
   public function execute()

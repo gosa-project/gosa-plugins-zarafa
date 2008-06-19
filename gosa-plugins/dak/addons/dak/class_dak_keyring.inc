@@ -57,7 +57,7 @@ class dak_keyring extends plugin
 
   private function refresh_list()
   {
-    $this->list =  DAK::get_queue_entries_for_servers($this->Servers[$this->selected_Server]['MAC']);
+    $this->list =  DAK::list_keys($this->Servers[$this->selected_Server]['MAC']);
   } 
 
   private function CreateList()
