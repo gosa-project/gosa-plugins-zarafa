@@ -3,6 +3,8 @@
 
 class DAK
 {
+
+  /* Unused ... */
 	public static function get_repositories($config)
 	{
     if(!$config instanceOf config){
@@ -30,6 +32,11 @@ class DAK
 	}
 
 
+  /*! \brief  Returns all configured repository server and some 
+               informations about release/sections/parent.
+      @param  Object  The GOsa configuration object.
+      @return Array   Repository infromations.
+   */
 	public static function get_repositories_by_server($config)
 	{
     if(!$config instanceOf config){
@@ -60,11 +67,15 @@ class DAK
 	}
 
 
-  /*! \brief  Returns all */
+  /*! \brief  Returns all keyring entries for the specified server 
+      @param  String  The servers mac address.
+      @return Array   All keyring entries.
+  */
   public static function list_keys($server)
   {
     $o_queue  = new gosaSupportDaemon();
-    $data     = $o_queue->DAK_get_queue_entries($server);
+    $data     = $o_queue->DAK_keyring_entries($server);
+    print_a($data);
     if($o_queue->is_error()){
       msg_dialog::display(_("Error"), $o_queue->get_error(), ERROR_DIALOG);
     }

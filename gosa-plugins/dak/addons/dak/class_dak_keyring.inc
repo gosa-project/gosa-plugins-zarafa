@@ -20,15 +20,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+/*! \brief  The DAK keyring class used to manage DAK keyrings.
+            It provides remove/add key mehtods and lists all keys for a selected server.
+ */
 class dak_keyring extends plugin
 {
-  
   private $Servers          = array();
   private $selected_Server  = array();
+  private $list             = array();
+  public $attributes        = array("selected_Server");
 
-  private $list = array();
-  public $attributes = array("selected_Server");
 
+  /*! \brief   Creates a dak_keyring class.
+      @param   The GOsa configuration object. 
+   */
   public function __construct($config)
   {
     plugin::plugin($config,NULL);
@@ -41,6 +47,10 @@ class dak_keyring extends plugin
     }
   }
 
+
+  /*! \brief  Create HTML output for this plugin.
+      @return String  HTML output.
+   */
   public function execute()
   {
     if(isset($_POST['search'])){
@@ -55,18 +65,25 @@ class dak_keyring extends plugin
   }
 
 
+  /*! \brief  Refresh the list of keys for the currently selected server 
+              This function is automatically called when a key was added and removed.
+   */
   private function refresh_list()
   {
     $this->list =  DAK::list_keys($this->Servers[$this->selected_Server]['MAC']);
   } 
 
+
+  /*! \brief  Creates the HTML output representing the keylist 
+              for this currently selected server 
+      @return String HTML list containig all keys for the selected server.
+   */
   private function CreateList()
   {
     $divlist = new divlist("DAK_keyring");
     $divlist->SetWidth("100%");
     $divlist->SetHeight("450px");
     $divlist->SetEntriesPerPage(0);
-#    $divlist->SetPluginMode(TRUE) ;
 
     /* Set default col styles 
      */
@@ -163,6 +180,8 @@ class dak_keyring extends plugin
   }
 
 
+  /*! \brief  Act on the HTML posts for this plugin 
+   */
   public function save_object()
   {
     plugin::save_object();
@@ -209,7 +228,10 @@ class dak_keyring extends plugin
     }
   }
 
-    
+   
+  /*! \brief   Removes the given key from the keyring server.
+      @return  Boolean TRUE in case of success else FALSE.
+   */ 
   private function remove_key($key)
   {
     if($this->list[$key]){
@@ -219,6 +241,9 @@ class dak_keyring extends plugin
   }
   
 
+  /*! \brief  Imports a new key into the keyring for the currently selected server 
+      @return  Boolean TRUE in case of success else FALSE.
+   */
   private function import_key($key)
   {
     $mac = $this->Servers[$this->selected_Server]['MAC'];
