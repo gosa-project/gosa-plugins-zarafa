@@ -48,6 +48,24 @@ class dak_queue extends plugin
       }
     }
   }
+
+  /*! \brief  ACL plugin information
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("DAK queue")."&nbsp;("._("Addon").")",
+          "plDescription" => _("DAK queue management")."&nbsp;("._("Addon").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 98,
+          "plSection"       => array("addon"),
+          "plCategory"      => array("server"),
+          "plProvidedAcls"  =>
+              array(
+                   )
+          ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

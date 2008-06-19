@@ -30,21 +30,26 @@ class dak_repository extends plugin
   public function execute()
   {
     $smarty= get_smarty();
-    return($smarty->fetch (get_template_path('dak_queue.tpl', TRUE, dirname(__FILE__))));
+    return($smarty->fetch (get_template_path('dak_repository.tpl', TRUE, dirname(__FILE__))));
   }
 
 
+
+  /*! \brief  ACL plugin information  
+   */
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("Repository"),
-          "plDescription" => _("DAK repository"),
+          "plShortName"   => _("DAK repository")."&nbsp;("._("Addon").")",
+          "plDescription" => _("DAK repository  management")."&nbsp;("._("Addon").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 98,
           "plSection"       => array("addon"),
-          "plCategory"      => array("dak"       => array("objectClass" => "none", "description" => _("DAK"))),
-          "plProvidedAcls"  => array("Comment"   => _("Description")) 
+          "plCategory"      => array("server"),
+          "plProvidedAcls"  => 
+              array(
+                   ) 
           ));
   }
 }

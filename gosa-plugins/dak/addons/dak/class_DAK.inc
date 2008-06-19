@@ -75,7 +75,6 @@ class DAK
   {
     $o_queue  = new gosaSupportDaemon();
     $data     = $o_queue->DAK_keyring_entries($server);
-    print_a($data);
     if($o_queue->is_error()){
       msg_dialog::display(_("Error"), $o_queue->get_error(), ERROR_DIALOG);
     }

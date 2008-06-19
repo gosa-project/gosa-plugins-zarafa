@@ -249,6 +249,25 @@ class dak_keyring extends plugin
     $mac = $this->Servers[$this->selected_Server]['MAC'];
     return(DAK::import_key($mac,$key));
   }
+
+
+  /*! \brief  ACL plugin information  
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("DAK keyring")."&nbsp;("._("Addon").")",
+          "plDescription" => _("DAK keyring management")."&nbsp;("._("Addon").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 98,
+          "plSection"       => array("addon"),
+          "plCategory"      => array("server"),
+          "plProvidedAcls"  => 
+              array(
+                   ) 
+          ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
