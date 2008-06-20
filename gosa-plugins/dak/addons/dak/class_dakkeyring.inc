@@ -160,7 +160,7 @@ class dakkeyring extends plugin
           $f1 = array("string" => "","attach" => $s1);
           $f2 = array("string" => "","attach" => $s2);
           $f3 = array("string" => "","attach" => $s3);
-          $f4 = array("string" => xmlentities(utf8_decode($val)), "attach" => $s4);
+          $f4 = array("string" => htmlentities(utf8_decode($val),ENT_QUOTES,"UTF-8"), "attach" => $s4);
           $f5 = array("string" => "","attach" => $s5);
 
           if($first){
@@ -169,7 +169,7 @@ class dakkeyring extends plugin
             $f1 = array("string" => $key_id       ,"attach" => $s1);
             $f2 = array("string" => $length       ,"attach" => $s2);
             $f3 = array("string" => $status       ,"attach" => $s3);
-            $f4 = array("string" => xmlentities(utf8_decode($val)), "attach" => $s4);
+            $f4 = array("string" => htmlentities(utf8_decode($val),ENT_QUOTES,"UTF-8"), "attach" => $s4);
             $f5 = array("string" => $actions      ,"attach" => $s5);
           }
           $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
@@ -186,7 +186,7 @@ class dakkeyring extends plugin
         $f1 = array("string" => $key_id,       "attach" => $s1);
         $f2 = array("string" => $length,       "attach" => $s2);
         $f3 = array("string" => $status,        "attach" => $s3);
-        $f4 = array("string" => xmlentities(utf8_decode($entry['UID'][0])), "attach" => $s4);
+        $f4 = array("string" => htmlentities(utf8_decode($entry['UID'][0]),ENT_QUOTES,"UTF-8"), "attach" => $s4);
         $f5 = array("string" => $actions,"attach" => $s5);
         $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
 
