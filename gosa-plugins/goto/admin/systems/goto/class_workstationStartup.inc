@@ -1211,7 +1211,9 @@ class workstartup extends plugin
 
     /* Get list of available kernel for this release 
      */
-    if($force || !isset($this->cache['KERNELS'][$release]) && $release != ""){
+    if(!isset($this->cache['KERNELS'])) $this->cache['KERNELS'] = array();
+
+    if($force || !isset($this->cache['KERNELS'][$release])){
       $o_queue = new gosaSupportDaemon();
       $tmp = $o_queue->FAI_get_kernels($release);
       $this->cache['KERNELS'][$release] = array();
@@ -1233,10 +1235,12 @@ class workstartup extends plugin
   function get_invalid_classes($classes)
   {
     $this->update_fai_cache();
-    if($this->FAIdebianMirror == "inherited"){
+    if($this->FAIdebianMirror == "inherited" && isset($this->cache['CLASSES'][$this->InheritedFAIrelease])){
       $release_classes = $this->cache['CLASSES'][$this->InheritedFAIrelease];
-    }else{
+    }elseif(isset($this->cache['CLASSES'][$this->FAIrelease])){
       $release_classes = $this->cache['CLASSES'][$this->FAIrelease];
+    }else{
+      $release_classes = array();
     }
 
 
@@ -1259,10 +1263,12 @@ class workstartup extends plugin
   {
     $this->update_fai_cache();
 
-    if($this->FAIdebianMirror == "inherited"){
+    if($this->FAIdebianMirror == "inherited" && isset($this->cache['CLASSES'][$this->InheritedFAIrelease])){
       $classes = $this->cache['CLASSES'][$this->InheritedFAIrelease];
-    }else{
+    }elseif(isset($this->cache['CLASSES'][$this->FAIrelease])){
       $classes = $this->cache['CLASSES'][$this->FAIrelease];
+    }else{
+      $classes = array();
     }
 
     $Abbr ="";
