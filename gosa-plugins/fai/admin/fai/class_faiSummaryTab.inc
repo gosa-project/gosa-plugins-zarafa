@@ -384,7 +384,12 @@ class faiSummaryTab extends plugin{
   function resolveObject($class)
   {
     $ldap 	          = $this->config->get_ldap_link();
-    $dn 	            = $this->Releases [$this->Release];
+    if(isset($this->Releases[$this->Release])){
+      $dn 	            = $this->Releases[$this->Release];
+    }else{
+      return(FALSE);
+    }
+  
     $resolvedClasses  = FAI::get_all_objects_for_given_base($dn,"(&(objectClass=FAIclass)(cn=".$class."))");
 
     /* Try to fetch all types of fai objects with the given cn  */
