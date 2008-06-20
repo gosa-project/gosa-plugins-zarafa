@@ -70,7 +70,21 @@ class dakkeyring extends plugin
    */
   private function refresh_list()
   {
-    $this->list =  DAK::list_keys($this->Servers[$this->selected_Server]['MAC']);
+    $details = array();
+    foreach($this->list as $entry){
+      if(isset($entry['DETAILS']) && $entry['DETAILS'] && isset($entry['ATTRIBUTES']['UID'])){
+        $details[] = $entry['ATTRIBUTES']['UID'];
+      }
+    }
+    
+    $tmp = DAK::list_keys($this->Servers[$this->selected_Server]['MAC']);
+    $this->list = array();
+    foreach($tmp as $entry){
+      if(isset($entry['ATTRIBUTES']['UID']) && in_array($entry['ATTRIBUTES']['UID'],$details)){
+        $entry['DETAILS'] = TRUE;
+      }
+      $this->list[] = $entry;
+    }
   } 
 
 
