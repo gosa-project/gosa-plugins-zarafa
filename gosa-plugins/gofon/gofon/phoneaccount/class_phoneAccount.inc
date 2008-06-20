@@ -38,7 +38,7 @@ class phoneAccount extends plugin
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
                                       "hardware_list","used_hardware");
 
-  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer","goFonContext","goFonVoiceMailContext",
+  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer",
       "goFonHardware","goFonPIN","goFonVoicemailPIN","telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
@@ -1107,6 +1107,14 @@ class phoneAccount extends plugin
 
 
     foreach($this->attributes as $attr){
+      if(in_array($attr,$this->multi_boxes)){
+        $smarty->assign("use_".$attr,TRUE);
+      }else{
+        $smarty->assign("use_".$attr,FALSE);
+      }
+    }
+
+    foreach(array("goFonVoiceMailContext","goFonContext") as $attr){
       if(in_array($attr,$this->multi_boxes)){
         $smarty->assign("use_".$attr,TRUE);
       }else{
