@@ -88,18 +88,18 @@ class dakkeyring extends plugin
     /* Set default col styles 
      */
     $s0 = "style='width:10px;'";
-    $s1 = "style='width:100px;'";
-    $s2 = "style='width:100px;'";
-    $s3 = "style='width:100px;'";
+    $s1 = "style='width:70px;'";
+    $s2 = "style='width:50px;'";
+    $s3 = "style='width:130px;'";
     $s4 = "";
-    $s5 = "style='width:100px; border-right:0px;'";
+    $s5 = "style='text-align: right;width:50px; border-right:0px;'";
 
     /* Add header 
      */
     $h0 = array("string" => "",            "attach" => $s0);
     $h1 = array("string" => _("Key ID"),   "attach" => $s1);
     $h2 = array("string" => _("Length"),   "attach" => $s2);
-    $h3 = array("string" => _("Validity"), "attach" => $s3);
+    $h3 = array("string" => _("Status"),   "attach" => $s3);
     $h4 = array("string" => _("UID"),      "attach" => $s4);
     $h5 = array("string" => _("Action"),   "attach" => $s5);
     $divlist->SetHeader(array($h0,$h1,$h2,$h3,$h4,$h5));
@@ -113,17 +113,19 @@ class dakkeyring extends plugin
       if(!is_array($entry['UID'])){
         $entry['UID'] = array($entry['UID']);
       }
-      $key_id = $length = $valid = "";
+      $key_id = $length = $created = $expired = $expires = "";
 
-      if(isset($entry['ATTRIBUTES']['UID'])){
-        $key_id = $entry['ATTRIBUTES']['UID'];
+      foreach(array("key_id"=>"UID","length"=>"LENGTH","created"=>"CREATED","expired"=>"EXPIRED","expires"=>"EXPIRES") as $var => $name){
+        if(isset($entry['ATTRIBUTES'][$name])){
+          $$var = $entry['ATTRIBUTES'][$name];
+        }
       }
-      if(isset($entry['ATTRIBUTES']['LENGTH'])){
-        $length = $entry['ATTRIBUTES']['LENGTH'];
-      }
-      if(isset($entry['ATTRIBUTES']['VALID'])){
-        $valid  = $entry['ATTRIBUTES']['VALID'];
-      }
+
+      $status ="-";
+      $title = " title='".sprintf(_("Created: %s"),$created)."' ";
+      if(empty($expires) && empty($expired)) $status = "<font $title style='color:green;'>"._("Valid")."</font>";
+      if(!empty($expired))                   $status = "<font $title style='color:red; font-size:bold'>"._("Expired: ").$expired."</font>";
+      if(!empty($expires))                   $status = "<font $title style='color:green;'>"._("Expires: ").$expires."</font>";
 
       /* Create detail icon 
        */  
@@ -144,7 +146,7 @@ class dakkeyring extends plugin
           $f1 = array("string" => "","attach" => $s1);
           $f2 = array("string" => "","attach" => $s2);
           $f3 = array("string" => "","attach" => $s3);
-          $f4 = array("string" => htmlentities($val) ,"attach" => $s4);
+          $f4 = array("string" => xmlentities(utf8_decode($val)), "attach" => $s4);
           $f5 = array("string" => "","attach" => $s5);
 
           if($first){
@@ -152,8 +154,8 @@ class dakkeyring extends plugin
             $f0 = array("string" => $hide         ,"attach" => $s0);
             $f1 = array("string" => $key_id       ,"attach" => $s1);
             $f2 = array("string" => $length       ,"attach" => $s2);
-            $f3 = array("string" => $valid        ,"attach" => $s3);
-            $f4 = array("string" => htmlentities($val) ,"attach" => $s4);
+            $f3 = array("string" => $status       ,"attach" => $s3);
+            $f4 = array("string" => xmlentities(utf8_decode($val)), "attach" => $s4);
             $f5 = array("string" => $actions      ,"attach" => $s5);
           }
           $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
@@ -169,8 +171,8 @@ class dakkeyring extends plugin
         }
         $f1 = array("string" => $key_id,       "attach" => $s1);
         $f2 = array("string" => $length,       "attach" => $s2);
-        $f3 = array("string" => $valid,        "attach" => $s3);
-        $f4 = array("string" => htmlentities($entry['UID'][0]), "attach" => $s4);
+        $f3 = array("string" => $status,        "attach" => $s3);
+        $f4 = array("string" => xmlentities(utf8_decode($entry['UID'][0])), "attach" => $s4);
         $f5 = array("string" => $actions,"attach" => $s5);
         $divlist->AddEntry(array($f0,$f1,$f2,$f3,$f4,$f5));
 
