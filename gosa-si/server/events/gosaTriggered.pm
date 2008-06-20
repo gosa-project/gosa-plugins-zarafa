@@ -886,17 +886,20 @@ sub get_dak_keyring {
     } else {
         my $command = "$gpg --list-keys";
         my $output = &run_as($main::dak_user, $command);
+        &main::daemon_log("$session_id DEBUG: ".$output->{'command'}, 7);
 
         my $i=0;
         foreach (@{$output->{'output'}}) {
             if ($_ =~ m/^pub\s.*$/) {
                 ($keys[$i]->{'pub'}->{'length'}, $keys[$i]->{'pub'}->{'uid'}, $keys[$i]->{'pub'}->{'created'}) = ($1, $2, $3)
                 if $_ =~ m/^pub\s*?(\w*?)\/(\w*?)\s(\d{4}-\d{2}-\d{2})/;
-                $keys[$1]->{'pub'}->{'expires'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expires:\s(\d{4}-\d{2}-\d{2})\]/;
+                $keys[$i]->{'pub'}->{'expires'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expires:\s(\d{4}-\d{2}-\d{2})\]/;
+                $keys[$i]->{'pub'}->{'expired'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expired:\s(\d{4}-\d{2}-\d{2})\]/;
             } elsif ($_ =~ m/^sub\s.*$/) {
                 ($keys[$i]->{'sub'}->{'length'}, $keys[$i]->{'sub'}->{'uid'}, $keys[$i]->{'sub'}->{'created'}) = ($1, $2, $3)
                 if $_ =~ m/^sub\s*?(\w*?)\/(\w*?)\s(\d{4}-\d{2}-\d{2})/;
-                $keys[$1]->{'sub'}->{'expires'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expires:\s(\d{4}-\d{2}-\d{2})\]/;
+                $keys[$i]->{'sub'}->{'expires'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expires:\s(\d{4}-\d{2}-\d{2})\]/;
+                $keys[$i]->{'sub'}->{'expired'} = $1 if $_ =~ m/^pub\s*?\w*?\/\w*?\s\d{4}-\d{2}-\d{2}\s\[expired:\s(\d{4}-\d{2}-\d{2})\]/;
             } elsif ($_ =~ m/^uid\s.*$/) {
                 push @{$keys[$i]->{'uid'}}, $1 if $_ =~ m/^uid\s*?([^\s].*?)$/;
             } elsif ($_ =~ m/^$/) {
@@ -907,6 +910,7 @@ sub get_dak_keyring {
 
     my $i=0;
     foreach my $key (@keys) {
+        #    &main::daemon_log(Dumper($key));
         &add_content2xml_hash($out_hash, "answer".$i++, $key);
     }
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
@@ -948,6 +952,7 @@ sub import_dak_key {
         close($keyfile);
         my $command = "$gpg --import /tmp/gosa_si_tmp_dak_key";
         my $output = &run_as($main::dak_user, $command);
+        &main::daemon_log("$session_id DEBUG: ".$output->{'command'}, 7);
         unlink("/tmp/gosa_si_tmp_dak_key");
 
         if($output->{'resultCode'} != 0) {
@@ -971,7 +976,7 @@ sub remove_dak_key {
     my $target = @{$msg_hash->{'target'}}[0];
     my $header= @{$msg_hash->{'header'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
-    my $key = @{$msg_hash->{'uid'}}[0];
+    my $key = @{$msg_hash->{'keyid'}}[0];
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
@@ -993,6 +998,7 @@ sub remove_dak_key {
         if(&run_as($main::dak_user, "$gpg --list-keys $key")->{'resultCode'} == 0) {
             my $command = "$gpg --batch --yes --delete-key $key";
             my $output = &run_as($main::dak_user, $command);
+            &main::daemon_log("$session_id DEBUG: ".$output->{'command'}, 7);
         } else {
             &add_content2xml_hash($out_hash, "error", "DAK key with id '$key' was not found in keyring");
         }

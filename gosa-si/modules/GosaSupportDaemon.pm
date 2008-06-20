@@ -634,8 +634,10 @@ sub run_as {
 	if(! -x $sudo_cmd) {
 		&main::daemon_log("ERROR: The sudo utility is not available! Please fix this!");
 	}
-	open(PIPE, "$sudo_cmd su - $uid -c '$command' |");
+	my $cmd_line= "$sudo_cmd su - $uid -c '$command'";
+	open(PIPE, "$cmd_line |");
 	my $result = {'resultCode' => $?};
+	$result->{'command'} = $cmd_line;
 	push @{$result->{'output'}}, <PIPE>;
 	return $result;
 }
