@@ -940,11 +940,17 @@ class mailAccount extends plugin
         $message[]= msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com");
       }
     }
+
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=".$this->mail.")(gosaMailAlternateAddress=".$this->mail."))(!(uid=".$this->uid."))(!(cn=".$this->uid.")))", array("uid"));
+    $filter = "(&(!(objectClass=gosaUserTemplate))(!(uid=".$this->uid."))".
+      "(objectClass=gosaMailAccount)".
+      "(|(mail=".$this->mail.")(alias=".$this->mail.")(gosaMailAlternateAddress=".$this->mail.")))";
+
+    $ldap->search($filter,array("uid"));
     if ($ldap->count() != 0){
       $message[]= msgPool::duplicated(_("Mail address"));
     }
+
 
     /* Check quota */
     if ($this->gosaMailQuota != '' && $this->acl_is_writeable("gosaMailQuota")){
@@ -1046,8 +1052,8 @@ class mailAccount extends plugin
 
       /* Is this address already assigned in LDAP? */
       $ldap->cd ($this->config->current['BASE']);
-      $ldap->search ("(&(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
-      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
+      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)".
+          "(alias=$address)(gosaMailAlternateAddress=$address)))", array("uid"));
 
       if ($ldap->count() > 0){
         $attrs= $ldap->fetch ();
