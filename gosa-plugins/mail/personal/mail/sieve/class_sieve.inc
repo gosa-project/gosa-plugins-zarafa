@@ -500,7 +500,7 @@ class sieve
 			} if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
 				$this->error_raw = "stream_socket_enable_crypto() returned 'false'"; return (false);
 			}else{
-				echo "Done";
+#				echo "Done";
 			}
 		}
 	}
