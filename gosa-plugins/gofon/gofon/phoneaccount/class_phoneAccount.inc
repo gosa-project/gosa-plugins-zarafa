@@ -5,7 +5,6 @@ class phoneAccount extends plugin
   /* Definitions */
   var $plHeadline= "Phone";
   var $plDescription= "This does something";
-  var $has_mailAccount= FALSE;
 
   /* Attributes */
   var $telephoneNumber        = array();
@@ -38,14 +37,18 @@ class phoneAccount extends plugin
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
                                       "hardware_list","used_hardware");
 
-  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer",
+  var $attributes             = array("goFonDeliveryMode", "goFonFormat","goFonHomeServer",
       "goFonHardware","goFonPIN","goFonVoicemailPIN","telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
   var $uid;
+  var $cn;
 
   var $view_logged = FALSE;
   var $multiple_support = TRUE;
+  var $mailAddress      = "";
+  var $has_mailAccount  = FALSE;
+  var $pager      = "";
 
   function phoneAccount (&$config, $dn= NULL, $parent= NULL)
   {
@@ -59,36 +62,41 @@ class phoneAccount extends plugin
       }
     }
 
-    /* Set up has_mailAccount */
-    if (isset($this->attrs['objectClass'])){
-      if (in_array("gosaMailAccount", $this->attrs['objectClass'])){
-        $this->has_mailAccount= TRUE;
-      }
-    }
-
     /* Set parent object to tab object */
     if(is_object($parent)){
       $this->parent = $parent->parent;
-    }else{
-
-      /* Workaround ... 
-          FIXME, * If there is time, split this code into class_voip.inc and class_phoneaccount.inc
-                   This code is to much to be comprehensible and understandable.
-                 * We don't need a parent object here, we just need a reference to the users uid and cn.
-                
-       */
-      $this->parent = new usertabs($this->config,
-          $this->config->data['TABS']['USERTABS'],$this->dn);
     }
 
-    /* Set uid */
-    if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
-      $this->uid = $this->parent->by_object['user']->uid;
+    /* Get current uid and cn 
+     */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
     }
-    if((isset($this->parent->by_object['user']->cn))&&(!empty($this->parent->by_object['user']->cn))){
-      $this->cn  = $this->parent->by_object['user']->cn;
+    if(isset($this->attrs['cn'][0])){
+      $this->cn = $this->attrs['cn'][0];
     }
-    
+    if(isset($this->attrs['mail'][0])){
+      $this->mailAddress = $this->attrs['mail'][0];
+    }
+    if(isset($this->attrs['pager'][0])){
+      $this->pager = $this->attrs['pager'][0];
+    }
+
+    /* If there is a parent object present, use references 
+     */
+    if(isset($this->parent->by_object['user']->uid)){
+      $this->uid = &$this->parent->by_object['user']->uid;
+    }
+    if(isset($this->parent->by_object['user']->cn)){
+      $this->cn   =&$this->parent->by_object['user']->cn;
+    }
+    if(isset($this->parent->by_object['user']->pager)){
+      $this->pager   =&$this->parent->by_object['user']->pager;
+    }
+    if(isset($this->parent->by_object['mailAccount']->mail)){
+      $this->mailAddress      = &$this->parent->by_object['mailAccount']->mail;
+      $this->has_mailAccount  = &$this->parent->by_object['mailAccount']->is_account();
+    }
 
     /* Check server configurations 
      * Load all server configuration in $this->goFonHomeServers if available
@@ -399,13 +407,9 @@ class phoneAccount extends plugin
       $newnums[]= preg_replace("/[^0-9]/","",$tele);
     }
 
-    /* If deletion starts from userslist, cn uid are not set */
-    if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
-      $this->uid = $this->parent->by_object['user']->uid;
-    }
-    if((isset($this->parent->by_object['user']->cn))&&(!empty($this->parent->by_object['user']->cn))){
-      $this->cn  = $this->parent->by_object['user']->cn;
-    }
+    if(empty($this->uid)) trigger_error("Uid is empty.");
+
+
     /* Create voicemail entry 
      */
     if((!isset($this->cn))||(empty($this->cn))){
@@ -414,11 +418,11 @@ class phoneAccount extends plugin
       $CNname= $this->cn;
     }
 
-    if((isset($this->parent))&&(isset($this->parent->by_object['mailAccount']))&&($this->parent->by_object['mailAccount']->is_account==true)){
-      $s_mail = $this->parent->by_object['mailAccount']->mail;
-    }else{
-      $s_mail = "";
+    $s_mail = "";
+    if($this->has_mailAccount){
+      $s_mail = $this->mailAddress;;
     }
+
     /* Get phonehardware to setup sip entry  */
     $ldap         = $this->config->get_ldap_link();
     $r_res        = $ldap->search("(&(objectClass=goFonHardware)(cn=".$this->goFonHardware."))", array('*'));
@@ -663,10 +667,7 @@ class phoneAccount extends plugin
           "context"     => $this->voice_context,
           "email"       => $s_mail);
 
-      /* Set pager number if available */
-      if(isset($this->parent->by_object['user']->pager)){
-        $voice_data_array['pager']   = $this->parent->by_object['user']->pager;
-      }
+      $voice_data_array['pager']   = $this->pager;
 
       /* Check if there is already an entry in sip_users for this uid */
       $query_tmp = "SELECT * FROM ".$a_New['VOICE_TABLE']." WHERE customer_id='".$customer_id."';\n";
@@ -846,6 +847,7 @@ class phoneAccount extends plugin
 
     $display = "";
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
+
     if(empty($this->macro)&&(!empty($this->goFonMacro))){
 
       /* Go through already saved values, for a parameter */
@@ -1066,7 +1068,7 @@ class phoneAccount extends plugin
     /* Assign acls */
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name,$SkipWrite));
     }
 
     /* Transfer ACL's */
@@ -1385,12 +1387,6 @@ class phoneAccount extends plugin
   {
     if(!$this->initially_was_account) return;
 
-    foreach($this->attributes as $key=>$val){
-      if(in_array($val,array("uid","cn"))){
-        unset($this->attributes[$key]);
-        unset($this->$val);
-      }
-    }
     if(count($this->goFonHomeServers) && !empty($this->init_HomeServer) && is_callable("mysql_pconnect")){
 
       // Get Configuration for initial Mysql database Server
@@ -1419,14 +1415,6 @@ class phoneAccount extends plugin
 
       $SQL="";
 
-      /* If deletion starts from userslist, cn uid are not set */
-      if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
-        $this->uid = $this->parent->by_object['user']->uid;
-      }
-
-      if((isset($this->parent->by_object['user']->cn))&&(!empty($this->parent->by_object['user']->cn))){
-        $this->cn  = $this->parent->by_object['user']->cn;
-      }
 
       $first_num = false;
       // Delete old entries
@@ -1517,8 +1505,6 @@ class phoneAccount extends plugin
     }
 
     foreach($this->phoneNumbers as $num){
-      if(!isset($this->cn)) $this->cn = "";
-
       if((isset($numbers[$num]))&&(($numbers[$num]['uid'][0]!=$this->uid))){
         if(isset($numbers[$num]['uid'][0])){
           return sprintf(_("The specified telephonenumber '%s' is already assigned to '%s'."),$num,$numbers[$num]['uid'][0]);
