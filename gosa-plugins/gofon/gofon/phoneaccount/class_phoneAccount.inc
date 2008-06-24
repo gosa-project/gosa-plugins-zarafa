@@ -659,6 +659,17 @@ class phoneAccount extends plugin
 
       $customer_id = $newnums[$i_new_key];
 
+      $query  = "SELECT id,name,callerid FROM ".$a_New['SIP_TABLE']." WHERE name='".$this->uid."';";
+
+      $rid    = mysql_query($query,$new_connection);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+      $result = mysql_fetch_assoc($rid);
+  
+      $old_customer_id = ""; 
+      if($result){
+        $old_customer_id = $result['callerid'];
+      }
+
       $voice_data_array = array(
           "customer_id" => $customer_id,
           "mailbox"     => $customer_id,
@@ -670,7 +681,9 @@ class phoneAccount extends plugin
       $voice_data_array['pager']   = $this->pager;
 
       /* Check if there is already an entry in sip_users for this uid */
-      $query_tmp = "SELECT * FROM ".$a_New['VOICE_TABLE']." WHERE customer_id='".$customer_id."';\n";
+      $query_tmp = "SELECT * FROM ".$a_New['VOICE_TABLE']." WHERE customer_id='".$old_customer_id."';\n";
+
+
       $rid = mysql_query($query_tmp,$new_connection);
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query_tmp, "Database query");
       if(mysql_affected_rows($new_connection)){
@@ -678,6 +691,7 @@ class phoneAccount extends plugin
         /********************** 
          * Update Voice mail entry  
          **********************/
+
         $result = mysql_fetch_assoc($rid)  ;
 
         foreach($voice_data_array as $name => $value){
@@ -686,14 +700,14 @@ class phoneAccount extends plugin
           }
         }
 
-        /* Only update entry if there is something to uopdate */
+        /* Only update entry if there is something to update */
         if(count($voice_data_array)){
           $query = "UPDATE ".$a_New['VOICE_TABLE']." SET ";
           foreach($voice_data_array as $key => $val){
             $query.= "".$key."='".$val."',"; 
           } 
           $query = preg_replace("/,$/","",$query);
-          $query.= " WHERE customer_id='".$customer_id."';";
+          $query.= " WHERE customer_id='".$old_customer_id."';";
           $SQL_query_array[] = $query;
         }
       }else{
@@ -1425,7 +1439,17 @@ class phoneAccount extends plugin
         $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$s_telenums."';\n";
       }
 
-      $SQL[] = "DELETE FROM ".$a_SETUP['VOICE_TABLE']." WHERE customer_id='".$first_num."';";
+
+      $query  = "SELECT id,name,callerid FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';";
+      $rid    = mysql_query($query,$r_con);
+      @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+      $result = mysql_fetch_assoc($rid);
+      $callerid = $first_num;
+      if($result){
+        $callerid = $result['callerid'];
+      }
+
+      $SQL[] = "DELETE FROM ".$a_SETUP['VOICE_TABLE']." WHERE customer_id='".$callerid."';";
       $SQL[] = "DELETE FROM ".$a_SETUP['EXT_TABLE']." WHERE exten='".$this->uid."';\n";
       $SQL[] = "DELETE FROM ".$a_SETUP['SIP_TABLE']." WHERE name='".$this->uid."';\n";
 
