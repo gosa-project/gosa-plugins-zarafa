@@ -1225,12 +1225,12 @@ class phoneAccount extends plugin
               }
             }
             if(array_differs($old_macro_settings,$this->macroarray[$this->macro][$key])){
-              $this->modified = TRUE;
+              $this->is_modified = TRUE;
             }
           }
 
           if(count(array_diff($this->macroarray[$this->macro][$key],$backup))){
-            $this->modified = TRUE;
+            $this->is_modified = TRUE;
           }
         }
       }
@@ -1667,7 +1667,7 @@ class phoneAccount extends plugin
           }
         }
         if(count(array_diff($this->macroarray[$this->macro][$key],$backup))){
-          $this->modified = TRUE;
+          $this->is_modified = TRUE;
         }
       }
     }
