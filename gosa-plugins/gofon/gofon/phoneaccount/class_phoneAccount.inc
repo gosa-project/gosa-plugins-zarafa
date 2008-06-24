@@ -67,7 +67,19 @@ class phoneAccount extends plugin
     }
 
     /* Set parent object to tab object */
-    $this->parent = $parent->parent;
+    if(is_object($parent)){
+      $this->parent = $parent->parent;
+    }else{
+
+      /* Workaround ... 
+          FIXME, * If there is time, split this code into class_voip.inc and class_phoneaccount.inc
+                   This code is to much to be comprehensible and understandable.
+                 * We don't need a parent object here, we just need a reference to the users uid and cn.
+                
+       */
+      $this->parent = new usertabs($this->config,
+          $this->config->data['TABS']['USERTABS'],$this->dn);
+    }
 
     /* Set uid */
     if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
@@ -76,6 +88,7 @@ class phoneAccount extends plugin
     if((isset($this->parent->by_object['user']->cn))&&(!empty($this->parent->by_object['user']->cn))){
       $this->cn  = $this->parent->by_object['user']->cn;
     }
+    
 
     /* Check server configurations 
      * Load all server configuration in $this->goFonHomeServers if available
