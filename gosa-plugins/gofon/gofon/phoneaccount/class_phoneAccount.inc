@@ -95,7 +95,7 @@ class phoneAccount extends plugin
     }
     if(isset($this->parent->by_object['mailAccount']->mail)){
       $this->mailAddress      = &$this->parent->by_object['mailAccount']->mail;
-      $this->has_mailAccount  = &$this->parent->by_object['mailAccount']->is_account();
+      $this->has_mailAccount  = &$this->parent->by_object['mailAccount']->is_account;
     }
 
     /* Check server configurations 
