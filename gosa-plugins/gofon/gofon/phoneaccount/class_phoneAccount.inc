@@ -188,7 +188,7 @@ class phoneAccount extends plugin
 
 
     /* Get available Macros  
-     * Search for all Marcos that are visible and create 
+     * Search for all Macros that are visible and create 
      *  an array with name and parameters 
      */
     $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("macroou")),
@@ -1164,6 +1164,7 @@ class phoneAccount extends plugin
 
       /* Every macro in the select box are available */
       if((isset($_POST['macro']))){
+        $this->macro = $_POST['macro'];
         $this->macrostillavailable=true;
       }
 
@@ -1199,9 +1200,11 @@ class phoneAccount extends plugin
       /* get all Postvars */
       if(isset($this->macroarray[$this->macro])){
 
-        if($this->acl_is_writeable("goFonMarco",$SkipWrite)){
+
+        if($this->acl_is_writeable("goFonMacro",$SkipWrite)){
           foreach($this->macroarray[$this->macro] as $key => $paras){
 
+            $old_macro_settings = $this->macroarray[$this->macro][$key]; 
             $backup = $this->macroarray[$this->macro][$key];
 
             if(isset($_POST[$paras['var']])){
@@ -1221,7 +1224,11 @@ class phoneAccount extends plugin
                 }
               }
             }
+            if(array_differs($old_macro_settings,$this->macroarray[$this->macro][$key])){
+              $this->modified = TRUE;
+            }
           }
+
           if(count(array_diff($this->macroarray[$this->macro][$key],$backup))){
             $this->modified = TRUE;
           }
@@ -1638,6 +1645,7 @@ class phoneAccount extends plugin
       }
 
       if(isset($_POST['macro']) && $_POST['macro'] != $this->macro){
+        $this->macro = $_POST['macro'];
         $this->is_modified =true;
       }
 
