@@ -135,7 +135,7 @@ class servkolab extends goService {
     $smarty->assign("quotastr", $quotastr);
 
     /* Load Template */
-    $display.=$smarty->fetch(get_template_path('servkolab.tpl', TRUE));
+    $display.=$smarty->fetch(get_template_path('servkolab.tpl', TRUE,dirname(__FILE__)));
     return ($display);
   }
 
