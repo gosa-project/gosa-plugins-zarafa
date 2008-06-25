@@ -5,6 +5,7 @@ my @events = (
     "get_events",
     "opsi_get_netboot_products",  
     "opsi_get_local_products",
+    "opsi_get_product_properties",
     "opsi_set_product_properties",
     "opsi_get_client_hardware",
     "opsi_get_client_software",
@@ -37,7 +38,24 @@ my %cfg_defaults = (
 &read_configfile($main::cfg_file, %cfg_defaults);
 
 # Assemble opsi URL
-my $opsi_url= "$opsi_admin:$opsi_password@$opsi_server:4447/rpc";
+my $opsi_url= "https://".$opsi_admin.":".$opsi_password."@".$opsi_server.":4447/rpc";
+my $client = new JSON::RPC::Client;
+
+sub check_res {
+  my $res= shift;
+
+  if($res) {
+    if ($res->is_error) {
+      &main::daemon_log("ERROR: opsi configed communication failed: ".$res->error_message, 1);
+    } else {
+      return 1;
+    }
+  } else {
+    &main::daemon_log("ERROR: opsi configed communication failed: ".$client->status_line, 1);
+  }
+
+  return 0;
+}
 
 
 sub read_configfile {
@@ -71,50 +89,101 @@ sub opsi_get_netboot_products {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
 
+    if (defined $forward_to_gosa) {
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
+
     # Authenticate
-    my $client = new JSON::RPC::Client;
     my $callobj = {
-      method  => 'getPossibleProductActions_hash',
+      method  => 'getNetBootProductIds_list',
       params  => [ ],
       id  => 1,
     };
 
     my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+      foreach my $r (@{$res->result}) {
+        $callobj = {
+          method  => 'getProduct_hash',
+          params  => [ $r ],
+          id  => 1,
+        };
 
-    if($res) {
-      if ($res->is_error) {
-        print STDERR "Error : ", $res->error_message;
-      }
-      else {
-        print STDERR Dumper($res->result);
-      }
-    }
-    else {
-      print STDERR $client->status_line;
-    }
+        my $sres = $client->call($opsi_url, $callobj);
+        if (check_res($sres)){
+          my $tres= $sres->result;
 
+          my $name= $tres->{'name'};
+          my $description= $tres->{'description'};
+          $name=~ s/\//\\\//;
+          $description=~ s/\//\\\//;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+        }
+
+      }
+  }
+
+  $xml_msg=~ s/<xxx><\/xxx>//;
+
+  return $xml_msg;
+}
+
+
+sub opsi_get_product_properties {
+    my ($msg, $msg_hash) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $productId = @{$msg_hash->{'ProductId'}}[0];
+
+    # build return message with twisted target and source
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
     if (defined $forward_to_gosa) {
-        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
 
-#      my $data= $kadm5->get_policy(@{$msg_hash->{'policy'}}[0]) or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
-#      &add_content2xml_hash($out_hash, "name", $data->name);
-#      &add_content2xml_hash($out_hash, "mask", $data->mask);
-#      &add_content2xml_hash($out_hash, "pw_history_num", $data->pw_history_num);
-#      &add_content2xml_hash($out_hash, "pw_max_life", $data->pw_max_life);
-#      &add_content2xml_hash($out_hash, "pw_min_classes", $data->pw_min_classes);
-#      &add_content2xml_hash($out_hash, "pw_min_length", $data->pw_min_length);
-#      &add_content2xml_hash($out_hash, "pw_min_life", $data->pw_min_life);
-#      &add_content2xml_hash($out_hash, "policy_refcnt", $data->policy_refcnt);
+    # JSON Query
+    my $callobj = {
+      method  => 'getProductPropertyDefinitions_listOfHashes',
+      params  => [ $productId ],
+      id  => 1,
+    };
 
-    # return message
-    return &create_xml_string($out_hash);
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+
+      my $item= "<item><ProductId>$productId</productId>";
+      print STDERR Dumper($res->result);
+      foreach my $r (@{$res->result}) {
+
+This is not correct....
+        $item= "<item><ProductId>$productId</productId>";
+        foreach my $key (keys %{$r}) {
+          my $value = $r->{$key};
+          $item.= "<$key>$value</$key>";
+        }
+        $item.= "</item>";
+        $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
+      }
+  }
+
+  $xml_msg=~ s/<xxx><\/xxx>//;
+
+  return $xml_msg;
 }
 
 
@@ -194,11 +263,43 @@ sub opsi_get_local_products {
     &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
-        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
 
-    # return message
-    return &create_xml_string($out_hash);
+    my $callobj = {
+      method  => 'getLocalBootProductIds_list',
+      params  => [ ],
+      id  => 1,
+    };
+
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+      foreach my $r (@{$res->result}) {
+        $callobj = {
+          method  => 'getProduct_hash',
+          params  => [ $r ],
+          id  => 1,
+        };
+
+        my $sres = $client->call($opsi_url, $callobj);
+        if (check_res($sres)){
+          my $tres= $sres->result;
+
+          my $name= $tres->{'name'};
+          my $description= $tres->{'description'};
+          $name=~ s/\//\\\//;
+          $description=~ s/\//\\\//;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><id>$r<\/id><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+        }
+
+      }
+  }
+
+  $xml_msg=~ s/<xxx><\/xxx>//;
+
+  return $xml_msg;
 }
 
 1;
