@@ -339,8 +339,6 @@ class gosa_logview extends plugin
 
   function save_object()
   {
-    if(isset($_POST['gosa_log_contents_posted'])){
-
       /* Get submitted range */	
       if(isset($_POST['EntriesPerPage'])){
         if(is_numeric($_POST['EntriesPerPage'])){
@@ -396,7 +394,6 @@ class gosa_logview extends plugin
         $logview['gosa_log'][$attr] = $this->$attr;
       }
       session::set('logview',$logview);
-    }
   }
 
 
