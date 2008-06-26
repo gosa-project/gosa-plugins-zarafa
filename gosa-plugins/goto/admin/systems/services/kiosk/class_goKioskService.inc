@@ -28,7 +28,7 @@ class goKioskService extends goService{
 
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
-      msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")), ERROR_DIALOG);
+#      msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")), ERROR_DIALOG);
     }else{
       $this->gotoKioskProfiles = array();
       if(isset($this->attrs['gotoKioskProfile']) && is_array($this->attrs['gotoKioskProfile'])){
@@ -73,6 +73,7 @@ class goKioskService extends goService{
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("baseDir",$this->baseDir);
     $display= "";
 
     /* Download kiosk profile 

@@ -1,5 +1,16 @@
 <h2><img alt="" class="center" src="images/house.png" align="middle">&nbsp;<LABEL for="gotoKioskProfile">{t}Kiosk profile management{/t}</ LABEL></h2>
 
+{if $baseDir == ""}
+
+<b>{msgPool type=invalidConfigurationAttribute param=KIOSKPATH}</b>
+
+<p class='seperator'>&nbsp;</p>
+<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
+    <input type='submit' name='CancelService' value='{msgPool type=cancelButton}'>
+</div>
+
+{else}
+
     <input type="hidden" name="dialogissubmitted" value="1">
 
 {t}Server path{/t}&nbsp;<input name="server_path" style="width:300px;" value="{$server_path}">
@@ -22,3 +33,4 @@
     focus_field('gotoKioskProfile');
   -->
 </script>
+{/if}
