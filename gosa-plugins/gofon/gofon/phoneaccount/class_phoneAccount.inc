@@ -159,7 +159,7 @@ class phoneAccount extends plugin
      * Search for all available phone hardware  
      */
     $tmp = get_sub_list("(objectClass=goFonHardware)","phone",array(get_ou("phoneou")),
-                  $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
+                  $this->config->current['BASE'],array("cn","description"), GL_SUBSEARCH);
     foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
       $description= "";
@@ -186,7 +186,7 @@ class phoneAccount extends plugin
         get_ou("phoneou"));
 
     $tmp = get_sub_list("(goFonHardware=*)","phone",$deps_a,$this->config->current['BASE'],
-        array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);
+        array('cn','dn','goFonHardware'),GL_SUBSEARCH);
     foreach($tmp as $attrs){
       $cn = $attrs['goFonHardware'][0];
       if(isset($this->hardware_list[$cn])){
@@ -200,7 +200,7 @@ class phoneAccount extends plugin
      *  an array with name and parameters 
      */
     $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("macroou")),
-                  $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn","cn"), GL_NONE);
+                  $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn","cn"), GL_NO_ACL_CHECK | GL_SUBSEARCH );
     
 
     /* Add none for no macro*/
@@ -209,6 +209,16 @@ class phoneAccount extends plugin
 
     /* Fetch all Macros*/
     foreach($tmp as $attrs){
+
+      $ui = get_userinfo(); 
+      $acl = $ui->get_permissions($attrs['dn'],"gofonmacro/macro","");
+
+      /* Skip all macros we are not able to read 
+          execpt, the currently selected macro.
+       */
+      if(!preg_match("/r/",$acl) && !preg_match("/^".normalizePreg($attrs['dn'])."/",$this->goFonMacro)){
+        continue;
+      }
 
       /* unset Count, we don't need that here */
       unset($attrs['displayName']['count']);

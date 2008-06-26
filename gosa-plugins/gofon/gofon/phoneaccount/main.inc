@@ -45,7 +45,7 @@ if (!$remove_lock){
 	}
 
 	/* Enter edit mode? */
-	if (isset($_POST['edit'])){
+	if (isset($_POST['edit']) && !session::is_set('edit')){
 
 		/* Check locking */
 		if (($username= get_lock($ui->dn)) != ""){
