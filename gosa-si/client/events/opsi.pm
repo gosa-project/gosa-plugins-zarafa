@@ -17,6 +17,7 @@ use warnings;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use JSON::RPC::Client;
+use XML::Quote qw(:all);
 
 BEGIN {}
 
@@ -121,8 +122,8 @@ sub opsi_get_netboot_products {
         if (check_res($sres)){
           my $tres= $sres->result;
 
-          my $name= $tres->{'name'};
-          my $description= $tres->{'description'};
+          my $name= xml_quote($tres->{'name'});
+          my $description= xml_quote($tres->{'description'});
           $name=~ s/\//\\\//;
           $description=~ s/\//\\\//;
           $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
@@ -173,10 +174,10 @@ sub opsi_get_product_properties {
           my $value = $r->{$key};
           if (UNIVERSAL::isa( $value, "ARRAY" )){
             foreach my $subval (@{$value}){
-              $item.= "<$key>$subval</$key>";
+              $item.= "<$key>".xml_quote($subval)."</$key>";
             }
           } else {
-            $item.= "<$key>$value</$key>";
+            $item.= "<$key>".xml_quote($value)."</$key>";
           }
         }
         $item.= "</item>";
@@ -206,6 +207,15 @@ sub opsi_set_product_properties {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
+# Produkt
+# Property
+# Wert
+#   <ProductId>ntfs-restore-image</ProductId>
+#   <item>
+#    <name>askbeforeinst</name>
+#    <value>false</value>
+#   </item>
+
     # return message
     return &create_xml_string($out_hash);
 }
@@ -218,17 +228,50 @@ sub opsi_get_client_hardware {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId = @{$msg_hash->{'hostId'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
-        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+    &add_content2xml_hash($out_hash, "hostId", "$hostId");
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
+
+    # JSON Query
+    my $callobj = {
+      method  => 'getHardwareInformation_hash',
+      params  => [ $hostId ],
+      id  => 1,
+    };
+
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+      my $result= $res->result;
+      foreach my $r (keys %{$result}){
+        my $item= "<item><name>".xml_quote($r)."</name>";
+        my $value= $result->{$r};
+        foreach my $sres (@{$value}){
+
+          foreach my $dres (keys %{$sres}){
+            if (defined $sres->{$dres}){
+              $item.= "<$dres>".xml_quote($sres->{$dres})."</$dres>";
+            }
+          }
+
+          $item.= "</item>";
+          $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
+
+        }
+      }
     }
 
-    # return message
-    return &create_xml_string($out_hash);
+    $xml_msg=~ s/<xxx><\/xxx>//;
+
+    return $xml_msg;
 }
 
 
@@ -239,17 +282,34 @@ sub opsi_get_client_software {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId = @{$msg_hash->{'hostId'}}[0];
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
-        &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+    &add_content2xml_hash($out_hash, "hostId", "$hostId");
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
+
+    # JSON Query
+    my $callobj = {
+      method  => 'getSoftwareInformation_hash',
+      params  => [ $hostId ],
+      id  => 1,
+    };
+
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+      my $result= $res->result;
     }
 
-    # return message
-    return &create_xml_string($out_hash);
+    $xml_msg=~ s/<xxx><\/xxx>//;
+
+    return $xml_msg;
 }
 
 
@@ -294,7 +354,7 @@ sub opsi_get_local_products {
           my $description= $tres->{'description'};
           $name=~ s/\//\\\//;
           $description=~ s/\//\\\//;
-          $xml_msg=~ s/<xxx><\/xxx>/<item><id>$r<\/id><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><id>".xml_quote($r).<\/id><name><\/name><description>".xml_quote($description)."<\/description><\/item><xxx><\/xxx>/;
         }
 
       }
