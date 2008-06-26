@@ -153,6 +153,7 @@ sub opsi_get_product_properties {
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
+    &add_content2xml_hash($out_hash, "ProducId", "$productId");
     &add_content2xml_hash($out_hash, "xxx", "");
     my $xml_msg= &create_xml_string($out_hash);
 
@@ -166,15 +167,17 @@ sub opsi_get_product_properties {
     my $res = $client->call($opsi_url, $callobj);
     if (check_res($res)){
 
-      my $item= "<item><ProductId>$productId</productId>";
-      print STDERR Dumper($res->result);
       foreach my $r (@{$res->result}) {
-
-This is not correct....
-        $item= "<item><ProductId>$productId</productId>";
+        my $item= "<item>";
         foreach my $key (keys %{$r}) {
           my $value = $r->{$key};
-          $item.= "<$key>$value</$key>";
+          if (UNIVERSAL::isa( $value, "ARRAY" )){
+            foreach my $subval (@{$value}){
+              $item.= "<$key>$subval</$key>";
+            }
+          } else {
+            $item.= "<$key>$value</$key>";
+          }
         }
         $item.= "</item>";
         $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
