@@ -1,9 +1,24 @@
 <h2>{t}Import jobs{/t}</h2>
+<p>
+{t}You can import a list of jobs into the GOsa job queue. This should be a semicolon seperated list of items in the following format:{/t}
+</p>
+<i>{t}timestamp{/t} ; {t}MAC-address{/t} ; {t}job type{/t} ; {t}object group{/t} [ ; {t}import base{/t} ; {t}full hostname{/t} ; {t}IP-address{/t} ; {t}DHCP group{/t} ]</i>
+<br>
+<br>
+{if !$count}
+{t}Example{/t}:
+<br>
+20080626162556 <b>;</b> 00:0C:29:99:1E:37 <b>;</b> job_trigger_activate_new <b>;</b> goto-client <b>;</b> dc=test,dc=gonicus,dc=de
+<br>
+<br>
+{/if}
 
+<p class="seperator"></p>
+&nbsp;
 <table>
 	<tr>	
 		<td>
-			{t}Select the semicolon seperated list to import{/t}
+			{t}Select list to import{/t}
 		</td>
 		<td>
 			<input type='file' name='file' value="{t}Browse{/t}">
