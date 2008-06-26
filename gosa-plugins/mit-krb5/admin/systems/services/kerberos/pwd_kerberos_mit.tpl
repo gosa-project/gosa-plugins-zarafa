@@ -173,28 +173,28 @@
 			<h2>{t}Status{/t}</h2>
 			<table>
 				<tr>
-					<td style='width:160px;'>{t}Failed logins{/t}</td>
-					<td>{if !$FAIL_AUTH_COUNT} {t}none{/t} {else} {$FAIL_AUTH_COUNT} {/if}</td>
+					<td>{t}Failed logins{/t}</td>
+					<td><i>{if !$FAIL_AUTH_COUNT} {t}none{/t} {else} {$FAIL_AUTH_COUNT} {/if}</i></td>
 				</tr>
 				<tr>
 					<td>{t}Key version number{/t}</td>
-					<td>{$KVNO}</td>
+					<td><i>{$KVNO}</i></td>
 				</tr>
 				<tr>
 					<td>{t}Last failed login{/t}</td>
-					<td>{if !$LAST_FAILED} {t}none{/t} {else} {$LAST_FAILED|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</td>
+					<td><i>{if !$LAST_FAILED} {t}none{/t} {else} {$LAST_FAILED|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</i></td>
 				</tr>
 				<tr>
 					<td>{t}Last password change{/t}</td>
-					<td>{if !$LAST_PWD_CHANGE} {t}none{/t} {else} {$LAST_PWD_CHANGE|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</td>
+					<td><i>{if !$LAST_PWD_CHANGE} {t}none{/t} {else} {$LAST_PWD_CHANGE|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</i></td>
 				</tr>
 				<tr>
 					<td>{t}Last successful login{/t}</td>
-					<td>{if !$LAST_SUCCESS} {t}none{/t} {else} {$LAST_SUCCESS|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</td>
+					<td><i>{if !$LAST_SUCCESS} {t}none{/t} {else} {$LAST_SUCCESS|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</i></td>
 				</tr>
 				<tr>
 					<td>{t}Last modification date{/t}</td>
-					<td>{if !$MOD_DATE} {t}none{/t} {else} {$MOD_DATE|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</td>
+					<td><i>{if !$MOD_DATE} {t}none{/t} {else} {$MOD_DATE|date_format:"%d.%m.%Y %H:%m:%S"} {/if}</i></td>
 				</tr>
 			</table>
 	
