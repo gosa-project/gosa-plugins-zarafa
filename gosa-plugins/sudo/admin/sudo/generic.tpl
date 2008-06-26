@@ -1,7 +1,7 @@
 {if $is_default}
 
 <h2>{t}Generic{/t} - {t}global defaults{/t}</h2>
-<table> 
+<table style="width:100%;">
  <tr>
   <td>
    {t}Name{/t}
@@ -24,14 +24,14 @@
 
 {else}
 
-<table style="width: 90%;">
+<table style="width:100%;">
  <tr>
   <td style="vertical-align:top;width:50%">
    <h2>{t}Generic{/t}</h2>
    <table> 
     <tr>
      <td>
-      {t}Name{/t}
+      {t}Name{/t}{$must}
      </td>
      <td>
       {render acl=$cnACL}
