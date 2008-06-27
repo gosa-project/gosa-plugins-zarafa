@@ -206,7 +206,7 @@ class faiHook extends plugin
       if(isset($this->SubObjects[base64_decode($_GET['getFAIHook'])])){
         $obj = $this->SubObjects[base64_decode($_GET['getFAIHook'])];
         $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        send_binary_content(stripslashes($obj['FAIhook']),$obj['cn'].".FAIhook");
+        send_binary_content(stripslashes($obj['FAIscript']),$obj['cn'].".FAIhook");
       }
     }
 
