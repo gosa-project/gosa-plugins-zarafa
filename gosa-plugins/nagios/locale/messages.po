@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,6 +112,10 @@ msgstr ""
 msgid "View system informations"
 msgstr ""
 
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr ""
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr ""
@@ -150,8 +154,4 @@ msgstr ""
 
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
-msgstr ""
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
 msgstr ""

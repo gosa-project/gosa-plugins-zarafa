@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -78,8 +78,9 @@ msgstr "月"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:175
 #: personal/connectivity/squid/class_proxyAccount.inc:301
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP 错误:"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:196
 #: personal/connectivity/squid/class_proxyAccount.inc:198

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2008-04-04 09:28+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -21,14 +21,152 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:16
+msgid "Scalix"
+msgstr "Scalix"
+
+#: personal/scalix/class_scalixAccount.inc:17
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: personal/scalix/class_scalixAccount.inc:121
+msgid "This account has no scalix extensions."
+msgstr "Dieses Konto besitzt keine Scalix-Erweiterungen."
+
+#: personal/scalix/class_scalixAccount.inc:130
+msgid "Remove scalix account"
+msgstr "Scalix-Konto entfernen"
+
+#: personal/scalix/class_scalixAccount.inc:131
+msgid ""
+"This account has scalix synchronization enabled. You can disable it by "
+"clicking below."
+msgstr ""
+"Dieses Konto besitzt aktivierte Scalix-Erweiterungen. Sie können diese durch "
+"einen Klick auf die untere Schaltfläche deaktivieren."
+
+#: personal/scalix/class_scalixAccount.inc:133
+msgid "Create scalix account"
+msgstr "Scalix-Konto erstellen"
+
+#: personal/scalix/class_scalixAccount.inc:133
+msgid ""
+"This account has scalix synchronization disabled. You can enable it by "
+"clicking below."
+msgstr ""
+"Dieses Konto besitzt keine aktivierten Scalix-Erweiterungen. Sie können "
+"diese durch einen Klick auf die untere Schaltfläche aktivieren."
+
+#: personal/scalix/class_scalixAccount.inc:227
+#: personal/scalix/class_scalixAccount.inc:330
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: personal/scalix/class_scalixAccount.inc:250
+#: personal/scalix/class_scalixAccount.inc:257
+#: personal/scalix/class_scalixAccount.inc:264
+#: personal/scalix/class_scalixAccount.inc:274
+#: personal/scalix/class_scalixAccount.inc:486
+#: personal/scalix/class_scalixAccount.inc:495
+msgid "Error"
+msgstr "Fehler"
+
+#: personal/scalix/class_scalixAccount.inc:250
+#: personal/scalix/class_scalixAccount.inc:486
+msgid "Cannot add invalid mail address!"
+msgstr "Kann eine ungültige Mail-Adresse nicht hinzuzufügen!"
+
+#: personal/scalix/class_scalixAccount.inc:257
+#: personal/scalix/class_scalixAccount.inc:274
+msgid "You have no permission to modify these addresses."
+msgstr "Sie haben keine Berechtigung, um diese Adressen zu bearbeiten."
+
+#: personal/scalix/class_scalixAccount.inc:264
+#: personal/scalix/class_scalixAccount.inc:495
+#, php-format
+msgid "Cannot add mail address: it is already used by user '%s'."
+msgstr ""
+"Kann Mail-Adresse nicht hinzufügen: sie wird bereits von Benutzer '%s' "
+"verwendet."
+
+#: personal/scalix/class_scalixAccount.inc:352
+msgid "Mailnode"
+msgstr "Mailknoten"
+
+#: personal/scalix/class_scalixAccount.inc:355
+msgid "Scalix object"
+msgstr "Scalix-Objekt"
+
+#: personal/scalix/class_scalixAccount.inc:364
+msgid "Email address"
+msgstr "Email-Adresse"
+
+#: personal/scalix/class_scalixAccount.inc:371
+msgid "Limit Mailbox"
+msgstr "Limitiere Mailbox"
+
+#: personal/scalix/class_scalixAccount.inc:446
+msgid "Scalix account"
+msgstr "Scalix-Konto"
+
+#: personal/scalix/class_scalixAccount.inc:450
+msgid "My account"
+msgstr "Mein Konto"
+
+#: personal/scalix/class_scalixAccount.inc:456
+msgid "Scalix Mail node"
+msgstr "Scalix Mailknoten"
+
+#: personal/scalix/class_scalixAccount.inc:457
+msgid "Mailbox class"
+msgstr "Mailbox-Klasse"
+
+#: personal/scalix/class_scalixAccount.inc:458
+msgid "Server language"
+msgstr "Serversprache"
+
+#: personal/scalix/class_scalixAccount.inc:459
+msgid "Administrator"
+msgstr "Administrator"
+
+#: personal/scalix/class_scalixAccount.inc:460
+msgid "Mailbox administrator"
+msgstr "Mailbox-Administrator"
+
+#: personal/scalix/class_scalixAccount.inc:461
+msgid "Hide user entry in Scalix"
+msgstr "Verstecke Benutzereintrag in Scalix"
+
+#: personal/scalix/class_scalixAccount.inc:462
+msgid "Mailbox size limitations"
+msgstr "Mailbox Größenbeschränkungen"
+
+#: personal/scalix/class_scalixAccount.inc:463
+msgid "Limit outbound"
+msgstr "Limitiere ausgehend"
+
+#: personal/scalix/class_scalixAccount.inc:464
+msgid "Limit inbound"
+msgstr "Limitiere eingehend"
+
 #: personal/scalix/class_scalixAccount.inc:465
+msgid "Notify user"
+msgstr "Benachrichtige Benutzer"
+
+#: personal/scalix/class_scalixAccount.inc:466 personal/scalix/generic.tpl:98
+#: personal/scalix/paste_generic.tpl:4
 msgid "Scalix email addresses"
 msgstr "Scalix Email-Adressen"
 
-#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
-msgid "List of scalix email addresses"
-msgstr "Liste alternativer Scalix Email-Adressen"
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr ""
+"Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
+"Dialog zu ändern"
+
+#: personal/scalix/main.inc:125
+msgid "Scalix settings"
+msgstr "Scalix-Einstellungen"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -43,7 +181,8 @@ msgid "Salix mailbox class"
 msgstr "Scalix Mailbox-Klasse"
 
 #: personal/scalix/generic.tpl:19
-msgid "Limited users can not make use of the group calendar functionality in Scalix"
+msgid ""
+"Limited users can not make use of the group calendar functionality in Scalix"
 msgstr ""
 "Eingeschränkte Benutzer können die Scalix Gruppenkalender-Funktion nicht "
 "verwenden"
@@ -118,145 +257,6 @@ msgstr ""
 msgid "Notify User"
 msgstr "Benutzer benachrichtigen"
 
-#: personal/scalix/class_scalixAccount.inc:16
-msgid "Scalix"
-msgstr "Scalix"
-
-#: personal/scalix/class_scalixAccount.inc:17
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: personal/scalix/class_scalixAccount.inc:120
-msgid "This account has no scalix extensions."
-msgstr "Dieses Konto besitzt keine Scalix-Erweiterungen."
-
-#: personal/scalix/class_scalixAccount.inc:129
-msgid "Remove scalix account"
-msgstr "Scalix-Konto entfernen"
-
-#: personal/scalix/class_scalixAccount.inc:130
-msgid ""
-"This account has scalix synchronization enabled. You can disable it by "
-"clicking below."
-msgstr ""
-"Dieses Konto besitzt aktivierte Scalix-Erweiterungen. Sie können diese durch "
-"einen Klick auf die untere Schaltfläche deaktivieren."
-
-#: personal/scalix/class_scalixAccount.inc:132
-msgid "Create scalix account"
-msgstr "Scalix-Konto erstellen"
-
-#: personal/scalix/class_scalixAccount.inc:132
-msgid ""
-"This account has scalix synchronization disabled. You can enable it by "
-"clicking below."
-msgstr ""
-"Dieses Konto besitzt keine aktivierten Scalix-Erweiterungen. Sie können "
-"diese durch einen Klick auf die untere Schaltfläche aktivieren."
-
-#: personal/scalix/class_scalixAccount.inc:226
-#: personal/scalix/class_scalixAccount.inc:329
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: personal/scalix/class_scalixAccount.inc:249
-#: personal/scalix/class_scalixAccount.inc:256
-#: personal/scalix/class_scalixAccount.inc:263
-#: personal/scalix/class_scalixAccount.inc:273
-#: personal/scalix/class_scalixAccount.inc:485
-#: personal/scalix/class_scalixAccount.inc:494
-msgid "Error"
-msgstr "Fehler"
-
-#: personal/scalix/class_scalixAccount.inc:249
-#: personal/scalix/class_scalixAccount.inc:485
-msgid "Cannot add invalid mail address!"
-msgstr "Kann eine ungültige Mail-Adresse nicht hinzuzufügen!"
-
-#: personal/scalix/class_scalixAccount.inc:256
-#: personal/scalix/class_scalixAccount.inc:273
-msgid "You have no permission to modify these addresses."
-msgstr "Sie haben keine Berechtigung, um diese Adressen zu bearbeiten."
-
-#: personal/scalix/class_scalixAccount.inc:263
-#: personal/scalix/class_scalixAccount.inc:494
-#, php-format
-msgid "Cannot add mail address: it is already used by user '%s'."
-msgstr ""
-"Kann Mail-Adresse nicht hinzufügen: sie wird bereits von Benutzer '%s' "
-"verwendet."
-
-#: personal/scalix/class_scalixAccount.inc:351
-msgid "Mailnode"
-msgstr "Mailknoten"
-
-#: personal/scalix/class_scalixAccount.inc:354
-msgid "Scalix object"
-msgstr "Scalix-Objekt"
-
-#: personal/scalix/class_scalixAccount.inc:363
-msgid "Email address"
-msgstr "Email-Adresse"
-
-#: personal/scalix/class_scalixAccount.inc:370
-msgid "Limit Mailbox"
-msgstr "Limitiere Mailbox"
-
-#: personal/scalix/class_scalixAccount.inc:445
-msgid "Scalix account"
-msgstr "Scalix-Konto"
-
-#: personal/scalix/class_scalixAccount.inc:449
-msgid "My account"
-msgstr "Mein Konto"
-
-#: personal/scalix/class_scalixAccount.inc:455
-msgid "Scalix Mail node"
-msgstr "Scalix Mailknoten"
-
-#: personal/scalix/class_scalixAccount.inc:456
-msgid "Mailbox class"
-msgstr "Mailbox-Klasse"
-
-#: personal/scalix/class_scalixAccount.inc:457
-msgid "Server language"
-msgstr "Serversprache"
-
-#: personal/scalix/class_scalixAccount.inc:458
-msgid "Administrator"
-msgstr "Administrator"
-
-#: personal/scalix/class_scalixAccount.inc:459
-msgid "Mailbox administrator"
-msgstr "Mailbox-Administrator"
-
-#: personal/scalix/class_scalixAccount.inc:460
-msgid "Hide user entry in Scalix"
-msgstr "Verstecke Benutzereintrag in Scalix"
-
-#: personal/scalix/class_scalixAccount.inc:461
-msgid "Mailbox size limitations"
-msgstr "Mailbox Größenbeschränkungen"
-
-#: personal/scalix/class_scalixAccount.inc:462
-msgid "Limit outbound"
-msgstr "Limitiere ausgehend"
-
-#: personal/scalix/class_scalixAccount.inc:463
-msgid "Limit inbound"
-msgstr "Limitiere eingehend"
-
-#: personal/scalix/class_scalixAccount.inc:464
-msgid "Notify user"
-msgstr "Benachrichtige Benutzer"
-
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr ""
-"Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
-"Dialog zu ändern"
-
-#: personal/scalix/main.inc:125
-msgid "Scalix settings"
-msgstr "Scalix-Einstellungen"
-
+#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
+msgid "List of scalix email addresses"
+msgstr "Liste alternativer Scalix Email-Adressen"

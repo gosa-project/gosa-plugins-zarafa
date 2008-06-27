@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-31 10:36+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,9 +26,9 @@ msgstr ""
 #: admin/fai/tabsVariable.inc:33 admin/fai/class_faiTemplate.inc:229
 #: admin/fai/class_faiPackage.inc:277
 #: admin/fai/class_faiPartitionTable.inc:204
-#: admin/fai/class_faiManagement.inc:408 admin/fai/class_faiManagement.inc:579
-#: admin/fai/class_faiManagement.inc:585 admin/fai/class_faiManagement.inc:833
-#: admin/fai/class_faiManagement.inc:876 admin/fai/class_faiHookEntry.inc:67
+#: admin/fai/class_faiManagement.inc:410 admin/fai/class_faiManagement.inc:581
+#: admin/fai/class_faiManagement.inc:587 admin/fai/class_faiManagement.inc:835
+#: admin/fai/class_faiManagement.inc:878 admin/fai/class_faiHookEntry.inc:67
 #: admin/fai/class_faiHookEntry.inc:70
 msgid "Error"
 msgstr ""
@@ -48,7 +48,7 @@ msgid "Create new FAI object"
 msgstr ""
 
 #: admin/fai/class_askClassName.inc:79 admin/fai/class_faiSummaryTab.inc:48
-#: admin/fai/class_divListFai.inc:139 admin/fai/class_divListFai.inc:206
+#: admin/fai/class_divListFai.inc:139 admin/fai/class_divListFai.inc:185
 #: admin/fai/class_faiProfileEntry.inc:138 admin/fai/class_faiProfile.inc:299
 #: admin/fai/class_faiPartitionTable.inc:583
 msgid "Partition table"
@@ -75,7 +75,7 @@ msgid "Hook bundle"
 msgstr ""
 
 #: admin/fai/class_askClassName.inc:84 admin/fai/class_divListFai.inc:55
-#: admin/fai/class_divListFai.inc:134 admin/fai/class_divListFai.inc:211
+#: admin/fai/class_divListFai.inc:134 admin/fai/class_divListFai.inc:190
 #: admin/fai/class_faiProfile.inc:468
 msgid "Profile"
 msgstr ""
@@ -110,7 +110,7 @@ msgstr ""
 #: admin/fai/class_faiPackage.inc:456 admin/fai/class_faiPackage.inc:579
 #: admin/fai/class_faiPartitionTable.inc:392
 #: admin/fai/class_faiPartitionTable.inc:591
-#: admin/fai/class_faiManagement.inc:579 admin/fai/class_faiManagement.inc:585
+#: admin/fai/class_faiManagement.inc:581 admin/fai/class_faiManagement.inc:587
 #: admin/fai/class_faiHookEntry.inc:152 admin/fai/class_faiHookEntry.inc:160
 #: admin/fai/class_faiHookEntry.inc:198 admin/fai/faiPartitionTableEntry.tpl:6
 #: admin/fai/faiScript.tpl:9
@@ -170,7 +170,7 @@ msgstr ""
 
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/fai/class_faiPackageEntry.inc:53
-#: admin/fai/class_faiPackageEntry.inc:191 admin/fai/class_FAI.inc:509
+#: admin/fai/class_faiPackageEntry.inc:193 admin/fai/class_FAI.inc:509
 #: admin/fai/class_faiPackage.inc:476
 msgid "Service infrastructure"
 msgstr ""
@@ -214,12 +214,12 @@ msgid "Action"
 msgstr ""
 
 #: admin/fai/class_faiScript.inc:364 admin/fai/class_faiScript.inc:366
-#: admin/fai/class_divListFai.inc:265 admin/fai/class_divListFai.inc:270
+#: admin/fai/class_divListFai.inc:243 admin/fai/class_divListFai.inc:248
 #: admin/fai/class_faiTemplate.inc:303 admin/fai/class_faiTemplate.inc:305
 msgid "edit"
 msgstr ""
 
-#: admin/fai/class_faiScript.inc:368 admin/fai/class_divListFai.inc:273
+#: admin/fai/class_faiScript.inc:368 admin/fai/class_divListFai.inc:251
 #: admin/fai/class_faiTemplate.inc:307
 msgid "delete"
 msgstr ""
@@ -379,26 +379,26 @@ msgid "sticky"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:44 admin/fai/class_divListFai.inc:140
-#: admin/fai/class_divListFai.inc:208
+#: admin/fai/class_divListFai.inc:187
 msgid "Scripts"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:45 admin/fai/class_divListFai.inc:141
-#: admin/fai/class_divListFai.inc:210
+#: admin/fai/class_divListFai.inc:189
 msgid "Hooks"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:46 admin/fai/class_divListFai.inc:142
-#: admin/fai/class_divListFai.inc:209
+#: admin/fai/class_divListFai.inc:188
 msgid "Variables"
 msgstr ""
 
-#: admin/fai/class_faiSummaryTab.inc:47 admin/fai/class_divListFai.inc:212
+#: admin/fai/class_faiSummaryTab.inc:47 admin/fai/class_divListFai.inc:191
 msgid "Templates"
 msgstr ""
 
 #: admin/fai/class_faiSummaryTab.inc:49 admin/fai/class_divListFai.inc:144
-#: admin/fai/class_divListFai.inc:207
+#: admin/fai/class_divListFai.inc:186
 msgid "Package list"
 msgstr ""
 
@@ -457,8 +457,8 @@ msgid "Type"
 msgstr ""
 
 #: admin/fai/remove_branch.tpl:2 admin/fai/remove.tpl:2
-#: admin/fai/class_faiManagement.inc:485
-#: admin/fai/class_faiManagement.inc:1195
+#: admin/fai/class_faiManagement.inc:487
+#: admin/fai/class_faiManagement.inc:1198
 msgid "Warning"
 msgstr ""
 
@@ -542,7 +542,7 @@ msgstr ""
 msgid "Please enter your search string here"
 msgstr ""
 
-#: admin/fai/class_faiPackageEntry.inc:101
+#: admin/fai/class_faiPackageEntry.inc:103
 msgid ""
 "This list displays all assigned package names for this repository settings."
 msgstr ""
@@ -746,67 +746,51 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:163
-msgid "Copy"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:172 admin/fai/class_divListFai.inc:175
-msgid "Paste"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:260
-msgid "copy"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:260
-msgid "Copy this entry"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:266 admin/fai/class_divListFai.inc:271
+#: admin/fai/class_divListFai.inc:244 admin/fai/class_divListFai.inc:249
 msgid "Edit class"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:274
+#: admin/fai/class_divListFai.inc:252
 msgid "Delete class"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:307 admin/fai/class_divListFai.inc:308
-#: admin/fai/class_divListFai.inc:309 admin/fai/class_divListFai.inc:310
-#: admin/fai/class_divListFai.inc:311 admin/fai/class_divListFai.inc:312
-#: admin/fai/class_divListFai.inc:313 admin/fai/class_divListFai.inc:314
+#: admin/fai/class_divListFai.inc:287 admin/fai/class_divListFai.inc:288
+#: admin/fai/class_divListFai.inc:289 admin/fai/class_divListFai.inc:290
+#: admin/fai/class_divListFai.inc:291 admin/fai/class_divListFai.inc:292
+#: admin/fai/class_divListFai.inc:293 admin/fai/class_divListFai.inc:294
 #, php-format
 msgid "Number of listed '%s'"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:307
+#: admin/fai/class_divListFai.inc:287
 msgid "profiles"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:308
+#: admin/fai/class_divListFai.inc:288
 msgid "partitions"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:309
+#: admin/fai/class_divListFai.inc:289
 msgid "scripts"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:310
+#: admin/fai/class_divListFai.inc:290
 msgid "hooks"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:311
+#: admin/fai/class_divListFai.inc:291
 msgid "variables"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:312
+#: admin/fai/class_divListFai.inc:292
 msgid "templates"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:313
+#: admin/fai/class_divListFai.inc:293
 msgid "packages"
 msgstr ""
 
-#: admin/fai/class_divListFai.inc:314
+#: admin/fai/class_divListFai.inc:294
 msgid "departments"
 msgstr ""
 
@@ -1216,102 +1200,102 @@ msgstr ""
 msgid "Manage software packages and deployment reciepes"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:239 admin/fai/class_faiManagement.inc:288
+#: admin/fai/class_faiManagement.inc:241 admin/fai/class_faiManagement.inc:290
 msgid "FAI object"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:245 admin/fai/class_faiManagement.inc:333
-#: admin/fai/class_faiManagement.inc:403 admin/fai/class_faiManagement.inc:467
-#: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:748
-#: admin/fai/class_faiManagement.inc:769 admin/fai/class_faiManagement.inc:803
-#: admin/fai/class_faiManagement.inc:820
+#: admin/fai/class_faiManagement.inc:247 admin/fai/class_faiManagement.inc:335
+#: admin/fai/class_faiManagement.inc:405 admin/fai/class_faiManagement.inc:469
+#: admin/fai/class_faiManagement.inc:616 admin/fai/class_faiManagement.inc:750
+#: admin/fai/class_faiManagement.inc:771 admin/fai/class_faiManagement.inc:805
+#: admin/fai/class_faiManagement.inc:822
 msgid "Permission error"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:275
+#: admin/fai/class_faiManagement.inc:277
 msgid "Branch locked"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:275
+#: admin/fai/class_faiManagement.inc:277
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:408
+#: admin/fai/class_faiManagement.inc:410
 #, php-format
 msgid "Cannot delete '%s': object does not exist!"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:464
+#: admin/fai/class_faiManagement.inc:466
 msgid "FAI branch/freeze"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:467
+#: admin/fai/class_faiManagement.inc:469
 msgid "You have no permission to delete this release!"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:485
+#: admin/fai/class_faiManagement.inc:487
 msgid "Release remove aborted because the release name check failed!"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:748
-#: admin/fai/class_faiManagement.inc:769
+#: admin/fai/class_faiManagement.inc:616 admin/fai/class_faiManagement.inc:750
+#: admin/fai/class_faiManagement.inc:771
 msgid "Branch"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:717 admin/fai/class_faiManagement.inc:930
-#: admin/fai/class_faiManagement.inc:936
+#: admin/fai/class_faiManagement.inc:719 admin/fai/class_faiManagement.inc:932
+#: admin/fai/class_faiManagement.inc:938
 msgid "Continue"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:790
+#: admin/fai/class_faiManagement.inc:792
 msgid "partition table"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:791
+#: admin/fai/class_faiManagement.inc:793
 msgid "script"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:792
+#: admin/fai/class_faiManagement.inc:794
 msgid "hook"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:793
+#: admin/fai/class_faiManagement.inc:795
 msgid "variable"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:794
+#: admin/fai/class_faiManagement.inc:796
 msgid "template"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:795
+#: admin/fai/class_faiManagement.inc:797
 msgid "package list"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:803 admin/fai/class_faiManagement.inc:820
+#: admin/fai/class_faiManagement.inc:805 admin/fai/class_faiManagement.inc:822
 #, php-format
 msgid "You have no permission to create a new %s!"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:820
+#: admin/fai/class_faiManagement.inc:822
 msgid "profile"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1195
+#: admin/fai/class_faiManagement.inc:1198
 msgid ""
 "The selected release is not available anymore. All triggered actions are "
 "skipped."
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1302
+#: admin/fai/class_faiManagement.inc:1308
 msgid "FAI releases"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1303
+#: admin/fai/class_faiManagement.inc:1309
 msgid "FAI release management"
 msgstr ""
 
-#: admin/fai/class_faiManagement.inc:1308
+#: admin/fai/class_faiManagement.inc:1314
 msgid "FAI"
 msgstr ""
 

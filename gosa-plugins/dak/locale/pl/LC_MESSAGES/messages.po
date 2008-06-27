@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-10 16:38+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,23 +14,117 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: addons/dak/class_dak_repository.inc:40
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
+
+#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
 #, fuzzy
-msgid "Repository"
+msgid "Filter"
+msgstr "Filtry"
+
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
 msgstr "Odtwórz"
 
-#: addons/dak/class_dak_repository.inc:41
+#: addons/dak/dak_keyring.tpl:11
+msgid "Server"
+msgstr "Serwer"
+
+#: addons/dak/dak_keyring.tpl:18
+msgid "Search"
+msgstr "Szukaj"
+
+#: addons/dak/dak_keyring.tpl:22
+msgid "Import"
+msgstr "Import"
+
+#: addons/dak/class_dakqueue.inc:57
+#, fuzzy
+msgid "DAK queue"
+msgstr "Kolejka telefoniczna"
+
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "Addon"
+msgstr "Dodatki"
+
+#: addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "DAK queue management"
+msgstr "Zarządzanie ACL"
+
+#: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
 msgstr "Katalog"
 
-#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
-msgid "DAK"
+#: addons/dak/class_dakrepository.inc:44
+#, fuzzy
+msgid "DAK repository  management"
+msgstr "Katalog"
+
+#: addons/dak/class_dakkeyring.inc:114
+#, fuzzy
+msgid "Key ID"
+msgstr "Identyfikator użytkownika"
+
+#: addons/dak/class_dakkeyring.inc:115
+#, fuzzy
+msgid "Length"
+msgstr "Ulica"
+
+#: addons/dak/class_dakkeyring.inc:116
+msgid "Status"
+msgstr "Status"
+
+#: addons/dak/class_dakkeyring.inc:117
+msgid "UID"
+msgstr "UID"
+
+#: addons/dak/class_dakkeyring.inc:118
+msgid "Action"
+msgstr "Akcja"
+
+#: addons/dak/class_dakkeyring.inc:139
+#, fuzzy, php-format
+msgid "Created: %s"
+msgstr "Utwórz"
+
+#: addons/dak/class_dakkeyring.inc:140
+#, fuzzy
+msgid "Valid"
+msgstr "prawidłowy"
+
+#: addons/dak/class_dakkeyring.inc:141
+#, fuzzy
+msgid "Expired: "
+msgstr "wygasło"
+
+#: addons/dak/class_dakkeyring.inc:142
+#, fuzzy
+msgid "Expires: "
+msgstr "wygasło"
+
+#: addons/dak/class_dakkeyring.inc:276
+msgid "DAK keyring"
 msgstr ""
 
-#: addons/dak/class_dak_repository.inc:47
-msgid "Description"
-msgstr "Opis"
+#: addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "DAK keyring management"
+msgstr "Zarządzanie departamentem"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Błąd"
+
+#~ msgid "Description"
+#~ msgstr "Opis"
 
 #~ msgid "Addressbook"
 #~ msgstr "Książka adresowa"
@@ -40,9 +134,6 @@ msgstr "Opis"
 
 #~ msgid "Dial from %s to %s now?"
 #~ msgstr "Zadzwonić teraz z '%s' do '%s'?"
-
-#~ msgid "Error"
-#~ msgstr "Błąd"
 
 #, fuzzy
 #~ msgid ""
@@ -91,9 +182,6 @@ msgstr "Opis"
 #~ msgid "Home phone"
 #~ msgstr "Telefon domowy"
 
-#~ msgid "User ID"
-#~ msgstr "Identyfikator użytkownika"
-
 #~ msgid "Phone"
 #~ msgstr "Telefon"
 
@@ -123,9 +211,6 @@ msgstr "Opis"
 #, fuzzy
 #~ msgid "Addressbook entry acls"
 #~ msgstr "Zapisywanie wpisu książki adresowej nieudane"
-
-#~ msgid "Addons"
-#~ msgstr "Dodatki"
 
 #~ msgid "Surename"
 #~ msgstr "Nazwisko"
@@ -226,9 +311,6 @@ msgstr "Opis"
 
 #~ msgid "Remove entry"
 #~ msgstr "Usuń pozycję"
-
-#~ msgid "Filters"
-#~ msgstr "Filtry"
 
 #~ msgid "Select to see regular users"
 #~ msgstr "Wybierz aby zobaczyć zwykłych użytkowników"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-10 16:38+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,23 +19,117 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: addons/dak/class_dak_repository.inc:40
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
+
+#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
 #, fuzzy
-msgid "Repository"
+msgid "Filter"
+msgstr "Filters"
+
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
 msgstr "Opnieuw proberen"
 
-#: addons/dak/class_dak_repository.inc:41
+#: addons/dak/dak_keyring.tpl:11
+msgid "Server"
+msgstr "Server"
+
+#: addons/dak/dak_keyring.tpl:18
+msgid "Search"
+msgstr "Zoeken"
+
+#: addons/dak/dak_keyring.tpl:22
+msgid "Import"
+msgstr "Importeren"
+
+#: addons/dak/class_dakqueue.inc:57
+#, fuzzy
+msgid "DAK queue"
+msgstr "Telefoonwachtrij"
+
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "Addon"
+msgstr "Plugins"
+
+#: addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "DAK queue management"
+msgstr "Blokkeerlijst beheer"
+
+#: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
 msgstr "Directory"
 
-#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
-msgid "DAK"
+#: addons/dak/class_dakrepository.inc:44
+#, fuzzy
+msgid "DAK repository  management"
+msgstr "Directory"
+
+#: addons/dak/class_dakkeyring.inc:114
+#, fuzzy
+msgid "Key ID"
+msgstr "Gebruikers ID"
+
+#: addons/dak/class_dakkeyring.inc:115
+#, fuzzy
+msgid "Length"
+msgstr "Straat"
+
+#: addons/dak/class_dakkeyring.inc:116
+msgid "Status"
+msgstr "Status"
+
+#: addons/dak/class_dakkeyring.inc:117
+msgid "UID"
+msgstr "UID"
+
+#: addons/dak/class_dakkeyring.inc:118
+msgid "Action"
+msgstr "Actie"
+
+#: addons/dak/class_dakkeyring.inc:139
+#, fuzzy, php-format
+msgid "Created: %s"
+msgstr "Aanmaken"
+
+#: addons/dak/class_dakkeyring.inc:140
+#, fuzzy
+msgid "Valid"
+msgstr "geldig"
+
+#: addons/dak/class_dakkeyring.inc:141
+#, fuzzy
+msgid "Expired: "
+msgstr "verlopen"
+
+#: addons/dak/class_dakkeyring.inc:142
+#, fuzzy
+msgid "Expires: "
+msgstr "verlopen"
+
+#: addons/dak/class_dakkeyring.inc:276
+msgid "DAK keyring"
 msgstr ""
 
-#: addons/dak/class_dak_repository.inc:47
-msgid "Description"
-msgstr "Omschrijving"
+#: addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "DAK keyring management"
+msgstr "Afdeling beheer"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Fout"
+
+#~ msgid "Description"
+#~ msgstr "Omschrijving"
 
 #~ msgid "Addressbook"
 #~ msgstr "Adresboek"
@@ -45,9 +139,6 @@ msgstr "Omschrijving"
 
 #~ msgid "Dial from %s to %s now?"
 #~ msgstr "Nu van %s naar %s bellen?"
-
-#~ msgid "Error"
-#~ msgstr "Fout"
 
 #, fuzzy
 #~ msgid ""
@@ -96,9 +187,6 @@ msgstr "Omschrijving"
 #~ msgid "Home phone"
 #~ msgstr "Telefoon Privé"
 
-#~ msgid "User ID"
-#~ msgstr "Gebruikers ID"
-
 #~ msgid "Phone"
 #~ msgstr "Telefoon"
 
@@ -128,9 +216,6 @@ msgstr "Omschrijving"
 #, fuzzy
 #~ msgid "Addressbook entry acls"
 #~ msgstr "Het opslaan van de adresboek invoer is mislukt"
-
-#~ msgid "Addons"
-#~ msgstr "Plugins"
 
 #~ msgid "Surename"
 #~ msgstr "Achternaam"
@@ -237,9 +322,6 @@ msgstr "Omschrijving"
 
 #~ msgid "Remove entry"
 #~ msgstr "Record verwijderen"
-
-#~ msgid "Filters"
-#~ msgstr "Filters"
 
 #~ msgid "Select to see regular users"
 #~ msgstr "Selecteer om gewone gebruikers te tonen"

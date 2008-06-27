@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,11 +13,6 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
-
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-msgid "WebDAV account"
-msgstr "Konto WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
 #: personal/connectivity/webdav/class_webdavAccount.inc:159
@@ -30,8 +25,14 @@ msgstr "To robi coś"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:84
 #: personal/connectivity/webdav/class_webdavAccount.inc:140
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "błąd LDAP:"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
+msgstr "Konto WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:160
 #, fuzzy

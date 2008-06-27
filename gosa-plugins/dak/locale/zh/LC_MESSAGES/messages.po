@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-10 16:38+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,23 +16,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: addons/dak/class_dak_repository.inc:40
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
+
+#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
 #, fuzzy
-msgid "Repository"
+msgid "Filter"
+msgstr "过滤器"
+
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
 msgstr "仓库"
 
-#: addons/dak/class_dak_repository.inc:41
+#: addons/dak/dak_keyring.tpl:11
+msgid "Server"
+msgstr "服务器"
+
+#: addons/dak/dak_keyring.tpl:18
+msgid "Search"
+msgstr "查找"
+
+#: addons/dak/dak_keyring.tpl:22
+msgid "Import"
+msgstr "导入"
+
+#: addons/dak/class_dakqueue.inc:57
+#, fuzzy
+msgid "DAK queue"
+msgstr "电话队列"
+
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "Addon"
+msgstr "插件"
+
+#: addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "DAK queue management"
+msgstr "管理"
+
+#: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
 msgstr "目录"
 
-#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
-msgid "DAK"
+#: addons/dak/class_dakrepository.inc:44
+#, fuzzy
+msgid "DAK repository  management"
+msgstr "目录"
+
+#: addons/dak/class_dakkeyring.inc:114
+#, fuzzy
+msgid "Key ID"
+msgstr "用户 ID"
+
+#: addons/dak/class_dakkeyring.inc:115
+#, fuzzy
+msgid "Length"
+msgstr "街道"
+
+#: addons/dak/class_dakkeyring.inc:116
+msgid "Status"
+msgstr "状态"
+
+#: addons/dak/class_dakkeyring.inc:117
+msgid "UID"
+msgstr "UID"
+
+#: addons/dak/class_dakkeyring.inc:118
+msgid "Action"
+msgstr "行动"
+
+#: addons/dak/class_dakkeyring.inc:139
+#, fuzzy, php-format
+msgid "Created: %s"
+msgstr "创建"
+
+#: addons/dak/class_dakkeyring.inc:140
+#, fuzzy
+msgid "Valid"
+msgstr "有效"
+
+#: addons/dak/class_dakkeyring.inc:141
+#, fuzzy
+msgid "Expired: "
+msgstr "过期"
+
+#: addons/dak/class_dakkeyring.inc:142
+#, fuzzy
+msgid "Expires: "
+msgstr "过期"
+
+#: addons/dak/class_dakkeyring.inc:276
+msgid "DAK keyring"
 msgstr ""
 
-#: addons/dak/class_dak_repository.inc:47
-msgid "Description"
-msgstr "描述"
+#: addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "DAK keyring management"
+msgstr "部门管理"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "错误"
+
+#~ msgid "Description"
+#~ msgstr "描述"
 
 #~ msgid "Addressbook"
 #~ msgstr "地址簿"
@@ -43,9 +137,6 @@ msgstr "描述"
 
 #~ msgid "Dial from %s to %s now?"
 #~ msgstr "现在从 %s 拨号到 %s 么？"
-
-#~ msgid "Error"
-#~ msgstr "错误"
 
 #, fuzzy
 #~ msgid ""
@@ -92,9 +183,6 @@ msgstr "描述"
 #~ msgid "Home phone"
 #~ msgstr "住宅电话"
 
-#~ msgid "User ID"
-#~ msgstr "用户 ID"
-
 #~ msgid "Phone"
 #~ msgstr "电话"
 
@@ -122,9 +210,6 @@ msgstr "描述"
 #, fuzzy
 #~ msgid "Addressbook entry acls"
 #~ msgstr "保存地址簿条目失败"
-
-#~ msgid "Addons"
-#~ msgstr "插件"
 
 #~ msgid "Surename"
 #~ msgstr "姓"
@@ -226,9 +311,6 @@ msgstr "描述"
 
 #~ msgid "Remove entry"
 #~ msgstr "删除记录"
-
-#~ msgid "Filters"
-#~ msgstr "过滤器"
 
 #~ msgid "Select to see regular users"
 #~ msgstr "选择查看普通用户"

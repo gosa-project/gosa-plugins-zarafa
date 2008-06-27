@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 10:39+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2008-06-08 15:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,35 +14,37 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:212
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:221
 #, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
 msgstr "Impossible de charger le principal '%s', depuis le serveur '%s' !"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:213
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:268
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:295
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:349
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:364
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:628
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:222
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:277
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:304
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:358
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:373
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:637
 #: admin/systems/services/kerberos/class_goKrbServer.inc:74
 #: admin/systems/services/kerberos/class_goKrbServer.inc:358
 #: admin/systems/services/kerberos/class_goKrbServer.inc:367
 #: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:325
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:358
 msgid "Service infrastructure"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:267
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:276
 #, php-format
 msgid "Cannot load principals from server '%s'!"
 msgstr "Impossible de charger le principal depuis '%s' !"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:294
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:303
 #, php-format
 msgid "Cannot load policies from server '%s'!"
 msgstr "Impossible de charger les polices de sécurité depuis '%s' !"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:299
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:308
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:177
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:185
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:189
@@ -51,21 +53,22 @@ msgstr "Impossible de charger les polices de sécurité depuis '%s' !"
 msgid "none"
 msgstr "aucun"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:399
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:408
 msgid "Daemon based"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:444
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:453
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:211
 msgid "Kerberos"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:558
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:567
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
 msgid "Ticket max life"
 msgstr "Durée de vie maximum du ticket"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:561
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:570
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
 msgid "Ticket max renew"
 msgstr "Durée de renouvellement maximum du ticket"
@@ -98,8 +101,11 @@ msgid "Realm"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
-msgstr "Impossible d'appliquer les changement de polices de sécurité ! Le serveur Kerberos défini n'a pas d'adresse MAC."
+msgid ""
+"Cannot apply policy changes! The defined kerberos server has no mac address."
+msgstr ""
+"Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
+"Kerberos défini n'a pas d'adresse MAC."
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
@@ -117,6 +123,27 @@ msgstr "Information d'accès Kerberos"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Services"
 msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:202
+msgid "updated to"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:211
+#, php-format
+msgid ""
+"The principal name of this system has changed. Do you want to update your "
+"principals? The affected principals are listed below: %s"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:269
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:299
+msgid "installed"
+msgstr ""
+
+#: admin/systems/services/kerberos/krb_host_keys.tpl:4
+#, fuzzy
+msgid "Kerberos keys"
+msgstr "Realm Kerberos"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:1
 msgid "Policy settings"
@@ -306,5 +333,6 @@ msgstr "Cette politique de sécurité est référencée %d fois."
 msgid ""
 "The value specified for '%s' must be smaller than the value specified for '%"
 "s'!"
-msgstr "La valeur spécifiée pour '%s' doit être plus petite que la valeur spécifiée pour '%s' !"
-
+msgstr ""
+"La valeur spécifiée pour '%s' doit être plus petite que la valeur spécifiée "
+"pour '%s' !"

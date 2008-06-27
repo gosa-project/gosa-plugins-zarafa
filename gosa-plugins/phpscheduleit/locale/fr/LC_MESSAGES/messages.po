@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2008-06-08 15:37+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,10 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-msgid "PHPscheduleit account"
-msgstr "Compte PHPscheduleit"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 msgid "PHPscheduleit"
@@ -47,3 +43,6 @@ msgstr "Connectivité"
 msgid "My account"
 msgstr "Mon Compte"
 
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+msgid "PHPscheduleit account"
+msgstr "Compte PHPscheduleit"

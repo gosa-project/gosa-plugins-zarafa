@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "FTP 账号"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "带宽"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+msgid "Upload bandwidth"
+msgstr "上传带宽"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "kb/s"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
+msgid "Download bandwidth"
+msgstr "下载带宽"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Quota"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "文件"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "大小"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "比率"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "上传/下载文件"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "杂项"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "检查禁用 FTP 访问"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "临时禁用 FTP 访问"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
 msgid "FTP"
@@ -27,18 +86,9 @@ msgstr "******"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:139
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "上传带宽"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "下载带宽"
+msgstr "LDAP 错误:"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
@@ -104,55 +154,6 @@ msgstr "下载带宽"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "状态"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:6
-msgid "FTP account"
-msgstr "FTP 账号"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:17
-msgid "Bandwidth"
-msgstr "带宽"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:26
-#: personal/connectivity/pureftpd/pureftpd.tpl:34
-msgid "kb/s"
-msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:45
-msgid "Quota"
-msgstr "Quota"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:49
-msgid "Files"
-msgstr "文件"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:57
-msgid "Size"
-msgstr "大小"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:62
-msgid "MB"
-msgstr "MB"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:73
-msgid "Ratio"
-msgstr "比率"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:77
-msgid "Uploaded / downloaded files"
-msgstr "上传/下载文件"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:95
-msgid "Miscellaneous"
-msgstr "杂项"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:100
-msgid "Check to disable FTP Access"
-msgstr "检查禁用 FTP 访问"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:102
-msgid "Temporary disable FTP access"
-msgstr "临时禁用 FTP 访问"
 
 #, fuzzy
 #~ msgid "Removing of user/pureftpd account with dn '%s' failed."

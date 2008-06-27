@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 10:39+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,58 +14,62 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:212
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:221
 #, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:213
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:268
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:295
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:349
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:364
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:628
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:222
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:277
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:304
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:358
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:373
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:637
 #: admin/systems/services/kerberos/class_goKrbServer.inc:74
 #: admin/systems/services/kerberos/class_goKrbServer.inc:358
 #: admin/systems/services/kerberos/class_goKrbServer.inc:367
 #: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:325
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:358
+#, fuzzy
 msgid "Service infrastructure"
-msgstr ""
+msgstr "Szukaj wewnątrz tego poddrzewa"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:267
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:276
 #, php-format
 msgid "Cannot load principals from server '%s'!"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:294
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:303
 #, php-format
 msgid "Cannot load policies from server '%s'!"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:299
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:308
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:177
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:185
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:189
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:193
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:197
 msgid "none"
-msgstr ""
+msgstr "żaden"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:399
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:408
 msgid "Daemon based"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:444
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:453
 #: admin/systems/services/kerberos/class_goKrbServer.inc:384
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:211
 msgid "Kerberos"
 msgstr "Kerberos"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:558
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:567
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
 msgid "Ticket max life"
 msgstr ""
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:561
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:570
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
 msgid "Ticket max renew"
 msgstr ""
@@ -106,7 +110,7 @@ msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 msgid "Remove"
-msgstr ""
+msgstr "Usuń"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:265
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:41
@@ -121,6 +125,27 @@ msgstr "Informacje dostępowe Kerberos kadmin"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:385
 msgid "Services"
 msgstr "Usługi"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:202
+msgid "updated to"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:211
+#, php-format
+msgid ""
+"The principal name of this system has changed. Do you want to update your "
+"principals? The affected principals are listed below: %s"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:269
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:299
+msgid "installed"
+msgstr ""
+
+#: admin/systems/services/kerberos/krb_host_keys.tpl:4
+#, fuzzy
+msgid "Kerberos keys"
+msgstr "Dziedzina Kerberos"
 
 #: admin/systems/services/kerberos/krb5_policy.tpl:1
 msgid "Policy settings"
@@ -193,24 +218,29 @@ msgid "infinite"
 msgstr ""
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:79
+#, fuzzy
 msgid "Hour"
-msgstr ""
+msgstr "godzina"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:81
+#, fuzzy
 msgid "Minute"
-msgstr ""
+msgstr "Drukarka"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:83
+#, fuzzy
 msgid "Day"
-msgstr ""
+msgstr "dzień"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:85
+#, fuzzy
 msgid "Month"
-msgstr ""
+msgstr "miesiąc"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:87
+#, fuzzy
 msgid "Year"
-msgstr ""
+msgstr "Szukaj"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:92
 msgid "Valid ticket end time"
@@ -223,7 +253,7 @@ msgstr "Hasło"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:173
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:176
 msgid "Failed logins"

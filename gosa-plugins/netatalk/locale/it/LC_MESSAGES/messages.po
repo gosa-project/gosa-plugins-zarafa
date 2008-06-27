@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,6 +14,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+
+#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
+#: personal/netatalk/class_netatalk.inc:376
+#, fuzzy
+msgid "Share"
+msgstr "reset"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr ""
+
+#: personal/netatalk/main.inc:113
+#, fuzzy
+msgid "Netatalk settings"
+msgstr "Mostra workstation"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:366
@@ -41,16 +56,11 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376 personal/netatalk/netatalk.tpl:4
-#, fuzzy
-msgid "Share"
-msgstr "reset"
-
 #: personal/netatalk/class_netatalk.inc:287
 #: personal/netatalk/class_netatalk.inc:351
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Errore LDAP"
 
 #: personal/netatalk/class_netatalk.inc:370
 msgid "My account"
@@ -60,15 +70,6 @@ msgstr "Identità"
 #, fuzzy
 msgid "User home path"
 msgstr "Telefono privato"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr ""
-
-#: personal/netatalk/main.inc:113
-#, fuzzy
-msgid "Netatalk settings"
-msgstr "Mostra workstation"
 
 #, fuzzy
 #~ msgid "This account has no netatalk extensions."

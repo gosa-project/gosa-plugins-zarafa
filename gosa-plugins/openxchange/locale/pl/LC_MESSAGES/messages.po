@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,84 +13,6 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
-msgid "Open-Xchange"
-msgstr "Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
-msgid "This does something"
-msgstr "To robi coś"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-msgid "Error"
-msgstr "Błąd"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy
-msgid "Open-Xchange database"
-msgstr "konto Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, fuzzy
-msgid "Configuration error"
-msgstr "Plik konfiguracyjny"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
-msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#, fuzzy
-msgid "Open-Xchange account name"
-msgstr "konto Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-#, fuzzy
-msgid "Cannot save Open-Xchange account!"
-msgstr "konto Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
-msgid "Open-Xchange account settings"
-msgstr "Ustawienia konta Open xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Konto połączeń"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:973
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:978
-#, fuzzy
-msgid "OXAppointmentDays"
-msgstr "Dni spotkania"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:979
-#, fuzzy
-msgid "OXTaskDays"
-msgstr "Dni robocze"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:980
-#, fuzzy
-msgid "OXTimeZone"
-msgstr "Strefa czasowa użytkownika"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -131,6 +53,85 @@ msgstr "Informacja o użytkowniku"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
+msgstr "Strefa czasowa użytkownika"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:432
+msgid "Open-Xchange"
+msgstr "Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
+msgid "This does something"
+msgstr "To robi coś"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
+msgid "Error"
+msgstr "Błąd"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
+#, fuzzy
+msgid "Open-Xchange database"
+msgstr "konto Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:195
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:304
+#, fuzzy
+msgid "Configuration error"
+msgstr "Plik konfiguracyjny"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:205
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:218
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:324
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:333
+#, fuzzy
+msgid "LDAP error"
+msgstr "błąd LDAP:"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
+#, fuzzy
+msgid "Open-Xchange account name"
+msgstr "konto Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
+#, fuzzy
+msgid "Cannot save Open-Xchange account!"
+msgstr "konto Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
+#, fuzzy
+msgid "Open-Xchange account settings"
+msgstr "Ustawienia konta Open xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Konto połączeń"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
+#, fuzzy
+msgid "OXAppointmentDays"
+msgstr "Dni spotkania"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+#, fuzzy
+msgid "OXTaskDays"
+msgstr "Dni robocze"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:444
+#, fuzzy
+msgid "OXTimeZone"
 msgstr "Strefa czasowa użytkownika"
 
 #, fuzzy

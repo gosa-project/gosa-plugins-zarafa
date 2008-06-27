@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-31 10:37+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -239,8 +239,9 @@ msgstr "不能删除所选的域，因为它仍然被这些条目使用 '%s'"
 #: admin/systems/services/dns/class_servDNS.inc:493
 #: admin/systems/services/dns/class_servDNS.inc:504
 #: admin/systems/services/dns/class_servDNS.inc:537
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP 错误:"
 
 #: admin/systems/services/dns/class_servDNS.inc:577
 msgid "Services"
@@ -304,7 +305,7 @@ msgstr "无法将 '%s' 重命名为 '%s'，目标名称已经存在。"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:248
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:257
 #, fuzzy, php-format

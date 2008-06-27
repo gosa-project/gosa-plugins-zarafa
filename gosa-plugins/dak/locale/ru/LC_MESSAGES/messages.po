@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-10 16:38+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,23 +14,116 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: addons/dak/class_dak_repository.inc:40
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
+
+#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
 #, fuzzy
-msgid "Repository"
+msgid "Filter"
+msgstr "Фильтры"
+
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
 msgstr "Повторить"
 
-#: addons/dak/class_dak_repository.inc:41
+#: addons/dak/dak_keyring.tpl:11
+msgid "Server"
+msgstr "Сервер"
+
+#: addons/dak/dak_keyring.tpl:18
+msgid "Search"
+msgstr "Поиск"
+
+#: addons/dak/dak_keyring.tpl:22
+msgid "Import"
+msgstr "Импортировать"
+
+#: addons/dak/class_dakqueue.inc:57
+#, fuzzy
+msgid "DAK queue"
+msgstr "Номер телефона"
+
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "Addon"
+msgstr "Дополнительно"
+
+#: addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "DAK queue management"
+msgstr "Управление подразделениями"
+
+#: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
 msgstr "Каталог"
 
-#: addons/dak/class_dak_repository.inc:46 addons/dak/main.inc:32
-msgid "DAK"
+#: addons/dak/class_dakrepository.inc:44
+#, fuzzy
+msgid "DAK repository  management"
+msgstr "Каталог"
+
+#: addons/dak/class_dakkeyring.inc:114
+#, fuzzy
+msgid "Key ID"
+msgstr "Идентификатор пользователя"
+
+#: addons/dak/class_dakkeyring.inc:115
+#, fuzzy
+msgid "Length"
+msgstr "Улица"
+
+#: addons/dak/class_dakkeyring.inc:116
+msgid "Status"
+msgstr "Состояние"
+
+#: addons/dak/class_dakkeyring.inc:117
+msgid "UID"
+msgstr "UID"
+
+#: addons/dak/class_dakkeyring.inc:118
+msgid "Action"
+msgstr "Действие"
+
+#: addons/dak/class_dakkeyring.inc:139
+#, fuzzy, php-format
+msgid "Created: %s"
+msgstr "Создать"
+
+#: addons/dak/class_dakkeyring.inc:140
+msgid "Valid"
 msgstr ""
 
-#: addons/dak/class_dak_repository.inc:47
-msgid "Description"
-msgstr "Описание"
+#: addons/dak/class_dakkeyring.inc:141
+#, fuzzy
+msgid "Expired: "
+msgstr "Экспорт"
+
+#: addons/dak/class_dakkeyring.inc:142
+#, fuzzy
+msgid "Expires: "
+msgstr "Экспорт"
+
+#: addons/dak/class_dakkeyring.inc:276
+msgid "DAK keyring"
+msgstr ""
+
+#: addons/dak/class_dakkeyring.inc:277
+#, fuzzy
+msgid "DAK keyring management"
+msgstr "Управление подразделениями"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr ""
+
+#~ msgid "Description"
+#~ msgstr "Описание"
 
 #~ msgid "Addressbook"
 #~ msgstr "Адресная книга"
@@ -90,9 +183,6 @@ msgstr "Описание"
 #~ msgid "Home phone"
 #~ msgstr "Домашний телефон"
 
-#~ msgid "User ID"
-#~ msgstr "Идентификатор пользователя"
-
 #~ msgid "Phone"
 #~ msgstr "Телефон"
 
@@ -121,9 +211,6 @@ msgstr "Описание"
 #, fuzzy
 #~ msgid "Addressbook entry acls"
 #~ msgstr "Показать объекты адресной книги"
-
-#~ msgid "Addons"
-#~ msgstr "Дополнительно"
 
 #, fuzzy
 #~ msgid "Surename"
@@ -232,9 +319,6 @@ msgstr "Описание"
 
 #~ msgid "Remove entry"
 #~ msgstr "Удалить объект"
-
-#~ msgid "Filters"
-#~ msgstr "Фильтры"
 
 #~ msgid "Select to see regular users"
 #~ msgstr "Выберите, чтобы просмотреть пользователей"

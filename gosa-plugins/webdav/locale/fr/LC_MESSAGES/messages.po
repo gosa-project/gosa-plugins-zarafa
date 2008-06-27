@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2007-07-19 11:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,11 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-msgid "WebDAV account"
-msgstr "Compte WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
 #: personal/connectivity/webdav/class_webdavAccount.inc:159
@@ -31,7 +26,12 @@ msgstr "Ceci fait quelque chose"
 #: personal/connectivity/webdav/class_webdavAccount.inc:84
 #: personal/connectivity/webdav/class_webdavAccount.inc:140
 msgid "LDAP error"
-msgstr ""
+msgstr "Erreur LDAP"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
+msgstr "Compte WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:160
 msgid "Connectivity addon"

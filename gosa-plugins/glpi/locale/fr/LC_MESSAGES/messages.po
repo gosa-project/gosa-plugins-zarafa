@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2008-06-04 18:45+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,312 +14,99 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:6
-msgid "List of users"
-msgstr "Liste des utilisateurs"
+#: admin/systems/services/glpi/glpi_edit_type.tpl:1
+msgid "Manage System-types"
+msgstr "Gérer le type de système"
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:20
+#: admin/systems/services/glpi/glpi_edit_type.tpl:9
+#: admin/systems/services/glpi/glpi_edit_type.tpl:28
+#: admin/systems/services/glpi/glpi_edit_os.tpl:9
+#: admin/systems/services/glpi/glpi_edit_os.tpl:28
+#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:8
+#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:29
+#: admin/systems/services/glpi/glpi_edit_cartridge_type.tpl:7
+msgid "Rename"
+msgstr "Renommer"
+
+#: admin/systems/services/glpi/glpi_edit_type.tpl:15
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:81
+#: admin/systems/services/glpi/glpi_edit_os.tpl:15
+#: admin/systems/services/glpi/glpiManufacturer.tpl:13
+#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:14
+#: admin/systems/services/glpi/glpi_edit_cartridge_type.tpl:13
+msgid "Close"
+msgstr "Fermer"
+
+#: admin/systems/services/glpi/glpi_edit_type.tpl:24
+#: admin/systems/services/glpi/glpi_edit_os.tpl:24
+#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:25
+msgid "Please enter a new name"
+msgstr "Veuillez entrer un nouveau nom"
+
+#: admin/systems/services/glpi/glpiDeviceManagement.tpl:6
+msgid "List of devices"
+msgstr "Liste des périphériques"
+
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:20
-#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:20
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:20
 #: admin/systems/services/glpi/glpiPrinter.tpl:127
+#: admin/systems/services/glpi/glpiSelectUser.tpl:20
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:20
+#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:20
 msgid "Information"
 msgstr "Information"
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:23
-msgid "This dialog allows you to select a user as technical responsible person."
+#: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
+msgid ""
+"This dialog allows you to attach a device to your currently edited computer."
 msgstr ""
-"Ce dialogue vous permet de désigner un utilisateur comme personne "
-"responsable."
+"Ce menu vous permet d'attacher un périphérique à votre ordinateur en cours "
+"d'édition."
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:27
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:27
-#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:27
+#: admin/systems/services/glpi/glpiSelectUser.tpl:27
 #: admin/systems/services/glpi/glpiAttachmentPool.tpl:27
+#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:27
 msgid "Filters"
 msgstr "Filtres"
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:35
-msgid "Display users matching"
-msgstr "Afficher les utilisateurs correspondants"
+#: admin/systems/services/glpi/glpiDeviceManagement.tpl:35
+msgid "Display devices matching"
+msgstr "Afficher les périphériques correspondants"
 
-#: admin/systems/services/glpi/glpiSelectUser.tpl:37
-msgid "Regular expression for matching user names"
-msgstr "Expression régulière concordant avec les noms des utilisateurs"
+#: admin/systems/services/glpi/glpiDeviceManagement.tpl:37
+msgid "Regular expression for matching device names"
+msgstr "Expression régulière concordant avec les noms des périphériques"
 
-#: admin/systems/services/glpi/glpi.tpl:6
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:4
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:34
-#: admin/systems/services/glpi/glpiPrinter.tpl:6
-msgid "Generic"
-msgstr "Informations"
+#: admin/systems/services/glpi/glpiDeviceManagement.tpl:51
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:109
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:136
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:51
+#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:51
+msgid "Use"
+msgstr "Utiliser"
 
-#: admin/systems/services/glpi/glpi.tpl:9
-msgid "System type"
-msgstr "Type de système"
+#: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:104
+msgid "Can't delete this entry, it is still in use."
+msgstr "Impossible d'effacer cette entrée elle est encore utilisée"
 
-#: admin/systems/services/glpi/glpi.tpl:18
-#: admin/systems/services/glpi/glpi.tpl:32
-#: admin/systems/services/glpi/glpi.tpl:46
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:43
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:53
-#: admin/systems/services/glpi/glpiPrinter.tpl:18
-#: admin/systems/services/glpi/glpiPrinter.tpl:32
-msgid "edit"
-msgstr "éditer"
-
-#: admin/systems/services/glpi/glpi.tpl:23
-#: admin/systems/services/glpi/class_glpiAccount.inc:804
-msgid "Operating system"
-msgstr "Système d'exploitation"
-
-#: admin/systems/services/glpi/glpi.tpl:37
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:812
-#: admin/systems/services/glpi/glpi_devices.tpl:24
-#: admin/systems/services/glpi/glpi_devices.tpl:123
-#: admin/systems/services/glpi/glpi_devices.tpl:164
-#: admin/systems/services/glpi/glpi_devices.tpl:219
-#: admin/systems/services/glpi/glpi_devices.tpl:275
-#: admin/systems/services/glpi/glpi_devices.tpl:333
-#: admin/systems/services/glpi/glpi_devices.tpl:397
-#: admin/systems/services/glpi/glpi_devices.tpl:469
-#: admin/systems/services/glpi/glpi_devices.tpl:533
-#: admin/systems/services/glpi/glpi_devices.tpl:580
-#: admin/systems/services/glpi/glpi_devices.tpl:633
-#: admin/systems/services/glpi/glpi_devices.tpl:687
-#: admin/systems/services/glpi/glpi_devices.tpl:733
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:47
-#: admin/systems/services/glpi/class_glpiAccount.inc:809
-#: admin/systems/services/glpi/glpiPrinter.tpl:23
-msgid "Manufacturer"
-msgstr "Fabricant"
-
-#: admin/systems/services/glpi/glpi.tpl:52
-#: admin/systems/services/glpi/glpiPrinter.tpl:80
-msgid "Contacts"
-msgstr "Contacts"
-
-#: admin/systems/services/glpi/glpi.tpl:56
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:810
-#: admin/systems/services/glpi/class_glpiAccount.inc:806
-#: admin/systems/services/glpi/glpiPrinter.tpl:94
-msgid "Contact person"
-msgstr "Personne de contact"
-
-#: admin/systems/services/glpi/glpi.tpl:61
-#: admin/systems/services/glpi/glpi.tpl:71
-#: admin/systems/services/glpi/glpi.tpl:106
-#: admin/systems/services/glpi/glpiManufacturer.tpl:7
-#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:187
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:163
-#: admin/systems/services/glpi/glpiPrinter.tpl:88
-#: admin/systems/services/glpi/glpiPrinter.tpl:99
-msgid "Edit"
-msgstr "Editer"
-
-#: admin/systems/services/glpi/glpi.tpl:66
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:807
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:57
-#: admin/systems/services/glpi/class_glpiAccount.inc:802
-#: admin/systems/services/glpi/glpiPrinter.tpl:83
-msgid "Technical responsible"
-msgstr "Responsable technique"
-
-#: admin/systems/services/glpi/glpi.tpl:79
-#: admin/systems/services/glpi/glpi_devices.tpl:112
-#: admin/systems/services/glpi/glpi_devices.tpl:153
-#: admin/systems/services/glpi/glpi_devices.tpl:208
-#: admin/systems/services/glpi/glpi_devices.tpl:264
-#: admin/systems/services/glpi/glpi_devices.tpl:322
-#: admin/systems/services/glpi/glpi_devices.tpl:386
-#: admin/systems/services/glpi/glpi_devices.tpl:458
-#: admin/systems/services/glpi/glpi_devices.tpl:522
-#: admin/systems/services/glpi/glpi_devices.tpl:569
-#: admin/systems/services/glpi/glpi_devices.tpl:622
-#: admin/systems/services/glpi/glpi_devices.tpl:676
-#: admin/systems/services/glpi/glpi_devices.tpl:722
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:25
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:18
-#: admin/systems/services/glpi/class_glpiAccount.inc:803
-msgid "Comment"
-msgstr "Commentaires"
-
-#: admin/systems/services/glpi/glpi.tpl:96
-msgid "Installed devices"
-msgstr "Périphériques installés"
-
-#: admin/systems/services/glpi/glpi.tpl:112
-msgid "Trading"
-msgstr ""
-
-#: admin/systems/services/glpi/glpi.tpl:113
-msgid "Software"
-msgstr "Logiciel"
-
-#: admin/systems/services/glpi/glpi.tpl:114
-msgid "Contracts"
-msgstr "Contrats"
-
-#: admin/systems/services/glpi/glpi.tpl:117
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:814
-#: admin/systems/services/glpi/class_glpiAccount.inc:810
-#: admin/systems/services/glpi/glpiPrinter.tpl:107
-msgid "Attachments"
-msgstr "Documents liés"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:163
-#: admin/systems/services/glpi/class_glpiAccount.inc:146
-msgid "There is no server with valid glpi database service."
-msgstr "Il n'y a pas de serveur qui contient un service glpi valide."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:173
-#: admin/systems/services/glpi/class_glpiAccount.inc:156
-msgid "Can't connect to glpi database, the php-mysql extension is missing."
-msgstr ""
-"Impossible de se connecter sur la base de données glpi, l'extension php-"
-"mysql n'est pas disponible."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:183
-#: admin/systems/services/glpi/class_glpiAccount.inc:166
-msgid "Can't connect to glpi database, check configuration twice."
-msgstr ""
-"Impossible de se connecter à la base de données glpi, veuillez vérifier la "
-"configuration."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:198
-#: admin/systems/services/glpi/class_glpiAccount.inc:181
-msgid "Download of attachment failed. Attachment was not found on server."
-msgstr "Le téléchargement de la pièce jointe à échoué. La pièce jointe n'est pas présente sur le serveur."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:201
-#: admin/systems/services/glpi/class_glpiAccount.inc:184
-msgid "Download of attachment failed. Not a valid attachment id."
-msgstr "Le téléchargement de la pièce jointe à échoué. Numéro id non valide."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:229
-#: admin/systems/services/glpi/class_glpiAccount.inc:593
-msgid "Remove inventory"
-msgstr "Supprimer l'inventaire"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:230
-msgid ""
-"This server has inventory features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"Ce serveur à l'extension inventaire activée. Vous pouvez la désactiver en "
-"cliquant sur le bouton ci-dessous."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:232
-#: admin/systems/services/glpi/class_glpiAccount.inc:596
-msgid "Add inventory"
-msgstr "Ajouter l'inventaire"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:233
-msgid ""
-"This server has inventory features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"Ce serveur à l'extension d'inventaire désactivé. Vous pouvez l'activer en "
-"cliquant sur le bouton ci-dessous."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:256
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:294
-#, php-format
-msgid ""
-"Can't rename given printer type to '%s', because this type name already "
-"exists."
-msgstr "Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:308
-#, php-format
-msgid "Can't delete printer type, it is still in use by '%s'."
-msgstr "Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:633
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:648
 #: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:268
 #: admin/systems/services/glpi/class_glpiAccount.inc:656
 #: admin/systems/services/glpi/class_glpiAccount.inc:671
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:633
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:648
 msgid "N/A"
 msgstr "N/A"
 
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:785
-msgid "since"
-msgstr "depuis"
+#: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:286
+msgid "The selected name is already in use."
+msgstr "Le nom spécifié est déjà utilisé."
 
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:795
-#: admin/systems/services/glpi/class_glpiAccount.inc:793
-msgid "Glpi"
-msgstr ""
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:1
+msgid "Add/Edit manufacturer"
+msgstr "Ajouter/Modifier un fabricant"
 
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:796
-msgid "Printer inventory extension"
-msgstr "Ajouter une extension d'inventaire d'imprimante"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:804
-msgid "Supports serial interface"
-msgstr "Supporte une Interface série"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:805
-msgid "Supports parallel interface"
-msgstr "Supporte une interface parallèle"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:806
-msgid "Supports usb interface"
-msgstr "Supporte une interface usb"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:808
-#: admin/systems/services/glpi/glpi_devices.tpl:17
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:53
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:22
-msgid "Comments"
-msgstr "Commentaires"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:809
-#: admin/systems/services/glpi/class_glpiAccount.inc:805
-msgid "Location"
-msgstr "Lieu"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:811
-#: admin/systems/services/glpi/glpi_devices.tpl:427
-#: admin/systems/services/glpi/glpi_devices.tpl:492
-#: admin/systems/services/glpi/glpi_devices.tpl:542
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:37
-#: admin/systems/services/glpi/class_glpiAccount.inc:808
-msgid "Type"
-msgstr "Type"
-
-#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:816
-msgid "Cartridge settings"
-msgstr "Paramètre des cartouches"
-
-#: admin/systems/services/glpi/remove_glpi.tpl:2
-msgid "Warning"
-msgstr "Avertissement"
-
-#: admin/systems/services/glpi/remove_glpi.tpl:6
-msgid ""
-"Please double check if your really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Veuillez vous assurez que vous voulez effectuer cette opération. Toutes les "
-"données seront perdues étant donné qu'il est impossible pour GOsa de "
-"récupérer vos données."
-
-#: admin/systems/services/glpi/remove_glpi.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your MySql database in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Il est conseillé de sauvegarder le contenu de votre base de données MySql "
-"dans un fichier avant de réaliser cette action. Donc - si vous avez fait "
-"cela - appuyez sur 'Supprimer' pour continuer ou 'Annuler' pour abandonner."
-
-#: admin/systems/services/glpi/glpi_devices.tpl:2
-msgid "Add/Edit monitor"
-msgstr "Ajouter/Modifier un écran"
-
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:7
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:7
 #: admin/systems/services/glpi/glpi_devices.tpl:10
 #: admin/systems/services/glpi/glpi_devices.tpl:105
 #: admin/systems/services/glpi/glpi_devices.tpl:146
@@ -333,12 +120,123 @@ msgstr "Ajouter/Modifier un écran"
 #: admin/systems/services/glpi/glpi_devices.tpl:615
 #: admin/systems/services/glpi/glpi_devices.tpl:669
 #: admin/systems/services/glpi/glpi_devices.tpl:715
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:7
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:7
 #: admin/systems/services/glpi/glpiAttachmentEdit.tpl:10
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:197
 msgid "Name"
 msgstr "Nom"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:14
+msgid "Website"
+msgstr "Site web"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:21
+msgid "Address"
+msgstr "Adresse"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:32
+msgid "Phone number"
+msgstr "Numéro de téléphone"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:39
+msgid "Fax"
+msgstr "Fax"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:46
+msgid "Email"
+msgstr "Adresse de messagerie"
+
+#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:53
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:22
+#: admin/systems/services/glpi/glpi_devices.tpl:17
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:808
+msgid "Comments"
+msgstr "Commentaires"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:4
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:34
+#: admin/systems/services/glpi/glpiPrinter.tpl:6
+#: admin/systems/services/glpi/glpi.tpl:6
+msgid "Generic"
+msgstr "Informations"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:14
+msgid "Reference"
+msgstr "Référence"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:25
+#: admin/systems/services/glpi/glpi_devices.tpl:112
+#: admin/systems/services/glpi/glpi_devices.tpl:153
+#: admin/systems/services/glpi/glpi_devices.tpl:208
+#: admin/systems/services/glpi/glpi_devices.tpl:264
+#: admin/systems/services/glpi/glpi_devices.tpl:322
+#: admin/systems/services/glpi/glpi_devices.tpl:386
+#: admin/systems/services/glpi/glpi_devices.tpl:458
+#: admin/systems/services/glpi/glpi_devices.tpl:522
+#: admin/systems/services/glpi/glpi_devices.tpl:569
+#: admin/systems/services/glpi/glpi_devices.tpl:622
+#: admin/systems/services/glpi/glpi_devices.tpl:676
+#: admin/systems/services/glpi/glpi_devices.tpl:722
+#: admin/systems/services/glpi/class_glpiAccount.inc:803
+#: admin/systems/services/glpi/glpi.tpl:79
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:18
+msgid "Comment"
+msgstr "Commentaires"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:37
+#: admin/systems/services/glpi/glpi_devices.tpl:427
+#: admin/systems/services/glpi/glpi_devices.tpl:492
+#: admin/systems/services/glpi/glpi_devices.tpl:542
+#: admin/systems/services/glpi/class_glpiAccount.inc:808
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:811
+msgid "Type"
+msgstr "Type"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:43
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:53
+#: admin/systems/services/glpi/glpiPrinter.tpl:18
+#: admin/systems/services/glpi/glpiPrinter.tpl:32
+#: admin/systems/services/glpi/glpi.tpl:18
+#: admin/systems/services/glpi/glpi.tpl:32
+#: admin/systems/services/glpi/glpi.tpl:46
+msgid "edit"
+msgstr "éditer"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:47
+#: admin/systems/services/glpi/glpi_devices.tpl:24
+#: admin/systems/services/glpi/glpi_devices.tpl:123
+#: admin/systems/services/glpi/glpi_devices.tpl:164
+#: admin/systems/services/glpi/glpi_devices.tpl:219
+#: admin/systems/services/glpi/glpi_devices.tpl:275
+#: admin/systems/services/glpi/glpi_devices.tpl:333
+#: admin/systems/services/glpi/glpi_devices.tpl:397
+#: admin/systems/services/glpi/glpi_devices.tpl:469
+#: admin/systems/services/glpi/glpi_devices.tpl:533
+#: admin/systems/services/glpi/glpi_devices.tpl:580
+#: admin/systems/services/glpi/glpi_devices.tpl:633
+#: admin/systems/services/glpi/glpi_devices.tpl:687
+#: admin/systems/services/glpi/glpi_devices.tpl:733
+#: admin/systems/services/glpi/glpiPrinter.tpl:23
+#: admin/systems/services/glpi/class_glpiAccount.inc:809
+#: admin/systems/services/glpi/glpi.tpl:37
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:812
+msgid "Manufacturer"
+msgstr "Fabricant"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:57
+#: admin/systems/services/glpi/glpiPrinter.tpl:83
+#: admin/systems/services/glpi/class_glpiAccount.inc:802
+#: admin/systems/services/glpi/glpi.tpl:66
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:807
+msgid "Technical responsible"
+msgstr "Responsable technique"
+
+#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:61
+msgid "Choose"
+msgstr "Choisir"
+
+#: admin/systems/services/glpi/glpi_devices.tpl:2
+msgid "Add/Edit monitor"
+msgstr "Ajouter/Modifier un écran"
 
 #: admin/systems/services/glpi/glpi_devices.tpl:33
 msgid "Monitor size"
@@ -508,65 +406,533 @@ msgstr "Ajouter/Modifier un Boîtier"
 msgid "format"
 msgstr "format"
 
-#: admin/systems/services/glpi/glpi_edit_cartridge_type.tpl:7
-#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:8
-#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:29
-#: admin/systems/services/glpi/glpi_edit_os.tpl:9
-#: admin/systems/services/glpi/glpi_edit_os.tpl:28
-#: admin/systems/services/glpi/glpi_edit_type.tpl:9
-#: admin/systems/services/glpi/glpi_edit_type.tpl:28
-msgid "Rename"
-msgstr "Renommer"
+#: admin/systems/services/glpi/glpiPrinter.tpl:9
+msgid "Printer type"
+msgstr "Type de l'imprimante"
 
-#: admin/systems/services/glpi/glpi_edit_cartridge_type.tpl:13
-#: admin/systems/services/glpi/glpiManufacturer.tpl:13
-#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:14
-#: admin/systems/services/glpi/glpi_edit_os.tpl:15
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:81
-#: admin/systems/services/glpi/glpi_edit_type.tpl:15
-msgid "Close"
-msgstr "Fermer"
+#: admin/systems/services/glpi/glpiPrinter.tpl:39
+msgid "Supported interfaces"
+msgstr "Interfaces supportées"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:48
+msgid "Serial"
+msgstr "Série"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:58
+msgid "Parallel"
+msgstr "Parallèle"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:68
+msgid "USB"
+msgstr "USB"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:80
+#: admin/systems/services/glpi/glpi.tpl:52
+msgid "Contacts"
+msgstr "Contacts"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:88
+#: admin/systems/services/glpi/glpiPrinter.tpl:99
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:163
+#: admin/systems/services/glpi/glpi.tpl:61
+#: admin/systems/services/glpi/glpi.tpl:71
+#: admin/systems/services/glpi/glpi.tpl:106
+#: admin/systems/services/glpi/glpiManufacturer.tpl:7
+#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:187
+msgid "Edit"
+msgstr "Editer"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:94
+#: admin/systems/services/glpi/class_glpiAccount.inc:806
+#: admin/systems/services/glpi/glpi.tpl:56
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:810
+msgid "Contact person"
+msgstr "Personne de contact"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:107
+#: admin/systems/services/glpi/class_glpiAccount.inc:810
+#: admin/systems/services/glpi/glpi.tpl:117
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:814
+msgid "Attachments"
+msgstr "Documents liés"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:139
+msgid "Installed cartridges"
+msgstr "Cartouches installés"
+
+#: admin/systems/services/glpi/glpiPrinter.tpl:152
+#: admin/systems/services/glpi/glpiManufacturer.tpl:8
+msgid "Remove"
+msgstr "Supprimer"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:92
+msgid "cartridge"
+msgstr "cartouche"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:111
+#, php-format
+msgid ""
+"You can't delete this cartridge type, it is still in use by this printer(s) "
+"'%s'."
+msgstr ""
+"Vous ne pouvez pas effacer ce type de cartouche, il est utilisé actuellement "
+"par ce(s) imprimante(s) '%s'."
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:158
+msgid "Cartridges"
+msgstr "Cartouches"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:159
+msgid "Action"
+msgstr "Action"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:164
+#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:188
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:206
+#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:221
+msgid "New monitor"
+msgstr "Nouvel écran"
+
+#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:206
+#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:221
+msgid "M"
+msgstr "M"
+
+#: admin/systems/services/glpi/class_glpiManufacturer.inc:53
+#, php-format
+msgid ""
+"You can't delete this manufacturer, it is still in use by these system(s) '%"
+"s'"
+msgstr ""
+"Vous ne pouvez pas effacer ce fournisseur, il est utilisé actuellement par ce"
+"(s) système(s) '%s'"
+
+#: admin/systems/services/glpi/class_glpiManufacturer.inc:99
+msgid "Please specify a name."
+msgstr "Veuillez indiquer un nom."
+
+#: admin/systems/services/glpi/class_glpiManufacturer.inc:108
+#: admin/systems/services/glpi/class_glpiManufacturer.inc:114
+msgid "Specified name is already in use, please choose another one."
+msgstr "Le nom indiqué est déjà utilisé, veuillez en choisir un autre."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:146
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:163
+msgid "There is no server with valid glpi database service."
+msgstr "Il n'y a pas de serveur qui contient un service glpi valide."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:156
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:173
+msgid "Can't connect to glpi database, the php-mysql extension is missing."
+msgstr ""
+"Impossible de se connecter sur la base de données glpi, l'extension php-"
+"mysql n'est pas disponible."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:166
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:183
+msgid "Can't connect to glpi database, check configuration twice."
+msgstr ""
+"Impossible de se connecter à la base de données glpi, veuillez vérifier la "
+"configuration."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:181
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:198
+msgid "Download of attachment failed. Attachment was not found on server."
+msgstr ""
+"Le téléchargement de la pièce jointe à échoué. La pièce jointe n'est pas "
+"présente sur le serveur."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:184
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:201
+msgid "Download of attachment failed. Not a valid attachment id."
+msgstr "Le téléchargement de la pièce jointe à échoué. Numéro id non valide."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:198
+#: admin/systems/services/glpi/class_glpiAccount.inc:204
+#: admin/systems/services/glpi/class_glpiAccount.inc:210
+msgid "This feature is not implemented yet."
+msgstr "Cette fonctionnalité n'est pas encore implémentée."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:312
+msgid "Adding new sytem type failed, this system type name is already used."
+msgstr ""
+"L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:332
+#, php-format
+msgid ""
+"You can't delete this system type, it is still in use by these system(s) '%s'"
+msgstr ""
+"Vous ne pouvez pas effacer ce type de système, il est utilisé actuellement "
+"par les sytème(s) '%s'"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:343
+msgid "Rename failed, this system type name is already used."
+msgstr "Le changement de nom à échoué, le nom spécifié est déjà utilisé."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:399
+msgid "Adding new operating system failed, specifed name is already used."
+msgstr ""
+"L'ajout d'un nouveau système d'exploitation à échoué, le nom utilisé existe "
+"déjà."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:421
+#, php-format
+msgid ""
+"You can't delete this operating system, it is still in use by these system"
+"(s) '%s'"
+msgstr ""
+"Vous ne pouvez pas effacer ce système  d'exploitation, il est utilisé "
+"actuellement par ce(s) système(s) '%s'"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:433
+msgid "Updating operating system failed, specifed name is already used."
+msgstr ""
+"Le changement de nom du système d'exploitation à échoué, le nom utilisé "
+"existe déjà."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:512
+#, php-format
+msgid ""
+"Could not add the given user, the users dn is too long, only 100 characters "
+"are allowed here."
+msgstr ""
+"Impossible d'ajouter l'utilisateur, le dns de l'utilisateur est trop long, "
+"seulement 100 caractères sont permis. "
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:593
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:229
+msgid "Remove inventory"
+msgstr "Supprimer l'inventaire"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:594
+msgid ""
+"This device has inventory informations enabled. You can disable them by "
+"clicking below."
+msgstr ""
+"Ce périphérique à l'extension inventaire activée. Vous pouvez la désactiver "
+"en cliquant sur le bouton ci-dessous."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:596
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:232
+msgid "Add inventory"
+msgstr "Ajouter l'inventaire"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:597
+msgid ""
+"This device has inventory informations disabled. You can enable them by "
+"clicking below."
+msgstr ""
+"Ce périphérique à l'extension d'inventaire désactivé. Vous pouvez l'activer "
+"en cliquant sur le bouton ci-dessous."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:692
+#: admin/systems/services/glpi/class_glpiAccount.inc:693
+msgid "Can't remove glpi account, while mysql extension is missing."
+msgstr ""
+"Impossible de supprimer l'extension glpi, l'extension mysql n'est pas "
+"disponible."
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:793
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:795
+msgid "Glpi"
+msgstr ""
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:794
+msgid "Inventory extension"
+msgstr "Extension d'inventaire"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:804
+#: admin/systems/services/glpi/glpi.tpl:23
+msgid "Operating system"
+msgstr "Système d'exploitation"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:805
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:809
+msgid "Location"
+msgstr "Lieu"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:807
+msgid "Model"
+msgstr "Modèle"
+
+#: admin/systems/services/glpi/class_glpiAccount.inc:811
+msgid "Peripheral devices"
+msgstr "Périphériques externes"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:108
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:108
+msgid "Departments"
+msgstr "Départements"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:136
+msgid "use"
+msgstr "utiliser"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:172
+msgid "Go to root department"
+msgstr "Aller au département de base"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:172
+msgid "Root"
+msgstr "Racine"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:174
+msgid "Go up one department"
+msgstr "Monter d'un département"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:174
+msgid "Up"
+msgstr "Au dessus"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:176
+msgid "Go to users department"
+msgstr "Aller au département des utilisateurs"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:176
+msgid "Home"
+msgstr "Accueil"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:177
+msgid "Reload list"
+msgstr "Recharger la liste"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:177
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:181
+msgid "Submit"
+msgstr "Soumettre"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:178
+msgid "Base"
+msgstr "Base"
+
+#: admin/systems/services/glpi/class_glpiSelectUser.inc:181
+msgid "Submit department"
+msgstr "Soumettre le département"
+
+#: admin/systems/services/glpi/glpi.tpl:9
+msgid "System type"
+msgstr "Type de système"
+
+#: admin/systems/services/glpi/glpi.tpl:96
+msgid "Installed devices"
+msgstr "Périphériques installés"
+
+#: admin/systems/services/glpi/glpi.tpl:112
+msgid "Trading"
+msgstr ""
+
+#: admin/systems/services/glpi/glpi.tpl:113
+msgid "Software"
+msgstr "Logiciel"
+
+#: admin/systems/services/glpi/glpi.tpl:114
+msgid "Contracts"
+msgstr "Contrats"
+
+#: admin/systems/services/glpi/glpi_edit_os.tpl:1
+msgid "Manage OS-types"
+msgstr "Gérer les types de systèmes d'exploitation"
+
+#: admin/systems/services/glpi/remove_glpi.tpl:2
+msgid "Warning"
+msgstr "Avertissement"
+
+#: admin/systems/services/glpi/remove_glpi.tpl:6
+msgid ""
+"Please double check if your really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+"Veuillez vous assurez que vous voulez effectuer cette opération. Toutes les "
+"données seront perdues étant donné qu'il est impossible pour GOsa de "
+"récupérer vos données."
+
+#: admin/systems/services/glpi/remove_glpi.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your MySql database in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Il est conseillé de sauvegarder le contenu de votre base de données MySql "
+"dans un fichier avant de réaliser cette action. Donc - si vous avez fait "
+"cela - appuyez sur 'Supprimer' pour continuer ou 'Annuler' pour abandonner."
 
 #: admin/systems/services/glpi/glpiManufacturer.tpl:1
 msgid "Manage manufacturers"
 msgstr "Gérer les Fabricants"
 
-#: admin/systems/services/glpi/glpiManufacturer.tpl:8
-#: admin/systems/services/glpi/glpiPrinter.tpl:152
-msgid "Remove"
-msgstr "Supprimer"
-
-#: admin/systems/services/glpi/glpiDeviceManagement.tpl:6
-msgid "List of devices"
-msgstr "Liste des périphériques"
-
-#: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
-msgid "This dialog allows you to attach a device to your currently edited computer."
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:230
+msgid ""
+"This server has inventory features enabled. You can disable them by clicking "
+"below."
 msgstr ""
-"Ce menu vous permet d'attacher un périphérique à votre ordinateur en cours "
-"d'édition."
+"Ce serveur à l'extension inventaire activée. Vous pouvez la désactiver en "
+"cliquant sur le bouton ci-dessous."
 
-#: admin/systems/services/glpi/glpiDeviceManagement.tpl:35
-msgid "Display devices matching"
-msgstr "Afficher les périphériques correspondants"
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:233
+msgid ""
+"This server has inventory features disabled. You can enable them by clicking "
+"below."
+msgstr ""
+"Ce serveur à l'extension d'inventaire désactivé. Vous pouvez l'activer en "
+"cliquant sur le bouton ci-dessous."
 
-#: admin/systems/services/glpi/glpiDeviceManagement.tpl:37
-msgid "Regular expression for matching device names"
-msgstr "Expression régulière concordant avec les noms des périphériques"
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:256
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:294
+#, php-format
+msgid ""
+"Can't rename given printer type to '%s', because this type name already "
+"exists."
+msgstr ""
+"Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
 
-#: admin/systems/services/glpi/glpiDeviceManagement.tpl:51
-#: admin/systems/services/glpi/glpiPrinterCartridges.tpl:51
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:51
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:109
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:136
-msgid "Use"
-msgstr "Utiliser"
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:308
+#, php-format
+msgid "Can't delete printer type, it is still in use by '%s'."
+msgstr ""
+"Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
 
-#: admin/systems/services/glpi/glpi_edit_printer_type.tpl:25
-#: admin/systems/services/glpi/glpi_edit_os.tpl:24
-#: admin/systems/services/glpi/glpi_edit_type.tpl:24
-msgid "Please enter a new name"
-msgstr "Veuillez entrer un nouveau nom"
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:785
+msgid "since"
+msgstr "depuis"
+
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:796
+msgid "Printer inventory extension"
+msgstr "Ajouter une extension d'inventaire d'imprimante"
+
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:804
+msgid "Supports serial interface"
+msgstr "Supporte une Interface série"
+
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:805
+msgid "Supports parallel interface"
+msgstr "Supporte une interface parallèle"
+
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:806
+msgid "Supports usb interface"
+msgstr "Supporte une interface usb"
+
+#: admin/systems/services/glpi/class_glpiPrinterAccount.inc:816
+msgid "Cartridge settings"
+msgstr "Paramètre des cartouches"
+
+#: admin/systems/services/glpi/glpiSelectUser.tpl:6
+msgid "List of users"
+msgstr "Liste des utilisateurs"
+
+#: admin/systems/services/glpi/glpiSelectUser.tpl:23
+msgid ""
+"This dialog allows you to select a user as technical responsible person."
+msgstr ""
+"Ce dialogue vous permet de désigner un utilisateur comme personne "
+"responsable."
+
+#: admin/systems/services/glpi/glpiSelectUser.tpl:35
+msgid "Display users matching"
+msgstr "Afficher les utilisateurs correspondants"
+
+#: admin/systems/services/glpi/glpiSelectUser.tpl:37
+msgid "Regular expression for matching user names"
+msgstr "Expression régulière concordant avec les noms des utilisateurs"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:2
+msgid "Attachment"
+msgstr "Document lié"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:30
+msgid "File"
+msgstr "Fichier"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:33
+msgid "Upload"
+msgstr "Télécharger"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:38
+msgid "Status"
+msgstr "Statut"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:46
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:54
+msgid "Mime-type"
+msgstr "Type mime"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:32
+#: admin/systems/services/glpi/class_goGlpiServer.inc:87
+#: admin/systems/services/glpi/class_goGlpiServer.inc:88
+msgid "Inventory database"
+msgstr "Base de données de l'inventaire"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:58
+msgid "Inventory database service"
+msgstr "Service de la base de données d'inventaire"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:67
+msgid "The attribute user is empty or contains invalid characters."
+msgstr "L'attribut utilisateur est vide ou contient des caractères invalides."
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:70
+msgid "The attribute database is empty or contains invalid characters."
+msgstr ""
+"L'attribut base de données est vide ou contient des caractères invalides."
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:88
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:96
+msgid "Start"
+msgstr "Démarrage"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:97
+msgid "Stop"
+msgstr "Arrêter"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:98
+msgid "Restart"
+msgstr "Réessayer"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:100
+msgid "Admin"
+msgstr "Administrateur"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:101
+#: admin/systems/services/glpi/goGlpiServer.tpl:20
+msgid "Database"
+msgstr "Base de données"
+
+#: admin/systems/services/glpi/class_goGlpiServer.inc:102
+#: admin/systems/services/glpi/goGlpiServer.tpl:12
+msgid "Password"
+msgstr "Mot de passe"
+
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:6
+msgid "List of attachments"
+msgstr "Liste des documents liés"
+
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:23
+msgid ""
+"This dialog allow you to attach additional objects (like manuals, guides, "
+"etc.)  to your currently edited computer."
+msgstr ""
+"Ce menu vous permet d'attacher des objets supplémentaires ( comme des "
+"manuels, guides, etc..) à l'ordinateur que vous être en train d'éditer."
+
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:35
+msgid "Display attachments matching"
+msgstr "Afficher les documents liées correspondants"
+
+#: admin/systems/services/glpi/glpiAttachmentPool.tpl:37
+msgid "Regular expression for matching attachment names"
+msgstr "Expression régulière pour faire correspondre le nom des documents liés"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:88
 #, php-format
@@ -584,7 +950,8 @@ msgstr "Impossible de détecter le nom de l'objet."
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:133
 #, php-format
-msgid "You can't delete this device, it is still in use by these system(s) '%s'"
+msgid ""
+"You can't delete this device, it is still in use by these system(s) '%s'"
 msgstr ""
 "Vous ne pouvez pas effacer ce périphérique, il est utilisé actuellement par "
 "ces système(s) '%s'"
@@ -597,21 +964,6 @@ msgstr "périphériques"
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:199
 msgid "Actions"
 msgstr "Actions"
-
-#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:188
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:164
-msgid "Delete"
-msgstr "Supprimer"
-
-#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:221
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:206
-msgid "New monitor"
-msgstr "Nouvel écran"
-
-#: admin/systems/services/glpi/class_glpiDeviceManagement.inc:221
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:206
-msgid "M"
-msgstr "M"
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:223
 msgid "New mainbord"
@@ -730,52 +1082,6 @@ msgstr "Aucun"
 msgid "Other"
 msgstr "Autres"
 
-#: admin/systems/services/glpi/glpi_edit_os.tpl:1
-msgid "Manage OS-types"
-msgstr "Gérer les types de systèmes d'exploitation"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:1
-msgid "Add/Edit manufacturer"
-msgstr "Ajouter/Modifier un fabricant"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:14
-msgid "Website"
-msgstr "Site web"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:21
-msgid "Address"
-msgstr "Adresse"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:32
-msgid "Phone number"
-msgstr "Numéro de téléphone"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:39
-msgid "Fax"
-msgstr "Fax"
-
-#: admin/systems/services/glpi/glpiManufacturerAdd.tpl:46
-msgid "Email"
-msgstr "Adresse de messagerie"
-
-#: admin/systems/services/glpi/class_glpiManufacturer.inc:53
-#, php-format
-msgid ""
-"You can't delete this manufacturer, it is still in use by these system(s) '%"
-"s'"
-msgstr ""
-"Vous ne pouvez pas effacer ce fournisseur, il est utilisé actuellement par ce"
-"(s) système(s) '%s'"
-
-#: admin/systems/services/glpi/class_glpiManufacturer.inc:99
-msgid "Please specify a name."
-msgstr "Veuillez indiquer un nom."
-
-#: admin/systems/services/glpi/class_glpiManufacturer.inc:108
-#: admin/systems/services/glpi/class_glpiManufacturer.inc:114
-msgid "Specified name is already in use, please choose another one."
-msgstr "Le nom indiqué est déjà utilisé, veuillez en choisir un autre."
-
 #: admin/systems/services/glpi/goGlpiServer.tpl:1
 msgid "GLPI database information"
 msgstr "Information sur la base de données GLPI"
@@ -783,16 +1089,6 @@ msgstr "Information sur la base de données GLPI"
 #: admin/systems/services/glpi/goGlpiServer.tpl:4
 msgid "Logging DB user"
 msgstr "Utilisateur de la base de données des journaux systèmes"
-
-#: admin/systems/services/glpi/goGlpiServer.tpl:12
-#: admin/systems/services/glpi/class_goGlpiServer.inc:102
-msgid "Password"
-msgstr "Mot de passe"
-
-#: admin/systems/services/glpi/goGlpiServer.tpl:20
-#: admin/systems/services/glpi/class_goGlpiServer.inc:101
-msgid "Database"
-msgstr "Base de données"
 
 #: admin/systems/services/glpi/glpiPrinterCartridges.tpl:6
 msgid "List of available cartridge type for this type of printer"
@@ -821,261 +1117,14 @@ msgstr "Afficher les types de cartouches correspondantes"
 msgid "Regular expression for matching cartridge types"
 msgstr "Expression régulière pour sélectionner les cartouches correspondantes"
 
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:92
-msgid "cartridge"
-msgstr "cartouche"
-
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:111
-#, php-format
-msgid ""
-"You can't delete this cartridge type, it is still in use by this printer(s) "
-"'%s'."
-msgstr ""
-"Vous ne pouvez pas effacer ce type de cartouche, il est utilisé actuellement "
-"par ce(s) imprimante(s) '%s'."
-
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:158
-msgid "Cartridges"
-msgstr "Cartouches"
-
-#: admin/systems/services/glpi/class_glpiPrinterCartridges.inc:159
-msgid "Action"
-msgstr "Action"
-
-#: admin/systems/services/glpi/glpi_edit_type.tpl:1
-msgid "Manage System-types"
-msgstr "Gérer le type de système"
-
-#: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:104
-msgid "Can't delete this entry, it is still in use."
-msgstr "Impossible d'effacer cette entrée elle est encore utilisée"
-
-#: admin/systems/services/glpi/class_glpiPrinterCartridgesEdit.inc:286
-msgid "The selected name is already in use."
-msgstr "Le nom spécifié est déjà utilisé."
-
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:14
-msgid "Reference"
-msgstr "Référence"
-
-#: admin/systems/services/glpi/glpiPrinterCartridgesEdit.tpl:61
-msgid "Choose"
-msgstr "Choisir"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:2
-msgid "Attachment"
-msgstr "Document lié"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:30
-msgid "File"
-msgstr "Fichier"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:33
-msgid "Upload"
-msgstr "Télécharger"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:38
-msgid "Status"
-msgstr "Statut"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:46
-msgid "Filename"
-msgstr "Nom du fichier"
-
-#: admin/systems/services/glpi/glpiAttachmentEdit.tpl:54
-msgid "Mime-type"
-msgstr "Type mime"
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:198
-#: admin/systems/services/glpi/class_glpiAccount.inc:204
-#: admin/systems/services/glpi/class_glpiAccount.inc:210
-msgid "This feature is not implemented yet."
-msgstr "Cette fonctionnalité n'est pas encore implémentée."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:312
-msgid "Adding new sytem type failed, this system type name is already used."
-msgstr "L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:332
-#, php-format
-msgid "You can't delete this system type, it is still in use by these system(s) '%s'"
-msgstr ""
-"Vous ne pouvez pas effacer ce type de système, il est utilisé actuellement "
-"par les sytème(s) '%s'"
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:343
-msgid "Rename failed, this system type name is already used."
-msgstr "Le changement de nom à échoué, le nom spécifié est déjà utilisé."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:399
-msgid "Adding new operating system failed, specifed name is already used."
-msgstr ""
-"L'ajout d'un nouveau système d'exploitation à échoué, le nom utilisé existe "
-"déjà."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:421
-#, php-format
-msgid ""
-"You can't delete this operating system, it is still in use by these system"
-"(s) '%s'"
-msgstr ""
-"Vous ne pouvez pas effacer ce système  d'exploitation, il est utilisé "
-"actuellement par ce(s) système(s) '%s'"
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:433
-msgid "Updating operating system failed, specifed name is already used."
-msgstr ""
-"Le changement de nom du système d'exploitation à échoué, le nom utilisé "
-"existe déjà."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:512
-#, php-format
-msgid ""
-"Could not add the given user, the users dn is too long, only 100 characters "
-"are allowed here."
-msgstr ""
-"Impossible d'ajouter l'utilisateur, le dns de l'utilisateur est trop long, "
-"seulement 100 caractères sont permis. "
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:594
-msgid ""
-"This device has inventory informations enabled. You can disable them by "
-"clicking below."
-msgstr ""
-"Ce périphérique à l'extension inventaire activée. Vous pouvez la désactiver "
-"en cliquant sur le bouton ci-dessous."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:597
-msgid ""
-"This device has inventory informations disabled. You can enable them by "
-"clicking below."
-msgstr ""
-"Ce périphérique à l'extension d'inventaire désactivé. Vous pouvez l'activer "
-"en cliquant sur le bouton ci-dessous."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:692
-#: admin/systems/services/glpi/class_glpiAccount.inc:693
-msgid "Can't remove glpi account, while mysql extension is missing."
-msgstr ""
-"Impossible de supprimer l'extension glpi, l'extension mysql n'est pas "
-"disponible."
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:794
-msgid "Inventory extension"
-msgstr "Extension d'inventaire"
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:807
-msgid "Model"
-msgstr "Modèle"
-
-#: admin/systems/services/glpi/class_glpiAccount.inc:811
-msgid "Peripheral devices"
-msgstr "Périphériques externes"
-
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:6
-msgid "List of attachments"
-msgstr "Liste des documents liés"
-
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:23
-msgid ""
-"This dialog allow you to attach additional objects (like manuals, guides, "
-"etc.)  to your currently edited computer."
-msgstr ""
-"Ce menu vous permet d'attacher des objets supplémentaires ( comme des "
-"manuels, guides, etc..) à l'ordinateur que vous être en train d'éditer."
-
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:35
-msgid "Display attachments matching"
-msgstr "Afficher les documents liées correspondants"
-
-#: admin/systems/services/glpi/glpiAttachmentPool.tpl:37
-msgid "Regular expression for matching attachment names"
-msgstr "Expression régulière pour faire correspondre le nom des documents liés"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:9
-msgid "Printer type"
-msgstr "Type de l'imprimante"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:39
-msgid "Supported interfaces"
-msgstr "Interfaces supportées"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:48
-msgid "Serial"
-msgstr "Série"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:58
-msgid "Parallel"
-msgstr "Parallèle"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:68
-msgid "USB"
-msgstr "USB"
-
-#: admin/systems/services/glpi/glpiPrinter.tpl:139
-msgid "Installed cartridges"
-msgstr "Cartouches installés"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:108
-msgid "Users"
-msgstr "Utilisateurs"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:108
-msgid "Departments"
-msgstr "Départements"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:136
-msgid "use"
-msgstr "utiliser"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:172
-msgid "Go to root department"
-msgstr "Aller au département de base"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:172
-msgid "Root"
-msgstr "Racine"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:174
-msgid "Go up one department"
-msgstr "Monter d'un département"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:174
-msgid "Up"
-msgstr "Au dessus"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:176
-msgid "Go to users department"
-msgstr "Aller au département des utilisateurs"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:176
-msgid "Home"
-msgstr "Accueil"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:177
-msgid "Reload list"
-msgstr "Recharger la liste"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:177
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:181
-msgid "Submit"
-msgstr "Soumettre"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:178
-msgid "Base"
-msgstr "Base"
-
-#: admin/systems/services/glpi/class_glpiSelectUser.inc:181
-msgid "Submit department"
-msgstr "Soumettre le département"
-
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:68
 msgid "attachment"
 msgstr "pièce jointe"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:107
 #, php-format
-msgid "You can't delete this attachment, it is still in use by these system(s) '%s'"
+msgid ""
+"You can't delete this attachment, it is still in use by these system(s) '%s'"
 msgstr ""
 "Impossible d'effacer ce fichier attaché, tant qu'il est utilisé par ce(s) "
 "système(s) '%s'."
@@ -1142,42 +1191,3 @@ msgstr "Le nom spécifié est déjà utilisé."
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:352
 msgid "Please specify a valid name for this attachment."
 msgstr "Veuillez spécifier un nom valide pour ce document lié."
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:32
-#: admin/systems/services/glpi/class_goGlpiServer.inc:87
-#: admin/systems/services/glpi/class_goGlpiServer.inc:88
-msgid "Inventory database"
-msgstr "Base de données de l'inventaire"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:58
-msgid "Inventory database service"
-msgstr "Service de la base de données d'inventaire"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:67
-msgid "The attribute user is empty or contains invalid characters."
-msgstr "L'attribut utilisateur est vide ou contient des caractères invalides."
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:70
-msgid "The attribute database is empty or contains invalid characters."
-msgstr "L'attribut base de données est vide ou contient des caractères invalides."
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:88
-msgid "Services"
-msgstr "Services"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:96
-msgid "Start"
-msgstr "Démarrage"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:97
-msgid "Stop"
-msgstr "Arrêter"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:98
-msgid "Restart"
-msgstr "Réessayer"
-
-#: admin/systems/services/glpi/class_goGlpiServer.inc:100
-msgid "Admin"
-msgstr "Administrateur"
-

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,85 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:968
-msgid "Open-Xchange"
-msgstr "Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
-#, fuzzy
-msgid "This does something"
-msgstr "******"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:723
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:832
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-msgid "Error"
-msgstr "错误"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:727
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:836
-#, fuzzy
-msgid "Open-Xchange database"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:731
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:840
-#, fuzzy
-msgid "Configuration error"
-msgstr "配置文件"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:741
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:754
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:860
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:869
-msgid "LDAP error"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:820
-#, fuzzy
-msgid "Open-Xchange account name"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:958
-#, fuzzy
-msgid "Cannot save Open-Xchange account!"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
-msgid "Open-Xchange account settings"
-msgstr "Open-Xchange 账号"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:969
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "互联"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:973
-msgid "My account"
-msgstr "我的账号"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:978
-#, fuzzy
-msgid "OXAppointmentDays"
-msgstr "约会日期"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:979
-#, fuzzy
-msgid "OXTaskDays"
-msgstr "任务日期"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:980
-#, fuzzy
-msgid "OXTimeZone"
-msgstr "用户时区"
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -132,6 +53,86 @@ msgstr "用户信息"
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
+msgstr "用户时区"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:432
+msgid "Open-Xchange"
+msgstr "Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
+#, fuzzy
+msgid "This does something"
+msgstr "******"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
+msgid "Error"
+msgstr "错误"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
+#, fuzzy
+msgid "Open-Xchange database"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:195
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:304
+#, fuzzy
+msgid "Configuration error"
+msgstr "配置文件"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:205
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:218
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:324
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:333
+#, fuzzy
+msgid "LDAP error"
+msgstr "LDAP 错误:"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
+#, fuzzy
+msgid "Open-Xchange account name"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
+#, fuzzy
+msgid "Cannot save Open-Xchange account!"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
+#, fuzzy
+msgid "Open-Xchange account settings"
+msgstr "Open-Xchange 账号"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "互联"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
+msgid "My account"
+msgstr "我的账号"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
+#, fuzzy
+msgid "OXAppointmentDays"
+msgstr "约会日期"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+#, fuzzy
+msgid "OXTaskDays"
+msgstr "任务日期"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:444
+#, fuzzy
+msgid "OXTimeZone"
 msgstr "用户时区"
 
 #, fuzzy

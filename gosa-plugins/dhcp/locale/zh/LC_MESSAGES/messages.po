@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,46 +16,203 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/dhcp/dhcp_pool.tpl:2
-#: admin/systems/services/dhcp/dhcp_host.tpl:2
-#: admin/systems/services/dhcp/dhcp_service.tpl:1
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:2
-#: admin/systems/services/dhcp/dhcp_group.tpl:2
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:2
-msgid "Generic"
-msgstr "通用配置"
-
-#: admin/systems/services/dhcp/dhcp_pool.tpl:6
-#: admin/systems/services/dhcp/dhcp_host.tpl:8
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:42
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:10
+#: admin/systems/services/dhcp/class_servDHCP.inc:680
+msgid "Error"
+msgstr "错误"
+
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
+msgid "Cannot delete automatic statements!"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:78
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:87
+msgid "automatic"
+msgstr "自动"
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:42
+#: admin/systems/services/dhcp/dhcp_group.tpl:6
+#: admin/systems/services/dhcp/dhcp_host.tpl:8
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:147
+#: admin/systems/services/dhcp/class_dhcpPool.inc:106
+#: admin/systems/services/dhcp/class_dhcpPool.inc:114
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:90
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:93
 #: admin/systems/services/dhcp/class_dhcpGroup.inc:101
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:147
-#: admin/systems/services/dhcp/dhcp_group.tpl:6
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:10
+#: admin/systems/services/dhcp/dhcp_pool.tpl:6
 #: admin/systems/services/dhcp/class_dhcpHost.inc:137
 #: admin/systems/services/dhcp/class_dhcpHost.inc:145
-#: admin/systems/services/dhcp/class_dhcpPool.inc:106
-#: admin/systems/services/dhcp/class_dhcpPool.inc:114
 #: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:145
 #: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:163
 msgid "Name"
 msgstr "名称"
 
-#: admin/systems/services/dhcp/dhcp_pool.tpl:8
-#, fuzzy
-msgid "Name of pool"
-msgstr "黑名单名称"
-
-#: admin/systems/services/dhcp/dhcp_pool.tpl:11
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:204
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:154
-#: admin/systems/services/dhcp/class_dhcpPool.inc:121
-#: admin/systems/services/dhcp/class_dhcpPool.inc:125
-#: admin/systems/services/dhcp/class_dhcpPool.inc:129
+#: admin/systems/services/dhcp/dhcp_network.tpl:15
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:12
 #, fuzzy
-msgid "Range"
-msgstr "管理"
+msgid "Netmask"
+msgstr "Netatalk"
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:204
+#: admin/systems/services/dhcp/dhcp_network.tpl:21
+msgid "Broadcast"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
+#, php-format
+msgid "Error in definition of '%s'!"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:33
+#: admin/systems/services/dhcp/class_servDHCP.inc:691
+#: admin/systems/services/dhcp/class_servDHCP.inc:692
+#: admin/systems/services/dhcp/class_servDHCP.inc:737
+#, fuzzy
+msgid "DHCP service"
+msgstr "添加 DHCP 服务"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:35
+#, fuzzy
+msgid "Logging"
+msgstr "登录名"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:36
+#: admin/systems/services/dhcp/class_servDHCP.inc:300
+#: admin/systems/services/dhcp/class_servDHCP.inc:603
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
+#, fuzzy
+msgid "Global options"
+msgstr "邮件选项"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:37
+msgid "Class"
+msgstr "类"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:38
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
+#, fuzzy
+msgid "Subclass"
+msgstr "类"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:39
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
+#, fuzzy
+msgid "Host"
+msgstr "贴"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:40
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
+msgid "Group"
+msgstr "组"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:41
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
+#, fuzzy
+msgid "Pool"
+msgstr "布尔值"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:42
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
+#, fuzzy
+msgid "Subnet"
+msgstr "提交"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:43
+#, fuzzy
+msgid "Failover peer"
+msgstr "过滤器"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:44
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
+#, fuzzy
+msgid "Shared network"
+msgstr "SMTP 授权网络"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:103
+#, fuzzy, php-format
+msgid ""
+"You have requested a migration of the DHCP setup from server '%s' to the "
+"current one."
+msgstr "您将要拷贝条目 '%s'。"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:105
+msgid "The migration will be started when you save this system."
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:108
+#: admin/systems/services/dhcp/remove_dhcp.tpl:2
+msgid "Warning"
+msgstr "警告"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:221
+#, fuzzy
+msgid "Permission error"
+msgstr "允许"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:255
+#, fuzzy
+msgid "DHCP section"
+msgstr "PHP 安装检查"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:324
+#: admin/systems/services/dhcp/class_servDHCP.inc:327
+msgid "Insert new DHCP section"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:325
+#: admin/systems/services/dhcp/class_servDHCP.inc:328
+#: admin/systems/services/dhcp/class_servDHCP.inc:329
+#, fuzzy
+msgid "Edit DHCP section"
+msgstr "PHP 安装检查"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:326
+#: admin/systems/services/dhcp/class_servDHCP.inc:330
+#, fuzzy
+msgid "Remove DHCP section"
+msgstr "删除 DHCP 服务"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:377
+#: admin/systems/services/dhcp/class_servDHCP.inc:394
+#: admin/systems/services/dhcp/class_servDHCP.inc:449
+#: admin/systems/services/dhcp/class_servDHCP.inc:525
+#: admin/systems/services/dhcp/class_servDHCP.inc:533
+#: admin/systems/services/dhcp/class_servDHCP.inc:560
+#, fuzzy
+msgid "LDAP error"
+msgstr "LDAP 错误:"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:680
+#, fuzzy
+msgid ""
+"The DHCP configuration set is unkown. Please contact your system "
+"administrator."
+msgstr "账户锁定。请联系管理员。"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:692
+msgid "Services"
+msgstr "服务"
+
+#: admin/systems/services/dhcp/dhcp_group.tpl:2
+#: admin/systems/services/dhcp/dhcp_host.tpl:2
+#: admin/systems/services/dhcp/dhcp_service.tpl:1
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:2
+#: admin/systems/services/dhcp/dhcp_pool.tpl:2
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:2
+msgid "Generic"
+msgstr "通用配置"
+
+#: admin/systems/services/dhcp/dhcp_group.tpl:10
+#, fuzzy
+msgid "Name of group"
+msgstr "组名称"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:11
 #, fuzzy
@@ -111,30 +268,29 @@ msgstr "最大文件大小"
 msgid "Enter maximum lease time in seconds."
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:42
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
-#: admin/systems/services/dhcp/class_servDHCP.inc:680
-msgid "Error"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:204
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:139
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:136
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:154
-#: admin/systems/services/dhcp/dhcp_network.tpl:15
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:12
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
+msgid "Network address"
+msgstr "网络地址"
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:154
+#: admin/systems/services/dhcp/class_dhcpPool.inc:121
+#: admin/systems/services/dhcp/class_dhcpPool.inc:125
+#: admin/systems/services/dhcp/class_dhcpPool.inc:129
+#: admin/systems/services/dhcp/dhcp_pool.tpl:11
 #, fuzzy
-msgid "Netmask"
-msgstr "Netatalk"
+msgid "Range"
+msgstr "管理"
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:204
-#: admin/systems/services/dhcp/dhcp_network.tpl:21
-msgid "Broadcast"
-msgstr ""
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:163
+#, fuzzy
+msgid "Network range"
+msgstr "网络地址"
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
-#, php-format
-msgid "Error in definition of '%s'!"
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
+#: admin/systems/services/dhcp/class_dhcpPool.inc:143
+msgid "'Range' is not inside the configured network."
 msgstr ""
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:12
@@ -232,11 +388,6 @@ msgstr "允许使用该打印机的用户"
 msgid "Allow booting"
 msgstr ""
 
-#: admin/systems/services/dhcp/remove_dhcp.tpl:2
-#: admin/systems/services/dhcp/class_servDHCP.inc:108
-msgid "Warning"
-msgstr "警告"
-
 #: admin/systems/services/dhcp/remove_dhcp.tpl:6
 #, fuzzy
 msgid ""
@@ -256,26 +407,25 @@ msgstr ""
 "最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
 "这么做了，按“删除”继续或者按“取消”退出。"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:136
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:154
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
-msgid "Network address"
-msgstr "网络地址"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:163
+#: admin/systems/services/dhcp/dhcp_pool.tpl:8
 #, fuzzy
-msgid "Network range"
-msgstr "网络地址"
+msgid "Name of pool"
+msgstr "黑名单名称"
 
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
-#: admin/systems/services/dhcp/class_dhcpPool.inc:143
-msgid "'Range' is not inside the configured network."
+#: admin/systems/services/dhcp/servdhcp.tpl:5
+msgid ""
+"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
+"abort."
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_group.tpl:10
+#: admin/systems/services/dhcp/servdhcp.tpl:14
+msgid "Take over dhcp configuration from following server"
+msgstr ""
+
+#: admin/systems/services/dhcp/servdhcp.tpl:24
 #, fuzzy
-msgid "Name of group"
-msgstr "组名称"
+msgid "DHCP sections"
+msgstr "PHP 安装检查"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:5
 #, fuzzy
@@ -363,50 +513,9 @@ msgstr ""
 msgid "Assign hostnames from host declarations"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
-#, fuzzy
-msgid "Hide advanced settings"
-msgstr "高级电话设置"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:15
-#, fuzzy
-msgid "DHCP statements"
-msgstr "部门"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:28
-#, fuzzy
-msgid "DHCP options"
-msgstr "文件系统选项"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:43
-#, fuzzy
-msgid "Show advanced settings"
-msgstr "高级电话设置"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:140
-#, fuzzy
-msgid "Lease time"
-msgstr "信息"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:143
-#, fuzzy
-msgid "Max lease time"
-msgstr "信息"
-
-#: admin/systems/services/dhcp/servdhcp.tpl:5
-msgid ""
-"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
-"abort."
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:20
+msgid "Range for dynamic address assignment"
 msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:14
-msgid "Take over dhcp configuration from following server"
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:24
-#, fuzzy
-msgid "DHCP sections"
-msgstr "PHP 安装检查"
 
 #: admin/systems/services/dhcp/class_dhcpHost.inc:62
 #, fuzzy
@@ -421,142 +530,15 @@ msgstr ""
 msgid "Token Ring"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:53
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:66
-msgid "Cannot delete automatic statements!"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:78
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:87
-msgid "automatic"
-msgstr "自动"
-
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:20
-msgid "Range for dynamic address assignment"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:33
-#: admin/systems/services/dhcp/class_servDHCP.inc:691
-#: admin/systems/services/dhcp/class_servDHCP.inc:692
-#: admin/systems/services/dhcp/class_servDHCP.inc:737
+#: admin/systems/services/dhcp/class_dhcpService.inc:140
 #, fuzzy
-msgid "DHCP service"
-msgstr "添加 DHCP 服务"
+msgid "Lease time"
+msgstr "信息"
 
-#: admin/systems/services/dhcp/class_servDHCP.inc:35
+#: admin/systems/services/dhcp/class_dhcpService.inc:143
 #, fuzzy
-msgid "Logging"
-msgstr "登录名"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:36
-#: admin/systems/services/dhcp/class_servDHCP.inc:300
-#: admin/systems/services/dhcp/class_servDHCP.inc:603
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
-#, fuzzy
-msgid "Global options"
-msgstr "邮件选项"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:37
-msgid "Class"
-msgstr "类"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:38
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
-#, fuzzy
-msgid "Subclass"
-msgstr "类"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:39
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
-#, fuzzy
-msgid "Host"
-msgstr "贴"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:40
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
-msgid "Group"
-msgstr "组"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:41
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
-#, fuzzy
-msgid "Pool"
-msgstr "布尔值"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:42
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
-#, fuzzy
-msgid "Subnet"
-msgstr "提交"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:43
-#, fuzzy
-msgid "Failover peer"
-msgstr "过滤器"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:44
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
-#, fuzzy
-msgid "Shared network"
-msgstr "SMTP 授权网络"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:103
-#, fuzzy, php-format
-msgid ""
-"You have requested a migration of the DHCP setup from server '%s' to the "
-"current one."
-msgstr "您将要拷贝条目 '%s'。"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:105
-msgid "The migration will be started when you save this system."
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:221
-msgid "Permission error"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:255
-#, fuzzy
-msgid "DHCP section"
-msgstr "PHP 安装检查"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:324
-#: admin/systems/services/dhcp/class_servDHCP.inc:327
-msgid "Insert new DHCP section"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:325
-#: admin/systems/services/dhcp/class_servDHCP.inc:328
-#: admin/systems/services/dhcp/class_servDHCP.inc:329
-#, fuzzy
-msgid "Edit DHCP section"
-msgstr "PHP 安装检查"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:326
-#: admin/systems/services/dhcp/class_servDHCP.inc:330
-#, fuzzy
-msgid "Remove DHCP section"
-msgstr "删除 DHCP 服务"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:377
-#: admin/systems/services/dhcp/class_servDHCP.inc:394
-#: admin/systems/services/dhcp/class_servDHCP.inc:449
-#: admin/systems/services/dhcp/class_servDHCP.inc:525
-#: admin/systems/services/dhcp/class_servDHCP.inc:533
-#: admin/systems/services/dhcp/class_servDHCP.inc:560
-msgid "LDAP error"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:680
-#, fuzzy
-msgid ""
-"The DHCP configuration set is unkown. Please contact your system "
-"administrator."
-msgstr "账户锁定。请联系管理员。"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:692
-msgid "Services"
-msgstr "服务"
+msgid "Max lease time"
+msgstr "信息"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 #, fuzzy
@@ -580,6 +562,26 @@ msgstr "选择鼠标类型"
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:15
 msgid "Create"
 msgstr "创建"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
+#, fuzzy
+msgid "Hide advanced settings"
+msgstr "高级电话设置"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:15
+#, fuzzy
+msgid "DHCP statements"
+msgstr "部门"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:28
+#, fuzzy
+msgid "DHCP options"
+msgstr "文件系统选项"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:43
+#, fuzzy
+msgid "Show advanced settings"
+msgstr "高级电话设置"
 
 #, fuzzy
 #~ msgid "May lease time"

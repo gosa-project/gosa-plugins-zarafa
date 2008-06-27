@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -33,8 +33,9 @@ msgstr "Dit doet iets"
 
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP fout:"
 
 #: personal/nagios/class_nagiosAccount.inc:194
 #: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
@@ -45,7 +46,7 @@ msgstr "Alias"
 #: personal/nagios/class_nagiosAccount.inc:201
 #: personal/nagios/class_nagiosAccount.inc:205
 msgid "Mail"
-msgstr ""
+msgstr "E-mail"
 
 #: personal/nagios/class_nagiosAccount.inc:274
 #, fuzzy
@@ -124,6 +125,10 @@ msgstr "configuratie informatie bekijken"
 msgid "View system informations"
 msgstr "systeem informatie bekijken"
 
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Nagios instellingen"
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr "Nagios account"
@@ -163,10 +168,6 @@ msgstr "alle service commando's activeren"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "alle host commando's activeren"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Nagios instellingen"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "Dit account heeft nagios mogelijkheden uitgeschakeld."

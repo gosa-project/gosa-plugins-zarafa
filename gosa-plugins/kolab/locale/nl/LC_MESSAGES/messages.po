@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -37,7 +37,7 @@ msgstr "Fout"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:171
 msgid "Mail address"
-msgstr ""
+msgstr "E-mail adres"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:179
 msgid "Primary mail address"
@@ -72,8 +72,9 @@ msgstr "Anoniem"
 #: admin/systems/services/kolab/class_servKolab.inc:194
 #: admin/systems/services/kolab/class_servKolab.inc:210
 #: admin/systems/services/kolab/class_servKolab.inc:352
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP fout:"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
@@ -173,6 +174,115 @@ msgstr "Toekomstig"
 msgid "days"
 msgstr "dagen"
 
+#: admin/systems/services/kolab/servkolab.tpl:6
+msgid "Generic"
+msgstr "Algemeen"
+
+#: admin/systems/services/kolab/servkolab.tpl:9
+#: admin/systems/services/kolab/class_servKolab.inc:388
+msgid "Postfix mydomain"
+msgstr "Postfix mydomain"
+
+#: admin/systems/services/kolab/servkolab.tpl:18
+msgid "Postfix mydestination"
+msgstr "Postfix mydestination"
+
+#: admin/systems/services/kolab/servkolab.tpl:27
+#: admin/systems/services/kolab/class_servKolab.inc:390
+msgid "Cyrus admins"
+msgstr ""
+
+#: admin/systems/services/kolab/servkolab.tpl:39
+#: admin/systems/services/kolab/class_servKolab.inc:380
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/kolab/servkolab.tpl:48
+#: admin/systems/services/kolab/class_servKolab.inc:401
+msgid "POP3 service"
+msgstr "POP3 service"
+
+#: admin/systems/services/kolab/servkolab.tpl:58
+#: admin/systems/services/kolab/class_servKolab.inc:403
+msgid "POP3/SSL service"
+msgstr "POP3/SSL service"
+
+#: admin/systems/services/kolab/servkolab.tpl:68
+#: admin/systems/services/kolab/class_servKolab.inc:399
+msgid "IMAP service"
+msgstr "IMAP Service"
+
+#: admin/systems/services/kolab/servkolab.tpl:78
+#: admin/systems/services/kolab/class_servKolab.inc:402
+msgid "IMAP/SSL service"
+msgstr "IMAP/SSL service"
+
+#: admin/systems/services/kolab/servkolab.tpl:88
+#: admin/systems/services/kolab/class_servKolab.inc:404
+msgid "Sieve service"
+msgstr "Sieve service"
+
+#: admin/systems/services/kolab/servkolab.tpl:98
+msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
+msgstr ""
+"FTP Free/Busy service (vervallen, niet compatibel met Kolab2 Free/Busy)"
+
+#: admin/systems/services/kolab/servkolab.tpl:108
+msgid "HTTP FreeBusy service (legacy)"
+msgstr "HTTP Free/Busy service (vervallen)"
+
+#: admin/systems/services/kolab/servkolab.tpl:118
+msgid "Amavis email scanning (virus/spam)"
+msgstr "Amavis email scannen (virus/anti-spam)"
+
+#: admin/systems/services/kolab/servkolab.tpl:129
+#: admin/systems/services/kolab/class_servKolab.inc:405
+msgid "Quota settings"
+msgstr "Quota instellingen"
+
+#: admin/systems/services/kolab/servkolab.tpl:147
+msgid "Free/Busy settings"
+msgstr "Free/Busy instellingen"
+
+#: admin/systems/services/kolab/servkolab.tpl:153
+msgid "Allow unauthenticated downloading of Free/Busy information"
+msgstr "Sta ongeauthoriseerd downloaden van Free/Busy informatie toe"
+
+#: admin/systems/services/kolab/servkolab.tpl:171
+#: admin/systems/services/kolab/class_servKolab.inc:392
+msgid "SMTP privileged networks"
+msgstr "SMTP toegestane netwerken"
+
+#: admin/systems/services/kolab/servkolab.tpl:176
+msgid "Hosts/networks allowed to relay"
+msgstr "Hosts/netwerken die E-mail mogen ralayen"
+
+#: admin/systems/services/kolab/servkolab.tpl:181
+msgid "Enter multiple values, seperated with"
+msgstr "Voor meerdere waardes in, gescheiden door"
+
+#: admin/systems/services/kolab/servkolab.tpl:194
+msgid "SMTP smarthost/relayhost"
+msgstr "SMTP smarthost/relayhost"
+
+#: admin/systems/services/kolab/servkolab.tpl:202
+#: admin/systems/services/kolab/class_servKolab.inc:395
+msgid "Enable MX lookup for relayhost"
+msgstr "Sta MX record opzoeken voor relayhost toe"
+
+#: admin/systems/services/kolab/servkolab.tpl:207
+msgid "Host used to relay mails"
+msgstr "Host die gebruikt wordt om E-mails te relayen"
+
+#: admin/systems/services/kolab/servkolab.tpl:223
+#: admin/systems/services/kolab/class_servKolab.inc:398
+msgid "Accept Internet Mail"
+msgstr "Accepteer Internet E-mail"
+
+#: admin/systems/services/kolab/servkolab.tpl:231
+msgid "Accept mail from other domains over non-authenticated SMTP"
+msgstr "Accepteer E-mail van andere domeinen over niet geauthenticeerde SMTP"
+
 #: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
 msgid "Include data from %s days in the past when creating free/busy lists"
@@ -187,8 +297,9 @@ msgstr ""
 "wordt"
 
 #: admin/systems/services/kolab/class_servKolab.inc:180
+#, fuzzy
 msgid "Internal error"
-msgstr ""
+msgstr "Terminal server"
 
 #: admin/systems/services/kolab/class_servKolab.inc:180
 #, fuzzy
@@ -225,35 +336,15 @@ msgstr "SMTP toegestane netwerken"
 msgid "Kolab mail service"
 msgstr "Voeg Kolab service toe"
 
-#: admin/systems/services/kolab/class_servKolab.inc:380
-#: admin/systems/services/kolab/servkolab.tpl:39
-msgid "Services"
-msgstr "Services"
-
-#: admin/systems/services/kolab/class_servKolab.inc:388
-#: admin/systems/services/kolab/servkolab.tpl:9
-msgid "Postfix mydomain"
-msgstr "Postfix mydomain"
-
 #: admin/systems/services/kolab/class_servKolab.inc:389
 #, fuzzy
 msgid "My destination"
 msgstr "Doel"
 
-#: admin/systems/services/kolab/class_servKolab.inc:390
-#: admin/systems/services/kolab/servkolab.tpl:27
-msgid "Cyrus admins"
-msgstr ""
-
 #: admin/systems/services/kolab/class_servKolab.inc:391
 #, fuzzy
 msgid "FTP FreeBusy service"
 msgstr "HTTP Free/Busy service (vervallen)"
-
-#: admin/systems/services/kolab/class_servKolab.inc:392
-#: admin/systems/services/kolab/servkolab.tpl:171
-msgid "SMTP privileged networks"
-msgstr "SMTP toegestane netwerken"
 
 #: admin/systems/services/kolab/class_servKolab.inc:393
 msgid "Enable virus scan"
@@ -263,11 +354,6 @@ msgstr ""
 #, fuzzy
 msgid "Relayhost"
 msgstr "Lijst herladen"
-
-#: admin/systems/services/kolab/class_servKolab.inc:395
-#: admin/systems/services/kolab/servkolab.tpl:202
-msgid "Enable MX lookup for relayhost"
-msgstr "Sta MX record opzoeken voor relayhost toe"
 
 #: admin/systems/services/kolab/class_servKolab.inc:396
 #, fuzzy
@@ -279,93 +365,9 @@ msgstr "HTTP Free/Busy service (vervallen)"
 msgid "Allow unauthenticated free busy"
 msgstr "Sta ongeauthoriseerd downloaden van Free/Busy informatie toe"
 
-#: admin/systems/services/kolab/class_servKolab.inc:398
-#: admin/systems/services/kolab/servkolab.tpl:223
-msgid "Accept Internet Mail"
-msgstr "Accepteer Internet E-mail"
-
-#: admin/systems/services/kolab/class_servKolab.inc:399
-#: admin/systems/services/kolab/servkolab.tpl:68
-msgid "IMAP service"
-msgstr "IMAP Service"
-
 #: admin/systems/services/kolab/class_servKolab.inc:400
 msgid "kolabFreeBusyFuture"
 msgstr ""
-
-#: admin/systems/services/kolab/class_servKolab.inc:401
-#: admin/systems/services/kolab/servkolab.tpl:48
-msgid "POP3 service"
-msgstr "POP3 service"
-
-#: admin/systems/services/kolab/class_servKolab.inc:402
-#: admin/systems/services/kolab/servkolab.tpl:78
-msgid "IMAP/SSL service"
-msgstr "IMAP/SSL service"
-
-#: admin/systems/services/kolab/class_servKolab.inc:403
-#: admin/systems/services/kolab/servkolab.tpl:58
-msgid "POP3/SSL service"
-msgstr "POP3/SSL service"
-
-#: admin/systems/services/kolab/class_servKolab.inc:404
-#: admin/systems/services/kolab/servkolab.tpl:88
-msgid "Sieve service"
-msgstr "Sieve service"
-
-#: admin/systems/services/kolab/class_servKolab.inc:405
-#: admin/systems/services/kolab/servkolab.tpl:129
-msgid "Quota settings"
-msgstr "Quota instellingen"
-
-#: admin/systems/services/kolab/servkolab.tpl:6
-msgid "Generic"
-msgstr "Algemeen"
-
-#: admin/systems/services/kolab/servkolab.tpl:18
-msgid "Postfix mydestination"
-msgstr "Postfix mydestination"
-
-#: admin/systems/services/kolab/servkolab.tpl:98
-msgid "FTP FreeBusy service (legacy, not interoperable with Kolab2 FreeBusy)"
-msgstr ""
-"FTP Free/Busy service (vervallen, niet compatibel met Kolab2 Free/Busy)"
-
-#: admin/systems/services/kolab/servkolab.tpl:108
-msgid "HTTP FreeBusy service (legacy)"
-msgstr "HTTP Free/Busy service (vervallen)"
-
-#: admin/systems/services/kolab/servkolab.tpl:118
-msgid "Amavis email scanning (virus/spam)"
-msgstr "Amavis email scannen (virus/anti-spam)"
-
-#: admin/systems/services/kolab/servkolab.tpl:147
-msgid "Free/Busy settings"
-msgstr "Free/Busy instellingen"
-
-#: admin/systems/services/kolab/servkolab.tpl:153
-msgid "Allow unauthenticated downloading of Free/Busy information"
-msgstr "Sta ongeauthoriseerd downloaden van Free/Busy informatie toe"
-
-#: admin/systems/services/kolab/servkolab.tpl:176
-msgid "Hosts/networks allowed to relay"
-msgstr "Hosts/netwerken die E-mail mogen ralayen"
-
-#: admin/systems/services/kolab/servkolab.tpl:181
-msgid "Enter multiple values, seperated with"
-msgstr "Voor meerdere waardes in, gescheiden door"
-
-#: admin/systems/services/kolab/servkolab.tpl:194
-msgid "SMTP smarthost/relayhost"
-msgstr "SMTP smarthost/relayhost"
-
-#: admin/systems/services/kolab/servkolab.tpl:207
-msgid "Host used to relay mails"
-msgstr "Host die gebruikt wordt om E-mails te relayen"
-
-#: admin/systems/services/kolab/servkolab.tpl:231
-msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr "Accepteer E-mail van andere domeinen over niet geauthenticeerde SMTP"
 
 #~ msgid "Add"
 #~ msgstr "Toevoegen"

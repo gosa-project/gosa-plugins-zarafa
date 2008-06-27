@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "Учетная запись Groupware"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -24,8 +28,9 @@ msgstr "Что-то будет"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:85
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:141
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Ошибка LDAP:"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:160
 msgid "PHP GW"
@@ -44,10 +49,6 @@ msgstr "Подключение"
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
 msgstr "Моя учетная запись"
-
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
-msgstr "Учетная запись Groupware"
 
 #, fuzzy
 #~ msgid "Removing of user/PHPgw account with dn '%s' failed."

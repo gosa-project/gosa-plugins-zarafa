@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-12 09:08+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2008-06-08 13:55+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,6 +13,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr "Accès kadmin Kerberos"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+msgid "Kerberos Realms"
+msgstr "Realm Kerberos"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
+msgstr "Politiques d'accès"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
+msgid "Kerberos service"
+msgstr "Service Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Fenêtre de connexion GOsa"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Service Kerberos ( information accès kadmin )"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+msgid "Realm"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+#, fuzzy
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+"Pour pouvoir changer la police de securité, le serveur nécessite un adresse "
+"mac valide."
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr "Enlever"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr "Police"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
+msgid "Kerberos"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Kerberos access information"
+msgstr "Information d'accès Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Services"
+msgstr "Services"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -57,19 +119,6 @@ msgstr ""
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:357
 msgid "Valid password"
 msgstr "Mot de passe valide"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr "Accès kadmin Kerberos"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-msgid "Kerberos Realms"
-msgstr "Realm Kerberos"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:16
-#: admin/systems/services/kerberos/class_goKrbServer.inc:393
-msgid "Policies"
-msgstr "Politiques d'accès"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 msgid "Heimdal options"
@@ -130,52 +179,3 @@ msgstr "Enregistrer"
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
 msgid "Cancel"
 msgstr "Annuler"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:58
-msgid "Kerberos service"
-msgstr "Service Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:358
-#: admin/systems/services/kerberos/class_goKrbServer.inc:367
-#: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "Fenêtre de connexion GOsa"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:165
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Service Kerberos ( information accès kadmin )"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:178
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-msgid "Realm"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:181
-#, fuzzy
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
-msgstr ""
-"Pour pouvoir changer la police de securité, le serveur nécessite un adresse "
-"mac valide."
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Remove"
-msgstr "Enlever"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Policy"
-msgstr "Police"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:384
-msgid "Kerberos"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Kerberos access information"
-msgstr "Information d'accès Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Services"
-msgstr "Services"

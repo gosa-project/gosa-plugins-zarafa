@@ -1,43 +1,68 @@
+# translation of messages.po to Italian
+# Copyright (c) 2005 B-Open Solutions srl - http://www.bopen.it/
+# Copyright (c) 2005 Alessandro Amici <a.amici@bopen.it>
+# Alessandro Amici <a.amici@bopen.it>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"PO-Revision-Date: 2005-11-18 15:26+0100\n"
+"Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
+"Language-Team: Italian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
 #: admin/sudo/trust_machines.tpl:6
 msgid "Select systems to add"
-msgstr ""
+msgstr "Seleziona un sistema da aggiungere"
 
 #: admin/sudo/trust_machines.tpl:26
 msgid "Display systems of department"
-msgstr ""
+msgstr "Mostra i sistemi del dipartimento"
 
 #: admin/sudo/trust_machines.tpl:27
 msgid "Choose the department the search will be based on"
-msgstr ""
+msgstr "Scegli il dipartimento di base per la ricerca"
 
 #: admin/sudo/trust_machines.tpl:30
 msgid "Display systems matching"
-msgstr ""
+msgstr "Mostra i sistemi che corrispondono a:"
 
 #: admin/sudo/trust_machines.tpl:31
 msgid "Regular expression for matching addresses"
-msgstr ""
+msgstr "Espressione regolare per selezionare l'indirizzo"
 
 #: admin/sudo/class_sudoManagement.inc:31
 msgid "Sudo roles"
 msgstr ""
 
 #: admin/sudo/class_sudoManagement.inc:32
+#, fuzzy
 msgid "Manage sudo roles"
-msgstr ""
+msgstr "Utenti di Dominio"
 
-#: admin/sudo/class_sudoManagement.inc:250
-#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/class_sudoGeneric.inc:674
+#: admin/sudo/class_sudoManagement.inc:245
+#, fuzzy
+msgid "Permission"
+msgstr "Permessi"
+
+#: admin/sudo/class_sudoManagement.inc:260
+#: admin/sudo/class_sudoGeneric.inc:679 admin/sudo/class_sudoGeneric.inc:684
 msgid "Sudo role"
 msgstr ""
 
-#: admin/sudo/class_sudoManagement.inc:282
+#: admin/sudo/class_sudoManagement.inc:293
+#, fuzzy
 msgid "Permission error"
-msgstr ""
+msgstr "Permessi"
 
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
+#, fuzzy
 msgid "Sudo role administration"
-msgstr ""
+msgstr "Amministrazione dei gruppi di utenti"
 
 #: admin/sudo/options.tpl:5
 msgid "Option name"
@@ -49,15 +74,16 @@ msgstr ""
 
 #: admin/sudo/options.tpl:8
 msgid "Options"
-msgstr ""
+msgstr "Opzioni"
 
 #: admin/sudo/options.tpl:81
+#, fuzzy
 msgid "Available options"
-msgstr ""
+msgstr "Applicazioni disponibili"
 
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
-msgstr ""
+msgstr "Attenzione"
 
 #: admin/sudo/remove.tpl:9
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
@@ -66,7 +92,7 @@ msgstr ""
 #: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
 #: admin/sudo/paste_generic.tpl:1
 msgid "Generic"
-msgstr ""
+msgstr "Generale"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
@@ -74,20 +100,20 @@ msgstr ""
 
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
 #: admin/sudo/class_divListSudo.inc:82 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/class_sudoGeneric.inc:561 admin/sudo/class_sudoGeneric.inc:566
-#: admin/sudo/class_sudoGeneric.inc:571 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:677
+#: admin/sudo/class_sudoGeneric.inc:565 admin/sudo/class_sudoGeneric.inc:570
+#: admin/sudo/class_sudoGeneric.inc:575 admin/sudo/class_sudoGeneric.inc:584
+#: admin/sudo/class_sudoGeneric.inc:687
 msgid "Name"
-msgstr ""
+msgstr "Cognome"
 
 #: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
-#: admin/sudo/class_sudoGeneric.inc:678
+#: admin/sudo/class_sudoGeneric.inc:688
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #: admin/sudo/generic.tpl:55
 msgid "System trust"
-msgstr ""
+msgstr "Accesso ai sistemi"
 
 #: admin/sudo/generic.tpl:56
 msgid "Trust mode"
@@ -102,8 +128,9 @@ msgid "Add from list"
 msgstr ""
 
 #: admin/sudo/generic.tpl:102
+#, fuzzy
 msgid "Systems"
-msgstr ""
+msgstr "Sistemi"
 
 #: admin/sudo/generic.tpl:120
 msgid "Commands"
@@ -123,8 +150,9 @@ msgid "The sudo option '%s' is invalid!"
 msgstr ""
 
 #: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
+#, fuzzy
 msgid "string"
-msgstr ""
+msgstr "Attenzione"
 
 #: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
 #: admin/sudo/class_sudoOption.inc:280
@@ -132,8 +160,9 @@ msgid "bool"
 msgstr ""
 
 #: admin/sudo/class_sudoOption.inc:279
+#, fuzzy
 msgid "integer"
-msgstr ""
+msgstr "stampanti"
 
 #: admin/sudo/class_sudoOption.inc:280
 msgid "list"
@@ -151,7 +180,7 @@ msgstr ""
 #: admin/sudo/class_target_list_users.inc:61
 #: admin/sudo/class_target_list_systems.inc:64
 msgid "Object name"
-msgstr ""
+msgstr "Nome dell'oggetto"
 
 #: admin/sudo/class_target_list_users.inc:63
 msgid "Select to see users"
@@ -172,31 +201,31 @@ msgstr ""
 #: admin/sudo/class_target_list_users.inc:73
 #: admin/sudo/class_target_list_systems.inc:76
 msgid "Regular expression for matching group names"
-msgstr ""
+msgstr "Espressioni regolare per selezionare il nome del gruppo"
 
 #: admin/sudo/class_target_list_users.inc:140
 #: admin/sudo/class_target_list_systems.inc:143
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #: admin/sudo/class_target_list_users.inc:142
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #: admin/sudo/class_target_list_users.inc:142
 #: admin/sudo/class_target_list_systems.inc:145
 msgid "Submit"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:181
-#: admin/sudo/class_sudoGeneric.inc:398
+#: admin/sudo/class_target_list_users.inc:180
+#: admin/sudo/class_sudoGeneric.inc:402
 msgid "User"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:182
-#: admin/sudo/class_sudoGeneric.inc:399
+#: admin/sudo/class_target_list_users.inc:181
+#: admin/sudo/class_sudoGeneric.inc:403
 msgid "Group"
-msgstr ""
+msgstr "Gruppo"
 
 #: admin/sudo/class_target_list_systems.inc:53
 msgid "Select the target objects for your scheduled action."
@@ -213,7 +242,7 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:67
 msgid "Show terminals"
-msgstr ""
+msgstr "Mostra terminali"
 
 #: admin/sudo/class_target_list_systems.inc:68
 msgid "Select to see servers"
@@ -221,7 +250,7 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:68
 msgid "Show servers"
-msgstr ""
+msgstr "Mostra server"
 
 #: admin/sudo/class_target_list_systems.inc:69
 msgid "Select to see workstations"
@@ -229,124 +258,123 @@ msgstr ""
 
 #: admin/sudo/class_target_list_systems.inc:69
 msgid "Show workstations"
-msgstr ""
+msgstr "Mostra workstation"
 
-#: admin/sudo/class_target_list_systems.inc:187
+#: admin/sudo/class_target_list_systems.inc:186
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
-#: admin/sudo/class_target_list_systems.inc:189
+#: admin/sudo/class_target_list_systems.inc:188
 msgid "Workstation"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:191
+#: admin/sudo/class_target_list_systems.inc:190
+#, fuzzy
 msgid "Terminal"
-msgstr ""
+msgstr "Terminali"
 
 #: admin/sudo/class_divListSudo.inc:55 admin/sudo/class_divListSudo.inc:56
+#, fuzzy
 msgid "List of sudo roles"
-msgstr ""
+msgstr "Lista degli utenti"
 
 #: admin/sudo/class_divListSudo.inc:76
+#, fuzzy
 msgid "Select all"
-msgstr ""
+msgstr "Rimuovi"
 
 #: admin/sudo/class_divListSudo.inc:82
 msgid "Department"
-msgstr ""
+msgstr "Dipartimento"
 
-#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:108
+#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:109
 msgid "Actions"
-msgstr ""
+msgstr "Azioni"
 
 #: admin/sudo/class_divListSudo.inc:87
+#, fuzzy
 msgid "Regular expression for matching role names"
-msgstr ""
+msgstr "Espressioni regolare per selezionare il nome del gruppo"
 
 #: admin/sudo/class_divListSudo.inc:89
+#, fuzzy
 msgid "Regular expression for matching role member names"
-msgstr ""
+msgstr "Espressioni regolare per selezionare il nome del gruppo"
 
-#: admin/sudo/class_divListSudo.inc:110
+#: admin/sudo/class_divListSudo.inc:111
 msgid "Create"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:114
-msgid "Role"
-msgstr ""
+msgstr "Creare"
 
 #: admin/sudo/class_divListSudo.inc:115
+msgid "Role"
+msgstr "Ruolo"
+
+#: admin/sudo/class_divListSudo.inc:116
 msgid "Default"
 msgstr ""
 
-#: admin/sudo/class_divListSudo.inc:122
+#: admin/sudo/class_divListSudo.inc:123
 msgid "Remove"
-msgstr ""
+msgstr "Rimuovi"
 
-#: admin/sudo/class_divListSudo.inc:129 admin/sudo/class_divListSudo.inc:196
-msgid "Copy"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:135 admin/sudo/class_divListSudo.inc:138
-msgid "Paste"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:196
-msgid "Copy this entry"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:201
+#: admin/sudo/class_divListSudo.inc:175
 msgid "Edit this entry"
-msgstr ""
+msgstr "Modifica questo record"
 
-#: admin/sudo/class_divListSudo.inc:209
+#: admin/sudo/class_divListSudo.inc:182
 msgid "Delete this entry"
-msgstr ""
+msgstr "Elimina questo record"
 
-#: admin/sudo/class_divListSudo.inc:251
+#: admin/sudo/class_divListSudo.inc:224
+#, fuzzy
 msgid "Number of listed roles"
-msgstr ""
+msgstr "Nome del gruppo"
 
-#: admin/sudo/class_sudoGeneric.inc:309
+#: admin/sudo/class_sudoGeneric.inc:313
 msgid "Error"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:351
+#: admin/sudo/class_sudoGeneric.inc:355
 msgid "disabled"
-msgstr ""
+msgstr "disabilitato"
 
-#: admin/sudo/class_sudoGeneric.inc:352
+#: admin/sudo/class_sudoGeneric.inc:356
 msgid "full access"
-msgstr ""
+msgstr "accesso completo"
 
-#: admin/sudo/class_sudoGeneric.inc:353
+#: admin/sudo/class_sudoGeneric.inc:357
 msgid "allow access to these hosts"
-msgstr ""
+msgstr "accesso limitato ai seguenti host"
 
-#: admin/sudo/class_sudoGeneric.inc:547
+#: admin/sudo/class_sudoGeneric.inc:551
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Errore LDAP"
 
-#: admin/sudo/class_sudoGeneric.inc:668
+#: admin/sudo/class_sudoGeneric.inc:678
+#, fuzzy
 msgid "Sudo"
-msgstr ""
+msgstr "Cognome"
 
-#: admin/sudo/class_sudoGeneric.inc:679
+#: admin/sudo/class_sudoGeneric.inc:689
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
-#: admin/sudo/class_sudoGeneric.inc:680
+#: admin/sudo/class_sudoGeneric.inc:690
 msgid "Host"
 msgstr ""
 
-#: admin/sudo/class_sudoGeneric.inc:681
+#: admin/sudo/class_sudoGeneric.inc:691
+#, fuzzy
 msgid "Command"
-msgstr ""
+msgstr "e"
 
-#: admin/sudo/class_sudoGeneric.inc:682
+#: admin/sudo/class_sudoGeneric.inc:692
+#, fuzzy
 msgid "Run as user"
-msgstr ""
+msgstr "Utenti di Dominio"
 
-#: admin/sudo/class_sudoGeneric.inc:683
+#: admin/sudo/class_sudoGeneric.inc:693
+#, fuzzy
 msgid "Access control list"
-msgstr ""
+msgstr "Opzioni di accesso"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -28,8 +28,9 @@ msgstr "Что-то будет"
 
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Ошибка LDAP:"
 
 #: personal/nagios/class_nagiosAccount.inc:194
 #: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
@@ -41,7 +42,7 @@ msgstr "женский"
 #: personal/nagios/class_nagiosAccount.inc:201
 #: personal/nagios/class_nagiosAccount.inc:205
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: personal/nagios/class_nagiosAccount.inc:274
 #, fuzzy
@@ -126,6 +127,11 @@ msgstr "Информация об организации"
 msgid "View system informations"
 msgstr "Системная информация"
 
+#: personal/nagios/main.inc:125
+#, fuzzy
+msgid "Nagios settings"
+msgstr "Почтовые настройки пользователя"
+
 #: personal/nagios/nagios.tpl:5
 #, fuzzy
 msgid "Nagios Account"
@@ -170,11 +176,6 @@ msgstr ""
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr ""
-
-#: personal/nagios/main.inc:125
-#, fuzzy
-msgid "Nagios settings"
-msgstr "Почтовые настройки пользователя"
 
 #, fuzzy
 #~ msgid "This account has no nagios extensions."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -31,8 +31,9 @@ msgstr "******"
 
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "LDAP 错误:"
 
 #: personal/nagios/class_nagiosAccount.inc:194
 #: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
@@ -43,7 +44,7 @@ msgstr "别名"
 #: personal/nagios/class_nagiosAccount.inc:201
 #: personal/nagios/class_nagiosAccount.inc:205
 msgid "Mail"
-msgstr ""
+msgstr "邮件"
 
 #: personal/nagios/class_nagiosAccount.inc:274
 #, fuzzy
@@ -122,6 +123,10 @@ msgstr "查看配置信息"
 msgid "View system informations"
 msgstr "查看系统信息"
 
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Nagios 设置"
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr "Nagios 账号"
@@ -161,10 +166,6 @@ msgstr "触发所有服务命令"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "触发所有主机命令"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Nagios 设置"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "这个账户尚未包含 nagios 扩展。 "

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2008-04-03 16:12+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -117,6 +117,10 @@ msgstr "Konfiguration anzeigen"
 msgid "View system informations"
 msgstr "System-Informationen anzeigen"
 
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Nagios-Einstellungen"
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr "Nagios-Konto"
@@ -156,7 +160,3 @@ msgstr "Alle Dienst-Befehle ausführen"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "Alle Host-Befehle ausführen"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Nagios-Einstellungen"

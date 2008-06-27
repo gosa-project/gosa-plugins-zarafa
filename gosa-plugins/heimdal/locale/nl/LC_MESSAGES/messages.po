@@ -11,13 +11,77 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-12 09:08+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr "Kerberos kadmin toegang"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+#, fuzzy
+msgid "Kerberos Realms"
+msgstr "Kerberos Realm"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos server"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Zoek binnen subtree"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Kerberos kadmin toegang"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+#, fuzzy
+msgid "Realm"
+msgstr "RAM"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Kerberos kadmin toegang"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Services"
+msgstr "Services"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -63,20 +127,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "Oud wachtwoord"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr "Kerberos kadmin toegang"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
-msgid "Kerberos Realms"
-msgstr "Kerberos Realm"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:16
-#: admin/systems/services/kerberos/class_goKrbServer.inc:393
-msgid "Policies"
-msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 #, fuzzy
@@ -144,56 +194,6 @@ msgstr "Opslaan"
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
 msgid "Cancel"
 msgstr "Annuleren"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:58
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos server"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:358
-#: admin/systems/services/kerberos/class_goKrbServer.inc:367
-#: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "Zoek binnen subtree"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:165
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Kerberos kadmin toegang"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:178
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-#, fuzzy
-msgid "Realm"
-msgstr "RAM"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Remove"
-msgstr "Verwijderen"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Policy"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:384
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Kerberos kadmin toegang"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Services"
-msgstr "Services"
 
 #~ msgid "Admin user"
 #~ msgstr "Beheerder"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-27 13:33+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2008-05-27 13:34+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -44,12 +44,16 @@ msgstr "Sudo-Rollen"
 msgid "Manage sudo roles"
 msgstr "Sudo-Rollen verwalten"
 
-#: admin/sudo/class_sudoManagement.inc:250
-#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/class_sudoGeneric.inc:674
+#: admin/sudo/class_sudoManagement.inc:245
+msgid "Permission"
+msgstr "Berechtigung"
+
+#: admin/sudo/class_sudoManagement.inc:260
+#: admin/sudo/class_sudoGeneric.inc:679 admin/sudo/class_sudoGeneric.inc:684
 msgid "Sudo role"
 msgstr "Sudo-Rolle"
 
-#: admin/sudo/class_sudoManagement.inc:282
+#: admin/sudo/class_sudoManagement.inc:293
 msgid "Permission error"
 msgstr "Berechtigungs-Fehler"
 
@@ -94,14 +98,14 @@ msgstr "globale Vorgaben"
 
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
 #: admin/sudo/class_divListSudo.inc:82 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/class_sudoGeneric.inc:561 admin/sudo/class_sudoGeneric.inc:566
-#: admin/sudo/class_sudoGeneric.inc:571 admin/sudo/class_sudoGeneric.inc:580
-#: admin/sudo/class_sudoGeneric.inc:677
+#: admin/sudo/class_sudoGeneric.inc:565 admin/sudo/class_sudoGeneric.inc:570
+#: admin/sudo/class_sudoGeneric.inc:575 admin/sudo/class_sudoGeneric.inc:584
+#: admin/sudo/class_sudoGeneric.inc:687
 msgid "Name"
 msgstr "Name"
 
 #: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
-#: admin/sudo/class_sudoGeneric.inc:678
+#: admin/sudo/class_sudoGeneric.inc:688
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -208,13 +212,13 @@ msgstr "Anwenden"
 msgid "Submit"
 msgstr "Übertragen"
 
-#: admin/sudo/class_target_list_users.inc:181
-#: admin/sudo/class_sudoGeneric.inc:398
+#: admin/sudo/class_target_list_users.inc:180
+#: admin/sudo/class_sudoGeneric.inc:402
 msgid "User"
 msgstr "Benutzer"
 
-#: admin/sudo/class_target_list_users.inc:182
-#: admin/sudo/class_sudoGeneric.inc:399
+#: admin/sudo/class_target_list_users.inc:181
+#: admin/sudo/class_sudoGeneric.inc:403
 msgid "Group"
 msgstr "Gruppe"
 
@@ -251,15 +255,15 @@ msgstr "Auswählen um Arbeitsstationen zu sehen"
 msgid "Show workstations"
 msgstr "Zeige Arbeitsstationen"
 
-#: admin/sudo/class_target_list_systems.inc:187
+#: admin/sudo/class_target_list_systems.inc:186
 msgid "Server"
 msgstr "Server"
 
-#: admin/sudo/class_target_list_systems.inc:189
+#: admin/sudo/class_target_list_systems.inc:188
 msgid "Workstation"
 msgstr "Arbeitsstation"
 
-#: admin/sudo/class_target_list_systems.inc:191
+#: admin/sudo/class_target_list_systems.inc:190
 msgid "Terminal"
 msgstr "Terminal"
 
@@ -275,7 +279,7 @@ msgstr "Alles auswählen"
 msgid "Department"
 msgstr "Abteilung"
 
-#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:108
+#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:109
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -287,87 +291,83 @@ msgstr "Regulärer Ausdruck zum Abgleich der Rollen-Namen"
 msgid "Regular expression for matching role member names"
 msgstr "Regulärer Ausdruck zum Abgleich der Mitglieds-Namen"
 
-#: admin/sudo/class_divListSudo.inc:110
+#: admin/sudo/class_divListSudo.inc:111
 msgid "Create"
 msgstr "Anlegen"
 
-#: admin/sudo/class_divListSudo.inc:114
+#: admin/sudo/class_divListSudo.inc:115
 msgid "Role"
 msgstr "Rolle"
 
-#: admin/sudo/class_divListSudo.inc:115
+#: admin/sudo/class_divListSudo.inc:116
 msgid "Default"
 msgstr "Vorgabe"
 
-#: admin/sudo/class_divListSudo.inc:122
+#: admin/sudo/class_divListSudo.inc:123
 msgid "Remove"
 msgstr "Entfernen"
 
-#: admin/sudo/class_divListSudo.inc:129 admin/sudo/class_divListSudo.inc:196
-msgid "Copy"
-msgstr "Kopieren"
-
-#: admin/sudo/class_divListSudo.inc:135 admin/sudo/class_divListSudo.inc:138
-msgid "Paste"
-msgstr "Einfügen"
-
-#: admin/sudo/class_divListSudo.inc:196
-msgid "Copy this entry"
-msgstr "Diesen Eintrag kopieren"
-
-#: admin/sudo/class_divListSudo.inc:201
+#: admin/sudo/class_divListSudo.inc:175
 msgid "Edit this entry"
 msgstr "Diesen Eintrag bearbeiten"
 
-#: admin/sudo/class_divListSudo.inc:209
+#: admin/sudo/class_divListSudo.inc:182
 msgid "Delete this entry"
 msgstr "Diesen Eintrag löschen"
 
-#: admin/sudo/class_divListSudo.inc:251
+#: admin/sudo/class_divListSudo.inc:224
 msgid "Number of listed roles"
 msgstr "Anzahl der angezeigten Rollen"
 
-#: admin/sudo/class_sudoGeneric.inc:309
+#: admin/sudo/class_sudoGeneric.inc:313
 msgid "Error"
 msgstr "Fehler"
 
-#: admin/sudo/class_sudoGeneric.inc:351
+#: admin/sudo/class_sudoGeneric.inc:355
 msgid "disabled"
 msgstr "deaktiviert"
 
-#: admin/sudo/class_sudoGeneric.inc:352
+#: admin/sudo/class_sudoGeneric.inc:356
 msgid "full access"
 msgstr "Vollzugriff"
 
-#: admin/sudo/class_sudoGeneric.inc:353
+#: admin/sudo/class_sudoGeneric.inc:357
 msgid "allow access to these hosts"
 msgstr "erlaube Zugriff auf diese Hosts"
 
-#: admin/sudo/class_sudoGeneric.inc:547
+#: admin/sudo/class_sudoGeneric.inc:551
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: admin/sudo/class_sudoGeneric.inc:668
+#: admin/sudo/class_sudoGeneric.inc:678
 msgid "Sudo"
 msgstr "Sudo"
 
-#: admin/sudo/class_sudoGeneric.inc:679
+#: admin/sudo/class_sudoGeneric.inc:689
 msgid "Users"
 msgstr "Benutzer"
 
-#: admin/sudo/class_sudoGeneric.inc:680
+#: admin/sudo/class_sudoGeneric.inc:690
 msgid "Host"
 msgstr "System"
 
-#: admin/sudo/class_sudoGeneric.inc:681
+#: admin/sudo/class_sudoGeneric.inc:691
 msgid "Command"
 msgstr "Kommando"
 
-#: admin/sudo/class_sudoGeneric.inc:682
+#: admin/sudo/class_sudoGeneric.inc:692
 msgid "Run as user"
 msgstr "Als Benutzer ausführen"
 
-#: admin/sudo/class_sudoGeneric.inc:683
+#: admin/sudo/class_sudoGeneric.inc:693
 msgid "Access control list"
 msgstr "Zugriffsberechtigungen"
 
+#~ msgid "Copy"
+#~ msgstr "Kopieren"
+
+#~ msgid "Paste"
+#~ msgstr "Einfügen"
+
+#~ msgid "Copy this entry"
+#~ msgstr "Diesen Eintrag kopieren"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-12 09:08+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr "Kerberos kadmin 访问"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+#, fuzzy
+msgid "Kerberos Realms"
+msgstr "Kerberos Realm"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos 服务器"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "在子树中查找"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Kerberos kadmin 访问"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+#, fuzzy
+msgid "Realm"
+msgstr "Ram"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr "删除"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "个人信息"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Services"
+msgstr "服务"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -60,20 +124,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "旧口令"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr "Kerberos kadmin 访问"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
-msgid "Kerberos Realms"
-msgstr "Kerberos Realm"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:16
-#: admin/systems/services/kerberos/class_goKrbServer.inc:393
-msgid "Policies"
-msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 #, fuzzy
@@ -140,56 +190,6 @@ msgstr "保存"
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
 msgid "Cancel"
 msgstr "取消"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:58
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos 服务器"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:358
-#: admin/systems/services/kerberos/class_goKrbServer.inc:367
-#: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "在子树中查找"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:165
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Kerberos kadmin 访问"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:178
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-#, fuzzy
-msgid "Realm"
-msgstr "Ram"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Remove"
-msgstr "删除"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Policy"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:384
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "个人信息"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Services"
-msgstr "服务"
 
 #~ msgid "Admin user"
 #~ msgstr "管理员"

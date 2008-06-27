@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-31 10:37+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -242,8 +242,9 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNS.inc:493
 #: admin/systems/services/dns/class_servDNS.inc:504
 #: admin/systems/services/dns/class_servDNS.inc:537
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Servicio LDAP"
 
 #: admin/systems/services/dns/class_servDNS.inc:577
 msgid "Services"
@@ -303,7 +304,7 @@ msgstr "No se puede renombrar '%s' a '%s',ya existe el nombre de destino."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:248
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:257
 #, fuzzy, php-format

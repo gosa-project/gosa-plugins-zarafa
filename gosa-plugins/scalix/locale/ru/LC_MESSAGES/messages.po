@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:52+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,16 +14,170 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: personal/scalix/paste_generic.tpl:4 personal/scalix/generic.tpl:98
+#: personal/scalix/class_scalixAccount.inc:16
+#, fuzzy
+msgid "Scalix"
+msgstr "терминалы"
+
+#: personal/scalix/class_scalixAccount.inc:17
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: personal/scalix/class_scalixAccount.inc:121
+#, fuzzy
+msgid "This account has no scalix extensions."
+msgstr "Для этой учетной записи нет расширений факса."
+
+#: personal/scalix/class_scalixAccount.inc:130
+#, fuzzy
+msgid "Remove scalix account"
+msgstr "Удалить учетную запись POSIX"
+
+#: personal/scalix/class_scalixAccount.inc:131
+#, fuzzy
+msgid ""
+"This account has scalix synchronization enabled. You can disable it by "
+"clicking below."
+msgstr ""
+"В этой учетной записи используются атрибуты POSIX. Вы можете отключить их "
+"использование, щелкнув ниже."
+
+#: personal/scalix/class_scalixAccount.inc:133
+#, fuzzy
+msgid "Create scalix account"
+msgstr "Создать учетную запись POSIX"
+
+#: personal/scalix/class_scalixAccount.inc:133
+#, fuzzy
+msgid ""
+"This account has scalix synchronization disabled. You can enable it by "
+"clicking below."
+msgstr ""
+"В этой учетной записи не используются атрибуты POSIX. Вы можете использовать "
+"их, щелкнув ниже."
+
+#: personal/scalix/class_scalixAccount.inc:227
+#: personal/scalix/class_scalixAccount.inc:330
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
+#: personal/scalix/class_scalixAccount.inc:250
+#: personal/scalix/class_scalixAccount.inc:257
+#: personal/scalix/class_scalixAccount.inc:264
+#: personal/scalix/class_scalixAccount.inc:274
+#: personal/scalix/class_scalixAccount.inc:486
+#: personal/scalix/class_scalixAccount.inc:495
+msgid "Error"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:250
+#: personal/scalix/class_scalixAccount.inc:486
+#, fuzzy
+msgid "Cannot add invalid mail address!"
+msgstr "Вы пытаетесь добавить некорректный адрес электронной почты "
+
+#: personal/scalix/class_scalixAccount.inc:257
+#: personal/scalix/class_scalixAccount.inc:274
+#, fuzzy
+msgid "You have no permission to modify these addresses."
+msgstr "У вас недостаточно прав для удаления этого подразделения."
+
+#: personal/scalix/class_scalixAccount.inc:264
+#: personal/scalix/class_scalixAccount.inc:495
+#, fuzzy, php-format
+msgid "Cannot add mail address: it is already used by user '%s'."
+msgstr "Добавляемый вами адрес уже используется пользователем"
+
+#: personal/scalix/class_scalixAccount.inc:352
+msgid "Mailnode"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:355
+#, fuzzy
+msgid "Scalix object"
+msgstr "Моя учетная запись"
+
+#: personal/scalix/class_scalixAccount.inc:364
+#, fuzzy
+msgid "Email address"
+msgstr "Основной адрес"
+
+#: personal/scalix/class_scalixAccount.inc:371
+#, fuzzy
+msgid "Limit Mailbox"
+msgstr "Размер квоты"
+
+#: personal/scalix/class_scalixAccount.inc:446
+#, fuzzy
+msgid "Scalix account"
+msgstr "Моя учетная запись"
+
+#: personal/scalix/class_scalixAccount.inc:450
+msgid "My account"
+msgstr "Моя учетная запись"
+
+#: personal/scalix/class_scalixAccount.inc:456
+msgid "Scalix Mail node"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:457
+#, fuzzy
+msgid "Mailbox class"
+msgstr "MAC-адрес"
+
+#: personal/scalix/class_scalixAccount.inc:458
+#, fuzzy
+msgid "Server language"
+msgstr "Имя сервера"
+
+#: personal/scalix/class_scalixAccount.inc:459
+#, fuzzy
+msgid "Administrator"
+msgstr "Администрирование"
+
+#: personal/scalix/class_scalixAccount.inc:460
+#, fuzzy
+msgid "Mailbox administrator"
+msgstr "Администраторы папки"
+
+#: personal/scalix/class_scalixAccount.inc:461
+msgid "Hide user entry in Scalix"
+msgstr ""
+
+#: personal/scalix/class_scalixAccount.inc:462
+#, fuzzy
+msgid "Mailbox size limitations"
+msgstr "Почтовые настройки пользователя"
+
+#: personal/scalix/class_scalixAccount.inc:463
+#, fuzzy
+msgid "Limit outbound"
+msgstr "Путь к профилю"
+
+#: personal/scalix/class_scalixAccount.inc:464
+msgid "Limit inbound"
+msgstr ""
+
 #: personal/scalix/class_scalixAccount.inc:465
+#, fuzzy
+msgid "Notify user"
+msgstr "Страна"
+
+#: personal/scalix/class_scalixAccount.inc:466 personal/scalix/generic.tpl:98
+#: personal/scalix/paste_generic.tpl:4
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Основной адрес"
 
-#: personal/scalix/paste_generic.tpl:6 personal/scalix/generic.tpl:101
+#: personal/scalix/main.inc:112
+msgid "Click the 'Edit' button below to change informations in this dialog"
+msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
+
+#: personal/scalix/main.inc:125
 #, fuzzy
-msgid "List of scalix email addresses"
-msgstr "Список альтернативных адресов эл. почты"
+msgid "Scalix settings"
+msgstr "Почтовые настройки пользователя"
 
 #: personal/scalix/generic.tpl:4
 msgid "Generic"
@@ -114,163 +268,10 @@ msgstr ""
 msgid "Notify User"
 msgstr ""
 
-#: personal/scalix/class_scalixAccount.inc:16
+#: personal/scalix/generic.tpl:101 personal/scalix/paste_generic.tpl:6
 #, fuzzy
-msgid "Scalix"
-msgstr "терминалы"
-
-#: personal/scalix/class_scalixAccount.inc:17
-msgid "This does something"
-msgstr "Что-то будет"
-
-#: personal/scalix/class_scalixAccount.inc:120
-#, fuzzy
-msgid "This account has no scalix extensions."
-msgstr "Для этой учетной записи нет расширений факса."
-
-#: personal/scalix/class_scalixAccount.inc:129
-#, fuzzy
-msgid "Remove scalix account"
-msgstr "Удалить учетную запись POSIX"
-
-#: personal/scalix/class_scalixAccount.inc:130
-#, fuzzy
-msgid ""
-"This account has scalix synchronization enabled. You can disable it by "
-"clicking below."
-msgstr ""
-"В этой учетной записи используются атрибуты POSIX. Вы можете отключить их "
-"использование, щелкнув ниже."
-
-#: personal/scalix/class_scalixAccount.inc:132
-#, fuzzy
-msgid "Create scalix account"
-msgstr "Создать учетную запись POSIX"
-
-#: personal/scalix/class_scalixAccount.inc:132
-#, fuzzy
-msgid ""
-"This account has scalix synchronization disabled. You can enable it by "
-"clicking below."
-msgstr ""
-"В этой учетной записи не используются атрибуты POSIX. Вы можете использовать "
-"их, щелкнув ниже."
-
-#: personal/scalix/class_scalixAccount.inc:226
-#: personal/scalix/class_scalixAccount.inc:329
-msgid "LDAP error"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:249
-#: personal/scalix/class_scalixAccount.inc:256
-#: personal/scalix/class_scalixAccount.inc:263
-#: personal/scalix/class_scalixAccount.inc:273
-#: personal/scalix/class_scalixAccount.inc:485
-#: personal/scalix/class_scalixAccount.inc:494
-msgid "Error"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:249
-#: personal/scalix/class_scalixAccount.inc:485
-#, fuzzy
-msgid "Cannot add invalid mail address!"
-msgstr "Вы пытаетесь добавить некорректный адрес электронной почты "
-
-#: personal/scalix/class_scalixAccount.inc:256
-#: personal/scalix/class_scalixAccount.inc:273
-#, fuzzy
-msgid "You have no permission to modify these addresses."
-msgstr "У вас недостаточно прав для удаления этого подразделения."
-
-#: personal/scalix/class_scalixAccount.inc:263
-#: personal/scalix/class_scalixAccount.inc:494
-#, fuzzy, php-format
-msgid "Cannot add mail address: it is already used by user '%s'."
-msgstr "Добавляемый вами адрес уже используется пользователем"
-
-#: personal/scalix/class_scalixAccount.inc:351
-msgid "Mailnode"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:354
-#, fuzzy
-msgid "Scalix object"
-msgstr "Моя учетная запись"
-
-#: personal/scalix/class_scalixAccount.inc:363
-#, fuzzy
-msgid "Email address"
-msgstr "Основной адрес"
-
-#: personal/scalix/class_scalixAccount.inc:370
-#, fuzzy
-msgid "Limit Mailbox"
-msgstr "Размер квоты"
-
-#: personal/scalix/class_scalixAccount.inc:445
-#, fuzzy
-msgid "Scalix account"
-msgstr "Моя учетная запись"
-
-#: personal/scalix/class_scalixAccount.inc:449
-msgid "My account"
-msgstr "Моя учетная запись"
-
-#: personal/scalix/class_scalixAccount.inc:455
-msgid "Scalix Mail node"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:456
-#, fuzzy
-msgid "Mailbox class"
-msgstr "MAC-адрес"
-
-#: personal/scalix/class_scalixAccount.inc:457
-#, fuzzy
-msgid "Server language"
-msgstr "Имя сервера"
-
-#: personal/scalix/class_scalixAccount.inc:458
-#, fuzzy
-msgid "Administrator"
-msgstr "Администрирование"
-
-#: personal/scalix/class_scalixAccount.inc:459
-#, fuzzy
-msgid "Mailbox administrator"
-msgstr "Администраторы папки"
-
-#: personal/scalix/class_scalixAccount.inc:460
-msgid "Hide user entry in Scalix"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:461
-#, fuzzy
-msgid "Mailbox size limitations"
-msgstr "Почтовые настройки пользователя"
-
-#: personal/scalix/class_scalixAccount.inc:462
-#, fuzzy
-msgid "Limit outbound"
-msgstr "Путь к профилю"
-
-#: personal/scalix/class_scalixAccount.inc:463
-msgid "Limit inbound"
-msgstr ""
-
-#: personal/scalix/class_scalixAccount.inc:464
-#, fuzzy
-msgid "Notify user"
-msgstr "Страна"
-
-#: personal/scalix/main.inc:112
-msgid "Click the 'Edit' button below to change informations in this dialog"
-msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
-
-#: personal/scalix/main.inc:125
-#, fuzzy
-msgid "Scalix settings"
-msgstr "Почтовые настройки пользователя"
+msgid "List of scalix email addresses"
+msgstr "Список альтернативных адресов эл. почты"
 
 #~ msgid "Add"
 #~ msgstr "Добавить"

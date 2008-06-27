@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2008-06-04 09:19+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -23,6 +23,10 @@ msgstr "Connectivité"
 #: personal/connectivity/class_intranetAccount.inc:18
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
+
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Compte Intranet"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:198
@@ -45,8 +49,3 @@ msgstr "Paramètres du compte Intranet"
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Connectivity addon"
 msgstr "Extension Connectivité"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Compte Intranet"
-

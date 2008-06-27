@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-12 09:08+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr ""
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+#, fuzzy
+msgid "Kerberos Realms"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:16
+#: admin/systems/services/kerberos/class_goKrbServer.inc:393
+msgid "Policies"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:58
+#, fuzzy
+msgid "Kerberos service"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:358
+#: admin/systems/services/kerberos/class_goKrbServer.inc:367
+#: admin/systems/services/kerberos/class_goKrbServer.inc:371
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Искать в поддеревьях"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:165
+#, fuzzy
+msgid "Kerberos service (kadmin access informations)"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:178
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+#, fuzzy
+msgid "Realm"
+msgstr "Имя сервера"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:181
+msgid ""
+"In order to save policy changes, the server requires a valid mac address."
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Remove"
+msgstr "Удалить"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:265
+msgid "Policy"
+msgstr ""
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:384
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+#, fuzzy
+msgid "Kerberos access information"
+msgstr "Личная информация"
+
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Services"
+msgstr "Сервисы"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:104
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:127
@@ -58,20 +122,6 @@ msgstr ""
 #, fuzzy
 msgid "Valid password"
 msgstr "Пароль"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr ""
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
-msgid "Kerberos Realms"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:16
-#: admin/systems/services/kerberos/class_goKrbServer.inc:393
-msgid "Policies"
-msgstr ""
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:5
 #, fuzzy
@@ -139,56 +189,6 @@ msgstr "Сохранить"
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:200
 msgid "Cancel"
 msgstr "Отмена"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:58
-#, fuzzy
-msgid "Kerberos service"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:358
-#: admin/systems/services/kerberos/class_goKrbServer.inc:367
-#: admin/systems/services/kerberos/class_goKrbServer.inc:371
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "Искать в поддеревьях"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:165
-#, fuzzy
-msgid "Kerberos service (kadmin access informations)"
-msgstr "Личная информация"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:178
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-#, fuzzy
-msgid "Realm"
-msgstr "Имя сервера"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Remove"
-msgstr "Удалить"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:265
-msgid "Policy"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:384
-msgid "Kerberos"
-msgstr "Kerberos"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#, fuzzy
-msgid "Kerberos access information"
-msgstr "Личная информация"
-
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-msgid "Services"
-msgstr "Сервисы"
 
 #, fuzzy
 #~ msgid "Admin user"

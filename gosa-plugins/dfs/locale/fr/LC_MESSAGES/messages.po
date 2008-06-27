@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:50+0200\n"
 "PO-Revision-Date: 2008-06-04 09:22+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,6 +14,73 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr "Administration du systèmes de fichiers distribués DFS"
+
+#: addons/godfs/contents.tpl:8
+msgid "DFS Shares"
+msgstr "Partages DFS"
+
+#: addons/godfs/contents.tpl:22
+msgid "Information"
+msgstr "Information"
+
+#: addons/godfs/contents.tpl:26
+msgid ""
+"This menu allows you to create, delete and edit selected dfs shares. Having "
+"a large numbers of dfs shares, you might prefer the range selectors on top "
+"of the dfs share list."
+msgstr ""
+"Ce menu vous permet de d'ajouter, supprimer et éditer des partages DFS. Si "
+"vous avez un grand nombre de départements il est conseillé d'utiliser les "
+"filtres."
+
+#: addons/godfs/contents.tpl:31
+msgid "Filters"
+msgstr "Filtres"
+
+#: addons/godfs/contents.tpl:40
+msgid "Display dfs shares matching"
+msgstr "Afficher les partages dfs correspondants"
+
+#: addons/godfs/contents.tpl:44
+msgid "Regular expression for matching dfs share names"
+msgstr "Expression régulière pour sélectionner les partages dfs"
+
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#: addons/godfs/class_dfsManagment.inc:148
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr "Propriétés DFS"
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr "Nom du partage DFS"
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr "Description"
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr "Serveur de fichier"
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr "Partage sur le serveur de fichier"
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr "Location DFS"
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr "Lieu"
+
 #: addons/godfs/class_dfsManagment.inc:8
 msgid "DFS Management"
 msgstr "Gestion DFS"
@@ -21,11 +88,6 @@ msgstr "Gestion DFS"
 #: addons/godfs/class_dfsManagment.inc:9
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
-
-#: addons/godfs/class_dfsManagment.inc:148
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-msgid "LDAP error"
-msgstr "Erreur LDAP"
 
 #: addons/godfs/class_dfsManagment.inc:168
 msgid "No DFS entries found"
@@ -66,66 +128,3 @@ msgstr "Soumettre"
 #: addons/godfs/class_dfsManagment.inc:245
 msgid "Finish"
 msgstr "Terminé"
-
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr "Propriétés DFS"
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr "Nom du partage DFS"
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr "Description"
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr "Serveur de fichier"
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr "Partage sur le serveur de fichier"
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr "Location DFS"
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr "Lieu"
-
-#: addons/godfs/contents.tpl:8
-msgid "DFS Shares"
-msgstr "Partages DFS"
-
-#: addons/godfs/contents.tpl:22
-msgid "Information"
-msgstr "Information"
-
-#: addons/godfs/contents.tpl:26
-msgid ""
-"This menu allows you to create, delete and edit selected dfs shares. Having "
-"a large numbers of dfs shares, you might prefer the range selectors on top "
-"of the dfs share list."
-msgstr ""
-"Ce menu vous permet de d'ajouter, supprimer et éditer des partages DFS. Si "
-"vous avez un grand nombre de départements il est conseillé d'utiliser les "
-"filtres."
-
-#: addons/godfs/contents.tpl:31
-msgid "Filters"
-msgstr "Filtres"
-
-#: addons/godfs/contents.tpl:40
-msgid "Display dfs shares matching"
-msgstr "Afficher les partages dfs correspondants"
-
-#: addons/godfs/contents.tpl:44
-msgid "Regular expression for matching dfs share names"
-msgstr "Expression régulière pour sélectionner les partages dfs"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
-msgid "Distributed File System Administration"
-msgstr "Administration du systèmes de fichiers distribués DFS"
-

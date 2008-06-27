@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 09:23+0200\n"
+"POT-Creation-Date: 2008-06-27 12:51+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -31,8 +31,9 @@ msgstr ""
 
 #: personal/nagios/class_nagiosAccount.inc:173
 #: personal/nagios/class_nagiosAccount.inc:258
+#, fuzzy
 msgid "LDAP error"
-msgstr ""
+msgstr "Servicio LDAP"
 
 #: personal/nagios/class_nagiosAccount.inc:194
 #: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
@@ -43,7 +44,7 @@ msgstr "Alias"
 #: personal/nagios/class_nagiosAccount.inc:201
 #: personal/nagios/class_nagiosAccount.inc:205
 msgid "Mail"
-msgstr ""
+msgstr "Correo Electrónico"
 
 #: personal/nagios/class_nagiosAccount.inc:274
 msgid "Nagios account settings"
@@ -113,6 +114,10 @@ msgstr "Ver la información de configuración"
 msgid "View system informations"
 msgstr "Ver la información de sistemas"
 
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Parámetros de Nagios"
+
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
 msgstr ""
@@ -152,10 +157,6 @@ msgstr ""
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr ""
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Parámetros de Nagios"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "Esta cuenta no tiene extensión nagios."
