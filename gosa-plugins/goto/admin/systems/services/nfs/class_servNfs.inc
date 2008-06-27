@@ -179,7 +179,7 @@ class servnfs extends plugin
     }
 
     if(!tests::is_path($this->path)){
-      $message[]= msgPool::invalid(_("Path"));
+      $message[]= _("'Path / Volume' must contain at least one '/'!");
     }
 
     // only 0-9a-z
