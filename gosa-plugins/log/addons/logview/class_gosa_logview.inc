@@ -143,6 +143,7 @@ class gosa_logview extends plugin
      * Connect to currently selected server 
      ****/
     $cfg = $list_of_servers[$this->server];
+  
     $link = @mysql_pconnect($this->server, $cfg['USER'], $cfg['PWD']);
     if ($link === FALSE){
       msg_dialog::display(_("Error"), msgPool::dbconnect($this->server,@mysql_error(),"GOsa LOG"), ERROR_DIALOG);
@@ -280,6 +281,7 @@ class gosa_logview extends plugin
       $query= "SELECT * ".$query_base." ORDER BY ".$this->fields[$this->sort]." ".$desc." LIMIT  ".$this->start.",".$this->range.";";
       @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
       $result = @mysql_query($query);
+
       if(!$result){
         msg_dialog::display(_("Error"), msgPool::dbquery("gosa_log",@mysql_error(), "GOsa LOG"), ERROR_DIALOG);
         new log("debug","gosa_logging","querydb",array(),@mysql_error());
@@ -314,7 +316,7 @@ class gosa_logview extends plugin
         $res.="   <td>".date("H:i:s d.m.Y",($line['timestamp'] + $this->timezone_offset))."</td>";
         $res.="   <td title='".$line['user']."'>".preg_replace("/,/",", ",$user)."</td>"; 
         $res.="   <td title='".$line['objecttype']."'>".$line['objecttype']."</td>"; 
-        $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$object)."</td>"; 
+        $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",LDAP::fix($object))."</td>"; 
         $res.="   <td>".$line['result']."</td>";
         $res.=" </tr>\n";
       }
@@ -350,7 +352,10 @@ class gosa_logview extends plugin
       $logfilter_changed = FALSE;
       foreach( array("server", "action","time","regex") as $type){
         if(isset($_POST[$type])){
-          $this->$type = $_POST[$type];   
+          if($type == "server" && $this->server != $_POST['server']){
+            $this->location_id = -1;
+          }
+          $this->$type = $_POST[$type];  
         }
       }
 
@@ -390,6 +395,7 @@ class gosa_logview extends plugin
       /* Save attributes in Sessiob, so we are able to recontruct filter on plugin reload */
       $logview = session::get('logview');
       $logview['gosa_log'] = array();
+
       foreach(array("action","server","time","regex") as $attr){
         $logview['gosa_log'][$attr] = $this->$attr;
       }
