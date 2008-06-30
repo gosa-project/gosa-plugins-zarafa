@@ -130,7 +130,7 @@ class printgeneric extends plugin
         
           $mem = $this->attrs[$attr][$i];
           if(preg_match("/Group/",$type)){
-            $ldap->search("(&(objectClass=posixGroup)(cn=".$mem."))",array("cn","description"));
+            $ldap->search("(&(|(objectClass=posixGroup)(objectClass=gosaGroupOfNames))(cn=".$mem."))",array("cn","description"));
             if($ldap->count()){
               $entry = $ldap->fetch();
               $this->member[$type][$entry['cn'][0]]=$entry;
