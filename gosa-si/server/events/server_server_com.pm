@@ -14,6 +14,7 @@ use warnings;
 use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw( usleep);
+use Socket;
 
 
 BEGIN {}

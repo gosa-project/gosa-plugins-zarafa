@@ -658,7 +658,7 @@ sub trigger_action_wake {
 
     # build out message
     my $out_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
-    &add_content2xml_hash($out_hash, 'macAddress', $msg_hash->{macaddress}); 
+    &add_content2xml_hash($out_hash, 'macAddress', @{$msg_hash->{macaddress}}[0]); 
     my $out_msg = &create_xml_string($out_hash);
     
     # invoke trigger wake for this gosa-si-server
