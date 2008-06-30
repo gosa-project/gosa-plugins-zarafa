@@ -801,6 +801,7 @@ sub new_ldap_config {
 			return;
 		} elsif ($mesg->count >= 2) {
             &main::daemon_log("$session_id ERROR: multiple LDAP informations found for client  with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'", 1);
+            return;
         }
 
 		$entry= $mesg->entry(0);
