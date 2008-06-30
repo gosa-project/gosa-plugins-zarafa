@@ -221,7 +221,7 @@ class servnfs extends plugin
         foreach($test['goExportEntry'] as $entry){
           $tmp = split("\|",$entry);
           if($tmp[0] == $this->name){
-            $message[]="Name already in use";
+            $message[]= msgPool::duplicated(_("Name"));
           }
         }
       }
