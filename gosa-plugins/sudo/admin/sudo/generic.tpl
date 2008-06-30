@@ -4,7 +4,7 @@
 <table style="width:100%;">
  <tr>
   <td>
-   {t}Name{/t}
+   {t}Name{/t}{$must}
   </td>
   <td>
    <input type="text" name="dummy" value="{$cn}" disabled>
