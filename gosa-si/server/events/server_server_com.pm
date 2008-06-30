@@ -5,6 +5,7 @@ my @events = (
     'new_server',
     'confirm_new_server',
     'new_foreign_client',
+    'trigger_wake',
     );
 @EXPORT = @events;
 
@@ -205,6 +206,49 @@ sub new_foreign_client {
         &main::daemon_log("$session_id ERROR: server_server_com.pm: cannot add server to foreign_clients_db: $res", 1);
     } else {
         &main::daemon_log("$session_id INFO: server_server_com.pm: client '$hostname' successfully added to foreign_clients_db", 5);
+    }
+
+    return;
+}
+
+
+sub trigger_wake {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+
+    foreach (@{$msg_hash->{macAddress}}){
+        &main::daemon_log("$session_id INFO: trigger wake for $_", 5);
+        my $host    = $_;
+        my $ipaddr  = '255.255.255.255';
+        my $port    = getservbyname('discard', 'udp');
+
+        my ($raddr, $them, $proto);
+        my ($hwaddr, $hwaddr_re, $pkt);
+
+        # get the hardware address (ethernet address)
+        $hwaddr_re = join(':', ('[0-9A-Fa-f]{1,2}') x 6);
+        if ($host =~ m/^$hwaddr_re$/) {
+          $hwaddr = $host;
+        } else {
+          &main::daemon_log("$session_id ERROR: trigger_wake called with non mac address", 1);
+        }
+
+        # Generate magic sequence
+        foreach (split /:/, $hwaddr) {
+                $pkt .= chr(hex($_));
+        }
+        $pkt = chr(0xFF) x 6 . $pkt x 16;
+
+        # Allocate socket and send packet
+
+        $raddr = gethostbyname($ipaddr);
+        $them = pack_sockaddr_in($port, $raddr);
+        $proto = getprotobyname('udp');
+
+        socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
+        setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
+
+        send(S, $pkt, 0, $them) or die "send : $!";
+        close S;
     }
 
     return;

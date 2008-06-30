@@ -27,10 +27,10 @@ my %copies = (
         "modules/SIPackages.pm" => "/usr/lib/gosa-si/modules/SIPackages.pm",
         "modules/DBsqlite.pm" => "/usr/share/perl5/GOSA/DBsqlite.pm",
         "modules/GosaSupportDaemon.pm" => "/usr/share/perl5/GOSA/GosaSupportDaemon.pm",
-        "sever/events/clMessages.pm" => "/usr/lib/gosa-si/server/events/clMessages.pm",
-        "sever/events/databases.pm" => "/usr/lib/gosa-si/server/events/databases.pm",
-        "sever/events/gosaTriggered.pm" => "/usr/lib/gosa-si/server/events/gosaTriggered.pm",
-        "sever/events/siTriggered.pm" => "/usr/lib/gosa-si/server/events/siTriggered.pm",
+        "server/events/clMessages.pm" => "/usr/lib/gosa-si/server/events/clMessages.pm",
+        "server/events/databases.pm" => "/usr/lib/gosa-si/server/events/databases.pm",
+        "server/events/gosaTriggered.pm" => "/usr/lib/gosa-si/server/events/gosaTriggered.pm",
+        "server/events/siTriggered.pm" => "/usr/lib/gosa-si/server/events/siTriggered.pm",
 );
 
 while( my($file_name, $new_file) = each %copies ) {
