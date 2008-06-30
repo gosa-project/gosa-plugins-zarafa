@@ -22,10 +22,6 @@ class goKioskService extends goService{
   {
     goService::goService($config,$dn);
 
-    $this->DisplayName = _("Kiosk profile service");
-    $this->baseDir = $this->config->search('environment', 'kioskpath',array('menu','tabs'));
-    $this->server_path = preg_replace("/%cn/", $this->cn, $this->server_path);
-
     /* Get the current object name. 
      */
     if(isset($parent->parent->cn)){
@@ -34,6 +30,10 @@ class goKioskService extends goService{
       $this->cn = $this->attrs['cn'][0];
     }
     $this->orig_cn = $this->cn;
+
+    $this->DisplayName = _("Kiosk profile service");
+    $this->baseDir = $this->config->search('environment', 'kioskpath',array('menu','tabs'));
+    $this->server_path = preg_replace("/%cn/", $this->cn, $this->server_path);
 
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
