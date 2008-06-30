@@ -792,13 +792,13 @@ sub new_ldap_config {
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
 		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
-			&main::daemon_log("$session_id ".$mesg->error, 1);
+			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$dn))': ".$mesg->error, 1);
 			return;
 		}
 
 		# Sanity check
 		if ($mesg->count != 1) {
-			&main::daemon_log("$session_id WARNING: no LDAP information found for client mac $macaddress", 1);
+			&main::daemon_log("$session_id WARNING: no or more via an object class inherited LDAP information found for client mac $macaddress", 1);
 			return;
 		}
 
@@ -815,6 +815,11 @@ sub new_ldap_config {
 	}
 
 	@servers= sort (@servers);
+
+    # complain if no ldap information found
+    if (@servers == 0) {
+        &main::daemon_log("$session_id ERROR: no gotoLdapServer information for LDAP entry with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'");
+    }
 
 	foreach $server (@servers){
                 # Conversation for backward compatibility
