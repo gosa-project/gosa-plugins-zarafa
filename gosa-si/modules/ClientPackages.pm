@@ -790,17 +790,18 @@ sub new_ldap_config {
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
 			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
-		#$mesg->code && die $mesg->error;
 		if($mesg->code) {
 			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$dn))': ".$mesg->error, 1);
 			return;
 		}
 
 		# Sanity check
-		if ($mesg->count != 1) {
-			&main::daemon_log("$session_id WARNING: no or more via an object class inherited LDAP information found for client mac $macaddress", 1);
+		if ($mesg->count == 0) {
+			&main::daemon_log("$session_id WARNING: no LDAP informations found for client  with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'", 3);
 			return;
-		}
+		} elsif ($mesg->count >= 2) {
+            &main::daemon_log("$session_id ERROR: multiple LDAP informations found for client  with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'", 1);
+        }
 
 		$entry= $mesg->entry(0);
 		$dn= $entry->dn;
