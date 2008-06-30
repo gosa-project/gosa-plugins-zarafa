@@ -4,7 +4,7 @@ class goKioskService extends goService{
 	
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goEnvironmentServer");
-  var $attributes       = array("gotoKioskProfile","cn");
+  var $attributes       = array("gotoKioskProfile");
   var $StatusFlag       = "";
  
   /* This class can't be assigned twice so it conflicts with itsself */
@@ -13,12 +13,12 @@ class goKioskService extends goService{
   var $baseDir          = "../kiosk";
   var $filesToAttach    = array();
   var $cn               = "unknown";  
+  var $orig_cn          = "unknown";  
   var $gotoKioskProfiles= array();
   var $gotoKioskProfile = array();
-
   var $server_path      = "http://%cn/kiosk";
  
-  function goKioskService(&$config,$dn)
+  function goKioskService(&$config, $dn, $parent)
   {
     goService::goService($config,$dn);
 
@@ -26,9 +26,19 @@ class goKioskService extends goService{
     $this->baseDir = $this->config->search('environment', 'kioskpath',array('menu','tabs'));
     $this->server_path = preg_replace("/%cn/", $this->cn, $this->server_path);
 
+    /* Get the current object name. 
+     */
+    if(isset($parent->parent->cn)){
+      $this->cn = &$parent->parent->cn;
+    }elseif(isset($this->attrs['cn'][0])){
+      $this->cn = $this->attrs['cn'][0];
+    }
+    $this->orig_cn = $this->cn;
+
     /* Load list of profiles and check if they still exists */
     if ($this->baseDir == ""){
-#      msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")), ERROR_DIALOG);
+#      msg_dialog::display(_("Configuration error"), 
+#      msgPool::cmdnotfound("KIOSKPATH",_("Kiosk profile service")), ERROR_DIALOG);
     }else{
       $this->gotoKioskProfiles = array();
       if(isset($this->attrs['gotoKioskProfile']) && is_array($this->attrs['gotoKioskProfile'])){
@@ -50,7 +60,7 @@ class goKioskService extends goService{
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoEnvironment)(gotoKioskProfile=*/".$this->cn."/*))",array("cn"));
+    $ldap->search("(&(objectClass=gotoEnvironment)(gotoKioskProfile=*/".$this->orig_cn."/*))",array("cn"));
     if ($ldap->count() != 0){
       $obj= array();
       while($attrs = $ldap->fetch()){
