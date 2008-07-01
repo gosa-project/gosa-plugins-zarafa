@@ -263,6 +263,9 @@ class environment extends plugin
 
   function update_kiosk_profiles()
   { 
+    $this->gotoKioskProfile_Server = preg_replace("/^.*:\/\/([^\/]*).*$/","\\1",$this->gotoKioskProfile);
+    $this->gotoKioskProfile_Profile= preg_replace("/^.*\//","",$this->gotoKioskProfile);
+
     $tmp1  = array("none" => array(_("disabled")));
     $tmp2  = array("none" => _("disabled"));
     $tmp3  = array();
@@ -270,15 +273,18 @@ class environment extends plugin
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=goEnvironmentServer)(gotoKioskProfile=*)(cn=*))",array("cn","gotoKioskProfile"));
     $cnt = 0;
+    $ui = get_userinfo();
     while($attrs = $ldap->fetch()){
+      $acl = $ui->get_permissions($attrs['dn'],"server/goShareServer","");
       for($i = 0 ; $i < $attrs['gotoKioskProfile']['count'] ; $i ++){
-        $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
-        $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
-        $tmp1[$attrs['cn'][0]][] = $name;
-        $tmp3[$attrs['cn'][0]][$name] = $attrs['gotoKioskProfile'][$i];
+        if(preg_match("/r/",$acl) || $this->gotoKioskProfile_Server == $attrs['cn'][0]){
+          $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
+          $tmp1[$attrs['cn'][0]][] = $name;
+          $tmp3[$attrs['cn'][0]][$name] = $attrs['gotoKioskProfile'][$i];
+          $tmp2[$attrs['cn'][0]]= $attrs['cn'][0];
+          $cnt ++;
+        }
       }
-      $tmp2[$attrs['cn'][0]]= $attrs['cn'][0];
-      $cnt ++;
     }
 
     if($cnt && $this->config->search("environment","kioskpath",array('menu','tabs'))){
@@ -289,9 +295,6 @@ class environment extends plugin
     $this->gotoKioskProfiles['SERVERS']   = $tmp2;
     $this->gotoKioskProfiles['MAP']       = $tmp3;
   
-    $this->gotoKioskProfile_Server = preg_replace("/^.*:\/\/([^\/]*).*$/","\\1",$this->gotoKioskProfile);
-    $this->gotoKioskProfile_Profile= preg_replace("/^.*\//","",$this->gotoKioskProfile);
-
     $error = false;
     if(!isset($this->gotoKioskProfiles['SERVERS'][$this->gotoKioskProfile_Server])){
       $error = true;
