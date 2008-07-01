@@ -249,10 +249,11 @@ sub ping {
     my $header = @{$msg_hash->{header}}[0];
     my $target = @{$msg_hash->{target}}[0];
     my $source = @{$msg_hash->{source}}[0];
-
-    my ($sql, $res);
-    my $out_msg = $msg;
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+    my $error = 0;
+    my $answer_msg;
+    my ($sql, $res);
+
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
@@ -262,44 +263,53 @@ sub ping {
     # send message
     $sql = "SELECT * FROM $main::known_clients_tn WHERE ((hostname='$target') || (macaddress LIKE '$target'))"; 
     $res = $main::known_clients_db->exec_statement($sql);
-    my $host_name = @{@$res[0]}[0];
-    my $host_key = @{@$res[0]}[2];
 
-    my $client_hash = &create_xml_hash("ping", $main::server_address, $host_name);
-    &add_content2xml_hash($client_hash, 'session_id', $session_id); 
-    my $client_msg = &create_xml_string($client_hash);
-    my $error = &main::send_msg_to_target($client_msg, $host_name, $host_key, $header, $session_id);
-    #if ($error != 0) {}
+    # sanity check of db result
+    my ($host_name, $host_key);
+    if ((defined $res) && (@$res > 0) && @{@$res[0]} > 0) {
+        $host_name = @{@$res[0]}[0];
+        $host_key = @{@$res[0]}[2];
+    } else {
+        &main::daemon_log("$session_id ERROR: cannot determine host_name and host_key from known_clients_db at function ping\n$msg", 1);
+        my %data = ( 'answer_xml'  => 'host not found in known_clients_db' );
+        $answer_msg = &build_msg("got_ping_error", $target, $source, \%data);
+        $error = 1;
+    }
 
-    my $message_id;
-    my $i = 0;
-    while (1) {
-        $i++;
-        $sql = "SELECT * FROM $main::incoming_tn WHERE headertag='answer_$session_id'";
-        $res = $main::incoming_db->exec_statement($sql);
-        if (ref @$res[0] eq "ARRAY") { 
-            $message_id = @{@$res[0]}[0];
-            last;
+    if (not $error) {
+        my $client_hash = &create_xml_hash("ping", $main::server_address, $host_name);
+        &add_content2xml_hash($client_hash, 'session_id', $session_id); 
+        my $client_msg = &create_xml_string($client_hash);
+        &main::send_msg_to_target($client_msg, $host_name, $host_key, $header, $session_id);
+
+        my $message_id;
+        my $i = 0;
+        while (1) {
+            $i++;
+            $sql = "SELECT * FROM $main::incoming_tn WHERE headertag='answer_$session_id'";
+            $res = $main::incoming_db->exec_statement($sql);
+            if (ref @$res[0] eq "ARRAY") { 
+                $message_id = @{@$res[0]}[0];
+                last;
+            }
+
+            # do not run into a endless loop
+            if ($i > 100) { last; }
+            usleep(100000);
         }
 
-        # do not run into a endless loop
-        if ($i > 100) { last; }
-        usleep(100000);
+        my $answer_xml = @{@$res[0]}[3];
+        my %data = ( 'answer_xml'  => 'bin noch da' );
+        $answer_msg = &build_msg("got_ping", $target, $source, \%data);
+        my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+        if (defined $forward_to_gosa){
+            $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+        }
+        $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
+        $res = $main::incoming_db->exec_statement($sql);
     }
 
-    my $answer_xml = @{@$res[0]}[3];
-    my %data = ( 'answer_xml'  => 'bin noch da' );
-    my $answer_msg = &build_msg("got_ping", $target, $source, \%data);
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    if (defined $forward_to_gosa) {
-        $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
-    }
-
-    $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
-    $res = $main::incoming_db->exec_statement($sql);
-
-    my @answer_msg_l = ( $answer_msg );
-    return @answer_msg_l;
+    return ( $answer_msg );
 }
 
 
