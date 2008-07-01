@@ -254,10 +254,10 @@ class logview extends plugin
         /* Order setting */
         if ($this->sort_direction == "down"){
           $desc= "DESC";
-          $sort_sign = "\\/";
+          $sort_sign = "<img src='images/lists/sort-down.png' class='center' alt='\\/' border='0'>";
         } else {
           $desc= "";
-          $sort_sign="/\\";
+          $sort_sign = "<img src='images/lists/sort-up.png' class='center' alt='/\\' border='0'>";
         }
         $end= date ("YmdHis");
         $query_base= "  FROM 
