@@ -577,8 +577,8 @@ class faiManagement extends plugin
       $base= $this->fai_base;
 
       /* Check used characters */
-      if(!preg_match("/^[0-9a-z \ö\ä\ü\.\-_:,]*$/i",$name)){
-        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z \ö\ä\ü\.\-_:,]/i"), ERROR_DIALOG);
+      if(!preg_match("/^[0-9a-z\.]*$/",$name)){
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),$name,"/[0-9a-z\.]/"), ERROR_DIALOG);
         $is_ok = false;
       }
 
