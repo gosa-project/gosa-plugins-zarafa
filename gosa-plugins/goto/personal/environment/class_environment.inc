@@ -236,7 +236,27 @@ class environment extends plugin
     $this->gotoProfileServers= $config->getShareServerList() ;
     $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);  
+  
+    /* Ensure that a currently selected server will stay selected, even if the list of profile servers
+        is empty due to insufficient permissions.
+     */
+    if(count($this->gotoProfileServers) && !empty($this->gotoProfileServer)){
 
+      /* The currently selected profile server is outdated/no longer available */
+      if(!isset($this->gotoProfileServers[$this->gotoProfileServer])){
+
+      }else{
+        $c = $this->gotoProfileServers[$this->gotoProfileServer];
+        if(!preg_match("/r/",$c['ACL'])){
+
+          /* We are not allowed to read to currently selected server.
+             But to ensure that the selection will be kept after saving the account, we 
+              override the current ACL tag.
+           */          
+          $this->gotoProfileServers[$this->gotoProfileServer]['ACL'] .= "r";
+        }
+      }
+    }
     $this->update_kiosk_profiles();
   }
 
@@ -322,7 +342,10 @@ class environment extends plugin
 
     /* Check profile server */
     if($this->acl_is_writeable("gotoProfileServer",$WriteOnly)){
+
       if(!empty($this->gotoProfileServer) && !isset($this->gotoProfileServers[$this->gotoProfileServer])){
+
+
         if(count($this->gotoProfileServers)){
 
           /* Get First Profile */
@@ -535,7 +558,6 @@ class environment extends plugin
     if(!is_array($this->gotoProfileServers)){
       $this->gotoProfileServers =array();
     }
-    $smarty->assign("gotoProfileServerKeys",array_flip($this->gotoProfileServers));
 
     /* Handle kiosk profiles*/
     $smarty->assign("kiosk_servers" , $this->gotoKioskProfiles['SERVERS']);

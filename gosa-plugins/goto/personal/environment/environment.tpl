@@ -24,9 +24,12 @@
 	<br>
 	{render acl=$gotoProfileServerACL checkbox=$multiple_support checked=$use_gotoProfileServer}
 		{t}Profil path{/t}
-		<select id="gotoProfileServer" name="gotoProfileServer">
-			{html_options values=$gotoProfileServerKeys output=$gotoProfileServers selected=$gotoProfileServer}
-		</select>
+         <select id="gotoProfileServer" name="gotoProfileServer">
+			{foreach from=$gotoProfileServers key=key item=item}
+				<option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
+			{/foreach}
+          <option disabled>&nbsp;</option>
+         </select>
 	{/render}
 	<br>
 	{render acl=$gotoProfileQuotaACL checkbox=$multiple_support checked=$use_gotoProfileQuota}
@@ -66,13 +69,14 @@
 
 {if $gotoProfileServerWriteable}
          <select id="gotoProfileServer" name="gotoProfileServer">
-          {html_options values=$gotoProfileServerKeys output=$gotoProfileServers selected=$gotoProfileServer}
+			{foreach from=$gotoProfileServers key=key item=item}
+				<option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
+			{/foreach}
           <option disabled>&nbsp;</option>
          </select>
 {else}
-         <select id="gotoProfileServer" name="gotoProfileServer">
-          {html_options values=$gotoProfileServer output=$gotoProfileServer selected=$gotoProfileServer}
-          <option disabled>&nbsp;</option>
+         <select id="dummy_pS" name="dummy_pS" disabled >
+          <option >{$gotoProfileServer}</option> 
          </select>
 {/if}
 {/render}
