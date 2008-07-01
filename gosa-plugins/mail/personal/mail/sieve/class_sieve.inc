@@ -490,7 +490,6 @@ class sieve
 		/* Check if PHP supports TLS encryption for sockets 
          */
 		if(function_exists("stream_socket_enable_crypto")){
-			
 			if (@ fputs ($this->fp, "STARTTLS\r\n") === false) {
 				$this->error_raw = "fputs() returned 'false'"; return (false);
 			} @ $linha = fgets ($this->fp, 1024); if ($linha === false) {
@@ -499,8 +498,6 @@ class sieve
 				$this->error_raw = "expected an 'OK', but server replied: '" . trim ($linha) . "'"; return (false);
 			} if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
 				$this->error_raw = "stream_socket_enable_crypto() returned 'false'"; return (false);
-			}else{
-#				echo "Done";
 			}
 		}
 	}
