@@ -70,7 +70,9 @@
 {if $gotoProfileServerWriteable}
          <select id="gotoProfileServer" name="gotoProfileServer">
 			{foreach from=$gotoProfileServers key=key item=item}
+				{if $item.ACL != ""}
 				<option {if $gotoProfileServer == $key} selected {/if}value='{$key}'>{$item.DISPLAY}</option>
+				{/if}
 			{/foreach}
           <option disabled>&nbsp;</option>
          </select>
