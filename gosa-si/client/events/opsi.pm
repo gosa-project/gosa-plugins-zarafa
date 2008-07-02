@@ -91,6 +91,12 @@ sub opsi_get_netboot_products {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId;
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+	$hostId = @{$msg_hash->{'hostId'}}[0];
+    }
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -103,11 +109,20 @@ sub opsi_get_netboot_products {
     my $xml_msg= &create_xml_string($out_hash);
 
     # Authenticate
-    my $callobj = {
-      method  => 'getNetBootProductIds_list',
-      params  => [ ],
-      id  => 1,
-    };
+    my $callobj;
+    if (defined $hostId){
+	    $callobj = {
+	      method  => 'getNetBootProductIds_list',
+	      params  => [ $hostId ],
+	      id  => 1,
+	    };
+    } else {
+	    $callobj = {
+	      method  => 'getNetBootProductIds_list',
+	      params  => [ ],
+	      id  => 1,
+	    };
+    }
 
     my $res = $client->call($opsi_url, $callobj);
     if (check_res($res)){
@@ -146,6 +161,12 @@ sub opsi_get_product_properties {
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $productId = @{$msg_hash->{'ProductId'}}[0];
+    my $hostId;
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+	$hostId = @{$msg_hash->{'hostId'}}[0];
+    }
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -157,6 +178,9 @@ sub opsi_get_product_properties {
     &add_content2xml_hash($out_hash, "ProducId", "$productId");
     &add_content2xml_hash($out_hash, "xxx", "");
     my $xml_msg= &create_xml_string($out_hash);
+
+
+# Move to getProductProperties_hash  prod + objectid
 
     # JSON Query
     my $callobj = {
@@ -198,6 +222,12 @@ sub opsi_set_product_properties {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId;
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+	$hostId = @{$msg_hash->{'hostId'}}[0];
+    }
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -206,6 +236,8 @@ sub opsi_set_product_properties {
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
+
+# Params += objectId ='hostId'
 
 # Produkt
 # Property
@@ -320,6 +352,12 @@ sub opsi_get_local_products {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId;
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+	$hostId = @{$msg_hash->{'hostId'}}[0];
+    }
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
@@ -331,11 +369,21 @@ sub opsi_get_local_products {
     &add_content2xml_hash($out_hash, "xxx", "");
     my $xml_msg= &create_xml_string($out_hash);
 
-    my $callobj = {
-      method  => 'getLocalBootProductIds_list',
-      params  => [ ],
-      id  => 1,
-    };
+    # Append hostId
+    my $callobj;
+    if (defined $hostId){
+	    $callobj = {
+	      method  => 'getLocalBootProductIds_list',
+	      params  => [ $hostId ],
+	      id  => 1,
+	    };
+    } else {
+	    $callobj = {
+	      method  => 'getLocalBootProductIds_list',
+	      params  => [ ],
+	      id  => 1,
+	    };
+    }
 
     my $res = $client->call($opsi_url, $callobj);
     if (check_res($res)){
