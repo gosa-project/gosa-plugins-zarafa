@@ -237,7 +237,7 @@ sub trigger_wake {
         foreach (split /:/, $hwaddr) {
                 $pkt .= chr(hex($_));
         }
-        $pkt = chr(0xFF) x 6 . $pkt x 16;
+        $pkt = chr(0xFF) x 6 . $pkt x 16 . $main::wake_on_lan_passwd;
 
         # Allocate socket and send packet
 
