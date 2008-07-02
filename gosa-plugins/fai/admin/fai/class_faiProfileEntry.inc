@@ -88,14 +88,19 @@ class faiProfileEntry extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
     $display = "";
 
     $SUBfaifilter  = session::get('SUBfaifilter');
+
+    /* Get alphabet selection */
+    if(isset($_GET['search'])){
+      $SUBfaifilter['Sregex'] = strtolower($_GET['search'])."*";
+    }
 
     /* If someone used the apply button, update searchfilter */
     if(isset($_POST['Sregex'])){
@@ -184,7 +189,7 @@ class faiProfileEntry extends plugin
       $fi = str_replace("*",".*",$SUBfaifilter['Sregex']);  
  
       $abort = true;
-      if(!preg_match("/".$fi."/",$usedClass)){
+      if(!preg_match("/^".$fi."/i",$usedClass)){
         $abort = false;
         continue;
       }
