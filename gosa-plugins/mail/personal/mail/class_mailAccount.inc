@@ -241,8 +241,12 @@ class mailAccount extends plugin
 
     /* Get available mailserver */
     $mailserver= array();
+    $ui = get_userinfo();
     foreach ($this->config->data['SERVERS']['IMAP'] as $key => $val){
-      $mailserver[]= $key;
+      if( $this->gosaMailServer == $key || 
+          preg_match("/r/",$ui->get_permissions($val['server_dn'],"server/goImapServer",""))){
+        $mailserver[]= $key;
+      }
     }
 
     /* 
