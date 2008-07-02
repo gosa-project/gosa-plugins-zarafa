@@ -34,7 +34,6 @@ use GOSA::GosaSupportDaemon;
 use Digest::MD5  qw(md5_hex md5 md5_base64);
 use MIME::Base64;
 use XML::Simple;
-#use Net::DNS;    # no longer used because function moved to GosaSupportDaemon.pm : rettenbe : 16.05.2008
 use File::Basename;
 use File::Spec;
 
