@@ -616,6 +616,11 @@ class faiManagement extends plugin
         msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
       }else{
 
+        /* In order to see error messages we have to reset the error handler.
+            Due to the exit(); 
+         */
+        restore_error_handler();
+
         /* Create it know */
         $this->dispNewBranch = false;
         $this->dispNewFreeze = false;
@@ -733,6 +738,25 @@ class faiManagement extends plugin
         $this->lock_name  = $name; 
         $this->lock_dn    = $baseToUse;
         $this->postcreate();
+
+
+        /* Send daemon event to reload the fai release database 
+         */
+        if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+          $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+          if(isset($events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'])){
+            $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'];
+            $tmp = new $evt['CLASS_NAME']($this->config);
+            $tmp->set_type(TRIGGERED_EVENT);
+            $tmp->add_targets(array("GOsa"));
+            $o_queue = new gosaSupportDaemon();
+            if(!$o_queue->append($tmp)){
+              msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+            }
+          }
+        }else{  
+          trigger_error("Unknown class DaemonEvent / gosaSupportDaemon");
+        }
         exit();
       }
     }
