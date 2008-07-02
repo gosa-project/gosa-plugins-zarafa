@@ -658,7 +658,7 @@ sub trigger_action_rescan {
 
 sub trigger_action_wake {
     my ($msg, $msg_hash, $session_id) = @_;
-
+    
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
@@ -668,15 +668,14 @@ sub trigger_action_wake {
 
     # build out message
     my $out_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
-    &add_content2xml_hash($out_hash, 'macAddress', @{$msg_hash->{macaddress}}[0]); 
+    foreach (@{$msg_hash->{target}}) {
+        &add_content2xml_hash($out_hash, 'macAddress', $_);
+    }
     my $out_msg = &create_xml_string($out_hash);
     
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($out_msg, $out_hash, $session_id);
 
-    #my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
-    #my $out_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
-        
     # send trigger wake to all other gosa-si-server
     my @out_msg_l = ($out_msg);  
     return @out_msg_l;
