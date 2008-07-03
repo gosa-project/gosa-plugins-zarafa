@@ -26,7 +26,8 @@ my @functions = (
     "get_ip",
     "get_interface_for_ip",
     "get_interfaces",
-	"run_as",
+    "is_local",
+    "run_as",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -617,6 +618,32 @@ sub get_interfaces {
 	}
 
 	return @result;
+}
+
+
+#===  FUNCTION  ================================================================
+#         NAME:  is_local
+#   PARAMETERS:  Server Address
+#      RETURNS:  true if Server Address is on this host, false otherwise
+#  DESCRIPTION:  Checks all interface addresses, stops on first match
+#===============================================================================
+sub is_local {
+    my $server_address = shift || "";
+    my $result = 0;
+
+    my $server_ip = $1 if $server_address =~ /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):\d{1,6}$/;
+
+    if(defined($server_ip) && length($server_ip) > 0) {
+        foreach my $interface(&get_interfaces()) {
+            my $ip_address= &get_ip($interface);
+            if($ip_address eq $server_ip) {
+                $result = 1;
+                last;
+            }
+        }
+    }
+
+    return $result;
 }
 
 
