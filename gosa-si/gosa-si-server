@@ -539,7 +539,7 @@ sub check_key_and_xml_validity {
 
 
 sub check_outgoing_xml_validity {
-    my ($msg) = @_;
+    my ($msg, $session_id) = @_;
 
     my $msg_hash;
     eval{
@@ -592,8 +592,8 @@ sub check_outgoing_xml_validity {
         }
     };
     if($@) {
-        daemon_log("WARNING: outgoing msg is not gosa-si envelope conform", 5);
-        daemon_log("$@ ".(defined($msg) && length($msg)>0)?$msg:"Empty Message", 8);
+        daemon_log("$session_id WARNING: outgoing msg is not gosa-si envelope conform: ", 5);
+        daemon_log("$@ ".(defined($msg) && length($msg)>0)?$msg:"Empty Message", 5);
         $msg_hash = undef;
     }
 
@@ -1348,7 +1348,7 @@ sub process_task {
 
         foreach my $answer ( @{$answer_l} ) {
             # check outgoing msg to xml validity
-            my $answer_hash = &check_outgoing_xml_validity($answer);
+            my $answer_hash = &check_outgoing_xml_validity($answer, $session_id);
             if( not defined $answer_hash ) { next; }
             
             $answer_header = @{$answer_hash->{'header'}}[0];
