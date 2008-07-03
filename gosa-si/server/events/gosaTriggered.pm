@@ -72,8 +72,8 @@ sub send_user_msg {
     #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $subject = @{$msg_hash->{'subject'}}[0];
     my $from = @{$msg_hash->{'from'}}[0];
-    my @users = @{$msg_hash->{'users'}};
-	my @groups = @{$msg_hash->{'groups'}};
+    my @users = exists $msg_hash->{'users'} ? @{$msg_hash->{'users'}} : () ;
+	my @groups = exists $msg_hash->{'groups'} ? @{$msg_hash->{'groups'}} : ();
     my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
     #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
     my $message = @{$msg_hash->{'message'}}[0];
