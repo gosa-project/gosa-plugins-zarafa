@@ -221,6 +221,10 @@ sub trigger_wake {
         my $host    = $_;
         my $ipaddr  = '255.255.255.255';
         my $port    = getservbyname('discard', 'udp');
+	if (not defined $port) {
+		&main::daemon_log("$session_id ERROR: cannot determine port for wol $_: 'getservbyname('discard', 'udp')' failed!",1);
+		next;
+	}
 
         my ($raddr, $them, $proto);
         my ($hwaddr, $hwaddr_re, $pkt);
@@ -242,12 +246,16 @@ sub trigger_wake {
         # Allocate socket and send packet
 
         $raddr = gethostbyname($ipaddr);
+	if (not defined $raddr) {
+		&main::daemon_log("$session_id ERROR: cannot determine raddr for wol $_: 'gethostbyname($ipaddr)' failed!", 1);
+		next;
+	}
+
         $them = pack_sockaddr_in($port, $raddr);
         $proto = getprotobyname('udp');
 
         socket(S, AF_INET, SOCK_DGRAM, $proto) or die "socket : $!";
         setsockopt(S, SOL_SOCKET, SO_BROADCAST, 1) or die "setsockopt : $!";
-
         send(S, $pkt, 0, $them) or die "send : $!";
         close S;
     }
