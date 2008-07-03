@@ -109,6 +109,12 @@ class krb_host_keys extends plugin
       /* Create password handle, it has already a working principal parsing 
        */
       $this->pwd_handle = new passwordMethodMIT($this->config);
+  
+      /* Check class initialation */
+      if(!($this->pwd_handle instanceOf passwordMethodMIT)){
+        trigger_error("Could not initialize kerberos password method 'passwordMethodMIT'.");
+        return;
+      }
       $this->pwd_handle->clear_cache();
 
       /* Get a list of all kerberos servers, defined in ldap
@@ -143,7 +149,7 @@ class krb_host_keys extends plugin
         }
       }
   
-      if(isset($this->server_list) && count($this->server_list)){
+      if(isset($this->server_list) && count($this->server_list) && $this->o_queue->is_connected()){
         $this->kerberos_support = TRUE;
       }
     }
