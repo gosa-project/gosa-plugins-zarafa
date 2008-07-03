@@ -50,7 +50,7 @@ class workgeneric extends plugin
   var $objectclasses= array("top", "gotoWorkstation", "GOhard");
 
   var $validActions   = array("reboot" => "", "localboot" => "", "halt" => "", "update" => "", "reinstall" => "",
-                            "rescan" => "", "wake" => "", "memcheck" => "", "sysinfo" => "");
+                            "rescan" => "", "wakeup" => "", "memcheck" => "", "sysinfo" => "");
   
   var $fai_activated = FALSE;
 
@@ -303,7 +303,7 @@ class workgeneric extends plugin
                                        "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
     } else {
-      $smarty->assign("actions", array("wake" => _("Wake up"),
+      $smarty->assign("actions", array("wakeup" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
                                        "update" => _("Software update"),
                                        "memcheck" => _("Memory test"),
