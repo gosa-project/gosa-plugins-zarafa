@@ -12,6 +12,8 @@ class termtabs extends tabs
     $baseobject= NULL;
 
     foreach ($data as $tab){
+      if(!class_available($tab['CLASS'])) continue;  
+
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
       if ($baseobject === NULL){
