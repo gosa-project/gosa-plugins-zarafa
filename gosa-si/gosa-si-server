@@ -1175,7 +1175,9 @@ sub msg_to_decrypt {
             $sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
             $res = $foreign_clients_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
-                my $hostname = $res->{1}->{'hostname'};
+		    my $hostname = $res->{1}->{'hostname'};
+		    my ($host_ip, $host_port) = split(/:/, $hostname);
+		    my $local_address =  &get_local_ip_for_remote_ip($host_ip).":$server_port";
                 my $regserver = $res->{1}->{'regserver'};
                 my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$regserver'"; 
                 my $res = $known_server_db->select_dbentry($sql);
