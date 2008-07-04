@@ -650,7 +650,7 @@ sub trigger_action_rescan {
     }
 
 
-    $msg =~ s/<header>gosa_trigger_action_rescan<\/header>/<header>trigger_action_rescan<\/header>/;
+    $msg =~ s/<header>gosa_trigger_action_rescan<\/header>/<header>detect_hardware<header>/;
     my @out_msg_l = ($msg);  
     return @out_msg_l;
 }
