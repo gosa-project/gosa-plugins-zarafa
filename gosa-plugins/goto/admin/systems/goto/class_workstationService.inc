@@ -447,6 +447,12 @@ class workservice extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $this->cleanup();
+
+    /* Send goto reload event to gosaSupportDaemon */
+    if(count($this->attrs)){
+      $this->send_goto_reload(); 
+    }
+
     $ldap->modify ($this->attrs); 
     new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     if (!$ldap->success()){
@@ -506,6 +512,34 @@ class workservice extends plugin
             "goFonHardware"         => _("Telephone hardware")) 
             ));
   }
+
+
+  /*! \brief  Send goto_reload event to support daemon
+   */
+  function send_goto_reload()
+  {
+    $targets = array();
+    if(isset($this->parent) && ($this->parent instanceOf worktabs)){
+      $targets[] = $this->parent->by_object['workgeneric']->netConfigDNS->ipHostNumber;
+    }
+    if(isset($this->parent) && ($this->parent instanceOf ogrouptabs)){
+      $member = $this->parent->by_object['ogroup']->member;
+      $oc = $this->parent->by_object['ogroup']->objcache;
+      foreach($member as $mem){
+        if(isset($oc[$mem]['macAddress'])){
+          $targets[] = $oc[$mem]['macAddress']; 
+        }
+      }
+    }
+    if(count($targets) && class_available("gosaSupportDaemon") && class_available("DaemonEvent_goto_reload")){
+      $o_g = new gosaSupportDaemon();
+      $evt = new DaemonEvent_goto_reload($this->config);
+      $evt -> set_type(TRIGGERED_EVENT);
+      $evt -> add_targets($targets);
+      $o_g->append($evt);
+    } 
+  }
+
 
   function PrepareForCopyPaste($source)
   {
