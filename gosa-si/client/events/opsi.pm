@@ -221,31 +221,51 @@ sub opsi_set_product_properties {
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $productId = @{$msg_hash->{'ProductId'}}[0];
     my $hostId;
-
-    # Get hostID if defined
-    if (defined @{$msg_hash->{'hostId'}}[0]){
-	$hostId = @{$msg_hash->{'hostId'}}[0];
-    }
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
+    &add_content2xml_hash($out_hash, "ProductId", $productId);
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+      $hostId = @{$msg_hash->{'hostId'}}[0];
+      &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
 
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
-# Params += objectId ='hostId'
+    # Find properties
+    foreach my $item (@{$msg_hash->{'item'}}){
+      # JSON Query
+      my $callobj;
 
-# Produkt
-# Property
-# Wert
-#   <ProductId>ntfs-restore-image</ProductId>
-#   <item>
-#    <name>askbeforeinst</name>
-#    <value>false</value>
-#   </item>
+      if (defined $hostId){
+        $callobj = {
+          method  => 'setProductProperty',
+          params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0], $hostId ],
+          id  => 1,
+        };
+      } else {
+        $callobj = {
+          method  => 'setProductProperty',
+          params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0] ],
+          id  => 1,
+        };
+      }
+
+      my $res = $client->call($opsi_url, $callobj);
+
+      if (!check_res($res)){
+        &main::daemon_log("ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res->error_message, 1);
+        &add_content2xml_hash($out_hash, "error", $$res->error_message);
+      }
+
+    }
 
     # return message
     return &create_xml_string($out_hash);
