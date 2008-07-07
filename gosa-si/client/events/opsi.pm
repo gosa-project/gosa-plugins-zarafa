@@ -93,14 +93,15 @@ sub opsi_get_netboot_products {
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $hostId;
 
-    # Get hostID if defined
-    if (defined @{$msg_hash->{'hostId'}}[0]){
-	$hostId = @{$msg_hash->{'hostId'}}[0];
-    }
-
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+    	$hostId = @{$msg_hash->{'hostId'}}[0];
+      &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -163,14 +164,15 @@ sub opsi_get_product_properties {
     my $productId = @{$msg_hash->{'ProductId'}}[0];
     my $hostId;
 
-    # Get hostID if defined
-    if (defined @{$msg_hash->{'hostId'}}[0]){
-	$hostId = @{$msg_hash->{'hostId'}}[0];
-    }
-
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+      $hostId = @{$msg_hash->{'hostId'}}[0];
+      &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -180,22 +182,20 @@ sub opsi_get_product_properties {
     my $xml_msg= &create_xml_string($out_hash);
 
 
-# Move to getProductProperties_hash  prod + objectid
-
     # JSON Query
     my $callobj = {
-      method  => 'getProductPropertyDefinitions_listOfHashes',
+      method  => 'getProductProperties_hash',
       params  => [ $productId ],
       id  => 1,
     };
 
     my $res = $client->call($opsi_url, $callobj);
-    if (check_res($res)){
 
-      foreach my $r (@{$res->result}) {
-        my $item= "<item>";
+    if (check_res($res)){
+        my $r= $res->result;
         foreach my $key (keys %{$r}) {
-          my $value = $r->{$key};
+          my $item= "<item>";
+          my $value= $r->{$key};
           if (UNIVERSAL::isa( $value, "ARRAY" )){
             foreach my $subval (@{$value}){
               $item.= "<$key>".xml_quote($subval)."</$key>";
@@ -203,10 +203,9 @@ sub opsi_get_product_properties {
           } else {
             $item.= "<$key>".xml_quote($value)."</$key>";
           }
+          $item.= "</item>";
+          $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
         }
-        $item.= "</item>";
-        $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
-      }
   }
 
   $xml_msg=~ s/<xxx><\/xxx>//;
