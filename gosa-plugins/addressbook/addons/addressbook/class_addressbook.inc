@@ -553,8 +553,11 @@ class addressbook extends plugin
       }
       foreach ($this->attributes as $name){
 
+        $dn = $this->dn;
+        if($dn == "new") $dn = $this->base;
+
         /* Skip entries we are not allowed to read */
-        if(!preg_match("/r/",$this->get_entry_acls($this->dn,$name))){
+        if(!preg_match("/r/",$this->get_entry_acls($dn,$name))){
           $smarty->assign("info_$name", "");
         }else
 
