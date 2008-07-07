@@ -48,11 +48,13 @@ sub check_res {
   if($res) {
     if ($res->is_error) {
       &main::daemon_log("ERROR: opsi configed communication failed: ".$res->error_message, 1);
+      &add_content2xml_hash($out_hash, "error", $res->error_message);
     } else {
       return 1;
     }
   } else {
     &main::daemon_log("ERROR: opsi configed communication failed: ".$client->status_line, 1);
+    &add_content2xml_hash($out_hash, "error", $client->status_line);
   }
 
   return 0;
@@ -262,7 +264,7 @@ sub opsi_set_product_properties {
 
       if (!check_res($res)){
         &main::daemon_log("ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res->error_message, 1);
-        &add_content2xml_hash($out_hash, "error", $$res->error_message);
+        &add_content2xml_hash($out_hash, "error", $res->error_message);
       }
 
     }
