@@ -263,12 +263,14 @@ class termgeneric extends plugin
     if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array( "halt" => _("Switch off"), 
                                         "reboot" => _("Reboot"),
-                                        "memcheck" => _("Memory test"),
-                                        "sysinfo"  => _("System analysis")));
+                                        #"memcheck" => _("Memory test"),
+                                        #"sysinfo"  => _("System analysis")
+					));
     } else {
       $smarty->assign("actions", array("wake" => _("Wake up"),
-                                       "memcheck" => _("Memory test"),
-                                       "sysinfo"  => _("System analysis")));
+                                       #"memcheck" => _("Memory test"),
+                                       #"sysinfo"  => _("System analysis")
+					));
     }
 
     /* Arrays */

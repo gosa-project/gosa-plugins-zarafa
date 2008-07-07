@@ -21,8 +21,10 @@ class termgroup extends plugin
                             "reinstall"       => "reinstall",
                             "rescan"          => "rescan",
                             "wake"            => "wakeup",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
+			   # These are currently not supported by the tftp daemon
+                           # "memcheck"        => "memcheck",
+                           # "sysinfo"         => "sysinfo"
+			   );
 
   var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer");
   var $objectclasses  = array("gotoWorkstationTemplate");

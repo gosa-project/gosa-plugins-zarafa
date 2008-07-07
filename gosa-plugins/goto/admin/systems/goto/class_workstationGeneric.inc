@@ -299,16 +299,18 @@ class workgeneric extends plugin
                                        "update" => _("Software update"),
                                        "reinstall" => _("Reinstall"),
                                        "rescan" => _("Rescan hardware"),
-                                       "memcheck" => _("Memory test"),
+                                       #"memcheck" => _("Memory test"),
                                        "localboot" => _("Force localboot"),
-                                       "sysinfo"  => _("System analysis")));
+                                       #"sysinfo"  => _("System analysis")
+					));
     } else {
       $smarty->assign("actions", array("wakeup" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
                                        "update" => _("Software update"),
-                                       "memcheck" => _("Memory test"),
+                                       #"memcheck" => _("Memory test"),
                                        "localboot" => _("Force localboot"),
-                                       "sysinfo"  => _("System analysis")));
+                                       #"sysinfo"  => _("System analysis")
+					));
     }
     /* Arrays */
     $smarty->assign("modes", $this->modes);
