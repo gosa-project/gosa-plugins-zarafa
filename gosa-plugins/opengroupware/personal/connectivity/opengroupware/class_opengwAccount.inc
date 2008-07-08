@@ -168,7 +168,7 @@ class opengwAccount extends plugin
 		}elseif(count($this->serverCon)){
 
 			/* Check if config exists */
-			if($this->config->search("opengwAccount", 'DATABASE',array('tabs'))){
+			if($this->config->search("opengwAccount", 'DATABASE',array('tabs')) == ""){
         msg_dialog::display(_("Configuration error"), msgPool::noserver(_("Open Groupware database")), ERROR_DIALOG);
 			}else{
 
