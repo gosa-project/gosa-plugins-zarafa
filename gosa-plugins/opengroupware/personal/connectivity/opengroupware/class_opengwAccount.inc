@@ -200,7 +200,7 @@ class opengwAccount extends plugin
 
 					/* Create Team membership */ 
 					$str = "";
-					if(($this->is_account)==""){
+					if($this->is_account){
 						$dis = "";
 					}else{
 						$dis = " disabled ";
