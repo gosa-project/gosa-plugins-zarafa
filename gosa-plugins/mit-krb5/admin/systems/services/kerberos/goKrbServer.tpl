@@ -11,6 +11,7 @@
 		</table>
      </td>
     </tr>
+{if $MIT_KRB}
     <tr>
      <td>
 		<h2>{t}Policies{/t}</h2>
@@ -26,6 +27,7 @@
 		<input type='submit' name="policy_add" value="{msgPool type=addButton}">
      </td>
     </tr>
+{/if}
    </table>
 
 <p class='seperator'>&nbsp;</p>

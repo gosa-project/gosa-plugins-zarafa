@@ -88,6 +88,7 @@ class goKrbServer extends goService{
   public function execute()
   { 
     $smarty = get_smarty(); 
+    $smarty->assign("MIT_KRB", class_available("passwordMethodMIT"));
 
     if(!$this->view_logged){
       $this->view_logged = TRUE;
