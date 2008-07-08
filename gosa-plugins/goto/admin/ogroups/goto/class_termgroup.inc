@@ -16,7 +16,6 @@ class termgroup extends plugin
   var $didAction          = FALSE;
   var $mapActions   = array("halt"            => "halt",
                             "reboot"          => "localboot",
-                            "instant_update"  => "softupdate",
                             "update"          => "update",
                             "reinstall"       => "reinstall",
                             "rescan"          => "rescan",
