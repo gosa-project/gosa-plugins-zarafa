@@ -116,7 +116,7 @@ if (!$remove_lock){
   $display.="</div>";
 
   /* Page header*/
-  $display= print_header(get_template_path('images/proxy.png'),
+  $display= print_header(get_template_path('plugins/connectivity/images/plugin.png'),
       _("Connectivity"), $info).$display;
 
 }
