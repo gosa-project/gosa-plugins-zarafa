@@ -5,7 +5,7 @@
     <td>
 		<table>
 		 <tr>
-		  <td>{t}Kerberos Realms{/t}</td>
+		  <td>{t}Kerberos Realm{/t}{$must}</td>
 		  <td><input name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60  value="{$goKrbRealm}"></td>
 		 </tr>
 		</table>
