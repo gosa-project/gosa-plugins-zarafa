@@ -122,7 +122,7 @@ if (!$remove_lock){
   }
 
   /* Page header*/
-  $display= print_header(get_template_path('images/samba.png'), _("Samba settings"),
+  $display= print_header(get_template_path('plugins/samba/images/plugin.png'), _("Samba settings"),
                          $info).$display;
 
 }

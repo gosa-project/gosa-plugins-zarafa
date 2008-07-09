@@ -1195,28 +1195,24 @@ class sambaAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
+
+            "sambaHomePath"               => _("Generic home directory") ,
+            "sambaHomeDrive"              => _("Generic samba home drive") ,
+            "sambaDomainName"             => _("Domain") ,
+            "sambaLogonScript"            => _("Generic script path") ,
+            "sambaProfilePath"            => _("Generic profile path") ,
             "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
             "InheritClientConfig"         => _("Inherit client config"),
-
-            "sambaPwdCanChange"     => _("Allow user to change password") ,
-            "sambaAcctFlagsN"            => _("Login from windows client requires no password"),
-            "sambaAcctFlagsL"            => _("Lock samba account"),
-
-
-            "sambaKickoffTime"      => _("Account expires") ,
-            "sambaPwdMustChange"    => _("Password expires") ,
-
-            "sambaLogonTime"        => _("Limit Logon Time") ,
-            "sambaLogoffTime"       => _("Limit Logoff Time") ,
-            "sambaLogonHours"       => _("Logon hours") ,
-
-            "sambaHomePath"         => _("Generic home directory") ,
-            "sambaHomeDrive"        => _("Generic samba home drive") ,
-            "sambaLogonScript"      => _("Generic script path") ,
-            "sambaProfilePath"      => _("Generic profile path") ,
-            "sambaDomainName"       => _("Domain") ,
-            "sambaUserWorkstations" => _("Allow connection from")))
-              );
+            "sambaPwdCanChange"           => _("Allow user to change password") ,
+            "sambaAcctFlagsN"             => _("Login from windows client requires no password"),
+            "sambaAcctFlagsL"             => _("Lock samba account"),
+            "sambaKickoffTime"            => _("Account expires") ,
+            "sambaPwdMustChange"          => _("Password expires") ,
+            "sambaLogonTime"              => _("Limit Logon Time") ,
+            "sambaLogoffTime"             => _("Limit Logoff Time") ,
+            "sambaLogonHours"             => _("Logon hours") ,
+            "sambaUserWorkstations"       => _("Allow connection from"))
+          ));
   }    
 
   function enable_multiple_support()
