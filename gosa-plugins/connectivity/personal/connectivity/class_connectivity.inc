@@ -259,6 +259,27 @@ class connectivity extends plugin
       $this->plugin[$name]->set_multi_edit_values($plugin->get_multi_edit_values());
     }
   }
+
+
+  /* Return plugin informations for acl handling */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"     => _("Connectivity"),
+          "plDepends"       => array("user"),
+          "plPriority"      => 20,                                 // Position in tabs
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users"),
+          "plOptions"       => array(),
+
+          "plDescription"       => _("Connectivity addon"),
+          "plSelfModify"        => TRUE,
+
+          "plProvidedAcls"  => array()
+          ));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
