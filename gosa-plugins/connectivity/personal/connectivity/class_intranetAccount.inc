@@ -86,7 +86,14 @@ class intranetAccount extends plugin
       $smarty->assign("tabbed", 0);	
     }
 
-    $smarty->assign('gosaIntranetACL', $this->getacl("",$this->ReadOnly));
+    /* check if we are allowed to switch the checkbox.
+     */
+    $smarty->assign('gosaIntranetACL', preg_replace("/w/","",$this->getacl("",$this->ReadOnly)));
+    if(($this->acl_is_removeable() && $this->is_account) || 
+       ($this->acl_is_createable() && !$this->is_account)){
+      $smarty->assign('gosaIntranetACL', $this->getacl("",$this->ReadOnly));
+    }
+
     $smarty->assign("use_intranet",in_array("intranet",$this->multi_boxes));
     $smarty->assign("multiple_support",$this->multiple_support_active);
     $display.= $smarty->fetch (get_template_path('intranet.tpl', TRUE, dirname(__FILE__)));
