@@ -70,7 +70,9 @@ class servRepositorySetup  extends plugin
         /* Add new entries */
         foreach($vals as $entry){
           $entry = trim($entry);
-          $this->Sections[$entry]=$entry;
+          if(!empty($entry)){
+            $this->Sections[$entry]=$entry;
+          }
         }
       }else{
         $this->Sections[$val]=$val;
