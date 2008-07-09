@@ -33,6 +33,8 @@ class servapache extends goService
   var $dialog           = NULL;
   var $orig_dn          = "";
 
+  var $conflicts        = array("servapache");
+
   var $initially_was_account;
   var $krb_service_prefix = "HTTP/";
 
