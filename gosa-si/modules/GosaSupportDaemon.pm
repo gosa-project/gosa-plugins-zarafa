@@ -293,6 +293,8 @@ sub get_where_statement {
                 my @xml_tags = keys %{$phrase};
                 my $tag = $xml_tags[0];
                 my $val = $phrase->{$tag}[0];
+                if( ref($val) eq "HASH" ) { next; }  # empty xml-tags should not appear in where statement
+
 				# integer columns do not have to have single quotes besides the value
 				if ($tag eq "id") {
 						push(@phrase_l, "$tag$operator$val");
@@ -300,8 +302,11 @@ sub get_where_statement {
 						push(@phrase_l, "$tag$operator'$val'");
 				}
             }
-            my $clause_str .= join(" $connector ", @phrase_l);
-            push(@clause_l, "($clause_str)");
+
+            if (not 0 == @phrase_l) {
+                my $clause_str .= join(" $connector ", @phrase_l);
+                push(@clause_l, "($clause_str)");
+            }
         }
 
         if( not 0 == @clause_l ) {
