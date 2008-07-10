@@ -147,7 +147,15 @@ class proxyAccount extends plugin
         $smarty->assign("use_filter".$attr,FALSE);
       }
     }
-    $smarty->assign("proxyAccountACL",$this->getacl("",$this->ReadOnly));
+
+    /* check if we are allowed to switch the checkbox.
+     */
+    $smarty->assign('proxyAccountACL', preg_replace("/w/","",$this->getacl("",$this->ReadOnly)));
+    if(($this->acl_is_removeable() && $this->is_account) ||
+        ($this->acl_is_createable() && !$this->is_account)){
+      $smarty->assign('proxyAccountACL', $this->getacl("",$this->ReadOnly));
+    }
+
     $smarty->assign("use_proxy",in_array("proxy",$this->multi_boxes));
     $smarty->assign("multiple_support",$this->multiple_support_active);
     $display.= $smarty->fetch(get_template_path('proxy.tpl', TRUE, dirname(__FILE__)));
