@@ -77,9 +77,9 @@ class proxyAccount extends plugin
     }
 
     /* Assign working time */
-    $smarty->assign("starthour" ,($this->gosaProxyWorkingStart / 60));
+    $smarty->assign("starthour" ,floor($this->gosaProxyWorkingStart / 60));
     $smarty->assign("startminute", ($this->gosaProxyWorkingStart % 60));
-    $smarty->assign("stophour", ($this->gosaProxyWorkingStop / 60));
+    $smarty->assign("stophour", floor($this->gosaProxyWorkingStop / 60));
     $smarty->assign("stopminute", ($this->gosaProxyWorkingStop % 60));
     $hours= array();
     for($i=0; $i<24; $i++){
