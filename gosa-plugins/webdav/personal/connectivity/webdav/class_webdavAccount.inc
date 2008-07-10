@@ -53,7 +53,14 @@ class webdavAccount extends plugin
       $smarty->assign("tabbed", 1);
     }
 
-    $smarty->assign('webdavAccountACL', $this->getacl("",$this->ReadOnly));
+   /* check if we are allowed to switch the checkbox.
+    */
+    $smarty->assign('webdavAccountACL', preg_replace("/w/","",$this->getacl("",$this->ReadOnly)));
+    if(($this->acl_is_removeable() && $this->is_account) ||
+        ($this->acl_is_createable() && !$this->is_account)){
+      $smarty->assign('webdavAccountACL', $this->getacl("",$this->ReadOnly));
+    }
+
     $smarty->assign("use_webdav",in_array("webdav",$this->multi_boxes));
     $smarty->assign("multiple_support",$this->multiple_support_active);
     $display.= $smarty->fetch (get_template_path('webdav.tpl', TRUE, dirname(__FILE__)));
