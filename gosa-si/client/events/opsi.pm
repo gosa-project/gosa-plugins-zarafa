@@ -44,6 +44,8 @@ my $client = new JSON::RPC::Client;
 
 sub check_res {
   my $res= shift;
+  # TODO: We need to return the outhash!
+  my $out_hash;
 
   if($res) {
     if ($res->is_error) {
