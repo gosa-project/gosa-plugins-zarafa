@@ -51,20 +51,19 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit'])){
+  if (isset($_POST['edit']) || isset($_POST['delete_lock'])){
 
     /* Check locking */
     if ((($username= get_lock($ui->dn)) != "") && (!session::is_set('edit'))){
       session::set('back_plugin',$plug);
-      gen_locked_message ($username, $ui->dn);
-      exit ();
+      $display = gen_locked_message ($username, $ui->dn);
+    }else{
+
+      /* Lock the current entry */
+      add_lock ($ui->dn, $ui->dn);
+      session::set('dn',$ui->dn);
+      session::set('edit',TRUE);
     }
-
-
-    /* Lock the current entry */
-    add_lock ($ui->dn, $ui->dn);
-    session::set('dn',$ui->dn);
-    session::set('edit',TRUE);
   }
 
   /* save changes to LDAP and disable edit mode */
@@ -88,32 +87,34 @@ if (!$remove_lock){
   }
 
   /* Execute formular */
-  $display= $connectivity->execute ();
-
-  /* Store changes  in session */
-  if (session::is_set('edit')){
-    session::set('connectivity',$connectivity);
-  }
-
   $info= "";
+  if(!isset($display)){
+    $display= $connectivity->execute ();
 
-  $display.="<div align='right'>";
-  if (session::is_set('edit')){
-    $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-    $display.= "&nbsp;";
-    $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
-    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png').
-      "\"> ".$ui->dn."&nbsp;";
-  } else {
-    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
-      "\"> ".$ui->dn."&nbsp;";
+    /* Store changes  in session */
+    if (session::is_set('edit')){
+      session::set('connectivity',$connectivity);
+    }
 
-    $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
-      "\">".msgPool::clickEditToChange();
-    $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
-    $display.= "<input type=\"hidden\" name=\"ignore\">\n";
+
+    $display.="<div align='right'>";
+    if (session::is_set('edit')){
+      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
+      $display.= "&nbsp;";
+      $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
+      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png').
+        "\"> ".$ui->dn."&nbsp;";
+    } else {
+      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
+        "\"> ".$ui->dn."&nbsp;";
+
+      $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
+        "\">".msgPool::clickEditToChange();
+      $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
+      $display.= "<input type=\"hidden\" name=\"ignore\">\n";
+    }
+    $display.="</div>";
   }
-  $display.="</div>";
 
   /* Page header*/
   $display= print_header(get_template_path('plugins/connectivity/images/plugin.png'),
