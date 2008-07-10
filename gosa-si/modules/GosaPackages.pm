@@ -53,8 +53,6 @@ our $server_address = "$server_ip:$server_port";
 if( inet_aton($gosa_ip) ){ $gosa_ip = inet_ntoa(inet_aton($gosa_ip)); }
 $main::gosa_address = "$gosa_ip:$gosa_port";
 
-# create general settings for this module
-#y $gosa_cipher = &create_ciphering($gosa_passwd);
 my $xml = new XML::Simple();
 
 # import local events
@@ -105,63 +103,6 @@ sub read_configfile {
     }
 }
 
-# moved to GosaSupportDaemon: 03-06-2008: rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_interface_for_ip
-#   PARAMETERS:  ip address (i.e. 192.168.0.1)
-#      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
-#===============================================================================
-#sub get_interface_for_ip {
-#    my $result;
-#    my $ip= shift;
-#    if ($ip && length($ip) > 0) {
-#        my @ifs= &get_interfaces();
-#        if($ip eq "0.0.0.0") {
-#            $result = "all";
-#        } else {
-#            foreach (@ifs) {
-#                my $if=$_;
-#                if(get_ip($if) eq $ip) {
-#                    $result = $if;
-#                }
-#            }       
-#        }
-#    }       
-#    return $result;
-#}
-
-# moved to GosaSupportDaemon: 03-06-2008: rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_interfaces 
-#   PARAMETERS:  none
-#      RETURNS:  (list of interfaces) 
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
-#===============================================================================
-#sub get_interfaces {
-#        my @result;
-#        my $PROC_NET_DEV= ('/proc/net/dev');
-#
-#        open(PROC_NET_DEV, "<$PROC_NET_DEV")
-#                or die "Could not open $PROC_NET_DEV";
-#
-#        my @ifs = <PROC_NET_DEV>;
-#
-#        close(PROC_NET_DEV);
-#
-#        # Eat first two line
-#        shift @ifs;
-#        shift @ifs;
-#
-#        chomp @ifs;
-#        foreach my $line(@ifs) {
-#                my $if= (split /:/, $line)[0];
-#                $if =~ s/^\s+//;
-#                push @result, $if;
-#        }
-#
-#        return @result;
-#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_mac 
@@ -199,35 +140,6 @@ sub get_mac {
     }
     return $result;
 }
-
-# moved to GosaSupportDaemon: 03-06-2008: rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_ip 
-#   PARAMETERS:  interface name (i.e. eth0)
-#      RETURNS:  (ip address) 
-#  DESCRIPTION:  Uses ioctl to get ip address directly from system.
-#===============================================================================
-#sub get_ip {
-#        my $ifreq= shift;
-#        my $result= "";
-#        my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
-#        my $proto= getprotobyname('ip');
-#
-#        socket SOCKET, PF_INET, SOCK_DGRAM, $proto
-#                or die "socket: $!";
-#
-#        if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
-#                my ($if, $sin)    = unpack 'a16 a16', $ifreq;
-#                my ($port, $addr) = sockaddr_in $sin;
-#                my $ip            = inet_ntoa $addr;
-#
-#                if ($ip && length($ip) > 0) {
-#                        $result = $ip;
-#                }
-#        }
-#
-#        return $result;
-#}
 
 
 #===  FUNCTION  ================================================================
@@ -399,6 +311,8 @@ sub process_job_msg {
             xmlmessage=>$msg,
             macaddress=>$macaddress,
 			plainname=>$plain_name,
+            siserver=>"localhost",
+            modified=>"0",
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {

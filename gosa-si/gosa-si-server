@@ -86,7 +86,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
     $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
-    $wake_on_lan_passwd,
+    $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
 );
 
 # additional variable which should be globaly accessable
@@ -146,6 +146,8 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 		"xmlmessage DEFAULT 'none'", 
 		"macaddress DEFAULT 'none'",
 		"plainname DEFAULT 'none'",
+        "siserver DEFAULT 'none'",
+        "modified DEFAULT '0'",
 		);
 
 # holds all other gosa-si-server
@@ -253,6 +255,8 @@ my $max_children = 2;
     "domain"  => [\$server_domain, ""],
     "key"     => [\$ServerPackages_key, "none"],
     "key-lifetime" => [\$foreign_servers_register_delay, 120],
+    "job-synchronization" => [\$job_synchronization, "true"],
+    "synchronization-loop" => [\$modified_jobs_loop_delay, 5],
 }
 );
 
@@ -1132,7 +1136,7 @@ sub msg_to_decrypt {
 		if ($done) {
 				# if a job or a gosa message comes from a foreign server, fake module to GosaPackages
 				# so gosa-si-server knows how to process this kind of messages
-				if ($header =~ /^gosa_/ || $header =~ /job_/) {
+				if ($header =~ /^gosa_/ || $header =~ /^job_/) {
 						$module = "GosaPackages";
 				}
 
@@ -1466,6 +1470,7 @@ sub session_start {
 	$kernel->sig(USR2 => "recreate_packages_db");
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
+	$kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
@@ -1490,12 +1495,50 @@ sub watch_for_done_jobs {
 }
 
 
+# if a job got an update or was modified anyway, send to all other si-server an update message
+# of this jobs
+sub watch_for_modified_jobs {
+    my ($kernel,$heap) = @_[KERNEL, HEAP];
+
+    my $sql_statement = "SELECT * FROM $job_queue_tn WHERE ((siserver='localhost') AND (modified='1'))"; 
+    my $res = $job_db->select_dbentry( $sql_statement );
+    
+    # if db contains no jobs which should be update, do nothing
+    if (keys %$res != 0) {
+
+        # make out of the db result a gosa-si message   
+        my $update_msg = &db_res2si_msg ($res, "foreign_job_updates", "KNOWN_SERVER", "MY_LOCAL_ADDRESS");
+       
+        # determine all other si-server a foreign_job_updates message should be send
+        my $sql_statement= "SELECT * FROM $known_server_tn";
+        my $res = $known_server_db->select_dbentry( $sql_statement ); 
+        while( my ($hit_num, $hit) = each %$res ) {    
+            my $act_update_msg = $update_msg;
+            my $act_target_address = $hit->{hostname};
+            my $act_target_key = $hit->{hostkey};
+            my ($act_target_ip, $act_target_port) = split(/:/, $act_target_address);
+            my $act_source_address = &get_local_ip_for_remote_ip($act_target_ip).":$act_target_port";
+
+            $act_update_msg =~ s/<target>KNOWN_SERVER<\/target>/<target>$act_target_address<\/target>/g;
+            $act_update_msg =~ s/<source>MY_LOCAL_ADDRESS<\/source>/<source>$act_source_address<\/source>/g;
+            &send_msg_to_target($act_update_msg, $act_target_address, $act_target_key, "foreign_job_updates" , "J");
+        }
+
+        # set jobs all jobs to modified = 0, wait until the next modification for updates of other si-server
+        $sql_statement = "UPDATE $job_queue_tn SET modified='0' ";
+        $res = $job_db->update_dbentry($sql_statement);
+    }
+
+    $kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay);
+}
+
+
 sub watch_for_new_jobs {
 	if($watch_for_new_jobs_in_progress == 0) {
 		$watch_for_new_jobs_in_progress = 1;
 		my ($kernel,$heap) = @_[KERNEL, HEAP];
 
-		# check gosa job queue for jobs with executable timestamp
+		# check gosa job quaeue for jobs with executable timestamp
 		my $timestamp = &get_time();
 		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER)) < $timestamp ORDER BY timestamp";
 		my $res = $job_db->exec_statement( $sql_statement );
@@ -1584,6 +1627,7 @@ sub watch_for_new_jobs {
 		$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	}
 }
+
 
 
 sub watch_for_new_messages {
@@ -3036,6 +3080,7 @@ POE::Session->create(
         watch_for_delivery_messages => \&watch_for_delivery_messages,
         watch_for_done_messages => \&watch_for_done_messages,
 		watch_for_new_jobs => \&watch_for_new_jobs,
+        watch_for_modified_jobs => \&watch_for_modified_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
         watch_for_old_known_clients => \&watch_for_old_known_clients,
         create_packages_list_db => \&run_create_packages_list_db,

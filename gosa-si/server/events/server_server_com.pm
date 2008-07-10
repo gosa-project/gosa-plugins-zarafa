@@ -6,6 +6,7 @@ my @events = (
     'confirm_new_server',
     'new_foreign_client',
     'trigger_wake',
+    'foreign_job_updates',
     );
 @EXPORT = @events;
 
@@ -25,6 +26,48 @@ END {}
 
 sub get_events {
     return \@events;
+}
+
+
+sub foreign_job_updates {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    
+    my @act_keys = keys %$msg_hash;
+    my @jobs;
+    foreach my $key (@act_keys) {
+        if ($key =~ /answer\d+/ ) { push(@jobs, $key); }
+    }
+
+    foreach my $foreign_job (@jobs) {
+
+        # add job to job queue
+        my $func_dic = {table=>$main::job_queue_tn,
+            primkey=>['macaddress', 'headertag'],
+            timestamp=>@{@{$msg_hash->{$foreign_job}}[0]->{'timestamp'}}[0],
+            status=>@{@{$msg_hash->{$foreign_job}}[0]->{'status'}}[0],
+            result=>@{@{$msg_hash->{$foreign_job}}[0]->{'result'}}[0],
+            progress=>@{@{$msg_hash->{$foreign_job}}[0]->{'progress'}}[0],
+            headertag=>@{@{$msg_hash->{$foreign_job}}[0]->{'headertag'}}[0],
+            targettag=>@{@{$msg_hash->{$foreign_job}}[0]->{'targettag'}}[0],
+            xmlmessage=>@{@{$msg_hash->{$foreign_job}}[0]->{'xmlmessage'}}[0],
+            macaddress=>@{@{$msg_hash->{$foreign_job}}[0]->{'macaddress'}}[0],
+            plainname=>@{@{$msg_hash->{$foreign_job}}[0]->{'plainname'}}[0],
+            siserver=>$source,
+            modified=>"0",
+        };
+        my $res = $main::job_db->add_dbentry($func_dic);
+        if (not $res == 0) {
+            &main::daemon_log("$session_id ERROR: ServerPackages: process_job_msg: $res", 1);
+        } else {
+            &main::daemon_log("$session_id INFO: ServerPackages: $header, job '".@{@{$msg_hash->{$foreign_job}}[0]->{'headertag'}}[0].
+                    "' successfully added to job queue", 5);
+        }
+    }
+
+    return;
 }
 
 

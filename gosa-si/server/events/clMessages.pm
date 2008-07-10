@@ -225,7 +225,7 @@ sub CURRENTLY_LOGGED_IN {
 sub GOTOACTIVATION {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -236,7 +236,7 @@ sub GOTOACTIVATION {
     $header =~ s/CLMSG_//g;
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', progress='goto-activation' ".
+            "SET status='processing', progress='goto-activation', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
@@ -248,7 +248,7 @@ sub GOTOACTIVATION {
 sub PROGRESS {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -259,7 +259,7 @@ sub PROGRESS {
     $header =~ s/CLMSG_//g;
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-        "SET progress='$content' ".
+        "SET progress='$content', modified='1' ".
         "WHERE status='processing' AND macaddress LIKE '$macaddress'";
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
@@ -272,7 +272,7 @@ sub PROGRESS {
 sub FAIREBOOT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -283,7 +283,7 @@ sub FAIREBOOT {
     $header =~ s/CLMSG_//g;
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', result='$header "."$content' ".
+            "SET status='processing', result='$header "."$content', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
@@ -296,7 +296,7 @@ sub FAIREBOOT {
 sub TASKSKIP {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -307,7 +307,7 @@ sub TASKSKIP {
     $header =~ s/CLMSG_//g;
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', result='$header "."$content' ".
+            "SET status='processing', result='$header "."$content', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
@@ -320,7 +320,8 @@ sub TASKSKIP {
 sub TASKBEGIN {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -336,7 +337,7 @@ sub TASKBEGIN {
 			|| ($content eq 'savelog')
 			) {
         my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='done', result='$header "."$content' ".
+            "SET status='done', result='$header "."$content', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
         my $res = $main::job_db->update_dbentry($sql_statement);
@@ -363,7 +364,9 @@ sub TASKBEGIN {
 		# there is exactly one job entry in queue for this host
 		if (keys(%$res) == 1) {
 			&main::daemon_log("$session_id DEBUG: there is already one processing job in queue for host '$macaddress', run an update for this entry", 7);
-			my $sql_statement = "UPDATE $main::job_queue_tn SET result='$header $content' WHERE status='processing' AND macaddress LIKE '$macaddress'";
+			my $sql_statement = "UPDATE $main::job_queue_tn ".
+                "SET result='$header $content', modified='1' ".
+                "WHERE status='processing' AND macaddress LIKE '$macaddress'";
 			my $err = $main::job_db->update_dbentry($sql_statement);
 			if (not defined  $err) {
 				&main::daemon_log("$session_id ERROR: cannot update job_db entry: ".Dumper($err), 1);
@@ -416,10 +419,12 @@ sub TASKBEGIN {
 					result=>"$header $content",
 					progress=>'none',
 					headertag=>'trigger_action_reinstall',
-					targettag=>$source,
+					targettag=>$target,
 					xmlmessage=>'none',
 					macaddress=>$macaddress,
 					plainname=>$plain_name,
+                    modified=>'1',
+                    siserver=>$source,
 			};
 			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
 			if ($err != 0)  {
@@ -442,7 +447,8 @@ sub TASKBEGIN {
 sub TASKEND {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # test whether content is an empty hash or a string which is required
@@ -453,7 +459,7 @@ sub TASKEND {
     $header =~ s/CLMSG_//g;
 
 	if ($content eq "savelog 0") {
-		&main::daemon_log("$session_id DEBUG: got savelog from host '$source' - jub done", 7);
+		&main::daemon_log("$session_id DEBUG: got savelog from host '$target' - job done", 7);
 		my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
 		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
 		my $res = $main::job_db->del_dbentry($sql_statement);
@@ -461,7 +467,7 @@ sub TASKEND {
 	} else {
 
 			my $sql_statement = "UPDATE $main::job_queue_tn ".
-					"SET status='processing', result='$header "."$content' ".
+					"SET status='processing', result='$header "."$content', modified='1' ".
 					"WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
 			&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
 			my $res = $main::job_db->update_dbentry($sql_statement);
@@ -481,7 +487,7 @@ sub TASKEND {
 sub TASKERROR {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # clean up header
@@ -495,7 +501,7 @@ sub TASKERROR {
 	&main::change_fai_state('error', \@{$msg_hash->{'macaddress'}}, $session_id);
 		
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', result='$header "."$content' ".
+            "SET status='processing', result='$header "."$content', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);
@@ -514,7 +520,7 @@ sub TASKERROR {
 sub HOOK {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'target'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
     my $macaddress = @{$msg_hash->{'macaddress'}}[0];
 
     # clean up header
@@ -525,7 +531,7 @@ sub HOOK {
     if(not ref($content) eq "STRING") { $content = ""; }
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', result='$header "."$content' ".
+            "SET status='processing', result='$header "."$content', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);

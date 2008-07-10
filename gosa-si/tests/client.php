@@ -20,8 +20,8 @@ for($count = 1; $count <= $zahl; $count++)
     # jobdb add
     #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source><target>GOSA</target><hostname>ws-muc-2</hostname></xml>";
     #$data = "<xml> <header>job_sayHello</header> <source>10.89.1.155:20083</source><target>00:01:6c:9d:b9:fa</target><mac>00:1B:77:04:8A:6C</mac> <timestamp>20130102133908</timestamp> </xml>";
-    #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>19700101000000</timestamp> </xml>";
-
+    $data = "<xml> <header>job_ping2</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:01:6c:9d:b9:fa</macaddress><timestamp>20130101000000</timestamp> </xml>";
+  
     # jobdb delete
     #$data = "<xml> <header>gosa_delete_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase><id>3</id></phrase></clause></where></xml>";
 
@@ -33,7 +33,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     # jobdb update  
     #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
-    #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
+    $data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
     # jobdb query
     #$data = "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
@@ -109,10 +109,10 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml><header>gosa_query_fai_server</header><source>GOSA</source> <target>10.89.1.131:20081</target></xml>";
     #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:aa:16</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_ping</header> <target>00:01:6c:9d:b9:fb</target> <source>GOSA</source> </xml>";
-    $data = "<xml> <header>gosa_get_dak_keyring</header> <target>GOSA</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_get_dak_keyring</header> <target>GOSA</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:0c:29:02:e5:4d</target> <macaddress>00:0c:29:02:e5:4d</macaddress><timestamp>29700101000000</timestamp> </xml>";
 
-    $data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source> <target>GOSA</target> <hostname>localhost</hostname> </xml>";
+    #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source> <target>GOSA</target> <hostname>localhost</hostname> </xml>";
 
     $sock->write($data);
     $answer = "nothing";
