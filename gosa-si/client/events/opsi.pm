@@ -44,7 +44,7 @@ my $client = new JSON::RPC::Client;
 
 sub check_res {
   my $res= shift;
-  # TODO: We need to return the outhash!
+  # TODO: We need to return the outhash!?
   my $out_hash;
 
   if($res) {
@@ -89,48 +89,91 @@ sub get_events { return \@events; }
 
 
 sub opsi_get_netboot_products {
-    my ($msg, $msg_hash) = @_;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $session_id = @{$msg_hash->{'session_id'}}[0];
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $hostId;
+  my ($msg, $msg_hash) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $session_id = @{$msg_hash->{'session_id'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my $hostId;
 
-    # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  &add_content2xml_hash($out_hash, "session_id", $session_id);
 
-    # Get hostID if defined
-    if (defined @{$msg_hash->{'hostId'}}[0]){
-    	$hostId = @{$msg_hash->{'hostId'}}[0];
-      &add_content2xml_hash($out_hash, "hostId", $hostId);
-    }
+  # Get hostID if defined
+  if (defined @{$msg_hash->{'hostId'}}[0]){
+    $hostId = @{$msg_hash->{'hostId'}}[0];
+    &add_content2xml_hash($out_hash, "hostId", $hostId);
+  }
 
-    if (defined $forward_to_gosa) {
-      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
-    }
-    &add_content2xml_hash($out_hash, "xxx", "");
-    my $xml_msg= &create_xml_string($out_hash);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+  &add_content2xml_hash($out_hash, "xxx", "");
+  my $xml_msg= &create_xml_string($out_hash);
 
-    # Authenticate
-    my $callobj;
+  # For hosts, only return the products that are or get installed
+  my $callobj;
+  $callobj = {
+    method  => 'getNetBootProductIds_list',
+    params  => [ ],
+    id  => 1,
+  };
+
+  my $res = $client->call($opsi_url, $callobj);
+  my %r = ();
+  for (@{$res->result}) { $r{$_} = 1 }
+
+  if (check_res($res)){
+
     if (defined $hostId){
-	    $callobj = {
-	      method  => 'getNetBootProductIds_list',
-	      params  => [ $hostId ],
-	      id  => 1,
-	    };
-    } else {
-	    $callobj = {
-	      method  => 'getNetBootProductIds_list',
-	      params  => [ ],
-	      id  => 1,
-	    };
-    }
+      $callobj = {
+        method  => 'getProductStates_hash',
+        params  => [ $hostId ],
+        id  => 1,
+      };
 
-    my $res = $client->call($opsi_url, $callobj);
-    if (check_res($res)){
+      my $hres = $client->call($opsi_url, $callobj);
+      if (check_res($hres)){
+        my $htmp= $hres->result->{$hostId};
+
+        # check state != not_installed or action == setup -> load and add
+        foreach my $product (@{$htmp}){
+
+          if (!defined ($r{$product->{'productId'}})){
+            next;
+          }
+
+          # Now we've a couple of hashes...
+          if ($product->{'installationStatus'} ne "not_installed" or
+              $product->{'actionRequest'} eq "setup"){
+            my $state= "<state>".$product->{'installationStatus'}."</state><action>".$product->{'actionRequest'}."</action>";
+
+            $callobj = {
+              method  => 'getProduct_hash',
+              params  => [ $product->{'productId'} ],
+              id  => 1,
+            };
+
+            my $sres = $client->call($opsi_url, $callobj);
+            if (check_res($sres)){
+              my $tres= $sres->result;
+
+              my $name= xml_quote($tres->{'name'});
+              my $r= $product->{'productId'};
+              my $description= xml_quote($tres->{'description'});
+              $name=~ s/\//\\\//;
+              $description=~ s/\//\\\//;
+              $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+            }
+
+          }
+        }
+
+      }
+
+    } else {
       foreach my $r (@{$res->result}) {
         $callobj = {
           method  => 'getProduct_hash',
@@ -150,6 +193,8 @@ sub opsi_get_netboot_products {
         }
 
       }
+
+    }
   }
 
   $xml_msg=~ s/<xxx><\/xxx>//;
@@ -307,7 +352,7 @@ sub opsi_get_client_hardware {
     if (check_res($res)){
       my $result= $res->result;
       foreach my $r (keys %{$result}){
-        my $item= "<item><name>".xml_quote($r)."</name>";
+        my $item= "<item><id>".xml_quote($r)."</id>";
         my $value= $result->{$r};
         foreach my $sres (@{$value}){
 
@@ -317,10 +362,10 @@ sub opsi_get_client_hardware {
             }
           }
 
-          $item.= "</item>";
-          $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
-
         }
+          $item.= "</item>";
+          $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
+
       }
     }
 
@@ -369,47 +414,91 @@ sub opsi_get_client_software {
 
 
 sub opsi_get_local_products {
-    my ($msg, $msg_hash) = @_;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my $session_id = @{$msg_hash->{'session_id'}}[0];
-    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $hostId;
+  my ($msg, $msg_hash) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $session_id = @{$msg_hash->{'session_id'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my $hostId;
 
-    # Get hostID if defined
-    if (defined @{$msg_hash->{'hostId'}}[0]){
-	$hostId = @{$msg_hash->{'hostId'}}[0];
-    }
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  &add_content2xml_hash($out_hash, "session_id", $session_id);
 
-    # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
+  # Get hostID if defined
+  if (defined @{$msg_hash->{'hostId'}}[0]){
+    $hostId = @{$msg_hash->{'hostId'}}[0];
+    &add_content2xml_hash($out_hash, "hostId", $hostId);
+  }
 
-    if (defined $forward_to_gosa) {
-      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
-    }
-    &add_content2xml_hash($out_hash, "xxx", "");
-    my $xml_msg= &create_xml_string($out_hash);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+  &add_content2xml_hash($out_hash, "xxx", "");
+  my $xml_msg= &create_xml_string($out_hash);
 
-    # Append hostId
-    my $callobj;
+  # For hosts, only return the products that are or get installed
+  my $callobj;
+  $callobj = {
+    method  => 'getLocalBootProductIds_list',
+    params  => [ ],
+    id  => 1,
+  };
+
+  my $res = $client->call($opsi_url, $callobj);
+  my %r = ();
+  for (@{$res->result}) { $r{$_} = 1 }
+
+  if (check_res($res)){
+
     if (defined $hostId){
-	    $callobj = {
-	      method  => 'getLocalBootProductIds_list',
-	      params  => [ $hostId ],
-	      id  => 1,
-	    };
-    } else {
-	    $callobj = {
-	      method  => 'getLocalBootProductIds_list',
-	      params  => [ ],
-	      id  => 1,
-	    };
-    }
+      $callobj = {
+        method  => 'getProductStates_hash',
+        params  => [ $hostId ],
+        id  => 1,
+      };
 
-    my $res = $client->call($opsi_url, $callobj);
-    if (check_res($res)){
+      my $hres = $client->call($opsi_url, $callobj);
+      if (check_res($hres)){
+        my $htmp= $hres->result->{$hostId};
+
+        # check state != not_installed or action == setup -> load and add
+        foreach my $product (@{$htmp}){
+
+          if (!defined ($r{$product->{'productId'}})){
+            next;
+          }
+
+          # Now we've a couple of hashes...
+          if ($product->{'installationStatus'} ne "not_installed" or
+              $product->{'actionRequest'} eq "setup"){
+            my $state= "<state>".$product->{'installationStatus'}."</state><action>".$product->{'actionRequest'}."</action>";
+
+            $callobj = {
+              method  => 'getProduct_hash',
+              params  => [ $product->{'productId'} ],
+              id  => 1,
+            };
+
+            my $sres = $client->call($opsi_url, $callobj);
+            if (check_res($sres)){
+              my $tres= $sres->result;
+
+              my $name= xml_quote($tres->{'name'});
+              my $r= $product->{'productId'};
+              my $description= xml_quote($tres->{'description'});
+              $name=~ s/\//\\\//;
+              $description=~ s/\//\\\//;
+              $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+            }
+
+          }
+        }
+
+      }
+
+    } else {
       foreach my $r (@{$res->result}) {
         $callobj = {
           method  => 'getProduct_hash',
@@ -421,14 +510,16 @@ sub opsi_get_local_products {
         if (check_res($sres)){
           my $tres= $sres->result;
 
-          my $name= $tres->{'name'};
-          my $description= $tres->{'description'};
+          my $name= xml_quote($tres->{'name'});
+          my $description= xml_quote($tres->{'description'});
           $name=~ s/\//\\\//;
           $description=~ s/\//\\\//;
-          $xml_msg=~ s/<xxx><\/xxx>/<item><id>".xml_quote($r).<\/id><name><\/name><description>".xml_quote($description)."<\/description><\/item><xxx><\/xxx>/;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
         }
 
       }
+
+    }
   }
 
   $xml_msg=~ s/<xxx><\/xxx>//;
