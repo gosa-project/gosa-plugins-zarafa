@@ -1,4 +1,4 @@
-
+{if $acl}
 <!-- Javacript function used to switch a complete row or col of selected hours -->
 <script language="javascript" type="text/javascript">
   {literal}
@@ -17,6 +17,7 @@
   }
   {/literal}
 </script>
+{/if}
 
 <h1>{t}Specify the hours this user is allowed to log in{/t}</h1>
 <br>
@@ -39,6 +40,7 @@
     {/foreach}
   </tr>
 
+{if $acl}
   <!-- Add toggle buttons for hours -->
   <tr>
     <td style='text-align: left;' class='list0'>
@@ -55,10 +57,10 @@
     </td>
     {/foreach}
     <td>
-
       <input type='button' onClick="toggle_chk('^day_[0-9]*_[0-9]*$');" value='+/-' style='width:100%;'>
     </td>
   </tr>
+{/if}
 
   <!-- Add Entries -->
 {foreach from=$Matrix item=days key=key_day}
@@ -72,18 +74,19 @@
       {else}
         <td style="text-align:center;height: 22px; background-color: rgb(245, 245, 245); border-right: solid 1px;">
       {/if}
-        {if $Matrix[$key_day].$key_hour}
-          <input id='day_{$key_day}_{$key_hour}' type='checkbox' name='day_{$key_day}_{$key_hour}' checked >
-        {else}
-          <input id='day_{$key_day}_{$key_hour}' type='checkbox' name='day_{$key_day}_{$key_hour}' >
-        {/if}
+          <input type='checkbox' 
+            {if $acl} id='day_{$key_day}_{$key_hour}' name='day_{$key_day}_{$key_hour}' {/if}
+            {if $Matrix[$key_day].$key_hour} checked  {/if}
+            {if !$acl} disabled {/if}>
       </td>
     {/foreach}
 
+{if $acl}
     <!-- Add toggle button for days -->
     <td>  
       <input type='button' onClick="toggle_chk('^day_{$key_day}_[0-9]*$')" value='+/-'  style='padding:0px;margin:0px;'>
     </td>
+{/if}
   </tr>
 {/foreach}
 </table>
@@ -91,8 +94,10 @@
 <input type='hidden' name='sambaLogonHoursPosted' value='1'> 
 <br>
 <p class="plugbottom">
+{if $acl}
   <input type=submit name="save_logonHours" value="{msgPool type=saveButton}">
   &nbsp;
+{/if}
   <input type=submit name="cancel_logonHours" value="{msgPool type=cancelButton}">
 </p>
 

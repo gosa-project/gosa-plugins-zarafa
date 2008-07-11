@@ -250,7 +250,7 @@ class sambaAccount extends plugin
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
 
     /* Open Samaba Logong hours dialog */
-    if(isset($_POST['SetSambaLogonHours']) && $this->samba3 && $this->acl_is_writeable("sambaLogonHours")){
+    if(isset($_POST['SetSambaLogonHours']) && $this->samba3 && $this->acl_is_readable("sambaLogonHours")){
       $this->dialog = new sambaLogonHours($this->config,$this->dn,$this->sambaLogonHours);
     }
 
@@ -280,6 +280,10 @@ class sambaAccount extends plugin
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $var => $rest){
       $smarty->assign($var."ACL",$this->getacl($var,$SkipWrite));
+    }
+
+    if(!session::is_set('edit')){
+      $smarty->assign("sambaLogonHoursACL","");
     }
 
     if ($this->sambaPwdMustChange=="0"){

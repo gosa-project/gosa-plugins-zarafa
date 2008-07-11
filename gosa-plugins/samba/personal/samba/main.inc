@@ -96,7 +96,7 @@ if (!$remove_lock){
   }
 
   $info= "";
-  if (($sambaAccount->is_account) && (!$sambaAccount->show_ws_dialog) && empty($lock_msg)){
+  if (($sambaAccount->is_account) && (!$sambaAccount->dialog) && (!$sambaAccount->show_ws_dialog) && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */

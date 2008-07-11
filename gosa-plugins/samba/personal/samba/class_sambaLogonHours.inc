@@ -60,13 +60,16 @@ class sambaLogonHours extends plugin
 
     $week_days = msgPool::weekdays();
 
+    $ui =get_userinfo();
+    $smarty = get_smarty();
+    $acl = $ui->get_permissions($this->dn,"users/sambaAccount","sambaLogonHours");
+    $smarty->assign("acl",preg_match("/w/i",$acl));
+
     $hours = array();
     for($i = 0 ; $i <24 ; $i++ ){
       $hours[$i] = $i ;
     }
-    $ui =get_userinfo();
 
-    $smarty = get_smarty();
     $smarty->assign("Matrix",$this->Matrix);
     $smarty->assign("Days"  ,$week_days);
     $smarty->assign("Hours" ,$hours);
