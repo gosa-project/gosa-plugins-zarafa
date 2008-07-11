@@ -128,25 +128,31 @@ sub delete_jobdb_entry {
     my $source = @{$msg_hash->{'source'}}[0];
     
     # prepare query sql statement
-    my $table= $main::job_queue_tn;
     my $where= &get_where_statement($msg, $msg_hash);
-    my $sql_statement = "DELETE FROM $table $where";
-   	&main::daemon_log("$session_id DEBUG: $sql_statement",7);
+
+    #my $sql_statement = "DELETE FROM $main::job_queue_tn $where";
+   	#&main::daemon_log("$session_id DEBUG: $sql_statement",7);
     # execute db query
-    my $db_res = $main::job_db->del_dbentry($sql_statement);
+    #my $db_res = $main::job_db->del_dbentry($sql_statement);
+    #
+    #my $res;
+    #if( $db_res > 0 ) { 
+    #    $res = 0 ;
+    #} else {
+    #    $res = 1;
+    #}
 
-    my $res;
-    if( $db_res > 0 ) { 
-        $res = 0 ;
-    } else {
-        $res = 1;
-    }
-
+    # set job to status 'done', job will be deleted automatically
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+        "SET status='done', modified='1' ".
+        "$where";
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+    my $res = $main::job_db->update_dbentry( $sql_statement );
+ 
     # prepare xml answer
     my $out_xml = "<xml><header>answer</header><source>$target</source><target>$source</target><answer1>$res</answer1><session_id>$session_id</session_id></xml>";
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     if (defined $forward_to_gosa) {
-        #&add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
         $out_xml =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
     }
 
