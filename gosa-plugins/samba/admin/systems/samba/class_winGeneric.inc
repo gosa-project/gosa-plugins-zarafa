@@ -49,6 +49,8 @@ class wingeneric extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+    $this->netConfigDNS->MACisMust = FALSE;
+
     /* Set base */
     if ($this->dn == "new"){
       $ui= get_userinfo();
@@ -199,14 +201,9 @@ class wingeneric extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
-    $this->dn= "cn=".$this->cn.",".get_ou('componentou').$this->base;
-    
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
+    $this->dn= "cn=".$this->uid.",".get_ou('winstations').$this->base;
 
-    if(!$this->acl_is_createable() && $this->dn == "new"){
+    if(!$this->acl_is_createable()){
       $message[]= msgPool::permCreate();
     }
 
