@@ -10,10 +10,9 @@ my @events = (
     "opsi_get_client_software",
     "opsi_get_product_properties",
     "opsi_set_product_properties",
-
-    #"opsi_list_clients",
-    # Clients auflisten. Rückgabe -> name, dsecription
-    #getClients_listOfHashes
+    "opsi_list_clients",
+    "opsi_del_client",
+    "opsi_install_client",
 
     #"opsi_add_client",
     # Client hinzufügen
@@ -23,7 +22,7 @@ my @events = (
     # -> Description
     # -> Notizen
 
-    #"opsi_del_client",
+    #"opsi_modify_client",
 
     #"opsi_add_product_to_client",
     # -> set product state auf "setup"
@@ -35,9 +34,6 @@ my @events = (
     # createProductDependency('productId', 'action', '*requiredProductId', '*requiredProductClassId', '*requiredAction', '*requiredInstallationStatus', '*requirementType', '*depotIds')
     # -> delete nur wenn eine "uninstall" methode existiert
     # -> set product state auf "none"
-
-    #"opsi_install_client",
-    # Setze alles was auf "installed" steht auf setup
 
     );
 @EXPORT = @events;
@@ -284,7 +280,7 @@ sub opsi_get_product_properties {
       id  => 1,
     };
 
-    my $res = $client->call($opsi_url, $callobj);
+    $res = $client->call($opsi_url, $callobj);
 
     if (check_res($res)){
         my $r= $res->result;
@@ -426,6 +422,51 @@ sub opsi_get_client_hardware {
 
     $xml_msg=~ s/<xxx><\/xxx>//;
 
+    return $xml_msg;
+}
+
+
+sub opsi_list_clients {
+    my ($msg, $msg_hash) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+
+    # build return message with twisted target and source
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    if (defined $forward_to_gosa) {
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+
+    &add_content2xml_hash($out_hash, "xxx", "");
+    my $xml_msg= &create_xml_string($out_hash);
+
+    # JSON Query
+    my $callobj = {
+      method  => 'getClients_listOfHashes',
+      params  => [ ],
+      id  => 1,
+    };
+
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+
+      foreach my $host (@{$res->result}){
+        my $item= "<item><name>".$host->{'hostId'}."</name>";
+        if (defined($host->{'description'})){
+          $item.= "<description>".xml_quote($host->{'description'})."</description>";
+        }
+        $item.= "</item>";
+        $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
+      }
+
+    }
+
+    $xml_msg=~ s/<xxx><\/xxx>//;
     return $xml_msg;
 }
 
@@ -630,6 +671,74 @@ sub _opsi_get_client_status {
   }
 
   return $result;
+}
+
+
+sub opsi_del_client {
+    my ($msg, $msg_hash) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId = @{$msg_hash->{'hostId'}}[0];
+
+    # build return message with twisted target and source
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    if (defined $forward_to_gosa) {
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+    &add_content2xml_hash($out_hash, "hostId", "$hostId");
+
+    # JSON Query
+    my $callobj = {
+      method  => 'deleteClient',
+      params  => [ $hostId ],
+      id  => 1,
+    };
+
+    my $res = $client->call($opsi_url, $callobj);
+
+    my $xml_msg= &create_xml_string($out_hash);
+    return $xml_msg;
+}
+
+
+# Setze alles was auf "installed" steht auf setup
+sub opsi_install_client {
+    my ($msg, $msg_hash) = @_;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $session_id = @{$msg_hash->{'session_id'}}[0];
+    my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+    my $hostId = @{$msg_hash->{'hostId'}}[0];
+
+    # build return message with twisted target and source
+    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    &add_content2xml_hash($out_hash, "session_id", $session_id);
+
+    if (defined $forward_to_gosa) {
+      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+    }
+    &add_content2xml_hash($out_hash, "hostId", "$hostId");
+
+# Schaue nach produkten für diesen Host
+# Setze alle Produkte dieses Hosts auf "setup"
+
+#    # JSON Query
+#    my $callobj = {
+#      method  => 'deleteClient',
+#      params  => [ $hostId ],
+#      id  => 1,
+#    };
+#
+#    my $res = $client->call($opsi_url, $callobj);
+
+    my $xml_msg= &create_xml_string($out_hash);
+    return $xml_msg;
 }
 
 
