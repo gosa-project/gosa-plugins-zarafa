@@ -33,7 +33,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     # jobdb update  
     #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source> <target>GOSA</target> <where><clause><phrase> <id>1</id></phrase></clause></where> <update><timestamp>19700101000000</timestamp></update></xml>";
-    $data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
+    #$data = "<xml> <header>gosa_update_status_jobdb_entry</header> <source>GOSA</source><target>GOSA</target><where><clause><phrase> <macaddress>00:01:6c:9d:b9:fa</macaddress></phrase></clause> </where> <update><status>processing</status> <result>update</result></update></xml>";
 
     # jobdb query
     #$data = "<xml><header>gosa_query_jobdb</header><source>GOSA</source> <target>GOSA</target><where><clause><connector>and</connector><phrase><operator>gt</operator><ROWID>0</ROWID></phrase><phrase><operator>le</operator><ROWID>5</ROWID></phrase></clause></where></xml>";
@@ -113,6 +113,41 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_ping</header> <source>GOSA</source> <target>00:0c:29:02:e5:4d</target> <macaddress>00:0c:29:02:e5:4d</macaddress><timestamp>29700101000000</timestamp> </xml>";
 
     #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source> <target>GOSA</target> <hostname>localhost</hostname> </xml>";
+
+    ########
+    # Opsi testing
+
+    # Get all netboot products
+    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
+
+    # Get netboot product for specific host
+    # -->
+    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+    # Get all localboot products
+    $data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
+    
+    # Get localboot product for specific host
+    #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+    # Get product properties - global
+    $data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>winxppro</ProductId></xml>";
+
+    # Get product properties - per host
+    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>firefox</ProductId> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+
+    # Set product properties - global
+    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
+
+    # Set product properties - per host
+    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <ProductId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
+
+    # Get hardware inventory
+    #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    
+    # Get software inventory
+    #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+
 
     $sock->write($data);
     $answer = "nothing";
