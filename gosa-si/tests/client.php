@@ -148,6 +148,11 @@ for($count = 1; $count <= $zahl; $count++)
     # Get software inventory
     #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
+    # List Opsi clients
+    #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
+
+    # Delete Opsi client
+    $data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
 
     $sock->write($data);
     $answer = "nothing";
