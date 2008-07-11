@@ -3,12 +3,42 @@ use Exporter;
 @ISA = qw(Exporter);
 my @events = (
     "get_events",
+    "_opsi_get_client_status",
     "opsi_get_netboot_products",  
     "opsi_get_local_products",
-    "opsi_get_product_properties",
-    "opsi_set_product_properties",
     "opsi_get_client_hardware",
     "opsi_get_client_software",
+    "opsi_get_product_properties",
+    "opsi_set_product_properties",
+
+    #"opsi_list_clients",
+    # Clients auflisten. Rückgabe -> name, dsecription
+    #getClients_listOfHashes
+
+    #"opsi_add_client",
+    # Client hinzufügen
+    # -> voll qualifizierter name
+    # -> IP
+    # -> MAC
+    # -> Description
+    # -> Notizen
+
+    #"opsi_del_client",
+
+    #"opsi_add_product_to_client",
+    # -> set product state auf "setup"
+    # -> Abhängigkeit prüfen und evtl. erweitern
+    # createProductDependency('productId', 'action', '*requiredProductId', '*requiredProductClassId', '*requiredAction', '*requiredInstallationStatus', '*requirementType', '*depotIds')
+
+    #"opsi_del_product_from_client",
+    # -> Abhängigkeit prüfen und evtl. verweigern
+    # createProductDependency('productId', 'action', '*requiredProductId', '*requiredProductClassId', '*requiredAction', '*requiredInstallationStatus', '*requirementType', '*depotIds')
+    # -> delete nur wenn eine "uninstall" methode existiert
+    # -> set product state auf "none"
+
+    #"opsi_install_client",
+    # Setze alles was auf "installed" steht auf setup
+
     );
 @EXPORT = @events;
 
@@ -227,12 +257,28 @@ sub opsi_get_product_properties {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
     &add_content2xml_hash($out_hash, "ProducId", "$productId");
+
+    # Load actions
+    my $callobj = {
+      method  => 'getPossibleProductActions_list',
+      params  => [ $productId ],
+      id  => 1,
+    };
+    my $res = $client->call($opsi_url, $callobj);
+    if (check_res($res)){
+      foreach my $action (@{$res->result}){
+        &add_content2xml_hash($out_hash, "action", $action);
+      }
+    }
+
+    # Add place holder
     &add_content2xml_hash($out_hash, "xxx", "");
+
+    # Move to XML string
     my $xml_msg= &create_xml_string($out_hash);
 
-
     # JSON Query
-    my $callobj = {
+    $callobj = {
       method  => 'getProductProperties_hash',
       params  => [ $productId ],
       id  => 1,
@@ -255,7 +301,8 @@ sub opsi_get_product_properties {
           $item.= "</item>";
           $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
         }
-  }
+    }
+
 
   $xml_msg=~ s/<xxx><\/xxx>//;
 
@@ -282,6 +329,14 @@ sub opsi_set_product_properties {
     if (defined @{$msg_hash->{'hostId'}}[0]){
       $hostId = @{$msg_hash->{'hostId'}}[0];
       &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
+
+    # Set product states if requested
+    if (defined @{$msg_hash->{'action'}}[0]){
+      &_set_action($productId, @{$msg_hash->{'action'}}[0], $hostId);
+    }
+    if (defined @{$msg_hash->{'state'}}[0]){
+      &_set_state($productId, @{$msg_hash->{'state'}}[0], $hostId);
     }
 
     if (defined $forward_to_gosa) {
@@ -525,6 +580,88 @@ sub opsi_get_local_products {
   $xml_msg=~ s/<xxx><\/xxx>//;
 
   return $xml_msg;
+}
+
+
+sub _opsi_get_client_status {
+  my $hostId = shift;
+  my $result= {};
+
+  # For hosts, only return the products that are or get installed
+  my $callobj;
+  $callobj = {
+    method  => 'getProductStates_hash',
+    params  => [ $hostId ],
+    id  => 1,
+  };
+
+  my $hres = $client->call($opsi_url, $callobj);
+  if (check_res($hres)){
+    my $htmp= $hres->result->{$hostId};
+
+    # check state != not_installed or action == setup -> load and add
+    my $products= 0;
+    my $installed= 0;
+    my $error= 0;
+    foreach my $product (@{$htmp}){
+
+      if ($product->{'installationStatus'} ne "not_installed" or
+          $product->{'actionRequest'} eq "setup"){
+
+        # Increase number of products for this host
+        $products++;
+
+        if ($product->{'installationStatus'} eq "failed"){
+          $result->{$product->{'productId'}}= "error";
+          $error++;
+        }
+        if ($product->{'installationStatus'} eq "installed"){
+          $result->{$product->{'productId'}}= "installed";
+          $installed++;
+        }
+        if ($product->{'installationStatus'} eq "installing"){
+          $result->{$product->{'productId'}}= "installing";
+        }
+      }
+    }
+
+    # Estimate "rough" progress
+    $result->{'progress'}= int($installed * 100 / $products);
+  }
+
+  return $result;
+}
+
+
+sub _set_action {
+  my $product= shift;
+  my $action = shift;
+  my $hostId = shift;
+  my $callobj;
+
+  $callobj = {
+    method  => 'setProductActionRequest',
+    params  => [ $product, $hostId, $action],
+    id  => 1,
+  };
+
+  $client->call($opsi_url, $callobj);
+}
+
+
+sub _set_state {
+  my $product = shift;
+  my $hostId = shift;
+  my $action = shift;
+  my $callobj;
+
+  $callobj = {
+    method  => 'setProductState',
+    params  => [ $product, $hostId, $action ],
+    id  => 1,
+  };
+
+  $client->call($opsi_url, $callobj);
 }
 
 1;
