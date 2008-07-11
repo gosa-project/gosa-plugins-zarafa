@@ -28,6 +28,7 @@ my @functions = (
     "get_interfaces",
     "is_local",
     "run_as",
+    "inform_all_other_si_server",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -674,5 +675,38 @@ sub run_as {
 	return $result;
 }
 
+
+#===  FUNCTION  ================================================================
+#         NAME:  inform_other_si_server
+#   PARAMETERS:  message
+#      RETURNS:  nothing
+#  DESCRIPTION:  Sends message to all other SI-server found in known_server_db. 
+#===============================================================================
+sub inform_all_other_si_server {
+    my ($msg) = @_;
+
+    # determine all other si-server from known_server_db
+    my $sql_statement= "SELECT * FROM $main::known_server_tn";
+    my $res = $main::known_server_db->select_dbentry( $sql_statement ); 
+
+    while( my ($hit_num, $hit) = each %$res ) {    
+        my $act_target_address = $hit->{hostname};
+        my $act_target_key = $hit->{hostkey};
+
+        # determine the source address corresponding to the actual target address
+        my ($act_target_ip, $act_target_port) = split(/:/, $act_target_address);
+        my $act_source_address = &main::get_local_ip_for_remote_ip($act_target_ip).":$act_target_port";
+
+        # fill into message the correct target and source addresses
+        my $act_msg = $msg;
+        $act_msg =~ s/<target>\w*<\/target>/<target>$act_target_address<\/target>/g;
+        $act_msg =~ s/<source>\w*<\/source>/<source>$act_source_address<\/source>/g;
+
+        # send message to the target
+        &main::send_msg_to_target($act_msg, $act_target_address, $act_target_key, "foreign_job_updates" , "J");
+    }
+
+    return;
+}
 
 1;

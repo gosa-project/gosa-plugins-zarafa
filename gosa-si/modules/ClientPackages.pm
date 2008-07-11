@@ -944,6 +944,8 @@ sub hardware_config {
 				xmlmessage=>'none',
 				macaddress=>$macaddress,
 				plainname=>'none',
+                siserver=>'localhost',
+                modified=>'1',
 		};
 		my $hd_res = $main::job_db->add_dbentry($func_dic);
 		&main::daemon_log("$session_id INFO: add '$macaddress' to job queue as an installing job", 5);

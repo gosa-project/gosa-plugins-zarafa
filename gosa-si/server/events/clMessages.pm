@@ -379,11 +379,13 @@ sub TASKBEGIN {
 				&main::daemon_log("$session_id DEBUG: there are more than one processing job in queue for host '$macaddress', ".
 								"delete entries", 7); 
 
-				my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'";
-				my ($err) = $main::job_db->del_dbentry($sql_statement);
-				if (not defined $err) {
-					&main::daemon_log("$session_id ERROR: can not delete multiple processing queue entries for host '$macaddress': ".Dumper($err), 1); 
-				}
+                # set job to status 'done', job will be deleted automatically
+                my $sql_statement = "UPDATE $main::job_queue_tn ".
+                    "SET status='done', modified='1'".
+                    "WHERE status='processing' AND macaddress LIKE '$macaddress'";
+                &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+                my $res = $main::job_db->update_dbentry( $sql_statement );
+
 			}
 		
 			# in case of no and more than one running jobs in queue, add one single job
@@ -460,25 +462,22 @@ sub TASKEND {
 
 	if ($content eq "savelog 0") {
 		&main::daemon_log("$session_id DEBUG: got savelog from host '$target' - job done", 7);
-		my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
-		my $res = $main::job_db->del_dbentry($sql_statement);
+        
+        # set job to status 'done', job will be deleted automatically
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+					"SET status='done', modified='1'".
+                    "WHERE status='processing' AND macaddress LIKE '$macaddress'";
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+        my $res = $main::job_db->update_dbentry( $sql_statement );
 
 	} else {
-
-			my $sql_statement = "UPDATE $main::job_queue_tn ".
-					"SET status='processing', result='$header "."$content', modified='1' ".
-					"WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
-			&main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
-			my $res = $main::job_db->update_dbentry($sql_statement);
-			&main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
-
+        my $sql_statement = "UPDATE $main::job_queue_tn ".
+            "SET status='processing', result='$header "."$content', modified='1' ".
+            "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
+        my $res = $main::job_db->update_dbentry($sql_statement);
+        &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 	}
-# -----------------------> Update hier
-#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
-#  <header>CLMSG_TASKBEGIN</header>
-# macaddress auslesen, Client im LDAP lokalisieren
-# FAIstate auf "error" setzen
 
     return; 
 }

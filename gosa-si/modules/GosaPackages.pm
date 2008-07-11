@@ -312,7 +312,7 @@ sub process_job_msg {
             macaddress=>$macaddress,
 			plainname=>$plain_name,
             siserver=>"localhost",
-            modified=>"0",
+            modified=>"1",
         };
         my $res = $main::job_db->add_dbentry($func_dic);
         if (not $res == 0) {

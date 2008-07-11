@@ -443,11 +443,13 @@ sub trigger_action_faireboot {
     &main::change_goto_state('locked', \@{$msg_hash->{macaddress}}, $session_id);
 	&main::change_fai_state('install', \@{$msg_hash->{macaddress}}, $session_id); 
 
-    # delete all jobs from jobqueue which correspond to fai
-    my $sql_statement = "DELETE FROM $main::job_queue_tn WHERE (macaddress='$macaddress' AND ".
-        "status='processing')";
-    $main::job_db->del_dbentry($sql_statement ); 
-                                             
+    # set job to status 'done', job will be deleted automatically
+    my $sql_statement = "UPDATE $main::job_queue_tn ".
+        "SET status='done', modified='1'".
+        "WHERE (macaddress='$macaddress' AND status='processing')";
+    &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
+    my $res = $main::job_db->update_dbentry( $sql_statement );
+
     return @out_msg_l;
 }
 
