@@ -185,7 +185,7 @@ class netatalk extends plugin {
         } elseif (count($this->shares)== 0) {
           $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk"), _("netatalk or NFS share")), TRUE);
         } else {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk")), TRUE);
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk")));
         } 
         return ($display);
       }
