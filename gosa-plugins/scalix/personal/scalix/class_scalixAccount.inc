@@ -111,6 +111,8 @@ class scalixAccount extends plugin
       $this->is_account= !$this->is_account;
     }
 
+    $ReadOnly = !session::is_set("edit") && !isset($this->parent);
+
     /* Show main page */
     $mailboxClasses = array("", "LIMITED", "FULL");
     $serverLanguages= array("", "GERMAN", "ENGLISH");
@@ -155,7 +157,7 @@ class scalixAccount extends plugin
       "scalixLimitInboundMail", "scalixLimitNotifyUser", "scalixHideUserEntry", "scalixMailboxClass") as $val){
 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val, !session::is_set('edit')));
+      $smarty->assign("$val"."ACL", $this->getacl($val, $ReadOnly));
     }
 
     /* Fill checkboxes */
@@ -254,7 +256,7 @@ class scalixAccount extends plugin
 
         /* Check write access */
         if(!$this->acl_is_writeable("scalixEmailAddress")){
-	  msg_dialog::display(_("Error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
         }else{
 
           /* Mail address already in use ? */
@@ -269,9 +271,9 @@ class scalixAccount extends plugin
       }
 
       /* Delete email addresses */
-      if (isset($_POST['delete_email']) && isset ($_POST['emails_list'])){
+      if (isset($_POST['delete_email']) && isset ($_POST['emails_list']) && $this->acl_is_writeable("scalixEmailAddress")){
         if(!$this->acl_is_writeable("scalixEmailAddress")){
-	  msg_dialog::display(_("Error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
+          msg_dialog::display(_("Error"), _("You have no permission to modify these addresses."), ERROR_DIALOG);
         }else{
           if (count($_POST['emails_list'])){
             $this->delEmail ($_POST['emails_list']);
