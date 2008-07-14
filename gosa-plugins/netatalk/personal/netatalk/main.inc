@@ -110,7 +110,7 @@ if (!$remove_lock) {
   }
 
   /* Page header*/
-  $display = print_header(get_template_path('images/netatalk.png'), _("Netatalk settings"), $info).$display;
+  $display = print_header(get_template_path('plugins/netatalk/images/plugin.png'), _("Netatalk settings"), $info).$display;
 
 }
 
