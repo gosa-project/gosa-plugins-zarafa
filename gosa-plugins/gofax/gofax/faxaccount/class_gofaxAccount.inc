@@ -869,15 +869,15 @@ class gofaxAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "goFaxIsEnabled"                    => _("Enable/Disable fax"),
-            "goFaxRBlocklist"                   => _("Receive blocklist"),
-            "goFaxSBlocklist"                   => _("Send blocklist"),
             "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
+            "goFaxLanguage"                     => _("Language"),
+            "goFaxFormat"                       => _("Delivery format"),
             "facsimileAlternateTelephoneNumber" => _("Alternate fax number"), // goFaxDeliveryMode
+            "goFaxIsEnabled"                    => _("Enable/Disable fax"),
             "faxtomail"                         => _("Deliver fax as mail"),
             "faxtoprinter"                      => _("Deliver fax to printer"),
-            "goFaxFormat"                       => _("Delivery format"),
-            "goFaxLanguage"                     => _("Language"))
+            "goFaxRBlocklist"                   => _("Receive blocklist"),
+            "goFaxSBlocklist"                   => _("Send blocklist"))
           ));
   }
 
