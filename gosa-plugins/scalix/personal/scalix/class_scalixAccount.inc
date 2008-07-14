@@ -155,7 +155,7 @@ class scalixAccount extends plugin
       "scalixLimitInboundMail", "scalixLimitNotifyUser", "scalixHideUserEntry", "scalixMailboxClass") as $val){
 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val));
+      $smarty->assign("$val"."ACL", $this->getacl($val, !session::is_set('edit')));
     }
 
     /* Fill checkboxes */
@@ -241,7 +241,7 @@ class scalixAccount extends plugin
       plugin::save_object();
 
       /* Check if given value is not empty */
-      if ($_POST['email_address'] != ""){
+      if (isset($_POST['email_address']) && !empty($_POST['email_address'])){
         $valid= FALSE;
 
         /* Valid mail address */
