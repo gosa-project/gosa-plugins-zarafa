@@ -37,7 +37,7 @@ class selectPrinterDialog extends plugin
     /* Load possible departments */
     $ui= get_userinfo();
     $this->ui = $ui;
-    $tdeps= $ui->get_module_departments("users");
+    $tdeps= $ui->get_module_departments("printer");
     $ids = $this->config->idepartments;
     $first = "";
     $found = FALSE;
@@ -136,15 +136,11 @@ class selectPrinterDialog extends plugin
     }
 
     foreach($res as $printer)  {
-
-      $acl = $this->ui->get_permissions($printer['dn'],"printer/printgeneric","gotoUserPrinter");
-
+      $acl = $this->ui->get_permissions($printer['dn'],"printer/printgeneric","gotoUserPrinter");;
       if(!preg_match("/w/",$acl)){
         continue;
       }
-
       if(isset($this->AlreadyAssigned[$printer['cn'][0]])) continue;
-
       if($detailed ==true){
         $a_return[$printer['cn'][0]] = $printer;
       }else{
@@ -158,10 +154,6 @@ class selectPrinterDialog extends plugin
     return($a_return);
   }
 }
-
-
-
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
