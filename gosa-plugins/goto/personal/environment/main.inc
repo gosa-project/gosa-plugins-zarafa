@@ -119,7 +119,7 @@ if (!$remove_lock){
   }
 
   /* Page header*/
-  $display= print_header(get_template_path('images/email.png'), _("User environment settings"), $info).$display;
+  $display= print_header(get_template_path('plugins/goto/images/plugin.png'), _("User environment settings"), $info).$display;
 
 }
 
