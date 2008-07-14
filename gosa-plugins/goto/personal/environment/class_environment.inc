@@ -739,7 +739,7 @@ class environment extends plugin
 
 
     $tmp = array();
-    if($this->acl_is_readable("gotoShares")){
+    if($this->acl_is_readable("gotoShare")){
       $tmp = $this->printOutAssignedShares();
     }
 
@@ -1772,19 +1772,15 @@ class environment extends plugin
 
           "plProvidedAcls"  => array(
 
-            "gotoProfileFlagL"    => _("Resolution changeable during session") ,
-            "gotoProfileFlagC"    => _("Cache profile localy") ,
-
-            "gotoProfileQuota"    => _("Profile quota") ,
             "gotoProfileServer"   => _("Profile server") ,
-
-            "gotoXResolution"     => _("Resolution") ,
-            "gotoKioskProfile"    => _("Kiosk profile") ,
-
-            "gosaDefaultPrinter"  => _("Default printer") ,
-            "gotoLogonScript"     => _("Logon script") ,
+            "gotoProfileQuota"    => _("Profile quota") ,
+            "gotoProfileFlagC"    => _("Cache profile localy") ,
+            "gotoShare"           => _("Shares"),
             "gotoHotplugDevice"   => _("Hotplug devices"),
-            "gotoShare"           => _("Shares"))
+            "gotoKioskProfile"    => _("Kiosk profile") ,
+            "gotoProfileFlagL"    => _("Resolution changeable during session") ,
+            "gotoXResolution"     => _("Resolution") ,
+            "gotoLogonScript"     => _("Logon script"))
             ));
   }
 }

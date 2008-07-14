@@ -19,10 +19,11 @@
  */
 $lock_msg = "";
 if (!$remove_lock){
+
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) || 
       (isset($_GET['reset']) && $_GET['reset'] == 1)){
-#    del_lock ($ui->dn);
+    del_lock ($ui->dn);
     session::un_set ('edit');
     session::un_set ('environment');
   }
