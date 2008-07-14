@@ -45,7 +45,7 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit']) && preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
+  if (isset($_POST['edit']) && preg_match("/r/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
 
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
@@ -113,7 +113,7 @@ if (!$remove_lock){
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
             "\"> ".msgPool::clickEditToChange();
 
-        if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
+        if(preg_match("/r/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
           $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
         }
 
