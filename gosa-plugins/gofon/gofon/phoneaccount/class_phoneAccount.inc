@@ -1610,9 +1610,9 @@ class phoneAccount extends plugin
 
           "plProvidedAcls"  => array(
             "telephoneNumber"     => _("Telephone number"),
-            "goFonHomeServer"     => _("Home server"),
             "goFonMacro"          => _("Macro settings"),
             "goFonHardware"       => _("Phone hardware"),
+            "goFonHomeServer"     => _("Home server"),
             "goFonContext"          => _("Phone context"),
             "goFonVoiceMailContext" => _("Voice mail context"),
             "goFonPIN"            => _("Telephone pin"),
