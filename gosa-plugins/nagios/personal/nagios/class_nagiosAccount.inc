@@ -282,26 +282,23 @@ class nagiosAccount extends plugin
           "plProvidedAcls"  => array(
 
             "NagiosAlias"                       =>  _("Alias"),
-            "NagiosPager"                       =>  _("Pager number"),
             "NagiosMail"                        =>  _("Mail address"),
-
-            "HostNotificationCommands"          =>  _("Host notification commands"),
-            "HostNotificationOptions"           =>  _("Host notification options"),
             "HostNotificationPeriod"            =>  _("Host notification period"),
+            "ServiceNotificationPeriod"         =>  _("Service notification period"),
+            "HostNotificationOptions"           =>  _("Host notification options"),
+            "ServiceNotificationOptions"        =>  _("Service notification options"),
+            "NagiosPager"                       =>  _("Pager number"),
 
             "ServiceNotificationCommands"       =>  _("Service notification commands"),
-            "ServiceNotificationOptions"        =>  _("Service notification options"),
-            "ServiceNotificationPeriod"         =>  _("Service notification period"),
-
-            "AuthorizedAllHosts"                =>  _("View all hosts"),
-            "AuthorizedAllServices"             =>  _("View all services"),
-
-            "AuthorizedSystemCommands"          =>  _("Trigger system commands"),
-            "AuthorizedAllHostCommands"         =>  _("Trigger all host commands"),
-            "AuthorizedAllServiceCommands"      =>  _("Trigger all service commands"),
-
+            "HostNotificationCommands"          =>  _("Host notification commands"),
+            "AuthorizedSystemInformation"       =>  _("View system informations"),
             "AuthorizedConfigurationInformation"=>  _("View configuration information"),
-            "AuthorizedSystemInformation"       =>  _("View system informations"))
+            "AuthorizedSystemCommands"          =>  _("Trigger system commands"),
+            "AuthorizedAllServices"             =>  _("View all services"),
+            "AuthorizedAllHosts"                =>  _("View all hosts"),
+            "AuthorizedAllServiceCommands"      =>  _("Trigger all service commands"),
+            "AuthorizedAllHostCommands"         =>  _("Trigger all host commands"))
+
       ));
   }
 }

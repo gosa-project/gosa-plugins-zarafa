@@ -111,7 +111,7 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
              "\"> ".$ui->dn."&nbsp;";
 
-      if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/nagiosAccount"))){
+      if(preg_match("/r/",$ui->get_permissions($ui->dn,"users/nagiosAccount"))){
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
           "\"> ".msgPool::clickEditToChange();
         $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
@@ -122,7 +122,7 @@ if (!$remove_lock){
   }
 
   /* Page header*/
-  $display= print_header(get_template_path('images/monitoring.png'), _("Nagios settings"), $info).$display;
+  $display= print_header(get_template_path('plugins/nagios/images/plugin.png'), _("Nagios settings"), $info).$display;
 
 }
 
