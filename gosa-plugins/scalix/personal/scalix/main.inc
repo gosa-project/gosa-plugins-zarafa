@@ -122,7 +122,7 @@ if (!$remove_lock){
   $info= "";
 
   /* Page header*/
-  $display= print_header(get_template_path('images/scalix.png'), _("Scalix settings"), $info).$display;
+  $display= print_header(get_template_path('plugins/scalix/images/plugin.png'), _("Scalix settings"), $info).$display;
 
 }
 
