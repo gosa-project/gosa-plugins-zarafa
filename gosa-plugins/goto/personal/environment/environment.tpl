@@ -116,6 +116,7 @@
   </td>
   <td style="vertical-align:top">
 
+
   <table summary="{t}Kiosk profile settings{/t}">
 {if $kiosk_enabled }
     <tr>
@@ -132,18 +133,22 @@
 					 changeState('kiosk_profile');"> 
 {/if}
 	  {t}Server{/t}
+{render acl=$gotoKioskProfileACL}
       <select name='kiosk_server' id="kiosk_server" onChange='document.mainform.submit();'
 		{if !$use_kiosk_server && $multiple_support} disabled {/if}>
        {html_options options=$kiosk_servers selected=$kiosk_server}
       </select>
+{/render}
      </td>
      <td>
       {if $kiosk_server != "none"}
       {t}Profile{/t}
+{render acl=$gotoKioskProfileACL}
       <select name='kiosk_profile' id="kiosk_profile"
         {if !$use_kiosk_server && $multiple_support} disabled {/if}>
        {html_options values=$kiosk_profiles output=$kiosk_profiles selected=$kiosk_profile}
       </select>
+{/render}
       {else}
         &nbsp;
       {/if}

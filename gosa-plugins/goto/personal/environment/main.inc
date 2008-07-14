@@ -43,7 +43,7 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit'])){
+  if (isset($_POST['edit']) || isset($_POST['delete_lock'])){
   
    /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
@@ -94,11 +94,11 @@ if (!$remove_lock){
 
   $info= "";
   /* Show page footer depending on the mode */
-  if (!$environment->in_dialog && $environment->is_account  && empty($lock_msg)){
+  if (!$environment->in_dialog && !$environment->dialog && $environment->is_account  && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */
-    if ((session::is_set('edit'))&&($environment->dialog===NULL)){
+    if (session::is_set('edit')){
       $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
       $display.= "&nbsp;";
       $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";

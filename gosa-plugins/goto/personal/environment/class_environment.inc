@@ -275,7 +275,7 @@ class environment extends plugin
     $cnt = 0;
     $ui = get_userinfo();
     while($attrs = $ldap->fetch()){
-      $acl = $ui->get_permissions($attrs['dn'],"server/goShareServer","");
+      $acl = $ui->get_permissions($attrs['dn'],"server/goKioskService","");
       for($i = 0 ; $i < $attrs['gotoKioskProfile']['count'] ; $i ++){
         if(preg_match("/r/",$acl) || $this->gotoKioskProfile_Server == $attrs['cn'][0]){
           $name = preg_replace("/^.*\//","",$attrs['gotoKioskProfile'][$i]);
