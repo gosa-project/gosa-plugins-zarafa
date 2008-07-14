@@ -432,6 +432,7 @@ class faiManagement extends plugin
 
 			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
       $this->dialog->parent = &$this;
+      $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];;
       $this->dialog->set_acl_base($this->dn);
 			$this->is_dialog  = true;
 
@@ -1122,7 +1123,7 @@ class faiManagement extends plugin
           /* Append type to this string, to be able to check if the selected 
            * entry is of type 'freeze' or 'branch'
            */
-          if(!isset($object['FAIstate'])){
+#          if(!isset($object['FAIstate'])){
             
             /* Is this entry inherited from an earlier release? 
                In this case inherit the FAIstate from the release container.
@@ -1135,9 +1136,9 @@ class faiManagement extends plugin
               $obj['FAIstate'] = $this->lock_type;
             }
   
-          }else{
-            $obj['FAIstate'] = $object['FAIstate'][0]; 
-          }
+#          }else{
+#            $obj['FAIstate'] = $object['FAIstate'][0]; 
+#          }
 
           if($force_freezed && !$this->allow_freeze_object_attach){
             $obj['FAIstate'] = "freeze";
