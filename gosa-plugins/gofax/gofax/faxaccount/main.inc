@@ -106,7 +106,7 @@ if (!$remove_lock){
 	}
 	
 	/* Page header*/
-	$display= print_header(get_template_path('images/fax.png'), _("FAX settings"), $info).$display;
+	$display= print_header(get_template_path('plugins/gofax/images/plugin.png'), _("FAX settings"), $info).$display;
 
 }
 ?>
