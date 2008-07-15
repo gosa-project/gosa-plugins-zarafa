@@ -15,7 +15,7 @@ class environment extends plugin
 
   var $is_group             = false;
   var $view_logged = FALSE;
-  
+ vn 
   /* Attribute definition
    */
 
