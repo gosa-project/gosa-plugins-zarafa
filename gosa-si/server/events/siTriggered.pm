@@ -164,19 +164,24 @@ sub detected_hardware {
 		&main::daemon_log("INFO: Need to create a new LDAP Entry for client $address", 4);
 		my $ipaddress= $1 if $address =~ /^([0-9\.]*?):.*$/;
 		my $dnsname;
+		#FIXME: like in ClientPackages!
 		#if ( defined($heap->{force-hostname}->{$macaddress}) ){
 		#	$dnsname= $heap->{force-hostname}->{$macaddress};
 		#	&main::daemon_log("INFO: Using forced hostname $dnsname for client $address", 4);
-		#} else {
+		if (-e "/var/tmp/$macaddress" ){
+			open(TFILE, "< /var/tmp/$macaddress");
+			$dnsname= <TFILE>;
+			close(TFILE);
+		} else {
 			$dnsname= gethostbyaddr(inet_aton($ipaddress), AF_INET) || $ipaddress;
-		#}
+		}
 
 		my $cn = (($dnsname =~ /^(\d){1,3}\.(\d){1,3}\.(\d){1,3}\.(\d){1,3}/) ? $dnsname : sprintf "%s", $dnsname =~ /([^\.]+)\.?/);
 		my $dn = "cn=$cn,ou=incoming,$ldap_base";
 		&main::daemon_log("INFO: Creating entry for $dn",5);
 		my $entry= Net::LDAP::Entry->new( $dn );
 		$entry->dn($dn);
-		$entry->add("objectClass" => "goHard");
+		$entry->add("objectClass" => "GOhard");
 		$entry->add("cn" => $cn);
 		$entry->add("macAddress" => $macaddress);
 		$entry->add("gotomode" => "locked");

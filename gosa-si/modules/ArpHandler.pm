@@ -346,7 +346,7 @@ sub add_ldap_entry {
 		# create LDAP entry 
 		my $entry = Net::LDAP::Entry->new( $dn );
 		$entry->dn($dn);
-		$entry->add("objectClass" => "goHard");
+		$entry->add("objectClass" => "GOhard");
 		$entry->add("cn" => $hosts_database->{$mac}->{cn});
 		$entry->add("macAddress" => $mac);
 		if(defined $gotoSysStatus) {$entry->add("gotoSysStatus" => $gotoSysStatus)}

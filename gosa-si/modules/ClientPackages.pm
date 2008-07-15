@@ -421,12 +421,19 @@ sub here_i_am {
     my $key_lifetime = @{$msg_hash->{key_lifetime}}[0];
 
     # Move forced hostname to heap - if used
-    #if ( defined($msg_hash->{'force-hostname'}[0]) &&
-    #   length($msg_hash->{'force-hostname'}[0]) > 0){
+    #FIXME: move to some global POE namespace - please
+    if ( defined($msg_hash->{'force-hostname'}[0]) &&
+       length($msg_hash->{'force-hostname'}[0]) > 0){
     #      $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
-    #} else {
+	    open (TFILE, ">/var/tmp/$mac_address");
+	    print TFILE $msg_hash->{'force-hostname'}[0];
+	    close (TFILE); 
+    } else {
     #      $heap->{force-hostname}->{$mac_address}= undef;
-    #}
+	if ( -e "/var/tmp/$mac_address") {
+		unlink("/var/tmp/$mac_address")
+	}; 
+    }
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
