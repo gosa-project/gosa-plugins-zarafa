@@ -21,7 +21,7 @@
 				<tr>
 				 	<td style="vertical-align:top;">
 			   			<h2>
-							<img class="center" alt="" align="middle" src="images/alternatemail.png" />
+							<img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png" />
 							<label for="alternates_list">{t}Alternative addresses{/t}</label>
 						</h2>
 					</td>

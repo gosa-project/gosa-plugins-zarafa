@@ -61,7 +61,7 @@
 	&nbsp;
   </td>
 	<td>	
-   <h2><img class="center" alt="" align="middle" src="images/alternatemail.png" /><label for="alternates_list"> {t}Alternative addresses{/t}</label></h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png" /><label for="alternates_list"> {t}Alternative addresses{/t}</label></h2>
 {render acl=$gosaMailAlternateAddressACL}
    <select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15" multiple 
 	title="{t}List of alternative mail addresses{/t}">
