@@ -81,7 +81,9 @@ class netatalk extends plugin {
       $this->uid = $this->attrs['uid'][0];
     }
 
-    /* Copy needed attributes */
+    /* Netatalk attribute include '-' and we can't handle thos attribute names.
+       Copy all thos attribute into a useable name.
+     */
     foreach($this->attributes as $val) {
       $name = str_replace('_', '-', $val);
       if (isset($this->attrs[$name][0])) {
@@ -89,8 +91,11 @@ class netatalk extends plugin {
       }
     }
 
+    /* Extract homepath value 
+     */
     if (strlen($this->apple_user_homeDirectory) >0) {
-      $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
+      $this->apple_user_homepath_raw = i
+        substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
     }
 
     /* get share list an set default values */
@@ -167,8 +172,8 @@ class netatalk extends plugin {
 
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent === NULL) {
-      $display = "<img alt=\"\"src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".msgPool::noValidExtension(_("netatalk"))."</b>";
-
+      $display = "<img alt=\"\"src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
+        msgPool::noValidExtension(_("netatalk"))."</b>";
       $display .= back_to_main();
       return ($display);
     }
@@ -176,16 +181,20 @@ class netatalk extends plugin {
     /* Show tab dialog headers */
     if ($this->parent !== NULL) {
       if ($this->is_account) {
-        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("netatalk")), msgPool::featuresEnabled(_("netatalk")));
+        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("netatalk")), 
+            msgPool::featuresEnabled(_("netatalk")));
       } else {
         $errmsg="";
         $obj = $this->parent->by_object['posixAccount'];
         if  (!($obj->is_account) ) {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk"), _("POSIX")), TRUE);
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
+              msgPool::featuresDisabled(_("netatalk"), _("POSIX")), TRUE);
         } elseif (count($this->shares)== 0) {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk"), _("netatalk or NFS share")), TRUE);
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
+              msgPool::featuresDisabled(_("netatalk"), _("netatalk or NFS share")), TRUE);
         } else {
-          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), msgPool::featuresDisabled(_("netatalk")));
+          $display = $this->show_enable_header(msgPool::addFeaturesButton(_("netatalk")), 
+              msgPool::featuresDisabled(_("netatalk")));
         } 
         return ($display);
       }
@@ -240,12 +249,14 @@ class netatalk extends plugin {
     /* Convert raw data to wished format */
     if ($this->is_account) {
       if($mountType=="url") {
-        $this->apple_user_homeurl_xml = '<home_dir><url>afp://'.$host.$dir . '</url><path>'.$this->apple_user_homepath_raw.'</path></home_dir>';
+        $this->apple_user_homeurl_xml = '<home_dir><url>afp://'.$host.$dir . '</url><path>'.
+          $this->apple_user_homepath_raw.'</path></home_dir>';
         $this->apple_user_homeurl = base64_encode($this->apple_user_homeurl_xml);
       } else {
         $this->apple_user_homeurl = "";
       }
-      $this->apple_user_homeDirectory = $this->mountDirectory . '/' . $host .$dir . '/' . $this->apple_user_homepath_raw;
+      $this->apple_user_homeDirectory = $this->mountDirectory . '/' . $host .
+        $dir . '/' . $this->apple_user_homepath_raw;
     } else {
       $this->apple_user_homeurl = "";
       $this->apple_user_homeDirectory = "";
@@ -254,6 +265,8 @@ class netatalk extends plugin {
     $ldap = $this->config->get_ldap_link();
     plugin :: save();
 
+    /* Transform variable names from '_' to '-'.
+     */
     foreach ($this->attributes as $val) {
       unset($this->attrs[$val]);
       $name = str_replace('_', '-', $val);
