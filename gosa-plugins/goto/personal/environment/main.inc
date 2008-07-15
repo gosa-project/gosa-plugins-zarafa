@@ -108,7 +108,7 @@ if (!$remove_lock){
     } else {
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
         "\"> ".$ui->dn."&nbsp;";
-      if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/environment"))){
+      if(preg_match("/r/",$ui->get_permissions($ui->dn,"users/environment"))){
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
           "\"> ".msgPool::clickEditToChange();
         $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
