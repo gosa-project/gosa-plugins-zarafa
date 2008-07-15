@@ -2,6 +2,8 @@
 
 class environment extends plugin
 {
+  var $plIcon = "plugins/goto/images/plugin.png";
+
   /* attribute list for save action */
   var $ignore_account       = FALSE;
   var $plHeadline           = "Environment";
