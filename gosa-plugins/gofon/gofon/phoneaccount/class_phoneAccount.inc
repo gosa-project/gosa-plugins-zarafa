@@ -3,8 +3,9 @@
 class phoneAccount extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Phone";
+  var $plHeadline   = "Phone";
   var $plDescription= "This does something";
+  var $plIcon       = "plugins/gofon/images/phoneAccount.png";
 
   /* Attributes */
   var $telephoneNumber        = array();
