@@ -9,10 +9,9 @@
 */
 class macro extends plugin
 {
-
   /*! Macro attributes,  */
   var $generate_error= "";
-  
+    
   /*! The name of the Macro in the openldap drirectory */
   var $cn               = ""; 
  

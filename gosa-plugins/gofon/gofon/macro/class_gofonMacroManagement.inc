@@ -23,6 +23,8 @@ class goFonMacro extends plugin
   /* Definitions */
   var $plHeadline		    = "Phone macros";
   var $plDescription	  = "This does something";
+  var $plIcon           = "plugins/gofon/images/macros.png";
+
 
   /* Dialog attributes */
   var $macrotabs		    = NULL;

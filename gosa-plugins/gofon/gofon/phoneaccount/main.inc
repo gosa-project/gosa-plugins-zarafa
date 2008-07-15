@@ -120,7 +120,7 @@ if (!$remove_lock){
 	}
 
 	/* Page header*/
-	$display= print_header(get_template_path('plugins/gofon/plugin.png'), _("Phone settings"), $info).$display;
+	$display= print_header(get_template_path('plugins/gofon/images/phoneAccount.png'), _("Phone settings"), $info).$display;
 
 }
 ?>

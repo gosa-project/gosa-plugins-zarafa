@@ -23,6 +23,7 @@ class phoneConferenceManagment extends plugin
   /* Definitions */
   var $plHeadline				  = "Phone conferences";
   var $plDescription			= "Management";
+  var $plIcon             = "plugins/gofon/images/conference.png";
 
   /* attribute list for save action */
   var $attributes				  = array();
