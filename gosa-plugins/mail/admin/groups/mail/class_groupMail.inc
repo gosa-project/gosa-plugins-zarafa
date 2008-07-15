@@ -1239,7 +1239,7 @@ I: Only insider delivery */
           "plDescription" => _("Group mail"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 10,
           "plSection"     => array("administration"),
           "plCategory"    => array("groups"), 
           "plProvidedAcls"=> array(
