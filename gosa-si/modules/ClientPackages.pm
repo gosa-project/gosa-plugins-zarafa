@@ -410,7 +410,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($heap, $msg, $msg_hash, $session_id) = @_[HEAP, ARG0, ARG1, ARG2];
+    my ($msg, $msg_hash, $session_id) = @_;
     my @out_msg_l;
     my $out_hash;
     my $source = @{$msg_hash->{source}}[0];
@@ -421,12 +421,12 @@ sub here_i_am {
     my $key_lifetime = @{$msg_hash->{key_lifetime}}[0];
 
     # Move forced hostname to heap - if used
-    if ( defined($msg_hash->{'force-hostname'}[0]) &&
-       length($msg_hash->{'force-hostname'}[0]) > 0){
-          $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
-    } else {
-          $heap->{force-hostname}->{$mac_address}= undef;
-    }
+    #if ( defined($msg_hash->{'force-hostname'}[0]) &&
+    #   length($msg_hash->{'force-hostname'}[0]) > 0){
+    #      $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
+    #} else {
+    #      $heap->{force-hostname}->{$mac_address}= undef;
+    #}
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
