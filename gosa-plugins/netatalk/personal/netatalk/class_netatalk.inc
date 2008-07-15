@@ -94,7 +94,7 @@ class netatalk extends plugin {
     /* Extract homepath value 
      */
     if (strlen($this->apple_user_homeDirectory) >0) {
-      $this->apple_user_homepath_raw = i
+      $this->apple_user_homepath_raw = 
         substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
     }
 
