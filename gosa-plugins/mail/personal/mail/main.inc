@@ -123,7 +123,7 @@ if (!$remove_lock){
   }
 
   /* Page header*/
-  $display= print_header(get_template_path('images/email.png'), _("User mail settings"), $info).$display;
+  $display= print_header(get_template_path('plugins/mail/images/plugin.png'), _("User mail settings"), $info).$display;
 
 }
 
