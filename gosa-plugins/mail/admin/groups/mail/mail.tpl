@@ -99,7 +99,7 @@
 
 	
 
-   <h2><img class="center" alt="" align="middle" src="images/alternatemail.png"> {t}Alternative addresses{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png"> {t}Alternative addresses{/t}</h2>
 
 {render acl=$gosaMailAlternateAddressACL}
    <select style="width:100%;" name="alternates_list[]" size=10 multiple title="{t}List of alternative mail addresses{/t}">
