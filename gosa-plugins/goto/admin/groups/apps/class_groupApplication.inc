@@ -1362,7 +1362,7 @@ class appgroup extends plugin
           "plDescription" => _("Group applications"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 7,
           "plSection"     => array("admin"),
           "plCategory"    => array("groups"),
           "plProvidedAcls"=> array(
