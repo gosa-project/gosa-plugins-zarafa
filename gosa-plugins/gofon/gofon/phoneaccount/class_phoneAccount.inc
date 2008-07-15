@@ -406,8 +406,6 @@ class phoneAccount extends plugin
 
     $i_is_accounted = false;  // Ensure that extension entry, for name to number is only once in table
 
-    restore_error_handler();
-
     /* Prepare some basic attributes */
     $oldnums = array();
     foreach($this->a_old_telenums as $tele){
