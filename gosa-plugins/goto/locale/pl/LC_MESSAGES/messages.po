@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-07-14 16:40+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,6 +14,372 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
+#: personal/environment/class_hotplugDialog.inc:64
+#, fuzzy
+msgid "Please select a hotplug device!"
+msgstr "Proszę wybrać prawidłowy plik"
+
+#: personal/environment/class_selectPrinterDialog.inc:107
+#, fuzzy
+msgid "Please select a printer!"
+msgstr "Proszę wybrać prawidłowy plik"
+
+#: personal/environment/hotplugDialog.tpl:1
+msgid "Add hotplug devices"
+msgstr "Dodaj urządzenia hotplug"
+
+#: personal/environment/hotplugDialog.tpl:5
+msgid "Hotplug management"
+msgstr "Zarządzanie Hotplug"
+
+#: personal/environment/hotplugDialog.tpl:10
+msgid "Select hotplug device to add"
+msgstr "Wybierz urządzenie hotplug do dodania"
+
+#: personal/environment/hotplugDialog.tpl:24
+#: personal/environment/selectPrinterDialog.tpl:24
+#: admin/systems/ppd/printerPPDSelectionDialog.tpl:18
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:22
+msgid "Filters"
+msgstr "Filtry"
+
+#: personal/environment/hotplugDialog.tpl:34
+msgid "Choose the department the search will be based    on"
+msgstr "Wybierz departament na którym będzie wyszukiwanie"
+
+#: personal/environment/hotplugDialog.tpl:43
+#: admin/applications/class_divListApplication.inc:58
+msgid "Display users matching"
+msgstr "Wyświetl użytkowników pasujących"
+
+#: personal/environment/hotplugDialog.tpl:48
+msgid "Regular expression for        matching hotplugs"
+msgstr "Wyrażenie regularne dla dopasowania hotplug"
+
+#: personal/environment/class_environment.inc:7
+#: personal/environment/class_environment.inc:431
+#: personal/environment/class_environment.inc:432
+#: personal/environment/class_environment.inc:440
+#: personal/environment/class_environment.inc:441
+#: personal/environment/class_environment.inc:444
+#: personal/environment/class_environment.inc:445
+#: personal/environment/class_environment.inc:448
+#: personal/environment/class_environment.inc:449
+#: personal/environment/class_environment.inc:471
+#: personal/environment/class_environment.inc:472
+#: personal/environment/class_environment.inc:476
+#: personal/environment/class_environment.inc:477
+#: personal/environment/class_environment.inc:480
+#: personal/environment/class_environment.inc:481
+#: personal/environment/class_environment.inc:1762
+msgid "Environment"
+msgstr "Środowisko"
+
+#: personal/environment/class_environment.inc:8
+#: admin/applications/class_applicationManagement.inc:25
+msgid "This does something"
+msgstr "To robi coś"
+
+#: personal/environment/class_environment.inc:137
+#: personal/environment/class_environment.inc:305
+#: personal/environment/class_environment.inc:358
+#: personal/environment/class_environment.inc:362 addons/goto/remove.tpl:2
+#: admin/devices/remove.tpl:2 admin/applications/remove.tpl:2
+#: admin/systems/ppd/remove_ppd.tpl:2 admin/mimetypes/remove.tpl:2
+#: admin/ogroups/goto/termgroup.tpl:2
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: personal/environment/class_environment.inc:137
+#, fuzzy, php-format
+msgid "Device '%s' is not available anymore. It will be removed!"
+msgstr "Brak snapshot'u który mógłby zostać odtworzony"
+
+#: personal/environment/class_environment.inc:210
+msgid "auto"
+msgstr "automatycznie"
+
+#: personal/environment/class_environment.inc:232
+#: admin/systems/ppd/class_printerPPDDialog.inc:100
+#: admin/systems/goto/class_terminalInfo.inc:74
+#: admin/systems/goto/class_terminalService.inc:110
+#: admin/systems/goto/class_workstationService.inc:79
+#: admin/systems/goto/class_workstationStartup.inc:1343
+#: admin/systems/goto/class_workstationStartup.inc:1345
+#, fuzzy
+msgid "Configuration error"
+msgstr "Plik konfiguracyjny"
+
+#: personal/environment/class_environment.inc:232
+#, fuzzy, php-format
+msgid "Cannot open file '%s'!"
+msgstr "Nie można otworzyć pliku '%s'."
+
+#: personal/environment/class_environment.inc:269
+#: personal/environment/class_environment.inc:270
+msgid "disabled"
+msgstr "wyłączone"
+
+#: personal/environment/class_environment.inc:305
+#, php-format
+msgid ""
+"Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk "
+"profile will be disabled!"
+msgstr ""
+
+#: personal/environment/class_environment.inc:358
+#, fuzzy, php-format
+msgid "Profile server '%s' is not available anymore. Switched to server '%s'."
+msgstr ""
+"Wybrany profil kiosk '%s' nie jest już dostępny, ustawiam aktualny profil na "
+"'brak'."
+
+#: personal/environment/class_environment.inc:362
+#, fuzzy, php-format
+msgid ""
+"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgstr ""
+"Wybrany profil kiosk '%s' nie jest już dostępny, ustawiam aktualny profil na "
+"'brak'."
+
+#: personal/environment/class_environment.inc:449
+#: personal/environment/class_environment.inc:481
+#: personal/environment/class_environment.inc:1145
+msgid "POSIX"
+msgstr ""
+
+#: personal/environment/class_environment.inc:581
+#: admin/devices/class_deviceManagement.inc:295
+#: admin/devices/class_deviceManagement.inc:351
+#: admin/devices/class_deviceManagement.inc:380
+#: admin/applications/class_applicationManagement.inc:383
+#: admin/applications/class_applicationManagement.inc:438
+#: admin/applications/class_applicationManagement.inc:469
+#: admin/systems/goto/class_printGeneric.inc:952
+#: admin/systems/goto/class_printGeneric.inc:974
+#: admin/mimetypes/class_mimetypeManagement.inc:389
+#: admin/mimetypes/class_mimetypeManagement.inc:443
+#: admin/mimetypes/class_mimetypeManagement.inc:473
+#, fuzzy
+msgid "Permission error"
+msgstr "Uprawnienia"
+
+#: personal/environment/class_environment.inc:581
+#: personal/environment/environment.tpl:246
+msgid "Logon scripts"
+msgstr "Skrypty logowania"
+
+#: personal/environment/class_environment.inc:589
+#: personal/environment/class_environment.inc:671
+#: personal/environment/class_environment.inc:673
+#: personal/environment/class_environment.inc:675
+#: personal/environment/class_environment.inc:686
+#: personal/environment/class_environment.inc:837
+#: personal/environment/class_environment.inc:888
+#: personal/environment/class_environment.inc:984
+#: addons/goto/class_goto_log_view.inc:57
+#: addons/goto/class_goto_log_view.inc:171
+#: addons/goto/class_gotomasses.inc:172 addons/goto/class_gotomasses.inc:512
+#: addons/goto/class_gotomasses.inc:639 addons/goto/class_gotomasses.inc:675
+#: addons/goto/class_gotomasses.inc:719 addons/goto/class_gotomasses.inc:723
+#: addons/goto/class_gotomasses.inc:759 addons/goto/class_gotomasses.inc:800
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#: admin/devices/class_deviceGeneric.inc:163
+#: admin/applications/class_applicationGeneric.inc:261
+#: admin/applications/class_applicationGeneric.inc:333
+#: admin/applications/class_applicationGeneric.inc:365
+#: admin/applications/class_applicationGeneric.inc:370
+#: admin/applications/class_applicationGeneric.inc:375
+#: admin/applications/class_applicationGeneric.inc:379
+#: admin/systems/services/kiosk/class_goKioskService.inc:69
+#: admin/systems/services/kiosk/class_goKioskService.inc:152
+#: admin/systems/services/kiosk/class_goKioskService.inc:159
+#: admin/systems/services/kiosk/class_goKioskService.inc:162
+#: admin/systems/services/kiosk/class_goKioskService.inc:226
+#: admin/systems/services/shares/class_goShareServer.inc:98
+#: admin/systems/services/shares/class_goShareServer.inc:233
+#: admin/systems/services/nfs/class_servNfs.inc:42
+#: admin/systems/services/nfs/class_servNfs.inc:45
+#: admin/systems/goto/class_printGeneric.inc:435
+#: admin/systems/goto/class_printGeneric.inc:482
+#: admin/systems/goto/class_printGeneric.inc:584
+#: admin/systems/goto/class_printGeneric.inc:591
+#: admin/systems/goto/class_printGeneric.inc:1009
+#: admin/systems/goto/class_printGeneric.inc:1020
+#: admin/systems/goto/class_terminalStartup.inc:207
+#: admin/systems/goto/class_workstationStartup.inc:244
+#: admin/systems/goto/class_workstationStartup.inc:257
+#: admin/systems/goto/class_workstationStartup.inc:373
+#: admin/systems/goto/class_workstationStartup.inc:481
+msgid "Error"
+msgstr "Błąd"
+
+#: personal/environment/class_environment.inc:671
+#, fuzzy
+msgid "Share"
+msgstr "Udziały"
+
+#: personal/environment/class_environment.inc:673
+#: personal/environment/class_environment.inc:675
+#: personal/environment/class_environment.inc:686
+#: admin/systems/goto/class_terminalStartup.inc:207
+#: admin/systems/goto/class_workstationStartup.inc:481
+#, fuzzy
+msgid "Mount point"
+msgstr "Punkt montowania"
+
+#: personal/environment/class_environment.inc:761
+#: personal/environment/environment.tpl:257
+#: personal/environment/environment.tpl:303
+#, fuzzy
+msgid "Used by all users"
+msgstr "ACL jest prawidłowy dla wszystkich użytkowników"
+
+#: personal/environment/class_environment.inc:764
+#: personal/environment/environment.tpl:259
+#: personal/environment/environment.tpl:305
+msgid "Used by some users"
+msgstr ""
+
+#: personal/environment/class_environment.inc:776
+#: personal/environment/class_environment.inc:777
+#: personal/environment/class_environment.inc:785
+#: personal/environment/class_environment.inc:786
+msgid "Reset password hash"
+msgstr "Zresetuj hash hasła"
+
+#: personal/environment/class_environment.inc:790
+msgid "Delete share entry"
+msgstr "Usuń wpis udziału"
+
+#: personal/environment/class_environment.inc:984
+msgid "Cannot set default printer flag for groups!"
+msgstr ""
+
+#: personal/environment/class_environment.inc:1055
+#: personal/environment/class_environment.inc:1312
+#: admin/groups/apps/class_groupApplication.inc:638
+#: admin/groups/apps/class_groupApplication.inc:1320
+#: admin/groups/apps/class_groupApplication.inc:1333
+#: admin/groups/apps/class_groupApplication.inc:1346
+#: admin/devices/class_deviceGeneric.inc:192
+#: admin/applications/class_applicationParameters.inc:153
+#: admin/applications/class_applicationParameters.inc:216
+#: admin/applications/class_applicationGeneric.inc:268
+#: admin/applications/class_applicationGeneric.inc:282
+#: admin/applications/class_applicationGeneric.inc:509
+#: admin/systems/services/kiosk/class_goKioskService.inc:241
+#: admin/systems/services/ntp/class_goNtpServer.inc:98
+#: admin/systems/services/shares/class_goShareServer.inc:192
+#: admin/systems/services/shares/class_goShareServer.inc:261
+#: admin/systems/services/shares/class_goShareServer.inc:277
+#: admin/systems/services/shares/class_goShareServer.inc:290
+#: admin/systems/services/terminal/class_goTerminalServer.inc:106
+#: admin/systems/goto/class_printGeneric.inc:602
+#: admin/systems/goto/class_printGeneric.inc:886
+#: admin/systems/goto/class_terminalService.inc:578
+#: admin/systems/goto/class_terminalStartup.inc:441
+#: admin/systems/goto/class_workstationService.inc:459
+#: admin/systems/goto/class_workstationStartup.inc:929
+#: admin/systems/goto/class_terminalGeneric.inc:339
+#: admin/systems/goto/class_terminalGeneric.inc:561
+#: admin/systems/goto/class_ArpNewDevice.inc:69
+#: admin/systems/goto/class_workstationGeneric.inc:364
+#: admin/systems/goto/class_workstationGeneric.inc:591
+#: admin/systems/goto/class_workstationGeneric.inc:604
+#: admin/mimetypes/class_mimetypeGeneric.inc:488
+#: admin/mimetypes/class_mimetypeGeneric.inc:500
+#: admin/mimetypes/class_mimetypeGeneric.inc:515
+#: admin/ogroups/goto/class_termgroup.inc:311
+#, fuzzy
+msgid "LDAP error"
+msgstr "Serwer LDAP"
+
+#: personal/environment/class_environment.inc:1138
+#: personal/environment/class_environment.inc:1707
+#: personal/environment/class_environment.inc:1776
+msgid "Profile quota"
+msgstr "Quota profilu"
+
+#: personal/environment/class_environment.inc:1145
+#, fuzzy
+msgid "environment"
+msgstr "Środowisko"
+
+#: personal/environment/class_environment.inc:1326
+msgid "group share"
+msgstr "grupuj udział"
+
+#: personal/environment/class_environment.inc:1360
+msgid "Administrator"
+msgstr "Administrator"
+
+#: personal/environment/class_environment.inc:1365
+msgid "Default printer"
+msgstr "Domyślna drukarka"
+
+#: personal/environment/class_environment.inc:1763
+msgid "Environment settings"
+msgstr "Ustawienia środowiska"
+
+#: personal/environment/class_environment.inc:1767
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/environment/class_environment.inc:1771
+msgid "Command to extend the list of possible screen resolutions"
+msgstr "Polecenie do rozszerzenia listy możliwych rozdzielczości ekranu"
+
+#: personal/environment/class_environment.inc:1775
+msgid "Profile server"
+msgstr "Serwer profili"
+
+#: personal/environment/class_environment.inc:1777
+#: personal/environment/environment.tpl:41
+#: personal/environment/environment.tpl:106
+msgid "Cache profile localy"
+msgstr "Buforu profil lokalnie"
+
+#: personal/environment/class_environment.inc:1778
+#: personal/environment/environment.tpl:212
+#: admin/systems/services/shares/goShareServer.tpl:1
+#: admin/systems/goto/class_terminalStartup.inc:550
+#: admin/systems/goto/terminalStartup.tpl:89
+#: admin/systems/goto/class_workstationStartup.inc:1073
+#: admin/systems/goto/workstationStartup.tpl:201
+msgid "Shares"
+msgstr "Udziały"
+
+#: personal/environment/class_environment.inc:1779
+#: personal/environment/environment.tpl:293
+#: admin/devices/class_deviceManagement.inc:7
+msgid "Hotplug devices"
+msgstr "Urządzenia Hotplug"
+
+#: personal/environment/class_environment.inc:1780
+#: personal/environment/environment.tpl:124
+#: personal/environment/environment.tpl:160
+#: admin/systems/services/kiosk/class_goKioskService.inc:152
+msgid "Kiosk profile"
+msgstr "Profil Kiosk"
+
+#: personal/environment/class_environment.inc:1781
+#: personal/environment/environment.tpl:174
+msgid "Resolution changeable during session"
+msgstr "Rozdzielczość zmienialna podczas pracy"
+
+#: personal/environment/class_environment.inc:1782
+#: personal/environment/environment.tpl:183
+#: admin/systems/goto/terminalService.tpl:108
+#: admin/systems/goto/workstationService.tpl:122
+msgid "Resolution"
+msgstr "Rozdzielczość"
+
+#: personal/environment/class_environment.inc:1783
+#: personal/environment/logonManagement.tpl:56
+msgid "Logon script"
+msgstr "Skrypt logowania"
+
 #: personal/environment/selectPrinterDialog.tpl:1
 #, fuzzy
 msgid "Add printer devices"
@@ -24,13 +390,6 @@ msgstr "Dodaj urządzenie drukujące"
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:3
 msgid "Select printer to add"
 msgstr "Wybierz drukarkę do dodania"
-
-#: personal/environment/selectPrinterDialog.tpl:24
-#: personal/environment/hotplugDialog.tpl:24
-#: admin/systems/ppd/printerPPDSelectionDialog.tpl:18
-#: admin/systems/goto/selectUserToPrinterDialog.tpl:22
-msgid "Filters"
-msgstr "Filtry"
 
 #: personal/environment/selectPrinterDialog.tpl:34
 #: admin/systems/goto/selectUserToPrinterDialog.tpl:41
@@ -56,41 +415,201 @@ msgstr "Wyświetl drukarki pasujące"
 msgid "Regular expression for matching printer names"
 msgstr "Wyrażenie regularne do dopasowania nazw drukarek"
 
+#: personal/environment/environment.tpl:3
+msgid "The environment extension is currently disabled."
+msgstr "Rozszerzenie Środowisko jest obecnie wyłączone"
+
+#: personal/environment/environment.tpl:11
+msgid "Profiles"
+msgstr "Profile"
+
+#: personal/environment/environment.tpl:14
+#: personal/environment/environment.tpl:207
+#: personal/environment/environment.tpl:288
+msgid "Environment managment settings"
+msgstr "Ustawienia zarządzania Środowiskiem"
+
+#: personal/environment/environment.tpl:22
+#: personal/environment/environment.tpl:55
+msgid "Use profile managment"
+msgstr "Użyj zarządzania profilami"
+
+#: personal/environment/environment.tpl:26
+#: personal/environment/environment.tpl:65
+msgid "Profil path"
+msgstr "Ścieżka profili"
+
+#: personal/environment/environment.tpl:36
+#: personal/environment/environment.tpl:95
+msgid "MB"
+msgstr "MB"
+
+#: personal/environment/environment.tpl:47
+msgid "Profile managment"
+msgstr "Zarządzanie profilami"
+
+#: personal/environment/environment.tpl:62
+msgid "Profile server managment"
+msgstr "Zarządzanie serwerem profili"
+
+#: personal/environment/environment.tpl:89
+msgid "Profil quota"
+msgstr "Quota profili"
+
+#: personal/environment/environment.tpl:120
+msgid "Kiosk profile settings"
+msgstr "Ustawienia profilu Kiosk"
+
+#: personal/environment/environment.tpl:135
+#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/class_target_list.inc:201
+#: admin/systems/services/nfs/servnfs.tpl:39
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+msgid "Server"
+msgstr "Serwer"
+
+#: personal/environment/environment.tpl:145
+msgid "Profile"
+msgstr "Profile"
+
+#: personal/environment/environment.tpl:164
+msgid "Manage"
+msgstr "Zarządzaj"
+
+#: personal/environment/environment.tpl:222
+msgid "User used to connect to the share"
+msgstr "Użytkownik łączył się do tego udziału"
+
+#: personal/environment/environment.tpl:225
+msgid "Select a share"
+msgstr "Wybierz udział"
+
+#: personal/environment/environment.tpl:233
+msgid "Mount path"
+msgstr "Ścieżka montowania"
+
+#: personal/environment/environment.tpl:238
+#: addons/goto/events/class_DaemonEvent.inc:230
+#: addons/goto/class_gotomasses.inc:267 addons/goto/class_gotomasses.inc:364
+#: addons/goto/class_gotomasses.inc:472 addons/goto/class_gotomasses.inc:476
+#: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
+#: admin/groups/apps/app_list.tpl:132
+#: admin/devices/class_divListDevices.inc:100
+#: admin/applications/class_divListApplication.inc:114
+#: admin/applications/class_applicationParameters.inc:117
+#: admin/systems/goto/printer.tpl:71
+#: admin/systems/goto/terminalService.tpl:212
+#: admin/systems/goto/terminalStartup.tpl:113
+#: admin/systems/goto/workstationStartup.tpl:225
+#: admin/mimetypes/class_divListMimeTypes.inc:122
+msgid "Remove"
+msgstr "Usuń"
+
+#: personal/environment/environment.tpl:248
 #: personal/environment/logonManagement.tpl:1
 #: personal/environment/logonManagement.tpl:5
-#: personal/environment/environment.tpl:237
 msgid "Logon script management"
 msgstr "Zarządzanie skryptami logowania"
 
-#: personal/environment/logonManagement.tpl:8
-msgid "Logon script settings"
-msgstr "Ustawienia skryptu logowania"
+#: personal/environment/environment.tpl:274
+#: addons/goto/class_gotomasses.inc:457 admin/groups/apps/app_list.tpl:88
+#: admin/groups/apps/app_list.tpl:134
+#: admin/systems/services/shares/goShareServer.tpl:17
+#: admin/systems/goto/printer.tpl:68
+msgid "Edit"
+msgstr "Edytuj"
 
-#: personal/environment/logonManagement.tpl:10
+#: personal/environment/environment.tpl:295
+msgid "Hotplug device settings"
+msgstr "Ustawienia urządzeń Hotplug"
+
+#: personal/environment/environment.tpl:338
+#: personal/environment/environment.tpl:374
+#: admin/systems/goto/class_printGeneric.inc:927
+msgid "Printer"
+msgstr "Drukarka"
+
+#: personal/environment/environment.tpl:342
+msgid ""
+"Using this option will overwrite the complete printer settings for all "
+"currently edited objects!"
+msgstr ""
+
+#: personal/environment/environment.tpl:343
+#: personal/environment/environment.tpl:376
+msgid "Printer settings"
+msgstr "Ustawienia drukarki"
+
+#: personal/environment/environment.tpl:360
+#: personal/environment/environment.tpl:393
+msgid "Toggle admin"
+msgstr "Przełącz admin"
+
+#: personal/environment/environment.tpl:363
+#: personal/environment/environment.tpl:396
+msgid "Toggle default"
+msgstr "Przełącz domyślne"
+
+#: personal/environment/class_logonManagementDialog.inc:103
+#: admin/groups/apps/edit_entry.tpl:43
+#: admin/devices/class_deviceGeneric.inc:90
+#: admin/devices/class_deviceGeneric.inc:112
+#: admin/devices/class_deviceGeneric.inc:256
+#: admin/applications/class_applicationParameters.inc:185
+#: admin/applications/class_applicationGeneric.inc:425
+#: admin/applications/class_applicationGeneric.inc:429
+#: admin/applications/class_applicationGeneric.inc:600
+#: admin/applications/class_applicationGeneric.inc:604
+#: admin/systems/services/shares/class_goShareServer.inc:398
+#: admin/systems/services/nfs/class_servNfs.inc:188
+#: admin/systems/services/nfs/class_servNfs.inc:191
+#: admin/systems/services/nfs/class_servNfs.inc:224
+#: admin/systems/services/nfs/servnfs.tpl:9
+#: admin/systems/goto/class_printGeneric.inc:671
+#: admin/systems/goto/class_printGeneric.inc:676
+#: admin/systems/goto/class_printGeneric.inc:695
+#: admin/systems/goto/class_printGeneric.inc:930
+#: admin/systems/goto/class_terminalGeneric.inc:432
+#: admin/systems/goto/class_terminalGeneric.inc:437
+#: admin/systems/goto/class_terminalGeneric.inc:456
+#: admin/systems/goto/class_terminalGeneric.inc:652
+#: admin/systems/goto/class_ArpNewDevice.inc:46
+#: admin/systems/goto/class_workstationGeneric.inc:456
+#: admin/systems/goto/class_workstationGeneric.inc:461
+#: admin/systems/goto/class_workstationGeneric.inc:479
+#: admin/mimetypes/class_mimetypeGeneric.inc:526
+#: admin/mimetypes/class_mimetypeGeneric.inc:718
+msgid "Name"
+msgstr "Imię"
+
 #: personal/environment/class_logonManagementDialog.inc:107
+#: personal/environment/logonManagement.tpl:10
 #, fuzzy
 msgid "Script name"
 msgstr "Nazwa skryptu"
 
-#: personal/environment/logonManagement.tpl:17
 #: personal/environment/class_logonManagementDialog.inc:111
-#: addons/goto/class_gotomasses.inc:901 admin/devices/deviceGeneric.tpl:25
-#: admin/devices/class_deviceGeneric.inc:93
+#: personal/environment/logonManagement.tpl:17
+#: addons/goto/class_gotomasses.inc:901
+#: admin/devices/class_deviceGeneric.inc:93 admin/devices/deviceGeneric.tpl:25
+#: admin/applications/generic.tpl:33
 #: admin/applications/class_applicationGeneric.inc:602
-#: admin/applications/generic.tpl:33 admin/mimetypes/generic.tpl:34
-#: admin/mimetypes/class_mimetypeGeneric.inc:720
-#: admin/mimetypes/paste_generic.tpl:21
-#: admin/systems/goto/class_printGeneric.inc:932
-#: admin/systems/goto/class_workstationGeneric.inc:701
-#: admin/systems/goto/class_terminalGeneric.inc:651
-#: admin/systems/goto/ArpNewDevice.tpl:17
-#: admin/systems/goto/workstation.tpl:19 admin/systems/goto/printer.tpl:16
-#: admin/systems/goto/terminal.tpl:19
-#: admin/systems/services/nfs/class_servNfs.inc:196
-#: admin/systems/services/nfs/servnfs.tpl:19
 #: admin/systems/services/shares/class_goShareServer.inc:400
+#: admin/systems/services/nfs/class_servNfs.inc:196
+#: admin/systems/services/nfs/servnfs.tpl:19 admin/systems/goto/printer.tpl:16
+#: admin/systems/goto/workstation.tpl:19
+#: admin/systems/goto/class_printGeneric.inc:932
+#: admin/systems/goto/class_terminalGeneric.inc:653
+#: admin/systems/goto/terminal.tpl:19 admin/systems/goto/ArpNewDevice.tpl:17
+#: admin/systems/goto/class_workstationGeneric.inc:703
+#: admin/mimetypes/class_mimetypeGeneric.inc:720
+#: admin/mimetypes/paste_generic.tpl:21 admin/mimetypes/generic.tpl:34
 msgid "Description"
 msgstr "Opis"
+
+#: personal/environment/logonManagement.tpl:8
+msgid "Logon script settings"
+msgstr "Ustawienia skryptu logowania"
 
 #: personal/environment/logonManagement.tpl:24
 msgid "Priority"
@@ -113,712 +632,174 @@ msgstr "Skrypt może być zmieniony przez użytkownika"
 msgid "Script"
 msgstr "Skrypt"
 
-#: personal/environment/logonManagement.tpl:56
-#: personal/environment/class_environment.inc:1763
-msgid "Logon script"
-msgstr "Skrypt logowania"
-
 #: personal/environment/logonManagement.tpl:65
-#: addons/goto/goto_import_file.tpl:32
+#: addons/goto/goto_import_file.tpl:32 addons/goto/class_gotomasses.inc:363
 #: addons/goto/class_goto_import_file.inc:28
 #: addons/goto/class_goto_import_file.inc:88
 #: addons/goto/class_goto_import_file.inc:130
-#: addons/goto/class_gotomasses.inc:363 admin/applications/generic.tpl:135
+#: admin/applications/generic.tpl:135
 msgid "Import"
 msgstr "Import"
 
-#: personal/environment/environment.tpl:3
-msgid "The environment extension is currently disabled."
-msgstr "Rozszerzenie Środowisko jest obecnie wyłączone"
-
-#: personal/environment/environment.tpl:11
-msgid "Profiles"
-msgstr "Profile"
-
-#: personal/environment/environment.tpl:14
-#: personal/environment/environment.tpl:196
-#: personal/environment/environment.tpl:277
-msgid "Environment managment settings"
-msgstr "Ustawienia zarządzania Środowiskiem"
-
-#: personal/environment/environment.tpl:22
-#: personal/environment/environment.tpl:52
-msgid "Use profile managment"
-msgstr "Użyj zarządzania profilami"
-
-#: personal/environment/environment.tpl:26
-#: personal/environment/environment.tpl:62
-msgid "Profil path"
-msgstr "Ścieżka profili"
-
-#: personal/environment/environment.tpl:33
-#: personal/environment/environment.tpl:89
-msgid "MB"
-msgstr "MB"
-
-#: personal/environment/environment.tpl:38
-#: personal/environment/environment.tpl:100
-#: personal/environment/class_environment.inc:1754
-msgid "Cache profile localy"
-msgstr "Buforu profil lokalnie"
-
-#: personal/environment/environment.tpl:44
-msgid "Profile managment"
-msgstr "Zarządzanie profilami"
-
-#: personal/environment/environment.tpl:59
-msgid "Profile server managment"
-msgstr "Zarządzanie serwerem profili"
-
-#: personal/environment/environment.tpl:83
-msgid "Profil quota"
-msgstr "Quota profili"
-
-#: personal/environment/environment.tpl:113
-msgid "Kiosk profile settings"
-msgstr "Ustawienia profilu Kiosk"
-
-#: personal/environment/environment.tpl:117
-#: personal/environment/environment.tpl:149
-#: personal/environment/class_environment.inc:1760
-#: admin/systems/services/kiosk/class_goKioskService.inc:142
-msgid "Kiosk profile"
-msgstr "Profil Kiosk"
-
-#: personal/environment/environment.tpl:128
-#: addons/goto/events/class_EventTargetAddList.inc:238
-#: addons/goto/class_target_list.inc:201
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-#: admin/systems/services/nfs/servnfs.tpl:39
-msgid "Server"
-msgstr "Serwer"
-
-#: personal/environment/environment.tpl:136
-msgid "Profile"
-msgstr "Profile"
-
-#: personal/environment/environment.tpl:153
-msgid "Manage"
-msgstr "Zarządzaj"
-
-#: personal/environment/environment.tpl:163
-#: personal/environment/class_environment.inc:1753
-msgid "Resolution changeable during session"
-msgstr "Rozdzielczość zmienialna podczas pracy"
-
-#: personal/environment/environment.tpl:172
-#: personal/environment/class_environment.inc:1759
-#: admin/systems/goto/workstationService.tpl:122
-#: admin/systems/goto/terminalService.tpl:108
-msgid "Resolution"
-msgstr "Rozdzielczość"
-
-#: personal/environment/environment.tpl:201
-#: personal/environment/class_environment.inc:1765
-#: admin/systems/goto/workstationStartup.tpl:201
-#: admin/systems/goto/class_terminalStartup.inc:550
-#: admin/systems/goto/terminalStartup.tpl:89
-#: admin/systems/goto/class_workstationStartup.inc:1073
-#: admin/systems/services/shares/goShareServer.tpl:1
-msgid "Shares"
-msgstr "Udziały"
-
-#: personal/environment/environment.tpl:211
-msgid "User used to connect to the share"
-msgstr "Użytkownik łączył się do tego udziału"
-
-#: personal/environment/environment.tpl:214
-msgid "Select a share"
-msgstr "Wybierz udział"
-
-#: personal/environment/environment.tpl:222
-msgid "Mount path"
-msgstr "Ścieżka montowania"
-
-#: personal/environment/environment.tpl:227
-#: addons/goto/events/class_DaemonEvent.inc:230
-#: addons/goto/class_gotomasses.inc:267 addons/goto/class_gotomasses.inc:364
-#: addons/goto/class_gotomasses.inc:472 addons/goto/class_gotomasses.inc:476
-#: admin/devices/class_divListDevices.inc:100
-#: admin/applications/class_divListApplication.inc:114
-#: admin/applications/class_applicationParameters.inc:117
-#: admin/mimetypes/class_divListMimeTypes.inc:122
-#: admin/systems/goto/workstationStartup.tpl:225
-#: admin/systems/goto/terminalStartup.tpl:113
-#: admin/systems/goto/printer.tpl:71
-#: admin/systems/goto/terminalService.tpl:212
-#: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
-#: admin/groups/apps/app_list.tpl:132
-msgid "Remove"
-msgstr "Usuń"
-
-#: personal/environment/environment.tpl:235
-#: personal/environment/class_environment.inc:556
-msgid "Logon scripts"
-msgstr "Skrypty logowania"
-
-#: personal/environment/environment.tpl:246
-#: personal/environment/environment.tpl:292
-#: personal/environment/class_environment.inc:736
-#, fuzzy
-msgid "Used by all users"
-msgstr "ACL jest prawidłowy dla wszystkich użytkowników"
-
-#: personal/environment/environment.tpl:248
-#: personal/environment/environment.tpl:294
-#: personal/environment/class_environment.inc:739
-msgid "Used by some users"
-msgstr ""
-
-#: personal/environment/environment.tpl:263
-#: addons/goto/class_gotomasses.inc:457 admin/systems/goto/printer.tpl:68
-#: admin/systems/services/shares/goShareServer.tpl:17
-#: admin/groups/apps/app_list.tpl:88 admin/groups/apps/app_list.tpl:134
-msgid "Edit"
-msgstr "Edytuj"
-
-#: personal/environment/environment.tpl:282
-#: personal/environment/class_environment.inc:1764
-#: admin/devices/class_deviceManagement.inc:7
-msgid "Hotplug devices"
-msgstr "Urządzenia Hotplug"
-
-#: personal/environment/environment.tpl:284
-msgid "Hotplug device settings"
-msgstr "Ustawienia urządzeń Hotplug"
-
-#: personal/environment/environment.tpl:327
-#: personal/environment/environment.tpl:363
-#: admin/systems/goto/class_printGeneric.inc:927
-msgid "Printer"
-msgstr "Drukarka"
-
-#: personal/environment/environment.tpl:331
-msgid ""
-"Using this option will overwrite the complete printer settings for all "
-"currently edited objects!"
-msgstr ""
-
-#: personal/environment/environment.tpl:332
-#: personal/environment/environment.tpl:365
-msgid "Printer settings"
-msgstr "Ustawienia drukarki"
-
-#: personal/environment/environment.tpl:349
-#: personal/environment/environment.tpl:382
-msgid "Toggle admin"
-msgstr "Przełącz admin"
-
-#: personal/environment/environment.tpl:352
-#: personal/environment/environment.tpl:385
-msgid "Toggle default"
-msgstr "Przełącz domyślne"
-
-#: personal/environment/hotplugDialog.tpl:1
-msgid "Add hotplug devices"
-msgstr "Dodaj urządzenia hotplug"
-
-#: personal/environment/hotplugDialog.tpl:5
-msgid "Hotplug management"
-msgstr "Zarządzanie Hotplug"
-
-#: personal/environment/hotplugDialog.tpl:10
-msgid "Select hotplug device to add"
-msgstr "Wybierz urządzenie hotplug do dodania"
-
-#: personal/environment/hotplugDialog.tpl:34
-msgid "Choose the department the search will be based    on"
-msgstr "Wybierz departament na którym będzie wyszukiwanie"
-
-#: personal/environment/hotplugDialog.tpl:43
-#: admin/applications/class_divListApplication.inc:58
-msgid "Display users matching"
-msgstr "Wyświetl użytkowników pasujących"
-
-#: personal/environment/hotplugDialog.tpl:48
-msgid "Regular expression for        matching hotplugs"
-msgstr "Wyrażenie regularne dla dopasowania hotplug"
-
-#: personal/environment/class_environment.inc:7
-#: personal/environment/class_environment.inc:405
-#: personal/environment/class_environment.inc:406
-#: personal/environment/class_environment.inc:414
-#: personal/environment/class_environment.inc:415
-#: personal/environment/class_environment.inc:418
-#: personal/environment/class_environment.inc:419
-#: personal/environment/class_environment.inc:422
-#: personal/environment/class_environment.inc:423
-#: personal/environment/class_environment.inc:445
-#: personal/environment/class_environment.inc:446
-#: personal/environment/class_environment.inc:450
-#: personal/environment/class_environment.inc:451
-#: personal/environment/class_environment.inc:454
-#: personal/environment/class_environment.inc:455
-#: personal/environment/class_environment.inc:1740
-msgid "Environment"
-msgstr "Środowisko"
-
-#: personal/environment/class_environment.inc:8
-#: admin/applications/class_applicationManagement.inc:25
-msgid "This does something"
-msgstr "To robi coś"
-
-#: personal/environment/class_environment.inc:137
-#: personal/environment/class_environment.inc:282
-#: personal/environment/class_environment.inc:332
-#: personal/environment/class_environment.inc:336 addons/goto/remove.tpl:2
-#: admin/devices/remove.tpl:2 admin/applications/remove.tpl:2
-#: admin/mimetypes/remove.tpl:2 admin/systems/ppd/remove_ppd.tpl:2
-#: admin/ogroups/goto/termgroup.tpl:2
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-#: personal/environment/class_environment.inc:137
-#, fuzzy, php-format
-msgid "Device '%s' is not available anymore. It will be removed!"
-msgstr "Brak snapshot'u który mógłby zostać odtworzony"
-
-#: personal/environment/class_environment.inc:210
-msgid "auto"
-msgstr "automatycznie"
-
-#: personal/environment/class_environment.inc:232
-#: admin/systems/ppd/class_printerPPDDialog.inc:100
-#: admin/systems/goto/class_terminalInfo.inc:74
-#: admin/systems/goto/class_workstationService.inc:79
-#: admin/systems/goto/class_workstationStartup.inc:1343
-#: admin/systems/goto/class_workstationStartup.inc:1345
-#: admin/systems/goto/class_terminalService.inc:110
-#, fuzzy
-msgid "Configuration error"
-msgstr "Plik konfiguracyjny"
-
-#: personal/environment/class_environment.inc:232
-#, fuzzy, php-format
-msgid "Cannot open file '%s'!"
-msgstr "Nie można otworzyć pliku '%s'."
-
-#: personal/environment/class_environment.inc:246
-#: personal/environment/class_environment.inc:247
-msgid "disabled"
-msgstr "wyłączone"
-
-#: personal/environment/class_environment.inc:282
-#, php-format
-msgid ""
-"Kiosk profile '%s' located on server '%s' is not available anymore. Kiosk "
-"profile will be disabled!"
-msgstr ""
-
-#: personal/environment/class_environment.inc:332
-#, fuzzy, php-format
-msgid "Profile server '%s' is not available anymore. Switched to server '%s'."
-msgstr ""
-"Wybrany profil kiosk '%s' nie jest już dostępny, ustawiam aktualny profil na "
-"'brak'."
-
-#: personal/environment/class_environment.inc:336
-#, fuzzy, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
-msgstr ""
-"Wybrany profil kiosk '%s' nie jest już dostępny, ustawiam aktualny profil na "
-"'brak'."
-
-#: personal/environment/class_environment.inc:423
-#: personal/environment/class_environment.inc:455
-#: personal/environment/class_environment.inc:1120
-msgid "POSIX"
-msgstr ""
-
-#: personal/environment/class_environment.inc:556
-#: admin/devices/class_deviceManagement.inc:295
-#: admin/devices/class_deviceManagement.inc:351
-#: admin/devices/class_deviceManagement.inc:380
-#: admin/applications/class_applicationManagement.inc:383
-#: admin/applications/class_applicationManagement.inc:438
-#: admin/applications/class_applicationManagement.inc:469
-#: admin/mimetypes/class_mimetypeManagement.inc:389
-#: admin/mimetypes/class_mimetypeManagement.inc:443
-#: admin/mimetypes/class_mimetypeManagement.inc:473
-#: admin/systems/goto/class_printGeneric.inc:952
-#: admin/systems/goto/class_printGeneric.inc:974
-#, fuzzy
-msgid "Permission error"
-msgstr "Uprawnienia"
-
-#: personal/environment/class_environment.inc:564
-#: personal/environment/class_environment.inc:646
-#: personal/environment/class_environment.inc:648
-#: personal/environment/class_environment.inc:650
-#: personal/environment/class_environment.inc:661
-#: personal/environment/class_environment.inc:812
-#: personal/environment/class_environment.inc:863
-#: personal/environment/class_environment.inc:959
-#: addons/goto/class_gotomasses.inc:172 addons/goto/class_gotomasses.inc:512
-#: addons/goto/class_gotomasses.inc:639 addons/goto/class_gotomasses.inc:675
-#: addons/goto/class_gotomasses.inc:719 addons/goto/class_gotomasses.inc:723
-#: addons/goto/class_gotomasses.inc:759 addons/goto/class_gotomasses.inc:800
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-#: addons/goto/class_goto_log_view.inc:57
-#: addons/goto/class_goto_log_view.inc:171
-#: admin/devices/class_deviceGeneric.inc:163
-#: admin/applications/class_applicationGeneric.inc:261
-#: admin/applications/class_applicationGeneric.inc:333
-#: admin/applications/class_applicationGeneric.inc:365
-#: admin/applications/class_applicationGeneric.inc:370
-#: admin/applications/class_applicationGeneric.inc:375
-#: admin/applications/class_applicationGeneric.inc:379
-#: admin/systems/goto/class_printGeneric.inc:435
-#: admin/systems/goto/class_printGeneric.inc:482
-#: admin/systems/goto/class_printGeneric.inc:584
-#: admin/systems/goto/class_printGeneric.inc:591
-#: admin/systems/goto/class_printGeneric.inc:1009
-#: admin/systems/goto/class_printGeneric.inc:1020
-#: admin/systems/goto/class_terminalStartup.inc:207
-#: admin/systems/goto/class_workstationStartup.inc:244
-#: admin/systems/goto/class_workstationStartup.inc:257
-#: admin/systems/goto/class_workstationStartup.inc:373
-#: admin/systems/goto/class_workstationStartup.inc:481
-#: admin/systems/services/nfs/class_servNfs.inc:42
-#: admin/systems/services/nfs/class_servNfs.inc:45
-#: admin/systems/services/shares/class_goShareServer.inc:98
-#: admin/systems/services/shares/class_goShareServer.inc:233
-#: admin/systems/services/repository/class_servRepository.inc:142
-#: admin/systems/services/repository/class_servRepository.inc:177
-#: admin/systems/services/repository/class_servRepository.inc:182
-#: admin/systems/services/repository/class_servRepositorySetup.inc:196
-#: admin/systems/services/kiosk/class_goKioskService.inc:59
-#: admin/systems/services/kiosk/class_goKioskService.inc:142
-#: admin/systems/services/kiosk/class_goKioskService.inc:149
-#: admin/systems/services/kiosk/class_goKioskService.inc:152
-#: admin/systems/services/kiosk/class_goKioskService.inc:216
-msgid "Error"
-msgstr "Błąd"
-
-#: personal/environment/class_environment.inc:646
-#, fuzzy
-msgid "Share"
-msgstr "Udziały"
-
-#: personal/environment/class_environment.inc:648
-#: personal/environment/class_environment.inc:650
-#: personal/environment/class_environment.inc:661
-#: admin/systems/goto/class_terminalStartup.inc:207
-#: admin/systems/goto/class_workstationStartup.inc:481
-#, fuzzy
-msgid "Mount point"
-msgstr "Punkt montowania"
-
-#: personal/environment/class_environment.inc:751
-#: personal/environment/class_environment.inc:752
-#: personal/environment/class_environment.inc:760
-#: personal/environment/class_environment.inc:761
-msgid "Reset password hash"
-msgstr "Zresetuj hash hasła"
-
-#: personal/environment/class_environment.inc:765
-msgid "Delete share entry"
-msgstr "Usuń wpis udziału"
-
-#: personal/environment/class_environment.inc:959
-msgid "Cannot set default printer flag for groups!"
-msgstr ""
-
-#: personal/environment/class_environment.inc:1030
-#: personal/environment/class_environment.inc:1287
-#: admin/devices/class_deviceGeneric.inc:192
-#: admin/applications/class_applicationGeneric.inc:268
-#: admin/applications/class_applicationGeneric.inc:282
-#: admin/applications/class_applicationGeneric.inc:509
-#: admin/applications/class_applicationParameters.inc:153
-#: admin/applications/class_applicationParameters.inc:216
-#: admin/mimetypes/class_mimetypeGeneric.inc:488
-#: admin/mimetypes/class_mimetypeGeneric.inc:500
-#: admin/mimetypes/class_mimetypeGeneric.inc:515
-#: admin/systems/goto/class_printGeneric.inc:602
-#: admin/systems/goto/class_printGeneric.inc:886
-#: admin/systems/goto/class_workstationGeneric.inc:362
-#: admin/systems/goto/class_workstationGeneric.inc:589
-#: admin/systems/goto/class_workstationGeneric.inc:602
-#: admin/systems/goto/class_terminalStartup.inc:441
-#: admin/systems/goto/class_terminalGeneric.inc:337
-#: admin/systems/goto/class_terminalGeneric.inc:559
-#: admin/systems/goto/class_ArpNewDevice.inc:69
-#: admin/systems/goto/class_workstationService.inc:453
-#: admin/systems/goto/class_workstationStartup.inc:929
-#: admin/systems/goto/class_terminalService.inc:578
-#: admin/systems/services/terminal/class_goTerminalServer.inc:106
-#: admin/systems/services/shares/class_goShareServer.inc:192
-#: admin/systems/services/shares/class_goShareServer.inc:261
-#: admin/systems/services/shares/class_goShareServer.inc:277
-#: admin/systems/services/shares/class_goShareServer.inc:290
-#: admin/systems/services/ntp/class_goNtpServer.inc:98
-#: admin/systems/services/kiosk/class_goKioskService.inc:231
-#: admin/ogroups/goto/class_termgroup.inc:289
-#: admin/groups/apps/class_groupApplication.inc:638
-#: admin/groups/apps/class_groupApplication.inc:1320
-#: admin/groups/apps/class_groupApplication.inc:1333
-#: admin/groups/apps/class_groupApplication.inc:1346
-#, fuzzy
-msgid "LDAP error"
-msgstr "Serwer LDAP"
-
-#: personal/environment/class_environment.inc:1113
-#: personal/environment/class_environment.inc:1685
-#: personal/environment/class_environment.inc:1756
-msgid "Profile quota"
-msgstr "Quota profilu"
-
-#: personal/environment/class_environment.inc:1120
-#, fuzzy
-msgid "environment"
-msgstr "Środowisko"
-
-#: personal/environment/class_environment.inc:1301
-msgid "group share"
-msgstr "grupuj udział"
-
-#: personal/environment/class_environment.inc:1337
-msgid "Administrator"
-msgstr "Administrator"
-
-#: personal/environment/class_environment.inc:1342
-#: personal/environment/class_environment.inc:1762
-msgid "Default printer"
-msgstr "Domyślna drukarka"
-
-#: personal/environment/class_environment.inc:1741
-msgid "Environment settings"
-msgstr "Ustawienia środowiska"
-
-#: personal/environment/class_environment.inc:1745
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/environment/class_environment.inc:1749
-msgid "Command to extend the list of possible screen resolutions"
-msgstr "Polecenie do rozszerzenia listy możliwych rozdzielczości ekranu"
-
-#: personal/environment/class_environment.inc:1757
-msgid "Profile server"
-msgstr "Serwer profili"
-
-#: personal/environment/main.inc:121
+#: personal/environment/main.inc:122
 msgid "User environment settings"
 msgstr "Ustawienia środowiska użytkownika"
 
-#: personal/environment/class_selectPrinterDialog.inc:107
-#, fuzzy
-msgid "Please select a printer!"
-msgstr "Proszę wybrać prawidłowy plik"
+#: addons/goto/events/target_list.tpl:5
+msgid "Apply"
+msgstr "Zastosuj"
 
-#: personal/environment/class_hotplugDialog.inc:64
-#, fuzzy
-msgid "Please select a hotplug device!"
-msgstr "Proszę wybrać prawidłowy plik"
+#: addons/goto/events/target_list.tpl:6
+msgid "Cancel"
+msgstr "Anuluj"
 
-#: personal/environment/class_logonManagementDialog.inc:103
-#: admin/devices/class_deviceGeneric.inc:90
-#: admin/devices/class_deviceGeneric.inc:112
-#: admin/devices/class_deviceGeneric.inc:256
-#: admin/applications/class_applicationGeneric.inc:425
-#: admin/applications/class_applicationGeneric.inc:429
-#: admin/applications/class_applicationGeneric.inc:600
-#: admin/applications/class_applicationGeneric.inc:604
-#: admin/applications/class_applicationParameters.inc:185
-#: admin/mimetypes/class_mimetypeGeneric.inc:526
-#: admin/mimetypes/class_mimetypeGeneric.inc:718
-#: admin/systems/goto/class_printGeneric.inc:671
-#: admin/systems/goto/class_printGeneric.inc:676
-#: admin/systems/goto/class_printGeneric.inc:695
-#: admin/systems/goto/class_printGeneric.inc:930
-#: admin/systems/goto/class_workstationGeneric.inc:454
-#: admin/systems/goto/class_workstationGeneric.inc:459
-#: admin/systems/goto/class_workstationGeneric.inc:477
-#: admin/systems/goto/class_terminalGeneric.inc:430
-#: admin/systems/goto/class_terminalGeneric.inc:435
-#: admin/systems/goto/class_terminalGeneric.inc:454
-#: admin/systems/goto/class_terminalGeneric.inc:650
-#: admin/systems/goto/class_ArpNewDevice.inc:46
-#: admin/systems/services/nfs/class_servNfs.inc:188
-#: admin/systems/services/nfs/class_servNfs.inc:191
-#: admin/systems/services/nfs/servnfs.tpl:9
-#: admin/systems/services/shares/class_goShareServer.inc:398
-#: admin/systems/services/repository/class_servRepository.inc:177
-#: admin/systems/services/repository/class_servRepository.inc:354
-#: admin/groups/apps/edit_entry.tpl:43
-msgid "Name"
-msgstr "Imię"
-
-#: addons/goto/log_view.tpl:2
-#, fuzzy
-msgid "Available logs"
-msgstr "Dostępne aplikacje"
-
-#: addons/goto/log_view.tpl:8
-#, fuzzy
-msgid "Selected log"
-msgstr "Wybierz"
-
-#: addons/goto/log_view.tpl:13
-msgid "No logs for this host available!"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
-#, fuzzy
-msgid "Abort installation"
-msgstr "Stacja robocza"
-
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_reinstall.tpl:9
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
+#: addons/goto/events/DaemonEvent_notify.tpl:28
 #: addons/goto/events/DaemonEvent_faireboot.tpl:9
+#: addons/goto/events/DaemonEvent_memcheck.tpl:9
 #: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/events/DaemonEvent_halt.tpl:9
+#: addons/goto/events/DaemonEvent_reboot.tpl:9
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_wakeup.tpl:9
+#: addons/goto/events/DaemonEvent_activate.tpl:9
+#: addons/goto/events/DaemonEvent_rescan.tpl:9
+#: addons/goto/events/DaemonEvent_localboot.tpl:9
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:9
 #: addons/goto/events/DaemonEvent_lock.tpl:9
-#: addons/goto/events/DaemonEvent_reinstall.tpl:9
-#: addons/goto/events/DaemonEvent_halt.tpl:9
-#: addons/goto/events/DaemonEvent_notify.tpl:28
-#: addons/goto/events/DaemonEvent_reboot.tpl:9
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
-#: addons/goto/events/DaemonEvent_rescan.tpl:9
-#: addons/goto/events/DaemonEvent_wakeup.tpl:9
-#: addons/goto/events/DaemonEvent_localboot.tpl:9
-#: addons/goto/events/DaemonEvent_memcheck.tpl:9
-#: addons/goto/events/DaemonEvent_activate.tpl:9
 #, fuzzy
 msgid "Time schedule"
 msgstr "Zaplanowana aktualizacja"
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
-#: addons/goto/events/DaemonEvent_faireboot.tpl:18
-#: addons/goto/events/DaemonEvent_update.tpl:18
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
-#: addons/goto/events/DaemonEvent_lock.tpl:18
 #: addons/goto/events/DaemonEvent_reinstall.tpl:18
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
+#: addons/goto/events/DaemonEvent_faireboot.tpl:18
+#: addons/goto/events/DaemonEvent_memcheck.tpl:18
+#: addons/goto/events/DaemonEvent_update.tpl:18
 #: addons/goto/events/DaemonEvent_halt.tpl:18
 #: addons/goto/events/DaemonEvent_reboot.tpl:18
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
-#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
 #: addons/goto/events/DaemonEvent_wakeup.tpl:18
-#: addons/goto/events/DaemonEvent_localboot.tpl:18
-#: addons/goto/events/DaemonEvent_memcheck.tpl:18
 #: addons/goto/events/DaemonEvent_activate.tpl:18
+#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_localboot.tpl:18
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
+#: addons/goto/events/DaemonEvent_lock.tpl:18
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
 #, fuzzy
 msgid "System list"
 msgstr "Analiza systemu"
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_reinstall.tpl:35
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
+#: addons/goto/events/DaemonEvent_notify.tpl:69
 #: addons/goto/events/DaemonEvent_faireboot.tpl:35
+#: addons/goto/events/DaemonEvent_memcheck.tpl:35
 #: addons/goto/events/DaemonEvent_update.tpl:35
+#: addons/goto/events/DaemonEvent_halt.tpl:35
+#: addons/goto/events/DaemonEvent_reboot.tpl:35
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_wakeup.tpl:35
+#: addons/goto/events/DaemonEvent_activate.tpl:35
+#: addons/goto/events/DaemonEvent_rescan.tpl:35
+#: addons/goto/events/DaemonEvent_localboot.tpl:35
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:35
 #: addons/goto/events/DaemonEvent_lock.tpl:35
-#: addons/goto/events/DaemonEvent_reinstall.tpl:35
-#: addons/goto/events/DaemonEvent_halt.tpl:35
-#: addons/goto/events/DaemonEvent_notify.tpl:69
-#: addons/goto/events/DaemonEvent_reboot.tpl:35
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
-#: addons/goto/events/DaemonEvent_rescan.tpl:35
-#: addons/goto/events/DaemonEvent_wakeup.tpl:35
-#: addons/goto/events/DaemonEvent_localboot.tpl:35
-#: addons/goto/events/DaemonEvent_memcheck.tpl:35
-#: addons/goto/events/DaemonEvent_activate.tpl:35
 msgid "ID"
 msgstr ""
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_reinstall.tpl:39
+#, fuzzy
+msgid "Progress"
+msgstr "Właściwości"
+
+#: addons/goto/events/DaemonEvent_reinstall.tpl:43
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
+#: addons/goto/events/DaemonEvent_notify.tpl:73
 #: addons/goto/events/DaemonEvent_faireboot.tpl:39
+#: addons/goto/events/DaemonEvent_memcheck.tpl:39
 #: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/events/DaemonEvent_halt.tpl:39
+#: addons/goto/events/DaemonEvent_reboot.tpl:39
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_wakeup.tpl:39
+#: addons/goto/events/DaemonEvent_activate.tpl:39
+#: addons/goto/events/DaemonEvent_rescan.tpl:39
+#: addons/goto/events/DaemonEvent_localboot.tpl:39
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:39
 #: addons/goto/events/DaemonEvent_lock.tpl:39
-#: addons/goto/events/DaemonEvent_reinstall.tpl:43
-#: addons/goto/events/DaemonEvent_halt.tpl:39
-#: addons/goto/events/DaemonEvent_notify.tpl:73
-#: addons/goto/events/DaemonEvent_reboot.tpl:39
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
-#: addons/goto/events/DaemonEvent_rescan.tpl:39
-#: addons/goto/events/DaemonEvent_wakeup.tpl:39
-#: addons/goto/events/DaemonEvent_localboot.tpl:39
-#: addons/goto/events/DaemonEvent_memcheck.tpl:39
-#: addons/goto/events/DaemonEvent_activate.tpl:39
 #: addons/goto/class_gotomasses.inc:401
 #, fuzzy
 msgid "Status"
 msgstr "Startup"
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_reinstall.tpl:47
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
+#: addons/goto/events/DaemonEvent_notify.tpl:77
 #: addons/goto/events/DaemonEvent_faireboot.tpl:43
+#: addons/goto/events/DaemonEvent_memcheck.tpl:43
 #: addons/goto/events/DaemonEvent_update.tpl:43
+#: addons/goto/events/DaemonEvent_halt.tpl:43
+#: addons/goto/events/DaemonEvent_reboot.tpl:43
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_wakeup.tpl:43
+#: addons/goto/events/DaemonEvent_activate.tpl:43
+#: addons/goto/events/DaemonEvent_rescan.tpl:43
+#: addons/goto/events/DaemonEvent_localboot.tpl:43
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:43
 #: addons/goto/events/DaemonEvent_lock.tpl:43
-#: addons/goto/events/DaemonEvent_reinstall.tpl:47
-#: addons/goto/events/DaemonEvent_halt.tpl:43
-#: addons/goto/events/DaemonEvent_notify.tpl:77
-#: addons/goto/events/DaemonEvent_reboot.tpl:43
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
-#: addons/goto/events/DaemonEvent_rescan.tpl:43
-#: addons/goto/events/DaemonEvent_wakeup.tpl:43
-#: addons/goto/events/DaemonEvent_localboot.tpl:43
-#: addons/goto/events/DaemonEvent_memcheck.tpl:43
-#: addons/goto/events/DaemonEvent_activate.tpl:43
 #, fuzzy
 msgid "Result"
 msgstr "Rozdzielczość"
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
-#: addons/goto/events/DaemonEvent_faireboot.tpl:47
-#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_reinstall.tpl:51
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
 #: addons/goto/events/class_DaemonEvent_notify.inc:77
 #: addons/goto/events/class_DaemonEvent_notify.inc:78
 #: addons/goto/events/class_DaemonEvent_notify.inc:103
+#: addons/goto/events/DaemonEvent_notify.tpl:81
+#: addons/goto/events/DaemonEvent_faireboot.tpl:47
+#: addons/goto/events/DaemonEvent_memcheck.tpl:47
+#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_halt.tpl:47
+#: addons/goto/events/DaemonEvent_reboot.tpl:47
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
+#: addons/goto/events/DaemonEvent_wakeup.tpl:47
+#: addons/goto/events/DaemonEvent_activate.tpl:47
+#: addons/goto/events/DaemonEvent_rescan.tpl:47
+#: addons/goto/events/DaemonEvent_localboot.tpl:47
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:47
 #: addons/goto/events/DaemonEvent_lock.tpl:47
-#: addons/goto/events/DaemonEvent_reinstall.tpl:51
-#: addons/goto/events/DaemonEvent_halt.tpl:47
-#: addons/goto/events/DaemonEvent_notify.tpl:81
-#: addons/goto/events/DaemonEvent_reboot.tpl:47
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
-#: addons/goto/events/DaemonEvent_rescan.tpl:47
-#: addons/goto/events/DaemonEvent_wakeup.tpl:47
-#: addons/goto/events/DaemonEvent_localboot.tpl:47
-#: addons/goto/events/DaemonEvent_memcheck.tpl:47
-#: addons/goto/events/DaemonEvent_activate.tpl:47
 #: addons/goto/class_gotomasses.inc:396
 #, fuzzy
 msgid "Target"
 msgstr "Kodowanie"
 
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_reinstall.tpl:55
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
+#: addons/goto/events/DaemonEvent_notify.tpl:85
 #: addons/goto/events/DaemonEvent_faireboot.tpl:51
+#: addons/goto/events/DaemonEvent_memcheck.tpl:51
 #: addons/goto/events/DaemonEvent_update.tpl:51
+#: addons/goto/events/DaemonEvent_halt.tpl:51
+#: addons/goto/events/DaemonEvent_reboot.tpl:51
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_wakeup.tpl:51
+#: addons/goto/events/DaemonEvent_activate.tpl:51
+#: addons/goto/events/DaemonEvent_rescan.tpl:51
+#: addons/goto/events/DaemonEvent_localboot.tpl:51
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:51
 #: addons/goto/events/DaemonEvent_lock.tpl:51
-#: addons/goto/events/DaemonEvent_reinstall.tpl:55
-#: addons/goto/events/DaemonEvent_halt.tpl:51
-#: addons/goto/events/DaemonEvent_notify.tpl:85
-#: addons/goto/events/DaemonEvent_reboot.tpl:51
 #: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
-#: addons/goto/events/DaemonEvent_rescan.tpl:51
-#: addons/goto/events/DaemonEvent_wakeup.tpl:51
-#: addons/goto/events/DaemonEvent_localboot.tpl:51
-#: addons/goto/events/DaemonEvent_memcheck.tpl:51
-#: addons/goto/events/DaemonEvent_activate.tpl:51
 #: addons/goto/goto_import_file.tpl:45
 msgid "Timestamp"
 msgstr "Czas"
-
-#: addons/goto/events/class_DaemonEvent_update.inc:29
-#: addons/goto/events/class_DaemonEvent_update.inc:30
-#: admin/systems/goto/class_workstationGeneric.inc:299
-#: admin/systems/goto/class_workstationGeneric.inc:308
-#, fuzzy
-msgid "Software update"
-msgstr "Natychmiastowe uaktualnienie"
-
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
-msgid "Installation activation"
-msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_notify.inc:46
 #: addons/goto/events/class_DaemonEvent_notify.inc:47
@@ -841,23 +822,44 @@ msgstr "Zużycie pamięci"
 msgid "From"
 msgstr ""
 
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+#, fuzzy
+msgid "Activate new"
+msgstr "Aktywne"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:7
+#, fuzzy
+msgid "Message settings"
+msgstr "Ustawienia serwera ntp"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:10
+#, fuzzy
+msgid "Sender"
+msgstr "Serwer"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:37
+#, fuzzy
+msgid "Target users"
+msgstr "Udziały"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:44
+#, fuzzy
+msgid "Target groups"
+msgstr "Udziały"
+
 #: addons/goto/events/class_DaemonEvent_memcheck.inc:28
 #: addons/goto/events/class_DaemonEvent_memcheck.inc:29
-#: admin/systems/goto/class_workstationGeneric.inc:302
-#: admin/systems/goto/class_workstationGeneric.inc:309
-#: admin/systems/goto/class_terminalGeneric.inc:266
-#: admin/systems/goto/class_terminalGeneric.inc:270
-#: admin/ogroups/goto/class_termgroup.inc:206
+#: admin/ogroups/goto/class_termgroup.inc:228
 msgid "Memory test"
 msgstr "Test pamięci"
 
-#: addons/goto/events/class_DaemonEvent_halt.inc:31
-#: addons/goto/events/class_DaemonEvent_halt.inc:32
-#: admin/systems/goto/class_workstationGeneric.inc:298
-#: admin/systems/goto/class_terminalGeneric.inc:264
-#: admin/ogroups/goto/class_termgroup.inc:200
-msgid "Switch off"
-msgstr "Wyłącz"
+#: addons/goto/events/class_DaemonEvent_localboot.inc:28
+#: addons/goto/events/class_DaemonEvent_localboot.inc:29
+#: admin/systems/goto/class_workstationGeneric.inc:303
+#: admin/systems/goto/class_workstationGeneric.inc:311
+msgid "Force localboot"
+msgstr ""
 
 #: addons/goto/events/timestamp_select.tpl:3
 #, fuzzy
@@ -889,19 +891,38 @@ msgstr "Drukarka"
 msgid "Second"
 msgstr "Sekcja"
 
-#: addons/goto/events/DaemonEvent_reinstall.tpl:39
-#, fuzzy
-msgid "Progress"
-msgstr "Właściwości"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
-msgid "Reload fai server db"
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
+msgid "Installation activation"
 msgstr ""
 
+#: addons/goto/events/class_DaemonEvent_update.inc:29
+#: addons/goto/events/class_DaemonEvent_update.inc:30
+#: admin/systems/goto/class_workstationGeneric.inc:299
+#: admin/systems/goto/class_workstationGeneric.inc:309
+#, fuzzy
+msgid "Software update"
+msgstr "Natychmiastowe uaktualnienie"
+
+#: addons/goto/events/class_DaemonEvent_halt.inc:31
+#: addons/goto/events/class_DaemonEvent_halt.inc:32
+#: admin/systems/goto/class_terminalGeneric.inc:264
+#: admin/systems/goto/class_workstationGeneric.inc:298
+#: admin/ogroups/goto/class_termgroup.inc:222
+msgid "Switch off"
+msgstr "Wyłącz"
+
+#: addons/goto/events/class_DaemonEvent_reboot.inc:29
+#: addons/goto/events/class_DaemonEvent_reboot.inc:30
+#: admin/systems/goto/class_terminalGeneric.inc:265
+#: admin/systems/goto/class_workstationGeneric.inc:298
+#: admin/ogroups/goto/class_termgroup.inc:222
+msgid "Reboot"
+msgstr "Restartuj"
+
 #: addons/goto/events/class_DaemonEvent_wakeup.inc:29
-#: admin/systems/goto/class_workstationGeneric.inc:306
-#: admin/systems/goto/class_terminalGeneric.inc:269
+#: admin/systems/goto/class_terminalGeneric.inc:270
+#: admin/systems/goto/class_workstationGeneric.inc:307
 msgid "Wake up"
 msgstr "Zbudź"
 
@@ -910,82 +931,33 @@ msgstr "Zbudź"
 msgid "Start a system"
 msgstr "System"
 
-#: addons/goto/events/target_list.tpl:5
-msgid "Apply"
-msgstr "Zastosuj"
-
-#: addons/goto/events/target_list.tpl:6
-msgid "Cancel"
-msgstr "Anuluj"
-
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:32
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 #: admin/systems/goto/class_workstationGeneric.inc:300
-#: admin/systems/goto/class_workstationGeneric.inc:307
-#: admin/ogroups/goto/class_termgroup.inc:204
+#: admin/systems/goto/class_workstationGeneric.inc:308
+#: admin/ogroups/goto/class_termgroup.inc:226
 msgid "Reinstall"
 msgstr "Przeinstaluj"
 
-#: addons/goto/events/class_DaemonEvent_rescan.inc:28
-#: addons/goto/events/class_DaemonEvent_rescan.inc:29
-#: admin/systems/goto/class_workstationGeneric.inc:301
-#: admin/ogroups/goto/class_termgroup.inc:205
-msgid "Rescan hardware"
-msgstr "Przeskanuj sprzęt"
-
-#: addons/goto/events/class_DaemonEvent_reboot.inc:29
-#: addons/goto/events/class_DaemonEvent_reboot.inc:30
-#: admin/systems/goto/class_workstationGeneric.inc:298
-#: admin/systems/goto/class_terminalGeneric.inc:265
-#: admin/ogroups/goto/class_termgroup.inc:200
-msgid "Reboot"
-msgstr "Restartuj"
-
-#: addons/goto/events/DaemonEvent_notify.tpl:7
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:29
 #, fuzzy
-msgid "Message settings"
-msgstr "Ustawienia serwera ntp"
+msgid "Goto reload"
+msgstr "do folferu"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:10
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:30
 #, fuzzy
-msgid "Sender"
-msgstr "Serwer"
+msgid "Reload goto settings"
+msgstr "Ustawienia Posix"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:37
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
 #, fuzzy
-msgid "Target users"
-msgstr "Udziały"
-
-#: addons/goto/events/DaemonEvent_notify.tpl:44
-#, fuzzy
-msgid "Target groups"
-msgstr "Udziały"
-
-#: addons/goto/events/class_DaemonEvent_lock.inc:29
-#: addons/goto/events/class_DaemonEvent_lock.inc:30
-#, fuzzy
-msgid "Lock"
+msgid "Unlock"
 msgstr "Zablokowane"
 
-#: addons/goto/events/class_DaemonEvent.inc:119
-#, fuzzy
-msgid "This job has no template."
-msgstr "Ten 'dn' nie posiada cech terminala."
-
-#: addons/goto/events/class_DaemonEvent.inc:135
-#, php-format
-msgid "Create '%s' job"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent.inc:234
-msgid "Add"
-msgstr "Dodaj"
-
-#: addons/goto/events/class_DaemonEvent_localboot.inc:28
-#: addons/goto/events/class_DaemonEvent_localboot.inc:29
-#: admin/systems/goto/class_workstationGeneric.inc:303
-#: admin/systems/goto/class_workstationGeneric.inc:310
-msgid "Force localboot"
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
+msgid "Reload fai server db"
 msgstr ""
 
 #: addons/goto/events/class_EventTargetAddList.inc:51
@@ -1030,18 +1002,19 @@ msgstr ""
 #: addons/goto/events/class_EventTargetAddUsersList.inc:130
 #: addons/goto/goto_import_file.tpl:49 addons/goto/class_target_list.inc:152
 #: admin/devices/deviceGeneric.tpl:9 admin/devices/class_divListDevices.inc:82
-#: admin/applications/class_applicationGeneric.inc:601
 #: admin/applications/class_divListApplication.inc:90
-#: admin/applications/generic.tpl:42 admin/mimetypes/generic.tpl:44
-#: admin/mimetypes/class_mimetypeGeneric.inc:721
-#: admin/mimetypes/class_divListMimeTypes.inc:93
-#: admin/systems/goto/class_printGeneric.inc:931
-#: admin/systems/goto/class_workstationGeneric.inc:703
-#: admin/systems/goto/class_terminalGeneric.inc:649
-#: admin/systems/goto/workstation.tpl:35 admin/systems/goto/printer.tpl:27
-#: admin/systems/goto/terminal.tpl:27
+#: admin/applications/generic.tpl:42
+#: admin/applications/class_applicationGeneric.inc:601
 #: admin/systems/services/ldap/class_goLdapServer.inc:67
 #: admin/systems/services/ldap/class_goLdapServer.inc:70
+#: admin/systems/goto/printer.tpl:27 admin/systems/goto/workstation.tpl:35
+#: admin/systems/goto/class_printGeneric.inc:931
+#: admin/systems/goto/class_terminalGeneric.inc:651
+#: admin/systems/goto/terminal.tpl:27
+#: admin/systems/goto/class_workstationGeneric.inc:705
+#: admin/mimetypes/class_mimetypeGeneric.inc:721
+#: admin/mimetypes/class_divListMimeTypes.inc:93
+#: admin/mimetypes/generic.tpl:44
 msgid "Base"
 msgstr "Kontener"
 
@@ -1065,8 +1038,8 @@ msgstr "Wyślij"
 
 #: addons/goto/events/class_EventTargetAddList.inc:249
 #: addons/goto/class_target_list.inc:203
-#: admin/systems/goto/class_workstationGeneric.inc:697
 #: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_workstationGeneric.inc:699
 msgid "Workstation"
 msgstr "Stacja robocza"
 
@@ -1077,16 +1050,49 @@ msgstr "Stacja robocza"
 msgid "Object group"
 msgstr "Proszę wybrać grupę obiektów"
 
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
 #, fuzzy
-msgid "Activate new"
-msgstr "Aktywne"
+msgid "Abort installation"
+msgstr "Stacja robocza"
 
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
-msgid "Reload ldap config"
+#: addons/goto/events/class_DaemonEvent_rescan.inc:28
+#: addons/goto/events/class_DaemonEvent_rescan.inc:29
+#: admin/systems/goto/class_workstationGeneric.inc:301
+#: admin/ogroups/goto/class_termgroup.inc:227
+msgid "Rescan hardware"
+msgstr "Przeskanuj sprzęt"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
+msgid "Reload fai release db"
 msgstr ""
+
+#: addons/goto/events/class_DaemonEvent.inc:119
+#, fuzzy
+msgid "This job has no template."
+msgstr "Ten 'dn' nie posiada cech terminala."
+
+#: addons/goto/events/class_DaemonEvent.inc:135
+#, php-format
+msgid "Create '%s' job"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent.inc:234
+msgid "Add"
+msgstr "Dodaj"
+
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+#, fuzzy
+msgid "Lock"
+msgstr "Zablokowane"
+
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
+#: admin/ogroups/goto/class_termgroup.inc:229
+msgid "System analysis"
+msgstr "Analiza systemu"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:65
 #, fuzzy
@@ -1099,8 +1105,8 @@ msgid "Display groups"
 msgstr "Wyświetl obiekty pasujące"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:171
-#: admin/systems/goto/class_printGeneric.inc:909
 #: admin/systems/services/syslog/class_goLogDBServer.inc:68
+#: admin/systems/goto/class_printGeneric.inc:909
 msgid "User"
 msgstr "Użytkownik"
 
@@ -1110,38 +1116,10 @@ msgstr "Użytkownik"
 msgid "Group"
 msgstr "Grupa"
 
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
-#: admin/systems/goto/class_workstationGeneric.inc:304
-#: admin/systems/goto/class_workstationGeneric.inc:311
-#: admin/systems/goto/class_terminalGeneric.inc:267
-#: admin/systems/goto/class_terminalGeneric.inc:271
-#: admin/ogroups/goto/class_termgroup.inc:207
-msgid "System analysis"
-msgstr "Analiza systemu"
-
-#: addons/goto/events/class_DaemonEvent_activate.inc:29
-#: addons/goto/events/class_DaemonEvent_activate.inc:30
-#, fuzzy
-msgid "Unlock"
-msgstr "Zablokowane"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
-msgid "Reload fai release db"
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
+msgid "Reload ldap config"
 msgstr ""
-
-#: addons/goto/main.inc:52 addons/goto/class_gotomasses.inc:27
-#, fuzzy
-msgid "System deployment status"
-msgstr "Typ systemu"
-
-#: addons/goto/remove.tpl:9 admin/devices/remove.tpl:9
-#: admin/applications/remove.tpl:9 admin/mimetypes/remove.tpl:9
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
-"anulować."
 
 #: addons/goto/goto_import_file.tpl:1
 #, fuzzy
@@ -1207,9 +1185,9 @@ msgstr "Wybierz drukarkę do dodania"
 msgid "Browse"
 msgstr "Przeglądaj"
 
-#: addons/goto/goto_import_file.tpl:25 admin/applications/generic.tpl:138
+#: addons/goto/goto_import_file.tpl:25 admin/groups/apps/edit_entry.tpl:28
+#: admin/applications/generic.tpl:138
 #: admin/systems/ppd/printerPPDDialog.tpl:11
-#: admin/groups/apps/edit_entry.tpl:28
 msgid "Upload"
 msgstr "Wgraj"
 
@@ -1242,42 +1220,30 @@ msgstr ""
 msgid "DHCP"
 msgstr ""
 
-#: addons/goto/class_goto_import_file.inc:28
-#: admin/systems/ppd/class_printerPPDDialog.inc:118
-#: admin/systems/ppd/class_printerPPDDialog.inc:315
+#: addons/goto/class_goto_log_view.inc:84
+#: admin/systems/goto/class_SelectDeviceType.inc:59
+msgid "none"
+msgstr "żaden"
+
+#: addons/goto/class_goto_log_view.inc:110
 #, fuzzy
-msgid "file is empty"
-msgstr "Usuń ten obiekt"
+msgid "File"
+msgstr "Filtry"
 
-#: addons/goto/class_goto_import_file.inc:89
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
-msgstr ""
-
-#: addons/goto/class_goto_import_file.inc:123
-#: addons/goto/class_gotomasses.inc:324
-#: admin/systems/goto/class_workstationGeneric.inc:212
-#: admin/systems/goto/class_workstationGeneric.inc:628
-#: admin/systems/goto/class_terminalStartup.inc:460
-#: admin/systems/goto/class_terminalGeneric.inc:186
-#: admin/systems/goto/class_terminalGeneric.inc:573
-#: admin/systems/goto/class_workstationStartup.inc:978
-#: admin/systems/goto/class_workstationStartup.inc:1105
-#: admin/systems/goto/class_workstationStartup.inc:1161
-#: admin/systems/services/repository/class_servRepository.inc:328
+#: addons/goto/class_goto_log_view.inc:112
 #, fuzzy
-msgid "Service infrastructure"
-msgstr "Szukaj wewnątrz tego poddrzewa"
-
-#: addons/goto/class_goto_import_file.inc:130
-#, php-format
-msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
+msgid "Date"
+msgstr "Wklej"
 
 #: addons/goto/class_gotomasses.inc:26
 #, fuzzy
 msgid "Deployment status"
 msgstr "Status systemu"
+
+#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
+#, fuzzy
+msgid "System deployment status"
+msgstr "Typ systemu"
 
 #: addons/goto/class_gotomasses.inc:228
 #: admin/devices/class_deviceManagement.inc:245
@@ -1291,6 +1257,21 @@ msgstr "Uprawnienia"
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
 msgstr ""
+
+#: addons/goto/class_gotomasses.inc:324
+#: addons/goto/class_goto_import_file.inc:123
+#: admin/systems/goto/class_terminalStartup.inc:460
+#: admin/systems/goto/class_workstationStartup.inc:978
+#: admin/systems/goto/class_workstationStartup.inc:1105
+#: admin/systems/goto/class_workstationStartup.inc:1161
+#: admin/systems/goto/class_terminalGeneric.inc:186
+#: admin/systems/goto/class_terminalGeneric.inc:575
+#: admin/systems/goto/class_workstationGeneric.inc:212
+#: admin/systems/goto/class_workstationGeneric.inc:630
+#: admin/ogroups/goto/class_termgroup.inc:174
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Szukaj wewnątrz tego poddrzewa"
 
 #: addons/goto/class_gotomasses.inc:350
 #, fuzzy
@@ -1316,8 +1297,8 @@ msgstr "Akcje"
 #: addons/goto/class_gotomasses.inc:356
 #: admin/devices/class_divListDevices.inc:92
 #: admin/applications/class_divListApplication.inc:106
-#: admin/mimetypes/class_divListMimeTypes.inc:114
 #: admin/systems/goto/chooser.tpl:16
+#: admin/mimetypes/class_divListMimeTypes.inc:114
 msgid "Create"
 msgstr "Utwórz"
 
@@ -1336,19 +1317,19 @@ msgstr "Wklej"
 msgid "Abort"
 msgstr "Inicjały"
 
-#: addons/goto/class_gotomasses.inc:371
+#: addons/goto/class_gotomasses.inc:371 admin/applications/generic.tpl:24
 #: admin/applications/class_applicationGeneric.inc:433
 #: admin/applications/class_applicationGeneric.inc:603
-#: admin/applications/generic.tpl:24 admin/systems/goto/workstation.tpl:146
+#: admin/systems/goto/workstation.tpl:146
 #: admin/systems/goto/workstation.tpl:150 admin/systems/goto/terminal.tpl:169
 #: admin/ogroups/goto/termgroup.tpl:101
 msgid "Execute"
 msgstr "Uruchom"
 
 #: addons/goto/class_gotomasses.inc:388
-#: admin/systems/goto/workstationStartup.tpl:34
-#: admin/systems/goto/terminalStartup.tpl:13
 #: admin/systems/goto/terminalService.tpl:184
+#: admin/systems/goto/terminalStartup.tpl:13
+#: admin/systems/goto/workstationStartup.tpl:34
 #, fuzzy
 msgid "Reload"
 msgstr "Odczyt"
@@ -1410,9 +1391,9 @@ msgid "Processed"
 msgstr "Właściwości"
 
 #: addons/goto/class_gotomasses.inc:526
-#: admin/systems/goto/class_workstationGeneric.inc:139
 #: admin/systems/goto/class_terminalGeneric.inc:120
-#: admin/ogroups/goto/class_termgroup.inc:44
+#: admin/systems/goto/class_workstationGeneric.inc:139
+#: admin/ogroups/goto/class_termgroup.inc:46
 msgid "Locked"
 msgstr "Zablokowane"
 
@@ -1454,6 +1435,44 @@ msgstr "Zarządzanie systemem"
 
 #: addons/goto/class_gotomasses.inc:895
 msgid "Provide a mechanism to automatically activate a set of systems"
+msgstr ""
+
+#: addons/goto/log_view.tpl:2
+#, fuzzy
+msgid "Available logs"
+msgstr "Dostępne aplikacje"
+
+#: addons/goto/log_view.tpl:8
+#, fuzzy
+msgid "Selected log"
+msgstr "Wybierz"
+
+#: addons/goto/log_view.tpl:13
+msgid "No logs for this host available!"
+msgstr ""
+
+#: addons/goto/remove.tpl:9 admin/devices/remove.tpl:9
+#: admin/applications/remove.tpl:9 admin/mimetypes/remove.tpl:9
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
+"anulować."
+
+#: addons/goto/class_goto_import_file.inc:28
+#: admin/systems/ppd/class_printerPPDDialog.inc:118
+#: admin/systems/ppd/class_printerPPDDialog.inc:315
+#, fuzzy
+msgid "file is empty"
+msgstr "Usuń ten obiekt"
+
+#: addons/goto/class_goto_import_file.inc:89
+msgid ""
+"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:130
+#, php-format
+msgid "Import complete: %s events successfully send, %s failed"
 msgstr ""
 
 #: addons/goto/class_target_list.inc:58
@@ -1534,31 +1553,215 @@ msgstr ""
 msgid "IP range"
 msgstr ""
 
-#: addons/goto/class_goto_log_view.inc:84
-#: admin/systems/goto/class_SelectDeviceType.inc:59
-msgid "none"
+#: admin/groups/apps/edit_entry.tpl:8
+#, fuzzy
+msgid "Folder image"
+msgstr "Strona kodowa"
+
+#: admin/groups/apps/edit_entry.tpl:12
+msgid "Could not load image."
+msgstr ""
+
+#: admin/groups/apps/edit_entry.tpl:14
+#, fuzzy
+msgid "None"
 msgstr "żaden"
 
-#: addons/goto/class_goto_log_view.inc:110
+#: admin/groups/apps/edit_entry.tpl:24
 #, fuzzy
-msgid "File"
+msgid "Upload image"
+msgstr "Wgraj"
+
+#: admin/groups/apps/edit_entry.tpl:32
+msgid "Reset image"
+msgstr ""
+
+#: admin/groups/apps/edit_entry.tpl:33
+#, fuzzy
+msgid "Reset"
+msgstr "ustaw"
+
+#: admin/groups/apps/edit_entry.tpl:40
+#: admin/applications/class_applicationGeneric.inc:551
+msgid "Application settings"
+msgstr "Ustawienia Aplikacji"
+
+#: admin/groups/apps/edit_entry.tpl:53
+msgid "Application options"
+msgstr "Opcje aplikacji"
+
+#: admin/groups/apps/app_list.tpl:5 admin/groups/apps/app_list.tpl:53
+#: admin/groups/apps/class_groupApplication.inc:1370
+#: admin/systems/goto/workstationStartup.tpl:79
+#: admin/systems/goto/workstationStartup.tpl:115
+msgid "Release"
+msgstr "Wersja"
+
+#: admin/groups/apps/app_list.tpl:11
+#, fuzzy
+msgid "Copy menu"
+msgstr "kopiuj"
+
+#: admin/groups/apps/app_list.tpl:13
+msgid "Paste menu from"
+msgstr ""
+
+#: admin/groups/apps/app_list.tpl:17
+#, fuzzy
+msgid "Delete menu"
+msgstr "Usuń wpis"
+
+#: admin/groups/apps/app_list.tpl:70 admin/groups/apps/app_list.tpl:74
+#, fuzzy
+msgid "Folder"
 msgstr "Filtry"
 
-#: addons/goto/class_goto_log_view.inc:112
+#: admin/groups/apps/app_list.tpl:121
 #, fuzzy
-msgid "Date"
-msgstr "Wklej"
+msgid "Entry"
+msgstr "Edycja pozycji"
 
-#: admin/devices/deviceGeneric.tpl:2 admin/devices/class_deviceGeneric.inc:253
+#: admin/groups/apps/app_list.tpl:143
+#, fuzzy
+msgid "add to"
+msgstr "Dodaj opcję"
+
+#: admin/groups/apps/app_list.tpl:149 admin/groups/apps/app_list.tpl:159
+#, fuzzy
+msgid "Add selected applications to this folder."
+msgstr "Wybrana aplikacja nie posiada opcji."
+
+#: admin/groups/apps/app_list.tpl:150
+#, fuzzy
+msgid "Separator"
+msgstr "Wstaw separator"
+
+#: admin/groups/apps/app_list.tpl:150
+#, fuzzy
+msgid "Add a separator to this folder."
+msgstr "Wybrana aplikacja nie posiada opcji."
+
+#: admin/groups/apps/class_groupApplication.inc:375
+#: admin/groups/apps/class_groupApplication.inc:379
+#, fuzzy
+msgid "Menu"
+msgstr "Drukarka"
+
+#: admin/groups/apps/class_groupApplication.inc:432
+msgid "Back"
+msgstr "Wróć"
+
+#: admin/groups/apps/class_groupApplication.inc:442
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:147
+msgid "back"
+msgstr "wróć"
+
+#: admin/groups/apps/class_groupApplication.inc:450
+msgid "department"
+msgstr "departament"
+
+#: admin/groups/apps/class_groupApplication.inc:473
+#: admin/applications/class_applicationGeneric.inc:124
+#: admin/applications/class_applicationManagement.inc:350
+#: admin/applications/class_applicationManagement.inc:431
+msgid "application"
+msgstr "aplikacja"
+
+#: admin/groups/apps/class_groupApplication.inc:1135
+msgid "Not available in release."
+msgstr ""
+
+#: admin/groups/apps/class_groupApplication.inc:1361
+#: admin/applications/class_applicationManagement.inc:24
+#: admin/mimetypes/generic.tpl:112 admin/mimetypes/generic.tpl:172
+msgid "Applications"
+msgstr "Aplikacje"
+
+#: admin/groups/apps/class_groupApplication.inc:1362
+msgid "Group applications"
+msgstr "Grupa aplikacje"
+
+#: admin/groups/apps/class_groupApplication.inc:1369
+#: admin/applications/class_divListApplication.inc:108
+#: admin/applications/class_divListApplication.inc:144
+#: admin/applications/class_applicationGeneric.inc:597
+#: admin/mimetypes/class_mimetypeGeneric.inc:722
+msgid "Application"
+msgstr "Aplikacja"
+
+#: admin/groups/apps/class_groupApplication.inc:1371
+msgid "Application parameter"
+msgstr "Parametr aplikacji"
+
 #: admin/devices/paste_deviceGeneric.tpl:2
+#: admin/devices/class_deviceGeneric.inc:253 admin/devices/deviceGeneric.tpl:2
 msgid "Devices"
 msgstr "Urządzenia"
 
-#: admin/devices/deviceGeneric.tpl:18
+#: admin/devices/paste_deviceGeneric.tpl:9 admin/devices/deviceGeneric.tpl:18
 #: admin/devices/class_divListDevices.inc:51
-#: admin/devices/paste_deviceGeneric.tpl:9
 msgid "Device name"
 msgstr "Nazwa urządzenia"
+
+#: admin/devices/class_deviceGeneric.inc:30
+msgid "Digital camera"
+msgstr ""
+
+#: admin/devices/class_deviceGeneric.inc:31
+#, fuzzy
+msgid "USB stick"
+msgstr "sticky"
+
+#: admin/devices/class_deviceGeneric.inc:32
+msgid "CD/DVD drive"
+msgstr ""
+
+#: admin/devices/class_deviceGeneric.inc:98
+#, fuzzy
+msgid "iSerial"
+msgstr "Szeregowy"
+
+#: admin/devices/class_deviceGeneric.inc:101
+#, fuzzy
+msgid "Serial"
+msgstr "Szeregowy"
+
+#: admin/devices/class_deviceGeneric.inc:104
+#, fuzzy
+msgid "Vendor ID"
+msgstr "ID Dostawcy"
+
+#: admin/devices/class_deviceGeneric.inc:163
+#: admin/devices/class_divListDevices.inc:94
+#: admin/devices/class_divListDevices.inc:131
+msgid "Device"
+msgstr "Urządzenie"
+
+#: admin/devices/class_deviceGeneric.inc:247
+#: admin/applications/class_applicationGeneric.inc:591
+#: admin/systems/goto/class_printGeneric.inc:921
+#: admin/systems/goto/class_workstationGeneric.inc:693
+#: admin/mimetypes/class_mimetypeGeneric.inc:709
+#: admin/mimetypes/paste_generic.tpl:4 admin/mimetypes/generic.tpl:4
+#: admin/ogroups/goto/termgroup.tpl:6
+msgid "Generic"
+msgstr "Ogólne"
+
+#: admin/devices/class_deviceGeneric.inc:248
+#, fuzzy
+msgid "Device generic"
+msgstr "Nazwa serwera"
+
+#: admin/devices/class_deviceManagement.inc:8
+#, fuzzy
+msgid "Manage hotplug devices"
+msgstr "Dodaj urządzenia hotplug"
+
+#: admin/devices/class_deviceManagement.inc:262
+#: admin/devices/class_deviceManagement.inc:344
+#, fuzzy
+msgid "device"
+msgstr "Urządzenie"
 
 #: admin/devices/deviceGeneric.tpl:32
 #, fuzzy
@@ -1599,60 +1802,6 @@ msgstr "ID Produktu"
 msgid "(idProduct)"
 msgstr "ID Produktu"
 
-#: admin/devices/class_deviceGeneric.inc:30
-msgid "Digital camera"
-msgstr ""
-
-#: admin/devices/class_deviceGeneric.inc:31
-#, fuzzy
-msgid "USB stick"
-msgstr "sticky"
-
-#: admin/devices/class_deviceGeneric.inc:32
-msgid "CD/DVD drive"
-msgstr ""
-
-#: admin/devices/class_deviceGeneric.inc:98
-#, fuzzy
-msgid "iSerial"
-msgstr "Szeregowy"
-
-#: admin/devices/class_deviceGeneric.inc:101
-#, fuzzy
-msgid "Serial"
-msgstr "Szeregowy"
-
-#: admin/devices/class_deviceGeneric.inc:104
-#, fuzzy
-msgid "Vendor ID"
-msgstr "ID Dostawcy"
-
-#: admin/devices/class_deviceGeneric.inc:163
-#: admin/devices/class_divListDevices.inc:94
-#: admin/devices/class_divListDevices.inc:131
-msgid "Device"
-msgstr "Urządzenie"
-
-#: admin/devices/class_deviceGeneric.inc:247
-#: admin/applications/class_applicationGeneric.inc:591
-#: admin/mimetypes/generic.tpl:4 admin/mimetypes/class_mimetypeGeneric.inc:709
-#: admin/mimetypes/paste_generic.tpl:4
-#: admin/systems/goto/class_printGeneric.inc:921
-#: admin/systems/goto/class_workstationGeneric.inc:691
-#: admin/ogroups/goto/termgroup.tpl:6
-msgid "Generic"
-msgstr "Ogólne"
-
-#: admin/devices/class_deviceGeneric.inc:248
-#, fuzzy
-msgid "Device generic"
-msgstr "Nazwa serwera"
-
-#: admin/devices/main.inc:41 admin/devices/main.inc:43
-#, fuzzy
-msgid "Hotplug device management"
-msgstr "Zarządzanie Hotplug"
-
 #: admin/devices/remove.tpl:6
 #, fuzzy
 msgid ""
@@ -1661,6 +1810,11 @@ msgid ""
 msgstr ""
 "To może być używane przez kilka grup. Proszę upewnić się czy kontynuować, "
 "gdyż nie ma operacji powrotu."
+
+#: admin/devices/main.inc:41 admin/devices/main.inc:43
+#, fuzzy
+msgid "Hotplug device management"
+msgstr "Zarządzanie Hotplug"
 
 #: admin/devices/class_divListDevices.inc:33
 #: admin/devices/class_divListDevices.inc:34
@@ -1699,8 +1853,8 @@ msgstr "Edytuj ten obiekt"
 
 #: admin/devices/class_divListDevices.inc:163
 #: admin/applications/class_divListApplication.inc:179
-#: admin/mimetypes/class_divListMimeTypes.inc:185
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:136
+#: admin/mimetypes/class_divListMimeTypes.inc:185
 msgid "delete"
 msgstr "Usuń"
 
@@ -1722,125 +1876,6 @@ msgstr "Nazwa departamentu"
 msgid "Number of listed departments"
 msgstr "Nazwa departamentu"
 
-#: admin/devices/class_deviceManagement.inc:8
-#, fuzzy
-msgid "Manage hotplug devices"
-msgstr "Dodaj urządzenia hotplug"
-
-#: admin/devices/class_deviceManagement.inc:262
-#: admin/devices/class_deviceManagement.inc:344
-#, fuzzy
-msgid "device"
-msgstr "Urządzenie"
-
-#: admin/applications/class_applicationGeneric.inc:93
-msgid "no example"
-msgstr "brak przykładu"
-
-#: admin/applications/class_applicationGeneric.inc:124
-#: admin/applications/class_applicationManagement.inc:350
-#: admin/applications/class_applicationManagement.inc:431
-#: admin/groups/apps/class_groupApplication.inc:473
-msgid "application"
-msgstr "aplikacja"
-
-#: admin/applications/class_applicationGeneric.inc:261
-#, fuzzy, php-format
-msgid "Cannot remove application - it is still in use by these objects: %s"
-msgstr ""
-"Nie można usunąć tego załącznika, jest wciąż używany przez system(y) '%s'"
-
-#: admin/applications/class_applicationGeneric.inc:365
-#, fuzzy
-msgid "no read permission"
-msgstr "Uprawnienia"
-
-#: admin/applications/class_applicationGeneric.inc:370
-msgid "cannot resize image"
-msgstr ""
-
-#: admin/applications/class_applicationGeneric.inc:375
-msgid "cannot convert image"
-msgstr ""
-
-#: admin/applications/class_applicationGeneric.inc:379
-#, fuzzy, php-format
-msgid "cannot save image to '%s'"
-msgstr "Nie można zapisać pliku '%s'."
-
-#: admin/applications/class_applicationGeneric.inc:408
-#, fuzzy
-msgid "Execute path"
-msgstr "Uruchom"
-
-#: admin/applications/class_applicationGeneric.inc:551
-#: admin/groups/apps/edit_entry.tpl:40
-msgid "Application settings"
-msgstr "Ustawienia Aplikacji"
-
-#: admin/applications/class_applicationGeneric.inc:555
-#: admin/applications/class_divListApplication.inc:51
-#: admin/applications/generic.tpl:7 admin/applications/generic.tpl:10
-msgid "Application name"
-msgstr "Nazwa aplikacji"
-
-#: admin/applications/class_applicationGeneric.inc:560
-#: admin/applications/generic.tpl:19
-msgid "Application name to be displayed (i.e. below icons)"
-msgstr "Wyświetlana nazwa aplikacji (pod ikoną)"
-
-#: admin/applications/class_applicationGeneric.inc:592
-#, fuzzy
-msgid "Application generic"
-msgstr "Nazwa aplikacji"
-
-#: admin/applications/class_applicationGeneric.inc:597
-#: admin/applications/class_divListApplication.inc:108
-#: admin/applications/class_divListApplication.inc:144
-#: admin/mimetypes/class_mimetypeGeneric.inc:722
-#: admin/groups/apps/class_groupApplication.inc:1369
-msgid "Application"
-msgstr "Aplikacja"
-
-#: admin/applications/class_applicationGeneric.inc:605
-#: admin/applications/generic.tpl:66 admin/mimetypes/generic.tpl:67
-#: admin/mimetypes/class_mimetypeGeneric.inc:724
-msgid "Icon"
-msgstr "Ikona"
-
-#: admin/applications/class_applicationGeneric.inc:606
-msgid "Flag"
-msgstr "Flaga"
-
-#: admin/applications/class_applicationGeneric.inc:607
-msgid "Script content"
-msgstr "Zawartość skryptu"
-
-#: admin/applications/class_applicationGeneric.inc:609
-#: admin/applications/generic.tpl:99
-msgid "Only executable for members"
-msgstr "Tylko wykonywalne dla członków"
-
-#: admin/applications/class_applicationGeneric.inc:610
-#: admin/applications/generic.tpl:110
-msgid "Place icon on members desktop"
-msgstr "Utwórz ikonę na desktopie członka"
-
-#: admin/applications/class_applicationGeneric.inc:611
-#: admin/applications/generic.tpl:120
-msgid "Place entry in members launch bar"
-msgstr "Utwórz wpis w pasku uruchamiania członka"
-
-#: admin/applications/class_applicationGeneric.inc:612
-#: admin/applications/generic.tpl:115
-msgid "Place entry in members startmenu"
-msgstr "Utwórz wpis w menu startowym członka"
-
-#: admin/applications/class_applicationGeneric.inc:613
-#: admin/applications/generic.tpl:104
-msgid "Replace user configuration on startup"
-msgstr "Podmień konfigurację użytkownika na starcie"
-
 #: admin/applications/class_divListApplication.inc:25
 msgid "List of Applications"
 msgstr "Lista aplikacji"
@@ -1849,82 +1884,16 @@ msgstr "Lista aplikacji"
 msgid "This table displays all applications in the selected tree."
 msgstr "Ta tabela wyświetla wszystkie aplikacje w wybranym drzewie."
 
+#: admin/applications/class_divListApplication.inc:51
+#: admin/applications/generic.tpl:7 admin/applications/generic.tpl:10
+#: admin/applications/class_applicationGeneric.inc:555
+msgid "Application name"
+msgstr "Nazwa aplikacji"
+
 #: admin/applications/class_divListApplication.inc:219
 #, fuzzy
 msgid "Number of listed applications"
 msgstr "Osadzone aplikacje"
-
-#: admin/applications/main.inc:38 admin/applications/main.inc:40
-msgid "Application management"
-msgstr "Zarządzanie aplikacją"
-
-#: admin/applications/remove.tpl:6 admin/mimetypes/remove.tpl:6
-msgid ""
-"This may be used by several groups. Please double check if your really want "
-"to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"To może być używane przez kilka grup. Proszę upewnić się czy kontynuować, "
-"gdyż nie ma operacji powrotu."
-
-#: admin/applications/generic.tpl:15
-msgid "Display name"
-msgstr "Wyświetl nazwę"
-
-#: admin/applications/generic.tpl:28
-msgid "Path and/or binary name of application"
-msgstr "Ścieżka i/lub nazwa binarium aplikacji"
-
-#: admin/applications/generic.tpl:45 admin/mimetypes/generic.tpl:47
-msgid "Choose subtree to place application in"
-msgstr "Wybierz poddrzewo do umieszczenia aplikacji"
-
-#: admin/applications/generic.tpl:52 admin/mimetypes/generic.tpl:53
-#: admin/systems/goto/workstation.tpl:43 admin/systems/goto/printer.tpl:35
-#: admin/systems/goto/terminal.tpl:36
-msgid "Select a base"
-msgstr "Wybierz bazę"
-
-#: admin/applications/generic.tpl:78 admin/mimetypes/generic.tpl:79
-msgid "Update"
-msgstr "Aktualizuj"
-
-#: admin/applications/generic.tpl:78
-msgid "Reload picture from LDAP"
-msgstr "Przeładuj obrazek z LDAP"
-
-#: admin/applications/generic.tpl:81
-msgid "Remove picture"
-msgstr "Usuń obrazek"
-
-#: admin/applications/generic.tpl:81
-#, fuzzy
-msgid "Remove picture from LDAP"
-msgstr "Przeładuj obrazek z LDAP"
-
-#: admin/applications/generic.tpl:92 admin/systems/ppd/printerPPDDialog.tpl:17
-#: admin/systems/services/repository/class_divListRepositories.inc:25
-msgid "Options"
-msgstr "Opcje"
-
-#: admin/applications/generic.tpl:140
-msgid "Download"
-msgstr "Ściągnij"
-
-#: admin/applications/class_applicationManagement.inc:24
-#: admin/mimetypes/generic.tpl:112 admin/mimetypes/generic.tpl:172
-#: admin/groups/apps/class_groupApplication.inc:1361
-msgid "Applications"
-msgstr "Aplikacje"
-
-#: admin/applications/release_select.tpl:2
-#: admin/mimetypes/release_select.tpl:2
-msgid "Branches"
-msgstr "Gałęzie"
-
-#: admin/applications/release_select.tpl:8
-#: admin/mimetypes/release_select.tpl:8
-msgid "Current release"
-msgstr "Obecne wydanie"
 
 #: admin/applications/class_applicationParameters.inc:49
 msgid "Remove options"
@@ -1966,148 +1935,153 @@ msgstr "Konfiguracja bazy FAX"
 msgid "Application parameter settings"
 msgstr "Parametr aplikacji"
 
-#: admin/mimetypes/main.inc:41 admin/mimetypes/main.inc:43
-msgid "Mimetype management"
-msgstr "Zarządzanie typami mime"
+#: admin/applications/generic.tpl:15
+msgid "Display name"
+msgstr "Wyświetl nazwę"
 
-#: admin/mimetypes/generic.tpl:12
-#: admin/mimetypes/class_divListMimeTypes.inc:51
-#: admin/mimetypes/class_divListMimeTypes.inc:116
-#: admin/mimetypes/class_divListMimeTypes.inc:152
-#: admin/mimetypes/class_mimetypeManagement.inc:355
-#: admin/mimetypes/class_mimetypeManagement.inc:436
-#: admin/mimetypes/paste_generic.tpl:13
-msgid "Mime type"
-msgstr "Typ mime"
+#: admin/applications/generic.tpl:19
+#: admin/applications/class_applicationGeneric.inc:560
+msgid "Application name to be displayed (i.e. below icons)"
+msgstr "Wyświetlana nazwa aplikacji (pod ikoną)"
 
-#: admin/mimetypes/generic.tpl:16 admin/mimetypes/paste_generic.tpl:16
-msgid "Please enter a name for the mime type here"
-msgstr "Proszę podać nazwę typu mime"
+#: admin/applications/generic.tpl:28
+msgid "Path and/or binary name of application"
+msgstr "Ścieżka i/lub nazwa binarium aplikacji"
 
-#: admin/mimetypes/generic.tpl:22
-#: admin/mimetypes/class_mimetypeGeneric.inc:719
-msgid "Mime group"
-msgstr "Grupa mime"
+#: admin/applications/generic.tpl:45 admin/mimetypes/generic.tpl:47
+msgid "Choose subtree to place application in"
+msgstr "Wybierz poddrzewo do umieszczenia aplikacji"
 
-#: admin/mimetypes/generic.tpl:26
-msgid "Categorize this mime type"
-msgstr "Skategoryzuj ten typ mime"
+#: admin/applications/generic.tpl:52 admin/systems/goto/printer.tpl:35
+#: admin/systems/goto/workstation.tpl:43 admin/systems/goto/terminal.tpl:36
+#: admin/mimetypes/generic.tpl:53
+msgid "Select a base"
+msgstr "Wybierz bazę"
 
-#: admin/mimetypes/generic.tpl:38
-msgid "Please specify a description"
-msgstr "Proszę podać opis"
+#: admin/applications/generic.tpl:66
+#: admin/applications/class_applicationGeneric.inc:605
+#: admin/mimetypes/class_mimetypeGeneric.inc:724
+#: admin/mimetypes/generic.tpl:67
+msgid "Icon"
+msgstr "Ikona"
 
-#: admin/mimetypes/generic.tpl:68
+#: admin/applications/generic.tpl:78 admin/mimetypes/generic.tpl:79
+msgid "Update"
+msgstr "Aktualizuj"
+
+#: admin/applications/generic.tpl:78
+msgid "Reload picture from LDAP"
+msgstr "Przeładuj obrazek z LDAP"
+
+#: admin/applications/generic.tpl:81
+msgid "Remove picture"
+msgstr "Usuń obrazek"
+
+#: admin/applications/generic.tpl:81
 #, fuzzy
-msgid "Mime icon"
-msgstr "Grupa mime"
+msgid "Remove picture from LDAP"
+msgstr "Przeładuj obrazek z LDAP"
 
-#: admin/mimetypes/generic.tpl:80
-msgid "Update mime type icon"
-msgstr "Aktualizuj ikonę typu mime"
+#: admin/applications/generic.tpl:92 admin/systems/ppd/printerPPDDialog.tpl:17
+msgid "Options"
+msgstr "Opcje"
 
-#: admin/mimetypes/generic.tpl:94
-msgid "Left click"
+#: admin/applications/generic.tpl:99
+#: admin/applications/class_applicationGeneric.inc:609
+msgid "Only executable for members"
+msgstr "Tylko wykonywalne dla członków"
+
+#: admin/applications/generic.tpl:104
+#: admin/applications/class_applicationGeneric.inc:613
+msgid "Replace user configuration on startup"
+msgstr "Podmień konfigurację użytkownika na starcie"
+
+#: admin/applications/generic.tpl:110
+#: admin/applications/class_applicationGeneric.inc:610
+msgid "Place icon on members desktop"
+msgstr "Utwórz ikonę na desktopie członka"
+
+#: admin/applications/generic.tpl:115
+#: admin/applications/class_applicationGeneric.inc:612
+msgid "Place entry in members startmenu"
+msgstr "Utwórz wpis w menu startowym członka"
+
+#: admin/applications/generic.tpl:120
+#: admin/applications/class_applicationGeneric.inc:611
+msgid "Place entry in members launch bar"
+msgstr "Utwórz wpis w pasku uruchamiania członka"
+
+#: admin/applications/generic.tpl:140
+msgid "Download"
+msgstr "Ściągnij"
+
+#: admin/applications/remove.tpl:6 admin/mimetypes/remove.tpl:6
+msgid ""
+"This may be used by several groups. Please double check if your really want "
+"to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"To może być używane przez kilka grup. Proszę upewnić się czy kontynuować, "
+"gdyż nie ma operacji powrotu."
+
+#: admin/applications/main.inc:38 admin/applications/main.inc:40
+msgid "Application management"
+msgstr "Zarządzanie aplikacją"
+
+#: admin/applications/class_applicationGeneric.inc:93
+msgid "no example"
+msgstr "brak przykładu"
+
+#: admin/applications/class_applicationGeneric.inc:261
+#, fuzzy, php-format
+msgid "Cannot remove application - it is still in use by these objects: %s"
+msgstr ""
+"Nie można usunąć tego załącznika, jest wciąż używany przez system(y) '%s'"
+
+#: admin/applications/class_applicationGeneric.inc:365
+#, fuzzy
+msgid "no read permission"
+msgstr "Uprawnienia"
+
+#: admin/applications/class_applicationGeneric.inc:370
+msgid "cannot resize image"
 msgstr ""
 
-#: admin/mimetypes/generic.tpl:99
-#: admin/mimetypes/class_mimetypeGeneric.inc:725
-msgid "File patterns"
-msgstr "Wzorce pliku"
+#: admin/applications/class_applicationGeneric.inc:375
+msgid "cannot convert image"
+msgstr ""
 
-#: admin/mimetypes/generic.tpl:105
-msgid "Please specify a new file pattern"
-msgstr "Proszę podać nowy wzorzec pliku"
+#: admin/applications/class_applicationGeneric.inc:379
+#, fuzzy, php-format
+msgid "cannot save image to '%s'"
+msgstr "Nie można zapisać pliku '%s'."
 
-#: admin/mimetypes/generic.tpl:108
-msgid "Add a new file pattern"
-msgstr "Dodaj nowy wzorzec pliku"
-
-#: admin/mimetypes/generic.tpl:124 admin/mimetypes/generic.tpl:184
-msgid "Enter an application name here"
-msgstr "Podaj nazwę aplikacji"
-
-#: admin/mimetypes/generic.tpl:127 admin/mimetypes/generic.tpl:188
-msgid "Add application"
-msgstr "Dodaj aplikację"
-
-#: admin/mimetypes/generic.tpl:138
-msgid "Embedding"
-msgstr "Osadzanie"
-
-#: admin/mimetypes/generic.tpl:151
-msgid "Show file in embedded viewer"
-msgstr "Pokaż plik w osadzonej przeglądarce"
-
-#: admin/mimetypes/generic.tpl:158
-msgid "Show file in external viewer"
-msgstr "Pokaż plik w zewnętrznej przeglądarce"
-
-#: admin/mimetypes/generic.tpl:165
-msgid "Ask whether to save to local disk"
-msgstr "Pytaj czy zapisać na dysk"
-
-#: admin/mimetypes/class_mimetypeGeneric.inc:529
+#: admin/applications/class_applicationGeneric.inc:408
 #, fuzzy
-msgid "File pattern"
-msgstr "Wzorce pliku"
+msgid "Execute path"
+msgstr "Uruchom"
 
-#: admin/mimetypes/class_mimetypeGeneric.inc:710
-msgid "Mime type generic"
-msgstr "Typ mime podstawowy"
-
-#: admin/mimetypes/class_mimetypeGeneric.inc:715
-#: admin/mimetypes/class_mimetypeManagement.inc:24
-msgid "Mime types"
-msgstr "Typy mime"
-
-#: admin/mimetypes/class_mimetypeGeneric.inc:723
-msgid "Left click action"
-msgstr "Akcja lewego kliknięcia"
-
-#: admin/mimetypes/class_mimetypeGeneric.inc:726
-msgid "Embedded applications"
-msgstr "Osadzone aplikacje"
-
-#: admin/mimetypes/class_divListMimeTypes.inc:27
-#: admin/mimetypes/class_divListMimeTypes.inc:28
-msgid "List of defined mime types"
-msgstr "Lista zdefiniowanych typów mime"
-
-#: admin/mimetypes/class_divListMimeTypes.inc:58
-msgid "Display mime types matching"
-msgstr "Wyświetl pasujące typy mime"
-
-#: admin/mimetypes/class_divListMimeTypes.inc:227
+#: admin/applications/class_applicationGeneric.inc:592
 #, fuzzy
-msgid "Number of listed mimetypes"
-msgstr "Lista zdefiniowanych typów mime"
+msgid "Application generic"
+msgstr "Nazwa aplikacji"
 
-#: admin/mimetypes/class_mimetypeManagement.inc:25
-msgid "Manage mime types"
-msgstr "Zarządzaj typami mime"
+#: admin/applications/class_applicationGeneric.inc:606
+msgid "Flag"
+msgstr "Flaga"
 
-#: admin/mimetypes/paste_generic.tpl:24
-msgid "Please specify a description for this mime type here"
-msgstr "Proszę podać opis dla tego typu mime"
+#: admin/applications/class_applicationGeneric.inc:607
+msgid "Script content"
+msgstr "Zawartość skryptu"
 
-#: admin/systems/ppd/printerPPDDialog.tpl:1
-msgid "Printer driver"
-msgstr "Sterownik drulkarki"
+#: admin/applications/release_select.tpl:2
+#: admin/mimetypes/release_select.tpl:2
+msgid "Branches"
+msgstr "Gałęzie"
 
-#: admin/systems/ppd/printerPPDDialog.tpl:5
-#: admin/systems/goto/workstationService.tpl:7
-#: admin/systems/goto/terminalService.tpl:7
-msgid "Model"
-msgstr "Model"
-
-#: admin/systems/ppd/printerPPDDialog.tpl:6
-msgid "Select"
-msgstr "Wybierz"
-
-#: admin/systems/ppd/printerPPDDialog.tpl:9
-msgid "New driver"
-msgstr "Nowy sterownik"
+#: admin/applications/release_select.tpl:8
+#: admin/mimetypes/release_select.tpl:8
+msgid "Current release"
+msgstr "Obecne wydanie"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:63
 #: admin/systems/ppd/class_printerPPDDialog.inc:118
@@ -2188,9 +2162,32 @@ msgid ""
 "configuration."
 msgstr ""
 
-#: admin/systems/ppd/remove_ppd.tpl:9
-msgid "The ppd file will be removed from the server and can not be restored."
+#: admin/systems/ppd/printerPPDDialog.tpl:1
+msgid "Printer driver"
+msgstr "Sterownik drulkarki"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:5
+#: admin/systems/goto/terminalService.tpl:7
+#: admin/systems/goto/workstationService.tpl:7
+msgid "Model"
+msgstr "Model"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:6
+msgid "Select"
+msgstr "Wybierz"
+
+#: admin/systems/ppd/printerPPDDialog.tpl:9
+msgid "New driver"
+msgstr "Nowy sterownik"
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:120
+#, php-format
+msgid "Cannot locate vendor '%s' in available PPDs!"
 msgstr ""
+
+#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:129
+msgid "Printer ppd selection."
+msgstr "Wybór ppd drukarki."
 
 #: admin/systems/ppd/class_ppdManager.inc:16
 #: admin/systems/ppd/class_ppdManager.inc:148
@@ -2250,20 +2247,6 @@ msgstr "PickMany nie jest jeszcze obsługiwany"
 msgid "Parsing PPD file %s failed - no information found."
 msgstr "Parsowanie pliku PPD %s nieudane - nie znaleziono informacji."
 
-#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:120
-#, php-format
-msgid "Cannot locate vendor '%s' in available PPDs!"
-msgstr ""
-
-#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:129
-msgid "Printer ppd selection."
-msgstr "Wybór ppd drukarki."
-
-#: admin/systems/ppd/class_printerPPDSelectionDialog.inc:147
-#: admin/groups/apps/class_groupApplication.inc:442
-msgid "back"
-msgstr "wróć"
-
 #: admin/systems/ppd/printerPPDSelectionDialog.tpl:6
 msgid "Select objects to add"
 msgstr "Wybierz obiekty do dodania"
@@ -2273,13 +2256,435 @@ msgid "Display objects matching"
 msgstr "Wyświetl obiekty pasujące"
 
 #: admin/systems/ppd/printerPPDSelectionDialog.tpl:32
-#: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "Wyrażenie regularne dla dopasowania nazw obiektów"
 
 #: admin/systems/ppd/printerPPDSelectionDialog.tpl:44
 msgid "Close"
 msgstr "Zamknij"
+
+#: admin/systems/ppd/remove_ppd.tpl:9
+msgid "The ppd file will be removed from the server and can not be restored."
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:34
+#: admin/systems/services/kiosk/class_goKioskService.inc:69
+#: admin/systems/services/kiosk/class_goKioskService.inc:198
+#, fuzzy
+msgid "Kiosk profile service"
+msgstr "Ustawienia profilu Kiosk"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:261
+msgid "Kiosk"
+msgstr ""
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:262
+#: admin/systems/services/kiosk/goKioskService.tpl:1
+msgid "Kiosk profile management"
+msgstr "Zarządzanie profilami kiosk"
+
+#: admin/systems/services/kiosk/class_goKioskService.inc:262
+#: admin/systems/services/ldap/class_goLdapServer.inc:89
+#: admin/systems/services/syslog/class_goLogDBServer.inc:89
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+#: admin/systems/services/ntp/class_goNtpServer.inc:115
+#: admin/systems/services/shares/class_goShareServer.inc:390
+#: admin/systems/services/cups/class_goCupsServer.inc:69
+#: admin/systems/services/terminal/class_goTerminalServer.inc:167
+msgid "Services"
+msgstr "Usługi"
+
+#: admin/systems/services/kiosk/goKioskService.tpl:16
+#, fuzzy
+msgid "Server path"
+msgstr "Nazwa serwera"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:29
+#: admin/systems/services/ldap/class_goLdapServer.inc:56
+#: admin/systems/services/ldap/goLdapServer.tpl:1
+msgid "LDAP service"
+msgstr "Usługa LDAP"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:88
+#: admin/systems/services/ldap/class_goLdapServer.inc:89
+msgid "Ldap"
+msgstr "Ldap"
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:97
+msgid "Ldap base"
+msgstr "Baza Ldap"
+
+#: admin/systems/services/ldap/goLdapServer.tpl:2
+msgid "LDAP URI"
+msgstr ""
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:30
+#: admin/systems/services/syslog/class_goLogDBServer.inc:58
+#, fuzzy
+msgid "Syslog service database"
+msgstr "Usługa Syslog"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:71
+#: admin/systems/services/syslog/class_goLogDBServer.inc:101
+#: admin/systems/services/syslog/goLogDBServer.tpl:12
+msgid "Password"
+msgstr "Hasło"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:88
+#: admin/systems/services/syslog/class_goLogDBServer.inc:89
+msgid "Logging database"
+msgstr "Baza logowania"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:97
+#: admin/systems/services/cups/class_goCupsServer.inc:76
+msgid "Start"
+msgstr "Start"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:98
+#: admin/systems/services/cups/class_goCupsServer.inc:77
+msgid "Stop"
+msgstr "Zatrzymaj"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:99
+#: admin/systems/services/cups/class_goCupsServer.inc:78
+msgid "Restart"
+msgstr "Restart"
+
+#: admin/systems/services/syslog/class_goLogDBServer.inc:100
+msgid "Admin"
+msgstr "Admin"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:1
+msgid "Logging database information"
+msgstr "Informacje bazy logowania"
+
+#: admin/systems/services/syslog/goLogDBServer.tpl:4
+msgid "Logging DB user"
+msgstr "Użytkownik bazy logowania"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:27
+#: admin/systems/services/syslog/class_goSyslogServer.inc:47
+#: admin/systems/goto/workstation.tpl:65 admin/systems/goto/terminal.tpl:57
+#: admin/systems/goto/class_workstationGeneric.inc:707
+#: admin/ogroups/goto/class_termgroup.inc:328
+#: admin/ogroups/goto/termgroup.tpl:58
+msgid "Syslog server"
+msgstr "Serwer Syslog"
+
+#: admin/systems/services/syslog/class_goSyslogServer.inc:68
+#: admin/systems/services/syslog/class_goSyslogServer.inc:69
+msgid "Logging service"
+msgstr "Usługa Logowania"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+msgid "Syslog Service"
+msgstr "Usługa Syslog"
+
+#: admin/systems/services/syslog/goSyslogServer.tpl:1
+#: admin/systems/services/cups/goCupsServer.tpl:1
+msgid "enabled"
+msgstr "włączone"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:28
+#: admin/systems/services/ntp/class_goNtpServer.inc:74
+#, fuzzy
+msgid "Time service (NTP)"
+msgstr "Usługa czasu"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:114
+msgid "Time service"
+msgstr "Usługa czasu"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:115
+#, fuzzy
+msgid "Time service - NTP"
+msgstr "Usługa czasu"
+
+#: admin/systems/services/ntp/class_goNtpServer.inc:123
+msgid "Ntp source"
+msgstr "Źródło ntp"
+
+#: admin/systems/services/ntp/goNtpServer.tpl:2
+msgid "Time server"
+msgstr "Serwer czasu"
+
+#: admin/systems/services/shares/class_goShareServer.inc:31
+#: admin/systems/services/shares/class_goShareServer.inc:157
+#: admin/systems/services/shares/class_goShareServer.inc:389
+#, fuzzy
+msgid "File service (Shares)"
+msgstr "Usługa plików"
+
+#: admin/systems/services/shares/class_goShareServer.inc:233
+#, fuzzy
+msgid "share"
+msgstr "Udziały"
+
+#: admin/systems/services/shares/class_goShareServer.inc:390
+#, fuzzy
+msgid "File service - Shares"
+msgstr "Usługa plików"
+
+#: admin/systems/services/shares/class_goShareServer.inc:399
+#, fuzzy
+msgid "Apple mounts"
+msgstr "Apple talk"
+
+#: admin/systems/services/shares/class_goShareServer.inc:401
+#: admin/systems/services/nfs/servnfs.tpl:56
+#: admin/systems/goto/terminalService.tpl:48
+#: admin/systems/goto/terminalService.tpl:138
+#: admin/systems/goto/workstationService.tpl:54
+#: admin/systems/goto/workstationService.tpl:156
+msgid "Type"
+msgstr "Typ"
+
+#: admin/systems/services/shares/class_goShareServer.inc:402
+msgid "Charset"
+msgstr "Kodowanie"
+
+#: admin/systems/services/shares/class_goShareServer.inc:403
+#: admin/systems/services/nfs/class_servNfs.inc:178
+#: admin/systems/services/nfs/servnfs.tpl:29
+msgid "Path"
+msgstr "Ścieżka"
+
+#: admin/systems/services/shares/class_goShareServer.inc:404
+#: admin/systems/services/nfs/class_servNfs.inc:204
+#: admin/systems/services/nfs/servnfs.tpl:121
+msgid "Option"
+msgstr "Opcja"
+
+#: admin/systems/services/shares/class_goShareServer.inc:405
+#: admin/systems/services/nfs/class_servNfs.inc:200
+#: admin/systems/services/nfs/servnfs.tpl:29
+msgid "Volume"
+msgstr "Głośność"
+
+#: admin/systems/services/nfs/class_servNfs.inc:182
+msgid "'Path / Volume' must contain at least one '/'!"
+msgstr ""
+
+#: admin/systems/services/nfs/servnfs.tpl:1
+msgid "Edit share"
+msgstr "Edytuj udział"
+
+#: admin/systems/services/nfs/servnfs.tpl:2
+msgid "NFS setup"
+msgstr "Ustawienia NFS"
+
+#: admin/systems/services/nfs/servnfs.tpl:69
+msgid "Auto-mount share on Apple systems"
+msgstr "Auto-montuj udział na systemach Apple"
+
+#: admin/systems/services/nfs/servnfs.tpl:109
+msgid "Codepage"
+msgstr "Strona kodowa"
+
+#: admin/systems/services/cups/class_goCupsServer.inc:27
+#: admin/systems/services/cups/class_goCupsServer.inc:48
+#: admin/systems/services/cups/class_goCupsServer.inc:69
+#: admin/systems/goto/info.tpl:119
+msgid "Print service"
+msgstr "Usługa Drukowania"
+
+#: admin/systems/services/cups/class_goCupsServer.inc:68
+msgid "Cups"
+msgstr "Cups"
+
+#: admin/systems/services/cups/goCupsServer.tpl:1
+msgid "Print Service"
+msgstr "Usługa drukowania"
+
+#: admin/systems/services/terminal/class_goTerminalServer.inc:30
+#: admin/systems/services/terminal/class_goTerminalServer.inc:79
+#: admin/systems/services/terminal/class_goTerminalServer.inc:166
+#: admin/systems/services/terminal/class_goTerminalServer.inc:167
+#: admin/systems/services/terminal/goTerminalServer.tpl:4
+#: admin/systems/goto/class_terminalService.inc:614
+msgid "Terminal service"
+msgstr "Usługa Terminali"
+
+#: admin/systems/services/terminal/class_goTerminalServer.inc:175
+#: admin/systems/services/terminal/goTerminalServer.tpl:8
+msgid "Temporary disable login"
+msgstr "Tymczasowo zablokuj logowanie"
+
+#: admin/systems/services/terminal/goTerminalServer.tpl:13
+msgid "Supported session types"
+msgstr ""
+
+#: admin/systems/goto/printer.tpl:5
+msgid "General"
+msgstr "Ogólne"
+
+#: admin/systems/goto/printer.tpl:8
+msgid "Printer name"
+msgstr "nazwa drukarki"
+
+#: admin/systems/goto/printer.tpl:30
+msgid "Choose subtree to place user in"
+msgstr "Wybierz poddrzewo do umieszczenia konta."
+
+#: admin/systems/goto/printer.tpl:43
+msgid "Details"
+msgstr "Szczegóły"
+
+#: admin/systems/goto/printer.tpl:46
+msgid "Printer location"
+msgstr "Lokalizacja drukarki"
+
+#: admin/systems/goto/printer.tpl:54
+#: admin/systems/goto/class_printGeneric.inc:681
+msgid "Printer URL"
+msgstr "URL drukarki"
+
+#: admin/systems/goto/printer.tpl:66 admin/systems/goto/terminalService.tpl:98
+#: admin/systems/goto/workstationService.tpl:110
+msgid "Driver"
+msgstr "Sterownik"
+
+#: admin/systems/goto/printer.tpl:82
+#: admin/systems/goto/class_printGeneric.inc:936
+msgid "Permissions"
+msgstr "Uprawnienia"
+
+#: admin/systems/goto/printer.tpl:89
+msgid "Users which are allowed to use this printer"
+msgstr "Użytkownicy którzy mogą używać tej drukarki"
+
+#: admin/systems/goto/printer.tpl:91
+msgid "Users"
+msgstr "Użytkownicy"
+
+#: admin/systems/goto/printer.tpl:96 admin/systems/goto/printer.tpl:120
+msgid "Add user"
+msgstr "Dodaj użytkownika"
+
+#: admin/systems/goto/printer.tpl:99 admin/systems/goto/printer.tpl:123
+msgid "Add group"
+msgstr "Dodaj grupę"
+
+#: admin/systems/goto/printer.tpl:113
+msgid "Users which are allowed to administrate this printer"
+msgstr "Użytkownicy, którzy mogą administrować tą drukarką"
+
+#: admin/systems/goto/printer.tpl:115
+msgid "Admins"
+msgstr "Administratorzy"
+
+#: admin/systems/goto/workstation.tpl:1 admin/systems/goto/terminal.tpl:1
+msgid "Properties"
+msgstr "Właściwości"
+
+#: admin/systems/goto/workstation.tpl:8
+msgid "Workstation template"
+msgstr "Szablon stacji roboczej"
+
+#: admin/systems/goto/workstation.tpl:10
+#: admin/systems/goto/class_workstationGeneric.inc:702
+msgid "Workstation name"
+msgstr "Nazwa stacji roboczej"
+
+#: admin/systems/goto/workstation.tpl:27
+#: admin/systems/goto/class_printGeneric.inc:933
+#: admin/systems/goto/class_workstationGeneric.inc:704
+msgid "Location"
+msgstr "Lokalizacja"
+
+#: admin/systems/goto/workstation.tpl:38 admin/systems/goto/terminal.tpl:31
+msgid "Choose subtree to place group in"
+msgstr "Wybierz poddrzewo do umieszczenia grupy"
+
+#: admin/systems/goto/workstation.tpl:55
+#: admin/systems/goto/class_terminalGeneric.inc:646
+#: admin/systems/goto/terminal.tpl:47
+#: admin/ogroups/goto/class_termgroup.inc:327
+#: admin/ogroups/goto/termgroup.tpl:47
+msgid "Mode"
+msgstr "Tryb"
+
+#: admin/systems/goto/workstation.tpl:58 admin/systems/goto/terminal.tpl:50
+#: admin/ogroups/goto/termgroup.tpl:50
+msgid "Select terminal mode"
+msgstr "Proszę wybrać tryb terminala"
+
+#: admin/systems/goto/workstation.tpl:68 admin/systems/goto/terminal.tpl:60
+#: admin/ogroups/goto/termgroup.tpl:61
+msgid "Choose server to use for logging"
+msgstr "Proszę wybrać serwer do logowania"
+
+#: admin/systems/goto/workstation.tpl:87 admin/systems/goto/workstation.tpl:90
+#: admin/systems/goto/terminal.tpl:109 admin/systems/goto/terminal.tpl:112
+msgid "Inherit time server attributes"
+msgstr "Dziedzicz atrybuty serwera czasu"
+
+#: admin/systems/goto/workstation.tpl:95
+#: admin/systems/goto/class_terminalGeneric.inc:466
+#: admin/systems/goto/terminal.tpl:117
+#: admin/systems/goto/class_workstationGeneric.inc:489
+#: admin/ogroups/goto/class_termgroup.inc:116
+#: admin/ogroups/goto/termgroup.tpl:14
+msgid "NTP server"
+msgstr "Serwer NTP"
+
+#: admin/systems/goto/workstation.tpl:98 admin/systems/goto/terminal.tpl:120
+#: admin/ogroups/goto/termgroup.tpl:17
+msgid "Choose server to use for synchronizing time"
+msgstr "Proszę wybrać serwer do synchronizacji czasu"
+
+#: admin/systems/goto/workstation.tpl:137 admin/systems/goto/terminal.tpl:161
+#: admin/ogroups/goto/termgroup.tpl:93
+msgid "Select action to execute for this terminal"
+msgstr "Proszę wybrać akcję do wykonania dla tego terminala"
+
+#: admin/systems/goto/workstation.tpl:160
+#, fuzzy
+msgid "Inherit all values from group"
+msgstr "Lista grup"
+
+#: admin/systems/goto/class_terminalInfo.inc:50
+#: admin/systems/goto/class_terminalInfo.inc:201
+msgid "present"
+msgstr "obecne"
+
+#: admin/systems/goto/class_terminalInfo.inc:68
+#: admin/systems/goto/class_printGeneric.inc:535
+#: admin/systems/goto/class_terminalStartup.inc:165
+#: admin/systems/goto/class_terminalGeneric.inc:229
+#, fuzzy
+msgid "terminal"
+msgstr "Terminal"
+
+#: admin/systems/goto/class_terminalInfo.inc:80
+#: admin/systems/goto/class_terminalInfo.inc:176
+msgid "unknown status"
+msgstr "nieznany status"
+
+#: admin/systems/goto/class_terminalInfo.inc:89
+msgid "This is a virtual terminal which has no properties to show here."
+msgstr ""
+"To jest terminal wirtualny i nie posiada właściwości do pokazania tutaj."
+
+#: admin/systems/goto/class_terminalInfo.inc:103
+msgid "online"
+msgstr "online"
+
+#: admin/systems/goto/class_terminalInfo.inc:165
+msgid "running"
+msgstr "działa"
+
+#: admin/systems/goto/class_terminalInfo.inc:168
+msgid "not running"
+msgstr "nie działa"
+
+#: admin/systems/goto/class_terminalInfo.inc:171
+msgid "not defined"
+msgstr "nie zdefiniowane"
+
+#: admin/systems/goto/class_terminalInfo.inc:193
+msgid "offline"
+msgstr "offline"
 
 #: admin/systems/goto/class_printGeneric.inc:106
 #: admin/systems/goto/class_printGeneric.inc:969
@@ -2362,17 +2767,9 @@ msgid "This printer belongs to %s. You can't rename this printer."
 msgstr ""
 "Ta drukarka należy do terminala %s. Nie można zmienić nazwy tej drukarki."
 
-#: admin/systems/goto/class_printGeneric.inc:535
-#: admin/systems/goto/class_terminalStartup.inc:165
-#: admin/systems/goto/class_terminalGeneric.inc:229
-#: admin/systems/goto/class_terminalInfo.inc:68
-#, fuzzy
-msgid "terminal"
-msgstr "Terminal"
-
 #: admin/systems/goto/class_printGeneric.inc:537
-#: admin/systems/goto/class_workstationGeneric.inc:226
 #: admin/systems/goto/class_workstationStartup.inc:334
+#: admin/systems/goto/class_workstationGeneric.inc:226
 #, fuzzy
 msgid "workstation"
 msgstr "Stacja robocza"
@@ -2383,21 +2780,10 @@ msgstr "Stacja robocza"
 msgid "Object is no printer!"
 msgstr "Drukarka sieciowa"
 
-#: admin/systems/goto/class_printGeneric.inc:681
-#: admin/systems/goto/printer.tpl:54
-msgid "Printer URL"
-msgstr "URL drukarki"
-
 #: admin/systems/goto/class_printGeneric.inc:922
 #, fuzzy
 msgid "Print generic"
 msgstr "Usługa drukowania"
-
-#: admin/systems/goto/class_printGeneric.inc:933
-#: admin/systems/goto/class_workstationGeneric.inc:702
-#: admin/systems/goto/workstation.tpl:27
-msgid "Location"
-msgstr "Lokalizacja"
 
 #: admin/systems/goto/class_printGeneric.inc:934
 msgid "LabeledURL"
@@ -2406,11 +2792,6 @@ msgstr ""
 #: admin/systems/goto/class_printGeneric.inc:935
 msgid "Printer PPD"
 msgstr "PPD drukarki"
-
-#: admin/systems/goto/class_printGeneric.inc:936
-#: admin/systems/goto/printer.tpl:82
-msgid "Permissions"
-msgstr "Uprawnienia"
 
 #: admin/systems/goto/class_printGeneric.inc:952
 #: admin/systems/goto/class_printGeneric.inc:974
@@ -2433,339 +2814,32 @@ msgstr "Ta nazwa jest już w użyciu."
 msgid "'%s' does not exist!"
 msgstr "Manager PPD: Podana ścieżka '%s' nie istnieje."
 
-#: admin/systems/goto/workstationService.tpl:4
-#: admin/systems/goto/terminalService.tpl:4
-msgid "Keyboard"
-msgstr "Klawiatura"
-
-#: admin/systems/goto/workstationService.tpl:11
-#: admin/systems/goto/terminalService.tpl:10
-msgid "Choose keyboard model"
-msgstr "Wybierz model klawiatury"
-
-#: admin/systems/goto/workstationService.tpl:19
-#: admin/systems/goto/terminalService.tpl:17
-msgid "Layout"
-msgstr "Układ"
-
-#: admin/systems/goto/workstationService.tpl:23
-#: admin/systems/goto/terminalService.tpl:20
-msgid "Choose keyboard layout"
-msgstr "Wybierz układ klawiatury"
-
-#: admin/systems/goto/workstationService.tpl:31
-#: admin/systems/goto/terminalService.tpl:27
-msgid "Variant"
-msgstr "Wariant"
-
-#: admin/systems/goto/workstationService.tpl:35
-#: admin/systems/goto/terminalService.tpl:30
-msgid "Choose keyboard variant"
-msgstr "Wybierz wariant klawiatury"
-
-#: admin/systems/goto/workstationService.tpl:51
-#: admin/systems/goto/terminalService.tpl:45
-msgid "Mouse"
-msgstr "Mysz"
-
-#: admin/systems/goto/workstationService.tpl:54
-#: admin/systems/goto/workstationService.tpl:156
-#: admin/systems/goto/terminalService.tpl:48
-#: admin/systems/goto/terminalService.tpl:138
-#: admin/systems/services/nfs/servnfs.tpl:56
-#: admin/systems/services/shares/class_goShareServer.inc:401
-msgid "Type"
-msgstr "Typ"
-
-#: admin/systems/goto/workstationService.tpl:58
-#: admin/systems/goto/terminalService.tpl:51
-msgid "Choose mouse type"
-msgstr "Wybierz typ myszy"
-
-#: admin/systems/goto/workstationService.tpl:66
-#: admin/systems/goto/terminalService.tpl:58
-msgid "Port"
-msgstr "Port"
-
-#: admin/systems/goto/workstationService.tpl:70
-#: admin/systems/goto/terminalService.tpl:61
-msgid "Choose mouse port"
-msgstr "Wybierz port myszy"
-
-#: admin/systems/goto/workstationService.tpl:86
-#: admin/systems/goto/class_workstationService.inc:506
-#: admin/systems/goto/terminalService.tpl:76
-#: admin/systems/goto/class_terminalService.inc:639
-msgid "Telephone hardware"
-msgstr "Sprzęt telefoniczny"
-
-#: admin/systems/goto/workstationService.tpl:89
-#: admin/systems/goto/terminalService.tpl:79
-msgid "Telephone"
-msgstr "Telefon"
-
-#: admin/systems/goto/workstationService.tpl:107
-#: admin/systems/goto/info.tpl:73 admin/systems/goto/terminalService.tpl:95
-msgid "Graphic device"
-msgstr "Karta graficzna"
-
-#: admin/systems/goto/workstationService.tpl:110
-#: admin/systems/goto/printer.tpl:66 admin/systems/goto/terminalService.tpl:98
-msgid "Driver"
-msgstr "Sterownik"
-
-#: admin/systems/goto/workstationService.tpl:114
-#: admin/systems/goto/terminalService.tpl:101
-msgid "Choose graphic driver that is needed by the installed graphic board"
-msgstr "Wybierz sterownik wymagany przez zainstalowaną kartę graficzną"
-
-#: admin/systems/goto/workstationService.tpl:126
-#: admin/systems/goto/terminalService.tpl:111
-msgid "Choose screen resolution used in graphic mode"
-msgstr "Wybierz rozdzielczość ekranu użytą w trybie graficznym"
-
-#: admin/systems/goto/workstationService.tpl:134
-#: admin/systems/goto/terminalService.tpl:118
-msgid "Color depth"
-msgstr "Głębia kolorów"
-
-#: admin/systems/goto/workstationService.tpl:138
-#: admin/systems/goto/terminalService.tpl:121
-msgid "Choose colordepth used in graphic mode"
-msgstr "Wybierz głębię kolorów użytą w trybie graficznym"
-
-#: admin/systems/goto/workstationService.tpl:153
-#: admin/systems/goto/terminalService.tpl:135
-msgid "Display device"
-msgstr "Urządzenie wyświetlające"
-
-#: admin/systems/goto/workstationService.tpl:157
-#: admin/systems/goto/class_workstationService.inc:86
-#: admin/systems/goto/class_terminalService.inc:586
-msgid "unknown"
-msgstr "nieznane"
-
-#: admin/systems/goto/workstationService.tpl:167
-#: admin/systems/goto/terminalService.tpl:147
-msgid "Use DDC for automatic detection"
-msgstr "Użyj DCC do automatycznego wykrywania"
-
-#: admin/systems/goto/workstationService.tpl:170
-#: admin/systems/goto/class_workstationService.inc:403
-#: admin/systems/goto/class_workstationService.inc:408
-#: admin/systems/goto/class_workstationService.inc:497
-#: admin/systems/goto/terminalService.tpl:150
-#: admin/systems/goto/class_terminalService.inc:628
-msgid "HSync"
-msgstr "HSync"
-
-#: admin/systems/goto/workstationService.tpl:175
-#: admin/systems/goto/terminalService.tpl:154
-msgid "Horizontal refresh frequency for installed monitor"
-msgstr "Częstotliwość odświeżania poziomego dla zainstalowanego monitora"
-
-#: admin/systems/goto/workstationService.tpl:181
-#: admin/systems/goto/class_workstationService.inc:388
-#: admin/systems/goto/class_workstationService.inc:393
-#: admin/systems/goto/class_workstationService.inc:498
-#: admin/systems/goto/terminalService.tpl:158
-#: admin/systems/goto/class_terminalService.inc:629
-msgid "VSync"
-msgstr "VSync"
-
-#: admin/systems/goto/workstationService.tpl:186
-#: admin/systems/goto/terminalService.tpl:162
-msgid "Vertical refresh frequency for installed monitor"
-msgstr "Częstotliwość odświeżania pionowego dla zainstalowanego monitora"
-
-#: admin/systems/goto/workstationService.tpl:201
-#: admin/systems/goto/terminalService.tpl:228
-msgid "Scan device"
-msgstr "Urządzenie skanujące"
-
-#: admin/systems/goto/workstationService.tpl:204
-#: admin/systems/goto/terminalService.tpl:230
-msgid "Select to start SANE scan service on terminal"
-msgstr "Zaznacz aby uruchomić usługę skanowania SANE na terminalu"
-
-#: admin/systems/goto/workstationService.tpl:207
-#: admin/systems/goto/terminalService.tpl:232
-msgid "Provide scan services"
-msgstr "Dostarcza usługi skanowania"
-
-#: admin/systems/goto/gencd.tpl:2
-msgid "CD-Install-Image generation"
+#: admin/systems/goto/gencd_frame.tpl:2
+msgid "Your browser does not supprt iframes."
 msgstr ""
 
-#: admin/systems/goto/gencd.tpl:5
-msgid ""
-"This option enables you to generate FAI install CD images for the selected "
-"workstation. The procedure may take about 10 minutes to complete, so please "
-"be patient after pressing the 'Create ISO-Image' button."
-msgstr ""
+#: admin/systems/goto/class_terminalService.inc:117
+#: admin/systems/goto/class_terminalService.inc:118
+#: admin/systems/goto/class_terminalService.inc:119
+#: admin/systems/goto/class_terminalService.inc:120
+#: admin/systems/goto/class_workstationService.inc:89
+#: admin/systems/goto/class_workstationService.inc:90
+#: admin/systems/goto/class_workstationService.inc:91
+#: admin/systems/goto/class_workstationService.inc:92
+msgid "bit"
+msgstr "bit"
 
-#: admin/systems/goto/gencd.tpl:9
-msgid "Create ISO-Image"
-msgstr ""
-
-#: admin/systems/goto/workstationStartup.tpl:4
-#: admin/systems/goto/terminalStartup.tpl:1
-msgid "Boot parameters"
-msgstr "Parametry uruchamiania"
-
-#: admin/systems/goto/workstationStartup.tpl:8
-#: admin/systems/goto/class_terminalStartup.inc:552
-#: admin/systems/goto/terminalStartup.tpl:38
-#: admin/systems/goto/class_workstationStartup.inc:1069
-msgid "Boot kernel"
-msgstr "Uruchamiane jądro"
-
-#: admin/systems/goto/workstationStartup.tpl:18
-#: admin/systems/goto/terminalStartup.tpl:49
-msgid "Custom options"
-msgstr "Dodatkowe opcje"
-
-#: admin/systems/goto/workstationStartup.tpl:22
-#: admin/systems/goto/terminalStartup.tpl:53
-msgid ""
-"Enter any parameters that should be passed to the kernel as append line "
-"during bootup"
-msgstr ""
-"Podaj wszystkie parametry które powinny zostać przekazane do jądra podczas "
-"uruchamiania"
-
-#: admin/systems/goto/workstationStartup.tpl:27
-#: admin/systems/goto/terminalStartup.tpl:7
-msgid "LDAP server"
-msgstr "Serwer LDAP"
-
-#: admin/systems/goto/workstationStartup.tpl:32
-#: admin/systems/goto/terminalStartup.tpl:11
-#, fuzzy
-msgid "inherit from group"
-msgstr "Lista grup"
-
-#: admin/systems/goto/workstationStartup.tpl:62
-msgid "GOsa support daemon not configured"
-msgstr ""
-
-#: admin/systems/goto/workstationStartup.tpl:63
-msgid "FAI settings cannot be modified"
-msgstr ""
-
-#: admin/systems/goto/workstationStartup.tpl:66
-msgid "Check if the GOsa support daemon (gosa-si) is running."
-msgstr ""
-
-#: admin/systems/goto/workstationStartup.tpl:67
-#, fuzzy
-msgid "retry"
-msgstr "Edycja pozycji"
-
-#: admin/systems/goto/workstationStartup.tpl:75
-#: admin/systems/goto/workstationStartup.tpl:111
-msgid "FAI server"
-msgstr "Serwer FAI"
-
-#: admin/systems/goto/workstationStartup.tpl:79
-#: admin/systems/goto/workstationStartup.tpl:115
-#: admin/systems/services/repository/servRepositorySetup.tpl:19
-#: admin/systems/services/repository/class_divListRepositories.inc:23
-#: admin/systems/services/repository/class_servRepositorySetup.inc:145
-#: admin/groups/apps/app_list.tpl:5 admin/groups/apps/app_list.tpl:53
-#: admin/groups/apps/class_groupApplication.inc:1370
-msgid "Release"
-msgstr "Wersja"
-
-#: admin/systems/goto/workstationStartup.tpl:101
-#: admin/systems/goto/workstationStartup.tpl:146
-msgid "Assigned FAI classes"
-msgstr "Przydzielone klasy FAI"
-
-#: admin/systems/goto/workstationStartup.tpl:130
-msgid "set"
-msgstr "ustaw"
-
-#: admin/systems/goto/workstationStartup.tpl:167
-msgid ""
-"FAI Object assignment disabled. You can't use this feature until FAI is "
-"activated."
-msgstr ""
-
-#: admin/systems/goto/workstationStartup.tpl:180
-#: admin/systems/goto/terminalStartup.tpl:68
-msgid "Kernel modules (format: name parameters)"
-msgstr "Modułu jądra (format: nazwa parametry)"
-
-#: admin/systems/goto/workstationStartup.tpl:183
-#: admin/systems/goto/terminalStartup.tpl:71
-msgid "Add additional modules to load on startup"
-msgstr "Dodaj inne moduły do załadowania na starcie"
-
-#: admin/systems/goto/workstationStartup.tpl:219
-#: admin/systems/goto/terminalStartup.tpl:107
-msgid "Mountpoint"
-msgstr "Punkt montowania"
-
-#: admin/systems/goto/chooser.tpl:1
-msgid "Choose the kind of system component you want to create"
-msgstr "Wybierz rodzaj komponentu systemu do utworzenia"
-
-#: admin/systems/goto/chooser.tpl:4
-msgid ""
-"Linux terminals and workstations are autocreated on bootup. For this reason "
-"you're only be able to create templates for a specific tree. Servers are "
-"normally automatically added too, but in some special cases you may need to "
-"create a faked server entry to provide GOsa with some informations. Other "
-"network components may be used for Nagios setups to create component "
-"dependencies."
-msgstr ""
-"Linuksowe terminale i stacje robocze są automatycznie tworzone podczas "
-"uruchamiania. Z tego powodu można jedynie utworzyć szablon dla konkretnego "
-"drzewa. Serwery przeważnie są automatycznie dodawane, lecz w niektórych "
-"przypadkach trzeba utworzyć sztuczny wpis serwera aby zapewnić GOsa pewne "
-"informacje. Inne elementy sieciowe mogą zostać użyte w ustawieniach Nagios "
-"aby utworzyć zależności."
-
-#: admin/systems/goto/chooser.tpl:7
-msgid "Linux thin client template"
-msgstr "Szablon cienkiego klienta Linux"
-
-#: admin/systems/goto/chooser.tpl:8
-msgid "Linux workstation template"
-msgstr "Sszablon stacji roboczej Linux"
-
-#: admin/systems/goto/chooser.tpl:9
-msgid "Linux Server"
-msgstr "Serwer Linux"
-
-#: admin/systems/goto/chooser.tpl:10
-msgid "Windows workstation"
-msgstr "Stacja robocza Windows"
-
-#: admin/systems/goto/chooser.tpl:11
-msgid "Network printer"
-msgstr "Drukarka sieciowa"
-
-#: admin/systems/goto/chooser.tpl:12
-msgid "Phone"
-msgstr "Telefon"
-
-#: admin/systems/goto/chooser.tpl:13
-msgid "Other network component"
-msgstr "Inny element sieciowy"
-
-#: admin/systems/goto/class_workstationGeneric.inc:138
-#: admin/systems/goto/class_terminalGeneric.inc:121
-#: admin/ogroups/goto/class_termgroup.inc:43
-msgid "Activated"
-msgstr "Aktywne"
-
-#: admin/systems/goto/class_workstationGeneric.inc:154
+#: admin/systems/goto/class_terminalService.inc:165
+#: admin/systems/goto/class_terminalService.inc:249
+#: admin/systems/goto/class_terminalService.inc:257
+#: admin/systems/goto/class_terminalService.inc:260
+#: admin/systems/goto/class_terminalService.inc:263
+#: admin/systems/goto/class_terminalService.inc:266
+#: admin/systems/goto/class_terminalService.inc:269
+#: admin/systems/goto/class_terminalService.inc:272
+#: admin/systems/goto/class_terminalService.inc:275
 #: admin/systems/goto/class_terminalStartup.inc:137
 #: admin/systems/goto/class_terminalStartup.inc:140
-#: admin/systems/goto/class_terminalGeneric.inc:136
-#: admin/systems/goto/class_terminalGeneric.inc:283
 #: admin/systems/goto/class_workstationService.inc:203
 #: admin/systems/goto/class_workstationService.inc:206
 #: admin/systems/goto/class_workstationService.inc:209
@@ -2782,229 +2856,178 @@ msgstr "Aktywne"
 #: admin/systems/goto/class_workstationService.inc:238
 #: admin/systems/goto/class_workstationStartup.inc:191
 #: admin/systems/goto/class_workstationStartup.inc:221
-#: admin/systems/goto/class_terminalService.inc:165
-#: admin/systems/goto/class_terminalService.inc:249
-#: admin/systems/goto/class_terminalService.inc:257
-#: admin/systems/goto/class_terminalService.inc:260
-#: admin/systems/goto/class_terminalService.inc:263
-#: admin/systems/goto/class_terminalService.inc:266
-#: admin/systems/goto/class_terminalService.inc:269
-#: admin/systems/goto/class_terminalService.inc:272
-#: admin/systems/goto/class_terminalService.inc:275
+#: admin/systems/goto/class_terminalGeneric.inc:136
+#: admin/systems/goto/class_terminalGeneric.inc:285
+#: admin/systems/goto/class_workstationGeneric.inc:154
 msgid "inherited"
 msgstr "odziedziczony"
 
-#: admin/systems/goto/class_workstationGeneric.inc:216
-#: admin/systems/goto/class_terminalGeneric.inc:190
-#, fuzzy
-msgid "Event error"
-msgstr "Błąd"
-
-#: admin/systems/goto/class_workstationGeneric.inc:217
-#: admin/systems/goto/class_terminalGeneric.inc:191
-#, php-format
-msgid "Event '%s' is not available!"
+#: admin/systems/goto/class_terminalService.inc:167
+msgid "XDMCP"
 msgstr ""
 
-#: admin/systems/goto/class_workstationGeneric.inc:487
-#: admin/systems/goto/class_terminalGeneric.inc:464
-#: admin/systems/goto/workstation.tpl:95 admin/systems/goto/terminal.tpl:117
-#: admin/ogroups/goto/class_termgroup.inc:114
-#: admin/ogroups/goto/termgroup.tpl:14
-msgid "NTP server"
-msgstr "Serwer NTP"
-
-#: admin/systems/goto/class_workstationGeneric.inc:498
-msgid "A valid LDAP server assignement is missing!"
+#: admin/systems/goto/class_terminalService.inc:168
+msgid "LDM"
 msgstr ""
 
-#: admin/systems/goto/class_workstationGeneric.inc:508
+#: admin/systems/goto/class_terminalService.inc:169
+#: admin/systems/goto/class_workstationService.inc:139
+msgid "Windows RDP"
+msgstr "Windows RDP"
+
+#: admin/systems/goto/class_terminalService.inc:170
+#: admin/systems/goto/class_workstationService.inc:140
+msgid "ICA client"
+msgstr "Klient ICA"
+
+#: admin/systems/goto/class_terminalService.inc:193
+#: admin/systems/goto/class_workstationService.inc:156
+msgid "automatic"
+msgstr "automatyczne"
+
+#: admin/systems/goto/class_terminalService.inc:260
+#: admin/systems/goto/class_workstationService.inc:206
+msgid "Bit"
+msgstr "Bit"
+
+#: admin/systems/goto/class_terminalService.inc:307
+msgid "This 'dn' has no terminal features."
+msgstr "Ten 'dn' nie posiada cech terminala."
+
+#: admin/systems/goto/class_terminalService.inc:364
 #, fuzzy
-msgid "Software deployment"
-msgstr "Typ systemu"
+msgid "Unsupported"
+msgstr "Wsparcie dla USB"
 
-#: admin/systems/goto/class_workstationGeneric.inc:509
-msgid "This host is currently installing. If you want to save it, press 'OK'."
-msgstr ""
+#: admin/systems/goto/class_terminalService.inc:406
+#: admin/systems/goto/class_workstationService.inc:321
+msgid "Choose the phone located at the current terminal"
+msgstr "Wybierz telefon umieszczony przy obecnym terminalu"
 
-#: admin/systems/goto/class_workstationGeneric.inc:692
+#: admin/systems/goto/class_terminalService.inc:480
+#: admin/systems/goto/class_terminalService.inc:485
 #, fuzzy
-msgid "Workstation generic"
-msgstr "Nazwa stacji roboczej"
+msgid "VSync range"
+msgstr "VSync"
 
-#: admin/systems/goto/class_workstationGeneric.inc:700
-#: admin/systems/goto/workstation.tpl:10
-msgid "Workstation name"
-msgstr "Nazwa stacji roboczej"
-
-#: admin/systems/goto/class_workstationGeneric.inc:704
+#: admin/systems/goto/class_terminalService.inc:493
+#: admin/systems/goto/class_terminalService.inc:498
 #, fuzzy
-msgid "Goto mode"
-msgstr "do folferu"
+msgid "HSync range"
+msgstr "HSync"
 
-#: admin/systems/goto/class_workstationGeneric.inc:705
-#: admin/systems/goto/workstation.tpl:65 admin/systems/goto/terminal.tpl:57
-#: admin/systems/services/syslog/class_goSyslogServer.inc:27
-#: admin/systems/services/syslog/class_goSyslogServer.inc:47
-#: admin/ogroups/goto/class_termgroup.inc:306
-#: admin/ogroups/goto/termgroup.tpl:58
-msgid "Syslog server"
-msgstr "Serwer Syslog"
-
-#: admin/systems/goto/class_workstationGeneric.inc:706
-#: admin/ogroups/goto/class_termgroup.inc:308
-msgid "Ntp server"
-msgstr "Serwer NTP"
-
-#: admin/systems/goto/class_workstationGeneric.inc:707
-#: admin/systems/goto/class_terminalGeneric.inc:652
-#, fuzzy
-msgid "Root password"
-msgstr "Ustaw hasło"
-
-#: admin/systems/goto/class_workstationGeneric.inc:708
-#: admin/systems/goto/class_terminalGeneric.inc:653
-#: admin/ogroups/goto/class_termgroup.inc:307
-msgid "Action flag"
-msgstr "Flaga akcji"
-
-#: admin/systems/goto/class_terminalStartup.inc:84
-#, php-format
+#: admin/systems/goto/class_terminalService.inc:523
 msgid ""
-"Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to "
-"exist."
-msgstr ""
-"Polecenie '%s' podane jako zaczep KERNELS dla dodatku '%s' nie istnieje."
-
-#: admin/systems/goto/class_terminalStartup.inc:540
-#: admin/systems/goto/class_workstationStartup.inc:1059
-msgid "Startup"
-msgstr "Startup"
-
-#: admin/systems/goto/class_terminalStartup.inc:541
-#, fuzzy
-msgid "Terminal startup"
-msgstr "Szablon terminala"
-
-#: admin/systems/goto/class_terminalStartup.inc:549
-#: admin/systems/goto/class_workstationStartup.inc:1068
-msgid "Ldap server"
-msgstr "Serwer Ldap"
-
-#: admin/systems/goto/class_terminalStartup.inc:551
-#: admin/systems/goto/class_workstationStartup.inc:1072
-#, fuzzy
-msgid "Kernel modules"
-msgstr "Parametr kernela"
-
-#: admin/systems/goto/class_terminalStartup.inc:553
-#: admin/systems/goto/class_workstationStartup.inc:1070
-msgid "Kernel parameter"
-msgstr "Parametr kernela"
-
-#: admin/systems/goto/class_terminalGeneric.inc:635
-#: admin/systems/goto/class_terminalGeneric.inc:641
-#: admin/systems/goto/class_SelectDeviceType.inc:39
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/goto/class_terminalGeneric.inc:636
-#, fuzzy
-msgid "Terminal generic"
-msgstr "Usługa Terminali"
-
-#: admin/systems/goto/class_terminalGeneric.inc:644
-#: admin/systems/goto/workstation.tpl:55 admin/systems/goto/terminal.tpl:47
-#: admin/ogroups/goto/class_termgroup.inc:305
-#: admin/ogroups/goto/termgroup.tpl:47
-msgid "Mode"
-msgstr "Tryb"
-
-#: admin/systems/goto/class_terminalGeneric.inc:645
-#: admin/systems/goto/terminal.tpl:76
-msgid "Root server"
-msgstr "Serwer NFS"
-
-#: admin/systems/goto/class_terminalGeneric.inc:646
-#: admin/systems/goto/terminal.tpl:86
-msgid "Swap server"
-msgstr "Serwer Swap"
-
-#: admin/systems/goto/class_terminalGeneric.inc:647
-msgid "Syslog server enabled"
-msgstr "Serwer Syslog włączony"
-
-#: admin/systems/goto/class_terminalGeneric.inc:648
-msgid "Ntp server settings"
-msgstr "Ustawienia serwera ntp"
-
-#: admin/systems/goto/selectUserToPrinterDialog.tpl:8
-msgid "Select entries to add"
-msgstr "Wybierz elementy do dodania"
-
-#: admin/systems/goto/selectUserToPrinterDialog.tpl:38
-msgid "Display members of department"
-msgstr "Wyświetl członków departamentu"
-
-#: admin/systems/goto/selectUserToPrinterDialog.tpl:50
-msgid "Display members matching"
-msgstr "Wyświetl członków pasujących"
-
-#: admin/systems/goto/selectUserToPrinterDialog.tpl:55
-msgid "Regular expression for matching member names"
-msgstr "Wyrażenie regularne dla dopasowania nazw członków"
-
-#: admin/systems/goto/class_terminalInfo.inc:50
-#: admin/systems/goto/class_terminalInfo.inc:201
-msgid "present"
-msgstr "obecne"
-
-#: admin/systems/goto/class_terminalInfo.inc:80
-#: admin/systems/goto/class_terminalInfo.inc:176
-msgid "unknown status"
-msgstr "nieznany status"
-
-#: admin/systems/goto/class_terminalInfo.inc:89
-msgid "This is a virtual terminal which has no properties to show here."
-msgstr ""
-"To jest terminal wirtualny i nie posiada właściwości do pokazania tutaj."
-
-#: admin/systems/goto/class_terminalInfo.inc:103
-msgid "online"
-msgstr "online"
-
-#: admin/systems/goto/class_terminalInfo.inc:165
-msgid "running"
-msgstr "działa"
-
-#: admin/systems/goto/class_terminalInfo.inc:168
-msgid "not running"
-msgstr "nie działa"
-
-#: admin/systems/goto/class_terminalInfo.inc:171
-msgid "not defined"
-msgstr "nie zdefiniowane"
-
-#: admin/systems/goto/class_terminalInfo.inc:193
-msgid "offline"
-msgstr "offline"
-
-#: admin/systems/goto/ArpNewDevice.tpl:1
-msgid "Integrating unknown devices"
+"Remote desktop settings contains servers that do not support the selected "
+"connection method."
 msgstr ""
 
-#: admin/systems/goto/ArpNewDevice.tpl:3
-msgid ""
-"The current device has been detected by the ARP monitor used by GOsa. You "
-"can integrate this device into your running DHCP/DNS infrastructure by "
-"submitting this form. The device entry will disappear from the list of the "
-"systems and move to the DNS/DHCP configuration."
+#: admin/systems/goto/class_terminalService.inc:586
+#: admin/systems/goto/class_workstationService.inc:86
+#: admin/systems/goto/workstationService.tpl:157
+msgid "unknown"
+msgstr "nieznane"
+
+#: admin/systems/goto/class_terminalService.inc:613
+#: admin/systems/goto/class_workstationService.inc:490
+msgid "Service"
+msgstr "Usługa"
+
+#: admin/systems/goto/class_terminalService.inc:622
+#: admin/systems/goto/class_workstationService.inc:499
+msgid "Monitor"
+msgstr "Monitor"
+
+#: admin/systems/goto/class_terminalService.inc:623
+msgid "Method"
+msgstr "Metoda"
+
+#: admin/systems/goto/class_terminalService.inc:624
+#: admin/systems/goto/terminalService.tpl:173
+msgid "Remote desktop"
+msgstr "Zdalny pulpit"
+
+#: admin/systems/goto/class_terminalService.inc:625
+#: admin/systems/goto/class_workstationService.inc:500
+msgid "Gfx driver"
+msgstr "Sterownik Gfx"
+
+#: admin/systems/goto/class_terminalService.inc:626
+#: admin/systems/goto/class_workstationService.inc:501
+msgid "Gfx resolution"
+msgstr "Rozdzielczość Gfx"
+
+#: admin/systems/goto/class_terminalService.inc:627
+#: admin/systems/goto/class_workstationService.inc:502
+msgid "Gfx color depth"
+msgstr "Głębia kolorów Gfx"
+
+#: admin/systems/goto/class_terminalService.inc:628
+#: admin/systems/goto/terminalService.tpl:150
+#: admin/systems/goto/class_workstationService.inc:403
+#: admin/systems/goto/class_workstationService.inc:408
+#: admin/systems/goto/class_workstationService.inc:503
+#: admin/systems/goto/workstationService.tpl:170
+msgid "HSync"
+msgstr "HSync"
+
+#: admin/systems/goto/class_terminalService.inc:629
+#: admin/systems/goto/terminalService.tpl:158
+#: admin/systems/goto/class_workstationService.inc:388
+#: admin/systems/goto/class_workstationService.inc:393
+#: admin/systems/goto/class_workstationService.inc:504
+#: admin/systems/goto/workstationService.tpl:181
+msgid "VSync"
+msgstr "VSync"
+
+#: admin/systems/goto/class_terminalService.inc:630
+msgid "Auto-Sync"
 msgstr ""
 
-#: admin/systems/goto/ArpNewDevice.tpl:9
-#, fuzzy
-msgid "DNS name"
-msgstr "Imię"
+#: admin/systems/goto/class_terminalService.inc:631
+msgid "Printer service enabled"
+msgstr "Usługa drukowania włączona"
+
+#: admin/systems/goto/class_terminalService.inc:632
+msgid "Spool server"
+msgstr "Serwer kolejkowania"
+
+#: admin/systems/goto/class_terminalService.inc:633
+#: admin/systems/goto/class_workstationService.inc:506
+msgid "Scanner enabled"
+msgstr "Skaner włączony"
+
+#: admin/systems/goto/class_terminalService.inc:634
+#: admin/systems/goto/class_workstationService.inc:507
+msgid "Keyboard model"
+msgstr "Model klawiatury"
+
+#: admin/systems/goto/class_terminalService.inc:635
+#: admin/systems/goto/class_workstationService.inc:508
+msgid "Keyboard layout"
+msgstr "Układ klawiatury"
+
+#: admin/systems/goto/class_terminalService.inc:636
+#: admin/systems/goto/class_workstationService.inc:509
+msgid "Keyboard variant"
+msgstr "Wariant klawiatury"
+
+#: admin/systems/goto/class_terminalService.inc:637
+#: admin/systems/goto/class_workstationService.inc:510
+msgid "Mouse type"
+msgstr "Typ myszy"
+
+#: admin/systems/goto/class_terminalService.inc:638
+#: admin/systems/goto/class_workstationService.inc:511
+msgid "Mouse port"
+msgstr "Port myszy"
+
+#: admin/systems/goto/class_terminalService.inc:639
+#: admin/systems/goto/terminalService.tpl:76
+#: admin/systems/goto/class_workstationService.inc:512
+#: admin/systems/goto/workstationService.tpl:86
+msgid "Telephone hardware"
+msgstr "Sprzęt telefoniczny"
 
 #: admin/systems/goto/info.tpl:1
 msgid "System information"
@@ -3058,6 +3081,11 @@ msgstr "Stacja dyskietek"
 msgid "CDROM device"
 msgstr "Stacja CDROM"
 
+#: admin/systems/goto/info.tpl:73 admin/systems/goto/terminalService.tpl:95
+#: admin/systems/goto/workstationService.tpl:107
+msgid "Graphic device"
+msgstr "Karta graficzna"
+
 #: admin/systems/goto/info.tpl:77
 msgid "Audio device"
 msgstr "Karta dźwiękowa"
@@ -3082,13 +3110,6 @@ msgstr "Zużycie SWAP"
 msgid "SSH service"
 msgstr "Usłoga SSH"
 
-#: admin/systems/goto/info.tpl:119
-#: admin/systems/services/cups/class_goCupsServer.inc:27
-#: admin/systems/services/cups/class_goCupsServer.inc:48
-#: admin/systems/services/cups/class_goCupsServer.inc:69
-msgid "Print service"
-msgstr "Usługa Drukowania"
-
 #: admin/systems/goto/info.tpl:122
 msgid "Scan service"
 msgstr "Usługa Skanowania"
@@ -3101,216 +3122,100 @@ msgstr "Usługa dźwięku"
 msgid "GUI"
 msgstr "GUI"
 
-#: admin/systems/goto/class_workstationService.inc:89
-#: admin/systems/goto/class_workstationService.inc:90
-#: admin/systems/goto/class_workstationService.inc:91
-#: admin/systems/goto/class_workstationService.inc:92
-#: admin/systems/goto/class_terminalService.inc:117
-#: admin/systems/goto/class_terminalService.inc:118
-#: admin/systems/goto/class_terminalService.inc:119
-#: admin/systems/goto/class_terminalService.inc:120
-msgid "bit"
-msgstr "bit"
+#: admin/systems/goto/terminalService.tpl:4
+#: admin/systems/goto/workstationService.tpl:4
+msgid "Keyboard"
+msgstr "Klawiatura"
 
-#: admin/systems/goto/class_workstationService.inc:132
-msgid "show chooser"
-msgstr "pokaż wybor"
+#: admin/systems/goto/terminalService.tpl:10
+#: admin/systems/goto/workstationService.tpl:11
+msgid "Choose keyboard model"
+msgstr "Wybierz model klawiatury"
 
-#: admin/systems/goto/class_workstationService.inc:133
-msgid "direct"
-msgstr "bezpośredni"
+#: admin/systems/goto/terminalService.tpl:17
+#: admin/systems/goto/workstationService.tpl:19
+msgid "Layout"
+msgstr "Układ"
 
-#: admin/systems/goto/class_workstationService.inc:136
-msgid "load balanced"
-msgstr "równoważone obciążenie"
+#: admin/systems/goto/terminalService.tpl:20
+#: admin/systems/goto/workstationService.tpl:23
+msgid "Choose keyboard layout"
+msgstr "Wybierz układ klawiatury"
 
-#: admin/systems/goto/class_workstationService.inc:139
-#: admin/systems/goto/class_terminalService.inc:169
-msgid "Windows RDP"
-msgstr "Windows RDP"
+#: admin/systems/goto/terminalService.tpl:27
+#: admin/systems/goto/workstationService.tpl:31
+msgid "Variant"
+msgstr "Wariant"
 
-#: admin/systems/goto/class_workstationService.inc:140
-#: admin/systems/goto/class_terminalService.inc:170
-msgid "ICA client"
-msgstr "Klient ICA"
+#: admin/systems/goto/terminalService.tpl:30
+#: admin/systems/goto/workstationService.tpl:35
+msgid "Choose keyboard variant"
+msgstr "Wybierz wariant klawiatury"
 
-#: admin/systems/goto/class_workstationService.inc:156
-#: admin/systems/goto/class_terminalService.inc:193
-msgid "automatic"
-msgstr "automatyczne"
+#: admin/systems/goto/terminalService.tpl:45
+#: admin/systems/goto/workstationService.tpl:51
+msgid "Mouse"
+msgstr "Mysz"
 
-#: admin/systems/goto/class_workstationService.inc:206
-#: admin/systems/goto/class_terminalService.inc:260
-msgid "Bit"
-msgstr "Bit"
+#: admin/systems/goto/terminalService.tpl:51
+#: admin/systems/goto/workstationService.tpl:58
+msgid "Choose mouse type"
+msgstr "Wybierz typ myszy"
 
-#: admin/systems/goto/class_workstationService.inc:321
-#: admin/systems/goto/class_terminalService.inc:406
-msgid "Choose the phone located at the current terminal"
-msgstr "Wybierz telefon umieszczony przy obecnym terminalu"
+#: admin/systems/goto/terminalService.tpl:58
+#: admin/systems/goto/workstationService.tpl:66
+msgid "Port"
+msgstr "Port"
 
-#: admin/systems/goto/class_workstationService.inc:484
-#: admin/systems/goto/class_terminalService.inc:613
-msgid "Service"
-msgstr "Usługa"
+#: admin/systems/goto/terminalService.tpl:61
+#: admin/systems/goto/workstationService.tpl:70
+msgid "Choose mouse port"
+msgstr "Wybierz port myszy"
 
-#: admin/systems/goto/class_workstationService.inc:485
-msgid "Workstation service"
-msgstr "Usługa stacji roboczej"
+#: admin/systems/goto/terminalService.tpl:79
+#: admin/systems/goto/workstationService.tpl:89
+msgid "Telephone"
+msgstr "Telefon"
 
-#: admin/systems/goto/class_workstationService.inc:493
-#: admin/systems/goto/class_terminalService.inc:622
-msgid "Monitor"
-msgstr "Monitor"
+#: admin/systems/goto/terminalService.tpl:101
+#: admin/systems/goto/workstationService.tpl:114
+msgid "Choose graphic driver that is needed by the installed graphic board"
+msgstr "Wybierz sterownik wymagany przez zainstalowaną kartę graficzną"
 
-#: admin/systems/goto/class_workstationService.inc:494
-#: admin/systems/goto/class_terminalService.inc:625
-msgid "Gfx driver"
-msgstr "Sterownik Gfx"
+#: admin/systems/goto/terminalService.tpl:111
+#: admin/systems/goto/workstationService.tpl:126
+msgid "Choose screen resolution used in graphic mode"
+msgstr "Wybierz rozdzielczość ekranu użytą w trybie graficznym"
 
-#: admin/systems/goto/class_workstationService.inc:495
-#: admin/systems/goto/class_terminalService.inc:626
-msgid "Gfx resolution"
-msgstr "Rozdzielczość Gfx"
+#: admin/systems/goto/terminalService.tpl:118
+#: admin/systems/goto/workstationService.tpl:134
+msgid "Color depth"
+msgstr "Głębia kolorów"
 
-#: admin/systems/goto/class_workstationService.inc:496
-#: admin/systems/goto/class_terminalService.inc:627
-msgid "Gfx color depth"
-msgstr "Głębia kolorów Gfx"
+#: admin/systems/goto/terminalService.tpl:121
+#: admin/systems/goto/workstationService.tpl:138
+msgid "Choose colordepth used in graphic mode"
+msgstr "Wybierz głębię kolorów użytą w trybie graficznym"
 
-#: admin/systems/goto/class_workstationService.inc:499
-#, fuzzy
-msgid "Use DDC"
-msgstr "Identyfikator użytkownika"
+#: admin/systems/goto/terminalService.tpl:135
+#: admin/systems/goto/workstationService.tpl:153
+msgid "Display device"
+msgstr "Urządzenie wyświetlające"
 
-#: admin/systems/goto/class_workstationService.inc:500
-#: admin/systems/goto/class_terminalService.inc:633
-msgid "Scanner enabled"
-msgstr "Skaner włączony"
+#: admin/systems/goto/terminalService.tpl:147
+#: admin/systems/goto/workstationService.tpl:167
+msgid "Use DDC for automatic detection"
+msgstr "Użyj DCC do automatycznego wykrywania"
 
-#: admin/systems/goto/class_workstationService.inc:501
-#: admin/systems/goto/class_terminalService.inc:634
-msgid "Keyboard model"
-msgstr "Model klawiatury"
+#: admin/systems/goto/terminalService.tpl:154
+#: admin/systems/goto/workstationService.tpl:175
+msgid "Horizontal refresh frequency for installed monitor"
+msgstr "Częstotliwość odświeżania poziomego dla zainstalowanego monitora"
 
-#: admin/systems/goto/class_workstationService.inc:502
-#: admin/systems/goto/class_terminalService.inc:635
-msgid "Keyboard layout"
-msgstr "Układ klawiatury"
-
-#: admin/systems/goto/class_workstationService.inc:503
-#: admin/systems/goto/class_terminalService.inc:636
-msgid "Keyboard variant"
-msgstr "Wariant klawiatury"
-
-#: admin/systems/goto/class_workstationService.inc:504
-#: admin/systems/goto/class_terminalService.inc:637
-msgid "Mouse type"
-msgstr "Typ myszy"
-
-#: admin/systems/goto/class_workstationService.inc:505
-#: admin/systems/goto/class_terminalService.inc:638
-msgid "Mouse port"
-msgstr "Port myszy"
-
-#: admin/systems/goto/gencd_frame.tpl:2
-msgid "Your browser does not supprt iframes."
-msgstr ""
-
-#: admin/systems/goto/workstation.tpl:1 admin/systems/goto/terminal.tpl:1
-msgid "Properties"
-msgstr "Właściwości"
-
-#: admin/systems/goto/workstation.tpl:8
-msgid "Workstation template"
-msgstr "Szablon stacji roboczej"
-
-#: admin/systems/goto/workstation.tpl:38 admin/systems/goto/terminal.tpl:31
-msgid "Choose subtree to place group in"
-msgstr "Wybierz poddrzewo do umieszczenia grupy"
-
-#: admin/systems/goto/workstation.tpl:58 admin/systems/goto/terminal.tpl:50
-#: admin/ogroups/goto/termgroup.tpl:50
-msgid "Select terminal mode"
-msgstr "Proszę wybrać tryb terminala"
-
-#: admin/systems/goto/workstation.tpl:68 admin/systems/goto/terminal.tpl:60
-#: admin/ogroups/goto/termgroup.tpl:61
-msgid "Choose server to use for logging"
-msgstr "Proszę wybrać serwer do logowania"
-
-#: admin/systems/goto/workstation.tpl:87 admin/systems/goto/workstation.tpl:90
-#: admin/systems/goto/terminal.tpl:109 admin/systems/goto/terminal.tpl:112
-msgid "Inherit time server attributes"
-msgstr "Dziedzicz atrybuty serwera czasu"
-
-#: admin/systems/goto/workstation.tpl:98 admin/systems/goto/terminal.tpl:120
-#: admin/ogroups/goto/termgroup.tpl:17
-msgid "Choose server to use for synchronizing time"
-msgstr "Proszę wybrać serwer do synchronizacji czasu"
-
-#: admin/systems/goto/workstation.tpl:137 admin/systems/goto/terminal.tpl:161
-#: admin/ogroups/goto/termgroup.tpl:93
-msgid "Select action to execute for this terminal"
-msgstr "Proszę wybrać akcję do wykonania dla tego terminala"
-
-#: admin/systems/goto/workstation.tpl:160
-#, fuzzy
-msgid "Inherit all values from group"
-msgstr "Lista grup"
-
-#: admin/systems/goto/class_selectUserToPrinterDialog.inc:139
-msgid "Please select a printer or press cancel."
-msgstr "Proszę wybrać drukarkę lub nacisnąć Anuluj."
-
-#: admin/systems/goto/printer.tpl:5
-msgid "General"
-msgstr "Ogólne"
-
-#: admin/systems/goto/printer.tpl:8
-msgid "Printer name"
-msgstr "nazwa drukarki"
-
-#: admin/systems/goto/printer.tpl:30
-msgid "Choose subtree to place user in"
-msgstr "Wybierz poddrzewo do umieszczenia konta."
-
-#: admin/systems/goto/printer.tpl:43
-msgid "Details"
-msgstr "Szczegóły"
-
-#: admin/systems/goto/printer.tpl:46
-msgid "Printer location"
-msgstr "Lokalizacja drukarki"
-
-#: admin/systems/goto/printer.tpl:89
-msgid "Users which are allowed to use this printer"
-msgstr "Użytkownicy którzy mogą używać tej drukarki"
-
-#: admin/systems/goto/printer.tpl:91
-msgid "Users"
-msgstr "Użytkownicy"
-
-#: admin/systems/goto/printer.tpl:96 admin/systems/goto/printer.tpl:120
-msgid "Add user"
-msgstr "Dodaj użytkownika"
-
-#: admin/systems/goto/printer.tpl:99 admin/systems/goto/printer.tpl:123
-msgid "Add group"
-msgstr "Dodaj grupę"
-
-#: admin/systems/goto/printer.tpl:113
-msgid "Users which are allowed to administrate this printer"
-msgstr "Użytkownicy, którzy mogą administrować tą drukarką"
-
-#: admin/systems/goto/printer.tpl:115
-msgid "Admins"
-msgstr "Administratorzy"
-
-#: admin/systems/goto/terminalService.tpl:173
-#: admin/systems/goto/class_terminalService.inc:624
-msgid "Remote desktop"
-msgstr "Zdalny pulpit"
+#: admin/systems/goto/terminalService.tpl:162
+#: admin/systems/goto/workstationService.tpl:186
+msgid "Vertical refresh frequency for installed monitor"
+msgstr "Częstotliwość odświeżania pionowego dla zainstalowanego monitora"
 
 #: admin/systems/goto/terminalService.tpl:177
 msgid "Connect method"
@@ -3336,6 +3241,239 @@ msgstr ""
 #, fuzzy
 msgid "Remove selected server"
 msgstr "Usuń obrazek"
+
+#: admin/systems/goto/terminalService.tpl:228
+#: admin/systems/goto/workstationService.tpl:201
+msgid "Scan device"
+msgstr "Urządzenie skanujące"
+
+#: admin/systems/goto/terminalService.tpl:230
+#: admin/systems/goto/workstationService.tpl:204
+msgid "Select to start SANE scan service on terminal"
+msgstr "Zaznacz aby uruchomić usługę skanowania SANE na terminalu"
+
+#: admin/systems/goto/terminalService.tpl:232
+#: admin/systems/goto/workstationService.tpl:207
+msgid "Provide scan services"
+msgstr "Dostarcza usługi skanowania"
+
+#: admin/systems/goto/class_terminalStartup.inc:84
+#, php-format
+msgid ""
+"Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to "
+"exist."
+msgstr ""
+"Polecenie '%s' podane jako zaczep KERNELS dla dodatku '%s' nie istnieje."
+
+#: admin/systems/goto/class_terminalStartup.inc:540
+#: admin/systems/goto/class_workstationStartup.inc:1059
+msgid "Startup"
+msgstr "Startup"
+
+#: admin/systems/goto/class_terminalStartup.inc:541
+#, fuzzy
+msgid "Terminal startup"
+msgstr "Szablon terminala"
+
+#: admin/systems/goto/class_terminalStartup.inc:549
+#: admin/systems/goto/class_workstationStartup.inc:1068
+msgid "Ldap server"
+msgstr "Serwer Ldap"
+
+#: admin/systems/goto/class_terminalStartup.inc:551
+#: admin/systems/goto/class_workstationStartup.inc:1072
+#, fuzzy
+msgid "Kernel modules"
+msgstr "Parametr kernela"
+
+#: admin/systems/goto/class_terminalStartup.inc:552
+#: admin/systems/goto/terminalStartup.tpl:38
+#: admin/systems/goto/class_workstationStartup.inc:1069
+#: admin/systems/goto/workstationStartup.tpl:8
+msgid "Boot kernel"
+msgstr "Uruchamiane jądro"
+
+#: admin/systems/goto/class_terminalStartup.inc:553
+#: admin/systems/goto/class_workstationStartup.inc:1070
+msgid "Kernel parameter"
+msgstr "Parametr kernela"
+
+#: admin/systems/goto/terminalStartup.tpl:1
+#: admin/systems/goto/workstationStartup.tpl:4
+msgid "Boot parameters"
+msgstr "Parametry uruchamiania"
+
+#: admin/systems/goto/terminalStartup.tpl:7
+#: admin/systems/goto/workstationStartup.tpl:27
+msgid "LDAP server"
+msgstr "Serwer LDAP"
+
+#: admin/systems/goto/terminalStartup.tpl:11
+#: admin/systems/goto/workstationStartup.tpl:32
+#, fuzzy
+msgid "inherit from group"
+msgstr "Lista grup"
+
+#: admin/systems/goto/terminalStartup.tpl:49
+#: admin/systems/goto/workstationStartup.tpl:18
+msgid "Custom options"
+msgstr "Dodatkowe opcje"
+
+#: admin/systems/goto/terminalStartup.tpl:53
+#: admin/systems/goto/workstationStartup.tpl:22
+msgid ""
+"Enter any parameters that should be passed to the kernel as append line "
+"during bootup"
+msgstr ""
+"Podaj wszystkie parametry które powinny zostać przekazane do jądra podczas "
+"uruchamiania"
+
+#: admin/systems/goto/terminalStartup.tpl:68
+#: admin/systems/goto/workstationStartup.tpl:180
+msgid "Kernel modules (format: name parameters)"
+msgstr "Modułu jądra (format: nazwa parametry)"
+
+#: admin/systems/goto/terminalStartup.tpl:71
+#: admin/systems/goto/workstationStartup.tpl:183
+msgid "Add additional modules to load on startup"
+msgstr "Dodaj inne moduły do załadowania na starcie"
+
+#: admin/systems/goto/terminalStartup.tpl:107
+#: admin/systems/goto/workstationStartup.tpl:219
+msgid "Mountpoint"
+msgstr "Punkt montowania"
+
+#: admin/systems/goto/class_SelectDeviceType.inc:39
+#: admin/systems/goto/class_terminalGeneric.inc:637
+#: admin/systems/goto/class_terminalGeneric.inc:643
+msgid "Terminal"
+msgstr "Terminal"
+
+#: admin/systems/goto/SelectDeviceType.tpl:3
+msgid ""
+"This system has no system type configured. Please choose a system type for "
+"this object and an optional inheritance group. Press the 'continue' button "
+"to procreed."
+msgstr ""
+
+#: admin/systems/goto/SelectDeviceType.tpl:10
+msgid ""
+"Please select a system type and an optional bundle of predefined settings to "
+"be inherited."
+msgstr ""
+"Proszę wybrać typ systemu i opcjonalny zestaw predefiniowanych ustawień do "
+"dziedziczenia."
+
+#: admin/systems/goto/SelectDeviceType.tpl:12
+#, fuzzy
+msgid ""
+"Please select a system type and a bundle of predefined settings to be "
+"inherited."
+msgstr ""
+"Proszę wybrać typ systemu i opcjonalny zestaw predefiniowanych ustawień do "
+"dziedziczenia."
+
+#: admin/systems/goto/SelectDeviceType.tpl:23
+#: admin/systems/goto/SelectDeviceType.tpl:24
+msgid "System type"
+msgstr "Typ systemu"
+
+#: admin/systems/goto/SelectDeviceType.tpl:35
+msgid "Choose an object group as template"
+msgstr "Wybierz grupę obiektową jako szablon"
+
+#: admin/systems/goto/SelectDeviceType.tpl:47
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: admin/systems/goto/chooser.tpl:1
+msgid "Choose the kind of system component you want to create"
+msgstr "Wybierz rodzaj komponentu systemu do utworzenia"
+
+#: admin/systems/goto/chooser.tpl:4
+msgid ""
+"Linux terminals and workstations are autocreated on bootup. For this reason "
+"you're only be able to create templates for a specific tree. Servers are "
+"normally automatically added too, but in some special cases you may need to "
+"create a faked server entry to provide GOsa with some informations. Other "
+"network components may be used for Nagios setups to create component "
+"dependencies."
+msgstr ""
+"Linuksowe terminale i stacje robocze są automatycznie tworzone podczas "
+"uruchamiania. Z tego powodu można jedynie utworzyć szablon dla konkretnego "
+"drzewa. Serwery przeważnie są automatycznie dodawane, lecz w niektórych "
+"przypadkach trzeba utworzyć sztuczny wpis serwera aby zapewnić GOsa pewne "
+"informacje. Inne elementy sieciowe mogą zostać użyte w ustawieniach Nagios "
+"aby utworzyć zależności."
+
+#: admin/systems/goto/chooser.tpl:7
+msgid "Linux thin client template"
+msgstr "Szablon cienkiego klienta Linux"
+
+#: admin/systems/goto/chooser.tpl:8
+msgid "Linux workstation template"
+msgstr "Sszablon stacji roboczej Linux"
+
+#: admin/systems/goto/chooser.tpl:9
+msgid "Linux Server"
+msgstr "Serwer Linux"
+
+#: admin/systems/goto/chooser.tpl:10
+msgid "Windows workstation"
+msgstr "Stacja robocza Windows"
+
+#: admin/systems/goto/chooser.tpl:11
+msgid "Network printer"
+msgstr "Drukarka sieciowa"
+
+#: admin/systems/goto/chooser.tpl:12
+msgid "Phone"
+msgstr "Telefon"
+
+#: admin/systems/goto/chooser.tpl:13
+msgid "Other network component"
+msgstr "Inny element sieciowy"
+
+#: admin/systems/goto/class_workstationService.inc:132
+msgid "show chooser"
+msgstr "pokaż wybor"
+
+#: admin/systems/goto/class_workstationService.inc:133
+msgid "direct"
+msgstr "bezpośredni"
+
+#: admin/systems/goto/class_workstationService.inc:136
+msgid "load balanced"
+msgstr "równoważone obciążenie"
+
+#: admin/systems/goto/class_workstationService.inc:491
+msgid "Workstation service"
+msgstr "Usługa stacji roboczej"
+
+#: admin/systems/goto/class_workstationService.inc:505
+#, fuzzy
+msgid "Use DDC"
+msgstr "Identyfikator użytkownika"
+
+#: admin/systems/goto/class_selectUserToPrinterDialog.inc:139
+msgid "Please select a printer or press cancel."
+msgstr "Proszę wybrać drukarkę lub nacisnąć Anuluj."
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:8
+msgid "Select entries to add"
+msgstr "Wybierz elementy do dodania"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:38
+msgid "Display members of department"
+msgstr "Wyświetl członków departamentu"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:50
+msgid "Display members matching"
+msgstr "Wyświetl członków pasujących"
+
+#: admin/systems/goto/selectUserToPrinterDialog.tpl:55
+msgid "Regular expression for matching member names"
+msgstr "Wyrażenie regularne dla dopasowania nazw członków"
 
 #: admin/systems/goto/class_workstationStartup.inc:244
 #, fuzzy, php-format
@@ -3394,102 +3532,97 @@ msgstr "flaga statusu FAI"
 msgid "REPOSITORY_HOOK returned no result!"
 msgstr ""
 
-#: admin/systems/goto/SelectDeviceType.tpl:3
-msgid ""
-"This system has no system type configured. Please choose a system type for "
-"this object and an optional inheritance group. Press the 'continue' button "
-"to procreed."
-msgstr ""
+#: admin/systems/goto/class_terminalGeneric.inc:121
+#: admin/systems/goto/class_workstationGeneric.inc:138
+#: admin/ogroups/goto/class_termgroup.inc:45
+msgid "Activated"
+msgstr "Aktywne"
 
-#: admin/systems/goto/SelectDeviceType.tpl:10
-msgid ""
-"Please select a system type and an optional bundle of predefined settings to "
-"be inherited."
-msgstr ""
-"Proszę wybrać typ systemu i opcjonalny zestaw predefiniowanych ustawień do "
-"dziedziczenia."
-
-#: admin/systems/goto/SelectDeviceType.tpl:12
+#: admin/systems/goto/class_terminalGeneric.inc:190
+#: admin/systems/goto/class_workstationGeneric.inc:216
+#: admin/ogroups/goto/class_termgroup.inc:178
 #, fuzzy
-msgid ""
-"Please select a system type and a bundle of predefined settings to be "
-"inherited."
-msgstr ""
-"Proszę wybrać typ systemu i opcjonalny zestaw predefiniowanych ustawień do "
-"dziedziczenia."
+msgid "Event error"
+msgstr "Błąd"
 
-#: admin/systems/goto/SelectDeviceType.tpl:23
-#: admin/systems/goto/SelectDeviceType.tpl:24
-msgid "System type"
-msgstr "Typ systemu"
-
-#: admin/systems/goto/SelectDeviceType.tpl:35
-msgid "Choose an object group as template"
-msgstr "Wybierz grupę obiektową jako szablon"
-
-#: admin/systems/goto/SelectDeviceType.tpl:47
-msgid "Continue"
-msgstr "Kontynuuj"
-
-#: admin/systems/goto/class_terminalService.inc:167
-msgid "XDMCP"
+#: admin/systems/goto/class_terminalGeneric.inc:191
+#: admin/systems/goto/class_workstationGeneric.inc:217
+#: admin/ogroups/goto/class_termgroup.inc:179
+#, php-format
+msgid "Event '%s' is not available!"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:168
-msgid "LDM"
-msgstr ""
-
-#: admin/systems/goto/class_terminalService.inc:307
-msgid "This 'dn' has no terminal features."
-msgstr "Ten 'dn' nie posiada cech terminala."
-
-#: admin/systems/goto/class_terminalService.inc:364
+#: admin/systems/goto/class_terminalGeneric.inc:638
 #, fuzzy
-msgid "Unsupported"
-msgstr "Wsparcie dla USB"
-
-#: admin/systems/goto/class_terminalService.inc:480
-#: admin/systems/goto/class_terminalService.inc:485
-#, fuzzy
-msgid "VSync range"
-msgstr "VSync"
-
-#: admin/systems/goto/class_terminalService.inc:493
-#: admin/systems/goto/class_terminalService.inc:498
-#, fuzzy
-msgid "HSync range"
-msgstr "HSync"
-
-#: admin/systems/goto/class_terminalService.inc:523
-msgid ""
-"Remote desktop settings contains servers that do not support the selected "
-"connection method."
-msgstr ""
-
-#: admin/systems/goto/class_terminalService.inc:614
-#: admin/systems/services/terminal/class_goTerminalServer.inc:30
-#: admin/systems/services/terminal/class_goTerminalServer.inc:79
-#: admin/systems/services/terminal/class_goTerminalServer.inc:166
-#: admin/systems/services/terminal/class_goTerminalServer.inc:167
-#: admin/systems/services/terminal/goTerminalServer.tpl:4
-msgid "Terminal service"
+msgid "Terminal generic"
 msgstr "Usługa Terminali"
 
-#: admin/systems/goto/class_terminalService.inc:623
-msgid "Method"
-msgstr "Metoda"
+#: admin/systems/goto/class_terminalGeneric.inc:647
+#: admin/systems/goto/terminal.tpl:76
+msgid "Root server"
+msgstr "Serwer NFS"
 
-#: admin/systems/goto/class_terminalService.inc:630
-msgid "Auto-Sync"
+#: admin/systems/goto/class_terminalGeneric.inc:648
+#: admin/systems/goto/terminal.tpl:86
+msgid "Swap server"
+msgstr "Serwer Swap"
+
+#: admin/systems/goto/class_terminalGeneric.inc:649
+msgid "Syslog server enabled"
+msgstr "Serwer Syslog włączony"
+
+#: admin/systems/goto/class_terminalGeneric.inc:650
+msgid "Ntp server settings"
+msgstr "Ustawienia serwera ntp"
+
+#: admin/systems/goto/class_terminalGeneric.inc:654
+#: admin/systems/goto/class_workstationGeneric.inc:709
+#, fuzzy
+msgid "Root password"
+msgstr "Ustaw hasło"
+
+#: admin/systems/goto/class_terminalGeneric.inc:655
+#: admin/systems/goto/class_workstationGeneric.inc:710
+#: admin/ogroups/goto/class_termgroup.inc:329
+msgid "Action flag"
+msgstr "Flaga akcji"
+
+#: admin/systems/goto/workstationStartup.tpl:62
+msgid "GOsa support daemon not configured"
 msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:631
-msgid "Printer service enabled"
-msgstr "Usługa drukowania włączona"
+#: admin/systems/goto/workstationStartup.tpl:63
+msgid "FAI settings cannot be modified"
+msgstr ""
 
-#: admin/systems/goto/class_terminalService.inc:632
-msgid "Spool server"
-msgstr "Serwer kolejkowania"
+#: admin/systems/goto/workstationStartup.tpl:66
+msgid "Check if the GOsa support daemon (gosa-si) is running."
+msgstr ""
+
+#: admin/systems/goto/workstationStartup.tpl:67
+#, fuzzy
+msgid "retry"
+msgstr "Edycja pozycji"
+
+#: admin/systems/goto/workstationStartup.tpl:75
+#: admin/systems/goto/workstationStartup.tpl:111
+msgid "FAI server"
+msgstr "Serwer FAI"
+
+#: admin/systems/goto/workstationStartup.tpl:101
+#: admin/systems/goto/workstationStartup.tpl:146
+msgid "Assigned FAI classes"
+msgstr "Przydzielone klasy FAI"
+
+#: admin/systems/goto/workstationStartup.tpl:130
+msgid "set"
+msgstr "ustaw"
+
+#: admin/systems/goto/workstationStartup.tpl:167
+msgid ""
+"FAI Object assignment disabled. You can't use this feature until FAI is "
+"activated."
+msgstr ""
 
 #: admin/systems/goto/terminal.tpl:8
 msgid "Terminal template"
@@ -3512,297 +3645,209 @@ msgstr "Proszę wybrać system plików NFS dla plików swap"
 msgid "Inherit all"
 msgstr "Inicjały"
 
-#: admin/systems/services/nfs/class_servNfs.inc:178
-#: admin/systems/services/nfs/class_servNfs.inc:182
-#: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/shares/class_goShareServer.inc:403
-msgid "Path"
-msgstr "Ścieżka"
-
-#: admin/systems/services/nfs/class_servNfs.inc:200
-#: admin/systems/services/nfs/servnfs.tpl:29
-#: admin/systems/services/shares/class_goShareServer.inc:405
-msgid "Volume"
-msgstr "Głośność"
-
-#: admin/systems/services/nfs/class_servNfs.inc:204
-#: admin/systems/services/nfs/servnfs.tpl:121
-#: admin/systems/services/shares/class_goShareServer.inc:404
-msgid "Option"
-msgstr "Opcja"
-
-#: admin/systems/services/nfs/servnfs.tpl:1
-msgid "Edit share"
-msgstr "Edytuj udział"
-
-#: admin/systems/services/nfs/servnfs.tpl:2
-msgid "NFS setup"
-msgstr "Ustawienia NFS"
-
-#: admin/systems/services/nfs/servnfs.tpl:69
-msgid "Auto-mount share on Apple systems"
-msgstr "Auto-montuj udział na systemach Apple"
-
-#: admin/systems/services/nfs/servnfs.tpl:109
-msgid "Codepage"
-msgstr "Strona kodowa"
-
-#: admin/systems/services/terminal/class_goTerminalServer.inc:167
-#: admin/systems/services/shares/class_goShareServer.inc:390
-#: admin/systems/services/syslog/class_goLogDBServer.inc:89
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-#: admin/systems/services/ntp/class_goNtpServer.inc:115
-#: admin/systems/services/ldap/class_goLdapServer.inc:89
-#: admin/systems/services/repository/class_servRepository.inc:346
-#: admin/systems/services/kiosk/class_goKioskService.inc:252
-#: admin/systems/services/cups/class_goCupsServer.inc:69
-msgid "Services"
-msgstr "Usługi"
-
-#: admin/systems/services/terminal/class_goTerminalServer.inc:175
-#: admin/systems/services/terminal/goTerminalServer.tpl:8
-msgid "Temporary disable login"
-msgstr "Tymczasowo zablokuj logowanie"
-
-#: admin/systems/services/terminal/goTerminalServer.tpl:13
-msgid "Supported session types"
+#: admin/systems/goto/ArpNewDevice.tpl:1
+msgid "Integrating unknown devices"
 msgstr ""
 
-#: admin/systems/services/shares/class_goShareServer.inc:31
-#: admin/systems/services/shares/class_goShareServer.inc:157
-#: admin/systems/services/shares/class_goShareServer.inc:389
-#, fuzzy
-msgid "File service (Shares)"
-msgstr "Usługa plików"
-
-#: admin/systems/services/shares/class_goShareServer.inc:233
-#, fuzzy
-msgid "share"
-msgstr "Udziały"
-
-#: admin/systems/services/shares/class_goShareServer.inc:390
-#, fuzzy
-msgid "File service - Shares"
-msgstr "Usługa plików"
-
-#: admin/systems/services/shares/class_goShareServer.inc:399
-#, fuzzy
-msgid "Apple mounts"
-msgstr "Apple talk"
-
-#: admin/systems/services/shares/class_goShareServer.inc:402
-msgid "Charset"
-msgstr "Kodowanie"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-msgid "Syslog Service"
-msgstr "Usługa Syslog"
-
-#: admin/systems/services/syslog/goSyslogServer.tpl:1
-#: admin/systems/services/cups/goCupsServer.tpl:1
-msgid "enabled"
-msgstr "włączone"
-
-#: admin/systems/services/syslog/goLogDBServer.tpl:1
-msgid "Logging database information"
-msgstr "Informacje bazy logowania"
-
-#: admin/systems/services/syslog/goLogDBServer.tpl:4
-msgid "Logging DB user"
-msgstr "Użytkownik bazy logowania"
-
-#: admin/systems/services/syslog/goLogDBServer.tpl:12
-#: admin/systems/services/syslog/class_goLogDBServer.inc:71
-#: admin/systems/services/syslog/class_goLogDBServer.inc:101
-msgid "Password"
-msgstr "Hasło"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:30
-#: admin/systems/services/syslog/class_goLogDBServer.inc:58
-#, fuzzy
-msgid "Syslog service database"
-msgstr "Usługa Syslog"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:88
-#: admin/systems/services/syslog/class_goLogDBServer.inc:89
-msgid "Logging database"
-msgstr "Baza logowania"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:97
-#: admin/systems/services/repository/class_servRepository.inc:355
-#: admin/systems/services/cups/class_goCupsServer.inc:76
-msgid "Start"
-msgstr "Start"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:98
-#: admin/systems/services/repository/class_servRepository.inc:356
-#: admin/systems/services/cups/class_goCupsServer.inc:77
-msgid "Stop"
-msgstr "Zatrzymaj"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:99
-#: admin/systems/services/repository/class_servRepository.inc:357
-#: admin/systems/services/cups/class_goCupsServer.inc:78
-msgid "Restart"
-msgstr "Restart"
-
-#: admin/systems/services/syslog/class_goLogDBServer.inc:100
-msgid "Admin"
-msgstr "Admin"
-
-#: admin/systems/services/syslog/class_goSyslogServer.inc:68
-#: admin/systems/services/syslog/class_goSyslogServer.inc:69
-msgid "Logging service"
-msgstr "Usługa Logowania"
-
-#: admin/systems/services/ntp/class_goNtpServer.inc:28
-#: admin/systems/services/ntp/class_goNtpServer.inc:74
-#, fuzzy
-msgid "Time service (NTP)"
-msgstr "Usługa czasu"
-
-#: admin/systems/services/ntp/class_goNtpServer.inc:114
-msgid "Time service"
-msgstr "Usługa czasu"
-
-#: admin/systems/services/ntp/class_goNtpServer.inc:115
-#, fuzzy
-msgid "Time service - NTP"
-msgstr "Usługa czasu"
-
-#: admin/systems/services/ntp/class_goNtpServer.inc:123
-msgid "Ntp source"
-msgstr "Źródło ntp"
-
-#: admin/systems/services/ntp/goNtpServer.tpl:2
-msgid "Time server"
-msgstr "Serwer czasu"
-
-#: admin/systems/services/ldap/goLdapServer.tpl:1
-#: admin/systems/services/ldap/class_goLdapServer.inc:29
-#: admin/systems/services/ldap/class_goLdapServer.inc:56
-msgid "LDAP service"
-msgstr "Usługa LDAP"
-
-#: admin/systems/services/ldap/goLdapServer.tpl:2
-msgid "LDAP URI"
+#: admin/systems/goto/ArpNewDevice.tpl:3
+msgid ""
+"The current device has been detected by the ARP monitor used by GOsa. You "
+"can integrate this device into your running DHCP/DNS infrastructure by "
+"submitting this form. The device entry will disappear from the list of the "
+"systems and move to the DNS/DHCP configuration."
 msgstr ""
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:88
-#: admin/systems/services/ldap/class_goLdapServer.inc:89
-msgid "Ldap"
-msgstr "Ldap"
+#: admin/systems/goto/ArpNewDevice.tpl:9
+#, fuzzy
+msgid "DNS name"
+msgstr "Imię"
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:97
-msgid "Ldap base"
-msgstr "Baza Ldap"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/systems/services/repository/class_servRepository.inc:345
-msgid "Repository"
-msgstr "Repozytorium"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#: admin/systems/services/repository/class_servRepository.inc:360
-msgid "Parent server"
-msgstr "Nadrzędny serwer"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-msgid "URL"
-msgstr "URL"
-
-#: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_divListRepositories.inc:24
-#: admin/systems/services/repository/class_divListRepositories.inc:64
-#: admin/systems/services/repository/class_servRepository.inc:359
-msgid "Sections"
-msgstr "Sekcje"
-
-#: admin/systems/services/repository/class_divListRepositories.inc:19
-msgid "List of configured repositories."
-msgstr "Lista skonfigurowanych repozytoriów"
-
-#: admin/systems/services/repository/class_divListRepositories.inc:20
-msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"To menu umożliwia tworzenie, usuwanie oraz edycję ustawień repozytorium."
-
-#: admin/systems/services/repository/class_divListRepositories.inc:33
-msgid "Add repository"
-msgstr "Dodaj repozytorium"
-
-#: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
-#: admin/systems/services/repository/class_servRepository.inc:346
-#: admin/systems/services/repository/class_servRepositorySetup.inc:196
-msgid "Repository service"
-msgstr "Usługa repozytorium"
-
-#: admin/systems/services/repository/class_servRepository.inc:93
-msgid "You can't use this plugin until FAI is activated."
+#: admin/systems/goto/gencd.tpl:2
+msgid "CD-Install-Image generation"
 msgstr ""
 
-#: admin/systems/services/repository/class_servRepository.inc:142
-#, fuzzy
-msgid "FAI release"
-msgstr "Klasy FAI"
-
-#: admin/systems/services/repository/class_servRepository.inc:358
-msgid "Releases"
-msgstr "Wydania"
-
-#: admin/systems/services/repository/class_servRepository.inc:361
-#: admin/systems/services/repository/class_servRepositorySetup.inc:149
-msgid "Url"
-msgstr "Url"
-
-#: admin/systems/services/kiosk/goKioskService.tpl:1
-#: admin/systems/services/kiosk/class_goKioskService.inc:252
-msgid "Kiosk profile management"
-msgstr "Zarządzanie profilami kiosk"
-
-#: admin/systems/services/kiosk/goKioskService.tpl:16
-#, fuzzy
-msgid "Server path"
-msgstr "Nazwa serwera"
-
-#: admin/systems/services/kiosk/class_goKioskService.inc:25
-#: admin/systems/services/kiosk/class_goKioskService.inc:59
-#: admin/systems/services/kiosk/class_goKioskService.inc:188
-#, fuzzy
-msgid "Kiosk profile service"
-msgstr "Ustawienia profilu Kiosk"
-
-#: admin/systems/services/kiosk/class_goKioskService.inc:251
-msgid "Kiosk"
+#: admin/systems/goto/gencd.tpl:5
+msgid ""
+"This option enables you to generate FAI install CD images for the selected "
+"workstation. The procedure may take about 10 minutes to complete, so please "
+"be patient after pressing the 'Create ISO-Image' button."
 msgstr ""
 
-#: admin/systems/services/cups/class_goCupsServer.inc:68
-msgid "Cups"
-msgstr "Cups"
+#: admin/systems/goto/gencd.tpl:9
+msgid "Create ISO-Image"
+msgstr ""
 
-#: admin/systems/services/cups/goCupsServer.tpl:1
-msgid "Print Service"
-msgstr "Usługa drukowania"
+#: admin/systems/goto/class_workstationGeneric.inc:500
+msgid "A valid LDAP server assignement is missing!"
+msgstr ""
 
-#: admin/ogroups/goto/class_termgroup.inc:201
+#: admin/systems/goto/class_workstationGeneric.inc:510
+#, fuzzy
+msgid "Software deployment"
+msgstr "Typ systemu"
+
+#: admin/systems/goto/class_workstationGeneric.inc:511
+msgid "This host is currently installing. If you want to save it, press 'OK'."
+msgstr ""
+
+#: admin/systems/goto/class_workstationGeneric.inc:694
+#, fuzzy
+msgid "Workstation generic"
+msgstr "Nazwa stacji roboczej"
+
+#: admin/systems/goto/class_workstationGeneric.inc:706
+#, fuzzy
+msgid "Goto mode"
+msgstr "do folferu"
+
+#: admin/systems/goto/class_workstationGeneric.inc:708
+#: admin/ogroups/goto/class_termgroup.inc:330
+msgid "Ntp server"
+msgstr "Serwer NTP"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:529
+#, fuzzy
+msgid "File pattern"
+msgstr "Wzorce pliku"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:710
+msgid "Mime type generic"
+msgstr "Typ mime podstawowy"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:715
+#: admin/mimetypes/class_mimetypeManagement.inc:24
+msgid "Mime types"
+msgstr "Typy mime"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:719
+#: admin/mimetypes/generic.tpl:22
+msgid "Mime group"
+msgstr "Grupa mime"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:723
+msgid "Left click action"
+msgstr "Akcja lewego kliknięcia"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:725
+#: admin/mimetypes/generic.tpl:99
+msgid "File patterns"
+msgstr "Wzorce pliku"
+
+#: admin/mimetypes/class_mimetypeGeneric.inc:726
+msgid "Embedded applications"
+msgstr "Osadzone aplikacje"
+
+#: admin/mimetypes/class_mimetypeManagement.inc:25
+msgid "Manage mime types"
+msgstr "Zarządzaj typami mime"
+
+#: admin/mimetypes/class_mimetypeManagement.inc:355
+#: admin/mimetypes/class_mimetypeManagement.inc:436
+#: admin/mimetypes/paste_generic.tpl:13
+#: admin/mimetypes/class_divListMimeTypes.inc:51
+#: admin/mimetypes/class_divListMimeTypes.inc:116
+#: admin/mimetypes/class_divListMimeTypes.inc:152
+#: admin/mimetypes/generic.tpl:12
+msgid "Mime type"
+msgstr "Typ mime"
+
+#: admin/mimetypes/paste_generic.tpl:16 admin/mimetypes/generic.tpl:16
+msgid "Please enter a name for the mime type here"
+msgstr "Proszę podać nazwę typu mime"
+
+#: admin/mimetypes/paste_generic.tpl:24
+msgid "Please specify a description for this mime type here"
+msgstr "Proszę podać opis dla tego typu mime"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:27
+#: admin/mimetypes/class_divListMimeTypes.inc:28
+msgid "List of defined mime types"
+msgstr "Lista zdefiniowanych typów mime"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:58
+msgid "Display mime types matching"
+msgstr "Wyświetl pasujące typy mime"
+
+#: admin/mimetypes/class_divListMimeTypes.inc:227
+#, fuzzy
+msgid "Number of listed mimetypes"
+msgstr "Lista zdefiniowanych typów mime"
+
+#: admin/mimetypes/generic.tpl:26
+msgid "Categorize this mime type"
+msgstr "Skategoryzuj ten typ mime"
+
+#: admin/mimetypes/generic.tpl:38
+msgid "Please specify a description"
+msgstr "Proszę podać opis"
+
+#: admin/mimetypes/generic.tpl:68
+#, fuzzy
+msgid "Mime icon"
+msgstr "Grupa mime"
+
+#: admin/mimetypes/generic.tpl:80
+msgid "Update mime type icon"
+msgstr "Aktualizuj ikonę typu mime"
+
+#: admin/mimetypes/generic.tpl:94
+msgid "Left click"
+msgstr ""
+
+#: admin/mimetypes/generic.tpl:105
+msgid "Please specify a new file pattern"
+msgstr "Proszę podać nowy wzorzec pliku"
+
+#: admin/mimetypes/generic.tpl:108
+msgid "Add a new file pattern"
+msgstr "Dodaj nowy wzorzec pliku"
+
+#: admin/mimetypes/generic.tpl:124 admin/mimetypes/generic.tpl:184
+msgid "Enter an application name here"
+msgstr "Podaj nazwę aplikacji"
+
+#: admin/mimetypes/generic.tpl:127 admin/mimetypes/generic.tpl:188
+msgid "Add application"
+msgstr "Dodaj aplikację"
+
+#: admin/mimetypes/generic.tpl:138
+msgid "Embedding"
+msgstr "Osadzanie"
+
+#: admin/mimetypes/generic.tpl:151
+msgid "Show file in embedded viewer"
+msgstr "Pokaż plik w osadzonej przeglądarce"
+
+#: admin/mimetypes/generic.tpl:158
+msgid "Show file in external viewer"
+msgstr "Pokaż plik w zewnętrznej przeglądarce"
+
+#: admin/mimetypes/generic.tpl:165
+msgid "Ask whether to save to local disk"
+msgstr "Pytaj czy zapisać na dysk"
+
+#: admin/mimetypes/main.inc:41 admin/mimetypes/main.inc:43
+msgid "Mimetype management"
+msgstr "Zarządzanie typami mime"
+
+#: admin/ogroups/goto/class_termgroup.inc:223
 msgid "Instant update"
 msgstr "Natychmiastowe uaktualnienie"
 
-#: admin/ogroups/goto/class_termgroup.inc:202
+#: admin/ogroups/goto/class_termgroup.inc:224
 msgid "Scheduled update"
 msgstr "Zaplanowana aktualizacja"
 
-#: admin/ogroups/goto/class_termgroup.inc:203
+#: admin/ogroups/goto/class_termgroup.inc:225
 #, fuzzy
 msgid "Wake"
 msgstr "Zbudź"
 
-#: admin/ogroups/goto/class_termgroup.inc:297
+#: admin/ogroups/goto/class_termgroup.inc:319
 msgid "System"
 msgstr "System"
 
-#: admin/ogroups/goto/class_termgroup.inc:298
+#: admin/ogroups/goto/class_termgroup.inc:320
 msgid "System group"
 msgstr "Grupa systemowa"
 
@@ -3816,107 +3861,40 @@ msgstr ""
 "Dodatkowo wszystkie wartości edytowalne tutaj mogą być odziedziczone przez "
 "klientów przypisanych do tych grup obiektów."
 
-#: admin/groups/apps/app_list.tpl:11
+#~ msgid "Repository"
+#~ msgstr "Repozytorium"
+
+#~ msgid "Parent server"
+#~ msgstr "Nadrzędny serwer"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Sections"
+#~ msgstr "Sekcje"
+
+#~ msgid "List of configured repositories."
+#~ msgstr "Lista skonfigurowanych repozytoriów"
+
+#~ msgid "This menu allows you to create, delete and edit repository settings."
+#~ msgstr ""
+#~ "To menu umożliwia tworzenie, usuwanie oraz edycję ustawień repozytorium."
+
+#~ msgid "Add repository"
+#~ msgstr "Dodaj repozytorium"
+
+#~ msgid "Repository service"
+#~ msgstr "Usługa repozytorium"
+
 #, fuzzy
-msgid "Copy menu"
-msgstr "kopiuj"
+#~ msgid "FAI release"
+#~ msgstr "Klasy FAI"
 
-#: admin/groups/apps/app_list.tpl:13
-msgid "Paste menu from"
-msgstr ""
+#~ msgid "Releases"
+#~ msgstr "Wydania"
 
-#: admin/groups/apps/app_list.tpl:17
-#, fuzzy
-msgid "Delete menu"
-msgstr "Usuń wpis"
-
-#: admin/groups/apps/app_list.tpl:70 admin/groups/apps/app_list.tpl:74
-#, fuzzy
-msgid "Folder"
-msgstr "Filtry"
-
-#: admin/groups/apps/app_list.tpl:121
-#, fuzzy
-msgid "Entry"
-msgstr "Edycja pozycji"
-
-#: admin/groups/apps/app_list.tpl:143
-#, fuzzy
-msgid "add to"
-msgstr "Dodaj opcję"
-
-#: admin/groups/apps/app_list.tpl:149 admin/groups/apps/app_list.tpl:159
-#, fuzzy
-msgid "Add selected applications to this folder."
-msgstr "Wybrana aplikacja nie posiada opcji."
-
-#: admin/groups/apps/app_list.tpl:150
-#, fuzzy
-msgid "Separator"
-msgstr "Wstaw separator"
-
-#: admin/groups/apps/app_list.tpl:150
-#, fuzzy
-msgid "Add a separator to this folder."
-msgstr "Wybrana aplikacja nie posiada opcji."
-
-#: admin/groups/apps/edit_entry.tpl:8
-#, fuzzy
-msgid "Folder image"
-msgstr "Strona kodowa"
-
-#: admin/groups/apps/edit_entry.tpl:12
-msgid "Could not load image."
-msgstr ""
-
-#: admin/groups/apps/edit_entry.tpl:14
-#, fuzzy
-msgid "None"
-msgstr "żaden"
-
-#: admin/groups/apps/edit_entry.tpl:24
-#, fuzzy
-msgid "Upload image"
-msgstr "Wgraj"
-
-#: admin/groups/apps/edit_entry.tpl:32
-msgid "Reset image"
-msgstr ""
-
-#: admin/groups/apps/edit_entry.tpl:33
-#, fuzzy
-msgid "Reset"
-msgstr "ustaw"
-
-#: admin/groups/apps/edit_entry.tpl:53
-msgid "Application options"
-msgstr "Opcje aplikacji"
-
-#: admin/groups/apps/class_groupApplication.inc:375
-#: admin/groups/apps/class_groupApplication.inc:379
-#, fuzzy
-msgid "Menu"
-msgstr "Drukarka"
-
-#: admin/groups/apps/class_groupApplication.inc:432
-msgid "Back"
-msgstr "Wróć"
-
-#: admin/groups/apps/class_groupApplication.inc:450
-msgid "department"
-msgstr "departament"
-
-#: admin/groups/apps/class_groupApplication.inc:1135
-msgid "Not available in release."
-msgstr ""
-
-#: admin/groups/apps/class_groupApplication.inc:1362
-msgid "Group applications"
-msgstr "Grupa aplikacje"
-
-#: admin/groups/apps/class_groupApplication.inc:1371
-msgid "Application parameter"
-msgstr "Parametr aplikacji"
+#~ msgid "Url"
+#~ msgstr "Url"
 
 #~ msgid "Skript name"
 #~ msgstr "Nazwa skryptu"
