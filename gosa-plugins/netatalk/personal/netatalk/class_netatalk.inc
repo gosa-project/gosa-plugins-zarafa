@@ -33,8 +33,8 @@
 class netatalk extends plugin {
 
   /* Definitions */
-  var $plHeadline = "Netatalk";
-  var $plDescription = "Manage netatalk account";
+  var $plHeadline     = "Netatalk";
+  var $plDescription  = "Manage netatalk account";
 
   var $view_logged = FALSE;
 
@@ -51,26 +51,26 @@ class netatalk extends plugin {
   var $mountDirectory         = "/Network/Servers";
 
   /* Attributes to save to LDAP */
-  var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
-  var $CopyPasteVars= array("apple_user_homeurl", "apple_user_homeDirectory","apple_user_share","shares_settings","apple_user_homepath_raw",
-      "apple_user_homeurl_raw","apple_user_homeurl_xml","apple_user_homeurl","selectedshare","mountDirectory");
+  var $attributes = array ("apple_user_homeurl", "apple_user_homeDirectory");
+  var $CopyPasteVars= array("apple_user_homeurl", "apple_user_homeDirectory",
+      "apple_user_share","shares_settings","apple_user_homepath_raw",
+      "apple_user_homeurl_raw","apple_user_homeurl_xml","apple_user_homeurl",
+      "selectedshare","mountDirectory");
 
   /* Attributes to use in smarty template */
   var $smarty_attributes = array ("apple_user_homepath_raw", "shares", "selectedshare");
 
   /* Attributes to save from $_POST */
-  var $post_attributes = array ("apple_user_share", "apple_user_homepath_raw");
+  var $post_attributes = array ("netatalkShare"         => "apple_user_share", 
+                                "netatalkUserHomepath"  => "apple_user_homepath_raw");
 
   /* Objectclasses */
   var $objectclasses = array ("apple-user");
-
-  /* Checkboxes */
-  var $is_chk_box = array ();
-
   var $uid ="";  
 
   /* The constructor just saves a copy of the config. You may add what ever you need. */
-  function netatalk(&$config, $dn = NULL) {
+  function netatalk(&$config, $dn = NULL) 
+  {
 
     /* Include config object */
     $this->config = $config;
@@ -83,9 +83,9 @@ class netatalk extends plugin {
 
     /* Copy needed attributes */
     foreach($this->attributes as $val) {
-      if (isset($this->attrs["$val"][0])) {
-        $name = str_replace('-', '_', $val);
-        $this->$name = $this->attrs["$val"][0];
+      $name = str_replace('_', '-', $val);
+      if (isset($this->attrs[$name][0])) {
+        $this->$val = $this->attrs[$name][0];
       }
     }
 
@@ -191,20 +191,18 @@ class netatalk extends plugin {
       }
     }
 
-    /* Assign attributes and ACL to smarty */
-    $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
-    $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare",$SkipWrite));
-    $smarty->assign("netatalkUserHomepathACL", $this->getacl("netatalkUserHomepath",$SkipWrite));
-
+    /* Assign attributes 
+     */
     foreach ($this->smarty_attributes as $val) {
       $smarty->assign("$val", $this-> $val);
-      if (in_array($val, $this->is_chk_box)) {
-        if ($this-> $val == "checked") {
-          $smarty->assign($val."CHK", " checked ");
-        } else {
-          $smarty->assign($val."CHK", "");
-        }
-      }
+    }
+
+    /* Assign ACLs 
+     */
+    $tmp = $this->plInfo();
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
+    foreach($tmp['plProvidedAcls'] as $name => $desc){
+      $smarty->assign($name."ACL",$this->getacl($name,$SkipWrite));
     }
 
     /* Let smarty fetch and process the page. */
@@ -214,18 +212,20 @@ class netatalk extends plugin {
 
 
   /* Check if we have correct data */
-  function check() {
+  function check() 
+  {
     $message = array ();
-
     if (strlen($this->apple_user_share) == 0) {
       $message[] = msgPool::required(_("Share"));
     }
-
     return ($message);
   }
 
+
   /* Save to LDAP */
-  function save() {
+  function save() 
+  {
+
     /* remove a / at the end of the homepath, we neither need it there nor
      * do we want to check for it later.
      */
@@ -252,24 +252,16 @@ class netatalk extends plugin {
     }
 
     $ldap = $this->config->get_ldap_link();
-
-    /* Reset array of used attributes, because plugin::save() 
-       will not work with '-' in attributes names 
-       after calling save restore attributes array */
-    $attributes = $this->attributes;
-    $this->attributes = array();
     plugin :: save();
-    $this->attributes = $attributes;
 
-    /* Do attribute conversion */
     foreach ($this->attributes as $val) {
-      $name = str_replace('-', '_', $val);
-      if ($this->$name != "") {
-        $this->attrs[$val] = $this->$name;
+      unset($this->attrs[$val]);
+      $name = str_replace('_', '-', $val);
+      if ($this->$val != "") {
+        $this->attrs[$name] = $this->$val;
       } else {
-        $this->attrs[$val] = array();
+        $this->attrs[$name] = array();
       }
-      unset ($this->attrs[$name]);
     }
 
     /* Write back to ldap */
@@ -297,34 +289,31 @@ class netatalk extends plugin {
     }
   }
 
-  /* Use Save_object for every Post handling */
-  function save_object() {
+
+  /* Use Save_object for every Post handling 
+   */
+  function save_object() 
+  {
     if (isset ($_POST['netatalkTab'])) {
       /* Save ldap attributes */
       plugin :: save_object();
 
-      foreach($this->post_attributes as $val) {
+      foreach($this->post_attributes as $acl => $val) {
+        if(!preg_match("/w/",$this->getacl($acl))) continue;
         if (isset ($_POST[$val])) {
           $this->$val = $_POST[$val];
         } else {
           $this->$val = "";
         }
       }
-
-      /* Specialhandling for checkboxes */
-      foreach ($this->is_chk_box as $val) {
-        if (isset ($_POST[$val])) {
-          $this-> $val = "checked";
-        } else {
-          $this-> $val = "unchecked";
-        }
-      }
-
       $this->apple_user_homeurl_raw = 'afp://' . $this->apple_user_share;
     }
   }
 
-  function remove_from_parent() {
+
+  function remove_from_parent() 
+  {
+
     /* Cancel if there's nothing to do here */
     if (!$this->initially_was_account) {
       return;
@@ -335,14 +324,18 @@ class netatalk extends plugin {
 
     /* Remove and write to LDAP */
     plugin :: remove_from_parent();
+    $this->cleanup();
 
-    /* Adapt attributes if needed */
-    //     $method= new $this->method($this->config);
-    //     $method->fixAttributesOnRemove($this);
+    /* Attribute name conversion "_" to "-" */
+    foreach($this->attributes as $val){
+      unset($this->attrs[$val]);
+      $name = preg_replace("/_/","-",$val);
+      $this->attrs[$name] = array();
+    }
 
     @ DEBUG(DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__, $this->attributes, "Save");
     $ldap->cd($this->dn);
-    $this->cleanup();
+
     $ldap->modify($this->attrs);
 
     new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
