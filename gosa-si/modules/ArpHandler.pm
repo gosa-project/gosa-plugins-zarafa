@@ -271,37 +271,6 @@ sub get_host_from_ldap {
 	return $result;
 }
 
-# moved to GosaSupportDaemon: 03-06-2008: rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_interfaces 
-#   PARAMETERS:  none
-#      RETURNS:  (list of interfaces) 
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
-#===============================================================================
-#sub get_interfaces {
-#	my @result;
-#	my $PROC_NET_DEV= ('/proc/net/dev');
-#
-#	open(PROC_NET_DEV, "<$PROC_NET_DEV")
-#		or die "Could not open $PROC_NET_DEV";
-#
-#	my @ifs = <PROC_NET_DEV>;
-#
-#	close(PROC_NET_DEV);
-#
-#	# Eat first two line
-#	shift @ifs;
-#	shift @ifs;
-#
-#	chomp @ifs;
-#	foreach my $line(@ifs) {
-#		my $if= (split /:/, $line)[0];
-#		$if =~ s/^\s+//;
-#		push @result, $if;
-#	}
-#
-#	return @result;
-#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_mac 
@@ -477,4 +446,5 @@ sub search_ldap_entry {
 	return $msg;
 }
 
+# vim:ts=4:shiftwidth:expandtab
 1;

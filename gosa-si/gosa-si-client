@@ -99,13 +99,13 @@ my $fai_log_dir = "/tmp/fai";
     {"port"        => [\$client_port, "20083"],
      "ip"          => [\$client_ip, "0.0.0.0"],
      "mac-address" => [\$client_mac_address, "00:00:00:00:00:00"],
-     "server-domain"       => [\$server_domain, ""],
+     "server-domain"      => [\$server_domain, ""],
      "ldap"               => [\$ldap_enabled, 1],
      "ldap-config"        => [\$ldap_config, "/etc/ldap/ldap.conf"],
      "pam-config"         => [\$pam_config, "/etc/pam_ldap.conf"],
      "nss-config"         => [\$nss_config, "/etc/libnss-ldap.conf"],
-     "fai-logpath"         => [\$fai_logpath, "/var/log/fai/fai.log"],
-	 "force-hostname"		=> [\$client_force_hostname, "false"],
+     "fai-logpath"        => [\$fai_logpath, "/var/log/fai/fai.log"],
+     "force-hostname"	  => [\$client_force_hostname, "false"],
     },
 "server" => {
     "ip"          => [\$server_ip, "127.0.0.1"],
@@ -416,17 +416,6 @@ sub generate_hw_digest {
 }
 
 
-# moved to GosaSupportDaemon: rettenbe, 19.05.2008
-#sub create_passwd {
-#    my $new_passwd = "";
-#    for(my $i=0; $i<31; $i++) {
-#        $new_passwd .= ("a".."z","A".."Z",0..9)[int(rand(62))]
-#    }
-#
-#    return $new_passwd;
-#}
-
-
 sub create_ciphering {
     my ($passwd) = @_;
 	if((!defined($passwd)) || length($passwd)==0) {
@@ -466,45 +455,6 @@ sub decrypt_msg {
     $msg =~ s/\0*//g;
     return $msg;
 }
-
-
-# moved to GosaSupportDaemon: rettenbe: 16.05.2008
-#sub get_server_addresses {
-#    my $domain= shift;
-#    my @result;
-# 
-#    my $error = 0;
-#    my $res   = Net::DNS::Resolver->new;
-#    my $query = $res->send("_gosa-si._tcp.".$domain, "SRV");
-#    my @hits;
-#
-#    if ($query) {
-#        foreach my $rr ($query->answer) {
-#            push(@hits, $rr->target.":".$rr->port);
-#        }
-#    }
-#    else {
-#        #warn "query failed: ", $res->errorstring, "\n";
-#        $error++;
-#    }
-#
-#    if( $error == 0 ) {
-#        foreach my $hit (@hits) {
-#            my ($hit_name, $hit_port) = split(/:/, $hit);
-#			chomp($hit_name);
-#			chomp($hit_port);
-#
-#            my $address_query = $res->send($hit_name);
-#            if( 1 == length($address_query->answer) ) {
-#                foreach my $rr ($address_query->answer) {
-#                    push(@result, $rr->address.":".$hit_port);
-#                }
-#            }
-#        }
-#    }
-#
-#    return @result;
-#}
 
 
 #===  FUNCTION  ================================================================
@@ -658,8 +608,12 @@ sub register_at_gosa_si_server {
       		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
       		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
       		if(!defined($dnsname)) {
-        		&write_to_file("goto-error-dns:$ip", $fai_logpath);
-        		exit(1);
+			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+				$dnsname = `hostname`;
+			} else {
+	        		&write_to_file("goto-error-dns:$ip", $fai_logpath);
+        			exit(1);
+			}
       		}
 
       		# create registration msg
@@ -842,38 +796,6 @@ sub check_outgoing_xml_validity {
     return ($msg_hash);
 }
 
-
-#sub import_events {
-#
-#    if (not -e $event_dir) {
-#        daemon_log("ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-#    }
-#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
-#
-#    while (defined (my $event = readdir (DIR))) {
-#        if( $event eq "." || $event eq ".." ) { next; }    
-#        daemon_log("INFO: found event module: $event", 5); 
-#        eval{ require $event; };
-#        if( $@ ) {
-#            daemon_log("ERROR: import of event module '$event' failed", 1);
-#            daemon_log("$@", 1);
-#            next;
-#        }
-#
-#        $event =~ /(\S*?).pm$/;
-#        my $event_module = $1;
-#        my $events_l = eval( $1."::get_events()") ;
-#        foreach my $event_name (@{$events_l}) {
-#            $event_hash->{$event_name} = $event_module;
-#        }
-#
-#    }
-#
-#    my @all_events = keys %$event_hash;
-#    my $all_events_string = join(", ", @all_events);
-#    
-#    daemon_log("INFO: imported events: $all_events_string", 5);
-#}
 
 sub trigger_new_key {
     my ($kernel) = $_[KERNEL] ;   

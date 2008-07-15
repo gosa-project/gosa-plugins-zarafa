@@ -430,9 +430,6 @@ sub get_dns_domains() {
 }
 
 
-#############################################
-# moved from gosa-si-client: rettenbe, 16.05.2008
-# outcommented at gosa-si-client
 sub get_server_addresses {
     my $domain= shift;
     my @result;

@@ -31,12 +31,6 @@ my (@ldap_cfg, @pam_cfg, @nss_cfg, $goto_admin, $goto_secret);
 my $mesg;
 
 my %cfg_defaults = (
-#"bus" => {
-#    "activ" => [\$bus_activ, "on"],
-#    "key" => [\$bus_key, ""],
-#    "ip" => [\$bus_ip, ""],
-#    "port" => [\$bus_port, "20080"],
-#    },
 "server" => {
     "ip" => [\$server_ip, "0.0.0.0"],
     "mac-address" => [\$main::server_mac_address, "00:00:00:00:00"],
@@ -153,43 +147,6 @@ my $server_address = "$server_ip:$server_port";
 $main::server_address = $server_address;
 
 
-#if( inet_aton($bus_ip) ){ $bus_ip = inet_ntoa(inet_aton($bus_ip)); } 
-#######################################################
-## to change
-#if( $bus_ip eq "127.0.1.1" ) { $bus_ip = "127.0.0.1" }
-#######################################################
-#my $bus_address = "$bus_ip:$bus_port";
-#$main::bus_address = $bus_address;
-
-
-#my $hostkey = &create_passwd;
-#my $res = $main::known_server_db->add_dbentry( {table=>$main::known_server_tn, 
-#            primkey=>['hostname'],
-#            hostname=>$main::server_address,
-#            status=>'myself',
-#            hostkey=>$hostkey,
-#            timestamp=>&get_time(),
-#            } );
-#if (not $res == 0) {
-#    &main::daemon_log("0 ERROR: cannot add server to known_server_db: $res", 1);
-#} else {
-#    &main::daemon_log("0 INFO: '$main::server_address' successfully added to known_server_db", 5);
-#}
-
-
-
-## create general settings for this module
-#my $xml = new XML::Simple();
-#
-## register at bus
-#if ($main::no_bus > 0) {
-#    $bus_activ = "off"
-#}
-#if($bus_activ eq "on") {
-#    &register_at_bus();
-#}
-
-
 ### functions #################################################################
 
 
@@ -252,63 +209,6 @@ sub read_configfile {
 
 }
 
-# moved to GosaSupportDaemon: 03-06-2008 rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_interface_for_ip
-#   PARAMETERS:  ip address (i.e. 192.168.0.1)
-#      RETURNS:  array: list of interfaces if ip=0.0.0.0, matching interface if found, undef else
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
-#===============================================================================
-#sub get_interface_for_ip {
-#	my $result;
-#	my $ip= shift;
-#	if ($ip && length($ip) > 0) {
-#		my @ifs= &get_interfaces();
-#		if($ip eq "0.0.0.0") {
-#			$result = "all";
-#		} else {
-#			foreach (@ifs) {
-#				my $if=$_;
-#				if(&main::get_ip($if) eq $ip) {
-#					$result = $if;
-#				}
-#			}	
-#		}
-#	}	
-#	return $result;
-#}
-
-# moved to GosaSupportDaemon: 03-06-2008 rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_interfaces 
-#   PARAMETERS:  none
-#      RETURNS:  (list of interfaces) 
-#  DESCRIPTION:  Uses proc fs (/proc/net/dev) to get list of interfaces.
-#===============================================================================
-#sub get_interfaces {
-#	my @result;
-#	my $PROC_NET_DEV= ('/proc/net/dev');
-#
-#	open(PROC_NET_DEV, "<$PROC_NET_DEV")
-#		or die "Could not open $PROC_NET_DEV";
-#
-#	my @ifs = <PROC_NET_DEV>;
-#
-#	close(PROC_NET_DEV);
-#
-#	# Eat first two line
-#	shift @ifs;
-#	shift @ifs;
-#
-#	chomp @ifs;
-#	foreach my $line(@ifs) {
-#		my $if= (split /:/, $line)[0];
-#		$if =~ s/^\s+//;
-#		push @result, $if;
-#	}
-#
-#	return @result;
-#}
 
 #===  FUNCTION  ================================================================
 #         NAME:  get_mac 
@@ -346,61 +246,6 @@ sub get_mac {
 	}
 	return $result;
 }
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  register_at_bus
-#   PARAMETERS:  nothing
-#      RETURNS:  nothing
-#  DESCRIPTION:  creates an entry in known_daemons and send a 'here_i_am' msg to bus
-#===============================================================================
-#sub register_at_bus {
-#
-#    # add bus to known_server_db
-#    my $res = $main::known_server_db->add_dbentry( {table=>'known_server',
-#                                                    primkey=>['hostname'],
-#                                                    hostname=>$bus_address,
-#                                                    status=>'bus',
-#                                                    hostkey=>$bus_key,
-#                                                    timestamp=>&get_time,
-#                                                } );
-#    my $msg_hash = &create_xml_hash("here_i_am", $server_address, $bus_address);
-#    my $msg = &create_xml_string($msg_hash);
-#
-#    &main::send_msg_to_target($msg, $bus_address, $bus_key, "here_i_am");
-#    return $msg;
-#}
-
-
-
-# outcommented from rettenbe: moved to GosaSupportDaemon.pm
-#sub import_events {
-#    if (not -e $event_dir) {
-#        &main::daemon_log("S ERROR: cannot find directory or directory is not readable: $event_dir", 1);   
-#    }
-#    opendir (DIR, $event_dir) or die "ERROR while loading gosa-si-events from directory $event_dir : $!\n";
-#
-#    while (defined (my $event = readdir (DIR))) {
-#        if( $event eq "." || $event eq ".." ) { next; }  
-#        if( $event eq "gosaTriggered.pm" ) { next; }    # only GOsa specific events
-#
-#        eval{ require $event; };
-#        if( $@ ) {
-#            &main::daemon_log("S ERROR: import of event module '$event' failed", 1);
-#            &main::daemon_log("$@", 8);
-#            next;
-#        }
-#
-#        $event =~ /(\S*?).pm$/;
-#        my $event_module = $1;
-#        my $events_l = eval( $1."::get_events()") ;
-#        foreach my $event_name (@{$events_l}) {
-#            $event_hash->{$event_name} = $event_module;
-#        }
-#        my $events_string = join( ", ", @{$events_l});
-#        &main::daemon_log("S DEBUG: ClientPackages imported events $events_string", 8);
-#    }
-#}
 
 
 #===  FUNCTION  ================================================================
@@ -565,7 +410,7 @@ sub new_key {
 #  DESCRIPTION:  process this incoming message
 #===============================================================================
 sub here_i_am {
-    my ($msg, $msg_hash, $session_id) = @_;
+    my ($heap, $msg, $msg_hash, $session_id) = @_[HEAP, ARG0, ARG1, ARG2];
     my @out_msg_l;
     my $out_hash;
     my $source = @{$msg_hash->{source}}[0];
@@ -574,6 +419,14 @@ sub here_i_am {
     my $client_status = @{$msg_hash->{client_status}}[0];
     my $client_revision = @{$msg_hash->{client_revision}}[0];
     my $key_lifetime = @{$msg_hash->{key_lifetime}}[0];
+
+    # Move forced hostname to heap - if used
+    if ( defined($msg_hash->{'force-hostname'}[0]) &&
+       length($msg_hash->{'force-hostname'}[0]) > 0){
+          $heap->{force-hostname}->{$mac_address}= $msg_hash->{'force-hostname'}[0];
+    } else {
+          $heap->{force-hostname}->{$mac_address}= undef;
+    }
 
     # number of known clients
     my $nu_clients= $main::known_clients_db->count_dbentries('known_clients');
@@ -1030,4 +883,5 @@ sub server_matches {
 	return $result;
 }
 
+# vim:ts=4:shiftwidth:expandtab
 1;

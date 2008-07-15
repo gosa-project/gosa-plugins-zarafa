@@ -825,36 +825,6 @@ sub open_socket {
 }
 
 
-# moved to GosaSupportDaemon: 03-06-2008: rettenbe
-#===  FUNCTION  ================================================================
-#         NAME:  get_ip 
-#   PARAMETERS:  interface name (i.e. eth0)
-#      RETURNS:  (ip address) 
-#  DESCRIPTION:  Uses ioctl to get ip address directly from system.
-#===============================================================================
-#sub get_ip {
-#	my $ifreq= shift;
-#	my $result= "";
-#	my $SIOCGIFADDR= 0x8915;       # man 2 ioctl_list
-#	my $proto= getprotobyname('ip');
-#
-#	socket SOCKET, PF_INET, SOCK_DGRAM, $proto
-#		or die "socket: $!";
-#
-#	if(ioctl SOCKET, $SIOCGIFADDR, $ifreq) {
-#		my ($if, $sin)    = unpack 'a16 a16', $ifreq;
-#		my ($port, $addr) = sockaddr_in $sin;
-#		my $ip            = inet_ntoa $addr;
-#
-#		if ($ip && length($ip) > 0) {
-#			$result = $ip;
-#		}
-#	}
-#
-#	return $result;
-#}
-
-
 sub get_local_ip_for_remote_ip {
 	my $remote_ip= shift;
 	my $result="0.0.0.0";
@@ -1306,6 +1276,7 @@ sub handle_task_done {
 
 sub process_task {
     no strict "refs";
+    #CHECK: Not @_[...]?
     my ($session, $heap, $task) = @_;
     my $error = 0;
     my $answer_l;
@@ -1481,6 +1452,7 @@ sub session_start {
 
 
 sub watch_for_done_jobs {
+    #CHECK: $heap for what?
     my ($kernel,$heap) = @_[KERNEL, HEAP];
 
     my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((status='done') AND (modified='0'))";

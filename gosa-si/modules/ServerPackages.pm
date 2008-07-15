@@ -10,14 +10,6 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 
-#use IO::Socket::INET;
-#use XML::Simple;
-#use Data::Dumper;
-#use NetAddr::IP;
-#use Net::LDAP;
-#use Socket;
-#use Net::hostent;
-
 my $event_dir = "/usr/lib/gosa-si/server/ServerPackages";
 use lib "/usr/lib/gosa-si/server/ServerPackages";
 

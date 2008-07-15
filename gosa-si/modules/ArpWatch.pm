@@ -171,6 +171,7 @@ sub _process_packet {
 sub _ipaddr { join( ".", unpack( "C4", pack( "N", oct( "0x". shift ) ) ) ) }
 sub _phys { join( ":", grep {length} split( /(..)/, shift ) ) }
 
+# vim:ts=4:shiftwidth:expandtab
 1;
 
 __END__
