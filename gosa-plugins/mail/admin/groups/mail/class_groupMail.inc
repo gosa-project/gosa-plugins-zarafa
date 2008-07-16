@@ -636,9 +636,19 @@ class mailgroup extends plugin
 
     /* Show main page */
     $mailserver= array();
+    $ui = get_userinfo();
     foreach ($this->config->data['SERVERS']['IMAP'] as $key => $val){
+      if(!preg_match("/r/",$ui->get_category_permissions($val['server_dn'],"server"))) continue;
       $mailserver[]= $key;
     }
+
+    /* Append currently selected server if we are not allowed to view it. 
+     */
+    if(isset($this->config->data['SERVERS']['IMAP'][$this->gosaMailServer]) && 
+        !in_array($this->gosaMailServer,$mailserver)){
+      $mailserver[] = $this->gosaMailServer;
+    }
+
     $smarty->assign("mailServers", $mailserver);
     foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
           "gosaMailAlternateAddress", "gosaMailForwardingAddress") as $val){
@@ -1072,7 +1082,7 @@ I: Only insider delivery */
     }
 
     if(empty($this->gosaMailServer)){
-      $message[] = msgPool::requried(_("Mail server"));
+      $message[] = msgPool::required(_("Mail server"));
     }
 
     return ($message);
