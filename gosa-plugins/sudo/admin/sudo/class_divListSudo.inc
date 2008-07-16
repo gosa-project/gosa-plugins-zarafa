@@ -26,10 +26,6 @@
  */
 class divListSudo extends MultiSelectWindow
 {
-
-  /* Current base */
-  private $departments        = array();
-
   /* Regex */
   public $Regex              = "*";
   public $UserRegex          = "*";

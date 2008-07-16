@@ -26,9 +26,6 @@ class target_list_systems extends MultiSelectWindow
   protected $list         =array();
   private $Targets_used =array();
 
-  /* Current base */
-  public $departments       = array();
-
   /* Regex */
   protected $Regex           = "*";
 

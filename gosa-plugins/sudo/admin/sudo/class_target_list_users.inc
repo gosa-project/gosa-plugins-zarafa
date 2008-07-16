@@ -26,9 +26,6 @@ class target_list_users extends MultiSelectWindow
   private $list         =array();
   private $Targets_used =array();
 
-  /* Current base */
-  public $departments        = array();
-
   /* Regex */
   protected $Regex              = "*";
 
