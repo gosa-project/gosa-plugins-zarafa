@@ -63,22 +63,22 @@
 		{if $multiple_support}
 			<input type='checkbox' name='use_kolabFolderType' id='use_kolabFolderType' class="center"
 				{if $use_kolabFolderType} checked {/if}
-				onClick="changeState('kolabFolderType_Type');changeState('kolabFolderType_SubType');"			
+				onClick="changeState('kolabFolderTypeType');changeState('kolabFolderTypeSubType');"			
 			>
-			<select id="kolabFolderType_Type" name="kolabFolderType_Type" onChange="document.mainform.submit();"
+			<select id="kolabFolderTypeType" name="kolabFolderTypeType" onChange="document.mainform.submit();"
 				{if !$use_kolabFolderType} disabled {/if}>
-				{html_options options=$kolabFolderType_Types selected=$kolabFolderType_Type}
+				{html_options options=$kolabFolderTypeTypes selected=$kolabFolderTypeType}
 			</select>
-			<select id="kolabFolderType_SubType" name="kolabFolderType_SubType" onChange="document.mainform.submit();"
+			<select id="kolabFolderTypeSubType" name="kolabFolderTypeSubType" onChange="document.mainform.submit();"
 				{if !$use_kolabFolderType} disabled {/if}>
-				{html_options options=$kolabFolderType_SubTypes selected=$kolabFolderType_SubType}
+				{html_options options=$kolabFolderTypeSubTypes selected=$kolabFolderTypeSubType}
 			</select>
 		{else}
-			<select id="kolabFolderType_Type" name="kolabFolderType_Type" onChange="document.mainform.submit();">
-				{html_options options=$kolabFolderType_Types selected=$kolabFolderType_Type}
+			<select id="kolabFolderTypeType" name="kolabFolderTypeType" onChange="document.mainform.submit();">
+				{html_options options=$kolabFolderTypeTypes selected=$kolabFolderTypeType}
 			</select>
-			<select id="kolabFolderType_SubType" name="kolabFolderType_SubType" onChange="document.mainform.submit();">
-				{html_options options=$kolabFolderType_SubTypes selected=$kolabFolderType_SubType}
+			<select id="kolabFolderTypeSubType" name="kolabFolderTypeSubType" onChange="document.mainform.submit();">
+				{html_options options=$kolabFolderTypeSubTypes selected=$kolabFolderTypeSubType}
 			</select>
 		{/if}
 			{if !$JS}

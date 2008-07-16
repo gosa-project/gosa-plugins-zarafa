@@ -25,8 +25,8 @@ class mailgroup extends plugin
       '%members%' => 'lrswp',  // %members% are all group-members
       ''          => 'p');    // Every user added gets this right
 
-  var $kolabFolderType_SubType = "";
-  var $kolabFolderType_Type = "";
+  var $kolabFolderTypeSubType = "";
+  var $kolabFolderTypeType = "";
 
   var $gosaSpamSortLevel          = "";     
   var $gosaSpamMailbox            = "";
@@ -98,8 +98,8 @@ class mailgroup extends plugin
     if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
       if(isset($this->attrs['kolabFolderType'])){
         $tmp = split("\.",$this->attrs['kolabFolderType'][0]);
-        $this->kolabFolderType_Type = $tmp[0];
-        $this->kolabFolderType_SubType = $tmp[1];
+        $this->kolabFolderTypeType = $tmp[0];
+        $this->kolabFolderTypeSubType = $tmp[1];
       }
     }
 
@@ -670,20 +670,20 @@ class mailgroup extends plugin
 
       $smarty->assign("kolab", TRUE);
       $smarty->assign("JS",session::get('js'));
-      $smarty->assign("kolabFolderType_Types",    array (   ''      => _('Unspecified'),  'mail' => _('Mails'),
+      $smarty->assign("kolabFolderTypeTypes",    array (   ''      => _('Unspecified'),  'mail' => _('Mails'),
                                                             'task'  => _('Tasks') ,       'journal' => _('Journals'),
                                                             'calendar' => _('Calendar'),       'contact' => _('Contacts'), 
                                                             'note'  => _('Notes')));
-      if($this->kolabFolderType_Type == "mail"){
-        $smarty->assign("kolabFolderType_SubTypes", array(    
+      if($this->kolabFolderTypeType == "mail"){
+        $smarty->assign("kolabFolderTypeSubTypes", array(    
               ''          => _('Unspecified'),  'inbox'     => _("Inbox")   , 
               'drafts'    => _("Drafts"),       'sentitems' => _("Sent items"),
               'junkemail' => _("Junk mail")));
       }else{
-        $smarty->assign("kolabFolderType_SubTypes", array(  'default' => _("Default")));
+        $smarty->assign("kolabFolderTypeSubTypes", array(  'default' => _("Default")));
       }
-      $smarty->assign("kolabFolderType_Type",     $this->kolabFolderType_Type);
-      $smarty->assign("kolabFolderType_SubType",  $this->kolabFolderType_SubType);
+      $smarty->assign("kolabFolderTypeType",     $this->kolabFolderTypeType);
+      $smarty->assign("kolabFolderTypeSubType",  $this->kolabFolderTypeSubType);
     }else{
       $smarty->assign("kolab", FALSE);
     }
@@ -775,9 +775,9 @@ class mailgroup extends plugin
 
     /* Add special kolab attributes */    
     if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
-      if(isset($_POST['kolabFolderType_Type'])){
-        $this->kolabFolderType_Type = get_post("kolabFolderType_Type");
-        $this->kolabFolderType_SubType = get_post("kolabFolderType_SubType");
+      if(isset($_POST['kolabFolderTypeType']) && $this->acl_is_writeable("kolabFolderType")){
+        $this->kolabFolderTypeType = get_post("kolabFolderTypeType");
+        $this->kolabFolderTypeSubType = get_post("kolabFolderTypeSubType");
       }
     }
   
@@ -894,8 +894,8 @@ I: Only insider delivery */
 
     /* Prepare kolab attributes to be written  */
     if(preg_match("/olab/i",$this->mmethod)){
-      if(!empty($this->kolabFolderType_Type)){
-        $this->attrs['kolabFolderType'] = $this->kolabFolderType_Type.".".$this->kolabFolderType_SubType;
+      if(!empty($this->kolabFolderTypeType)){
+        $this->attrs['kolabFolderType'] = $this->kolabFolderTypeType.".".$this->kolabFolderTypeSubType;
       }else{
         $this->attrs['kolabFolderType'] = array();
       }
@@ -1254,10 +1254,11 @@ I: Only insider delivery */
           "plCategory"    => array("groups"), 
           "plProvidedAcls"=> array(
             "mail"                      => _("Mail address"),
-            "gosaMailAlternateAddress"  => _("Alternate addresses"),
-            "gosaMailForwardingAddress" => _("Forwarding addresses"),
             "gosaMailQuota"             => _("Quota size"),
             "gosaMailServer"            => _("Mail server"),
+            "kolabFolderType"           => _("Folder type")." ("._("Kolab").")",
+            "gosaMailAlternateAddress"  => _("Alternate addresses"),
+            "gosaMailForwardingAddress" => _("Forwarding addresses"),
             "acl"                       => _("Permissions"))
           ));
   }
@@ -1312,9 +1313,9 @@ I: Only insider delivery */
 
       /* Add special kolab attributes */
       if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
-        if(isset($_POST['kolabFolderType_Type'])){
-          $this->kolabFolderType_Type = get_post("kolabFolderType_Type");
-          $this->kolabFolderType_SubType = get_post("kolabFolderType_SubType");
+        if(isset($_POST['kolabFolderTypeType']) && $this->acl_is_writeable("kolabFolderType")){
+          $this->kolabFolderTypeType = get_post("kolabFolderTypeType");
+          $this->kolabFolderTypeSubType = get_post("kolabFolderTypeSubType");
         }
       }
 
@@ -1345,8 +1346,8 @@ I: Only insider delivery */
     $ret['Forward_some'] = $this->gosaMailForwardingAddress_Some;    
     $ret['Forward_all'] = $this->gosaMailForwardingAddress;    
     if(in_array('kolabFolderType',$this->multi_boxes)){
-      $ret['kolabFolderType_Type'] = $this->kolabFolderType_Type;
-      $ret['kolabFolderType_SubType'] = $this->kolabFolderType_SubType;
+      $ret['kolabFolderTypeType'] = $this->kolabFolderTypeType;
+      $ret['kolabFolderTypeSubType'] = $this->kolabFolderTypeSubType;
     }
     if(in_array("acl",$this->multi_boxes)){
       $ret['imapacl'] = $this->imapacl;
