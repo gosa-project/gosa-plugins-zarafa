@@ -572,7 +572,7 @@ class mailgroup extends plugin
     }
 
     /* Assemble extra attributes */
-    $perm= $this->getacl( "permissions");
+    $perm= $this->getacl( "acl");
     $tmp= "";
     $nr= 0;
     $count= count($this->imapacl);
