@@ -65,11 +65,6 @@ class faiPackage extends plugin
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Get FAIstate */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
       /* Check if there are already some packages in this list 
        */
       $this->usedPackages = array();
@@ -204,7 +199,7 @@ class faiPackage extends plugin
      ******/
 
     /* + was pressed to open the package dialog */
-    if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
+    if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage") && !preg_match("/freeze/",$this->FAIstate)){
       $this->dialog = new faiPackageEntry($this->config, $this->FAIdebianRelease,$this->usedPackages);
       $this->is_dialog =true;
     }
@@ -217,7 +212,7 @@ class faiPackage extends plugin
        * Mark as removed  
        ******/
       
-      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^removal_package_/",$name)){
+      if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^removal_package_/",$name)){
         $id = @base64_decode(preg_replace("/^removal_package_(.*)_[xy]*$/","\\1",$name));
         if(isset($this->usedPackages[$id])){
           $pkg = $this->usedPackages[$id]; 
@@ -234,7 +229,7 @@ class faiPackage extends plugin
       /******
        * Delete Pkgs   
        ******/
-      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^remove_package_/",$name)){
+      if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^remove_package_/",$name)){
         $id = @base64_decode(preg_replace("/^remove_package_(.*)_[xy]*$/","\\1",$name));
         if(isset($this->usedPackages[$id])){
           unset($this->usedPackages[$id]);
@@ -245,7 +240,7 @@ class faiPackage extends plugin
       /******
        * Configure Pkgs   
        ******/
-      if(!preg_match('/^freeze/', $this->FAIstate) && preg_match("/^configure_package_/",$name)){
+      if(!preg_match('/freeze/i', $this->FAIstate) && preg_match("/^configure_package_/",$name)){
         $pkg = @base64_decode(preg_replace("/^configure_package_(.*)_[xy]*$/","\\1",$name));
          
         if(isset($this->usedPackages[$pkg])){
@@ -270,7 +265,7 @@ class faiPackage extends plugin
 
     /* attach new packages */
     if(isset($_POST['SaveSubObject'])) {
-      if(!preg_match("/^freeze/", $this->FAIstate)){
+      if(!preg_match("/freeze/i", $this->FAIstate)){
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msgs){
@@ -325,6 +320,8 @@ class faiPackage extends plugin
     ksort($this->usedPackages);
     if(is_array($this->usedPackages)){
       foreach($this->usedPackages as $usedName => $name){
+    
+        $actions = "";
 
         /* Append message if package is configured */
         $configured = "<img src='images/empty.png' alt=' '  class='center'>";
@@ -390,7 +387,8 @@ class faiPackage extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/",$this->FAIstate)));
     }
-
+ 
+    $smarty->assign("freeze", preg_match("/freeze/",$this->FAIstate));
     $smarty->assign("divlist",$divlist->DrawList());
     $smarty->assign("release" ,$this->FAIdebianRelease);
     $smarty->assign("sections",$this->sections);
