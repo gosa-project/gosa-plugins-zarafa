@@ -26,7 +26,14 @@ class FAI
 
     /* Collect some basic informations and initialize some variables */ 
     $base_release       = FAI::get_release_dn($Current_DN);
-    $previous_releases  = array_reverse(FAI::             get_previous_releases_of_this_release($base_release,true));
+    $previous_releases  = array_reverse(FAI::get_previous_releases_of_this_release($base_release,true));
+
+    $ldap->cat($base_release);
+    $attrs = $ldap->fetch();
+    $FAIstate = "branch";
+    if(isset($attrs['FAIstate'][0])){
+      $FAIstate = $attrs['FAIstate'][0];
+    }
 
     /* We must also include the given release dn */
     $previous_releases[] = $base_release;
@@ -57,6 +64,18 @@ class FAI
               }
               continue;
             }
+          }
+
+          /* Seems to be an inherited class, apply current FAIstate to this classes 
+           */
+          if(!preg_match("/".normalizePreg($base_release)."$/i",$attr['dn'])){
+            $buffer['FAIstate'] = $FAIstate; 
+          }else{
+
+            /* Seems to be created within this release department.
+               This indicates - it can't be of state "freeze"
+             */              
+            $buffer['FAIstate'] = "branch";
           }
 
           /* In detailed mode are some additonal informations visible */

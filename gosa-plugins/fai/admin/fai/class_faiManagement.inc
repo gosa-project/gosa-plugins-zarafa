@@ -1082,16 +1082,6 @@ class faiManagement extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
 
-    /* Get release tag 
-       If current release is freezed, all objects are freezed to.
-     */
-    $ldap->cat($base);
-    $release_attrs = $ldap->fetch();
-    $force_freezed = FALSE;
-    if(isset($release_attrs['FAIstate'][0]) && preg_match("/freeze/i",$release_attrs['FAIstate'][0])){
-      $force_freezed = TRUE;
-    }
-
     foreach($tmp as $entry){
 
       /* Get some more informations about the object */ 
@@ -1117,32 +1107,9 @@ class faiManagement extends plugin
           $obj['dn'] 			      = $object['dn'];
           $obj['acl'] 			    = $acl;
           $obj['class'] 			  = $rest ['ACL'];
+          $obj['FAIstate']      = $entry['FAIstate'];
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
-
-          /* Append type to this string, to be able to check if the selected 
-           * entry is of type 'freeze' or 'branch'
-           */
-#          if(!isset($object['FAIstate'])){
-            
-            /* Is this entry inherited from an earlier release? 
-               In this case inherit the FAIstate from the release container.
-               If this is a newly created entry (allow_freeze_object_attach == TRUE) 
-                then allow to edit this entry by setting its FAIstate manually to branch. 
-             */
-            if($this->allow_freeze_object_attach && preg_match("/".normalizePreg($this->fai_release)."$/i",$object['dn'])){
-              $obj['FAIstate'] = "branch|overridden_by_management_reload";
-            }else{
-              $obj['FAIstate'] = $this->lock_type;
-            }
-  
-#          }else{
-#            $obj['FAIstate'] = $object['FAIstate'][0]; 
-#          }
-
-          if($force_freezed && !$this->allow_freeze_object_attach){
-            $obj['FAIstate'] = "freeze";
-          }
 
           $this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;
           $this->objects[strtolower($obj['cn']).$obj['cn'].$type]['type']=$type;
