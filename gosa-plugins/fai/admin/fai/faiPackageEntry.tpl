@@ -54,7 +54,6 @@
 	<input id="SaveSubObject" name="SaveSubObject" value="{msgPool type=applyButton}" type="submit">
 	<input id="CancelSubObject" name="CancelSubObject" value="{msgPool type=cancelButton}" type="submit">
 </div>
-<input type="hidden" name="ignore">
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
