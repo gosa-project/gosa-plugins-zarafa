@@ -26,11 +26,6 @@ class faiVariableEntry extends plugin
         $oname = $name;
         $this->$oname=addslashes($value);
       }
-
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
     }else{
       $this->status = "new";
       $this->orig_cn       = false;
@@ -59,18 +54,15 @@ class faiVariableEntry extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $acl = $this->getacl($name);
-      if($this->FAIstate == "freezed"){
-        $acl = preg_replace("/w/","",$acl);
-      }
+      $acl = $this->getacl($name, preg_match("/freeze/",$this->FAIstate));
       $smarty->assign($name."ACL",$acl);
     }
 
-
-
+    $smarty->assign("freeze",preg_match("/freeze/",$this->FAIstate));
     $display.= $smarty->fetch(get_template_path('faiVariableEntry.tpl', TRUE));
     return($display);
   }
+
 
   /* Save data to object */
   function save_object()

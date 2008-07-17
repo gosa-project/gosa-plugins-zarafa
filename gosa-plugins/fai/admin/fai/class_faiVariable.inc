@@ -40,12 +40,6 @@ class faiVariable extends plugin
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Get FAIstate
-       */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
       $ldap     = $this->config->get_ldap_link();
@@ -118,11 +112,12 @@ class faiVariable extends plugin
     $display= "";
 
     /* Add new sub object */
-    if(isset($_POST['AddSubObject'])){
+    if(isset($_POST['AddSubObject']) && !preg_match("/freeze/i",$this->FAIstate)){
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
       $this->dialog->parent = &$this;
+      $this->dialog->FAIstate = $this->FAIstate;
       $this->is_dialog=true;
     }
 
@@ -139,13 +134,14 @@ class faiVariable extends plugin
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$var]);
       $this->dialog->set_acl_category("fai");
       $this->dialog->set_acl_base($c_dn);
+      $this->dialog->FAIstate = $this->FAIstate;
       $this->dialog->parent = &$this;
       session::set('objectinfo',$this->SubObjects[$var]['dn']);
       $this->is_dialog=true;
     }
     
     /* Remove Sub object */
-    if((isset($_POST['DelSubObject']))&&(isset($_POST['SubObject']))){
+    if((isset($_POST['DelSubObject']))&&(isset($_POST['SubObject'])) && !preg_match("/freeze/i",$this->FAIstate)){
       foreach($_POST['SubObject'] as $var){
 
         $c_dn = $this->acl_base_for_current_object($this->SubObjects[$var]['dn']);
@@ -161,7 +157,7 @@ class faiVariable extends plugin
     }
 
     /* Save Dialog */
-    if(isset($_POST['SaveSubObject'])){
+    if(isset($_POST['SaveSubObject']) && !preg_match("/freeze/i",$this->FAIstate)){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)>0){
@@ -237,12 +233,12 @@ class faiVariable extends plugin
     }
 
     $c_dn = $this->acl_base_for_current_object($this->dn);
-    $smarty->assign("is_createable",     preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && !preg_match("/freeze/", $this->FAIstate));
+    $smarty->assign("is_createable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && !preg_match("/freeze/", $this->FAIstate));
     $smarty->assign("is_removeable",  preg_match("/d/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && !preg_match("/freeze/", $this->FAIstate));
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation) {
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/i",$this->FAIstate)));
     }
     
 
