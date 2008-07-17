@@ -432,13 +432,9 @@ class faiManagement extends plugin
 
 			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
       $this->dialog->parent = &$this;
-      $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];;
+      $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
       $this->dialog->set_acl_base($this->dn);
 			$this->is_dialog  = true;
-
-      if(preg_match("/^freeze/", $entry['FAIstate']) || $this->no_save){
-#        $this->dialog->set_acl_base("freezed")  ;    
-      }
 			session::set('objectinfo',$this->dn);
 		}
 

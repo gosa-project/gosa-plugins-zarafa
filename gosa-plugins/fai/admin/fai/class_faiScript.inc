@@ -30,7 +30,7 @@ class faiScript extends plugin
   var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
   var $SubObjects       = array();  // All leafobjects of this object
 
-  var $FAIstate         = "";
+  var $FAIstate         = "branch";
   var $sort_by          = "name";
   var $sort_order       = "up";
 
@@ -156,8 +156,9 @@ class faiScript extends plugin
     $display= "";
 
     /* Add new sub object */
-    if(isset($_POST['AddSubObject'])){
+    if(isset($_POST['AddSubObject']) && !preg_match("/freeze/i",$this->FAIstate)){
       $this->dialog= new $this->subClassName($this->config,"new");
+      $this->dialog->FAIstate = $this->FAIstate;
       $this->dialog->set_acl_base($this->acl_base);
       $this->dialog->set_acl_category("fai");
       $this->dialog->parent = &$this;
@@ -190,7 +191,7 @@ class faiScript extends plugin
       }
 
       /* Delete script requested */
-      if(preg_match("/^deletescript_/",$name)){
+      if(preg_match("/^deletescript_/",$name) && preg_match("/freeze/i",$this->FAIstate)){
         $s_action = "remove";
         $s_entry = preg_replace("/^deletescript_/","",$name);
         $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
@@ -215,6 +216,7 @@ class faiScript extends plugin
 
       /* Create new dialog and set acl attributes  */
       $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+      $this->dialog->FAIstate = $this->FAIstate;
       $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
       $this->dialog->set_acl_category("fai");
 

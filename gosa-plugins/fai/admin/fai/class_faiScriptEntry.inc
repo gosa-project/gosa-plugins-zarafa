@@ -28,11 +28,6 @@ class faiScriptEntry extends plugin
         $oname = $name;
         $this->$oname=$value;
       }
-
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
     }else{
       if(is_array($object)&&count($object)){
         $this->orig_cn= $object['cn'];
@@ -56,6 +51,7 @@ class faiScriptEntry extends plugin
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
+    $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));
     $display = "";
   
     if(isset($_POST['ImportUpload']) && $this->acl_is_writeable("FAIscript")){
@@ -101,10 +97,7 @@ class faiScriptEntry extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $acl = $this->getacl($name);
-      if($this->FAIstate == "freezed"){
-        $acl = preg_replace("/w/","",$acl);
-      }
+      $acl = $this->getacl($name,preg_match("/freeze/i",$this->FAIstate));
       $smarty->assign($name."ACL",$acl);
     }
 

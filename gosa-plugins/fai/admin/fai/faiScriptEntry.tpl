@@ -80,7 +80,9 @@
 </div>
 <br>
 <div style="align:right;" align="right">
+{if !$freeze}
 	<input type="submit" value="{msgPool type=applyButton}" 	name="SaveSubObject">&nbsp;
+{/if}
 	<input type="submit" value="{msgPool type=cancelButton}" 	name="CancelSubObject">
 </div>
 <!-- Place cursor -->
