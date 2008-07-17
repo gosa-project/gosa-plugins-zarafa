@@ -40,10 +40,6 @@ class faiProfile extends plugin
       }
     }
 
-    if(isset($this->attrs['FAIstate'][0])){
-      $this->FAIstate = $this->attrs['FAIstate'][0];
-    }
-
     /* Sort assigned classes */ 
     if(is_array($tmp2)){
       foreach($tmp2 as $class){
@@ -214,64 +210,66 @@ class faiProfile extends plugin
 
     /* Remove class name From list */
     $sort_once = false;
-    foreach($_POST as $name => $post){
-      if(preg_match("/DEL_/i",$name) && $this->acl_is_writeable("FAIclass")){
-        $s_action = "delete";
-        $s_entry  = preg_replace("/DEL_/","",$name);
-        $s_entry  = base64_decode(preg_replace("/_.*$/","",$s_entry));
-      }elseif(preg_match("/Add_class/i",$name)&& $this->acl_is_writeable("FAIclass")){
-        $s_action  = "add";
-      }elseif(preg_match("/DelClass/i",$name) && $this->acl_is_writeable("FAIclass")){
-        $s_action  = "delete";
-        $s_entry = $_POST['FAIclass'];
-      }elseif(preg_match("/AddClass/i",$name) && $this->acl_is_writeable("FAIclass")){
-        $s_action  = "add";
-      }
-
-      /* Check if a list element should be pushed one position up */
-      if((preg_match("/sortup_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
-        $sort_once = true;
-        $val = preg_replace("/sortup_/","",$name);
-        $val = preg_replace("/_.*$/","",$val);
-        $val = base64_decode($val);
-        $this->catUp($val);
-      }
-      
-      /* Check if a list element should be pushed one position down */
-      if((preg_match("/sortdown_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
-        $sort_once = true;
-        $val = preg_replace("/sortdown_/","",$name);
-        $val = preg_replace("/_.*$/","",$val);
-        $val = base64_decode($val);
-        $this->catDown($val);
-      }
-
-    }
-
-    if($s_action == "delete" && $this->acl_is_writeable("FAIclass")){
-      unset($this->FAIclasses[$s_entry]);
-    }
-
-    if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
-      $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses,$this->parent->parent->fai_release);
-      $this->is_dialog  =true;
-    }
-
-    /* Save Dialog */
-    if(isset($_POST['SaveSubObject'])){
-      $this->dialog->save_object();
-      $msgs= $this->dialog->check();
-      if(count($msgs)){
-        msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
-      }else{
-        $ret = $this->dialog->save();
-        foreach($ret as $class){
-          $this->FAIclasses[$class] =$class; 
+    if(!preg_match("/freeze/",$this->FAIstate)){
+      foreach($_POST as $name => $post){
+        if(preg_match("/DEL_/i",$name) && $this->acl_is_writeable("FAIclass")){
+          $s_action = "delete";
+          $s_entry  = preg_replace("/DEL_/","",$name);
+          $s_entry  = base64_decode(preg_replace("/_.*$/","",$s_entry));
+        }elseif(preg_match("/Add_class/i",$name)&& $this->acl_is_writeable("FAIclass")){
+          $s_action  = "add";
+        }elseif(preg_match("/DelClass/i",$name) && $this->acl_is_writeable("FAIclass")){
+          $s_action  = "delete";
+          $s_entry = $_POST['FAIclass'];
+        }elseif(preg_match("/AddClass/i",$name) && $this->acl_is_writeable("FAIclass")){
+          $s_action  = "add";
         }
-        $this->is_dialog=false;
-        unset($this->dialog);
-        $this->dialog=FALSE;
-        //ksort($this->FAIclasses);
+
+        /* Check if a list element should be pushed one position up */
+        if((preg_match("/sortup_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
+          $sort_once = true;
+          $val = preg_replace("/sortup_/","",$name);
+          $val = preg_replace("/_.*$/","",$val);
+          $val = base64_decode($val);
+          $this->catUp($val);
+        }
+
+        /* Check if a list element should be pushed one position down */
+        if((preg_match("/sortdown_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
+          $sort_once = true;
+          $val = preg_replace("/sortdown_/","",$name);
+          $val = preg_replace("/_.*$/","",$val);
+          $val = base64_decode($val);
+          $this->catDown($val);
+        }
+
+      }
+
+      if($s_action == "delete" && $this->acl_is_writeable("FAIclass")){
+        unset($this->FAIclasses[$s_entry]);
+      }
+
+      if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
+        $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses,$this->parent->parent->fai_release);
+        $this->is_dialog  =true;
+      }
+
+      /* Save Dialog */
+      if(isset($_POST['SaveSubObject'])){
+        $this->dialog->save_object();
+        $msgs= $this->dialog->check();
+        if(count($msgs)){
+          msg_dialog::display(_("Error"), $msgs, ERROR_DIALOG);
+        }else{
+          $ret = $this->dialog->save();
+          foreach($ret as $class){
+            $this->FAIclasses[$class] =$class; 
+          }
+          $this->is_dialog=false;
+          unset($this->dialog);
+          $this->dialog=FALSE;
+          //ksort($this->FAIclasses);
+        }
       }
     }
 
@@ -330,6 +328,8 @@ class faiProfile extends plugin
       }
     }
 
+    $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));
+
     $smarty->assign("FAIclasses"  ,$this->FAIclasses);
     $smarty->assign("divlist"     ,$divlist->DrawList());
 
@@ -352,7 +352,7 @@ class faiProfile extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name, preg_match("/freeze/",$this->FAIstate)));
     }
 
     $display.= $smarty->fetch(get_template_path('faiProfile.tpl', TRUE));
@@ -375,7 +375,9 @@ class faiProfile extends plugin
    */
   function save_object()
   {
-    plugin::save_object();
+    if(!preg_match("/freeze/",$this->FAIstate)){
+      plugin::save_object();
+    }
   }
 
 

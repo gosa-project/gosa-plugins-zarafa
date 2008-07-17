@@ -44,12 +44,6 @@ class faiHook extends plugin
     if($dn != "new"){
       $this->dn =$dn;
     
-      /* Get FAIstate
-       */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
       $ldap     = $this->config->get_ldap_link();
@@ -174,6 +168,7 @@ class faiHook extends plugin
         }
 
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
         $this->dialog->set_acl_category("fai");
 
@@ -218,6 +213,7 @@ class faiHook extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->acl = $this->acl;
         session::set('objectinfo',$obj['dn']);
         $this->dialog->parent = &$this;
@@ -233,6 +229,7 @@ class faiHook extends plugin
       $c_dn = $this->acl_base_for_current_object($this->dn);
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($c_dn);
+      $this->dialog->FAIstate = $this->FAIstate;
       $this->dialog->set_acl_category("fai");
       $this->dialog->parent = &$this;
       $this->is_dialog=true;

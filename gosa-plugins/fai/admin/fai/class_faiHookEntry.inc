@@ -31,11 +31,6 @@ class faiHookEntry extends plugin
         $oname = $name;
         $this->$oname=$value;
       }
-
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
     }elseif(is_array($object)){
       if(count($object)){
         $this->orig_cn= $object['cn'];
@@ -110,10 +105,7 @@ class faiHookEntry extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $acl = $this->getacl($name);
-      if($this->FAIstate == "freezed"){
-        $acl = preg_replace("/w/","",$acl);
-      }
+      $acl = $this->getacl($name, preg_match("/freeze/",$this->FAIstate));
       $smarty->assign($name."ACL",$acl);
     }
    
@@ -122,6 +114,7 @@ class faiHookEntry extends plugin
     }else{
       $smarty->assign("FAIscript" , htmlentities($this->FAIscript));
     }
+    $smarty->assign("freeze" , preg_match("/freeze/",$this->FAIstate));
     $display.= $smarty->fetch(get_template_path('faiHookEntry.tpl', TRUE));
     return($display);
   }
