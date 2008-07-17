@@ -46,12 +46,6 @@ class faiTemplate extends plugin
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Get FAIstate
-       */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
       $ldap     = $this->config->get_ldap_link();
@@ -152,6 +146,7 @@ class faiTemplate extends plugin
           }
           $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
           $this->dialog->set_acl_base($this->acl_base);
+          $this->dialog->FAIstate = $this->FAIstate;
           $this->dialog->set_acl_category("fai");
 
           session::set('objectinfo',$obj['dn']);
@@ -159,7 +154,7 @@ class faiTemplate extends plugin
           $this->is_dialog=true;
         }
       }
-      if(preg_match("/^deletescript_/",$name)&&($once)){
+      if(preg_match("/^deletescript_/",$name)&&($once) && !preg_match("/freeze/",$this->FAIstate)){
         $once = false;
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
@@ -195,6 +190,7 @@ class faiTemplate extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->acl = $this->acl;
         session::set('objectinfo',$obj['dn']);
         $this->dialog->parent = &$this;
@@ -203,13 +199,14 @@ class faiTemplate extends plugin
     }
 
     /* Add new sub object */
-    if(isset($_POST['AddSubObject'])){
+    if(isset($_POST['AddSubObject']) && !preg_match("/freeze/",$this->FAIstate)){
       $acl_dn = "cn=dummy,".$this->acl_base_for_current_object($this->dn);
       $acl    = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
 
       if(preg_match("/c/",$acl)){
         $this->dialog= new $this->subClassName($this->config,"new");
         $this->dialog->set_acl_base($this->acl_base);
+        $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->set_acl_category("fai");
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
@@ -350,7 +347,7 @@ class faiTemplate extends plugin
             !preg_match("/freeze/",$this->FAIstate));
 
     foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",$this->getacl($attr));
+      $smarty->assign($attr."ACL",$this->getacl($attr, preg_match("/freeze/",$this->FAIstate)));
     }
 
     $display.= $smarty->fetch(get_template_path('faiTemplate.tpl', TRUE));

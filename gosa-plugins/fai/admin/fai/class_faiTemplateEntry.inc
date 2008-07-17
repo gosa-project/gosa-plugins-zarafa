@@ -34,11 +34,6 @@ class faiTemplateEntry extends plugin
         $oname = $name;
         $this->$oname=$value;
       }
-
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
     }else{
       $this->status = "new";
       $this->orig_cn= false;
@@ -140,6 +135,7 @@ class faiTemplateEntry extends plugin
     /* We now split cn/FAItemplatePath to make things more clear... */
     $smarty->assign("cn", basename($this->FAItemplatePath));
     $smarty->assign("templatePath", dirname($this->FAItemplatePath));
+    $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));;
 
     $display.=  $smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
     return($display);
@@ -201,7 +197,7 @@ class faiTemplateEntry extends plugin
     } 
 
     if(!preg_match('/^\//', $this->FAItemplatePath)){
-      $message[]= msgPool::invalid(_("Destination path"),$this->FAItemplatePath,'/^\//');
+      $message[]= msgPool::invalid(_("Destination path"),"","","/path");
     } 
  
     $b = basename($this->FAItemplatePath); 
