@@ -1084,6 +1084,7 @@ class FAI
 
           /* Add marking attribute */
           $attr['objectClass'][] = "FAIbranch";
+          $attr['FAIstate'] = $type;
 
           /* Add this entry */
           $ldap->modify($attr);
@@ -1114,6 +1115,10 @@ class FAI
         }
         unset($attr['count']);
         unset($attr['dn']);
+        if(!in_array("FAIclass",$attr['objectClass'])){
+          $attr['objectClass'][] = "FAIobject";
+        }
+        $attr['FAIstate'] = $type;
 
         /* Add entry
          */
