@@ -306,6 +306,9 @@ class mimetypeManagement extends plugin
 
       /* Register mimetabs to trigger edit dialog */
       $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
+      if($this->IsReleaseManagementActivated()){
+        $this->mimetabs->set_FAIstate($this->mimetypes[$s_entry]['FAIstate'][0]);
+      }
       $this->mimetabs->parent = &$this;
       $this->mimetabs->set_acl_base($this->dn);
       session::set('objectinfo',$this->dn);
@@ -496,12 +499,16 @@ class mimetypeManagement extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->mimetabs->by_object[$this->mimetabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-        $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
-          $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+
+        if(isset($this->mimetabs->FAIstate) && !preg_match("/freeze/i",$this->mimetabs->FAIstate)){
+          $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
           $display.= "&nbsp;\n";
+          if ($this->dn != "new"){
+            $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+            $display.= "&nbsp;\n";
+          }
         }
+      
         $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
         $display.= "</p>";
       }
@@ -568,15 +575,24 @@ class mimetypeManagement extends plugin
       $SubSearch= FALSE;
     }
 
+    /* Add FAIstate to the search attributes */
+    $search_attrs = array("cn","description","dn","objectClass");
+    if($this->IsReleaseManagementActivated()) {
+      $search_attrs[] = "FAIstate";
+    }
+
     if($SubSearch){
-      $res= get_sub_list($Filter, "mimetypes",get_ou("mimeou"), $use_base, array("cn","description","dn","objectClass"), $Flags);
+      $res= get_sub_list($Filter, "mimetypes",get_ou("mimeou"), $use_base, $search_attrs, $Flags);
     }else{
-      $res= get_list($Filter, "mimetypes",$use_base, array("cn","description","dn","objectClass"), $Flags);
+      $res= get_list($Filter, "mimetypes",$use_base, $search_attrs, $Flags);
     }
 
 
     $tmp2 = array();
     foreach ($res as $val){
+      if(!isset($val['FAIstate'])){
+        $val['FAIstate'][0] = "";
+      }
       $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
       $tmp2[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']] = strtolower($val['cn'][0]).$val['cn'][0].$val['dn'];
     }

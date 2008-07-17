@@ -37,6 +37,8 @@ class mimetype extends plugin
   var $DivApps							            = NULL;
   var $DivEApps							            = NULL;
 
+  var $FAIstate ="";
+
   /* These vars will be copied too, if you use copy&paste mode */
   var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData",
                                     "gotoMimeLeftClickAction_I","gotoMimeLeftClickAction_E","gotoMimeLeftClickAction_Q","use_gotoMimeIcon");
@@ -127,7 +129,7 @@ class mimetype extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
+      $this->base= preg_replace ("/^.*,".normalizePreg(get_ou("mimetypeou"))."/", "", $this->dn);
     }
 
     /* Get icon data */
@@ -156,13 +158,13 @@ class mimetype extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/i",$this->FAIstate)));
     }
 
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && !preg_match("/freeze/i",$this->FAIstate)){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
@@ -205,81 +207,83 @@ class mimetype extends plugin
     $once = true;
 
     /* Walk through posts and try to find some commands for us. */
-    foreach($_POST as $name => $value){
+    if(!preg_match("/freeze/i",$this->FAIstate)){
+      foreach($_POST as $name => $value){
 
-      /* Walk through possible commands */
-      foreach($posts as $regex => $action){
+        /* Walk through possible commands */
+        foreach($posts as $regex => $action){
 
-        /* Check if there is a command posted */
-        if(preg_match($regex,$name) && $once){
-          $once = false;
+          /* Check if there is a command posted */
+          if(preg_match($regex,$name) && $once){
+            $once = false;
 
-          /* Get action vars */
-          $func 		= $action['Func'];		// Get function name 
-          $attr 		= $action['Attr'];		// Get attribute name
+            /* Get action vars */
+            $func 		= $action['Func'];		// Get function name 
+            $attr 		= $action['Attr'];		// Get attribute name
 
-          /* Get entry id */
-          $s_entry  	= preg_replace($regex,"",$name);
-          $s_entry 	= preg_replace("/_[xy]$/","",$s_entry); 
+            /* Get entry id */
+            $s_entry  	= preg_replace($regex,"",$name);
+            $s_entry 	= preg_replace("/_[xy]$/","",$s_entry); 
 
-          /* Execute a command with the given attribute and entry 
-             e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
-          if($this->acl_is_writeable($attr)){
-            $this->$attr= $this->$func($s_entry,$this->$attr,true);					 
+            /* Execute a command with the given attribute and entry 
+               e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
+            if($this->acl_is_writeable($attr)){
+              $this->$attr= $this->$func($s_entry,$this->$attr,true);					 
+            }
           }
         }
       }
-    }
 
-    /* Set a new icon was requested */
-    if(isset($_POST['update_icon']) && (isset($_FILES['picture_file']['name']))){
-      $this->set_new_picture($_FILES['picture_file']['tmp_name']);		
-    }
-
-    /* Add gotoMimeFilePattern */
-    if(isset($_POST['AddNewFilePattern']) && isset($_POST['NewFilePattern'])){
-      if($this->acl_is_writeable("gotoMimeFilePattern")){
-        $str = $_POST['NewFilePattern'];
-        if(!empty($str)){
-          $this->use_gotoMimeFilePattern[] = $str;
-        }
+      /* Set a new icon was requested */
+      if(isset($_POST['update_icon']) && (isset($_FILES['picture_file']['name']))){
+        $this->set_new_picture($_FILES['picture_file']['tmp_name']);		
       }
-    }	
 
-    /* Add gotoMimeFilePattern */
-    if(isset($_POST['AddNewApplication']) && 
-            (isset($_POST['NewApplication']) || isset($_POST['NewApplicationSelect']))){
-      if($this->acl_is_writeable("gotoMimeApplication")){
-        $str = "";
-        if(isset($_POST['NewApplicationSelect']) && !empty($_POST['NewApplicationSelect'])){
-          $str = get_post("NewApplicationSelect");
+      /* Add gotoMimeFilePattern */
+      if(isset($_POST['AddNewFilePattern']) && isset($_POST['NewFilePattern'])){
+        if($this->acl_is_writeable("gotoMimeFilePattern")){
+          $str = $_POST['NewFilePattern'];
+          if(!empty($str)){
+            $this->use_gotoMimeFilePattern[] = $str;
+          }
         }
-        if(isset($_POST['NewApplication']) && !empty($_POST['NewApplication'])){
-          $str = get_post("NewApplication");
-        }
-        if(!empty($str) && !in_array($str,$this->use_gotoMimeApplication)){
-          $this->use_gotoMimeApplication[] = $str;
-        }
-      }
-    }	
+      }	
 
-    /* Add embedded application 
-     *  - From input or from select box 
-     */
-    if(isset($_POST['AddNewEmbeddedApplication']) && 
-            (isset($_POST['NewEmbeddedApplication']) || isset($_POST['NewEmbeddedApplicationSelect']))){
-      if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
-        $str = "";
-        if(isset($_POST['NewEmbeddedApplicationSelect']) && !empty($_POST['NewEmbeddedApplicationSelect'])){
-          $str = get_post('NewEmbeddedApplicationSelect');
+      /* Add gotoMimeFilePattern */
+      if(isset($_POST['AddNewApplication']) && 
+          (isset($_POST['NewApplication']) || isset($_POST['NewApplicationSelect']))){
+        if($this->acl_is_writeable("gotoMimeApplication")){
+          $str = "";
+          if(isset($_POST['NewApplicationSelect']) && !empty($_POST['NewApplicationSelect'])){
+            $str = get_post("NewApplicationSelect");
+          }
+          if(isset($_POST['NewApplication']) && !empty($_POST['NewApplication'])){
+            $str = get_post("NewApplication");
+          }
+          if(!empty($str) && !in_array($str,$this->use_gotoMimeApplication)){
+            $this->use_gotoMimeApplication[] = $str;
+          }
         }
-        if(isset($_POST['NewEmbeddedApplication']) && !empty($_POST['NewEmbeddedApplication'])){
-          $str = get_post('NewEmbeddedApplication');
+      }	
+
+      /* Add embedded application 
+       *  - From input or from select box 
+       */
+      if(isset($_POST['AddNewEmbeddedApplication']) && 
+          (isset($_POST['NewEmbeddedApplication']) || isset($_POST['NewEmbeddedApplicationSelect']))){
+        if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
+          $str = "";
+          if(isset($_POST['NewEmbeddedApplicationSelect']) && !empty($_POST['NewEmbeddedApplicationSelect'])){
+            $str = get_post('NewEmbeddedApplicationSelect');
+          }
+          if(isset($_POST['NewEmbeddedApplication']) && !empty($_POST['NewEmbeddedApplication'])){
+            $str = get_post('NewEmbeddedApplication');
+          }
+          if(!empty($str) && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
+            $this->use_gotoMimeEmbeddedApplication[] = $str;
+          }
         }
-        if(!empty($str) && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
-          $this->use_gotoMimeEmbeddedApplication[] = $str;
-        }
-      }
+      }	
     }	
 
     /* Create divlists */
@@ -291,7 +295,7 @@ class mimetype extends plugin
     $DivEApps		-> SetHeight(100);
 
 
-    if($this->acl_is_writeable("gotoMimeFilePattern")){
+    if($this->acl_is_writeable("gotoMimeFilePattern") && !preg_match("/freeze/i",$this->FAIstate)){
       $Pattern_Actions= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Pattern_SortUp_%s' >&nbsp;
       <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Pattern_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='Pattern_Remove_%s'>";
@@ -299,7 +303,7 @@ class mimetype extends plugin
       $Pattern_Actions= "";	
     }
 
-    if($this->acl_is_writeable("gotoMimeApplication")){
+    if($this->acl_is_writeable("gotoMimeApplication") && !preg_match("/freeze/i",$this->FAIstate)){
       $Apps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='Apps_SortUp_%s' >&nbsp;
       <input type='image' src='images/lists/sort-down.png' 	class='center'  name='Apps_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='Apps_Remove_%s'>";
@@ -307,7 +311,7 @@ class mimetype extends plugin
       $Apps_Actions= "";	
     }
 
-    if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
+    if($this->acl_is_writeable("gotoMimeEmbeddedApplication") && !preg_match("/freeze/i",$this->FAIstate)){
       $EApps_Actions 	= " <input type='image' src='images/lists/sort-up.png' 	class='center'	name='EApps_SortUp_%s' >&nbsp;
       <input type='image' src='images/lists/sort-down.png' 	class='center'  name='EApps_SortDown_%s'>&nbsp;
       <input type='image' src='images/lists/trash.png'	class='center'  name='EApps_Remove_%s'>";
@@ -369,7 +373,7 @@ class mimetype extends plugin
 
   function save_object()
   {
-    if(isset($_POST['MimeGeneric'])){
+    if(isset($_POST['MimeGeneric']) && !preg_match("/freeze/i",$this->FAIstate)){
 
       /* Create a base backup and reset the
          base directly after calling plugin::save_object();

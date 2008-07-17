@@ -164,6 +164,10 @@ class divListMimeTypes extends MultiSelectWindow
 
     foreach($list as $key => $val){
 
+      /* Check FAI state 
+       */  
+      $FAIstate = $val['FAIstate'][0];
+
       $ui       = get_userinfo();
       $acl      = $ui->get_permissions($val['dn'],"mimetypes/mimetype");
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"mimetypes") ;
@@ -171,16 +175,28 @@ class divListMimeTypes extends MultiSelectWindow
       $action = "";
 
       /* Add copy & cut functionality */
-      $action.= $this->parent->get_copypaste_action($val['dn'],"mimetypes","mimetype");
+      if(!preg_match("/freeze/i",$FAIstate)){
+        $action.= $this->parent->get_copypaste_action($val['dn'],"mimetypes","mimetype");
+      }else{
+        $action.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+        $action.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+      }
 
       $action.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon */
-      $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
+      if(!preg_match("/freeze/i",$FAIstate)){
+        $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
+      }else{
+        $action.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+        $action.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+      }
 
       /* Add delete button */
-      if(preg_match("/d/",$acl)){
+      if(preg_match("/freeze/i",$FAIstate)){
+        $action .= "<img src='images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
+      }elseif(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image'
           src='images/lists/trash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
       }else{
