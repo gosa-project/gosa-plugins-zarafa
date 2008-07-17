@@ -34,12 +34,6 @@ class faiPartitionTable extends plugin
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Get FAIstate
-       */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
-
       /* Read all disks from ldap taht are defined fot this partition table 
        */
       $ldap = $this->config->get_ldap_link();
@@ -135,7 +129,7 @@ class faiPartitionTable extends plugin
      * This code adds a new HDD to the disks 
      * A new Dialog will be opened 
      */
-    if(isset($_POST['AddDisk'])){
+    if(isset($_POST['AddDisk']) && !preg_match("/freeze/i",$this->FAIstate)){
       $usedDiskNames =array();
       foreach($this->disks as $key=>$disk){
         $usedDiskNames[]= $key;
@@ -197,7 +191,7 @@ class faiPartitionTable extends plugin
      */
     if(isset($_POST['SaveDisk'])){
 
-      if (!preg_match("/freeze/", $this->FAIstate)){
+      if (!preg_match("/freeze/i", $this->FAIstate)){
         $this->dialog->save_object();
         if(count($this->dialog->check())){
           foreach($this->dialog->check() as $msg){
@@ -238,7 +232,7 @@ class faiPartitionTable extends plugin
      * Assign delete status for all its partitions      
      */
     if((isset($_POST['DelDisk']))&&(!empty($_POST['disks']))){
-      if (!preg_match("/freeze/", $this->FAIstate)){
+      if (!preg_match("/freeze/i", $this->FAIstate)){
         foreach($_POST['disks'] as $disk) {
 
           if(isset($this->disks[$disk])){
@@ -284,10 +278,13 @@ class faiPartitionTable extends plugin
     $smarty->assign("sub_object_is_addable",
         preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiPartitionTableEntry")) &&
         !preg_match("/freeze/",$this->FAIstate));
+    $smarty->assign("sub_object_is_removeable",
+        preg_match("/d/",$this->ui->get_permissions($dn,"fai/faiPartitionTableEntry")) &&
+        !preg_match("/freeze/",$this->FAIstate));
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/i",$this->FAIstate)));
     }
     $disks = $this->getDisks();
     $smarty->assign("disks"   ,$disks);

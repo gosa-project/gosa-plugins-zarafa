@@ -48,11 +48,16 @@
 {if $sub_object_is_addable}
 						<input type="submit" name="AddDisk"     value="{msgPool type=addButton}"     title="{msgPool type=addButton}">
 {else}
-						<input type="submit" name="AddDisk"     value="{msgPool type=addButton}"     title="{msgPool type=addButton}" disabled >
+						<input type="button" name="dummy_c" value="{msgPool type=addButton}"     title="{msgPool type=addButton}" disabled >
 {/if}
 
 						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}">
+
+{if $sub_object_is_removeable}
 						<input type="submit" name="DelDisk"     value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
+{else}
+						<input type="button" name="dummy_r" disabled value="{msgPool type=delButton}"  title="{msgPool type=delButton}">
+{/if}
 					</td>
 				</tr>
 				</table>

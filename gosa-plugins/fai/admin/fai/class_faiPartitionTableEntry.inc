@@ -109,7 +109,7 @@ class faiPartitionTableEntry extends plugin
      * The number specifies the index we want to delete
      */
     foreach($_POST as $name => $value){
-      if((preg_match("/Delete_.*/",$name)) && $this->acl_is_removeable()){
+      if((preg_match("/Delete_.*/",$name)) && $this->acl_is_removeable() && !preg_match("/freeze/i",$this->FAIstate)){
         $tmp = split("_",$name);
         $s_action = "remove";
         $s_entry  = $tmp[1]; 
@@ -120,7 +120,7 @@ class faiPartitionTableEntry extends plugin
      * We must sort the index again, else we possibly got problems 
      * with partitions order.
      */
-    if($s_action == "remove" && $this->acl_is_removeable()){
+    if($s_action == "remove" && $this->acl_is_removeable() && !preg_match("/freeze/i",$this->FAIstate)){
       if($this->partitions[$s_entry]['status'] == "edited"){
         $this->deletePartitions[$s_entry]= $this->partitions[$s_entry];
         $this->deletePartitions[$s_entry]['FAIpartitionNr']=$s_entry;
@@ -138,7 +138,7 @@ class faiPartitionTableEntry extends plugin
     /* To add a partitions we only append an empty 
      *  array to the already defined partitions.
      */
-    if(isset($_POST['AddPartition']) && $this->acl_is_createable()){
+    if(isset($_POST['AddPartition']) && $this->acl_is_createable() && !preg_match("/freeze/i",$this->FAIstate)){
       foreach($this->UsedAttrs as $attr){
         $tmp[$attr]                = "";     
       }
@@ -157,17 +157,12 @@ class faiPartitionTableEntry extends plugin
     $tmp = $this->plInfo();
     $sacl = "";
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-
-      $acl = $this->getacl($name);
-      $sacl .= $acl;
-      if($this->FAIstate == "freezed"){
-        $acl = preg_replace("/w/","",$acl);
-      }
+      $acl = $this->getacl($name, preg_match("/freeze/i",$this->FAIstate));
       $smarty->assign($name."ACL",$acl);
     }
-    $smarty->assign("allowSave",$sacl);
    
     $smarty->assign("sub_object_is_createable",$this->acl_is_createable());
+    $smarty->assign("freeze",preg_match("/freeze/i",$this->FAIstate));
  
     /* Fetch template and show the result
      */
