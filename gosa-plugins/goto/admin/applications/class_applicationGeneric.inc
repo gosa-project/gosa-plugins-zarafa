@@ -425,7 +425,7 @@ class application extends plugin
       $message[]= msgPool::required(_("Name"));
     }
 
-    if(preg_match("/[^a-z0-9]/",$this->cn))	{
+    if(preg_match("/[^a-z0-9_-]/",$this->cn))	{
       $message[]=msgPool::invalid(_("Name"),$this->cn,"/^[a-z0-9_-]*$/");
     }
 
