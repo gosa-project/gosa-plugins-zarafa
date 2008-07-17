@@ -74,8 +74,12 @@ class FAI
 
             /* Seems to be created within this release department.
                This indicates - it can't be of state "freeze"
-             */              
-            $buffer['FAIstate'] = "branch";
+             */             
+            if(isset($attr['FAIstate'])){
+              $buffer['FAIstate'] = $attr['FAIstate'][0];
+            }else{
+              $buffer['FAIstate'] = "branch"; 
+            }
           }
 
           /* In detailed mode are some additonal informations visible */
