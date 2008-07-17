@@ -1,7 +1,7 @@
+{if $logs_available}
 
 <h2>{t}Available logs{/t}</h2>
 
-{if $logs_available}
 	<div style="width:99%;border: solid 1px #CCCCCC;">{$divlist}</div>
   <br>
   <p class="seperator"></p>
@@ -20,5 +20,5 @@
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
 	<input type='submit' name='abort_event_dialog' value='{msgPool type=backButton}'>
 </div>
-{/if}
 <br>
+{/if}

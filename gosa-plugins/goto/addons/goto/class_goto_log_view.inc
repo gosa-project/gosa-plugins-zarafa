@@ -79,7 +79,9 @@ class goto_log_view extends plugin
     $smarty->assign("log_file", $this->get_log($this->mac,$this->selected_date,$this->selected_file));        
     $smarty->assign("standalone",$this->standalone);
 
-    $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);
+    if (isset($this->logs[$this->mac])){
+	    $date = date("d.m.Y H:i:s",$this->logs[$this->mac][$this->selected_date]['REAL_DATE']);
+    }
     $file = $this->selected_file;
     $smarty->assign("selected_log",_("none"));
     if(!empty($file)){
