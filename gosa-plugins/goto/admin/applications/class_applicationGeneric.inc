@@ -26,6 +26,7 @@ class application extends plugin
       "gosaApplicationFlags","gotoLogonScript");
 
   var $objectclasses= array("top", "gosaApplication");
+  var $FAIstate ="";
 
   function application (&$config, $dn= NULL, $parent= NULL)
   {
@@ -115,7 +116,7 @@ class application extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
-      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."ACL",$this->getacl($name, preg_match("/freeze/i",$this->FAIstate)));
     }
  
     /* Do we represent a valid group? */
@@ -144,7 +145,7 @@ class application extends plugin
     $head = $this->generateTemplate();
     $this->gotoLogonScript= $this->generateTemplate().preg_replace('/.*### END HEADER ###/s', '', $this->gotoLogonScript);
 
-    if((isset($_POST['upLoad']))&&(isset($_FILES['ScriptFile']))){
+    if((isset($_POST['upLoad']))&&(isset($_FILES['ScriptFile'])) && !preg_match("/freeze/i",$this->FAIstate)){
       $str = file_get_contents($_FILES['ScriptFile']['tmp_name']);
       $this->gotoLogonScript = $str;
     }
@@ -167,7 +168,7 @@ class application extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && !preg_match("/freeze/i",$this->FAIstate)){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
@@ -288,6 +289,10 @@ class application extends plugin
   /* Save data to object */
   function save_object()
   {
+    if(preg_match("/freeze/i",$this->FAIstate)){
+      return;
+    }
+
     if (isset($_POST['cn'])){
 
       /* Create a base backup and reset the

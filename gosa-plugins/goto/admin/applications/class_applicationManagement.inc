@@ -302,6 +302,9 @@ class applicationManagement extends plugin
 
       /* Register apptabs to trigger edit dialog */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+      if($this->IsReleaseManagementActivated()){
+        $this->apptabs->set_FAIstate($this->applications[$s_entry]['FAIstate'][0]);
+      }
       $this->apptabs->parent = &$this;
       $this->apptabs->set_acl_base($this->dn);
       session::set('objectinfo',$this->dn);
@@ -492,11 +495,14 @@ class applicationManagement extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->apptabs->by_object[$this->apptabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-        $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
-          $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+
+        if(isset($this->apptabs->FAIstate) && !preg_match("/freeze/i",$this->apptabs->FAIstate)){
+          $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
           $display.= "&nbsp;\n";
+          if ($this->dn != "new"){
+            $display.= "<input type=submit name=\"edit_apply\" value=\"".msgPool::applyButton()."\">\n";
+            $display.= "&nbsp;\n";
+          }
         }
         $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
         $display.= "</p>";
@@ -562,14 +568,23 @@ class applicationManagement extends plugin
       $use_base = $this->app_release;
       $SubSearch= FALSE;
     }
-  
+
+    /* Add FAIstate to the search attributes */
+    $search_attrs = array("cn","description","dn","objectClass");
+    if($this->IsReleaseManagementActivated()) {
+      $search_attrs[] = "FAIstate";
+    }
+ 
     if($SubSearch){ 
-      $res= get_sub_list($Filter, "application",get_ou("applicationou"), $use_base, array("cn","description","dn","objectClass"), $Flags);
+      $res= get_sub_list($Filter, "application",get_ou("applicationou"), $use_base, $search_attrs, $Flags);
     }else{
-      $res= get_list($Filter, "application",$use_base, array("cn","description","dn","objectClass"), $Flags);
+      $res= get_list($Filter, "application",$use_base, $search_attrs, $Flags);
     }
     $tmp2 = array();
     foreach ($res as $val){
+      if(!isset($val['FAIstate'])){
+        $val['FAIstate'][0] = "";
+      }
       $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
       $tmp2[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']] = strtolower($val['cn'][0]).$val['cn'][0].$val['dn'];
     }

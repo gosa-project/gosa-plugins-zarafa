@@ -2,7 +2,8 @@
 
 class apptabs extends tabs
 {
-  var $parent = FALSE;
+  var $parent   = FALSE;
+  var $FAIstate = "";
 
   function apptabs($config, $data, $dn,$category)
   {
@@ -10,6 +11,14 @@ class apptabs extends tabs
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
+  }
+
+  function set_FAIstate($state)
+  {
+    $this->FAIstate = $state;
+    foreach($this->by_name as $name => $desc){
+      $this->by_object[$name]->FAIstate = $state;
+    }
   }
 
   function save($ignore_account= FALSE)

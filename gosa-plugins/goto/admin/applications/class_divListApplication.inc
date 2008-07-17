@@ -160,21 +160,38 @@ class divListApplication extends MultiSelectWindow
       $acl = $ui->get_permissions($val['dn'],"application/application");
       $acl_all= $ui->has_complete_category_acls($val['dn'],"application");
 
+      /* Check FAI state 
+       */  
+      $FAIstate = $val['FAIstate'][0];
+
       /* Create action icons */
       $actions= "";
 
       /* Add copy & cut functionality */
-      $actions.= $this->parent->get_copypaste_action($val['dn'],"application","application");
+      if(!preg_match("/freeze/i",$FAIstate)){
+        $actions.= $this->parent->get_copypaste_action($val['dn'],"application","application");
+      }else{
+        $actions.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+        $actions.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+      }
 
       /* Add edit icon */
       $actions.= "<input class='center' type='image'
         src='images/lists/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon */
-      $actions.= $this->parent->get_snapshot_action($val['dn'],$this->module);
+      if(!preg_match("/freeze/i",$FAIstate)){
+        $actions.= $this->parent->get_snapshot_action($val['dn'],$this->module);
+      }else{
+        $actions.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+        $actions.= "<img src='images/empty.png' class='center' alt=''>&nbsp;";
+      }
+
 
       /* If we are allowed to remove the application account, display remove icon */
-      if(preg_match("/d/",$acl)){
+      if(preg_match("/freeze/i",$FAIstate)){
+        $actions .= "<img src='images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
+      }elseif(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
           src='images/lists/trash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
       }else{
