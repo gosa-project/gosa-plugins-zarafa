@@ -369,9 +369,9 @@ class FAI
 
       /* Get some basic informations */
       $base_release       = FAI::get_release_dn($Current_DN);
-      $sub_releases       = FAI::                       get_sub_releases_of_this_release($base_release,true);
+      $sub_releases       = FAI::get_sub_releases_of_this_release($base_release,true);
       $parent_obj         = FAI::get_parent_release_object($Current_DN);
-      $following_releases = FAI::                       get_sub_releases_of_this_release($base_release,true);
+      $following_releases = $sub_releases;
 
       /* Check if given dn exists or if is a new entry */
       $ldap->cat($Current_DN);
@@ -495,11 +495,17 @@ class FAI
 
           /* check if we must patch the follwing release */
           if(!empty($r)){
+
             foreach($r as $key ){
               if(DEBUG_FAI_FUNC) { 
                 echo "<b>Copy current objects original attributes to next release</b> ".$key;
                 print_a($parent_attrs);
               }
+             
+              /* Append FAIstate tag to ensure that freezed objects stay freezed
+               */ 
+              $rTag = FAI::get_release_tag(FAI::get_release_dn($key));
+              $parent_attrs['FAIstate'] = $rTag;
               FAI::save_FAI_object($key,$parent_attrs);
             }
           }
