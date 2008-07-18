@@ -21,6 +21,7 @@ class faiVariable extends plugin
   /* Attributes to initialise for each subObject */
   var $subAttributes    = array("cn","description","FAIvariableContent"); 
   var $sub64coded       = array();  
+  var $subBinary        = array();
 
   /* Specific attributes */
   var $cn               = "";       // The class name for this object
@@ -42,39 +43,14 @@ class faiVariable extends plugin
 
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
-      $ldap     = $this->config->get_ldap_link();
-      $ldap->cd ($this->dn);
-
-      $attrs_to_search = $this->subAttributes;
-      $attrs_to_search[] = "FAIstate";
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
-
-      while($object = $ldap->fetch()){
-      
-        /* Skip objects, that are tagged as removed */
-        if(isset($object['FAIstate'][0])){
-          if(preg_match("/removed$/",$object['FAIstate'][0])){
-            continue;
-          }
-        }
-
-        /* Set status for save management */
-        foreach($this->subAttributes as $attrs){
-          if(!isset($object[$attrs][0])){
-            $this->SubObjects[$object['cn'][0]][$attrs]="";
-          }else{
-            $this->SubObjects[$object['cn'][0]][$attrs]=$object[$attrs][0];
-          }
-        }
-     
-        foreach($this->sub64coded as $codeIt){
-          $this->SubObjects[$object['cn'][0]][$codeIt]=base64_decode($this->SubObjects[$object['cn'][0]][$codeIt]);
-        }
- 
-        $this->SubObjects[$object['cn'][0]]['status']      = "edited";
-        $this->SubObjects[$object['cn'][0]]['dn']          = $object['dn'];
+      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+      foreach($res as $obj){
+        $objects = array();
+        $objects['status']      = "FreshLoaded";
+        $objects['dn']          = $obj['dn'];
+        $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+        $this->SubObjects[$objects['cn']] = $objects;
       }
-
     }
     $this->is_new = FALSE;
     if($this->dn == "new"){
@@ -483,6 +459,37 @@ class faiVariable extends plugin
       $this->cn = get_post('cn');
     }
   }
+
+  /* Reload some attributes */
+  function get_object_attributes($object,$attributes)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->cat($object['dn'],$attributes);
+    $tmp  = $ldap->fetch();
+
+    foreach($attributes as $attrs){
+      if(isset($tmp[$attrs][0])){
+        $var = $tmp[$attrs][0];
+
+        /* Check if we must decode some attributes */
+        if(in_array_ics($attrs,$this->sub64coded)){
+          $var = base64_decode($var);
+        }
+
+        /*  check if this is a binary entry */
+        if(in_array_ics($attrs,$this->subBinary)){
+          $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
+        }
+
+        /* Fix slashes */
+        $var = addslashes($var);
+        $object[$attrs] = $var;
+      }
+    }
+    return($object);
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
