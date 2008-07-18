@@ -47,44 +47,18 @@ class faiScript extends plugin
      * First read SubObjects from ldap ... and then the partition definitions for the SubObjects.
      */
     if($dn != "new"){
-
       $this->dn =$dn;
-
-      /* Get FAIstate
-       */
-      if(isset($this->attrs['FAIstate'][0])){
-        $this->FAIstate = $this->attrs['FAIstate'][0];
-      }
 
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
-      $ldap     = $this->config->get_ldap_link();
-      $ldap->cd ($this->dn);
-      
-      $attrs_to_search = $this->subAttributes;
-      $attrs_to_search[] = "FAIstate";
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
-      $data = array();
-      while($object = $ldap->fetch()){
-        $data[] = $object;
-      }
-      foreach($data as $object){
-
-        /* Skip objects, that are tagged as removed */
-        if(isset($object['FAIstate'][0])){
-          if(preg_match("/removed$/",$object['FAIstate'][0])){
-            continue;
-          }
-        }
-
-        /* Set status for save management */
+      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+      foreach($res as $obj){
         $objects = array();
         $objects['status']      = "FreshLoaded";
-        $objects['dn']          = $object['dn'];
+        $objects['dn']          = $obj['dn'];
         $objects                = $this->get_object_attributes($objects,$this->subAttributes);
         $this->SubObjects[$objects['cn']] = $objects;
       }
-    
     }
 
     $this->is_new = FALSE;
@@ -191,7 +165,7 @@ class faiScript extends plugin
       }
 
       /* Delete script requested */
-      if(preg_match("/^deletescript_/",$name) && preg_match("/freeze/i",$this->FAIstate)){
+      if(preg_match("/^deletescript_/",$name) && !preg_match("/freeze/i",$this->FAIstate)){
         $s_action = "remove";
         $s_entry = preg_replace("/^deletescript_/","",$name);
         $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));

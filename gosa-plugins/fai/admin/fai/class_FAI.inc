@@ -21,7 +21,7 @@ class FAI
     $tmp = array();
 
     if(!FAI::is_release_department($Current_DN)) {
-      return($res);
+#      return($res);
     }
 
     /* Collect some basic informations and initialize some variables */ 
