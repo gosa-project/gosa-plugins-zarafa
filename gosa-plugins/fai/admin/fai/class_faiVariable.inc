@@ -388,11 +388,11 @@ class faiVariable extends plugin
 
     /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-    $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+    $res = FAI::get_all_objects_for_given_base($source['dn'],"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
     foreach($res as $obj){
 
       /* Skip not relevant objects */
-      if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
+      if(!preg_match("/".normalizePreg($source['dn'])."$/i",$obj['dn'])) continue;
 
       $objects = array();
       $objects['status']      = "edited";
