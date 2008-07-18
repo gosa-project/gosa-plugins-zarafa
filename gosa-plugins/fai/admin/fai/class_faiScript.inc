@@ -591,19 +591,18 @@ class faiScript extends plugin
 
     /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
-      foreach($res as $obj){
+    $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+    foreach($res as $obj){
 
-        /* Skip not relevant objects */
-        if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
+      /* Skip not relevant objects */
+      if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
 
-        $objects = array();
-        $objects['status']      = "edited";
-        $objects['dn']          = $obj['dn'];
-        $objects                = $this->get_object_attributes($objects,$this->subAttributes);
-        $objects                = $this->get_object_attributes($objects,$this->sub_Load_Later);
-        $this->SubObjects[$objects['cn']] = $objects;
-      }
+      $objects = array();
+      $objects['status']      = "edited";
+      $objects['dn']          = $obj['dn'];
+      $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+      $objects                = $this->get_object_attributes($objects,$this->sub_Load_Later);
+      $this->SubObjects[$objects['cn']] = $objects;
     }
   }
 
