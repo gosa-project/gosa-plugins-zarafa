@@ -495,66 +495,40 @@ class faiPartitionTable extends plugin
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
-    /* Get FAIstate
+
+    /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-    if(isset($source['FAIstate'][0])){
-      $this->FAIstate = $source['FAIstate'][0];
+    $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))");
+    foreach($res as $obj){
+
+      /* Skip not relevant objects */
+      if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
+
+      $objects = array();
+      $objects['description']  = "";
+      $objects['status']      = "edited";
+      $objects['dn']          = $obj['dn'];
+      $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+      $this->disks[$objects['cn']] = $objects;
+      $this->disks[$objects['cn']]['partitions'] = array();
     }
 
-    /* Read all disks from ldap taht are defined fot this partition table 
-     */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($source['dn']);
-    $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))",array("*"));
-    while($object = $ldap->fetch()){
-
-      /* Skip objects, that are tagged as removed */
-      if(isset($object['FAIstate'][0])){
-        if(preg_match("/removed$/",$object['FAIstate'][0])){
-          continue;
-        }
-      }
-
-      $this->disks[$object['cn'][0]]['status']      = "edited";
-      $this->disks[$object['cn'][0]]['dn']          = $object['dn'];
-      $this->disks[$object['cn'][0]]['cn']          = $object['cn'][0];
-      if(isset($object['description'][0])){
-        $this->disks[$object['cn'][0]]['description'] = $object['description'][0];
-      }else{
-        $this->disks[$object['cn'][0]]['description'] = "";
-      }
-      $this->disks[$object['cn'][0]]['partitions']   = array();
-    }
-
-    /* read all partitions for each disk 
+    /* read all partitions for each disk
      */
     foreach($this->disks as $name => $disk){
-      $ldap->cd ($disk['dn']);
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))",array("*"));
-      while($partition = $ldap->fetch()){
+      $res = FAI::get_all_objects_for_given_base($disk['dn'],"(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))");
+      foreach($res as $obj){
 
-        /* Skip objects, that are tagged as removed */
-        if(isset($partition['FAIstate'][0])){
-          if(preg_match("/removed$/",$partition['FAIstate'][0])){
-            continue;
-          }
-        }
+        /* Skip not relevant objects */
+        if(!preg_match("/".normalizePreg($disk['dn'])."$/i",$obj['dn'])) continue;
 
-        /* remove count ... from ldap result 
-         */
-        foreach($partition as $key=>$val){
-          if((is_numeric($key))||($key=="count")||($key=="dn")){
-            unset($partition[$key]);
-          }else{
-            $partition[$key] = $val[0];
-          }
-        }
-
-        /* Append fetched partitions
-         */
-        $partition['status']="edited";
-        $this->disks[$name]['partitions'][$partition['FAIpartitionNr']] = $partition; 
-      }  
+        $objects = array();
+        $objects['status']      = "edited";
+        $objects['dn']          = $obj['dn'];
+        $objects                = $this->get_object_attributes($objects,$this->subPartAttributes);
+        unset($objects['dn']);;
+        $this->disks[$name]['partitions'][$objects['FAIpartitionNr']] = $objects;
+      }
     }
     ksort($this->disks);
   }

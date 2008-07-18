@@ -388,33 +388,17 @@ class faiVariable extends plugin
 
     /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-    $ldap     = $this->config->get_ldap_link();
-    $ldap->cd ($source['dn']);
-    $attrs_to_search = $this->subAttributes;
-    $attrs_to_search[] = "FAIstate";
-    $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
-    while($object = $ldap->fetch()){
+    $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+    foreach($res as $obj){
 
-      /* Skip objects, that are tagged as removed */
-      if(isset($object['FAIstate'][0])){
-        if(preg_match("/removed$/",$object['FAIstate'][0])){
-          continue;
-        }
-      }
+      /* Skip not relevant objects */
+      if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
 
-      /* Set status for save management */
-      foreach($this->subAttributes as $attrs){
-        if(!isset($object[$attrs][0])){
-          $this->SubObjects[$object['cn'][0]][$attrs]="";
-        }else{
-          $this->SubObjects[$object['cn'][0]][$attrs]=$object[$attrs][0];
-        }
-      }
-      foreach($this->sub64coded as $codeIt){
-        $this->SubObjects[$object['cn'][0]][$codeIt]=base64_decode($this->SubObjects[$object['cn'][0]][$codeIt]);
-      }
-      $this->SubObjects[$object['cn'][0]]['status']      = "edited";
-      $this->SubObjects[$object['cn'][0]]['dn']          = $object['dn'];
+      $objects = array();
+      $objects['status']      = "edited";
+      $objects['dn']          = $obj['dn'];
+      $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+      $this->SubObjects[$objects['cn']] = $objects;
     }
   } 
 
