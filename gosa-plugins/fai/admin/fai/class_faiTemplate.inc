@@ -50,6 +50,10 @@ class faiTemplate extends plugin
        */
       $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
       foreach($res as $obj){
+
+        /* Skip not relevant objects */
+        if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
+
         $objects = array();
         $objects['status']      = "FreshLoaded";
         $objects['dn']          = $obj['dn'];
