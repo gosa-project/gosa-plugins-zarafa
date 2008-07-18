@@ -7,6 +7,10 @@ class faiPartitionTable extends plugin
   var $attributes       = array("cn","description");
   var $objectclasses    = array("top","FAIclass","FAIpartitionTable");
 
+  var $subAttributes = array("cn","description","FAIpartitionNr");
+  var $sub64coded = array();
+  var $subBinary = array();
+
   /* Specific attributes */
   var $cn               = "";       // The class name for this object
   var $description      = "";       // The description for this set of partitions
@@ -23,71 +27,36 @@ class faiPartitionTable extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
-    $this->acl ="#all#";
-
-    $this->ui = get_userinfo();    
-
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
-     * First read disks from ldap ... and then the partition definitions for the disks.
      */
+    $this->ui = get_userinfo();
     if($dn != "new"){
       $this->dn =$dn;
 
-      /* Read all disks from ldap taht are defined fot this partition table 
+      /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
-      $ldap = $this->config->get_ldap_link();
-      $ldap->cd ($this->dn);
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))",array("*"));
-      while($object = $ldap->fetch()){
-
-        /* Skip objects, that are tagged as removed */
-        if(isset($object['FAIstate'][0])){
-          if(preg_match("/removed$/",$object['FAIstate'][0])){
-            continue;
-          }
-        }
-
-        $this->disks[$object['cn'][0]]['status']      = "edited";
-        $this->disks[$object['cn'][0]]['dn']          = $object['dn'];
-        $this->disks[$object['cn'][0]]['cn']          = $object['cn'][0];
-        if(isset($object['description'][0])){
-          $this->disks[$object['cn'][0]]['description'] = $object['description'][0];
-        }else{
-          $this->disks[$object['cn'][0]]['description'] = "";
-        }
-        $this->disks[$object['cn'][0]]['partitions']   = array();
+      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=FAIpartitionTable))");
+      foreach($res as $obj){
+        $objects = array();
+        $objects['status']      = "edited";
+        $objects['dn']          = $obj['dn'];
+        $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+        $this->disks[$objects['cn']] = $objects;
       }
-  
+
       /* read all partitions for each disk 
        */
       foreach($this->disks as $name => $disk){
-        $ldap->cd ($disk['dn']);
-        $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))",array("*"));
-        while($partition = $ldap->fetch()){
 
-          /* Skip objects, that are tagged as removed */
-          if(isset($partition['FAIstate'][0])){
-            if(preg_match("/removed$/",$partition['FAIstate'][0])){
-              continue;
-            }
-          }
-
-          /* remove count ... from ldap result 
-           */
-          foreach($partition as $key=>$val){
-            if((is_numeric($key))||($key=="count")||($key=="dn")){
-              unset($partition[$key]);
-            }else{
-              $partition[$key] = $val[0];
-            }
-          }
-
-          /* Append fetched partitions
-           */
-          $partition['status']="edited";
-          $this->disks[$name]['partitions'][$partition['FAIpartitionNr']] = $partition; 
-        }  
+        $res = FAI::get_all_objects_for_given_base($disk['dn'],"(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))");
+        foreach($res as $obj){
+          $objects = array();
+          $objects['status']      = "edited";
+          $objects['dn']          = $obj['dn'];
+          $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+          $this->disks[$name]['partitions'][$objects['cn']] = $objects;
+        }
       }
     }
     $this->is_new = FALSE;
@@ -115,6 +84,8 @@ class faiPartitionTable extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    print_a($this->disks);
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -617,6 +588,37 @@ class faiPartitionTable extends plugin
       $this->cn = get_post('cn');
     }
   }
+
+  /* Reload some attributes */
+  function get_object_attributes($object,$attributes)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->cat($object['dn'],$attributes);
+    $tmp  = $ldap->fetch();
+
+    foreach($attributes as $attrs){
+      if(isset($tmp[$attrs][0])){
+        $var = $tmp[$attrs][0];
+
+        /* Check if we must decode some attributes */
+        if(in_array_ics($attrs,$this->sub64coded)){
+          $var = base64_decode($var);
+        }
+
+        /*  check if this is a binary entry */
+        if(in_array_ics($attrs,$this->subBinary)){
+          $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
+        }
+
+        /* Fix slashes */
+        $var = addslashes($var);
+        $object[$attrs] = $var;
+      }
+    }
+    return($object);
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
