@@ -7,7 +7,9 @@ class faiPartitionTable extends plugin
   var $attributes       = array("cn","description");
   var $objectclasses    = array("top","FAIclass","FAIpartitionTable");
 
-  var $subAttributes = array("cn","description","FAIpartitionNr");
+  var $subAttributes      = array("cn","description");
+  var $subPartAttributes  = array("cn","FAIpartitionNr","FAIpartitionSize","FAImountPoint","FAIfsType","FAIpartitionType","FAImountOptions","FAIfsOptions","FAIpartitionFlags","description");
+
   var $sub64coded = array();
   var $subBinary = array();
 
@@ -36,29 +38,40 @@ class faiPartitionTable extends plugin
 
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
-      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=FAIpartitionTable))");
+      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))");
       foreach($res as $obj){
+
+        /* Skip not relevant objects */
+        if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
+
         $objects = array();
+        $objects['description']  = "";
         $objects['status']      = "edited";
         $objects['dn']          = $obj['dn'];
         $objects                = $this->get_object_attributes($objects,$this->subAttributes);
         $this->disks[$objects['cn']] = $objects;
+        $this->disks[$objects['cn']]['partitions'] = array();
       }
 
       /* read all partitions for each disk 
        */
       foreach($this->disks as $name => $disk){
-
         $res = FAI::get_all_objects_for_given_base($disk['dn'],"(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))");
         foreach($res as $obj){
+
+          /* Skip not relevant objects */
+          if(!preg_match("/".normalizePreg($disk['dn'])."$/i",$obj['dn'])) continue;
+
           $objects = array();
           $objects['status']      = "edited";
           $objects['dn']          = $obj['dn'];
-          $objects                = $this->get_object_attributes($objects,$this->subAttributes);
-          $this->disks[$name]['partitions'][$objects['cn']] = $objects;
+          $objects                = $this->get_object_attributes($objects,$this->subPartAttributes);
+          unset($objects['dn']);;
+          $this->disks[$name]['partitions'][$objects['FAIpartitionNr']] = $objects;
         }
       }
     }
+
     $this->is_new = FALSE;
     if($this->dn == "new"){
       $this->is_new =TRUE;
@@ -84,8 +97,6 @@ class faiPartitionTable extends plugin
   {
     /* Call parent execute */
     plugin::execute();
-
-    print_a($this->disks);
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
@@ -403,6 +414,11 @@ class faiPartitionTable extends plugin
       $disk_dn                    = "cn=".$disk['cn'].",".$this->dn;
       $disk_attrs['cn']           =  $disk['cn'];
       $disk_attrs['description']  =  $disk['description']; 
+
+      if(empty($disk_attrs['description']) && $disk['status'] == "edited"){
+        $disk_attrs['description'] = array();
+      }
+
       $disk_attrs['objectClass']  =  array("top","FAIclass","FAIpartitionDisk");
 
       if($disk['status']=="new"){
@@ -457,8 +473,8 @@ class faiPartitionTable extends plugin
           $partition_attrs['FAImountPoint']="swap";
         }
 
-	/* Tag object */
-	$this->tag_attrs($partition_attrs, $partition_dn, $this->gosaUnitTag);
+        /* Tag object */
+        $this->tag_attrs($partition_attrs, $partition_dn, $this->gosaUnitTag);
 
         if($partition['status'] == "delete"){
           FAI::prepare_to_save_FAI_object($partition_dn,array(),true);
