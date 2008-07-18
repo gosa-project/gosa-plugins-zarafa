@@ -50,6 +50,7 @@ class faiVariable extends plugin
         if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
 
         $objects = array();
+        $objects['description'] = "";
         $objects['status']      = "FreshLoaded";
         $objects['dn']          = $obj['dn'];
         $objects                = $this->get_object_attributes($objects,$this->subAttributes);
