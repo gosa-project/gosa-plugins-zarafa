@@ -160,6 +160,7 @@ class mimetype extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/i",$this->FAIstate)));
     }
+    $smarty->assign("IconReadable", preg_match("/r/",$this->getacl("gotoMimeIcon",preg_match("/freeze/i",$this->FAIstate))));
 
     /* Base select dialog */
     $once = true;
@@ -220,6 +221,7 @@ class mimetype extends plugin
             /* Get action vars */
             $func 		= $action['Func'];		// Get function name 
             $attr 		= $action['Attr'];		// Get attribute name
+            $acl_a 		= preg_replace("/^use_/","",$action['Attr']);		// Get attribute name
 
             /* Get entry id */
             $s_entry  	= preg_replace($regex,"",$name);
@@ -227,7 +229,7 @@ class mimetype extends plugin
 
             /* Execute a command with the given attribute and entry 
                e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
-            if($this->acl_is_writeable($attr)){
+            if($this->acl_is_writeable($acl_a)){
               $this->$attr= $this->$func($s_entry,$this->$attr,true);					 
             }
           }

@@ -12,7 +12,7 @@
 						{t}Mime type{/t}{$must}
 					</td>
 					<td>
-{render acl=$gotoMimeGroupACL}
+{render acl=$cnACL}
 						<input type="text" name='cn' value="{$cn}" title='{t}Please enter a name for the mime type here{/t}'>
 {/render}
 					</td>
@@ -65,8 +65,13 @@
 				<tr>
 					<td>
 						<LABEL for="picture_file">{t}Icon{/t}</LABEL><br>
+{if $IconReadable}
 						<img src="{$gotoMimeIcon}" border=1 alt='{t}Mime icon{/t}' 
 							style="width:48px; height:48; background-color:white; vertical-align:bottom;">
+{else}
+						<img src="images/empty.png" border=1 alt='{t}Mime icon{/t}' 
+							style="width:48px; height:48; background-color:white; vertical-align:bottom;">
+{/if}
 					</td>
 					<td style="vertical-align:top">
 						&nbsp;<br>
