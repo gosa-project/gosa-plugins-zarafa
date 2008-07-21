@@ -50,11 +50,11 @@
    <td style="vertical-align:top">
     <table summary="">
         <tr>
-            <td><LABEL for="dev_id">{t}Serial number{/t}&nbsp;{t}(iSerial){/t}</LABEL>{$must}
+            <td><LABEL for="devID">{t}Serial number{/t}&nbsp;{t}(iSerial){/t}</LABEL>{$must}
             </td>
             <td>
-{render acl=$dev_idACL}
-                <input type="text" value="{$dev_id}" name="dev_id" id="dev_id">
+{render acl=$devIDACL}
+                <input type="text" value="{$devID}" name="devID" id="devID">
 {/render}
             </td>
             <td colspan="2">&nbsp;</td>

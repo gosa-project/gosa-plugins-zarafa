@@ -9,16 +9,16 @@ class deviceGeneric extends plugin
   public $orig_dn       = "";
   public $description   = "";
   public $vendor        = "";
-  public $dev_id        = "";
+  public $devID        = "";
   public $serial        = "";
   public $base          = "";	
   public $types;
   public $type;
 
-  public $attributes      = array("cn","description","dev_id","serial","vendor", "type");
+  public $attributes      = array("cn","description","devID","serial","vendor", "type");
   public $objectclasses   = array("top","gotoDevice");
 
-  public $CopyPasteVars   = array("orig_cn","description","vendor","dev_id","serial","base");
+  public $CopyPasteVars   = array("orig_cn","description","vendor","devID","serial","base");
 
   public function deviceGeneric(&$config,$dn = NULL)
   {
@@ -36,7 +36,7 @@ class deviceGeneric extends plugin
       $tmp = preg_split("/\|/",$this->attrs['gotoHotplugDevice'][0]);
       $this->cn         = $this->attrs['cn'][0];
       $this->description= $tmp[0];
-      $this->dev_id     = $tmp[1];
+      $this->devID     = $tmp[1];
       $this->serial     = $tmp[2];
       $this->vendor     = $tmp[3];
       if (isset($tmp[4])){
@@ -94,7 +94,7 @@ class deviceGeneric extends plugin
     }
 
     /* Skip serial check if vendor and product id are given */
-    if(preg_match("/^\s+$/i",$this->dev_id)){
+    if(preg_match("/^\s+$/i",$this->devID)){
       $message[]= msgPool::invalid(_("iSerial"),"","01234");
     }
     if(empty($this->serial) || !$this->is_2byteHex($this->serial)){
@@ -168,7 +168,7 @@ class deviceGeneric extends plugin
     $this->attrs = array();
     $this->attrs['cn'] = $this->cn;
     $this->attrs['gotoHotplugDevice'] = "";
-    foreach(array("description","dev_id","serial","vendor", "type") as $post){
+    foreach(array("description","devID","serial","vendor", "type") as $post){
       $this->attrs['gotoHotplugDevice'] .= $this->$post."|"; 
     }
     $this->attrs['gotoHotplugDevice'] = preg_replace("/\|$/","",$this->attrs['gotoHotplugDevice']);
@@ -255,7 +255,7 @@ class deviceGeneric extends plugin
             "type"          => _("Tpye"),
             "serial"        => _("Serial"),
             "vendor"        => _("Vendor"), 
-            "dev_id"        => _("Devive ID"))
+            "devID"        => _("Devive ID"))
           ));
 
   }
