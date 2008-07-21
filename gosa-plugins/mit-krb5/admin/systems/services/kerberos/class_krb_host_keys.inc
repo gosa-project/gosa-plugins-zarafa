@@ -30,7 +30,7 @@
              The keys can be created and removed.
              A running "GOsa support Daemon" with a krb5 module is required.
 */
-class krb_host_keys extends plugin 
+class krbHostKeys extends plugin 
 {
 
   public  $config;
@@ -46,7 +46,6 @@ class krb_host_keys extends plugin
   private $init_namingAttr  = "";
   private $namingAttr       = "";
   private $is_service_key   = FALSE;
-
   private $confirm_box      = NULL;
 
   /*! \brief  Initalizes the kerberos host/service key generation. 
@@ -61,6 +60,9 @@ class krb_host_keys extends plugin
      */
     plugin::plugin($config, NULL);
     $this->object = $object;
+
+    $this->acl_category = &$this->object->acl_category;
+    $this->acl_base = &$this->object->acl_base;
 
     /* Instantiate si class, to be able to communicate with the support daemon.
      */
@@ -315,7 +317,7 @@ class krb_host_keys extends plugin
     $smarty->assign("server_list" ,$this->server_list);
     $smarty->assign("service_plugin" ,$service_plugin);
     $smarty->assign("is_service_key" , $this->is_service_key);
-    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
+    return($smarty->fetch (get_template_path('krbHostKeys.tpl', TRUE,dirname(__FILE__))));
   }
 
 
@@ -431,6 +433,27 @@ class krb_host_keys extends plugin
   public function ServiceKey($bool = TRUE)
   {
     $this->is_service_key = $bool;
+  }
+
+
+  /*! \brief Return plugin informations for acl handling
+      @return Array   ACL infos.
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Kerberos key"),
+          "plDescription" => _("Kerberos host key"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 2,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server","workstation","terminal"),
+
+          "plProvidedAcls"=> array()
+        ));
+        
+
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
