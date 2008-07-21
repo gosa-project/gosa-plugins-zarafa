@@ -370,9 +370,11 @@ sub get_local_ip_for_remote_ip {
 	my $result="0.0.0.0";
 
 	if($server_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
-		if($server_ip eq "127.0.0.1") {
-			$result="127.0.0.1";
-		} else {
+        # client should always have a 'valid' ip-address, which is available from other hosts too,
+        # 127.0.0.1 says nothing to foreign host
+		#if($server_ip eq "127.0.0.1") {
+		#	$result="127.0.0.1";
+		#} else {
 			my $PROC_NET_ROUTE= ('/proc/net/route');
 
 			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
@@ -399,7 +401,7 @@ sub get_local_ip_for_remote_ip {
 					last;
 				}
 			}
-		}
+		#}
 	} else {
 		daemon_log("get_local_ip_for_remote_ip was called with a non-ip parameter: $server_ip", 1);
 	}
@@ -912,11 +914,21 @@ sub save_fai_log {
 }
 
 
+sub sig_handler {
+	my ($kernel, $signal) = @_[KERNEL, ARG0] ;
+	daemon_log("0 INFO got signal '$signal'", 1); 
+	$kernel->sig_handled();
+	return;
+}
+
+
 sub _start {
     my ($kernel, $heap) = @_[KERNEL, HEAP];
     $kernel->alias_set('client_session');
     $global_kernel = $kernel;       # this is used to throw events at each point of the skript
-    
+ 
+    $kernel->sig(USR1 => "sig_handler");
+
     # force a registration at a gosa-si-server
     $kernel->yield('register_at_gosa_si_server');
     
@@ -1128,10 +1140,6 @@ daemon_log("INFO: start socket for incoming xml messages at port '$client_port' 
 
 # prepare variables
 if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); }
-############################################################
-# to change
-#if( $server_ip eq "127.0.1.1" ) { $server_ip = "127.0.0.1" } 
-############################################################
 if (defined $server_ip && defined $server_port) {
     $server_address = $server_ip.":".$server_port;
 }
@@ -1188,6 +1196,7 @@ POE::Session->create(
 	inline_states => {
 		_start => \&_start, 
         _default => \&_default,
+        sig_handler => \&sig_handler,
         register_at_gosa_si_server => \&register_at_gosa_si_server,
 
         # trigger periodical tasks
