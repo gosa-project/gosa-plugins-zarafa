@@ -294,6 +294,8 @@ sub get_log_file_by_date_and_mac {
     if (not -f $act_log_file) {
         my $error_string = "client fai log file '$act_log_file' do not exist or could not be read"; 
         &main::daemon_log("$session_id ERROR: $error_string", 1); 
+        &main::daemon_log("$session_id ERROR: mac='$mac', date='$date', log_file='$log_file'", 1); 
+        &main::daemon_log("$session_id ERROR: could not process message: $msg", 1); 
         return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
     
