@@ -66,8 +66,8 @@ class termgeneric extends plugin
 
     plugin::plugin ($config, $dn, $parent);
 
-    if(class_available("krb_host_keys")){
-      $this->kerberos_key_service = new krb_host_keys($this->config,$this);
+    if(class_available("krbHostKeys")){
+      $this->kerberos_key_service = new krbHostKeys($this->config,$this);
     }
 
     if(!isset($this->parent->by_object['ogroup'])){
