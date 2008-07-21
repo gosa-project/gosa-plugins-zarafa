@@ -15,8 +15,7 @@ class deviceGeneric extends plugin
   public $types;
   public $type;
 
-  public $posts           = array("description","dev_id","serial","vendor", "type");
-  public $attributes      = array("cn");
+  public $attributes      = array("cn","description","dev_id","serial","vendor", "type");
   public $objectclasses   = array("top","gotoDevice");
 
   public $CopyPasteVars   = array("orig_cn","description","vendor","dev_id","serial","base");
@@ -71,13 +70,14 @@ class deviceGeneric extends plugin
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
-    foreach($this->posts as $attr){
-      $smarty->assign($attr,$this->$attr);
+  
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $attr => $desc){
+      $smarty->assign($attr."ACL", $this->getacl($attr));
     }
 
     $smarty->assign("type",$this->type);
     $smarty->assign ("types", $this->types);
-
     return($smarty->fetch(get_template_path("deviceGeneric.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -136,12 +136,6 @@ class deviceGeneric extends plugin
           $this->base = get_post("base");
         }
       }
-    
-      foreach($this->posts as $post){
-        if(isset($_POST[$post])){
-          $this->$post = get_post($post);
-        }
-      }
     }
   }
 
@@ -171,8 +165,10 @@ class deviceGeneric extends plugin
   {
     plugin::save();
 
+    $this->attrs = array();
+    $this->attrs['cn'] = $this->cn;
     $this->attrs['gotoHotplugDevice'] = "";
-    foreach($this->posts as $post){
+    foreach(array("description","dev_id","serial","vendor", "type") as $post){
       $this->attrs['gotoHotplugDevice'] .= $this->$post."|"; 
     }
     $this->attrs['gotoHotplugDevice'] = preg_replace("/\|$/","",$this->attrs['gotoHotplugDevice']);
@@ -245,7 +241,7 @@ class deviceGeneric extends plugin
   {
     return (array(
           "plShortName"   => _("Generic"),
-          "plDescription" => _("Device generic"),
+          "plDescription" => _("Device generic")." ("._("Hotplug").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
@@ -253,7 +249,13 @@ class deviceGeneric extends plugin
           "plCategory"    => array("devices" => array("description"  => _("Devices"),
                                                         "objectClass"  => "gotoHotplugDevice")),
           "plProvidedAcls"=> array(
-            "cn"                          => _("Name"))
+            "cn"            => _("Name"),
+            "base"          => _("Base"),
+            "description"   => _("Description"),
+            "type"          => _("Tpye"),
+            "serial"        => _("Serial"),
+            "vendor"        => _("Vendor"), 
+            "dev_id"        => _("Devive ID"))
           ));
 
   }

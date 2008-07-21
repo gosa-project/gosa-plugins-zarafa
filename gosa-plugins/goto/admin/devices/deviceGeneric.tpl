@@ -9,32 +9,40 @@
             <td><LABEL for="base">{t}Base{/t}</LABEL>
             </td>
             <td>
+{render acl=$baseACL}
 				<select name="base">
 					{html_options options=$bases selected=$base}
 				</select>
+{/render}
             </td>
         </tr>
         <tr>
             <td><LABEL for="cn">{t}Device name{/t}</LABEL>{$must}
             </td>
             <td>
+{render acl=$cnACL}
                 <input type="text" size=40 value="{$cn}" name="cn" id="cn">
+{/render}
             </td>
         </tr>
         <tr>
             <td><LABEL for="description">{t}Description{/t}</LABEL>
             </td>
             <td>
+{render acl=$descriptionACL}
                 <input type="text" size=40 value="{$description}" name="description" id="description">
+{/render}
             </td>
         </tr>
         <tr>
             <td><LABEL for="description">{t}Device type{/t}</LABEL>
             </td>
             <td>
-		<select id="type" size="1" name="type" title="{t}Choose the device type{/t}">
-			{html_options options=$types selected=$type}
-		</select>
+{render acl=$typeACL}
+				<select id="type" size="1" name="type" title="{t}Choose the device type{/t}">
+					{html_options options=$types selected=$type}
+				</select>
+{/render}
             </td>
         </tr>
     </table>
@@ -45,7 +53,9 @@
             <td><LABEL for="dev_id">{t}Serial number{/t}&nbsp;{t}(iSerial){/t}</LABEL>{$must}
             </td>
             <td>
+{render acl=$dev_idACL}
                 <input type="text" value="{$dev_id}" name="dev_id" id="dev_id">
+{/render}
             </td>
             <td colspan="2">&nbsp;</td>
         </tr>
@@ -53,14 +63,18 @@
             <td><LABEL for="vendor">{t}Vendor-ID{/t}&nbsp;{t}(idVendor){/t}</LABEL>{$must}
             </td>
             <td>
+{render acl=$vendorACL}
                 <input type="text" value="{$vendor}" name="vendor" id="vendor">
+{/render}
             </td>
         </tr>
         <tr>
           <td><LABEL for="produkt">{t}Product-ID{/t}&nbsp;{t}(idProduct){/t}</LABEL>{$must}
             </td>
             <td>
+{render acl=$serialACL}
                 <input type="text" value="{$serial}" name="serial" id="serial">
+{/render}
             </td>
         </tr>
     </table>
