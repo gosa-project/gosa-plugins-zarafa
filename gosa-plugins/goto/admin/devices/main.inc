@@ -19,38 +19,39 @@
  */
 
 if ($remove_lock){
-		if(session::is_set('DeviceManagement')){
-				$DeviceManagement = session::get('DeviceManagement');
-				$DeviceManagement->remove_lock();
-				session::un_set ('DeviceManagement');
-		}
+  if(session::is_set('DeviceManagement')){
+    $DeviceManagement = session::get('DeviceManagement');
+    $DeviceManagement->remove_lock();
+    session::un_set ('DeviceManagement');
+  }
 } else {
 
-		/* Create DeviceManagement object on demand */
-		if (!session::is_set('DeviceManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-			session::set('DeviceManagement',new deviceManagement ($config));
-		}
+  /* Create DeviceManagement object on demand */
+  if (!session::is_set('DeviceManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+    session::set('DeviceManagement',new deviceManagement ($config));
+  }
 
-		/* Get object */
-		$DeviceManagement = session::get('DeviceManagement');
-		$DeviceManagement->save_object();
-		$output= $DeviceManagement->execute();
+  /* Get object */
+  $DeviceManagement = session::get('DeviceManagement');
+  $DeviceManagement->save_object();
+  $output= $DeviceManagement->execute();
 
-		/* Page header*/
-		if (session::is_set('objectinfo')){
-				$display= print_header(get_template_path('images/devices.png'), _("Hotplug device management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
-		} else {
-				$display= print_header(get_template_path('images/devices.png'), _("Hotplug device management"));
-		}
+  /* Page header*/
+  if (session::is_set('objectinfo')){
+    $display= print_header(get_template_path('images/devices.png'), _("Hotplug device management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
+  } else {
+    $display= print_header(get_template_path('images/devices.png'), _("Hotplug device management"));
+  }
 
-		/* Reset requested? */
-		if (isset($_GET['reset']) && $_GET['reset'] == 1){
-				del_lock ($ui->dn);
-				session::un_set ('DeviceManagement');
-		}
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    del_lock ($ui->dn);
+    session::un_set ('DeviceManagement');
+  }
 
-		/* Show and save dialog */
-		$display.= $output;
-		session::set('DeviceManagement',$DeviceManagement);
+  /* Show and save dialog */
+  $display.= $output;
+  session::set('DeviceManagement',$DeviceManagement);
 }
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
