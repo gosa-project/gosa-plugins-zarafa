@@ -317,7 +317,7 @@ class krbHostKeys extends plugin
     $smarty->assign("server_list" ,$this->server_list);
     $smarty->assign("service_plugin" ,$service_plugin);
     $smarty->assign("is_service_key" , $this->is_service_key);
-    return($smarty->fetch (get_template_path('krbHostKeys.tpl', TRUE,dirname(__FILE__))));
+    return($smarty->fetch (get_template_path('krb_host_keys.tpl', TRUE,dirname(__FILE__))));
   }
 
 
