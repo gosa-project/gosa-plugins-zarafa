@@ -60,15 +60,13 @@ $main::server_mac_address= &get_mac($network_interface);
 
 # import local events
 my ($error, $result, $event_hash) = &import_events($event_dir);
-if ($error == 0) {
-    foreach my $log_line (@$result) {
+
+foreach my $log_line (@$result) {
+    if ($log_line =~ / succeed: /) {
         &main::daemon_log("0 DEBUG: ClientPackages - $log_line", 7);
-    }
-} else {
-    foreach my $log_line (@$result) {
+    } else {
         &main::daemon_log("0 ERROR: ClientPackages - $log_line", 1);
     }
-
 }
 
 # Unit tag can be defined in config

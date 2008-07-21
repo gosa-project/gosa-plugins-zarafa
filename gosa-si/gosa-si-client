@@ -1102,13 +1102,12 @@ daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
 # import events
 my ($error, $result, $tmp_hash) = &import_events($event_dir);
 $event_hash = $tmp_hash;
-if ($error == 0) {
-    foreach my $log_line (@$result) {
-        daemon_log("DEBUG: $log_line", 7);
-    }
-} else {
-    foreach my $log_line (@$result) {
-        daemon_log("ERROR: $log_line", 1);
+
+foreach my $log_line (@$result) {
+    if ($log_line =~ / succeed: /) {
+        &main::daemon_log("0 DEBUG: $log_line", 7);
+    } else {
+        &main::daemon_log("0 ERROR: $log_line", 1);
     }
 }
 
