@@ -118,6 +118,7 @@ class application extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name, preg_match("/freeze/i",$this->FAIstate)));
     }
+    $smarty->assign("IconReadable", $this->acl_is_readable("gosaApplicationIcon"));
  
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent === NULL){
@@ -205,10 +206,10 @@ class application extends plugin
     }
 
     /* Checkboxes */
-    foreach (array("G" => "exec_for_groupmembers", "O" => "overwrite_config",
-          "L" => "place_on_kicker",
-          "D" => "place_on_desktop", "M" => "place_in_startmenu") as $key => $val){
-      if (preg_match("/$key/", $this->gosaApplicationFlags)){
+    foreach (array("G" => "execForGroupmembers", "O" => "overwriteConfig",
+          "L" => "placeOnKicker",
+          "D" => "placeOnDesktop", "M" => "placeInStartmenu") as $key => $val){
+      if (preg_match("/$key/", $this->gosaApplicationFlags) && $this->acl_is_readable("$val")){
         $smarty->assign("$val", "checked");
       } else {
         $smarty->assign("$val", "");
@@ -305,25 +306,22 @@ class application extends plugin
       /* Save attributes */
       parent::save_object();
 
+      $checks = array("execForGroupmembers" => "G",
+                      "placeOnDesktop"      => "D",
+                      "placeOnKicker"       => "L",
+                      "placeInStartmenu"    => "M",
+                      "overwriteConfig"     => "O");
+
       /* Save application flags */
-      $flag= "";
-      if (isset($_POST['exec_for_groupmembers']) && $_POST['exec_for_groupmembers'] == 1){
-        $flag.= "G";
-      }
-      if (isset($_POST['place_on_desktop']) && $_POST['place_on_desktop'] == 1){
-        $flag.= "D";
-      }
-      if (isset($_POST['place_on_kicker']) && $_POST['place_on_kicker'] == 1){
-        $flag.= "L";
-      }
-      if (isset($_POST['place_in_startmenu']) && $_POST['place_in_startmenu'] == 1){
-        $flag.= "M";
-      }
-      if (isset($_POST['overwrite_config']) && $_POST['overwrite_config'] == 1){
-        $flag.= "O";
-      }
-      if ($this->acl_is_writeable("gosaApplicationFlags")){
-        $this->gosaApplicationFlags= "[$flag]";
+      foreach($checks as $name => $flag){
+        if($this->acl_is_writeable($name)){
+          $set = isset($_POST[$name]) && $_POST[$name] == 1;
+          if(!$set && preg_match("/".$flag."/",$this->gosaApplicationFlags)){
+            $this->gosaApplicationFlags = preg_replace("/".$flag."/","",$this->gosaApplicationFlags);  
+          }elseif($set && !preg_match("/".$flag."/",$this->gosaApplicationFlags)){
+            $this->gosaApplicationFlags = preg_replace("/]/",$flag."]",$this->gosaApplicationFlags); 
+          }
+        }  
       }
 
       /* Remove current picture */
@@ -608,14 +606,13 @@ class application extends plugin
             "gosaApplicationExecute"  => _("Execute"),
             "gosaApplicationName"     => _("Name"),
             "gosaApplicationIcon"     => _("Icon"),
-            "gosaApplicationFlags"    => _("Flag"),
             "gotoLogonScript"         => _("Script content"),
 
-            "exec_for_groupmembers" => _("Only executable for members"),              // G
-            "place_on_desktop"      => _("Place icon on members desktop"),            // D
-            "place_on_kicker"       => _("Place entry in members launch bar"),        // L
-            "place_in_startmenu"    => _("Place entry in members startmenu"),         // M
-            "overwrite_config"      => _("Replace user configuration on startup"))  // O
+            "execForGroupmembers" => _("Only executable for members"),              // G
+            "placeOnDesktop"      => _("Place icon on members desktop"),            // D
+            "placeOnKicker"       => _("Place entry in members launch bar"),        // L
+            "placeInStartmenu"    => _("Place entry in members startmenu"),         // M
+            "overwriteConfig"      => _("Replace user configuration on startup"))  // O
             ));
   }
 }

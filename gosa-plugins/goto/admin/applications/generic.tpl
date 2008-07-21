@@ -65,7 +65,11 @@
     <td>
     <LABEL for="picture_file">{t}Icon{/t}</LABEL>
     <br>
+{if $IconReadable}
     <img alt="" src="getbin.php?rand={$rand}" border=1 style="width:48px; height:48; background-color:white; vertical-align:bottom;">
+{else}
+	<img src='images/empty.png' style="width:48px; height:48; background-color:white; vertical-align:bottom;" border=1 >
+{/if}
     </td>
     <td style="vertical-align:top">
     &nbsp;<br>
@@ -93,29 +97,29 @@
 <table summary="" style="width:100%;">
   <tr>
     <td style="width:50%;border-right:1px solid #B0B0B0; vertical-align:top">
-{render acl=$gosaApplicationFlagsACL}
-      <input type=checkbox name="exec_for_groupmembers" value="1" {$exec_for_groupmembers}>
+{render acl=$execForGroupmembersACL}
+      <input type=checkbox name="execForGroupmembers" value="1" {$execForGroupmembers}>
 {/render}
 	{t}Only executable for members{/t}
       <br>
-{render acl=$gosaApplicationFlagsACL}
-      <input type=checkbox name="overwrite_config" value="1" {$overwrite_config}>
+{render acl=$overwriteConfigACL}
+      <input type=checkbox name="overwriteConfig" value="1" {$overwriteConfig}>
 {/render}
 	{t}Replace user configuration on startup{/t}
     </td>
     <td>
-{render acl=$gosaApplicationFlagsACL}
-      <input type=checkbox name="place_on_desktop" value="1" {$place_on_desktop}>
+{render acl=$placeOnDesktopACL}
+      <input type=checkbox name="placeOnDesktop" value="1" {$placeOnDesktop}>
 {/render}
       {t}Place icon on members desktop{/t}
       <br>
-{render acl=$gosaApplicationFlagsACL}
-      <input type=checkbox name="place_in_startmenu" value="1" {$place_in_startmenu}>
+{render acl=$placeInStartmenuACL}
+      <input type=checkbox name="placeInStartmenu" value="1" {$placeInStartmenu}>
 {/render}
       {t}Place entry in members startmenu{/t}
       <br>
-{render acl=$gosaApplicationFlagsACL}
-      <input type=checkbox name="place_on_kicker" value="1" {$place_on_kicker}>
+{render acl=$placeOnKickerACL}
+      <input type=checkbox name="placeOnKicker" value="1" {$placeOnKicker}>
 {/render}
       {t}Place entry in members launch bar{/t}
     </td>

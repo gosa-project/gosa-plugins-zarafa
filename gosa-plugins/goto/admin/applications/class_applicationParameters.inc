@@ -38,8 +38,12 @@ class applicationParameters extends plugin
     plugin::execute();
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Show tab dialog headers */
@@ -54,29 +58,32 @@ class applicationParameters extends plugin
       }
     }
 
-    /* Add option to list */
-    if (isset($_POST['add_option'])){
-      $i= count($this->option_name);
-      $this->option_name[$i]= "";
-      $this->option_value[$i]= "";
-    }
+    if($this->acl_is_writeable("gosaApplicationParameter")){
 
-    /* Remove value from list */
-    for ($i= 0; $i<count($this->option_name); $i++){
-      if (isset($_POST["remove$i"])){
-        $k= 0;
-        $on= array();
-        $ov= array();
-        for ($j= 0; $j<count($this->option_name); $j++){
-          if ($j != $i){
-            $on[$k]= $this->option_name[$j];
-            $ov[$k]= $this->option_value[$j];
-            $k++;
+      /* Add option to list */
+      if (isset($_POST['add_option'])){
+        $i= count($this->option_name);
+        $this->option_name[$i]= "";
+        $this->option_value[$i]= "";
+      }
+
+      /* Remove value from list */
+      for ($i= 0; $i<count($this->option_name); $i++){
+        if (isset($_POST["remove$i"])){
+          $k= 0;
+          $on= array();
+          $ov= array();
+          for ($j= 0; $j<count($this->option_name); $j++){
+            if ($j != $i){
+              $on[$k]= $this->option_name[$j];
+              $ov[$k]= $this->option_value[$j];
+              $k++;
+            }
           }
+          $this->option_name= $on;
+          $this->option_value= $ov;
+          break;
         }
-        $this->option_name= $on;
-        $this->option_value= $ov;
-        break;
       }
     }
 
@@ -85,6 +92,7 @@ class applicationParameters extends plugin
       $this->option_name[]= "";
       $this->option_value[]= "";
     }
+    
 
 
     $acl = $this->getacl("gosaApplicationParameter")	;
@@ -120,7 +128,7 @@ class applicationParameters extends plugin
       }
     }
     $table.= "</table>";
-    $table.="<input type=\"submit\" name=\"add_option\" value=\""._("Add option")."\">";
+    $table.="<input type=\"submit\" name=\"add_option\" $tag value=\""._("Add option")."\">";
 
     /* Show main page */
     $smarty= get_smarty();
@@ -161,7 +169,7 @@ class applicationParameters extends plugin
   /* Save data to object */
   function save_object()
   {
-    if (isset($_POST['option0'])){
+    if (isset($_POST['option0']) && $this->acl_is_writeable("gosaApplicationParameter")){
       for ($i= 0; $i<count($this->option_name); $i++){
         $this->option_name[$i]= $_POST["option$i"];
         $this->option_value[$i]= "";
