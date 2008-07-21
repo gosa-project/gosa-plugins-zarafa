@@ -472,11 +472,36 @@ sub import_modules {
     close (DIR);
 }
 
+#===  FUNCTION  ================================================================
+#         NAME:  password_check
+#   PARAMETERS:  nothing
+#      RETURNS:  nothing
+#  DESCRIPTION:  escalates an critical error if two modules exist which are avaialable by 
+#                the same password
+#===============================================================================
+sub password_check {
+    my $passwd_hash = {};
+    while (my ($mod_name, $mod_info) = each %$known_modules) {
+        my $mod_passwd = @$mod_info[1];
+        if (not defined $mod_passwd) { next; }
+        if (not exists $passwd_hash->{$mod_passwd}) {
+            $passwd_hash->{$mod_passwd} = $mod_name;
+
+        # escalates critical error
+        } else {
+            &daemon_log("0 ERROR: two loaded modules do have the same password. Please modify the 'key'-parameter in config file");
+            &daemon_log("0 ERROR: module='$mod_name' and module='".$passwd_hash->{$mod_passwd}."'");
+            exit( -1 );
+        }
+    }
+
+}
+
 
 #===  FUNCTION  ================================================================
 #         NAME:  sig_int_handler
 #   PARAMETERS:  signal - string - signal arose from system
-#      RETURNS:  noting
+#      RETURNS:  nothing
 #  DESCRIPTION:  handels tasks to be done befor signal becomes active
 #===============================================================================
 sub sig_int_handler {
@@ -3007,6 +3032,12 @@ foreach my $foreign_server (@foreign_server_list) {
 }
 
 
+# import all modules
+&import_modules;
+# check wether all modules are gosa-si valid passwd check
+&password_check;
+
+
 POE::Component::Server::TCP->new(
     Alias => "TCP_SERVER",
 	Port => $server_port,
@@ -3056,14 +3087,6 @@ POE::Session->create(
         child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
 	}
 );
-
-
-# import all modules
-&import_modules;
-
-# TODO
-# check wether all modules are gosa-si valid passwd check
-
 
 
 POE::Kernel->run();

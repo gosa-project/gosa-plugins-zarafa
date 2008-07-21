@@ -33,7 +33,7 @@ foreach my $log_line (@$result) {
 
 sub get_module_info {
     my @info = ($main::server_address,
-            $main::foreign_server_key,            
+            $main::ServerPackages_key,         
             );
     return \@info;
 }
