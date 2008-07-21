@@ -167,7 +167,7 @@ class krbHostKeys extends plugin
   {
     /* Skip if there is no kerberos support available 
      */
-    if(!$this->kerberos_support) return("");
+    if(!$this->kerberos_support || !$this->acl_is_readable("0")) return("");
 
     /* Check if naming context has changed,
        in this case ask user if he wants to update the keys. 
@@ -242,6 +242,12 @@ class krbHostKeys extends plugin
       alt='{t}Recreate key{/t}' title='{t}Recreate key{/t}' src='images/lists/reload.png'>
       <input type='image' class='center' name='remove_%ID%'
       alt='{t}Remove key{/t}' title='{t}Remove key{/t}' src='images/lists/trash.png'>";
+
+    /* Check ACLs */
+    if(!$this->acl_is_writeable("0")){
+      $new = $rec = "";
+    }
+    
 
     foreach($this->server_list as $mac => $server){
 
@@ -376,6 +382,8 @@ class krbHostKeys extends plugin
   public function save_object_by_prefix($prefix)
   {
     if(!isset($this->last_list[$prefix])) return; // No posts for us 
+
+    if(!$this->acl_is_writeable("0")) return; // No permissions to change anything
 
     foreach($_POST as $name => $value){
       if(preg_match("/^create_/",$name)){
