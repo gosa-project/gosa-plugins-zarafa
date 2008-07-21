@@ -298,15 +298,19 @@ sub ping {
             usleep(100000);
         }
 
-        my $answer_xml = @{@$res[0]}[3];
-        my %data = ( 'answer_xml'  => 'bin noch da' );
-        $answer_msg = &build_msg("got_ping", $target, $source, \%data);
-        my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-        if (defined $forward_to_gosa){
-            $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+        # if an answer to the question exists
+        if (defined $message_id) {
+            my $answer_xml = @{@$res[0]}[3];
+            my %data = ( 'answer_xml'  => 'bin noch da' );
+            $answer_msg = &build_msg("got_ping", $target, $source, \%data);
+            my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+            if (defined $forward_to_gosa){
+                $answer_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+            }
+            $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
+            $res = $main::incoming_db->exec_statement($sql);
         }
-        $sql = "DELETE FROM $main::incoming_tn WHERE id=$message_id"; 
-        $res = $main::incoming_db->exec_statement($sql);
+
     }
 
     return ( $answer_msg );
