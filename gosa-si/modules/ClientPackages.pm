@@ -13,6 +13,7 @@ use XML::Simple;
 use Data::Dumper;
 use NetAddr::IP;
 use Net::LDAP;
+use Net::LDAP::Util;
 use Socket;
 use Net::hostent;
 
@@ -644,10 +645,11 @@ sub new_ldap_config {
 
 	# Do we need to look at an object class?
 	if (not @servers){
+            my $escaped_dn = &escape_dn_value($dn);
 	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
-			filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+			filter => "(&(objectClass=gosaGroupOfNames)(member=$escaped_dn))");
 		if($mesg->code) {
 			&main::daemon_log("$session_id ERROR: unable to search for '(&(objectClass=gosaGroupOfNames)(member=$dn))': ".$mesg->error, 1);
 			return;
