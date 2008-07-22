@@ -15,7 +15,7 @@ class goImapServer extends goService {
   var $dn               = NULL;
   var $StatusFlag       = "goImapServerStatus";
   var $attributes       = array("goImapName","goImapConnect","goImapAdmin","goImapPassword",
-                                "goImapSieveServer",
+                                "goImapSieveServer","goImapSievePort",
                                 "cyrusImap","cyrusImapSSL","cyrusPop3","cyrusPop3SSL");
 
   var $cn                   = "";
