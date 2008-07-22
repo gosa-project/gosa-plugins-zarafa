@@ -309,25 +309,27 @@ class servdnseditZone extends plugin
       }
     }
 
-    if((isset($_POST['AddMXRecord'])) && (!empty($_POST['StrMXRecord']))){
-      $this->mXRecords[] = array("type"=>"mXRecord","value"=>trim($_POST['StrMXRecord']));      
-    }
-
-    /* Handle Post events */
-    $once = true;
-    foreach($_POST as $name => $value){
-
-      /* Delete record if requested */
-      if((preg_match("/RemoveRecord_/",$name))&&($once)){
-        $once = false;
-        $id= preg_replace("/RemoveRecord_/","",$name);
-        unset($this->Records[$id]);
+    if($this->acl_is_writeable("mXRecord")){
+      if((isset($_POST['AddMXRecord'])) && (!empty($_POST['StrMXRecord']))){
+        $this->mXRecords[] = array("type"=>"mXRecord","value"=>trim($_POST['StrMXRecord']));      
       }
-    }
 
-    /* Add new Zonerecord */
-    if(isset($_POST['AddNewRecord'])){
-      $this->Records[] = array("type"=>"aRecord","value"=>"");
+      /* Handle Post events */
+      $once = true;
+      foreach($_POST as $name => $value){
+
+        /* Delete record if requested */
+        if((preg_match("/RemoveRecord_/",$name))&&($once)){
+          $once = false;
+          $id= preg_replace("/RemoveRecord_/","",$name);
+          unset($this->Records[$id]);
+        }
+      }
+
+      /* Add new Zonerecord */
+      if(isset($_POST['AddNewRecord'])){
+        $this->Records[] = array("type"=>"aRecord","value"=>"");
+      }
     }
 
     /* Fill in values */
@@ -374,31 +376,21 @@ class servdnseditZone extends plugin
   /* Save data to object */
   function save_object()
   {
-    //plugin::save_object();
-    foreach($this->attributes as $attr){
+    plugin::save_object();
 
-      if($this->Zone_is_used && in_array($attr,array("ReverseZone","zoneName"))){
-        continue;
-      }
-
-      if(isset($_POST[$attr])){
-        $this->$attr = $_POST[$attr];
-      }
-    }
-
-    foreach($this->Records as $id => $value){  
-      if(isset($_POST['RecordTypeSelectedFor_'.$id])){
-        $this->Records[$id]['type'] = $_POST['RecordTypeSelectedFor_'.$id];
-      }
-      if(isset($_POST['RecordValue_'.$id])){
-        $this->Records[$id]['value'] = $_POST['RecordValue_'.$id];
+    if($this->acl_is_writeable("zoneRecords")){
+      foreach($this->Records as $id => $value){  
+        if(isset($_POST['RecordTypeSelectedFor_'.$id])){
+          $this->Records[$id]['type'] = $_POST['RecordTypeSelectedFor_'.$id];
+        }
+        if(isset($_POST['RecordValue_'.$id])){
+          $this->Records[$id]['value'] = $_POST['RecordValue_'.$id];
+        }
       }
     }
-
-     if(isset($_POST['NetworkClass']) && !$this->Zone_is_used){
-       $this->NetworkClass = $_POST['NetworkClass'];
-     }
-
+    if(isset($_POST['NetworkClass']) && !$this->Zone_is_used && $this->acl_is_writeable("NetworkClass")){
+      $this->NetworkClass = $_POST['NetworkClass'];
+    }
   }
 
 
