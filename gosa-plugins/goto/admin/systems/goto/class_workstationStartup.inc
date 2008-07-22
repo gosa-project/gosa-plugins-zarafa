@@ -179,7 +179,7 @@ class workstartup extends plugin
       }
     }
 
-    $this->gotoShareSelections= $config->getShareList(true);
+    $this->otoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);
     $tmp2 = array();
   
@@ -317,15 +317,6 @@ class workstartup extends plugin
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
       new log("view","workstation/".get_class($this),$this->dn);
-    }
-
-    /* Do we need to flip is_account state? */
-    if(isset($_POST['modify_state'])){
-      if($this->is_account && $this->acl_is_removeable()){
-        $this->is_account= FALSE;
-      }elseif(!$this->is_account && $this->acl_is_createable()){
-        $this->is_account= TRUE;
-      }
     }
 
     /* Do we represent a valid terminal? */
@@ -508,7 +499,10 @@ class workstartup extends plugin
     $SelectBoxLdapServer->SetHeight(130);
 
     /* Add new ldap server to the list */
-    if(!$this->gotoLdap_inherit && isset($_POST['add_ldap_server']) && isset($_POST['ldap_server_to_add'])){
+    if($this->acl_is_writeable("gotoLdapServer") && 
+        !$this->gotoLdap_inherit && 
+        isset($_POST['add_ldap_server']) && 
+        isset($_POST['ldap_server_to_add'])){
       if(isset($this->gotoLdapServerList[$_POST['ldap_server_to_add']])){
         $to_add = $this->gotoLdapServerList[$_POST['ldap_server_to_add']];
         if(!in_array($to_add,$this->gotoLdapServers)){
@@ -518,7 +512,7 @@ class workstartup extends plugin
     }
     
     /* Move ldap servers up and down */
-    if(!$this->gotoLdap_inherit){
+    if(!$this->gotoLdap_inherit && $this->acl_is_writeable("gotoLdapServer")){
       foreach($_POST as $name => $value){
         if(preg_match("/sort_ldap_up_/",$name)){
           $id = preg_replace("/^sort_ldap_up_([0-9]*)_(x|y)$/","\\1",$name);
@@ -550,17 +544,20 @@ class workstartup extends plugin
     }
   
     /* Add Entries */
-    foreach($this->gotoLdapServers as $key => $server){
-      /* Announce missing entries */
-      if(!in_array($server,$this->gotoLdapServerList)){
-        $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
-      }
+    if($this->acl_is_readable("gotoLdapServer")){
 
-      /* Convert old style entry */
-      if (!preg_match('%:ldaps?://%', $server)){
-        $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
+      foreach($this->gotoLdapServers as $key => $server){
 
-      /* Beautify new style entries */
+        /* Announce missing entries */
+        if(!in_array($server,$this->gotoLdapServerList)){
+          $server = $server."&nbsp;<font style='color:red'>(missing)</font>";
+        }
+
+        /* Convert old style entry */
+        if (!preg_match('%:ldaps?://%', $server)){
+          $server= "ldap://".preg_replace('/^([^:]+):/', '\1/', $server);
+
+        /* Beautify new style entries */
       } else {
         $server= preg_replace("/^[^:]+:/", "", $server);
       }
@@ -572,6 +569,7 @@ class workstartup extends plugin
               "<input class='center' type='image' src='images/lists/sort-down.png' name='sort_ldap_down_".$key."'>&nbsp;".
               "<input class='center' type='image' src='images/lists/trash.png' name='gotoLdapRemove_".$key."'>",
               "attach" => "style='text-align:right;width:40px;border-right:0px;'")));
+      }    
     }    
 
     if($this->gotoLdap_inherit){
