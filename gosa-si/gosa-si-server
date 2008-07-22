@@ -2041,9 +2041,9 @@ sub change_goto_state {
 sub run_recreate_packages_db {
     my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
     my $session_id = $session->ID;
-	&main::daemon_log("$session_id INFO: Recreating FAI Packages DB ('$fai_release_tn', '$fai_server_tn', '$packages_list_tn')", 4);
-	$kernel->yield('create_fai_release_db');
-	$kernel->yield('create_fai_server_db');
+	&main::daemon_log("$session_id INFO: Recreating FAI Packages DB ('$fai_release_tn', '$fai_server_tn', '$packages_list_tn')", 5);
+	$kernel->yield('create_fai_release_db', $fai_release_tn);
+	$kernel->yield('create_fai_server_db', $fai_server_tn);
 	return;
 }
 
