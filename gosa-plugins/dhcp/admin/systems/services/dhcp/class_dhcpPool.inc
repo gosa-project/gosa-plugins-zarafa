@@ -28,9 +28,9 @@ class dhcpPool extends dhcpPlugin
   /* attribute list for save action */
   var $objectclasses= array('top', 'dhcpPool');
 
-  function dhcpPool($attrs)
+  function dhcpPool($parent,$attrs)
   {
-    dhcpPlugin::dhcpPlugin($attrs);
+    dhcpPlugin::dhcpPlugin($parent,$attrs);
 
     /* Load attributes */
     if (!$this->new){
