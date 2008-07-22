@@ -27,9 +27,9 @@ class dhcpHost extends dhcpPlugin
   /* attribute list for save action */
   var $objectclasses= array("top", "dhcpHost");
 
-  function dhcpHost($attrs,$host_exists_in_gosa = FALSE)
+  function dhcpHost($parent,$attrs,$host_exists_in_gosa = FALSE)
   {
-    dhcpPlugin::dhcpPlugin($attrs);
+    dhcpPlugin::dhcpPlugin($parent,$attrs);
 
     /* Load attributes */
     if (!$this->new){
@@ -82,9 +82,12 @@ class dhcpHost extends dhcpPlugin
     }
 
     /* Add footer */
-    $display.= "<div style='width:100%;text-align:right;margin-top:5px;'><input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>".
-               "&nbsp;<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'></div>";
-
+    $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
+#    if(preg_match("/w/",$this->parent->getacl(""))){
+        $display.=   "<input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>&nbsp;";
+#    }
+    $display.=   "<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'>";
+    $display.= "</div>";
 
     return ($display);
   }

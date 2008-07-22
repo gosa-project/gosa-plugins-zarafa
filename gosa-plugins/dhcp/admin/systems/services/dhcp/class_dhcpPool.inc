@@ -70,8 +70,12 @@ class dhcpPool extends dhcpPlugin
     }
 
     /* Add footer */
-    $display.= "<div style='width:100%;text-align:right;margin-top:5px;'><input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>".
-               "&nbsp;<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'></div>";
+    $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
+    if(preg_match("/w/",$this->parent->getacl(""))){
+        $display.=   "<input type=submit name='save_dhcp' value='".msgPool::saveButton()."'>&nbsp;";
+    }
+    $display.=   "<input type=submit name='cancel_dhcp' value='".msgPool::cancelButton()."'>";
+    $display.= "</div>";
 
     return ($display);
   }
