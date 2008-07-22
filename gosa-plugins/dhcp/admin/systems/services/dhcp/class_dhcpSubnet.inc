@@ -57,6 +57,9 @@ class dhcpSubnet extends dhcpPlugin
     $smarty->assign("cn", $this->cn);
     $smarty->assign("dhcp_netmask", $this->dhcpNetMask);
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     /* Prepare range */
     if ($this->use_range){
       $smarty->assign("use_range", "checked");

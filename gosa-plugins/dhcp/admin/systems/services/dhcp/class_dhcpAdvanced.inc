@@ -30,6 +30,7 @@ class dhcpAdvanced extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array();
+  var $parent;
 
   function dhcpAdvanced()
   {
@@ -70,6 +71,9 @@ class dhcpAdvanced extends plugin
     }
 
     $smarty= get_smarty();
+
+	/* Assign ACLs */
+	$smarty->assign("acl",$this->parent->getacl(""));
 
     /* Assign arrays */
     $statements= array();

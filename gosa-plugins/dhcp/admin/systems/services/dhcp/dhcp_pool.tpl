@@ -4,14 +4,20 @@
  <tr>
   <td width="50%">
    {t}Name{/t}{$must}&nbsp;
+{render acl=$acl}
    <input id='cn' type='text' name='cn' size='25' maxlength='80' value='{$cn}'
         title='{t}Name of pool{/t}'>
+{/render}
   </td>
   <td>
    {t}Range{/t}{$must}&nbsp;
+{render acl=$acl}
    <input type='text' name='range_start' size='25' maxlength='30' value='{$range_start}'>
+{/render}
    &nbsp;-&nbsp;
+{render acl=$acl}
    <input type='text' name='range_stop' size='25' maxlength='30' value='{$range_stop}'>
+{/render}
   </td>
  </tr>
 </table>

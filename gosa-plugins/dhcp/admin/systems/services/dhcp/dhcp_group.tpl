@@ -6,8 +6,10 @@
    {t}Name{/t}{$must}
   </td> 
   <td>
+{render acl=$acl}
    <input id='cn' type='text' name='cn' size='25' maxlength='80' value='{$cn}'
         title='{t}Name of group{/t}'>
+{/render}
   </td>
  </tr>
 </table>

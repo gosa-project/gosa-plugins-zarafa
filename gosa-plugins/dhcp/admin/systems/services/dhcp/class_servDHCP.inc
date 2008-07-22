@@ -121,7 +121,7 @@ class servdhcp extends goService
       $section= $_POST['section'];
       $tmp = new dhcpNewSectionDialog(NULL);
       if (isset($tmp->sectionMap[$section])){
-        $this->dialog= new $section($this->current_object);
+        $this->dialog= new $section($this,$this->current_object);
         $this->current_object= "";
       } else {
         $this->dialog= FALSE;
@@ -154,6 +154,7 @@ class servdhcp extends goService
         }
         $data= $this->dialog->save();
         if ($this->current_object == ""){
+
           /* New object */
           $newsects= array();
           foreach ($this->dhcpSections as $key => $dsc){
@@ -242,7 +243,7 @@ class servdhcp extends goService
         if (isset($this->dhcpObjectCache[$dn])){
           $section= $this->objectType($dn);
           $this->current_object= $dn;
-          $this->dialog= new $section($this->dhcpObjectCache[$dn]);
+          $this->dialog= new $section($this,$this->dhcpObjectCache[$dn]);
         }
       }
 
@@ -264,7 +265,7 @@ class servdhcp extends goService
       if (isset($this->dhcpObjectCache[$dn])){
         $section= $this->objectType($dn);
         $this->current_object= $dn;
-        $this->dialog= new $section($this->dhcpObjectCache[$dn]);
+        $this->dialog= new $section($this,$this->dhcpObjectCache[$dn]);
       }
     }
     
@@ -274,7 +275,7 @@ class servdhcp extends goService
       if (isset($this->dhcpObjectCache[$dn])){
         $section= $this->objectType($dn);
         $this->current_object= $dn;
-        $this->dialog= new $section($this->dhcpObjectCache[$dn]);
+        $this->dialog= new $section($this,$this->dhcpObjectCache[$dn]);
       }
     }
     

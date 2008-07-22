@@ -49,6 +49,9 @@ class dhcpPool extends dhcpPlugin
     $smarty->assign("range_start", $this->range_start);
     $smarty->assign("range_stop", $this->range_stop);
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     /* Show main page */
     $display= $smarty->fetch(get_template_path('dhcp_pool.tpl', TRUE, dirname(__FILE__))).$this->network->execute();
 

@@ -14,26 +14,42 @@
    <br>
    <b>{t}DHCP statements{/t}</b>
    <br>
+{render acl=$acl}
    <select name='dhcpstatements' style="width:100%;" size="14">
     {html_options values=$dhcpstatements output=$dhcpstatements}
    </select>
+{/render}
    <br>
+{render acl=$acl}
    <input type='text' name='addstatement' size='25' maxlength='80'>&nbsp;
+{/render}
+{render acl=$acl}
    <input type='submit' name='add_statement' value='{msgPool type=addButton}'>&nbsp;
+{/render}
+{render acl=$acl}
    <input type='submit' name='delete_statement' value='{msgPool type=delButton}'> 
+{/render}
   </td>
 
   <td>
    <br>
    <b>{t}DHCP options{/t}</b>
    <br>
+{render acl=$acl}
    <select name='dhcpoptions' style="width:100%;" size="14">
     {html_options values=$dhcpoptions output=$dhcpoptions}
    </select>
+{/render}
    <br>
+{render acl=$acl}
    <input type='text' name='addoption' size='25' maxlength='80'>&nbsp;
+{/render}
+{render acl=$acl}
    <input type='submit' name='add_option' value='{msgPool type=addButton}'>&nbsp;
+{/render}
+{render acl=$acl}
    <input type='submit' name='delete_option' value='{msgPool type=delButton}'> 
+{/render}
   </td>
  </tr>
 </table>

@@ -49,6 +49,9 @@ class dhcpHost extends dhcpPlugin
     $smarty->assign("dhcpHWAddress", preg_replace('/^[^ ]+ /', '', $this->dhcpHWAddress));
     $smarty->assign("realGosaHost",$this->realGosaHost);
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     /* Create fixed address */
     if (isset($this->statements['fixed-address'])){
       $smarty->assign("fixedaddr", $this->statements['fixed-address']);

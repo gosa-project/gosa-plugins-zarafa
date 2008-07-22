@@ -70,6 +70,9 @@ class dhcpNetwork extends plugin
     /* Show main page */
     $smarty= get_smarty();
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     /*
      * Assemble options
      */

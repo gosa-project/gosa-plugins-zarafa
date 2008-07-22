@@ -34,8 +34,10 @@ class dhcpPlugin extends plugin
   var $attributes= array();
   var $objectclasses= array();
 
-  function dhcpPlugin($attrs)
+  function dhcpPlugin(&$parent,$attrs)
   {
+	$this->parent = $parent;
+
     /* Load statements / options */
     if (is_array($attrs)){
       $this->dn= $attrs['dn'];
@@ -81,6 +83,9 @@ class dhcpPlugin extends plugin
     $this->advanced= new dhcpAdvanced();
     $this->advanced->options= $this->options;
     $this->advanced->statements= $this->statements;
+
+	$this->network->parent = $parent;
+	$this->advanced->parent = $parent;
 
     /* Save CN for later reference */
     $this->orig_cn= $this->cn;

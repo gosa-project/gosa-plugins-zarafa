@@ -58,6 +58,9 @@ class dhcpService extends dhcpPlugin
     /* Show main page */
     $smarty= get_smarty();
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     $smarty->assign('ddns_styles', $this->ddns_styles);
     foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $value){
       if (isset($this->statements[preg_replace('/_/', '-', $value)])){

@@ -37,6 +37,9 @@ class dhcpSharedNetwork extends dhcpPlugin
   {
     $smarty= get_smarty();
 
+    /* Assign ACLs */
+    $smarty->assign("acl",$this->parent->getacl(""));
+
     /* Fill template */
     $smarty->assign ("cn", $this->cn);
     foreach (array("server-identifier", "default-lease-time", "max-lease-time", "min-lease-time") as $attr){
