@@ -585,6 +585,7 @@ class servdns extends goService
             "zoneName"      =>_("Zone name"),
             "ReverseZone"   =>_("Reverse zone"),
             "NetworkClass"  =>_("Network class"),
+            "zoneEditor"    =>_("Zone entry editor"),
             "sOAprimary"    =>_("Primary dns server"),
             "sOAmail"       =>_("Mail address"),
             "sOAserial"     =>_("Serial"),

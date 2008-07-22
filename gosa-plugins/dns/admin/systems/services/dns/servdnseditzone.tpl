@@ -52,7 +52,9 @@
 						{/if}
 					</td>
 					<td>
+{render acl=$zoneEditorACL mode=read_active}
 						<input type="submit" name="EditZoneEntries" value="{t}Edit{/t}" {if $AllowZoneEdit == false} disabled {/if}> 
+{/render}
 					</td>
 				</tr>
 			</table>

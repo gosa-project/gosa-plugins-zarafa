@@ -13,7 +13,7 @@ class servDNSeditZoneEntries extends plugin
   var $reverseName        = "";   // ReverseZone of the currently edited Zone
 
   var $RecordTypes        = array();  // Possible record type.
-
+  var $acl                = "";
   var $disableDialog      = false; // Dialog will be disabled, if this zone is new 
 
 
@@ -72,6 +72,7 @@ class servDNSeditZoneEntries extends plugin
       $table .= $this->generateRecordConfigurationRow($key);
     }
 
+    $smarty->assign("acl",$this->acl);
     $smarty->assign("disableDialog",$this->disableDialog);
     $smarty->assign("table",$table);;
     $display.= $smarty->fetch(get_template_path('servDNSeditZoneEntries.tpl', TRUE, dirname(__FILE__)));
@@ -85,6 +86,8 @@ class servDNSeditZoneEntries extends plugin
      */
     $once = true;
     $ptr_updates = array();
+    if(!preg_match("/w/",$this->acl)) return;
+
     foreach($_POST as $name => $value){
 
       /* Add a new Record in given object  
@@ -232,7 +235,9 @@ class servDNSeditZoneEntries extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-    
+   
+    if(!preg_match("/w/",$this->acl)) return($message);
+ 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
 
@@ -317,7 +322,7 @@ class servDNSeditZoneEntries extends plugin
 
   function save()
   {
-    if($this->disableDialog) return;
+    if($this->disableDialog || !preg_match("/w/",$this->acl)) return;
 
     $todo = array(); 
 
@@ -404,6 +409,11 @@ class servDNSeditZoneEntries extends plugin
     $obj        = $this->Devices[$objKey];
     $objectName = $objKey;
 
+    $dis = "";
+    if(!preg_match("/w/",$this->acl)){
+      $dis = " disabled ";
+    }
+
     /* Abort if emtpy
      */
     if(count($obj['RECORDS']) == 0) return "";
@@ -434,7 +444,7 @@ class servDNSeditZoneEntries extends plugin
        */
       if($hostNameOnce){
         $hostNameOnce = false;  
-        $str .="<input type='text' name='RenameHost_".$name."' value='".$objectName."'>\n";
+        $str .="<input $dis type='text' name='RenameHost_".$name."' value='".$objectName."'>\n";
       }
 
       /* Create rest. Selectbox, icons ...
@@ -445,12 +455,17 @@ class servDNSeditZoneEntries extends plugin
           ".$this->createRecordTypeSelection($record['type'],$name)."
         </td>
         <td>
-          <input type='text'  value='".$record['value']."' name='ValueSelection_".$name."' style='width:250px;'>
-        </td>
-        <td style='width:75px;text-align:right;'>
-          <input type='image' name='AddRecord_".$name."'   src='images/lists/new.png' alt='"._("Add")."' title='"._("Add")."'>
-          <input type='image' name='RemoveRecord_".$name."' src='images/lists/trash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
-        ";
+          <input type='text' $dis value='".$record['value']."' name='ValueSelection_".$name."' style='width:250px;'>
+        </td>";
+
+      if(preg_match("/w/",$this->acl)){
+        $str .= "<td style='width:75px;text-align:right;'>
+          <input type='image' name='AddRecord_".$name."'   
+          src='images/lists/new.png' alt='"._("Add")."' title='"._("Add")."'>
+          <input type='image' name='RemoveRecord_".$name."' 
+          src='images/lists/trash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
+          ";
+      }
 
       $str.=
         "</td>
@@ -465,15 +480,19 @@ class servDNSeditZoneEntries extends plugin
    */
   function createRecordTypeSelection($id,$refID){
 
-    $str = "\n<select name='RecordTypeSelection_".$refID."'>";
-    foreach($this->RecordTypes as $type => $atr) {
-      if($id == $type){
-        $str .="\n<option value='".$type."' selected >".strtoupper(preg_replace("/record/i","",$type))."</option>";
-      }else{
-        $str .="\n<option value='".$type."'>".strtoupper(preg_replace("/record/i","",$type))."</option>";
+    if(preg_match("/w/",$this->acl)){
+      $str = "\n<select name='RecordTypeSelection_".$refID."'>";
+      foreach($this->RecordTypes as $type => $atr) {
+        if($id == $type){
+          $str .="\n<option value='".$type."' selected >".strtoupper(preg_replace("/record/i","",$type))."</option>";
+        }else{
+          $str .="\n<option value='".$type."'>".strtoupper(preg_replace("/record/i","",$type))."</option>";
+        }
       }
+      $str.= "\n</select>";
+    }else{
+      $str = "&nbsp;".strtoupper(preg_replace("/record/i","",$id));
     }
-    $str.= "\n</select>";
     return($str);
   }
 

@@ -228,9 +228,11 @@ class servdnseditZone extends plugin
       $smarty->assign("AllowZoneEdit" , false);
     }else{
       $smarty->assign("AllowZoneEdit" , true);
-      if(isset($_POST['EditZoneEntries'])){
+
+      if(isset($_POST['EditZoneEntries']) && $this->parent->acl_is_readable("zoneEditor")){
         if($this->zoneEditor == NULL){
-          $this->zoneEditor= new servDNSeditZoneEntries($this->config,$this->dn,$this->ZoneObject);
+          $this->zoneEditor= new servDNSeditZoneEntries($this->config,$this->dn,$this->ZoneObject); 
+          $this->zoneEditor->acl = $this->parent->getacl("zoneEditor");
           $this->zoneEditor->parent = $this;
         }
         $this->dialog = $this->zoneEditor;

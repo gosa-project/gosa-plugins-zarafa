@@ -8,13 +8,18 @@
 	<br>
 	{$table}
 	<br>
+
+	{render acl=$acl}
 	<input type='submit' name='UserRecord' value='{t}New entry{/t}' title='{t}Create a new DNS zone entry{/t}'>
+	{/render}
 {/if}
 
 <p class="seperator">&nbsp;</p>
 <div style="text-algin:right;" align="right">
     <p>
+	{render acl=$acl}
         <input type="submit" name="SaveZoneEntryChanges" value="{msgPool type=saveButton}">
+	{/render}
         <input type="submit" name="CancelZoneEntryChanges" value="{msgPool type=cancelButton}">
     </p>
 </div>
