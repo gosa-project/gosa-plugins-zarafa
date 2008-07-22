@@ -311,7 +311,7 @@ class servdnseditZone extends plugin
       }
     }
 
-    if($this->acl_is_writeable("mXRecord")){
+    if($this->parent->acl_is_writeable("mXRecord")){
       if((isset($_POST['AddMXRecord'])) && (!empty($_POST['StrMXRecord']))){
         $this->mXRecords[] = array("type"=>"mXRecord","value"=>trim($_POST['StrMXRecord']));      
       }
@@ -380,7 +380,9 @@ class servdnseditZone extends plugin
   {
     plugin::save_object();
 
-    if($this->acl_is_writeable("zoneRecords")){
+    if(!is_object($this->parent)) return;
+
+    if($this->parent->acl_is_writeable("zoneRecords")){
       foreach($this->Records as $id => $value){  
         if(isset($_POST['RecordTypeSelectedFor_'.$id])){
           $this->Records[$id]['type'] = $_POST['RecordTypeSelectedFor_'.$id];
@@ -390,7 +392,7 @@ class servdnseditZone extends plugin
         }
       }
     }
-    if(isset($_POST['NetworkClass']) && !$this->Zone_is_used && $this->acl_is_writeable("NetworkClass")){
+    if(isset($_POST['NetworkClass']) && !$this->Zone_is_used && $this->parent->acl_is_writeable("NetworkClass")){
       $this->NetworkClass = $_POST['NetworkClass'];
     }
   }

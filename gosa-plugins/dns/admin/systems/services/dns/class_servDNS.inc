@@ -111,7 +111,7 @@ class servdns extends goService
      */
     $smarty= get_smarty();
     $smarty->assign("dns_take_over",FALSE);
-    $smarty->assign("is_createable",$this->acl_is_writeable(""));
+    $smarty->assign("is_createable",$this->acl_is_createable());
     $display= "";
 
 
