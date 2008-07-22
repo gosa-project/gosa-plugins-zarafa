@@ -111,7 +111,7 @@ class servdns extends goService
      */
     $smarty= get_smarty();
     $smarty->assign("dns_take_over",FALSE);
-    $smarty->assign("is_createable",$this->acl_is_createable());
+    $smarty->assign("is_createable",$this->acl_is_writeable(""));
     $display= "";
 
 
@@ -584,6 +584,7 @@ class servdns extends goService
           "plProvidedAcls"=> array(
             "zoneName"      =>_("Zone name"),
             "ReverseZone"   =>_("Reverse zone"),
+            "NetworkClass"  =>_("Network class"),
             "sOAprimary"    =>_("Primary dns server"),
             "sOAmail"       =>_("Mail address"),
             "sOAserial"     =>_("Serial"),
@@ -591,6 +592,7 @@ class servdns extends goService
             "sOAretry"      =>_("Retry"),
             "sOAexpire"     =>_("Expire"),
             "sOAttl"        =>_("TTL"),
+            "mXRecord"      =>_("MX records"),
             "zoneRecords"   =>_("Zone records"))
     ));
   }

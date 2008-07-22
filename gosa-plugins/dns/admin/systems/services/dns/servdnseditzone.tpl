@@ -7,7 +7,7 @@
 					<td style='vertical-align:top'>{t}Zone name{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$zoneNameACL}					
 						<input type="text" name="zoneName" value="{$zoneName}" {if $NotNew | $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
@@ -16,7 +16,7 @@
 					<td style='vertical-align:top'>{t}Network address{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$ReverseZoneACL}					
 						<input type="text" name="ReverseZone" value="{$ReverseZone}" {if $NotNew | $Zone_is_used} disabled {/if}>
 {/render}
 					</td>
@@ -25,7 +25,7 @@
 					<td>{t}Netmask{/t}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$NetworkClassACL}					
 						<select name="NetworkClass" {if $NotNew | $Zone_is_used} disabled {/if}>
 							{html_options options=$NetworkClasses selected=$NetworkClass }
 						</select>
@@ -52,9 +52,7 @@
 						{/if}
 					</td>
 					<td>
-{render acl=$ACLs}					
 						<input type="submit" name="EditZoneEntries" value="{t}Edit{/t}" {if $AllowZoneEdit == false} disabled {/if}> 
-{/render}
 					</td>
 				</tr>
 			</table>
@@ -71,7 +69,7 @@
 					<td>{t}Primary dns server for this zone{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAprimaryACL}					
 						<input type="text" name="sOAprimary" value="{$sOAprimary}">
 {/render}
 					</td>
@@ -80,7 +78,7 @@
 					<td>{t}Mail address{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAmailACL}					
 						<input type="text" name="sOAmail" value="{$sOAmail}">
 {/render}
 					</td>
@@ -89,7 +87,7 @@
 					<td>{t}Serial number (automatically incremented){/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAserialACL}					
 						<input type="text" name="sOAserial" value="{$sOAserial}">
 {/render}
 					</td>
@@ -102,7 +100,7 @@
 					<td>{t}Refresh{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOArefreshACL}					
 						<input type="text" name="sOArefresh" value="{$sOArefresh}">
 {/render}
 					</td>
@@ -111,7 +109,7 @@
 					<td>{t}Retry{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAretryACL}					
 						<input type="text" name="sOAretry" value="{$sOAretry}">
 {/render}
 					</td>
@@ -120,7 +118,7 @@
 					<td>{t}Expire{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAexpireACL}					
 						<input type="text" name="sOAexpire" value="{$sOAexpire}">
 {/render}
 					</td>
@@ -129,7 +127,7 @@
 					<td>{t}TTL{/t}{$must}
 					</td>
 					<td>
-{render acl=$ACLs}					
+{render acl=$sOAttlACL}					
 						<input type="text" name="sOAttl" value="{$sOAttl}">
 {/render}
 					</td>
@@ -148,13 +146,13 @@
 			<table width="100%">	
 				<tr>
 					<td>
-{render acl=$ACLs}					
+{render acl=$mXRecordACL}					
 						{$Mxrecords}
 {/render}
-{render acl=$ACLs}					
+{render acl=$mXRecordACL}					
 						<input type="text" 		name="StrMXRecord" value="">
 {/render}
-{render acl=$ACLs}					
+{render acl=$mXRecordACL}					
 						<input type="submit" 	name="AddMXRecord" value="{msgPool type=addButton}">
 {/render}
 					</td>
@@ -163,7 +161,7 @@
 		</td>
 		<td style="vertical-align:top;">
 			<h2>{t}Global zone records{/t}</h2>
-{render acl=$ACLs}					
+{render acl=$zoneRecordsACL}					
 			  {$records}
 {/render}
 		</td>
@@ -171,9 +169,7 @@
 </table>
 <div style="text-algin:right;" align="right">
 	<p>
-{render acl=$ACLs}					
 		<input type="submit" name="SaveZoneChanges" value="{msgPool type=saveButton}">
-{/render}
 		<input type="submit" name="CancelZoneChanges" value="{msgPool type=cancelButton}">
 	</p>
 </div>

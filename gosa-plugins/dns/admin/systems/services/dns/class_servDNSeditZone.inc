@@ -212,7 +212,14 @@ class servdnseditZone extends plugin
     $smarty->assign("Zone_is_used",$this->Zone_is_used);
     $ui = get_userinfo();
 
-    $smarty->assign("ACLs",$this->parent->getacl(""));
+    /* Assign ACLs 
+        All acls are defined in our parent class.
+     */
+    $tmp = $this->parent->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $desc){
+      $smarty->assign($name."ACL", $this->parent->getacl($name));
+    }
+  
     $display= "";
 
     /* Open Zone Entry Edit Dialog
