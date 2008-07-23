@@ -108,8 +108,8 @@ class divListSudo extends MultiSelectWindow
 
     /* Append create options */
     if(preg_match("/c/",$acl)) {
-      $s.= "...|<input class='center' type='image' src='images/list_new_sudo.png' alt=''>&nbsp;"._("Role")."|new_role|\n";
-      $s.= "...|<input class='center' type='image' src='images/list_new_sudo.png' alt=''>&nbsp;"._("Default")."|new_default|\n";
+      $s.= "...|<input class='center' type='image' src='plugins/sudo/images/list_new_sudo.png' alt=''>&nbsp;"._("Role")."|new_role|\n";
+      $s.= "...|<input class='center' type='image' src='plugins/sudo/images/list_new_sudo.png' alt=''>&nbsp;"._("Default")."|new_default|\n";
     }
 
     /* Append multiple remove */
