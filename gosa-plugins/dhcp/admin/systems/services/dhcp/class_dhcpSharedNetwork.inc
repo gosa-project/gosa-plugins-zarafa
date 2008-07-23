@@ -28,8 +28,9 @@ class dhcpSharedNetwork extends dhcpPlugin
     dhcpPlugin::dhcpPlugin($parent,$attrs);
 
     $this->advanced->setAutoStatements(array("server-identifier", "default-lease-time",
-          "max-lease-time", "min-lease-time", "authoritative", "deny-unknown-clients",
-          "deny-bootp", "deny-booting"));
+          "max-lease-time", "min-lease-time", "authoritative", "deny unknown-clients",
+          "deny bootp", "deny booting", "allow unknown-clients",
+          "allow bootp", "allow booting"));
   }
 
 
@@ -75,6 +76,18 @@ class dhcpSharedNetwork extends dhcpPlugin
 
     /* Merge arrays for advanced view */
     $this->fix_options();
+	
+	/* Remove states configured by checkboxes. 
+     */
+	foreach(array("deny unknown-clients",
+          "deny bootp", "deny booting", "allow unknown-clients",
+          "allow bootp", "allow booting") as $name){
+		if(isset($this->advanced->statements[$name])){
+			unset($this->advanced->statements[$name]);
+			unset($this->network->statements[$name]);
+		}
+	}
+
     foreach (array("options", "statements") as $type){
       $this->advanced->$type= $this->$type + $this->network->$type;
     }
@@ -196,4 +209,5 @@ class dhcpSharedNetwork extends dhcpPlugin
 
 }
 
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

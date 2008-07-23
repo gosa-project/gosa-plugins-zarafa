@@ -66,10 +66,14 @@ class dhcpPlugin extends plugin
           } else {
             $value= preg_replace('/^[^\s]+\s/', '', $opt);
           }
-          $this->statements[$idx]= $value;
+
+          if(preg_match("/^allow\s/",$opt) || preg_match("/^deny\s/",$opt)){
+            $this->statements[$opt]= "";
+          }else{
+            $this->statements[$idx]= $value;
+          }
         }
       }
-
     } else {
       /* We keep the parent dn here if it's new */
       $this->dn= $attrs;
@@ -210,4 +214,5 @@ class dhcpPlugin extends plugin
 
 }
 
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
