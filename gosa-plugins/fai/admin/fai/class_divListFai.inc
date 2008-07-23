@@ -126,7 +126,7 @@ class divListFai extends MultiSelectWindow
 
     $acl = $ui->get_permissions($this->parent->fai_base,"fai/faiProfile");
     if($this->parent->lock_type == "freeze" && !$this->parent->allow_freeze_object_attach){
-      $s.= "...|<input class='center' type='image' src='images/freeze.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/fai/images/freeze.png' alt=''>".
         "&nbsp;"._("Freezed")."|\n";
     }else{
       if(preg_match("/c/",$acl)){
