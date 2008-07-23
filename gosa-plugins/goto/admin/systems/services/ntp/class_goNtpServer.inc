@@ -72,7 +72,7 @@ class goNtpServer extends goService{
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Time service (NTP)");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

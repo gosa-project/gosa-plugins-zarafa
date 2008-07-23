@@ -98,8 +98,8 @@ class goImapServer extends goService {
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("IMAP/POP3 (Cyrus) service");
-    $fields['AllowRemove']= true;
-    $fields['AllowEdit']  = true;
+    #$fields['AllowRemove']= true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

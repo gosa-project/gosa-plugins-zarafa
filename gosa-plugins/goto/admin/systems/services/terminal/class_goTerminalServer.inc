@@ -77,7 +77,7 @@ class goTerminalServer extends goService{
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Terminal service");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

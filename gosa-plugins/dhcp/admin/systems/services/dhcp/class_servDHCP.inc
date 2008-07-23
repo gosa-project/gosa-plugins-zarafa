@@ -737,7 +737,7 @@ class servdhcp extends goService
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("DHCP service");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

@@ -510,7 +510,7 @@ class goMailServer extends goService{
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Mail smtp service (Postfix)");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

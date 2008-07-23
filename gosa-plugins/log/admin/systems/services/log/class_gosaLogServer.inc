@@ -53,10 +53,10 @@ class gosaLogServer extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']      = _("GOsa MySQL logging service");
-    $fields['AllowEdit']    = true;
-    $fields['AllowStart']   = FALSE;
-    $fields['AllowStop']    = FALSE;
-    $fields['AllowRestart'] = FALSE;
+    #$fields['AllowEdit']    = true;
+    #$fields['AllowStart']   = FALSE;
+    #$fields['AllowStop']    = FALSE;
+    #$fields['AllowRestart'] = FALSE;
     return($fields);
   }
 

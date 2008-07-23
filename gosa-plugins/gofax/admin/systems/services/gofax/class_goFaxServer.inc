@@ -57,7 +57,7 @@ class goFaxServer extends goService {
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("FAX database configuration");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

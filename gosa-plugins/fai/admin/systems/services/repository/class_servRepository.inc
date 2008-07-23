@@ -306,8 +306,8 @@ class servrepository extends goService
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("Repository service");
-    $fields['AllowEdit']  = true;
-    $fields['AllowStart'] = $fields['AllowStop'] = $fields['AllowRestart'] = false;
+    #$fields['AllowEdit']  = true;
+    #$fields['AllowStart'] = #$fields['AllowStop'] = #$fields['AllowRestart'] = false;
     return($fields);
   }
 

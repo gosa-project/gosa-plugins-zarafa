@@ -63,7 +63,7 @@ class goFonServer extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("VoIP service")." - "._("Asterisk management");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

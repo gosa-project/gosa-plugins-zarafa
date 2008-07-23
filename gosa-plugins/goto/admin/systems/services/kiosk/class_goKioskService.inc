@@ -196,10 +196,10 @@ class goKioskService extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("Kiosk profile service");
-    $fields['AllowEdit']  = TRUE;
-    $fields['AllowStart']  = false;
-    $fields['AllowStop']  = false;
-    $fields['AllowRestart']  = false;
+    #$fields['AllowEdit']  = TRUE;
+    #$fields['AllowStart']  = false;
+    #$fields['AllowStop']  = false;
+    #$fields['AllowRestart']  = false;
     return($fields);
   }
 

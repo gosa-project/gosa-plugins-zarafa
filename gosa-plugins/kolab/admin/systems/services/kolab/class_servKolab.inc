@@ -367,7 +367,7 @@ class servkolab extends goService {
   {
     $fields                 = goService::getListEntry();
     $fields['Message']      = _("Kolab mail service");
-    $fields['AllowEdit']    = true;
+    #$fields['AllowEdit']    = true;
     return($fields);
   }
 

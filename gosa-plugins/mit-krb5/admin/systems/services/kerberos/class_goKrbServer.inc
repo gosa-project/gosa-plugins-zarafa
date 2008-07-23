@@ -164,7 +164,7 @@ class goKrbServer extends goService{
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Kerberos service (kadmin access informations)");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

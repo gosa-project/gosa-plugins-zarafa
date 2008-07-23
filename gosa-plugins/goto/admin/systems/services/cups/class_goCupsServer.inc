@@ -46,7 +46,7 @@ class goCupsServer extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("Print service");
-    $fields['AllowEdit']  = false;
+    #$fields['AllowEdit']  = false;
     return($fields);
   }
 

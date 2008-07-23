@@ -155,7 +155,7 @@ class goShareServer extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("File service (Shares)");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

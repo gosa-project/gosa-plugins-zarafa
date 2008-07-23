@@ -56,7 +56,7 @@ class goLogDBServer extends goService{
   {
     $fields = goService::getListEntry();
     $fields['Message']      = _("Syslog service database");
-    $fields['AllowEdit']    = true;
+    #$fields['AllowEdit']    = true;
     return($fields);
   }
 

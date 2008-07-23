@@ -346,7 +346,7 @@ class gospamserver extends goService{
   {
     $fields                 = goService::getListEntry();
     $fields['Message']      = _("Spamassassin");
-    $fields['AllowEdit']    = true;
+    #$fields['AllowEdit']    = true;
     return($fields);
   }
 }

@@ -54,7 +54,7 @@ class goLdapServer extends goService{
   {
     $fields  = goService::getListEntry();
     $fields['Message']    = _("LDAP service");
-    $fields['AllowEdit']  = true;
+    #$fields['AllowEdit']  = true;
     return($fields);
   }
 

@@ -45,7 +45,7 @@ class goSyslogServer extends goService{
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Syslog server");
-    $fields['AllowEdit']  = false;
+    #$fields['AllowEdit']  = false;
     return($fields);
   }
 
