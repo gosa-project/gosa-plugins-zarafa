@@ -184,8 +184,8 @@ class glpiDeviceManagement extends plugin
           array("string" => _("Actions"), "attach" => "style='width:60px;border-right:0px;text-align:right;'" )));
 
     $edit = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'>%s</a>";
-    $editdel = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'><img src='images/lists/edit.png' alt='"._("Edit")."' border=0></a>";
-    $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_device&amp;id=%s'><img src='images/lists/trash.png' alt='"._("Delete")."' border=0></a>";
+    $editdel = "<a href='?plug=".$_GET['plug']."&amp;act=edit_device&amp;id=%s'><img src='plugins/glpi/images/lists/edit.png' alt='"._("Edit")."' border=0></a>";
+    $editdel.= "<a href='?plug=".$_GET['plug']."&amp;act=del_device&amp;id=%s'><img src='plugins/glpi/images/lists/trash.png' alt='"._("Delete")."' border=0></a>";
     
     $useDevice = "<input type='hidden' name='wasOnPage_%s' value='%s'><input type='checkbox' value='%s' name='useDevice_%s' %USE%>";
 
@@ -218,29 +218,29 @@ class glpiDeviceManagement extends plugin
     
   $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' align='middle' 
-      src='images/monitor.png'  title='"._("New monitor")."' alt='"._("M")."' name='new_monitor'>&nbsp;".
+      src='plugins/glpi/images/monitor.png'  title='"._("New monitor")."' alt='"._("M")."' name='new_monitor'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/mainboard.png' title='"._("New mainbord")."' alt='"._("MB")."' name='new_moboard'>&nbsp;".
+      src='plugins/glpi/images/mainboard.png' title='"._("New mainbord")."' alt='"._("MB")."' name='new_moboard'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/processor.png' title='"._("New processor")."' alt='"._("P")."' name='new_processor'>&nbsp;".
+      src='plugins/glpi/images/processor.png' title='"._("New processor")."' alt='"._("P")."' name='new_processor'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/server.png' title='"._("New case")."' alt='"._("C")."' name='new_case'>&nbsp;".
+      src='plugins/glpi/images/server.png' title='"._("New case")."' alt='"._("C")."' name='new_case'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/net_hardware.png' title='"._("New network interface")."' alt='"._("NI")."' name='new_iface'>&nbsp;".
+      src='plugins/glpi/images/net_hardware.png' title='"._("New network interface")."' alt='"._("NI")."' name='new_iface'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/memory.png' title='"._("New ram")."' alt='"._("R")."' name='new_ram'>&nbsp;".
+      src='plugins/glpi/images/memory.png' title='"._("New ram")."' alt='"._("R")."' name='new_ram'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='plugins/glpi/images/harddisk.png' title='"._("New hard disk")."' alt='"._("HDD")."' name='new_hdd'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='plugins/glpi/images/drives.png' title='"._("New drive")."' alt='"._("D")."' name='new_drive'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/hardware.png' title='"._("New controller")."' alt='"._("CS")."' name='new_control'>&nbsp;".
+      src='plugins/glpi/images/hardware.png' title='"._("New controller")."' alt='"._("CS")."' name='new_control'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='plugins/glpi/images/gfx_hardware.png' title='"._("New graphics card")."' alt='"._("GC")."' name='new_gfxcard'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/snd_hardware.png' title='"._("New sound card")."' alt='"._("SC")."' name='new_sndcard'>&nbsp;".
+      src='plugins/glpi/images/snd_hardware.png' title='"._("New sound card")."' alt='"._("SC")."' name='new_sndcard'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/power.png' title='"._("New power supply")."' alt='"._("PS")."' name='new_power'>&nbsp;".
+      src='plugins/glpi/images/power.png' title='"._("New power supply")."' alt='"._("PS")."' name='new_power'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='plugins/glpi/images/glpi_device.png' title='"._("New misc device")."' alt='"._("OC")."' name='new_pci'>&nbsp;".
       "</div>";
