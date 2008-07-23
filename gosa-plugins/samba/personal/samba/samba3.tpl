@@ -63,7 +63,7 @@
 
 <p class="seperator">&nbsp;</p>
 
-<h2><img class="center" alt="" align="middle" src="images/display.png" />&nbsp;{t}Terminal Server{/t}</h2>
+<h2><img class="center" alt="" align="middle" src="plugins/samba/images/terminal_server.png" />&nbsp;{t}Terminal Server{/t}</h2>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
