@@ -506,7 +506,7 @@ class gotomasses extends plugin
       $status = $task['STATUS'];
   
       if($status == "waiting"){
-        $status = "<img class='center' src='images/clock.png' alt=''>&nbsp;"._("Waiting");
+        $status = "<img class='center' src='plugins/goto/images/clock.png' alt=''>&nbsp;"._("Waiting");
       }
       if($status == "error"){
         $status = "<img class='center' src='images/false.png' alt=''>&nbsp;"._("Error");
