@@ -42,7 +42,7 @@ class faiSummaryTab extends plugin{
     /* Base object configuration */
     $this->objs = array(	
         "FAIscript" 		    => array(	"Image"	=>"images/fai_script.png",        "Name"=>_("Scripts")      ,"Tree"	=>get_ou('faiscriptou')) ,
-        "FAIhook" 			    => array(	"Image"	=>"images/fai_hook.png" ,         "Name"=>_("Hooks")        ,"Tree"	=>get_ou('faihookou')),
+        "FAIhook" 			    => array(	"Image"	=>"plugins/fai/images/fai_hook.png" ,         "Name"=>_("Hooks")        ,"Tree"	=>get_ou('faihookou')),
         "FAIvariable" 		  => array(	"Image"	=>"images/fai_variable.png",      "Name"=>_("Variables")    ,"Tree"	=>get_ou('faivariableou')) ,
         "FAItemplate" 		  => array(	"Image"	=>"images/fai_template.png",      "Name"=>_("Templates")    ,"Tree"	=>get_ou('faitemplateou')) ,
         "FAIpartitionTable" => array(	"Image"	=>"images/fai_partitionTable.png","Name"=>_("Partition table")  ,"Tree"	=>get_ou('faipartitionou')) ,

@@ -35,7 +35,7 @@
 <table width="100%" summary=''>
 	<tr>
 		<td>
-				<h2><img class="center" alt="" src="images/fai_hook.png" align="middle" title="{t}Objects{/t}">&nbsp;
+				<h2><img class="center" alt="" src="plugins/fai/images/fai_hook.png" align="middle" title="{t}Objects{/t}">&nbsp;
 					{t}List of hook scripts{/t}
 				</h2>
 				<table width="100%" summary=''>

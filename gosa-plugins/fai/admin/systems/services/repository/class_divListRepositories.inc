@@ -30,7 +30,7 @@ class divListRepository extends MultiSelectWindow
   function GenHeader()
   {
     if($this->parent->acl_is_createable()){
-      $this->SetListHeader("<input type=\"image\" src=\"images/fai_new_packages.png\" title=\""._("Add repository")."\"                 name=\"AddRepository\">");
+      $this->SetListHeader("<input type=\"image\" src=\"plugins/fai/images/fai_new_packages.png\" title=\""._("Add repository")."\"                 name=\"AddRepository\">");
     }
   }
 
