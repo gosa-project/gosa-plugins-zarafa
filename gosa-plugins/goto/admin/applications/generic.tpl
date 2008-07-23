@@ -131,7 +131,7 @@
 <table width="99%" summary="">
 	<tr>
 		<td>
-			<h2><img src="images/fai_script.png" alt="{t}Script{/t}" align="middle">&nbsp;{t}Script{/t}</h2>
+			<h2><img src="plugins/goto/images/logon_script.png" alt="{t}Script{/t}" align="middle">&nbsp;{t}Script{/t}</h2>
 {render acl=$gotoLogonScriptACL}
 			<textarea name="gotoLogonScript" style='width:99%;height:220px;'>{$gotoLogonScript}</textarea>
 {/render}
