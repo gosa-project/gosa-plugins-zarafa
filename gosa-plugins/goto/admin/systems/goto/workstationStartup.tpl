@@ -198,7 +198,7 @@
   </td>
 
   <td style="vertical-align:top;">
-        <h2><img class="center" alt="" src="images/fai_partitionTable.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h2>
+        <h2><img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle">&nbsp;<LABEL for="gotoShare">{t}Shares{/t}</LABEL></h2>
         <table summary="" style="width:100%">
                 <tr>
                         <td>

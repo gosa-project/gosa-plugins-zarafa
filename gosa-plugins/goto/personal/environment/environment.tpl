@@ -208,7 +208,7 @@
  <tr>
   <td style="width:50%;border-right:1px solid #B0B0B0">
    <h2>
-    <img class="center" alt="" src="images/fai_partitionTable.png" align="middle" />&nbsp;
+    <img class="center" alt="" src="plugins/goto/images/edit_share.png" align="middle" />&nbsp;
     <label for="gotoShare">{t}Shares{/t}</label>
    </h2>
    <table summary="" style="width:100%">
