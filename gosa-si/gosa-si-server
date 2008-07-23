@@ -621,8 +621,8 @@ sub check_outgoing_xml_validity {
         }
     };
     if($@) {
-        daemon_log("$session_id WARNING: outgoing msg is not gosa-si envelope conform: ", 5);
-        daemon_log("$@ ".(defined($msg) && length($msg)>0)?$msg:"Empty Message", 5);
+        daemon_log("$session_id ERROR: outgoing msg is not gosa-si envelope conform: ", 1);
+        daemon_log("$@ ".(defined($msg) && length($msg)>0)?$msg:"Empty Message", 1);
         $msg_hash = undef;
     }
 
@@ -1043,8 +1043,8 @@ sub msg_to_decrypt {
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
         # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
         # could not understand a msg from its server the client cause a re-registering process
-        daemon_log("$session_id INFO cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
-                "' to cause a re-registering of the client if necessary", 5);
+        daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
+                "' to cause a re-registering of the client if necessary", 3);
         my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
         my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
         while( my ($hit_num, $hit) = each %{ $query_res } ) {    
