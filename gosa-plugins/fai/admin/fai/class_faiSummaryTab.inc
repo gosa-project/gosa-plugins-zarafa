@@ -47,7 +47,7 @@ class faiSummaryTab extends plugin{
         "FAItemplate" 		  => array(	"Image"	=>"images/fai_template.png",      "Name"=>_("Templates")    ,"Tree"	=>get_ou('faitemplateou')) ,
         "FAIpartitionTable" => array(	"Image"	=>"plugins/fai/images/fai_partitionTable.png","Name"=>_("Partition table")  ,"Tree"	=>get_ou('faipartitionou')) ,
         "FAIpackageList" 	  => array(	"Image" =>"plugins/fai/images/fai_packages.png",      "Name"=>_("Package list") ,"Tree"	=>get_ou('faipackageou')) ,
-        "FAIprofile" 		    => array(	"Image"	=>"images/fai_profile.png",       "Name"=>_("Profiles")     ,"Tree"	=>get_ou('faiprofileou')));
+        "FAIprofile" 		    => array(	"Image"	=>"plugins/fai/images/fai_profile.png",       "Name"=>_("Profiles")     ,"Tree"	=>get_ou('faiprofileou')));
   }
 
 
