@@ -230,7 +230,7 @@ class glpiDeviceManagement extends plugin
       " <input class='center' type='image' align='middle' 
       src='images/memory.png' title='"._("New ram")."' alt='"._("R")."' name='new_ram'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/fai_partitionTable.png' title='"._("New hard disk")."' alt='"._("HDD")."' name='new_hdd'>&nbsp;".
+      src='plugins/glpi/images/harddisk.png' title='"._("New hard disk")."' alt='"._("HDD")."' name='new_hdd'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='plugins/glpi/images/drives.png' title='"._("New drive")."' alt='"._("D")."' name='new_drive'>&nbsp;".
       " <input class='center' type='image' align='middle' 
