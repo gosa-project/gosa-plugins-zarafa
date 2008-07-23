@@ -519,7 +519,6 @@ sub trigger_action_halt {
     my ($msg, $msg_hash, $session_id) = @_;
     $msg =~ s/<header>gosa_trigger_action_halt<\/header>/<header>trigger_action_halt<\/header>/;
 
-    &main::change_fai_state('halt', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
         my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
