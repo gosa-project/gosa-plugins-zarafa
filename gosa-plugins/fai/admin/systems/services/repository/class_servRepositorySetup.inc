@@ -46,7 +46,7 @@ class servRepositorySetup  extends plugin
     return(false);
   }
 
-  
+
 
   function execute()
   {
@@ -56,51 +56,52 @@ class servRepositorySetup  extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
 
-    if((isset($_POST['AddSection']))&&(isset($_POST['SectionName']))&&(!empty($_POST['SectionName']))){
+    if(preg_match("/w/",$this->parent->getacl("Section"))){
+      if((isset($_POST['AddSection']))&&(isset($_POST['SectionName']))&&(!empty($_POST['SectionName']))){
 
-      /* Replace multiple spaces with a single, and cut of white spaces (trim)*/
-      $val = preg_replace("/\ \ * /" , " ", trim($_POST['SectionName']));
+        /* Replace multiple spaces with a single, and cut of white spaces (trim)*/
+        $val = preg_replace("/\ \ * /" , " ", trim($_POST['SectionName']));
 
-      /* check if there are more than one entry given ( "section1 section2 )*/
-      if(preg_match("/ /",$val)){
+        /* check if there are more than one entry given ( "section1 section2 )*/
+        if(preg_match("/ /",$val)){
 
-        /* Generate list of new section names */
-        $vals = split(" ",$val);
+          /* Generate list of new section names */
+          $vals = split(" ",$val);
 
-        /* Add new entries */
-        foreach($vals as $entry){
-          $entry = trim($entry);
-          if(!empty($entry)){
-            $this->Sections[$entry]=$entry;
+          /* Add new entries */
+          foreach($vals as $entry){
+            $entry = trim($entry);
+            if(!empty($entry)){
+              $this->Sections[$entry]=$entry;
+            }
           }
+        }else{
+          $this->Sections[$val]=$val;
         }
-      }else{
-        $this->Sections[$val]=$val;
       }
-    }
-    
-    foreach($_POST as $name => $value){
-      if(preg_match("/^delete_/",$name)){
 
-        $val = preg_replace("/^delete_/","",$name);
-        $val = base64_decode(preg_replace("/_.*$/","",$val));
+      foreach($_POST as $name => $value){
+        if(preg_match("/^delete_/",$name)){
 
-        if(isset($this->Sections[$val])){
-          unset($this->Sections[$val]);
+          $val = preg_replace("/^delete_/","",$name);
+          $val = base64_decode(preg_replace("/_.*$/","",$val));
+
+          if(isset($this->Sections[$val])){
+            unset($this->Sections[$val]);
+          }
         }
       }
     }
 
     $divlist = new divSelectBox("servRepositorySetup");
     $divlist->setHeight("220");
-
     $dellink = "<input type='image' src='images/lists/trash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
-
     foreach($this->Sections as $sec){
       $divlist->AddEntry(array(
-                              array("string"=>$sec),
-                              array("string"=>sprintf($dellink,base64_encode($sec),$sec),"attach"=>"style='border-right:0px;width:20px;'")
-                              ));
+            array("string"=>$sec),
+            array("string"=>sprintf($dellink,base64_encode($sec),$sec),
+              "attach"=>"style='border-right:0px;width:20px;'")
+            ));
     }
   
     $smarty->assign("Sections",$divlist->DrawList());

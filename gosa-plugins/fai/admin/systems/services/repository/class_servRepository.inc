@@ -306,8 +306,6 @@ class servrepository extends goService
   {
     $fields = goService::getListEntry();
     $fields['Message']    = _("Repository service");
-    #$fields['AllowEdit']  = true;
-    #$fields['AllowStart'] = #$fields['AllowStop'] = #$fields['AllowRestart'] = false;
     return($fields);
   }
 
@@ -351,15 +349,16 @@ class servrepository extends goService
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-              "cn"            => _("Name"),
-              "start"         => _("Start"),
-              "stop"          => _("Stop"),
-              "restart"       => _("Restart"),
-              "Release"       => _("Releases"),
-              "Section"       => _("Sections"),
-              "ParentServer"  => _("Parent server"),
-              "Url"           => _("Url"))
-            ));
+#            "start"         => _("Service start"),  // Remove this to hide the start button at all.
+#            "stop"          => _("Service stop"),   // Remove this to hide the stop button at all.
+#            "restart"       => _("Service restart"),// Remove this to hide the restart button at all.
+
+            "cn"            => _("Name"),
+            "Release"       => _("Releases"),
+            "Section"       => _("Sections"),
+            "ParentServer"  => _("Parent server"),
+            "Url"           => _("Url"))
+          ));
   }
 }
 
