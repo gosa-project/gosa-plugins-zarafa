@@ -86,7 +86,7 @@ class divListFai extends MultiSelectWindow
       $smarty->assign("allow_remove", $r);
       $smarty->assign("fai_release" , $releases[$this->parent->fai_release]);
       $smarty->assign("fai_base"    , $releases[$this->parent->fai_base]);
-      $smarty->assign("branchimage","images/branch.png");
+      $smarty->assign("branchimage","plugins/fai/images/branch.png");
       $smarty->assign("fai_releases", $releases);
       $plug_id = 0;       
       if(isset($_GET['plug'])){
