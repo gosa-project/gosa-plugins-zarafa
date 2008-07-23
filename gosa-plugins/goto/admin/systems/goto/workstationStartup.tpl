@@ -177,7 +177,7 @@
  <tr>
   <td style="width:50%; vertical-align:top; border-right:1px solid #B0B0B0">
    <h2>
-    <img class="center" alt="" align="middle" src="images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
+    <img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
    </h2>
 {render acl=$gotoModulesACL}
     <select style="width:100%; height:150px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">

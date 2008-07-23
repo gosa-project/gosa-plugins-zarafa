@@ -30,8 +30,8 @@ class DaemonEvent_rescan extends DaemonEvent
     $this->s_Schedule_Action= "job_detect_hardware";
     $this->s_Trigger_Action = "gosa_detect_hardware";
     $this->s_Queued_Action  = "detect_hardware";
-    $this->s_Menu_Image = "images/snd_hardware.png";
-    $this->s_List_Image = "images/snd_hardware.png";
+    $this->s_Menu_Image = "plugins/goto/images/rescan.png";
+    $this->s_List_Image = "plugins/goto/images/rescan.png";
   }
 
   public function execute()

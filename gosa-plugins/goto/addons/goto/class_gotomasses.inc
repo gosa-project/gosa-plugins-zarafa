@@ -528,7 +528,7 @@ class gotomasses extends plugin
 
         /* Show hardware detect? */
         } elseif ($percent == "goto-hardware-detection") {
-          $status = "<img class='center' src='images/hardware.png' alt=''>&nbsp;"._("Detection");
+          $status = "<img class='center' src='plugins/goto/images/hardware.png' alt=''>&nbsp;"._("Detection");
 
         /* Real percent */
         } else {

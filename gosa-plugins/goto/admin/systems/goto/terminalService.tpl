@@ -92,7 +92,7 @@
  <tr><td colspan=5><p class="plugbottom" style="text-align:left;"></p></td></tr>
  <tr>
    <td style="width:33%;vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/hardware.png"> {t}Graphic device{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Graphic device{/t}</h2>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>

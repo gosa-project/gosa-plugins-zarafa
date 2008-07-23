@@ -65,7 +65,7 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h2>
-    <img class="center" alt="" align="middle" src="images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
+    <img class="center" alt="" align="middle" src="plugins/goto/images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
    </h2>
 {render acl=$gotoModulesACL}
     <select style="width:100%;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
