@@ -23,6 +23,7 @@ class mimetypeManagement extends plugin
   /* Definitions */
   var $plHeadline     = "Mime types";
   var $plDescription  = "Manage mime types";
+  var $plIcon         = "plugins/goto/images/mimetypes.png";
 
   /* Dialog attributes */
   var $ui                             = NULL;
