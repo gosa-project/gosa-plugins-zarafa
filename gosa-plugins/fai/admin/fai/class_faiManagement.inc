@@ -23,7 +23,8 @@ class faiManagement extends plugin
 {
 	/* Definitions */
   var $plHeadline     = "Software deployment";
-  var $plDescription    = "Manage software packages and deployment reciepes";
+  var $plDescription  = "Manage software packages and deployment reciepes";
+  var $plIcon         = "plugins/fai/plugin.png";
 
 	/* Headpage attributes */
   var $lock_type    = "";    // should be branch/freeze
