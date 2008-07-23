@@ -39,7 +39,7 @@
  <tr>
 
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/hardware.png" />&nbsp;{t}Telephone hardware{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/gofon/images/hardware.png" />&nbsp;{t}Telephone hardware{/t}</h2>
 
       <table summary="{t}Telephone{/t}" border=0>
 	   {if !$multiple_support}
