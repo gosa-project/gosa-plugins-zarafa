@@ -139,8 +139,8 @@ class faiProfileEntry extends plugin
     $objTypes['FAItemplate']        = "<img src='images/fai_template.png' title='"._("Template bundle")."' alt=''>&nbsp;";
     $objTypes['FAIscript']          = "<img src='images/fai_script.png' title='"._("Script bundle")."' alt=''>&nbsp;";
     $objTypes['FAIvariable']        = "<img src='images/fai_variable.png' title='"._("Variable bundle")."' alt=''>&nbsp;";
-    $objTypes['FAIpackageList']     = "<img src='images/fai_packages.png' title='"._("Package bundle")."' alt=''>&nbsp;";
-    $objTypes['FAIpartitionTable']  = "<img src='images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>&nbsp;";
+    $objTypes['FAIpackageList']     = "<img src='plugins/fai/images/fai_packages.png' title='"._("Package bundle")."' alt=''>&nbsp;";
+    $objTypes['FAIpartitionTable']  = "<img src='plugins/fai/images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>&nbsp;";
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again

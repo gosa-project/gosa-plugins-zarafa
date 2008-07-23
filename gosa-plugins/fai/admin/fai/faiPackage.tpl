@@ -68,7 +68,7 @@
 <table width="99%" summary="">
 	<tr>
 		<td> 
-			<h2><img class="center" alt="" src="images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h2>
+			<h2><img class="center" alt="" src="plugins/fai/images/fai_packages.png" align="middle" title="{t}Used packages{/t}">&nbsp;{t}Used packages{/t}</h2>
 			{$divlist}
 			<br>
 {render acl=$FAIpackageACL}

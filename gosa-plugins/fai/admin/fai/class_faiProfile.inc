@@ -293,8 +293,8 @@ class faiProfile extends plugin
     $objTypes['FAItemplate']        = "<img src='images/fai_template.png' title='"._("Template bundle")."' alt=''>";
     $objTypes['FAIscript']          = "<img src='images/fai_script.png' title='"._("Script bundle")."' alt=''>";
     $objTypes['FAIvariable']        = "<img src='images/fai_variable.png' title='"._("Variable bundle")."' alt=''>";
-    $objTypes['FAIpackageList']        = "<img src='images/fai_packages.png' title='"._("Package bundle")."' alt=''>";
-    $objTypes['FAIpartitionTable']  = "<img src='images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>";
+    $objTypes['FAIpackageList']        = "<img src='plugins/fai/images/fai_packages.png' title='"._("Package bundle")."' alt=''>";
+    $objTypes['FAIpartitionTable']  = "<img src='plugins/fai/images/fai_partitionTable.png' title='"._("Partition table")."' alt=''>";
 
     /* Delete button */
     $actions = "<input type='image' src='images/lists/trash.png' title='"._("Remove class from profile")."' name='DEL_%KEY%'>"; 
