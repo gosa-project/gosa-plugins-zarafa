@@ -94,7 +94,7 @@
 
 {elseif $device_type=="pci"}
 
-        <h2><img alt="" align="middle" src="images/fai_template.png" class="center">&nbsp;{t}Add/Edit other device{/t}</h2>
+        <h2><img alt="" align="middle" src="plugins/glpi/images/glpi_device.png" class="center">&nbsp;{t}Add/Edit other device{/t}</h2>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">

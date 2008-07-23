@@ -242,7 +242,7 @@ class glpiDeviceManagement extends plugin
       " <input class='center' type='image' align='middle' 
       src='images/power.png' title='"._("New power supply")."' alt='"._("PS")."' name='new_power'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/fai_template.png' title='"._("New misc device")."' alt='"._("OC")."' name='new_pci'>&nbsp;".
+      src='plugins/glpi/images/glpi_device.png' title='"._("New misc device")."' alt='"._("OC")."' name='new_pci'>&nbsp;".
       "</div>";
     
     $filter = session::get('glpiDeviceRegex');
