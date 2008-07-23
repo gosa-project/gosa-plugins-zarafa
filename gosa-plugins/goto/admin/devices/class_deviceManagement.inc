@@ -6,6 +6,7 @@ class deviceManagement extends plugin
   /* Definitions */
   var $plHeadline     = "Hotplug devices";
   var $plDescription  = "Manage hotplug devices";
+  var $plIcon         = "plugins/goto/images/devices.png";
 
   /* Dialog attributes */
   var $ui                             = NULL;

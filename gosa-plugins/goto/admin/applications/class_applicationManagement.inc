@@ -23,6 +23,7 @@ class applicationManagement extends plugin
   /* Definitions */
   var $plHeadline     = "Applications";
   var $plDescription  = "This does something";
+  var $plIcon         = "plugins/goto/images/application.png";
 
   /* Dialog attributes */
   var $apptabs                  = NULL;
