@@ -30,6 +30,7 @@ class sudoManagement extends plugin
   /* Definitions */
   public $plHeadline     = "Sudo roles";
   public $plDescription  = "Manage sudo roles";
+  public $plIcon  ="plugins/sudo/images/sudo.png";
 
   private $DivListSudo    = NULL;
   private $sudotabs       = NULL;
