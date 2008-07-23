@@ -94,7 +94,7 @@ class divListBlocklist extends MultiSelectWindow
     if(preg_match("/c/",$acl)) {
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='images/list_new_blocklist.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/gofax/images/list_new_blocklist.png' alt=''>".
         "&nbsp;"._("Blocklist")."|goFaxBlocklist_new|\n";
       $s.= "..|---|\n";
     }
