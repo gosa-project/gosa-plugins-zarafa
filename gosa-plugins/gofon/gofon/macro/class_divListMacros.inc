@@ -87,7 +87,7 @@ class divListMacro extends MultiSelectWindow
     if(preg_match("/c/",$acl)){
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='images/list_new_macro.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/gofon/images/list_new_macro.png' alt=''>".
         "&nbsp;"._("Macro")."|goFonMacro_new|\n";
       $s.= "..|---|\n";
     }
