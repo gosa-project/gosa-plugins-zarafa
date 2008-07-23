@@ -146,7 +146,7 @@ class divListSudo extends MultiSelectWindow
   {
     /* Prepare links */
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
-    $userimg  = "<img class='center' src='images/select_sudo.png' alt='Sudo' title='%s'>";
+    $userimg  = "<img class='center' src='plugins/sudo/images/select_sudo.png' alt='Sudo' title='%s'>";
     $ui       = get_userinfo();
 
     $action_col_size = 54;
@@ -218,7 +218,7 @@ class divListSudo extends MultiSelectWindow
     /* Create summary string for list footer */
     $num     = count($list);
     $num_str  = _("Number of listed roles");
-    $str = "<img class='center' src='images/select_sudo.png'
+    $str = "<img class='center' src='plugins/sudo/images/select_sudo.png'
               title='".$num_str."' alt='".$num_str."'>&nbsp;".$num."&nbsp;";
     $this->set_List_Bottom_Info($str);
   }
