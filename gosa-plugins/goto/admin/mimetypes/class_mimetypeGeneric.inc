@@ -571,7 +571,7 @@ class mimetype extends plugin
   function set_new_picture($filename)
   {
     if (empty($filename)){
-      $filename= "./images/default_icon.png";
+      $filename= "./plugins/goto/images/default_icon.png";
       $this->use_gotoMimeIcon= "*removed*";
     }else{
       $this->use_gotoMimeIcon= $filename;

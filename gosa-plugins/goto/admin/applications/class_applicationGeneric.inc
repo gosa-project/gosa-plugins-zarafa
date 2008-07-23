@@ -532,7 +532,7 @@ class application extends plugin
   function set_picture($filename)
   {
     if (!is_file($filename)){
-      $filename= "./images/default_icon.png";
+      $filename= "./plugins/goto/images/default_icon.png";
       $this->gosaApplicationIcon= "*removed*";
     }
 
