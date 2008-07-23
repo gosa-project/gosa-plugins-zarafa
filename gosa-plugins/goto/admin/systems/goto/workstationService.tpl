@@ -150,7 +150,7 @@
   </td>
 
    <td style="width:32%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/display.png"> {t}Display device{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/display.png"> {t}Display device{/t}</h2>
    <table summary="">
     <tr>
      <td>{t}Type{/t}</td>
