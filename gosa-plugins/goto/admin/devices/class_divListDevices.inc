@@ -128,7 +128,7 @@ class divListDevices extends MultiSelectWindow
     /* Create links */
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
     $userimg  = "<img class='center' src='plugins/groups/images/groups.png' alt='User'    title='%s'>";
-    $deviceimg  = "<img class='center' src='images/select_device.png' alt='A'  title='"._("Device")."'>";
+    $deviceimg  = "<img class='center' src='plugins/goto/images/select_device.png' alt='A'  title='"._("Device")."'>";
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
     /* set Page header */
@@ -205,7 +205,7 @@ class divListDevices extends MultiSelectWindow
     $num_obj_str = _("Number of listed devices");
     $num_dep_str = _("Number of listed departments");
 
-    $str = "<img class='center' src='images/select_devices.png'
+    $str = "<img class='center' src='plugins/goto/images/select_device.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/lists/folder.png'
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
