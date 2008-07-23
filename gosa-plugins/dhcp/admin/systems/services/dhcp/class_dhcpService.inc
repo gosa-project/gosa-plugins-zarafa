@@ -114,23 +114,22 @@ class dhcpService extends dhcpPlugin
   function save_object()
   {
     /* No need to save in the first time */
-    if (!isset($_POST['ddns_update_style'])){
-      return;
-    }
+    if (isset($_POST['ddns_update_style']) && preg_match("/w/",$this->parent->getacl(""))){
 
-    /* Save remaining attributes */
-    foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $val){
-      $tval= preg_replace('/_/', '-', $val);
-      if ($_POST[$val] != ""){
-        $this->statements[$tval]= validate(get_post($val));
-      } else {
-        unset ($this->statements[$tval]);
+      /* Save remaining attributes */
+      foreach (array('max_lease_time', 'default_lease_time', 'ddns_update_style') as $val){
+        $tval= preg_replace('/_/', '-', $val);
+        if ($_POST[$val] != ""){
+          $this->statements[$tval]= validate(get_post($val));
+        } else {
+          unset ($this->statements[$tval]);
+        }
       }
-    }
-    if (isset($_POST['authoritative'])){
-      $this->statements['authoritative']= "";
-    } else {
-      unset($this->statements['authoritative']);
+      if (isset($_POST['authoritative'])){
+        $this->statements['authoritative']= "";
+      } else {
+        unset($this->statements['authoritative']);
+      }
     }
 
     dhcpPlugin::save_object();

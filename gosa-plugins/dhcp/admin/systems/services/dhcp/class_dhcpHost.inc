@@ -102,7 +102,7 @@ class dhcpHost extends dhcpPlugin
   function save_object()
   {
     /* Save remaining attributes */
-    if (isset($_POST['dhcp_host_posted'])){
+    if (isset($_POST['dhcp_host_posted']) && preg_match("/w/",$this->parent->getacl(""))){
 
       /* Assemble hwAddress */
       if (isset($_POST['dhcpHWAddress'])){

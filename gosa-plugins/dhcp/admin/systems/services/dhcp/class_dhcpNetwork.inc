@@ -36,10 +36,14 @@ class dhcpNetwork extends plugin
 
   function execute()
   {
+
+    $acl_writeable = preg_match("/w/",$this->parent->getacl(""));
+
     /* Check for iteraction */
-    if (isset($_POST['add_dns']) && $_POST['addserver'] != ""){
+    if ($acl_writeable && isset($_POST['add_dns']) && $_POST['addserver'] != ""){
       if (!preg_match('/^[0-9a-z.-]+$/', get_post('addserver'))){
-        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),htmlentities(get_post('addserver')),"/[0-9a-z.-]/"), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::invalid(_("Name"),
+              htmlentities(get_post('addserver')),"/[0-9a-z.-]/"), ERROR_DIALOG);
       } else {
         $servers= array();
         if (isset($this->options['domain-name-servers'])){
@@ -56,7 +60,7 @@ class dhcpNetwork extends plugin
         $this->options['domain-name-servers']= preg_replace('/,$/', '', $tmp);
       }
     }
-    if (isset($_POST['delete_dns']) && isset($_POST['dnsserver'])){
+    if ($acl_writeable && isset($_POST['delete_dns']) && isset($_POST['dnsserver'])){
       $tmp= preg_replace("/(\s*,\s*)?".get_post('dnsserver')."/i", '',
           $this->options['domain-name-servers']);
       $tmp= preg_replace("/(\s*)?,(\s*)?$/", '', $tmp);
@@ -151,7 +155,7 @@ class dhcpNetwork extends plugin
   function save_object()
   {
     /* Only save, if we are "active" */
-    if (isset($_POST['routers'])){
+    if (isset($_POST['routers']) && preg_match("/w/",$this->parent->getacl(""))){
 
       /*
        * Assemble options

@@ -42,13 +42,15 @@ class dhcpAdvanced extends plugin
 
   function execute()
   {
+	$acl_writeable = preg_match("/w/",$this->parent->getacl(""));
+
     /* Check for interaction */
-    if (isset($_POST['add_statement']) && $_POST['addstatement'] != ""){
+    if ($acl_writeable && isset($_POST['add_statement']) && $_POST['addstatement'] != ""){
       $key= preg_replace('/^([a-z0-9-]+)\s(.*)$/', '\\1', get_post('addstatement'));
       $val= preg_replace("/^$key\s*/", '', get_post('addstatement'));
       $this->statements[$key]= $val;
     }
-    if (isset($_POST['delete_statement']) && isset($_POST['dhcpstatements'])){
+    if ($acl_writeable && isset($_POST['delete_statement']) && isset($_POST['dhcpstatements'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpstatements'));
       if (in_array($key, $this->autoStatements)){
 	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);
@@ -56,12 +58,12 @@ class dhcpAdvanced extends plugin
         unset($this->statements[$key]);	
       }
     }
-    if (isset($_POST['add_option']) && $_POST['addoption'] != ""){
+    if ($acl_writeable && isset($_POST['add_option']) && $_POST['addoption'] != ""){
       $key= preg_replace('/^([a-z0-9-]+)\s(.*)$/', '\\1', get_post('addoption'));
       $val= preg_replace("/^$key\s*/", '', get_post('addoption'));
       $this->options[$key]= $val;
     }
-    if (isset($_POST['delete_option']) && isset($_POST['dhcpoptions'])){
+    if ($acl_writeable && isset($_POST['delete_option']) && isset($_POST['dhcpoptions'])){
       $key= preg_replace('/([a-z0-9-]+)\s(.*)$/', '\\1', get_post('dhcpoptions'));
       if (in_array($key, $this->autoOptions)){
 	msg_dialog::display(_("Error"), _("Cannot delete automatic statements!"), ERROR_DIALOG);

@@ -107,7 +107,12 @@ class dhcpSharedNetwork extends dhcpPlugin
   /* Save data to object */
   function save_object()
   {
-    if (isset($_POST['cn'])){
+	/* Check permissions, don't touch anything if we do not have write permissions 
+     */
+    if (!preg_match("/w/",$this->parent->getacl(""))){
+      dhcpPlugin::save_object();
+	}elseif(isset($_POST['cn'])){
+
       $this->cn= validate(get_post('cn'));
       dhcpPlugin::save_object();
 

@@ -75,7 +75,7 @@ class dhcpGroup extends dhcpPlugin
   function save_object()
   {
     /* Save cn */
-    if (isset($_POST['cn'])){
+    if (preg_match("/w/",$this->parent->getacl("")) && isset($_POST['cn'])){
       $this->cn= validate(get_post('cn'));
     }
 

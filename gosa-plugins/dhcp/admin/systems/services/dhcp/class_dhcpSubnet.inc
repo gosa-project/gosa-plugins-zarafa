@@ -110,7 +110,11 @@ class dhcpSubnet extends dhcpPlugin
   /* Save data to object */
   function save_object()
   {
-    if(isset($_POST['dhcp_subnet_posted'])){
+
+    /* Skip here if do not have write permissions here 
+        Still executed at bottom - dhcpPlugin::save_object();
+     */
+    if(isset($_POST['dhcp_subnet_posted']) && preg_match("/w/",$this->parent->getacl(""))){
       if (isset($_POST['cn'])){
         $this->cn= validate(get_post('cn'));
       } 
@@ -127,8 +131,8 @@ class dhcpSubnet extends dhcpPlugin
 
       /* Move range to internal variable */
       $this->dhcpRange= $this->range_start." ".$this->range_stop;
-      dhcpPlugin::save_object();
     }
+    dhcpPlugin::save_object();
   }
 
 
@@ -159,7 +163,11 @@ class dhcpSubnet extends dhcpPlugin
     }
 
     /* IP's? */
-    foreach(array('dhcpNetMask' => _("Netmask"), 'cn' => _("Network address"), 'range_start' => _("Range"), 'range_stop' => _("Range")) as $attr => $str){
+    foreach(array(
+          'dhcpNetMask' => _("Netmask"), 
+          'cn'          => _("Network address"),
+          'range_start' => _("Range"),
+          'range_stop'  => _("Range")) as $attr => $str){
       if ($this->$attr != "" && !tests::is_ip($this->$attr)){
         $message[]= msgPool::invalid($str,"","","192.168.0.23");
       }
