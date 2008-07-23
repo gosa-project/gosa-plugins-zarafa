@@ -188,7 +188,7 @@ class divListFai extends MultiSelectWindow
            "FAIvariable"        => array("IMG"=> "images/fai_variable.png",       "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
            "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",           "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
            "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",        "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
-           "FAItemplate"        => array("IMG"=> "images/fai_template.png",       "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"));
+           "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",       "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"));
 
 
     /* Dynamic action col, depending on snapshot icons */

@@ -30,7 +30,7 @@
 				</table>
 		</td>
 		<td style="width:50%">
-				<h2><img class="center" alt="" src="images/fai_template.png" align="middle" title="{t}Objects{/t}">&nbsp;
+				<h2><img class="center" alt="" src="plugins/fai/images/fai_template.png" align="middle" title="{t}Objects{/t}">&nbsp;
 					{t}List of template files{/t}
 				</h2>
 			{$Entry_divlist}

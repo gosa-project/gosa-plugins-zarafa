@@ -42,7 +42,7 @@
 
 <table width="100%" summary="">
 <tr>
-  <td colspan=2><h2><img class="middle" alt="" src="images/fai_template.png" title="{t}Template attributes{/t}">&nbsp;{t}Template attributes{/t}</h2></td>
+  <td colspan=2><h2><img class="middle" alt="" src="plugins/fai/images/fai_template.png" title="{t}Template attributes{/t}">&nbsp;{t}Template attributes{/t}</h2></td>
 </tr>
 <tr>
   <td style="vertical-align:top;width:50%;border-right:1px solid #B0B0B0">
