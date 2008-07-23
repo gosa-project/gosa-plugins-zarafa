@@ -133,7 +133,7 @@ class glpiSelectUser extends plugin
     foreach($this->users as $key=>$user){
       $field1 = array("string" => "<img src='images/select_user.png' alt='user' >", "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($useruse,base64_encode($key),$user), "attach" => "style=''");
-      $field3 = array("string" => sprintf($useruse,base64_encode($key),"<img title='"._("Use")."' border=0 src='images/crossref.png' alt='"._("use")."'>"), 
+      $field3 = array("string" => sprintf($useruse,base64_encode($key),"<img title='"._("Use")."' border=0 src='plugins/glpi/images/crossref.png' alt='"._("use")."'>"), 
         "attach" => "style='width:60px;border-right:0px;text-align:right;'");
       $divlist->AddEntry(array($field1,$field2,$field3));
       
