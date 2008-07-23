@@ -72,11 +72,11 @@
 			<table>
 				<tr>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
+						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
 						</h2>
 					</td>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
+						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
 						</h2>
 					</td>
 				</tr>
@@ -98,7 +98,7 @@
 				</tr>
 			</table>
 			<h2>
-				<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
+				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
 			</h2>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	
@@ -108,11 +108,11 @@
 			<table>
 				<tr>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
+						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}FAI server{/t}
 						</h2>
 					</td>
 					<td>
-						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
+						<h2><img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Release{/t}
 						</h2>
 					</td>
 				</tr>
@@ -143,7 +143,7 @@
 				</tr>
 			</table>
 			<h2>
-				<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
+				<img class="center" alt="" align="middle" src="plugins/goto/images/fai_settings.png">&nbsp;{t}Assigned FAI classes{/t}
 			</h2>
 	{render acl=$FAIclassACL}
 			{$FAIScriptlist}	

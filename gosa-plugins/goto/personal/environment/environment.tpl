@@ -7,7 +7,7 @@
 <input type="hidden" name="iamposted" value="1">
 
 <h2> 
- <img class="center" alt="" src="images/fai_profile.png" align="middle" /> 
+ <img class="center" alt="" src="plugins/goto/images/fai_settings.png" align="middle" /> 
  {t}Profiles{/t}
 </h2>
 
