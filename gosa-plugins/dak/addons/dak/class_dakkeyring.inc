@@ -143,8 +143,8 @@ class dakkeyring extends plugin
 
       /* Create detail icon 
        */  
-      $hide = "<input type='image' name='details_".$key."' src='images/forward-arrow.png' alt='-' class='center'>&nbsp;";
-      $down = "<input type='image' name='details_".$key."' src='images/down-arrow.png' alt='+' class='center'>&nbsp;";
+      $hide = "<input type='image' name='details_".$key."' src='plugins/dak/images/forward-arrow.png' alt='-' class='center'>&nbsp;";
+      $down = "<input type='image' name='details_".$key."' src='plugins/dak/images/down-arrow.png' alt='+' class='center'>&nbsp;";
 
       $actions = "<input type='image' class='center' alt='".msgPool::delButton()."' 
                     src='images/lists/trash.png' name='remove_key_".$key."'>";
