@@ -90,7 +90,7 @@ class divListDevices extends MultiSelectWindow
     if(preg_match("/c/",$acl)) {
       $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Create")."|\n";
-      $s.= "...|<input class='center' type='image' src='images/list_new_device.png' alt=''>".
+      $s.= "...|<input class='center' type='image' src='plugins/goto/images/list_new_device.png' alt=''>".
         "&nbsp;"._("Device")."|device_new|\n";
       $s.= "..|---|\n";
     }
