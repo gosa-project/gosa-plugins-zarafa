@@ -190,7 +190,7 @@
 	</table>
 {elseif $device_type=="gfxcard"}
 
-        <h2><img alt="" align="middle" src="images/gfx_hardware.png" class="center">&nbsp;{t}Add/Edit graphic card{/t}</h2>
+        <h2><img alt="" align="middle" src="plugins/glpi/images/gfx_hardware.png" class="center">&nbsp;{t}Add/Edit graphic card{/t}</h2>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">

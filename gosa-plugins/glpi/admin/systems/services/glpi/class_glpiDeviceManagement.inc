@@ -236,7 +236,7 @@ class glpiDeviceManagement extends plugin
       " <input class='center' type='image' align='middle' 
       src='images/hardware.png' title='"._("New controller")."' alt='"._("CS")."' name='new_control'>&nbsp;".
       " <input class='center' type='image' align='middle' 
-      src='images/gfx_hardware.png' title='"._("New graphics card")."' alt='"._("GC")."' name='new_gfxcard'>&nbsp;".
+      src='plugins/glpi/images/gfx_hardware.png' title='"._("New graphics card")."' alt='"._("GC")."' name='new_gfxcard'>&nbsp;".
       " <input class='center' type='image' align='middle' 
       src='images/snd_hardware.png' title='"._("New sound card")."' alt='"._("SC")."' name='new_sndcard'>&nbsp;".
       " <input class='center' type='image' align='middle' 
