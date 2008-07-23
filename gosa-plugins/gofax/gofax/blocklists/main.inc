@@ -24,9 +24,9 @@ if ($remove_lock){
 
 	/* Page header*/
 	if (session::is_set('objectinfo')){
-	        $display= print_header(get_template_path('images/blocklists.png'), _("Blocklist management"), "<img alt=\"\"align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
+	        $display= print_header(get_template_path($blocklist->plIcon), _("Blocklist management"), "<img alt=\"\"align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".@LDAP::fix(session::get('objectinfo')));
 	} else {
-	        $display= print_header(get_template_path('images/blocklists.png'), _("Blocklist management"));
+	        $display= print_header(get_template_path($blocklist->plIcon), _("Blocklist management"));
 	}
 	$display.= $output;
 

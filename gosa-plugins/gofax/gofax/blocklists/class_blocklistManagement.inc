@@ -4,6 +4,7 @@ class blocklist extends plugin
   /* Definitions */
   var $plHeadline= "FAX blocklists";
   var $plDescription= "This does something";
+  var $plIcon = "plugins/gofax/images/blocklists.png";
 
   var $blocklists       = array();
   var $DivListBlocklist = NULL;

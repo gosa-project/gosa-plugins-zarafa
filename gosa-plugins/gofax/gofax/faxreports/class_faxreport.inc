@@ -5,6 +5,7 @@ class faxreport extends plugin
   /* Definitions */
   var $plHeadline     = "FAX Reports";
   var $plDescription  = "This does something";
+  var $plIcon         = "plugins/gofax/images/reports.png";
 
   /* For internal use */
   var $start          = 0;
