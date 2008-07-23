@@ -67,7 +67,7 @@ class divListApplication extends MultiSelectWindow
       $releases = $this->parent->getReleases();
       $smarty->assign("app_release" , $releases[$this->parent->app_release]);
       $smarty->assign("app_base"    , $releases[$this->parent->app_base]);
-      $smarty->assign("branchimage","images/branch.png");
+      $smarty->assign("branchimage","plugins/goto/images/branch.png");
       $smarty->assign("app_releases", $releases);
       $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE));
     }
@@ -190,7 +190,7 @@ class divListApplication extends MultiSelectWindow
 
       /* If we are allowed to remove the application account, display remove icon */
       if(preg_match("/freeze/i",$FAIstate)){
-        $actions .= "<img src='images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
+        $actions .= "<img src='plugins/goto/images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
       }elseif(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
           src='images/lists/trash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";

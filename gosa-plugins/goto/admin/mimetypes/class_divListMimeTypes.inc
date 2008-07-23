@@ -67,7 +67,7 @@ class divListMimeTypes extends MultiSelectWindow
       $releases = $this->parent->getReleases();
       $smarty->assign("mime_release" , $releases[$this->parent->mime_release]);
       $smarty->assign("mime_base"    , $releases[$this->parent->mime_base]);
-      $smarty->assign("branchimage","images/branch.png");
+      $smarty->assign("branchimage","plugins/goto/images/branch.png");
       $smarty->assign("mime_releases", $releases);
       $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE));
     }
@@ -195,7 +195,7 @@ class divListMimeTypes extends MultiSelectWindow
 
       /* Add delete button */
       if(preg_match("/freeze/i",$FAIstate)){
-        $action .= "<img src='images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
+        $action .= "<img src='plugins/goto/images/freeze.png' class='center' alt='!' title='"._("Freezed")."'>";
       }elseif(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image'
           src='images/lists/trash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
