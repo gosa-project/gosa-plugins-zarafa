@@ -1,7 +1,7 @@
 <table summary="" width="100%">
 	<tr>
 		<td width="50%" valign="top">
-				<h2><img class="center" alt="" src="images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h2>
+				<h2><img class="center" alt="" src="plugins/fai/images/fai_small.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Generic{/t}</h2>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
