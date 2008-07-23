@@ -50,7 +50,7 @@
 			<tr class="rowxp1">
 		{/if}
 			<td style='width:20px; padding-top:5px;padding-bottom:5px;background-color: transparent;'>
-				<img src='images/fai_small.png' alt='{t}Release{/t}'>
+				<img src='plugins/fai/images/fai_small.png' alt='{t}Release{/t}'>
 			</td>
 			<td style='background-color: transparent;'>
 				{$item.NAME}
