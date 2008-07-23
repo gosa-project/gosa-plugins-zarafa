@@ -30,7 +30,7 @@
            &nbsp;
         </td>
 		<td valign="top">
-				<h2><img class="center" alt="" src="images/fai_script.png" align="middle" title="{t}Properties{/t}">&nbsp;{t}Script attributes{/t}</h2>
+				<h2><img class="center" alt="" src="plugins/fai/images/fai_script.png" align="middle" title="{t}Properties{/t}">&nbsp;{t}Script attributes{/t}</h2>
 				<table summary="" width="100%">
 					<tr>
 						<td>
@@ -51,7 +51,7 @@
 	</tr>
 </table>
 <p class="seperator">&nbsp;</p>
-<h2><img class="center" alt="" src="images/fai_script.png" align="middle" title="{t}Script attributes{/t}">&nbsp;
+<h2><img class="center" alt="" src="plugins/fai/images/fai_script.png" align="middle" title="{t}Script attributes{/t}">&nbsp;
 	<LABEL for="FAIscript">
 		{t}Script{/t}
 	</LABEL>

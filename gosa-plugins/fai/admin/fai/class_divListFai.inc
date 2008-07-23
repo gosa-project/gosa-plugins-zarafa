@@ -184,7 +184,7 @@ class divListFai extends MultiSelectWindow
      $objects = array(
            "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png", "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
            "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",       "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
-           "FAIscript"          => array("IMG"=> "images/fai_script.png",         "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
+           "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",         "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
            "FAIvariable"        => array("IMG"=> "images/fai_variable.png",       "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
            "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",           "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
            "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",        "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
