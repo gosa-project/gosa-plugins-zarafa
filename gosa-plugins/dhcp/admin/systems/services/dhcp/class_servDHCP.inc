@@ -698,8 +698,9 @@ class servdhcp extends goService
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            
-          )     
+            "start"         => _("Service start"),  // Remove this to hide the start button at all.
+            "stop"          => _("Service stop"),   // Remove this to hide the stop button at all.
+            "restart"       => _("Service restart"))// Remove this to hide the restart button at all.
     ));
   }
 
