@@ -25,6 +25,7 @@ class gotomasses extends plugin
   /* Definitions */
   var $plHeadline     = "Deployment status";
   var $plDescription  = "System deployment status";
+  var $plIcon         = "plugins/goto/images/goto.png";
 
   /* attribute list for save action */
   var $attributes= array();
