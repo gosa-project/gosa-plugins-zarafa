@@ -23,13 +23,13 @@
  
      # create page header
      if (session::is_set('objectinfo')) {
-       $display = print_header(get_template_path('images/dfs.png'), 
+       $display = print_header(get_template_path('plugins/dfs/images/dfs.png'), 
                                 _("Distributed File System Administration"),
                                 "<img alt=\"\" class=\"center\" src=\"".
                                 get_template_path('images/lists/locked.png').
                                 "\"> ".session::get('objectinfo'));
      } else {
-       $display = print_header(get_template_path('images/dfs.png'),
+       $display = print_header(get_template_path('plugins/dfs/images/dfs.png'),
                                 _("Distributed File System Administration"));
      }
 
