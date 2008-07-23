@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:50+0200\n"
-"PO-Revision-Date: 2008-06-04 08:50+0200\n"
+"PO-Revision-Date: 2008-07-23 19:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgstr "Erreur interne"
 
 #: html/getvcard.php:39
 msgid "Missing parameters!"
-msgstr ""
+msgstr "Paramètres manquants !"
 
 #: addons/addressbook/address_edit.tpl:7
 msgid "Choose the department to store entry in"
@@ -214,8 +214,7 @@ msgstr "Afficher les entrées de l'organisation"
 
 #: addons/addressbook/contents.tpl:76
 msgid "Select to see users in addressbook"
-msgstr ""
-"Sélectionner pour afficher les utilisateurs présent dans le carnet d'adresse"
+msgstr "Sélectionner pour afficher les utilisateurs présent dans le carnet d'adresse"
 
 #: addons/addressbook/contents.tpl:76
 msgid "Show addressbook entries"
@@ -270,8 +269,7 @@ msgid "Error"
 msgstr "Erreur"
 
 #: addons/addressbook/class_addressbook.inc:178
-msgid ""
-"You need to set your personal phone number in order to perform direct dials."
+msgid "You need to set your personal phone number in order to perform direct dials."
 msgstr ""
 "Vous n'avez pas de numéro de téléphone personnel indiqué. Veuillez rectifier "
 "cela afin de pouvoir faire des appels directs."
@@ -346,8 +344,7 @@ msgid "Telephone number"
 msgstr "Numéro de téléphone"
 
 #: addons/addressbook/class_addressbook.inc:718
-msgid ""
-"Cannot create a unique DN for your entry. Please fill more formular fields."
+msgid "Cannot create a unique DN for your entry. Please fill more formular fields."
 msgstr ""
 "Impossible de créer un DN unique pour cette entrée. Veuillez remplir plus de "
 "champs."
@@ -416,3 +413,4 @@ msgstr "Adresse postale personnelle"
 #: addons/addressbook/class_addressbook.inc:832
 msgid "Common name"
 msgstr "Nom complet"
+
