@@ -95,7 +95,7 @@
   </td>
 
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/envelope.png" /><label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/scalix/images/envelope.png" /><label for="emails_list"> {t}Scalix email addresses{/t}</label></h2>
 {render acl=$scalixEmailAddressACL}
    <select id="emails_list" style="width:100%;height:100px;" name="emails_list[]" size="15"
 		 multiple title="{t}List of scalix email addresses{/t}" >
