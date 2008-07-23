@@ -27,7 +27,7 @@
     &nbsp;
    </td>
    <td style="vertical-align:top; width:50%">
-     <h2><img alt="" align="top" src="images/house.png"> {t}DFS Location{/t}</h2>
+     <h2><img alt="" align="top" src="plugins/dfs/images/location.png"> {t}DFS Location{/t}</h2>
 
      <table summary="" style="width:100%">
       <tr>
