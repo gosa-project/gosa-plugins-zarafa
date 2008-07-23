@@ -30,7 +30,7 @@
            &nbsp;
         </td>
 		<td valign="top">
-				<h2><img class="center" alt="" src="images/fai_variable.png" align="middle" title="{t}Variable attributes{/t}">&nbsp;{t}Variable attributes{/t}</h2>
+				<h2><img class="center" alt="" src="plugins/fai/images/fai_variable.png" align="middle" title="{t}Variable attributes{/t}">&nbsp;{t}Variable attributes{/t}</h2>
 				<table  summary="" width="100%">
 					<tr>
 						<td>
