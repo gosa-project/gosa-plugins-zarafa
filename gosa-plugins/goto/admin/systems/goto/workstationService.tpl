@@ -1,7 +1,7 @@
 <table style="width:100%;" summary="">
  <tr>
   <td style="width:33%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/keyboard.png"> {t}Keyboard{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/keyboard.png"> {t}Keyboard{/t}</h2>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
