@@ -304,7 +304,7 @@
 
 {elseif $device_type=="drive"}
 
-        <h2><img alt="" align="middle" src="images/drives.png" class="center">&nbsp;{t}Add/Edit drive{/t}</h2>
+        <h2><img alt="" align="middle" src="plugins/glpi/images/drives.png" class="center">&nbsp;{t}Add/Edit drive{/t}</h2>
         <p class="seperator">&nbsp;</p>
         <br>
 	<table summary="" width="100%">
