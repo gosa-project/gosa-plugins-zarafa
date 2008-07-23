@@ -117,7 +117,7 @@ class divListMacro extends MultiSelectWindow
   {
   
     $empty      = "<img class='center' src='images/nothing.png' style='width:16px;height:16px;' alt=''>";
-    $macroimg   = "<img class='center' src='images/list_macro.png' alt='"._("Macro")."' title='%s'>";
+    $macroimg   = "<img class='center' src='plugins/gofon/images/list_macro.png' alt='"._("Macro")."' title='%s'>";
     $visible    = "<img class='center' src='images/true.png' alt='"._("yes")."' title='"._("visible")."'>";
     $invisible  = "<img class='center' src='images/false.png' alt='"._("no")."'title='"._("invisible")."'>";
     $editlink   = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
