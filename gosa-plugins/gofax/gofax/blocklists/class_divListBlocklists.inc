@@ -122,7 +122,7 @@ class divListBlocklist extends MultiSelectWindow
   function setEntries($list)
   {
     // User and Template  Images
-    $blockimg = "<img class='center' src='images/list_blocklist.png' alt='User' title='%s'>";
+    $blockimg = "<img class='center' src='plugins/gofax/images/list_blocklist.png' alt='User' title='%s'>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
@@ -195,7 +195,7 @@ class divListBlocklist extends MultiSelectWindow
     $num_obj_str = sprintf(_("Number of listed '%s'"),_("blocklists"));
     $num_dep_str = sprintf(_("Number of listed '%s'"),_("departments"));
 
-    $str = "<img class='center' src='images/list_blocklist.png'
+    $str = "<img class='center' src='plugins/gofax/images/list_blocklist.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/lists/folder.png'
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
