@@ -96,7 +96,7 @@
 
 	{if !$multiple_support}
 
-    <h2><img class="center" alt="" align="middle" src="images/fax_small.png">&nbsp;{t}Alternate fax numbers{/t}</h2>
+    <h2><img class="center" alt="" align="middle" src="plugins/gofax/images/fax_small.png">&nbsp;{t}Alternate fax numbers{/t}</h2>
 {render acl=$facsimileAlternateTelephoneNumberACL}
     <select style="width:100%" name="alternate_list[]" size="10" multiple>
 			{html_options values=$facsimileAlternateTelephoneNumber output=$facsimileAlternateTelephoneNumber}
