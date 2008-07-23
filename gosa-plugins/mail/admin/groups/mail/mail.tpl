@@ -174,7 +174,7 @@
   </td>
   <td style="vertical-align:top;width:50%">
    <h2>
-	<img class="center" alt="" align="middle" src="images/envelope.png">
+	<img class="center" alt="" align="middle" src="plugins/mail/images/envelope.png">
 	{t}Forward messages to non group members{/t}
    </h2>
 

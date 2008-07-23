@@ -89,7 +89,7 @@
 {if $multiple_support}
 
 <p class="seperator">&nbsp;</p>
-<h2><img class="center" alt="" align="middle" src="images/envelope.png" />&nbsp;{t}Mail options{/t}</h2>
+<h2><img class="center" alt="" align="middle" src="plugins/mail/images/envelope.png" />&nbsp;{t}Mail options{/t}</h2>
 
 {else}
 
