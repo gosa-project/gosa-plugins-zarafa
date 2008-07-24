@@ -729,6 +729,9 @@ class workgeneric extends plugin
       $this->parent->by_object['workstartup']->gotoBootKernel = "default-inherited";
       $this->parent->by_object['workstartup']->gotoLdapServer = "default-inherited";
       $this->parent->by_object['workstartup']->FAIdebianMirror= "inherited";
+
+      $this->parent->by_object['workstartup']->gotoLdap_inherit = TRUE;
+      $this->parent->by_object['workstartup']->gotoLdapServers = array();
     }
   }
 }
