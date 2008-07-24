@@ -18,20 +18,20 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 if (!$remove_lock){
-	if (!session::is_set('dak_tabs') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-		session::set('dak_tabs',new dak_tabs($config, $config->data['TABS']['DAK_TABS'],""));
+	if (!session::is_set('dak_plug') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+		session::set('dak_plug',new dakplug($config));
 	}
-	$dak_tabs = session::get('dak_tabs');
+	$dak_plug = session::get('dak_plug');
 
 	/* Execute formular */
-#	$display= $dak_tabs->save_object();
-	$display= $dak_tabs->execute ();
+	$display= $dak_plug->save_object();
+	$display= $dak_plug->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/dak.png'), _("DAK")).$display;
+	$display= print_header(get_template_path($dak_plug->plIcon), _("DAK")).$display;
 
 	/* Store changes  in session */
-	session::set('dak_tabs',$dak_tabs);
+	session::set('dak_plug',$dak_plug);
 }
 ?>
