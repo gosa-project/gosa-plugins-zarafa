@@ -99,7 +99,7 @@
    {/render}
   </td>
   <td style="padding-left:5px;border-left: solid 1px #AAAAAA;">
-   <h2><img src="images/select_workstation.png" alt="" class="center">&nbsp;{t}Systems{/t}</h2>
+   <h2><img src="plugins/sudo/images/select_workstation.png" alt="" class="center">&nbsp;{t}Systems{/t}</h2>
    {render acl=$sudoHostACL}
    {$divlist_sudoHost}
    {/render}
