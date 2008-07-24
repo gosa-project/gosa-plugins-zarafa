@@ -203,7 +203,7 @@ class glpiPrinterCartridges extends plugin
     /* Create list header */ 
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' align='middle' 
-      src='images/zip.png'  title='"._("New monitor")."' alt='"._("M")."' name='newcartridge'>&nbsp;".
+      src='plugins/glpi/images/zip.png'  title='"._("New monitor")."' alt='"._("M")."' name='newcartridge'>&nbsp;".
       "</div>";
 
     /* Tell smarty some vars */
