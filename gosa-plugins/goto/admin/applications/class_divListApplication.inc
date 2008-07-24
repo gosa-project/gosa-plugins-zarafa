@@ -141,7 +141,7 @@ class divListApplication extends MultiSelectWindow
     /* Create links */
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
     $userimg  = "<img class='center' src='plugins/groups/images/groups.png' alt='User'    title='%s'>";
-    $applimg  = "<img class='center' src='images/select_application.png' alt='A'  title='"._("Application")."'>";
+    $applimg  = "<img class='center' src='plugins/goto/images/select_application.png' alt='A'  title='"._("Application")."'>";
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
     /* set Page header */
@@ -236,7 +236,7 @@ class divListApplication extends MultiSelectWindow
     $num_app_str = _("Number of listed applications");
     $num_dep_str = _("Number of listed departments");
   
-    $str = "<img class='center' src='images/select_application.png' 
+    $str = "<img class='center' src='plugins/goto/images/select_application.png' 
               title='".$num_app_str."' alt='".$num_app_str."'>&nbsp;".$num_apps."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/lists/folder.png' 
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";

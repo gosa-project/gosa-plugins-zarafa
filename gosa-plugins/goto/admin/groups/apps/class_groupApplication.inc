@@ -470,7 +470,7 @@ class appgroup extends plugin
       }
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
-              "<img class='center' src='images/select_application.png' alt='"._("application")."'>&nbsp;".$name,
+              "<img class='center' src='plugins/goto/images/select_application.png' alt='"._("application")."'>&nbsp;".$name,
               "attach"=>"style='border:0px;'")
             ));
     }
