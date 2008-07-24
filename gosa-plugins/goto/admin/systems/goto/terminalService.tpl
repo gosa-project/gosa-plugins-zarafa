@@ -73,7 +73,7 @@
   </td>
   
   <td style="vertical-align:top;width:33%">
-   <h2><img class="center" alt="" align="middle" src="images/select_phone.png"> {t}Telephone hardware{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/systems/images/select_phone.png"> {t}Telephone hardware{/t}</h2>
    <table style="width:100%" border=0 summary="">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
