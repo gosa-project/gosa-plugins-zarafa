@@ -96,7 +96,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<h2><img src='images/mime_leftclick.png' class='center' alt='{t}Left click{/t}'>&nbsp;{t}Left click{/t}</h2>
+			<h2><img src='plugins/goto/images/mime_leftclick.png' class='center' alt='{t}Left click{/t}'>&nbsp;{t}Left click{/t}</h2>
 		</td>
 	</tr>
 	<tr>
