@@ -162,7 +162,7 @@ class divListConference extends MultiSelectWindow
       $owner = $this->parent->ui->dn==$conference['goFonConferenceOwner'][0];
       $p_acl = $this->ui->get_permissions($conference['dn'],"gofonconference/conference","goFonPIN");
       if((isset($conference['goFonPIN'][0])) && $owner && preg_match("/r/",$p_acl)){
-        $pin = "<img class='center' src='images/list_password.png' title='PIN : ".$conference['goFonPIN'][0]."' alt='PIN'>";
+        $pin = "<img class='center' src='plugins/gofon/images/pin.png' title='PIN : ".$conference['goFonPIN'][0]."' alt='PIN'>";
       }else{
         $pin = "&nbsp;";
       }
