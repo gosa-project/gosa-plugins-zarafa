@@ -5,6 +5,7 @@ class logview extends plugin
   /* Definitions */
   var $plHeadline= "System logs";
   var $plDescription= "This does something";
+  var $plIcon = "plugins/log/images/plugin.png";
 
   /* attribute list for save action */
   var $attributes= array();
