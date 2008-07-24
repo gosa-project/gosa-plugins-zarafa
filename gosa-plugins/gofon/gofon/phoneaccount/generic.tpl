@@ -121,7 +121,7 @@
  <tr style="vertical-align:top; border-top:1px solid #A0A0A0;">
  <td colspan=2 style="vertical-align:top;width:50%">
   <h2>
-   <img class="center" alt="" src="images/select_macro.png" align="middle" />
+   <img class="center" alt="" src="plugins/gofon/images/select_macro.png" align="middle" />
    &nbsp;{t}Phone macro{/t}
   </h2>
   <table summary="{t}Phone macro{/t}">
