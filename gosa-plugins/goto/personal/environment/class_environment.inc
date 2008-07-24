@@ -775,7 +775,8 @@ class environment extends plugin
 
         /* Create pwd reset images */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
+          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 
+            'src='plugins/goto/images/list_reset_password.png' alt='"._("Reset password hash")."' 
             title='"._("Reset password hash")."'>";
         }
         $field1 = array("string" => "<font style=\"color:#C0C0C0\">".$value."</font>" , "attach" => "style='".$color."'");
@@ -784,7 +785,8 @@ class environment extends plugin
 
         /* Create pwd reset img && delete image */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
+          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 
+            'src='plugins/goto/images/list_reset_password.png' alt='"._("Reset password hash")."' 
             title='"._("Reset password hash")."'>";
           $img.= "&nbsp;";
         }
