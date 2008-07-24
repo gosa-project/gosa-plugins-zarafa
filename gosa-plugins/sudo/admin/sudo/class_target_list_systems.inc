@@ -184,7 +184,7 @@ class target_list_systems extends MultiSelectWindow
       }elseif(in_array("gotoWorkstation",$val['objectClass'])){
         $img = "<img src='images/select_workstation.png' alt='"._("Workstation")."' ".$title.">";
       }elseif(in_array("gotoTerminal",$val['objectClass'])){
-        $img = "<img src='images/select_terminal.png' alt='"._("Terminal")."' ".$title.">";
+        $img = "<img src='plugins/systems/images/select_terminal.png' alt='"._("Terminal")."' ".$title.">";
       }
 
       /* Create each field */
