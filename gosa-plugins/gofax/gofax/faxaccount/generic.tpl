@@ -51,7 +51,7 @@
     &nbsp;
    </td>
    <td style="vertical-align:top; width:100%">
-     <h2><img class="center" alt="" align="middle" src="images/printer.png" />&nbsp;{t}Delivery methods{/t}</h2>
+     <h2><img class="center" alt="" align="middle" src="plugins/gofax/images/printer.png" />&nbsp;{t}Delivery methods{/t}</h2>
 
 {render acl=$goFaxIsEnabledACL checkbox=$multiple_support checked=$use_goFaxIsEnabled}
      <input type=checkbox name="goFaxIsEnabled" value="1" {$goFaxIsEnabled} class="center">
