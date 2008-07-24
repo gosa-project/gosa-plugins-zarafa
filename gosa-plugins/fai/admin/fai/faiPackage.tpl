@@ -30,7 +30,7 @@
 				</table>
 		</td>
 		<td width="50%" valign="top">
-			<h2><img class="center" alt="" src="images/network.png" align="middle" title="{t}Repository{/t}">&nbsp;{t}Repository{/t}</h2>
+			<h2><img class="center" alt="" src="plugins/fai/images/repository.png" align="middle" title="{t}Repository{/t}">&nbsp;{t}Repository{/t}</h2>
 				<table summary="" cellspacing="4">
 					<tr>
 						<td>
