@@ -129,7 +129,7 @@
 </td>
 <td valign='top' style="border-left: 1px solid rgb(160, 160, 160);">
 	<h2>
-    <img class="center" alt="" src="images/sound.png" align="middle">
+    <img class="center" alt="" src="plugins/gofon/images/sound.png" align="middle">
     {t}Queue sound setup{/t}
     </h2>
 	<table summary="{t}Generic queue Settings{/t}">
