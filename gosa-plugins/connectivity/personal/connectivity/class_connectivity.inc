@@ -14,7 +14,7 @@ class connectivity extends plugin
   /* Definitions */
   var $plHeadline= "Connectivity";
   var $plDescription= "This does something";
-  var $plInfo = "plugins/connectivity/images/plugin.png";
+  var $plIcon = "plugins/connectivity/images/plugin.png";
 
   /* attribute list for save action */
   var $attributes= array();
