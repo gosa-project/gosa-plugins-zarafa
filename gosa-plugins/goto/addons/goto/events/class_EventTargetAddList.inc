@@ -235,7 +235,7 @@ class EventTargetAddList extends MultiSelectWindow
 
       $img ="";
       if(in_array("goServer",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_server.png" alt="S" title="'._("Server").'">';
+        $img = '<img class="center" src="plugins/systems/images/select_server.png" alt="S" title="'._("Server").'">';
 
         if($this->filter_iprange){
           if(!isset($obj['ipHostNumber']) || !tests::is_in_ip_range($this->ipfrom,$this->ipto,             $obj['ipHostNumber'][0])) {
