@@ -170,7 +170,7 @@ class addressbook extends plugin
 
         /* Perform call */
         if ($target != "" && $source != ""){
-          $smarty->assign("phone_image", get_template_path('images/phone.png'));
+          $smarty->assign("phone_image", get_template_path('plugins/addressbook/images/phone.png'));
           $smarty->assign("dial_info", sprintf(_("Dial from %s to %s now?"), "<b style='font-size:22px; color:red'>".$source."</b>", "<b style='font-size:22px;color:red'>".$target."</b>"));
           return($smarty->fetch(get_template_path('dial.tpl', TRUE)));
           return;
