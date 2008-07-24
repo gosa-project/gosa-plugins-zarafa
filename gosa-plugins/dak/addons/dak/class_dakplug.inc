@@ -4,9 +4,10 @@
 class dakplug extends plugin
 {
 
-	var $tabs = NULL;	
+	var $tabs 	= NULL;
+	var $plIcon = "plugins/dak/images/plugin.png";
 	
-	public function __construct($config,NULL)
+	public function __construct($config)
 	{
 		$this->tabs = new dak_tabs($config, $config->data['TABS']['DAK_TABS'],"");
 	}
