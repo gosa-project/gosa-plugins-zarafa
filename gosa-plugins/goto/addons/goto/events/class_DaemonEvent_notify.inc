@@ -49,8 +49,8 @@ class DaemonEvent_notify extends DaemonEvent
     $this->s_Schedule_Action = "job_send_user_msg";
     $this->s_Trigger_Action= "gosa_send_user_msg";
     $this->s_Queued_Action= "trigger_action_notify";
-    $this->s_Menu_Image = "images/mailto.png";
-    $this->s_List_Image = "images/mailto.png";
+    $this->s_Menu_Image = "plugins/goto/images/notify.png";
+    $this->s_List_Image = "plugins/goto/images/notify.png";
     $this->a_targets = array("GOSA"); // Required to get the event send. Maybe this is a wrong value.
   }
 
