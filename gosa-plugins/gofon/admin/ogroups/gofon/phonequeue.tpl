@@ -44,7 +44,7 @@
 		</table>
 		</tr>
 		<tr>
-		  <td colspan=2><h2><img class="center" alt="" src="images/select_ogroup.png" align="middle">&nbsp;{t}Options{/t}</h2></td>
+		  <td colspan=2><h2><img class="center" alt="" src="plugins/gofon/images/options.png" align="middle">&nbsp;{t}Options{/t}</h2></td>
 		</tr>
                 <tr>
                 <td><LABEL for="goFonHomeServer">{t}Home server{/t}</LABEL>{$must}</td>
@@ -264,7 +264,7 @@
 	</td>
 </tr>
 <tr>
-<td colspan=2><h2 style='margin-bottom:0px;'><img class="center" alt="" src="images/select_ogroup.png" align="middle">&nbsp;{t}Phone attributes {/t}</h2></td>
+<td colspan=2><h2 style='margin-bottom:0px;'><img class="center" alt="" src="plugins/gofon/images/options.png" align="middle">&nbsp;{t}Phone attributes {/t}</h2></td>
 </tr>
 <tr>
 <td>

@@ -135,7 +135,7 @@
   </tr>
   <tr>
     <td colspan=3>
-      <h2 style='margin:0px; padding:0px;'><img class="center" alt="" align="middle" src="images/select_ogroup.png"> 
+      <h2 style='margin:0px; padding:0px;'><img class="center" alt="" align="middle" src="plugins/gofon/images/options.png"> 
         {t}Options{/t}
       </h2>
     </td>
