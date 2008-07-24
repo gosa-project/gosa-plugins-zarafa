@@ -225,7 +225,7 @@
  <tr><td><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
  <tr>
   <td style="vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/scanner.png"> {t}Scan device{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/scanner.png"> {t}Scan device{/t}</h2>
 {render acl=$gotoScannerEnableACL}
    <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} >
 {/render}
