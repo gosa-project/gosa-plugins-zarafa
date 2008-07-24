@@ -1,4 +1,4 @@
-<h2><img class="center" alt="" src="images/select_printer.png" align="middle">&nbsp;{t}Add printer devices{/t}</h2>
+<h2><img class="center" alt="" src="plugins/systems/images/select_printer.png" align="middle">&nbsp;{t}Add printer devices{/t}</h2>
 
     <input type="hidden" name="dialogissubmitted" value="1">
 

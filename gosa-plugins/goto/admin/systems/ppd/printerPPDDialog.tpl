@@ -1,4 +1,4 @@
-<h2><img alt="P" class="center" src="images/select_printer.png" align="middle">&nbsp;{t}Printer driver{/t}</h2>
+<h2><img alt="P" class="center" src="plugins/systems/images/select_printer.png" align="middle">&nbsp;{t}Printer driver{/t}</h2>
 <table summary="" width="100%">
 	<tr>
 		<td width="50%" style="vertical-align:top">

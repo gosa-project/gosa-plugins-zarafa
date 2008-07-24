@@ -334,7 +334,7 @@
    <h2>
 	<input type="checkbox" name="use_gotoPrinter" value="1" {if $use_gotoPrinter} checked {/if}
 		class="center" onClick="toggle('div_gotoPrinter');">
-    <img alt="" src="images/select_printer.png" align="middle" class="center" />&nbsp;
+    <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>
 
@@ -370,7 +370,7 @@
 {else}
 
    <h2>
-    <img alt="" src="images/select_printer.png" align="middle" class="center" />&nbsp;
+    <img alt="" src="plugins/systems/images/select_printer.png" align="middle" class="center" />&nbsp;
     <label for="gotoPrinter">{t}Printer{/t}</label>
    </h2>
    <table style="width:100%" summary="{t}Printer settings{/t}">
