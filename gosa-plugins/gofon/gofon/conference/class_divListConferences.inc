@@ -117,7 +117,7 @@ class divListConference extends MultiSelectWindow
 
   function setEntries($list)
   {
-    $userimg  = "<img class='center' src='images/select_conference.png' alt='User' title='%s'>";
+    $userimg  = "<img class='center' src='plugins/gofon/images/select_conference.png' alt='User' title='%s'>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
@@ -222,7 +222,7 @@ class divListConference extends MultiSelectWindow
     $num_obj_str = sprintf(_("Number of listed '%s'"),_("conferences"));
     $num_dep_str = sprintf(_("Number of listed '%s'"),_("departments"));
 
-    $str = "<img class='center' src='images/select_conference.png'
+    $str = "<img class='center' src='plguins/gofon/images/select_conference.png'
               title='".$num_obj_str."' alt='".$num_obj_str."'>&nbsp;".$num_objs."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/lists/folder.png'
               title='".$num_dep_str."' alt='".$num_dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
