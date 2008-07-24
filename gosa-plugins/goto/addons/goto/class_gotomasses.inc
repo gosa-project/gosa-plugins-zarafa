@@ -417,9 +417,9 @@ class gotomasses extends plugin
       /* If WAITING add priority action
        */  
       if(in_array($task['STATUS'],array("waiting"))){
-        $prio_actions.= "<input class='center' type='image' src='images/prio_increase.png' 
+        $prio_actions.= "<input class='center' type='image' src='plugins/goto/images/prio_increase.png' 
           title='"._("Move up")."' name='prio_up_".$key."'>&nbsp;";
-        $prio_actions.= "<input class='center' type='image' src='images/prio_decrease.png' 
+        $prio_actions.= "<input class='center' type='image' src='plugins/goto/images/prio_decrease.png' 
           title='"._("Move down")."' name='prio_down_".$key."'>&nbsp;";
       }
     

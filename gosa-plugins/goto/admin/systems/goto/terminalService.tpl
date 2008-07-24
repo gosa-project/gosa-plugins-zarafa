@@ -42,7 +42,7 @@
   </td>
   
   <td style="vertical-align:top;width:32%">
-   <h2><img class="center" alt="" align="middle" src="images/mouse.png"> {t}Mouse{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/goto/images/mouse.png"> {t}Mouse{/t}</h2>
    <table summary="">
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
