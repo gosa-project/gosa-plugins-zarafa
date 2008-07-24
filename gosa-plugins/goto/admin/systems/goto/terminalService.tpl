@@ -170,7 +170,7 @@
   </td>
 
   <td style="width:33%; vertical-align:top;">
-   <h2><img class="center" alt="" align="middle" src="images/server.png"> {t}Remote desktop{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/systems/images/server.png"> {t}Remote desktop{/t}</h2>
    <table summary="">
     <tr>
      <td></td>
