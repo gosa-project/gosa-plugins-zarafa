@@ -333,7 +333,7 @@ class faiPackage extends plugin
         /* Adapt used name if we're marked for removal */
         $removal = "<img src='images/empty.png' alt=' '  class='center'>";
         if (preg_match('/\-$/', $name)){
-          $removal = "<img src='images/negate.png' alt='"._("Package marked for removal")."'
+          $removal = "<img src='plugins/fai/images/removal_mark.png' alt='"._("Package marked for removal")."'
                       title='"._("Package marked for removal")."' class='center'>";
         }
 
@@ -351,7 +351,7 @@ class faiPackage extends plugin
  
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
           $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
-            src='images/negate.png' name='removal_package_".base64_encode($usedName)."' >";
+            src='plugins/fai/images/removal_mark.png' name='removal_package_".base64_encode($usedName)."' >";
         }
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
           $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
