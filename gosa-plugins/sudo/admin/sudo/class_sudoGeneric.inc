@@ -376,8 +376,8 @@ class sudo extends plugin
 
     /* Fill divlists
      */
-    $neg_img= "<img src='images/negate.png' alt='!' class='center'>"; 
-    $option = "<input type='image' src='images/negate.png'     name='neg_%ATTR%_%KEY%' class='center'>"; 
+    $neg_img= "<img src='plugins/sudo/images/negate.png' alt='!' class='center'>"; 
+    $option = "<input type='image' src='plugins/sudo/images/negate.png'     name='neg_%ATTR%_%KEY%' class='center'>"; 
     $option.= "<input type='image' src='images/lists/trash.png'  name='del_%ATTR%_%KEY%' class='center'>"; 
     foreach(array("sudoCommand","sudoHost","sudoRunAs") as $attr){
       if($this->acl_is_readable($attr)){
