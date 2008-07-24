@@ -117,7 +117,7 @@ if (!$remove_lock){
   }
 
   /* Page header*/
-  $display= print_header(get_template_path('plugins/connectivity/images/plugin.png'),
+  $display= print_header(get_template_path($connectivity->plIcon),
       _("Connectivity"), $info).$display;
 
 }
