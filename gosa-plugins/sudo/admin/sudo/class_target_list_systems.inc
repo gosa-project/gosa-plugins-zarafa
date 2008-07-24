@@ -180,7 +180,7 @@ class target_list_systems extends MultiSelectWindow
 
       $img ="?";
       if(in_array("goServer",$val['objectClass'])){
-        $img = "<img src='images/select_server.png' alt='"._("Server")."' ".$title.">";
+        $img = "<img src='plugins/systems/images/select_server.png' alt='"._("Server")."' ".$title.">";
       }elseif(in_array("gotoWorkstation",$val['objectClass'])){
         $img = "<img src='images/select_workstation.png' alt='"._("Workstation")."' ".$title.">";
       }elseif(in_array("gotoTerminal",$val['objectClass'])){
