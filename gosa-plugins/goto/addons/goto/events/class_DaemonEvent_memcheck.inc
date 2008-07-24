@@ -30,8 +30,8 @@ class DaemonEvent_memcheck extends DaemonEvent
     $this->s_Schedule_Action= "job_trigger_action_memcheck";
     $this->s_Trigger_Action = "gosa_trigger_action_memcheck";
     $this->s_Queued_Action  = "trigger_action_memcheck";
-    $this->s_Menu_Image = "images/memory.png";
-    $this->s_List_Image = "images/memory.png";
+    $this->s_Menu_Image = "plugins/goto/images/memcheck.png";
+    $this->s_List_Image = "plugins/goto/images/memcheck.png";
   }
 
   public function execute()
