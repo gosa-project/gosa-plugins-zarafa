@@ -326,7 +326,7 @@ class faiPackage extends plugin
         /* Append message if package is configured */
         $configured = "<img src='images/empty.png' alt=' '  class='center'>";
         if(isset($this->ConfiguredPackages[$usedName])){
-          $configured = "<img src='images/package_configure.png' alt='"._("Configured")."'
+          $configured = "<img src='plugins/fai/images/package_configure.png' alt='"._("Configured")."'
                       title='"._("Configured")."' class='center'>";
         }
 
@@ -355,7 +355,7 @@ class faiPackage extends plugin
         }
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
           $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
-            src='images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
+            src='plugins/fai/images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
         }
         if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIpackage")){
           $actions.= "&nbsp;<input type='image' class='center' title='"._("Remove this package")."' 
