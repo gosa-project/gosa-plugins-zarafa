@@ -132,7 +132,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td style="vertical-align:top;width:50%; border-right:1px solid #A0A0A0">
-   <h2><img class="center" alt="" align="middle" src="images/members.png"> {t}IMAP shared folders{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/shared_folder.png"> {t}IMAP shared folders{/t}</h2>
 {if $multiple_support}
 
 	<input class="center" type='checkbox' name="use_acl" value="1" {if $use_acl} checked {/if} 
