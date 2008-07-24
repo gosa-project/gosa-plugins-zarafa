@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:51+0200\n"
-"PO-Revision-Date: 2008-06-08 15:40+0200\n"
+"PO-Revision-Date: 2008-07-24 01:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -91,7 +91,6 @@ msgid "Quota file"
 msgstr "Taille du nombre de fichiers"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:201
-#, fuzzy
 msgid "Quota size"
 msgstr "Taille du Quota"
 
@@ -140,3 +139,4 @@ msgstr "Bande passante descendante"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "Statut"
+

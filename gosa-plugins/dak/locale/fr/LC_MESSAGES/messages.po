@@ -1,13 +1,13 @@
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007.
+# translation of messages.po to french
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:50+0200\n"
-"PO-Revision-Date: 2007-07-19 11:57+0200\n"
+"PO-Revision-Date: 2008-07-23 22:13+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,17 +16,15 @@ msgstr ""
 
 #: addons/dak/main.inc:32
 msgid "DAK"
-msgstr ""
+msgstr "DAK"
 
 #: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: addons/dak/dak_queue.tpl:11
-#, fuzzy
 msgid "Repositories"
-msgstr "Restaurer"
+msgstr "Dépôts"
 
 #: addons/dak/dak_keyring.tpl:11
 msgid "Server"
@@ -38,44 +36,37 @@ msgstr "Recherche"
 
 #: addons/dak/dak_keyring.tpl:22
 msgid "Import"
-msgstr ""
+msgstr "Importer"
 
 #: addons/dak/class_dakqueue.inc:57
-#, fuzzy
 msgid "DAK queue"
-msgstr "Queue téléphonique"
+msgstr "Queue DAK"
 
 #: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
 #: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
 #: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
-#, fuzzy
 msgid "Addon"
-msgstr "Extensions"
+msgstr "Extension"
 
 #: addons/dak/class_dakqueue.inc:58
-#, fuzzy
 msgid "DAK queue management"
-msgstr "Gestion des ACL"
+msgstr "Gestion de la queue DAK"
 
 #: addons/dak/class_dakrepository.inc:43
-#, fuzzy
 msgid "DAK repository"
-msgstr "Répertoire"
+msgstr "Dépôt DAK"
 
 #: addons/dak/class_dakrepository.inc:44
-#, fuzzy
 msgid "DAK repository  management"
-msgstr "Répertoire"
+msgstr "Gestion des dépôts DAK"
 
 #: addons/dak/class_dakkeyring.inc:114
-#, fuzzy
 msgid "Key ID"
-msgstr "ID de l'utilisateur"
+msgstr "Identifiant de la clé"
 
 #: addons/dak/class_dakkeyring.inc:115
-#, fuzzy
 msgid "Length"
-msgstr "Sécurité"
+msgstr "Longueur"
 
 #: addons/dak/class_dakkeyring.inc:116
 msgid "Status"
@@ -83,356 +74,39 @@ msgstr "Statut"
 
 #: addons/dak/class_dakkeyring.inc:117
 msgid "UID"
-msgstr ""
+msgstr "UID"
 
 #: addons/dak/class_dakkeyring.inc:118
 msgid "Action"
 msgstr "Action"
 
 #: addons/dak/class_dakkeyring.inc:139
-#, fuzzy, php-format
+#, php-format
 msgid "Created: %s"
-msgstr "Créer"
+msgstr "Crée le : %s"
 
 #: addons/dak/class_dakkeyring.inc:140
-#, fuzzy
 msgid "Valid"
 msgstr "valide"
 
 #: addons/dak/class_dakkeyring.inc:141
-#, fuzzy
 msgid "Expired: "
-msgstr "expire"
+msgstr "Expirée :"
 
 #: addons/dak/class_dakkeyring.inc:142
-#, fuzzy
 msgid "Expires: "
-msgstr "expire"
+msgstr "Expire le :"
 
 #: addons/dak/class_dakkeyring.inc:276
 msgid "DAK keyring"
-msgstr ""
+msgstr "Trousseau de clefs DAK"
 
 #: addons/dak/class_dakkeyring.inc:277
-#, fuzzy
 msgid "DAK keyring management"
-msgstr "Gestion des départements"
+msgstr "Gestion du trousseau de clefs DAK"
 
 #: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
 #: addons/dak/class_DAK.inc:113
 msgid "Error"
 msgstr "Erreur"
 
-#~ msgid "Description"
-#~ msgstr "Description"
-
-#~ msgid "Addressbook"
-#~ msgstr "Carnet d'adresses"
-
-#~ msgid "This does something"
-#~ msgstr "Ceci fait quelque chose"
-
-#~ msgid "Dial from %s to %s now?"
-#~ msgstr "Appeler de %s vers %s maintenant ?"
-
-#, fuzzy
-#~ msgid ""
-#~ "You need to set your personal phone number in order to perform direct "
-#~ "dials."
-#~ msgstr ""
-#~ "Vous n'avez pas de numéro de téléphone personnel indiqué. Veuillez "
-#~ "rectifier cela en vue de pouvoir faire des appels directs."
-
-#~ msgid "Dial"
-#~ msgstr "Appeler"
-
-#~ msgid "Save contact for %s as vcard"
-#~ msgstr "Enregistrer le contact %s au format vcard"
-
-#~ msgid "Send mail to %s"
-#~ msgstr "Envoyer un message à %s"
-
-#~ msgid "global addressbook"
-#~ msgstr "Carnet d'adresses général"
-
-#~ msgid "user database"
-#~ msgstr "Base de données des utilisateurs"
-
-#~ msgid "Contact stored in '%s'"
-#~ msgstr "Contact enregistré dans '%s'"
-
-#~ msgid "Creating new entry in"
-#~ msgstr "Création d'une nouvelle entrée dans"
-
-#~ msgid "All"
-#~ msgstr "Tout"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "Given name"
-#~ msgstr "Prénom"
-
-#~ msgid "Work phone"
-#~ msgstr "Téléphone du bureau"
-
-#~ msgid "Cell phone"
-#~ msgstr "GSM"
-
-#~ msgid "Home phone"
-#~ msgstr "Téléphone personnel"
-
-#~ msgid "Phone"
-#~ msgstr "Téléphone"
-
-#, fuzzy
-#~ msgid "Telephone number"
-#~ msgstr "Numéro de téléphone"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Mobile"
-#~ msgstr "GSM"
-
-#~ msgid "Pager"
-#~ msgstr "Bip"
-
-#~ msgid "Email"
-#~ msgstr "Adresse de messagerie"
-
-#~ msgid ""
-#~ "Cannot create a unique DN for your entry. Please fill more formular "
-#~ "fields."
-#~ msgstr ""
-#~ "Impossible de créer un DN unique pour cette entrée. Veuillez remplir plus "
-#~ "de champs."
-
-#~ msgid "Addressbook entry acls"
-#~ msgstr "Liste de contrôle d'accès du carnet d'adresses"
-
-#~ msgid "Surename"
-#~ msgstr "Nom de famille"
-
-#~ msgid "Telefon number"
-#~ msgstr "Numéro de téléphone"
-
-#~ msgid "Fax number"
-#~ msgstr "Numéro de fax"
-
-#~ msgid "Mobile number"
-#~ msgstr "Numéro de GSM"
-
-#~ msgid "Home phone number"
-#~ msgstr "Numéro de téléphone privé"
-
-#~ msgid "User identification"
-#~ msgstr "Information Utilisateur"
-
-#~ msgid "Mail address"
-#~ msgstr "Adresse de messagerie"
-
-#~ msgid "Organization"
-#~ msgstr "Entreprise"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Location"
-#~ msgstr "Lieu"
-
-#~ msgid "Postal address"
-#~ msgstr "Adresse postale"
-
-#~ msgid "State"
-#~ msgstr "Département"
-
-#~ msgid "Initials"
-#~ msgstr "Initiales"
-
-#~ msgid "Title"
-#~ msgstr "Titre"
-
-#~ msgid "Home postal address"
-#~ msgstr "Adresse postale personnelle"
-
-#~ msgid "Common name"
-#~ msgstr "Nom complet"
-
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid ""
-#~ "This includes all addressbook data in this entry. Please double check if "
-#~ "your really want to do this since there is no way for GOsa to get your "
-#~ "data back."
-#~ msgstr ""
-#~ "Ceci inclut toutes les données du carnet d'adresse situées dans cette "
-#~ "entrée. Veuillez vérifier si vous voulez réaliser cette opération, toutes "
-#~ "les données seront définitivement perdues, il n'y a pas de moyen pour "
-#~ "GOsa de les récupérer."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou "
-#~ "sur 'Annuler' pour abandonner."
-
-#~ msgid "Dial connection..."
-#~ msgstr "Appel en cours ..."
-
-#~ msgid "Private"
-#~ msgstr "Privé"
-
-#~ msgid "Contact"
-#~ msgstr "Contact"
-
-#~ msgid "Information"
-#~ msgstr "Information"
-
-#~ msgid ""
-#~ "The telephone list plugin provides list and search facilities for the "
-#~ "people in your site. You may want to specify the asterisk [*] like in "
-#~ "'Go*us' to find 'Gonicus'. Use the filters below to narrow down your "
-#~ "search."
-#~ msgstr ""
-#~ "L'extension gérant les listes de numéros de téléphone permet de les "
-#~ "mettre à disposition de vos utilisateurs. Vous pouvez utiliser les [*] "
-#~ "dans vos recherches, comme dans 'Go*us' pour trouver 'Gonicus'. Utilisez "
-#~ "les filtres ci dessous pour réduire l'étendue de votre recherche."
-
-#~ msgid "Actions"
-#~ msgstr "Actions"
-
-#~ msgid "Add entry"
-#~ msgstr "Ajouter une entrée"
-
-#~ msgid "Edit entry"
-#~ msgstr "Modifier une entrée"
-
-#~ msgid "Remove entry"
-#~ msgstr "Supprimer une entrée"
-
-#~ msgid "Select to see regular users"
-#~ msgstr "Sélectionnez afin d'afficher les utilisateurs habituels"
-
-#~ msgid "Show organizational entries"
-#~ msgstr "Afficher les entrées de l'organisation"
-
-#~ msgid "Select to see users in addressbook"
-#~ msgstr ""
-#~ "Sélectionner pour afficher les utilisateurs présent dans le carnet "
-#~ "d'adresse"
-
-#~ msgid "Show addressbook entries"
-#~ msgstr "Afficher les entrées du carnet d'adresses"
-
-#~ msgid "Display results for department"
-#~ msgstr "Afficher les résultats pour le département"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Sélectionner le département où sera effectuée la recherche"
-
-#~ msgid "Match object"
-#~ msgstr "Objet correspondant"
-
-#~ msgid "Choose the object that will be searched in"
-#~ msgstr "Indiquez l'objet dans lequel la recherche sera effectuée"
-
-#~ msgid "Search for"
-#~ msgstr "Recherche de"
-
-#~ msgid "Search string"
-#~ msgstr "Phrase de recherche"
-
-#~ msgid "Choose the department to store entry in"
-#~ msgstr "Choisissez le département où l'entrée sera stockée"
-
-#~ msgid "Personal"
-#~ msgstr "Personnel"
-
-#~ msgid "Last name"
-#~ msgstr "Nom de famille"
-
-#~ msgid "First name"
-#~ msgstr "Prénom"
-
-#~ msgid "Personal title"
-#~ msgstr "Titre Personnel"
-
-#~ msgid "Address"
-#~ msgstr "Adresse"
-
-#~ msgid "Organizational"
-#~ msgstr "Organisation"
-
-#~ msgid "Company"
-#~ msgstr "Société"
-
-#~ msgid "City"
-#~ msgstr "Ville"
-
-#~ msgid "Postal code"
-#~ msgstr "Code postal"
-
-#~ msgid "Country"
-#~ msgstr "Pays"
-
-#~ msgid "FAX"
-#~ msgstr "FAX"
-
-#~ msgid "You're about to delete the entry %s."
-#~ msgstr "Vous êtes sur le point de supprimer l'entrée %s."
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Save"
-#~ msgstr "Enregistrer"
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
-
-#~ msgid "Address book"
-#~ msgstr "Carnet d'adresses"
-
-#~ msgid "Removing of addressbook entry '%s' failed."
-#~ msgstr "La suppression de l'entrée du carnet d'adresses '%s' à échoué."
-
-#, fuzzy
-#~ msgid "Permission error"
-#~ msgstr "Permissions"
-
-#, fuzzy
-#~ msgid "You have no permission to delete this entry!"
-#~ msgstr ""
-#~ "Vous n'avez pas les droits nécessaires pour supprimer ce département."
-
-#~ msgid "The required field 'Name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom' n'est pas rempli."
-
-#~ msgid "The required field 'Given name' is not set."
-#~ msgstr "Le champ obligatoire 'Nom Complet' n'est pas rempli."
-
-#~ msgid "The field 'Name' contains invalid characters."
-#~ msgstr "Le champ 'Nom' contient des caractères invalides."
-
-#~ msgid "The field 'Given name' contains invalid characters."
-#~ msgstr "Le champ 'Nom complet' contient des caractères invalides."
-
-#~ msgid "The field 'Phone' contains an invalid phone number."
-#~ msgstr "Le champ 'Téléphone' contient un numéro invalide."
-
-#~ msgid "The field 'Fax' contains an invalid phone number."
-#~ msgstr "Le champ 'Fax' contient un numéro invalide."
-
-#~ msgid "The field 'Mobile' contains an invalid phone number."
-#~ msgstr "Le champ 'GSM' contient un numéro invalide."
-
-#~ msgid "The field 'Pager' contains an invalid phone number."
-#~ msgstr "Le champ 'Bip' contient un numéro invalide."
-
-#~ msgid "Please enter a valid email address in 'Primary address' field."
-#~ msgstr ""
-#~ "Veuillez entrer une adresse de messagerie valide dans le champ 'Adresse "
-#~ "Principale'."

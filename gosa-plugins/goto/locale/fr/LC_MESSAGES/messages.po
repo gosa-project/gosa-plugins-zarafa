@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-14 16:40+0200\n"
-"PO-Revision-Date: 2008-06-05 21:24+0200\n"
+"PO-Revision-Date: 2008-07-24 01:00+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,8 +52,7 @@ msgstr "Afficher les utilisateurs correspondants"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
 
 #: personal/environment/class_environment.inc:7
 #: personal/environment/class_environment.inc:431
@@ -136,8 +135,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:362
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -375,9 +373,8 @@ msgid "Logon script"
 msgstr "Script de démarrage"
 
 #: personal/environment/selectPrinterDialog.tpl:1
-#, fuzzy
 msgid "Add printer devices"
-msgstr "Ajouter une d'imprimante"
+msgstr "Ajouter des d'imprimantes"
 
 #: personal/environment/selectPrinterDialog.tpl:5
 #: personal/environment/selectPrinterDialog.tpl:10
@@ -808,13 +805,12 @@ msgstr "Depuis"
 
 #: addons/goto/events/class_DaemonEvent_activate_new.inc:40
 #: addons/goto/events/class_DaemonEvent_activate_new.inc:41
-#, fuzzy
 msgid "Activate new"
-msgstr "Activé"
+msgstr "Activé les nouveaux"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:7
 msgid "Message settings"
-msgstr ""
+msgstr "Paramètres des messages"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:10
 msgid "Sender"
@@ -912,14 +908,12 @@ msgid "Reinstall"
 msgstr "Reinstaller"
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:29
-#, fuzzy
 msgid "Goto reload"
-msgstr "Mode Goto"
+msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:30
-#, fuzzy
 msgid "Reload goto settings"
-msgstr "Paramètres Posix"
+msgstr "Recharger les paramètres goto"
 
 #: addons/goto/events/class_DaemonEvent_activate.inc:29
 #: addons/goto/events/class_DaemonEvent_activate.inc:30
@@ -950,11 +944,11 @@ msgstr "Systèmes / Département"
 
 #: addons/goto/events/class_EventTargetAddList.inc:73
 msgid "Display server"
-msgstr ""
+msgstr "Afficher les serveurs"
 
 #: addons/goto/events/class_EventTargetAddList.inc:74
 msgid "Display workstation"
-msgstr ""
+msgstr "Afficher les stations de travail"
 
 #: addons/goto/events/class_EventTargetAddList.inc:75
 msgid "Display object groups"
@@ -1030,7 +1024,7 @@ msgstr "Recherche du matériel"
 #: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
 msgid "Reload fai release db"
-msgstr ""
+msgstr "Recharger la base de données fai"
 
 #: addons/goto/events/class_DaemonEvent.inc:119
 msgid "This job has no template."
@@ -1092,51 +1086,44 @@ msgid ""
 msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "timestamp"
-msgstr "Date"
+msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "MAC-address"
-msgstr "Adresse"
+msgstr "Adresse mac"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "job type"
-msgstr "Type de souris"
+msgstr "Type de job"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "object group"
 msgstr "Groupes d'objets"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "import base"
-msgstr "Importer de tâches"
+msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "full hostname"
-msgstr ""
+msgstr "Nom complet de l'hôte"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "IP-address"
-msgstr "Adresse"
+msgstr "Adresse ip"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "DHCP group"
-msgstr "Ajouter un groupe"
+msgstr "Groupe DHCP"
 
 #: addons/goto/goto_import_file.tpl:9
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #: addons/goto/goto_import_file.tpl:21
-#, fuzzy
 msgid "Select list to import"
-msgstr "Sélectionnez une imprimante à ajouter"
+msgstr "Sélectionnez la liste à importer"
 
 #: addons/goto/goto_import_file.tpl:24
 #: admin/systems/services/kiosk/goKioskService.tpl:20
@@ -1156,7 +1143,7 @@ msgstr "Démarrer l'importation"
 #: addons/goto/goto_import_file.tpl:46
 #: addons/goto/class_goto_import_file.inc:166
 msgid "MAC"
-msgstr ""
+msgstr "MAC"
 
 #: addons/goto/goto_import_file.tpl:47
 #: addons/goto/class_goto_import_file.inc:169
@@ -1181,22 +1168,20 @@ msgid "none"
 msgstr "aucun"
 
 #: addons/goto/class_goto_log_view.inc:110
-#, fuzzy
 msgid "File"
-msgstr "Filtres"
+msgstr "Fichier"
 
 #: addons/goto/class_goto_log_view.inc:112
-#, fuzzy
 msgid "Date"
-msgstr "Coller"
+msgstr ""
 
 #: addons/goto/class_gotomasses.inc:26
 msgid "Deployment status"
-msgstr ""
+msgstr "Etat du déploiement"
 
 #: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
 msgid "System deployment status"
-msgstr ""
+msgstr "Etat du déploiement des systèmes"
 
 #: addons/goto/class_gotomasses.inc:228
 #: admin/devices/class_deviceManagement.inc:245
@@ -1208,7 +1193,7 @@ msgstr "Permissions"
 #: addons/goto/class_gotomasses.inc:268
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
+msgstr "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:324
 #: addons/goto/class_goto_import_file.inc:123
@@ -1226,8 +1211,7 @@ msgstr "Infrastructure des services"
 
 #: addons/goto/class_gotomasses.inc:350
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:351
 msgid "List of queued jobs"
@@ -1308,7 +1292,7 @@ msgstr ""
 
 #: addons/goto/class_gotomasses.inc:436
 msgid "Resume job"
-msgstr ""
+msgstr "Redémarrer le job"
 
 #: addons/goto/class_gotomasses.inc:443
 msgid "Execute now"
@@ -1328,7 +1312,7 @@ msgstr "Avertissement"
 
 #: addons/goto/class_gotomasses.inc:515
 msgid "Processed"
-msgstr ""
+msgstr "Terminé"
 
 #: addons/goto/class_gotomasses.inc:526
 #: admin/systems/goto/class_terminalGeneric.inc:120
@@ -1372,7 +1356,7 @@ msgstr "Déploiement de système en masse"
 
 #: addons/goto/class_gotomasses.inc:895
 msgid "Provide a mechanism to automatically activate a set of systems"
-msgstr ""
+msgstr "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
 
 #: addons/goto/log_view.tpl:2
 msgid "Available logs"
@@ -1400,14 +1384,13 @@ msgid "file is empty"
 msgstr "Le fichier est vide"
 
 #: addons/goto/class_goto_import_file.inc:89
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
-msgstr ""
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle contiennent. Voulez vous continuer ?"
 
 #: addons/goto/class_goto_import_file.inc:130
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
+msgstr "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
 
 #: addons/goto/class_target_list.inc:58
 msgid "Select the target objects for your scheduled action."
@@ -1422,97 +1405,84 @@ msgid "Object name"
 msgstr "Nom de l'objet"
 
 #: addons/goto/class_target_list.inc:72
-#, fuzzy
 msgid "Select to see object groups"
-msgstr "Choisissez un groupe d'objets"
+msgstr "Groupe d'objets"
 
 #: addons/goto/class_target_list.inc:72
-#, fuzzy
 msgid "Show object groups"
-msgstr "Choisissez un groupe d'objets"
+msgstr "Montrez les groupes d'objets"
 
 #: addons/goto/class_target_list.inc:73
-#, fuzzy
 msgid "Select to see servers"
-msgstr "Sélectionner pour chercher dans le sous arbre"
+msgstr "Serveurs"
 
 #: addons/goto/class_target_list.inc:73
-#, fuzzy
 msgid "Show servers"
-msgstr "Serveur de Swap"
+msgstr "Montrez les serveurs"
 
 #: addons/goto/class_target_list.inc:74
-#, fuzzy
 msgid "Select to see workstations"
 msgstr "Station de travail Windows"
 
 #: addons/goto/class_target_list.inc:74
-#, fuzzy
 msgid "Show workstations"
 msgstr "Station de travail Windows"
 
 #: addons/goto/class_target_list.inc:75
-#, fuzzy
 msgid "Select to see incoming objects"
-msgstr "Sélectionner pour chercher dans le sous arbre"
+msgstr "Sélectionner pour voir les objets qui arrivent"
 
 #: addons/goto/class_target_list.inc:75
 msgid "Show new objects"
-msgstr ""
+msgstr "Montrer les nouveaux objets"
 
 #: addons/goto/class_target_list.inc:80
 msgid "Select to search for a specific IP range only"
-msgstr ""
+msgstr "Sélectionnez pour rechercher dans plage IP spécifique"
 
 #: addons/goto/class_target_list.inc:80
 msgid "Match IP range"
 msgstr ""
 
 #: addons/goto/class_target_list.inc:83
-#, fuzzy
 msgid "Regular expression for matching group names"
-msgstr "Expression régulière concordant avec les noms des membres"
+msgstr "Expression régulière concordant avec les noms des groupes"
 
 #: addons/goto/class_target_list.inc:84
 msgid "IP range start"
-msgstr ""
+msgstr "Début de la plage ip"
 
 #: addons/goto/class_target_list.inc:85
 msgid "IP range end"
-msgstr ""
+msgstr "Fin de la plage ip"
 
 #: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 msgid "IP range"
-msgstr ""
+msgstr "Plage ip"
 
 #: admin/groups/apps/edit_entry.tpl:8
-#, fuzzy
 msgid "Folder image"
-msgstr "Codage des caractères"
+msgstr "Dossier image"
 
 #: admin/groups/apps/edit_entry.tpl:12
-#, fuzzy
 msgid "Could not load image."
-msgstr "Impossible de sauvegarder l'image to %s."
+msgstr "Impossible de charger l'image."
 
 #: admin/groups/apps/edit_entry.tpl:14
-#, fuzzy
 msgid "None"
 msgstr "aucun"
 
 #: admin/groups/apps/edit_entry.tpl:24
-#, fuzzy
 msgid "Upload image"
-msgstr "Télécharger"
+msgstr "Télécharger une image"
 
 #: admin/groups/apps/edit_entry.tpl:32
 msgid "Reset image"
-msgstr ""
+msgstr "Réinitialiser l'image"
 
 #: admin/groups/apps/edit_entry.tpl:33
-#, fuzzy
 msgid "Reset"
-msgstr "activé"
+msgstr "Réinitialiser"
 
 #: admin/groups/apps/edit_entry.tpl:40
 #: admin/applications/class_applicationGeneric.inc:551
@@ -1531,54 +1501,45 @@ msgid "Release"
 msgstr "Version"
 
 #: admin/groups/apps/app_list.tpl:11
-#, fuzzy
 msgid "Copy menu"
-msgstr "copier"
+msgstr ""
 
 #: admin/groups/apps/app_list.tpl:13
 msgid "Paste menu from"
-msgstr ""
+msgstr "Coller le menu depuis"
 
 #: admin/groups/apps/app_list.tpl:17
-#, fuzzy
 msgid "Delete menu"
-msgstr "Supprimer cette entrée"
+msgstr "Effacer le menu"
 
 #: admin/groups/apps/app_list.tpl:70 admin/groups/apps/app_list.tpl:74
-#, fuzzy
 msgid "Folder"
-msgstr "Filtres"
+msgstr "Dossier"
 
 #: admin/groups/apps/app_list.tpl:121
-#, fuzzy
 msgid "Entry"
-msgstr "Modifier une entrée"
+msgstr "Entrée"
 
 #: admin/groups/apps/app_list.tpl:143
-#, fuzzy
 msgid "add to"
-msgstr "Ajouter une option"
+msgstr "Ajouter à"
 
 #: admin/groups/apps/app_list.tpl:149 admin/groups/apps/app_list.tpl:159
-#, fuzzy
 msgid "Add selected applications to this folder."
-msgstr "L'application sélectionnée n'a pas d'options."
+msgstr "Ajouter les applications sélectionnées dans ce dossier."
 
 #: admin/groups/apps/app_list.tpl:150
-#, fuzzy
 msgid "Separator"
-msgstr "Insérer un séparateur"
+msgstr "Séparateur"
 
 #: admin/groups/apps/app_list.tpl:150
-#, fuzzy
 msgid "Add a separator to this folder."
-msgstr "L'application sélectionnée n'a pas d'options."
+msgstr "Ajouter un séparateur à ce dossier."
 
 #: admin/groups/apps/class_groupApplication.inc:375
 #: admin/groups/apps/class_groupApplication.inc:379
-#, fuzzy
 msgid "Menu"
-msgstr "Imprimante"
+msgstr "Menu"
 
 #: admin/groups/apps/class_groupApplication.inc:432
 msgid "Back"
@@ -1601,9 +1562,8 @@ msgid "application"
 msgstr "application"
 
 #: admin/groups/apps/class_groupApplication.inc:1135
-#, fuzzy
 msgid "Not available in release."
-msgstr "Pas disponible dans la configuration actuelle"
+msgstr "Non disponible dans cette version."
 
 #: admin/groups/apps/class_groupApplication.inc:1361
 #: admin/applications/class_applicationManagement.inc:24
@@ -1639,29 +1599,25 @@ msgstr "Nom du périphérique"
 
 #: admin/devices/class_deviceGeneric.inc:30
 msgid "Digital camera"
-msgstr ""
+msgstr "Appareil photo numérique"
 
 #: admin/devices/class_deviceGeneric.inc:31
-#, fuzzy
 msgid "USB stick"
-msgstr "permanent"
+msgstr "Clé USB"
 
 #: admin/devices/class_deviceGeneric.inc:32
 msgid "CD/DVD drive"
-msgstr ""
+msgstr "Lecteur de CD / DVD"
 
 #: admin/devices/class_deviceGeneric.inc:98
-#, fuzzy
 msgid "iSerial"
-msgstr "(ISérie)"
+msgstr "ISérie"
 
 #: admin/devices/class_deviceGeneric.inc:101
-#, fuzzy
 msgid "Serial"
-msgstr "(ISérie)"
+msgstr "Série"
 
 #: admin/devices/class_deviceGeneric.inc:104
-#, fuzzy
 msgid "Vendor ID"
 msgstr "ID du vendeur"
 
@@ -1682,30 +1638,25 @@ msgid "Generic"
 msgstr "Informations"
 
 #: admin/devices/class_deviceGeneric.inc:248
-#, fuzzy
 msgid "Device generic"
-msgstr "Serveur générique"
+msgstr ""
 
 #: admin/devices/class_deviceManagement.inc:8
-#, fuzzy
 msgid "Manage hotplug devices"
-msgstr "Ajouter des périphériques hotplug"
+msgstr "Gérer les périphériques hotplug"
 
 #: admin/devices/class_deviceManagement.inc:262
 #: admin/devices/class_deviceManagement.inc:344
-#, fuzzy
 msgid "device"
-msgstr "Périphérique"
+msgstr "périphérique"
 
 #: admin/devices/deviceGeneric.tpl:32
-#, fuzzy
 msgid "Device type"
-msgstr "Nom du périphérique"
+msgstr "Type de périphérique"
 
 #: admin/devices/deviceGeneric.tpl:35
-#, fuzzy
 msgid "Choose the device type"
-msgstr "Sélectionnez un type de téléphone"
+msgstr "Choisissez le type de périphérique"
 
 #: admin/devices/deviceGeneric.tpl:45
 msgid "Serial number"
@@ -1732,32 +1683,28 @@ msgid "(idProduct)"
 msgstr "(Idproduit)"
 
 #: admin/devices/remove.tpl:6
-#, fuzzy
 msgid ""
 "This may be used by several users/groups. Please double check if your really "
 "want to do this since there is no way for GOsa to get your data back."
 msgstr ""
-"Cela peut être utilisé par plusieurs groupes. Veuillez vérifier que vous "
+"Cela peut être utilisé par plusieurs utilisateurs/groupes. Veuillez vérifier que vous "
 "voulez effectuer cette opération étant donné qu'il est impossible pour GOsa "
 "de récupérer vos données."
 
 #: admin/devices/main.inc:41 admin/devices/main.inc:43
-#, fuzzy
 msgid "Hotplug device management"
 msgstr "Gestion des périphériques Hotplug"
 
 #: admin/devices/class_divListDevices.inc:33
 #: admin/devices/class_divListDevices.inc:34
-#, fuzzy
 msgid "List of defined devices"
-msgstr "Liste des périphériques"
+msgstr "Liste des périphériques définis"
 
 #: admin/devices/class_divListDevices.inc:45
 #: admin/applications/class_divListApplication.inc:45
 #: admin/mimetypes/class_divListMimeTypes.inc:45
-#, fuzzy
 msgid "Select all"
-msgstr "Sélectionner"
+msgstr "Tout sélectionner"
 
 #: admin/devices/class_divListDevices.inc:51
 #: admin/applications/class_divListApplication.inc:51
@@ -1795,16 +1742,14 @@ msgid "Delete this entry"
 msgstr "Supprimer cette entrée"
 
 #: admin/devices/class_divListDevices.inc:205
-#, fuzzy
 msgid "Number of listed devices"
-msgstr "Nombre de pages"
+msgstr "Nombre de périphériques listés"
 
 #: admin/devices/class_divListDevices.inc:206
 #: admin/applications/class_divListApplication.inc:220
 #: admin/mimetypes/class_divListMimeTypes.inc:228
-#, fuzzy
 msgid "Number of listed departments"
-msgstr "Nom du département"
+msgstr "Nom de départements listés"
 
 #: admin/applications/class_divListApplication.inc:25
 msgid "List of Applications"
@@ -1821,9 +1766,8 @@ msgid "Application name"
 msgstr "Nom de l'application"
 
 #: admin/applications/class_divListApplication.inc:219
-#, fuzzy
 msgid "Number of listed applications"
-msgstr "Applications Incorporées"
+msgstr "Nombre d'applications listées"
 
 #: admin/applications/class_applicationParameters.inc:49
 msgid "Remove options"
@@ -1831,9 +1775,8 @@ msgstr "Supprimer les options"
 
 #: admin/applications/class_applicationParameters.inc:49
 #: admin/applications/class_applicationParameters.inc:51
-#, fuzzy
 msgid "parameter"
-msgstr "Paramètres"
+msgstr "paramètre"
 
 #: admin/applications/class_applicationParameters.inc:51
 msgid "Create options"
@@ -1962,34 +1905,30 @@ msgid "no example"
 msgstr "pas d'exemple"
 
 #: admin/applications/class_applicationGeneric.inc:261
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot remove application - it is still in use by these objects: %s"
-msgstr ""
-"Impossible d'enlever le profile kiosk ,il est encore utilisé par ce(s) "
-"objets '%s'."
+msgstr "Impossible d'enlever l'application ,elle est encore utilisée par ce(s) objets : %s"
 
 #: admin/applications/class_applicationGeneric.inc:365
-#, fuzzy
 msgid "no read permission"
-msgstr "Permissions"
+msgstr "Pas de permissions en lecture"
 
 #: admin/applications/class_applicationGeneric.inc:370
 msgid "cannot resize image"
-msgstr ""
+msgstr "Impossible de redimensionner l'image"
 
 #: admin/applications/class_applicationGeneric.inc:375
 msgid "cannot convert image"
-msgstr ""
+msgstr "impossible de convertir l'image"
 
 #: admin/applications/class_applicationGeneric.inc:379
-#, fuzzy, php-format
+#, php-format
 msgid "cannot save image to '%s'"
-msgstr "Impossible de sauver le fichier '%s'."
+msgstr "Impossible de sauver l'image dans '%s'"
 
 #: admin/applications/class_applicationGeneric.inc:408
-#, fuzzy
 msgid "Execute path"
-msgstr "Exécuter"
+msgstr "Chemin d'exécution"
 
 #: admin/applications/class_applicationGeneric.inc:592
 msgid "Application generic"
@@ -2031,14 +1970,13 @@ msgstr "Version actuelle"
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:75
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:100
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:120
-#, fuzzy
 msgid "PPD error"
-msgstr "Serveur LDAP"
+msgstr "Erreur de PPD"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:63
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot open PPD '%s'!"
-msgstr "Impossible de lire le fichier '%s'."
+msgstr "Impossible de lire le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:88
 #: admin/systems/goto/class_printGeneric.inc:522
@@ -2048,23 +1986,22 @@ msgstr "Impossible d'obtenir des informations sur les ppd."
 #: admin/systems/ppd/class_printerPPDDialog.inc:100
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:264
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot parse PPD '%s'!"
-msgstr "Impossible de lire le fichier '%s'."
+msgstr "Ne peut pas analyser le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:290
 msgid "Overwrite existing PPD"
-msgstr ""
+msgstr "Ecrasement du PPD existant"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:291
-#, fuzzy
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante."
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:437
 msgid "Section"
@@ -2081,9 +2018,9 @@ msgid "False"
 msgstr "Faux"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:501
-#, fuzzy, php-format
+#, php-format
 msgid "PPD type '%s' is not supported!"
-msgstr "La sélection multiple n'est pas encore supportée !"
+msgstr " PPD de type '%s' non supporté !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:538
 msgid ""
@@ -2114,7 +2051,7 @@ msgstr "Nouveau pilote"
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:120
 #, php-format
 msgid "Cannot locate vendor '%s' in available PPDs!"
-msgstr ""
+msgstr "Impossible de localiser le vendeur '%s' dans les PPD disponibles !"
 
 #: admin/systems/ppd/class_printerPPDSelectionDialog.inc:129
 msgid "Printer ppd selection."
@@ -2123,22 +2060,21 @@ msgstr "Sélection du ppd de votre imprimante."
 #: admin/systems/ppd/class_ppdManager.inc:16
 #: admin/systems/ppd/class_ppdManager.inc:148
 #: admin/systems/ppd/class_ppdManager.inc:150
-#, fuzzy
 msgid "PPD manager error"
-msgstr "Gérer l'annuaire"
+msgstr "Erreur du gestionnaire de PPD"
 
 #: admin/systems/ppd/class_ppdManager.inc:16
-#, fuzzy, php-format
+#, php-format
 msgid "The specified path '%s' does not exist."
-msgstr "Gestionnaire de PPD: Le chemin '%s' n'existe pas."
+msgstr "Le chemin '%s' n'existe pas."
 
 #: admin/systems/ppd/class_ppdManager.inc:148
-#, fuzzy, php-format
+#, php-format
 msgid "Specified PPD file '%s' cannot be opened for reading."
-msgstr "Le fichier ppd '%s' ne peut pas être ouvert en lecture."
+msgstr "Le fichier PPD '%s' ne peut pas être ouvert en lecture."
 
 #: admin/systems/ppd/class_ppdManager.inc:150
-#, fuzzy, php-format
+#, php-format
 msgid "The temporary file '%s' cannot be opened for writing."
 msgstr "Le fichier temporaire '%s' n'a pas pu être ouvert en écriture."
 
@@ -2201,13 +2137,12 @@ msgstr "Le fichier ppd sera effacé du serveur et ne pourra pas être récupér�
 #: admin/systems/services/kiosk/class_goKioskService.inc:34
 #: admin/systems/services/kiosk/class_goKioskService.inc:69
 #: admin/systems/services/kiosk/class_goKioskService.inc:198
-#, fuzzy
 msgid "Kiosk profile service"
-msgstr "Paramètres du profil Kiosk"
+msgstr "Service de profil Kiosk"
 
 #: admin/systems/services/kiosk/class_goKioskService.inc:261
 msgid "Kiosk"
-msgstr ""
+msgstr "Kiosk"
 
 #: admin/systems/services/kiosk/class_goKioskService.inc:262
 #: admin/systems/services/kiosk/goKioskService.tpl:1
@@ -2226,9 +2161,8 @@ msgid "Services"
 msgstr "Services"
 
 #: admin/systems/services/kiosk/goKioskService.tpl:16
-#, fuzzy
 msgid "Server path"
-msgstr "Nom du serveur"
+msgstr ""
 
 #: admin/systems/services/ldap/class_goLdapServer.inc:29
 #: admin/systems/services/ldap/class_goLdapServer.inc:56
@@ -2251,9 +2185,8 @@ msgstr ""
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:30
 #: admin/systems/services/syslog/class_goLogDBServer.inc:58
-#, fuzzy
 msgid "Syslog service database"
-msgstr "Serveur de journaux systèmes activé"
+msgstr "Service de journaux systèmes"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:71
 #: admin/systems/services/syslog/class_goLogDBServer.inc:101
@@ -2344,9 +2277,8 @@ msgid "File service (Shares)"
 msgstr "Serveur de fichier (Partages)"
 
 #: admin/systems/services/shares/class_goShareServer.inc:233
-#, fuzzy
 msgid "share"
-msgstr "Partages"
+msgstr "partage"
 
 #: admin/systems/services/shares/class_goShareServer.inc:390
 msgid "File service - Shares"
@@ -2389,7 +2321,7 @@ msgstr "Volume"
 
 #: admin/systems/services/nfs/class_servNfs.inc:182
 msgid "'Path / Volume' must contain at least one '/'!"
-msgstr ""
+msgstr "'Chemin / Volume' doit au moins contenir un '/' !"
 
 #: admin/systems/services/nfs/servnfs.tpl:1
 msgid "Edit share"
@@ -2438,7 +2370,7 @@ msgstr "Désactiver temporairement l'identifiant"
 
 #: admin/systems/services/terminal/goTerminalServer.tpl:13
 msgid "Supported session types"
-msgstr ""
+msgstr "Type de sessions supportées"
 
 #: admin/systems/goto/printer.tpl:5
 msgid "General"
@@ -2565,9 +2497,8 @@ msgid "Select action to execute for this terminal"
 msgstr "Sélectionnez l'opération à exécuter sur le terminal"
 
 #: admin/systems/goto/workstation.tpl:160
-#, fuzzy
 msgid "Inherit all values from group"
-msgstr "Liste des groupes"
+msgstr "Hériter toutes les valeurs du groupe"
 
 #: admin/systems/goto/class_terminalInfo.inc:50
 #: admin/systems/goto/class_terminalInfo.inc:201
@@ -2578,9 +2509,8 @@ msgstr "présent"
 #: admin/systems/goto/class_printGeneric.inc:535
 #: admin/systems/goto/class_terminalStartup.inc:165
 #: admin/systems/goto/class_terminalGeneric.inc:229
-#, fuzzy
 msgid "terminal"
-msgstr "Terminal"
+msgstr "terminal"
 
 #: admin/systems/goto/class_terminalInfo.inc:80
 #: admin/systems/goto/class_terminalInfo.inc:176
@@ -2613,17 +2543,13 @@ msgstr "hors-ligne"
 
 #: admin/systems/goto/class_printGeneric.inc:106
 #: admin/systems/goto/class_printGeneric.inc:969
-#, fuzzy
 msgid "Internal error"
-msgstr "Erreur"
+msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:106
-#, fuzzy, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
-msgstr ""
-"Impossible d'obtenir un base valide depuis le dn de l'objet, je met la base "
-"à '%s'. "
+#, php-format
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
+msgstr "Impossible d'obtenir un département valide pour cet objet. Je met la base à '%s' ! "
 
 #: admin/systems/goto/class_printGeneric.inc:262
 #: admin/systems/goto/class_printGeneric.inc:270
@@ -2635,18 +2561,14 @@ msgid "Add printer extension"
 msgstr "Ajouter une extension d'imprimante"
 
 #: admin/systems/goto/class_printGeneric.inc:263
-#, fuzzy
 msgid ""
 "Could not initialize printer tab, parameter parent was missing while "
 "construction."
-msgstr ""
-"Impossible d'initialiser l'onglet imprimante, le paramètre parent était "
-"manquant pendant la construction."
+msgstr "Impossible d'initialiser l'onglet imprimante, le paramètre parent était manquant pendant la construction."
 
 #: admin/systems/goto/class_printGeneric.inc:271
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:276
 msgid "This is a terminal template, printer tab is disabled."
@@ -2658,19 +2580,14 @@ msgstr "Ceci est un modèle de terminal, l'onglet imprimante est désactivé."
 #: admin/systems/goto/class_printGeneric.inc:336
 #: admin/systems/goto/class_printGeneric.inc:341
 #: admin/systems/goto/class_printGeneric.inc:344
-#, fuzzy
 msgid "printer"
 msgstr "Imprimante"
 
 #: admin/systems/goto/class_printGeneric.inc:325
-#, fuzzy
 msgid ""
 "You can't enable it while 'cn' is not present in entry. Possibly you are "
 "currently creating a new terminal template."
-msgstr ""
-"Ce serveur à l'extension d'imprimante désactivé. Vous ne pourrez l'activer "
-"tant qu'un 'cn' n'est pas présent dans l'entrée. Vous êtes probablement "
-"occupé à créer un nouveau modèle de terminal"
+msgstr "Vous ne pourrez l'activer tant qu'un 'cn' n'est pas présent dans l'entrée. Vous êtes probablement occupé à créer un nouveau modèle de terminal."
 
 #: admin/systems/goto/class_printGeneric.inc:332
 #: admin/systems/goto/class_printGeneric.inc:335
@@ -2683,30 +2600,25 @@ msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr "Le fichier PPD sélectionné '%s' n'existe pas."
 
 #: admin/systems/goto/class_printGeneric.inc:519
-#, fuzzy
 msgid "Not defined"
-msgstr "non défini"
+msgstr "Non défini"
 
 #: admin/systems/goto/class_printGeneric.inc:535
 #: admin/systems/goto/class_printGeneric.inc:537
-#, fuzzy, php-format
+#, php-format
 msgid "This printer belongs to %s. You can't rename this printer."
-msgstr ""
-"Cette imprimante appartient au terminal %s. Vous ne pouvez pas changer son "
-"nom."
+msgstr "Cette imprimante appartient à %s. Vous ne pouvez pas changer son nom."
 
 #: admin/systems/goto/class_printGeneric.inc:537
 #: admin/systems/goto/class_workstationStartup.inc:334
 #: admin/systems/goto/class_workstationGeneric.inc:226
-#, fuzzy
 msgid "workstation"
-msgstr "Stations de travail"
+msgstr "stations de travail"
 
 #: admin/systems/goto/class_printGeneric.inc:584
 #: admin/systems/goto/class_printGeneric.inc:591
-#, fuzzy
 msgid "Object is no printer!"
-msgstr "Imprimante réseau"
+msgstr "L'objet n'est pas une Imprimante !"
 
 #: admin/systems/goto/class_printGeneric.inc:922
 msgid "Print generic"
@@ -2722,24 +2634,23 @@ msgstr "PPD de  l'Imprimante"
 
 #: admin/systems/goto/class_printGeneric.inc:952
 #: admin/systems/goto/class_printGeneric.inc:974
-#, fuzzy
 msgid "printer user"
-msgstr "Imprimante"
+msgstr "utilisateur de l'Imprimante"
 
 #: admin/systems/goto/class_printGeneric.inc:969
 #, php-format
 msgid "Illegal member type '%s'!"
-msgstr ""
+msgstr "Type de membre illégal '%s' !"
 
 #: admin/systems/goto/class_printGeneric.inc:1009
-#, fuzzy, php-format
+#, php-format
 msgid "'%s' is already used!"
-msgstr "Le nom spécifié est déjà utilisé."
+msgstr "'%s' est déjà utilisé !"
 
 #: admin/systems/goto/class_printGeneric.inc:1020
-#, fuzzy, php-format
+#, php-format
 msgid "'%s' does not exist!"
-msgstr "Gestionnaire de PPD: Le chemin '%s' n'existe pas."
+msgstr "'%s' n'existe pas !"
 
 #: admin/systems/goto/gencd_frame.tpl:2
 msgid "Your browser does not supprt iframes."
@@ -2822,9 +2733,8 @@ msgid "This 'dn' has no terminal features."
 msgstr "Ce 'dn' n'a pas d'extension de terminaux."
 
 #: admin/systems/goto/class_terminalService.inc:364
-#, fuzzy
 msgid "Unsupported"
-msgstr "Support USB"
+msgstr "Non supporté"
 
 #: admin/systems/goto/class_terminalService.inc:406
 #: admin/systems/goto/class_workstationService.inc:321
@@ -2833,13 +2743,11 @@ msgstr "Choisissez le téléphone situé à coté du terminal"
 
 #: admin/systems/goto/class_terminalService.inc:480
 #: admin/systems/goto/class_terminalService.inc:485
-#, fuzzy
 msgid "VSync range"
 msgstr "Fréquence de synchronisation verticale"
 
 #: admin/systems/goto/class_terminalService.inc:493
 #: admin/systems/goto/class_terminalService.inc:498
-#, fuzzy
 msgid "HSync range"
 msgstr "Fréquence de synchronisation Horizontale"
 
@@ -3164,12 +3072,11 @@ msgstr "Sélectionnez un serveur de terminaux à utiliser"
 
 #: admin/systems/goto/terminalService.tpl:208
 msgid "Add selected server"
-msgstr ""
+msgstr "Ajouter le serveur sélectionné"
 
 #: admin/systems/goto/terminalService.tpl:212
-#, fuzzy
 msgid "Remove selected server"
-msgstr "Suppression de l'image personnelle"
+msgstr "Supprimer le serveur sélectionné"
 
 #: admin/systems/goto/terminalService.tpl:228
 #: admin/systems/goto/workstationService.tpl:201
@@ -3238,9 +3145,8 @@ msgstr "Serveur LDAP"
 
 #: admin/systems/goto/terminalStartup.tpl:11
 #: admin/systems/goto/workstationStartup.tpl:32
-#, fuzzy
 msgid "inherit from group"
-msgstr "Liste des groupes"
+msgstr "hériter du groupe"
 
 #: admin/systems/goto/terminalStartup.tpl:49
 #: admin/systems/goto/workstationStartup.tpl:18
@@ -3291,13 +3197,10 @@ msgstr ""
 "paramètres à hériter."
 
 #: admin/systems/goto/SelectDeviceType.tpl:12
-#, fuzzy
 msgid ""
 "Please select a system type and a bundle of predefined settings to be "
 "inherited."
-msgstr ""
-"Veuillez sélectionner un type de système et éventuellement d'un ensemble de "
-"paramètres à hériter."
+msgstr "Veuillez sélectionner un type de système et d'un ensemble de paramètres à hériter."
 
 #: admin/systems/goto/SelectDeviceType.tpl:23
 #: admin/systems/goto/SelectDeviceType.tpl:24
@@ -3402,32 +3305,24 @@ msgid "Regular expression for matching member names"
 msgstr "Expression régulière concordant avec les noms des membres"
 
 #: admin/systems/goto/class_workstationStartup.inc:244
-#, fuzzy, php-format
+#, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le profil kiosk sélectionné '%s' n'est plus disponible, le profil actuel est "
-"changé en 'aucun'."
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:257
-#, fuzzy, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
-msgstr ""
-"Le serveur de profil kiosk sélectionné '%s' n'est plus disponible, Le "
-"serveur de profil actuel est changé en '%s'."
+#, php-format
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgstr "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version sera '%s' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:306
 msgid "Please select a 'FAI server' or remove the 'FAI classes'."
 msgstr "Veuillez sélectionner un 'serveur FAI' ou effacer les 'Classes FAI'."
 
 #: admin/systems/goto/class_workstationStartup.inc:373
-#, fuzzy
 msgid ""
 "There is already a profile containing a partition table in your "
 "configuration!"
-msgstr ""
-"Il y a déjà un profil dans votre sélection qui contient des configurations "
-"de table de partitions."
+msgstr "Il y a déjà un profil dans votre sélection qui contient des configurations de table de partitions !"
 
 #: admin/systems/goto/class_workstationStartup.inc:664
 msgid "Not available in current setup"
@@ -3455,7 +3350,7 @@ msgstr "Indicateur de statut FAI"
 
 #: admin/systems/goto/class_workstationStartup.inc:1345
 msgid "REPOSITORY_HOOK returned no result!"
-msgstr ""
+msgstr "REPOSITORY_HOOK à retourné 0 résultat !"
 
 #: admin/systems/goto/class_terminalGeneric.inc:121
 #: admin/systems/goto/class_workstationGeneric.inc:138
@@ -3466,16 +3361,15 @@ msgstr "Activé"
 #: admin/systems/goto/class_terminalGeneric.inc:190
 #: admin/systems/goto/class_workstationGeneric.inc:216
 #: admin/ogroups/goto/class_termgroup.inc:178
-#, fuzzy
 msgid "Event error"
-msgstr "Erreur"
+msgstr "Erreur Evénement "
 
 #: admin/systems/goto/class_terminalGeneric.inc:191
 #: admin/systems/goto/class_workstationGeneric.inc:217
 #: admin/ogroups/goto/class_termgroup.inc:179
 #, php-format
 msgid "Event '%s' is not available!"
-msgstr ""
+msgstr "L'événement '%s' n'est pas disponible !"
 
 #: admin/systems/goto/class_terminalGeneric.inc:638
 msgid "Terminal generic"
@@ -3516,16 +3410,15 @@ msgstr ""
 
 #: admin/systems/goto/workstationStartup.tpl:63
 msgid "FAI settings cannot be modified"
-msgstr ""
+msgstr "Les paramètres FAI ne peuvent pas être modifiés"
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "Check if the GOsa support daemon (gosa-si) is running."
-msgstr ""
+msgstr "Vérifiez si le service GOsa (gosa-si) fonctionne."
 
 #: admin/systems/goto/workstationStartup.tpl:67
-#, fuzzy
 msgid "retry"
-msgstr "Modifier une entrée"
+msgstr "réessayer"
 
 #: admin/systems/goto/workstationStartup.tpl:75
 #: admin/systems/goto/workstationStartup.tpl:111
@@ -3545,8 +3438,7 @@ msgstr "activé"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/terminal.tpl:8
 msgid "Terminal template"
@@ -3570,7 +3462,7 @@ msgstr "Hériter de tout"
 
 #: admin/systems/goto/ArpNewDevice.tpl:1
 msgid "Integrating unknown devices"
-msgstr ""
+msgstr "Intégration des périphériques inconnus"
 
 #: admin/systems/goto/ArpNewDevice.tpl:3
 msgid ""
@@ -3581,9 +3473,8 @@ msgid ""
 msgstr ""
 
 #: admin/systems/goto/ArpNewDevice.tpl:9
-#, fuzzy
 msgid "DNS name"
-msgstr "Nom"
+msgstr "Nom DNS"
 
 #: admin/systems/goto/gencd.tpl:2
 msgid "CD-Install-Image generation"
@@ -3608,13 +3499,12 @@ msgid "A valid LDAP server assignement is missing!"
 msgstr ""
 
 #: admin/systems/goto/class_workstationGeneric.inc:510
-#, fuzzy
 msgid "Software deployment"
-msgstr "Type de système"
+msgstr "Déploiement logiciel"
 
 #: admin/systems/goto/class_workstationGeneric.inc:511
 msgid "This host is currently installing. If you want to save it, press 'OK'."
-msgstr ""
+msgstr "Cet hôte est en cours d'installation, si vous voulez le sauver, cliquez sur 'OK'."
 
 #: admin/systems/goto/class_workstationGeneric.inc:694
 msgid "Workstation generic"
@@ -3630,9 +3520,8 @@ msgid "Ntp server"
 msgstr "Serveur NTP"
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:529
-#, fuzzy
 msgid "File pattern"
-msgstr "Filtres des fichiers"
+msgstr ""
 
 #: admin/mimetypes/class_mimetypeGeneric.inc:710
 msgid "Mime type generic"
@@ -3693,9 +3582,8 @@ msgid "Display mime types matching"
 msgstr "Afficher les types mime correspondants"
 
 #: admin/mimetypes/class_divListMimeTypes.inc:227
-#, fuzzy
 msgid "Number of listed mimetypes"
-msgstr "Liste des type mime définis"
+msgstr "Nombre de type mime listés"
 
 #: admin/mimetypes/generic.tpl:26
 msgid "Categorize this mime type"
@@ -3762,7 +3650,6 @@ msgid "Scheduled update"
 msgstr "Mise à jour programmée"
 
 #: admin/ogroups/goto/class_termgroup.inc:225
-#, fuzzy
 msgid "Wake"
 msgstr "Réveiller"
 
@@ -3784,68 +3671,3 @@ msgstr ""
 "groupe d'objet. De plus tout les valeurs éditables ici peuvent être hérité "
 "par les clients assigné à ce groupe d'objets."
 
-#~ msgid "Repository"
-#~ msgstr "Dépôt"
-
-#~ msgid "Parent server"
-#~ msgstr "Serveur Père"
-
-#~ msgid "URL"
-#~ msgstr "URL"
-
-#~ msgid "Sections"
-#~ msgstr "Sections"
-
-#~ msgid "List of configured repositories."
-#~ msgstr "Liste des dépôts configurés."
-
-#~ msgid "This menu allows you to create, delete and edit repository settings."
-#~ msgstr ""
-#~ "Ce menu vous permet créer, effacer et éditer des classes des dépôts FAI."
-
-#~ msgid "Add repository"
-#~ msgstr "Ajouter un dépôt"
-
-#~ msgid "Repository service"
-#~ msgstr "Service de dépôt"
-
-#~ msgid "You can't use this plugin until FAI is activated."
-#~ msgstr ""
-#~ "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
-
-#, fuzzy
-#~ msgid "FAI release"
-#~ msgstr "Classes FAI"
-
-#~ msgid "Releases"
-#~ msgstr "Version"
-
-#~ msgid "Skript name"
-#~ msgstr "Nom du script"
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "copier"
-
-#, fuzzy
-#~ msgid "Cut"
-#~ msgstr "couper"
-
-#~ msgid "Paste"
-#~ msgstr "Coller"
-
-#~ msgid "cut"
-#~ msgstr "couper"
-
-#~ msgid "Cut this entry"
-#~ msgstr "Couper cette entrée"
-
-#~ msgid "copy"
-#~ msgstr "copier"
-
-#~ msgid "Copy this entry"
-#~ msgstr "Copier cette entrée"
-
-#, fuzzy
-#~ msgid "System update"
-#~ msgstr "Type de système"

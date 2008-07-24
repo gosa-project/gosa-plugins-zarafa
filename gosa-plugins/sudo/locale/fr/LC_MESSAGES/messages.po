@@ -1,4 +1,4 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Header entry was created by KBabel!
 #
 # Benoit Mortier <benoit.mortier@opensides.be>, 2008.
@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:52+0200\n"
-"PO-Revision-Date: 2008-06-08 15:54+0200\n"
+"PO-Revision-Date: 2008-07-24 01:58+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: admin/sudo/trust_machines.tpl:6
 msgid "Select systems to add"
-msgstr "Sélectionner les sytèmes à ajouter"
+msgstr "Sélectionner les systèmes à ajouter"
 
 #: admin/sudo/trust_machines.tpl:26
 msgid "Display systems of department"
@@ -38,11 +38,11 @@ msgstr "Expression régulière pour sélectionner les adresses correspondantes"
 
 #: admin/sudo/class_sudoManagement.inc:31
 msgid "Sudo roles"
-msgstr ""
+msgstr "Rôles Sudo"
 
 #: admin/sudo/class_sudoManagement.inc:32
 msgid "Manage sudo roles"
-msgstr ""
+msgstr "Gèrer les rôles sudo"
 
 #: admin/sudo/class_sudoManagement.inc:245
 msgid "Permission"
@@ -51,7 +51,7 @@ msgstr "Permissions"
 #: admin/sudo/class_sudoManagement.inc:260
 #: admin/sudo/class_sudoGeneric.inc:679 admin/sudo/class_sudoGeneric.inc:684
 msgid "Sudo role"
-msgstr ""
+msgstr "Rôle sudo"
 
 #: admin/sudo/class_sudoManagement.inc:293
 msgid "Permission error"
@@ -59,15 +59,15 @@ msgstr "Erreur de permissions"
 
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 msgid "Sudo role administration"
-msgstr ""
+msgstr "Administration des rôles sudo"
 
 #: admin/sudo/options.tpl:5
 msgid "Option name"
-msgstr ""
+msgstr "Nom de l'option"
 
 #: admin/sudo/options.tpl:7
 msgid "Value"
-msgstr ""
+msgstr "Valeur"
 
 #: admin/sudo/options.tpl:8
 msgid "Options"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: admin/sudo/options.tpl:81
 msgid "Available options"
-msgstr ""
+msgstr "Options disponibles"
 
 #: admin/sudo/remove.tpl:2
 msgid "Warning"
@@ -83,7 +83,7 @@ msgstr "Avertissement"
 
 #: admin/sudo/remove.tpl:9
 msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
+msgstr "Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour arrêter."
 
 #: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
 #: admin/sudo/paste_generic.tpl:1
@@ -92,7 +92,7 @@ msgstr "Informations"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
-msgstr ""
+msgstr "Paramètres globaux par défaut"
 
 #: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
 #: admin/sudo/class_divListSudo.inc:82 admin/sudo/paste_generic.tpl:5
@@ -117,54 +117,53 @@ msgstr "Mode de confiance"
 
 #: admin/sudo/generic.tpl:87
 msgid "Users and groups"
-msgstr ""
+msgstr "Utilisateurs et groupes"
 
 #: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
 msgid "Add from list"
-msgstr ""
+msgstr "Ajouter à la liste"
 
 #: admin/sudo/generic.tpl:102
-#, fuzzy
 msgid "Systems"
-msgstr "Système"
+msgstr "Systèmes"
 
 #: admin/sudo/generic.tpl:120
 msgid "Commands"
-msgstr ""
+msgstr "Commandes"
 
 #: admin/sudo/generic.tpl:132
 msgid "Run as"
-msgstr ""
+msgstr "Exécuter comme"
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
-msgstr ""
+msgstr "Option inconnue"
 
 #: admin/sudo/class_sudoOption.inc:155
 #, php-format
 msgid "The sudo option '%s' is invalid!"
-msgstr ""
+msgstr "L'option sudo '%s' est non valide !"
 
 #: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
 msgid "string"
-msgstr ""
+msgstr "chaîne"
 
 #: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
 #: admin/sudo/class_sudoOption.inc:280
 msgid "bool"
-msgstr ""
+msgstr "booléen"
 
 #: admin/sudo/class_sudoOption.inc:279
 msgid "integer"
-msgstr ""
+msgstr "entier"
 
 #: admin/sudo/class_sudoOption.inc:280
 msgid "list"
-msgstr ""
+msgstr "liste"
 
 #: admin/sudo/class_target_list_users.inc:50
 msgid "Select the target objects"
-msgstr ""
+msgstr "Sélectionner les objets cible"
 
 #: admin/sudo/class_target_list_users.inc:51
 #: admin/sudo/class_target_list_users.inc:52
@@ -178,19 +177,19 @@ msgstr "Nom de l'objet"
 
 #: admin/sudo/class_target_list_users.inc:63
 msgid "Select to see users"
-msgstr ""
+msgstr "Voir les utilisateurs"
 
 #: admin/sudo/class_target_list_users.inc:63
 msgid "Show users"
-msgstr ""
+msgstr "Montrer les utilisateurs"
 
 #: admin/sudo/class_target_list_users.inc:64
 msgid "Select to see groups"
-msgstr ""
+msgstr "Voir les groupes"
 
 #: admin/sudo/class_target_list_users.inc:64
 msgid "Show groups"
-msgstr ""
+msgstr "Montrer les groupes"
 
 #: admin/sudo/class_target_list_users.inc:73
 #: admin/sudo/class_target_list_systems.inc:76
@@ -223,20 +222,20 @@ msgstr "Groupes"
 
 #: admin/sudo/class_target_list_systems.inc:53
 msgid "Select the target objects for your scheduled action."
-msgstr ""
+msgstr "Sélectionnez les objets cibles pour votre action programmée."
 
 #: admin/sudo/class_target_list_systems.inc:54
 #: admin/sudo/class_target_list_systems.inc:55
 msgid "Available systems"
-msgstr ""
+msgstr "Systèmes disponibles"
 
 #: admin/sudo/class_target_list_systems.inc:67
 msgid "Select to see terminals"
-msgstr ""
+msgstr "Voir les terminaux"
 
 #: admin/sudo/class_target_list_systems.inc:67
 msgid "Show terminals"
-msgstr ""
+msgstr "Montrer les terminaux"
 
 #: admin/sudo/class_target_list_systems.inc:68
 msgid "Select to see servers"
@@ -244,15 +243,15 @@ msgstr "Sélectionnez pour voir les serveurs"
 
 #: admin/sudo/class_target_list_systems.inc:68
 msgid "Show servers"
-msgstr ""
+msgstr "Montrer les serveurs"
 
 #: admin/sudo/class_target_list_systems.inc:69
 msgid "Select to see workstations"
-msgstr ""
+msgstr "Voir les stations de travail"
 
 #: admin/sudo/class_target_list_systems.inc:69
 msgid "Show workstations"
-msgstr ""
+msgstr "Montrer les stations de travail"
 
 #: admin/sudo/class_target_list_systems.inc:186
 msgid "Server"
@@ -268,7 +267,7 @@ msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:55 admin/sudo/class_divListSudo.inc:56
 msgid "List of sudo roles"
-msgstr ""
+msgstr "Liste des rôles sudo"
 
 #: admin/sudo/class_divListSudo.inc:76
 msgid "Select all"
@@ -284,11 +283,11 @@ msgstr ""
 
 #: admin/sudo/class_divListSudo.inc:87
 msgid "Regular expression for matching role names"
-msgstr ""
+msgstr "Expressions régulières pour le nom des rôles correspondants"
 
 #: admin/sudo/class_divListSudo.inc:89
 msgid "Regular expression for matching role member names"
-msgstr ""
+msgstr "Expressions régulières pour le nom des membres appartenant aux rôles correspondants"
 
 #: admin/sudo/class_divListSudo.inc:111
 msgid "Create"
@@ -300,7 +299,7 @@ msgstr "Rôle"
 
 #: admin/sudo/class_divListSudo.inc:116
 msgid "Default"
-msgstr ""
+msgstr "Défaut"
 
 #: admin/sudo/class_divListSudo.inc:123
 msgid "Remove"
@@ -316,7 +315,7 @@ msgstr "Supprimer cette entrée"
 
 #: admin/sudo/class_divListSudo.inc:224
 msgid "Number of listed roles"
-msgstr ""
+msgstr "Nombre de rôles listés"
 
 #: admin/sudo/class_sudoGeneric.inc:313
 msgid "Error"
@@ -348,16 +347,17 @@ msgstr "Utilisateurs"
 
 #: admin/sudo/class_sudoGeneric.inc:690
 msgid "Host"
-msgstr ""
+msgstr "Hôte"
 
 #: admin/sudo/class_sudoGeneric.inc:691
 msgid "Command"
-msgstr ""
+msgstr "Commande"
 
 #: admin/sudo/class_sudoGeneric.inc:692
 msgid "Run as user"
-msgstr ""
+msgstr "Exécuter comme un utilisateur"
 
 #: admin/sudo/class_sudoGeneric.inc:693
 msgid "Access control list"
 msgstr "Contrôle d'accès (ACL)"
+

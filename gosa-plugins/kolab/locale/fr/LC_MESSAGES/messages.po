@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:51+0200\n"
-"PO-Revision-Date: 2008-06-08 14:01+0200\n"
+"PO-Revision-Date: 2008-07-24 01:07+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -73,8 +73,7 @@ msgstr "Erreur LDAP"
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
-msgstr ""
-"Nombre de jours dans le futur à calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
@@ -110,9 +109,8 @@ msgid "Free busy future"
 msgstr "Nombre de jours futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:523
-#, fuzzy
 msgid "Mail size restriction"
-msgstr "Limitation en taille du compte de messagerie"
+msgstr ""
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "Free busy information"
@@ -143,7 +141,6 @@ msgstr ""
 "vous ajoutez un compte de messagerie."
 
 #: personal/connectivity/kolab/kolab.tpl:83
-#, fuzzy
 msgid "Mail size"
 msgstr "Quota de messagerie"
 
@@ -277,8 +274,7 @@ msgstr "Accepter le courrier électronique venant d'internet"
 
 #: admin/systems/services/kolab/servkolab.tpl:231
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
 
 #: admin/systems/services/kolab/class_servKolab.inc:98
 #, php-format
@@ -358,3 +354,4 @@ msgstr ""
 #: admin/systems/services/kolab/class_servKolab.inc:400
 msgid "kolabFreeBusyFuture"
 msgstr "Nombre de jours dans le futur pour les options de disponibilités"
+

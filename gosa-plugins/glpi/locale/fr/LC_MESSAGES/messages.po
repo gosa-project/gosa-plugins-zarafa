@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:50+0200\n"
-"PO-Revision-Date: 2008-06-04 18:45+0200\n"
+"PO-Revision-Date: 2008-07-23 23:06+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,8 +56,7 @@ msgid "Information"
 msgstr "Information"
 
 #: admin/systems/services/glpi/glpiDeviceManagement.tpl:23
-msgid ""
-"This dialog allows you to attach a device to your currently edited computer."
+msgid "This dialog allows you to attach a device to your currently edited computer."
 msgstr ""
 "Ce menu vous permet d'attacher un périphérique à votre ordinateur en cours "
 "d'édition."
@@ -558,13 +557,11 @@ msgstr "Cette fonctionnalité n'est pas encore implémentée."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:312
 msgid "Adding new sytem type failed, this system type name is already used."
-msgstr ""
-"L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
+msgstr "L'ajout d'un nouveau type de système à échoué, le nom est déjà utilisé."
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:332
 #, php-format
-msgid ""
-"You can't delete this system type, it is still in use by these system(s) '%s'"
+msgid "You can't delete this system type, it is still in use by these system(s) '%s'"
 msgstr ""
 "Vous ne pouvez pas effacer ce type de système, il est utilisé actuellement "
 "par les sytème(s) '%s'"
@@ -639,7 +636,7 @@ msgstr ""
 #: admin/systems/services/glpi/class_glpiAccount.inc:793
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:795
 msgid "Glpi"
-msgstr ""
+msgstr "Glpi"
 
 #: admin/systems/services/glpi/class_glpiAccount.inc:794
 msgid "Inventory extension"
@@ -789,14 +786,12 @@ msgstr ""
 msgid ""
 "Can't rename given printer type to '%s', because this type name already "
 "exists."
-msgstr ""
-"Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
+msgstr "Impossible de renommer le type d'imprimante en '%s', ce type existe déjà."
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:308
 #, php-format
 msgid "Can't delete printer type, it is still in use by '%s'."
-msgstr ""
-"Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
+msgstr "Impossible d'effacer ce type d'imprimante, il est encore utilisé par '%s'"
 
 #: admin/systems/services/glpi/class_glpiPrinterAccount.inc:785
 msgid "since"
@@ -827,8 +822,7 @@ msgid "List of users"
 msgstr "Liste des utilisateurs"
 
 #: admin/systems/services/glpi/glpiSelectUser.tpl:23
-msgid ""
-"This dialog allows you to select a user as technical responsible person."
+msgid "This dialog allows you to select a user as technical responsible person."
 msgstr ""
 "Ce dialogue vous permet de désigner un utilisateur comme personne "
 "responsable."
@@ -881,8 +875,7 @@ msgstr "L'attribut utilisateur est vide ou contient des caractères invalides."
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:70
 msgid "The attribute database is empty or contains invalid characters."
-msgstr ""
-"L'attribut base de données est vide ou contient des caractères invalides."
+msgstr "L'attribut base de données est vide ou contient des caractères invalides."
 
 #: admin/systems/services/glpi/class_goGlpiServer.inc:88
 msgid "Services"
@@ -950,8 +943,7 @@ msgstr "Impossible de détecter le nom de l'objet."
 
 #: admin/systems/services/glpi/class_glpiDeviceManagement.inc:133
 #, php-format
-msgid ""
-"You can't delete this device, it is still in use by these system(s) '%s'"
+msgid "You can't delete this device, it is still in use by these system(s) '%s'"
 msgstr ""
 "Vous ne pouvez pas effacer ce périphérique, il est utilisé actuellement par "
 "ces système(s) '%s'"
@@ -1123,8 +1115,7 @@ msgstr "pièce jointe"
 
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:107
 #, php-format
-msgid ""
-"You can't delete this attachment, it is still in use by these system(s) '%s'"
+msgid "You can't delete this attachment, it is still in use by these system(s) '%s'"
 msgstr ""
 "Impossible d'effacer ce fichier attaché, tant qu'il est utilisé par ce(s) "
 "système(s) '%s'."
@@ -1191,3 +1182,4 @@ msgstr "Le nom spécifié est déjà utilisé."
 #: admin/systems/services/glpi/class_glpiAttachmentPool.inc:352
 msgid "Please specify a valid name for this attachment."
 msgstr "Veuillez spécifier un nom valide pour ce document lié."
+

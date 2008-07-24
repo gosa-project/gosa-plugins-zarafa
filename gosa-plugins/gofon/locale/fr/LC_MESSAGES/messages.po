@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-27 12:50+0200\n"
-"PO-Revision-Date: 2008-06-04 18:59+0200\n"
+"PO-Revision-Date: 2008-07-23 23:27+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,7 +29,6 @@ msgstr "Permissions"
 
 #: gofon/conference/class_phoneConferenceManagment.inc:205
 #: gofon/conference/class_phoneConferenceManagment.inc:267
-#, fuzzy
 msgid "conference"
 msgstr "Conférence"
 
@@ -43,9 +42,8 @@ msgstr "Erreur de permissions"
 
 #: gofon/conference/class_phoneConferenceManagment.inc:227
 #: gofon/conference/class_phoneConferenceManagment.inc:288
-#, fuzzy
 msgid "You have not permission to delete this entry!"
-msgstr "Vous n'avez pas les droits nécessaires pour supprimer ce département."
+msgstr "Vous n'avez pas les droits nécessaires pour supprimer cette entrée !"
 
 #: gofon/conference/main.inc:38 gofon/conference/main.inc:40
 msgid "Conference management"
@@ -163,20 +161,18 @@ msgstr "Inconnu"
 
 #: gofon/conference/class_divListConferences.inc:222
 #: gofon/conference/class_divListConferences.inc:223
-#, fuzzy, php-format
+#, php-format
 msgid "Number of listed '%s'"
-msgstr "Nombre de pages"
+msgstr "Nombre de '%s' listés"
 
 #: gofon/conference/class_divListConferences.inc:222
-#, fuzzy
 msgid "conferences"
-msgstr "Conférence"
+msgstr "Conférences"
 
 #: gofon/conference/class_divListConferences.inc:223
 #: gofon/macro/class_divListMacros.inc:203
-#, fuzzy
 msgid "departments"
-msgstr "Département"
+msgstr "Départements"
 
 #: gofon/conference/remove.tpl:2 gofon/macro/remove.tpl:2
 msgid "Warning"
@@ -243,9 +239,8 @@ msgid "Language"
 msgstr "Langue"
 
 #: gofon/conference/generic.tpl:81
-#, fuzzy
 msgid "Select language"
-msgstr "Langue du serveur"
+msgstr "Sélectionnez la langue"
 
 #: gofon/conference/generic.tpl:96
 #: gofon/conference/class_phoneConferenceGeneric.inc:777
@@ -350,7 +345,7 @@ msgstr "Entrée obsolète"
 msgid ""
 "The current home server is not available anymore. It will be moved to '%s' "
 "if you save this entry!"
-msgstr ""
+msgstr "Le serveur home n'est plus disponible. Il sera bougé vers '%s' si vous sauvez cette entrée !"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:260
 #: gofon/conference/class_phoneConferenceGeneric.inc:264
@@ -374,15 +369,12 @@ msgstr "Erreur"
 #: gofon/conference/class_phoneConferenceGeneric.inc:264
 #, php-format
 msgid "Cannot delete entry from server '%s' because it seems to be removed!"
-msgstr ""
+msgstr "Impossible d'effacer l'entrée du serveur '%s' parceque l'entrée semble avoir déjà été effacée !"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:379
-#, fuzzy, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
-msgstr ""
-"Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
-"disponible."
+#, php-format
+msgid "The previously selected asterisk home server '%s' is no longer available!"
+msgstr "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus disponible !"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:396
 #: gofon/conference/class_phoneConferenceGeneric.inc:790
@@ -400,13 +392,13 @@ msgstr "Durée"
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
 msgid "GOfon"
-msgstr ""
+msgstr "Gofon"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:641
 #: gofon/conference/class_phoneConferenceGeneric.inc:643
-#, fuzzy, php-format
+#, php-format
 msgid "'%s' is already assigned to '%s'!"
-msgstr "Le numéro de téléphone %s est déjà utilisé par '%s'."
+msgstr "'%s' est déjà utilisé par '%s' !"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:718
 #: gofon/phoneaccount/class_phoneAccount.inc:1380
@@ -456,7 +448,7 @@ msgstr "Type de conférence"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:789
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:791
 #: gofon/phoneaccount/class_phoneAccount.inc:1612
@@ -701,14 +693,12 @@ msgid "Phone hardware"
 msgstr "Matériel téléphonique"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1616
-#, fuzzy
 msgid "Phone context"
-msgstr "Nom du téléphone"
+msgstr "Contexte téléphonique"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1617
-#, fuzzy
 msgid "Voice mail context"
-msgstr "Code PIN de la boite vocale"
+msgstr "Contexte de la boite vocale"
 
 #: gofon/phoneaccount/class_phoneAccount.inc:1618
 msgid "Telephone pin"
@@ -765,19 +755,16 @@ msgid "Select the accounts home server"
 msgstr "Sélectionnez le serveur primaire"
 
 #: gofon/phoneaccount/generic.tpl:69
-#, fuzzy
 msgid "Context"
-msgstr "Contenu"
+msgstr "Contexte"
 
 #: gofon/phoneaccount/generic.tpl:73 gofon/phoneaccount/generic.tpl:84
-#, fuzzy
 msgid "Select the accounts context"
-msgstr "Sélectionnez le serveur primaire"
+msgstr "Sélectionnez le contexte du compte"
 
 #: gofon/phoneaccount/generic.tpl:80
-#, fuzzy
 msgid "Voicemail context"
-msgstr "Code PIN de la boite vocale"
+msgstr "Contexte de la boite vocale"
 
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
 #: gofon/macro/class_gofonMacroParameters.inc:200
@@ -838,14 +825,13 @@ msgstr "Supprimer une macro"
 
 #: gofon/macro/class_divListMacros.inc:202
 #: gofon/macro/class_divListMacros.inc:203
-#, fuzzy, php-format
+#, php-format
 msgid "Number of listed %s"
-msgstr "Nombre de pages"
+msgstr "Nombre de '%s' listés"
 
 #: gofon/macro/class_divListMacros.inc:202
-#, fuzzy
 msgid "macros"
-msgstr "Macro"
+msgstr "macros"
 
 #: gofon/macro/main.inc:42 gofon/macro/main.inc:46
 msgid "Phone macro management"
@@ -871,9 +857,8 @@ msgid "Phone macros"
 msgstr "Macros téléphoniques"
 
 #: gofon/macro/class_gofonMacroManagement.inc:364
-#, fuzzy
 msgid "macro"
-msgstr "Macro"
+msgstr "macro"
 
 #: gofon/macro/generic.tpl:6 gofon/macro/generic.tpl:9
 #: gofon/macro/class_gofonMacro.inc:581 gofon/macro/paste_generic.tpl:4
@@ -907,35 +892,32 @@ msgid "Not supported multiple brace in line %s!"
 msgstr ""
 
 #: gofon/macro/class_gofonMacro.inc:308
-#, fuzzy, php-format
+#, php-format
 msgid "Application missing in line %s!"
-msgstr "Il y a pas d'application indiquée à la ligne : '%s'."
+msgstr "Il y a pas d'application indiquée à la ligne '%s' !"
 
 #: gofon/macro/class_gofonMacro.inc:312
 #, php-format
 msgid "Extension missing in line %s!"
-msgstr ""
+msgstr "Extension manquante à la ligne %s !"
 
 #: gofon/macro/class_gofonMacro.inc:425
 msgid "Name can be 20 characters at maximum!"
-msgstr ""
+msgstr "Les noms ne peuvent pas dépasser 20 caractères !"
 
 #: gofon/macro/class_gofonMacro.inc:434
-#, fuzzy
 msgid "Macro is still in use!"
-msgstr "Paramètres des macros"
+msgstr "Macro encore en utilisation !"
 
 #: gofon/macro/class_gofonMacro.inc:441
-#, fuzzy
 msgid "Macro is empty!"
-msgstr "Texte de la macro"
+msgstr "La macro est vide !"
 
 #: gofon/macro/class_gofonMacro.inc:467
 #: admin/systems/gofon/class_phoneGeneric.inc:271
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr ""
-"Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
+msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: gofon/macro/class_gofonMacro.inc:571
 #: admin/systems/gofon/class_phoneGeneric.inc:500
@@ -948,7 +930,7 @@ msgstr "Gestion des macros d'Asterisk"
 
 #: gofon/macro/class_gofonMacro.inc:577
 msgid "GOfon macro"
-msgstr ""
+msgstr "Macro GOfon"
 
 #: gofon/macro/class_gofonMacro.inc:585
 msgid "Macro content and parameter"
@@ -975,22 +957,20 @@ msgid "Delete unused"
 msgstr "Supprimer les paramètres inutilisés"
 
 #: gofon/macro/class_gofonMacroParameters.inc:340
-#, fuzzy, php-format
+#, php-format
 msgid "Parameter %s contains invalid character. '!,#' is used as delimiter!"
-msgstr ""
-"Le paramètre %s contient des caractères invalides. '!#' est utilisé comme "
-"séparateur"
+msgstr "Le paramètre %s contient des caractères invalides. '!,#' est utilisé comme séparateur !"
 
 #: gofon/macro/class_gofonMacroParameters.inc:345
 #, php-format
 msgid "Parameter %s is invalid!"
-msgstr ""
+msgstr "Le paramètre %s est non valide !"
 
 #: gofon/macro/class_gofonMacroParameters.inc:374
 msgid ""
 "Number of parameters for this macro has changed. Please update all users "
 "using it!"
-msgstr ""
+msgstr "Le nombre de paramètres de cette macro à changé. Veuillez mettre à jour tout les utilisateurs qui l'utilisent !"
 
 #: gofon/macro/parameter.tpl:4
 msgid "Argument"
@@ -1267,8 +1247,7 @@ msgid "Country dial prefix"
 msgstr "Préfixe du pays"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid ""
-"Only users with the same asterisk home server will be included to this queue."
+msgid "Only users with the same asterisk home server will be included to this queue."
 msgstr ""
 "Seulement les utilisateurs avec le même serveur asterisk seront inclus dans "
 "cette queue."
@@ -1532,28 +1511,3 @@ msgstr "Méthode"
 msgid "Announce"
 msgstr "Annonce"
 
-#~ msgid "GOfon reports"
-#~ msgstr "Rapports téléphoniques"
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "copier"
-
-#, fuzzy
-#~ msgid "Cut"
-#~ msgstr "couper"
-
-#~ msgid "Paste"
-#~ msgstr "Coller"
-
-#~ msgid "cut"
-#~ msgstr "couper"
-
-#~ msgid "Cut this entry"
-#~ msgstr "Couper cette entrée"
-
-#~ msgid "copy"
-#~ msgstr "copier"
-
-#~ msgid "Copy this entry"
-#~ msgstr "Copier cette entrée"
