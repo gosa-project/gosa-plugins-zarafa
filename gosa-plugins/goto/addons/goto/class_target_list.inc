@@ -200,7 +200,7 @@ class target_list extends MultiSelectWindow
       if(in_array("goServer",$val['objectClass'])){
         $img = "<img src='plugins/systems/images/select_server.png' alt='"._("Server")."' ".$title.">";
       }elseif(in_array("gotoWorkstation",$val['objectClass'])){
-        $img = "<img src='images/select_workstation.png' alt='"._("Workstation")."' ".$title.">";
+        $img = "<img src='plugins/systems/images/select_workstation.png' alt='"._("Workstation")."' ".$title.">";
       }elseif(in_array("gosaGroupOfNames",$val['objectClass'])){
         $img = "<img src='images/list_ogroup.png' alt='"._("Object group")."' ".$title.">";
       }

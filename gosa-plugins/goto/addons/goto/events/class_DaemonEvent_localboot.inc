@@ -30,8 +30,8 @@ class DaemonEvent_localboot extends DaemonEvent
     $this->s_Schedule_Action = "job_trigger_action_localboot";
     $this->s_Trigger_Action= "gosa_trigger_action_localboot";
     $this->s_Queued_Action= "trigger_action_localboot";
-    $this->s_Menu_Image = "images/select_workstation.png";
-    $this->s_List_Image = "images/select_workstation.png";
+    $this->s_Menu_Image = "plugins/goto/images/localboot.png";
+    $this->s_List_Image = "plugins/goto/images/localboot.png";
   }
 
   public function execute()

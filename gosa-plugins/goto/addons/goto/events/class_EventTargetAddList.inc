@@ -246,7 +246,7 @@ class EventTargetAddList extends MultiSelectWindow
           continue;
         }
       }elseif(in_array("gotoWorkstation",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_workstation.png" alt="W" title="'._("Workstation").'">';
+        $img = '<img class="center" src="plugins/systems/images/select_workstation.png" alt="W" title="'._("Workstation").'">';
         if($this->filter_iprange){
           if(!isset($obj['ipHostNumber']) || !tests::is_in_ip_range($this->ipfrom,$this->ipto,$obj['ipHostNumber'][0])) {
             continue;
