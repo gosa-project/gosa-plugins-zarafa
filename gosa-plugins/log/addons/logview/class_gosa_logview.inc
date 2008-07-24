@@ -90,7 +90,7 @@ class gosa_logview extends plugin
     $smarty->assign("plug", "?plug=".validate($_GET['plug']));
     $smarty->assign("search_image", get_template_path('images/lists/search.png'));
     $smarty->assign("time_image", get_template_path('images/time.png'));
-    $smarty->assign("server_image", get_template_path('images/server.png'));
+    $smarty->assign("server_image", get_template_path('plugins/systems/images/server.png'));
     $smarty->assign("log_image", get_template_path('plugins/logview/images/log_warning.png'));
     $smarty->assign("ruleset_image", get_template_path('images/lists/edit.png'));
     $smarty->assign("launchimage", get_template_path('images/launch.png'));
