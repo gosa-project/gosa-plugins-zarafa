@@ -256,7 +256,7 @@ class EventTargetAddList extends MultiSelectWindow
           continue;
         }
       }elseif(in_array("gosaGroupOfNames",$obj['objectClass'])){
-        $img = '<img class="center" src="images/select_ogroup.png" alt="O" title="'._("Object group").'">';
+        $img = '<img class="center" src="plugins/ogroups/images/select_ogroup.png" alt="O" title="'._("Object group").'">';
       }
 
       $field1 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>",
