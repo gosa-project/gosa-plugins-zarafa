@@ -130,7 +130,7 @@ class divListFai extends MultiSelectWindow
         "&nbsp;"._("Freezed")."|\n";
     }else{
       if(preg_match("/c/",$acl)){
-        $s.= "...|<input class='center' type='image' src='images/fai_new_profile.png' alt=''>".
+        $s.= "...|<input class='center' type='image' src='plugins/fai/images/fai_new_profile.png' alt=''>".
           "&nbsp;"._("Profile")."|Create_profile|\n";
       }
 
