@@ -28,8 +28,8 @@ class mailMethod
     /* Check if the mail account identification attribute
        is overridden in the configuration file
      */
-    if(isset($config->current['MAIL_ATTRIB']) && !empty($config->current['MAIL_ATTRIB'])){
-      $new_uattrib= strtolower($config->current['MAIL_ATTRIB']);
+    if($config->get_cfg_value("mail_attrib") != ""){
+      $new_uattrib= strtolower($config->get_cfg_value("mail_attrib"));
       if(in_array($new_uattrib,array("mail","uid"))){
         $this->uattrib = $new_uattrib;
       }else{

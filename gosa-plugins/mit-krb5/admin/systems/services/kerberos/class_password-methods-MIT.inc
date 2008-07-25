@@ -338,7 +338,7 @@ class passwordMethodMIT extends passwordMethod
   public function generate_hash($pwd = "")
   {
     $mode= "kerberos";
-    if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+    if ($this->config->get_cfg_value("krbsasl") == "true"){
       $mode= "sasl";
     }
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
@@ -384,7 +384,7 @@ class passwordMethodMIT extends passwordMethod
   public function get_hash_name()
   {
     $mode= "kerberos";
-    if (isset($this->config->current['KRBSASL']) && preg_match('/^true$/i', $this->config->current['KRBSASL'])){
+    if ($this->config->get_cfg_value("krbsasl") == "true"){
       $mode= "sasl";
     }
     return "$mode";

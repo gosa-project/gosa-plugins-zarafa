@@ -96,7 +96,7 @@ class sambaAccount extends plugin
   function sambaAccount (&$config, $dn= NULL)
   {
     /* Load attributes depending on the samba version */
-    $this->samba3= ($config->current['SAMBAVERSION'] == 3);
+    $this->samba3= ($config->get_cfg_value("sambaversion") == 3);
 
     if ($this->samba3){
       $this->attributes= array ("sambaSID", "sambaPwdLastSet", "sambaLogonTime",
@@ -135,7 +135,7 @@ class sambaAccount extends plugin
         if(isset($attrs['sambaAlgorithmicRidBase'])){
           $this->ridBase= $attrs['sambaAlgorithmicRidBase'][0];
         } else {
-          $this->ridBase= $this->config->current['RIDBASE'];
+          $this->ridBase= $this->config->get_cfg_value("ridbase");
         }
         if ($this->sambaDomainName == ""){
           $this->sambaDomainName= $attrs['sambaDomainName'][0];
@@ -144,8 +144,8 @@ class sambaAccount extends plugin
         if ($this->sambaDomainName == ""){
           $this->sambaDomainName= "DEFAULT";
         }
-        $this->ridBase= $this->config->current['RIDBASE'];
-        $this->SID= $this->config->current['SID'];
+        $this->ridBase= $this->config->get_cfg_value("ridbase");
+        $this->SID= $this->config->get_cfg_value("sid");
       }
 
       /* Save in order to compare later on */
@@ -1006,8 +1006,7 @@ class sambaAccount extends plugin
       /* User wants me to fake the idMappings? This is useful for
          making winbind resolve the user names in a reasonable amount
          of time in combination with larger databases. */
-      if (isset($this->config->current['SAMBAIDMAPPING']) &&
-          preg_match('/true/i', $this->config->current['SAMBAIDMAPPING'])){
+      if ($this->config->get_cfg_value("sambaidmapping") == "true"){
         $this->attrs['objectClass'][]= "sambaIdmapEntry";
       }
 

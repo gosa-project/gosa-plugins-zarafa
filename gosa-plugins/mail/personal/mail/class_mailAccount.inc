@@ -82,8 +82,8 @@ class mailAccount extends plugin
     $this->initially_was_account= $this->is_account;
 
     /*  Set mailMethod to the one defined in gosa.conf */
-    if (isset($this->config->current['MAILMETHOD'])){
-      $method= $this->config->current['MAILMETHOD'];
+    if ($this->config->get_cfg_value("mailmethod") != ""){
+      $method= $this->config->get_cfg_value("mailmethod");
 
       $cls = get_correct_class_name("mailMethod$method");
       if ($cls && class_exists($cls)){
@@ -97,9 +97,7 @@ class mailAccount extends plugin
     /* Create the account prefix  user. user/ 
        Preset folder prefix. Will change it later to respect
        altnamespace. */
-    if (isset($this->config->current['CYRUSUNIXSTYLE']) && $this->config->current['CYRUSUNIXSTYLE'] == "true"){
-      $this->folder_prefix= "user/";
-    }elseif (isset($this->config->data['MAIN']['CYRUSUNIXSTYLE']) && $this->config->data['MAIN']['CYRUSUNIXSTYLE'] == "true"){
+    if ($this->config->get_cfg_value("cyrusunixstyle") == "true"){
       $this->folder_prefix= "user/";
     } else {
       $this->folder_prefix= "user.";
@@ -168,8 +166,8 @@ class mailAccount extends plugin
 
     /* Fill vacation array */
     $this->vacation= array();
-    if (isset($this->config->current['VACATIONDIR'])){
-      $dir= $this->config->current['VACATIONDIR'];
+    if ($this->config->get_cfg_value("vacationdir") != ""){
+      $dir= $this->config->get_cfg_value("vacationdir");
       if (is_dir($dir) && is_readable($dir)){
 
         /* Look for files and build the vacation array */
@@ -1141,8 +1139,8 @@ class mailAccount extends plugin
 
   function allow_remove()
   {
-    if (isset($this->config->current['MAILMETHOD'])){
-      $method= $this->config->current['MAILMETHOD'];
+    if ($this->config->get_cfg_value("mailmethod") != ""){
+      $method= $this->config->get_cfg_value("mailmethod");
       if(preg_match("/olab/i",$method)){
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);

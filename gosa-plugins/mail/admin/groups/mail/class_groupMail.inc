@@ -69,8 +69,8 @@ class mailgroup extends plugin
 
     /* Set mailMethod to the one defined in gosa.conf 
      */
-    if (isset($this->config->current['MAILMETHOD'])){
-      $this->mmethod= $this->config->current['MAILMETHOD'];
+    if ($this->config->get_cfg_value("mailmethod")){
+      $this->mmethod= $this->config->get_cfg_value("mailmethod");
     }
 
     /* Check if selected mail method exists 
@@ -95,7 +95,7 @@ class mailgroup extends plugin
     }
 
     /* Get folder type */
-    if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
+    if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
       if(isset($this->attrs['kolabFolderType'])){
         $tmp = split("\.",$this->attrs['kolabFolderType'][0]);
         $this->kolabFolderTypeType = $tmp[0];
@@ -666,7 +666,7 @@ class mailgroup extends plugin
       $smarty->assign("quotadefined", "false");
     }
 
-    if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
+    if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
 
       $smarty->assign("kolab", TRUE);
       $smarty->assign("JS",session::get('js'));
@@ -725,7 +725,7 @@ class mailgroup extends plugin
     /* Added these ObjectClass and Attributes, because they were not 
        removed correctly, only in case of kolab ... 
      */
-    if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
+    if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
       $this->attributes[]="acl";
       $this->objectclasses[] = "kolabSharedFolder";
     }
@@ -774,7 +774,7 @@ class mailgroup extends plugin
   {
 
     /* Add special kolab attributes */    
-    if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
+    if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
       if(isset($_POST['kolabFolderTypeType']) && $this->acl_is_writeable("kolabFolderType")){
         $this->kolabFolderTypeType = get_post("kolabFolderTypeType");
         $this->kolabFolderTypeSubType = get_post("kolabFolderTypeSubType");
@@ -1312,7 +1312,7 @@ I: Only insider delivery */
       }
 
       /* Add special kolab attributes */
-      if(isset($this->config->current['MAILMETHOD'])&&preg_match("/olab/i",$this->config->current['MAILMETHOD'])){
+      if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
         if(isset($_POST['kolabFolderTypeType']) && $this->acl_is_writeable("kolabFolderType")){
           $this->kolabFolderTypeType = get_post("kolabFolderTypeType");
           $this->kolabFolderTypeSubType = get_post("kolabFolderTypeSubType");

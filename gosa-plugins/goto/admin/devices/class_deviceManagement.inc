@@ -27,7 +27,7 @@ class deviceManagement extends plugin
     $this->ui = get_userinfo();  
 
     /* Check if copy & paste is activated */
-    if($this->config->boolValueIsTrue("MAIN","ENABLECOPYPASTE")){
+    if($this->config->get_cfg_value("enablecopypaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
 

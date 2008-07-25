@@ -71,7 +71,7 @@ class workstartup extends plugin
     plugin::plugin ($config, $dn, $parent);
 
     /* Check for si daemon */
-    $this->si_active = isset($this->config->current['GOSA_SI']) && !empty($this->config->current['GOSA_SI']);
+    $this->si_active = $this->config->get_cfg_value("gosa_si") != "";
 
     /* Check object group membership */
     if(!isset($this->parent->by_object['ogroup'])){

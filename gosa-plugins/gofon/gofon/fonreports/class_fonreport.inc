@@ -7,7 +7,6 @@ class fonreport extends plugin
   var $plDescription= "This does something";
   var $plIcon       = "plugins/gofon/images/phonereport.png";
 
-
   /* For internal use */
   var $start				  = 0;
   var $search_for		  = "*";

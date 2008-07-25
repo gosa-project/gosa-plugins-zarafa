@@ -217,8 +217,8 @@ class environment extends plugin
                                     "1280x768"  =>  "1280x768",
                                     "1280x1024" =>  "1280x1024");
 
-    if(isset($this->config->data['MAIN']['RESOLUTION_HOOK'])){
-      $file = $this->config->data['MAIN']['RESOLUTION_HOOK'];
+    if($this->config->get_cfg_value("resolutions") != ""){
+      $file = $this->config->get_cfg_value("resolutions");
 
       if(is_readable($file)){
         $str = file_get_contents($file);

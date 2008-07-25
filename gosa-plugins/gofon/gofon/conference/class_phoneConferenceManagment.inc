@@ -49,7 +49,7 @@ class phoneConferenceManagment extends plugin
     $this->DivListConference = new divListConference($this->config,$this);
 
     /* Copy & Paste enabled ?*/
-    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+    if ($this->config->get_cfg_value("enablecopypaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
   }
