@@ -1139,11 +1139,9 @@ class FAI
         if(!$ldap->success()){
 
           /* Some error occurred */
-          print "---------------------------------------------";
-          print $ldap->get_error()."<br>";
-          print $sourcedn."<br>";
-          print $destinationdn."<br>";
-          print_a( $attr);
+          msg_dialog::display(_("Fatal error"),
+              sprintf(_("Release creation failed due to ldap errors. Additional informations '%s'."),
+                $ldap->get_error()."<br>".$sourcedn."<br>".$destinationdn."<br>"),FATAL_ERROR_DIALOG);
           exit();
         }
       }
