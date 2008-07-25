@@ -783,7 +783,9 @@ class workstartup extends plugin
     }elseif(isset($this->parent->by_object['servgeneric'])){
       $this->objectclasses = array("GOhard","gotoWorkstationTemplate");
     }else{
-      print "Object Type Configuration : unknown";
+      msg_dialog::display(_("Fatal error"),
+          "Object Type Configuration is unknown. Please contact the GOsa developers.",
+          FATAL_ERROR_DIALOG);
       exit();
     }
 
