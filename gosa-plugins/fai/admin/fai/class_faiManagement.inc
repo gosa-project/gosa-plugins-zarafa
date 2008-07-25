@@ -754,6 +754,9 @@ class faiManagement extends plugin
           }
         }else{  
           trigger_error("Unknown class DaemonEvent / gosaSupportDaemon");
+          msg_dialog::display(_("Fatal error"),
+              "Daemon events called but classes where not accessible, DaemonEvent gosaSupportDaemon",
+              FATAL_ERROR_DIALOG);
         }
         exit();
       }
