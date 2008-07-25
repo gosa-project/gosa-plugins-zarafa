@@ -19,6 +19,7 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+$lock_msg = "";
 if (!$remove_lock) {
   /* Reset requested? */
   if (isset ($_POST['edit_cancel']) || (isset ($_GET['reset']) && $_GET['reset'] == 1)) {
@@ -48,8 +49,7 @@ if (!$remove_lock) {
     /* Check locking */
     if (($username = get_lock($ui->dn)) != "") {
       session::set('back_plugin',$plug);
-      gen_locked_message($username, $ui->dn);
-      exit ();
+      $lock_msg =  gen_locked_message ($username, $ui->dn);
     }
 
     /* Lock the current entry */
@@ -79,7 +79,12 @@ if (!$remove_lock) {
   }
 
   /* Execute formular */
-  $display = $netatalk->execute();
+  if(!empty($lock_msg(){
+    $display = $lock_msg;
+  }else{
+    $display.= $netatalk->execute ();
+  }
+
 
   /* Store changes  in session */
   if (session::is_set('edit')) {
