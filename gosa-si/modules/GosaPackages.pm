@@ -172,7 +172,6 @@ sub process_incoming_msg {
         if (defined $out_msg){
             push(@out_msg_l, $out_msg);
         }
-
     }
 
     return \@out_msg_l;
@@ -185,9 +184,12 @@ sub process_gosa_msg {
     my @out_msg_l = ('nohandler');
     my $sql_events;
 
+    # strip gosa_ prefix from header, it is not used any more
+    @{$msg_hash->{'header'}}[0] =~ s/gosa_//;
+    $msg =~ s/<header>gosa_/<header>/;
+
     my $header = @{$msg_hash->{'header'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
-    $header =~ s/gosa_//;
 
     # check local installed events
     if( exists $event_hash->{$header} ) {
@@ -212,7 +214,6 @@ sub process_gosa_msg {
 
             # client is registered for this event, deliver this message to client
             if ($client_events =~ /,$header,/) {
-                $msg =~ s/<header>gosa_/<header>/;
                 @out_msg_l = ( $msg );
 
             # client is not registered for this event, set error

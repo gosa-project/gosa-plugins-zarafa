@@ -87,6 +87,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
     $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
+    $arp_enabled, $arp_interface,
 );
 
 # additional variable which should be globaly accessable
@@ -257,7 +258,12 @@ my $max_children = 2;
     "key-lifetime" => [\$foreign_servers_register_delay, 120],
     "job-synchronization-enabled" => [\$job_synchronization, "true"],
     "synchronization-loop" => [\$modified_jobs_loop_delay, 5],
-}
+    },
+"ArpHandler" => {
+    "enabled"   => [\$arp_enabled, "true"],
+    "interface" => [\$arp_interface, "all"],
+	},
+
 );
 
 
@@ -449,10 +455,9 @@ sub import_modules {
         }
 		my $mod_name = $1;
 
+        # ArpHandler switch
         if( $file =~ /ArpHandler.pm/ ) {
-            if( $no_arp > 0 ) {
-                next;
-            }
+            if( $arp_enabled eq "false" ) { next; }
         }
         
         eval { require $file; };

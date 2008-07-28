@@ -125,13 +125,13 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get all localboot products
-    $data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
     
     # Get localboot product for specific host
     #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get product properties - global
-    $data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>winxppro</ProductId></xml>";
+    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>winxppro</ProductId></xml>";
 
     # Get product properties - per host
     #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>firefox</ProductId> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
@@ -152,7 +152,23 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
 
     # Delete Opsi client
-    $data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
+    #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
+
+    #########################
+    # Mailqueue communication
+    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+
+    # multiple xml tags msg_id are allowed
+    #$data = "<xml> <header>gosa_mailqueue_hold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99C8ABEF23</msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_unhold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>5657EBEEF7</msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_requeue</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>11A09BEF04</msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_del</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>11A09BEF04</msg_id> </xml>";
+
+    # only one xml tag msg_id is allowed
+    #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99E92BEF2B</msg_id> </xml>";
+     
+
+
 
     $sock->write($data);
     $answer = "nothing";
