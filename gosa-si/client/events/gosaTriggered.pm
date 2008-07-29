@@ -1,3 +1,33 @@
+
+=head1 NAME
+
+gosaTriggered.pm
+
+=head1 SYNOPSIS
+
+use GOSA::GosaSupportDaemon;
+
+use Data::Dumper;
+
+use MIME::Base64
+
+=head1 DESCRIPTION
+
+This module contains all GOsa-SI-client processing instructions concerning actions controllable from GOsa.
+
+=head1 VERSION
+
+Version 1.0
+
+=head1 AUTHOR
+
+Andreas Rettenberger <rettenberger at gonicus dot de>
+
+=head1 FUNCTIONS
+
+=cut
+
+
 package gosaTriggered;
 use Exporter;
 @ISA = qw(Exporter);
@@ -8,11 +38,9 @@ my @events = (
     "trigger_action_halt",
     "trigger_action_faireboot",
     "trigger_action_reboot",
-#    "trigger_action_memcheck",   # not yet implemented
     "trigger_action_reinstall",
     "trigger_action_update",
     "trigger_action_instant_update",
-#    "trigger_action_sysinfo",    # not yet implemented
     );
 @EXPORT = @events;
 
@@ -26,9 +54,66 @@ BEGIN {}
 
 END {}
 
+###############################################################################
+=over 
 
+=item B<get_events ()>
+
+=over
+
+=item description 
+
+    Reports all provided functions.
+
+=item parameter
+
+    None.
+
+=item return 
+
+    ARRAYREF - array containing all functions 
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub get_events { return \@events; }
 
+
+###############################################################################
+=over 
+
+=item B<usr_msg ($$)>
+
+=over
+
+=item description 
+
+    Executes '/usr/bin/goto-notify' wich displays the message, subject und receiver at screen
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+    
+    <to> - STRING - username message should be deliverd to
+    <subject> - STRING - subject of the message, base64 encoded
+    <message> - STRING - message itself, base64 encoded
+
+=item return 
+
+    $out_msg - STRING - GOsa-si valid xml message, feedback that message was deliverd
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub usr_msg {
     my ($msg, $msg_hash) = @_;
 
@@ -44,6 +129,37 @@ sub usr_msg {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_localboot ($$)>
+
+=over
+
+=item description 
+
+    Executes '/sbin/shutdown -r' if  no user is logged in otherwise write 
+    'trigger_action_localboot' to '/etc/gosa-si/event'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    <timeout> - INTEGER - timeout to wait befor restart, default 0
+
+=item return 
+    
+    Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub trigger_action_localboot {
     my ($msg, $msg_hash) = @_;
     my $timeout;
@@ -85,6 +201,36 @@ sub trigger_action_localboot {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_faireboot ($$)>
+
+=over
+
+=item description 
+
+    Executes '/usr/sbin/faireboot'.
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    None.
+
+=item return 
+    
+    Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub trigger_action_faireboot {
     my ($msg, $msg_hash) = @_;
 	&main::daemon_log("DEBUG: run /usr/sbin/faireboot\n", 7); 
@@ -93,6 +239,37 @@ sub trigger_action_faireboot {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_reboot ($$)>
+
+=over
+
+=item description 
+
+    Executes '/usr/bin/goto-notify reboot' and '/sbin/shutdown -r'  if  no 
+    user is logged in otherwise write 'reboot' to '/etc/gosa-si/event'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    <timeout> - INTEGER - timeout to wait befor reboot, default 0
+
+=item return 
+    
+    Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub trigger_action_reboot {
     my ($msg, $msg_hash) = @_;
     my $timeout;
@@ -120,6 +297,37 @@ sub trigger_action_reboot {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_halt ($$)>
+
+=over
+
+=item description 
+
+    Executes '/usr/bin/goto-notify halt' and '/sbin/shutdown -h' if  no 
+    user is logged in otherwise write 'halt' to '/etc/gosa-si/event'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    <timeout> - INTEGER - timeout to wait befor halt, default 0
+
+=item return 
+    
+    Nothing.    
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub trigger_action_halt {
     my ($msg, $msg_hash) = @_;
     my $timeout;
@@ -147,6 +355,37 @@ sub trigger_action_halt {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_reinstall>
+
+=over
+
+=item description 
+
+    Executes '/usr/bin/goto-notify install' and '/sbin/shutdown -r now' if no 
+    user is logged in otherwise write 'install' to '/etc/gosa-si/event'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    None.
+
+=item return 
+    
+    Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub trigger_action_reinstall {
     my ($msg, $msg_hash) = @_;
 
@@ -166,6 +405,36 @@ sub trigger_action_reinstall {
 }
 
 
+###############################################################################
+=over 
+
+=item B<trigger_action_updae>
+
+=over
+
+=item description 
+
+    Executes 'DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    None.
+
+=item return 
+    
+    Nothing
+
+=back
+
+=back
+
+=cut
+###############################################################################
 # Backward compatibility
 sub trigger_action_update {
     my ($msg, $msg_hash) = @_;
@@ -176,6 +445,37 @@ sub trigger_action_update {
     return;
 }
 
+
+###############################################################################
+=over 
+
+=item B<trigger_action_instant_update ($$)>
+
+=over
+
+=item description 
+
+    Executes 'DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &'
+
+=item parameter
+
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
+
+=item GOsa-si message xml content
+
+    None.
+
+=item return 
+    
+    Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 # Backward compatibility
 sub trigger_action_instant_update {
     my ($msg, $msg_hash) = @_;
