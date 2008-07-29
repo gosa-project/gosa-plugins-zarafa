@@ -71,7 +71,7 @@ END {}
 
 =item return 
 
-    ARRAYREF - array containing all functions 
+    \@events - ARRAYREF - array containing all functions 
 
 =back
 
