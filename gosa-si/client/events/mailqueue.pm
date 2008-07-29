@@ -57,15 +57,15 @@ END {}
 
 =item description 
 
-Reports all provided functions.
+    Reports all provided functions.
 
 =item parameter
 
-None.
+    None.
 
 =item return 
 
-ARRAYREF - array containing all functions 
+    \@events - ARRAYREF - array containing all functions 
 
 =back
 
@@ -85,17 +85,20 @@ sub get_events { return \@events; }
 
 =item description 
 
-Executes /usr/sbin/mailq, parse the informations and return them
+    Executes /usr/sbin/mailq, parse the informations and return them
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    None.
 
 =item return 
 
-STRING - GOsa-SI valid xml message
+    $out_msg - STRING - GOsa-SI valid xml message containing msg_id, msg_hold, msg_size, arrival_time, sender and recipient.
 
 =back
 
@@ -175,6 +178,7 @@ sub mailqueue_query {
 
 }
 
+
 ###############################################################################
 =over 
 
@@ -184,17 +188,20 @@ sub mailqueue_query {
 
 =item description 
 
-Executes '/usr/sbin/postsuper -h' and set mail to hold. 
+    Executes '/usr/sbin/postsuper -h' and set mail to hold. 
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    <msg_id> - STRING - postfix mail id
 
 =item return 
 
-Nothing.
+    Nothing.
 
 =back
 
@@ -262,13 +269,16 @@ sub mailqueue_hold {
 
 =item description 
 
-Executes '/usr/sbin/postsuper -H' and set mail to unhold. 
+    Executes '/usr/sbin/postsuper -H' and set mail to unhold. 
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    <msg_id> - STRING - postfix mail id
 
 =item return 
 
@@ -341,13 +351,16 @@ sub mailqueue_unhold {
 
 =item description 
 
-Executes '/usr/sbin/postsuper -r' and requeue the mail.
+    Executes '/usr/sbin/postsuper -r' and requeue the mail.
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    <msg_id> - STRING - postfix mail id
 
 =item return 
 
@@ -412,6 +425,7 @@ sub mailqueue_requeue {
     return;
 }
 
+
 ###############################################################################
 =over 
 
@@ -421,13 +435,16 @@ sub mailqueue_requeue {
 
 =item description 
 
-Executes '/usr/sbin/postsuper -d' and deletes mail from queue.
+    Executes '/usr/sbin/postsuper -d' and deletes mail from queue.
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    <msg_id> - STRING - postfix mail id
 
 =item return 
 
@@ -501,17 +518,20 @@ sub mailqueue_del {
 
 =item description 
 
-Executes 'postcat -q', parse the informations and return them. 
+    Executes 'postcat -q', parse the informations and return them. 
 
 =item parameter
 
-STRING - complete GOsa-si message
+    $msg - STRING - complete GOsa-si message
+    $msg_hash - HASHREF - content of GOsa-si message in a hash
 
-HASHREF - content of GOsa-si message in a hash
+=item GOsa-si message xml content
+
+    <msg_id> - STRING - postfix mail id
 
 =item return 
 
-STRING - GOsa-si valid xml message
+    $out_msg - STRING - GOsa-si valid xml message containing recipient, sender and subject.
 
 =back
 
