@@ -1,3 +1,29 @@
+
+=head1 NAME
+
+mailqueue.pm
+
+=head1 SYNOPSIS
+
+use GOSA::GosaSupportDaemon;
+
+=head1 DESCRIPTION
+
+This module contains all GOsa-SI-client processing instructions concerning the mailqueue in GOsa.
+
+=head1 VERSION
+
+Version 1.0
+
+=head1 AUTHOR
+
+Andreas Rettenberger <rettenberger at gonicus dot de>
+
+=head1 FUNCTIONS
+
+=cut
+
+
 package mailqueue;
 use Exporter;
 @ISA = qw(Exporter);
@@ -22,8 +48,61 @@ BEGIN {}
 END {}
 
 
+###############################################################################
+=over 
+
+=item B<get_events ()>
+
+=over
+
+=item description 
+
+Reports all provided functions.
+
+=item parameter
+
+None.
+
+=item return 
+
+ARRAYREF - array containing all functions 
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub get_events { return \@events; }
 
+
+###############################################################################
+=over 
+
+=item B<mailqueue_query ($$)>
+
+=over
+
+=item description 
+
+Executes /usr/sbin/mailq, parse the informations and return them
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+STRING - GOsa-SI valid xml message
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_query {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -96,6 +175,33 @@ sub mailqueue_query {
 
 }
 
+###############################################################################
+=over 
+
+=item B<mailqueue_hold ($$)>
+
+=over
+
+=item description 
+
+Executes '/usr/sbin/postsuper -h' and set mail to hold. 
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_hold {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -147,7 +253,33 @@ sub mailqueue_hold {
     return;
 }
 
+###############################################################################
+=over 
 
+=item B<mailqueue_unhold ($$)>
+
+=over
+
+=item description 
+
+Executes '/usr/sbin/postsuper -H' and set mail to unhold. 
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_unhold {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -200,6 +332,33 @@ sub mailqueue_unhold {
     return;
 }
 
+###############################################################################
+=over 
+
+=item B<mailqueue_requeue ($$)>
+
+=over
+
+=item description 
+
+Executes '/usr/sbin/postsuper -r' and requeue the mail.
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_requeue {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -253,6 +412,33 @@ sub mailqueue_requeue {
     return;
 }
 
+###############################################################################
+=over 
+
+=item B<mailqueue_del ($$)>
+
+=over
+
+=item description 
+
+Executes '/usr/sbin/postsuper -d' and deletes mail from queue.
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+Nothing.
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_del {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -306,6 +492,33 @@ sub mailqueue_del {
     return;
 }
 
+###############################################################################
+=over 
+
+=item B<mailqueue_header ($$)>
+
+=over
+
+=item description 
+
+Executes 'postcat -q', parse the informations and return them. 
+
+=item parameter
+
+STRING - complete GOsa-si message
+
+HASHREF - content of GOsa-si message in a hash
+
+=item return 
+
+STRING - GOsa-si valid xml message
+
+=back
+
+=back
+
+=cut
+###############################################################################
 sub mailqueue_header {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
