@@ -216,6 +216,7 @@ my $max_children = 2;
     "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
 "server" => {
+    "ip" => [\$server_ip, "0.0.0.0"],
     "port" => [\$server_port, "20081"],
     "known-clients"        => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
     "known-servers"        => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
@@ -924,7 +925,7 @@ sub send_msg_to_target {
     # opensocket
     my $socket = &open_socket($address);
     if( !$socket ) {
-        daemon_log("$session_id ERROR: cannot send ".$header."msg to $address , host not reachable", 1);
+        daemon_log("$session_id WARNING: cannot send ".$header."msg to $address , host not reachable", 3);
         $error++;
     }
     

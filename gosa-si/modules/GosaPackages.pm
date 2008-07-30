@@ -20,44 +20,20 @@ use lib "/usr/lib/gosa-si/server/GosaPackages";
 BEGIN{}
 END{}
 
-my ($server_ip, $server_port, $server_passwd, $max_clients);
-my ($gosa_ip, $gosa_mac_address, $gosa_port, $gosa_passwd, $network_interface);
-my ($job_queue_timeout, $job_queue_file_name);
-
-my %cfg_defaults = (
-"server" => {
-    "ip" => [\$server_ip, "0.0.0.0"],
-    "port" => [\$server_port, "20081"],
-    "key" => [\$server_passwd, ""],
-    "max-clients" => [\$max_clients, 100],
-    },
-"GOsaPackages" => {
-    "ip" => [\$gosa_ip, "0.0.0.0"],
-    "port" => [\$gosa_port, "20082"],
-    "key" => [\$gosa_passwd, "none"],
-    "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
-    },
-);
- 
+my $network_interface;
+my $gosa_mac_address;
 
 ## START ##########################
 
-# read configfile and import variables
-&read_configfile();
-$network_interface= &get_interface_for_ip($server_ip);
+$network_interface= &get_interface_for_ip($main::server_ip);
 $gosa_mac_address= &get_mac($network_interface);
 
 # complete addresses
-if( inet_aton($server_ip) ){ $server_ip = inet_ntoa(inet_aton($server_ip)); } 
-our $server_address = "$server_ip:$server_port";
-if( inet_aton($gosa_ip) ){ $gosa_ip = inet_ntoa(inet_aton($gosa_ip)); }
-$main::gosa_address = "$gosa_ip:$gosa_port";
-
-my $xml = new XML::Simple();
+if( inet_aton($main::server_ip) ){ $main::server_ip = inet_ntoa(inet_aton($main::server_ip)); } 
+$main::server_address = $main::server_ip.":".$main::server_port;
 
 # import local events
 my ($error, $result, $event_hash) = &import_events($event_dir);
-
 foreach my $log_line (@$result) {
     if ($log_line =~ / succeed: /) {
         &main::daemon_log("0 DEBUG: GosaPackages - $log_line", 7);
@@ -71,35 +47,9 @@ foreach my $log_line (@$result) {
 
 sub get_module_info {
     my @info = ($main::gosa_address,
-                $gosa_passwd,
+                $main::gosa_passwd,
                 );
     return \@info;
-}
-
-
-#===  FUNCTION  ================================================================
-#         NAME:  read_configfile
-#   PARAMETERS:  cfg_file - string -
-#      RETURNS:  nothing
-#  DESCRIPTION:  read cfg_file and set variables
-#===============================================================================
-sub read_configfile {
-    my $cfg;
-    if( defined( $main::cfg_file) && ( (-s $main::cfg_file) > 0 )) {
-        if( -r $main::cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $main::cfg_file );
-        } else {
-            print STDERR "Couldn't read config file!";
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-        }
-    }
 }
 
 
@@ -167,7 +117,7 @@ sub process_incoming_msg {
 
     foreach my $out_msg ( @msg_l ) {
         # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
-        $out_msg =~ s/<source>GOSA<\/source>/<source>$server_address<\/source>/g;
+        $out_msg =~ s/<source>GOSA<\/source>/<source>$main::server_address<\/source>/g;
         $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
         if (defined $out_msg){
             push(@out_msg_l, $out_msg);
@@ -268,7 +218,7 @@ sub process_job_msg {
         $error ++;
         $out_msg = "<xml>".
             "<header>answer</header>".
-            "<source>$server_address</source>".
+            "<source>$main::server_address</source>".
             "<target>GOSA</target>".
             "<answer1>1</answer1>".
             "<error_string>no mac address specified, neither in target-tag nor in macaddres-tag</error_string>".
@@ -320,7 +270,7 @@ sub process_job_msg {
         } else {
             &main::daemon_log("$session_id INFO: GosaPackages: $header job successfully added to job queue", 5);
         }
-        $out_msg = "<xml><header>answer</header><source>$server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
+        $out_msg = "<xml><header>answer</header><source>$main::server_address</source><target>GOSA</target><answer1>$res</answer1></xml>";
     }
     
     my @out_msg_l = ( $out_msg );
