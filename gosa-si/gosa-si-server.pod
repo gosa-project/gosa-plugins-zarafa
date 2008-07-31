@@ -1,0 +1,60 @@
+#
+#===============================================================================
+#
+#         FILE:  gosa-si-server.pod
+#
+#  DESCRIPTION:  
+#
+#       AUTHOR:   (), <>
+#      COMPANY:  
+#      CREATED:  31.07.2008 15:52:15 CEST
+#     REVISION:  ---
+#===============================================================================
+
+
+=head1 NAME
+
+gosa-si-server -Support infrastructure for GOsa
+
+=head1 SYNOPSIS
+
+    gosa-si-server [-hvf] [-c config]
+
+=head1 OPTIONS
+
+    -h        : print out this help message
+
+    -f        : foregroud, process will not be forked to background
+
+    -v*       : be verbose (multiple v's will increase verbosity)
+
+    -c <file> : configuration file, default F</etc/gosa-si/server.conf>
+
+    --no-arp  : starts script without connection to arp module
+
+
+=head1 DESCRIPTION
+
+gosa-si-server  belongs  to  the  support infrastructure of GOsa.  Several gosa-si-clients can connect to one gosa-si-server.  The server take care of the message forwarding from GOsa to si-clients.  At the client site each message is related to a working instruction which will be executed there.  Depending of the message an answer from the client to GOsa via the server is possible.  Additional to answers clients reporting events  or  information  to the server.  The server registers himself at other servers in network and shares his knowledge with them.  So messages to clients which are no registrated locally will be forward to the client corresponding server. The communication within the complete SI nework is realised by XML messages.
+
+
+=head1 BUGS 
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list <gosa-devel@oss.gonicus.de> or to <https://oss.gonicus.de/labs/gosa>
+
+
+=head1 LICENCE AND COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2008 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
+
+
+
