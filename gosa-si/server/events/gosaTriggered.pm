@@ -1,3 +1,10 @@
+## @file
+# @details A GOsa-SI event module containing all functions common used by GOsa
+# @brief Implementation of a GOsa-SI event module. 
+# @author Andreas Rettenberger <rettenberger@gonicus.de> 
+# @date 2008
+# @version 1.0
+
 package gosaTriggered;
 use Exporter;
 @ISA = qw(Exporter);
@@ -57,25 +64,32 @@ END {}
 
 ### Start ######################################################################
 
-#&main::read_configfile($main::cfg_file, %cfg_defaults);
-
+## @method get_events()
+# A brief function returning a list of functions which are exported by importing the module.
+# @return List of all provided functions
 sub get_events {
     return \@events;
 }
 
+## @method send_usr_msg($msg, $msg_hash, $session_id)
+# This function accepts usr messages from GOsa, split mulitple target messages to mulitiple single target messages and put all messages into messaging_db
+# @param msg - STRING - xml message
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
+# @return (out_msg)  - ARRAY - Array containing the answer message from client
 sub send_user_msg {
     my ($msg, $msg_hash, $session_id) = @_ ;
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
 
-    #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
+    #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);   # just for debugging
     my $subject = @{$msg_hash->{'subject'}}[0];
     my $from = @{$msg_hash->{'from'}}[0];
     my @users = exists $msg_hash->{'users'} ? @{$msg_hash->{'users'}} : () ;
 	my @groups = exists $msg_hash->{'groups'} ? @{$msg_hash->{'groups'}} : ();
     my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
-    #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
+    #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);   # just for debugging
     my $message = @{$msg_hash->{'message'}}[0];
     
     # keep job queue uptodate if necessary 
@@ -93,7 +107,7 @@ sub send_user_msg {
         return &create_xml_string(&create_xml_hash($header, $target, $source, $error_string));
     }
 
-    # add incoming message to messaging_db
+    # determine new message id
     my $new_msg_id = 1;
 	my $new_msg_id_sql = "SELECT MAX(CAST(id AS INTEGER)) FROM $main::messaging_tn";
     my $new_msg_id_res = $main::messaging_db->exec_statement($new_msg_id_sql);
@@ -107,6 +121,7 @@ sub send_user_msg {
 	@users = map(push(@receiver_l, "u_$_"), @users);
 	@groups = map(push(@receiver_l, "g_$_"), @groups);
 
+    # add incoming message to messaging_db
     my $func_dic = {table=>$main::messaging_tn,
         primkey=>[],
         id=>$new_msg_id,

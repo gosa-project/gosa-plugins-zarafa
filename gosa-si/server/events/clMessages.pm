@@ -1,3 +1,10 @@
+## @file
+# @brief Implementation of a GOsa-SI event module. 
+# @details A GOsa-SI event module containing all functions to handle incoming messages from clients.
+# @author Andreas Rettenberger <rettenberger@gonicus.de> 
+# @date 2008
+# @version 1.0
+
 package clMessages;
 use Exporter;
 @ISA = qw(Exporter);
@@ -31,22 +38,27 @@ END {}
 
 ### Start ######################################################################
 
-my $ldap_uri;
-my $ldap_base;
-my $ldap_admin_dn;
-my $ldap_admin_password;
+# labled for deleting: rettenbe 20080730
+#my $ldap_uri;
+#my $ldap_base;
+#my $ldap_admin_dn;
+#my $ldap_admin_password;
+#
+#my %cfg_defaults = (
+#"server" => {
+#   "ldap-uri" => [\$ldap_uri, ""],
+#   "ldap-base" => [\$ldap_base, ""],
+#   "ldap-admin-dn" => [\$ldap_admin_dn, ""],
+#   "ldap-admin-password" => [\$ldap_admin_password, ""],
+#   },
+#);
+#&read_configfile($main::cfg_file, %cfg_defaults);
+#
 
-my %cfg_defaults = (
-"server" => {
-   "ldap-uri" => [\$ldap_uri, ""],
-   "ldap-base" => [\$ldap_base, ""],
-   "ldap-admin-dn" => [\$ldap_admin_dn, ""],
-   "ldap-admin-password" => [\$ldap_admin_password, ""],
-   },
-);
-&read_configfile($main::cfg_file, %cfg_defaults);
 
-
+## @method get_events()
+# @details A brief function returning a list of functions which are exported by importing the module.
+# @return List of all provided functions
 sub get_events {
     return \@events;
 }
@@ -69,26 +81,26 @@ sub confirm_usr_msg {
 
 
 
-sub read_configfile {
-    my ($cfg_file, %cfg_defaults) = @_;
-    my $cfg;
-
-    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-        if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
-        } else {
-            &main::daemon_log("ERROR: clMessages.pm couldn't read config file!", 1);
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-        }
-    }
-}
+#sub read_configfile {
+#    my ($cfg_file, %cfg_defaults) = @_;
+#    my $cfg;
+#
+#    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
+#        if( -r $cfg_file ) {
+#            $cfg = Config::IniFiles->new( -file => $cfg_file );
+#        } else {
+#            &main::daemon_log("ERROR: clMessages.pm couldn't read config file!", 1);
+#        }
+#    } else {
+#        $cfg = Config::IniFiles->new() ;
+#    }
+#    foreach my $section (keys %cfg_defaults) {
+#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+#            my $pinfo = $cfg_defaults{ $section }{ $param };
+#            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
+#        }
+#    }
+#}
 
 
 sub save_fai_log {

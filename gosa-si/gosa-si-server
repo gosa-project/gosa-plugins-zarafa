@@ -84,7 +84,7 @@ my %repo_dirs=();
 our (%cfg_defaults, $log_file, $pid_file, 
     $server_ip, $server_port, $ClientPackages_key, 
     $arp_activ, $gosa_unit_tag,
-    $GosaPackages_key, $gosa_ip, $gosa_port, $gosa_timeout,
+    $GosaPackages_key, $gosa_timeout,
     $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
     $arp_enabled, $arp_interface,
@@ -238,8 +238,6 @@ my $max_children = 2;
     "wol-password"           => [\$wake_on_lan_passwd, ""],
     },
 "GOsaPackages" => {
-    "ip" => [\$gosa_ip, "0.0.0.0"],
-    "port" => [\$gosa_port, "20082"],
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],

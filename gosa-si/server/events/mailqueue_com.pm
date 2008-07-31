@@ -7,9 +7,7 @@ mailqueue_com - Implementation of a GOsa-SI event module.
 =head1 SYNOPSIS
 
  use GOSA::GosaSupportDaemon;
-
  use Time::HiRes qw(usleep);
-
  use MIME::Base64;
 
 =head1 DESCRIPTION
