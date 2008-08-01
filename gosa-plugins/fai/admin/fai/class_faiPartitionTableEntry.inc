@@ -419,9 +419,9 @@ class faiPartitionTableEntry extends plugin
                 break;
                 
         case 2:
-                if((!tests::is_id($tmp[0]))&&(!tests::is_id($tmp[1])) &&(!empty($tmp[1]))){
+                if( !tests::is_id($tmp[0]) && !tests::is_id($tmp[1]) && !empty($tmp[1]) ){
                   $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
-                }elseif($tmp[0]>=$tmp[1]){
+                }elseif(!empty($tmp[1]) && $tmp[0]>=$tmp[1]){
                   $message[]= msgPool::invalid(sprintf(_("partition %s size"),$key));
                 }
                 break;
