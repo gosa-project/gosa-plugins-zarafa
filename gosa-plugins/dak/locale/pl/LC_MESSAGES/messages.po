@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,19 +14,10 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 #, fuzzy
 msgid "Filter"
 msgstr "Filtry"
-
-#: addons/dak/dak_queue.tpl:11
-#, fuzzy
-msgid "Repositories"
-msgstr "Odtwórz"
 
 #: addons/dak/dak_keyring.tpl:11
 msgid "Server"
@@ -57,6 +48,11 @@ msgstr "Dodatki"
 msgid "DAK queue management"
 msgstr "Zarządzanie ACL"
 
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
+msgstr "Odtwórz"
+
 #: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
@@ -66,6 +62,11 @@ msgstr "Katalog"
 #, fuzzy
 msgid "DAK repository  management"
 msgstr "Katalog"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Błąd"
 
 #: addons/dak/class_dakkeyring.inc:114
 #, fuzzy
@@ -118,10 +119,9 @@ msgstr ""
 msgid "DAK keyring management"
 msgstr "Zarządzanie departamentem"
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
-msgstr "Błąd"
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "Opis"

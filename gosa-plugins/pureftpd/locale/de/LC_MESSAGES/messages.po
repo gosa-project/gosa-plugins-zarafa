@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-04-03 14:25+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -20,65 +20,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:6
-msgid "FTP account"
-msgstr "FTP Konto"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:17
-msgid "Bandwidth"
-msgstr "Bandbreite"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Upload bandwidth"
-msgstr "Upload-Bandbreite"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:26
-#: personal/connectivity/pureftpd/pureftpd.tpl:34
-msgid "kb/s"
-msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
-msgid "Download bandwidth"
-msgstr "Download-Bandbreite"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:45
-msgid "Quota"
-msgstr "Kontingent"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:49
-msgid "Files"
-msgstr "Dateien"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:57
-msgid "Size"
-msgstr "Größe"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:62
-msgid "MB"
-msgstr "MB"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:73
-msgid "Ratio"
-msgstr "Verhältnis"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:77
-msgid "Uploaded / downloaded files"
-msgstr "Hoch- / heruntergeladene Dateien"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:95
-msgid "Miscellaneous"
-msgstr "Verschiedenes"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:100
-msgid "Check to disable FTP Access"
-msgstr "Wählen Sie diese Option, um FTP-Zugriff zu deaktivieren"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:102
-msgid "Temporary disable FTP access"
-msgstr "Temporäres Abschalten des FTP-Zugriffs"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
 msgid "FTP"
@@ -92,6 +33,16 @@ msgstr "Dies tut etwas"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:241
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Upload-Bandbreite"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Download-Bandbreite"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 msgid "Quota file"
@@ -146,3 +97,52 @@ msgstr "Download-Bandbreite"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "Status"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "FTP Konto"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "Bandbreite"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "kb/s"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Kontingent"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "Dateien"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "Größe"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "MB"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "Verhältnis"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "Hoch- / heruntergeladene Dateien"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "Verschiedenes"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "Wählen Sie diese Option, um FTP-Zugriff zu deaktivieren"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "Temporäres Abschalten des FTP-Zugriffs"

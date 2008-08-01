@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -57,77 +57,73 @@ msgstr "Nagios instellingen"
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/nagios/class_nagiosAccount.inc:285
-#, fuzzy
-msgid "Pager number"
-msgstr "Telefoonnummer"
-
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "E-mail adres"
 
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
-msgid "Host notification commands"
-msgstr "Host notificatie commando's"
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:27
+msgid "Host notification period"
+msgstr "Host notificatie periode"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:40
+msgid "Service notification period"
+msgstr "Service notificatie periode"
+
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "Host notificatie opties"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
-msgid "Host notification period"
-msgstr "Host notificatie periode"
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:53
+msgid "Service notification options"
+msgstr "Service notificatie opties"
+
+#: personal/nagios/class_nagiosAccount.inc:290
+#, fuzzy
+msgid "Pager number"
+msgstr "Telefoonnummer"
 
 #: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "Service notificatie commando's"
 
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
-msgid "Service notification options"
-msgstr "Service notificatie opties"
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:100
+msgid "Host notification commands"
+msgstr "Host notificatie commando's"
 
-#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
-msgid "Service notification period"
-msgstr "Service notificatie periode"
+#: personal/nagios/class_nagiosAccount.inc:294
+#, fuzzy
+msgid "View system informations"
+msgstr "systeem informatie bekijken"
+
+#: personal/nagios/class_nagiosAccount.inc:295
+#, fuzzy
+msgid "View configuration information"
+msgstr "configuratie informatie bekijken"
 
 #: personal/nagios/class_nagiosAccount.inc:296
 #, fuzzy
-msgid "View all hosts"
-msgstr "alle hosts bekijken"
+msgid "Trigger system commands"
+msgstr "systeem commando's activeren"
 
 #: personal/nagios/class_nagiosAccount.inc:297
 #, fuzzy
 msgid "View all services"
 msgstr "alle services bekijken"
 
+#: personal/nagios/class_nagiosAccount.inc:298
+#, fuzzy
+msgid "View all hosts"
+msgstr "alle hosts bekijken"
+
 #: personal/nagios/class_nagiosAccount.inc:299
 #, fuzzy
-msgid "Trigger system commands"
-msgstr "systeem commando's activeren"
+msgid "Trigger all service commands"
+msgstr "alle service commando's activeren"
 
 #: personal/nagios/class_nagiosAccount.inc:300
 #, fuzzy
 msgid "Trigger all host commands"
 msgstr "alle host commando's activeren"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-#, fuzzy
-msgid "Trigger all service commands"
-msgstr "alle service commando's activeren"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-#, fuzzy
-msgid "View configuration information"
-msgstr "configuratie informatie bekijken"
-
-#: personal/nagios/class_nagiosAccount.inc:304
-#, fuzzy
-msgid "View system informations"
-msgstr "systeem informatie bekijken"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Nagios instellingen"
 
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
@@ -168,6 +164,10 @@ msgstr "alle service commando's activeren"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "alle host commando's activeren"
+
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Nagios instellingen"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "Dit account heeft nagios mogelijkheden uitgeschakeld."

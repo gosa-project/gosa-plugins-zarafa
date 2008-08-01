@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-06-08 15:33+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -50,69 +50,65 @@ msgstr "Paramètres Nagios"
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/nagios/class_nagiosAccount.inc:285
-msgid "Pager number"
-msgstr "Numéro de bip"
-
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "Adresse de messagerie"
 
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
-msgid "Host notification commands"
-msgstr "Commandes pour la notification des systèmes"
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:27
+msgid "Host notification period"
+msgstr "Période de notification pour les systèmes"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:40
+msgid "Service notification period"
+msgstr "Période de notification pour les services"
+
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "Options pour la notification des systèmes"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
-msgid "Host notification period"
-msgstr "Période de notification pour les systèmes"
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:53
+msgid "Service notification options"
+msgstr "Options pour la période de notification pour les services"
+
+#: personal/nagios/class_nagiosAccount.inc:290
+msgid "Pager number"
+msgstr "Numéro de bip"
 
 #: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "Commandes pour la notification des services"
 
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
-msgid "Service notification options"
-msgstr "Options pour la période de notification pour les services"
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:100
+msgid "Host notification commands"
+msgstr "Commandes pour la notification des systèmes"
 
-#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
-msgid "Service notification period"
-msgstr "Période de notification pour les services"
+#: personal/nagios/class_nagiosAccount.inc:294
+msgid "View system informations"
+msgstr "Voir les informations sur le système"
+
+#: personal/nagios/class_nagiosAccount.inc:295
+msgid "View configuration information"
+msgstr "Voir les informations de configuration"
 
 #: personal/nagios/class_nagiosAccount.inc:296
-msgid "View all hosts"
-msgstr "Voir tout les hôtes"
+msgid "Trigger system commands"
+msgstr "Permettre les commandes systèmes"
 
 #: personal/nagios/class_nagiosAccount.inc:297
 msgid "View all services"
 msgstr "Voir tout les services"
 
+#: personal/nagios/class_nagiosAccount.inc:298
+msgid "View all hosts"
+msgstr "Voir tout les hôtes"
+
 #: personal/nagios/class_nagiosAccount.inc:299
-msgid "Trigger system commands"
-msgstr "Permettre les commandes systèmes"
+msgid "Trigger all service commands"
+msgstr "Permettre les commandes sur tout les services"
 
 #: personal/nagios/class_nagiosAccount.inc:300
 msgid "Trigger all host commands"
 msgstr "Permettre les commandes sur tout les hôtes"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-msgid "Trigger all service commands"
-msgstr "Permettre les commandes sur tout les services"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-msgid "View configuration information"
-msgstr "Voir les informations de configuration"
-
-#: personal/nagios/class_nagiosAccount.inc:304
-msgid "View system informations"
-msgstr "Voir les informations sur le système"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Paramètres Nagios"
 
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
@@ -153,3 +149,7 @@ msgstr "Permettre les commandes sur tout les services"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "permettre les commandes sur tout les hôtes"
+
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Paramètres Nagios"

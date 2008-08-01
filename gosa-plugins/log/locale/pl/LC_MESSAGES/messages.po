@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,163 +14,46 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "Podgląd logu systemowego"
-
-#: addons/logview/contents.tpl:2 addons/logview/gosa_log_contents.tpl:2
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
 msgid "Filter"
 msgstr "Filtr"
 
-#: addons/logview/contents.tpl:11 addons/logview/gosa_log_contents.tpl:11
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
 msgid "Show hosts"
 msgstr "Pokaż hosty"
-
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Poziom logu"
-
-#: addons/logview/contents.tpl:38 addons/logview/gosa_log_contents.tpl:38
-msgid "Time interval"
-msgstr "Interwał czasowy"
-
-#: addons/logview/contents.tpl:47 addons/logview/gosa_log_contents.tpl:47
-msgid "Search for"
-msgstr "Szukaj dla"
-
-#: addons/logview/contents.tpl:48 addons/logview/gosa_log_contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Proszę podać szukany ciąg znaków"
-
-#: addons/logview/contents.tpl:60 addons/logview/gosa_log_contents.tpl:60
-msgid "Ruleset"
-msgstr "Reguły"
-
-#: addons/logview/contents.tpl:62 addons/logview/gosa_log_contents.tpl:62
-msgid "Edit"
-msgstr "Edytuj"
-
-#: addons/logview/contents.tpl:68 addons/logview/gosa_log_contents.tpl:68
-msgid "Search"
-msgstr "Szukaj"
-
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Poziom"
-
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Nazwa hosta"
-
-#: addons/logview/contents.tpl:84 addons/logview/gosa_log_contents.tpl:83
-msgid "Date"
-msgstr "Data"
-
-#: addons/logview/contents.tpl:85 addons/logview/gosa_log_contents.tpl:87
-msgid "Message"
-msgstr "Wiadomość"
-
-#: addons/logview/contents.tpl:97 addons/logview/gosa_log_contents.tpl:99
-msgid "Search returned no results..."
-msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:417
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "Logi systemowe"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-msgid "This does something"
-msgstr "To robi coś"
-
-#: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, fuzzy
-msgid "Configuration error"
-msgstr "Plik konfiguracyjny"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Rozszerzenie inwentarza"
-
-#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
-#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
-#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
-#: addons/logview/class_logview.inc:276 addons/logview/class_logview.inc:293
-#: addons/logview/class_gosa_logview.inc:148
-#: addons/logview/class_gosa_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:234
-#: addons/logview/class_gosa_logview.inc:284
-msgid "Error"
-msgstr "Błąd"
-
-#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
-#: addons/logview/class_gosa_logview.inc:166
-#: addons/logview/class_gosa_logview.inc:181
-msgid "All"
-msgstr "Wszystkie"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "jedna godzina"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 godzin"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 godzin"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 godziny"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 dni"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "jeden tydzień"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 tygodnie"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "jeden miesiąc"
-
-#: addons/logview/class_logview.inc:411
-#, fuzzy
-msgid "Log view"
-msgstr "Usługa logowania"
-
-#: addons/logview/class_logview.inc:412
-#, fuzzy
-msgid "Log view addon"
-msgstr "Przesuń w dół"
 
 #: addons/logview/gosa_log_contents.tpl:20
 #: addons/logview/gosa_log_contents.tpl:82
 msgid "Action"
 msgstr "Akcja"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "Interwał czasowy"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "Szukaj dla"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Proszę podać szukany ciąg znaków"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "Reguły"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "Edytuj"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "Szukaj"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "Data"
 
 #: addons/logview/gosa_log_contents.tpl:84
 #: admin/systems/services/log/class_gosaLogServer.inc:68
@@ -187,12 +70,129 @@ msgstr "Nazwa obiektu"
 msgid "Object"
 msgstr "Obiekt"
 
-#: addons/logview/class_gosa_logview.inc:200
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "Wiadomość"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
+
+#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
+#: addons/logview/class_gosa_logview.inc:6
+msgid "System logs"
+msgstr "Logi systemowe"
+
+#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+msgid "This does something"
+msgstr "To robi coś"
+
+#: addons/logview/class_logview.inc:79
+#: addons/logview/class_gosa_logview.inc:118
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+#, fuzzy
+msgid "Configuration error"
+msgstr "Plik konfiguracyjny"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+#, fuzzy, php-format
+msgid "Missing %s PHP extension!"
+msgstr "Rozszerzenie inwentarza"
+
+#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
+#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
+#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
+#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
+#: addons/logview/class_gosa_logview.inc:149
+#: addons/logview/class_gosa_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:235
+#: addons/logview/class_gosa_logview.inc:286
+msgid "Error"
+msgstr "Błąd"
+
+#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
+#: addons/logview/class_gosa_logview.inc:167
+#: addons/logview/class_gosa_logview.inc:182
+msgid "All"
+msgstr "Wszystkie"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "one hour"
+msgstr "jedna godzina"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "6 hours"
+msgstr "6 godzin"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "12 hours"
+msgstr "12 godzin"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "24 hours"
+msgstr "24 godziny"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "2 days"
+msgstr "2 dni"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "one week"
+msgstr "jeden tydzień"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "2 weeks"
+msgstr "2 tygodnie"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "one month"
+msgstr "jeden miesiąc"
+
+#: addons/logview/class_logview.inc:412
+#, fuzzy
+msgid "Log view"
+msgstr "Usługa logowania"
+
+#: addons/logview/class_logview.inc:413
+#, fuzzy
+msgid "Log view addon"
+msgstr "Przesuń w dół"
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "Poziom logu"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "Poziom"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "Nazwa hosta"
+
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "Podgląd logu systemowego"
+
+#: addons/logview/class_gosa_logview.inc:201
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "Brak uprawnień do usunięcia tej bloklisty."
 
-#: addons/logview/class_gosa_logview.inc:235
+#: addons/logview/class_gosa_logview.inc:236
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""

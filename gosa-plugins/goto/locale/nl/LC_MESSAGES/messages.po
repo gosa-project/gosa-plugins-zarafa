@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:07+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -1038,8 +1038,8 @@ msgstr "Selecteer een objectgroep"
 #: admin/systems/goto/class_terminalGeneric.inc:651
 #: admin/systems/goto/class_workstationGeneric.inc:705
 #: admin/systems/goto/class_printGeneric.inc:930
-#: admin/systems/services/ldap/class_goLdapServer.inc:67
-#: admin/systems/services/ldap/class_goLdapServer.inc:70
+#: admin/systems/services/ldap/class_goLdapServer.inc:77
+#: admin/systems/services/ldap/class_goLdapServer.inc:80
 #: admin/applications/class_applicationGeneric.inc:604
 #: admin/applications/generic.tpl:42
 #: admin/applications/class_divListApplication.inc:90
@@ -2910,7 +2910,7 @@ msgstr "Tijd Service"
 #: admin/systems/services/syslog/class_goLogDBServer.inc:89
 #: admin/systems/services/syslog/class_goSyslogServer.inc:69
 #: admin/systems/services/shares/class_goShareServer.inc:390
-#: admin/systems/services/ldap/class_goLdapServer.inc:89
+#: admin/systems/services/ldap/class_goLdapServer.inc:99
 msgid "Services"
 msgstr "Services"
 
@@ -3092,18 +3092,22 @@ msgid "Charset"
 msgstr "Chipset"
 
 #: admin/systems/services/ldap/class_goLdapServer.inc:29
-#: admin/systems/services/ldap/class_goLdapServer.inc:56
+#: admin/systems/services/ldap/class_goLdapServer.inc:66
 #: admin/systems/services/ldap/goLdapServer.tpl:1
 #, fuzzy
 msgid "LDAP service"
 msgstr "LDAP Service"
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:88
-#: admin/systems/services/ldap/class_goLdapServer.inc:89
+#: admin/systems/services/ldap/class_goLdapServer.inc:34
+msgid "fill-in-your-servers-dns-name"
+msgstr ""
+
+#: admin/systems/services/ldap/class_goLdapServer.inc:98
+#: admin/systems/services/ldap/class_goLdapServer.inc:99
 msgid "Ldap"
 msgstr ""
 
-#: admin/systems/services/ldap/class_goLdapServer.inc:97
+#: admin/systems/services/ldap/class_goLdapServer.inc:107
 #, fuzzy
 msgid "Ldap base"
 msgstr "Ldap server"

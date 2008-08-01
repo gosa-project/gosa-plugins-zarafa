@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,8 +14,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
+msgid "WebDAV account"
+msgstr "Учетная запись WebDAV"
+
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:159
+#: personal/connectivity/webdav/class_webdavAccount.inc:166
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -23,23 +28,18 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "Что-то будет"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:84
-#: personal/connectivity/webdav/class_webdavAccount.inc:140
+#: personal/connectivity/webdav/class_webdavAccount.inc:91
+#: personal/connectivity/webdav/class_webdavAccount.inc:147
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-#: personal/connectivity/webdav/webdav.tpl:5
-msgid "WebDAV account"
-msgstr "Учетная запись WebDAV"
-
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Подключение"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:164
+#: personal/connectivity/webdav/class_webdavAccount.inc:171
 msgid "My account"
 msgstr "Моя учетная запись"
 

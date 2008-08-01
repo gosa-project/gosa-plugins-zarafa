@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
+msgid "PHPscheduleit account"
+msgstr "PHPscheduleit 账号"
 
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:27
 msgid "PHPscheduleit"
@@ -49,10 +53,6 @@ msgstr "互联"
 #: personal/connectivity/phpscheduleit/class_phpscheduleitAccount.inc:168
 msgid "My account"
 msgstr "我的账号"
-
-#: personal/connectivity/phpscheduleit/phpscheduleit.tpl:3
-msgid "PHPscheduleit account"
-msgstr "PHPscheduleit 账号"
 
 #, fuzzy
 #~ msgid "Removing of user/PHPscheduleit account with dn '%s' failed."

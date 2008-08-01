@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-04-03 15:59+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/squid/proxy.tpl:37
-#: personal/connectivity/squid/class_proxyAccount.inc:323
+#: personal/connectivity/squid/class_proxyAccount.inc:331
 msgid "Proxy account"
 msgstr "Proxy Konto"
 
@@ -37,7 +37,7 @@ msgid "Limit proxy access to working time"
 msgstr "Inhaltsfilterung nur während der Arbeitszeit"
 
 #: personal/connectivity/squid/proxy.tpl:100
-#: personal/connectivity/squid/class_proxyAccount.inc:334
+#: personal/connectivity/squid/class_proxyAccount.inc:342
 msgid "Restrict proxy usage by quota"
 msgstr "Proxynutzung durch Kontingent einschränken"
 
@@ -46,7 +46,7 @@ msgid "per"
 msgstr "pro"
 
 #: personal/connectivity/squid/class_proxyAccount.inc:5
-#: personal/connectivity/squid/class_proxyAccount.inc:322
+#: personal/connectivity/squid/class_proxyAccount.inc:330
 msgid "Proxy"
 msgstr "Proxy"
 
@@ -82,28 +82,28 @@ msgstr "Woche"
 msgid "month"
 msgstr "Monat"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:175
-#: personal/connectivity/squid/class_proxyAccount.inc:301
+#: personal/connectivity/squid/class_proxyAccount.inc:183
+#: personal/connectivity/squid/class_proxyAccount.inc:309
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:196
-#: personal/connectivity/squid/class_proxyAccount.inc:198
+#: personal/connectivity/squid/class_proxyAccount.inc:204
+#: personal/connectivity/squid/class_proxyAccount.inc:206
 msgid "Quota Setting"
 msgstr "Kontingent-Einstellung"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:323
+#: personal/connectivity/squid/class_proxyAccount.inc:331
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:327
+#: personal/connectivity/squid/class_proxyAccount.inc:335
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:332
+#: personal/connectivity/squid/class_proxyAccount.inc:340
 msgid "Filter unwanted content"
 msgstr "Filtere ungewünschten Inhalt"
 
-#: personal/connectivity/squid/class_proxyAccount.inc:333
+#: personal/connectivity/squid/class_proxyAccount.inc:341
 msgid "Limit proxy access"
 msgstr "Beschränke Proxy-Zugriff"

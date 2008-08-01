@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -55,77 +55,73 @@ msgstr "Nagios 设置"
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/nagios/class_nagiosAccount.inc:285
-#, fuzzy
-msgid "Pager number"
-msgstr "电话号码"
-
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:17
+#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:17
 msgid "Mail address"
 msgstr "邮件地址"
 
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:100
-msgid "Host notification commands"
-msgstr "主机通知命令"
+#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:27
+msgid "Host notification period"
+msgstr "主机通知周期"
 
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:66
+#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:40
+msgid "Service notification period"
+msgstr "服务通知周期"
+
+#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:66
 msgid "Host notification options"
 msgstr "主机通知选项"
 
-#: personal/nagios/class_nagiosAccount.inc:290 personal/nagios/nagios.tpl:27
-msgid "Host notification period"
-msgstr "主机通知周期"
+#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:53
+msgid "Service notification options"
+msgstr "服务通知选项"
+
+#: personal/nagios/class_nagiosAccount.inc:290
+#, fuzzy
+msgid "Pager number"
+msgstr "电话号码"
 
 #: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
 msgstr "服务通知命令"
 
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:53
-msgid "Service notification options"
-msgstr "服务通知选项"
+#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:100
+msgid "Host notification commands"
+msgstr "主机通知命令"
 
-#: personal/nagios/class_nagiosAccount.inc:294 personal/nagios/nagios.tpl:40
-msgid "Service notification period"
-msgstr "服务通知周期"
+#: personal/nagios/class_nagiosAccount.inc:294
+#, fuzzy
+msgid "View system informations"
+msgstr "查看系统信息"
+
+#: personal/nagios/class_nagiosAccount.inc:295
+#, fuzzy
+msgid "View configuration information"
+msgstr "查看配置信息"
 
 #: personal/nagios/class_nagiosAccount.inc:296
 #, fuzzy
-msgid "View all hosts"
-msgstr "查看所有主机"
+msgid "Trigger system commands"
+msgstr "触发系统命令"
 
 #: personal/nagios/class_nagiosAccount.inc:297
 #, fuzzy
 msgid "View all services"
 msgstr "查看所有服务"
 
+#: personal/nagios/class_nagiosAccount.inc:298
+#, fuzzy
+msgid "View all hosts"
+msgstr "查看所有主机"
+
 #: personal/nagios/class_nagiosAccount.inc:299
 #, fuzzy
-msgid "Trigger system commands"
-msgstr "触发系统命令"
+msgid "Trigger all service commands"
+msgstr "触发所有服务命令"
 
 #: personal/nagios/class_nagiosAccount.inc:300
 #, fuzzy
 msgid "Trigger all host commands"
 msgstr "触发所有主机命令"
-
-#: personal/nagios/class_nagiosAccount.inc:301
-#, fuzzy
-msgid "Trigger all service commands"
-msgstr "触发所有服务命令"
-
-#: personal/nagios/class_nagiosAccount.inc:303
-#, fuzzy
-msgid "View configuration information"
-msgstr "查看配置信息"
-
-#: personal/nagios/class_nagiosAccount.inc:304
-#, fuzzy
-msgid "View system informations"
-msgstr "查看系统信息"
-
-#: personal/nagios/main.inc:125
-msgid "Nagios settings"
-msgstr "Nagios 设置"
 
 #: personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
@@ -166,6 +162,10 @@ msgstr "触发所有服务命令"
 #: personal/nagios/nagios.tpl:175
 msgid "trigger all host commands"
 msgstr "触发所有主机命令"
+
+#: personal/nagios/main.inc:125
+msgid "Nagios settings"
+msgstr "Nagios 设置"
 
 #~ msgid "This account has no nagios extensions."
 #~ msgstr "这个账户尚未包含 nagios 扩展。 "

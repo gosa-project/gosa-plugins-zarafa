@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,25 +16,171 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/sudo/trust_machines.tpl:6
-msgid "Select systems to add"
-msgstr "选择要添加的系统"
+#: admin/sudo/class_target_list_systems.inc:50
+msgid "Select the target objects for your scheduled action."
+msgstr ""
 
-#: admin/sudo/trust_machines.tpl:26
-msgid "Display systems of department"
-msgstr "显示部门的系统"
+#: admin/sudo/class_target_list_systems.inc:51
+#: admin/sudo/class_target_list_systems.inc:52
+msgid "Available systems"
+msgstr ""
 
-#: admin/sudo/trust_machines.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "选择一个部门来做查询"
+#: admin/sudo/class_target_list_systems.inc:61
+#: admin/sudo/class_target_list_users.inc:58
+msgid "Object name"
+msgstr "对象名称"
 
-#: admin/sudo/trust_machines.tpl:30
-msgid "Display systems matching"
-msgstr "显示匹配的系统"
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Select to see terminals"
+msgstr "选择查看终端"
 
-#: admin/sudo/trust_machines.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "匹配地址的正则表达式"
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Show terminals"
+msgstr "显示终端"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Select to see servers"
+msgstr "选择显示服务器"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Show servers"
+msgstr "显示服务器"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Select to see workstations"
+msgstr "选择查看工作站"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Show workstations"
+msgstr "显示工作站"
+
+#: admin/sudo/class_target_list_systems.inc:73
+#: admin/sudo/class_target_list_users.inc:70
+msgid "Regular expression for matching group names"
+msgstr "用于匹配组名的正则表达式"
+
+#: admin/sudo/class_target_list_systems.inc:140
+#: admin/sudo/class_target_list_users.inc:137
+msgid "Base"
+msgstr "位置"
+
+#: admin/sudo/class_target_list_systems.inc:142
+#: admin/sudo/class_target_list_users.inc:139
+msgid "Submit"
+msgstr "提交"
+
+#: admin/sudo/class_target_list_systems.inc:183
+msgid "Server"
+msgstr "服务器"
+
+#: admin/sudo/class_target_list_systems.inc:185
+msgid "Workstation"
+msgstr "工作站"
+
+#: admin/sudo/class_target_list_systems.inc:187
+msgid "Terminal"
+msgstr "终端"
+
+#: admin/sudo/class_sudoOption.inc:154
+msgid "Unknown option"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:155
+#, php-format
+msgid "The sudo option '%s' is invalid!"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
+#, fuzzy
+msgid "string"
+msgstr "警告"
+
+#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
+#: admin/sudo/class_sudoOption.inc:280
+msgid "bool"
+msgstr ""
+
+#: admin/sudo/class_sudoOption.inc:279
+#, fuzzy
+msgid "integer"
+msgstr "打印机"
+
+#: admin/sudo/class_sudoOption.inc:280
+msgid "list"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
+#, fuzzy
+msgid "List of sudo roles"
+msgstr "用户列表"
+
+#: admin/sudo/class_divListSudo.inc:72
+#, fuzzy
+msgid "Select all"
+msgstr "选择"
+
+#: admin/sudo/class_divListSudo.inc:78 admin/sudo/class_sudoGeneric.inc:565
+#: admin/sudo/class_sudoGeneric.inc:570 admin/sudo/class_sudoGeneric.inc:575
+#: admin/sudo/class_sudoGeneric.inc:584 admin/sudo/class_sudoGeneric.inc:687
+#: admin/sudo/paste_generic.tpl:5 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34
+msgid "Name"
+msgstr "名称"
+
+#: admin/sudo/class_divListSudo.inc:78
+msgid "Department"
+msgstr "部门"
+
+#: admin/sudo/class_divListSudo.inc:79 admin/sudo/class_divListSudo.inc:105
+msgid "Actions"
+msgstr "动作"
+
+#: admin/sudo/class_divListSudo.inc:83
+#, fuzzy
+msgid "Regular expression for matching role names"
+msgstr "用于匹配组名的正则表达式"
+
+#: admin/sudo/class_divListSudo.inc:85
+#, fuzzy
+msgid "Regular expression for matching role member names"
+msgstr "匹配对象名的正则表达式"
+
+#: admin/sudo/class_divListSudo.inc:107
+msgid "Create"
+msgstr "创建"
+
+#: admin/sudo/class_divListSudo.inc:111
+msgid "Role"
+msgstr "角色"
+
+#: admin/sudo/class_divListSudo.inc:112
+msgid "Default"
+msgstr ""
+
+#: admin/sudo/class_divListSudo.inc:119
+msgid "Remove"
+msgstr "删除"
+
+#: admin/sudo/class_divListSudo.inc:171
+msgid "Edit this entry"
+msgstr "编辑这条记录"
+
+#: admin/sudo/class_divListSudo.inc:178
+msgid "Delete this entry"
+msgstr "删除这个条目"
+
+#: admin/sudo/class_divListSudo.inc:220
+#, fuzzy
+msgid "Number of listed roles"
+msgstr "组名称"
+
+#: admin/sudo/remove.tpl:2
+msgid "Warning"
+msgstr "警告"
+
+#: admin/sudo/remove.tpl:9
+msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
 
 #: admin/sudo/class_sudoManagement.inc:31
 msgid "Sudo roles"
@@ -45,26 +191,86 @@ msgstr ""
 msgid "Manage sudo roles"
 msgstr "域用户"
 
-#: admin/sudo/class_sudoManagement.inc:245
+#: admin/sudo/class_sudoManagement.inc:246
 #, fuzzy
 msgid "Permission"
 msgstr "允许"
 
-#: admin/sudo/class_sudoManagement.inc:260
+#: admin/sudo/class_sudoManagement.inc:261
 #: admin/sudo/class_sudoGeneric.inc:679 admin/sudo/class_sudoGeneric.inc:684
 #, fuzzy
 msgid "Sudo role"
 msgstr "! 未知 id"
 
-#: admin/sudo/class_sudoManagement.inc:293
+#: admin/sudo/class_sudoManagement.inc:294
 #, fuzzy
 msgid "Permission error"
 msgstr "允许"
 
-#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
+#: admin/sudo/class_sudoGeneric.inc:313
+msgid "Error"
+msgstr "错误"
+
+#: admin/sudo/class_sudoGeneric.inc:355
+msgid "disabled"
+msgstr "禁用"
+
+#: admin/sudo/class_sudoGeneric.inc:356
+msgid "full access"
+msgstr "完全访问权限"
+
+#: admin/sudo/class_sudoGeneric.inc:357
+msgid "allow access to these hosts"
+msgstr "允许访问这些主机"
+
+#: admin/sudo/class_sudoGeneric.inc:402
+#: admin/sudo/class_target_list_users.inc:177
+msgid "User"
+msgstr "用户"
+
+#: admin/sudo/class_sudoGeneric.inc:403
+#: admin/sudo/class_target_list_users.inc:178
+msgid "Group"
+msgstr "组"
+
+#: admin/sudo/class_sudoGeneric.inc:551
 #, fuzzy
-msgid "Sudo role administration"
-msgstr "组管理"
+msgid "LDAP error"
+msgstr "LDAP 错误:"
+
+#: admin/sudo/class_sudoGeneric.inc:678
+#, fuzzy
+msgid "Sudo"
+msgstr "姓"
+
+#: admin/sudo/class_sudoGeneric.inc:688 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44
+msgid "Description"
+msgstr "描述"
+
+#: admin/sudo/class_sudoGeneric.inc:689
+msgid "Users"
+msgstr "用户"
+
+#: admin/sudo/class_sudoGeneric.inc:690
+#, fuzzy
+msgid "Host"
+msgstr "钩子"
+
+#: admin/sudo/class_sudoGeneric.inc:691
+#, fuzzy
+msgid "Command"
+msgstr "和"
+
+#: admin/sudo/class_sudoGeneric.inc:692
+#, fuzzy
+msgid "Run as user"
+msgstr "域用户"
+
+#: admin/sudo/class_sudoGeneric.inc:693
+#, fuzzy
+msgid "Access control list"
+msgstr "访问选项"
 
 #: admin/sudo/options.tpl:5
 msgid "Option name"
@@ -83,35 +289,14 @@ msgstr "选项"
 msgid "Available options"
 msgstr "可用的应用程序"
 
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr "警告"
-
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-
-#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
-#: admin/sudo/paste_generic.tpl:1
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
+#: admin/sudo/generic.tpl:30
 msgid "Generic"
 msgstr "通用配置"
 
-#: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
+#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
 msgid "global defaults"
 msgstr ""
-
-#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/class_divListSudo.inc:82 admin/sudo/paste_generic.tpl:5
-#: admin/sudo/class_sudoGeneric.inc:565 admin/sudo/class_sudoGeneric.inc:570
-#: admin/sudo/class_sudoGeneric.inc:575 admin/sudo/class_sudoGeneric.inc:584
-#: admin/sudo/class_sudoGeneric.inc:687
-msgid "Name"
-msgstr "名称"
-
-#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
-#: admin/sudo/class_sudoGeneric.inc:688
-msgid "Description"
-msgstr "描述"
 
 #: admin/sudo/generic.tpl:55
 msgid "System trust"
@@ -142,241 +327,56 @@ msgstr ""
 msgid "Run as"
 msgstr ""
 
-#: admin/sudo/class_sudoOption.inc:154
-msgid "Unknown option"
-msgstr ""
-
-#: admin/sudo/class_sudoOption.inc:155
-#, php-format
-msgid "The sudo option '%s' is invalid!"
-msgstr ""
-
-#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
+#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 #, fuzzy
-msgid "string"
-msgstr "警告"
+msgid "Sudo role administration"
+msgstr "组管理"
 
-#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
-#: admin/sudo/class_sudoOption.inc:280
-msgid "bool"
-msgstr ""
-
-#: admin/sudo/class_sudoOption.inc:279
-#, fuzzy
-msgid "integer"
-msgstr "打印机"
-
-#: admin/sudo/class_sudoOption.inc:280
-msgid "list"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:50
+#: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:51
-#: admin/sudo/class_target_list_users.inc:52
+#: admin/sudo/class_target_list_users.inc:48
+#: admin/sudo/class_target_list_users.inc:49
 msgid "Available members"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:61
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Object name"
-msgstr "对象名称"
-
-#: admin/sudo/class_target_list_users.inc:63
+#: admin/sudo/class_target_list_users.inc:60
 msgid "Select to see users"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:63
+#: admin/sudo/class_target_list_users.inc:60
 msgid "Show users"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:64
+#: admin/sudo/class_target_list_users.inc:61
 msgid "Select to see groups"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:64
+#: admin/sudo/class_target_list_users.inc:61
 msgid "Show groups"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:73
-#: admin/sudo/class_target_list_systems.inc:76
-msgid "Regular expression for matching group names"
-msgstr "用于匹配组名的正则表达式"
-
-#: admin/sudo/class_target_list_users.inc:140
-#: admin/sudo/class_target_list_systems.inc:143
-msgid "Base"
-msgstr "位置"
-
-#: admin/sudo/class_target_list_users.inc:142
+#: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
 msgstr "应用"
 
-#: admin/sudo/class_target_list_users.inc:142
-#: admin/sudo/class_target_list_systems.inc:145
-msgid "Submit"
-msgstr "提交"
+#: admin/sudo/trust_machines.tpl:6
+msgid "Select systems to add"
+msgstr "选择要添加的系统"
 
-#: admin/sudo/class_target_list_users.inc:180
-#: admin/sudo/class_sudoGeneric.inc:402
-msgid "User"
-msgstr "用户"
+#: admin/sudo/trust_machines.tpl:26
+msgid "Display systems of department"
+msgstr "显示部门的系统"
 
-#: admin/sudo/class_target_list_users.inc:181
-#: admin/sudo/class_sudoGeneric.inc:403
-msgid "Group"
-msgstr "组"
+#: admin/sudo/trust_machines.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr "选择一个部门来做查询"
 
-#: admin/sudo/class_target_list_systems.inc:53
-msgid "Select the target objects for your scheduled action."
-msgstr ""
+#: admin/sudo/trust_machines.tpl:30
+msgid "Display systems matching"
+msgstr "显示匹配的系统"
 
-#: admin/sudo/class_target_list_systems.inc:54
-#: admin/sudo/class_target_list_systems.inc:55
-msgid "Available systems"
-msgstr ""
-
-#: admin/sudo/class_target_list_systems.inc:67
-msgid "Select to see terminals"
-msgstr "选择查看终端"
-
-#: admin/sudo/class_target_list_systems.inc:67
-msgid "Show terminals"
-msgstr "显示终端"
-
-#: admin/sudo/class_target_list_systems.inc:68
-msgid "Select to see servers"
-msgstr "选择显示服务器"
-
-#: admin/sudo/class_target_list_systems.inc:68
-msgid "Show servers"
-msgstr "显示服务器"
-
-#: admin/sudo/class_target_list_systems.inc:69
-msgid "Select to see workstations"
-msgstr "选择查看工作站"
-
-#: admin/sudo/class_target_list_systems.inc:69
-msgid "Show workstations"
-msgstr "显示工作站"
-
-#: admin/sudo/class_target_list_systems.inc:186
-msgid "Server"
-msgstr "服务器"
-
-#: admin/sudo/class_target_list_systems.inc:188
-msgid "Workstation"
-msgstr "工作站"
-
-#: admin/sudo/class_target_list_systems.inc:190
-msgid "Terminal"
-msgstr "终端"
-
-#: admin/sudo/class_divListSudo.inc:55 admin/sudo/class_divListSudo.inc:56
-#, fuzzy
-msgid "List of sudo roles"
-msgstr "用户列表"
-
-#: admin/sudo/class_divListSudo.inc:76
-#, fuzzy
-msgid "Select all"
-msgstr "选择"
-
-#: admin/sudo/class_divListSudo.inc:82
-msgid "Department"
-msgstr "部门"
-
-#: admin/sudo/class_divListSudo.inc:83 admin/sudo/class_divListSudo.inc:109
-msgid "Actions"
-msgstr "动作"
-
-#: admin/sudo/class_divListSudo.inc:87
-#, fuzzy
-msgid "Regular expression for matching role names"
-msgstr "用于匹配组名的正则表达式"
-
-#: admin/sudo/class_divListSudo.inc:89
-#, fuzzy
-msgid "Regular expression for matching role member names"
-msgstr "匹配对象名的正则表达式"
-
-#: admin/sudo/class_divListSudo.inc:111
-msgid "Create"
-msgstr "创建"
-
-#: admin/sudo/class_divListSudo.inc:115
-msgid "Role"
-msgstr "角色"
-
-#: admin/sudo/class_divListSudo.inc:116
-msgid "Default"
-msgstr ""
-
-#: admin/sudo/class_divListSudo.inc:123
-msgid "Remove"
-msgstr "删除"
-
-#: admin/sudo/class_divListSudo.inc:175
-msgid "Edit this entry"
-msgstr "编辑这条记录"
-
-#: admin/sudo/class_divListSudo.inc:182
-msgid "Delete this entry"
-msgstr "删除这个条目"
-
-#: admin/sudo/class_divListSudo.inc:224
-#, fuzzy
-msgid "Number of listed roles"
-msgstr "组名称"
-
-#: admin/sudo/class_sudoGeneric.inc:313
-msgid "Error"
-msgstr "错误"
-
-#: admin/sudo/class_sudoGeneric.inc:355
-msgid "disabled"
-msgstr "禁用"
-
-#: admin/sudo/class_sudoGeneric.inc:356
-msgid "full access"
-msgstr "完全访问权限"
-
-#: admin/sudo/class_sudoGeneric.inc:357
-msgid "allow access to these hosts"
-msgstr "允许访问这些主机"
-
-#: admin/sudo/class_sudoGeneric.inc:551
-#, fuzzy
-msgid "LDAP error"
-msgstr "LDAP 错误:"
-
-#: admin/sudo/class_sudoGeneric.inc:678
-#, fuzzy
-msgid "Sudo"
-msgstr "姓"
-
-#: admin/sudo/class_sudoGeneric.inc:689
-msgid "Users"
-msgstr "用户"
-
-#: admin/sudo/class_sudoGeneric.inc:690
-#, fuzzy
-msgid "Host"
-msgstr "钩子"
-
-#: admin/sudo/class_sudoGeneric.inc:691
-#, fuzzy
-msgid "Command"
-msgstr "和"
-
-#: admin/sudo/class_sudoGeneric.inc:692
-#, fuzzy
-msgid "Run as user"
-msgstr "域用户"
-
-#: admin/sudo/class_sudoGeneric.inc:693
-#, fuzzy
-msgid "Access control list"
-msgstr "访问选项"
+#: admin/sudo/trust_machines.tpl:31
+msgid "Regular expression for matching addresses"
+msgstr "匹配地址的正则表达式"

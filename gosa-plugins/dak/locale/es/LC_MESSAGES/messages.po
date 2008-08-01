@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,16 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 msgid "Filter"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:11
-msgid "Repositories"
 msgstr ""
 
 #: addons/dak/dak_keyring.tpl:11
@@ -56,6 +48,10 @@ msgstr ""
 msgid "DAK queue management"
 msgstr "Administración de ACL"
 
+#: addons/dak/dak_queue.tpl:11
+msgid "Repositories"
+msgstr ""
+
 #: addons/dak/class_dakrepository.inc:43
 msgid "DAK repository"
 msgstr ""
@@ -64,6 +60,11 @@ msgstr ""
 #, fuzzy
 msgid "DAK repository  management"
 msgstr "Administración de departamento"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr ""
 
 #: addons/dak/class_dakkeyring.inc:114
 #, fuzzy
@@ -116,9 +117,8 @@ msgstr ""
 msgid "DAK keyring management"
 msgstr "Administración de departamento"
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
+#: addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #~ msgid "Description"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-04-02 14:20+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -22,7 +22,8 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/main.inc:120
+#: personal/connectivity/class_connectivity.inc:269
+#: personal/connectivity/main.inc:121
 msgid "Connectivity"
 msgstr "Konnektivität"
 
@@ -31,28 +32,30 @@ msgstr "Konnektivität"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Intranet-Konto"
-
-#: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:198
-msgid "Intranet"
-msgstr "Intranet"
-
-#: personal/connectivity/class_intranetAccount.inc:119
-#: personal/connectivity/class_intranetAccount.inc:186
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mein Konto"
 
+#: personal/connectivity/class_connectivity.inc:276
+#: personal/connectivity/class_intranetAccount.inc:212
+msgid "Connectivity addon"
+msgstr "Konnektivitäts-Erweiterung"
+
+#: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
+msgid "Intranet"
+msgstr "Intranet"
+
+#: personal/connectivity/class_intranetAccount.inc:126
+#: personal/connectivity/class_intranetAccount.inc:193
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Einstellungen für Intranet-Konto"
 
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Connectivity addon"
-msgstr "Konnektivitäts-Erweiterung"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Intranet-Konto"

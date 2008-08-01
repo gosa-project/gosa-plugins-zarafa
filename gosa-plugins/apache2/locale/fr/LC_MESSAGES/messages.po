@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-07-23 20:02+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
 msgid "Generic"
-msgstr ""
+msgstr "Informations"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:7
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:365
@@ -74,33 +74,29 @@ msgstr "Sauver"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:59
-#: admin/systems/services/apache2/class_servApacheVhost.inc:282
-#: admin/systems/services/apache2/class_servApacheVhost.inc:295
+#: admin/systems/services/apache2/class_servApacheVhost.inc:61
+#: admin/systems/services/apache2/class_servApacheVhost.inc:284
+#: admin/systems/services/apache2/class_servApacheVhost.inc:297
 msgid "Apache service"
 msgstr "Service Apache"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:235
-#: admin/systems/services/apache2/class_servApacheVhost.inc:246
-#: admin/systems/services/apache2/class_servApacheVhost.inc:269
+#: admin/systems/services/apache2/class_servApacheVhost.inc:237
+#: admin/systems/services/apache2/class_servApacheVhost.inc:248
+#: admin/systems/services/apache2/class_servApacheVhost.inc:271
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:296
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
 msgid "Apache virtual host service"
 msgstr "Service de nom d'hôte virtuel apache"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:296
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
 msgid "Services"
 msgstr "Services"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:304
+#: admin/systems/services/apache2/class_servApacheVhost.inc:306
 msgid "Virtual hosts"
 msgstr "Hôtes virtuels"
-
-#: admin/systems/services/apache2/servApacheVhost.tpl:1
-msgid "Apache VHosts"
-msgstr "Hôtes virtuels Apache"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:298
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:317
@@ -115,11 +111,11 @@ msgstr "En Bas"
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:300
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:319
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:358
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "Only lowercase strings are allowed as Virtual Host Name."
@@ -144,3 +140,6 @@ msgid ""
 "or example.com'."
 msgstr ""
 
+#: admin/systems/services/apache2/servApacheVhost.tpl:1
+msgid "Apache VHosts"
+msgstr "Hôtes virtuels Apache"

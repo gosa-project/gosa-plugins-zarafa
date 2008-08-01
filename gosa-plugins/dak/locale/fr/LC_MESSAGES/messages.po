@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-07-23 22:13+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -14,17 +14,9 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr "DAK"
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 msgid "Filter"
 msgstr "Filtre"
-
-#: addons/dak/dak_queue.tpl:11
-msgid "Repositories"
-msgstr "Dépôts"
 
 #: addons/dak/dak_keyring.tpl:11
 msgid "Server"
@@ -52,6 +44,10 @@ msgstr "Extension"
 msgid "DAK queue management"
 msgstr "Gestion de la queue DAK"
 
+#: addons/dak/dak_queue.tpl:11
+msgid "Repositories"
+msgstr "Dépôts"
+
 #: addons/dak/class_dakrepository.inc:43
 msgid "DAK repository"
 msgstr "Dépôt DAK"
@@ -59,6 +55,11 @@ msgstr "Dépôt DAK"
 #: addons/dak/class_dakrepository.inc:44
 msgid "DAK repository  management"
 msgstr "Gestion des dépôts DAK"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Erreur"
 
 #: addons/dak/class_dakkeyring.inc:114
 msgid "Key ID"
@@ -105,8 +106,6 @@ msgstr "Trousseau de clefs DAK"
 msgid "DAK keyring management"
 msgstr "Gestion du trousseau de clefs DAK"
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
-msgstr "Erreur"
-
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr "DAK"

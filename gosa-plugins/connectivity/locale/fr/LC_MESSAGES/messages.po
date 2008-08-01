@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-06-04 09:19+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/main.inc:120
+#: personal/connectivity/class_connectivity.inc:269
+#: personal/connectivity/main.inc:121
 msgid "Connectivity"
 msgstr "Connectivité"
 
@@ -24,28 +25,30 @@ msgstr "Connectivité"
 msgid "This does something"
 msgstr "Ceci fait quelque chose"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Compte Intranet"
-
-#: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:198
-msgid "Intranet"
-msgstr "Intranet"
-
-#: personal/connectivity/class_intranetAccount.inc:119
-#: personal/connectivity/class_intranetAccount.inc:186
-msgid "LDAP error"
-msgstr "Erreur LDAP"
-
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mon Compte"
 
+#: personal/connectivity/class_connectivity.inc:276
+#: personal/connectivity/class_intranetAccount.inc:212
+msgid "Connectivity addon"
+msgstr "Extension Connectivité"
+
+#: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
+msgid "Intranet"
+msgstr "Intranet"
+
+#: personal/connectivity/class_intranetAccount.inc:126
+#: personal/connectivity/class_intranetAccount.inc:193
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Paramètres du compte Intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Connectivity addon"
-msgstr "Extension Connectivité"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Compte Intranet"

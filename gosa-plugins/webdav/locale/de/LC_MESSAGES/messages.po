@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-04-03 16:04+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -21,8 +21,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
+msgid "WebDAV account"
+msgstr "WebDAV-Konto"
+
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:159
+#: personal/connectivity/webdav/class_webdavAccount.inc:166
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -30,20 +35,15 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "Dies tut etwas"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:84
-#: personal/connectivity/webdav/class_webdavAccount.inc:140
+#: personal/connectivity/webdav/class_webdavAccount.inc:91
+#: personal/connectivity/webdav/class_webdavAccount.inc:147
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-#: personal/connectivity/webdav/webdav.tpl:5
-msgid "WebDAV account"
-msgstr "WebDAV-Konto"
-
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:164
+#: personal/connectivity/webdav/class_webdavAccount.inc:171
 msgid "My account"
 msgstr "Mein Konto"

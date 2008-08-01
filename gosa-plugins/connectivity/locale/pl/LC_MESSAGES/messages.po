@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "X-Poedit-Basepath: tedst\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/main.inc:120
+#: personal/connectivity/class_connectivity.inc:269
+#: personal/connectivity/main.inc:121
 msgid "Connectivity"
 msgstr "Połączenia"
 
@@ -24,33 +25,35 @@ msgstr "Połączenia"
 msgid "This does something"
 msgstr "To robi coś"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Konto Intranet"
+#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_intranetAccount.inc:208
+msgid "My account"
+msgstr "Moje konto "
+
+#: personal/connectivity/class_connectivity.inc:276
+#: personal/connectivity/class_intranetAccount.inc:212
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Konto połączeń"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:198
+#: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
 msgstr "Inranet"
 
-#: personal/connectivity/class_intranetAccount.inc:119
-#: personal/connectivity/class_intranetAccount.inc:186
+#: personal/connectivity/class_intranetAccount.inc:126
+#: personal/connectivity/class_intranetAccount.inc:193
 #, fuzzy
 msgid "LDAP error"
 msgstr "błąd LDAP:"
 
-#: personal/connectivity/class_intranetAccount.inc:201
-msgid "My account"
-msgstr "Moje konto "
-
-#: personal/connectivity/class_intranetAccount.inc:205
+#: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Ustawienia konta Intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:205
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Konto połączeń"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Konto Intranet"
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "To konto nie posiada rozszerzeń do Połączeń"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,164 +16,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: addons/logview/main.inc:34
-msgid "System log view"
-msgstr "系统日志显示"
-
-#: addons/logview/contents.tpl:2 addons/logview/gosa_log_contents.tpl:2
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
 msgid "Filter"
 msgstr "过滤器"
 
-#: addons/logview/contents.tpl:11 addons/logview/gosa_log_contents.tpl:11
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
 msgid "Show hosts"
 msgstr "显示主机"
-
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "日志级别"
-
-#: addons/logview/contents.tpl:38 addons/logview/gosa_log_contents.tpl:38
-msgid "Time interval"
-msgstr "时间间隔"
-
-#: addons/logview/contents.tpl:47 addons/logview/gosa_log_contents.tpl:47
-msgid "Search for"
-msgstr "查询"
-
-#: addons/logview/contents.tpl:48 addons/logview/gosa_log_contents.tpl:48
-msgid "Enter string to search for"
-msgstr "输入要查询的字符串"
-
-#: addons/logview/contents.tpl:60 addons/logview/gosa_log_contents.tpl:60
-msgid "Ruleset"
-msgstr "规则集"
-
-#: addons/logview/contents.tpl:62 addons/logview/gosa_log_contents.tpl:62
-msgid "Edit"
-msgstr "编辑"
-
-#: addons/logview/contents.tpl:68 addons/logview/gosa_log_contents.tpl:68
-msgid "Search"
-msgstr "查找"
-
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "级别"
-
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "主机名"
-
-#: addons/logview/contents.tpl:84 addons/logview/gosa_log_contents.tpl:83
-msgid "Date"
-msgstr "日期"
-
-#: addons/logview/contents.tpl:85 addons/logview/gosa_log_contents.tpl:87
-msgid "Message"
-msgstr "信息"
-
-#: addons/logview/contents.tpl:97 addons/logview/gosa_log_contents.tpl:99
-msgid "Search returned no results..."
-msgstr "查无结果..."
-
-#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:417
-#: addons/logview/class_gosa_logview.inc:6
-msgid "System logs"
-msgstr "系统日志"
-
-#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
-#, fuzzy
-msgid "This does something"
-msgstr "******"
-
-#: addons/logview/class_logview.inc:78
-#: addons/logview/class_gosa_logview.inc:118
-msgid "Warning"
-msgstr "警告"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, fuzzy
-msgid "Configuration error"
-msgstr "配置文件"
-
-#: addons/logview/class_logview.inc:82
-#: addons/logview/class_gosa_logview.inc:123
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "删除打印机扩展"
-
-#: addons/logview/class_logview.inc:94 addons/logview/class_logview.inc:101
-#: addons/logview/class_logview.inc:114 addons/logview/class_logview.inc:136
-#: addons/logview/class_logview.inc:194 addons/logview/class_logview.inc:199
-#: addons/logview/class_logview.inc:276 addons/logview/class_logview.inc:293
-#: addons/logview/class_gosa_logview.inc:148
-#: addons/logview/class_gosa_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:234
-#: addons/logview/class_gosa_logview.inc:284
-msgid "Error"
-msgstr "错误"
-
-#: addons/logview/class_logview.inc:123 addons/logview/class_logview.inc:145
-#: addons/logview/class_gosa_logview.inc:166
-#: addons/logview/class_gosa_logview.inc:181
-msgid "All"
-msgstr "全部"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "one hour"
-msgstr "1 小时"
-
-#: addons/logview/class_logview.inc:155
-#: addons/logview/class_gosa_logview.inc:71
-msgid "6 hours"
-msgstr "6 小时"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "12 hours"
-msgstr "12 小时"
-
-#: addons/logview/class_logview.inc:156
-#: addons/logview/class_gosa_logview.inc:72
-msgid "24 hours"
-msgstr "24 小时"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "2 days"
-msgstr "2 天"
-
-#: addons/logview/class_logview.inc:157
-#: addons/logview/class_gosa_logview.inc:73
-msgid "one week"
-msgstr "1 星期"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "2 weeks"
-msgstr "2 星期"
-
-#: addons/logview/class_logview.inc:158
-#: addons/logview/class_gosa_logview.inc:74
-msgid "one month"
-msgstr "1 个月"
-
-#: addons/logview/class_logview.inc:411
-#, fuzzy
-msgid "Log view"
-msgstr "日志级别"
-
-#: addons/logview/class_logview.inc:412
-#, fuzzy
-msgid "Log view addon"
-msgstr "向下移动"
 
 #: addons/logview/gosa_log_contents.tpl:20
 #: addons/logview/gosa_log_contents.tpl:82
 msgid "Action"
 msgstr "行动"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "时间间隔"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "查询"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "输入要查询的字符串"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "规则集"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "编辑"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "查找"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "日期"
 
 #: addons/logview/gosa_log_contents.tpl:84
 #: admin/systems/services/log/class_gosaLogServer.inc:68
@@ -190,12 +72,130 @@ msgstr "对象名称"
 msgid "Object"
 msgstr "对象"
 
-#: addons/logview/class_gosa_logview.inc:200
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "信息"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "查无结果..."
+
+#: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
+#: addons/logview/class_gosa_logview.inc:6
+msgid "System logs"
+msgstr "系统日志"
+
+#: addons/logview/class_logview.inc:7 addons/logview/class_gosa_logview.inc:7
+#, fuzzy
+msgid "This does something"
+msgstr "******"
+
+#: addons/logview/class_logview.inc:79
+#: addons/logview/class_gosa_logview.inc:118
+msgid "Warning"
+msgstr "警告"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+#, fuzzy
+msgid "Configuration error"
+msgstr "配置文件"
+
+#: addons/logview/class_logview.inc:83
+#: addons/logview/class_gosa_logview.inc:123
+#, fuzzy, php-format
+msgid "Missing %s PHP extension!"
+msgstr "删除打印机扩展"
+
+#: addons/logview/class_logview.inc:95 addons/logview/class_logview.inc:102
+#: addons/logview/class_logview.inc:115 addons/logview/class_logview.inc:137
+#: addons/logview/class_logview.inc:195 addons/logview/class_logview.inc:200
+#: addons/logview/class_logview.inc:277 addons/logview/class_logview.inc:294
+#: addons/logview/class_gosa_logview.inc:149
+#: addons/logview/class_gosa_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:235
+#: addons/logview/class_gosa_logview.inc:286
+msgid "Error"
+msgstr "错误"
+
+#: addons/logview/class_logview.inc:124 addons/logview/class_logview.inc:146
+#: addons/logview/class_gosa_logview.inc:167
+#: addons/logview/class_gosa_logview.inc:182
+msgid "All"
+msgstr "全部"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "one hour"
+msgstr "1 小时"
+
+#: addons/logview/class_logview.inc:156
+#: addons/logview/class_gosa_logview.inc:71
+msgid "6 hours"
+msgstr "6 小时"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "12 hours"
+msgstr "12 小时"
+
+#: addons/logview/class_logview.inc:157
+#: addons/logview/class_gosa_logview.inc:72
+msgid "24 hours"
+msgstr "24 小时"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "2 days"
+msgstr "2 天"
+
+#: addons/logview/class_logview.inc:158
+#: addons/logview/class_gosa_logview.inc:73
+msgid "one week"
+msgstr "1 星期"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "2 weeks"
+msgstr "2 星期"
+
+#: addons/logview/class_logview.inc:159
+#: addons/logview/class_gosa_logview.inc:74
+msgid "one month"
+msgstr "1 个月"
+
+#: addons/logview/class_logview.inc:412
+#, fuzzy
+msgid "Log view"
+msgstr "日志级别"
+
+#: addons/logview/class_logview.inc:413
+#, fuzzy
+msgid "Log view addon"
+msgstr "向下移动"
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "日志级别"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "级别"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "主机名"
+
+#: addons/logview/main.inc:34
+msgid "System log view"
+msgstr "系统日志显示"
+
+#: addons/logview/class_gosa_logview.inc:201
 #, fuzzy
 msgid "You have insufficient permissions to view syslog entries."
 msgstr "您无权查看和编辑 ACL。"
 
-#: addons/logview/class_gosa_logview.inc:235
+#: addons/logview/class_gosa_logview.inc:236
 #, php-format
 msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""

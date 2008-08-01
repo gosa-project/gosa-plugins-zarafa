@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/main.inc:120
+#: personal/connectivity/class_connectivity.inc:269
+#: personal/connectivity/main.inc:121
 msgid "Connectivity"
 msgstr "Conectividad"
 
@@ -27,32 +28,34 @@ msgstr "Conectividad"
 msgid "This does something"
 msgstr ""
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr ""
+#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_intranetAccount.inc:208
+msgid "My account"
+msgstr "Mi cuenta"
+
+#: personal/connectivity/class_connectivity.inc:276
+#: personal/connectivity/class_intranetAccount.inc:212
+msgid "Connectivity addon"
+msgstr "Conectividad adicional"
 
 #: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:198
+#: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
 msgstr "intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:119
-#: personal/connectivity/class_intranetAccount.inc:186
+#: personal/connectivity/class_intranetAccount.inc:126
+#: personal/connectivity/class_intranetAccount.inc:193
 #, fuzzy
 msgid "LDAP error"
 msgstr "Servicio LDAP"
 
-#: personal/connectivity/class_intranetAccount.inc:201
-msgid "My account"
-msgstr "Mi cuenta"
-
-#: personal/connectivity/class_intranetAccount.inc:205
+#: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Configuración de la cuenta de intranet"
 
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Connectivity addon"
-msgstr "Conectividad adicional"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr ""
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "Esta cuenta no tiene extensión de conectividad"

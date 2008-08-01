@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,19 +15,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 #, fuzzy
 msgid "Filter"
 msgstr "Filtri"
-
-#: addons/dak/dak_queue.tpl:11
-#, fuzzy
-msgid "Repositories"
-msgstr "Riprova"
 
 #: addons/dak/dak_keyring.tpl:11
 msgid "Server"
@@ -58,6 +49,11 @@ msgstr "Extra"
 msgid "DAK queue management"
 msgstr "Riferimenti"
 
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
+msgstr "Riprova"
+
 #: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
@@ -67,6 +63,11 @@ msgstr "Directory"
 #, fuzzy
 msgid "DAK repository  management"
 msgstr "Directory"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr ""
 
 #: addons/dak/class_dakkeyring.inc:114
 msgid "Key ID"
@@ -118,9 +119,8 @@ msgstr ""
 msgid "DAK keyring management"
 msgstr "Riferimenti"
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
+#: addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""
 
 #~ msgid "Description"

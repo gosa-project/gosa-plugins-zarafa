@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,19 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 #, fuzzy
 msgid "Filter"
 msgstr "过滤器"
-
-#: addons/dak/dak_queue.tpl:11
-#, fuzzy
-msgid "Repositories"
-msgstr "仓库"
 
 #: addons/dak/dak_keyring.tpl:11
 msgid "Server"
@@ -59,6 +50,11 @@ msgstr "插件"
 msgid "DAK queue management"
 msgstr "管理"
 
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
+msgstr "仓库"
+
 #: addons/dak/class_dakrepository.inc:43
 #, fuzzy
 msgid "DAK repository"
@@ -68,6 +64,11 @@ msgstr "目录"
 #, fuzzy
 msgid "DAK repository  management"
 msgstr "目录"
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "错误"
 
 #: addons/dak/class_dakkeyring.inc:114
 #, fuzzy
@@ -120,10 +121,9 @@ msgstr ""
 msgid "DAK keyring management"
 msgstr "部门管理"
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
-msgstr "错误"
+#: addons/dak/main.inc:32
+msgid "DAK"
+msgstr ""
 
 #~ msgid "Description"
 #~ msgstr "描述"

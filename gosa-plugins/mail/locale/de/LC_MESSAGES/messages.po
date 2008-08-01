@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-04-03 09:33+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -20,40 +20,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/mail/main.inc:126
-msgid "User mail settings"
-msgstr "Benutzer Mail-Einstellungen"
-
-#: personal/mail/copypaste.tpl:1 personal/mail/class_mailAccount.inc:1172
-#: admin/groups/mail/paste_mail.tpl:1
-msgid "Mail settings"
-msgstr "Mail-Einstellungen"
-
-#: personal/mail/copypaste.tpl:7 personal/mail/generic.tpl:8
-#: personal/mail/class_mailAccount.inc:932 admin/ogroups/mail/mail.tpl:10
-#: admin/groups/mail/mail.tpl:10 admin/groups/mail/paste_mail.tpl:8
-msgid "Primary address"
-msgstr "Primäre Adresse"
-
-#: personal/mail/copypaste.tpl:13 personal/mail/generic.tpl:262
-msgid "Forward messages to"
-msgstr "Nachrichten weiterleiten an"
-
-#: personal/mail/copypaste.tpl:25 personal/mail/generic.tpl:64
-#: admin/groups/mail/mail.tpl:102 admin/groups/mail/paste_mail.tpl:23
-msgid "Alternative addresses"
-msgstr "Alternative Adressen"
-
-#: personal/mail/copypaste.tpl:44 personal/mail/generic.tpl:285
-#: admin/groups/mail/mail.tpl:208 admin/groups/mail/paste_mail.tpl:42
-msgid "Add local"
-msgstr "Lokale hinzufügen"
-
-#: personal/mail/copypaste.tpl:55 personal/mail/generic.tpl:67
-#: admin/groups/mail/mail.tpl:105 admin/groups/mail/paste_mail.tpl:24
-msgid "List of alternative mail addresses"
-msgstr "Liste alternativer Mail-Adressen"
 
 #: personal/mail/mail_locals.tpl:7 admin/groups/mail/mail_locals.tpl:6
 msgid "Select addresses to add"
@@ -83,6 +49,820 @@ msgstr "Zeige Adressen des Benutzers"
 msgid "User name of which addresses are shown"
 msgstr "Benutzername, dessen Adressen angezeigt werden"
 
+#: personal/mail/class_mailAccount.inc:15
+#: personal/mail/class_mailAccount.inc:291
+#: personal/mail/class_mailAccount.inc:301
+#: personal/mail/class_mailAccount.inc:304
+#: personal/mail/class_mailAccount.inc:305
+#: personal/mail/class_mailAccount.inc:308
+#: personal/mail/class_mailAccount.inc:309
+#: personal/mail/class_mailAccount.inc:929
+#: personal/mail/class_mailAccount.inc:1173
+#: personal/mail/class_mailAccount.inc:1349
+#: admin/ogroups/mail/paste_mail.tpl:4
+#: admin/ogroups/mail/class_mailogroup.inc:186
+#: admin/groups/mail/class_groupMail.inc:1248
+msgid "Mail"
+msgstr "Mail"
+
+#: personal/mail/class_mailAccount.inc:16
+#: addons/mailqueue/class_mailqueue.inc:7
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: personal/mail/class_mailAccount.inc:92
+#: personal/mail/class_mailAccount.inc:211
+#: addons/mailqueue/class_mailqueue.inc:66
+#: addons/mailqueue/class_mailqueue.inc:103
+#: addons/mailqueue/class_mailqueue.inc:133
+#: addons/mailqueue/class_mailqueue.inc:195
+#: addons/mailqueue/class_mailqueue.inc:230
+#: addons/mailqueue/class_mailqueue.inc:243
+#: admin/groups/mail/class_groupMail.inc:82
+msgid "Configuration error"
+msgstr "Konfigurationsfehler"
+
+#: personal/mail/class_mailAccount.inc:92
+#, php-format
+msgid "Mail method '%s' is unknown!"
+msgstr "Mail-Methode '%s' ist unbekannt!"
+
+#: personal/mail/class_mailAccount.inc:211
+#, php-format
+msgid "No DESC tag in vacation template '%s'!"
+msgstr "Kein DESC-Tag in der Abwesenheits-Vorlage '%s'!"
+
+#: personal/mail/class_mailAccount.inc:302
+msgid "Mail settings cannot be removed while there are delegations configured!"
+msgstr ""
+"Die Maileinstellungen können nicht entfernt werden, wenn noch Delegationen "
+"konfiguriert sind!"
+
+#: personal/mail/class_mailAccount.inc:350
+#: personal/mail/class_mailAccount.inc:366
+#: personal/mail/class_mailAccount.inc:373
+#: personal/mail/class_mailAccount.inc:402
+#: personal/mail/class_mailAccount.inc:410
+#: personal/mail/class_mailAccount.inc:422
+#: personal/mail/sieve/class_My_Tree.inc:660
+#: personal/mail/sieve/class_sieveManagement.inc:201
+#: personal/mail/sieve/class_sieveManagement.inc:206
+#: personal/mail/sieve/class_sieveManagement.inc:212
+#: personal/mail/sieve/class_sieveManagement.inc:218
+#: personal/mail/sieve/class_sieveManagement.inc:429
+#: addons/mailqueue/contents.tpl:58
+#: admin/systems/services/spam/class_goSpamServer.inc:143
+#: admin/systems/services/spam/class_goSpamServer.inc:217
+#: admin/groups/mail/class_groupMail.inc:437
+#: admin/groups/mail/class_groupMail.inc:441
+#: admin/groups/mail/class_groupMail.inc:467
+#: admin/groups/mail/class_groupMail.inc:472
+msgid "Error"
+msgstr "Fehler"
+
+#: personal/mail/class_mailAccount.inc:350
+msgid "Please select an entry!"
+msgstr "Bitte wählen Sie einen Eintrag!"
+
+#: personal/mail/class_mailAccount.inc:367
+#: personal/mail/class_mailAccount.inc:403
+#: personal/mail/class_mailAccount.inc:411
+#: personal/mail/class_mailAccount.inc:422
+#: personal/mail/class_mailAccount.inc:938
+#: personal/mail/class_mailAccount.inc:942
+#: personal/mail/class_mailAccount.inc:953
+#: personal/mail/class_mailAccount.inc:1183
+#: admin/ogroups/mail/class_mailogroup.inc:86
+#: admin/ogroups/mail/class_mailogroup.inc:93
+#: admin/ogroups/mail/class_mailogroup.inc:194
+#: admin/groups/mail/class_groupMail.inc:472
+#: admin/groups/mail/class_groupMail.inc:1045
+#: admin/groups/mail/class_groupMail.inc:1048
+#: admin/groups/mail/class_groupMail.inc:1054
+#: admin/groups/mail/class_groupMail.inc:1256
+msgid "Mail address"
+msgstr "Mail-Adresse"
+
+#: personal/mail/class_mailAccount.inc:373
+msgid "Cannot add primary address to the list of forwarders!"
+msgstr ""
+"Kann die primäre Adresse nicht in die Liste der Weiterleitungen aufnehmen!"
+
+#: personal/mail/class_mailAccount.inc:423
+#, php-format
+msgid "Address is already in use by user '%s'."
+msgstr "Die Adresse wird bereits von Benutzer '%s' verwendet."
+
+#: personal/mail/class_mailAccount.inc:697
+#: personal/mail/class_mailAccount.inc:865
+#: admin/ogroups/mail/class_mailogroup.inc:120
+#: admin/ogroups/mail/class_mailogroup.inc:157
+#: admin/systems/services/virus/class_goVirusServer.inc:154
+#: admin/systems/services/spam/class_goSpamServer.inc:278
+#: admin/systems/services/mail/class_goMailServer.inc:582
+#: admin/systems/services/imap/class_goImapServer.inc:187
+#: admin/groups/mail/class_groupMail.inc:761
+#: admin/groups/mail/class_groupMail.inc:1009
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: personal/mail/class_mailAccount.inc:934 personal/mail/generic.tpl:8
+#: personal/mail/copypaste.tpl:7 admin/ogroups/mail/mail.tpl:10
+#: admin/groups/mail/paste_mail.tpl:8 admin/groups/mail/mail.tpl:10
+msgid "Primary address"
+msgstr "Primäre Adresse"
+
+#: personal/mail/class_mailAccount.inc:960
+#: personal/mail/class_mailAccount.inc:1185
+#: personal/mail/class_mailAccount.inc:1355 personal/mail/generic.tpl:47
+#: admin/groups/mail/mail.tpl:48 admin/groups/mail/class_groupMail.inc:1060
+#: admin/groups/mail/class_groupMail.inc:1257
+msgid "Quota size"
+msgstr "Kontingent-Größe"
+
+#: personal/mail/class_mailAccount.inc:969
+#: personal/mail/class_mailAccount.inc:977
+#: personal/mail/class_mailAccount.inc:1364
+msgid "Mail reject size"
+msgstr "Maximale Mailgröße"
+
+#: personal/mail/class_mailAccount.inc:981
+#: personal/mail/class_mailAccount.inc:1371
+msgid "Spam folder"
+msgstr "Ordner für Spam"
+
+#: personal/mail/class_mailAccount.inc:985
+#: personal/mail/class_mailAccount.inc:1376
+msgid "Vacation interval"
+msgstr "Urlaubsbenachrichtigungs-Intervall"
+
+#: personal/mail/class_mailAccount.inc:1030
+#: personal/mail/class_mailAccount.inc:1042
+#: personal/mail/class_mailAccount.inc:1075
+#: personal/mail/class_mailAccount.inc:1086
+#: addons/mailqueue/class_mailqueue.inc:94
+#: addons/mailqueue/class_mailqueue.inc:123
+#: addons/mailqueue/class_mailqueue.inc:184
+#: addons/mailqueue/class_mailqueue.inc:214
+msgid "Permission error"
+msgstr "Berechtigungsfehler"
+
+#: personal/mail/class_mailAccount.inc:1030
+#: personal/mail/class_mailAccount.inc:1042
+#: personal/mail/class_mailAccount.inc:1075
+#: personal/mail/class_mailAccount.inc:1086
+msgid "You have no permission to modify these addresses!"
+msgstr "Sie haben keine Berechtigung, diese Adressen zu verändern!"
+
+#: personal/mail/class_mailAccount.inc:1151
+msgid "Waiting for kolab to remove mail properties..."
+msgstr "Warte auf Entfernung der Mail-Einstellungen durch Kolab..."
+
+#: personal/mail/class_mailAccount.inc:1153
+msgid ""
+"Please remove the mail settings first to allow kolab to call its remove "
+"methods!"
+msgstr ""
+"Bitte entfernen Sie zunächst das Mail-Konto, damit Kolab Gelegenheit hat, "
+"die Löschroutinen aufzurufen!"
+
+#: personal/mail/class_mailAccount.inc:1174 personal/mail/copypaste.tpl:1
+#: admin/groups/mail/paste_mail.tpl:1
+msgid "Mail settings"
+msgstr "Mail-Einstellungen"
+
+#: personal/mail/class_mailAccount.inc:1178
+msgid "My account"
+msgstr "Mein Konto"
+
+#: personal/mail/class_mailAccount.inc:1184
+#: admin/groups/mail/class_groupMail.inc:1085
+#: admin/groups/mail/class_groupMail.inc:1258
+msgid "Mail server"
+msgstr "Mail-Server"
+
+#: personal/mail/class_mailAccount.inc:1187
+msgid "Add vacation information"
+msgstr "Urlaubsinformationen hinzufügen"
+
+#: personal/mail/class_mailAccount.inc:1188
+#: personal/mail/sieve/templates/object_container.tpl:31
+#: personal/mail/sieve/templates/element_vacation.tpl:44
+#: personal/mail/sieve/class_sieveManagement.inc:502
+#: personal/mail/sieve/class_sieveManagement.inc:721
+#: personal/mail/generic.tpl:241
+msgid "Vacation message"
+msgstr "Urlaubsbenachrichtigung"
+
+#: personal/mail/class_mailAccount.inc:1190
+msgid "Use spam filter"
+msgstr "Verwende Spam-Filter"
+
+#: personal/mail/class_mailAccount.inc:1191
+msgid "Spam level"
+msgstr "Spam-Level"
+
+#: personal/mail/class_mailAccount.inc:1192
+msgid "Spam mail box"
+msgstr "Spam-Postfach"
+
+#: personal/mail/class_mailAccount.inc:1194
+msgid "Sieve management"
+msgstr "Sieve Verwaltung"
+
+#: personal/mail/class_mailAccount.inc:1196
+msgid "Reject due to mailsize"
+msgstr "Aufgrund der Mail-Größe abweisen"
+
+#: personal/mail/class_mailAccount.inc:1197
+#: admin/groups/mail/class_groupMail.inc:1069
+msgid "Mail max size"
+msgstr "Maximale Mailgröße"
+
+#: personal/mail/class_mailAccount.inc:1199
+#: personal/mail/class_mailAccount.inc:1204
+msgid "Forwarding address"
+msgstr "Weiterleitungs-Adresse"
+
+#: personal/mail/class_mailAccount.inc:1200
+msgid "Local delivery"
+msgstr "Lokale Zustellung"
+
+#: personal/mail/class_mailAccount.inc:1201
+msgid "No delivery to own mailbox "
+msgstr "Keine Zustellung in eigenes Postfach"
+
+#: personal/mail/class_mailAccount.inc:1202
+msgid "Mail alternative addresses"
+msgstr "Weitere Adressen"
+
+#: personal/mail/class_mailAccount.inc:1205 personal/mail/generic.tpl:124
+msgid "Use custom sieve script"
+msgstr "Eigenes Sieve-Skript verwenden"
+
+#: personal/mail/sieve/class_sieveElement_Reject.inc:21
+msgid "Invalid character found, quotes are not allowed in a reject message."
+msgstr ""
+"Ungültiges Zeichen gefunden, Hochkommata sind in der Ablehnungsmeldung nicht "
+"erlaubt."
+
+#: personal/mail/sieve/class_sieveElement_Reject.inc:37
+msgid "Your reject text here"
+msgstr "Ihr Ablehnungstext"
+
+#: personal/mail/sieve/class_My_Tree.inc:245
+#: personal/mail/sieve/templates/remove_script.tpl:2
+#: personal/mail/class_mail-methods-cyrus.inc:52
+msgid "Warning"
+msgstr "Warnung"
+
+#: personal/mail/sieve/class_My_Tree.inc:245
+msgid "Cannot remove last element!"
+msgstr "Kann letztes Element nicht entfernen!"
+
+#: personal/mail/sieve/class_My_Tree.inc:658
+msgid "Require must be the first command in the script."
+msgstr "Require muss das erste Kommando im Skript sein."
+
+#: personal/mail/sieve/templates/element_header.tpl:16
+#: personal/mail/sieve/templates/element_header.tpl:106
+#: personal/mail/sieve/class_sieveManagement.inc:590
+msgid "Header"
+msgstr "Kopfzeilen"
+
+#: personal/mail/sieve/templates/element_header.tpl:19
+#: personal/mail/sieve/templates/element_envelope.tpl:19
+#: personal/mail/sieve/templates/element_address.tpl:18
+#: personal/mail/sieve/templates/element_vacation.tpl:16
+msgid "Normal view"
+msgstr "Normale Ansicht"
+
+#: personal/mail/sieve/templates/element_header.tpl:26
+#: personal/mail/sieve/templates/element_envelope.tpl:26
+#: personal/mail/sieve/templates/element_address.tpl:25
+msgid "Match type"
+msgstr "Art der Übereinstimmung"
+
+#: personal/mail/sieve/templates/element_header.tpl:29
+#: personal/mail/sieve/templates/element_header.tpl:52
+#: personal/mail/sieve/templates/element_header.tpl:63
+#: personal/mail/sieve/templates/element_header.tpl:114
+#: personal/mail/sieve/templates/element_header.tpl:119
+#: personal/mail/sieve/templates/element_boolean.tpl:5
+#: personal/mail/sieve/templates/element_envelope.tpl:29
+#: personal/mail/sieve/templates/element_envelope.tpl:52
+#: personal/mail/sieve/templates/element_envelope.tpl:63
+#: personal/mail/sieve/templates/element_envelope.tpl:113
+#: personal/mail/sieve/templates/element_envelope.tpl:118
+#: personal/mail/sieve/templates/element_address.tpl:28
+#: personal/mail/sieve/templates/element_address.tpl:51
+#: personal/mail/sieve/templates/element_address.tpl:61
+#: personal/mail/sieve/templates/element_address.tpl:72
+#: personal/mail/sieve/templates/element_address.tpl:121
+#: personal/mail/sieve/templates/element_address.tpl:126
+msgid "Boolean value"
+msgstr "Boolscher Wert"
+
+#: personal/mail/sieve/templates/element_header.tpl:37
+#: personal/mail/sieve/templates/element_envelope.tpl:37
+#: personal/mail/sieve/templates/element_address.tpl:36
+msgid "Invert test"
+msgstr "Test umkehren"
+
+#: personal/mail/sieve/templates/element_header.tpl:41
+#: personal/mail/sieve/templates/element_envelope.tpl:41
+#: personal/mail/sieve/templates/element_address.tpl:40
+msgid "Yes"
+msgstr "ja"
+
+#: personal/mail/sieve/templates/element_header.tpl:43
+#: personal/mail/sieve/templates/element_envelope.tpl:43
+#: personal/mail/sieve/templates/element_address.tpl:42
+msgid "No"
+msgstr "nein"
+
+#: personal/mail/sieve/templates/element_header.tpl:49
+#: personal/mail/sieve/templates/element_envelope.tpl:49
+#: personal/mail/sieve/templates/element_address.tpl:58
+msgid "Comparator"
+msgstr "Vergleichsoperator"
+
+#: personal/mail/sieve/templates/element_header.tpl:60
+msgid "operator"
+msgstr "Operator"
+
+#: personal/mail/sieve/templates/element_header.tpl:77
+#: personal/mail/sieve/templates/element_envelope.tpl:76
+#: personal/mail/sieve/templates/element_address.tpl:85
+msgid "Address fields to include"
+msgstr "Zu beinhaltende Adressfelder"
+
+#: personal/mail/sieve/templates/element_header.tpl:81
+#: personal/mail/sieve/templates/element_envelope.tpl:80
+#: personal/mail/sieve/templates/element_address.tpl:89
+msgid "Values to match for"
+msgstr "Zutreffende Werte"
+
+#: personal/mail/sieve/templates/element_header.tpl:109
+#: personal/mail/sieve/templates/element_allof.tpl:5
+#: personal/mail/sieve/templates/element_anyof.tpl:5
+#: personal/mail/sieve/templates/element_size.tpl:11
+#: personal/mail/sieve/templates/element_envelope.tpl:108
+#: personal/mail/sieve/templates/element_address.tpl:116
+#: personal/mail/sieve/templates/element_exists.tpl:10
+msgid "Not"
+msgstr "Nicht"
+
+#: personal/mail/sieve/templates/element_header.tpl:111
+#: personal/mail/sieve/templates/element_allof.tpl:7
+#: personal/mail/sieve/templates/element_size.tpl:13
+#: personal/mail/sieve/templates/element_envelope.tpl:110
+#: personal/mail/sieve/templates/element_address.tpl:118
+#: personal/mail/sieve/templates/element_exists.tpl:12
+msgid "-"
+msgstr "-"
+
+#: personal/mail/sieve/templates/element_header.tpl:131
+#: personal/mail/sieve/templates/element_envelope.tpl:130
+#: personal/mail/sieve/templates/element_address.tpl:138
+#: personal/mail/sieve/templates/element_vacation.tpl:47
+msgid "Expert view"
+msgstr "Expertenansicht"
+
+#: personal/mail/sieve/templates/element_allof.tpl:5
+#: personal/mail/sieve/templates/element_allof.tpl:7
+#: personal/mail/sieve/templates/element_anyof.tpl:5
+#: personal/mail/sieve/templates/element_anyof.tpl:7
+#: personal/mail/sieve/templates/element_size.tpl:11
+#: personal/mail/sieve/templates/element_size.tpl:13
+#: personal/mail/sieve/templates/element_envelope.tpl:41
+#: personal/mail/sieve/templates/element_envelope.tpl:43
+#: personal/mail/sieve/templates/element_exists.tpl:10
+#: personal/mail/sieve/templates/element_exists.tpl:12
+msgid "Inverse match"
+msgstr "Umgekehrte Übereinstimmung"
+
+#: personal/mail/sieve/templates/element_allof.tpl:10
+#: personal/mail/sieve/class_sieveManagement.inc:594
+msgid "All of"
+msgstr "Alle"
+
+#: personal/mail/sieve/templates/element_stop.tpl:4
+#: personal/mail/sieve/templates/object_container.tpl:30
+#: personal/mail/sieve/class_sieveManagement.inc:501
+#: personal/mail/sieve/class_sieveManagement.inc:720
+#: admin/systems/services/virus/class_goVirusServer.inc:229
+#: admin/systems/services/imap/class_goImapServer.inc:207
+msgid "Stop"
+msgstr "Beenden"
+
+#: personal/mail/sieve/templates/element_stop.tpl:9
+msgid "Stop execution here"
+msgstr "Beende Ausführung hier"
+
+#: personal/mail/sieve/templates/element_anyof.tpl:10
+#: personal/mail/sieve/class_sieveManagement.inc:595
+msgid "Any of"
+msgstr "Einer von"
+
+#: personal/mail/sieve/templates/element_if.tpl:4
+#: personal/mail/sieve/class_sieveElement_If.inc:834
+msgid "Condition"
+msgstr "Bedingung"
+
+#: personal/mail/sieve/templates/element_size.tpl:4
+#: personal/mail/sieve/class_sieveManagement.inc:592
+#: addons/mailqueue/contents.tpl:54
+msgid "Size"
+msgstr "Größe"
+
+#: personal/mail/sieve/templates/element_size.tpl:16
+msgid "Select match type"
+msgstr "Wählen Sie eine Art der Übereinstimmung"
+
+#: personal/mail/sieve/templates/element_size.tpl:20
+msgid "Select value unit"
+msgstr "Wählen Sie die Werteinheit"
+
+#: personal/mail/sieve/templates/add_element.tpl:1
+msgid "Add a new element"
+msgstr "Füge ein neues Element ein"
+
+#: personal/mail/sieve/templates/add_element.tpl:2
+msgid "Please select the type of element you want to add"
+msgstr "Bitte wählen Sie den Typ des Elements, das Sie hinzufügen möchten"
+
+#: personal/mail/sieve/templates/add_element.tpl:11
+#: personal/mail/sieve/templates/select_test_type.tpl:11
+msgid "Continue"
+msgstr "Fortsetzen"
+
+#: personal/mail/sieve/templates/add_element.tpl:13
+msgid "Abort"
+msgstr "Abbrechen"
+
+#: personal/mail/sieve/templates/element_comment.tpl:4
+#: personal/mail/sieve/templates/object_container.tpl:23
+#: personal/mail/sieve/class_sieveManagement.inc:494
+#: personal/mail/sieve/class_sieveManagement.inc:713
+msgid "Comment"
+msgstr "Kommentar"
+
+#: personal/mail/sieve/templates/element_comment.tpl:8
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:8
+msgid "Move this object up one position"
+msgstr "Verschiebe dieses Objekt um eine Position nach oben"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:8
+#: personal/mail/sieve/templates/object_container.tpl:8
+msgid "Up"
+msgstr "Auf"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:9
+#: personal/mail/sieve/templates/object_container.tpl:9
+msgid "Move up"
+msgstr "Nach oben bewegen"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:12
+msgid "Move this object down one position"
+msgstr "Verschiebe dieses Objekt um eine Position nach unten"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:12
+#: personal/mail/sieve/templates/object_container.tpl:12
+msgid "Down"
+msgstr "Ab"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:13
+#: personal/mail/sieve/templates/object_container.tpl:13
+msgid "Move down"
+msgstr "Nach unten bewegen"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:16
+msgid "Remove this object"
+msgstr "Dieses Objekt entfernen"
+
+#: personal/mail/sieve/templates/object_container_clear.tpl:17
+#: personal/mail/sieve/templates/object_container.tpl:17
+msgid "Remove element"
+msgstr "Element entfernen"
+
+#: personal/mail/sieve/templates/create_script.tpl:2
+msgid ""
+"Please enter the name for the new script below. Script names must consist of "
+"lower case characters only."
+msgstr ""
+"Bitte geben Sie den Namen für das neue Skript unten ein. Skriptnamen dürfen "
+"ausschliesslich aus Kleinbuchstaben bestehen."
+
+#: personal/mail/sieve/templates/create_script.tpl:8
+msgid "Script name"
+msgstr "Skriptname"
+
+#: personal/mail/sieve/templates/import_script.tpl:1
+msgid "Import sieve script"
+msgstr "Sieve-Skript importieren"
+
+#: personal/mail/sieve/templates/import_script.tpl:2
+msgid ""
+"Please select the sieve script you want to import. Use the import button to "
+"import the script or the cancel button to abort."
+msgstr ""
+"Bitte wählen Sie das zu importierende Sieve-Skript. Verwenden Sie den Import-"
+"Knopf um das Skript zu importieren oder den Abbrechen-Knopf um abzubrechen."
+
+#: personal/mail/sieve/templates/import_script.tpl:5
+msgid "Script to import"
+msgstr "Zu importierendes Skript"
+
+#: personal/mail/sieve/templates/import_script.tpl:12
+#: personal/mail/sieve/templates/edit_frame_base.tpl:7
+#: personal/mail/generic.tpl:256
+msgid "Import"
+msgstr "Importieren"
+
+#: personal/mail/sieve/templates/element_keep.tpl:4
+#: personal/mail/sieve/templates/object_container.tpl:22
+#: personal/mail/sieve/templates/object_container.tpl:25
+#: personal/mail/sieve/class_sieveManagement.inc:493
+#: personal/mail/sieve/class_sieveManagement.inc:496
+#: personal/mail/sieve/class_sieveManagement.inc:712
+#: personal/mail/sieve/class_sieveManagement.inc:715
+msgid "Keep"
+msgstr "Behalten"
+
+#: personal/mail/sieve/templates/element_keep.tpl:9
+msgid "Keep message"
+msgstr "Nachricht behalten"
+
+#: personal/mail/sieve/templates/element_redirect.tpl:13
+#: personal/mail/sieve/templates/object_container.tpl:27
+#: personal/mail/sieve/class_sieveManagement.inc:498
+#: personal/mail/sieve/class_sieveManagement.inc:717
+msgid "Redirect"
+msgstr "Umleiten"
+
+#: personal/mail/sieve/templates/element_redirect.tpl:18
+msgid "Redirect mail to following recipients"
+msgstr "Leite Mail an die folgenden Empfänger um"
+
+#: personal/mail/sieve/templates/element_discard.tpl:4
+#: personal/mail/sieve/templates/object_container.tpl:26
+#: personal/mail/sieve/class_sieveManagement.inc:497
+#: personal/mail/sieve/class_sieveManagement.inc:716
+msgid "Discard"
+msgstr "Verwerfen"
+
+#: personal/mail/sieve/templates/element_discard.tpl:9
+msgid "Discard message"
+msgstr "Verwerfe Nachricht"
+
+#: personal/mail/sieve/templates/element_require.tpl:12
+#: personal/mail/sieve/templates/object_container.tpl:29
+#: personal/mail/sieve/class_sieveManagement.inc:500
+#: personal/mail/sieve/class_sieveManagement.inc:719
+msgid "Require"
+msgstr "Benötigt"
+
+#: personal/mail/sieve/templates/object_container.tpl:8
+msgid "Move object up one position"
+msgstr "Verschiebe dieses Objekt um eine Position nach oben"
+
+#: personal/mail/sieve/templates/object_container.tpl:12
+msgid "Move object down one position"
+msgstr "Verschiebe dieses Objekt um eine Position nach unten"
+
+#: personal/mail/sieve/templates/object_container.tpl:16
+#: personal/mail/sieve/templates/object_test_container.tpl:10
+msgid "Remove object"
+msgstr "Objekt entfernen"
+
+#: personal/mail/sieve/templates/object_container.tpl:21
+msgid "choose element"
+msgstr "Wähle Element"
+
+#: personal/mail/sieve/templates/object_container.tpl:24
+msgid "Fileinto"
+msgstr "Ablegen unter"
+
+#: personal/mail/sieve/templates/object_container.tpl:28
+#: personal/mail/sieve/class_sieveManagement.inc:499
+#: personal/mail/sieve/class_sieveManagement.inc:718
+msgid "Reject"
+msgstr "Ablehnen"
+
+#: personal/mail/sieve/templates/object_container.tpl:32
+#: personal/mail/sieve/class_sieveManagement.inc:503
+#: personal/mail/sieve/class_sieveManagement.inc:722
+#: personal/mail/sieve/class_sieveElement_If.inc:836
+msgid "If"
+msgstr "Wenn"
+
+#: personal/mail/sieve/templates/object_container.tpl:33
+#: personal/mail/sieve/templates/element_else.tpl:4
+#: personal/mail/sieve/class_sieveManagement.inc:562
+#: personal/mail/sieve/class_sieveManagement.inc:757
+#: personal/mail/sieve/class_sieveElement_If.inc:840
+msgid "Else"
+msgstr "Sonst"
+
+#: personal/mail/sieve/templates/object_container.tpl:34
+#: personal/mail/sieve/templates/element_elsif.tpl:4
+#: personal/mail/sieve/class_sieveManagement.inc:564
+#: personal/mail/sieve/class_sieveManagement.inc:759
+#: personal/mail/sieve/class_sieveManagement.inc:764
+#: personal/mail/sieve/class_sieveElement_If.inc:838
+msgid "Else If"
+msgstr "Sonst Wenn"
+
+#: personal/mail/sieve/templates/object_container.tpl:38
+#: personal/mail/sieve/templates/object_container.tpl:42
+msgid "Add new"
+msgstr "Neu hinzufügen"
+
+#: personal/mail/sieve/templates/object_container.tpl:38
+#: personal/mail/sieve/templates/object_container.tpl:40
+msgid "Add a new object above this one."
+msgstr "Füge ein neues Objekt oberhalb ein."
+
+#: personal/mail/sieve/templates/object_container.tpl:40
+msgid "Add element above"
+msgstr "Füge Element oberhalb ein"
+
+#: personal/mail/sieve/templates/object_container.tpl:42
+#: personal/mail/sieve/templates/object_container.tpl:44
+msgid "Add a new object below this one."
+msgstr "Füge ein neues Objekt unterhalb ein."
+
+#: personal/mail/sieve/templates/object_container.tpl:44
+msgid "Add element below"
+msgstr "Füge Element unterhalb ein"
+
+#: personal/mail/sieve/templates/object_test_container.tpl:6
+msgid "Add object"
+msgstr "Objekt hinzufügen"
+
+#: personal/mail/sieve/templates/element_boolean.tpl:4
+msgid "Bool"
+msgstr "Schalter"
+
+#: personal/mail/sieve/templates/element_boolean.tpl:8
+msgid "update"
+msgstr "aktualisieren"
+
+#: personal/mail/sieve/templates/edit_frame_base.tpl:6
+msgid "Export"
+msgstr "Export"
+
+#: personal/mail/sieve/templates/edit_frame_base.tpl:12
+msgid "View structured"
+msgstr "Strukturierte Ansicht"
+
+#: personal/mail/sieve/templates/edit_frame_base.tpl:14
+msgid "View source"
+msgstr "Zeige Quelltext"
+
+#: personal/mail/sieve/templates/management.tpl:1
+msgid "List of sieve scripts"
+msgstr "Liste der Sieve-Skripte"
+
+#: personal/mail/sieve/templates/management.tpl:5
+msgid ""
+"Connection to the sieve server could not be established, the "
+"authentification attribute is empty."
+msgstr ""
+"Die Verbindung zum Sieve-Server konnte nicht hergestellt werden, das "
+"Authentifizierungsattribut ist leer."
+
+#: personal/mail/sieve/templates/management.tpl:6
+msgid ""
+"Please verify that the attributes uid and mail are not empty and try again."
+msgstr ""
+"Bitte überprüfen Sie, dass die Attribute uid und mail nicht leer sind und "
+"versuchen Sie es erneut."
+
+#: personal/mail/sieve/templates/management.tpl:12
+msgid "Connection to the sieve server could not be established."
+msgstr "Die Verbindung zum Sieve-Server konnte nicht hergestellt werden."
+
+#: personal/mail/sieve/templates/management.tpl:15
+msgid "Possibly the sieve account has not been created yet."
+msgstr "Wahrscheinlich wurde das Sieve-Konto noch nicht erstellt."
+
+#: personal/mail/sieve/templates/management.tpl:19
+msgid ""
+"Be careful. All your changes will be saved directly to sieve, if you use the "
+"save button below."
+msgstr ""
+"Bitte seien Sie vorsichtig. Alle Änderungen werden direkt für Sieve "
+"übernommen, wenn Sie den 'Speichern'-Knopf drücken."
+
+#: personal/mail/sieve/templates/management.tpl:22
+msgid "Create new script"
+msgstr "Neues Skript erstellen"
+
+#: personal/mail/sieve/templates/select_test_type.tpl:1
+msgid "Select the type of test you want to add"
+msgstr "Wählen Sie die Art des Tests, den Sie hinzufügen möchten"
+
+#: personal/mail/sieve/templates/select_test_type.tpl:3
+msgid "Available test types"
+msgstr "Verfügbare Testarten"
+
+#: personal/mail/sieve/templates/remove_script.tpl:6
+msgid ""
+"Please double check if your really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+"Bitte überprüfen Sie genau, was Sie tun. GOsa hat keine Möglichkeit, die "
+"Daten wiederherzustellen."
+
+#: personal/mail/sieve/templates/remove_script.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"script in a file. So - if you've done so - press 'Delete' to continue or "
+"'Cancel' to abort."
+msgstr ""
+"Eine Sicherung des Skripts bietet sich an. Wenn Sie dies erledigt haben, "
+"drücken Sie 'Entfernen' um Fortzufahren oder 'Abbrechen', um den Vorgang "
+"abzubrechen."
+
+#: personal/mail/sieve/templates/element_fileinto.tpl:4
+msgid "Move mail into folder"
+msgstr "Verschiebe Nachricht in Ordner"
+
+#: personal/mail/sieve/templates/element_fileinto.tpl:8
+msgid "Select from list"
+msgstr "Wählen Sie aus der Liste"
+
+#: personal/mail/sieve/templates/element_fileinto.tpl:10
+msgid "Manual selection"
+msgstr "Manuelle Auswahl"
+
+#: personal/mail/sieve/templates/element_fileinto.tpl:18
+msgid "Folder"
+msgstr "Ordner"
+
+#: personal/mail/sieve/templates/element_envelope.tpl:16
+#: personal/mail/sieve/templates/element_envelope.tpl:105
+#: personal/mail/sieve/class_sieveManagement.inc:591
+msgid "Envelope"
+msgstr "Umschlag"
+
+#: personal/mail/sieve/templates/element_envelope.tpl:60
+#: personal/mail/sieve/templates/element_address.tpl:69
+msgid "Operator"
+msgstr "Operator"
+
+#: personal/mail/sieve/templates/element_address.tpl:15
+#: personal/mail/sieve/templates/element_address.tpl:113
+#: personal/mail/sieve/class_sieveManagement.inc:589
+msgid "Address"
+msgstr "Adresse"
+
+#: personal/mail/sieve/templates/element_address.tpl:48
+msgid "Part of address that should be used"
+msgstr "Zu verwendender Teil der Adresse"
+
+#: personal/mail/sieve/templates/element_exists.tpl:8
+#: personal/mail/sieve/class_sieveManagement.inc:593
+msgid "Exists"
+msgstr "Vorhanden"
+
+#: personal/mail/sieve/templates/element_vacation.tpl:13
+msgid "Vacation Message"
+msgstr "Urlaubsnachricht"
+
+#: personal/mail/sieve/templates/element_vacation.tpl:21
+msgid "Release interval"
+msgstr "Freigabe-Intervall"
+
+#: personal/mail/sieve/templates/element_vacation.tpl:25
+msgid "days"
+msgstr "Tage"
+
+#: personal/mail/sieve/templates/element_vacation.tpl:30
+msgid "Alternative sender addresses"
+msgstr "Alternative Absender-Adressen"
+
+#: personal/mail/sieve/templates/element_reject.tpl:14
+msgid "Reject mail"
+msgstr "Mail ablehnen"
+
+#: personal/mail/sieve/templates/element_reject.tpl:17
+msgid "This is a multiline text element"
+msgstr "Dies ist ein mehrzeiliges Text-Element"
+
+#: personal/mail/sieve/templates/element_reject.tpl:19
+msgid "This is stored as single string"
+msgstr "Dies wird als einzelne Zeichenkette gespeichert"
+
+#: personal/mail/sieve/class_sieveElement_Vacation.inc:148
+msgid "Alternative sender address must be a valid email addresses."
+msgstr "Weitere Absender-Adresse muss eine gültige Email-Adresse sein."
+
 #: personal/mail/sieve/class_sieveManagement.inc:114
 #: personal/mail/sieve/class_sieveManagement.inc:242
 msgid "Parse failed"
@@ -100,27 +880,6 @@ msgid ""
 msgstr ""
 "Der angegebene Mail-Server '%s' wurde nicht in Ihrer GOsa-Konfiguration "
 "gefunden."
-
-#: personal/mail/sieve/class_sieveManagement.inc:201
-#: personal/mail/sieve/class_sieveManagement.inc:206
-#: personal/mail/sieve/class_sieveManagement.inc:212
-#: personal/mail/sieve/class_sieveManagement.inc:218
-#: personal/mail/sieve/class_sieveManagement.inc:429
-#: personal/mail/sieve/class_My_Tree.inc:660
-#: personal/mail/class_mailAccount.inc:348
-#: personal/mail/class_mailAccount.inc:364
-#: personal/mail/class_mailAccount.inc:371
-#: personal/mail/class_mailAccount.inc:400
-#: personal/mail/class_mailAccount.inc:408
-#: personal/mail/class_mailAccount.inc:420 addons/mailqueue/contents.tpl:58
-#: admin/systems/services/spam/class_goSpamServer.inc:143
-#: admin/systems/services/spam/class_goSpamServer.inc:217
-#: admin/groups/mail/class_groupMail.inc:437
-#: admin/groups/mail/class_groupMail.inc:441
-#: admin/groups/mail/class_groupMail.inc:467
-#: admin/groups/mail/class_groupMail.inc:472
-msgid "Error"
-msgstr "Fehler"
 
 #: personal/mail/sieve/class_sieveManagement.inc:201
 msgid "No script name specified!"
@@ -201,138 +960,14 @@ msgstr "Kann nicht auf temporäre Datei '%s' zugreifen!"
 msgid "Cannot open temporary file '%s'!"
 msgstr "Kann temporäre Datei '%s' nicht öffnen!"
 
-#: personal/mail/sieve/class_sieveManagement.inc:493
-#: personal/mail/sieve/class_sieveManagement.inc:496
-#: personal/mail/sieve/class_sieveManagement.inc:712
-#: personal/mail/sieve/class_sieveManagement.inc:715
-#: personal/mail/sieve/templates/element_keep.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:22
-#: personal/mail/sieve/templates/object_container.tpl:25
-msgid "Keep"
-msgstr "Behalten"
-
-#: personal/mail/sieve/class_sieveManagement.inc:494
-#: personal/mail/sieve/class_sieveManagement.inc:713
-#: personal/mail/sieve/templates/element_comment.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:23
-msgid "Comment"
-msgstr "Kommentar"
-
 #: personal/mail/sieve/class_sieveManagement.inc:495
 #: personal/mail/sieve/class_sieveManagement.inc:714
 msgid "File into"
 msgstr "Ablegen unter"
 
-#: personal/mail/sieve/class_sieveManagement.inc:497
-#: personal/mail/sieve/class_sieveManagement.inc:716
-#: personal/mail/sieve/templates/element_discard.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:26
-msgid "Discard"
-msgstr "Verwerfen"
-
-#: personal/mail/sieve/class_sieveManagement.inc:498
-#: personal/mail/sieve/class_sieveManagement.inc:717
-#: personal/mail/sieve/templates/element_redirect.tpl:13
-#: personal/mail/sieve/templates/object_container.tpl:27
-msgid "Redirect"
-msgstr "Umleiten"
-
-#: personal/mail/sieve/class_sieveManagement.inc:499
-#: personal/mail/sieve/class_sieveManagement.inc:718
-#: personal/mail/sieve/templates/object_container.tpl:28
-msgid "Reject"
-msgstr "Ablehnen"
-
-#: personal/mail/sieve/class_sieveManagement.inc:500
-#: personal/mail/sieve/class_sieveManagement.inc:719
-#: personal/mail/sieve/templates/element_require.tpl:12
-#: personal/mail/sieve/templates/object_container.tpl:29
-msgid "Require"
-msgstr "Benötigt"
-
-#: personal/mail/sieve/class_sieveManagement.inc:501
-#: personal/mail/sieve/class_sieveManagement.inc:720
-#: personal/mail/sieve/templates/element_stop.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:30
-#: admin/systems/services/imap/class_goImapServer.inc:207
-#: admin/systems/services/virus/class_goVirusServer.inc:229
-msgid "Stop"
-msgstr "Beenden"
-
-#: personal/mail/sieve/class_sieveManagement.inc:502
-#: personal/mail/sieve/class_sieveManagement.inc:721
-#: personal/mail/sieve/templates/element_vacation.tpl:44
-#: personal/mail/sieve/templates/object_container.tpl:31
-#: personal/mail/generic.tpl:241 personal/mail/class_mailAccount.inc:1186
-msgid "Vacation message"
-msgstr "Urlaubsbenachrichtigung"
-
-#: personal/mail/sieve/class_sieveManagement.inc:503
-#: personal/mail/sieve/class_sieveManagement.inc:722
-#: personal/mail/sieve/templates/object_container.tpl:32
-#: personal/mail/sieve/class_sieveElement_If.inc:836
-msgid "If"
-msgstr "Wenn"
-
 #: personal/mail/sieve/class_sieveManagement.inc:519
 msgid "Cannot add new element!"
 msgstr "Kann neues Element nicht einfügen!"
-
-#: personal/mail/sieve/class_sieveManagement.inc:562
-#: personal/mail/sieve/class_sieveManagement.inc:757
-#: personal/mail/sieve/templates/element_else.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:33
-#: personal/mail/sieve/class_sieveElement_If.inc:840
-msgid "Else"
-msgstr "Sonst"
-
-#: personal/mail/sieve/class_sieveManagement.inc:564
-#: personal/mail/sieve/class_sieveManagement.inc:759
-#: personal/mail/sieve/class_sieveManagement.inc:764
-#: personal/mail/sieve/templates/element_elsif.tpl:4
-#: personal/mail/sieve/templates/object_container.tpl:34
-#: personal/mail/sieve/class_sieveElement_If.inc:838
-msgid "Else If"
-msgstr "Sonst Wenn"
-
-#: personal/mail/sieve/class_sieveManagement.inc:589
-#: personal/mail/sieve/templates/element_address.tpl:15
-#: personal/mail/sieve/templates/element_address.tpl:113
-msgid "Address"
-msgstr "Adresse"
-
-#: personal/mail/sieve/class_sieveManagement.inc:590
-#: personal/mail/sieve/templates/element_header.tpl:16
-#: personal/mail/sieve/templates/element_header.tpl:106
-msgid "Header"
-msgstr "Kopfzeilen"
-
-#: personal/mail/sieve/class_sieveManagement.inc:591
-#: personal/mail/sieve/templates/element_envelope.tpl:16
-#: personal/mail/sieve/templates/element_envelope.tpl:105
-msgid "Envelope"
-msgstr "Umschlag"
-
-#: personal/mail/sieve/class_sieveManagement.inc:592
-#: personal/mail/sieve/templates/element_size.tpl:4
-#: addons/mailqueue/contents.tpl:54
-msgid "Size"
-msgstr "Größe"
-
-#: personal/mail/sieve/class_sieveManagement.inc:593
-#: personal/mail/sieve/templates/element_exists.tpl:8
-msgid "Exists"
-msgstr "Vorhanden"
-
-#: personal/mail/sieve/class_sieveManagement.inc:594
-#: personal/mail/sieve/templates/element_allof.tpl:10
-msgid "All of"
-msgstr "Alle"
-
-#: personal/mail/sieve/class_sieveManagement.inc:595
-#: personal/mail/sieve/templates/element_anyof.tpl:10
-msgid "Any of"
-msgstr "Einer von"
 
 #: personal/mail/sieve/class_sieveManagement.inc:596
 #: personal/mail/sieve/class_sieveElement_If.inc:915
@@ -345,7 +980,7 @@ msgid "False"
 msgstr "falsch"
 
 #: personal/mail/sieve/class_sieveManagement.inc:634
-#: addons/mailqueue/contents.tpl:76 addons/mailqueue/class_mailqueue.inc:390
+#: addons/mailqueue/contents.tpl:76 addons/mailqueue/class_mailqueue.inc:391
 msgid "Active"
 msgstr "Aktiv"
 
@@ -389,476 +1024,13 @@ msgstr "Kann Sieve-Skript nicht speichern: %s"
 msgid "Failed to save sieve script"
 msgstr "Fehler beim Speichern des Sieve-Skriptes"
 
-#: personal/mail/sieve/class_My_Tree.inc:245
-#: personal/mail/sieve/templates/remove_script.tpl:2
-#: personal/mail/class_mail-methods-cyrus.inc:52
-msgid "Warning"
-msgstr "Warnung"
-
-#: personal/mail/sieve/class_My_Tree.inc:245
-msgid "Cannot remove last element!"
-msgstr "Kann letztes Element nicht entfernen!"
-
-#: personal/mail/sieve/class_My_Tree.inc:658
-msgid "Require must be the first command in the script."
-msgstr "Require muss das erste Kommando im Skript sein."
-
-#: personal/mail/sieve/templates/element_fileinto.tpl:4
-msgid "Move mail into folder"
-msgstr "Verschiebe Nachricht in Ordner"
-
-#: personal/mail/sieve/templates/element_fileinto.tpl:8
-msgid "Select from list"
-msgstr "Wählen Sie aus der Liste"
-
-#: personal/mail/sieve/templates/element_fileinto.tpl:10
-msgid "Manual selection"
-msgstr "Manuelle Auswahl"
-
-#: personal/mail/sieve/templates/element_fileinto.tpl:18
-msgid "Folder"
-msgstr "Ordner"
-
-#: personal/mail/sieve/templates/object_test_container.tpl:6
-msgid "Add object"
-msgstr "Objekt hinzufügen"
-
-#: personal/mail/sieve/templates/object_test_container.tpl:10
-#: personal/mail/sieve/templates/object_container.tpl:16
-msgid "Remove object"
-msgstr "Objekt entfernen"
-
-#: personal/mail/sieve/templates/element_allof.tpl:5
-#: personal/mail/sieve/templates/element_envelope.tpl:108
-#: personal/mail/sieve/templates/element_exists.tpl:10
-#: personal/mail/sieve/templates/element_size.tpl:11
-#: personal/mail/sieve/templates/element_anyof.tpl:5
-#: personal/mail/sieve/templates/element_header.tpl:109
-#: personal/mail/sieve/templates/element_address.tpl:116
-msgid "Not"
-msgstr "Nicht"
-
-#: personal/mail/sieve/templates/element_allof.tpl:5
-#: personal/mail/sieve/templates/element_allof.tpl:7
-#: personal/mail/sieve/templates/element_envelope.tpl:41
-#: personal/mail/sieve/templates/element_envelope.tpl:43
-#: personal/mail/sieve/templates/element_exists.tpl:10
-#: personal/mail/sieve/templates/element_exists.tpl:12
-#: personal/mail/sieve/templates/element_size.tpl:11
-#: personal/mail/sieve/templates/element_size.tpl:13
-#: personal/mail/sieve/templates/element_anyof.tpl:5
-#: personal/mail/sieve/templates/element_anyof.tpl:7
-msgid "Inverse match"
-msgstr "Umgekehrte Übereinstimmung"
-
-#: personal/mail/sieve/templates/element_allof.tpl:7
-#: personal/mail/sieve/templates/element_envelope.tpl:110
-#: personal/mail/sieve/templates/element_exists.tpl:12
-#: personal/mail/sieve/templates/element_size.tpl:13
-#: personal/mail/sieve/templates/element_header.tpl:111
-#: personal/mail/sieve/templates/element_address.tpl:118
-msgid "-"
-msgstr "-"
-
-#: personal/mail/sieve/templates/management.tpl:1
-msgid "List of sieve scripts"
-msgstr "Liste der Sieve-Skripte"
-
-#: personal/mail/sieve/templates/management.tpl:5
-msgid ""
-"Connection to the sieve server could not be established, the "
-"authentification attribute is empty."
-msgstr ""
-"Die Verbindung zum Sieve-Server konnte nicht hergestellt werden, das "
-"Authentifizierungsattribut ist leer."
-
-#: personal/mail/sieve/templates/management.tpl:6
-msgid ""
-"Please verify that the attributes uid and mail are not empty and try again."
-msgstr ""
-"Bitte überprüfen Sie, dass die Attribute uid und mail nicht leer sind und "
-"versuchen Sie es erneut."
-
-#: personal/mail/sieve/templates/management.tpl:12
-msgid "Connection to the sieve server could not be established."
-msgstr "Die Verbindung zum Sieve-Server konnte nicht hergestellt werden."
-
-#: personal/mail/sieve/templates/management.tpl:15
-msgid "Possibly the sieve account has not been created yet."
-msgstr "Wahrscheinlich wurde das Sieve-Konto noch nicht erstellt."
-
-#: personal/mail/sieve/templates/management.tpl:19
-msgid ""
-"Be careful. All your changes will be saved directly to sieve, if you use the "
-"save button below."
-msgstr ""
-"Bitte seien Sie vorsichtig. Alle Änderungen werden direkt für Sieve "
-"übernommen, wenn Sie den 'Speichern'-Knopf drücken."
-
-#: personal/mail/sieve/templates/management.tpl:22
-msgid "Create new script"
-msgstr "Neues Skript erstellen"
-
-#: personal/mail/sieve/templates/element_discard.tpl:9
-msgid "Discard message"
-msgstr "Verwerfe Nachricht"
-
-#: personal/mail/sieve/templates/element_if.tpl:4
-#: personal/mail/sieve/class_sieveElement_If.inc:834
-msgid "Condition"
-msgstr "Bedingung"
-
-#: personal/mail/sieve/templates/edit_frame_base.tpl:6
-msgid "Export"
-msgstr "Export"
-
-#: personal/mail/sieve/templates/edit_frame_base.tpl:7
-#: personal/mail/sieve/templates/import_script.tpl:12
-#: personal/mail/generic.tpl:256
-msgid "Import"
-msgstr "Importieren"
-
-#: personal/mail/sieve/templates/edit_frame_base.tpl:12
-msgid "View structured"
-msgstr "Strukturierte Ansicht"
-
-#: personal/mail/sieve/templates/edit_frame_base.tpl:14
-msgid "View source"
-msgstr "Zeige Quelltext"
-
-#: personal/mail/sieve/templates/element_reject.tpl:14
-msgid "Reject mail"
-msgstr "Mail ablehnen"
-
-#: personal/mail/sieve/templates/element_reject.tpl:17
-msgid "This is a multiline text element"
-msgstr "Dies ist ein mehrzeiliges Text-Element"
-
-#: personal/mail/sieve/templates/element_reject.tpl:19
-msgid "This is stored as single string"
-msgstr "Dies wird als einzelne Zeichenkette gespeichert"
-
-#: personal/mail/sieve/templates/select_test_type.tpl:1
-msgid "Select the type of test you want to add"
-msgstr "Wählen Sie die Art des Tests, den Sie hinzufügen möchten"
-
-#: personal/mail/sieve/templates/select_test_type.tpl:3
-msgid "Available test types"
-msgstr "Verfügbare Testarten"
-
-#: personal/mail/sieve/templates/select_test_type.tpl:11
-#: personal/mail/sieve/templates/add_element.tpl:11
-msgid "Continue"
-msgstr "Fortsetzen"
-
-#: personal/mail/sieve/templates/element_boolean.tpl:4
-msgid "Bool"
-msgstr "Schalter"
-
-#: personal/mail/sieve/templates/element_boolean.tpl:5
-#: personal/mail/sieve/templates/element_envelope.tpl:29
-#: personal/mail/sieve/templates/element_envelope.tpl:52
-#: personal/mail/sieve/templates/element_envelope.tpl:63
-#: personal/mail/sieve/templates/element_envelope.tpl:113
-#: personal/mail/sieve/templates/element_envelope.tpl:118
-#: personal/mail/sieve/templates/element_header.tpl:29
-#: personal/mail/sieve/templates/element_header.tpl:52
-#: personal/mail/sieve/templates/element_header.tpl:63
-#: personal/mail/sieve/templates/element_header.tpl:114
-#: personal/mail/sieve/templates/element_header.tpl:119
-#: personal/mail/sieve/templates/element_address.tpl:28
-#: personal/mail/sieve/templates/element_address.tpl:51
-#: personal/mail/sieve/templates/element_address.tpl:61
-#: personal/mail/sieve/templates/element_address.tpl:72
-#: personal/mail/sieve/templates/element_address.tpl:121
-#: personal/mail/sieve/templates/element_address.tpl:126
-msgid "Boolean value"
-msgstr "Boolscher Wert"
-
-#: personal/mail/sieve/templates/element_boolean.tpl:8
-msgid "update"
-msgstr "aktualisieren"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:13
-msgid "Vacation Message"
-msgstr "Urlaubsnachricht"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:16
-#: personal/mail/sieve/templates/element_envelope.tpl:19
-#: personal/mail/sieve/templates/element_header.tpl:19
-#: personal/mail/sieve/templates/element_address.tpl:18
-msgid "Normal view"
-msgstr "Normale Ansicht"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:21
-msgid "Release interval"
-msgstr "Freigabe-Intervall"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:25
-msgid "days"
-msgstr "Tage"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:30
-msgid "Alternative sender addresses"
-msgstr "Alternative Absender-Adressen"
-
-#: personal/mail/sieve/templates/element_vacation.tpl:47
-#: personal/mail/sieve/templates/element_envelope.tpl:130
-#: personal/mail/sieve/templates/element_header.tpl:131
-#: personal/mail/sieve/templates/element_address.tpl:138
-msgid "Expert view"
-msgstr "Expertenansicht"
-
-#: personal/mail/sieve/templates/remove_script.tpl:6
-msgid ""
-"Please double check if your really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Bitte überprüfen Sie genau, was Sie tun. GOsa hat keine Möglichkeit, die "
-"Daten wiederherzustellen."
-
-#: personal/mail/sieve/templates/remove_script.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"script in a file. So - if you've done so - press 'Delete' to continue or "
-"'Cancel' to abort."
-msgstr ""
-"Eine Sicherung des Skripts bietet sich an. Wenn Sie dies erledigt haben, "
-"drücken Sie 'Entfernen' um Fortzufahren oder 'Abbrechen', um den Vorgang "
-"abzubrechen."
-
-#: personal/mail/sieve/templates/element_envelope.tpl:26
-#: personal/mail/sieve/templates/element_header.tpl:26
-#: personal/mail/sieve/templates/element_address.tpl:25
-msgid "Match type"
-msgstr "Art der Übereinstimmung"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:37
-#: personal/mail/sieve/templates/element_header.tpl:37
-#: personal/mail/sieve/templates/element_address.tpl:36
-msgid "Invert test"
-msgstr "Test umkehren"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:41
-#: personal/mail/sieve/templates/element_header.tpl:41
-#: personal/mail/sieve/templates/element_address.tpl:40
-msgid "Yes"
-msgstr "ja"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:43
-#: personal/mail/sieve/templates/element_header.tpl:43
-#: personal/mail/sieve/templates/element_address.tpl:42
-msgid "No"
-msgstr "nein"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:49
-#: personal/mail/sieve/templates/element_header.tpl:49
-#: personal/mail/sieve/templates/element_address.tpl:58
-msgid "Comparator"
-msgstr "Vergleichsoperator"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:60
-#: personal/mail/sieve/templates/element_address.tpl:69
-msgid "Operator"
-msgstr "Operator"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:76
-#: personal/mail/sieve/templates/element_header.tpl:77
-#: personal/mail/sieve/templates/element_address.tpl:85
-msgid "Address fields to include"
-msgstr "Zu beinhaltende Adressfelder"
-
-#: personal/mail/sieve/templates/element_envelope.tpl:80
-#: personal/mail/sieve/templates/element_header.tpl:81
-#: personal/mail/sieve/templates/element_address.tpl:89
-msgid "Values to match for"
-msgstr "Zutreffende Werte"
-
-#: personal/mail/sieve/templates/element_redirect.tpl:18
-msgid "Redirect mail to following recipients"
-msgstr "Leite Mail an die folgenden Empfänger um"
-
-#: personal/mail/sieve/templates/create_script.tpl:2
-msgid ""
-"Please enter the name for the new script below. Script names must consist of "
-"lower case characters only."
-msgstr ""
-"Bitte geben Sie den Namen für das neue Skript unten ein. Skriptnamen dürfen "
-"ausschliesslich aus Kleinbuchstaben bestehen."
-
-#: personal/mail/sieve/templates/create_script.tpl:8
-msgid "Script name"
-msgstr "Skriptname"
-
-#: personal/mail/sieve/templates/element_size.tpl:16
-msgid "Select match type"
-msgstr "Wählen Sie eine Art der Übereinstimmung"
-
-#: personal/mail/sieve/templates/element_size.tpl:20
-msgid "Select value unit"
-msgstr "Wählen Sie die Werteinheit"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:8
-msgid "Move this object up one position"
-msgstr "Verschiebe dieses Objekt um eine Position nach oben"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:8
-#: personal/mail/sieve/templates/object_container.tpl:8
-msgid "Up"
-msgstr "Auf"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:9
-#: personal/mail/sieve/templates/object_container.tpl:9
-msgid "Move up"
-msgstr "Nach oben bewegen"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:12
-msgid "Move this object down one position"
-msgstr "Verschiebe dieses Objekt um eine Position nach unten"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:12
-#: personal/mail/sieve/templates/object_container.tpl:12
-msgid "Down"
-msgstr "Ab"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:13
-#: personal/mail/sieve/templates/object_container.tpl:13
-msgid "Move down"
-msgstr "Nach unten bewegen"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:16
-msgid "Remove this object"
-msgstr "Dieses Objekt entfernen"
-
-#: personal/mail/sieve/templates/object_container_clear.tpl:17
-#: personal/mail/sieve/templates/object_container.tpl:17
-msgid "Remove element"
-msgstr "Element entfernen"
-
-#: personal/mail/sieve/templates/element_stop.tpl:9
-msgid "Stop execution here"
-msgstr "Beende Ausführung hier"
-
-#: personal/mail/sieve/templates/element_comment.tpl:8
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: personal/mail/sieve/templates/element_keep.tpl:9
-msgid "Keep message"
-msgstr "Nachricht behalten"
-
-#: personal/mail/sieve/templates/object_container.tpl:8
-msgid "Move object up one position"
-msgstr "Verschiebe dieses Objekt um eine Position nach oben"
-
-#: personal/mail/sieve/templates/object_container.tpl:12
-msgid "Move object down one position"
-msgstr "Verschiebe dieses Objekt um eine Position nach unten"
-
-#: personal/mail/sieve/templates/object_container.tpl:21
-msgid "choose element"
-msgstr "Wähle Element"
-
-#: personal/mail/sieve/templates/object_container.tpl:24
-msgid "Fileinto"
-msgstr "Ablegen unter"
-
-#: personal/mail/sieve/templates/object_container.tpl:38
-#: personal/mail/sieve/templates/object_container.tpl:42
-msgid "Add new"
-msgstr "Neu hinzufügen"
-
-#: personal/mail/sieve/templates/object_container.tpl:38
-#: personal/mail/sieve/templates/object_container.tpl:40
-msgid "Add a new object above this one."
-msgstr "Füge ein neues Objekt oberhalb ein."
-
-#: personal/mail/sieve/templates/object_container.tpl:40
-msgid "Add element above"
-msgstr "Füge Element oberhalb ein"
-
-#: personal/mail/sieve/templates/object_container.tpl:42
-#: personal/mail/sieve/templates/object_container.tpl:44
-msgid "Add a new object below this one."
-msgstr "Füge ein neues Objekt unterhalb ein."
-
-#: personal/mail/sieve/templates/object_container.tpl:44
-msgid "Add element below"
-msgstr "Füge Element unterhalb ein"
-
-#: personal/mail/sieve/templates/add_element.tpl:1
-msgid "Add a new element"
-msgstr "Füge ein neues Element ein"
-
-#: personal/mail/sieve/templates/add_element.tpl:2
-msgid "Please select the type of element you want to add"
-msgstr "Bitte wählen Sie den Typ des Elements, das Sie hinzufügen möchten"
-
-#: personal/mail/sieve/templates/add_element.tpl:13
-msgid "Abort"
-msgstr "Abbrechen"
-
-#: personal/mail/sieve/templates/element_header.tpl:60
-msgid "operator"
-msgstr "Operator"
-
-#: personal/mail/sieve/templates/import_script.tpl:1
-msgid "Import sieve script"
-msgstr "Sieve-Skript importieren"
-
-#: personal/mail/sieve/templates/import_script.tpl:2
-msgid ""
-"Please select the sieve script you want to import. Use the import button to "
-"import the script or the cancel button to abort."
-msgstr ""
-"Bitte wählen Sie das zu importierende Sieve-Skript. Verwenden Sie den Import-"
-"Knopf um das Skript zu importieren oder den Abbrechen-Knopf um abzubrechen."
-
-#: personal/mail/sieve/templates/import_script.tpl:5
-msgid "Script to import"
-msgstr "Zu importierendes Skript"
-
-#: personal/mail/sieve/templates/element_address.tpl:48
-msgid "Part of address that should be used"
-msgstr "Zu verwendender Teil der Adresse"
-
-#: personal/mail/sieve/class_sieveElement_Reject.inc:21
-msgid "Invalid character found, quotes are not allowed in a reject message."
-msgstr ""
-"Ungültiges Zeichen gefunden, Hochkommata sind in der Ablehnungsmeldung nicht "
-"erlaubt."
-
-#: personal/mail/sieve/class_sieveElement_Reject.inc:37
-msgid "Your reject text here"
-msgstr "Ihr Ablehnungstext"
-
-#: personal/mail/sieve/class_sieveElement_Require.inc:73
-msgid "Please specify at least one valid requirement."
-msgstr "Bitte geben Sie mindestens eine gültige Bedingung an."
-
-#: personal/mail/sieve/class_sieveElement_Redirect.inc:24
-msgid "Please specify a valid email address."
-msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
-
-#: personal/mail/sieve/class_sieveElement_Redirect.inc:35
-msgid "Place a mail address here"
-msgstr "Bitte geben Sie eine Mail-Adresse an"
-
-#: personal/mail/sieve/class_sieveElement_Comment.inc:21
-msgid "Your comment here"
-msgstr "Hier folgt Ihr Kommentar"
-
-#: personal/mail/sieve/class_sieveElement_Vacation.inc:148
-msgid "Alternative sender address must be a valid email addresses."
-msgstr "Weitere Absender-Adresse muss eine gültige Email-Adresse sein."
-
 #: personal/mail/sieve/class_sieveElement_If.inc:27
 msgid "Complete address"
 msgstr "Vollständige Adresse"
 
 #: personal/mail/sieve/class_sieveElement_If.inc:27
 #: personal/mail/sieve/class_sieveElement_If.inc:33
-#: admin/groups/mail/class_groupMail.inc:673
+#: admin/groups/mail/class_groupMail.inc:683
 msgid "Default"
 msgstr "Standard"
 
@@ -1024,6 +1196,22 @@ msgstr "Hier klicken, um einen neuen Test hinzuzufügen"
 msgid "Unhandled switch type"
 msgstr "Unbehandelter Weichentyp"
 
+#: personal/mail/sieve/class_sieveElement_Comment.inc:21
+msgid "Your comment here"
+msgstr "Hier folgt Ihr Kommentar"
+
+#: personal/mail/sieve/class_sieveElement_Redirect.inc:24
+msgid "Please specify a valid email address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+#: personal/mail/sieve/class_sieveElement_Redirect.inc:35
+msgid "Place a mail address here"
+msgstr "Bitte geben Sie eine Mail-Adresse an"
+
+#: personal/mail/sieve/class_sieveElement_Require.inc:73
+msgid "Please specify at least one valid requirement."
+msgstr "Bitte geben Sie mindestens eine gültige Bedingung an."
+
 #: personal/mail/generic.tpl:5 admin/systems/services/mail/goMailServer.tpl:1
 #: admin/systems/services/imap/goImapServer.tpl:1 admin/groups/mail/mail.tpl:7
 msgid "Generic"
@@ -1050,21 +1238,19 @@ msgstr "Kontingent-Nutzung"
 msgid "not defined"
 msgstr "nicht definiert"
 
-#: personal/mail/generic.tpl:47 personal/mail/class_mailAccount.inc:958
-#: personal/mail/class_mailAccount.inc:1183
-#: personal/mail/class_mailAccount.inc:1353 admin/groups/mail/mail.tpl:48
-#: admin/groups/mail/class_groupMail.inc:1050
-#: admin/groups/mail/class_groupMail.inc:1249
-msgid "Quota size"
-msgstr "Kontingent-Größe"
+#: personal/mail/generic.tpl:64 personal/mail/copypaste.tpl:25
+#: admin/groups/mail/paste_mail.tpl:23 admin/groups/mail/mail.tpl:102
+msgid "Alternative addresses"
+msgstr "Alternative Adressen"
+
+#: personal/mail/generic.tpl:67 personal/mail/copypaste.tpl:55
+#: admin/groups/mail/paste_mail.tpl:24 admin/groups/mail/mail.tpl:105
+msgid "List of alternative mail addresses"
+msgstr "Liste alternativer Mail-Adressen"
 
 #: personal/mail/generic.tpl:92
 msgid "Mail options"
 msgstr "Mail-Einstellungen"
-
-#: personal/mail/generic.tpl:124 personal/mail/class_mailAccount.inc:1203
-msgid "Use custom sieve script"
-msgstr "Eigenes Sieve-Skript verwenden"
 
 #: personal/mail/generic.tpl:124
 msgid "disables all Mail options!"
@@ -1128,6 +1314,15 @@ msgstr "Mails abweisen, die größer sind als"
 msgid "MB"
 msgstr "MB"
 
+#: personal/mail/generic.tpl:262 personal/mail/copypaste.tpl:13
+msgid "Forward messages to"
+msgstr "Nachrichten weiterleiten an"
+
+#: personal/mail/generic.tpl:285 personal/mail/copypaste.tpl:44
+#: admin/groups/mail/paste_mail.tpl:42 admin/groups/mail/mail.tpl:208
+msgid "Add local"
+msgstr "Lokale hinzufügen"
+
 #: personal/mail/generic.tpl:295
 msgid "Advanced mail options"
 msgstr "Erweiterte Mail-Einstellungen"
@@ -1142,202 +1337,9 @@ msgstr ""
 msgid "User is only allowed to send and receive local mails"
 msgstr "Der Benutzer darf nur lokale Mails senden und empfangen"
 
-#: personal/mail/class_mailAccount.inc:15
-#: personal/mail/class_mailAccount.inc:289
-#: personal/mail/class_mailAccount.inc:299
-#: personal/mail/class_mailAccount.inc:302
-#: personal/mail/class_mailAccount.inc:303
-#: personal/mail/class_mailAccount.inc:306
-#: personal/mail/class_mailAccount.inc:307
-#: personal/mail/class_mailAccount.inc:927
-#: personal/mail/class_mailAccount.inc:1171
-#: personal/mail/class_mailAccount.inc:1347
-#: admin/ogroups/mail/paste_mail.tpl:4
-#: admin/ogroups/mail/class_mailogroup.inc:186
-#: admin/groups/mail/class_groupMail.inc:1238
-msgid "Mail"
-msgstr "Mail"
-
-#: personal/mail/class_mailAccount.inc:16
-#: addons/mailqueue/class_mailqueue.inc:7
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: personal/mail/class_mailAccount.inc:92
-#: personal/mail/class_mailAccount.inc:213
-#: addons/mailqueue/class_mailqueue.inc:65
-#: addons/mailqueue/class_mailqueue.inc:102
-#: addons/mailqueue/class_mailqueue.inc:132
-#: addons/mailqueue/class_mailqueue.inc:194
-#: addons/mailqueue/class_mailqueue.inc:229
-#: addons/mailqueue/class_mailqueue.inc:242
-#: admin/groups/mail/class_groupMail.inc:82
-msgid "Configuration error"
-msgstr "Konfigurationsfehler"
-
-#: personal/mail/class_mailAccount.inc:92
-#, php-format
-msgid "Mail method '%s' is unknown!"
-msgstr "Mail-Methode '%s' ist unbekannt!"
-
-#: personal/mail/class_mailAccount.inc:213
-#, php-format
-msgid "No DESC tag in vacation template '%s'!"
-msgstr "Kein DESC-Tag in der Abwesenheits-Vorlage '%s'!"
-
-#: personal/mail/class_mailAccount.inc:300
-msgid "Mail settings cannot be removed while there are delegations configured!"
-msgstr ""
-"Die Maileinstellungen können nicht entfernt werden, wenn noch Delegationen "
-"konfiguriert sind!"
-
-#: personal/mail/class_mailAccount.inc:348
-msgid "Please select an entry!"
-msgstr "Bitte wählen Sie einen Eintrag!"
-
-#: personal/mail/class_mailAccount.inc:365
-#: personal/mail/class_mailAccount.inc:401
-#: personal/mail/class_mailAccount.inc:409
-#: personal/mail/class_mailAccount.inc:420
-#: personal/mail/class_mailAccount.inc:936
-#: personal/mail/class_mailAccount.inc:940
-#: personal/mail/class_mailAccount.inc:951
-#: personal/mail/class_mailAccount.inc:1181
-#: admin/ogroups/mail/class_mailogroup.inc:86
-#: admin/ogroups/mail/class_mailogroup.inc:93
-#: admin/ogroups/mail/class_mailogroup.inc:194
-#: admin/groups/mail/class_groupMail.inc:472
-#: admin/groups/mail/class_groupMail.inc:1035
-#: admin/groups/mail/class_groupMail.inc:1038
-#: admin/groups/mail/class_groupMail.inc:1044
-#: admin/groups/mail/class_groupMail.inc:1246
-msgid "Mail address"
-msgstr "Mail-Adresse"
-
-#: personal/mail/class_mailAccount.inc:371
-msgid "Cannot add primary address to the list of forwarders!"
-msgstr ""
-"Kann die primäre Adresse nicht in die Liste der Weiterleitungen aufnehmen!"
-
-#: personal/mail/class_mailAccount.inc:421
-#, php-format
-msgid "Address is already in use by user '%s'."
-msgstr "Die Adresse wird bereits von Benutzer '%s' verwendet."
-
-#: personal/mail/class_mailAccount.inc:695
-#: personal/mail/class_mailAccount.inc:863
-#: admin/systems/services/mail/class_goMailServer.inc:582
-#: admin/systems/services/imap/class_goImapServer.inc:187
-#: admin/systems/services/spam/class_goSpamServer.inc:278
-#: admin/systems/services/virus/class_goVirusServer.inc:154
-#: admin/ogroups/mail/class_mailogroup.inc:120
-#: admin/ogroups/mail/class_mailogroup.inc:157
-#: admin/groups/mail/class_groupMail.inc:751
-#: admin/groups/mail/class_groupMail.inc:999
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: personal/mail/class_mailAccount.inc:967
-#: personal/mail/class_mailAccount.inc:975
-#: personal/mail/class_mailAccount.inc:1362
-msgid "Mail reject size"
-msgstr "Maximale Mailgröße"
-
-#: personal/mail/class_mailAccount.inc:979
-#: personal/mail/class_mailAccount.inc:1369
-msgid "Spam folder"
-msgstr "Ordner für Spam"
-
-#: personal/mail/class_mailAccount.inc:983
-#: personal/mail/class_mailAccount.inc:1374
-msgid "Vacation interval"
-msgstr "Urlaubsbenachrichtigungs-Intervall"
-
-#: personal/mail/class_mailAccount.inc:1028
-#: personal/mail/class_mailAccount.inc:1040
-#: personal/mail/class_mailAccount.inc:1073
-#: personal/mail/class_mailAccount.inc:1084
-#: addons/mailqueue/class_mailqueue.inc:93
-#: addons/mailqueue/class_mailqueue.inc:122
-#: addons/mailqueue/class_mailqueue.inc:183
-#: addons/mailqueue/class_mailqueue.inc:213
-msgid "Permission error"
-msgstr "Berechtigungsfehler"
-
-#: personal/mail/class_mailAccount.inc:1028
-#: personal/mail/class_mailAccount.inc:1040
-#: personal/mail/class_mailAccount.inc:1073
-#: personal/mail/class_mailAccount.inc:1084
-msgid "You have no permission to modify these addresses!"
-msgstr "Sie haben keine Berechtigung, diese Adressen zu verändern!"
-
-#: personal/mail/class_mailAccount.inc:1149
-msgid "Waiting for kolab to remove mail properties..."
-msgstr "Warte auf Entfernung der Mail-Einstellungen durch Kolab..."
-
-#: personal/mail/class_mailAccount.inc:1151
-msgid ""
-"Please remove the mail settings first to allow kolab to call its remove "
-"methods!"
-msgstr ""
-"Bitte entfernen Sie zunächst das Mail-Konto, damit Kolab Gelegenheit hat, "
-"die Löschroutinen aufzurufen!"
-
-#: personal/mail/class_mailAccount.inc:1176
-msgid "My account"
-msgstr "Mein Konto"
-
-#: personal/mail/class_mailAccount.inc:1182
-#: admin/groups/mail/class_groupMail.inc:1075
-#: admin/groups/mail/class_groupMail.inc:1250
-msgid "Mail server"
-msgstr "Mail-Server"
-
-#: personal/mail/class_mailAccount.inc:1185
-msgid "Add vacation information"
-msgstr "Urlaubsinformationen hinzufügen"
-
-#: personal/mail/class_mailAccount.inc:1188
-msgid "Use spam filter"
-msgstr "Verwende Spam-Filter"
-
-#: personal/mail/class_mailAccount.inc:1189
-msgid "Spam level"
-msgstr "Spam-Level"
-
-#: personal/mail/class_mailAccount.inc:1190
-msgid "Spam mail box"
-msgstr "Spam-Postfach"
-
-#: personal/mail/class_mailAccount.inc:1192
-msgid "Sieve management"
-msgstr "Sieve Verwaltung"
-
-#: personal/mail/class_mailAccount.inc:1194
-msgid "Reject due to mailsize"
-msgstr "Aufgrund der Mail-Größe abweisen"
-
-#: personal/mail/class_mailAccount.inc:1195
-#: admin/groups/mail/class_groupMail.inc:1059
-msgid "Mail max size"
-msgstr "Maximale Mailgröße"
-
-#: personal/mail/class_mailAccount.inc:1197
-#: personal/mail/class_mailAccount.inc:1202
-msgid "Forwarding address"
-msgstr "Weiterleitungs-Adresse"
-
-#: personal/mail/class_mailAccount.inc:1198
-msgid "Local delivery"
-msgstr "Lokale Zustellung"
-
-#: personal/mail/class_mailAccount.inc:1199
-msgid "No delivery to own mailbox "
-msgstr "Keine Zustellung in eigenes Postfach"
-
-#: personal/mail/class_mailAccount.inc:1200
-msgid "Mail alternative addresses"
-msgstr "Weitere Adressen"
+#: personal/mail/main.inc:126
+msgid "User mail settings"
+msgstr "Benutzer Mail-Einstellungen"
 
 #: personal/mail/class_mail-methods-cyrus.inc:52
 msgid "Mail server for this account is invalid!"
@@ -1382,11 +1384,6 @@ msgstr "Kann das IMAP-Postfach nicht entfernen: '%s'"
 msgid "Cannot activate SIEVE script: %s"
 msgstr "Kann das Sieve-Skript nicht aktivieren: %s"
 
-#: addons/mailqueue/main.inc:43 addons/mailqueue/class_mailqueue.inc:6
-#: addons/mailqueue/class_mailqueue.inc:400
-msgid "Mail queue"
-msgstr "Mail-Warteschlange"
-
 #: addons/mailqueue/contents.tpl:10 addons/mailqueue/contents.tpl:26
 msgid "Search"
 msgstr "Suchen"
@@ -1419,7 +1416,7 @@ msgstr "Entferne alle Nachrichten"
 msgid "Remove all messages from selected servers queue"
 msgstr "Entferne alle Nachrichten aus der Warteschlange des gewählten Servers"
 
-#: addons/mailqueue/contents.tpl:31 addons/mailqueue/class_mailqueue.inc:410
+#: addons/mailqueue/contents.tpl:31 addons/mailqueue/class_mailqueue.inc:411
 msgid "Hold all messages"
 msgstr "Alle Nachrichten vorhalten"
 
@@ -1435,7 +1432,7 @@ msgstr "Alle Nachrichten freigeben"
 msgid "Release all messages in selected servers queue"
 msgstr "Alle Nachrichten in der Warteschlange des gewählten Servers freigeben"
 
-#: addons/mailqueue/contents.tpl:35 addons/mailqueue/class_mailqueue.inc:412
+#: addons/mailqueue/contents.tpl:35 addons/mailqueue/class_mailqueue.inc:413
 msgid "Requeue all messages"
 msgstr "Alle Nachrichten wieder einreihen"
 
@@ -1484,7 +1481,7 @@ msgstr "Nachricht freigeben"
 msgid "hold"
 msgstr "vorhalten"
 
-#: addons/mailqueue/contents.tpl:102 addons/mailqueue/class_mailqueue.inc:414
+#: addons/mailqueue/contents.tpl:102 addons/mailqueue/class_mailqueue.inc:415
 msgid "Hold message"
 msgstr "Nachricht vorhalten"
 
@@ -1504,444 +1501,141 @@ msgstr "Kopfzeilen"
 msgid "Display header from this message"
 msgstr "Zeige Kopfzeilen dieser Nachricht"
 
-#: addons/mailqueue/class_mailqueue.inc:66
+#: addons/mailqueue/main.inc:43 addons/mailqueue/class_mailqueue.inc:6
+#: addons/mailqueue/class_mailqueue.inc:401
+msgid "Mail queue"
+msgstr "Mail-Warteschlange"
+
+#: addons/mailqueue/class_mailqueue.inc:67
 #, php-format
 msgid "Missing '%s' directive in configuration!"
 msgstr "Fehlende '%s' Anweisung in der Konfiguration!"
 
-#: addons/mailqueue/class_mailqueue.inc:94
-#: addons/mailqueue/class_mailqueue.inc:122
-#: addons/mailqueue/class_mailqueue.inc:184
-#: addons/mailqueue/class_mailqueue.inc:214
+#: addons/mailqueue/class_mailqueue.inc:95
+#: addons/mailqueue/class_mailqueue.inc:123
+#: addons/mailqueue/class_mailqueue.inc:185
+#: addons/mailqueue/class_mailqueue.inc:215
 #, php-format
 msgid "You have no permission to submit a '%s' command!"
 msgstr "Sie haben keine Berechtigung, um ein '%s'-Kommando zu senden!"
 
-#: addons/mailqueue/class_mailqueue.inc:103
-#: addons/mailqueue/class_mailqueue.inc:401
-#: addons/mailqueue/class_mailqueue.inc:406
+#: addons/mailqueue/class_mailqueue.inc:104
+#: addons/mailqueue/class_mailqueue.inc:402
+#: addons/mailqueue/class_mailqueue.inc:407
 msgid "Mail queue addon"
 msgstr "Mail-Warteschlangen-Erweiterung"
 
-#: addons/mailqueue/class_mailqueue.inc:133
-#: addons/mailqueue/class_mailqueue.inc:195
-#: addons/mailqueue/class_mailqueue.inc:230
+#: addons/mailqueue/class_mailqueue.inc:134
+#: addons/mailqueue/class_mailqueue.inc:196
+#: addons/mailqueue/class_mailqueue.inc:231
 #, php-format
 msgid "'%s' defined for the '%s' directive cannot be executed!"
 msgstr "'%s' aus der '%s'-Anweisung kann nicht ausgeführt werden!"
 
-#: addons/mailqueue/class_mailqueue.inc:242
+#: addons/mailqueue/class_mailqueue.inc:243
 msgid "No mail servers specified!"
 msgstr "Keine Mail-Server definiert!"
 
-#: addons/mailqueue/class_mailqueue.inc:292
+#: addons/mailqueue/class_mailqueue.inc:293
 msgid "up"
 msgstr "auf"
 
-#: addons/mailqueue/class_mailqueue.inc:294
+#: addons/mailqueue/class_mailqueue.inc:295
 msgid "down"
 msgstr "ab"
 
-#: addons/mailqueue/class_mailqueue.inc:322
-#: addons/mailqueue/class_mailqueue.inc:387
+#: addons/mailqueue/class_mailqueue.inc:323
+#: addons/mailqueue/class_mailqueue.inc:388
 msgid "All"
 msgstr "Alle"
 
-#: addons/mailqueue/class_mailqueue.inc:337
+#: addons/mailqueue/class_mailqueue.inc:338
 msgid "no limit"
 msgstr "keine Beschränkung"
 
-#: addons/mailqueue/class_mailqueue.inc:340
+#: addons/mailqueue/class_mailqueue.inc:341
 msgid "hour"
 msgstr "Stunde"
 
-#: addons/mailqueue/class_mailqueue.inc:342
+#: addons/mailqueue/class_mailqueue.inc:343
 msgid "hours"
 msgstr "Stunden"
 
-#: addons/mailqueue/class_mailqueue.inc:388
+#: addons/mailqueue/class_mailqueue.inc:389
 msgid "Hold"
 msgstr "Vorhalten"
 
-#: addons/mailqueue/class_mailqueue.inc:389
+#: addons/mailqueue/class_mailqueue.inc:390
 msgid "Un hold"
 msgstr "Vorhalten aufheben"
 
-#: addons/mailqueue/class_mailqueue.inc:391
+#: addons/mailqueue/class_mailqueue.inc:392
 msgid "Not active"
 msgstr "inaktiv"
 
-#: addons/mailqueue/class_mailqueue.inc:409
+#: addons/mailqueue/class_mailqueue.inc:410
 msgid "Unhold all messages"
 msgstr "Alle Nachrichten aus der Warteschleife durchstellen"
 
-#: addons/mailqueue/class_mailqueue.inc:411
+#: addons/mailqueue/class_mailqueue.inc:412
 msgid "Delete all messages"
 msgstr "Alle Nachrichten entfernen"
 
-#: addons/mailqueue/class_mailqueue.inc:413
+#: addons/mailqueue/class_mailqueue.inc:414
 msgid "Unhold message"
 msgstr "Nachricht aus der Warteschleife durchstellen"
 
-#: addons/mailqueue/class_mailqueue.inc:415
+#: addons/mailqueue/class_mailqueue.inc:416
 msgid "Delete message"
 msgstr "Entferne Nachricht"
 
-#: addons/mailqueue/class_mailqueue.inc:416
+#: addons/mailqueue/class_mailqueue.inc:417
 msgid "Requeue message"
 msgstr "Nachricht wieder einreihen"
 
-#: addons/mailqueue/class_mailqueue.inc:417
+#: addons/mailqueue/class_mailqueue.inc:418
 msgid "Gathering queue data"
 msgstr "Erfasse Inhalt der Warteschlange"
 
-#: addons/mailqueue/class_mailqueue.inc:418
+#: addons/mailqueue/class_mailqueue.inc:419
 msgid "Get header information"
 msgstr "Hole Kopfzeilen"
 
-#: admin/systems/services/mail/class_goMailServer.inc:45
-#: admin/systems/services/mail/class_goMailServer.inc:512
-msgid "Mail smtp service (Postfix)"
-msgstr "Mail-SMTP Dienst (Postfix)"
-
-#: admin/systems/services/mail/class_goMailServer.inc:600
-#: admin/systems/services/mail/class_goMailServer.inc:711
-msgid "Header size limit"
-msgstr "Kopfgrössenbeschränkung"
-
-#: admin/systems/services/mail/class_goMailServer.inc:603
-msgid "Mailbox size limit"
-msgstr "Maximale Größe der Mailbox"
-
-#: admin/systems/services/mail/class_goMailServer.inc:606
-msgid "Message size limit"
-msgstr "Maximale Größe der Nachricht"
-
-#: admin/systems/services/mail/class_goMailServer.inc:700
-msgid "Mail smtp (Postfix)"
-msgstr "Mail-SMTP (Postfix)"
-
-#: admin/systems/services/mail/class_goMailServer.inc:701
-msgid "Mail smtp - Postfix"
-msgstr "Mail-SMTP - Postfix"
-
-#: admin/systems/services/mail/class_goMailServer.inc:701
-#: admin/systems/services/imap/class_goImapServer.inc:197
-#: admin/systems/services/spam/class_goSpamServer.inc:322
-#: admin/systems/services/virus/class_goVirusServer.inc:220
-msgid "Services"
-msgstr "Dienste"
-
-#: admin/systems/services/mail/class_goMailServer.inc:709
-#: admin/systems/services/mail/goMailServer.tpl:7
-msgid "Visible full qualified hostname"
-msgstr "Voll-Qualifizierter Hostname sichtbar"
-
-#: admin/systems/services/mail/class_goMailServer.inc:710
-msgid "Description"
-msgstr "Beschreibung"
-
-#: admin/systems/services/mail/class_goMailServer.inc:712
-#: admin/systems/services/mail/goMailServer.tpl:26
-msgid "Max mailbox size"
-msgstr "Maximale Größe der Mailbox"
-
-#: admin/systems/services/mail/class_goMailServer.inc:713
-#: admin/systems/services/mail/goMailServer.tpl:35
-msgid "Max message size"
-msgstr "Maximale Nachrichten-Größe"
-
-#: admin/systems/services/mail/class_goMailServer.inc:714
-#: admin/systems/services/mail/goMailServer.tpl:91
-msgid "Domains to accept mail for"
-msgstr "Domänen, für die Mail angenommen wird"
-
-#: admin/systems/services/mail/class_goMailServer.inc:715
-#: admin/systems/services/mail/goMailServer.tpl:60
-msgid "Local networks"
-msgstr "Lokale Netzwerke"
-
-#: admin/systems/services/mail/class_goMailServer.inc:716
-#: admin/systems/services/mail/goMailServer.tpl:45
-msgid "Relay host"
-msgstr "Relay host"
-
-#: admin/systems/services/mail/class_goMailServer.inc:717
-msgid "Transport table"
-msgstr "Transport-Tabelle"
-
-#: admin/systems/services/mail/class_goMailServer.inc:718
-#: admin/systems/services/mail/goMailServer.tpl:149
-msgid "Restrictions for sender"
-msgstr "Einschränkungen für den Sender"
-
-#: admin/systems/services/mail/class_goMailServer.inc:719
-#: admin/systems/services/mail/goMailServer.tpl:175
-msgid "Restrictions for recipient"
-msgstr "Einschränkungen für Empfänger"
-
-#: admin/systems/services/mail/goMailServer.tpl:11
-msgid "The full qualified host name."
-msgstr "Der Voll-Qualifizierte Hostname."
-
-#: admin/systems/services/mail/goMailServer.tpl:16
-msgid "Max mail header size"
-msgstr "Maximale Größe der Mail-Kopfzeilen"
-
-#: admin/systems/services/mail/goMailServer.tpl:21
-msgid "This value specifies the maximal header size."
-msgstr "Dieser Wert legt die maximale Größe der Kopfzeilen fest."
-
-#: admin/systems/services/mail/goMailServer.tpl:21
-#: admin/systems/services/mail/goMailServer.tpl:31
-#: admin/systems/services/mail/goMailServer.tpl:40
-msgid "KB"
-msgstr "KB"
-
-#: admin/systems/services/mail/goMailServer.tpl:31
-msgid "Defines the maximal size of mail box."
-msgstr "Setzt die maximale Größe der Mailbox."
-
-#: admin/systems/services/mail/goMailServer.tpl:40
-msgid "Specify the maximal size of a message."
-msgstr "Setzt die maximale Größe einer Nachricht."
-
-#: admin/systems/services/mail/goMailServer.tpl:50
-msgid "Relay messages to following host:"
-msgstr "Leite Nachrichten zu folgendem Host:"
-
-#: admin/systems/services/mail/goMailServer.tpl:62
-msgid "Postfix networks"
-msgstr "Postfix-Netzwerke"
-
-#: admin/systems/services/mail/goMailServer.tpl:73
-#: admin/systems/services/mail/goMailServer.tpl:104
-#: admin/systems/services/spam/goSpamServer.tpl:48
-#: admin/groups/mail/class_groupMail.inc:627
-msgid "Remove"
-msgstr "Entfernen"
-
-#: admin/systems/services/mail/goMailServer.tpl:83
-msgid "Domains and routing"
-msgstr "Domänen und Weiterleitung"
-
-#: admin/systems/services/mail/goMailServer.tpl:93
-msgid "Postfix is responsible for the following domains:"
-msgstr "Postfix ist verantwortlich für die folgenden Domänen:"
-
-#: admin/systems/services/mail/goMailServer.tpl:114
-msgid "Transports"
-msgstr "Transporte"
-
-#: admin/systems/services/mail/goMailServer.tpl:123
-msgid "Select a transport protocol."
-msgstr "Wählen Sie ein Transport-Protokoll."
-
-#: admin/systems/services/mail/goMailServer.tpl:141
-msgid "Restrictions"
-msgstr "Einschränkungen"
-
-#: admin/systems/services/mail/goMailServer.tpl:157
-#: admin/systems/services/mail/goMailServer.tpl:183
-msgid "Restriction filter"
-msgstr "Einschränkungsmuster"
-
-#: admin/systems/services/mail/goMailServer.tpl:204
-#: admin/systems/services/imap/goImapServer.tpl:99
-msgid "The server must be saved before you can use the status flag."
-msgstr ""
-"Der  Server muss gespeichert werden bevor Sie das Status-Flag verwenden "
-"können."
-
-#: admin/systems/services/mail/goMailServer.tpl:206
-#: admin/systems/services/imap/goImapServer.tpl:101
-msgid "The service must be saved before you can use the status flag."
-msgstr ""
-"Der Dienst muss gespeichert werden bevor Sie den Status-Flag verwenden "
-"können."
-
-#: admin/systems/services/mail/goMailServer.tpl:209
-#: admin/systems/services/imap/goImapServer.tpl:104
-msgid "Set new status"
-msgstr "Setze neuen Status"
-
-#: admin/systems/services/mail/goMailServer.tpl:215
-#: admin/systems/services/imap/goImapServer.tpl:110
-msgid "Set status"
-msgstr "Status setzen"
-
-#: admin/systems/services/mail/goMailServer.tpl:215
-#: admin/systems/services/imap/goImapServer.tpl:110
-msgid "Execute"
-msgstr "Ausführen"
-
-#: admin/systems/services/imap/goImapServer.tpl:7
-#: admin/systems/services/imap/class_goImapServer.inc:110
-#: admin/systems/services/imap/class_goImapServer.inc:211
-msgid "Server identifier"
-msgstr "Serverbezeichnung"
-
-#: admin/systems/services/imap/goImapServer.tpl:16
-#: admin/systems/services/imap/class_goImapServer.inc:113
-#: admin/systems/services/imap/class_goImapServer.inc:115
-#: admin/systems/services/imap/class_goImapServer.inc:212
-msgid "Connect URL"
-msgstr "Verbindungs-URL"
-
-#: admin/systems/services/imap/goImapServer.tpl:25
-#: admin/systems/services/imap/class_goImapServer.inc:126
-#: admin/systems/services/imap/class_goImapServer.inc:213
-msgid "Admin user"
-msgstr "Administrator"
-
-#: admin/systems/services/imap/goImapServer.tpl:34
-#: admin/systems/services/imap/class_goImapServer.inc:129
-msgid "Password"
-msgstr "Passwort"
-
-#: admin/systems/services/imap/goImapServer.tpl:43
-#: admin/systems/services/imap/class_goImapServer.inc:119
-#: admin/systems/services/imap/class_goImapServer.inc:121
-#: admin/systems/services/imap/class_goImapServer.inc:216
-#, fuzzy
-msgid "Sieve connect URL"
-msgstr "Verbindungs-URL"
-
-#: admin/systems/services/imap/goImapServer.tpl:61
-#: admin/systems/services/imap/class_goImapServer.inc:217
-msgid "Start IMAP service"
-msgstr "IMAP-Dienst starten"
-
-#: admin/systems/services/imap/goImapServer.tpl:70
-#: admin/systems/services/imap/class_goImapServer.inc:218
-msgid "Start IMAP SSL service"
-msgstr "IMAP/SSL-Dienst starten"
-
-#: admin/systems/services/imap/goImapServer.tpl:79
-#: admin/systems/services/imap/class_goImapServer.inc:219
-msgid "Start POP3 service"
-msgstr "POP3-Dienst starten"
-
-#: admin/systems/services/imap/goImapServer.tpl:88
-#: admin/systems/services/imap/class_goImapServer.inc:220
-msgid "Start POP3 SSL service"
-msgstr "POP3/SSL-Dienst starten"
-
-#: admin/systems/services/imap/class_goImapServer.inc:48
-msgid "IMAP/POP3 service"
-msgstr "IMAP/POP3-Dienst"
-
-#: admin/systems/services/imap/class_goImapServer.inc:53
-#: admin/systems/services/imap/class_goImapServer.inc:209
-msgid "Repair database"
-msgstr "Datenbank reparieren"
-
-#: admin/systems/services/imap/class_goImapServer.inc:100
-msgid "IMAP/POP3 (Cyrus) service"
-msgstr "IMAP/POP3 (Cyrus) Dienst"
-
-#: admin/systems/services/imap/class_goImapServer.inc:122
-#, fuzzy, php-format
-msgid "Valid options are: %s"
-msgstr "Mail-Einstellungen"
-
-#: admin/systems/services/imap/class_goImapServer.inc:196
-#: admin/systems/services/imap/class_goImapServer.inc:197
-msgid "IMAP/POP3"
-msgstr "IMAP/POP3"
-
-#: admin/systems/services/imap/class_goImapServer.inc:206
-#: admin/systems/services/virus/class_goVirusServer.inc:228
-msgid "Start"
-msgstr "Start"
-
-#: admin/systems/services/imap/class_goImapServer.inc:208
-#: admin/systems/services/virus/class_goVirusServer.inc:230
-msgid "Restart"
-msgstr "Neustart"
-
-#: admin/systems/services/imap/class_goImapServer.inc:214
-msgid "Admin password"
-msgstr "Administrator-Passwort:"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:42
-#: admin/systems/services/spam/class_goSpamServer.inc:321
-#: admin/systems/services/spam/class_goSpamServer.inc:322
-#: admin/systems/services/spam/class_goSpamServer.inc:348
-msgid "Spamassassin"
-msgstr "Spamassassin"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:217
-msgid "Trusted network"
-msgstr "Vertrauenswürdiges Netzwerk"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:288
-msgid "Score"
-msgstr "Ergebnis"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:330
-#: admin/systems/services/spam/goSpamServer.tpl:8
-msgid "Rewrite header"
-msgstr "Nachrichtenkopf bearbeiten"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:331
-msgid "Trusted networks"
-msgstr "gesicherte Netzwerke"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:332
-#: admin/systems/services/spam/goSpamServer.tpl:18
-msgid "Required score"
-msgstr "Benötigter Wert"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:333
-msgid "Rules"
-msgstr "Regeln"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:335
-#: admin/systems/services/spam/goSpamServer.tpl:69
-msgid "Enable use of bayes filtering"
-msgstr "Bayes-Filterung verwenden"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:336
-msgid "Enabled bayes auto learning"
-msgstr "Bayes lernt automatisch"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:337
-#: admin/systems/services/spam/goSpamServer.tpl:75
-msgid "Enable RBL checks"
-msgstr "RBL prüfen"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:338
-#: admin/systems/services/spam/goSpamServer.tpl:86
-msgid "Enable use of Razor"
-msgstr "Razor verwenden"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:339
-#: admin/systems/services/spam/goSpamServer.tpl:89
-msgid "Enable use of DDC"
-msgstr "DDC verwenden"
-
-#: admin/systems/services/spam/class_goSpamServer.inc:340
-#: admin/systems/services/spam/goSpamServer.tpl:92
-msgid "Enable use of Pyzor"
-msgstr "Pyzor verwenden"
-
-#: admin/systems/services/spam/goSpamServerRule.tpl:6
-msgid "Name"
-msgstr "Name"
-
-#: admin/systems/services/spam/goSpamServerRule.tpl:14
-msgid "Rule"
-msgstr "Regel"
-
-#: admin/systems/services/spam/goSpamServer.tpl:22
-msgid "Select required score to tag mail as spam"
-msgstr ""
-"Wählen Sie den gewünschten Wert, ab dem Mail als Spam gekennzeichnet wird."
-
-#: admin/systems/services/spam/goSpamServer.tpl:72
-msgid "Enable bayes auto learning"
-msgstr "Bayes lernt automatisch"
+#: admin/ogroups/mail/paste_mail.tpl:7
+msgid "Please enter a mail address"
+msgstr "Bitte geben Sie eine Mail-Adresse ein"
+
+#: admin/ogroups/mail/class_mailogroup.inc:50
+#: admin/groups/mail/class_groupMail.inc:363
+msgid "Remove mail account"
+msgstr "Mail-Konto entfernen"
+
+#: admin/ogroups/mail/class_mailogroup.inc:51
+#: admin/ogroups/mail/class_mailogroup.inc:54
+msgid "mail group"
+msgstr "Mail-Gruppe"
+
+#: admin/ogroups/mail/class_mailogroup.inc:53
+#: admin/groups/mail/class_groupMail.inc:366
+msgid "Create mail account"
+msgstr "Neues Mail-Konto erzeugen"
+
+#: admin/ogroups/mail/class_mailogroup.inc:86
+#: admin/groups/mail/class_groupMail.inc:1048
+msgid "your-name@your-domain.com"
+msgstr "Ihr-Name@ihre-domain.com"
+
+#: admin/ogroups/mail/class_mailogroup.inc:187
+msgid "Mail group"
+msgstr "Mail-Gruppe"
+
+#: admin/ogroups/mail/mail.tpl:7
+msgid "Mail distribution list"
+msgstr "Mail-Verteilerliste"
+
+#: admin/ogroups/mail/mail.tpl:13
+msgid "Primary mail address for this distribution list"
+msgstr "Primäre Mail-Adresse der Verteilerliste"
 
 #: admin/systems/services/virus/goVirusServer.tpl:5
 msgid "Generic virus filtering"
@@ -2041,55 +1735,387 @@ msgstr "Maximale Verzeichnis-Tiefe"
 msgid "Maximum recursions"
 msgstr "Maximale Rekursions-Tiefe"
 
+#: admin/systems/services/virus/class_goVirusServer.inc:220
+#: admin/systems/services/spam/class_goSpamServer.inc:322
+#: admin/systems/services/mail/class_goMailServer.inc:701
+#: admin/systems/services/imap/class_goImapServer.inc:197
+msgid "Services"
+msgstr "Dienste"
+
+#: admin/systems/services/virus/class_goVirusServer.inc:228
+#: admin/systems/services/imap/class_goImapServer.inc:206
+msgid "Start"
+msgstr "Start"
+
+#: admin/systems/services/virus/class_goVirusServer.inc:230
+#: admin/systems/services/imap/class_goImapServer.inc:208
+msgid "Restart"
+msgstr "Neustart"
+
 #: admin/systems/services/virus/class_goVirusServer.inc:239
 msgid "Anti virus user"
 msgstr "Anti-Virus Benutzer"
 
-#: admin/ogroups/mail/mail.tpl:7
-msgid "Mail distribution list"
-msgstr "Mail-Verteilerliste"
+#: admin/systems/services/spam/goSpamServerRule.tpl:6
+msgid "Name"
+msgstr "Name"
 
-#: admin/ogroups/mail/mail.tpl:13
-msgid "Primary mail address for this distribution list"
-msgstr "Primäre Mail-Adresse der Verteilerliste"
+#: admin/systems/services/spam/goSpamServerRule.tpl:14
+msgid "Rule"
+msgstr "Regel"
 
-#: admin/ogroups/mail/paste_mail.tpl:7
-msgid "Please enter a mail address"
-msgstr "Bitte geben Sie eine Mail-Adresse ein"
+#: admin/systems/services/spam/goSpamServer.tpl:8
+#: admin/systems/services/spam/class_goSpamServer.inc:330
+msgid "Rewrite header"
+msgstr "Nachrichtenkopf bearbeiten"
 
-#: admin/ogroups/mail/class_mailogroup.inc:50
-#: admin/groups/mail/class_groupMail.inc:363
-msgid "Remove mail account"
-msgstr "Mail-Konto entfernen"
+#: admin/systems/services/spam/goSpamServer.tpl:18
+#: admin/systems/services/spam/class_goSpamServer.inc:332
+msgid "Required score"
+msgstr "Benötigter Wert"
 
-#: admin/ogroups/mail/class_mailogroup.inc:51
-#: admin/ogroups/mail/class_mailogroup.inc:54
-msgid "mail group"
-msgstr "Mail-Gruppe"
+#: admin/systems/services/spam/goSpamServer.tpl:22
+msgid "Select required score to tag mail as spam"
+msgstr ""
+"Wählen Sie den gewünschten Wert, ab dem Mail als Spam gekennzeichnet wird."
 
-#: admin/ogroups/mail/class_mailogroup.inc:53
-#: admin/groups/mail/class_groupMail.inc:366
-msgid "Create mail account"
-msgstr "Neues Mail-Konto erzeugen"
+#: admin/systems/services/spam/goSpamServer.tpl:48
+#: admin/systems/services/mail/goMailServer.tpl:73
+#: admin/systems/services/mail/goMailServer.tpl:104
+#: admin/groups/mail/class_groupMail.inc:627
+msgid "Remove"
+msgstr "Entfernen"
 
-#: admin/ogroups/mail/class_mailogroup.inc:86
-#: admin/groups/mail/class_groupMail.inc:1038
-msgid "your-name@your-domain.com"
-msgstr "Ihr-Name@ihre-domain.com"
+#: admin/systems/services/spam/goSpamServer.tpl:69
+#: admin/systems/services/spam/class_goSpamServer.inc:335
+msgid "Enable use of bayes filtering"
+msgstr "Bayes-Filterung verwenden"
 
-#: admin/ogroups/mail/class_mailogroup.inc:187
-msgid "Mail group"
-msgstr "Mail-Gruppe"
+#: admin/systems/services/spam/goSpamServer.tpl:72
+msgid "Enable bayes auto learning"
+msgstr "Bayes lernt automatisch"
 
-#: admin/groups/mail/mail.tpl:17 admin/groups/mail/paste_mail.tpl:12
+#: admin/systems/services/spam/goSpamServer.tpl:75
+#: admin/systems/services/spam/class_goSpamServer.inc:337
+msgid "Enable RBL checks"
+msgstr "RBL prüfen"
+
+#: admin/systems/services/spam/goSpamServer.tpl:86
+#: admin/systems/services/spam/class_goSpamServer.inc:338
+msgid "Enable use of Razor"
+msgstr "Razor verwenden"
+
+#: admin/systems/services/spam/goSpamServer.tpl:89
+#: admin/systems/services/spam/class_goSpamServer.inc:339
+msgid "Enable use of DDC"
+msgstr "DDC verwenden"
+
+#: admin/systems/services/spam/goSpamServer.tpl:92
+#: admin/systems/services/spam/class_goSpamServer.inc:340
+msgid "Enable use of Pyzor"
+msgstr "Pyzor verwenden"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:42
+#: admin/systems/services/spam/class_goSpamServer.inc:321
+#: admin/systems/services/spam/class_goSpamServer.inc:322
+#: admin/systems/services/spam/class_goSpamServer.inc:348
+msgid "Spamassassin"
+msgstr "Spamassassin"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:217
+msgid "Trusted network"
+msgstr "Vertrauenswürdiges Netzwerk"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:288
+msgid "Score"
+msgstr "Ergebnis"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:331
+msgid "Trusted networks"
+msgstr "gesicherte Netzwerke"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:333
+msgid "Rules"
+msgstr "Regeln"
+
+#: admin/systems/services/spam/class_goSpamServer.inc:336
+msgid "Enabled bayes auto learning"
+msgstr "Bayes lernt automatisch"
+
+#: admin/systems/services/mail/goMailServer.tpl:7
+#: admin/systems/services/mail/class_goMailServer.inc:709
+msgid "Visible full qualified hostname"
+msgstr "Voll-Qualifizierter Hostname sichtbar"
+
+#: admin/systems/services/mail/goMailServer.tpl:11
+msgid "The full qualified host name."
+msgstr "Der Voll-Qualifizierte Hostname."
+
+#: admin/systems/services/mail/goMailServer.tpl:16
+msgid "Max mail header size"
+msgstr "Maximale Größe der Mail-Kopfzeilen"
+
+#: admin/systems/services/mail/goMailServer.tpl:21
+msgid "This value specifies the maximal header size."
+msgstr "Dieser Wert legt die maximale Größe der Kopfzeilen fest."
+
+#: admin/systems/services/mail/goMailServer.tpl:21
+#: admin/systems/services/mail/goMailServer.tpl:31
+#: admin/systems/services/mail/goMailServer.tpl:40
+msgid "KB"
+msgstr "KB"
+
+#: admin/systems/services/mail/goMailServer.tpl:26
+#: admin/systems/services/mail/class_goMailServer.inc:712
+msgid "Max mailbox size"
+msgstr "Maximale Größe der Mailbox"
+
+#: admin/systems/services/mail/goMailServer.tpl:31
+msgid "Defines the maximal size of mail box."
+msgstr "Setzt die maximale Größe der Mailbox."
+
+#: admin/systems/services/mail/goMailServer.tpl:35
+#: admin/systems/services/mail/class_goMailServer.inc:713
+msgid "Max message size"
+msgstr "Maximale Nachrichten-Größe"
+
+#: admin/systems/services/mail/goMailServer.tpl:40
+msgid "Specify the maximal size of a message."
+msgstr "Setzt die maximale Größe einer Nachricht."
+
+#: admin/systems/services/mail/goMailServer.tpl:45
+#: admin/systems/services/mail/class_goMailServer.inc:716
+msgid "Relay host"
+msgstr "Relay host"
+
+#: admin/systems/services/mail/goMailServer.tpl:50
+msgid "Relay messages to following host:"
+msgstr "Leite Nachrichten zu folgendem Host:"
+
+#: admin/systems/services/mail/goMailServer.tpl:60
+#: admin/systems/services/mail/class_goMailServer.inc:715
+msgid "Local networks"
+msgstr "Lokale Netzwerke"
+
+#: admin/systems/services/mail/goMailServer.tpl:62
+msgid "Postfix networks"
+msgstr "Postfix-Netzwerke"
+
+#: admin/systems/services/mail/goMailServer.tpl:83
+msgid "Domains and routing"
+msgstr "Domänen und Weiterleitung"
+
+#: admin/systems/services/mail/goMailServer.tpl:91
+#: admin/systems/services/mail/class_goMailServer.inc:714
+msgid "Domains to accept mail for"
+msgstr "Domänen, für die Mail angenommen wird"
+
+#: admin/systems/services/mail/goMailServer.tpl:93
+msgid "Postfix is responsible for the following domains:"
+msgstr "Postfix ist verantwortlich für die folgenden Domänen:"
+
+#: admin/systems/services/mail/goMailServer.tpl:114
+msgid "Transports"
+msgstr "Transporte"
+
+#: admin/systems/services/mail/goMailServer.tpl:123
+msgid "Select a transport protocol."
+msgstr "Wählen Sie ein Transport-Protokoll."
+
+#: admin/systems/services/mail/goMailServer.tpl:141
+msgid "Restrictions"
+msgstr "Einschränkungen"
+
+#: admin/systems/services/mail/goMailServer.tpl:149
+#: admin/systems/services/mail/class_goMailServer.inc:718
+msgid "Restrictions for sender"
+msgstr "Einschränkungen für den Sender"
+
+#: admin/systems/services/mail/goMailServer.tpl:157
+#: admin/systems/services/mail/goMailServer.tpl:183
+msgid "Restriction filter"
+msgstr "Einschränkungsmuster"
+
+#: admin/systems/services/mail/goMailServer.tpl:175
+#: admin/systems/services/mail/class_goMailServer.inc:719
+msgid "Restrictions for recipient"
+msgstr "Einschränkungen für Empfänger"
+
+#: admin/systems/services/mail/goMailServer.tpl:204
+#: admin/systems/services/imap/goImapServer.tpl:99
+msgid "The server must be saved before you can use the status flag."
+msgstr ""
+"Der  Server muss gespeichert werden bevor Sie das Status-Flag verwenden "
+"können."
+
+#: admin/systems/services/mail/goMailServer.tpl:206
+#: admin/systems/services/imap/goImapServer.tpl:101
+msgid "The service must be saved before you can use the status flag."
+msgstr ""
+"Der Dienst muss gespeichert werden bevor Sie den Status-Flag verwenden "
+"können."
+
+#: admin/systems/services/mail/goMailServer.tpl:209
+#: admin/systems/services/imap/goImapServer.tpl:104
+msgid "Set new status"
+msgstr "Setze neuen Status"
+
+#: admin/systems/services/mail/goMailServer.tpl:215
+#: admin/systems/services/imap/goImapServer.tpl:110
+msgid "Set status"
+msgstr "Status setzen"
+
+#: admin/systems/services/mail/goMailServer.tpl:215
+#: admin/systems/services/imap/goImapServer.tpl:110
+msgid "Execute"
+msgstr "Ausführen"
+
+#: admin/systems/services/mail/class_goMailServer.inc:45
+#: admin/systems/services/mail/class_goMailServer.inc:512
+msgid "Mail smtp service (Postfix)"
+msgstr "Mail-SMTP Dienst (Postfix)"
+
+#: admin/systems/services/mail/class_goMailServer.inc:600
+#: admin/systems/services/mail/class_goMailServer.inc:711
+msgid "Header size limit"
+msgstr "Kopfgrössenbeschränkung"
+
+#: admin/systems/services/mail/class_goMailServer.inc:603
+msgid "Mailbox size limit"
+msgstr "Maximale Größe der Mailbox"
+
+#: admin/systems/services/mail/class_goMailServer.inc:606
+msgid "Message size limit"
+msgstr "Maximale Größe der Nachricht"
+
+#: admin/systems/services/mail/class_goMailServer.inc:700
+msgid "Mail smtp (Postfix)"
+msgstr "Mail-SMTP (Postfix)"
+
+#: admin/systems/services/mail/class_goMailServer.inc:701
+msgid "Mail smtp - Postfix"
+msgstr "Mail-SMTP - Postfix"
+
+#: admin/systems/services/mail/class_goMailServer.inc:710
+msgid "Description"
+msgstr "Beschreibung"
+
+#: admin/systems/services/mail/class_goMailServer.inc:717
+msgid "Transport table"
+msgstr "Transport-Tabelle"
+
+#: admin/systems/services/imap/goImapServer.tpl:7
+#: admin/systems/services/imap/class_goImapServer.inc:110
+#: admin/systems/services/imap/class_goImapServer.inc:211
+msgid "Server identifier"
+msgstr "Serverbezeichnung"
+
+#: admin/systems/services/imap/goImapServer.tpl:16
+#: admin/systems/services/imap/class_goImapServer.inc:113
+#: admin/systems/services/imap/class_goImapServer.inc:115
+#: admin/systems/services/imap/class_goImapServer.inc:212
+msgid "Connect URL"
+msgstr "Verbindungs-URL"
+
+#: admin/systems/services/imap/goImapServer.tpl:25
+#: admin/systems/services/imap/class_goImapServer.inc:126
+#: admin/systems/services/imap/class_goImapServer.inc:213
+msgid "Admin user"
+msgstr "Administrator"
+
+#: admin/systems/services/imap/goImapServer.tpl:34
+#: admin/systems/services/imap/class_goImapServer.inc:129
+msgid "Password"
+msgstr "Passwort"
+
+#: admin/systems/services/imap/goImapServer.tpl:43
+#: admin/systems/services/imap/class_goImapServer.inc:119
+#: admin/systems/services/imap/class_goImapServer.inc:121
+#: admin/systems/services/imap/class_goImapServer.inc:216
+#, fuzzy
+msgid "Sieve connect URL"
+msgstr "Verbindungs-URL"
+
+#: admin/systems/services/imap/goImapServer.tpl:61
+#: admin/systems/services/imap/class_goImapServer.inc:217
+msgid "Start IMAP service"
+msgstr "IMAP-Dienst starten"
+
+#: admin/systems/services/imap/goImapServer.tpl:70
+#: admin/systems/services/imap/class_goImapServer.inc:218
+msgid "Start IMAP SSL service"
+msgstr "IMAP/SSL-Dienst starten"
+
+#: admin/systems/services/imap/goImapServer.tpl:79
+#: admin/systems/services/imap/class_goImapServer.inc:219
+msgid "Start POP3 service"
+msgstr "POP3-Dienst starten"
+
+#: admin/systems/services/imap/goImapServer.tpl:88
+#: admin/systems/services/imap/class_goImapServer.inc:220
+msgid "Start POP3 SSL service"
+msgstr "POP3/SSL-Dienst starten"
+
+#: admin/systems/services/imap/class_goImapServer.inc:48
+msgid "IMAP/POP3 service"
+msgstr "IMAP/POP3-Dienst"
+
+#: admin/systems/services/imap/class_goImapServer.inc:53
+#: admin/systems/services/imap/class_goImapServer.inc:209
+msgid "Repair database"
+msgstr "Datenbank reparieren"
+
+#: admin/systems/services/imap/class_goImapServer.inc:100
+msgid "IMAP/POP3 (Cyrus) service"
+msgstr "IMAP/POP3 (Cyrus) Dienst"
+
+#: admin/systems/services/imap/class_goImapServer.inc:122
+#, fuzzy, php-format
+msgid "Valid options are: %s"
+msgstr "Mail-Einstellungen"
+
+#: admin/systems/services/imap/class_goImapServer.inc:196
+#: admin/systems/services/imap/class_goImapServer.inc:197
+msgid "IMAP/POP3"
+msgstr "IMAP/POP3"
+
+#: admin/systems/services/imap/class_goImapServer.inc:214
+msgid "Admin password"
+msgstr "Administrator-Passwort:"
+
+#: admin/groups/mail/mail_locals.tpl:32
+msgid "Display addresses of department"
+msgstr "Zeige die Adressen der Abteilung"
+
+#: admin/groups/mail/mail_locals.tpl:42
+msgid "Display addresses matching"
+msgstr "Zeige die Adressen, auf die das Folgende passt"
+
+#: admin/groups/mail/paste_mail.tpl:12 admin/groups/mail/mail.tpl:17
 msgid "Primary mail address for this shared folder"
 msgstr "Primäre Mail-Adresse dieses geteilten Ordners"
+
+#: admin/groups/mail/paste_mail.tpl:34 admin/groups/mail/mail.tpl:178
+msgid "Forward messages to non group members"
+msgstr "Weiterleiten der Nachrichten an nicht-Gruppenmitglieder"
+
+#: admin/groups/mail/mail_admins.tpl:4
+msgid "Folder administrators"
+msgstr "Ordner-Administratoren"
+
+#: admin/groups/mail/mail_admins.tpl:24
+msgid "Select a specific department"
+msgstr "Wählen Sie eine bestimmte Abteilung"
+
+#: admin/groups/mail/mail_admins.tpl:30
+msgid "Choose"
+msgstr "Wählen"
 
 #: admin/groups/mail/mail.tpl:26
 msgid "Select mail server to place user on"
 msgstr "Wählen Sie den Mail-Server, auf dem der Benutzer angelegt werden soll"
 
-#: admin/groups/mail/mail.tpl:59
+#: admin/groups/mail/mail.tpl:59 admin/groups/mail/class_groupMail.inc:1259
 msgid "Folder type"
 msgstr "Ordner-Typ"
 
@@ -2112,10 +2138,6 @@ msgstr "Standard-Berechtigungen"
 #: admin/groups/mail/mail.tpl:159
 msgid "Member permission"
 msgstr "Mitglieder-Berechtigungen"
-
-#: admin/groups/mail/mail.tpl:178 admin/groups/mail/paste_mail.tpl:34
-msgid "Forward messages to non group members"
-msgstr "Weiterleiten der Nachrichten an nicht-Gruppenmitglieder"
 
 #: admin/groups/mail/mail.tpl:187
 msgid "Used in all groups"
@@ -2193,97 +2215,81 @@ msgstr "Weitere Adressen"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: admin/groups/mail/class_groupMail.inc:663
-#: admin/groups/mail/class_groupMail.inc:669
+#: admin/groups/mail/class_groupMail.inc:673
+#: admin/groups/mail/class_groupMail.inc:679
 msgid "Unspecified"
 msgstr "nicht definiert"
 
-#: admin/groups/mail/class_groupMail.inc:663
+#: admin/groups/mail/class_groupMail.inc:673
 msgid "Mails"
 msgstr "Mails"
 
-#: admin/groups/mail/class_groupMail.inc:664
+#: admin/groups/mail/class_groupMail.inc:674
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: admin/groups/mail/class_groupMail.inc:664
+#: admin/groups/mail/class_groupMail.inc:674
 msgid "Journals"
 msgstr "Journals"
 
-#: admin/groups/mail/class_groupMail.inc:665
+#: admin/groups/mail/class_groupMail.inc:675
 msgid "Calendar"
 msgstr "Kalender"
 
-#: admin/groups/mail/class_groupMail.inc:665
+#: admin/groups/mail/class_groupMail.inc:675
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: admin/groups/mail/class_groupMail.inc:666
+#: admin/groups/mail/class_groupMail.inc:676
 msgid "Notes"
 msgstr "Notizen"
 
-#: admin/groups/mail/class_groupMail.inc:669
+#: admin/groups/mail/class_groupMail.inc:679
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: admin/groups/mail/class_groupMail.inc:670
+#: admin/groups/mail/class_groupMail.inc:680
 msgid "Drafts"
 msgstr "Entwürfe"
 
-#: admin/groups/mail/class_groupMail.inc:670
+#: admin/groups/mail/class_groupMail.inc:680
 msgid "Sent items"
 msgstr "Gesendete Objekte"
 
-#: admin/groups/mail/class_groupMail.inc:671
+#: admin/groups/mail/class_groupMail.inc:681
 msgid "Junk mail"
 msgstr "Unerwünschte Werbung"
 
-#: admin/groups/mail/class_groupMail.inc:1067
+#: admin/groups/mail/class_groupMail.inc:1077
 msgid "You need to set the maximum mail size in order to reject anything."
 msgstr "Sie müssen die maximale Mail-Größe angeben, um Mails abzuweisen."
 
-#: admin/groups/mail/class_groupMail.inc:1071
+#: admin/groups/mail/class_groupMail.inc:1081
 msgid ""
 "Please choose valid permission settings. Default permission can't be emtpy."
 msgstr ""
 "Bitte wählen sie gültige Zugriffsrechte. Standard-Zugriffsrechte dürfen "
 "nicht leer sein."
 
-#: admin/groups/mail/class_groupMail.inc:1239
+#: admin/groups/mail/class_groupMail.inc:1249
 msgid "Group mail"
 msgstr "Gruppenmail"
 
-#: admin/groups/mail/class_groupMail.inc:1247
+#: admin/groups/mail/class_groupMail.inc:1259
+msgid "Kolab"
+msgstr ""
+
+#: admin/groups/mail/class_groupMail.inc:1260
 msgid "Alternate addresses"
 msgstr "Weitere Adressen"
 
-#: admin/groups/mail/class_groupMail.inc:1248
+#: admin/groups/mail/class_groupMail.inc:1261
 msgid "Forwarding addresses"
 msgstr "Weiterleitungs-Adressen"
 
-#: admin/groups/mail/class_groupMail.inc:1251
+#: admin/groups/mail/class_groupMail.inc:1262
 msgid "Permissions"
 msgstr "Berechtigungen"
-
-#: admin/groups/mail/mail_locals.tpl:32
-msgid "Display addresses of department"
-msgstr "Zeige die Adressen der Abteilung"
-
-#: admin/groups/mail/mail_locals.tpl:42
-msgid "Display addresses matching"
-msgstr "Zeige die Adressen, auf die das Folgende passt"
-
-#: admin/groups/mail/mail_admins.tpl:4
-msgid "Folder administrators"
-msgstr "Ordner-Administratoren"
-
-#: admin/groups/mail/mail_admins.tpl:24
-msgid "Select a specific department"
-msgstr "Wählen Sie eine bestimmte Abteilung"
-
-#: admin/groups/mail/mail_admins.tpl:30
-msgid "Choose"
-msgstr "Wählen"
 
 #~ msgid "Sieve port"
 #~ msgstr "Sieve-Port"

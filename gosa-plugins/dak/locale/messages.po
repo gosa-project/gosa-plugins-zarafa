@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,16 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:2 addons/dak/dak_keyring.tpl:2
+#: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 msgid "Filter"
-msgstr ""
-
-#: addons/dak/dak_queue.tpl:11
-msgid "Repositories"
 msgstr ""
 
 #: addons/dak/dak_keyring.tpl:11
@@ -54,12 +46,21 @@ msgstr ""
 msgid "DAK queue management"
 msgstr ""
 
+#: addons/dak/dak_queue.tpl:11
+msgid "Repositories"
+msgstr ""
+
 #: addons/dak/class_dakrepository.inc:43
 msgid "DAK repository"
 msgstr ""
 
 #: addons/dak/class_dakrepository.inc:44
 msgid "DAK repository  management"
+msgstr ""
+
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
 msgstr ""
 
 #: addons/dak/class_dakkeyring.inc:114
@@ -107,7 +108,6 @@ msgstr ""
 msgid "DAK keyring management"
 msgstr ""
 
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
+#: addons/dak/main.inc:32
+msgid "DAK"
 msgstr ""

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:52+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,8 +19,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: personal/connectivity/webdav/webdav.tpl:5
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
+msgid "WebDAV account"
+msgstr "WebDAV Account"
+
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
-#: personal/connectivity/webdav/class_webdavAccount.inc:159
+#: personal/connectivity/webdav/class_webdavAccount.inc:166
 msgid "WebDAV"
 msgstr "WebDAV"
 
@@ -28,23 +33,18 @@ msgstr "WebDAV"
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:84
-#: personal/connectivity/webdav/class_webdavAccount.inc:140
+#: personal/connectivity/webdav/class_webdavAccount.inc:91
+#: personal/connectivity/webdav/class_webdavAccount.inc:147
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
-#: personal/connectivity/webdav/webdav.tpl:5
-msgid "WebDAV account"
-msgstr "WebDAV Account"
-
-#: personal/connectivity/webdav/class_webdavAccount.inc:160
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Verbindingen"
 
-#: personal/connectivity/webdav/class_webdavAccount.inc:164
+#: personal/connectivity/webdav/class_webdavAccount.inc:171
 msgid "My account"
 msgstr "Mijn account"
 

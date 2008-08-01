@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:50+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-06-09 17:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -20,7 +20,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: personal/connectivity/class_connectivity.inc:15
-#: personal/connectivity/main.inc:120
+#: personal/connectivity/class_connectivity.inc:269
+#: personal/connectivity/main.inc:121
 msgid "Connectivity"
 msgstr "Verbindingen"
 
@@ -29,28 +30,30 @@ msgstr "Verbindingen"
 msgid "This does something"
 msgstr "Dit doet iets"
 
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Intranet account"
-
-#: personal/connectivity/class_intranetAccount.inc:16
-#: personal/connectivity/class_intranetAccount.inc:198
-msgid "Intranet"
-msgstr "Intranet"
-
-#: personal/connectivity/class_intranetAccount.inc:119
-#: personal/connectivity/class_intranetAccount.inc:186
-msgid "LDAP error"
-msgstr "LDAP fout"
-
-#: personal/connectivity/class_intranetAccount.inc:201
+#: personal/connectivity/class_connectivity.inc:272
+#: personal/connectivity/class_intranetAccount.inc:208
 msgid "My account"
 msgstr "Mijn account"
 
+#: personal/connectivity/class_connectivity.inc:276
+#: personal/connectivity/class_intranetAccount.inc:212
+msgid "Connectivity addon"
+msgstr "Verbindingen module"
+
+#: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
+msgid "Intranet"
+msgstr "Intranet"
+
+#: personal/connectivity/class_intranetAccount.inc:126
+#: personal/connectivity/class_intranetAccount.inc:193
+msgid "LDAP error"
+msgstr "LDAP fout"
+
+#: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Intranet account instellingen"
 
-#: personal/connectivity/class_intranetAccount.inc:205
-msgid "Connectivity addon"
-msgstr "Verbindingen module"
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Intranet account"

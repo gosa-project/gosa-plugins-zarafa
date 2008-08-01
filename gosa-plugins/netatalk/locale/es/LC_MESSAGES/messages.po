@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,21 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376
-msgid "Share"
-msgstr "Recurso compartido"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Ruta"
-
-#: personal/netatalk/main.inc:113
-msgid "Netatalk settings"
-msgstr "Parámetros de Netatalk"
-
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:372
 msgid "Netatalk"
 msgstr "Netatalk"
 
@@ -39,36 +26,53 @@ msgstr "Netatalk"
 msgid "Manage netatalk account"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:170
-#: personal/netatalk/class_netatalk.inc:179
+#: personal/netatalk/class_netatalk.inc:176
 #: personal/netatalk/class_netatalk.inc:184
-#: personal/netatalk/class_netatalk.inc:186
-#: personal/netatalk/class_netatalk.inc:188
+#: personal/netatalk/class_netatalk.inc:185
+#: personal/netatalk/class_netatalk.inc:190
+#: personal/netatalk/class_netatalk.inc:191
+#: personal/netatalk/class_netatalk.inc:193
+#: personal/netatalk/class_netatalk.inc:194
+#: personal/netatalk/class_netatalk.inc:196
+#: personal/netatalk/class_netatalk.inc:197
 #, fuzzy
 msgid "netatalk"
 msgstr "Netatalk"
 
-#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:191
 msgid "POSIX"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:194
 msgid "netatalk or NFS share"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:287
-#: personal/netatalk/class_netatalk.inc:351
+#: personal/netatalk/class_netatalk.inc:228
+#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Recurso compartido"
+
+#: personal/netatalk/class_netatalk.inc:292
+#: personal/netatalk/class_netatalk.inc:357
 #, fuzzy
 msgid "LDAP error"
 msgstr "Servicio LDAP"
 
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:376
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/netatalk/class_netatalk.inc:375
+#: personal/netatalk/class_netatalk.inc:381
 msgid "User home path"
 msgstr "Ruta del directorio del usuario"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Ruta"
+
+#: personal/netatalk/main.inc:118
+msgid "Netatalk settings"
+msgstr "Parámetros de Netatalk"
 
 #~ msgid "This account has no netatalk extensions."
 #~ msgstr "Esta cuenta no tiene extensión Netatalk"

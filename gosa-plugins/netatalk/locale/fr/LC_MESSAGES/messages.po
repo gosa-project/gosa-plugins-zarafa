@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 12:51+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2008-06-08 15:34+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -14,21 +14,8 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:221
-#: personal/netatalk/class_netatalk.inc:376
-msgid "Share"
-msgstr "Partage"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Chemin"
-
-#: personal/netatalk/main.inc:113
-msgid "Netatalk settings"
-msgstr "Configuration Netatalk"
-
 #: personal/netatalk/class_netatalk.inc:36
-#: personal/netatalk/class_netatalk.inc:366
+#: personal/netatalk/class_netatalk.inc:372
 msgid "Netatalk"
 msgstr ""
 
@@ -36,31 +23,48 @@ msgstr ""
 msgid "Manage netatalk account"
 msgstr "Gèrer un compte Netatalk"
 
-#: personal/netatalk/class_netatalk.inc:170
-#: personal/netatalk/class_netatalk.inc:179
+#: personal/netatalk/class_netatalk.inc:176
 #: personal/netatalk/class_netatalk.inc:184
-#: personal/netatalk/class_netatalk.inc:186
-#: personal/netatalk/class_netatalk.inc:188
+#: personal/netatalk/class_netatalk.inc:185
+#: personal/netatalk/class_netatalk.inc:190
+#: personal/netatalk/class_netatalk.inc:191
+#: personal/netatalk/class_netatalk.inc:193
+#: personal/netatalk/class_netatalk.inc:194
+#: personal/netatalk/class_netatalk.inc:196
+#: personal/netatalk/class_netatalk.inc:197
 msgid "netatalk"
 msgstr ""
 
-#: personal/netatalk/class_netatalk.inc:184
+#: personal/netatalk/class_netatalk.inc:191
 msgid "POSIX"
 msgstr "UNIX"
 
-#: personal/netatalk/class_netatalk.inc:186
+#: personal/netatalk/class_netatalk.inc:194
 msgid "netatalk or NFS share"
 msgstr "Partage netatalk ou NFS"
 
-#: personal/netatalk/class_netatalk.inc:287
-#: personal/netatalk/class_netatalk.inc:351
+#: personal/netatalk/class_netatalk.inc:228
+#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Partage"
+
+#: personal/netatalk/class_netatalk.inc:292
+#: personal/netatalk/class_netatalk.inc:357
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
-#: personal/netatalk/class_netatalk.inc:370
+#: personal/netatalk/class_netatalk.inc:376
 msgid "My account"
 msgstr "Mon Compte"
 
-#: personal/netatalk/class_netatalk.inc:375
+#: personal/netatalk/class_netatalk.inc:381
 msgid "User home path"
 msgstr "Chemin du répertoire personnel"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Chemin"
+
+#: personal/netatalk/main.inc:118
+msgid "Netatalk settings"
+msgstr "Configuration Netatalk"

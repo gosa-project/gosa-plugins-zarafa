@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:13+0200\n"
+"POT-Creation-Date: 2008-08-01 16:29+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -60,7 +60,7 @@ msgstr "Klasy FAI"
 #: admin/fai/class_faiHookEntry.inc:191 admin/fai/class_faiManagement.inc:579
 #: admin/fai/class_faiManagement.inc:585 admin/fai/class_faiHook.inc:443
 #: admin/fai/class_faiHook.inc:563 admin/fai/class_faiTemplateEntry.inc:192
-#: admin/fai/class_faiTemplateEntry.inc:256
+#: admin/fai/class_faiTemplateEntry.inc:260
 #: admin/fai/class_faiSummaryTab.inc:343 admin/fai/class_faiVariable.inc:304
 #: admin/fai/class_faiVariable.inc:419 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiTemplate.inc:420 admin/fai/class_faiTemplate.inc:543
@@ -81,7 +81,7 @@ msgstr "Klasy FAI"
 #: admin/fai/class_faiProfile.inc:478 admin/fai/faiPackage.tpl:9
 #: admin/fai/faiScriptEntry.tpl:9 admin/fai/faiVariableEntry.tpl:9
 #: admin/fai/faiProfile.tpl:9 admin/fai/class_faiPartitionTableEntry.inc:370
-#: admin/fai/class_faiPartitionTableEntry.inc:466
+#: admin/fai/class_faiPartitionTableEntry.inc:465
 msgid "Name"
 msgstr "Imię"
 
@@ -210,7 +210,7 @@ msgstr "Lista pakietów FAI"
 #: admin/fai/class_faiPackage.inc:578 admin/fai/faiScript.tpl:21
 #: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiTemplateEntry.tpl:33
 #: admin/fai/class_faiHookEntry.inc:192 admin/fai/class_faiHook.inc:564
-#: admin/fai/class_faiTemplateEntry.inc:257
+#: admin/fai/class_faiTemplateEntry.inc:261
 #: admin/fai/class_faiVariable.inc:420 admin/fai/faiHook.tpl:21
 #: admin/fai/class_faiTemplate.inc:544 admin/fai/faiVariable.tpl:21
 #: admin/fai/class_faiScript.inc:651 admin/fai/faiHookEntry.tpl:19
@@ -220,7 +220,7 @@ msgstr "Lista pakietów FAI"
 #: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiTemplate.tpl:21
 #: admin/fai/class_faiProfile.inc:479 admin/fai/faiPackage.tpl:21
 #: admin/fai/faiScriptEntry.tpl:19 admin/fai/faiVariableEntry.tpl:19
-#: admin/fai/faiProfile.tpl:21 admin/fai/class_faiPartitionTableEntry.inc:467
+#: admin/fai/faiProfile.tpl:21 admin/fai/class_faiPartitionTableEntry.inc:466
 msgid "Description"
 msgstr "Opis"
 
@@ -320,7 +320,8 @@ msgstr "Właściciel"
 
 #: admin/fai/faiTemplateEntry.tpl:103 admin/fai/faiTemplateEntry.tpl:145
 #: admin/fai/class_faiTemplateEntry.inc:216
-#: admin/fai/class_faiTemplateEntry.inc:219
+#: admin/fai/class_faiTemplateEntry.inc:220
+#: admin/fai/class_faiTemplateEntry.inc:222
 msgid "Group"
 msgstr "Grupa"
 
@@ -705,29 +706,29 @@ msgstr "Nie wgrano jeszcze żadnego pliku"
 msgid "exists in database (size: %s bytes)"
 msgstr "istnieje w bazie danych (rozmiar %s bajtów)"
 
-#: admin/fai/class_faiTemplateEntry.inc:248
+#: admin/fai/class_faiTemplateEntry.inc:252
 #, fuzzy
 msgid "Template entry"
 msgstr "Szablon użytkownika"
 
-#: admin/fai/class_faiTemplateEntry.inc:249
+#: admin/fai/class_faiTemplateEntry.inc:253
 #, fuzzy
 msgid "FAI template entry"
 msgstr "Szablon FAI"
 
-#: admin/fai/class_faiTemplateEntry.inc:258
+#: admin/fai/class_faiTemplateEntry.inc:262
 msgid "Template file"
 msgstr "Plik szablonu"
 
-#: admin/fai/class_faiTemplateEntry.inc:259
+#: admin/fai/class_faiTemplateEntry.inc:263
 msgid "Template path"
 msgstr "Ścieżka szablonu"
 
-#: admin/fai/class_faiTemplateEntry.inc:260
+#: admin/fai/class_faiTemplateEntry.inc:264
 msgid "File owner"
 msgstr "Właściciel pliku"
 
-#: admin/fai/class_faiTemplateEntry.inc:261
+#: admin/fai/class_faiTemplateEntry.inc:265
 msgid "File permissions"
 msgstr "Uprawnienia pliku"
 
@@ -822,7 +823,7 @@ msgstr "Opcje systemu plików"
 
 #: admin/fai/class_faiSummaryTab.inc:345
 #: admin/fai/class_faiPartitionTableEntry.inc:187
-#: admin/fai/class_faiPartitionTableEntry.inc:473
+#: admin/fai/class_faiPartitionTableEntry.inc:472
 msgid "Mount options"
 msgstr "Opcje montowania"
 
@@ -833,7 +834,7 @@ msgstr "Rozmiar w MB"
 
 #: admin/fai/class_faiSummaryTab.inc:347
 #: admin/fai/class_faiPartitionTableEntry.inc:185
-#: admin/fai/class_faiPartitionTableEntry.inc:471
+#: admin/fai/class_faiPartitionTableEntry.inc:470
 msgid "Mount point"
 msgstr "Punkt montowania"
 
@@ -1457,14 +1458,14 @@ msgstr ""
 
 #: admin/fai/class_faiPartitionTableEntry.inc:413
 #: admin/fai/class_faiPartitionTableEntry.inc:417
-#: admin/fai/class_faiPartitionTableEntry.inc:424
-#: admin/fai/class_faiPartitionTableEntry.inc:426
-#: admin/fai/class_faiPartitionTableEntry.inc:431
+#: admin/fai/class_faiPartitionTableEntry.inc:423
+#: admin/fai/class_faiPartitionTableEntry.inc:425
+#: admin/fai/class_faiPartitionTableEntry.inc:430
 #, fuzzy, php-format
 msgid "partition %s size"
 msgstr "Rozmiar partycji"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:446
+#: admin/fai/class_faiPartitionTableEntry.inc:445
 msgid ""
 "You have more than 3 primary partition table entries in your configuration, "
 "please check your configuration twice."
@@ -1472,37 +1473,37 @@ msgstr ""
 "Jest więcej niż 3 wpisy w podstawowej tablicy partycji. Proszę sprawdzić "
 "konfigurację."
 
-#: admin/fai/class_faiPartitionTableEntry.inc:458
+#: admin/fai/class_faiPartitionTableEntry.inc:457
 #, fuzzy
 msgid "Partition table entry"
 msgstr "Tablica partycji"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:459
+#: admin/fai/class_faiPartitionTableEntry.inc:458
 #, fuzzy
 msgid "FAI partition table entry"
 msgstr "Tablica partycji FAI"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:468
+#: admin/fai/class_faiPartitionTableEntry.inc:467
 msgid "Partition type"
 msgstr "Typ partycji"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:469
+#: admin/fai/class_faiPartitionTableEntry.inc:468
 msgid "Partition no."
 msgstr "Nr. Partycji"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:470
+#: admin/fai/class_faiPartitionTableEntry.inc:469
 msgid "File system type"
 msgstr "Typ systemu plików"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:472
+#: admin/fai/class_faiPartitionTableEntry.inc:471
 msgid "Partition size"
 msgstr "Rozmiar partycji"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:474
+#: admin/fai/class_faiPartitionTableEntry.inc:473
 msgid "File system options"
 msgstr "Opcje systemu plików"
 
-#: admin/fai/class_faiPartitionTableEntry.inc:475
+#: admin/fai/class_faiPartitionTableEntry.inc:474
 msgid "Partition flags"
 msgstr "Flagi partycji"
 
