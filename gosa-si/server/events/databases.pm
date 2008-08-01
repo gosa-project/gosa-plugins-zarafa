@@ -241,4 +241,69 @@ sub update_status_jobdb_entry {
     return @out_msg_l;
 }
 
+
+=pod
+
+=head1 NAME
+
+databases - Implementation of a GOsa-SI event module for GOsa-SI-server.
+
+=head1 SYNOPSIS
+
+ use GOSA::GosaSupportDaemon;
+
+=head1 DESCRIPTION
+
+This GOsa-SI event module containing all functions to handle messages coming from GOsa and concerning GOsa-SI databases. 
+
+This module will be automatically imported by GOsa-SI if it is under F</usr/lib/gosa-si/server/E<lt>PACKAGEMODULEE<gt>/> .
+
+=head1 METHODS
+
+=over 4
+
+=item get_events ( )
+
+=item query_jobdb ( )
+
+=item count_jobdb ( )
+
+=item delete_jobdb_entry ( )
+
+=item clear_jobdb ( )
+
+=item update_status_jobdb_entry ( )
+
+=item query_packages_list ( )
+
+=item count_packages_list ( )
+
+=item query_fai_server ( )
+
+=item count_fai_server ( )
+
+=item query_fai_release ( )
+
+=item count_fai_release ( )
+
+=back
+
+=head1 BUGS
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list E<lt>gosa-devel@oss.gonicus.deE<gt> or to L<https://oss.gonicus.de/labs/gosa>
+
+=head1 COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2008 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
+
+
 1;

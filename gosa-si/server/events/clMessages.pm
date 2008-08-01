@@ -444,14 +444,7 @@ sub TASKBEGIN {
 			if ($err != 0)  {
 					&main::daemon_log("$session_id ERROR: cannot add entry to job_db: $error_str", 1);
 			}
-
 		}
-
-# -----------------------> Update hier
-#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
-#  <header>CLMSG_TASKBEGIN</header>
-# macaddress auslesen, Client im LDAP lokalisieren
-# FAIstate auf "localboot" setzen, wenn FAIstate "install" oder "softupdate" war
     }
 
     return; 
@@ -518,12 +511,6 @@ sub TASKERROR {
     my $res = $main::job_db->update_dbentry($sql_statement);
     &main::daemon_log("$session_id INFO: $header at '$macaddress' - '$content'", 5); 
 
-# -----------------------> Update hier
-#  <CLMSG_TASKBEGIN>finish</CLMSG_TASKBEGIN>
-#  <header>CLMSG_TASKBEGIN</header>
-# macaddress auslesen, Client im LDAP lokalisieren
-# FAIstate auf "error" setzen
-
     return; 
 }
 
@@ -550,6 +537,74 @@ sub HOOK {
 
     return;
 }
+
+=pod
+
+=head1 NAME
+
+clMessages - Implementation of a GOsa-SI event module for GOsa-SI-server.
+
+=head1 SYNOPSIS
+
+ use GOSA::GosaSupportDaemon;
+ use MIME::Base64;
+
+=head1 DESCRIPTION
+
+This GOsa-SI event module containing all functions to handle messages coming from GOsa-SI-clients. 
+
+This module will be automatically imported by GOsa-SI if it is under F</usr/lib/gosa-si/server/E<lt>PACKAGEMODULEE<gt>/> .
+
+=head1 METHODS
+
+=over 4
+
+=item get_events ( )
+
+=item confirm_usr_msg ( )
+
+=item PROGRESS ( )
+
+=item FAIREBOOT ( )
+
+=item TASKSKIP ( )
+
+=item TASKBEGIN ( )
+
+=item TASKEND ( )
+
+=item TASKERROR ( )
+
+=item HOOK ( )
+
+=item GOTOACTIVATION ( )
+
+=item LOGIN ( )
+
+=item LOGOUT ( )
+
+=item CURRENTLY_LOGGED_IN ( )
+
+=item save_fai_log ( )
+
+=back
+
+=head1 BUGS
+
+Please report any bugs, or post any suggestions, to the GOsa mailing list E<lt>gosa-devel@oss.gonicus.deE<gt> or to L<https://oss.gonicus.de/labs/gosa>
+
+=head1 COPYRIGHT
+
+This code is part of GOsa (L<http://www.gosa-project.org>)
+
+Copyright (C) 2003-2008 GONICUS GmbH
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+=cut
 
 
 1;
