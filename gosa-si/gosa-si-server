@@ -1160,6 +1160,7 @@ sub msg_to_decrypt {
                     if(exists $heap->{'client'}) {
                         $msg = &encrypt_msg($msg, $GosaPackages_key);
                         $heap->{'client'}->put($msg);
+                        &daemon_log("$session_id INFO: incoming '$header' message forwarded to GOsa", 5); 
                     }
                     $done = 1;
                     #print STDERR "target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa\n";
