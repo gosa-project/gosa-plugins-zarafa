@@ -27,6 +27,16 @@ class goLdapServer extends goService{
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("LDAP service");
+
+    /* Suggest a default value */
+    if ($this->goLdapBase == ""){
+      if ($this->dn == ""){
+        $srv= _("fill-in-your-servers-dns-name");
+      } else {
+        $srv= preg_replace("/^cn=([^,]+),.*$/", "$1", $this->dn);
+      }
+      $this->goLdapBase= "ldap://$srv:389/".$config->current['BASE'];
+    }
   }
 
 
