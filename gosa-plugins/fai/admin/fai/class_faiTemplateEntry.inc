@@ -215,8 +215,12 @@ class faiTemplateEntry extends plugin
     if(empty($this->group)){
       $message[] = msgPool::required(_("Group"));
     }
-    elseif(preg_match("/[^0-9a-z]/i",$this->group)){
-      $message[] = msgPool::invalid(_("Group"),$this->group,"/[0-9a-z]/");
+    elseif (!tests::is_uid($this->group)){
+      if (strict_uid_mode()){
+        $message[]= msgPool::invalid(_("Group"), $this->group, "/[a-z0-9_-]/");
+      } else {
+        $message[]= msgPool::invalid(_("Group"), $this->group, "/[a-z0-9_-]/i");
+      }
     }
 
     return ($message);
