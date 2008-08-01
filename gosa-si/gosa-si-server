@@ -100,12 +100,6 @@ our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 
-# dak variables
-our $dak_base_directory;
-our $dak_signing_keys_directory;
-our $dak_queue_directory;
-our $dak_user;
-
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
 
@@ -242,10 +236,6 @@ my $max_children = 2;
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
-	"dak-base" => [\$dak_base_directory, "/srv/archive"],
-	"dak-keyring" => [\$dak_signing_keys_directory, "/srv/archive/keyrings"],
-	"dak-queue" => [\$dak_queue_directory, "/srv/archive/queue"],
-	"dak-user" => [\$dak_user, "deb-dak"],
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],
@@ -1112,6 +1102,11 @@ sub msg_to_decrypt {
 						my $hostname = $res->{1}->{'hostname'};
 						$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
 						#print STDERR "target is a client address in known_clients -> process here\n";
+                        my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
+                        if ($source eq "GOSA") {
+                            $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
+                        }
+
 				} else {
 						$not_found_in_known_clients_db = 1;
 				}

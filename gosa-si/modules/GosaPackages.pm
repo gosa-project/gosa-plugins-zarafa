@@ -32,6 +32,8 @@ $gosa_mac_address= &get_mac($network_interface);
 if( inet_aton($main::server_ip) ){ $main::server_ip = inet_ntoa(inet_aton($main::server_ip)); } 
 $main::server_address = $main::server_ip.":".$main::server_port;
 
+
+
 # import local events
 my ($error, $result, $event_hash) = &import_events($event_dir);
 foreach my $log_line (@$result) {
@@ -116,9 +118,26 @@ sub process_incoming_msg {
     }
 
     foreach my $out_msg ( @msg_l ) {
-        # substitute in all outgoing msg <source>GOSA</source> of <source>$server_address</source>
-        $out_msg =~ s/<source>GOSA<\/source>/<source>$main::server_address<\/source>/g;
+        # determine the correct outgoing source address to the corresponding target address
+        $out_msg =~ /<target>(\S*)<\/target>/;
+        my $act_server_ip = &main::get_local_ip_for_remote_ip(sprintf("%s", $1 =~ /^([0-9\.]*?):.*$/));
+
+        # Patch the correct outgoing source address
+        if ($out_msg =~ /<source>GOSA<\/source>/ ) {
+            $out_msg =~ s/<source>GOSA<\/source>/<source>$act_server_ip:$main::server_port<\/source>/g;
+        }
+
+        # Patch the correct outgoing forward_to_gosa address
+        if ($out_msg =~ /<forward_to_gosa>(\S+),(\d+)<\/forward_to_gosa>/ ) {
+            $out_msg =~ s/<forward_to_gosa>\S+<\/forward_to_gosa>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa>/;
+        } else {
+            $out_msg =~ s/<\/xml>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa> <\/xml>/;
+        }
+
+        # Add to each outgoing message the current POE session id
         $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
+
+
         if (defined $out_msg){
             push(@out_msg_l, $out_msg);
         }
@@ -157,7 +176,6 @@ sub process_gosa_msg {
         # set error if no or more than 1 hits are found for sql query
         if ( $l != 1) {
             @out_msg_l = ('knownclienterror');
-        
         # found exact 1 hit in db
         } else {
             my $client_events = $res->{'1'}->{'events'};

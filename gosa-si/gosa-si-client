@@ -89,6 +89,12 @@ my $trigger_logged_in_users_report_delay = 600;
 # directory where all log files from installation are stored
 my $fai_log_dir = "/tmp/fai"; 
 
+# dak variables
+our $dak_base_directory;
+our $dak_signing_keys_directory;
+our $dak_queue_directory;
+our $dak_user;
+
 %cfg_defaults = (
 "general" =>
     {"log-file"           => [\$log_file, "/var/run/".$prg.".log"],
@@ -106,6 +112,10 @@ my $fai_log_dir = "/tmp/fai";
      "nss-config"         => [\$nss_config, "/etc/libnss-ldap.conf"],
      "fai-logpath"        => [\$fai_logpath, "/var/log/fai/fai.log"],
      "force-hostname"	  => [\$client_force_hostname, "false"],
+     "dak-base" => [\$dak_base_directory, "/srv/archive"],
+     "dak-keyring" => [\$dak_signing_keys_directory, "/srv/archive/keyrings"],
+     "dak-queue" => [\$dak_queue_directory, "/srv/archive/queue"],
+     "dak-user" => [\$dak_user, "deb-dak"],
     },
 "server" => {
     "ip"          => [\$server_ip, "127.0.0.1"],

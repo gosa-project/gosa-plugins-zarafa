@@ -156,7 +156,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     #########################
     # Mailqueue communication
-    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
     # multiple xml tags msg_id are allowed
     #$data = "<xml> <header>gosa_mailqueue_hold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99C8ABEF23</msg_id> </xml>";
@@ -167,8 +167,11 @@ for($count = 1; $count <= $zahl; $count++)
     # only one xml tag msg_id is allowed
     #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99E92BEF2B</msg_id> </xml>";
      
-
-
+    ########################
+    # DAK Debian Archive Kit
+    #$data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    #$data = "<xml> <header>gosa_import_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    $data = "<xml> <header>gosa_remove_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
     $sock->write($data);
     $answer = "nothing";
