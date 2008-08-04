@@ -120,7 +120,9 @@ sub process_incoming_msg {
     foreach my $out_msg ( @msg_l ) {
         # determine the correct outgoing source address to the corresponding target address
         $out_msg =~ /<target>(\S*)<\/target>/;
-        my $act_server_ip = &main::get_local_ip_for_remote_ip(sprintf("%s", $1 =~ /^([0-9\.]*?):.*$/));
+        my $act_target = $1;
+        $act_target =~ s/GOSA/$main::server_address/;
+        my $act_server_ip = &main::get_local_ip_for_remote_ip(sprintf("%s", $act_target =~ /^([0-9\.]*?):.*$/));
 
         # Patch the correct outgoing source address
         if ($out_msg =~ /<source>GOSA<\/source>/ ) {
