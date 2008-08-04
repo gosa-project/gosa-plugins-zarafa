@@ -114,14 +114,13 @@ for($count = 1; $count <= $zahl; $count++)
 
     #$data = "<xml> <header>gosa_network_completition</header> <source>GOSA</source> <target>GOSA</target> <hostname>localhost</hostname> </xml>";
 
-    ########
+    ####################################################################
     # Opsi testing
 
     # Get all netboot products
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
 
     # Get netboot product for specific host
-    # -->
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get all localboot products
@@ -155,7 +154,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
 
     # Install Opsi client
-    $data = "<xml> <header>gosa_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+    $data = "<xml> <header>gosa_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>11:22:33:44:55:66</macaddress> </xml>";
 
 
     #########################
@@ -173,7 +172,7 @@ for($count = 1; $count <= $zahl; $count++)
      
     ########################
     # DAK Debian Archive Kit
-    $data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    #$data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
     #$data = "<xml> <header>gosa_import_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
     #$data = "<xml> <header>gosa_remove_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 

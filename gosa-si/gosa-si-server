@@ -204,6 +204,10 @@ my @msgs_to_decrypt = qw();
 my $max_children = 2;
 
 
+# loop delay for job queue to look for opsi jobs
+my $job_queue_opsi_delay = 2;
+
+
 %cfg_defaults = (
 "general" => {
     "log-file" => [\$log_file, "/var/run/".$prg.".log"],
@@ -854,7 +858,7 @@ sub get_local_ip_for_remote_ip {
 			}
 		}
 	} else {
-		daemon_log("get_local_ip_for_remote_ip was called with a non-ip parameter: $remote_ip", 1);
+		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
 	}
 	return $result;
 }
@@ -1441,6 +1445,7 @@ sub session_start {
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
     $kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay); 
+    $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
@@ -1464,6 +1469,69 @@ sub watch_for_done_jobs {
     }
 
     $kernel->delay_set('watch_for_done_jobs',$job_queue_loop_delay);
+}
+
+
+sub watch_for_opsi_jobs {
+    my ($kernel) = @_[KERNEL];
+
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((headertag='opsi_install_client') AND (status='processing'))";
+	my $res = $job_db->select_dbentry( $sql_statement );
+
+    while (my ($id, $hit) = each %$res ) {
+
+        # Ask OPSI for an update of the running jobs
+        my $hostId = $hit->{'plainname'};
+        print STDERR "\n\n$hostId\n";
+#        my $result= {};
+#        
+#        # For hosts, only return the products that are or get installed
+#        my $callobj;
+#        $callobj = {
+#            method  => 'getProductStates_hash',
+#            params  => [ $hostId ],
+#            id  => 1,
+#        };
+#        
+#        my $hres = $client->call($opsi_url, $callobj);
+#        if (check_res($hres)){
+#            my $htmp= $hres->result->{$hostId};
+#        
+#        # check state != not_installed or action == setup -> load and add
+#            my $products= 0;
+#            my $installed= 0;
+#            my $error= 0;
+#            foreach my $product (@{$htmp}){
+#        
+#                if ($product->{'installationStatus'} ne "not_installed" or
+#                        $product->{'actionRequest'} eq "setup"){
+#        
+#        # Increase number of products for this host
+#                    $products++;
+#        
+#                    if ($product->{'installationStatus'} eq "failed"){
+#                        $result->{$product->{'productId'}}= "error";
+#                        $error++;
+#                    }
+#                    if ($product->{'installationStatus'} eq "installed"){
+#                        $result->{$product->{'productId'}}= "installed";
+#                        $installed++;
+#                    }
+#                    if ($product->{'installationStatus'} eq "installing"){
+#                        $result->{$product->{'productId'}}= "installing";
+#                    }
+#                }
+#            }
+#        
+#        # Estimate "rough" progress
+#            $result->{'progress'}= int($installed * 100 / $products);
+#}
+#
+#return $result;
+#
+    }
+
+    $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay);
 }
 
 
@@ -1589,7 +1657,6 @@ sub watch_for_new_jobs {
 		$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	}
 }
-
 
 
 sub watch_for_new_messages {
@@ -2531,6 +2598,7 @@ sub create_packages_list_db {
 
 	close (CONFIG);
 
+
 	find(\&cleanup_and_extract, keys( %repo_dirs ));
 	&main::strip_packages_list_statements();
 	unshift @packages_list_statements, "VACUUM";
@@ -2779,7 +2847,7 @@ sub cleanup_and_extract {
 
 		if( -f "$dir/DEBIAN/templates" ) {
 
-			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 5);
+			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 7);
 
 			my $tmpl= "";
 			{
@@ -3050,6 +3118,7 @@ POE::Session->create(
 		watch_for_new_jobs => \&watch_for_new_jobs,
         watch_for_modified_jobs => \&watch_for_modified_jobs,
         watch_for_done_jobs => \&watch_for_done_jobs,
+        watch_for_opsi_jobs => \&watch_for_opsi_jobs,
         watch_for_old_known_clients => \&watch_for_old_known_clients,
         create_packages_list_db => \&run_create_packages_list_db,
         create_fai_server_db => \&run_create_fai_server_db,

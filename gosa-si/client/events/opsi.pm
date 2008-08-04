@@ -65,11 +65,12 @@ my %cfg_defaults = (
    "password" => [\$opsi_password, "secret"],
    },
 );
-&read_configfile($main::cfg_file, %cfg_defaults);
+&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 # Assemble opsi URL
 my $opsi_url= "https://".$opsi_admin.":".$opsi_password."@".$opsi_server.":4447/rpc";
 my $client = new JSON::RPC::Client;
+
 
 sub check_res {
   my $res= shift;
@@ -89,28 +90,6 @@ sub check_res {
   }
 
   return 0;
-}
-
-
-sub read_configfile {
-    my ($cfg_file, %cfg_defaults) = @_;
-    my $cfg;
-
-    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-        if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
-        } else {
-            &main::daemon_log("ERROR: opsi.pm couldn't read config file!", 1);
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-        }
-    }
 }
 
 
