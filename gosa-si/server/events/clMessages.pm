@@ -1,9 +1,6 @@
 ## @file
 # @brief Implementation of a GOsa-SI event module. 
 # @details A GOsa-SI event module containing all functions to handle incoming messages from clients.
-# @author Andreas Rettenberger <rettenberger@gonicus.de> 
-# @date 2008
-# @version 1.0
 
 package clMessages;
 use Exporter;
@@ -36,25 +33,6 @@ BEGIN {}
 
 END {}
 
-### Start ######################################################################
-
-# labled for deleting: rettenbe 20080730
-#my $ldap_uri;
-#my $ldap_base;
-#my $ldap_admin_dn;
-#my $ldap_admin_password;
-#
-#my %cfg_defaults = (
-#"server" => {
-#   "ldap-uri" => [\$ldap_uri, ""],
-#   "ldap-base" => [\$ldap_base, ""],
-#   "ldap-admin-dn" => [\$ldap_admin_dn, ""],
-#   "ldap-admin-password" => [\$ldap_admin_password, ""],
-#   },
-#);
-#&read_configfile($main::cfg_file, %cfg_defaults);
-#
-
 
 ## @method get_events()
 # @details A brief function returning a list of functions which are exported by importing the module.
@@ -63,7 +41,11 @@ sub get_events {
     return \@events;
 }
 
-
+## @method confirm_usr_msg()
+# @details Confirmed messages are set in the messaging_db from d (deliverd) to s(seen). 
+# @param msg - STRING - xml message with tags 'message', 'subject' and 'usr'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub confirm_usr_msg {
     my ($msg, $msg_hash, $session_id) = @_;
     my $message = @{$msg_hash->{'message'}}[0];
@@ -80,29 +62,11 @@ sub confirm_usr_msg {
 }
 
 
-
-#sub read_configfile {
-#    my ($cfg_file, %cfg_defaults) = @_;
-#    my $cfg;
-#
-#    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-#        if( -r $cfg_file ) {
-#            $cfg = Config::IniFiles->new( -file => $cfg_file );
-#        } else {
-#            &main::daemon_log("ERROR: clMessages.pm couldn't read config file!", 1);
-#        }
-#    } else {
-#        $cfg = Config::IniFiles->new() ;
-#    }
-#    foreach my $section (keys %cfg_defaults) {
-#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-#            my $pinfo = $cfg_defaults{ $section }{ $param };
-#            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-#        }
-#    }
-#}
-
-
+## @method save_fai_log()
+# @details Creates under /var/log/fai/ the directory '$macaddress' and stores within all FAI log files from client.
+# @param msg - STRING - xml message with tags 'macaddress' and 'save_fai_log'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub save_fai_log {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -142,7 +106,11 @@ sub save_fai_log {
     return;
 }
 
-
+## @method LOGIN()
+# @details Reported user from client is added to login_users_db.
+# @param msg - STRING - xml message with tag 'LOGIN'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub LOGIN {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -165,6 +133,11 @@ sub LOGIN {
 }
 
 
+## @method LOGOUT()
+# @details Reported user from client is deleted from login_users_db.
+# @param msg - STRING - xml message with tag 'LOGOUT'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub LOGOUT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -179,6 +152,11 @@ sub LOGOUT {
 }
 
 
+## @method CURRENTLY_LOGGED_IN()
+# @details Reported users from client are updated in login_users_db. Users which are no longer logged in are deleted from DB. 
+# @param msg - STRING - xml message
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub CURRENTLY_LOGGED_IN {
     my ($msg, $msg_hash, $session_id) = @_;
     my ($sql_statement, $db_res);
@@ -234,6 +212,11 @@ sub CURRENTLY_LOGGED_IN {
 }
 
 
+## @method GOTOACTIVATION()
+# @details Client is set at job_queue_db to status 'processing' and 'modified'.
+# @param msg - STRING - xml message with tag 'macaddress'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub GOTOACTIVATION {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -257,6 +240,11 @@ sub GOTOACTIVATION {
 }
 
 
+## @method PROGRESS()
+# @details Message reports installation progress of the client. Installation job at job_queue_db is going to be updated.
+# @param msg - STRING - xml message with tags 'macaddress' and 'PROGRESS'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub PROGRESS {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -281,6 +269,11 @@ sub PROGRESS {
 }
 
 
+## @method FAIREBOOT()
+# @details Message reports a FAI reboot. Job at job_queue_db is going to be updated.
+# @param msg - STRING - xml message with tag 'macaddress' and 'FAIREBOOT'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub FAIREBOOT {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -305,6 +298,11 @@ sub FAIREBOOT {
 }
 
 
+## @method TASKSKIP()
+# @details Message reports a skipped FAI task. Job at job_queue_db is going to be updated. 
+# @param msg - STRING - xml message with tag 'macaddress'.
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub TASKSKIP {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -329,6 +327,11 @@ sub TASKSKIP {
 }
 
 
+## @method TASKBEGIN()
+# @details Message reports a starting FAI task. If the task is equal to 'finish', 'faiend' or 'savelog', job at job_queue_db is being set to status 'done' and FAI state is being set to 'localboot'. If task is equal to 'chboot', 'test' or 'confdir', just do nothing. In all other cases, job at job_queue_db is going to be updated or created if not exists. 
+# @param msg - STRING - xml message with tag 'macaddress'.
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub TASKBEGIN {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -451,6 +454,11 @@ sub TASKBEGIN {
 }
 
 
+## @method TASKEND()
+# @details Message reports a finished FAI task. If task is equal to 'savelog', job at job_queue_db is going to be set to status 'done'. Otherwise, job is going to be updated. 
+# @param msg - STRING - xml message with tag 'macaddress'.
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub TASKEND {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -488,6 +496,11 @@ sub TASKEND {
 }
 
 
+## @method TASKERROR()
+# @details Message reports a FAI error. Job at job_queue_db is going to be updated. 
+# @param msg - STRING - xml message with tag 'macaddress' and 'TASKERROR'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub TASKERROR {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -515,6 +528,11 @@ sub TASKERROR {
 }
 
 
+## @method HOOK()
+# @details Message reports a FAI hook. Job at job_queue_db is going to be updated. 
+# @param msg - STRING - xml message with tag 'macaddress' and 'HOOK'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
 sub HOOK {
     my ($msg, $msg_hash, $session_id) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
