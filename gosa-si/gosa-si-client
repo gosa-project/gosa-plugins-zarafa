@@ -87,7 +87,7 @@ our $prg= basename($0);
 my $trigger_logged_in_users_report_delay = 600;
 
 # directory where all log files from installation are stored
-my $fai_log_dir = "/tmp/fai"; 
+my $fai_log_dir = "/var/log/fai"; 
 
 # dak variables
 our $dak_base_directory;

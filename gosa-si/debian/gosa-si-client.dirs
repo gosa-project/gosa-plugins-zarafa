@@ -2,4 +2,3 @@ etc/gosa-si
 usr/sbin
 usr/lib/gosa-si/client/events
 usr/lib/share/perl5/GOto
-tmp/fai

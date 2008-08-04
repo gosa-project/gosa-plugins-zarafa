@@ -16,11 +16,14 @@ my @events = (
 
     #"opsi_add_client",
     # Client hinzufügen
-    # -> voll qualifizierter name
+    # -> voll qualifizierter name == ID
     # -> IP
     # -> MAC
     # -> Description
     # -> Notizen
+
+    #"opsi_del_client",
+    # ID
 
     #"opsi_modify_client",
 
@@ -706,7 +709,6 @@ sub opsi_del_client {
 }
 
 
-# Setze alles was auf "installed" steht auf setup
 sub opsi_install_client {
     my ($msg, $msg_hash) = @_;
     my $header = @{$msg_hash->{'header'}}[0];
@@ -725,6 +727,7 @@ sub opsi_install_client {
     }
     &add_content2xml_hash($out_hash, "hostId", "$hostId");
 
+# Setze alles was auf "installed" steht auf setup
 # Schaue nach produkten für diesen Host
 # Setze alle Produkte dieses Hosts auf "setup"
 

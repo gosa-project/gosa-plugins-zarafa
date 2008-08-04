@@ -645,7 +645,7 @@ sub new_ldap_config {
 
 	# Do we need to look at an object class?
 	if (not @servers){
-            my $escaped_dn = &Net::LDAP::Utils::escape_dn_value($dn);
+          my $escaped_dn = &Net::LDAP::Utils::escape_dn_value($dn);
 	        $mesg = $ldap_handle->search( base   => $ldap_base,
 			scope  => 'sub',
 			attrs => ['dn', 'gotoLdapServer', 'FAIclass'],
