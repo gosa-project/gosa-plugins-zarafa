@@ -283,24 +283,24 @@ EOF
 #      RETURNS:  nothing
 #  DESCRIPTION:  read cfg_file and set variables
 #===============================================================================
-sub read_configfile {
-    my $cfg;
-    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-        if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
-        } else {
-            print STDERR "Couldn't read config file!\n";
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
-        }
-    }
-}
+#sub read_configfile {
+#    my $cfg;
+#    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
+#        if( -r $cfg_file ) {
+#            $cfg = Config::IniFiles->new( -file => $cfg_file );
+#        } else {
+#            print STDERR "Couldn't read config file!\n";
+#        }
+#    } else {
+#        $cfg = Config::IniFiles->new() ;
+#    }
+#    foreach my $section (keys %cfg_defaults) {
+#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+#            my $pinfo = $cfg_defaults{ $section }{ $param };
+#            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+#        }
+#    }
+#}
 
 
 #===  FUNCTION  ================================================================
@@ -2873,7 +2873,7 @@ GetOptions("h|help" => \&usage,
 
 #  read and set config parameters
 &check_cmdline_param ;
-&read_configfile;
+&read_configfile($cfg_file, %cfg_defaults);
 &check_pid;
 
 $SIG{CHLD} = 'IGNORE';

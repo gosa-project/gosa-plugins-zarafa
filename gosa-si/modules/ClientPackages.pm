@@ -50,7 +50,7 @@ my %cfg_defaults = (
 ### START #####################################################################
 
 # read configfile and import variables
-&read_configfile();
+&local_read_configfile();
 
 
 # if server_ip is not an ip address but a name
@@ -158,12 +158,12 @@ sub get_module_info {
 
 
 #===  FUNCTION  ================================================================
-#         NAME:  read_configfile
+#         NAME:  local_read_configfile
 #   PARAMETERS:  cfg_file - string -
 #      RETURNS:  nothing
 #  DESCRIPTION:  read cfg_file and set variables
 #===============================================================================
-sub read_configfile {
+sub local_read_configfile {
     my $cfg;
     if( defined( $main::cfg_file) && ( (-s $main::cfg_file) > 0 )) {
         if( -r $main::cfg_file ) {

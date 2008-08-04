@@ -28,14 +28,14 @@ my $ldap_admin_password;
 my $mesg;
 
 my %cfg_defaults = (
-"server" => {
-    "ldap-uri" => [\$ldap_uri, ""],
-    "ldap-base" => [\$ldap_base, ""],
-    "ldap-admin-dn" => [\$ldap_admin_dn, ""],
-    "ldap-admin-password" => [\$ldap_admin_password, ""],
+    "server" => {
+        "ldap-uri" => [\$ldap_uri, ""],
+        "ldap-base" => [\$ldap_base, ""],
+        "ldap-admin-dn" => [\$ldap_admin_dn, ""],
+        "ldap-admin-password" => [\$ldap_admin_password, ""],
     },
 );
-&read_configfile($main::cfg_file, %cfg_defaults);
+&GOSA::GosaSupportDaemon::read_configfile($main::cfg_file, %cfg_defaults);
 
 
 sub get_events {
@@ -43,26 +43,26 @@ sub get_events {
 }
 
 
-sub read_configfile {
-    my ($cfg_file, %cfg_defaults) = @_;
-    my $cfg;
-
-    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
-        if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
-        } else {
-            &main::daemon_log("ERROR: siTriggered.pm couldn't read config file!", 1);
-        }
-    } else {
-        $cfg = Config::IniFiles->new() ;
-    }
-    foreach my $section (keys %cfg_defaults) {
-        foreach my $param (keys %{$cfg_defaults{ $section }}) {
-            my $pinfo = $cfg_defaults{ $section }{ $param };
-            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
-        }
-    }
-}
+#sub read_configfile {
+#    my ($cfg_file, %cfg_defaults) = @_;
+#    my $cfg;
+#
+#    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
+#        if( -r $cfg_file ) {
+#            $cfg = Config::IniFiles->new( -file => $cfg_file );
+#        } else {
+#            &main::daemon_log("ERROR: siTriggered.pm couldn't read config file!", 1);
+#        }
+#    } else {
+#        $cfg = Config::IniFiles->new() ;
+#    }
+#    foreach my $section (keys %cfg_defaults) {
+#        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+#            my $pinfo = $cfg_defaults{ $section }{ $param };
+#            ${@$pinfo[0]} = $cfg->val( $section, $param, @$pinfo[1] );
+#        }
+#    }
+#}
 
 
 sub reload_ldap_config {

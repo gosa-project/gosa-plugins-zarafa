@@ -29,6 +29,7 @@ my @functions = (
     "is_local",
     "run_as",
     "inform_all_other_si_server",
+    "read_configfile",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -705,5 +706,27 @@ sub inform_all_other_si_server {
 
     return;
 }
+
+
+sub read_configfile {
+    my ($cfg_file, %cfg_defaults) = @_ ;
+    my $cfg;
+    if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
+        if( -r $cfg_file ) {
+            $cfg = Config::IniFiles->new( -file => $cfg_file );
+        } else {
+            print STDERR "Couldn't read config file!";
+        }
+    } else {
+        $cfg = Config::IniFiles->new() ;
+    }
+    foreach my $section (keys %cfg_defaults) {
+        foreach my $param (keys %{$cfg_defaults{ $section }}) {
+            my $pinfo = $cfg_defaults{ $section }{ $param };
+           ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
+        }
+    }
+}
+
 
 1;

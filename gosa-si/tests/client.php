@@ -169,9 +169,9 @@ for($count = 1; $count <= $zahl; $count++)
      
     ########################
     # DAK Debian Archive Kit
-    #$data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    $data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
     #$data = "<xml> <header>gosa_import_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
-    $data = "<xml> <header>gosa_remove_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    #$data = "<xml> <header>gosa_remove_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
     $sock->write($data);
     $answer = "nothing";

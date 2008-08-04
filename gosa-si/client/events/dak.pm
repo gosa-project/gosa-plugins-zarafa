@@ -36,6 +36,7 @@ my %cfg_defaults = (
 );
 &GOSA::GosaSupportDaemon::read_configfile($main::config_file, %cfg_defaults);
 
+
 ## @method get_events()
 # A brief function returning a list of functions which are exported by importing the module.
 # @return List of all provided functions
