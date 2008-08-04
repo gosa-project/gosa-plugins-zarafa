@@ -1,9 +1,6 @@
 ## @file
 # @details A GOsa-SI event module containing all functions common used by GOsa
 # @brief Implementation of a GOsa-SI event module. 
-# @author Andreas Rettenberger <rettenberger@gonicus.de> 
-# @date 2008
-# @version 1.0
 
 package gosaTriggered;
 use Exporter;
