@@ -154,6 +154,10 @@ for($count = 1; $count <= $zahl; $count++)
     # Delete Opsi client
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
 
+    # Install Opsi client
+    $data = "<xml> <header>gosa_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+
+
     #########################
     # Mailqueue communication
     #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
