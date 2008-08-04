@@ -516,8 +516,11 @@ sub import_events {
             eval{ require $event; };
             if( $@ ) {
                 $error++;
-                push(@result, "import of event module '$event' failed: $@");
-                next;
+                #push(@result, "import of event module '$event' failed: $@");
+                #next;
+                
+                &main::daemon_log("ERROR: Import of event module '$event' failed: $@",1);
+                exit(1);
             }
 
             # fetch all single events
