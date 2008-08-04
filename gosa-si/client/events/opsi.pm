@@ -727,9 +727,44 @@ sub opsi_install_client {
     }
     &add_content2xml_hash($out_hash, "hostId", "$hostId");
 
-# Setze alles was auf "installed" steht auf setup
-# Schaue nach produkten für diesen Host
-# Setze alle Produkte dieses Hosts auf "setup"
+    # Load all products for this host with status != "not_installed" or actionRequest != "none"
+    if (defined $hostId){
+      my $callobj = {
+        method  => 'getProductStates_hash',
+        params  => [ $hostId ],
+        id  => 1,
+      };
+
+      my $hres = $client->call($opsi_url, $callobj);
+      if (check_res($hres)){
+        my $htmp= $hres->result->{$hostId};
+
+        # check state != not_installed or action == setup -> load and add
+        foreach my $product (@{$htmp}){
+
+          # Now we've a couple of hashes...
+          if ($product->{'installationStatus'} ne "not_installed" or
+              $product->{'actionRequest'} ne "none"){
+
+            # Do an action request for all these -> "setup".
+            $callobj = {
+              method  => 'setProductActionRequest',
+              params  => [ $product->{'productId'}, $hostId, "setup" ],
+              id  => 1,
+            };
+            my $res = $client->call($opsi_url, $callobj);
+            if (!check_res($res)){
+              &main::daemon_log("ERROR: cannot set product action request for $hostId!", 1);
+            } else {
+              &main::daemon_log("INFO: requesting 'setup' for '".$product->{'productId'}."' on $hostId", 1);
+            }
+
+          }
+        }
+      }
+    }
+
+
 
 #    # JSON Query
 #    my $callobj = {
