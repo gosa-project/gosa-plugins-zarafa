@@ -283,8 +283,10 @@ sub ping {
         $host_key = @{@$res[0]}[2];
     } else {
         &main::daemon_log("$session_id ERROR: cannot determine host_name and host_key from known_clients_db at function ping\n$msg", 1);
-        my %data = ( 'answer_xml'  => 'host not found in known_clients_db' );
-        $answer_msg = &build_msg("got_ping_error", $target, $source, \%data);
+        my %data = ( 'answer_xml'  => 'host not found in known_clients_db',
+                'macaddress' => $target,
+                );
+        $answer_msg = &build_msg("got_ping_error", $main::server_address, $source, \%data);
         $error = 1;
     }
 
