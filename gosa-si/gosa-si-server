@@ -1503,12 +1503,13 @@ sub watch_for_done_jobs {
 sub watch_for_opsi_jobs {
     my ($kernel) = $_[KERNEL];
 
-    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((headertag='opsi_install_client') AND (status='processing'))";
+    # This is not very nice to look for opsi install jobs, but headertag has to be trigger_action_reinstall. The only way to identify a 
+    # opsi install job is to parse the xml message. There is still the correct header.
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((xmlmessage LIKE '%opsi_install_client</header>%') AND (status='processing'))";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
     # Ask OPSI for an update of the running jobs
     while (my ($id, $hit) = each %$res ) {
-
         # Determine current parameters of the job
         my $hostId = $hit->{'plainname'};
         my $macaddress = $hit->{'macaddress'};

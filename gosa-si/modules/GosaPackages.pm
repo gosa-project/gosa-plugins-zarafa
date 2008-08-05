@@ -247,6 +247,7 @@ sub process_job_msg {
             &daemon_log("$session_id ERROR: opsi_install_client-message has no xml-tag 'hostID', job was not created: $msg", 1);
         } else {
             $plain_name = $msg_hash->{'hostId'}[0];
+            $header = "trigger_action_reinstall"
         }
 
     } else {   # Try to determine plain_name via ladp search
