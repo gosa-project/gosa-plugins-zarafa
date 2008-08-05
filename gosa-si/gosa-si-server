@@ -1578,11 +1578,14 @@ print STDERR Dumper($result);
                 $act_status = "$status - $product";
             } elsif ($status eq "error") {
                 $error++;
-                unshift(@error_list, $product)$act_status = "error - $product";
+                unshift(@error_list, $product);
             }
         }
         if ((not $error) && (not $installing) && ($installed)) {
             $act_status = "installed - ".join(", ", @installed_list);
+        }
+        if ($error) {
+            $act_status = "error - ".join(", ", @error_list);
         }
         if ($progress ne $result->{'progress'} ) {
             my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', result='$act_status', modified='1' WHERE macaddress='$macaddress'";
