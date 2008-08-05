@@ -88,6 +88,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
     $arp_enabled, $arp_interface,
+    $opsi_enabled, $opsi_server, $opsi_admin, $opsi_password,
 );
 
 # additional variable which should be globaly accessable
@@ -205,7 +206,10 @@ my $max_children = 2;
 
 
 # loop delay for job queue to look for opsi jobs
-my $job_queue_opsi_delay = 2;
+my $job_queue_opsi_delay = 10;
+our $opsi_client;
+our $opsi_url;
+ 
 
 
 %cfg_defaults = (
@@ -256,6 +260,12 @@ my $job_queue_opsi_delay = 2;
     "enabled"   => [\$arp_enabled, "true"],
     "interface" => [\$arp_interface, "all"],
 	},
+"Opsi" => {
+    "enabled"  => [\$opsi_enabled, "false"], 
+    "server"   => [\$opsi_server, "localhost"],
+    "admin"    => [\$opsi_admin, "opsi-admin"],
+    "password" => [\$opsi_password, "secret"],
+   },
 
 );
 
@@ -302,7 +312,7 @@ sub daemon_log {
             return 
         }
         chomp($msg);
-        $msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
+        #$msg =~s/\n//g;   # no newlines are allowed in log messages, this is important for later log parsing
         if($level <= $verbose){
             my ($seconds, $minutes, $hours, $monthday, $month,
                     $year, $weekday, $yearday, $sommertime) = localtime(time);
@@ -1445,13 +1455,31 @@ sub session_start {
 	$kernel->delay_set('watch_for_new_jobs', $job_queue_loop_delay);
 	$kernel->delay_set('watch_for_done_jobs', $job_queue_loop_delay); 
     $kernel->delay_set('watch_for_modified_jobs', $modified_jobs_loop_delay); 
-    $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay); 
 	$kernel->delay_set('watch_for_new_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay);
 	$kernel->delay_set('watch_for_done_messages', $messaging_db_loop_delay);
     $kernel->delay_set('watch_for_old_known_clients', $job_queue_loop_delay);
 
+    # Start opsi check
+    if ($opsi_enabled eq "true") {
+        $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay); 
+    }
 
+}
+
+
+sub check_opsi_res {
+    my $res= shift;
+    if($res) {
+        if ($res->is_error) {
+            &main::daemon_log("ERROR: opsi configed communication failed: ".$res->error_message, 1);
+        } else {
+            return 1;
+        }
+    } else {
+        &main::daemon_log("ERROR: opsi configed communication failed: ".$opsi_client->status_line, 1);
+    }
+    return 0;
 }
 
 
@@ -1473,7 +1501,7 @@ sub watch_for_done_jobs {
 
 
 sub watch_for_opsi_jobs {
-    my ($kernel) = @_[KERNEL];
+    my ($kernel) = $_[KERNEL];
 
     my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((headertag='opsi_install_client') AND (status='processing'))";
 	my $res = $job_db->select_dbentry( $sql_statement );
@@ -1482,53 +1510,56 @@ sub watch_for_opsi_jobs {
 
         # Ask OPSI for an update of the running jobs
         my $hostId = $hit->{'plainname'};
-        print STDERR "\n\n$hostId\n";
-#        my $result= {};
-#        
-#        # For hosts, only return the products that are or get installed
-#        my $callobj;
-#        $callobj = {
-#            method  => 'getProductStates_hash',
-#            params  => [ $hostId ],
-#            id  => 1,
-#        };
-#        
-#        my $hres = $client->call($opsi_url, $callobj);
-#        if (check_res($hres)){
-#            my $htmp= $hres->result->{$hostId};
-#        
-#        # check state != not_installed or action == setup -> load and add
-#            my $products= 0;
-#            my $installed= 0;
-#            my $error= 0;
-#            foreach my $product (@{$htmp}){
-#        
-#                if ($product->{'installationStatus'} ne "not_installed" or
-#                        $product->{'actionRequest'} eq "setup"){
-#        
-#        # Increase number of products for this host
-#                    $products++;
-#        
-#                    if ($product->{'installationStatus'} eq "failed"){
-#                        $result->{$product->{'productId'}}= "error";
-#                        $error++;
-#                    }
-#                    if ($product->{'installationStatus'} eq "installed"){
-#                        $result->{$product->{'productId'}}= "installed";
-#                        $installed++;
-#                    }
-#                    if ($product->{'installationStatus'} eq "installing"){
-#                        $result->{$product->{'productId'}}= "installing";
-#                    }
-#                }
-#            }
-#        
-#        # Estimate "rough" progress
-#            $result->{'progress'}= int($installed * 100 / $products);
-#}
-#
-#return $result;
-#
+print STDERR "\n\n$hostId\n";
+        my $result= {};
+        
+        # For hosts, only return the products that are or get installed
+        my $callobj;
+        $callobj = {
+            method  => 'getProductStates_hash',
+            params  => [ $hostId ],
+            id  => 1,
+        };
+        
+        my $hres = $opsi_client->call($opsi_url, $callobj);
+        if (&check_opsi_res($hres)){
+            my $htmp= $hres->result->{$hostId};
+        
+        # check state != not_installed or action == setup -> load and add
+            my $products= 0;
+            my $installed= 0;
+            my $error= 0;
+            foreach my $product (@{$htmp}){
+
+                if ($product->{'installationStatus'} ne "not_installed" or
+                        $product->{'actionRequest'} eq "setup"){
+
+        # Increase number of products for this host
+                    $products++;
+        
+                    if ($product->{'installationStatus'} eq "failed"){
+                        $result->{$product->{'productId'}}= "error";
+                        $error++;
+                    }
+                    if ($product->{'installationStatus'} eq "installed"){
+                        $result->{$product->{'productId'}}= "installed";
+                        $installed++;
+                    }
+                    if ($product->{'installationStatus'} eq "installing"){
+                        $result->{$product->{'productId'}}= "installing";
+                    }
+                }
+            }
+        
+        # Estimate "rough" progress
+            $result->{'progress'}= int($installed * 100 / $products);
+        }
+
+        #return $result;
+print STDERR Dumper($result);        
+    
+        # Set updates to job queue
+
     }
 
     $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay);
@@ -3074,10 +3105,19 @@ foreach my $foreign_server (@foreign_server_list) {
 }
 
 
-# import all modules
+# Import all modules
 &import_modules;
-# check wether all modules are gosa-si valid passwd check
+
+# Check wether all modules are gosa-si valid passwd check
 &password_check;
+
+# Prepare for using Opsi 
+if ($opsi_enabled eq "true") {
+    use JSON::RPC::Client;
+    use XML::Quote qw(:all);
+    $opsi_url= "https://".$opsi_admin.":".$opsi_password."@".$opsi_server.":4447/rpc";
+    $opsi_client = new JSON::RPC::Client;
+}
 
 
 POE::Component::Server::TCP->new(
