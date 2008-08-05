@@ -17,7 +17,6 @@ my @events = (
     "opsi_set_product_properties",
     "opsi_list_clients",
     "opsi_del_client",
-    "opsi_install_client",
 
    );
 @EXPORT = @events;
@@ -41,99 +40,6 @@ sub get_events {
 }
 
     
-## @method opsi_install_client
-# A new windows installing job is created at job_queue_db.
-# @param msg - STRING - xml message with tags macaddress and hostId
-# @param msg_hash - HASHREF - message information parsed into a hash
-# @param session_id - INTEGER - POE session id of the processing of this message
-#sub opsi_install_client {
-#    my ($msg, $msg_hash, $session_id) = @_ ;
-#    my $error = 0;
-#    my $out_msg;
-#    my $out_hash;
-#
-#    # Prepare incoming message
-#    $msg =~ s/<header>gosa_/<header>/;
-#    $msg_hash->{'header'}[0] =~ s/gosa_//;
-#
-#
-#    # Assign variables
-#    my $header = @{$msg_hash->{'header'}}[0];
-#    my $source = @{$msg_hash->{'source'}}[0];
-#    my $target = @{$msg_hash->{'target'}}[0];
-#
-#
-#    # If no timestamp is specified in incoming message, use 19700101000000
-#    my $timestamp = "19700101000000";
-#    if( exists $msg_hash->{'timestamp'} ) {
-#        $timestamp = @{$msg_hash->{'timestamp'}}[0];
-#    }
-#     
-#
-#    # If no macaddress is specified, raise error 
-#    my $macaddress;
-#    if ((exists $msg_hash->{'macaddress'}) &&
-#            ($msg_hash->{'macaddress'}[0] =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i)) { 
-#        $macaddress = $1;
-#    } else {
-#        $error ++;
-#        $out_msg = "<xml>".
-#            "<header>answer</header>".
-#            "<source>$main::server_address</source>".
-#            "<target>GOSA</target>".
-#            "<answer1>1</answer1>".
-#            "<error_string>no mac address specified in macaddres-tag</error_string>".
-#            "</xml>";
-#    }
-#    
-#
-#    # Set hostID to plain_name
-#    my $plain_name;
-#    if (not $error) {
-#        if (exists $msg_hash->{'hostId'}) {
-#            $plain_name = $msg_hash->{'hostId'}[0];
-#        } else {
-#            $error++;
-#            $out_msg = "<xml>".
-#            "<header>answer</header>".
-#            "<source>$main::server_address</source>".
-#            "<target>GOSA</target>".
-#            "<answer1>1</answer1>".
-#            "<error_string>no hostId specified in hostId-tag</error_string>".
-#            "</xml>";
-#        }
-#    }
-#
-#
-#    # Add installation job to job queue
-#    if (not $error) {
-#        my $insert_dic = {table=>$main::job_queue_tn, 
-#            primkey=>['macaddress', 'headertag'],
-#            timestamp=>&get_time(),
-#            status=>'processing', 
-#            result=>'none',
-#            progress=>'none',
-#            headertag=>$header, 
-#            targettag=>$target,
-#            xmlmessage=>$msg,
-#            macaddress=>$macaddress,
-#            plainname=>$plain_name,
-#            siserver=>"localhost",
-#            modified=>"1",
-#        };
-#        my $res = $main::job_db->add_dbentry($insert_dic);
-#        if (not $res == 0) {
-#            &main::daemon_log("$session_id ERROR: Cannot add opsi-job to job_queue: $msg", 1);
-#        } else {
-#            &main::daemon_log("$session_id INFO: '$header'-job successfully added to job queue", 5);
-#        }
-#        $out_msg = $msg;   # forward GOsa message to client 
-#    }
-#    
-#    return ($out_msg);
-#}
-
-
 ## @method opsi_get_netboot_products
 # ???
 # @param msg - STRING - xml message with tag hostId
@@ -665,61 +571,6 @@ sub opsi_get_local_products {
 }
 
 
-### @method _opsi_get_client_status
-## 
-## @param msg - STRING - xml message with tags 
-## @param msg_hash - HASHREF - message information parsed into a hash
-## @param session_id - INTEGER - POE session id of the processing of this message
-#sub _opsi_get_client_status {
-#  my $hostId = shift;
-#  my $result= {};
-#
-#  # For hosts, only return the products that are or get installed
-#  my $callobj;
-#  $callobj = {
-#    method  => 'getProductStates_hash',
-#    params  => [ $hostId ],
-#    id  => 1,
-#  };
-#
-#  my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-#  if (&main::check_opsi_res($hres)){
-#    my $htmp= $hres->result->{$hostId};
-#
-#    # check state != not_installed or action == setup -> load and add
-#    my $products= 0;
-#    my $installed= 0;
-#    my $error= 0;
-#    foreach my $product (@{$htmp}){
-#
-#      if ($product->{'installationStatus'} ne "not_installed" or
-#          $product->{'actionRequest'} eq "setup"){
-#
-#        # Increase number of products for this host
-#        $products++;
-#
-#        if ($product->{'installationStatus'} eq "failed"){
-#          $result->{$product->{'productId'}}= "error";
-#          $error++;
-#        }
-#        if ($product->{'installationStatus'} eq "installed"){
-#          $result->{$product->{'productId'}}= "installed";
-#          $installed++;
-#        }
-#        if ($product->{'installationStatus'} eq "installing"){
-#          $result->{$product->{'productId'}}= "installing";
-#        }
-#      }
-#    }
-#
-#    # Estimate "rough" progress
-#    $result->{'progress'}= int($installed * 100 / $products);
-#  }
-#
-#  return $result;
-#}
-
-
 ## @method opsi_del_client
 # ???
 # @param msg - STRING - xml message with tag hostId
@@ -790,7 +641,6 @@ sub opsi_install_client {
 
         # check state != not_installed or action == setup -> load and add
         foreach my $product (@{$htmp}){
-
           # Now we've a couple of hashes...
           if ($product->{'installationStatus'} ne "not_installed" or
               $product->{'actionRequest'} ne "none"){

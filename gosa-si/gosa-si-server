@@ -1525,13 +1525,17 @@ sub watch_for_opsi_jobs {
         };
         
         my $hres = $opsi_client->call($opsi_url, $callobj);
-        if (&check_opsi_res($hres)){
+        if (&check_opsi_res($hres)) {
             my $htmp= $hres->result->{$hostId};
         
             # check state != not_installed or action == setup -> load and add
             my $products= 0;
             my $installed= 0;
-            my $error= 0;
+            my $installing = 0;
+            my $error= 0;  
+            my @installed_list;
+            my @error_list;
+            my $act_status = "none";
             foreach my $product (@{$htmp}){
 
                 if ($product->{'installationStatus'} ne "not_installed" or
@@ -1542,57 +1546,38 @@ sub watch_for_opsi_jobs {
         
                     if ($product->{'installationStatus'} eq "failed"){
                         $result->{$product->{'productId'}}= "error";
+                        unshift(@error_list, $product);
                         $error++;
                     }
                     if ($product->{'installationStatus'} eq "installed" && $product->{'actionRequest'}  eq "none"){
                         $result->{$product->{'productId'}}= "installed";
+                        unshift(@installed_list, $product);
                         $installed++;
                     }
                     if ($product->{'installationStatus'} eq "installing"){
                         $result->{$product->{'productId'}}= "installing";
+                        $act_status = "installing - $product";
                     }
                 }
             }
         
         # Estimate "rough" progress
             $result->{'progress'}= int($installed * 100 / $products);
-        }
+print STDERR Dumper($result);            
 
-print STDERR Dumper($result);        
-    
-        # Set updates to job queue
-        my $act_status = "none";
-        my $error = 0;
-        my $installing = 0;
-        my $installed;
-        my @installed_list;
-        my @error_list;
-        while (my ($product, $status) = each %$result) {
-            if ($product eq "progress") { next; };
-            if ($status eq "installed" && (not $error)) {
-               unshift(@installed_list, $product);
-                $installed++;
-            } elsif ($status eq "installing" && (not $error)) {
-                $installing++;
-                $act_status = "$status - $product";
-            } elsif ($status eq "error") {
-                $error++;
-                unshift(@error_list, $product);
+        # Set updates in job queue
+            if ((not $error) && (not $installing) && ($installed)) {
+                $act_status = "installed - ".join(", ", @installed_list);
+            }
+            if ($error) {
+                $act_status = "error - ".join(", ", @error_list);
+            }
+            if ($progress ne $result->{'progress'} ) {
+                my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', result='$act_status', modified='1' WHERE macaddress='$macaddress'";
+                my $update_res = $job_db->update_dbentry($update_statement);
             }
         }
-        if ((not $error) && (not $installing) && ($installed)) {
-            $act_status = "installed - ".join(", ", @installed_list);
-        }
-        if ($error) {
-            $act_status = "error - ".join(", ", @error_list);
-        }
-        if ($progress ne $result->{'progress'} ) {
-            my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', result='$act_status', modified='1' WHERE macaddress='$macaddress'";
-            my $update_res = $job_db->update_dbentry($update_statement);
-        }
-
     }
-
     $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay);
 }
 
