@@ -1573,17 +1573,24 @@ sub watch_for_opsi_jobs {
                 $act_status = "error - ".join(", ", @error_list);
             }
             if ($progress ne $result->{'progress'} ) {
+                # Updating progress and result 
                 my $update_statement = "UPDATE $job_queue_tn SET modified='1', ";
-                if ($progress eq 100) { 
-                    if ($error) {
-                        $update_statement .= "status='error', ";
-                    } else {
-                        $update_statement .= "status='done', ";
-                    }
-                }
                 $update_statement .= "progress='".$result->{'progress'}."', result='$act_status' WHERE macaddress='$macaddress'";
                 my $update_res = $job_db->update_dbentry($update_statement);
             }
+            if ($progress eq 100) { 
+                # Updateing status
+                my $done_statement = "UPDATE $job_queue_tn SET modified='1', ";
+                if ($error) {
+                    $done_statement .= "status='error'";
+                } else {
+                    $done_statement .= "status='done'";
+                }
+                $done_statement .= " WHERE macaddress='$macaddress'";
+                my $done_res = $job_db->update_dbentry($done_statement);
+            }
+
+
         }
     }
 

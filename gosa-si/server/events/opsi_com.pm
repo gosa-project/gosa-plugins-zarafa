@@ -608,7 +608,7 @@ sub opsi_del_client {
 
 ## @method opsi_install_client
 # ???
-# @param msg - STRING - xml message with tag hostId
+# @param msg - STRING - xml message with tags hostId, macaddress
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
 sub opsi_install_client {
@@ -618,64 +618,88 @@ sub opsi_install_client {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $hostId = @{$msg_hash->{'hostId'}}[0];
+    my $error = 0;
+    my @out_msg_l;
 
-    # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    # If no macaddress is specified, raise error  
+    my $macaddress; 
+    if ((exists $msg_hash->{'macaddress'}) && 
+            ($msg_hash->{'macaddress'}[0] =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i)) {  
+        $macaddress = $1; 
+    } else { 
+        $error ++; 
+        my $out_msg = "<xml>". 
+            "<header>answer</header>". 
+            "<source>$main::server_address</source>". 
+            "<target>GOSA</target>". 
+            "<answer1>1</answer1>". 
+            "<error_string>no mac address specified in macaddres-tag</error_string>". 
+            "</xml>"; 
+        push(@out_msg_l, $out_msg);
+    } 
 
-    if (defined $forward_to_gosa) {
-      &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
-    }
-    &add_content2xml_hash($out_hash, "hostId", "$hostId");
+    # Set parameters in opsi
+    if (not $error) {
+        # build return message with twisted target and source
+        my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
 
-    # Load all products for this host with status != "not_installed" or actionRequest != "none"
-    if (defined $hostId){
-      my $callobj = {
-        method  => 'getProductStates_hash',
-        params  => [ $hostId ],
-        id  => 1,
-      };
-
-      my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (&main::check_opsi_res($hres)){
-        my $htmp= $hres->result->{$hostId};
-
-        # check state != not_installed or action == setup -> load and add
-        foreach my $product (@{$htmp}){
-          # Now we've a couple of hashes...
-          if ($product->{'installationStatus'} ne "not_installed" or
-              $product->{'actionRequest'} ne "none"){
-
-            # Do an action request for all these -> "setup".
-            $callobj = {
-              method  => 'setProductActionRequest',
-              params  => [ $product->{'productId'}, $hostId, "setup" ],
-              id  => 1,
-            };
-            my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (!&main::check_opsi_res($res)){
-              &main::daemon_log("ERROR: cannot set product action request for $hostId!", 1);
-            } else {
-              &main::daemon_log("INFO: requesting 'setup' for '".$product->{'productId'}."' on $hostId", 1);
-            }
-
-          }
+        if (defined $forward_to_gosa) {
+            &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
         }
-      }
+        &add_content2xml_hash($out_hash, "hostId", "$hostId");
+
+        # Load all products for this host with status != "not_installed" or actionRequest != "none"
+        if (defined $hostId){
+            my $callobj = {
+                method  => 'getProductStates_hash',
+                params  => [ $hostId ],
+                id  => 1,
+            };
+
+            my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
+            if (&main::check_opsi_res($hres)){
+                my $htmp= $hres->result->{$hostId};
+
+                # check state != not_installed or action == setup -> load and add
+                foreach my $product (@{$htmp}){
+                    # Now we've a couple of hashes...
+                    if ($product->{'installationStatus'} ne "not_installed" or
+                            $product->{'actionRequest'} ne "none"){
+
+                        # Do an action request for all these -> "setup".
+                        $callobj = {
+                            method  => 'setProductActionRequest',
+                            params  => [ $product->{'productId'}, $hostId, "setup" ],
+                            id  => 1,
+                        };
+                        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+                        if (!&main::check_opsi_res($res)){
+                            &main::daemon_log("ERROR: cannot set product action request for $hostId!", 1);
+                        } else {
+                            &main::daemon_log("INFO: requesting 'setup' for '".$product->{'productId'}."' on $hostId", 1);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        push(@out_msg_l, &create_xml_string($out_hash));
+    }
+
+    # Build wakeup message for client
+    if (not $error) {
+        my $wakeup_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
+        &add_content2xml_hash($wakeup_hash, 'macAddress', $macaddress);
+        my $wakeup_msg = &create_xml_string($wakeup_hash);
+        push(@out_msg_l, $wakeup_msg);
+
+        # invoke trigger wake for this gosa-si-server
+        &main::server_server_com::trigger_wake($wakeup_msg, $wakeup_hash, $session_id);
     }
 
 
-
-#    # JSON Query
-#    my $callobj = {
-#      method  => 'deleteClient',
-#      params  => [ $hostId ],
-#      id  => 1,
-#    };
-#
-#    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-    my $xml_msg= &create_xml_string($out_hash);
-    return ($xml_msg);
+    return @out_msg_l;
 }
 
 
