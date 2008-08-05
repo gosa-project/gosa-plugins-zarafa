@@ -222,13 +222,13 @@ sub process_job_msg {
     $header =~ s/job_//;
 	my $target = @{$msg_hash->{'target'}}[0];
     
-    # if no timestamp is specified, use 19700101000000
+    # If no timestamp is specified, use 19700101000000
     my $timestamp = "19700101000000";
     if( exists $msg_hash->{'timestamp'} ) {
         $timestamp = @{$msg_hash->{'timestamp'}}[0];
     }
 
-    #if no macaddress is specified, raise error 
+    # If no macaddress is specified, raise error 
     my $macaddress;
     if( exists $msg_hash->{'macaddress'} ) {
         $macaddress = @{$msg_hash->{'macaddress'}}[0];
@@ -245,31 +245,39 @@ sub process_job_msg {
             "</xml>";
     }
     
-	# if mac address is already known in ldap, set plain_name to 'cn'
+    # Determine plain_name for host
     my $plain_name;
-	my $ldap_handle = &main::get_ldap_handle($session_id); 
-	if( not defined $ldap_handle ) {
-		&main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
-		$plain_name = "none"; 
-		
-	# try to fetch a 'real name'		
-	} else {
-		my $mesg = $ldap_handle->search(
-						base => $main::ldap_base,
-						scope => 'sub',
-						attrs => ['cn'],
-						filter => "(macAddress=$macaddress)");
-		if($mesg->code) {
-			&main::daemon_log($mesg->error, 1);
-			$plain_name = "none";
-		} else {
-			my $entry= $mesg->entry(0);
-			$plain_name = $entry->get_value("cn");
-		}
-	}
+    if ($header eq "opsi_install_client") {   # Opsi installing clients use hostId as plain_name
+        if (not exists $msg_hash->{'hostId'}) {
+            $error++;
+            &daemon_log("$session_id ERROR: opsi_install_client-message has no xml-tag 'hostID', job was not created: $msg", 1);
+        } else {
+            $plain_name = $msg_hash->{'hostId'}[0];
+        }
 
+    } else {   # Try to determine plain_name via ladp search
+        my $ldap_handle = &main::get_ldap_handle($session_id); 
+        if( not defined $ldap_handle ) {
+            &main::daemon_log("$session_id ERROR: cannot connect to ldap", 1);
+            $plain_name = "none"; 
+        } else {
+            my $mesg = $ldap_handle->search(
+                    base => $main::ldap_base,
+                    scope => 'sub',
+                    attrs => ['cn'],
+                    filter => "(macAddress=$macaddress)");
+            if($mesg->code) {
+                &main::daemon_log($mesg->error, 1);
+                $plain_name = "none";
+            } else {
+                my $entry= $mesg->entry(0);
+                $plain_name = $entry->get_value("cn");
+            }
+        }
+    }
+	
+    # Add job to job queue
     if( $error == 0 ) {
-        # add job to job queue
         my $func_dic = {table=>$main::job_queue_tn, 
             primkey=>['macaddress', 'headertag'],
             timestamp=>$timestamp,

@@ -9,15 +9,15 @@ use Exporter;
 my @events = (
     "get_events",
     "opsi_install_client",
-    #"opsi_get_netboot_products",  
-    #"opsi_get_local_products",
-    #"opsi_get_client_hardware",
-    #"opsi_get_client_software",
-    #"opsi_get_product_properties",
-    #"opsi_set_product_properties",
-    #"opsi_list_clients",
-    #"opsi_del_client",
-    #"opsi_install_client",
+    "opsi_get_netboot_products",  
+    "opsi_get_local_products",
+    "opsi_get_client_hardware",
+    "opsi_get_client_software",
+    "opsi_get_product_properties",
+    "opsi_set_product_properties",
+    "opsi_list_clients",
+    "opsi_del_client",
+    "opsi_install_client",
 
    );
 @EXPORT = @events;
@@ -26,6 +26,7 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
+use XML::Quote qw(:all);
 
 
 BEGIN {}
@@ -45,92 +46,92 @@ sub get_events {
 # @param msg - STRING - xml message with tags macaddress and hostId
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
-sub opsi_install_client {
-    my ($msg, $msg_hash, $session_id) = @_ ;
-    my $error = 0;
-    my $out_msg;
-    my $out_hash;
-
-    # Prepare incoming message
-    $msg =~ s/<header>gosa_/<header>/;
-    $msg_hash->{'header'}[0] =~ s/gosa_//;
-
-
-    # Assign variables
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-
-
-    # If no timestamp is specified in incoming message, use 19700101000000
-    my $timestamp = "19700101000000";
-    if( exists $msg_hash->{'timestamp'} ) {
-        $timestamp = @{$msg_hash->{'timestamp'}}[0];
-    }
-     
-
-    # If no macaddress is specified, raise error 
-    my $macaddress;
-    if ((exists $msg_hash->{'macaddress'}) &&
-            ($msg_hash->{'macaddress'}[0] =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i)) { 
-        $macaddress = $1;
-    } else {
-        $error ++;
-        $out_msg = "<xml>".
-            "<header>answer</header>".
-            "<source>$main::server_address</source>".
-            "<target>GOSA</target>".
-            "<answer1>1</answer1>".
-            "<error_string>no mac address specified in macaddres-tag</error_string>".
-            "</xml>";
-    }
-    
-
-    # Set hostID to plain_name
-    my $plain_name;
-    if (not $error) {
-        if (exists $msg_hash->{'hostId'}) {
-            $plain_name = $msg_hash->{'hostId'}[0];
-        } else {
-            $error++;
-            $out_msg = "<xml>".
-            "<header>answer</header>".
-            "<source>$main::server_address</source>".
-            "<target>GOSA</target>".
-            "<answer1>1</answer1>".
-            "<error_string>no hostId specified in hostId-tag</error_string>".
-            "</xml>";
-        }
-    }
-
-
-    # Add installation job to job queue
-    if (not $error) {
-        my $insert_dic = {table=>$main::job_queue_tn, 
-            primkey=>['macaddress', 'headertag'],
-            timestamp=>&get_time(),
-            status=>'processing', 
-            result=>'none',
-            progress=>'none',
-            headertag=>$header, 
-            targettag=>$target,
-            xmlmessage=>$msg,
-            macaddress=>$macaddress,
-            plainname=>$plain_name,
-            siserver=>"localhost",
-            modified=>"1",
-        };
-        my $res = $main::job_db->add_dbentry($insert_dic);
-        if (not $res == 0) {
-            &main::daemon_log("$session_id ERROR: Cannot add opsi-job to job_queue: $msg", 1);
-        } else {
-            &main::daemon_log("$session_id INFO: '$header'-job successfully added to job queue", 5);
-        }
-        $out_msg = $msg;   # forward GOsa message to client 
-    }
-    
-    return ($out_msg);
-}
+#sub opsi_install_client {
+#    my ($msg, $msg_hash, $session_id) = @_ ;
+#    my $error = 0;
+#    my $out_msg;
+#    my $out_hash;
+#
+#    # Prepare incoming message
+#    $msg =~ s/<header>gosa_/<header>/;
+#    $msg_hash->{'header'}[0] =~ s/gosa_//;
+#
+#
+#    # Assign variables
+#    my $header = @{$msg_hash->{'header'}}[0];
+#    my $source = @{$msg_hash->{'source'}}[0];
+#    my $target = @{$msg_hash->{'target'}}[0];
+#
+#
+#    # If no timestamp is specified in incoming message, use 19700101000000
+#    my $timestamp = "19700101000000";
+#    if( exists $msg_hash->{'timestamp'} ) {
+#        $timestamp = @{$msg_hash->{'timestamp'}}[0];
+#    }
+#     
+#
+#    # If no macaddress is specified, raise error 
+#    my $macaddress;
+#    if ((exists $msg_hash->{'macaddress'}) &&
+#            ($msg_hash->{'macaddress'}[0] =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i)) { 
+#        $macaddress = $1;
+#    } else {
+#        $error ++;
+#        $out_msg = "<xml>".
+#            "<header>answer</header>".
+#            "<source>$main::server_address</source>".
+#            "<target>GOSA</target>".
+#            "<answer1>1</answer1>".
+#            "<error_string>no mac address specified in macaddres-tag</error_string>".
+#            "</xml>";
+#    }
+#    
+#
+#    # Set hostID to plain_name
+#    my $plain_name;
+#    if (not $error) {
+#        if (exists $msg_hash->{'hostId'}) {
+#            $plain_name = $msg_hash->{'hostId'}[0];
+#        } else {
+#            $error++;
+#            $out_msg = "<xml>".
+#            "<header>answer</header>".
+#            "<source>$main::server_address</source>".
+#            "<target>GOSA</target>".
+#            "<answer1>1</answer1>".
+#            "<error_string>no hostId specified in hostId-tag</error_string>".
+#            "</xml>";
+#        }
+#    }
+#
+#
+#    # Add installation job to job queue
+#    if (not $error) {
+#        my $insert_dic = {table=>$main::job_queue_tn, 
+#            primkey=>['macaddress', 'headertag'],
+#            timestamp=>&get_time(),
+#            status=>'processing', 
+#            result=>'none',
+#            progress=>'none',
+#            headertag=>$header, 
+#            targettag=>$target,
+#            xmlmessage=>$msg,
+#            macaddress=>$macaddress,
+#            plainname=>$plain_name,
+#            siserver=>"localhost",
+#            modified=>"1",
+#        };
+#        my $res = $main::job_db->add_dbentry($insert_dic);
+#        if (not $res == 0) {
+#            &main::daemon_log("$session_id ERROR: Cannot add opsi-job to job_queue: $msg", 1);
+#        } else {
+#            &main::daemon_log("$session_id INFO: '$header'-job successfully added to job queue", 5);
+#        }
+#        $out_msg = $msg;   # forward GOsa message to client 
+#    }
+#    
+#    return ($out_msg);
+#}
 
 
 ## @method opsi_get_netboot_products
@@ -148,7 +149,6 @@ sub opsi_get_netboot_products {
 
   # build return message with twisted target and source
   my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-  #&add_content2xml_hash($out_hash, "session_id", $session_id);   ### possibly not needed, to be checked
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -174,7 +174,7 @@ sub opsi_get_netboot_products {
   my %r = ();
   for (@{$res->result}) { $r{$_} = 1 }
 
-  if (check_res($res)){
+  if (&main::check_opsi_res($res)){
 
     if (defined $hostId){
       $callobj = {
@@ -184,7 +184,7 @@ sub opsi_get_netboot_products {
       };
 
       my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (check_res($hres)){
+      if (&main::check_opsi_res($hres)){
         my $htmp= $hres->result->{$hostId};
 
         # check state != not_installed or action == setup -> load and add
@@ -206,7 +206,7 @@ sub opsi_get_netboot_products {
             };
 
             my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (check_res($sres)){
+            if (&main::check_opsi_res($sres)){
               my $tres= $sres->result;
 
               my $name= xml_quote($tres->{'name'});
@@ -231,7 +231,7 @@ sub opsi_get_netboot_products {
         };
 
         my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (check_res($sres)){
+        if (&main::check_opsi_res($sres)){
           my $tres= $sres->result;
 
           my $name= xml_quote($tres->{'name'});
@@ -268,7 +268,6 @@ sub opsi_get_product_properties {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     # Get hostID if defined
     if (defined @{$msg_hash->{'hostId'}}[0]){
@@ -288,7 +287,7 @@ sub opsi_get_product_properties {
       id  => 1,
     };
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (check_res($res)){
+    if (&main::check_opsi_res($res)){
       foreach my $action (@{$res->result}){
         &add_content2xml_hash($out_hash, "action", $action);
       }
@@ -309,7 +308,7 @@ sub opsi_get_product_properties {
 
     $res = $main::opsi_client->call($main::opsi_url, $callobj);
 
-    if (check_res($res)){
+    if (&main::check_opsi_res($res)){
         my $r= $res->result;
         foreach my $key (keys %{$r}) {
           my $item= "<item>";
@@ -349,7 +348,6 @@ sub opsi_set_product_properties {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
     &add_content2xml_hash($out_hash, "ProductId", $productId);
 
     # Get hostID if defined
@@ -391,7 +389,7 @@ sub opsi_set_product_properties {
 
       my $res = $main::opsi_client->call($main::opsi_url, $callobj);
 
-      if (!check_res($res)){
+      if (!&main::check_opsi_res($res)){
         &main::daemon_log("ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res->error_message, 1);
         &add_content2xml_hash($out_hash, "error", $res->error_message);
       }
@@ -418,7 +416,6 @@ sub opsi_get_client_hardware {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -435,7 +432,7 @@ sub opsi_get_client_hardware {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (check_res($res)){
+    if (&main::check_opsi_res($res)){
       my $result= $res->result;
       foreach my $r (keys %{$result}){
         my $item= "<item><id>".xml_quote($r)."</id>";
@@ -475,7 +472,6 @@ sub opsi_list_clients {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -492,7 +488,7 @@ sub opsi_list_clients {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (check_res($res)){
+    if (&main::check_opsi_res($res)){
 
       foreach my $host (@{$res->result}){
         my $item= "<item><name>".$host->{'hostId'}."</name>";
@@ -525,7 +521,6 @@ sub opsi_get_client_software {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -542,7 +537,7 @@ sub opsi_get_client_software {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (check_res($res)){
+    if (&main::check_opsi_res($res)){
       my $result= $res->result;
     }
 
@@ -567,7 +562,6 @@ sub opsi_get_local_products {
 
   # build return message with twisted target and source
   my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-  &add_content2xml_hash($out_hash, "session_id", $session_id);
 
   # Get hostID if defined
   if (defined @{$msg_hash->{'hostId'}}[0]){
@@ -593,7 +587,7 @@ sub opsi_get_local_products {
   my %r = ();
   for (@{$res->result}) { $r{$_} = 1 }
 
-  if (check_res($res)){
+  if (&main::check_opsi_res($res)){
 
     if (defined $hostId){
       $callobj = {
@@ -603,7 +597,7 @@ sub opsi_get_local_products {
       };
 
       my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (check_res($hres)){
+      if (&main::check_opsi_res($hres)){
         my $htmp= $hres->result->{$hostId};
 
         # check state != not_installed or action == setup -> load and add
@@ -625,7 +619,7 @@ sub opsi_get_local_products {
             };
 
             my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (check_res($sres)){
+            if (&main::check_opsi_res($sres)){
               my $tres= $sres->result;
 
               my $name= xml_quote($tres->{'name'});
@@ -650,7 +644,7 @@ sub opsi_get_local_products {
         };
 
         my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (check_res($sres)){
+        if (&main::check_opsi_res($sres)){
           my $tres= $sres->result;
 
           my $name= xml_quote($tres->{'name'});
@@ -689,7 +683,7 @@ sub opsi_get_local_products {
 #  };
 #
 #  my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-#  if (check_res($hres)){
+#  if (&main::check_opsi_res($hres)){
 #    my $htmp= $hres->result->{$hostId};
 #
 #    # check state != not_installed or action == setup -> load and add
@@ -741,7 +735,6 @@ sub opsi_del_client {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -777,7 +770,6 @@ sub opsi_install_client {
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
-    &add_content2xml_hash($out_hash, "session_id", $session_id);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -793,7 +785,7 @@ sub opsi_install_client {
       };
 
       my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (check_res($hres)){
+      if (&main::check_opsi_res($hres)){
         my $htmp= $hres->result->{$hostId};
 
         # check state != not_installed or action == setup -> load and add
@@ -810,7 +802,7 @@ sub opsi_install_client {
               id  => 1,
             };
             my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (!check_res($res)){
+            if (!&main::check_opsi_res($res)){
               &main::daemon_log("ERROR: cannot set product action request for $hostId!", 1);
             } else {
               &main::daemon_log("INFO: requesting 'setup' for '".$product->{'productId'}."' on $hostId", 1);

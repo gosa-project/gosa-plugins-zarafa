@@ -1508,9 +1508,13 @@ sub watch_for_opsi_jobs {
 
     while (my ($id, $hit) = each %$res ) {
 
-        # Ask OPSI for an update of the running jobs
+        # Determine current parameters of the job
         my $hostId = $hit->{'plainname'};
-print STDERR "\n\n$hostId\n";
+        my $macaddress = $hit->{'macaddress'};
+        my $progress = $hit->{'progress'};
+
+        # Ask OPSI for an update of the running jobs
+#print STDERR "\n\n$hostId\n";
         my $result= {};
         
         # For hosts, only return the products that are or get installed
@@ -1555,10 +1559,13 @@ print STDERR "\n\n$hostId\n";
             $result->{'progress'}= int($installed * 100 / $products);
         }
 
-        #return $result;
-print STDERR Dumper($result);        
+#print STDERR Dumper($result);        
     
         # Set updates to job queue
+        if ($progress ne $result->{'progress'}) {
+            my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', modified='1' WHERE macaddress='$macaddress'";
+            my $update_res = $job_db->update_dbentry($update_statement);
+        }
 
     }
 
