@@ -1514,7 +1514,7 @@ sub watch_for_opsi_jobs {
         my $progress = $hit->{'progress'};
 
         # Ask OPSI for an update of the running jobs
-#print STDERR "\n\n$hostId\n";
+print STDERR "$hostId\n";
         my $result= {};
         
         # For hosts, only return the products that are or get installed
@@ -1559,11 +1559,33 @@ sub watch_for_opsi_jobs {
             $result->{'progress'}= int($installed * 100 / $products);
         }
 
-#print STDERR Dumper($result);        
+print STDERR Dumper($result);        
     
         # Set updates to job queue
-        if ($progress ne $result->{'progress'}) {
-            my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', modified='1' WHERE macaddress='$macaddress'";
+        my $act_status = "none";
+        my $error = 0;
+        my $installing = 0;
+        my $installed;
+        my @installed_list;
+        my @error_list;
+        while (my ($product, $status) = each %$result) {
+            if ($product eq "progress") { next; };
+            if ($status eq "installed" && (not $error)) {
+               unshift(@installed_list, $product);
+                $installed++;
+            } elsif ($status eq "installing" && (not $error)) {
+                $installing++;
+                $act_status = "$status - $product";
+            } elsif ($status eq "error") {
+                $error++;
+                unshift(@error_list, $product)$act_status = "error - $product";
+            }
+        }
+        if ((not $error) && (not $installing) && ($installed)) {
+            $act_status = "installed - ".join(", ", @installed_list);
+        }
+        if ($progress ne $result->{'progress'} ) {
+            my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', result='$act_status', modified='1' WHERE macaddress='$macaddress'";
             my $update_res = $job_db->update_dbentry($update_statement);
         }
 
