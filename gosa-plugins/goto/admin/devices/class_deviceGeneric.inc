@@ -252,10 +252,10 @@ class deviceGeneric extends plugin
             "cn"            => _("Name"),
             "base"          => _("Base"),
             "description"   => _("Description"),
-            "type"          => _("Tpye"),
+            "type"          => _("Type"),
             "serial"        => _("Serial"),
             "vendor"        => _("Vendor"), 
-            "devID"        => _("Devive ID"))
+            "devID"        => _("Device ID"))
           ));
 
   }
