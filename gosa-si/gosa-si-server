@@ -1514,7 +1514,6 @@ sub watch_for_opsi_jobs {
         my $progress = $hit->{'progress'};
 
         # Ask OPSI for an update of the running jobs
-print STDERR "$hostId\n";
         my $result= {};
         
         # For hosts, only return the products that are or get installed
@@ -1529,7 +1528,7 @@ print STDERR "$hostId\n";
         if (&check_opsi_res($hres)){
             my $htmp= $hres->result->{$hostId};
         
-        # check state != not_installed or action == setup -> load and add
+            # check state != not_installed or action == setup -> load and add
             my $products= 0;
             my $installed= 0;
             my $error= 0;
@@ -1538,14 +1537,14 @@ print STDERR "$hostId\n";
                 if ($product->{'installationStatus'} ne "not_installed" or
                         $product->{'actionRequest'} eq "setup"){
 
-        # Increase number of products for this host
+                    # Increase number of products for this host
                     $products++;
         
                     if ($product->{'installationStatus'} eq "failed"){
                         $result->{$product->{'productId'}}= "error";
                         $error++;
                     }
-                    if ($product->{'installationStatus'} eq "installed"){
+                    if ($product->{'installationStatus'} eq "installed" && $product->{'actionRequest'}  eq "none"){
                         $result->{$product->{'productId'}}= "installed";
                         $installed++;
                     }
