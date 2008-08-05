@@ -130,11 +130,11 @@ sub process_incoming_msg {
         }
 
         # Patch the correct outgoing forward_to_gosa address
-        if ($out_msg =~ /<forward_to_gosa>(\S+),(\d+)<\/forward_to_gosa>/ ) {
-            $out_msg =~ s/<forward_to_gosa>\S+<\/forward_to_gosa>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa>/;
-        } else {
-            $out_msg =~ s/<\/xml>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa> <\/xml>/;
-        }
+        #if ($out_msg =~ /<forward_to_gosa>(\S+),(\d+)<\/forward_to_gosa>/ ) {
+        #    $out_msg =~ s/<forward_to_gosa>\S+<\/forward_to_gosa>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa>/;
+        #} else {
+        #    $out_msg =~ s/<\/xml>/<forward_to_gosa>$act_server_ip:$main::server_port,$session_id<\/forward_to_gosa> <\/xml>/;
+        #}
 
         # Add to each outgoing message the current POE session id
         $out_msg =~ s/<\/xml>/<session_id>$session_id<\/session_id><\/xml>/;
@@ -184,6 +184,7 @@ sub process_gosa_msg {
 
             # client is registered for this event, deliver this message to client
             if ($client_events =~ /,$header,/) {
+                &daemon_log("$session_id INFO: client '$target' is registerd for event '$header', forward message to client.", 5);
                 @out_msg_l = ( $msg );
 
             # client is not registered for this event, set error
