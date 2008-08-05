@@ -1506,6 +1506,7 @@ sub watch_for_opsi_jobs {
     my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((headertag='opsi_install_client') AND (status='processing'))";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
+    # Ask OPSI for an update of the running jobs
     while (my ($id, $hit) = each %$res ) {
 
         # Determine current parameters of the job
@@ -1513,7 +1514,6 @@ sub watch_for_opsi_jobs {
         my $macaddress = $hit->{'macaddress'};
         my $progress = $hit->{'progress'};
 
-        # Ask OPSI for an update of the running jobs
         my $result= {};
         
         # For hosts, only return the products that are or get installed
@@ -1546,24 +1546,24 @@ sub watch_for_opsi_jobs {
         
                     if ($product->{'installationStatus'} eq "failed"){
                         $result->{$product->{'productId'}}= "error";
-                        unshift(@error_list, $product);
+                        unshift(@error_list, $product->{'productId'});
                         $error++;
                     }
                     if ($product->{'installationStatus'} eq "installed" && $product->{'actionRequest'}  eq "none"){
                         $result->{$product->{'productId'}}= "installed";
-                        unshift(@installed_list, $product);
+                        unshift(@installed_list, $product->{'productId'});
                         $installed++;
                     }
                     if ($product->{'installationStatus'} eq "installing"){
                         $result->{$product->{'productId'}}= "installing";
-                        $act_status = "installing - $product";
+                        $installing++;
+                        $act_status = "installing - ".$product->{'productId'};
                     }
                 }
             }
         
         # Estimate "rough" progress
             $result->{'progress'}= int($installed * 100 / $products);
-print STDERR Dumper($result);            
 
         # Set updates in job queue
             if ((not $error) && (not $installing) && ($installed)) {
@@ -1573,11 +1573,20 @@ print STDERR Dumper($result);
                 $act_status = "error - ".join(", ", @error_list);
             }
             if ($progress ne $result->{'progress'} ) {
-                my $update_statement = "UPDATE $job_queue_tn SET progress='".$result->{'progress'}."', result='$act_status', modified='1' WHERE macaddress='$macaddress'";
+                my $update_statement = "UPDATE $job_queue_tn SET modified='1', ";
+                if ($progress eq 100) { 
+                    if ($error) {
+                        $update_statement .= "status='error', ";
+                    } else {
+                        $update_statement .= "status='done', ";
+                    }
+                }
+                $update_statement .= "progress='".$result->{'progress'}."', result='$act_status' WHERE macaddress='$macaddress'";
                 my $update_res = $job_db->update_dbentry($update_statement);
             }
         }
     }
+
     $kernel->delay_set('watch_for_opsi_jobs', $job_queue_opsi_delay);
 }
 
