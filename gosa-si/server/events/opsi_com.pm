@@ -54,7 +54,7 @@ sub opsi_add_product_to_client {
   # TODO: check dependencies later on?
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -73,10 +73,12 @@ sub opsi_add_product_to_client {
     params  => [ $productId, $hostId, "setup" ],
     id  => 1, }; 
 
+
   my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  if (&main::check_opsi_res($sres)){
-    &main::daemon_log("ERROR: cannot add product: ".$sres->error_message, 1);
-    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+  if ($sres_err){
+    &main::daemon_log("$session_id ERROR: cannot add product: ".$sres_err_string, 1);
+    &add_content2xml_hash($out_hash, "error", $sres_err_string);
   }
   
   # return message
@@ -93,7 +95,7 @@ sub opsi_del_product_from_client {
   my ($hostId, $productId);
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -114,9 +116,10 @@ sub opsi_del_product_from_client {
   #    id  => 1, };
   #
   #my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  #if (&main::check_opsi_res($sres)){
-  #  &main::daemon_log("ERROR: cannot perform dependency check: ".$res->error_message, 1);
-  #  &add_content2xml_hash($out_hash, "error", $res->error_message);
+  #my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+  #if ($sres_err){
+  #  &main::daemon_log("ERROR: cannot perform dependency check: ".$sres_err_string, 1);
+  #  &add_content2xml_hash($out_hash, "error", $sres_err_string);
   #  return ( &create_xml_string($out_hash) );
   #}
 
@@ -128,9 +131,10 @@ sub opsi_del_product_from_client {
       id  => 1, };
   
   my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  if (&main::check_opsi_res($sres)){
-    &main::daemon_log("ERROR: cannot get product action list: ".$sres->error_message, 1);
-    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+  if ($sres_err){
+    &main::daemon_log("$session_id ERROR: cannot get product action list: ".$sres_err_string, 1);
+    &add_content2xml_hash($out_hash, "error", $sres_err_string);
     return ( &create_xml_string($out_hash) );
   }
   my $uninst_possible= 0;
@@ -140,7 +144,7 @@ sub opsi_del_product_from_client {
     }
   }
   if (!$uninst_possible){
-    &main::daemon_log("ERROR: cannot uninstall product", 1);
+    &main::daemon_log("$session_id ERROR: cannot uninstall product", 1);
     &add_content2xml_hash($out_hash, "error", "product is not uninstallable");
     return ( &create_xml_string($out_hash) );
   }
@@ -153,9 +157,10 @@ sub opsi_del_product_from_client {
       id  => 1, }; 
 
   $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  if (&main::check_opsi_res($sres)){
-      &main::daemon_log("ERROR: cannot delete product: ".$sres->error_message, 1);
-      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+  if ($sres_err){
+      &main::daemon_log("$session_id ERROR: cannot delete product: ".$sres_err_string, 1);
+      &add_content2xml_hash($out_hash, "error", $sres_err_string);
       return ( &create_xml_string($out_hash) );
   }
   
@@ -173,7 +178,7 @@ sub opsi_add_client {
   my $hostId;
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -196,21 +201,22 @@ sub opsi_add_client {
   if (defined @{$msg_hash->{'ip'}}[0]){
     $ip = @{$msg_hash->{'ip'}}[0];
   }
-  if (defined @{$msg_hash->{'mac'}}[0]){
-    $mac = @{$msg_hash->{'mac'}}[0];
+  if (defined @{$msg_hash->{'macaddress'}}[0]){
+    $mac = @{$msg_hash->{'macaddress'}}[0];
   }
   
   my $callobj;
   $callobj = {
-    method  => 'createclient',
+    method  => 'createClient',
     params  => [ $name, $domain, $description, $notes, $ip, $mac ],
     id  => 1,
   };
 
   my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  if (&main::check_opsi_res($sres)){
-    &main::daemon_log("ERROR: cannot create client: ".$sres->error_message, 1);
-    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+  if ($sres_err){
+    &main::daemon_log("$session_id ERROR: cannot create client: ".$sres_err_string, 1);
+    &add_content2xml_hash($out_hash, "error", $sres_err_string);
   }
 
   # return message
@@ -227,7 +233,7 @@ sub opsi_modify_client {
   my $hostId;
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -251,9 +257,10 @@ sub opsi_modify_client {
       id  => 1,
     };
     my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($sres)){
-      &main::daemon_log("ERROR: cannot set description: ".$sres->error_message, 1);
-      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+    my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+    if ($sres_err){
+      &main::daemon_log("ERROR: cannot set description: ".$sres_err_string, 1);
+      &add_content2xml_hash($out_hash, "error", $sres_err_string);
       return ( &create_xml_string($out_hash) );
     }
   }
@@ -265,9 +272,10 @@ sub opsi_modify_client {
       id  => 1,
     };
     my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($sres)){
-      &main::daemon_log("ERROR: cannot set notes: ".$sres->error_message, 1);
-      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+    my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+    if ($sres_err){
+      &main::daemon_log("ERROR: cannot set notes: ".$sres_err_string, 1);
+      &add_content2xml_hash($out_hash, "error", $sres_err_string);
       return ( &create_xml_string($out_hash) );
     }
   }
@@ -279,9 +287,10 @@ sub opsi_modify_client {
       id  => 1,
     };
     my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($sres)){
-      &main::daemon_log("ERROR: cannot set mac address: ".$sres->error_message, 1);
-      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+    my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
+    if ($sres_err){
+      &main::daemon_log("ERROR: cannot set mac address: ".$sres_err_string, 1);
+      &add_content2xml_hash($out_hash, "error", $sres_err_string);
       return ( &create_xml_string($out_hash) );
     }
   }
@@ -305,7 +314,7 @@ sub opsi_get_netboot_products {
   my $hostId;
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
   if (defined $forward_to_gosa) {
     &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
   }
@@ -331,7 +340,7 @@ sub opsi_get_netboot_products {
   my %r = ();
   for (@{$res->result}) { $r{$_} = 1 }
 
-  if (&main::check_opsi_res($res)){
+  if (&check_opsi_res($res)){
 
     if (defined $hostId){
       $callobj = {
@@ -341,7 +350,7 @@ sub opsi_get_netboot_products {
       };
 
       my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (&main::check_opsi_res($hres)){
+      if (&check_opsi_res($hres)){
         my $htmp= $hres->result->{$hostId};
 
         # check state != not_installed or action == setup -> load and add
@@ -363,7 +372,7 @@ sub opsi_get_netboot_products {
             };
 
             my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (&main::check_opsi_res($sres)){
+            if (&check_opsi_res($sres)){
               my $tres= $sres->result;
 
               my $name= xml_quote($tres->{'name'});
@@ -388,7 +397,7 @@ sub opsi_get_netboot_products {
         };
 
         my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (&main::check_opsi_res($sres)){
+        if (&check_opsi_res($sres)){
           my $tres= $sres->result;
 
           my $name= xml_quote($tres->{'name'});
@@ -424,7 +433,7 @@ sub opsi_get_product_properties {
     my $hostId;
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
     # Get hostID if defined
     if (defined @{$msg_hash->{'hostId'}}[0]){
@@ -444,7 +453,7 @@ sub opsi_get_product_properties {
       id  => 1,
     };
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($res)){
+    if (&check_opsi_res($res)){
       foreach my $action (@{$res->result}){
         &add_content2xml_hash($out_hash, "action", $action);
       }
@@ -465,7 +474,7 @@ sub opsi_get_product_properties {
 
     $res = $main::opsi_client->call($main::opsi_url, $callobj);
 
-    if (&main::check_opsi_res($res)){
+    if (&check_opsi_res($res)){
         my $r= $res->result;
         foreach my $key (keys %{$r}) {
           my $item= "<item>";
@@ -504,7 +513,7 @@ sub opsi_set_product_properties {
     my $hostId;
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     &add_content2xml_hash($out_hash, "ProductId", $productId);
 
     # Get hostID if defined
@@ -545,10 +554,11 @@ sub opsi_set_product_properties {
       }
 
       my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-
-      if (!&main::check_opsi_res($res)){
-        &main::daemon_log("ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res->error_message, 1);
-        &add_content2xml_hash($out_hash, "error", $res->error_message);
+      my ($res_err, $res_err_string) = &check_opsi_res($res);
+# TODO : This error message sounds strange
+      if ($res_err){
+        &man::daemon_log("$session_id ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res_err_string, 1);
+        &add_content2xml_hash($out_hash, "error", $res_err_string);
       }
 
     }
@@ -572,7 +582,7 @@ sub opsi_get_client_hardware {
     my $hostId = @{$msg_hash->{'hostId'}}[0];
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -589,7 +599,7 @@ sub opsi_get_client_hardware {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($res)){
+    if (&check_opsi_res($res)){
       my $result= $res->result;
       foreach my $r (keys %{$result}){
         my $item= "<item><id>".xml_quote($r)."</id>";
@@ -628,7 +638,7 @@ sub opsi_list_clients {
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -645,7 +655,7 @@ sub opsi_list_clients {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($res)){
+    if (&check_opsi_res($res)){
 
       foreach my $host (@{$res->result}){
         my $item= "<item><name>".$host->{'hostId'}."</name>";
@@ -677,7 +687,7 @@ sub opsi_get_client_software {
     my $hostId = @{$msg_hash->{'hostId'}}[0];
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -694,7 +704,7 @@ sub opsi_get_client_software {
     };
 
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-    if (&main::check_opsi_res($res)){
+    if (&check_opsi_res($res)){
       my $result= $res->result;
     }
 
@@ -718,7 +728,7 @@ sub opsi_get_local_products {
   my $hostId;
 
   # build return message with twisted target and source
-  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
   # Get hostID if defined
   if (defined @{$msg_hash->{'hostId'}}[0]){
@@ -744,7 +754,7 @@ sub opsi_get_local_products {
   my %r = ();
   for (@{$res->result}) { $r{$_} = 1 }
 
-  if (&main::check_opsi_res($res)){
+  if (&check_opsi_res($res)){
 
     if (defined $hostId){
       $callobj = {
@@ -754,7 +764,7 @@ sub opsi_get_local_products {
       };
 
       my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-      if (&main::check_opsi_res($hres)){
+      if (&check_opsi_res($hres)){
         my $htmp= $hres->result->{$hostId};
 
         # check state != not_installed or action == setup -> load and add
@@ -776,7 +786,7 @@ sub opsi_get_local_products {
             };
 
             my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (&main::check_opsi_res($sres)){
+            if (&check_opsi_res($sres)){
               my $tres= $sres->result;
 
               my $name= xml_quote($tres->{'name'});
@@ -801,7 +811,7 @@ sub opsi_get_local_products {
         };
 
         my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (&main::check_opsi_res($sres)){
+        if (&check_opsi_res($sres)){
           my $tres= $sres->result;
 
           my $name= xml_quote($tres->{'name'});
@@ -836,7 +846,7 @@ sub opsi_del_client {
     my $hostId = @{$msg_hash->{'hostId'}}[0];
 
     # build return message with twisted target and source
-    my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+    my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -892,7 +902,7 @@ sub opsi_install_client {
     # Set parameters in opsi
     if (not $error) {
         # build return message with twisted target and source
-        my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+        my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
 
         if (defined $forward_to_gosa) {
             &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -908,7 +918,7 @@ sub opsi_install_client {
             };
 
             my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-            if (&main::check_opsi_res($hres)){
+            if (&check_opsi_res($hres)){
                 my $htmp= $hres->result->{$hostId};
 
                 # check state != not_installed or action == setup -> load and add
@@ -924,7 +934,7 @@ sub opsi_install_client {
                             id  => 1,
                         };
                         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-                        if (!&main::check_opsi_res($res)){
+                        if (!&check_opsi_res($res)){
                             &main::daemon_log("ERROR: cannot set product action request for $hostId!", 1);
                         } else {
                             &main::daemon_log("INFO: requesting 'setup' for '".$product->{'productId'}."' on $hostId", 1);

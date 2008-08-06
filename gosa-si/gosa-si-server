@@ -1468,21 +1468,6 @@ sub session_start {
 }
 
 
-sub check_opsi_res {
-    my $res= shift;
-    if($res) {
-        if ($res->is_error) {
-            &main::daemon_log("ERROR: opsi configed communication failed: ".$res->error_message, 1);
-        } else {
-            return 1;
-        }
-    } else {
-        &main::daemon_log("ERROR: opsi configed communication failed: ".$opsi_client->status_line, 1);
-    }
-    return 0;
-}
-
-
 sub watch_for_done_jobs {
     #CHECK: $heap for what?
     my ($kernel,$heap) = @_[KERNEL, HEAP];
@@ -1526,6 +1511,7 @@ sub watch_for_opsi_jobs {
         };
         
         my $hres = $opsi_client->call($opsi_url, $callobj);
+        my ($hres_err, $hres_err_string) = &check_opsi_res($hres);
         if (&check_opsi_res($hres)) {
             my $htmp= $hres->result->{$hostId};
         

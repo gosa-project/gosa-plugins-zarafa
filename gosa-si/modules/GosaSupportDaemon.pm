@@ -30,6 +30,7 @@ my @functions = (
     "run_as",
     "inform_all_other_si_server",
     "read_configfile",
+    "check_opsi_res",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -729,6 +730,26 @@ sub read_configfile {
            ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
         }
     }
+}
+
+
+sub check_opsi_res {
+    my $res= shift;
+
+    if($res) {
+        if ($res->is_error) {
+            my $error_string;
+            if (ref $res->error_message eq "HASH") { 
+                $error_string = $res->error_message->{'message'}; 
+            } else { 
+                $error_string = $res->error_message; 
+            }
+            return 1, $error_string;
+        }
+    } else {
+        return 1, $main::opsi_client->status_line;
+    }
+    return 0;
 }
 
 
