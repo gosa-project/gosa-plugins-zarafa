@@ -157,13 +157,15 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
 
     # Add Opsi client
-    #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <description>Test halt</description> </xml>";
+    $data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <description>Test halt</description> <ip>1.2.3.4</ip> <notes>Im a note</notes> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
     # Add product to Opsi client
-    $data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <productId>softprod</productId>  </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e6</macaddress> </xml>";
 
     # Delete product from Opsi client
-    $data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <productId>softprod</productId>  </xml>";
+    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <productId>softprod</productId>  </xml>";
+    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
     #########################
     # Mailqueue communication
