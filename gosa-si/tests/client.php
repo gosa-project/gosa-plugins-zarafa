@@ -130,16 +130,16 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get product properties - global
-    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <ProductId>winxppro</ProductId></xml>";
+    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <productId>winxppro</ProductId></xml>";
 
     # Get product properties - per host
-    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <ProductId>firefox</ProductId> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <productId>firefox</ProductId> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # Set product properties - global
-    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <ProductId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
+    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <productId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
 
     # Set product properties - per host
-    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <ProductId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
+    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <productId>winxppro</ProductId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
 
     # Get hardware inventory
     #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
@@ -154,14 +154,16 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <hostId>sdfgsg.intranet.gonicus.de</hostId></xml>";
 
     # Install Opsi client
-    $data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
+    #$data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
 
     # Add Opsi client
-    $data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <description>Test halt</description> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <description>Test halt</description> </xml>";
 
     # Add product to Opsi client
+    $data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <productId>winxppro</productId>  </xml>";
 
     # Delete product from Opsi client
+    $data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e6</macaddress> <productId>winxppro</productId>  </xml>";
 
     #########################
     # Mailqueue communication

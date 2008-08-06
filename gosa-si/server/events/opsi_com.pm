@@ -380,7 +380,7 @@ sub opsi_get_netboot_products {
               my $description= xml_quote($tres->{'description'});
               $name=~ s/\//\\\//;
               $description=~ s/\//\\\//;
-              $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+              $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
             }
 
           }
@@ -404,7 +404,7 @@ sub opsi_get_netboot_products {
           my $description= xml_quote($tres->{'description'});
           $name=~ s/\//\\\//;
           $description=~ s/\//\\\//;
-          $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
         }
 
       }
@@ -429,7 +429,7 @@ sub opsi_get_product_properties {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $productId = @{$msg_hash->{'ProductId'}}[0];
+    my $productId = @{$msg_hash->{'productId'}}[0];
     my $hostId;
 
     # build return message with twisted target and source
@@ -509,12 +509,12 @@ sub opsi_set_product_properties {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $productId = @{$msg_hash->{'ProductId'}}[0];
+    my $productId = @{$msg_hash->{'productId'}}[0];
     my $hostId;
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
-    &add_content2xml_hash($out_hash, "ProductId", $productId);
+    &add_content2xml_hash($out_hash, "productId", $productId);
 
     # Get hostID if defined
     if (defined @{$msg_hash->{'hostId'}}[0]){
@@ -794,7 +794,7 @@ sub opsi_get_local_products {
               my $description= xml_quote($tres->{'description'});
               $name=~ s/\//\\\//;
               $description=~ s/\//\\\//;
-              $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+              $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
             }
 
           }
@@ -818,7 +818,7 @@ sub opsi_get_local_products {
           my $description= xml_quote($tres->{'description'});
           $name=~ s/\//\\\//;
           $description=~ s/\//\\\//;
-          $xml_msg=~ s/<xxx><\/xxx>/<item><ProductId>$r<\/ProductId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+          $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
         }
 
       }
