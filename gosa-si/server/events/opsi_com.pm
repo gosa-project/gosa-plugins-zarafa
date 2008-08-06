@@ -128,7 +128,6 @@ sub opsi_del_product_from_client {
       method  => 'getPossibleProductActions_list',
       params  => [ $productId ],
       id  => 1, };
-  
   my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
   my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
   if ($sres_err){
@@ -143,8 +142,8 @@ sub opsi_del_product_from_client {
     }
   }
   if (!$uninst_possible){
-    &main::daemon_log("$session_id ERROR: cannot uninstall product", 1);
-    &add_content2xml_hash($out_hash, "error", "product is not uninstallable");
+    &main::daemon_log("$session_id ERROR: cannot uninstall product '$productId', product do not has the action 'uninstall'", 1);
+    &add_content2xml_hash($out_hash, "error", "cannot uninstall product '$productId', product do not has the action 'uninstall'");
     return ( &create_xml_string($out_hash) );
   }
 
@@ -155,11 +154,13 @@ sub opsi_del_product_from_client {
       params  => [ $productId, $hostId, "none" ],
       id  => 1, }; 
 
-  $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-  my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
-  if ($sres_err){
-      &main::daemon_log("$session_id ERROR: cannot delete product: ".$sres_err_string, 1);
-      &add_content2xml_hash($out_hash, "error", $sres_err_string);
+print STDERR Dumper($callobj);
+
+  my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+  my ($res_err, $res_err_string) = &check_opsi_res($res);
+  if ($res_err){
+      &main::daemon_log("$session_id ERROR: cannot delete product: ".$res_err_string, 1);
+      &add_content2xml_hash($out_hash, "error", $res_err_string);
       return ( &create_xml_string($out_hash) );
   }
   
