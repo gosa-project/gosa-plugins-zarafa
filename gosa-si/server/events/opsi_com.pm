@@ -17,7 +17,10 @@ my @events = (
     "opsi_set_product_properties",
     "opsi_list_clients",
     "opsi_del_client",
-
+    "opsi_add_client",
+    "opsi_modify_client",
+    "opsi_add_product_to_client",
+    "opsi_del_product_from_client",
    );
 @EXPORT = @events;
 
@@ -37,6 +40,254 @@ END {}
 # @return List of all provided functions
 sub get_events {
     return \@events;
+}
+
+
+sub opsi_add_product_to_client {
+  my ($msg, $msg_hash, $session_id) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my ($hostId, $productId);
+
+  # TODO: check dependencies later on?
+
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+
+  # Get hostID
+  $hostId = @{$msg_hash->{'hostId'}}[0];
+  &add_content2xml_hash($out_hash, "hostId", $hostId);
+
+  # Get productID
+  $productId = @{$msg_hash->{'productId'}}[0];
+  &add_content2xml_hash($out_hash, "productId", $productId);
+
+  # Do an action request for all these -> "setup".
+  my $callobj = {
+    method  => 'setProductActionRequest',
+    params  => [ $productId, $hostId, "setup" ],
+    id  => 1, }; 
+
+  my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+  if (&main::check_opsi_res($sres)){
+    &main::daemon_log("ERROR: cannot add product: ".$sres->error_message, 1);
+    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  }
+  
+  # return message
+  return ( &create_xml_string($out_hash) );
+}
+
+
+sub opsi_del_product_from_client {
+  my ($msg, $msg_hash, $session_id) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my ($hostId, $productId);
+
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+
+  # Get hostID
+  $hostId = @{$msg_hash->{'hostId'}}[0];
+  &add_content2xml_hash($out_hash, "hostId", $hostId);
+
+  # Get productID
+  $productId = @{$msg_hash->{'productId'}}[0];
+  &add_content2xml_hash($out_hash, "productId", $productId);
+
+
+  #TODO: check the results for more than one entry which is currently installed
+  #$callobj = {
+  #    method  => 'getProductDependencies_listOfHashes',
+  #    params  => [ $productId ],
+  #    id  => 1, };
+  #
+  #my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+  #if (&main::check_opsi_res($sres)){
+  #  &main::daemon_log("ERROR: cannot perform dependency check: ".$res->error_message, 1);
+  #  &add_content2xml_hash($out_hash, "error", $res->error_message);
+  #  return ( &create_xml_string($out_hash) );
+  #}
+
+
+  # Check for uninstall method
+  my $callobj = {
+      method  => 'getPossibleProductActions_list',
+      params  => [ $productId ],
+      id  => 1, };
+  
+  my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+  if (&main::check_opsi_res($sres)){
+    &main::daemon_log("ERROR: cannot get product action list: ".$sres->error_message, 1);
+    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+    return ( &create_xml_string($out_hash) );
+  }
+  my $uninst_possible= 0;
+  foreach my $r (@{$sres->result}) {
+    if ($r eq 'uninstall') {
+      $uninst_possible= 1;
+    }
+  }
+  if (!$uninst_possible){
+    &main::daemon_log("ERROR: cannot uninstall product", 1);
+    &add_content2xml_hash($out_hash, "error", "product is not uninstallable");
+    return ( &create_xml_string($out_hash) );
+  }
+
+  # Set product state to "none"
+  # Do an action request for all these -> "setup".
+  $callobj = {
+      method  => 'setProductActionRequest',
+      params  => [ $productId, $hostId, "none" ],
+      id  => 1, }; 
+
+  $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+  if (&main::check_opsi_res($sres)){
+      &main::daemon_log("ERROR: cannot delete product: ".$sres->error_message, 1);
+      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+      return ( &create_xml_string($out_hash) );
+  }
+  
+  # return message
+  return ( &create_xml_string($out_hash) );
+}
+
+
+sub opsi_add_client {
+  my ($msg, $msg_hash, $session_id) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my $hostId;
+
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+
+  # Get hostID
+  $hostId = @{$msg_hash->{'hostId'}}[0];
+  &add_content2xml_hash($out_hash, "hostId", $hostId);
+  my $name= $hostId;
+  $name=~ s/^([^.]+).*$/$1/;
+  my $domain= $hostId;
+  $domain=~ s/^[^.]+(.*)$/$1/;
+  my ($description, $notes, $ip, $mac);
+
+  if (defined @{$msg_hash->{'description'}}[0]){
+    $description = @{$msg_hash->{'description'}}[0];
+  }
+  if (defined @{$msg_hash->{'notes'}}[0]){
+    $notes = @{$msg_hash->{'notes'}}[0];
+  }
+  if (defined @{$msg_hash->{'ip'}}[0]){
+    $ip = @{$msg_hash->{'ip'}}[0];
+  }
+  if (defined @{$msg_hash->{'mac'}}[0]){
+    $mac = @{$msg_hash->{'mac'}}[0];
+  }
+  
+  my $callobj;
+  $callobj = {
+    method  => 'createclient',
+    params  => [ $name, $domain, $description, $notes, $ip, $mac ],
+    id  => 1,
+  };
+
+  my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+  if (&main::check_opsi_res($sres)){
+    &main::daemon_log("ERROR: cannot create client: ".$sres->error_message, 1);
+    &add_content2xml_hash($out_hash, "error", $sres->error_message);
+  }
+
+  # return message
+  return ( &create_xml_string($out_hash) );
+}
+
+    
+sub opsi_modify_client {
+  my ($msg, $msg_hash, $session_id) = @_;
+  my $header = @{$msg_hash->{'header'}}[0];
+  my $source = @{$msg_hash->{'source'}}[0];
+  my $target = @{$msg_hash->{'target'}}[0];
+  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+  my $hostId;
+
+  # build return message with twisted target and source
+  my $out_hash = &main::create_xml_hash("answer_$header", $target, $source);
+  if (defined $forward_to_gosa) {
+    &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
+  }
+
+  # Get hostID
+  $hostId = @{$msg_hash->{'hostId'}}[0];
+  &add_content2xml_hash($out_hash, "hostId", $hostId);
+  my $name= $hostId;
+  $name=~ s/^([^.]+).*$/$1/;
+  my $domain= $hostId;
+  $domain=~ s/^[^.]+(.*)$/$1/;
+  my ($description, $notes, $ip, $mac);
+
+  my $callobj;
+
+  if (defined @{$msg_hash->{'description'}}[0]){
+    $description = @{$msg_hash->{'description'}}[0];
+    $callobj = {
+      method  => 'setHostDescription',
+      params  => [ $hostId, $description ],
+      id  => 1,
+    };
+    my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (&main::check_opsi_res($sres)){
+      &main::daemon_log("ERROR: cannot set description: ".$sres->error_message, 1);
+      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+      return ( &create_xml_string($out_hash) );
+    }
+  }
+  if (defined @{$msg_hash->{'notes'}}[0]){
+    $notes = @{$msg_hash->{'notes'}}[0];
+    $callobj = {
+      method  => 'setHostNotes',
+      params  => [ $hostId, $notes ],
+      id  => 1,
+    };
+    my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (&main::check_opsi_res($sres)){
+      &main::daemon_log("ERROR: cannot set notes: ".$sres->error_message, 1);
+      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+      return ( &create_xml_string($out_hash) );
+    }
+  }
+  if (defined @{$msg_hash->{'mac'}}[0]){
+    $mac = @{$msg_hash->{'mac'}}[0];
+    $callobj = {
+      method  => 'setMacAddress',
+      params  => [ $hostId, $mac ],
+      id  => 1,
+    };
+    my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (&main::check_opsi_res($sres)){
+      &main::daemon_log("ERROR: cannot set mac address: ".$sres->error_message, 1);
+      &add_content2xml_hash($out_hash, "error", $sres->error_message);
+      return ( &create_xml_string($out_hash) );
+    }
+  }
+  
+  # return message
+  return ( &create_xml_string($out_hash) );
 }
 
     
