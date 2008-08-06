@@ -73,7 +73,6 @@ sub opsi_add_product_to_client {
     params  => [ $productId, $hostId, "setup" ],
     id  => 1, }; 
 
-
   my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
   my ($sres_err, $sres_err_string) = &check_opsi_res($sres);
   if ($sres_err){
@@ -189,7 +188,7 @@ sub opsi_add_client {
   my $name= $hostId;
   $name=~ s/^([^.]+).*$/$1/;
   my $domain= $hostId;
-  $domain=~ s/^[^.]+(.*)$/$1/;
+  $domain=~ s/^[^.]+\.(.*)$/$1/;
   my ($description, $notes, $ip, $mac);
 
   if (defined @{$msg_hash->{'description'}}[0]){
