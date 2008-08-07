@@ -90,7 +90,7 @@ class faiVariableEntry extends plugin
       $message[] = msgPool::duplicated(_("Name"));
     }
     
-    if(empty($this->FAIvariableContent)) {
+    if($this->FAIvariableContent == "") {
       $message[]= msgPool::required(_("Content")); 
     }
    
