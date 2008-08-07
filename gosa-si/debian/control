@@ -19,7 +19,7 @@ Description: GOsa support infrastructure
 Package: gosa-si-server
 Architecture: any
 Depends: gosa-si-common, libcrypt-smbhash-perl
-Suggests: gosa, gosa-si-server-postfix
+Suggests: gosa, gosa-si-server-postfix, gosa-si-server-dak
 Description: GOsa support infrastructure server
  This package provides everything you need in order to deploy a simple
  or distributed GOsa support infrastructure. It can be used to trigger
@@ -31,7 +31,7 @@ Description: GOsa support infrastructure server
 Package: gosa-si-client
 Architecture: any
 Depends: gosa-si-common, hwinfo, libdatetime-perl
-Suggests: fai-progress, gosa-si-client-krb5, gosa-si-client-dak
+Suggests: fai-progress, gosa-si-client-krb5
 Description: GOsa support infrastructure client
  This package lets you join to a GOsa support infrastructure as a
  client in order to provide information or to act on events.
@@ -62,7 +62,7 @@ Package: gosa-si-server-dak
 Architecture: any
 Depends: gosa-si-server, dak
 Description: GOsa support infrastructure dak module
- This package controls debian archive kit setups and enables
+ This package controls Debian archive kit setups and enables
  administrators to manage queue and keyring related issues.
  .
  GOsa is a combination of system-administrator and end-user web
