@@ -13,6 +13,4 @@ server/events/databases.pm     		usr/lib/gosa-si/server/ServerPackages
 server/events/logHandling.pm   		usr/lib/gosa-si/server/GosaPackages
 server/events/logHandling.pm   		usr/lib/gosa-si/server/ServerPackages
 server/events/server_server_com.pm 	usr/lib/gosa-si/server/ServerPackages
-server/events/mailqueue_com.pm		usr/lib/gosa-si/server/GosaPackages
-server/events/mailqueue_com.pm		usr/lib/gosa-si/server/ServerPackages
 
