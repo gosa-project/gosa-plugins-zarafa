@@ -1,0 +1,52 @@
+.TH GOSA-SI-CLIENT 1 "JULY 2008" Linux "User Manuals"
+.SH NAME
+gosa-si-client \- client for GOsa support infrastructure
+.SH SYNOPSIS
+.B gosa-si-client [-hvf] [-c 
+.I config-file 
+.B ] 
+
+
+.SH DESCRIPTION
+.B gosa-si-client 
+belongs to the support infrastructure of GOsa. 
+The client registrates at a GOsa-SI-server and accepts messages from it. Each message is related to a working instruction which will be executed at the client. Depending on the message an answer can be send back to the server. 
+
+
+.SH OPTIONS
+.IP -h
+print out this help message
+.IP "-c config-file"
+Use a specific configuration file instead of 
+.IR /etc/gosa-si/client.conf .
+.IP -f
+run program in foreground modus, process will not be forked into background
+.IP -v
+be verbose (multiple v's give more and more informations)
+
+
+.SH FILES
+.I /etc/gosa-si/client.conf
+.RS
+The system wide configuration file. See
+.BR gosa-si-client(5)
+for further details.
+
+.SH ENVIRONMENT
+.IP ?????
+TODO...
+.IR foo.conf .
+Overridden by the
+.B -c
+option.
+
+
+.SH BUGS
+The command name should have been chosen more carefully
+to reflect its purpose.
+.SH AUTHOR
+Andreas Rettenberger <rettenberger at gonicus dot de>
+.SH "SEE ALSO"
+.BR gosa-si-server (1),
+.BR server.conf (5),
+.BR client.conf (5)
