@@ -11,6 +11,9 @@ case "$1" in
         *)                     exit 0;
 esac
 
+# Fix permission
+[ -f /etc/gosa-si/server.conf ] && chmod go-rwx /etc/gosa-si/server.conf
+
 # Restart daemon
 invoke-rc.d gosa-si restart
 
