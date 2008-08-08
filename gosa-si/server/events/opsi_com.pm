@@ -290,6 +290,8 @@ sub opsi_add_client {
         if ($sres_err){
             &main::daemon_log("$session_id ERROR: cannot create client: ".$sres_err_string, 1);
             &add_content2xml_hash($out_hash, "error", $sres_err_string);
+        } else {
+            &main::daemon_log("$session_id INFO: add opsi client '$hostId' with mac '$mac'", 5); 
         }
     }
 
@@ -625,7 +627,7 @@ sub opsi_set_product_properties {
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my ($productId, $hostId);
     my $error = 0;
-
+print STDERR Dumper($msg_hash);
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
@@ -639,19 +641,19 @@ sub opsi_set_product_properties {
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or productId tag invalid: $msg", 1); 
     }
-    if ((not exists $msg_hash->{'item'}) || (@{$msg_hash->{'item'}}[0] != 1)) {
+    if (not exists $msg_hash->{'item'}) {
         $error++;
         &add_content2xml_hash($out_hash, "item_error", "message needs one xml-tag 'item' and within the xml-tags 'name' and 'value'");
         &add_content2xml_hash($out_hash, "error", "item");
         &main::daemon_log("$session_id ERROR: message needs one xml-tag 'item' and within the xml-tags 'name' and 'value': $msg", 1); 
     } else {
-        if ((not exists $msg_hash->{'item'}->{'name'}) || (@{$msg_hash->{'item'}->{'name'}}[0] != 1)) {
+        if ((not exists @{$msg_hash->{'item'}}[0]->{'name'}) || (@{@{$msg_hash->{'item'}}[0]->{'name'}} != 1 )) {
             $error++;
             &add_content2xml_hash($out_hash, "name_error", "message needs within the xml-tag 'item' one xml-tags 'name'");
             &add_content2xml_hash($out_hash, "error", "name");
             &main::daemon_log("$session_id ERROR: message needs within the xml-tag 'item' one xml-tags 'name': $msg", 1); 
         }
-        if ((not exists $msg_hash->{'item'}->{'value'}) || (@{$msg_hash->{'item'}->{'value'}}[0] != 1)) {
+        if ((not exists @{$msg_hash->{'item'}}[0]->{'value'}) || (@{@{$msg_hash->{'item'}}[0]->{'value'}} != 1 )) {
             $error++;
             &add_content2xml_hash($out_hash, "value_error", "message needs within the xml-tag 'item' one xml-tags 'value'");
             &add_content2xml_hash($out_hash, "error", "value");
@@ -706,9 +708,9 @@ sub opsi_set_product_properties {
 
             my $res = $main::opsi_client->call($main::opsi_url, $callobj);
             my ($res_err, $res_err_string) = &check_opsi_res($res);
-# TODO : This error message sounds strange
-            if ($res_err){
-                &man::daemon_log("$session_id ERROR: no communication failed while setting '".$item->{'name'}[0]."': ".$res_err_string, 1);
+# TODO : Diese Errormessage klingt komisch! 
+            if (!$res_err){
+                &main::daemon_log("$session_id ERROR: no communication failed while setting '".$item->{'name'}[0]."'", 1);
                 &add_content2xml_hash($out_hash, "error", $res_err_string);
             }
         }
@@ -835,6 +837,8 @@ sub opsi_list_clients {
         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
         if (not &check_opsi_res($res)){
             foreach my $host (@{$res->result}){
+
+print STDERR Dumper($host);            
                 my $item= "<item><name>".$host->{'hostId'}."</name>";
                 if (defined($host->{'description'})){
                     $item.= "<description>".xml_quote($host->{'description'})."</description>";
@@ -911,7 +915,7 @@ sub opsi_get_client_software {
         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
         if (not &check_opsi_res($res)){
             my $result= $res->result;
-# TODO : fertig???   
+# TODO : Ist das hier schon fertig???   
         }
 
         $xml_msg=~ s/<xxx><\/xxx>//;
@@ -937,7 +941,6 @@ sub opsi_get_local_products {
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $hostId;
     my $error = 0;
-    my $xml_msg;
 
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);

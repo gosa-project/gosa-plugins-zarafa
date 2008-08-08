@@ -148,7 +148,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # List Opsi clients
-    #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    $data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Delete Opsi client
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
