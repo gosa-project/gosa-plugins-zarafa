@@ -531,7 +531,6 @@ sub opsi_get_product_properties {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my ($hostId, $productId);
-    my $error = 0;
     my $xml_msg;
 
     # build return message with twisted target and source
@@ -542,71 +541,77 @@ sub opsi_get_product_properties {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1))  {
-        $error++;
         &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or productId tag invalid: $msg", 1); 
+
+        # Return message
+        return ( &create_xml_string($out_hash) );
     }
 
-    if (not $error) {
+    # Get productid
+    $productId = @{$msg_hash->{'productId'}}[0];
+    &add_content2xml_hash($out_hash, "producId", "$productId");
 
-        # Get productid
-        $productId = @{$msg_hash->{'productId'}}[0];
-        &add_content2xml_hash($out_hash, "producId", "$productId");
-
-
-        $hostId = @{$msg_hash->{'hostId'}}[0];
-        &add_content2xml_hash($out_hash, "hostId", $hostId);
-
-        # Load actions
-        my $callobj = {
-            method  => 'getPossibleProductActions_list',
-            params  => [ $productId ],
-            id  => 1,
-        };
-        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (not &check_opsi_res($res)){
-            foreach my $action (@{$res->result}){
-                &add_content2xml_hash($out_hash, "action", $action);
-            }
-        }
-
-        # Add place holder
-        &add_content2xml_hash($out_hash, "xxx", "");
-
+    # Get hostID if defined
+    if (defined @{$msg_hash->{'hostId'}}[0]){
+      $hostId = @{$msg_hash->{'hostId'}}[0];
+      &add_content2xml_hash($out_hash, "hostId", $hostId);
     }
+
+    # Load actions
+    my $callobj = {
+      method  => 'getPossibleProductActions_list',
+      params  => [ $productId ],
+      id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (not &check_opsi_res($res)){
+      foreach my $action (@{$res->result}){
+        &add_content2xml_hash($out_hash, "action", $action);
+      }
+    }
+
+    # Add place holder
+    &add_content2xml_hash($out_hash, "xxx", "");
 
     # Move to XML string
     $xml_msg= &create_xml_string($out_hash);
 
-    if (not $error) {
-
-        # JSON Query
-        my $callobj = {
-            method  => 'getProductProperties_hash',
-            params  => [ $productId ],
-            id  => 1,
-        };
-        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (not &check_opsi_res($res)){
-            my $r= $res->result;
-            foreach my $key (keys %{$r}) {
-                my $item= "<item>";
-                my $value= $r->{$key};
-                if (UNIVERSAL::isa( $value, "ARRAY" )){
-                    foreach my $subval (@{$value}){
-                        $item.= "<$key>".xml_quote($subval)."</$key>";
-                    }
-                } else {
-                    $item.= "<$key>".xml_quote($value)."</$key>";
-                }
-                $item.= "</item>";
-                $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
-            }
-        }
-
-        $xml_msg=~ s/<xxx><\/xxx>//;
+    # JSON Query
+    if (defined $hostId){
+      $callobj = {
+          method  => 'getProductProperties_hash',
+          params  => [ $productId, $hostId ],
+          id  => 1,
+      };
+    } else {
+      $callobj = {
+          method  => 'getProductProperties_hash',
+          params  => [ $productId ],
+          id  => 1,
+      };
     }
+
+    $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (not &check_opsi_res($res)){
+        my $r= $res->result;
+        foreach my $key (keys %{$r}) {
+            my $item= "<item>";
+            my $value= $r->{$key};
+            if (UNIVERSAL::isa( $value, "ARRAY" )){
+                foreach my $subval (@{$value}){
+                    $item.= "<$key>".xml_quote($subval)."</$key>";
+                }
+            } else {
+                $item.= "<$key>".xml_quote($value)."</$key>";
+            }
+            $item.= "</item>";
+            $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
+        }
+    }
+
+    $xml_msg=~ s/<xxx><\/xxx>//;
 
     # Return message
     return ( $xml_msg );
@@ -626,7 +631,6 @@ sub opsi_set_product_properties {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my ($productId, $hostId);
-    my $error = 0;
 print STDERR Dumper($msg_hash);
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
@@ -636,86 +640,84 @@ print STDERR Dumper($msg_hash);
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1))  {
-        $error++;
         &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or productId tag invalid: $msg", 1); 
+        return ( &create_xml_string($out_hash) );
     }
     if (not exists $msg_hash->{'item'}) {
-        $error++;
         &add_content2xml_hash($out_hash, "item_error", "message needs one xml-tag 'item' and within the xml-tags 'name' and 'value'");
         &add_content2xml_hash($out_hash, "error", "item");
         &main::daemon_log("$session_id ERROR: message needs one xml-tag 'item' and within the xml-tags 'name' and 'value': $msg", 1); 
+        return ( &create_xml_string($out_hash) );
     } else {
         if ((not exists @{$msg_hash->{'item'}}[0]->{'name'}) || (@{@{$msg_hash->{'item'}}[0]->{'name'}} != 1 )) {
-            $error++;
             &add_content2xml_hash($out_hash, "name_error", "message needs within the xml-tag 'item' one xml-tags 'name'");
             &add_content2xml_hash($out_hash, "error", "name");
             &main::daemon_log("$session_id ERROR: message needs within the xml-tag 'item' one xml-tags 'name': $msg", 1); 
+            return ( &create_xml_string($out_hash) );
         }
         if ((not exists @{$msg_hash->{'item'}}[0]->{'value'}) || (@{@{$msg_hash->{'item'}}[0]->{'value'}} != 1 )) {
-            $error++;
             &add_content2xml_hash($out_hash, "value_error", "message needs within the xml-tag 'item' one xml-tags 'value'");
             &add_content2xml_hash($out_hash, "error", "value");
             &main::daemon_log("$session_id ERROR: message needs within the xml-tag 'item' one xml-tags 'value': $msg", 1); 
+            return ( &create_xml_string($out_hash) );
         }
     }
     if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1))  {
-        $error++;
         &add_content2xml_hash($out_hash, "hostId_error", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
+        return ( &create_xml_string($out_hash) );
     }
 
-    if (not $error) {
         
     # Get productId
-        $productId =  @{$msg_hash->{'productId'}}[0];
-        &add_content2xml_hash($out_hash, "productId", $productId);
+    $productId =  @{$msg_hash->{'productId'}}[0];
+    &add_content2xml_hash($out_hash, "productId", $productId);
 
     # Get hostID if defined
-        if (exists $msg_hash->{'hostId'}){
-            $hostId = @{$msg_hash->{'hostId'}}[0];
-            &add_content2xml_hash($out_hash, "hostId", $hostId);
-        }
+    if (exists $msg_hash->{'hostId'}){
+        $hostId = @{$msg_hash->{'hostId'}}[0];
+        &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
 
     # Set product states if requested
-        if (defined @{$msg_hash->{'action'}}[0]){
-            &_set_action($productId, @{$msg_hash->{'action'}}[0], $hostId);
-        }
-        if (defined @{$msg_hash->{'state'}}[0]){
-            &_set_state($productId, @{$msg_hash->{'state'}}[0], $hostId);
-        }
+    if (defined @{$msg_hash->{'action'}}[0]){
+        &_set_action($productId, @{$msg_hash->{'action'}}[0], $hostId);
+    }
+    if (defined @{$msg_hash->{'state'}}[0]){
+        &_set_state($productId, @{$msg_hash->{'state'}}[0], $hostId);
+    }
 
     # Find properties
-        foreach my $item (@{$msg_hash->{'item'}}){
-            # JSON Query
-            my $callobj;
+    foreach my $item (@{$msg_hash->{'item'}}){
+        # JSON Query
+        my $callobj;
 
-            if (defined $hostId){
-                $callobj = {
-                    method  => 'setProductProperty',
-                    params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0], $hostId ],
-                    id  => 1,
-                };
-            } else {
-                $callobj = {
-                    method  => 'setProductProperty',
-                    params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0] ],
-                    id  => 1,
-                };
-            }
-
-            my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-            my ($res_err, $res_err_string) = &check_opsi_res($res);
-# TODO : Diese Errormessage klingt komisch! 
-            if (!$res_err){
-                &main::daemon_log("$session_id ERROR: no communication failed while setting '".$item->{'name'}[0]."'", 1);
-                &add_content2xml_hash($out_hash, "error", $res_err_string);
-            }
+        if (defined $hostId){
+            $callobj = {
+                method  => 'setProductProperty',
+                params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0], $hostId ],
+                id  => 1,
+            };
+        } else {
+            $callobj = {
+                method  => 'setProductProperty',
+                params  => [ $productId, $item->{'name'}[0], $item->{'value'}[0] ],
+                id  => 1,
+            };
         }
 
+        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+        my ($res_err, $res_err_string) = &check_opsi_res($res);
+
+        if ($res_err){
+            &man::daemon_log("$session_id ERROR: communication failed while setting '".$item->{'name'}[0]."': ".$res_err_string, 1);
+            &add_content2xml_hash($out_hash, "error", $res_err_string);
+        }
     }
+
 
     # Return message
     return ( &create_xml_string($out_hash) );
@@ -814,7 +816,6 @@ sub opsi_list_clients {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-    my $error = 0;
 
     # build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
@@ -826,35 +827,44 @@ sub opsi_list_clients {
     # Move to XML string
     my $xml_msg= &create_xml_string($out_hash);
 
-    if (not $error) {
-
     # JSON Query
-        my $callobj = {
-            method  => 'getClients_listOfHashes',
-            params  => [ ],
-            id  => 1,
-        };
-        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-        if (not &check_opsi_res($res)){
-            foreach my $host (@{$res->result}){
-
-print STDERR Dumper($host);            
-                my $item= "<item><name>".$host->{'hostId'}."</name>";
-                if (defined($host->{'description'})){
-                    $item.= "<description>".xml_quote($host->{'description'})."</description>";
-                }
-                if (defined($host->{'ip'})){
-                    $item.= "<ip>".xml_quote($host->{'ip'})."</ip>";
-                }
-                if (defined($host->{'mac'})){
-                    $item.= "<mac>".xml_quote($host->{'mac'})."</mac>";
-                }
-                if (defined($host->{'notes'})){
-                    $item.= "<notes>".xml_quote($host->{'notes'})."</notes>";
-                }
-                $item.= "</item>";
-                $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
+    my $callobj = {
+        method  => 'getClients_listOfHashes',
+        params  => [ ],
+        id  => 1,
+    };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    if (not &check_opsi_res($res)){
+        foreach my $host (@{$res->result}){
+            my $item= "<item><name>".$host->{'hostId'}."</name>";
+            if (defined($host->{'description'})){
+                $item.= "<description>".xml_quote($host->{'description'})."</description>";
             }
+            if (defined($host->{'notes'})){
+                $item.= "<notes>".xml_quote($host->{'notes'})."</notes>";
+            }
+
+            $callobj = {
+              method  => 'getIpAddress',
+              params  => [ $host->{'hostId'} ],
+              id  => 1,
+            };
+            my $sres= $main::opsi_client->call($main::opsi_url, $callobj);
+            if ( not &check_opsi_res($sres)){
+              $item.= "<ip>".xml_quote($sres->result)."</ip>";
+            }
+
+            $callobj = {
+              method  => 'getMacAddress',
+              params  => [ $host->{'hostId'} ],
+              id  => 1,
+            };
+            $sres= $main::opsi_client->call($main::opsi_url, $callobj);
+            if ( not &check_opsi_res($sres)){
+                $item.= "<mac>".xml_quote($sres->result)."</mac>";
+            }
+            $item.= "</item>";
+            $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
         }
     }
 
@@ -940,7 +950,6 @@ sub opsi_get_local_products {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $hostId;
-    my $error = 0;
 
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
