@@ -132,7 +132,7 @@
 .\" ========================================================================
 .\"
 .IX Title "GOSA-SI-SERVER 1"
-.TH GOSA-SI-SERVER 1 "2008-08-07" " " " "
+.TH GOSA-SI-SERVER 1 "2008-08-08" " " " "
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -146,17 +146,25 @@ gosa\-si\-server \-Support infrastructure for GOsa
 .Ve
 .SH "OPTIONS"
 .IX Header "OPTIONS"
-.Vb 1
-\&    \-h        : print out this help message
-\&
-\&    \-f        : foregroud, process will not be forked to background
-\&
-\&    \-v*       : be verbose (multiple v\*(Aqs will increase verbosity)
-\&
-\&    \-c <file> : configuration file, default F</etc/gosa\-si/server.conf>
-\&
-\&    \-\-no\-arp  : starts script without connection to arp module
-.Ve
+\&\fB\-h\fR, \fB\-\-help\fR
+    print out this help message
+.PP
+\&\fB\-v\fR, \fB\-\-verbose\fR
+    be verbose (multiple v's will increase verbosity) 
+    \-v          \s-1ERROR\s0 level
+    \-vvv        \s-1WARNING\s0  + \s-1ERROR\s0 level
+    \-vvvvv      \s-1INFO\s0 + \s-1WARNING\s0 level
+    \-vvvvvvv    \s-1DEBUG\s0 + \s-1INFO\s0 level
+    \-vvvvvvvvv  in and out going xml messages will be displayed
+.PP
+\&\fB\-f\fR, \fB\-\-foreground\fR 
+    foregroud, process will not be forked to background
+.PP
+\&\fB\-c\fR \fIfile\fR, \fB\-\-config=\fR\fIfile\fR
+    configuration file, default \fI/etc/gosa\-si/server.conf\fR
+.PP
+\&\fB\-\-no\-arp\fR
+    starts script without connection to arp module
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 gosa-si-server  belongs  to  the  support infrastructure of GOsa.  Several gosa-si-clients can connect to one gosa-si-server.  The server take care of the message forwarding from GOsa to si-clients.  At the client site each message is related to a working instruction which will be executed there.  Depending of the message an answer from the client to GOsa via the server is possible.  Additional to answers clients reporting events  or  information  to the server.  The server registers himself at other servers in network and shares his knowledge with them.  So messages to clients which are no registrated locally will be forward to the client corresponding server. The communication within the complete \s-1SI\s0 nework is realised by \s-1XML\s0 messages.

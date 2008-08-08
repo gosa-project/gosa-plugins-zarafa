@@ -1,11 +1,11 @@
 
 =head1 NAME
 
-gosa-si-server -Support infrastructure for GOsa
+gosa-si-client - Client for GOsa support infrastructure
 
 =head1 SYNOPSIS
 
-gosa-si-server [-hvf] [-c config]
+gosa-si-client [-hvf] [-c config]
 
 =head1 OPTIONS
 
@@ -24,17 +24,15 @@ B<-f>, B<--foreground>
     foregroud, process will not be forked to background
 
 B<-c> I<file>, B<--config=>I<file>
-    configuration file, default F</etc/gosa-si/server.conf>
-
-B<--no-arp>
-    starts script without connection to arp module
-
+    configuration file, default F</etc/gosa-si/client.conf>
 
 
 =head1 DESCRIPTION
 
-gosa-si-server  belongs  to  the  support infrastructure of GOsa.  Several gosa-si-clients can connect to one gosa-si-server.  The server take care of the message forwarding from GOsa to si-clients.  At the client site each message is related to a working instruction which will be executed there.  Depending of the message an answer from the client to GOsa via the server is possible.  Additional to answers clients reporting events  or  information  to the server.  The server registers himself at other servers in network and shares his knowledge with them.  So messages to clients which are no registrated locally will be forward to the client corresponding server. The communication within the complete SI nework is realised by XML messages.
-
+B<gosa-si-client> belongs to the support infrastructure of GOsa. 
+The client registrates at a GOsa-SI-server and accepts messages from it. 
+Each message is related to a working instruction which will be executed on the client. 
+Depending on the message an answer can be send back to the server.
 
 =head1 BUGS 
 
