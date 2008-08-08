@@ -233,7 +233,7 @@ sub opsi_add_client {
     my $error = 0;
     my ($sres, $sres_err, $sres_err_string);
 
-    # build return message with twisted target and source
+    # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -533,7 +533,7 @@ sub opsi_get_product_properties {
     my ($hostId, $productId);
     my $xml_msg;
 
-    # build return message with twisted target and source
+    # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -631,7 +631,7 @@ sub opsi_set_product_properties {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my ($productId, $hostId);
-print STDERR Dumper($msg_hash);
+
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
@@ -740,7 +740,7 @@ sub opsi_get_client_hardware {
     my $error = 0;
     my $xml_msg;
 
-    # build return message with twisted target and source
+    # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -817,7 +817,7 @@ sub opsi_list_clients {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
 
-    # build return message with twisted target and source
+    # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
@@ -889,7 +889,7 @@ sub opsi_get_client_software {
     my $hostId;
     my $xml_msg;
 
-    # build return message with twisted target and source
+    # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
       &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
