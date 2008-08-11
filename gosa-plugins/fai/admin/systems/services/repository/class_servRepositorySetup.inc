@@ -95,7 +95,12 @@ class servRepositorySetup  extends plugin
 
     $divlist = new divSelectBox("servRepositorySetup");
     $divlist->setHeight("220");
-    $dellink = "<input type='image' src='images/lists/trash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
+    if(preg_match("/w/",$this->parent->getacl("Section"))){
+      $dellink = "<input type='image' src='images/lists/trash.png' title='delete' alt='delete' name='delete_%s' value='%s'>";
+    }else{
+      $dellink = "";
+    }
+  
     foreach($this->Sections as $sec){
       $divlist->AddEntry(array(
             array("string"=>$sec),

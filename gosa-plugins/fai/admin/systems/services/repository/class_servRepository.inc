@@ -353,11 +353,11 @@ class servrepository extends goService
 #            "stop"          => _("Service stop"),   // Remove this to hide the stop button at all.
 #            "restart"       => _("Service restart"),// Remove this to hide the restart button at all.
 
-            "cn"            => _("Name"),
-            "Release"       => _("Releases"),
-            "Section"       => _("Sections"),
+#            "cn"            => _("Name"),
             "ParentServer"  => _("Parent server"),
-            "Url"           => _("Url"))
+            "Release"       => _("Releases"),
+            "Url"           => _("Url"),
+            "Section"       => _("Sections"))
           ));
   }
 }
