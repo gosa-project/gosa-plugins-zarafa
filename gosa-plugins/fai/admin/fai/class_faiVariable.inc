@@ -43,12 +43,8 @@ class faiVariable extends plugin
 
       /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
        */
-      $res = FAI::get_all_objects_for_given_base($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+      $res = FAI::get_all_objects_for_given_object($this->dn,"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
       foreach($res as $obj){
-
-        /* Skip not relevant objects */
-        if(!preg_match("/".normalizePreg($this->dn)."$/i",$obj['dn'])) continue;
-
         $objects = array();
         $objects['description'] = "";
         $objects['status']      = "FreshLoaded";
@@ -148,15 +144,16 @@ class faiVariable extends plugin
       }else{
         $obj = $this->dialog->save();
         if(isset($obj['remove'])){
-          if($this->SubObjects[$obj['remove']['from']]['status']=="edited"){
+          if($this->SubObjects[$obj['remove']['from']]['status'] != "new"){
             $this->SubObjects[$obj['remove']['from']]['status'] = "delete";
-          }elseif($this->SubObjects[$obj['remove']['from']]['status']=="new"){
+          }else{
             unset($this->SubObjects[$obj['remove']['from']]);
           }
           $obj['status'] = "new";
           $this->SubObjects[$obj['remove']['to']] = $obj;
           unset($this->SubObjects[$obj['remove']['to']]['remove']);
         }else{
+          $obj['status'] = "edited";
           $this->SubObjects[$obj['cn']]=$obj;
         }
         $this->is_dialog=false;
@@ -328,13 +325,7 @@ class faiVariable extends plugin
      *  Because we must delete old entries first.
      * After deletion, we perform add and modify 
      */
-    $Objects = array();
-    foreach($this->SubObjects as $name => $obj){
-      if($obj['status'] == "delete"){
-        $Objects[$name] = $obj; 
-      }
-    }
-
+    $Objects = $this->SubObjects;
     foreach($Objects as $name => $obj){
 
       foreach($this->sub64coded as $codeIt){
@@ -384,11 +375,8 @@ class faiVariable extends plugin
 
     /* Read all leaf objects of this object (For FAIscript this would be FAIscriptEntry)
      */
-    $res = FAI::get_all_objects_for_given_base($source['dn'],"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
+    $res = FAI::get_all_objects_for_given_object($source['dn'],"(&(objectClass=FAIclass)(objectClass=".$this->subClass."))");
     foreach($res as $obj){
-
-      /* Skip not relevant objects */
-      if(!preg_match("/".normalizePreg($source['dn'])."$/i",$obj['dn'])) continue;
 
       $objects = array();
       $objects['status']      = "edited";
