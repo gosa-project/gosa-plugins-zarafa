@@ -8,6 +8,21 @@ class FAI
 
   /* TEST PHASE .... */
 
+  static function get_all_objects_for_given_object($dn,$filter,$detailed = false)
+  {
+    $res  = FAI::get_all_objects_for_given_base($dn,$filter,$detailed);
+    $name = preg_replace("/,ou=.*$/","",$dn);
+    $entries = array();
+    foreach($res as $entry_dn => $data){
+      if(!preg_match("/,".$name.",/",$entry_dn)) continue;
+      $entries[$entry_dn] = $data; 
+    }
+    return($entries);
+  }
+
+
+
+
   /* Returns all object for the given release.
      This function resolves the releases  
      from base up to the given dn.
@@ -1121,7 +1136,7 @@ class FAI
         }
         unset($attr['count']);
         unset($attr['dn']);
-        if(!in_array("FAIclass",$attr['objectClass'])){
+        if(!in_array("FAIobject",$attr['objectClass'])){
           $attr['objectClass'][] = "FAIobject";
         }
         $attr['FAIstate'] = $type;
