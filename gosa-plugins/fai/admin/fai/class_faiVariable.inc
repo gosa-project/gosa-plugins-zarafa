@@ -128,7 +128,7 @@ class faiVariable extends plugin
         $c_dn = $this->acl_base_for_current_object($this->SubObjects[$var]['dn']);
         $acl = $this->ui->get_permissions($c_dn,"fai/faiVariable");
         if(preg_match("/d/",$acl)){
-          if($this->SubObjects[$var]['status'] == "edited"){
+          if($this->SubObjects[$var]['status'] != "new"){
             $this->SubObjects[$var]['status']= "delete";
           }else{
             unset($this->SubObjects[$var]);
@@ -331,11 +331,6 @@ class faiVariable extends plugin
     $Objects = array();
     foreach($this->SubObjects as $name => $obj){
       if($obj['status'] == "delete"){
-        $Objects[$name] = $obj; 
-      }
-    }
-    foreach($this->SubObjects as $name => $obj){
-      if($obj['status'] != "delete"){
         $Objects[$name] = $obj; 
       }
     }
