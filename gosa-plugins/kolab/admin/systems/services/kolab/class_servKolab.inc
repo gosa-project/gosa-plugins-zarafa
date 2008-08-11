@@ -388,22 +388,28 @@ class servkolab extends goService {
             "postfixmydomain"                => _("Postfix mydomain") ,
             "postfixmydestination"           => _("My destination") ,
             "cyrusadmins"                    => _("Cyrus admins") ,
-            "proftpdftp"                     => _("FTP FreeBusy service") ,
-            "postfixmynetworks"              => _("SMTP privileged networks") ,
-            "postfixenablevirusscan"         => _("Enable virus scan") ,
-            "postfixrelayhost"               => _("Relayhost") ,
-            "postfixmxrelayenabled"          => _("Enable MX lookup for relayhost"),
-            "apachehttp"                     => _("HTTP FreeBusy service") ,
-            "apacheallowunauthenticatedfb"   => _("Allow unauthenticated free busy"),
-            "postfixallowunauthenticated"    => _("Accept Internet Mail") ,
-            "cyrusimap"                      => _("IMAP service") ,
-            "kolabFreeBusyFuture"            => _("kolabFreeBusyFuture") ,
+
             "cyruspop3"                      => _("POP3 service") ,
-            "cyrusimaps"                     => _("IMAP/SSL service") ,
             "cyruspop3s"                     => _("POP3/SSL service") ,
+
+            "cyrusimap"                      => _("IMAP service") ,
+            "cyrusimaps"                     => _("IMAP/SSL service") ,
+
             "cyrussieve"                     => _("Sieve service") ,
-            "cyrusquotawarn"                 => _("Quota settings")) 
-            ));
+            "proftpdftp"                     => _("FTP FreeBusy service") ,
+            "apachehttp"                     => _("HTTP FreeBusy service") ,
+            "postfixenablevirusscan"         => _("Enable virus scan") ,
+
+            "cyrusquotawarn"                 => _("Quota settings"), 
+
+            "apacheallowunauthenticatedfb"   => _("Allow unauthenticated free busy"),
+            "kolabFreeBusyFuture"            => _("kolabFreeBusyFuture") ,
+
+            "postfixmynetworks"              => _("SMTP privileged networks") ,
+            "postfixmxrelayenabled"          => _("Enable MX lookup for relayhost"),
+            "postfixrelayhost"               => _("Relayhost") ,
+            "postfixallowunauthenticated"    => _("Accept Internet Mail"))
+              ));
   }
 }
 
