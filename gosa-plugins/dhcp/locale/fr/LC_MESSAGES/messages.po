@@ -1,13 +1,13 @@
-# translation of messages.po to Français
+# translation of messages.po to french
 # Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-06-04 18:16+0200\n"
+"PO-Revision-Date: 2008-08-12 12:46+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
+"Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,8 +64,7 @@ msgstr "Adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:22
 msgid "Use hostname or IP-address to assign fixed address"
-msgstr ""
-"Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
+msgstr "Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:31
 msgid "Hardware type"
@@ -139,11 +138,11 @@ msgstr "Identifiant du serveur"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:22
 msgid "Propagated server identifier for this shared network"
-msgstr ""
+msgstr "Identifiant de serveur propagé pour ce réseau partagé"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:36
 msgid "Select if this server is authoritative for this shared network"
-msgstr ""
+msgstr "Sélectionnez si ce serveur doit être autoritaire pour ce réseau"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:36
 msgid "Authoritative server"
@@ -201,8 +200,7 @@ msgstr "Accepter les clients inconnus"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr ""
-"Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
+msgstr "Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Allow bootp clients"
@@ -222,15 +220,11 @@ msgid "Warning"
 msgstr "Avertissement"
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:6
-#, fuzzy
 msgid ""
 "This includes 'all' DHCP subsections that are located within this section. "
 "Please double check if your really want to do this since there is no way for "
 "GOsa to get your data back."
-msgstr ""
-"Ceci inclut toutes les informations sur les objets. Veuillez vérifier que "
-"vous voulez effectuer cette opération, étant donné qu'il est impossible pour "
-"GOsa de récupérer vos données."
+msgstr "Ceci inclut toutes les sous sections DHCP qui sont dans cette section. Veuillez vérifier que vous voulez effectuer cette opération, étant donné qu'il est impossible pour GOsa de récupérer vos données."
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:10
 msgid ""
@@ -249,14 +243,13 @@ msgid "Network address"
 msgstr "Adresse réseau"
 
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:179
-#, fuzzy
 msgid "Network range"
 msgstr "Etendue réseau"
 
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:185
 #: admin/systems/services/dhcp/class_dhcpPool.inc:150
 msgid "'Range' is not inside the configured network."
-msgstr ""
+msgstr "L'étendue réseau n'est pas comprise dans le réseau configuré."
 
 #: admin/systems/services/dhcp/dhcp_group.tpl:11
 msgid "Name of group"
@@ -285,14 +278,12 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
-msgid ""
-"Enter name of file that will be loaded via tftp after client has started"
+msgid "Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Entrez le nom du fichier qui doit être chargé via tftp après que le client "
 "aie démarré"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:47
-#, fuzzy
 msgid "Next server"
 msgstr "Serveur suivant"
 
@@ -338,12 +329,11 @@ msgstr "Options du serveur DNS"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:95
 msgid "Assign hostnames found via reverse mapping"
-msgstr ""
+msgstr "Assigner les nom trouvés avec un lookup inverse"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:99
-#, fuzzy
 msgid "Assign hostnames from host declarations"
-msgstr "Attribuer les nom d'hôtes gràce au déclarations des hôtes"
+msgstr "Attribuer les nom d'hôtes grâce au déclarations des hôtes"
 
 #: admin/systems/services/dhcp/dhcp_advanced.tpl:8
 msgid "Hide advanced settings"
@@ -351,7 +341,7 @@ msgstr "Afficher/Cacher la configuration avancée"
 
 #: admin/systems/services/dhcp/dhcp_advanced.tpl:15
 msgid "DHCP statements"
-msgstr ""
+msgstr "Directives DHCP"
 
 #: admin/systems/services/dhcp/dhcp_advanced.tpl:36
 msgid "DHCP options"
@@ -362,7 +352,6 @@ msgid "Show advanced settings"
 msgstr "Afficher la configuration avancée"
 
 #: admin/systems/services/dhcp/class_dhcpService.inc:145
-#, fuzzy
 msgid "Lease time"
 msgstr "Bail"
 
@@ -375,10 +364,12 @@ msgid ""
 "DHCP take over will take place when saving this entry. Choose 'Cancel' to "
 "abort."
 msgstr ""
+"La prise de contrôle du DHCP s'exécutera quand vous sauverez cette entrée. "
+"Choisissez 'Annuler' pour l'annuler."
 
 #: admin/systems/services/dhcp/servdhcp.tpl:14
 msgid "Take over dhcp configuration from following server"
-msgstr ""
+msgstr "Prendre le contrôle de la configuration DHCP du serveur suivant"
 
 #: admin/systems/services/dhcp/servdhcp.tpl:24
 msgid "DHCP sections"
@@ -408,7 +399,7 @@ msgstr "automatique"
 
 #: admin/systems/services/dhcp/dhcp_subnet.tpl:32
 msgid "Range for dynamic address assignment"
-msgstr ""
+msgstr "Intervalle pour l'affectation d'adresses dynamique"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:33
 #: admin/systems/services/dhcp/class_servDHCP.inc:692
@@ -459,7 +450,7 @@ msgstr "Sous réseau"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:43
 msgid "Failover peer"
-msgstr ""
+msgstr "Partenaire pour la prise de contrôle"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:44
 #: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
@@ -525,19 +516,16 @@ msgid "Services"
 msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
-#, fuzzy
 msgid "Service start"
-msgstr "Services"
+msgstr "Démarrage du service"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
-#, fuzzy
 msgid "Service stop"
-msgstr "Services"
+msgstr "Arrêt du service"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
-#, fuzzy
 msgid "Service restart"
-msgstr "Services"
+msgstr "Redémarrage du service"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 msgid "Create new DHCP section"
@@ -558,3 +546,4 @@ msgstr "Choisissez le type de section à créer"
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:15
 msgid "Create"
 msgstr "Créer"
+

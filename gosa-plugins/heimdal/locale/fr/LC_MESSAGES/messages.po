@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-24 01:03+0200\n"
+"PO-Revision-Date: 2008-08-12 13:55+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -56,11 +56,11 @@ msgstr "Année"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:47
 msgid "Valid ticket start time"
-msgstr ""
+msgstr "Date de validité de départ pour le ticket"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:87
 msgid "Valid ticket end time"
-msgstr ""
+msgstr "Date de validité de fin pour le ticket"
 
 #: admin/systems/services/kerberos/pwd_heimdal.tpl:127
 msgid "Password end"
@@ -108,8 +108,7 @@ msgid "Realm"
 msgstr ""
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:181
-msgid ""
-"In order to save policy changes, the server requires a valid mac address."
+msgid "In order to save policy changes, the server requires a valid mac address."
 msgstr ""
 "Pour pouvoir changer la police de sécurité, le serveur nécessite un adresse "
 "mac valide."
@@ -166,12 +165,13 @@ msgstr "Délai de renouvellement maximum"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:339
 msgid "Valid start"
-msgstr ""
+msgstr "Valide à partir de "
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:342
 msgid "Valid end"
-msgstr ""
+msgstr "Valide jusqu'a"
 
 #: admin/systems/services/kerberos/class_password-methods-heimdal.inc:345
 msgid "Valid password"
 msgstr "Mot de passe valide"
+

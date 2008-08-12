@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-23 20:02+0200\n"
+"PO-Revision-Date: 2008-08-12 12:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -119,11 +119,11 @@ msgstr "Nom"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "Only lowercase strings are allowed as Virtual Host Name."
-msgstr ""
+msgstr "Seul les chaînes en miniscule sont permises dans les noms d'hôtes virtuels."
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:366
 msgid "e.g. example.com"
-msgstr ""
+msgstr "ex: exemple.com"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:387
 msgid "Server alias"
@@ -138,8 +138,9 @@ msgstr ""
 msgid ""
 "Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
 "or example.com'."
-msgstr ""
+msgstr "Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci 'www.exemple.com ou exemple.com'"
 
 #: admin/systems/services/apache2/servApacheVhost.tpl:1
 msgid "Apache VHosts"
 msgstr "Hôtes virtuels Apache"
+

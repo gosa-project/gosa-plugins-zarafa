@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-24 01:30+0200\n"
+"PO-Revision-Date: 2008-08-12 13:58+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Année"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:92
 msgid "Valid ticket end time"
-msgstr ""
+msgstr "Date de validité de fin pour le ticket"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:132
 msgid "Password expires"
@@ -244,7 +244,6 @@ msgid "Kerberos kadmin access"
 msgstr "Accès kadmin Kerberos"
 
 #: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
 msgid "Kerberos Realm"
 msgstr "Realm Kerberos"
 
@@ -302,8 +301,7 @@ msgid "Kerberos service (kadmin access informations)"
 msgstr "Service Kerberos ( accès information kadmin )"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:182
-msgid ""
-"Cannot apply policy changes! The defined kerberos server has no mac address."
+msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
 msgstr ""
 "Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
 "Kerberos défini n'a pas d'adresse MAC."
@@ -339,11 +337,10 @@ msgid "installed"
 msgstr "installé"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:453
-#, fuzzy
 msgid "Kerberos key"
-msgstr "Clés Kerberos"
+msgstr "Clé Kerberos"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:454
-#, fuzzy
 msgid "Kerberos host key"
-msgstr "Clés Kerberos"
+msgstr "Clé Kerberos de l'hôte"
+

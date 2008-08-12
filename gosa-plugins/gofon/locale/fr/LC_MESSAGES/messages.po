@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-23 23:27+0200\n"
+"PO-Revision-Date: 2008-08-12 12:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -298,8 +298,7 @@ msgid "Announce"
 msgstr "Annonce"
 
 #: admin/ogroups/gofon/phonequeue.tpl:2
-msgid ""
-"Only users with the same asterisk home server will be included to this queue."
+msgid "Only users with the same asterisk home server will be included to this queue."
 msgstr ""
 "Seulement les utilisateurs avec le même serveur asterisk seront inclus dans "
 "cette queue."
@@ -499,8 +498,7 @@ msgstr "Configuration réseau"
 #: gofon/macro/class_gofonMacro.inc:466
 #, php-format
 msgid "Cannot delete entry because it is still in use by '%s'!"
-msgstr ""
-"Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
+msgstr "Impossible d'éffacer l'entrée parcequ'elle est encore utilisée par '%s' !"
 
 #: admin/systems/gofon/class_phoneGeneric.inc:330
 #: admin/systems/gofon/class_phoneGeneric.inc:333
@@ -1017,8 +1015,7 @@ msgstr ""
 
 #: gofon/conference/class_phoneConferenceGeneric.inc:379
 #, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
+msgid "The previously selected asterisk home server '%s' is no longer available!"
 msgstr ""
 "Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
 "disponible !"
@@ -1346,7 +1343,7 @@ msgstr "Expression régulière correspondant à des noms de macro"
 #: gofon/macro/class_gofonMacro.inc:300 gofon/macro/class_gofonMacro.inc:303
 #, php-format
 msgid "Not supported multiple brace in line %s!"
-msgstr ""
+msgstr "Les crochets multiple ne sont pas supportés à la ligne %s !"
 
 #: gofon/macro/class_gofonMacro.inc:307
 #, php-format
@@ -1525,3 +1522,4 @@ msgstr "Valeur par défaut"
 #: gofon/macro/parameter.tpl:19
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "Vous n'êtes pas autorisé à voir les paramètres de cette macro."
+

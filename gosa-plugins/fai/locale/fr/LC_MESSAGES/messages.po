@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-23 23:05+0200\n"
+"PO-Revision-Date: 2008-08-12 12:55+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,15 +18,13 @@ msgstr ""
 #: admin/systems/services/repository/class_servRepository.inc:308
 #: admin/systems/services/repository/class_servRepository.inc:344
 #: admin/systems/services/repository/class_servRepositorySetup.inc:199
-#, fuzzy
 msgid "Repository service"
-msgstr "Dépôt"
+msgstr "Service de dépôt"
 
 #: admin/systems/services/repository/class_servRepository.inc:93
 #: admin/fai/class_faiSummaryTab.inc:178
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/systems/services/repository/class_servRepository.inc:142
 #: admin/systems/services/repository/class_servRepository.inc:177
@@ -49,9 +47,8 @@ msgid "Error"
 msgstr "Erreur"
 
 #: admin/systems/services/repository/class_servRepository.inc:142
-#, fuzzy
 msgid "FAI release"
-msgstr "Versions FAI"
+msgstr "Version FAI"
 
 #: admin/systems/services/repository/class_servRepository.inc:177
 #: admin/systems/services/repository/class_servRepository.inc:356
@@ -101,9 +98,8 @@ msgid "Repository"
 msgstr "Dépôt"
 
 #: admin/systems/services/repository/class_servRepository.inc:344
-#, fuzzy
 msgid "Services"
-msgstr "Périphériques"
+msgstr ""
 
 #: admin/systems/services/repository/class_servRepository.inc:357
 #: admin/fai/branch_selector.tpl:2
@@ -114,15 +110,13 @@ msgstr "Versions"
 #: admin/systems/services/repository/servRepositorySetup.tpl:39
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
-#, fuzzy
 msgid "Sections"
-msgstr "Section"
+msgstr ""
 
 #: admin/systems/services/repository/class_servRepository.inc:359
 #: admin/systems/services/repository/servRepositorySetup.tpl:8
-#, fuzzy
 msgid "Parent server"
-msgstr "Préserver"
+msgstr "Serveur parent"
 
 #: admin/systems/services/repository/class_servRepository.inc:360
 #: admin/systems/services/repository/class_servRepositorySetup.inc:152
@@ -143,16 +137,15 @@ msgstr ""
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
 msgid "List of configured repositories."
-msgstr ""
+msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:25
-#, fuzzy
 msgid "Options"
-msgstr "Actions"
+msgstr ""
 
 #: admin/systems/services/repository/class_divListRepositories.inc:26
 #: admin/fai/faiProfileEntry.tpl:59 admin/fai/faiPackageEntry.tpl:44
@@ -160,9 +153,8 @@ msgid "Regular expression for matching object names"
 msgstr "Expression régulière pour trouver les objets correspondants"
 
 #: admin/systems/services/repository/class_divListRepositories.inc:33
-#, fuzzy
 msgid "Add repository"
-msgstr "Dépôt"
+msgstr "Ajouter un dépôt"
 
 #: admin/fai/class_faiPackage.inc:329 admin/fai/class_faiPackage.inc:330
 msgid "Configured"
@@ -189,8 +181,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:444
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -454,8 +445,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:278
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:411
 #, php-format
@@ -472,7 +462,7 @@ msgstr "Vous n'êtes pas autorisé à supprimer cette version !"
 
 #: admin/fai/class_faiManagement.inc:485
 msgid "Release remove aborted because the release name check failed!"
-msgstr ""
+msgstr "Echec de l'effacement de la version, la vérification du nom de la version à échoué !"
 
 #: admin/fai/class_faiManagement.inc:614 admin/fai/class_faiManagement.inc:775
 #: admin/fai/class_faiManagement.inc:796
@@ -623,7 +613,7 @@ msgstr "Erreur, les objets suivants doivent être égal '%s' et '%s'"
 #: admin/fai/class_FAI.inc:859
 #, php-format
 msgid "Creating group application release for %s"
-msgstr ""
+msgstr "Création d'un groupe d'application pour le version %s"
 
 #: admin/fai/class_FAI.inc:928 admin/fai/class_FAI.inc:950
 #: admin/fai/class_FAI.inc:990 admin/fai/class_FAI.inc:995
@@ -634,12 +624,12 @@ msgstr "Objet"
 #: admin/fai/class_FAI.inc:929
 #, php-format
 msgid "Adding missing group application release container %s."
-msgstr ""
+msgstr "Ajout du groupe d'application manquant %s."
 
 #: admin/fai/class_FAI.inc:951
 #, php-format
 msgid "Adding group application release container %s."
-msgstr ""
+msgstr "Ajout du groupe d'application %s."
 
 #: admin/fai/class_FAI.inc:991
 #, php-format
@@ -649,7 +639,7 @@ msgstr "Impossible de créer l'entrée de menu%s. (Existe déja)."
 #: admin/fai/class_FAI.inc:996
 #, php-format
 msgid "Created group application menu entry for %s."
-msgstr ""
+msgstr "menu du groupe d'application pour %s crée."
 
 #: admin/fai/class_FAI.inc:1027
 #, php-format
@@ -662,8 +652,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1048
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1061
 msgid "Error while fetching source dn - aborted!"
@@ -671,9 +660,8 @@ msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
 #: admin/fai/class_FAI.inc:1143
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
-msgstr ""
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
+msgstr "La création de la version à échoué du à des erreurs ldap. Information additionnelles '%s'."
 
 #: admin/fai/class_faiTemplateEntry.inc:90
 msgid "no file uploaded yet"
@@ -1317,8 +1305,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/faiScriptEntry.tpl:33
@@ -1456,3 +1443,4 @@ msgstr "Options des systèmes de fichier"
 #: admin/fai/class_faiPartitionTableEntry.inc:474
 msgid "Partition flags"
 msgstr "Indicateur des partitions"
+
