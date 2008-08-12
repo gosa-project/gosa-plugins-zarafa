@@ -1490,7 +1490,7 @@ sub watch_for_opsi_jobs {
 
     # This is not very nice to look for opsi install jobs, but headertag has to be trigger_action_reinstall. The only way to identify a 
     # opsi install job is to parse the xml message. There is still the correct header.
-    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((xmlmessage LIKE '%opsi_install_client</header>%') AND (status='processing'))";
+    my $sql_statement = "SELECT * FROM ".$job_queue_tn." WHERE ((xmlmessage LIKE '%opsi_install_client</header>%') AND (status='processing') AND (siserver='localhost'))";
 	my $res = $job_db->select_dbentry( $sql_statement );
 
     # Ask OPSI for an update of the running jobs
@@ -1515,7 +1515,7 @@ sub watch_for_opsi_jobs {
         if (&check_opsi_res($hres)) {
             my $htmp= $hres->result->{$hostId};
         
-            # check state != not_installed or action == setup -> load and add
+            # Check state != not_installed or action == setup -> load and add
             my $products= 0;
             my $installed= 0;
             my $installing = 0;
@@ -1549,10 +1549,10 @@ sub watch_for_opsi_jobs {
                 }
             }
         
-        # Estimate "rough" progress
+            # Estimate "rough" progress
             $result->{'progress'}= int($installed * 100 / $products);
 
-        # Set updates in job queue
+            # Set updates in job queue
             if ((not $error) && (not $installing) && ($installed)) {
                 $act_status = "installed - ".join(", ", @installed_list);
             }
@@ -1561,8 +1561,7 @@ sub watch_for_opsi_jobs {
             }
             if ($progress ne $result->{'progress'} ) {
                 # Updating progress and result 
-                my $update_statement = "UPDATE $job_queue_tn SET modified='1', ";
-                $update_statement .= "progress='".$result->{'progress'}."', result='$act_status' WHERE macaddress='$macaddress'";
+                my $update_statement = "UPDATE $job_queue_tn SET modified='1', progress='".$result->{'progress'}."', result='$act_status' WHERE macaddress='$macaddress' AND siserver='localhost'";
                 my $update_res = $job_db->update_dbentry($update_statement);
             }
             if ($progress eq 100) { 
@@ -1573,7 +1572,7 @@ sub watch_for_opsi_jobs {
                 } else {
                     $done_statement .= "status='done'";
                 }
-                $done_statement .= " WHERE macaddress='$macaddress'";
+                $done_statement .= " WHERE macaddress='$macaddress' AND siserver='localhost'";
                 my $done_res = $job_db->update_dbentry($done_statement);
             }
 
@@ -1585,8 +1584,7 @@ sub watch_for_opsi_jobs {
 }
 
 
-# if a job got an update or was modified anyway, send to all other si-server an update message
-# of this jobs
+# If a job got an update or was modified anyway, send to all other si-server an update message of this jobs.
 sub watch_for_modified_jobs {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
 

@@ -120,6 +120,19 @@ my $fai_log_dir = "/var/log/fai";
 
 #=== FUNCTIONS = functions =====================================================
 
+sub usage {
+    print STDERR << "EOF" ;
+usage: $prg [-hvf] [-c config]
+
+           -h        : this (help) message
+           -c <file> : config file
+           -f        : foreground, process will not be forked to background
+           -v        : be verbose (multiple to increase verbosity)
+ 
+EOF
+    print "\n" ;
+}
+
 #===  FUNCTION  ================================================================
 #         NAME: check_cmdline_param
 #   PARAMETERS: 
