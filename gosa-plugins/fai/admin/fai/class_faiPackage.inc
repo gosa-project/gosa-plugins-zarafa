@@ -353,7 +353,9 @@ class faiPackage extends plugin
           $actions = "<input type='image' class='center' title='"._("Mark package for removal")."' 
             src='plugins/fai/images/removal_mark.png' name='removal_package_".base64_encode($usedName)."' >";
         }
-        if(!preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
+
+        if(isset($this->list[$usedName]['TEMPLATE']) && 
+           !preg_match('/^freeze/', $this->FAIstate) && $this->acl_is_writeable("FAIdebconfInfo")){
           $actions.= "&nbsp;<input type='image' class='center' title='"._("Configure this package")."' 
             src='plugins/fai/images/package_configure.png' name='configure_package_".base64_encode($usedName)."' >";
         }
@@ -463,9 +465,11 @@ class faiPackage extends plugin
    */
   function genPkgs($force = false)
   {
+    if(empty($this->FAIdebianRelease)) return;
+
     if(!count($this->buffer) || $force){
       $q = new gosaSupportDaemon();
-      $attrs = array("distribution", "package","version", "section", "description", "timestamp");
+      $attrs = array("distribution", "package","version", "section", "description", "timestamp","template");
 
       $packages = array_keys($this->usedPackages);
 
