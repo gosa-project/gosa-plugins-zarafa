@@ -233,15 +233,16 @@ class krbHostKeys extends plugin
 
     /* Create actions */
     $new = "<input type='image' class='center' name='create_%ID%'
-      alt='{t}Create key{/t}' title='{t}Create key{/t}' src='images/lists/new.png'>
+      alt='"._("Create key")."' 
+      title='"._("Create key")."' src='images/lists/new.png'>
       <img src='images/empty.png' alt=' ' class='center'>
       <img src='images/empty.png' alt=' ' class='center'>";
     $rec ="
       <img src='images/empty.png' alt=' ' class='center'>
       <input type='image' class='center' name='recreate_%ID%'
-      alt='{t}Recreate key{/t}' title='{t}Recreate key{/t}' src='images/lists/reload.png'>
+      alt='"._("Recreate key")."' title='"._("Recreate key")."' src='images/lists/reload.png'>
       <input type='image' class='center' name='remove_%ID%'
-      alt='{t}Remove key{/t}' title='{t}Remove key{/t}' src='images/lists/trash.png'>";
+      alt='"._("Remove key")."' title='"._("Remove key")."' src='images/lists/trash.png'>";
 
     /* Check ACLs */
     if(!$this->acl_is_writeable("0")){
