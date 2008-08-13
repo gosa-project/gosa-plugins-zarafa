@@ -525,6 +525,11 @@ class termgeneric extends plugin
       }
     }
 
+    /* cn=default and macAddress=- indicates that this is a template */
+    if($this->cn == "default"){
+      $this->netConfigDNS->macAddress = "-";
+    }
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     if ($this->orig_dn == 'new'){
@@ -536,12 +541,20 @@ class termgeneric extends plugin
       }
       $ldap->add($this->attrs);
       new log("create","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+      $this->netConfigDNS->cn = $this->cn;
+      $this->netConfigDNS->save();
+
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       new log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+      $this->netConfigDNS->cn = $this->cn;
+      $this->netConfigDNS->save();
+
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
       /* Update all accessTo/trust dependencies */
@@ -550,13 +563,6 @@ class termgeneric extends plugin
       }
     }
     
-    /* cn=default and macAddress=- indicates that this is a template */
-    if($this->cn == "default"){
-      $this->netConfigDNS->macAddress = "-";
-    }
-
-    $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save();
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
     }

@@ -579,6 +579,11 @@ class workgeneric extends plugin
       }
     }
 
+    /* cn=default and macAddress=- indicates that this is a template */
+    if($this->cn == "wdefault"){
+      $this->netConfigDNS->macAddress = "-";
+    }
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     if ($this->orig_dn == 'new'){
@@ -613,11 +618,6 @@ class workgeneric extends plugin
       $this->netConfigDNS->save();
 
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
-    }
-
-    /* cn=default and macAddress=- indicates that this is a template */
-    if($this->cn == "wdefault"){
-      $this->netConfigDNS->macAddress = "-";
     }
 
     if ($activate && class_available("DaemonEvent")){
