@@ -320,7 +320,7 @@ class printgeneric extends plugin
 
     /* If this is a WS / Terminal depending printer, display account state button */
     if(!preg_match("/^Printer$/i",$this->BelongsTo)){
-      if((empty($this->cn)) && ($this->dn != "new")){
+      if($this->cn == "" && ($this->dn != "new")){
         $display= $this->show_enable_header(_("Add printer extension"),
             msgPool::featuresDisabled(_("printer"))._("You can't enable it while 'cn' is not present in entry. Possibly you are currently creating a new terminal template."),TRUE,TRUE);
         $this->is_account= false;
@@ -666,7 +666,7 @@ class printgeneric extends plugin
     $dn= "cn=".$this->cn.get_ou('printerou').",".$this->base;
 
     /* must: cn */
-    if(($this->BelongsTo == "Printer") && (empty($this->cn))){
+    if(($this->BelongsTo == "Printer") && $this->cn == ""){
       $message[]= msgPool::required(_("Name"));
     }
 
@@ -866,7 +866,8 @@ class printgeneric extends plugin
 
       /* Remove empty values */ 
       foreach($this->attrs as $name => $value){
-        if(empty($value)){
+        $value = trim($value);
+        if($value == ""){
           unset($this->attrs[$name]);
         }
       }
