@@ -86,7 +86,7 @@ class deviceGeneric extends plugin
   {
     $message = plugin::check();
 
-    if(empty($this->cn)||(preg_match("/[^a-z0-9]/i",$this->cn))){
+    if($this->cn == "" ||(preg_match("/[^a-z0-9]/i",$this->cn))){
       $message[]= msgPool::invalid(_("Name"),$this->cn,"/^[a-z0-9]*$/i");
     }
     if(preg_match("/[^a-z0-9!\"?.,;:-_\(\) ]/i",$this->description)){
@@ -165,8 +165,14 @@ class deviceGeneric extends plugin
   {
     plugin::save();
 
-    $this->attrs = array();
-    $this->attrs['cn'] = $this->cn;
+    /* Unset non ldap attributes 
+     */
+    foreach(array("devID","serial","vendor", "type", "description") as $name){
+      if(isset($this->attrs[$name])){
+        unset($this->attrs[$name]);
+      }
+    }
+
     $this->attrs['gotoHotplugDevice'] = "";
     foreach(array("description","devID","serial","vendor", "type") as $post){
       $this->attrs['gotoHotplugDevice'] .= $this->$post."|"; 
