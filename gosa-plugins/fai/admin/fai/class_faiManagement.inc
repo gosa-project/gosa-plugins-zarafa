@@ -76,7 +76,14 @@ class faiManagement extends plugin
     /* Set default release */
     $this->fai_base = get_ou("faiou").$this->config->current['BASE'];
     if(!session::is_set("fai_filter")){
-      session::set("fai_filter",array("fai_release" => $this->fai_base));
+
+      /* Set intial release */
+      $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+      if(empty($rel)){
+        $rel = $this->fai_base;
+      }
+
+      session::set("fai_filter",array("fai_release" => $rel));
     }
 
     $fai_filter = session::get("fai_filter");

@@ -77,7 +77,13 @@ class mimetypeManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $this->mime_base = get_ou("mimetypeou").$this->config->current['BASE'];
       if(!session::is_set("mime_filter")){
-        session::set("mime_filter",array("mime_base" => $this->mime_base));
+
+        /* Set intial release */
+        $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+        if(empty($rel)){
+          $rel = $this->mime_base;
+        }
+        session::set("mime_filter",array("mime_base" => $rel));
       }
       $mime_filter     = session::get("mime_filter");
       $this->mime_base = $mime_filter['mime_base'];
