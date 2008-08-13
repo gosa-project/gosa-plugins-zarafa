@@ -77,20 +77,23 @@ class applicationManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
       if(!session::is_set("app_filter")){
-
-        /* Set intial release */
-        $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
-        if(empty($rel)){
-          $rel = $this->app_base;
-        }
-        session::set("app_filter",array("app_base" => $rel));
+        session::set("app_filter",array("app_base" => $this->app_base));
       }
       $app_filter     = session::get("app_filter");
-      $this->app_base = $app_filter['app_base'];
     }else{
+
+      /* Set intial release */
       $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
+      $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+      $rels = array_flip($this->getReleases());
+      if(isset($rels[$rel])){
+        $rel = $rels[$rel];
+      }else{
+        $rel = $this->app_base;
+      }
+
       if(!session::is_set("app_filter")){
-        session::set("app_filter",array("app_base" => $this->app_base,"app_release" => $this->app_base));
+        session::set("app_filter",array("app_base" => $this->app_base,"app_release" => $rel));
       }
       $app_filter         = session::get("app_filter");
       $this->app_base     = $app_filter['app_base'];

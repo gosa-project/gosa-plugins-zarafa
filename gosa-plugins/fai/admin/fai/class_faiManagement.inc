@@ -75,11 +75,15 @@ class faiManagement extends plugin
 
     /* Set default release */
     $this->fai_base = get_ou("faiou").$this->config->current['BASE'];
+
     if(!session::is_set("fai_filter")){
 
       /* Set intial release */
       $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
-      if(empty($rel)){
+      $rels = array_flip($this->getBranches());
+      if(isset($rels[$rel])){
+        $rel = $rels[$rel];
+      }else{
         $rel = $this->fai_base;
       }
 
@@ -94,6 +98,7 @@ class faiManagement extends plugin
 	{
     /* Call parent execute */
     plugin::execute();
+
 
     /* Initialise vars and smarty */
 		$smarty 	= get_smarty();
