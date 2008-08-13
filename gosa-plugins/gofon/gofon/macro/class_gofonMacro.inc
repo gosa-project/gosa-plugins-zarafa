@@ -416,7 +416,7 @@ class macro extends plugin
     }
   
     /* Check if display name is set */
-    if(empty($this->displayName)){
+    if($this->displayName == ""){
       $message[] = msgPool::required(_("Name"));
     }  
     /* CN is restricted to 20 chars */

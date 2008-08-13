@@ -384,7 +384,7 @@ class conference extends plugin
       $message[]= msgPool::required(_("PIN"));
     }
 
-    if(empty($this->cn)){
+    if($this->cn == ""){
       $message[] = msgPool::required(_("Name"));
     }
 
