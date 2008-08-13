@@ -590,6 +590,10 @@ class workgeneric extends plugin
       if (!$ldap->success()){
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
       }
+
+      $this->netConfigDNS->cn = $this->cn;
+      $this->netConfigDNS->save();
+
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       if ($this->orig_dn != $this->dn){
@@ -604,6 +608,10 @@ class workgeneric extends plugin
         msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
       }
       new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+      $this->netConfigDNS->cn = $this->cn;
+      $this->netConfigDNS->save();
+
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 
@@ -611,9 +619,6 @@ class workgeneric extends plugin
     if($this->cn == "wdefault"){
       $this->netConfigDNS->macAddress = "-";
     }
-
-    $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save();
 
     if ($activate && class_available("DaemonEvent")){
 
