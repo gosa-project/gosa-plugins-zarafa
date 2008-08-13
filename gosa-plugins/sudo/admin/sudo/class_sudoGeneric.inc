@@ -561,7 +561,7 @@ class sudo extends plugin
     $message = plugin::check();
 
     /* Is a name given? */
-    if(empty($this->cn)){
+    if($this->cn == ""){
       $message[] = msgPool::required(_("Name"));
     }
 
