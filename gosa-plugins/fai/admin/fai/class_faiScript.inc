@@ -543,7 +543,7 @@ class faiScript extends plugin
       $attributes = array_merge($this->sub_Load_Later,$this->subAttributes);
       foreach($attributes as $attrs){
 
-        if(empty($obj[$attrs])){
+        if($obj[$attrs] == ""){
           $obj[$attrs] = array();
         }
         if(!is_array($obj[$attrs])){

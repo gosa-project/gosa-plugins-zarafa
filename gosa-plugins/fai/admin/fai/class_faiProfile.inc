@@ -391,8 +391,8 @@ class faiProfile extends plugin
       $message[]=_("No class specified for this profile!");
     }
 
-    if(empty($this->cn)){
-      $message[]= msgPool::invalid(_("Name"));
+    if($this->cn == ""){
+      $message[]= msgPool::required(_("Name"));
     }
 
     /* Ensure that we do not overwrite an allready existing entry 

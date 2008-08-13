@@ -366,8 +366,12 @@ class faiPartitionTableEntry extends plugin
     $message= plugin::check();
   
     /* Check for an empty disk name */
-    if(empty($this->DISKcn)){
+    $d = trim($this->DISKcn);
+    if($d == "" ){
       $message[] = msgPool::required(_("Name"));
+    }
+    if(preg_match("/[^a-z0-9_\-]/i",$d)){
+      $message[] = msgPool::invalid(_("Name"),$d,"/[a-z0-9_\-]/i");
     }
        
     /* check every partition.

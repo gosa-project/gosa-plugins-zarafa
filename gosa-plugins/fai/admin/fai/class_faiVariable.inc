@@ -334,7 +334,7 @@ class faiVariable extends plugin
 
       $tmp = array();
       foreach($this->subAttributes as $attrs){
-        if(empty($obj[$attrs])){
+        if($obj[$attrs] == ""){
           $obj[$attrs] = array();
         }
         $tmp[$attrs] = $obj[$attrs];

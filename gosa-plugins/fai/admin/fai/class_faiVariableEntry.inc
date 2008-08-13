@@ -93,9 +93,13 @@ class faiVariableEntry extends plugin
     if($this->FAIvariableContent == "") {
       $message[]= msgPool::required(_("Content")); 
     }
-   
-    if(empty($this->cn)){
+  
+    $c = trim($this->cn);
+    if($c == ""){
       $message[] = msgPool::required(_("Name"));
+    }
+    if(preg_match("/[^a-z0-9_\-]/i",$c)){
+      $message[] = msgPool::invalid(_("Name"),$c,"/[a-z0-9_\-]/i");
     }
 
     return ($message);

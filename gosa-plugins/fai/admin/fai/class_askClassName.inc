@@ -142,7 +142,7 @@ class askClassName extends plugin
       $message[] = msgPool::invalid(_("Name"),preg_replace("/ /","_",$this->ClassName),"/[^_]/");
     }
 
-    if(empty($this->ClassName)){
+    if($this->ClassName == ""){
       $message[]= msgPool::required(_("Name"));
     }
 

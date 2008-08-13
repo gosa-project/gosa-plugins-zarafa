@@ -200,22 +200,20 @@ class faiTemplateEntry extends plugin
       $message[]= msgPool::invalid(_("Destination path"),"","","/path");
     } 
  
-    $b = basename($this->FAItemplatePath); 
-    if(empty($b)){
+    $b = trim(basename($this->FAItemplatePath)); 
+    if($b == ""){
       $message[] = msgPool::required(_("File name"));
     }
 
-    if(empty($this->user)){
+    if($this->user == ""){
       $message[] = msgPool::required(_("User"));
-    }
-    elseif(preg_match("/[^0-9a-z]/i",$this->user)){
+    }elseif(preg_match("/[^0-9a-z]/i",$this->user)){
       $message[] = msgPool::invalid(_("User"),$this->user,"/[0-9a-z]/");
     }
 
-    if(empty($this->group)){
+    if($this->group == ""){
       $message[] = msgPool::required(_("Group"));
-    }
-    elseif (!tests::is_uid($this->group)){
+    }elseif (!tests::is_uid($this->group)){
       if (strict_uid_mode()){
         $message[]= msgPool::invalid(_("Group"), $this->group, "/[a-z0-9_-]/");
       } else {
