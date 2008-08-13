@@ -244,8 +244,8 @@ class mimetype extends plugin
       /* Add gotoMimeFilePattern */
       if(isset($_POST['AddNewFilePattern']) && isset($_POST['NewFilePattern'])){
         if($this->acl_is_writeable("gotoMimeFilePattern")){
-          $str = $_POST['NewFilePattern'];
-          if(!empty($str)){
+          $str = trim($_POST['NewFilePattern']);
+          if($str != ""){
             $this->use_gotoMimeFilePattern[] = $str;
           }
         }
@@ -257,12 +257,12 @@ class mimetype extends plugin
         if($this->acl_is_writeable("gotoMimeApplication")){
           $str = "";
           if(isset($_POST['NewApplicationSelect']) && !empty($_POST['NewApplicationSelect'])){
-            $str = get_post("NewApplicationSelect");
+            $str = trim(get_post("NewApplicationSelect"));
           }
           if(isset($_POST['NewApplication']) && !empty($_POST['NewApplication'])){
-            $str = get_post("NewApplication");
+            $str = trim(get_post("NewApplication"));
           }
-          if(!empty($str) && !in_array($str,$this->use_gotoMimeApplication)){
+          if($str != "" && !in_array($str,$this->use_gotoMimeApplication)){
             $this->use_gotoMimeApplication[] = $str;
           }
         }
@@ -276,12 +276,12 @@ class mimetype extends plugin
         if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
           $str = "";
           if(isset($_POST['NewEmbeddedApplicationSelect']) && !empty($_POST['NewEmbeddedApplicationSelect'])){
-            $str = get_post('NewEmbeddedApplicationSelect');
+            $str = trim(get_post('NewEmbeddedApplicationSelect'));
           }
           if(isset($_POST['NewEmbeddedApplication']) && !empty($_POST['NewEmbeddedApplication'])){
-            $str = get_post('NewEmbeddedApplication');
+            $str = trim(get_post('NewEmbeddedApplication'));
           }
-          if(!empty($str) && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
+          if($str != "" && !in_array($str,$this->use_gotoMimeEmbeddedApplication)){
             $this->use_gotoMimeEmbeddedApplication[] = $str;
           }
         }
@@ -528,7 +528,7 @@ class mimetype extends plugin
   function check()
   {
     $message = plugin::check();
-    if(empty($this->cn)){
+    if($this->cn == "" ){
       $message[] = msgPool::required(_("Name"));
     }
     if(!count($this->use_gotoMimeFilePattern)){
