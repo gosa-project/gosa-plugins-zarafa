@@ -60,6 +60,13 @@ class mailgroup extends plugin
 
   var $multiple_support = TRUE;
 
+
+
+  var $folder_prefix  = "";
+  var $user_prefix    = "";
+
+  var $account_name   = "";
+
   function mailgroup (&$config, $dn= NULL, $ui= NULL)
   {
     /* Initialise all available attributes ... if possible
@@ -88,18 +95,33 @@ class mailgroup extends plugin
       $this->gosaMailServer =  $this->attrs['gosaMailServer'][0];
     }
 
-    /* Convert cn to uid in case of existing entry
-     */
-    if (isset($this->attrs['cn'][0])){
-      $this->uid= $this->attrs['cn'][0];
-    }
-
     /* Get folder type */
     if(preg_match("/olab/i",$this->config->get_cfg_value("mailmethod"))){
       if(isset($this->attrs['kolabFolderType'])){
         $tmp = split("\.",$this->attrs['kolabFolderType'][0]);
         $this->kolabFolderTypeType = $tmp[0];
         $this->kolabFolderTypeSubType = $tmp[1];
+      }
+    }
+
+    /* Create new instance of our defined mailclass
+     */
+    $method= new $this->method($this->config);
+
+    $this->folder_prefix  = $method->folder_prefix;
+    $this->user_prefix    = $method->user_prefix;
+
+    /* Build account name 
+     */
+    $uattrib = $method->uattrib;
+    if (isset($this->attrs[$uattrib][0])){
+      $this->account_name= $this->attrs[$uattrib][0];
+      if(preg_match("/@/",$this->account_name)){
+        $cn = "";
+        if(isset($this->attrs['cn'][0])){
+          $cn = $this->attrs['cn'][0];
+        }
+        $this->account_name = preg_replace("/^[^@]*/",$cn,$this->account_name);
       }
     }
 
@@ -122,9 +144,6 @@ class mailgroup extends plugin
        */
       if (isset ($this->attrs["gosaMailServer"][0])){
 
-        /* Create new instance of our defined mailclass
-         */
-        $method= new $this->method($this->config);
         if ($method->connect($this->attrs["gosaMailServer"][0])){
 
           /* If we do NOT use kolab or equal methods, 
@@ -132,7 +151,7 @@ class mailgroup extends plugin
              They will be merged later with the ldap specified acls.
            */
           if(!preg_match("/olab/i",$this->mmethod) && !empty($this->mmethod)){
-            $this->imapacl=  $method->getSharedFolderPermissions($this->uid);
+            $this->imapacl=  $method->getSharedFolderPermissions($this->folder_prefix.$this->account_name);
 
             /* Need to filter what a member acl could be... */
             $vote= array();
@@ -168,7 +187,7 @@ class mailgroup extends plugin
           $method->fixAttributesOnLoad($this);
 
           /*  get Quota */
-          $quota= $method->getQuota($this->uid);
+          $quota= $method->getQuota($this->folder_prefix.$this->account_name);
 
           /* Update quota values */
           if(is_array($quota)){
@@ -748,7 +767,7 @@ class mailgroup extends plugin
       if ($method->connect($this->gosaMailServer) && $this->remove_folder_from_imap){
 
         /* Remove account from IMAP server */
-        $method->deleteMailbox($this->uid);
+        $method->deleteMailbox($this->folder_prefix.$this->account_name);
         $method->disconnect();
       }
     }
@@ -873,7 +892,7 @@ I: Only insider delivery */
     /* Save arrays */
     $this->attrs['gosaMailAlternateAddress']  = $this->gosaMailAlternateAddress;
     $this->attrs['gosaMailForwardingAddress'] = $this->gosaMailForwardingAddress;
-    $this->attrs['gosaSharedFolderTarget']    = "share+".$this->uid;
+    $this->attrs['gosaSharedFolderTarget']    = "share+".$this->account_name;
     $this->attrs['acl']= array();
 
     /* Prepare Mail server attribute */
@@ -884,7 +903,8 @@ I: Only insider delivery */
         }
       }
     }  
- /* Exchange '%member%' pseudo entry */
+
+    /* Exchange '%member%' pseudo entry */
     $memberacl= $this->imapacl['%members%'];
     foreach ($this->members as $user){
       if (!isset($this->imapacl[$user])){
@@ -988,14 +1008,14 @@ I: Only insider delivery */
       $method= new $this->method($this->config);
       $method->fixAttributesOnStore($this);
       if (($method->connect($this->gosaMailServer))){
-        $method->updateMailbox($this->uid);
-        $method->setQuota($this->uid, $this->gosaMailQuota);
+        $method->updateMailbox($this->folder_prefix.$this->account_name);
+        $method->setQuota($this->folder_prefix.$this->account_name, $this->gosaMailQuota);
 
         /* Only write imap acls directly if we are not
          *  using a kolab like mail method.
          */
         if(!preg_match("/olab/i",$this->mmethod)){
-          $method->setSharedFolderPermissions($this->uid, $this->imapacl);
+          $method->setSharedFolderPermissions($this->folder_prefix.$this->account_name, $this->imapacl);
         }
         $method->disconnect();
       }
