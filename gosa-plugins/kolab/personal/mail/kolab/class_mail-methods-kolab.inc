@@ -25,6 +25,9 @@ class mailMethodKolab extends mailMethodCyrus
   var $gosaMailServer= "";
   var $uattrib= "mail";
 
+  var $folder_prefix  = "shared.";
+  var $user_prefix    = "user/";
+
   var $attribute_map= array("gosaMailAlternateAddress"  =>  "alias",
                             "gosaMailQuota"             =>  "cyrus-userquota",
                             "gosaMailServer"            =>  "kolabHomeServer");
@@ -96,7 +99,7 @@ class mailMethodKolab extends mailMethodCyrus
         So overwrite uid to match these folder names. Else we can't read quota settings etc. 
         #FIXME is there a better way to detect if it is 'shared.' or 'shared+' or 'kolab+shared.' or what ever ?*/
     if(get_class($mailObject) == "mailgroup"){
-     $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
+     $mailObject->uid = $this->folder_prefix.$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
     }
 
     /* Convert attributes and objectClasses */
@@ -226,7 +229,7 @@ class mailMethodKolab extends mailMethodCyrus
       /* Kolab shared folder names are like ' shared.uid@server.de ' 
         So overwrite uid to match these folder names. Else we can't read quota settings etc. 
         #FIXME is there a better way to detect if it is 'shared.' or 'shared+' or 'kolab+shared.' or what ever ?*/
-      $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
+      $mailObject->uid = $this->folder_prefix.$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
   
       /* Assign new acls */
       $mailObject->attrs['acl']= array();
@@ -258,7 +261,7 @@ class mailMethodKolab extends mailMethodCyrus
       /* Kolab shared folder names are like ' shared.uid@server.de ' 
         So overwrite uid to match these folder names. Else we can't read quota settings etc. 
         #FIXME is there a better way to detect if it is 'shared.' or 'shared+' or 'kolab+shared.' or what ever ?*/
-      $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
+      $mailObject->uid = $this->folder_prefix.$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
       
     }
   }

@@ -25,6 +25,10 @@ class mailMethodGolab extends mailMethodCyrus
   var $gosaMailServer= "";
   var $uattrib= "mail";
 
+  var $folder_prefix  = "";
+  var $user_prefix    = "user/";
+
+
   var $attribute_map= array("gosaMailAlternateAddress"  =>  "alias",
                             "gosaMailQuota"             =>  "cyrus-userquota",
                             "gosaMailServer"            =>  "kolabHomeServer");
