@@ -34,7 +34,9 @@ class mailAccount extends plugin
 
   var $quotaUsage                         = 0;
   var $forward_dialog                     = FALSE;
+  var $user_prefix                        = "";
   var $folder_prefix                      = "";
+
   var $mailboxList                        = array("INBOX");
   var $default_permissions                = "none";
   var $member_permissions                 = "post";
@@ -93,15 +95,11 @@ class mailAccount extends plugin
       }
     }
 
-    
-    /* Create the account prefix  user. user/ 
-       Preset folder prefix. Will change it later to respect
-       altnamespace. */
-    if ($this->config->get_cfg_value("cyrusunixstyle") == "true"){
-      $this->folder_prefix= "user/";
-    } else {
-      $this->folder_prefix= "user.";
-    }
+    /* get user and folder prefix */
+    $method = new $this->method($this->config);
+    $this->user_prefix = $method->user_prefix;
+    $this->folder_prefix = $method->folder_prefix;
+
     
     /* This is not a new account, parse additional attributes */
     if (($dn !== NULL) && ($dn != "new") && $this->is_account){
@@ -120,7 +118,6 @@ class mailAccount extends plugin
       /* Only do IMAP actions if gosaMailServer attribute is set */
       if (isset ($this->attrs["gosaMailServer"][0])){
 
-        $method = new $this->method($this->config);
         $id     = $method->uattrib;
 
         /* Adapt attributes if needed */
@@ -135,7 +132,7 @@ class mailAccount extends plugin
         if ($method->connect($this->attrs["gosaMailServer"][0])){
 
           /* Update quota values */
-          $quota= $method->getQuota($this->folder_prefix.$this->$id);
+          $quota= $method->getQuota($this->user_prefix.$this->$id);
          
           if($quota){
             if ($quota['gosaMailQuota'] == 2147483647){
@@ -151,7 +148,7 @@ class mailAccount extends plugin
           }
 
           /* Get mailboxes / folder like INBOX ..*/
-          $this->mailboxList= $method->getMailboxList($this->folder_prefix.$this->$id,$this->$id);
+          $this->mailboxList= $method->getMailboxList($this->user_prefix.$this->$id,$this->$id);
           
           $method->disconnect();
         }else{
@@ -704,7 +701,7 @@ class mailAccount extends plugin
       if ($method->connect($this->gosaMailServer)){
 
         /* Remove account from IMAP server */
-        $method->deleteMailbox($this->folder_prefix.$this->$id);
+        $method->deleteMailbox($this->user_prefix.$this->$id);
         $method->disconnect();
       }
     }
@@ -876,9 +873,9 @@ class mailAccount extends plugin
     if (!$this->is_template){
 
       if ($method->connect($this->gosaMailServer)){
-        $method->updateMailbox($this->folder_prefix.$this->$id);
+        $method->updateMailbox($this->user_prefix.$this->$id);
         
-        $method->setQuota($this->folder_prefix.$this->$id, $this->gosaMailQuota);
+        $method->setQuota($this->user_prefix.$this->$id, $this->gosaMailQuota);
         $method->disconnect();
 
         /* Ensure that this is an existing account */

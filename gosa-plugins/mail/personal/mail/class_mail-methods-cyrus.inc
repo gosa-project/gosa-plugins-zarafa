@@ -25,6 +25,9 @@ class mailMethodCyrus extends mailMethod
   var $gosaMailServer= "";
   var $uattrib= "uid";
 
+  var $folder_prefix  = "share.";
+  var $user_prefix    = "user.";
+
   function mailMethodCyrus(&$config)
   {
     /* Check if the mail account identification attribute
@@ -37,6 +40,13 @@ class mailMethodCyrus extends mailMethod
       }else{
         trigger_error(sprintf("Unsupported MAIL_ATTRIB in gosa configuration specified, use 'mail' or 'uid', instead of '%s'.",            $new_uattrib));
       }
+    }
+    
+    /* Create the account prefix  user. user/ 
+       Preset folder prefix. Will change it later to respect
+       altnamespace. */
+    if ($config->get_cfg_value("cyrusunixstyle") == "true"){
+      $this->user_prefix= "user/";
     }
 
     $this->config= $config->data['SERVERS']['IMAP'];

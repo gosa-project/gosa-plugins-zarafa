@@ -22,6 +22,8 @@
 class mailMethod
 {
   var $uattrib= "uid";
+  var $folder_prefix  = "";
+  var $user_prefix    = "";
   
   function mailMethod(&$config)
   {
