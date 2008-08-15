@@ -96,6 +96,8 @@ class deviceGeneric extends plugin
     /* Skip serial check if vendor and product id are given */
     if(preg_match("/^\s+$/i",$this->devID)){
       $message[]= msgPool::invalid(_("iSerial"),"","01234");
+    }elseif(empty($this->devID) && $this->devID!="0"){
+      $message[]= msgPool::required(_("iSerial"));
     }
     if(empty($this->serial) || !$this->is_2byteHex($this->serial)){
       $message[]= msgPool::invalid(_("Serial"),"","","0x1234");
