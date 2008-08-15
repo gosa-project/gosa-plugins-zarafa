@@ -568,9 +568,12 @@ class appgroup extends plugin
     $entry  = $this->edit_entry;
     $r_entry= &$all[$entry['UNIQID']];
 
+
     if($entry['TYPE'] == "ENTRY"){
       $r_entry['PARAMETER'] = $this->app_parameter;
-      $r_entry['STATUS'] = "EDITED";
+      if($r_entry['STATUS'] != "ADDED"){
+        $r_entry['STATUS'] = "EDITED";
+      } 
     }
     if($entry['TYPE'] == "FOLDER"){
       $r_entry['ICON']   = $this->edit_entry['ICON'];
@@ -1193,7 +1196,6 @@ class appgroup extends plugin
     $all = $this->_get_all_entries();
     $prio = 0;
     $Actions = array("Remove" => array(),"Edit" => array() , "Add" => array());
-
 
     /* Walk through the menu structure and build up the ldap data object, 
         the entry dn and the entry priority.
