@@ -66,14 +66,14 @@ sub opsi_add_product_to_client {
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
 
     }
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1)) {
         $error++;
-        &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or procutId tag invalid: $msg", 1); 
     }
@@ -130,14 +130,14 @@ sub opsi_del_product_from_client {
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
 
     }
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1)) {
         $error++;
-        &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or procutId tag invalid: $msg", 1); 
     }
@@ -242,13 +242,13 @@ sub opsi_add_client {
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
     }
     if ((not exists $msg_hash->{'macaddress'}) || (@{$msg_hash->{'macaddress'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "macaddress_error", "no macaddress specified or macaddress tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no macaddress specified or macaddress tag invalid");
         &add_content2xml_hash($out_hash, "error", "macaddress");
         &main::daemon_log("$session_id ERROR: no macaddress specified or macaddress tag invalid: $msg", 1); 
     }
@@ -324,7 +324,7 @@ sub opsi_modify_client {
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
     }
@@ -413,7 +413,7 @@ sub opsi_get_netboot_products {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
         return &create_xml_string($out_hash);
@@ -537,7 +537,7 @@ sub opsi_get_product_properties {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1))  {
-        &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or productId tag invalid: $msg", 1); 
 
@@ -636,32 +636,32 @@ sub opsi_set_product_properties {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'productId'}) || (@{$msg_hash->{'productId'}} != 1))  {
-        &add_content2xml_hash($out_hash, "productId_error", "no productId specified or productId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no productId specified or productId tag invalid");
         &add_content2xml_hash($out_hash, "error", "productId");
         &main::daemon_log("$session_id ERROR: no productId specified or productId tag invalid: $msg", 1); 
         return ( &create_xml_string($out_hash) );
     }
     if (not exists $msg_hash->{'item'}) {
-        &add_content2xml_hash($out_hash, "item_error", "message needs one xml-tag 'item' and within the xml-tags 'name' and 'value'");
+        &add_content2xml_hash($out_hash, "error_string", "message needs one xml-tag 'item' and within the xml-tags 'name' and 'value'");
         &add_content2xml_hash($out_hash, "error", "item");
         &main::daemon_log("$session_id ERROR: message needs one xml-tag 'item' and within the xml-tags 'name' and 'value': $msg", 1); 
         return ( &create_xml_string($out_hash) );
     } else {
         if ((not exists @{$msg_hash->{'item'}}[0]->{'name'}) || (@{@{$msg_hash->{'item'}}[0]->{'name'}} != 1 )) {
-            &add_content2xml_hash($out_hash, "name_error", "message needs within the xml-tag 'item' one xml-tags 'name'");
+            &add_content2xml_hash($out_hash, "error_string", "message needs within the xml-tag 'item' one xml-tags 'name'");
             &add_content2xml_hash($out_hash, "error", "name");
             &main::daemon_log("$session_id ERROR: message needs within the xml-tag 'item' one xml-tags 'name': $msg", 1); 
             return ( &create_xml_string($out_hash) );
         }
         if ((not exists @{$msg_hash->{'item'}}[0]->{'value'}) || (@{@{$msg_hash->{'item'}}[0]->{'value'}} != 1 )) {
-            &add_content2xml_hash($out_hash, "value_error", "message needs within the xml-tag 'item' one xml-tags 'value'");
+            &add_content2xml_hash($out_hash, "error_string", "message needs within the xml-tag 'item' one xml-tags 'value'");
             &add_content2xml_hash($out_hash, "error", "value");
             &main::daemon_log("$session_id ERROR: message needs within the xml-tag 'item' one xml-tags 'value': $msg", 1); 
             return ( &create_xml_string($out_hash) );
         }
     }
     if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1))  {
-        &add_content2xml_hash($out_hash, "hostId_error", "hostId contains no or more than one values");
+        &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
         return ( &create_xml_string($out_hash) );
@@ -745,7 +745,7 @@ sub opsi_get_client_hardware {
     # Sanity check of needed parameter
     if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "hostId contains no or more than one values");
+        &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
     }
@@ -894,7 +894,7 @@ sub opsi_get_client_software {
     # Sanity check of needed parameter
     if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "hostId contains no or more than one values");
+        &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
     }
@@ -1078,7 +1078,7 @@ sub opsi_del_client {
     # Sanity check of needed parameter
     if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "hostId contains no or more than one values");
+        &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 
     }
@@ -1134,13 +1134,13 @@ sub opsi_install_client {
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
     }
     if ((not exists $msg_hash->{'macaddress'}) || (@{$msg_hash->{'macaddress'}} != 1))  {
         $error++;
-        &add_content2xml_hash($out_hash, "macaddress_error", "no macaddress specified or macaddress tag invalid");
+        &add_content2xml_hash($out_hash, "error_string", "no macaddress specified or macaddress tag invalid");
         &add_content2xml_hash($out_hash, "error", "macaddress");
         &main::daemon_log("$session_id ERROR: no macaddress specified or macaddress tag invalid: $msg", 1); 
     } else {
@@ -1149,7 +1149,7 @@ sub opsi_install_client {
             $macaddress = $1; 
         } else { 
             $error ++; 
-            &add_content2xml_hash($out_hash, "macaddress_error", "given mac address is not correct");
+            &add_content2xml_hash($out_hash, "error_string", "given mac address is not correct");
             &add_content2xml_hash($out_hash, "error", "macaddress");
             &main::daemon_log("$session_id ERROR: given mac address is not correct: $msg", 1); 
         }
