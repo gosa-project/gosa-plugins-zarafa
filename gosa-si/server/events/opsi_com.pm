@@ -403,7 +403,6 @@ sub opsi_get_netboot_products {
     my $target = @{$msg_hash->{'target'}}[0];
     my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
     my $hostId;
-    my $error = 0;
     my $xml_msg;
 
     # Build return message with twisted target and source
@@ -414,104 +413,101 @@ sub opsi_get_netboot_products {
 
     # Sanity check of needed parameter
     if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
-        $error++;
         &add_content2xml_hash($out_hash, "hostId_error", "no hostId specified or hostId tag invalid");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
+        return &create_xml_string($out_hash);
     }
 
-    if (not $error) {
+    # Get hostID if defined
+    $hostId = @{$msg_hash->{'hostId'}}[0];
+    &add_content2xml_hash($out_hash, "hostId", $hostId);
 
-        # Get hostID if defined
-        $hostId = @{$msg_hash->{'hostId'}}[0];
-        &add_content2xml_hash($out_hash, "hostId", $hostId);
+    &add_content2xml_hash($out_hash, "xxx", "");
+    $xml_msg= &create_xml_string($out_hash);
 
-        &add_content2xml_hash($out_hash, "xxx", "");
-        $xml_msg= &create_xml_string($out_hash);
+    # For hosts, only return the products that are or get installed
+    my $callobj;
+    $callobj = {
+        method  => 'getNetBootProductIds_list',
+        params  => [ ],
+        id  => 1,
+    };
 
-        # For hosts, only return the products that are or get installed
-        my $callobj;
-        $callobj = {
-            method  => 'getNetBootProductIds_list',
-            params  => [ ],
-            id  => 1,
-        };
+    my $res = $main::opsi_client->call($main::opsi_url, $callobj);
+    my %r = ();
+    for (@{$res->result}) { $r{$_} = 1 }
 
-        my $res = $main::opsi_client->call($main::opsi_url, $callobj);
-        my %r = ();
-        for (@{$res->result}) { $r{$_} = 1 }
+    if (not &check_opsi_res($res)){
 
-        if (not &check_opsi_res($res)){
+        if (defined $hostId){
+            $callobj = {
+                method  => 'getProductStates_hash',
+                params  => [ $hostId ],
+                id  => 1,
+            };
 
-            if (defined $hostId){
-                $callobj = {
-                    method  => 'getProductStates_hash',
-                    params  => [ $hostId ],
-                    id  => 1,
-                };
+            my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
+            if (not &check_opsi_res($hres)){
+                my $htmp= $hres->result->{$hostId};
 
-                my $hres = $main::opsi_client->call($main::opsi_url, $callobj);
-                if (not &check_opsi_res($hres)){
-                    my $htmp= $hres->result->{$hostId};
+                # check state != not_installed or action == setup -> load and add
+                foreach my $product (@{$htmp}){
 
-                    # check state != not_installed or action == setup -> load and add
-                    foreach my $product (@{$htmp}){
-
-                        if (!defined ($r{$product->{'productId'}})){
-                            next;
-                        }
-
-                        # Now we've a couple of hashes...
-                        if ($product->{'installationStatus'} ne "not_installed" or
-                                $product->{'actionRequest'} eq "setup"){
-                            my $state= "<state>".$product->{'installationStatus'}."</state><action>".$product->{'actionRequest'}."</action>";
-
-                            $callobj = {
-                                method  => 'getProduct_hash',
-                                params  => [ $product->{'productId'} ],
-                                id  => 1,
-                            };
-
-                            my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-                            if (not &check_opsi_res($sres)){
-                                my $tres= $sres->result;
-
-                                my $name= xml_quote($tres->{'name'});
-                                my $r= $product->{'productId'};
-                                my $description= xml_quote($tres->{'description'});
-                                $name=~ s/\//\\\//;
-                                $description=~ s/\//\\\//;
-                                $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
-                            }
-                        }
+                    if (!defined ($r{$product->{'productId'}})){
+                        next;
                     }
 
-                }
+                    # Now we've a couple of hashes...
+                    if ($product->{'installationStatus'} ne "not_installed" or
+                            $product->{'actionRequest'} eq "setup"){
+                        my $state= "<state>".$product->{'installationStatus'}."</state><action>".$product->{'actionRequest'}."</action>";
 
-            } else {
-                foreach my $r (@{$res->result}) {
-                    $callobj = {
-                        method  => 'getProduct_hash',
-                        params  => [ $r ],
-                        id  => 1,
-                    };
+                        $callobj = {
+                            method  => 'getProduct_hash',
+                            params  => [ $product->{'productId'} ],
+                            id  => 1,
+                        };
 
-                    my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
-                    if (not &check_opsi_res($sres)){
-                        my $tres= $sres->result;
+                        my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+                        if (not &check_opsi_res($sres)){
+                            my $tres= $sres->result;
 
-                        my $name= xml_quote($tres->{'name'});
-                        my $description= xml_quote($tres->{'description'});
-                        $name=~ s/\//\\\//;
-                        $description=~ s/\//\\\//;
-                        $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                            my $name= xml_quote($tres->{'name'});
+                            my $r= $product->{'productId'};
+                            my $description= xml_quote($tres->{'description'});
+                            $name=~ s/\//\\\//;
+                            $description=~ s/\//\\\//;
+                            $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+                        }
                     }
                 }
 
             }
+
+        } else {
+            foreach my $r (@{$res->result}) {
+                $callobj = {
+                    method  => 'getProduct_hash',
+                    params  => [ $r ],
+                    id  => 1,
+                };
+
+                my $sres = $main::opsi_client->call($main::opsi_url, $callobj);
+                if (not &check_opsi_res($sres)){
+                    my $tres= $sres->result;
+
+                    my $name= xml_quote($tres->{'name'});
+                    my $description= xml_quote($tres->{'description'});
+                    $name=~ s/\//\\\//;
+                    $description=~ s/\//\\\//;
+                    $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                }
+            }
+
         }
-        $xml_msg=~ s/<xxx><\/xxx>//;
     }
+    $xml_msg=~ s/<xxx><\/xxx>//;
 
     # Return message
     return ( $xml_msg );
