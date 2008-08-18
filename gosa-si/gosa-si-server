@@ -451,6 +451,7 @@ sub import_modules {
 			}
 		}
     }   
+
     close (DIR);
 }
 
@@ -1511,8 +1512,8 @@ sub watch_for_opsi_jobs {
         };
         
         my $hres = $opsi_client->call($opsi_url, $callobj);
-        my ($hres_err, $hres_err_string) = &check_opsi_res($hres);
-        if (&check_opsi_res($hres)) {
+        #my ($hres_err, $hres_err_string) = &check_opsi_res($hres);
+        if (not &check_opsi_res($hres)) {
             my $htmp= $hres->result->{$hostId};
         
             # Check state != not_installed or action == setup -> load and add

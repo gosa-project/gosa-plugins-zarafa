@@ -148,14 +148,14 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # List Opsi clients
-    $data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Delete Opsi client
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Install Opsi client
     # Please do always use 'job_...' and never 'gosa_...' otherways the job will never appear in job queue
-    #$data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
+    $data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
 
     # Add Opsi client
     #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <description>Test halt</description> <ip>1.2.3.4</ip> <notes>Im a note</notes> </xml>";
