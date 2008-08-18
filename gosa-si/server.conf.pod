@@ -167,7 +167,7 @@ Defines the password incoming ClientPackages messages should be encrypted. This 
 
 =item domain =
 
-???
+Forces the search domain used to get possible foreign servers from DNS. If not set, this server will search the domains found in domain or search statement in /etc/resolv.conf.
 
 =item key = none
 
