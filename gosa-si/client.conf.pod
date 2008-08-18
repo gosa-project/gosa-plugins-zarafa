@@ -43,11 +43,11 @@ If set GOsa-SI-client is forced to use this mac address. If it is not set, an au
 
 =item server-domain =
 
-???
+Forces the search domain used to get possible servers from DNS. If not set, the client will search the domains from $ENV.
 
 =item ldap = 1 | 0
 
-???
+If set to '1', the client will get the LDAP-Configuration from the registration server (on every registration process). Under some circumstances this is not wanted, so setting to '0' disables this behavior.
 
 =item ldap-config = /etc/ldap/ldap.conf
 
@@ -67,7 +67,7 @@ Defines the location for fai.log file.
 
 =item force-hostname = false | true
 
-???
+If set to true, client will try to get the hostname for registration from $ENV. Used in FAI environments, when hostname gets set from DHCP.
 
 =back
 

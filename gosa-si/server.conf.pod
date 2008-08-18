@@ -75,7 +75,7 @@ Defines the location for the sources file.
 
 =item repo-path = /srv/www/repository
 
-???
+Defines the location of the dak Archive or local Debian Mirror and is scanned for Debian Packages.
 
 =item ldap-uri = 
 
@@ -95,7 +95,7 @@ Defines the password of the administrator.
 
 =item gosa-unit-tag = 
 
-???
+Forces the Unit-Tag in a tagged environment. If not set, GOsa-SI tries to get the tag from the server entry in LDAP.
 
 =item max-clients = 10
 
@@ -129,19 +129,19 @@ Defines the password incoming GOsaPackages messages should be encrypted. This ha
 
 =item dak-base = /srv/archive
 
-???
+Base Directory of the local dak Archive.
 
 =item dak-keyring = /srv/archive/keyrings
 
-???
+Directory with keyrings that hold the gpg-keys the archive accepts when uploading Debian packages.
 
 =item dak-queue = /srv/archive/queue
 
-???
+Directory with the different dak queues.
 
 =item dak-usr = deb-dak
 
-???
+User that is used to access dak files. Only needed if you have manually changed the default.
 
 =back
 
@@ -198,7 +198,7 @@ Defines whether the ArpHandler is being activated at GOsa-SI-server start.
 
 =item interface = all
 
-???
+Space- or comma-separated list of interfaces on which to start an ARP-Daemon. Enter 'all' to use all possible interfaces (Default).
 
 =back
 
