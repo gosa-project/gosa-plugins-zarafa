@@ -159,7 +159,7 @@ sub server_leaving {
 # @param msg_hash - HASHREF - message information parsed into a hash
 sub new_ntp_config {
     my ($msg, $msg_hash) = @_ ;
-    
+
     # Sanity check of incoming message
     if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} >= 1) ) {
         &main::daemon_log("ERROR: 'new_ntp_config'-message does not contain a ntp server: $msg", 1);
@@ -167,13 +167,21 @@ sub new_ntp_config {
     }
 
     # Fetch the new ntp server from incoming message
-    my @ntp_servers = $msg_hash->{'server'};
-    my $ntp_servers_string = "server\t".join("\nserver\t", @ntp_servers)."\n";
+    my $ntp_servers = $msg_hash->{'server'};
+    &main::daemon_log("INFO: found ntp server: ".join(", ", @$ntp_servers), 5); 
+    my $ntp_servers_string = "server\t".join("\nserver\t", @$ntp_servers)."\n";
     my $found_server_flag = 0;
 
+    # Sanity check of /etc/chrony/chrony.conf
+    if (not -f $chrony_file) {
+        &main::daemon_log("ERROR: file '$chrony_file' does not exist, cannot do ntp reconfiguration!", 1);
+        return;
+    }
+
     # Substitute existing server with new ntp server
-    open (FILE, "+<$chrony_file");
+    open (FILE, "<$chrony_file");
     my @file = <FILE>;
+    close FILE;
     foreach my $line (@file) {
         if ($line =~ /^server /) {
             if ($found_server_flag) {
@@ -192,6 +200,7 @@ sub new_ntp_config {
     }
 
     # Write changes to file and close it
+    open (FILE, "+>$chrony_file");
     print FILE join("", @file); 
     close FILE;
     &main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);

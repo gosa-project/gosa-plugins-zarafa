@@ -509,6 +509,7 @@ sub here_i_am {
             push(@out_msg_l, $new_ldap_config_out);
     }
 
+    # Send client hardware configuration
 	my $hardware_config_out = &hardware_config($msg, $msg_hash, $session_id);
 	if( $hardware_config_out ) {
 		push(@out_msg_l, $hardware_config_out);
@@ -516,7 +517,10 @@ sub here_i_am {
 
     # Send client ntp server
 
-
+    my $ntp_config_out = &new_ntp_config($mac_address, $session_id);
+    if ($ntp_config_out) {
+        push(@out_msg_l, $ntp_config_out);
+    }
 
     # notify registered client to all other server
     my %mydata = ( 'client' => $source, 'macaddress' => $mac_address);
@@ -610,7 +614,7 @@ sub new_ntp_config {
 	}
 
 	my $entry= $ldap_res->entry(0);
-	my $dn= $entry->dn;
+    my $dn = &Net::LDAP::Util::escape_dn_value($entry->dn);
 	my @ntp_servers= $entry->get_value("gotoNtpServer");
 
     # If no ntp server is specified at host, just have a look at the object group of the host
@@ -737,11 +741,12 @@ sub new_ldap_config {
 		}
 
 		# Sanity check
-		if ($mesg->count == 0) {
-			&main::daemon_log("$session_id WARNING: no LDAP informations found for client  with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'", 3);
-			return;
-		} elsif ($mesg->count >= 2) {
-            &main::daemon_log("$session_id ERROR: multiple LDAP informations found for client  with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'", 1);
+        if ($mesg->count != 1) {
+            &main::daemon_log("$session_id ERROR: client with mac address $macaddress not found/unique/active - not sending ldap config".
+                    "\n\tbase: $ldap_base".
+                    "\n\tscope: sub".
+                    "\n\tattrs: dn, gotoLdapServer, FAIclass".
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$escaped_dn))", 1);
             return;
         }
 
@@ -761,7 +766,7 @@ sub new_ldap_config {
 
     # complain if no ldap information found
     if (@servers == 0) {
-        &main::daemon_log("$session_id ERROR: no gotoLdapServer information for LDAP entry with filter '(&(objectClass=gosaGroupOfNames)(member=$dn))'");
+        &main::daemon_log("$session_id ERROR: no gotoLdapServer information for LDAP entry '$dn'", 1);
     }
 
 	foreach $server (@servers){
