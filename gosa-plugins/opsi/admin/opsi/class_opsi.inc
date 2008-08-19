@@ -22,28 +22,73 @@
 /*! \brief  This is the opsi base class, it handles 
   .          gosa daemon requests and prepares data for opsi plugins.
  */
-class opsi 
+class opsi extends gosaSupportDaemon 
 {
+  private $config = NULL;
+
+  /*! \brief 		Create opsi object.
+    @param
+    @return 		
+   */
+  public function __construct($config)
+  {
+    $this->config = $config;
+    gosaSupportDaemon::__construct($config);
+    $this->target = "00:01:6c:9d:b9:fa";
+  }
+
+  /******************
+    Opsi handling 
+   ******************/
+
+  function get_hosts_for_system_management()
+  {
+    $res = $this->list_clients();
+
+    $data = array();
+    foreach($res as $entry){
+      $data[] = array(
+        "dn"          => "opsi:=".$entry['NAME'].",".get_ou("winstations").$this->config->current['BASE'],
+        "objectClass" => array("gosa_opsi_client"),
+        "cn"          => array(0 => $entry['NAME']),
+        "description" => array(0 => $entry['DESCRIPTION']),
+        "macAddress"  => array(0 => $entry['MAC']),
+        "opsi_notes"  => array(0 => $entry['NOTES']));
+        
+    }
+  
+    return($data);
+  }
+
+
+  /******************
+    SI Communication functions
+   ******************/
 
 
   /*! \brief 		Returns a list of netboot products.
     @param
     @return 		
    */
-  public static function opsi_get_netboot_products()
+  public function get_netboot_products($host = "")
   {
-    /*  <xml>
-        <header>gosa_opsi_get_netboot_products</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target>
-        </xml>	
-        <xml> 
-        <header>gosa_opsi_get_netboot_products</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId>
-        </xml> */
+    $data = array();
 
+    /* Append host attribute to query data 
+     */
+    if(!empty($host)){
+      $data['hostId'] = trim($host);
+    }
+
+    $res    = $this->send_data("gosa_opsi_get_netboot_products",$this->target,$data,TRUE);
+    $items  = array();
+    if($res['XML']['ITEM']['PRODUCTID']){
+    foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+        $items[$name]['NAME'] = $name;
+        $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+      }
+    }
+    return($items);
   }
 
 
@@ -51,20 +96,25 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_get_local_products()
+  public function get_local_products($host = "")
   {
-    /*  <xml> 
-        <header>gosa_opsi_get_local_products</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        </xml>
-        <xml> 
-        <header>gosa_opsi_get_local_products</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId>
-        </xml> */
+    $data = array();
 
+    /* Append host attribute to query data 
+     */
+    if(!empty($host)){
+      $data['hostId'] = trim($host);
+    }
+
+    $res    = $this->send_data("gosa_opsi_get_local_products",$this->target,$data,TRUE);
+    $items  = array();
+    if($res['XML']['ITEM']['PRODUCTID']){
+    foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+        $items[$name]['NAME'] = $name;
+        $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+      }
+    }
+    return($items);
   }
 
 
@@ -74,7 +124,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_get_product_properties()
+  public function get_product_properties()
   {
     /*  <xml> 
         <header>gosa_opsi_get_product_properties</header> 
@@ -90,6 +140,7 @@ class opsi
         <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
         </xml>
      */
+    
   }
 
 
@@ -97,7 +148,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_set_product_properties()
+  public function set_product_properties()
   {
     /* 	<xml> 
         <header>gosa_opsi_set_product_properties</header> 
@@ -128,7 +179,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_get_client_hardware()
+  public function get_client_hardware()
   {
     /*	<xml> 
         <header>gosa_opsi_get_client_hardware</header> 
@@ -144,7 +195,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_get_client_software()
+  public function get_client_software()
   {
     /*  <xml> 
         <header>gosa_opsi_get_client_software</header> 
@@ -160,14 +211,19 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_list_clients()
+  public function list_clients()
   {
-    /*  <xml> 
-        <header>gosa_opsi_list_clients</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        </xml>
-     */
+    $data   = array();
+    $res    = $this->send_data("gosa_opsi_list_clients",$this->target,$data,TRUE);
+    $items  = array();
+    if(isset($res['XML']['ITEM'])){
+      foreach($res['XML']['ITEM'] as $type => $val){
+        foreach($val as $key => $value){
+          $items[$key][$type] = $value;
+        }
+      }
+    }
+    return($items);
   }
 
 
@@ -175,7 +231,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_del_client()
+  public function del_client()
   {
     /*  <xml> 
         <header>gosa_opsi_del_client</header> 
@@ -191,7 +247,7 @@ class opsi
     @param
     @return 		
    */
-  public static function job_opsi_install_client()
+  public function job_opsi_install_client()
   {
     /*  <xml> 
         <header>job_opsi_install_client</header> 
@@ -208,7 +264,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_add_client()
+  public function add_client()
   {
     /*  <xml> 
         <header>gosa_opsi_add_client</header> 
@@ -228,7 +284,7 @@ class opsi
     @param
     @return 		
    */
-  public static function gosa_opsi_add_product_to_client()
+  public function add_product_to_client()
   {
     /*  <xml> 
         <header>gosa_opsi_add_product_to_client</header> 
@@ -246,7 +302,7 @@ class opsi
     @param
     @return
    */
-  public static function gosa_opsi_del_product_from_client()
+  public function del_product_from_client()
   {
     /* <xml> 
        <header>gosa_opsi_del_product_from_client</header> 
@@ -259,6 +315,5 @@ class opsi
      */
   }
 }
-
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
