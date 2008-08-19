@@ -601,7 +601,7 @@ sub new_ntp_config {
 
 	# Sanity check
 	if ($ldap_res->count != 1) {
-		&main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ldap config".
+		&main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ntp config".
                 "\n\tbase: $ldap_base".
                 "\n\tscope: sub".
                 "\n\tattrs: gotoNtpServer".
@@ -627,7 +627,7 @@ sub new_ntp_config {
 
         # Sanity check
         if ($ldap_res->count != 1) {
-            &main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ldap config".
+            &main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ntp config".
                     "\n\tbase: $ldap_base".
                     "\n\tscope: sub".
                     "\n\tattrs: gotoNtpServer".
@@ -646,7 +646,7 @@ sub new_ntp_config {
     }
  
     # Add each ntp server to 'ntp_config' message
-    my $ntp_msg_hash = &create_xml_hash("ntp_config", $server_address, $address);
+    my $ntp_msg_hash = &create_xml_hash("new_ntp_config", $server_address, $address);
     foreach my $ntp_server (@ntp_servers) {
         &add_content2xml_hash($ntp_msg_hash, "server", $ntp_server);
     }

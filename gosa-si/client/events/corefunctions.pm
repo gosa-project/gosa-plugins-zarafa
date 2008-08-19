@@ -4,6 +4,7 @@ use Exporter;
 my @events = (
     "get_events",
     "registered",
+    "new_ntp_config",
     "new_ldap_config",
     "new_key",
     "generate_hw_digest",     # no implementations
@@ -23,6 +24,7 @@ use File::Basename;
 
 my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
+my $chrony_file = "/etc/chrony/chrony.conf";
 
 my %cfg_defaults = (
     "client" => {
@@ -149,6 +151,56 @@ sub server_leaving {
     &main::register_at_server();
        
     return;   
+}
+
+## @method new_ntp_config
+# Updates the server options in /etc/chrony/chrony.conf and restarts the chrony service
+# @param msg - STRING - xml message with tag server
+# @param msg_hash - HASHREF - message information parsed into a hash
+sub new_ntp_config {
+    my ($msg, $msg_hash) = @_ ;
+    
+    # Sanity check of incoming message
+    if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} >= 1) ) {
+        &main::daemon_log("ERROR: 'new_ntp_config'-message does not contain a ntp server: $msg", 1);
+        return;
+    }
+
+    # Fetch the new ntp server from incoming message
+    my @ntp_servers = $msg_hash->{'server'};
+    my $ntp_servers_string = "server\t".join("\nserver\t", @ntp_servers)."\n";
+    my $found_server_flag = 0;
+
+    # Substitute existing server with new ntp server
+    open (FILE, "+<$chrony_file");
+    my @file = <FILE>;
+    foreach my $line (@file) {
+        if ($line =~ /^server /) {
+            if ($found_server_flag) {
+                $line =~ s/^server [\s\S]+$//;
+            } else {
+                $line =~ s/^server [\s\S]+$/$ntp_servers_string/;
+            }
+            $found_server_flag++;
+        }
+    }
+
+    # Append new server if no old server configuration found
+    if (not $found_server_flag) {
+        push(@file, "\n# ntp server configuration written by GOsa-si\n");
+        push(@file, $ntp_servers_string);
+    }
+
+    # Write changes to file and close it
+    print FILE join("", @file); 
+    close FILE;
+    &main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
+
+    # Restart chrony deamon
+    my $res = qx(/etc/init.d/chrony force-reload);
+    &main::daemon_log("INFO: restart chrony daemon: $res", 5);
+
+    return;
 }
 
 

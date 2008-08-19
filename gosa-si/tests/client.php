@@ -189,7 +189,8 @@ for($count = 1; $count <= $zahl; $count++)
 
     ##############################
     # NTP reload
-    $data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
+    #$data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
+    $data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
 
     $sock->write($data);
     $answer = "nothing";
