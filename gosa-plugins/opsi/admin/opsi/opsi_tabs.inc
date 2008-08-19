@@ -2,7 +2,6 @@
 
 class opsi_tabs extends tabs
 {
-
 }
 
 
