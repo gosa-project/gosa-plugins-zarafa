@@ -330,10 +330,10 @@ sub process_incoming_msg {
                 @out_msg_l = ();
             }  elsif ($out_msg_l[0] eq 'knownclienterror') {
                 &main::daemon_log("$session_id ERROR: no or more than 1 hits are found at known_clients_db with sql query: '$sql_events'", 1);
-                &main::daemon_log("$session_id WARNING: processing is aborted and message will not be forwarded");
+                &main::daemon_log("$session_id ERROR: processing is aborted and message will not be forwarded", 1);
                 @out_msg_l = ();
             } elsif ($out_msg_l[0] eq 'noeventerror') {
-                &main::daemon_log("$session_id WARNING: client '$target' is not registered for event '$header', processing is aborted", 1); 
+                &main::daemon_log("$session_id ERROR: client '$target' is not registered for event '$header', processing is aborted", 1); 
                 @out_msg_l = ();
             }
 
@@ -514,6 +514,10 @@ sub here_i_am {
 		push(@out_msg_l, $hardware_config_out);
 	}
 
+    # Send client ntp server
+
+
+
     # notify registered client to all other server
     my %mydata = ( 'client' => $source, 'macaddress' => $mac_address);
     my $mymsg = &build_msg('new_foreign_client', $main::server_address, "KNOWN_SERVER", \%mydata);
@@ -571,6 +575,83 @@ sub who_has_i_do {
     my $search_param = @{$msg_hash->{$header}}[0];
     my $search_value = @{$msg_hash->{$search_param}}[0];
     print "\ngot msg $header:\nserver $source has client with $search_param $search_value\n";
+}
+
+
+sub new_ntp_config {
+    my ($address, $session_id) = @_;
+    my $ntp_msg;
+
+	# Build LDAP connection
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+	if( not defined $ldap_handle ) {
+		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
+		return;
+	}
+
+	# Perform search
+    my $ldap_res = $ldap_handle->search( base   => $ldap_base,
+		scope  => 'sub',
+		attrs => ['gotoNtpServer'],
+		filter => "(&(objectClass=GOhard)(macaddress=$address))");
+	if($ldap_res->code) {
+		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+		return;
+	}
+
+	# Sanity check
+	if ($ldap_res->count != 1) {
+		&main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ldap config".
+                "\n\tbase: $ldap_base".
+                "\n\tscope: sub".
+                "\n\tattrs: gotoNtpServer".
+                "\n\tfilter: (&(objectClass=GOhard)(macaddress=$address))", 1);
+		return;
+	}
+
+	my $entry= $ldap_res->entry(0);
+	my $dn= $entry->dn;
+	my @ntp_servers= $entry->get_value("gotoNtpServer");
+
+    # If no ntp server is specified at host, just have a look at the object group of the host
+    # Perform object group search
+    if ((not @ntp_servers) || (@ntp_servers == 0)) {
+        my $ldap_res = $ldap_handle->search( base   => $ldap_base,
+                scope  => 'sub',
+                attrs => ['gotoNtpServer'],
+                filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+        if($ldap_res->code) {
+            &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            return;
+        }
+
+        # Sanity check
+        if ($ldap_res->count != 1) {
+            &main::daemon_log("$session_id ERROR: client with mac address $address not found/unique/active - not sending ldap config".
+                    "\n\tbase: $ldap_base".
+                    "\n\tscope: sub".
+                    "\n\tattrs: gotoNtpServer".
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$dn))", 1);
+            return;
+        }
+
+        my $entry= $ldap_res->entry(0);
+        @ntp_servers= $entry->get_value("gotoNtpServer");
+    }
+
+    # Return if no ntp server specified
+    if ((not @ntp_servers) || (@ntp_servers == 0)) {
+        &main::daemon_log("$session_id WARNING: no ntp server specified for this host '$address'", 3);
+        return;
+    }
+ 
+    # Add each ntp server to 'ntp_config' message
+    my $ntp_msg_hash = &create_xml_hash("ntp_config", $server_address, $address);
+    foreach my $ntp_server (@ntp_servers) {
+        &add_content2xml_hash($ntp_msg_hash, "server", $ntp_server);
+    }
+
+    return &create_xml_string($ntp_msg_hash);
 }
 
 

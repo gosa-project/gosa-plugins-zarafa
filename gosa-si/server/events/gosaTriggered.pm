@@ -10,6 +10,7 @@ my @events = (
     "get_login_usr_for_client",
     "get_client_for_login_usr",
     "gen_smb_hash",
+    "trigger_reload_ntp_config",
     "trigger_reload_ldap_config",
     "ping",
     "network_completition",
@@ -403,6 +404,28 @@ sub detect_hardware {
 
 }
 
+sub trigger_reload_ntp_config {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $target = @{$msg_hash->{target}}[0];
+
+    # Sanity check of macaddress
+    # TODO
+
+    my $macaddress = @{$msg_hash->{macaddress}}[0];
+
+    my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
+    if( defined $jobdb_id) {
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
+        my $res = $main::job_db->exec_statement($sql_statement);
+    }
+
+	my $out_msg = &ClientPackages::new_ntp_config($macaddress, $session_id);
+	my @out_msg_l = ( $out_msg );
+
+    return @out_msg_l;
+
+}
 
 sub trigger_reload_ldap_config {
     my ($msg, $msg_hash, $session_id) = @_ ;

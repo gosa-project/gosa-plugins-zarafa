@@ -1397,9 +1397,9 @@ sub process_task {
                     &update_jobdb_status_for_send_msgs($answer, $error);
                 }
 
-                # target of msg is a mac address
+                # Target of msg is a mac address
                 elsif( $answer_target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i ) {
-                    daemon_log("$session_id INFO: target is mac address '$answer_target', looking for host in known_clients", 5);
+                    daemon_log("$session_id INFO: target is mac address '$answer_target', looking for host in known_clients and foreign_clients", 5);
                     my $sql_statement = "SELECT * FROM known_clients WHERE macaddress LIKE '$answer_target'";
                     my $query_res = $known_clients_db->select_dbentry( $sql_statement );
                     my $found_ip_flag = 0;
@@ -1412,11 +1412,40 @@ sub process_task {
                         &update_jobdb_status_for_send_msgs($answer, $error);
                         $found_ip_flag++ ;
                     }   
+                    if ($found_ip_flag == 0) {
+                        my $sql = "SELECT * FROM $foreign_clients_tn WHERE macaddress LIKE '$answer_target'";
+                        my $res = $foreign_clients_db->select_dbentry($sql);
+                        while( my ($hit_num, $hit) = each %{ $res } ) {
+                            my $host_name = $hit->{hostname};
+                            my $reg_server = $hit->{regserver};
+                            daemon_log("$session_id INFO: found host '$host_name' with mac '$answer_target', registered at '$reg_server'", 5);
+                            
+                            # Fetch key for reg_server
+                            my $reg_server_key;
+                            my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$reg_server'";
+                            my $res = $known_server_db->select_dbentry($sql);
+                            if (exists $res->{1}) {
+                                $reg_server_key = $res->{1}->{'hostkey'}; 
+                            } else {
+                                daemon_log("$session_id ERROR: cannot find hostkey for '$host_name' in '$known_server_tn'", 1); 
+                                daemon_log("$session_id ERROR: unable to forward answer to correct registration server, processing is aborted!", 1); 
+                                $reg_server_key = undef;
+                            }
+
+                            # Send answer to server where client is registered
+                            if (defined $reg_server_key) {
+                                $answer =~ s/$answer_target/$host_name/g;
+                                my $error = &send_msg_to_target($answer, $reg_server, $reg_server_key, $answer_header, $session_id);
+                                &update_jobdb_status_for_send_msgs($answer, $error);
+                                $found_ip_flag++ ;
+                            }
+                        }
+                    }
                     if( $found_ip_flag == 0) {
                         daemon_log("$session_id WARNING: no host found in known_clients with mac address '$answer_target'", 3);
                     }
 
-                #  answer is for one specific host   
+                # Answer is for one specific host   
                 } else {
                     # get encrypt_key
                     my $encrypt_key = &get_encrypt_key($answer_target);

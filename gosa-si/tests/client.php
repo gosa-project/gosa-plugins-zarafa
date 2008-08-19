@@ -121,50 +121,50 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Get netboot product for specific host
-    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get all localboot products
     #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
     
     # Get localboot product for specific host
-    #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+    #$data = "<xml> <header>gosa_opsi_get_local_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Get product properties - global
     #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <productId>firefox</productId></xml>";
 
     # Get product properties - per host
-    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <productId>firefox</productId> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_product_properties</header> <source>GOSA</source> <target>GOSA</target> <productId>firefox</productId> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # Set product properties - global
     #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <productId>firefox</productId> <item><name>askbeforeinst</name><value>false</value></item></xml>";
 
     # Set product properties - per host
-    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> <item> <name>askbeforeinst</name> <value>false</value> </item> </xml>";
+    #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> <item> <name>askbeforeinst</name> <value>false</value> </item> </xml>";
 
     # Get hardware inventory
-    #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
     
     # Get software inventory
-    #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # List Opsi clients
     #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Delete Opsi client
-    #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId></xml>";
+    #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
 
     # Install Opsi client
     # Please do always use 'job_...' and never 'gosa_...' otherways the job will never appear in job queue
-    $data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
+    #$data = "<xml> <header>job_opsi_install_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> </xml>";
 
     # Add Opsi client
-    #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <description>Test halt</description> <ip>1.2.3.4</ip> <notes>Im a note</notes> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <description>Test halt</description> <ip>1.2.3.4</ip> <notes>Im a note</notes> </xml>";
 
     # Add product to Opsi client
-    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>limux-cl-2.intranet.gonicus.de</hostId> <productId>winxppro</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>winxppro</productId> </xml>";
 
     # Delete product from Opsi client
-    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>limux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <productId>softprod</productId>  </xml>";
+    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <productId>softprod</productId>  </xml>";
 
 
     #########################
@@ -185,6 +185,11 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_get_dak_keyring</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
     #$data = "<xml> <header>gosa_import_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
     #$data = "<xml> <header>gosa_remove_dak_key</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+
+
+    ##############################
+    # NTP reload
+    $data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
 
     $sock->write($data);
     $answer = "nothing";
