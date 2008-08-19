@@ -1902,7 +1902,7 @@ sub watch_for_old_known_clients {
                 );
 
         $dt->add( seconds => 2 * int($hit->{'keylifetime'}) );
-        $expired_timestamp = $dt->ymd('').$dt->hms('')."\n";
+        $expired_timestamp = $dt->ymd('').$dt->hms('');
         if ($act_time > $expired_timestamp) {
             my $hostname = $hit->{'hostname'};
             my $del_sql = "DELETE FROM $known_clients_tn WHERE hostname='$hostname'"; 
