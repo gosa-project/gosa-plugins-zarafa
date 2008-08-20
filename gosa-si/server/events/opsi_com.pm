@@ -411,17 +411,11 @@ sub opsi_get_netboot_products {
         &add_content2xml_hash($out_hash, "forward_to_gosa", $forward_to_gosa);
     }
 
-    # Sanity check of needed parameter
-    if ((not exists $msg_hash->{'hostId'}) || (@{$msg_hash->{'hostId'}} != 1))  {
-        &add_content2xml_hash($out_hash, "error_string", "no hostId specified or hostId tag invalid");
-        &add_content2xml_hash($out_hash, "error", "hostId");
-        &main::daemon_log("$session_id ERROR: no hostId specified or hostId tag invalid: $msg", 1); 
-        return &create_xml_string($out_hash);
-    }
-
     # Get hostID if defined
-    $hostId = @{$msg_hash->{'hostId'}}[0];
-    &add_content2xml_hash($out_hash, "hostId", $hostId);
+    if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} == 1))  {
+        $hostId = @{$msg_hash->{'hostId'}}[0];
+        &add_content2xml_hash($out_hash, "hostId", $hostId);
+    }
 
     &add_content2xml_hash($out_hash, "xxx", "");
     $xml_msg= &create_xml_string($out_hash);
