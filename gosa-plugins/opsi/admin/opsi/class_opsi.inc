@@ -101,7 +101,7 @@ class opsi extends gosaSupportDaemon
 
     $res    = $this->send_data("gosa_opsi_get_netboot_products",$this->target,$data,TRUE);
     $items  = array();
-    if($res['XML']['ITEM']['PRODUCTID']){
+    if(isset($res['XML']['ITEM']['PRODUCTID'])){
       if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
         $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
         $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
@@ -182,30 +182,78 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function set_product_properties()
+  public function set_product_properties($productId,$cfg,$hostId = "")
   {
-    /* 	<xml> 
-        <header>gosa_opsi_set_product_properties</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <productId>firefox</productId> 
-        <item>
-        <name>askbeforeinst</name>
-        <value>false</value>
-        </item>
-        </xml>
-        <xml> 
-        <header>gosa_opsi_set_product_properties</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        <productId>firefox</productId> 
-        <item> 
-        <name>askbeforeinst</name> 
-        <value>false</value> 
-        </item> 
-        </xml> 
+    $data = array("productId" => $productId);
+
+    /* Append host attribute to query data 
      */
+    if(!empty($hostId)){
+      $data['hostId'] = trim($hostId);
+    }
+   
+    /* Check parameter */ 
+    if(empty($productId)){
+      trigger_error("No valid product id given, check parameter 1.");
+      return(array());
+    }
+
+    if(!count($cfg)) return;
+    
+    /* Add properties */
+    $data['item'] = array();
+    foreach($cfg as $name => $value){
+      $data['item'][] = "<name>".$name."</name><value>".$value."</value>";
+    }  
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_set_product_properties",$this->target,$data,TRUE);
+  }
+
+
+  /*! \brief 		Adds a given product to a client.
+    @param
+    @return 		
+   */
+  public function add_product_to_client($productId,$hostId)
+  {
+    $data = array("productId" => $productId,"hostId" => $hostId);
+
+    /* Check parameter */ 
+    if(empty($productId)){
+      trigger_error("No valid product id given, check parameter 1.");
+      return;
+    }
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 2.");
+      return;
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_add_product_to_client",$this->target,$data,TRUE);
+  }
+
+
+  /*! \brief      Removes a given product from a client.
+    @param
+    @return
+   */
+  public function del_product_from_client($productId,$hostId)
+  {
+    $data = array("productId" => $productId,"hostId" => $hostId);
+
+    /* Check parameter */ 
+    if(empty($productId)){
+      trigger_error("No valid product id given, check parameter 1.");
+      return;
+    }
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 2.");
+      return;
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_del_product_from_client",$this->target,$data,TRUE);
   }
 
 
@@ -239,6 +287,8 @@ class opsi extends gosaSupportDaemon
         </xml> i
      */
   }
+
+
 
 
   /*! \brief 		Returns a list of all opsi clients.
@@ -319,40 +369,6 @@ class opsi extends gosaSupportDaemon
   }
 
 
-  /*! \brief 		Adds a given product to a client.
-    @param
-    @return 		
-   */
-  public function add_product_to_client()
-  {
-    /*  <xml> 
-        <header>gosa_opsi_add_product_to_client</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <macaddress>00:11:25:4b:8c:e5</macaddress> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        <productId>winxppro</productId> 
-        </xml>
-     */
-  }
-
-
-  /*! \brief      Removes a given product from a client.
-    @param
-    @return
-   */
-  public function del_product_from_client()
-  {
-    /* <xml> 
-       <header>gosa_opsi_del_product_from_client</header> 
-       <source>GOSA</source> 
-       <target>00:01:6c:9d:b9:fa</target> 
-       <hostId>limux-cl-1.intranet.gonicus.de</hostId> 
-       <macaddress>00:11:25:4b:8c:e5</macaddress> 
-       <productId>softprod</productId>  
-       </xml>
-     */
-  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

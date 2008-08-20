@@ -1,6 +1,13 @@
 
 <h2>Opsi host</h2>
 
+{if $init_failed}
+
+<font style='color: #FF0000;'>{msgPool type=siError p=$message}</font>
+
+<input type='submit' name='reinit' value="{t}Retry{/t}">
+
+{else}
 
 <table style="width: 100%;">
  <tr>
@@ -29,3 +36,4 @@
  </tr>
 </table> 
 <input type='hidden' name='opsi_generic' value='1'>
+{/if}
