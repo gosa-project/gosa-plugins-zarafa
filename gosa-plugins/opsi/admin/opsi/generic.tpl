@@ -10,6 +10,9 @@
      <td>{t}Boot product{/t}</td>
      <td>
       <select name="opsi_netboot_product">
+		{foreach from=$ANP item=item key=key}
+			<option {if $key == $SNP} selected {/if} value="{$key}">{$key}</option>
+		{/foreach}
       </select>
      </td>
     </tr>
@@ -18,13 +21,11 @@
  </tr>
  <tr>
   <td style="width:50%;"><h2>Installed products</h2>
-   <select size="10" multiple style="width:100%;">
-   </select>
+	{$divSLP}
   </td>
-  <td>&lt;</td>
   <td style="width:50%;"><h2>Available products</h2>
-   <select size="10" multiple style="width:100%;">
-   </select>
+	{$divALP}
   </td>
  </tr>
 </table> 
+<input type='hidden' name='opsi_generic' value='1'>

@@ -18,6 +18,25 @@
  */
 
 
+/********
+
+  __construct($config)
+  get_hosts_for_system_management()
+  get_netboot_products($host = "")
+  get_local_products($host = "")
+  get_product_properties()
+  set_product_properties()
+  get_client_hardware()
+  get_client_software()
+  list_clients()
+  del_client()
+  job_opsi_install_client()
+  add_client()
+  add_product_to_client()
+  del_product_from_client()
+
+ ********/
+
 
 /*! \brief  This is the opsi base class, it handles 
   .          gosa daemon requests and prepares data for opsi plugins.
@@ -83,10 +102,15 @@ class opsi extends gosaSupportDaemon
     $res    = $this->send_data("gosa_opsi_get_netboot_products",$this->target,$data,TRUE);
     $items  = array();
     if($res['XML']['ITEM']['PRODUCTID']){
-    foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
-        $items[$name]['NAME'] = $name;
-        $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
-      }
+      if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
+        $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
+        $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
+      }else{
+        foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+          $items[$name]['NAME'] = $name;
+          $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+        }
+      } 
     }
     return($items);
   }
@@ -109,10 +133,15 @@ class opsi extends gosaSupportDaemon
     $res    = $this->send_data("gosa_opsi_get_local_products",$this->target,$data,TRUE);
     $items  = array();
     if($res['XML']['ITEM']['PRODUCTID']){
-    foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
-        $items[$name]['NAME'] = $name;
-        $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
-      }
+      if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
+        $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
+        $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
+      }else{
+        foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+          $items[$name]['NAME'] = $name;
+          $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+        }
+      } 
     }
     return($items);
   }
@@ -124,23 +153,28 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function get_product_properties()
+  public function get_product_properties($productId,$hostId = "")
   {
-    /*  <xml> 
-        <header>gosa_opsi_get_product_properties</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <productId>firefox</productId>
-        </xml>
-        <xml> 
-        <header>gosa_opsi_get_product_properties</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <productId>firefox</productId> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        </xml>
+    $data = array("productId" => $productId);
+
+    /* Append host attribute to query data 
      */
-    
+    if(!empty($hostId)){
+      $data['hostId'] = trim($hostId);
+    }
+   
+    /* Check parameter */ 
+    if(empty($productId)){
+      trigger_error("No valid product id given, check parameter 1.");
+      return(array());
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_get_product_properties",$this->target,$data,TRUE);
+    if(isset($res['XML']['ITEM'])){   
+      return($res['XML']['ITEM']);
+    }
+    return(array());
   }
 
 
@@ -217,9 +251,14 @@ class opsi extends gosaSupportDaemon
     $res    = $this->send_data("gosa_opsi_list_clients",$this->target,$data,TRUE);
     $items  = array();
     if(isset($res['XML']['ITEM'])){
-      foreach($res['XML']['ITEM'] as $type => $val){
-        foreach($val as $key => $value){
-          $items[$key][$type] = $value;
+      if(!is_array($res['XML']['ITEM']['NAME'])){
+        $obj = $res['XML']['ITEM'];
+        $items[$obj['NAME']] = $obj;
+      }else{
+        foreach($res['XML']['ITEM'] as $type => $val){
+          foreach($val as $key => $value){
+            $items[$key][$type] = $value;
+          }
         }
       }
     }
