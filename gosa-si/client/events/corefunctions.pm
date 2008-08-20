@@ -4,6 +4,7 @@ use Exporter;
 my @events = (
     "get_events",
     "registered",
+    'new_syslog_config',
     "new_ntp_config",
     "new_ldap_config",
     "new_key",
@@ -25,6 +26,7 @@ use File::Basename;
 my ($ldap_enabled, $offline_enabled, $ldap_config, $pam_config, $nss_config, $fai_logpath);
 
 my $chrony_file = "/etc/chrony/chrony.conf";
+my $syslog_file = "/etc/syslog.conf";
 
 my %cfg_defaults = (
     "client" => {
@@ -152,6 +154,63 @@ sub server_leaving {
        
     return;   
 }
+
+
+## @method new_syslog_config
+# Update or add syslog messages forwarding to specified syslog server.
+# @param msg - STRING - xml message with tag server
+# @param msg_hash - HASHREF - message information parsed into a hash
+sub new_syslog_config {
+    my ($msg, $msg_hash) = @_ ;
+
+    # Sanity check of incoming message
+    if ((not exists $msg_hash->{'server'}) || (not @{$msg_hash->{'server'}} == 1) ) {
+        &main::daemon_log("ERROR: 'new_syslog_config'-message does not contain a syslog server: $msg", 1);
+        return;
+    }
+
+    # Fetch the new syslog server from incoming message
+    my $syslog_server = @{$msg_hash->{'server'}}[0];
+    &main::daemon_log("INFO: found syslog server: ".join(", ", $syslog_server), 5); 
+    my $found_server_flag = 0;
+    
+    # Sanity check of /etc/syslog.conf
+    if (not -f $syslog_file) {
+        &main::daemon_log("ERROR: file '$syslog_file' does not exist, cannot do syslog reconfiguration!", 1);
+        return;
+    }
+    
+    # Substitute existing server with new syslog server
+    open (FILE, "<$syslog_file");
+    my @file = <FILE>;
+    close FILE;
+    my $syslog_server_line = "*.*\t@".$syslog_server."\n"; 
+    foreach my $line (@file) {
+        if ($line =~ /^\*\.\*\s+@/) {
+            $line = $syslog_server_line;
+            $found_server_flag++;
+        }
+    }
+    
+    # Append new server if no old server configuration found
+    if (not $found_server_flag) {
+        push(@file, "\n#\n# syslog server configuration written by GOsa-si\n#\n");
+        push(@file, $syslog_server_line);
+    }
+    
+    # Write changes to file and close it
+    open (FILE, "+>$syslog_file");
+    print FILE join("", @file); 
+    close FILE;
+    &main::daemon_log("INFO: wrote new configuration file: $syslog_file", 5);
+
+    # Restart syslog deamon
+    my $res = qx(/etc/init.d/sysklogd restart);
+    &main::daemon_log("INFO: restart syslog daemon: \n$res", 5);
+
+    return;
+}
+
 
 ## @method new_ntp_config
 # Updates the server options in /etc/chrony/chrony.conf and restarts the chrony service

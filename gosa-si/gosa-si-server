@@ -1579,8 +1579,12 @@ sub watch_for_opsi_jobs {
                 }
             }
         
-            # Estimate "rough" progress
-            $result->{'progress'}= int($installed * 100 / $products);
+            # Estimate "rough" progress, avoid division by zero
+            if ($products == 0) {
+                $result->{'progress'}= 0;
+            } else {
+                $result->{'progress'}= int($installed * 100 / $products);
+            }
 
             # Set updates in job queue
             if ((not $error) && (not $installing) && ($installed)) {

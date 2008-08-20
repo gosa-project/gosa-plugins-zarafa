@@ -162,9 +162,16 @@ for($count = 1; $count <= $zahl; $count++)
 
     # Add product to Opsi client
     #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>winxppro</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>preloginloader</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>opsi-adminutils</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>xpconfig</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>hwaudit</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>javavm</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_add_product_to_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <macaddress>00:11:25:4b:8c:e5</macaddress> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>flashplayer</productId> </xml>";
 
     # Delete product from Opsi client
-    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <productId>softprod</productId>  </xml>";
+    #$data = "<xml> <header>gosa_opsi_del_product_from_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-1.intranet.gonicus.de</hostId> <macaddress>00:11:25:4b:8c:e5</macaddress> <productId>wipedisk</productId>  </xml>";
 
 
     #########################
@@ -189,7 +196,11 @@ for($count = 1; $count <= $zahl; $count++)
 
     ##############################
     # NTP reload
-    $data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
+    #$data = "<xml> <header>gosa_trigger_reload_ntp_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:11:25:4B:8C:E5</macaddress> </xml>"; 
+
+    ##############################
+    # SYSLOG reload
+    $data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
 
     $sock->write($data);
     $answer = "nothing";

@@ -582,6 +582,81 @@ sub who_has_i_do {
 }
 
 
+sub new_syslog_config {
+    my ($mac_address, $session_id) = @_;
+    my $syslog_msg;
+
+	# Build LDAP connection
+    my $ldap_handle = &main::get_ldap_handle($session_id);
+	if( not defined $ldap_handle ) {
+		&main::daemon_log("$session_id ERROR: cannot connect to ldap: $ldap_uri", 1);
+		return;
+	}
+
+	# Perform search
+    my $ldap_res = $ldap_handle->search( base   => $ldap_base,
+		scope  => 'sub',
+		attrs => ['gotoSyslogServer'],
+		filter => "(&(objectClass=GOhard)(macaddress=$mac_address))");
+	if($ldap_res->code) {
+		&main::daemon_log("$session_id ".$ldap_res->error, 1);
+		return;
+	}
+
+	# Sanity check
+	if ($ldap_res->count != 1) {
+		&main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not sending syslog config".
+                "\n\tbase: $ldap_base".
+                "\n\tscope: sub".
+                "\n\tattrs: gotoSyslogServer".
+                "\n\tfilter: (&(objectClass=GOhard)(macaddress=$mac_address))", 1);
+		return;
+	}
+
+	my $entry= $ldap_res->entry(0);
+    my $dn = &Net::LDAP::Util::escape_dn_value($entry->dn);
+	my $syslog_server = $entry->get_value("gotoSyslogServer");
+
+    # If no syslog server is specified at host, just have a look at the object group of the host
+    # Perform object group search
+    if (not defined $syslog_server) {
+        my $ldap_res = $ldap_handle->search( base   => $ldap_base,
+                scope  => 'sub',
+                attrs => ['gotoSyslogServer'],
+                filter => "(&(objectClass=gosaGroupOfNames)(member=$dn))");
+        if($ldap_res->code) {
+            &main::daemon_log("$session_id ".$ldap_res->error, 1);
+            return;
+        }
+
+        # Sanity check
+        if ($ldap_res->count != 1) {
+            &main::daemon_log("$session_id ERROR: client with mac address $mac_address not found/unique/active - not sending syslog config".
+                    "\n\tbase: $ldap_base".
+                    "\n\tscope: sub".
+                    "\n\tattrs: gotoSyslogServer".
+                    "\n\tfilter: (&(objectClass=gosaGroupOfNames)(member=$dn))", 1);
+            return;
+        }
+
+        my $entry= $ldap_res->entry(0);
+        $syslog_server= $entry->get_value("gotoSyslogServer");
+    }
+
+    # Return if no syslog server specified
+    if (not defined $syslog_server) {
+        &main::daemon_log("$session_id WARNING: no syslog server specified for this host '$mac_address'", 3);
+        return;
+    }
+ 
+    # Add syslog server to 'syslog_config' message
+    my $syslog_msg_hash = &create_xml_hash("new_syslog_config", $server_address, $mac_address);
+    &add_content2xml_hash($syslog_msg_hash, "server", $syslog_server);
+
+    return &create_xml_string($syslog_msg_hash);
+}
+
+
 sub new_ntp_config {
     my ($address, $session_id) = @_;
     my $ntp_msg;

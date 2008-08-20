@@ -472,7 +472,7 @@ sub opsi_get_netboot_products {
                             my $description= xml_quote($tres->{'description'});
                             $name=~ s/\//\\\//;
                             $description=~ s/\//\\\//;
-                            $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
                         }
                     }
                 }
@@ -495,7 +495,7 @@ sub opsi_get_netboot_products {
                     my $description= xml_quote($tres->{'description'});
                     $name=~ s/\//\\\//;
                     $description=~ s/\//\\\//;
-                    $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
                 }
             }
 
@@ -587,7 +587,7 @@ sub opsi_get_product_properties {
     if (not &check_opsi_res($res)){
         my $r= $res->result;
         foreach my $key (keys %{$r}) {
-            my $item= "<item>";
+            my $item= "\n<item>";
             my $value= $r->{$key};
             if (UNIVERSAL::isa( $value, "ARRAY" )){
                 foreach my $subval (@{$value}){
@@ -768,7 +768,7 @@ sub opsi_get_client_hardware {
         if (not &check_opsi_res($res)){
             my $result= $res->result;
             foreach my $r (keys %{$result}){
-                my $item= "<item><id>".xml_quote($r)."</id>";
+                my $item= "\n<item><id>".xml_quote($r)."</id>";
                 my $value= $result->{$r};
                 foreach my $sres (@{$value}){
 
@@ -1009,7 +1009,7 @@ sub opsi_get_local_products {
                             my $description= xml_quote($tres->{'description'});
                             $name=~ s/\//\\\//;
                             $description=~ s/\//\\\//;
-                            $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
+                            $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item>$state<xxx><\/xxx>/;
                         }
 
                     }
@@ -1033,7 +1033,7 @@ sub opsi_get_local_products {
                     my $description= xml_quote($tres->{'description'});
                     $name=~ s/\//\\\//;
                     $description=~ s/\//\\\//;
-                    $xml_msg=~ s/<xxx><\/xxx>/<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
+                    $xml_msg=~ s/<xxx><\/xxx>/\n<item><productId>$r<\/productId><name><\/name><description>$description<\/description><\/item><xxx><\/xxx>/;
                 }
 
             }
