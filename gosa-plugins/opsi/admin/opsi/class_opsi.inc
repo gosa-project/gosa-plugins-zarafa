@@ -66,6 +66,7 @@ class opsi extends gosaSupportDaemon
 
     $data = array();
     foreach($res as $entry){
+      if(!isset($entry['MAC'])) $entry['MAC'] = "";;
       $data[] = array(
         "dn"          => "opsi:=".$entry['NAME'].",".get_ou("winstations").$this->config->current['BASE'],
         "objectClass" => array("gosa_opsi_client"),

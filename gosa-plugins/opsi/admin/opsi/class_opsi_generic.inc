@@ -240,6 +240,23 @@ class opsi_generic extends plugin
       }   
     }
   }
+
+  /* Return plugin informations for acl handling */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Opsi generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 1,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("opsi" => array("description"  => _("Opsi client"),
+                                                     "objectClass"  => "dummy_class_opsi")),
+          "plProvidedAcls"=> array()
+          ));
+  }
+
 }
 
 
