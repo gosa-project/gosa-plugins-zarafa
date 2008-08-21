@@ -1,6 +1,6 @@
 <?php
 
-class opsi_generic extends plugin
+class opsigeneric extends plugin
 {
   private $opsi;
   private $hostId;  
@@ -26,7 +26,9 @@ class opsi_generic extends plugin
     $this->initially_was_account = TRUE;
   
     /* Get hostId */
-    $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
+    if($hostId != "new"){
+      $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
+    }
   
     /* Try to plugin */
     $this->init();
@@ -48,19 +50,19 @@ class opsi_generic extends plugin
     }
 
     /* Get selected products */
-    if(!$err) {
+    if(!$err && !empty($this->hostId)) {
       $tmp = array_keys($this->opsi->get_netboot_products($this->hostId));
       $this->s_selectedNetbootProduct = $tmp[0];
       $err |= $this->opsi->is_error();
     }
-    if(!$err) {
+    if(!$err && !empty($this->hostId)) {
       $tmp = $this->opsi->get_local_products($this->hostId);  
       $err |= $this->opsi->is_error();
       $this->a_selectedLocalProducts = $tmp;
     }
 
     /* Load product configuration */
-    if(!$err) {
+    if(!$err && !empty($this->hostId)) {
       foreach($this->a_selectedLocalProducts as $name => $data){
         $CFG = $this->opsi->get_product_properties($name,$this->hostId);
         $err |= $this->opsi->is_error();
@@ -205,7 +207,7 @@ class opsi_generic extends plugin
       $this->dialog = NULL;
     }
 
-    if(isset($_POST['opsi_generic'])){
+    if(isset($_POST['opsigeneric'])){
 
       if(isset($_POST['opsi_netboot_product'])){
         $SNP = trim($_POST['opsi_netboot_product']);

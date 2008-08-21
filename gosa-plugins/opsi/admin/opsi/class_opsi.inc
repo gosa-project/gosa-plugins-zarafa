@@ -133,7 +133,7 @@ class opsi extends gosaSupportDaemon
 
     $res    = $this->send_data("gosa_opsi_get_local_products",$this->target,$data,TRUE);
     $items  = array();
-    if($res['XML']['ITEM']['PRODUCTID']){
+    if(isset($res['XML']['ITEM']['PRODUCTID'])){
       if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
         $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
         $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
