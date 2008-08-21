@@ -35,5 +35,5 @@
   </td>
  </tr>
 </table> 
-<input type='hidden' name='opsi_generic' value='1'>
+<input type='hidden' name='opsigeneric' value='1'>
 {/if}
