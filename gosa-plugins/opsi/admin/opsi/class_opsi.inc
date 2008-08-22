@@ -56,6 +56,7 @@ class opsi extends gosaSupportDaemon
     $this->target = "00:01:6c:9d:b9:fa";
   }
 
+
   /******************
     Opsi handling 
    ******************/
@@ -262,15 +263,21 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function get_client_hardware()
+  public function get_client_hardware($hostId)
   {
-    /*	<xml> 
-        <header>gosa_opsi_get_client_hardware</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        </xml> 
-     */
+    $data = array("hostId" => $hostId);
+
+    /* Check parameter */ 
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_get_client_hardware",$this->target,$data,TRUE);
+    if(isset($res['XML']['ITEM'])){
+      #print_a($res['XML']['ITEM']);
+    }
   }
 
 
@@ -354,19 +361,28 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function add_client()
+  public function add_client($hostId,$ip,$macaddress,$notes,$description)
   {
-    /*  <xml> 
-        <header>gosa_opsi_add_client</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        <macaddress>00:11:25:4b:8c:e5</macaddress> 
-        <description>Test halt</description> 
-        <ip>1.2.3.4</ip> 
-        <notes>Im a note</notes> 
-        </xml>
-     */
+    $data = array("hostId" => $hostId,"ip" => $ip,"macaddress" => $macaddress);
+
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+    if(empty($ip)){
+      trigger_error("No valid ip address given, check parameter 2.");
+      return;
+    }
+  
+    /* Add optional attributes */ 
+    foreach(array("notes","description") as $attr) {
+      if(!empty($$attr)){
+        $data[$attr] = $$attr;
+      }
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_add_client",$this->target,$data,TRUE);
   }
 
 

@@ -19,14 +19,16 @@ class opsigeneric extends plugin
 
   private $init_failed = FALSE;
 
+  private $parent_mode = TRUE;
+
   public function __construct($config,$hostId)
   {
     $this->opsi = new opsi($config); 
     $this->is_account =TRUE;
-    $this->initially_was_account = TRUE;
   
     /* Get hostId */
     if($hostId != "new"){
+      $this->initially_was_account = TRUE;
       $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
     }
   
@@ -88,6 +90,15 @@ class opsigeneric extends plugin
     }
   }
 
+  public function check()
+  {
+    $messages = plugin::check();
+    if(!preg_match("/\./",$this->hostId)){
+      $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",_("The client name must contain a domain part (e.g. '.company.de')."));
+    }
+    return($messages);
+  }
+
   public function execute()
   {
     if($this->init_failed){
@@ -98,13 +109,13 @@ class opsigeneric extends plugin
       return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
     }  
 
-
     if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
 
     $smarty = get_smarty();
+    $smarty->assign("parent_mode", $this->parent_mode);
     $smarty->assign("init_failed",FALSE);
     $divSLP = new divSelectBox();
     $divALP = new divSelectBox();
@@ -145,11 +156,11 @@ class opsigeneric extends plugin
       $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
     }
 
+    ksort($this->a_availableNetbootProducts);
+    $smarty->assign("hostId", $this->hostId);
     $smarty->assign("divSLP", $divSLP->DrawList());
     $smarty->assign("divALP", $divALP->DrawList());
     $smarty->assign("SNP", $this->s_selectedNetbootProduct);
-  
-    ksort($this->a_availableNetbootProducts);
     $smarty->assign("ANP", $this->a_availableNetbootProducts);
     return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
   }
@@ -157,6 +168,17 @@ class opsigeneric extends plugin
 
   public function save()
   {
+    /* Check if this a new opsi client 
+        -Do we have to create this client first?
+     */
+    if(!$this->initially_was_account && $this->is_account){
+      $res = $this->opsi->add_client($this->hostId,"0.0.0.0","00:00:00:00:00:00","Hallo","TZ");
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+        return;
+      }
+    }
+
     $add = array_diff_assoc($this->a_selectedLocalProducts,$this->a_initial_selectedLocalProducts);
     $del = array_diff_assoc($this->a_initial_selectedLocalProducts,$this->a_selectedLocalProducts);
 
@@ -190,7 +212,7 @@ class opsigeneric extends plugin
 
   public function save_object()
   {
-    if(isset($_POST['reinit'])){
+    if(isset($_POST['reinit']) && $this->init_failed){
       $this->init();
     }
 
@@ -207,7 +229,11 @@ class opsigeneric extends plugin
       $this->dialog = NULL;
     }
 
-    if(isset($_POST['opsigeneric'])){
+    if(isset($_POST['opsigeneric_posted'])){
+
+      if(isset($_POST['hostId']) && $this->parent_mode){
+        $this->hostId = get_post('hostId');
+      }
 
       if(isset($_POST['opsi_netboot_product'])){
         $SNP = trim($_POST['opsi_netboot_product']);

@@ -13,6 +13,12 @@
  <tr>
   <td colspan="2">
    <table>
+    {if $parent_mode}
+     <tr>
+      <td>{t}Name{/t}</td>
+      <td><input type='text' name='hostId' value='{$hostId}'></td>
+     </tr>
+    {/if}
     <tr>
      <td>{t}Boot product{/t}</td>
      <td>
@@ -35,5 +41,5 @@
   </td>
  </tr>
 </table> 
-<input type='hidden' name='opsigeneric' value='1'>
+<input type='hidden' name='opsigeneric_posted' value='1'>
 {/if}
