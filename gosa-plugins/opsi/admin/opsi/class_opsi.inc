@@ -44,6 +44,7 @@
 class opsi extends gosaSupportDaemon 
 {
   private $config = NULL;
+  protected $use_alternative_xml_parse_method = TRUE;
 
   /*! \brief 		Create opsi object.
     @param
@@ -67,20 +68,26 @@ class opsi extends gosaSupportDaemon
 
     $data = array();
     foreach($res as $entry){
-      if(!isset($entry['MAC'])) $entry['MAC'] = "";;
+      if(!isset($entry['MAC'][0]['VALUE'])) $entry['MAC'][0]['VALUE'] = "";
       $data[] = array(
-        "dn"          => "opsi:=".$entry['NAME'].",".get_ou("winstations").$this->config->current['BASE'],
+        "dn"          => "opsi:=".$entry['NAME'][0]['VALUE'].",".get_ou("winstations").$this->config->current['BASE'],
         "objectClass" => array("gosa_opsi_client"),
-        "cn"          => array(0 => $entry['NAME']),
-        "description" => array(0 => $entry['DESCRIPTION']),
-        "macAddress"  => array(0 => $entry['MAC']),
-        "opsi_notes"  => array(0 => $entry['NOTES']));
+        "cn"          => array(0 => $entry['NAME'][0]['VALUE']),
+        "description" => array(0 => $entry['DESCRIPTION'][0]['VALUE']),
+        "macAddress"  => array(0 => $entry['MAC'][0]['VALUE']),
+        "opsi_notes"  => array(0 => $entry['NOTES'][0]['VALUE']));
         
     }
   
     return($data);
   }
 
+
+  private function xml_to_array($xml,$alternative_method = FALSE)
+  {
+    echo "asd";
+    return(gosaSupportDaemon::xml_to_array($xml,TRUE));
+  }
 
   /******************
     SI Communication functions
@@ -103,14 +110,14 @@ class opsi extends gosaSupportDaemon
 
     $res    = $this->send_data("gosa_opsi_get_netboot_products",$this->target,$data,TRUE);
     $items  = array();
-    if(isset($res['XML']['ITEM']['PRODUCTID'])){
-      if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
-        $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
-        $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
+    if(isset($res['XML'][0]['ITEM']['PRODUCTID'])){
+      if(!is_array($res['XML'][0]['ITEM']['PRODUCTID'])){
+        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['NAME'] = $res['XML'][0]['ITEM']['PRODUCTID'];
+        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'];
       }else{
-        foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+        foreach($res['XML'][0]['ITEM']['PRODUCTID'] as $id => $name){
           $items[$name]['NAME'] = $name;
-          $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+          $items[$name]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'][$id];
         }
       } 
     }
@@ -134,14 +141,14 @@ class opsi extends gosaSupportDaemon
 
     $res    = $this->send_data("gosa_opsi_get_local_products",$this->target,$data,TRUE);
     $items  = array();
-    if(isset($res['XML']['ITEM']['PRODUCTID'])){
-      if(!is_array($res['XML']['ITEM']['PRODUCTID'])){
-        $items[$res['XML']['ITEM']['PRODUCTID']]['NAME'] = $res['XML']['ITEM']['PRODUCTID'];
-        $items[$res['XML']['ITEM']['PRODUCTID']]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'];
+    if(isset($res['XML'][0]['ITEM']['PRODUCTID'])){
+      if(!is_array($res['XML'][0]['ITEM']['PRODUCTID'])){
+        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['NAME'] = $res['XML'][0]['ITEM']['PRODUCTID'];
+        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'];
       }else{
-        foreach($res['XML']['ITEM']['PRODUCTID'] as $id => $name){
+        foreach($res['XML'][0]['ITEM']['PRODUCTID'] as $id => $name){
           $items[$name]['NAME'] = $name;
-          $items[$name]['DESC'] = $res['XML']['ITEM']['DESCRIPTION'][$id];
+          $items[$name]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'][$id];
         }
       } 
     }
@@ -173,8 +180,8 @@ class opsi extends gosaSupportDaemon
 
     /* Query SI server */
     $res    = $this->send_data("gosa_opsi_get_product_properties",$this->target,$data,TRUE);
-    if(isset($res['XML']['ITEM'])){   
-      return($res['XML']['ITEM']);
+    if(isset($res['XML'][0]['ITEM'])){   
+      return($res['XML'][0]['ITEM']);
     }
     return(array());
   }
@@ -275,9 +282,7 @@ class opsi extends gosaSupportDaemon
 
     /* Query SI server */
     $res    = $this->send_data("gosa_opsi_get_client_hardware",$this->target,$data,TRUE);
-    if(isset($res['XML']['ITEM'])){
-      #print_a($res['XML']['ITEM']);
-    }
+    print_a($res);
   }
 
 
@@ -308,17 +313,8 @@ class opsi extends gosaSupportDaemon
     $data   = array();
     $res    = $this->send_data("gosa_opsi_list_clients",$this->target,$data,TRUE);
     $items  = array();
-    if(isset($res['XML']['ITEM'])){
-      if(!is_array($res['XML']['ITEM']['NAME'])){
-        $obj = $res['XML']['ITEM'];
-        $items[$obj['NAME']] = $obj;
-      }else{
-        foreach($res['XML']['ITEM'] as $type => $val){
-          foreach($val as $key => $value){
-            $items[$key][$type] = $value;
-          }
-        }
-      }
+    if(isset($res['XML'][0]['ITEM'])){
+      $items = $res['XML'][0]['ITEM'];
     }
     return($items);
   }
