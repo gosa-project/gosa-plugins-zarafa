@@ -76,18 +76,20 @@ class opsi extends gosaSupportDaemon
         "description" => array(0 => $entry['DESCRIPTION'][0]['VALUE']),
         "macAddress"  => array(0 => $entry['MAC'][0]['VALUE']),
         "opsi_notes"  => array(0 => $entry['NOTES'][0]['VALUE']));
-        
     }
-  
     return($data);
   }
 
 
+  /*! \brief  Maps all xml to array conversion to an alternative method
+                then used in the parent class 'gosaSupportDaemon'.
+              The alternative method is able to handle more complex data.
+   */
   private function xml_to_array($xml,$alternative_method = FALSE)
   {
-    echo "asd";
     return(gosaSupportDaemon::xml_to_array($xml,TRUE));
   }
+
 
   /******************
     SI Communication functions
@@ -100,26 +102,21 @@ class opsi extends gosaSupportDaemon
    */
   public function get_netboot_products($host = "")
   {
-    $data = array();
-
     /* Append host attribute to query data 
      */
+    $data = array();
     if(!empty($host)){
       $data['hostId'] = trim($host);
     }
 
     $res    = $this->send_data("gosa_opsi_get_netboot_products",$this->target,$data,TRUE);
-    $items  = array();
-    if(isset($res['XML'][0]['ITEM']['PRODUCTID'])){
-      if(!is_array($res['XML'][0]['ITEM']['PRODUCTID'])){
-        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['NAME'] = $res['XML'][0]['ITEM']['PRODUCTID'];
-        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'];
-      }else{
-        foreach($res['XML'][0]['ITEM']['PRODUCTID'] as $id => $name){
-          $items[$name]['NAME'] = $name;
-          $items[$name]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'][$id];
-        }
-      } 
+    $items = array();
+    if(isset($res['XML'][0]['ITEM'])){
+      foreach($res['XML'][0]['ITEM'] as $entry){
+        $e = array("DESC" => $entry['DESCRIPTION'][0]['VALUE'],
+                   "NAME" => $entry['PRODUCTID'][0]['VALUE']);
+        $items[$entry['PRODUCTID'][0]['VALUE']] = $e;
+      }
     }
     return($items);
   }
@@ -131,26 +128,21 @@ class opsi extends gosaSupportDaemon
    */
   public function get_local_products($host = "")
   {
-    $data = array();
-
     /* Append host attribute to query data 
      */
+    $data = array();
     if(!empty($host)){
       $data['hostId'] = trim($host);
     }
 
     $res    = $this->send_data("gosa_opsi_get_local_products",$this->target,$data,TRUE);
-    $items  = array();
-    if(isset($res['XML'][0]['ITEM']['PRODUCTID'])){
-      if(!is_array($res['XML'][0]['ITEM']['PRODUCTID'])){
-        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['NAME'] = $res['XML'][0]['ITEM']['PRODUCTID'];
-        $items[$res['XML'][0]['ITEM']['PRODUCTID']]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'];
-      }else{
-        foreach($res['XML'][0]['ITEM']['PRODUCTID'] as $id => $name){
-          $items[$name]['NAME'] = $name;
-          $items[$name]['DESC'] = $res['XML'][0]['ITEM']['DESCRIPTION'][$id];
-        }
-      } 
+    $items = array();
+    if(isset($res['XML'][0]['ITEM'])){
+      foreach($res['XML'][0]['ITEM'] as $entry){
+        $e = array("DESC" => $entry['DESCRIPTION'][0]['VALUE'],
+                   "NAME" => $entry['PRODUCTID'][0]['VALUE']);
+        $items[$entry['PRODUCTID'][0]['VALUE']] = $e; 
+      }
     }
     return($items);
   }
@@ -180,10 +172,15 @@ class opsi extends gosaSupportDaemon
 
     /* Query SI server */
     $res    = $this->send_data("gosa_opsi_get_product_properties",$this->target,$data,TRUE);
+    $items  = array();
     if(isset($res['XML'][0]['ITEM'])){   
-      return($res['XML'][0]['ITEM']);
+      foreach($res['XML'][0]['ITEM'] as $entry){
+        foreach($entry as $name => $val){
+          $items[$name] = $val['0']['VALUE'];
+        }
+      }
     }
-    return(array());
+    return($items);
   }
 
 

@@ -54,11 +54,13 @@ class opsigeneric extends plugin
     /* Get selected products */
     if(!$err && !empty($this->hostId)) {
       $tmp = array_keys($this->opsi->get_netboot_products($this->hostId));
-      $this->s_selectedNetbootProduct = $tmp[0];
+      if(count($tmp)){
+        $this->s_selectedNetbootProduct = $tmp[0];
+      }
       $err |= $this->opsi->is_error();
     }
     if(!$err && !empty($this->hostId)) {
-      $tmp = $this->opsi->get_local_products($this->hostId);  
+      $tmp = $this->opsi->get_local_products($this->hostId); 
       $err |= $this->opsi->is_error();
       $this->a_selectedLocalProducts = $tmp;
     }
@@ -184,10 +186,22 @@ class opsigeneric extends plugin
 
     foreach($del as $name => $data){
       $this->opsi->del_product_from_client($name,$this->hostId);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+        return;
+      }
     }
     foreach($add as $name => $data){
       $this->opsi->add_product_to_client($name,$this->hostId);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+        return;
+      }
       $this->opsi->set_product_properties($name,$data['CFG'],$this->hostId);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+        return;
+      }
     }
 
     foreach($this->a_selectedLocalProducts as $name => $data){
@@ -195,13 +209,25 @@ class opsigeneric extends plugin
       $diff = array_diff($data['CFG'],$this->a_initial_selectedLocalProducts[$name]['CFG']);
       if(count($diff)){
         $this->opsi->set_product_properties($name,$diff,$this->hostId);
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+          return;
+        }
       }
     }
-  
+
     if($this->s_selectedNetbootProduct != $this->s_initial_selectedNetbootProduct){
       if(!empty($this->s_initial_selectedNetbootProduct)){
         $this->opsi->del_product_from_client($this->s_initial_selectedNetbootProduct,$this->hostId);
-        $this->opsi->add_product_to_client($this->s_selectedNetbootProduct,$this->hostId);
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+          return;
+        }
+      }
+      $this->opsi->add_product_to_client($this->s_selectedNetbootProduct,$this->hostId);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+        return;
       }
     }
   }
