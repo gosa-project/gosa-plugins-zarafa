@@ -21,6 +21,12 @@ class opsigeneric extends plugin
 
   private $parent_mode = TRUE;
 
+  public $mac          = "";
+  public $note         = "";
+  public $description  = "";
+
+  public $attributes = array("mac","note","description");
+
   public function __construct($config,$hostId)
   {
     $this->opsi = new opsi($config); 
@@ -40,6 +46,19 @@ class opsigeneric extends plugin
   {
     $err = FALSE;
     $this->init_failed = FALSE;
+
+    if($this->hostId != "new"){
+      $list = $this->opsi->list_clients($this->hostId);
+      foreach($list as $entry){
+        if($entry['NAME'][0]['VALUE'] == $this->hostId){  
+          foreach(array("description" => "DESCRIPTION","mac" => "MAC", "note" => "NOTES") as $des => $src){
+            $this->$des = $entry[$src][0]['VALUE'];
+          } 
+
+          break;
+        }
+      }
+    }
 
     /* Get product settings */     
     if(!$err){
@@ -98,13 +117,15 @@ class opsigeneric extends plugin
     if(!preg_match("/\./",$this->hostId)){
       $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",_("The client name must contain a domain part (e.g. '.company.de')."));
     }
+    if(!tests::is_mac($this->mac)){
+      $messages[] = msgPool::invalid(_("MAC address"),$this->mac,"","00:0C:7F:31:33:F1");
+    }
     return($messages);
   }
 
   public function execute()
   {
     if($this->init_failed){
-      
       $smarty = get_smarty();
       $smarty->assign("init_failed",TRUE);
       $smarty->assign("message",$this->opsi->get_error());
@@ -117,6 +138,11 @@ class opsigeneric extends plugin
     }
 
     $smarty = get_smarty();
+
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr,$this->$attr);
+    }
+
     $smarty->assign("parent_mode", $this->parent_mode);
     $smarty->assign("init_failed",FALSE);
     $divSLP = new divSelectBox();
@@ -174,11 +200,16 @@ class opsigeneric extends plugin
         -Do we have to create this client first?
      */
     if(!$this->initially_was_account && $this->is_account){
-      $res = $this->opsi->add_client($this->hostId,"0.0.0.0","00:00:00:00:00:00","Hallo","TZ");
+      $res = $this->opsi->add_client($this->hostId,$this->mac,$this->note,$this->description);
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
         return;
       }
+    }
+    $this->opsi->modify_client($this->hostId,$this->mac,$this->note,$this->description);
+    if($this->opsi->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      return;
     }
 
     $add = array_diff_assoc($this->a_selectedLocalProducts,$this->a_initial_selectedLocalProducts);
@@ -256,6 +287,8 @@ class opsigeneric extends plugin
     }
 
     if(isset($_POST['opsigeneric_posted'])){
+
+      plugin::save_object();
 
       if(isset($_POST['hostId']) && $this->parent_mode){
         $this->hostId = get_post('hostId');
