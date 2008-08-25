@@ -866,8 +866,7 @@ class printgeneric extends plugin
 
       /* Remove empty values */ 
       foreach($this->attrs as $name => $value){
-        $value = trim($value);
-        if($value == ""){
+        if(empty($value)){
           unset($this->attrs[$name]);
         }
       }
