@@ -49,12 +49,12 @@ class opsigeneric extends plugin
 
     if($this->hostId != "new"){
       $list = $this->opsi->list_clients($this->hostId);
+      $err |= $this->opsi->is_error();
       foreach($list as $entry){
         if($entry['NAME'][0]['VALUE'] == $this->hostId){  
           foreach(array("description" => "DESCRIPTION","mac" => "MAC", "note" => "NOTES") as $des => $src){
             $this->$des = $entry[$src][0]['VALUE'];
           } 
-
           break;
         }
       }

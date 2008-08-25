@@ -96,6 +96,74 @@ class opsi extends gosaSupportDaemon
    ******************/
 
 
+
+  /*! \brief 		Returns a list of all opsi clients.
+    @param
+    @return 		
+   */
+  public function list_clients( $hostId = "")
+  {
+    $data   = array();
+    $res    = $this->send_data("gosa_opsi_list_clients",$this->target,$data,TRUE);
+    $items  = array();
+    if(isset($res['XML'][0]['ITEM'])){
+      $items = $res['XML'][0]['ITEM'];
+    }
+    return($items);
+  }
+
+
+  /*! \brief 		Adds a new opsi client.
+    @param
+    @return 		
+   */
+  public function add_client($hostId,$macaddress,$notes,$description)
+  {
+    $data = array("hostId" => $hostId,"macaddress" => $macaddress);
+
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+  
+    /* Add optional attributes */ 
+    foreach(array("notes","description") as $attr) {
+      if(!empty($$attr)){
+        $data[$attr] = $$attr;
+      }
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_add_client",$this->target,$data,TRUE);
+  }
+
+
+  /*! \brief 		Modify an opsi client.
+    @param
+    @return 		
+   */
+  public function modify_client($hostId,$mac,$notes,$description)
+  {
+    $data = array("hostId" => $hostId,"mac" => $mac);
+
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+  
+    /* Add optional attributes */ 
+    foreach(array("notes","description") as $attr) {
+      if(!empty($$attr)){
+        $data[$attr] = $$attr;
+      }
+    }
+
+    /* Query SI server */
+    $res = $this->send_data("gosa_opsi_modify_client",$this->target,$data,TRUE);
+  }
+
+
+
   /*! \brief 		Returns a list of netboot products.
     @param
     @return 		
@@ -279,7 +347,10 @@ class opsi extends gosaSupportDaemon
 
     /* Query SI server */
     $res    = $this->send_data("gosa_opsi_get_client_hardware",$this->target,$data,TRUE);
-    print_a($res);
+    if(isset($res['XML'][0]['ITEM'])){
+      return($res['XML'][0]['ITEM']);
+    }
+    return(array());
   }
 
 
@@ -287,34 +358,24 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function get_client_software()
+  public function get_client_software($hostId)
   {
-    /*  <xml> 
-        <header>gosa_opsi_get_client_software</header> 
-        <source>GOSA</source> 
-        <target>GOSA</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        </xml> i
-     */
-  }
+    $data = array("hostId" => $hostId);
 
-
-
-
-  /*! \brief 		Returns a list of all opsi clients.
-    @param
-    @return 		
-   */
-  public function list_clients( $hostId = "")
-  {
-    $data   = array();
-    $res    = $this->send_data("gosa_opsi_list_clients",$this->target,$data,TRUE);
-    $items  = array();
-    if(isset($res['XML'][0]['ITEM'])){
-      $items = $res['XML'][0]['ITEM'];
+    /* Check parameter */ 
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
     }
-    return($items);
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_get_client_software",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ITEM'])){
+      return($res['XML'][0]['ITEM']);
+    }
+    return(array());
   }
+
 
 
   /*! \brief 		Deletes the given opsi client.
@@ -348,58 +409,6 @@ class opsi extends gosaSupportDaemon
         </xml>
      */
   }
-
-
-  /*! \brief 		Adds a new opsi client.
-    @param
-    @return 		
-   */
-  public function add_client($hostId,$macaddress,$notes,$description)
-  {
-    $data = array("hostId" => $hostId,"macaddress" => $macaddress);
-
-    if(empty($hostId)){
-      trigger_error("No valid host id given, check parameter 1.");
-      return;
-    }
-  
-    /* Add optional attributes */ 
-    foreach(array("notes","description") as $attr) {
-      if(!empty($$attr)){
-        $data[$attr] = $$attr;
-      }
-    }
-
-    /* Query SI server */
-    $res    = $this->send_data("gosa_opsi_add_client",$this->target,$data,TRUE);
-  }
-
-
-  /*! \brief 		Modify an opsi client.
-    @param
-    @return 		
-   */
-  public function modify_client($hostId,$mac,$notes,$description)
-  {
-    $data = array("hostId" => $hostId,"mac" => $mac);
-
-    if(empty($hostId)){
-      trigger_error("No valid host id given, check parameter 1.");
-      return;
-    }
-  
-    /* Add optional attributes */ 
-    foreach(array("notes","description") as $attr) {
-      if(!empty($$attr)){
-        $data[$attr] = $$attr;
-      }
-    }
-
-    /* Query SI server */
-    $res    = $this->send_data("gosa_opsi_modify_client",$this->target,$data,TRUE);
-  }
-
-
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
