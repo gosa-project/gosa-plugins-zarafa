@@ -206,7 +206,7 @@ sub new_syslog_config {
 
     # Restart syslog deamon
     my $res = qx(/etc/init.d/sysklogd restart);
-    &main::daemon_log("INFO: restart syslog daemon: \n$res", 5);
+    &main::daemon_log("INFO: restart syslog daemon: $res", 5);
 
     return;
 }

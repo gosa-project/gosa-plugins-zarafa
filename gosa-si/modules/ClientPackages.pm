@@ -516,10 +516,15 @@ sub here_i_am {
 	}
 
     # Send client ntp server
-
     my $ntp_config_out = &new_ntp_config($mac_address, $session_id);
     if ($ntp_config_out) {
         push(@out_msg_l, $ntp_config_out);
+    }
+
+    # Send client syslog server
+    my $syslog_config_out = &new_syslog_config($mac_address, $session_id);
+    if ($syslog_config_out) {
+        push(@out_msg_l, $syslog_config_out);
     }
 
     # notify registered client to all other server
