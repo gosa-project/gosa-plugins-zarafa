@@ -828,12 +828,15 @@ sub opsi_list_clients {
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
     if (not &check_opsi_res($res)){
         foreach my $host (@{$res->result}){
-            my $item= "<item><name>".$host->{'hostId'}."</name>";
+            my $item= "\n<item><name>".$host->{'hostId'}."</name>";
             if (defined($host->{'description'})){
                 $item.= "<description>".xml_quote($host->{'description'})."</description>";
             }
             if (defined($host->{'notes'})){
                 $item.= "<notes>".xml_quote($host->{'notes'})."</notes>";
+            }
+            if (defined($host->{'lastSeen'})){
+                $item.= "<lastSeen>".xml_quote($host->{'lastSeen'})."</lastSeen>";
             }
 
             $callobj = {

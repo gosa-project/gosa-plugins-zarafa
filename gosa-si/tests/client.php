@@ -142,14 +142,14 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_set_product_properties</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> <productId>firefox</productId> <item> <name>askbeforeinst</name> <value>false</value> </item> </xml>";
 
     # Get hardware inventory
-    $data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
     #$data = "<xml> <header>gosa_opsi_get_client_hardware</header> <source>GOSA</source> <target>GOSA</target> <hostId>der_neue.intranet.gonicus.de</hostId> </xml>";
     
     # Get software inventory
     #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # List Opsi clients
-    #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    $data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Delete Opsi client
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
