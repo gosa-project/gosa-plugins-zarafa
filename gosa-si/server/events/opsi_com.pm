@@ -767,21 +767,24 @@ sub opsi_get_client_hardware {
         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
         if (not &check_opsi_res($res)){
             my $result= $res->result;
-            foreach my $r (keys %{$result}){
-                my $item= "\n<item><id>".xml_quote($r)."</id>";
-                my $value= $result->{$r};
-                foreach my $sres (@{$value}){
+print STDERR Dumper($result);   
+            if (ref $result eq "HASH") {
+                foreach my $r (keys %{$result}){
+                    my $item= "\n<item><id>".xml_quote($r)."</id>";
+                    my $value= $result->{$r};
+                    foreach my $sres (@{$value}){
 
-                    foreach my $dres (keys %{$sres}){
-                        if (defined $sres->{$dres}){
-                            $item.= "<$dres>".xml_quote($sres->{$dres})."</$dres>";
+                        foreach my $dres (keys %{$sres}){
+                            if (defined $sres->{$dres}){
+                                $item.= "<$dres>".xml_quote($sres->{$dres})."</$dres>";
+                            }
                         }
+
                     }
+                    $item.= "</item>";
+                    $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
 
                 }
-                $item.= "</item>";
-                $xml_msg=~ s%<xxx></xxx>%$item<xxx></xxx>%;
-
             }
         }
 
