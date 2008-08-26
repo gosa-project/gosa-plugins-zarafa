@@ -767,7 +767,6 @@ sub opsi_get_client_hardware {
         my $res = $main::opsi_client->call($main::opsi_url, $callobj);
         if (not &check_opsi_res($res)){
             my $result= $res->result;
-print STDERR Dumper($result);   
             if (ref $result eq "HASH") {
                 foreach my $r (keys %{$result}){
                     my $item= "\n<item><id>".xml_quote($r)."</id>";
