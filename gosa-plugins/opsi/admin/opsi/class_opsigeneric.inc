@@ -118,7 +118,7 @@ class opsigeneric extends plugin
     if(!preg_match("/\./",$this->hostId)){
       $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",_("The client name must contain a domain part (e.g. '.company.de')."));
     }
-    if(!tests::is_mac($this->mac)){
+    if(!tests::is_mac($this->mac) || empty($this->mac)){
       $messages[] = msgPool::invalid(_("MAC address"),$this->mac,"","00:0C:7F:31:33:F1");
     }
     return($messages);
@@ -307,7 +307,7 @@ class opsigeneric extends plugin
       if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->parent_mode){
         $action = $_POST['opsi_action'];
         if(in_array($action,array("wake","install"))){
-          $this->opsi->send_action($action,$this->hostId);
+          $this->opsi->send_action($action,$this->hostId,$this->mac);
           if($this->opsi->is_error()){
             msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
           }

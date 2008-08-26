@@ -92,11 +92,10 @@ class opsi extends gosaSupportDaemon
 
   /*! \brief  Trigger an event like wake or install for a specific hostId. 
    */
-  public function send_action($type,$hostId)
+  public function send_action($type,$hostId,$mac)
   {
     switch($type){
-      case 'install'  :  $this->job_opsi_install_client($hostId); break;
-      case 'wake'     :  $this->job_opsi_wake_client($hostId); break;
+      case 'install'  :  $this->job_opsi_install_client($hostId,$mac); break;
       default         :  trigger_error('Unknown type '.$type.'.');
     }
   }
@@ -416,9 +415,9 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function job_opsi_install_client($hostId)
+  public function job_opsi_install_client($hostId,$mac)
   {
-    $data = array("hostId" => $hostId);
+    $data = array("hostId" => $hostId,"macaddress"=>$mac);
 
     /* Check parameter */ 
     if(empty($hostId)){
@@ -428,25 +427,6 @@ class opsi extends gosaSupportDaemon
 
     /* Query SI server */
     $this->send_data("job_opsi_install_client",$this->target,$data,TRUE);
-  }
-
-
-  /*! \brief 		Triggers install/reinstall of an opsi client.
-    @param
-    @return 		
-   */
-  public function job_opsi_wake_client($hostId)
-  {
-    $data = array("hostId" => $hostId);
-
-    /* Check parameter */ 
-    if(empty($hostId)){
-      trigger_error("No valid host id given, check parameter 1.");
-      return;
-    }
-
-    /* Query SI server */
-    $this->send_data("job_opsi_wake_client",$this->target,$data,TRUE);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
