@@ -302,6 +302,18 @@ class opsigeneric extends plugin
         $this->hostId = get_post('hostId');
       }
 
+      /* Send actions like 'install' or 'wake' to the si server 
+       */
+      if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->parent_mode){
+        $action = $_POST['opsi_action'];
+        if(in_array($action,array("wake","install"))){
+          $this->opsi->send_action($action,$this->hostId);
+          if($this->opsi->is_error()){
+            msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+          }
+        }
+      }
+
       if(isset($_POST['opsi_netboot_product'])){
         $SNP = trim($_POST['opsi_netboot_product']);
         if(isset($this->a_availableNetbootProducts[$SNP])){
@@ -335,6 +347,13 @@ class opsigeneric extends plugin
       }   
     }
   }
+
+
+  function install_client()
+  {
+
+  }
+
 
   /* Return plugin informations for acl handling */
   static function plInfo()
