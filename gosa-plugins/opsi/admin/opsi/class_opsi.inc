@@ -65,7 +65,6 @@ class opsi extends gosaSupportDaemon
   function get_hosts_for_system_management()
   {
     $res = $this->list_clients();
-
     $data = array();
     foreach($res as $entry){
       if(!isset($entry['MAC'][0]['VALUE'])) $entry['MAC'][0]['VALUE'] = "";
@@ -382,15 +381,22 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function del_client()
+  public function del_client($hostId)
   {
-    /*  <xml> 
-        <header>gosa_opsi_del_client</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId>
-        </xml>
-     */
+    $data = array("hostId" => $hostId);
+
+    /* Check parameter */ 
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("gosa_opsi_del_client",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ITEM'])){
+      return($res['XML'][0]['ITEM']);
+    }
+    return(array());
   }
 
 
@@ -398,16 +404,22 @@ class opsi extends gosaSupportDaemon
     @param
     @return 		
    */
-  public function job_opsi_install_client()
+  public function job_opsi_install_client($hostId)
   {
-    /*  <xml> 
-        <header>job_opsi_install_client</header> 
-        <source>GOSA</source> 
-        <target>00:01:6c:9d:b9:fa</target> 
-        <hostId>limux-cl-2.intranet.gonicus.de</hostId> 
-        <macaddress>00:11:25:4b:8c:e5</macaddress> 
-        </xml>
-     */
+    $data = array("hostId" => $hostId);
+
+    /* Check parameter */ 
+    if(empty($hostId)){
+      trigger_error("No valid host id given, check parameter 1.");
+      return;
+    }
+
+    /* Query SI server */
+    $res    = $this->send_data("job_opsi_install_client",$this->target,$data,TRUE);
+    if(isset($res['XML'][0]['ITEM'])){
+      return($res['XML'][0]['ITEM']);
+    }
+    return(array());
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

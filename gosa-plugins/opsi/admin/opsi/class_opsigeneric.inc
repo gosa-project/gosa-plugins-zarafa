@@ -20,6 +20,7 @@ class opsigeneric extends plugin
   private $init_failed = FALSE;
 
   private $parent_mode = TRUE;
+  private $is_installed = FALSE;
 
   public $mac          = "";
   public $note         = "";
@@ -144,6 +145,7 @@ class opsigeneric extends plugin
     }
 
     $smarty->assign("parent_mode", $this->parent_mode);
+    $smarty->assign("is_installed", $this->is_installed);
     $smarty->assign("init_failed",FALSE);
     $divSLP = new divSelectBox();
     $divALP = new divSelectBox();
@@ -264,7 +266,13 @@ class opsigeneric extends plugin
   }
 
   public function remove_from_parent()
-  {}
+  {
+    $this->opsi->del_client($this->hostId);
+    if($this->opsi->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      return;
+    }
+  }
 
 
   public function save_object()
