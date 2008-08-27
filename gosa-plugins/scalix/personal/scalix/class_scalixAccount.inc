@@ -20,8 +20,12 @@ class scalixAccount extends plugin
   /* MUST */
   var $scalixScalixObject= TRUE; //TRUE or FALSE
   var $scalixMailnode= "";
-  /* INDIRECT MUST, scalix will complain if no email was specified */
+
+  /* Indicates whether we have a scalix group or a sclix user account 
+   */
+	var $scalixGroup = FALSE;
   
+  /* INDIRECT MUST, scalix will complain if no email was specified */
   /* MAY */
   var $scalixAdministrator= FALSE;
   var $scalixMailboxAdministrator = FALSE;
@@ -104,6 +108,7 @@ class scalixAccount extends plugin
 
     /* Load templating engine */
     $smarty= get_smarty();
+    $smarty->assign("scalixGroup",$this->scalixGroup);
     $display= "";
 
     /* Do we need to flip is_account state? */

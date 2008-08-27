@@ -22,6 +22,7 @@
 {/render}
      </td>
     </tr>
+{if !$calixGroup}
     <tr>
      <td><label for="scalixServerLanguage">{t}Scalix server language{/t}</label></td>
      <td>
@@ -115,6 +116,7 @@
 {/render}
   </td>
  </tr>
+{/if}
 </table>
 
 <input type="hidden" name="scalixTab" value="scalixTab">
