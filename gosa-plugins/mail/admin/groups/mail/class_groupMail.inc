@@ -72,6 +72,9 @@ class mailgroup extends plugin
     /* Initialise all available attributes ... if possible
      */
     plugin::plugin($config, $dn);
+    if (isset($this->attrs['cn'][0])){
+      $this->uid = $this->cn = $this->attrs['cn'][0];
+    }
     $this->orig_cn = $this->cn;
 
     /* Set mailMethod to the one defined in gosa.conf 
