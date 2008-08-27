@@ -117,7 +117,12 @@ class mailgroup extends plugin
     /* Build account name 
      */
     $uattrib = $method->uattrib;
+
+    /* Map uid to cn, because we are in a group currently */
+    if($uattrib == "uid") $uattrib ="cn"; 
+ 
     if (isset($this->attrs[$uattrib][0])){
+  
       $this->account_name= $this->attrs[$uattrib][0];
       if(preg_match("/@/",$this->account_name)){
         $cn = "";
