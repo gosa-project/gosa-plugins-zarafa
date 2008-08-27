@@ -2,6 +2,7 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
+<!-- Hide user specific attributes when in group mode. -->
    <table summary="">
     <tr>
      <td><label for="scalixMailnode">{t}Scalix mailnode{/t}</label>{$must}</td>
@@ -11,6 +12,7 @@
 {/render}
 	 </td>
     </tr>
+{if !$scalixGroup}
     <tr>
      <td><label for="scalixMailboxClass">{t}Salix mailbox class{/t}</label></td>
      <td>
@@ -22,7 +24,8 @@
 {/render}
      </td>
     </tr>
-{if !$calixGroup}
+
+
     <tr>
      <td><label for="scalixServerLanguage">{t}Scalix server language{/t}</label></td>
      <td>
@@ -34,13 +37,16 @@
 {/render}
      </td>
     </tr>
+{/if} 
    </table>
-   
+  
+{if !$scalixGroup}
    <p class="seperator">&nbsp;</p>
    
    <table summary="">
     <tr>
      <td>
+{if !$scalixGroup}
 {render acl=$scalixAdministratorACL}
 	  <input type=checkbox name="scalixAdministrator" value="1" {$scalixAdministrator}
 	   title="{t}Select for admin capability.{/t}"> {t}Scalix Administrator{/t}
@@ -51,6 +57,7 @@
 	   title="{t}Select for mailbox admin capability.{/t}"> {t}Scalix Mailbox Administrator{/t}
 {/render}
 	  <br>
+{/if}
 {render acl=$scalixHideUserEntryACL}
 	  <input type=checkbox name="scalixHideUserEntry" value="1" {$scalixHideUserEntry}
 	   title="{t}Hide user entry from addressbook.{/t}"> {t}Hide this user entry in Scalix{/t}
@@ -89,6 +96,7 @@
      </td>
     </tr>
    </table>
+{/if}
   </td>
 
   <td style="border-left:1px solid #A0A0A0">
@@ -116,9 +124,7 @@
 {/render}
   </td>
  </tr>
-{/if}
 </table>
-
 <input type="hidden" name="scalixTab" value="scalixTab">
 
 <!-- Place cursor -->

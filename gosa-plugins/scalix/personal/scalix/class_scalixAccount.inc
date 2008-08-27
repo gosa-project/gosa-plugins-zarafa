@@ -317,12 +317,15 @@ class scalixAccount extends plugin
     $this->attrs['scalixEmailAddress']= $this->scalixEmailAddress;    
     
     /* Save boolean vars ... the scalix schema expects them as strings */
+    if(!$this->scalixGroup){
+      $this->attrs['scalixAdministrator'] = $this->scalixAdministrator?"TRUE":"FALSE";
+      $this->attrs['scalixMailboxAdministrator'] = $this->scalixMailboxAdministrator?"TRUE":"FALSE";
+      $this->attrs['scalixLimitOutboundMail'] = $this->scalixLimitOutboundMail?"TRUE":"FALSE";
+      $this->attrs['scalixLimitInboundMail'] = $this->scalixLimitInboundMail?"TRUE":"FALSE";
+      $this->attrs['scalixLimitNotifyUser'] = $this->scalixLimitNotifyUser?"TRUE":"FALSE";
+    }
+    
     $this->attrs['scalixScalixObject'] = $this->scalixScalixObject?"TRUE":"FALSE";
-    $this->attrs['scalixAdministrator'] = $this->scalixAdministrator?"TRUE":"FALSE";
-    $this->attrs['scalixMailboxAdministrator'] = $this->scalixMailboxAdministrator?"TRUE":"FALSE";
-    $this->attrs['scalixLimitOutboundMail'] = $this->scalixLimitOutboundMail?"TRUE":"FALSE";
-    $this->attrs['scalixLimitInboundMail'] = $this->scalixLimitInboundMail?"TRUE":"FALSE";
-    $this->attrs['scalixLimitNotifyUser'] = $this->scalixLimitNotifyUser?"TRUE":"FALSE";
     $this->attrs['scalixHideUserEntry'] = $this->scalixHideUserEntry?"TRUE":"FALSE";
 
     /* Remove Mailquota if = "" */
