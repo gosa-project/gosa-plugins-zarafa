@@ -46,7 +46,6 @@
    <table summary="">
     <tr>
      <td>
-{if !$scalixGroup}
 {render acl=$scalixAdministratorACL}
 	  <input type=checkbox name="scalixAdministrator" value="1" {$scalixAdministrator}
 	   title="{t}Select for admin capability.{/t}"> {t}Scalix Administrator{/t}
@@ -57,7 +56,6 @@
 	   title="{t}Select for mailbox admin capability.{/t}"> {t}Scalix Mailbox Administrator{/t}
 {/render}
 	  <br>
-{/if}
 {render acl=$scalixHideUserEntryACL}
 	  <input type=checkbox name="scalixHideUserEntry" value="1" {$scalixHideUserEntry}
 	   title="{t}Hide user entry from addressbook.{/t}"> {t}Hide this user entry in Scalix{/t}
