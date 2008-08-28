@@ -14,27 +14,24 @@
   <td>
    <table>
     {if $parent_mode}
-     <tr>
-      <td>{t}Name{/t}</td>
-      <td><input type='text' name='hostId' value='{$hostId}'></td>
-     </tr>
-    {/if}
     <tr>
-     <td>{t}Description{/t}</td>
-     <td><input type='text' name='description' value='{$description}'></td>
+     <td>{t}Name{/t}</td>
+     <td><input style='width:300px;' type='text' name='hostId' value='{$hostId}'></td>
     </tr>
-    <tr>
-     <td>{t}Notes{/t}</td>
-     <td><input type='text' name='note' value='{$note}'></td>
-    </tr>
-   </table>
-  </td>
-  <td style='vertical-align: top;'>
-   <table>
     <tr>
      <td>{t}MAC address{/t}</td>
-     <td><input type='text' name='mac' value='{$mac}'></td>
+     <td><input type='text' name="mac" value="{$mac}"></td>
+	</tr>
+	{else}
+    <tr>
+     <td>{t}Name{/t}</td>
+     <td><input style='width:300px;' type='text' disabled value="{$hostId}"></td>
     </tr>
+    <tr>
+     <td>{t}MAC address{/t}</td>
+     <td><input type='text' name="mac" value="{$mac}"></td>
+    </tr>
+    {/if}
     <tr>
      <td>{t}Boot product{/t}</td>
      <td>
@@ -44,6 +41,18 @@
 		{/foreach}
       </select>
      </td>
+    </tr>
+   </table>
+  </td>
+  <td style='vertical-align: top;'>
+   <table>
+    <tr>
+     <td>{t}Description{/t}</td>
+     <td><input type='text' name='description' value='{$description}'></td>
+    </tr>
+    <tr>
+     <td>{t}Notes{/t}</td>
+     <td><input type='text' name='note' value='{$note}'></td>
     </tr>
    </table>
   </td>

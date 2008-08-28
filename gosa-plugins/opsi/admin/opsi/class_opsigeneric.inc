@@ -25,20 +25,32 @@ class opsigeneric extends plugin
   public $mac          = "";
   public $note         = "";
   public $description  = "";
-
   public $attributes = array("mac","note","description");
 
-  public function __construct($config,$hostId)
+  public $parent = NULL;
+
+  public function __construct($config,$hostId,&$parent = NULL)
   {
     $this->opsi = new opsi($config); 
     $this->is_account =TRUE;
-  
+    
+    /* Check if we are are part of a windows workstation 
+     */
+    $this->parent = $parent;
+    if($parent instanceof wingeneric){
+      $this->parent_mode = FALSE;
+    }
+
     /* Get hostId */
     if($hostId != "new"){
-      $this->initially_was_account = TRUE;
-      $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
+      if(preg_match("/^opsi=/",$hostId)){
+        $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
+      }else{
+        $this->hostId = &$this->parent->cn;
+//        $this->mac =    &$this->parent->netConfigDNS->macAddress;
+      }
     }
-  
+ 
     /* Try to plugin */
     $this->init();
   }
@@ -47,12 +59,14 @@ class opsigeneric extends plugin
   {
     $err = FALSE;
     $this->init_failed = FALSE;
+    $this->initially_was_account = FALSE; 
 
     if($this->hostId != "new"){
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
       foreach($list as $entry){
-        if($entry['NAME'][0]['VALUE'] == $this->hostId){  
+        if(preg_match("/^".normalizePreg($this->hostId).".$/i",$entry['NAME'][0]['VALUE'])){
+          $this->initially_was_account = TRUE; 
           foreach(array("description" => "DESCRIPTION","mac" => "MAC", "note" => "NOTES") as $des => $src){
             $this->$des = $entry[$src][0]['VALUE'];
           } 
@@ -107,6 +121,7 @@ class opsigeneric extends plugin
     }else{
 
       /* Remember initial settings */ 
+      $this->is_account = $this->initially_was_account;
       $this->a_initial_selectedLocalProducts = $this->a_selectedLocalProducts;
       $this->s_initial_selectedNetbootProduct = $this->s_selectedNetbootProduct;
     }
@@ -114,6 +129,7 @@ class opsigeneric extends plugin
 
   public function check()
   {
+    return(array());
     $messages = plugin::check();
     if(!preg_match("/\./",$this->hostId)){
       $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",_("The client name must contain a domain part (e.g. '.company.de')."));
@@ -126,6 +142,11 @@ class opsigeneric extends plugin
 
   public function execute()
   {
+    $display ="";
+
+    /* The pluign initialization failed due to communication problems with the gosa daemon. 
+       A retry button will be displayed here.
+     */
     if($this->init_failed){
       $smarty = get_smarty();
       $smarty->assign("init_failed",TRUE);
@@ -133,13 +154,38 @@ class opsigeneric extends plugin
       return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
     }  
 
+    /* If we are not a stand alone opsi client, we must be a samba client 
+       which has the opsi tab enabled.
+       Check if the opsi is added or removed and display state buttons.
+     */
+    if(!$this->parent_mode){
+      if(isset($_POST['modify_state'])){
+        if($this->is_account){
+          $this->is_account= FALSE;
+        }elseif(!$this->is_account){
+          $this->is_account= TRUE;
+        }
+      }
+      if($this->is_account){
+        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Opsi")), 
+            msgPool::featuresEnabled(_("Opsi")));
+      }else{
+        $display = $this->show_enable_header(msgPool::addFeaturesButton(_("Opsi")), 
+            msgPool::featuresDisabled(_("Opsi")));
+        return($display);
+      } 
+    } 
+
+    /* Check if we have a sub dialog opened
+     */
     if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
 
+    /* Create HTML output of this plugin
+     */
     $smarty = get_smarty();
-
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -192,7 +238,7 @@ class opsigeneric extends plugin
     $smarty->assign("divALP", $divALP->DrawList());
     $smarty->assign("SNP", $this->s_selectedNetbootProduct);
     $smarty->assign("ANP", $this->a_availableNetbootProducts);
-    return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
+    return($display.$smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
   }
 
 
