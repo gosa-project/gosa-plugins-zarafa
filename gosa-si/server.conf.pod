@@ -163,7 +163,7 @@ Defines the password incoming ClientPackages messages should be encrypted. This 
 
 =item address = 
 
-???
+Comma seperated list of GOsa-si-servers (1.2.3.4:20081,9.8.7.6:123) in network where this SI-server should register. These given SI-servers extend the list of SI-servers found in DNS. 
 
 =item domain =
 

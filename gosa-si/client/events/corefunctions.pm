@@ -98,7 +98,7 @@ sub registered {
     my $header = @{$msg_hash->{'header'}}[0];
     if( $header eq "registered" ) {
         my $source = @{$msg_hash->{'source'}}[0];
-        &main::daemon_log("INFO: registration at $source",1);
+        &main::daemon_log("INFO: registration at $source", 1);
         $main::server_address = $source;
     }
 
