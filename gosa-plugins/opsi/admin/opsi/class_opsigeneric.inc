@@ -43,14 +43,14 @@ class opsigeneric extends plugin
 
     /* Get hostId */
     if($hostId != "new"){
-      if(preg_match("/^opsi=/",$hostId)){
+      if(preg_match("/^opsi:/",$hostId)){
         $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
-      }else{
-        $this->hostId = &$this->parent->cn;
-//        $this->mac =    &$this->parent->netConfigDNS->macAddress;
+      }elseif($this->parent instanceof wingeneric){
+        $this->hostId = $this->parent->cn;
+        $this->hostId = preg_replace('/\$$/',"",$this->hostId);
       }
     }
- 
+  
     /* Try to plugin */
     $this->init();
   }
@@ -65,7 +65,7 @@ class opsigeneric extends plugin
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
       foreach($list as $entry){
-        if(preg_match("/^".normalizePreg($this->hostId).".$/i",$entry['NAME'][0]['VALUE'])){
+        if(preg_match("/^".normalizePreg($this->hostId)."$/i",$entry['NAME'][0]['VALUE'])){
           $this->initially_was_account = TRUE; 
           foreach(array("description" => "DESCRIPTION","mac" => "MAC", "note" => "NOTES") as $des => $src){
             $this->$des = $entry[$src][0]['VALUE'];
@@ -244,9 +244,6 @@ class opsigeneric extends plugin
 
   public function save()
   {
-    /* Check if this a new opsi client 
-        -Do we have to create this client first?
-     */
     if(!$this->initially_was_account && $this->is_account){
       $res = $this->opsi->add_client($this->hostId,$this->mac,$this->note,$this->description);
       if($this->opsi->is_error()){
@@ -271,15 +268,18 @@ class opsigeneric extends plugin
       }
     }
     foreach($add as $name => $data){
+      echo "Adding '$name' to ".$this->hostId."<br>";
       $this->opsi->add_product_to_client($name,$this->hostId);
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
         return;
       }
-      $this->opsi->set_product_properties($name,$data['CFG'],$this->hostId);
-      if($this->opsi->is_error()){
-        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
-        return;
+      if(!empty($data['CFG'])){
+        $this->opsi->set_product_properties($name,$data['CFG'],$this->hostId);
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
+          return;
+        }
       }
     }
 
