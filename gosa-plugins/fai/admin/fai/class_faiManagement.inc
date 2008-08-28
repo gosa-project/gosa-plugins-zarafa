@@ -269,22 +269,23 @@ class faiManagement extends plugin
       if($s_action == "opsi_edit"){
         $name = $this->objects[$s_entry]['cn'];
         $cfg = $this->opsi->get_product_properties($name);
-        $this->dialog = new opsi_product_config($this->config, $name,$cfg);
+        $this->dialog = new opsiProductConfig($this->config, $name,$cfg);
       }
-      if($this->dialog instanceof opsi_product_config && isset($_POST['cancel_properties'])){
+      if($this->dialog instanceof opsiProductConfig && isset($_POST['cancel_properties'])){
         $this->dialog = NULL;
       }
-      if($this->dialog instanceof opsi_product_config && isset($_POST['save_properties'])){
+      if($this->dialog instanceof opsiProductConfig && isset($_POST['save_properties'])){
         $this->dialog->save_object();
         $name  = $this->dialog->get_product();
         $cfg   = $this->dialog->get_cfg();
-        for($i = 0 ; $i < 10 ; $i ++){
-          $cfg["name$i"] = microtime(1);
-        }
         $this->opsi->set_product_properties($name,$cfg); 
-        $this->dialog = NULL;
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        }else{
+          $this->dialog = NULL;
+        }
       }
-      if($this->dialog instanceof opsi_product_config){
+      if($this->dialog instanceof opsiProductConfig){
         $this->dialog->save_object();
         return($this->dialog->execute());
       }
