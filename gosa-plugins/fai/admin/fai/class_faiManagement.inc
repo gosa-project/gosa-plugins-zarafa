@@ -56,6 +56,8 @@ class faiManagement extends plugin
 
   var $acl_module = array("fai");
 
+  var $opsi = NULL;
+
 	/* construction/reconstruction 
 	 */
 	function faiManagement (&$config, $ui)
@@ -64,6 +66,12 @@ class faiManagement extends plugin
 		$this->dn			= "";
 		$this->config	= $config;
 		$this->ui			= $ui;	
+
+    /* Check if the opsi plugin is installed.
+     */
+    if(class_available("opsi")){
+      $this->opsi = new opsi($this->config);;
+    }
     
     /* Creat dialog object */
     $this->DivListFai = new divListFai($this->config,$this);
@@ -131,29 +139,52 @@ class faiManagement extends plugin
                     "/^copy/" => "copy",
                     "/^remove_multiple_fai_objects/" => "del_multiple");
 
+    print_a($_POST);
+
 		foreach($_POST as $name => $value){
       foreach($posts as $reg => $act ){
         if(preg_match($reg,$name)){
           $s_action = $act;
           $s_entry = ltrim(preg_replace($reg,"",$name),"_");
           $s_entry = preg_replace("/_.*$/","",$s_entry);
+          break;
         }
       }
 			if(preg_match("/^entry_edit_.*/",$name)){
 				$s_entry = preg_replace("/^entry_edit_/","",$name);
 				$s_entry = preg_replace("/_.*$/","",$s_entry);
-				$s_action = "edit";
-			}elseif(preg_match("/^entry_freeze_edit_.*/",$name)){
-				$s_entry = preg_replace("/^entry_freeze_edit_/","",$name);
-				$s_entry = preg_replace("/_.*$/","",$s_entry);
-				$s_action = "edit";
+        $s_action = "edit";
+        break;
+      }elseif(preg_match("/^entry_freeze_edit_.*/",$name)){
+        $s_entry = preg_replace("/^entry_freeze_edit_/","",$name);
+        $s_entry = preg_replace("/_.*$/","",$s_entry);
+        $s_action = "edit";
         $no_save = TRUE;
-			}elseif(preg_match("/^entry_delete_.*/",$name)){
-				$s_entry = preg_replace("/^entry_delete_/","",$name);
-				$s_entry = preg_replace("/_.*$/","",$s_entry);
+        break;
+      }elseif(preg_match("/^entry_delete_.*/",$name)){
+        $s_entry = preg_replace("/^entry_delete_/","",$name);
+        $s_entry = preg_replace("/_.*$/","",$s_entry);
         $s_action = "delete";
+        break;
+      }
+
+      /* Get posts from opsi onjects 
+       */  
+      if($this->opsi instanceof opsi && $this->opsi->enabled()){
+        if(preg_match("/^entry_opsi_edit_/",$name)){
+          $s_entry = preg_replace("/^entry_opsi_edit_([0-9]*).*$/","\\1",$name);
+          $s_action = "opsi_edit";
+          break;
+        }
       }
     }
+
+    /* Get posts from opsi objects 
+     */ 
+		if($this->opsi instanceof opsi && $this->opsi->enabled() && isset($_GET['edit_opsi_entry'])){
+			$s_entry = $_GET['edit_opsi_entry'];
+			$s_action = "opsi_edit";
+		}
 
 		if(isset($_GET['edit_entry'])){
 			$s_entry = $_GET['edit_entry'];
@@ -227,6 +258,36 @@ class faiManagement extends plugin
     $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
     if($ret){
       return($ret);
+    }
+
+
+    /*******************
+      Opsi extension 
+     *******************/
+
+    if($this->opsi instanceof opsi && $this->opsi->enabled()){
+      if($s_action == "opsi_edit"){
+        $name = $this->objects[$s_entry]['cn'];
+        $cfg = $this->opsi->get_product_properties($name);
+        $this->dialog = new opsi_product_config($this->config, $name,$cfg);
+      }
+      if($this->dialog instanceof opsi_product_config && isset($_POST['cancel_properties'])){
+        $this->dialog = NULL;
+      }
+      if($this->dialog instanceof opsi_product_config && isset($_POST['save_properties'])){
+        $this->dialog->save_object();
+        $name  = $this->dialog->get_product();
+        $cfg   = $this->dialog->get_cfg();
+        for($i = 0 ; $i < 10 ; $i ++){
+          $cfg["name$i"] = microtime(1);
+        }
+        $this->opsi->set_product_properties($name,$cfg); 
+        $this->dialog = NULL;
+      }
+      if($this->dialog instanceof opsi_product_config){
+        $this->dialog->save_object();
+        return($this->dialog->execute());
+      }
     }
 
 
@@ -1128,6 +1189,36 @@ class faiManagement extends plugin
         }
 			}
 		}
+
+    /*  Append opsi objects, if opsi is available and if we are on the fai_base
+     */
+    if($this->opsi instanceof opsi && $this->opsi->enabled()){  
+
+      $err = FALSE;
+      if(!$err && $this->DivListFai->ShowOpsiNetboot){
+        $n_pro = $this->opsi->get_netboot_products();
+        $err |= $this->opsi->is_error();
+        foreach($n_pro as $name => $data){
+          $entry = array("cn" => $name,
+              "description" => $data['DESC'],
+              "type" => "opsi_netboot");
+          $this->objects[$name."_opsi_netboot"] = $entry;
+        }  
+      }
+      if(!$err && $this->DivListFai->ShowOpsiLocal){
+        $l_pro = $this->opsi->get_local_products();
+        $err |= $this->opsi->is_error();
+        foreach($l_pro as $name => $data){
+          $entry = array("cn" => $name,
+              "description" => $data['DESC'],
+              "type" => "opsi_local");
+          $this->objects[$name."_opsi_local"] = $entry;
+        }  
+      }  
+      if($err){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      }
+    }
 
 		ksort($this->objects);
 		reset ($this->objects);

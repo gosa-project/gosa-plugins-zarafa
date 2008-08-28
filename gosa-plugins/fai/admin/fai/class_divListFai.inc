@@ -18,6 +18,9 @@ class divListFai extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
+  var $ShowOpsiLocal;
+  var $ShowOpsiNetboot;
+
   function divListFai (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Fai", "fai");
@@ -52,13 +55,29 @@ class divListFai extends MultiSelectWindow
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
-    $this->AddCheckBox("ShowProfiles"   , sprintf(_("Display objects of type '%s'."),_("Profile"))  ,_("Show profiles")     ,true);
-    $this->AddCheckBox("ShowTemplates"  , sprintf(_("Display objects of type '%s'."),_("Variable")) ,_("Show templates")    ,true);
-    $this->AddCheckBox("ShowScripts"    , sprintf(_("Display objects of type '%s'."),_("Script"))   ,_("Show scripts")      ,true);
-    $this->AddCheckBox("ShowHooks"      , sprintf(_("Display objects of type '%s'."),_("Hook"))     ,_("Show hooks")        ,true);
-    $this->AddCheckBox("ShowVariables"  , sprintf(_("Display objects of type '%s'."),_("Variable")) ,_("Show variables")    ,true);
-    $this->AddCheckBox("ShowPackages"   , sprintf(_("Display objects of type '%s'."),_("Package"))  ,_("Show packages")     ,true);
-    $this->AddCheckBox("ShowPartitions" , sprintf(_("Display objects of type '%s'."),_("Partition")),_("Show partitions")   ,true);
+    $this->AddCheckBox("ShowProfiles"   , sprintf(_("Display objects of type '%s'."),
+          _("Profile"))  ,_("Show profiles")     ,true);
+    $this->AddCheckBox("ShowTemplates"  , sprintf(_("Display objects of type '%s'."),
+          _("Variable")) ,_("Show templates")    ,true);
+    $this->AddCheckBox("ShowScripts"    , sprintf(_("Display objects of type '%s'."),
+          _("Script"))   ,_("Show scripts")      ,true);
+    $this->AddCheckBox("ShowHooks"      , sprintf(_("Display objects of type '%s'."),
+          _("Hook"))     ,_("Show hooks")        ,true);
+    $this->AddCheckBox("ShowVariables"  , sprintf(_("Display objects of type '%s'."),
+          _("Variable")) ,_("Show variables")    ,true);
+    $this->AddCheckBox("ShowPackages"   , sprintf(_("Display objects of type '%s'."),
+          _("Package"))  ,_("Show packages")     ,true);
+    $this->AddCheckBox("ShowPartitions" , sprintf(_("Display objects of type '%s'."),
+          _("Partition")),_("Show partitions")   ,true);
+
+    /* Add opsi checkboxes if opsi is enabled 
+     */
+    if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
+      $this->AddCheckBox("ShowOpsiNetboot" , sprintf(_("Display objects of type '%s'."),
+        _("Opsi netboot product")),_("Show opsi netboot pruducts")   ,true);
+      $this->AddCheckBox("ShowOpsiLocal" , sprintf(_("Display objects of type '%s'."),
+        _("Opsi local product")),_("Show opsi locale pruducts")   ,true);
+    }
 
     /* Add SubSearch checkbox */
     //$this->AddCheckBox(SEPERATOR);
@@ -136,12 +155,18 @@ class divListFai extends MultiSelectWindow
 
       /* Append create icons for each fai component */
       $arr = array(
-          array("plugins/fai/images/fai_new_partitionTable.png" , _("Partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
-          array("plugins/fai/images/fai_new_script.png"         , _("Scripts")          ,"Create_script"    , _("S")  , "faiScript"),
-          array("plugins/fai/images/fai_new_hook.png"           , _("Hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
-          array("plugins/fai/images/fai_new_variable.png"       , _("Variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
-          array("plugins/fai/images/fai_new_template.png"       , _("Templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
-          array("plugins/fai/images/fai_new_packages.png"       , _("Package list")     ,"Create_package"   , _("PK") , "faiPackage"));
+          array("plugins/fai/images/fai_new_partitionTable.png" , _("Partition table")  ,
+            "Create_partition" , _("PT") , "faiPartitionTable"),
+          array("plugins/fai/images/fai_new_script.png"         , _("Scripts")          ,
+            "Create_script"    , _("S")  , "faiScript"),
+          array("plugins/fai/images/fai_new_hook.png"           , _("Hooks")            ,
+            "Create_hook"      , _("H")  , "faiHook"),
+          array("plugins/fai/images/fai_new_variable.png"       , _("Variables")        ,
+            "Create_variable"  , _("V")  , "faiVariable"),
+          array("plugins/fai/images/fai_new_template.png"       , _("Templates ")       ,
+            "Create_template"  , _("I")  , "faiTemplate"),
+          array("plugins/fai/images/fai_new_packages.png"       , _("Package list")     ,
+            "Create_package"   , _("PK") , "faiPackage"));
 
       foreach($arr as $ar){
         $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
@@ -181,14 +206,25 @@ class divListFai extends MultiSelectWindow
       Variable init
      ********************/
 
-     $objects = array(
-           "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png", "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
-           "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",       "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
-           "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",         "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
-           "FAIvariable"        => array("IMG"=> "plugins/fai/images/fai_variable.png",       "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
-           "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",           "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
-           "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",        "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
-           "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",       "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"));
+    $objects = array(
+        "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png", 
+          "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
+        "FAIpackageList"     => array("IMG"=> "plugins/fai/images/fai_packages.png",       
+          "NAME"=>_("Package list") ,  "KZL"=> "PL", "VAR"=>"ShowPackages"),
+        "FAIscript"          => array("IMG"=> "plugins/fai/images/fai_script.png",         
+          "NAME"=>_("Scripts") ,       "KZL"=> "S",  "VAR"=>"ShowScripts"),
+        "FAIvariable"        => array("IMG"=> "plugins/fai/images/fai_variable.png",       
+          "NAME"=>_("Variables") ,     "KZL"=> "V",  "VAR"=>"ShowVariables"),
+        "FAIhook"            => array("IMG"=> "plugins/fai/images/fai_hook.png",           
+          "NAME"=>_("Hooks"),          "KZL"=> "H",  "VAR"=>"ShowHooks"),
+        "FAIprofile"         => array("IMG"=> "plugins/fai/images/fai_profile.png",        
+          "NAME"=>_("Profile") ,       "KZL"=> "P",  "VAR"=>"ShowProfiles"),
+        "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",       
+          "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
+        "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",       
+          "NAME"=>_("Opsi netboot package") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
+        "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",       
+          "NAME"=>_("Opsi local package")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
 
     /* Dynamic action col, depending on snapshot icons */
@@ -235,21 +271,28 @@ class divListFai extends MultiSelectWindow
        $action ="";
        $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
 
-       /* Add copy & cut functionality */
-       $action.= $this->parent->get_copypaste_action($value['dn'],"fai",$value['class'],TRUE,FALSE);
-
-       if(preg_match("/^freeze/", $value['FAIstate'])){
-         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
+       if(preg_match("/^opsi_/",$type)){
+         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_opsi_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
          $action.=  "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
-           name='entry_freeze_edit_%KEY%' title='"._("Edit class")."'>";
-         $action.=  "<img src='images/lists/locked.png' alt='F' class='center'>";
+           name='entry_opsi_edit_%KEY%' title='"._("Edit product")."'><img src='images/empty.png' alt=' ' class='center'>";
        }else{
-         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-         $action.= "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
-           name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-         if(preg_match("/d/",$value['acl'])){
-           $action.= "<input class='center' type='image' src='images/lists/trash.png' alt='"._("delete")."'
-             name='entry_delete_%KEY%' title='"._("Delete class")."'>";
+
+         /* Add copy & cut functionality */
+         $action.= $this->parent->get_copypaste_action($value['dn'],"fai",$value['class'],TRUE,FALSE);
+
+         if(preg_match("/^freeze/", $value['FAIstate'])){
+           $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
+           $action.=  "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
+             name='entry_freeze_edit_%KEY%' title='"._("Edit class")."'>";
+           $action.=  "<img src='images/lists/locked.png' alt='F' class='center'>";
+         }else{
+           $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
+           $action.= "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
+             name='entry_edit_%KEY%' title='"._("Edit class")."'>";
+           if(preg_match("/d/",$value['acl'])){
+             $action.= "<input class='center' type='image' src='images/lists/trash.png' alt='"._("delete")."'
+               name='entry_delete_%KEY%' title='"._("Delete class")."'>";
+           }
          }
        }
 
@@ -267,6 +310,8 @@ class divListFai extends MultiSelectWindow
        }
        $edi = $editlink;
        $acti = $action;
+
+        $display = "<div style='overflow:hidden; height:1em;'>".$display."</div>";
 
        /* Create each field */
        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
