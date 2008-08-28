@@ -1,6 +1,6 @@
 <?php
 
-class opsigeneric extends plugin
+class opsiGeneric extends plugin
 {
   private $opsi;
   private $hostId;  
@@ -340,7 +340,7 @@ class opsigeneric extends plugin
       $this->dialog = NULL;
     }
 
-    if(isset($_POST['opsigeneric_posted'])){
+    if(isset($_POST['opsiGeneric_posted'])){
 
       plugin::save_object();
 

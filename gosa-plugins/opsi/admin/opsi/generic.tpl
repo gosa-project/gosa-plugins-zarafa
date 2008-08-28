@@ -89,5 +89,5 @@
   </td>
  </tr>
 </table> 
-<input type='hidden' name='opsigeneric_posted' value='1'>
+<input type='hidden' name='opsiGeneric_posted' value='1'>
 {/if}
