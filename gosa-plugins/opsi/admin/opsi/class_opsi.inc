@@ -57,6 +57,11 @@ class opsi extends gosaSupportDaemon
     $this->target = "00:01:6c:9d:b9:fa";
   }
 
+  
+  public function enabled()
+  {
+    return(TRUE);
+  }
 
   /******************
     Opsi handling 

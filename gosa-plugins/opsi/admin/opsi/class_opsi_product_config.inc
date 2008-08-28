@@ -1,6 +1,6 @@
 <?php
 
-class opsi_product_config extends plugin
+class opsiProductConfig extends plugin
 {
   private $product;
   private $cfg;

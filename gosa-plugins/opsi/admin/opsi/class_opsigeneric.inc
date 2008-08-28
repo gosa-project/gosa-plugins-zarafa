@@ -330,7 +330,7 @@ class opsigeneric extends plugin
     if(isset($_POST['cancel_properties']) && is_object($this->dialog)){
       $this->dialog = NULL;
     }
-    if(isset($_POST['save_properties']) && ($this->dialog instanceof opsi_product_config)){
+    if(isset($_POST['save_properties']) && ($this->dialog instanceof opsiProductConfig)){
       $this->dialog->save_object();
       $pro = $this->dialog->get_product();
       $CFG = $this->dialog->get_cfg();
@@ -386,7 +386,7 @@ class opsigeneric extends plugin
         }
         if(preg_match("/^edit_lp_/",$name)){
           $product = preg_replace("/^edit_lp_(.*)_.$/","\\1",$name);
-          $this->dialog = new opsi_product_config($this->config,
+          $this->dialog = new opsiProductConfig($this->config,
               $product,$this->a_selectedLocalProducts[$product]['CFG'],$this->hostId);
           break;
         }
