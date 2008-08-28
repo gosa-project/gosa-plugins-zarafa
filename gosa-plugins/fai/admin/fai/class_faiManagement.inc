@@ -139,8 +139,6 @@ class faiManagement extends plugin
                     "/^copy/" => "copy",
                     "/^remove_multiple_fai_objects/" => "del_multiple");
 
-    print_a($_POST);
-
 		foreach($_POST as $name => $value){
       foreach($posts as $reg => $act ){
         if(preg_match($reg,$name)){
@@ -269,12 +267,12 @@ class faiManagement extends plugin
       if($s_action == "opsi_edit"){
         $name = $this->objects[$s_entry]['cn'];
         $cfg = $this->opsi->get_product_properties($name);
-        $this->dialog = new opsiProductConfig($this->config, $name,$cfg);
+        $this->dialog = new tabs_opsiProdConfig($this->config, $this->config->data['TABS']['OPSIPRODCONFIG'], $cfg);
       }
-      if($this->dialog instanceof opsiProductConfig && isset($_POST['cancel_properties'])){
+      if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['cancel_properties'])){
         $this->dialog = NULL;
       }
-      if($this->dialog instanceof opsiProductConfig && isset($_POST['save_properties'])){
+      if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['save_properties'])){
         $this->dialog->save_object();
         $name  = $this->dialog->get_product();
         $cfg   = $this->dialog->get_cfg();
@@ -285,7 +283,7 @@ class faiManagement extends plugin
           $this->dialog = NULL;
         }
       }
-      if($this->dialog instanceof opsiProductConfig){
+      if($this->dialog instanceof tabs_opsiProdConfig){
         $this->dialog->save_object();
         return($this->dialog->execute());
       }
