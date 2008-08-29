@@ -267,15 +267,18 @@ class faiManagement extends plugin
       if($s_action == "opsi_edit"){
         $name = $this->objects[$s_entry]['cn'];
         $cfg = $this->opsi->get_product_properties($name);
-        $this->dialog = new tabs_opsiProdConfig($this->config, $this->config->data['TABS']['OPSIPRODCONFIG'], $cfg);
+        $this->dialog = new tabs_opsiProdConfig($this->config, $this->config->data['TABS']['OPSIPRODCONFIG'],"","opsi");
+        $this->dialog->by_object['opsiProperties']->set_cfg($cfg);
+        $this->dialog->by_object['opsiProperties']->set_product($name);
       }
       if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['cancel_properties'])){
         $this->dialog = NULL;
       }
       if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['save_properties'])){
         $this->dialog->save_object();
-        $name  = $this->dialog->get_product();
-        $cfg   = $this->dialog->get_cfg();
+        $op    = $this->dialog->by_object['opsiProperties'];
+        $name  = $op->get_product();
+        $cfg   = $op->get_cfg();
         $this->opsi->set_product_properties($name,$cfg); 
         if($this->opsi->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
