@@ -21,7 +21,9 @@
 {/if}
 <p class="seperator">&nbsp;</p>
 <div style='width:100%; text-align: right; padding:3px;'>
+{if $cfg_count != 0}
 	<input type='submit' name='save_properties' value='{msgPool type='saveButton'}'>
 	&nbsp;
+{/if}
 	<input type='submit' name='cancel_properties' value='{msgPool type='cancelButton'}'>
 </div>
