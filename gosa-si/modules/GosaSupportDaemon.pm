@@ -435,6 +435,7 @@ sub get_dns_domains() {
 sub get_server_addresses {
     my $domain= shift;
     my @result;
+    my $error_string;
 
     my $error = 0;
     my $res   = Net::DNS::Resolver->new;
@@ -447,7 +448,7 @@ sub get_server_addresses {
         }
     }
     else {
-        #warn "query failed: ", $res->errorstring, "\n";
+        $error_string = "determination of '_gosa-si._tcp' server in domain '$domain' failed: ".$res->errorstring;
         $error++;
     }
 
@@ -466,7 +467,7 @@ sub get_server_addresses {
         }
     }
 
-    return @result;
+    return \@result, $error_string;
 }
 
 
