@@ -1,10 +1,17 @@
 <?php
 
+
+/*! \brief  The opsi client base class.
+            This class can be implemented in tow different ways:
+              * as standalone opsi client
+              * as part of the samba tabs 
+            both types will be detected automatically.
+
+            This class allows to edit the properties of an opsi client
+             and its products.
+ */
 class opsiGeneric extends plugin
 {
-  private $opsi;
-  private $hostId;  
-
   /* Contains a list of all available netboot products 
    */
   private $a_availableNetbootProducts = array();
@@ -17,22 +24,33 @@ class opsiGeneric extends plugin
   private $a_selectedLocalProducts = array();
   private $a_initial_selectedLocalProducts = array();
 
-  private $init_failed = FALSE;
+  /* Internal veriables 
+   */ 
+  private $opsi;            // The opsi handle
+  public  $parent = NULL;   // The parent object (in case of samba)
 
-  private $parent_mode = TRUE;
-  private $is_installed = FALSE;
+  private $hostId       = ""; // The host Id of the currently edit opsi host  
+  public  $mac          = ""; // The hosts mac address
+  public  $note         = ""; // A note
+  public  $description  = ""; // The client description
 
-  public $mac          = "";
-  public $note         = "";
-  public $description  = "";
+  private $init_failed = FALSE; // Is true if the opsi communication failed
+  private $parent_mode = TRUE;  // Is true if this is a standlone plugin. (Not samba)
+  private $is_installed= FALSE; // Is true is the hast is already installed.
+
   public $attributes = array("mac","note","description");
 
-  public $parent = NULL;
 
+  /*! \brief  Initialize this class 
+      @param  Object    The GOsa base config.
+      @param  String    The Id of the host that we want to edit.
+      @param  Object    The parent object. (in case of samba)
+   */
   public function __construct($config,$hostId,&$parent = NULL)
   {
+    /* Create opsi handle
+     */
     $this->opsi = new opsi($config); 
-    $this->is_account =TRUE;
     
     /* Check if we are are part of a windows workstation 
      */
@@ -41,7 +59,8 @@ class opsiGeneric extends plugin
       $this->parent_mode = FALSE;
     }
 
-    /* Get hostId */
+    /* Get hostId 
+     */
     if($hostId != "new"){
       if(preg_match("/^opsi:/",$hostId)){
         $this->hostId = preg_replace("/^opsi:=([^,]*),.*$/","\\1",$hostId);
@@ -55,19 +74,34 @@ class opsiGeneric extends plugin
     $this->init();
   }
   
+
+  /*! \brief  Try to load opsi client informations from the 
+               gosa support daemon.
+   */
   private function init()
   {
     $err = FALSE;
     $this->init_failed = FALSE;
     $this->initially_was_account = FALSE; 
 
+    /* Try to load client infos from the gosa support daemon
+     */
     if($this->hostId != "new"){
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
+
+      /* Walk through all returned opsi clients and try to detect 
+          one that matches our hostId.
+         #FIXME Implement an opsi method which returns infos for only one opsi client, not all. 
+       */
       foreach($list as $entry){
         if(preg_match("/^".normalizePreg($this->hostId)."$/i",$entry['NAME'][0]['VALUE'])){
           $this->initially_was_account = TRUE; 
-          foreach(array("description" => "DESCRIPTION","mac" => "MAC", "note" => "NOTES") as $des => $src){
+          foreach(array(
+                "is_installed" => "LASTSEEN",
+                "description"  => "DESCRIPTION",
+                "mac"          => "MAC", 
+                "note"         => "NOTES") as $des => $src){
             $this->$des = $entry[$src][0]['VALUE'];
           } 
           break;
@@ -75,7 +109,8 @@ class opsiGeneric extends plugin
       }
     }
 
-    /* Get product settings */     
+    /* Fetch all product infos from support daemon
+     */     
     if(!$err){
       $this->a_availableNetbootProducts = $this->opsi->get_netboot_products();
       $err |= $this->opsi->is_error();
@@ -85,7 +120,8 @@ class opsiGeneric extends plugin
       $err |= $this->opsi->is_error();
     }
 
-    /* Get selected products */
+    /* Get products selected by this host.
+     */
     if(!$err && !empty($this->hostId)) {
       $tmp = array_keys($this->opsi->get_netboot_products($this->hostId));
       if(count($tmp)){
@@ -99,7 +135,8 @@ class opsiGeneric extends plugin
       $this->a_selectedLocalProducts = $tmp;
     }
 
-    /* Load product configuration */
+    /* Load product configuration for all already selected products.
+     */
     if(!$err && !empty($this->hostId)) {
       foreach($this->a_selectedLocalProducts as $name => $data){
         $CFG = $this->opsi->get_product_properties($name,$this->hostId);
@@ -127,19 +164,39 @@ class opsiGeneric extends plugin
     }
   }
 
+
+  /*! \brief  Check given data.
+      @return Array   Returns an array with all issues.
+   */
   public function check()
   {
     return(array());
     $messages = plugin::check();
-    if(!preg_match("/\./",$this->hostId)){
-      $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",_("The client name must contain a domain part (e.g. '.company.de')."));
+
+    if(empty($this->hostId)){
+      $messages[] = msgPool::required(_("Name"));
+    }elseif(!preg_match("/\./",$this->hostId)){
+
+      /* The hostId must contain a domain part 
+       */
+      $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",
+          _("The client name must contain a domain part (e.g. '.company.de')."));
+    }elseif(preg_match("/[^a-z0-9\.\-_]/",$this->hostId)){
+      $messages[] = msgPool::invalid(_("Name"),$this->hostId,"/[a-z0-9\.\-_]/");
     }
+
+    /* Ensure that the mac address is valid
+     */
     if(!tests::is_mac($this->mac) || empty($this->mac)){
       $messages[] = msgPool::invalid(_("MAC address"),$this->mac,"","00:0C:7F:31:33:F1");
     }
     return($messages);
   }
 
+
+  /*! \brief  Create the html ui of this plugin
+      @return String  HTML content.
+   */
   public function execute()
   {
     $display ="";
@@ -242,24 +299,38 @@ class opsiGeneric extends plugin
   }
 
 
+  /*! \brief  Save modifications using the gosa support daemon.
+   */
   public function save()
   {
+    
+    /* Check if we have to create a new opsi client
+        or just have to save client modifications.
+     */
     if(!$this->initially_was_account && $this->is_account){
       $res = $this->opsi->add_client($this->hostId,$this->mac,$this->note,$this->description);
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
         return;
       }
-    }
-    $this->opsi->modify_client($this->hostId,$this->mac,$this->note,$this->description);
-    if($this->opsi->is_error()){
-      msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
-      return;
+    }else{
+
+      /* Update client modifcations 
+       */
+      $this->opsi->modify_client($this->hostId,$this->mac,$this->note,$this->description);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        return;
+      }
     }
 
+    /* Detect which products were removed an which added.
+     */
     $add = array_diff_assoc($this->a_selectedLocalProducts,$this->a_initial_selectedLocalProducts);
     $del = array_diff_assoc($this->a_initial_selectedLocalProducts,$this->a_selectedLocalProducts);
 
+    /* Remove products from client
+     */
     foreach($del as $name => $data){
       $this->opsi->del_product_from_client($name,$this->hostId);
       if($this->opsi->is_error()){
@@ -267,8 +338,10 @@ class opsiGeneric extends plugin
         return;
       }
     }
+    
+    /* Add products to client
+     */
     foreach($add as $name => $data){
-      echo "Adding '$name' to ".$this->hostId."<br>";
       $this->opsi->add_product_to_client($name,$this->hostId);
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
@@ -283,6 +356,8 @@ class opsiGeneric extends plugin
       }
     }
 
+    /* Save local product properties 
+     */
     foreach($this->a_selectedLocalProducts as $name => $data){
       if(isset($del[$name]) || isset($add[$name])) continue;
       $diff = array_diff($data['CFG'],$this->a_initial_selectedLocalProducts[$name]['CFG']);
@@ -295,6 +370,8 @@ class opsiGeneric extends plugin
       }
     }
 
+    /* Update used netboot product. 
+     */
     if($this->s_selectedNetbootProduct != $this->s_initial_selectedNetbootProduct){
       if(!empty($this->s_initial_selectedNetbootProduct)){
         $this->opsi->del_product_from_client($this->s_initial_selectedNetbootProduct,$this->hostId);
@@ -311,6 +388,9 @@ class opsiGeneric extends plugin
     }
   }
 
+
+  /*! \brief  Removes the opsi client 
+   */  
   public function remove_from_parent()
   {
     $this->opsi->del_client($this->hostId);
@@ -321,15 +401,24 @@ class opsiGeneric extends plugin
   }
 
 
+  /*! \brief  Save html posts 
+   */
   public function save_object()
   {
+    /* Init failed; reinit is triggered here.
+     */
     if(isset($_POST['reinit']) && $this->init_failed){
       $this->init();
     }
 
+    /* Property are currently edited, close the dialog. 
+     */
     if(isset($_POST['cancel_properties']) && is_object($this->dialog)){
       $this->dialog = NULL;
     }
+  
+    /* Save product property changes 
+     */
     if(isset($_POST['save_properties']) && ($this->dialog instanceof opsiProperties)){
       $this->dialog->save_object();
       $pro = $this->dialog->get_product();
@@ -340,10 +429,14 @@ class opsiGeneric extends plugin
       $this->dialog = NULL;
     }
 
+    /* Save html post
+     */
     if(isset($_POST['opsiGeneric_posted'])){
 
       plugin::save_object();
 
+      /* Get hostId 
+       */
       if(isset($_POST['hostId']) && $this->parent_mode){
         $this->hostId = get_post('hostId');
       }
@@ -352,14 +445,13 @@ class opsiGeneric extends plugin
        */
       if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->parent_mode){
         $action = $_POST['opsi_action'];
-        if(in_array($action,array("wake","install"))){
-          $this->opsi->send_action($action,$this->hostId,$this->mac);
-          if($this->opsi->is_error()){
-            msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
-          }
+        if($action == "install"){
+          $this->install_client(); 
         }
       }
 
+      /* Get selected netboot product.
+       */
       if(isset($_POST['opsi_netboot_product'])){
         $SNP = trim($_POST['opsi_netboot_product']);
         if(isset($this->a_availableNetbootProducts[$SNP])){
@@ -367,7 +459,12 @@ class opsiGeneric extends plugin
         }
       }
 
+      /* Add/remove/edit local products 
+       */
       foreach($_POST as $name => $value){
+      
+        /* Add product 
+         */
         if(preg_match("/^add_lp_/",$name)){
           $product = preg_replace("/^add_lp_(.*)_.$/","\\1",$name);
           if(isset($this->a_availableLocalProducts[$product]) && !isset($this->a_selectedLocalProducts[$product])){
@@ -377,6 +474,9 @@ class opsiGeneric extends plugin
           }
           break;
         }
+  
+        /* Delete product 
+         */
         if(preg_match("/^del_lp_/",$name)){
           $product = preg_replace("/^del_lp_(.*)_.$/","\\1",$name);
           if(isset($this->a_selectedLocalProducts[$product])){
@@ -384,6 +484,9 @@ class opsiGeneric extends plugin
           }
           break;
         }
+      
+        /* Edit a product  
+         */
         if(preg_match("/^edit_lp_/",$name)){
           $product = preg_replace("/^edit_lp_(.*)_.$/","\\1",$name);
           $this->dialog = new opsiProperties($this->config,
@@ -395,9 +498,14 @@ class opsiGeneric extends plugin
   }
 
 
+  /* Triggers client installation 
+   */
   function install_client()
   {
-
+    $this->opsi->send_action("install",$this->hostId,$this->mac);
+    if($this->opsi->is_error()){
+      msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+    }
   }
 
 
