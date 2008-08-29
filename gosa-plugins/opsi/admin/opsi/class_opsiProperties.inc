@@ -1,6 +1,6 @@
 <?php
 
-class opsiProductConfig extends plugin
+class opsiProperties extends plugin
 {
   private $product;
   private $cfg;
@@ -18,6 +18,7 @@ class opsiProductConfig extends plugin
   {
     $smarty = get_smarty();
     $smarty->assign("cfg",$this->cfg);
+    $smarty->assign("cfg_count",count($this->cfg));
     return($smarty->fetch(get_template_path("properties.tpl",TRUE,dirname(__FILE__))));
   }
 
