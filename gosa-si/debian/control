@@ -68,3 +68,12 @@ Description: GOsa support infrastructure dak module
  GOsa is a combination of system-administrator and end-user web
  interface, designed to handle LDAP based setups.
 
+Package: gosa-si-server-opsi
+Architecture: any
+Depends: gosa-si-server
+Description: GOsa support infrastructure opsi module
+ This package controls OPSI windows software deployment.
+ .
+ GOsa is a combination of system-administrator and end-user web
+ interface, designed to handle LDAP based setups.
+
