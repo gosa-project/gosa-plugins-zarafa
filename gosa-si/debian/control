@@ -1,5 +1,5 @@
 Source: gosa-si
-Section: utils
+Section: gonicus/utils
 Priority: optional
 Maintainer: Cajus Pollmeier <cajus@debian.org>
 Standards-Version: 3.7.2.2
