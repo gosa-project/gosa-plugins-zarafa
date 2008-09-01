@@ -530,7 +530,7 @@ sub import_events {
             my $event_module = $1;
             my $events_l = eval( $1."::get_events()") ;
             foreach my $event_name (@{$events_l}) {
-                $event_hash->{$event_name} = $event_module;
+                $event_hash->{$event_module}->{$event_name} = "";
             }
             my $events_string = join( ", ", @{$events_l});
             push(@result, "import of event module '$event' succeed: $events_string");

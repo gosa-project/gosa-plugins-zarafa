@@ -1099,7 +1099,11 @@ daemon_log("INFO: gosa-si-client mac address detected: $client_mac_address", 1);
 
 # import events
 my ($error, $result, $tmp_hash) = &import_events($event_dir);
-$event_hash = $tmp_hash;
+while (my ($module, $mod_event_hash) = each %$tmp_hash) {
+    while (my ($event_name, $nothing) = each %$mod_event_hash) {
+        $event_hash->{$event_name} = $module;
+    }
+}
 
 foreach my $log_line (@$result) {
     if ($log_line =~ / succeed: /) {

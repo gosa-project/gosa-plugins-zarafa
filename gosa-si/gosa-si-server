@@ -71,7 +71,6 @@ my ($foreground, $ping_timeout);
 my ($server);
 my ($gosa_server, $job_queue_timeout, $job_queue_loop_delay);
 my ($messaging_db_loop_delay);
-my ($known_modules);
 my ($procid, $pid);
 my ($arp_fifo);
 my ($xml);
@@ -100,6 +99,7 @@ our $verbose;
 our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
+our $known_modules;
 
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
@@ -445,7 +445,7 @@ sub import_modules {
 			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
 			if( $info ) {
-				my ($input_address, $input_key, $input, $input_active, $input_type) = @{$info};
+				my ($input_address, $input_key, $event_hash) = @{$info};
 				$known_modules->{$mod_name} = $info;
 				daemon_log("0 INFO: module $mod_name loaded", 5);
 			}
@@ -2974,6 +2974,14 @@ sub register_at_foreign_servers {
         my $myhash = &create_xml_hash('new_server', $server_address, $hostname);
         &add_content2xml_hash($myhash, 'key', $hostkey);
         map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
+
+        my $loaded_modules = {};
+        while (my ($package, $pck_info) = each %$known_modules) {
+            foreach my $act_module (keys(%{@$pck_info[2]})) {
+                $loaded_modules->{$act_module} = ""; 
+            }
+        }
+        map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
         
         # build registration message and send it
         my $foreign_server_msg = &create_xml_string($myhash);

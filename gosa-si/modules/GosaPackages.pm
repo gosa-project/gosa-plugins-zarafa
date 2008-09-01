@@ -50,6 +50,7 @@ foreach my $log_line (@$result) {
 sub get_module_info {
     my @info = ($main::gosa_address,
                 $main::gosa_passwd,
+                $event_hash,
                 );
     return \@info;
 }

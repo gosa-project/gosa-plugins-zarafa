@@ -152,6 +152,7 @@ $main::server_address = $server_address;
 sub get_module_info {
     my @info = ($server_address,
                 $ClientPackages_key,
+                $event_hash,
                 );
     return \@info;
 }

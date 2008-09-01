@@ -242,7 +242,7 @@ sub new_ntp_config {
     my @file = <FILE>;
     close FILE;
     foreach my $line (@file) {
-        if ($line =~ /^server /) {
+        if ($line =~ /server /) {
             if ($found_server_flag) {
                 $line =~ s/^server [\s\S]+$//;
             } else {
@@ -259,7 +259,7 @@ sub new_ntp_config {
     }
 
     # Write changes to file and close it
-    open (FILE, "+>$chrony_file");
+    open (FILE, ">$chrony_file");
     print FILE join("", @file); 
     close FILE;
     &main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
