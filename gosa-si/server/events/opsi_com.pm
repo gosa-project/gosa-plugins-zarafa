@@ -153,7 +153,7 @@ sub opsi_del_product_from_client {
         &add_content2xml_hash($out_hash, "productId", $productId);
 
 
-        #TODO: check the results for more than one entry which is currently installed
+#TODO : check the results for more than one entry which is currently installed
         #$callobj = {
         #    method  => 'getProductDependencies_listOfHashes',
         #    params  => [ $productId ],
@@ -168,7 +168,7 @@ sub opsi_del_product_from_client {
         #}
 
 
-    # Check to get product action list 
+        # Check to get product action list 
         my $callobj = {
             method  => 'getPossibleProductActions_list',
             params  => [ $productId ],

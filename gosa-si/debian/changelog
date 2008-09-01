@@ -1,6 +1,18 @@
-gosa-si (1.0-1) unstable; urgency=low
+gosa-si (1.1-2) etch; urgency=low
 
-  * Initial release
+  * New upstream version
 
- -- Cajus Pollmeier <cajus@debian.org>  Fri,  7 Dec 2007 11:37:45 +0100
+ -- Andreas Rettenberger <rettenbe@.gonicus.de>  Mon, 01 Sep 2008 11:48:32 +0200
+
+gosa-si (1.0-2) etch; urgency=low
+
+  * Fixed perl mime dependencies.
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Thu, 07 Aug 2008 14:56:10 +0200
+
+gosa-si (1.0-1) etch; urgency=low
+
+  * New upstream version
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Thu, 07 Aug 2008 14:29:58 +0200
 
