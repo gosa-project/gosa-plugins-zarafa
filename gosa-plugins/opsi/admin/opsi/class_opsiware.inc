@@ -43,7 +43,7 @@ class opsiWare extends plugin
     if($this->init_failed){
       $smarty->assign("type", $this->type);
       $smarty->assign("message",$this->opsi->get_error());
-      return($smarty->fetch(get_template_path("opsiWare.tpl",TRUE,dirname(__FILE__))));
+      return($smarty->fetch(get_template_path("opsiware.tpl",TRUE,dirname(__FILE__))));
     }  
 
     $smarty->assign("type", $this->type);
@@ -53,7 +53,7 @@ class opsiWare extends plugin
     }else{
       $smarty->assign("info", $this->SW_info);
     }
-    return($smarty->fetch(get_template_path("opsiWare.tpl",TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path("opsiware.tpl",TRUE,dirname(__FILE__))));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
