@@ -3114,9 +3114,9 @@ if ( !$server_domain) {
     # Try our DNS Searchlist
     for my $domain(get_dns_domains()) {
         chomp($domain);
-        my @tmp_domains= &get_server_addresses($domain);
-        if(@tmp_domains) {
-            for my $tmp_server(@tmp_domains) {
+        my ($tmp_domains, $error_string) = &get_server_addresses($domain);
+        if(@$tmp_domains) {
+            for my $tmp_server(@$tmp_domains) {
                 push @tmp_servers, $tmp_server;
             }
         }
