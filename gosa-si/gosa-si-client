@@ -1162,7 +1162,7 @@ if( defined $server_check ) {
 		}
 		if (0 == @tmp_servers) {
             my $log_string = "no gosa-si-server found!";
-            $log_string .= "\n\tdetermined domains out of /etc/resolf.conf: ".join(", ", @domain_list); 
+            $log_string .= "\n\tdetermined domains out of /etc/resolv.conf: ".join(", ", @domain_list); 
             $log_string .= "\n\tdetermined server addresses in domains: ".join(", ",@$tmp_domains); 
             daemon_log("ERROR: $log_string", 1);
             daemon_log("ERROR: $error_string", 1);
