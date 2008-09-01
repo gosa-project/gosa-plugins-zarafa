@@ -50,7 +50,7 @@ Description: GOsa support infrastructure postfix module
 
 Package: gosa-si-client-krb5
 Architecture: any
-Depends: gosa-si-client, libauthen-krb5-perl
+Depends: gosa-si-client, libauthen-krb5-perl, libauthen-krb5-admin-perl
 Description: GOsa support infrastructure kerberos module
  This package controls keberos setups and enables administrators
  to maintain accounts and keys.
