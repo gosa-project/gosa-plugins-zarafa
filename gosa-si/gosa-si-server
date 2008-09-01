@@ -1325,9 +1325,9 @@ sub process_task {
             while ($answer_str =~ /<header>(\w+)<\/header>/g) {
                 daemon_log("$session_id INFO: got answer message with header '$1'", 5);
             }
-            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,8);
+            daemon_log("$session_id DEBUG: $module: got answer from module: \n".$answer_str,9);
         } else {
-            daemon_log("$session_id DEBUG: $module: got no answer from module!" ,8);
+            daemon_log("$session_id DEBUG: $module: got no answer from module!" ,7);
         }
 
     }
