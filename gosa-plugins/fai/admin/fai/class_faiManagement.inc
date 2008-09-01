@@ -1388,7 +1388,17 @@ class faiManagement extends plugin
   static function check_class_name($oc,$name,$dn)
   {
     $base = FAI::get_release_dn($dn);
-    $res  = FAI::get_all_objects_for_given_base($base,"(objectClass=".$oc.")",TRUE);
+
+    if($oc == "FAIprofile"){
+      $f = "";
+      $ocs = array("FAItemplate","FAIhook","FAIpartitionTable","FAIpackageList","FAIscript","FAIvariable");
+      foreach($ocs as $oc){
+        $f .= "(objectClass=".$oc.")";
+      } 
+      $res  = FAI::get_all_objects_for_given_base($base,"(|".$f.")",TRUE);    
+    }else{
+      $res  = FAI::get_all_objects_for_given_base($base,"(objectClass=".$oc.")",TRUE);
+    }
     $delete = array();
     $used   = array();
     foreach($res as $object){
