@@ -268,8 +268,12 @@ class faiManagement extends plugin
         $name = $this->objects[$s_entry]['cn'];
         $cfg = $this->opsi->get_product_properties($name);
         $this->dialog = new tabs_opsiProdConfig($this->config, $this->config->data['TABS']['OPSIPRODCONFIG'],"","opsi");
-        $this->dialog->by_object['opsiProperties']->set_cfg($cfg);
-        $this->dialog->by_object['opsiProperties']->set_product($name);
+        if(isset($this->dialog->by_object['opsiProperties'])){
+          $this->dialog->by_object['opsiProperties']->set_cfg($cfg);
+          $this->dialog->by_object['opsiProperties']->set_product($name);
+        }else{
+          trigger_error("Unknown tab, please check config.");
+        }
       }
       if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['cancel_properties'])){
         $this->dialog = NULL;
