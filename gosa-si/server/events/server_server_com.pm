@@ -77,6 +77,7 @@ sub new_server {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
+    my $mac = exists $msg_hash->{'macaddress'} ? @{$msg_hash->{'macaddress'}}[0] : "" ;
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
     my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
 
@@ -89,6 +90,7 @@ sub new_server {
     my $func_dic = {table=>$main::known_server_tn,
         primkey=>['hostname'],
         hostname => $source,
+        macaddress => $mac,
         status => "new_server",
         hostkey => $key,
         loaded_modules => join(',', @loaded_modules),
@@ -147,6 +149,13 @@ sub new_server {
     }
     map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
 
+    # add macaddress to registration message
+    my ($host_ip, $host_port) = split(/:/, $source);
+    my $local_ip = &get_local_ip_for_remote_ip($host_ip);
+    my $network_interface= &get_interface_for_ip($local_ip);
+    my $host_mac = &get_mac_for_interface($network_interface);
+    &add_content2xml_hash($myhash, 'macaddress', $host_mac);
+
     # build registration message and send it
     my $out_msg = &create_xml_string($myhash);
     my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
@@ -160,10 +169,13 @@ sub confirm_new_server {
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
+    my $mac = exists $msg_hash->{'macaddress'} ? @{$msg_hash->{'macaddress'}}[0] : "" ;
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
     my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
 
-    my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key', loaded_modules='".join(",",@loaded_modules)."' WHERE hostname='$source'"; 
+    my $sql = "UPDATE $main::known_server_tn".
+        " SET status='$header', hostkey='$key', loaded_modules='".join(",",@loaded_modules)."', macaddress='$mac'".
+        " WHERE hostname='$source'"; 
     my $res = $main::known_server_db->update_dbentry($sql);
 
     # add clients of foreign server to known_foreign_clients_db

@@ -150,7 +150,7 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
-my @known_server_col_names = ("hostname", "status", "hostkey", "loaded_modules", "timestamp");
+my @known_server_col_names = ("hostname", "macaddress", "status", "hostkey", "loaded_modules", "timestamp");
 
 # holds all registrated clients
 our $known_clients_db;
@@ -833,46 +833,46 @@ sub open_socket {
 }
 
 
-sub get_local_ip_for_remote_ip {
-	my $remote_ip= shift;
-	my $result="0.0.0.0";
-
-	if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
-		if($remote_ip eq "127.0.0.1") {
-			$result = "127.0.0.1";
-		} else {
-			my $PROC_NET_ROUTE= ('/proc/net/route');
-
-			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
-				or die "Could not open $PROC_NET_ROUTE";
-
-			my @ifs = <PROC_NET_ROUTE>;
-
-			close(PROC_NET_ROUTE);
-
-			# Eat header line
-			shift @ifs;
-			chomp @ifs;
-			foreach my $line(@ifs) {
-				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
-				my $destination;
-				my $mask;
-				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
-				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
-				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
-					# destination matches route, save mac and exit
-					$result= &get_ip($Iface);
-					last;
-				}
-			}
-		}
-	} else {
-		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
-	}
-	return $result;
-}
+#sub get_local_ip_for_remote_ip {
+#	my $remote_ip= shift;
+#	my $result="0.0.0.0";
+#
+#	if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
+#		if($remote_ip eq "127.0.0.1") {
+#			$result = "127.0.0.1";
+#		} else {
+#			my $PROC_NET_ROUTE= ('/proc/net/route');
+#
+#			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+#				or die "Could not open $PROC_NET_ROUTE";
+#
+#			my @ifs = <PROC_NET_ROUTE>;
+#
+#			close(PROC_NET_ROUTE);
+#
+#			# Eat header line
+#			shift @ifs;
+#			chomp @ifs;
+#			foreach my $line(@ifs) {
+#				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+#				my $destination;
+#				my $mask;
+#				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+#				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+#				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+#				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+#				if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
+#					# destination matches route, save mac and exit
+#					$result= &get_ip($Iface);
+#					last;
+#				}
+#			}
+#		}
+#	} else {
+#		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
+#	}
+#	return $result;
+#}
 
 
 sub send_msg_to_target {
@@ -2983,6 +2983,13 @@ sub register_at_foreign_servers {
             }
         }
         map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
+
+        # add macaddress to registration message
+        my ($host_ip, $host_port) = split(/:/, $hostname);
+        my $local_ip = &get_local_ip_for_remote_ip($host_ip);
+        my $network_interface= &get_interface_for_ip($local_ip);
+        my $host_mac = &get_mac_for_interface($network_interface);
+        &add_content2xml_hash($myhash, 'macaddress', $host_mac);
         
         # build registration message and send it
         my $foreign_server_msg = &create_xml_string($myhash);
@@ -3158,9 +3165,10 @@ foreach my $foreign_server (@foreign_server_list) {
     my $res = $known_server_db->add_dbentry( {table=>$known_server_tn, 
             primkey=>['hostname'],
             hostname=>$foreign_server,
+            macaddress=>"",
             status=>'not_jet_registered',
             hostkey=>"none",
-            loaded_modules => "", 
+            loaded_modules => "none", 
             timestamp=>$act_timestamp,
             } );
 }

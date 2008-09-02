@@ -26,6 +26,8 @@ my @functions = (
     "get_ip",
     "get_interface_for_ip",
     "get_interfaces",
+    "get_mac_for_interface",
+    "get_local_ip_for_remote_ip",
     "is_local",
     "run_as",
     "inform_all_other_si_server",
@@ -627,6 +629,79 @@ sub get_interfaces {
 	}
 
 	return @result;
+}
+
+sub get_local_ip_for_remote_ip {
+	my $remote_ip= shift;
+	my $result="0.0.0.0";
+
+	if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
+		if($remote_ip eq "127.0.0.1") {
+			$result = "127.0.0.1";
+		} else {
+			my $PROC_NET_ROUTE= ('/proc/net/route');
+
+			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+				or die "Could not open $PROC_NET_ROUTE";
+
+			my @ifs = <PROC_NET_ROUTE>;
+
+			close(PROC_NET_ROUTE);
+
+			# Eat header line
+			shift @ifs;
+			chomp @ifs;
+			foreach my $line(@ifs) {
+				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+				my $destination;
+				my $mask;
+				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+				if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
+					# destination matches route, save mac and exit
+					$result= &get_ip($Iface);
+					last;
+				}
+			}
+		}
+	} else {
+		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
+	}
+	return $result;
+}
+
+
+sub get_mac_for_interface {
+	my $ifreq= shift;
+	my $result;
+	if ($ifreq && length($ifreq) > 0) { 
+		if($ifreq eq "all") {
+			$result = "00:00:00:00:00:00";
+		} else {
+			my $SIOCGIFHWADDR= 0x8927;     # man 2 ioctl_list
+
+			# A configured MAC Address should always override a guessed value
+			if ($main::server_mac_address and length($main::server_mac_address) > 0) {
+				$result= $main::server_mac_address;
+			}
+
+			socket SOCKET, PF_INET, SOCK_DGRAM, getprotobyname('ip')
+				or die "socket: $!";
+
+			if(ioctl SOCKET, $SIOCGIFHWADDR, $ifreq) {
+				my ($if, $mac)= unpack 'h36 H12', $ifreq;
+
+				if (length($mac) > 0) {
+					$mac=~ m/^([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/;
+					$mac= sprintf("%s:%s:%s:%s:%s:%s", $1, $2, $3, $4, $5, $6);
+					$result = $mac;
+				}
+			}
+		}
+	}
+	return $result;
 }
 
 

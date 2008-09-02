@@ -43,6 +43,7 @@ my @events = (
 #	"import_dak_key",
 #	"remove_dak_key",
 #    "get_dak_queue",
+    "get_opsi_hosts",    
     );
 @EXPORT = @events;
 
@@ -1113,6 +1114,11 @@ sub trigger_activate_new {
 #    my @out_msg_l = ($out_msg);
 #    return @out_msg_l;
 #}
+
+
+sub get_opsi_hosts {
+
+}
 
 
 # vim:ts=4:shiftwidth:expandtab
