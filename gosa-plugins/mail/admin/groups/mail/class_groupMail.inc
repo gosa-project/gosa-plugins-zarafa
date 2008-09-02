@@ -896,6 +896,11 @@ I: Only insider delivery */
 
     /* Call parents save to prepare $this->attrs */
     plugin::save();
+   
+    /* Update sharefolder account name */ 
+    if(isset($this->parent->by_object['group']->cn)) {
+      $this->account_name = $this->parent->by_object['group']->cn;
+    }
 
     /* Save arrays */
     $this->attrs['gosaMailAlternateAddress']  = $this->gosaMailAlternateAddress;
