@@ -1139,8 +1139,9 @@ sub get_hosts_with_module {
 
     # Check localhost for module_name
     if (exists @{$main::known_modules->{'GosaPackages'}}[2]->{$module_name}) {
-        my ($remote_ip, $remote_port) = split(/:/, $source);
-        my $local_mac = &get_local_mac_for_remote_ip($remote_ip);
+        my ($local_ip, $local_port) = split(/:/, $target);
+        my $network_interface= &get_interface_for_ip($local_ip);
+        my $local_mac = &get_mac_for_interface($network_interface);
         &add_content2xml_hash($out_hash, "host", $local_mac);
     }
 
