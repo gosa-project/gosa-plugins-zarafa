@@ -472,7 +472,7 @@ class faiTemplate extends plugin
       $tmp = array();
       $attributes = array_merge($this->sub_Load_Later,$this->subAttributes);
       foreach($attributes as $attrs){
-        if($obj[$attrs] == ""){
+        if(!isset($obj[$attrs]) || $obj[$attrs] == ""){
           $obj[$attrs] = array();
         }
         $tmp[$attrs] =($obj[$attrs]);
