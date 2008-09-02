@@ -1138,7 +1138,7 @@ sub get_hosts_with_module {
     }
 
     # Check localhost for module_name
-    if (exists %{@{$main::known_modules->{'GosaPackages'}}[2]}->{$module_name}) {
+    if (exists @{$main::known_modules->{'GosaPackages'}}[2]->{$module_name}) {
         my ($remote_ip, $remote_port) = split(/:/, $source);
         my $local_mac = &get_local_mac_for_remote_ip($remote_ip);
         &add_content2xml_hash($out_hash, "host", $local_mac);
@@ -1148,7 +1148,7 @@ sub get_hosts_with_module {
     my $sql = "SELECT * FROM $main::known_server_tn WHERE loaded_modules LIKE '%$module_name%'"; 
     my $res = $main::known_server_db->select_dbentry($sql);
     while (my ($hit_id, $hit_hash) = each %$res) {
-        &add_content2xml_hash($out_hash, "host", %$hit_hash->{'macaddress'});
+        &add_content2xml_hash($out_hash, "host", $hit_hash->{'macaddress'});
     }
 
     return (&create_xml_string($out_hash));
