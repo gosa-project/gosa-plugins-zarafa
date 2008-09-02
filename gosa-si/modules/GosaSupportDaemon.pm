@@ -28,6 +28,7 @@ my @functions = (
     "get_interfaces",
     "get_mac_for_interface",
     "get_local_ip_for_remote_ip",
+    "get_local_mac_for_remote_ip",
     "is_local",
     "run_as",
     "inform_all_other_si_server",
@@ -702,6 +703,17 @@ sub get_mac_for_interface {
 		}
 	}
 	return $result;
+}
+
+
+sub get_local_mac_for_remote_ip {
+    my $ip = shift;
+
+    my $local_ip = &get_local_ip_for_remote_ip($ip);
+    my $network_interface= &get_interface_for_ip($local_ip);
+    my $mac = &get_mac_for_interface($network_interface);
+
+    return $mac
 }
 
 

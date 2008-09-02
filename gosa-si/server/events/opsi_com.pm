@@ -868,6 +868,7 @@ sub opsi_list_clients {
 }
 
 
+
 ## @method opsi_get_client_software
 # Reports client software inventory.
 # @param msg - STRING - xml message with tag hostId

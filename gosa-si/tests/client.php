@@ -76,6 +76,9 @@ for($count = 1; $count <= $zahl; $count++)
     # get_client_for_login_usr
     #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>harald</usr></xml>";
 
+    # List all si-server providing opsi
+    $data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>GOSA</target> <module_name>opsi_com</module_name> </xml>";
+
     ##################
     # recreate fai dbs
     #$data = "<xml> <header>gosa_recreate_fai_server_db</header> <target>GOSA</target> <source>GOSA</source></xml>"; 
@@ -149,7 +152,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_opsi_get_client_software</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId> </xml>";
 
     # List Opsi clients
-    $data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    #$data = "<xml> <header>gosa_opsi_list_clients</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Delete Opsi client
     #$data = "<xml> <header>gosa_opsi_del_client</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";

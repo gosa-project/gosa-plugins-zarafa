@@ -39,11 +39,11 @@ my @events = (
     "send_user_msg", 
     "get_available_kernel",
 	"trigger_activate_new",
+    "get_hosts_with_module",    
 #	"get_dak_keyring",
 #	"import_dak_key",
 #	"remove_dak_key",
 #    "get_dak_queue",
-    "get_opsi_hosts",    
     );
 @EXPORT = @events;
 
@@ -1115,10 +1115,45 @@ sub trigger_activate_new {
 #    return @out_msg_l;
 #}
 
+## @method get_hosts_with_module
+# Reports all GOsa-si-server providing the given module. 
+# @param msg - STRING - xml message with tag get_hosts_with_module
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
+# @return out_msg - STRING - feedback to GOsa in success and error case
+sub get_hosts_with_module {
+    my ($msg, $msg_hash, $session_id) = @_;
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+    my $header= @{$msg_hash->{'header'}}[0];
+    my $module_name = @{$msg_hash->{'module_name'}}[0];
+    my $out_hash = &create_xml_hash($header, $target, $source);
 
-sub get_opsi_hosts {
+    # Sanity check of module_name
+    if ((not exists $msg_hash->{'module_name'}) || (@{$msg_hash->{'module_name'}} != 1))  {
+        &add_content2xml_hash($out_hash, "error_string", "no module_name specified or module_name tag invalid");
+        &add_content2xml_hash($out_hash, "error", "module_name");
+        &main::daemon_log("$session_id ERROR: no module_name specified or module_name tag invalid: $msg", 1); 
+        return (&create_xml_string($out_hash));
+    }
 
+    # Check localhost for module_name
+    if (exists %{@{$main::known_modules->{'GosaPackages'}}[2]}->{$module_name}) {
+        my ($remote_ip, $remote_port) = split(/:/, $source);
+        my $local_mac = &get_local_mac_for_remote_ip($remote_ip);
+        &add_content2xml_hash($out_hash, "host", $local_mac);
+    }
+
+    # Search for opsi hosts in server_db
+    my $sql = "SELECT * FROM $main::known_server_tn WHERE loaded_modules LIKE '%$module_name%'"; 
+    my $res = $main::known_server_db->select_dbentry($sql);
+    while (my ($hit_id, $hit_hash) = each %$res) {
+        &add_content2xml_hash($out_hash, "host", %$hit_hash->{'macaddress'});
+    }
+
+    return (&create_xml_string($out_hash));
 }
+
 
 
 # vim:ts=4:shiftwidth:expandtab

@@ -44,6 +44,15 @@ foreach my $log_line (@$result) {
     }
 }
 
+# build vice versa event_hash, event_name => module
+my $event2module_hash = {};
+while (my ($module, $mod_events) = each %$event_hash) {
+    while (my ($event_name, $nothing) = each %$mod_events) {
+        $event2module_hash->{$event_name} = $module;
+    }
+
+}
+
 
 ## FUNCTIONS #################################################################
 
@@ -157,11 +166,11 @@ sub process_gosa_msg {
     my $target = @{$msg_hash->{'target'}}[0];
 
     # check local installed events
-    if( exists $event_hash->{$header} ) {
+    if( exists $event2module_hash->{$header} ) {
         # a event exists with the header as name
-        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+        &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
         no strict 'refs';
-        @out_msg_l = &{$event_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id );
+        @out_msg_l = &{$event2module_hash->{$header}."::$header"}( $msg, $msg_hash, $session_id );
 
     # check client registered events
     } else {

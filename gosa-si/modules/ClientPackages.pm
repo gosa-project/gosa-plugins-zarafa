@@ -69,6 +69,14 @@ foreach my $log_line (@$result) {
         &main::daemon_log("0 ERROR: ClientPackages - $log_line", 1);
     }
 }
+# build vice versa event_hash, event_name => module
+my $event2module_hash = {};
+while (my ($module, $mod_events) = each %$event_hash) {
+    while (my ($event_name, $nothing) = each %$mod_events) {
+        $event2module_hash->{$event_name} = $module;
+    }
+
+}
 
 # Unit tag can be defined in config
 if((not defined($main::gosa_unit_tag)) || length($main::gosa_unit_tag) == 0) {
@@ -286,10 +294,10 @@ sub process_incoming_msg {
                 @out_msg_l = &here_i_am($msg, $msg_hash, $session_id)
             } else {
                 # a event exists with the header as name
-                if( exists $event_hash->{$header} ) {
-                    &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event_hash->{$header}."'", 5);
+                if( exists $event2module_hash->{$header} ) {
+                    &main::daemon_log("$session_id INFO: found event '$header' at event-module '".$event2module_hash->{$header}."'", 5);
                     no strict 'refs';
-                    @out_msg_l = &{$event_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
+                    @out_msg_l = &{$event2module_hash->{$header}."::$header"}($msg, $msg_hash, $session_id);
 
                 # if no event handler is implemented   
                 } else {
