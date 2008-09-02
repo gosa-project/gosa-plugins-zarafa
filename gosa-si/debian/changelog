@@ -1,3 +1,9 @@
+gosa-si (1.2-1) etch; urgency=low
+
+  * New upstream version
+
+ -- Andreas Rettenberger <rettenberger@gonicus.de>  Tue, 02 Sep 2008 16:24:08 +0200
+
 gosa-si (1.1-1) etch; urgency=low
 
   * New upstream version
