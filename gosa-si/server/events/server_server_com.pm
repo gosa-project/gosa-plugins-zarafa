@@ -78,7 +78,8 @@ sub new_server {
     my $target = @{$msg_hash->{'target'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
-
+    my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
+    
     # sanity check
     if (ref $key eq 'HASH') {
         &main::daemon_log("$session_id ERROR: 'new_server'-message from host '$source' contains no key!", 1);
@@ -91,6 +92,7 @@ sub new_server {
         hostname => $source,
         status => "new_server",
         hostkey => $key,
+        loaded_modules => join(',', @loaded_modules),
         timestamp=>&get_time(),
     };
     my $res = $main::known_server_db->add_dbentry($func_dic);
@@ -126,7 +128,7 @@ sub new_server {
         &main::daemon_log("$session_id DEBUG: Inserting ".$len." entries to foreign_clients_db", 8);
         my $res = $main::foreign_clients_db->exec_statementlist(\@sql_list);
     }
-            
+
     # fetch all registered clients
     my $client_sql = "SELECT * FROM $main::known_clients_tn"; 
     my $client_res = $main::known_clients_db->exec_statement($client_sql);
@@ -139,13 +141,8 @@ sub new_server {
 
     # build registration message and send it
     my $out_msg = &create_xml_string($myhash);
-
-
-    # build confirm_new_server message
-    #my %data = ( key=>$key );
-    #my $out_msg = &build_msg('confirm_new_server', $main::server_address, $source, \%data);
     my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
-    
+
     return;
 }
 

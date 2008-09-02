@@ -150,7 +150,7 @@ my @job_queue_col_names = ("id INTEGER PRIMARY KEY",
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
-my @known_server_col_names = ("hostname", "status", "hostkey", "timestamp");
+my @known_server_col_names = ("hostname", "status", "hostkey", "loaded_modules", "timestamp");
 
 # holds all registrated clients
 our $known_clients_db;
