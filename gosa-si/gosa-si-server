@@ -2975,6 +2975,7 @@ sub register_at_foreign_servers {
         &add_content2xml_hash($myhash, 'key', $hostkey);
         map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
 
+        # add locally loaded gosa-si modules to registration message
         my $loaded_modules = {};
         while (my ($package, $pck_info) = each %$known_modules) {
             foreach my $act_module (keys(%{@$pck_info[2]})) {
@@ -3159,6 +3160,7 @@ foreach my $foreign_server (@foreign_server_list) {
             hostname=>$foreign_server,
             status=>'not_jet_registered',
             hostkey=>"none",
+            loaded_modules => "", 
             timestamp=>$act_timestamp,
             } );
 }

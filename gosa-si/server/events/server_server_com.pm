@@ -79,13 +79,12 @@ sub new_server {
     my $key = @{$msg_hash->{'key'}}[0];
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
     my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
-    
+
     # sanity check
     if (ref $key eq 'HASH') {
         &main::daemon_log("$session_id ERROR: 'new_server'-message from host '$source' contains no key!", 1);
         return;
     }
-
     # add foreign server to known_server_db
     my $func_dic = {table=>$main::known_server_tn,
         primkey=>['hostname'],
@@ -139,6 +138,15 @@ sub new_server {
     &add_content2xml_hash($myhash, 'key', $key);
     map(&add_content2xml_hash($myhash, 'client', @{$_}[0].",".@{$_}[4]), @$client_res);
 
+    # add locally loaded gosa-si modules to registration message
+    my $loaded_modules = {};
+    while (my ($package, $pck_info) = each %$main::known_modules) {
+        foreach my $act_module (keys(%{@$pck_info[2]})) {
+            $loaded_modules->{$act_module} = ""; 
+        }
+    }
+    map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
+
     # build registration message and send it
     my $out_msg = &create_xml_string($myhash);
     my $error =  &main::send_msg_to_target($out_msg, $source, $main::ServerPackages_key, 'confirm_new_server', $session_id); 
@@ -153,8 +161,9 @@ sub confirm_new_server {
     my $source = @{$msg_hash->{'source'}}[0];
     my $key = @{$msg_hash->{'key'}}[0];
     my @clients = exists $msg_hash->{'client'} ? @{$msg_hash->{'client'}} : qw();
+    my @loaded_modules = exists $msg_hash->{'loaded_modules'} ? @{$msg_hash->{'loaded_modules'}} : qw();
 
-    my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key' WHERE hostname='$source'"; 
+    my $sql = "UPDATE $main::known_server_tn SET status='$header', hostkey='$key', loaded_modules='".join(",",@loaded_modules)."' WHERE hostname='$source'"; 
     my $res = $main::known_server_db->update_dbentry($sql);
 
     # add clients of foreign server to known_foreign_clients_db
