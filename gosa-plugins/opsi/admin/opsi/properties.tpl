@@ -1,9 +1,9 @@
-<h2><img src='plugins/opsi/images/product.png' class='center' alt=''>&nbsp;{t}Opsi product properties{/t}</h2>
+<h2>{t}Opsi product properties{/t}</h2>
 
 
 {if $cfg_count == 0}
 <br>
-<b>{t}This product has no options.{/t}</b>
+<b>{t}This OPSI product has no options.{/t}</b>
 <br>
 <br>
 
