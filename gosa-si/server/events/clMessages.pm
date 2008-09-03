@@ -380,7 +380,7 @@ sub TASKBEGIN {
 		if (keys(%$res) == 1) {
 			&main::daemon_log("$session_id DEBUG: there is already one processing job in queue for host '$macaddress', run an update for this entry", 7);
 			my $sql_statement = "UPDATE $main::job_queue_tn ".
-                "SET result='$header $content', modified='1' ".
+                "SET result='$header $content', modified='1', siserver='localhost' ".
                 "WHERE status='processing' AND macaddress LIKE '$macaddress'";
 			my $err = $main::job_db->update_dbentry($sql_statement);
 			if (not defined  $err) {
@@ -427,7 +427,7 @@ sub TASKBEGIN {
 				}
 			}
 
-
+            # In any case add a new job to job queue
 			&main::daemon_log("$session_id DEBUG: add job to queue for host '$macaddress'", 7); 
 			my $func_dic = {table=>$main::job_queue_tn,
 					primkey=>['macaddress', 'headertag'],
@@ -441,7 +441,7 @@ sub TASKBEGIN {
 					macaddress=>$macaddress,
 					plainname=>$plain_name,
                     modified=>'1',
-                    siserver=>$source,
+                    siserver=>'localhost',
 			};
 			my ($err, $error_str) = $main::job_db->add_dbentry($func_dic);
 			if ($err != 0)  {

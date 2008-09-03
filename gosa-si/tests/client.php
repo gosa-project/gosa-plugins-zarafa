@@ -74,10 +74,10 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
 
     # get_client_for_login_usr
-    #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>harald</usr></xml>";
+    $data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>rettenbe</usr></xml>";
 
     # List all si-server providing opsi
-    $data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>opsi_com</module_name> </xml>";
+    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>opsi_com</module_name> </xml>";
 
     ##################
     # recreate fai dbs
