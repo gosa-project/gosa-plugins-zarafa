@@ -241,7 +241,7 @@ sub db_res2xml {
             $xml .= $xml_content;
             $xml .= "</$column_name>"; 
         }
-        $xml .= "</answer$i>";
+        $xml .= "</answer>";
 
     }
 
