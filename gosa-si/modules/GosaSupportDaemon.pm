@@ -28,7 +28,6 @@ my @functions = (
     "get_interfaces",
     "get_mac_for_interface",
     "get_local_ip_for_remote_ip",
-    "get_local_mac_for_remote_ip",
     "is_local",
     "run_as",
     "inform_all_other_si_server",
@@ -636,38 +635,34 @@ sub get_local_ip_for_remote_ip {
 	my $remote_ip= shift;
 	my $result="0.0.0.0";
 
-	if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
-		if($remote_ip eq "127.0.0.1") {
-			$result = "127.0.0.1";
-		} else {
-			my $PROC_NET_ROUTE= ('/proc/net/route');
+    if($remote_ip =~ /^(\d\d?\d?\.){3}\d\d?\d?$/) {
+        my $PROC_NET_ROUTE= ('/proc/net/route');
 
-			open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
-				or die "Could not open $PROC_NET_ROUTE";
+        open(PROC_NET_ROUTE, "<$PROC_NET_ROUTE")
+            or die "Could not open $PROC_NET_ROUTE";
 
-			my @ifs = <PROC_NET_ROUTE>;
+        my @ifs = <PROC_NET_ROUTE>;
 
-			close(PROC_NET_ROUTE);
+        close(PROC_NET_ROUTE);
 
-			# Eat header line
-			shift @ifs;
-			chomp @ifs;
-			foreach my $line(@ifs) {
-				my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
-				my $destination;
-				my $mask;
-				my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
-				$destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
-				$mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
-				if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
-					# destination matches route, save mac and exit
-					$result= &get_ip($Iface);
-					last;
-				}
-			}
-		}
-	} else {
+        # Eat header line
+        shift @ifs;
+        chomp @ifs;
+        foreach my $line(@ifs) {
+            my ($Iface,$Destination,$Gateway,$Flags,$RefCnt,$Use,$Metric,$Mask,$MTU,$Window,$IRTT)=split(/\s/, $line);
+            my $destination;
+            my $mask;
+            my ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Destination);
+            $destination= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+            ($d,$c,$b,$a)=unpack('a2 a2 a2 a2', $Mask);
+            $mask= sprintf("%d.%d.%d.%d", hex($a), hex($b), hex($c), hex($d));
+            if(new NetAddr::IP($remote_ip)->within(new NetAddr::IP($destination, $mask))) {
+                # destination matches route, save mac and exit
+                $result= &get_ip($Iface);
+                last;
+            }
+        }
+    } else {
 		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
 	}
 	return $result;
@@ -703,17 +698,6 @@ sub get_mac_for_interface {
 		}
 	}
 	return $result;
-}
-
-
-sub get_local_mac_for_remote_ip {
-    my $ip = shift;
-
-    my $local_ip = &get_local_ip_for_remote_ip($ip);
-    my $network_interface= &get_interface_for_ip($local_ip);
-    my $mac = &get_mac_for_interface($network_interface);
-
-    return $mac
 }
 
 
