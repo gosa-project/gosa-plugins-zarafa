@@ -582,20 +582,51 @@ sub opsi_get_product_properties {
           id  => 1,
       };
     }
-
     $res = $main::opsi_client->call($main::opsi_url, $callobj);
+
+    # JSON Query 2
+    $callobj = {
+      method  => 'getProductPropertyDefinitions_listOfHashes',
+      params  => [ $productId ],
+      id  => 1,
+    };
+
+    # Assemble options
+    my $res2 = $main::opsi_client->call($main::opsi_url, $callobj);
+    my $values = {};
+    my $descriptions = {};
+    if (not &check_opsi_res($res2)){
+        my $r= $res2->result;
+
+          foreach my $entr (@$r){
+            # Unroll values
+            my $cnv;
+            if (UNIVERSAL::isa( $entr->{'values'}, "ARRAY" )){
+              foreach my $v (@{$entr->{'values'}}){
+                $cnv.= "<value>$v</value>";
+              }
+            } else {
+              $cnv= $entr->{'values'};
+            }
+            $values->{$entr->{'name'}}= $cnv;
+            $descriptions->{$entr->{'name'}}= "<description>".$entr->{'description'}."</description>";
+          }
+    }
+
     if (not &check_opsi_res($res)){
         my $r= $res->result;
         foreach my $key (keys %{$r}) {
             my $item= "\n<item>";
             my $value= $r->{$key};
-            if (UNIVERSAL::isa( $value, "ARRAY" )){
-                foreach my $subval (@{$value}){
-                    $item.= "<$key>".xml_quote($subval)."</$key>";
-                }
-            } else {
-                $item.= "<$key>".xml_quote($value)."</$key>";
+            my $dsc= "";
+            my $vals= "";
+            if (defined $descriptions->{$key}){
+              $dsc= $descriptions->{$key};
             }
+            if (defined $values->{$key}){
+              $vals= $values->{$key};
+            }
+            $item.= "<$key>$dsc<default>".xml_quote($value)."</default>$vals</$key>";
             $item.= "</item>";
             $xml_msg=~ s/<xxx><\/xxx>/$item<xxx><\/xxx>/;
         }
