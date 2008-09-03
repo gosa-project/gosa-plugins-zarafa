@@ -427,15 +427,17 @@ class appgroup extends plugin
     $div = new divSelectBox("appgroup");
     $div->SetHeight(300);
     $departments = array();
-    $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
-    foreach($res as $value){
-      $fdn = $value['dn'];
-      $fdn = preg_replace("/".normalizePreg($this->curbase)."/","",$fdn);
-      $fdn= @LDAP::fix($fdn);
-      if($value["description"][0]!=".."){
-        $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
-      }else{
-        $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
+    if(!$this->enableReleaseManagement){
+      $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
+      foreach($res as $value){
+        $fdn = $value['dn'];
+        $fdn = preg_replace("/".normalizePreg($this->curbase)."/","",$fdn);
+        $fdn= @LDAP::fix($fdn);
+        if($value["description"][0]!=".."){
+          $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
+        }else{
+          $departments[$value['dn']]=convert_department_dn($fdn)." ["._("Back")."]";
+        }
       }
     }
 
