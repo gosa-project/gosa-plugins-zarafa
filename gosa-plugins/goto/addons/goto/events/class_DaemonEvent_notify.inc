@@ -24,14 +24,14 @@ class DaemonEvent_notify extends DaemonEvent
 {
   var $visible_for = USER_EVENT;
 
-  var $users = array();
-  var $groups= array(); 
+  var $user = array();
+  var $group= array(); 
 
   var $message = "";
   var $subject = "";
   var $from    = "";
 
-  var $attributes = array("from","users","groups","message","subject");
+  var $attributes = array("from","user","group","message","subject");
 
   public function __construct($config,$data = array())
   {
@@ -71,8 +71,8 @@ class DaemonEvent_notify extends DaemonEvent
     $smarty->assign("is_new"      , $this->is_new);
     $smarty->assign("timestamp"   , $this->get_time_select());
     
-    $smarty->assign("users" , $this->users);
-    $smarty->assign("groups" , $this->groups);
+    $smarty->assign("user" , $this->user);
+    $smarty->assign("group" , $this->group);
     
     $smarty->assign("add_str", msgPool::addButton(_("Target")));
     $smarty->assign("del_str", msgPool::delButton(_("Target")));
@@ -99,7 +99,7 @@ class DaemonEvent_notify extends DaemonEvent
     if(empty($this->from)){
       $msgs[] = msgPool::required(_("From"));
     }
-    if(!count($this->groups) && !count($this->users)){
+    if(!count($this->group) && !count($this->user)){
       $msgs[] = msgPool::required(_("Target"));
     }
     return($msgs);
@@ -110,17 +110,17 @@ class DaemonEvent_notify extends DaemonEvent
   {
     DaemonEvent::save_object();
 
-    if(isset($_POST['del_any_target']) && isset($_POST['groups'])){
-      foreach($_POST['groups'] as $id){
-        if(isset($this->groups[$id])){
-          unset($this->groups[$id]);
+    if(isset($_POST['del_any_target']) && isset($_POST['group'])){
+      foreach($_POST['group'] as $id){
+        if(isset($this->group[$id])){
+          unset($this->group[$id]);
         }
       }
     }
-    if(isset($_POST['del_any_target']) && isset($_POST['users'])){
-      foreach($_POST['users'] as $id){
-        if(isset($this->users[$id])){
-          unset($this->users[$id]);
+    if(isset($_POST['del_any_target']) && isset($_POST['user'])){
+      foreach($_POST['user'] as $id){
+        if(isset($this->user[$id])){
+          unset($this->user[$id]);
         }
       }
     }
@@ -143,8 +143,8 @@ class DaemonEvent_notify extends DaemonEvent
       $add = array($add);
     }
     foreach($add as $target){
-      if(!in_array($target,$this->users)){
-        $this->users[] = $target;
+      if(!in_array($target,$this->user)){
+        $this->user[] = $target;
       }
     }
   }
@@ -157,8 +157,8 @@ class DaemonEvent_notify extends DaemonEvent
       $add = array($add);
     }
     foreach($add as $target){
-      if(!in_array($target,$this->groups)){
-        $this->groups[] = $target;
+      if(!in_array($target,$this->group)){
+        $this->group[] = $target;
       }
     }
   }
@@ -200,8 +200,8 @@ class DaemonEvent_notify extends DaemonEvent
   {
     $ret = DaemonEvent::save();
     $ret['delivery_time'] = $ret['timestamp'];
-    $ret['users']   = array_values( $ret['users']);
-    $ret['groups']  = array_values( $ret['groups']);
+    $ret['user']   = array_values( $ret['user']);
+    $ret['group']  = array_values( $ret['group']);
     $ret['subject'] = base64_encode($ret['subject']);
     $ret['message'] = base64_encode($ret['message']);
     return($ret);

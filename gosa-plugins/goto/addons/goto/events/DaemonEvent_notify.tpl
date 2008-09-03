@@ -36,15 +36,15 @@
           <td style="width:50%;">
             <b>{t}Target users{/t}</b>
             <br>
-			<select style="height:180px;width:100%" name="users[]"  multiple size=4>
-				{html_options options=$users}
+			<select style="height:180px;width:100%" name="user[]"  multiple size=4>
+				{html_options options=$user}
 			</select>
           </td>
           <td>
             <b>{t}Target groups{/t}</b>
             <br>
-			<select style="height:180px;width:100%" name="groups[]"  multiple size=4>
-				{html_options options=$groups}
+			<select style="height:180px;width:100%" name="group[]"  multiple size=4>
+				{html_options options=$group}
 			</select>
           </td>
         </tr>
