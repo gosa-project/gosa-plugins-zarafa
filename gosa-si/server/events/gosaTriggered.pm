@@ -86,8 +86,8 @@ sub send_user_msg {
     #my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);   # just for debugging
     my $subject = @{$msg_hash->{'subject'}}[0];
     my $from = @{$msg_hash->{'from'}}[0];
-    my @users = exists $msg_hash->{'users'} ? @{$msg_hash->{'users'}} : () ;
-	my @groups = exists $msg_hash->{'groups'} ? @{$msg_hash->{'groups'}} : ();
+    my @users = exists $msg_hash->{'user'} ? @{$msg_hash->{'user'}} : () ;
+	my @groups = exists $msg_hash->{'group'} ? @{$msg_hash->{'group'}} : ();
     my $delivery_time = @{$msg_hash->{'delivery_time'}}[0];
     #my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);   # just for debugging
     my $message = @{$msg_hash->{'message'}}[0];
@@ -120,6 +120,12 @@ sub send_user_msg {
 	my @receiver_l;
 	@users = map(push(@receiver_l, "u_$_"), @users);
 	@groups = map(push(@receiver_l, "g_$_"), @groups);
+
+    # Sanitiy check of receivers list
+    if (@receiver_l == 0) {
+        &main::daemon_log("$session_id ERROR: 'send_usr_msg'-message contains neither a 'usr' nor a 'group' tag. No receiver specified.", 1); 
+        return;
+    }
 
     # add incoming message to messaging_db
     my $func_dic = {table=>$main::messaging_tn,
