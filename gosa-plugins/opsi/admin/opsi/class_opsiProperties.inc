@@ -44,7 +44,7 @@ class opsiProperties extends plugin
   {
     foreach($this->cfg as $name => $value){
       if(isset($_POST['value_'.$name])){
-        $this->cfg[$name] = validate(get_post('value_'.$name));
+        $this->cfg[$name]['DEFAULT'] = validate(get_post('value_'.$name));
       }
     }
   }

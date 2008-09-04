@@ -34,6 +34,10 @@ class opsiGeneric extends plugin
   public  $note         = ""; // A note
   public  $description  = ""; // The client description
 
+  public  $initial_mac          = ""; 
+  public  $initial_note         = ""; 
+  public  $initial_description  = ""; 
+
   private $init_failed = FALSE; // Is true if the opsi communication failed
   private $parent_mode = TRUE;  // Is true if this is a standlone plugin. (Not samba)
   private $is_installed= FALSE; // Is true is the hast is already installed.
@@ -102,7 +106,8 @@ class opsiGeneric extends plugin
                 "description"  => "DESCRIPTION",
                 "mac"          => "MAC", 
                 "note"         => "NOTES") as $des => $src){
-            $this->$des = $entry[$src][0]['VALUE'];
+            $des2 = "initial_".$des;
+            $this->$des2 = $this->$des = $entry[$src][0]['VALUE'];
           } 
           break;
         }
@@ -315,12 +320,17 @@ class opsiGeneric extends plugin
       }
     }else{
 
-      /* Update client modifcations 
+      /* Update client modifcations.
+          -Only if necessary  
        */
-      $this->opsi->modify_client($this->hostId,$this->mac,$this->note,$this->description);
-      if($this->opsi->is_error()){
-        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
-        return;
+      if($this->note != $this->initial_note || 
+          $this->description != $this->initial_description ||
+          $this->mac != $this->initial_mac){
+        $this->opsi->modify_client($this->hostId,$this->mac,$this->note,$this->description);
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+          return;
+        }
       }
     }
 
@@ -360,9 +370,12 @@ class opsiGeneric extends plugin
      */
     foreach($this->a_selectedLocalProducts as $name => $data){
       if(isset($del[$name]) || isset($add[$name])) continue;
-      $diff = array_diff($data['CFG'],$this->a_initial_selectedLocalProducts[$name]['CFG']);
-      if(count($diff)){
-        $this->opsi->set_product_properties($name,$diff,$this->hostId);
+
+      /* Update product properties if there are changes 
+       */
+      #if(serialize($data['CFG']) != serialize($this->a_initial_selectedLocalProducts[$name]['CFG'])){
+      if($data['CFG'] != $this->a_initial_selectedLocalProducts[$name]['CFG']){
+        $this->opsi->set_product_properties($name,$data['CFG'],$this->hostId);
         if($this->opsi->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
           return;

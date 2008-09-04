@@ -13,7 +13,18 @@
 {foreach from=$cfg item=item key=key}
 	<tr>
 		<td>{$key}</td>
-		<td><input type='input' name='value_{$key}' value="{$item}"></td>
+		<td>
+			{if $item.VALUE_CNT}
+				<select name="value_{$key}" style='width:180px;'>
+				{foreach from=$item.VALUE key=k item=i}
+					<option {if $item.DEFAULT == $i} selected {/if} value="{$i}">{$i}</option>
+				{/foreach}
+				</select>
+			{else}
+				<input type='input' name='value_{$key}' value="{$item.DEFAULT}" style='width:280px;'>
+			{/if}
+
+		</td>
 	</tr>
 {/foreach}
 </table>

@@ -259,7 +259,20 @@ class opsi extends gosaSupportDaemon
     if(isset($res['XML'][0]['ITEM'])){   
       foreach($res['XML'][0]['ITEM'] as $entry){
         foreach($entry as $name => $val){
-          $items[$name] = $val['0']['VALUE'];
+
+          foreach(array("DESCRIPTION","DEFAULT") as $attr){
+            $items[$name][$attr] = "";
+            if(isset($val[0][$attr])){
+              $items[$name][$attr] = $val[0][$attr][0]['VALUE'];
+            }
+          }
+          $items[$name]['VALUE'] = array();
+          if(isset($val['0']['VALUE'])){
+            foreach($val['0']['VALUE'] as $value){
+              $items[$name]['VALUE'][] = $value['VALUE'];
+            }
+          }
+          $items[$name]['VALUE_CNT'] = count($items[$name]['VALUE']);
         }
       }
     }
@@ -292,7 +305,7 @@ class opsi extends gosaSupportDaemon
     /* Add properties */
     $data['item'] = array();
     foreach($cfg as $name => $value){
-      $data['item'][] = "<name>".$name."</name><value>".$value."</value>";
+      $data['item'][] = "<name>".$name."</name><value>".$value['DEFAULT']."</value>";
     }  
 
     /* Query SI server */
