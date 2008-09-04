@@ -1151,14 +1151,20 @@ sub get_hosts_with_module {
         &add_content2xml_hash($out_hash, "host", $local_mac);
     }
 
+    
+    my $out_msg = &create_xml_string($out_hash);
+
     # Search for opsi hosts in server_db
     my $sql = "SELECT * FROM $main::known_server_tn WHERE loaded_modules LIKE '%$module_name%'"; 
     my $res = $main::known_server_db->select_dbentry($sql);
     while (my ($hit_id, $hit_hash) = each %$res) {
-        &add_content2xml_hash($out_hash, "host", $hit_hash->{'macaddress'});
+        $out_msg =~ s/<\/xml>/<result>host$hit_id<\/result> <\/xml>/;
+        my $host_infos = "<ip>".$hit_hash->{'hostname'}."</ip>";
+        $host_infos .= " <mac>".$hit_hash->{'macaddress'}."</mac>"; 
+        $out_msg =~  s/<\/xml>/\n<host$hit_id> $host_infos <\/host$hit_id> \n <\/xml>/;
     }
 
-    return (&create_xml_string($out_hash));
+    return $out_msg;
 }
 
 
