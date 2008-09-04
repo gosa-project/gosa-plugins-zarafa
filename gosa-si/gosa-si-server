@@ -1102,7 +1102,7 @@ sub msg_to_decrypt {
 						$done = 1; 
 						my $hostname = $res->{1}->{'hostname'};
 						$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-						#print STDERR "target is a client address in known_clients -> process here\n";
+                        #print STDERR "target is a client address in known_clients -> process here\n";
                         my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
                         if ($source eq "GOSA") {
                             $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
