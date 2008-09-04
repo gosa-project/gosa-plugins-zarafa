@@ -1057,11 +1057,23 @@ sub msg_to_decrypt {
 		my $not_found_in_known_server_db = 0;
 		my $not_found_in_foreign_clients_db = 0;
         my $local_address;
+        my $local_mac;
         my ($target_ip, $target_port) = split(':', $target);
+        
+        # Determine the local ip address if target is an ip address
 		if ($target =~ /^\d+\.\d+\.\d+\.\d+:\d+$/) {
 			$local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
 		} else {
             $local_address = $server_address;
+        }
+        
+        # Determine the local mac address if target is a mac address
+        if ($target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i) {
+            my $loc_ip = &get_local_ip_for_remote_ip($heap->{'remote_ip'});
+            my $network_interface= &get_interface_for_ip($loc_ip);
+            $local_mac = &get_mac_for_interface($network_interface);
+        } else {
+            $local_mac = $server_mac_address;
         }
 
         # target and source is equal to GOSA -> process here
@@ -1073,7 +1085,7 @@ sub msg_to_decrypt {
 
         # target is own address without forward_to_gosa-tag -> process here
         if (not $done) {
-            if (($target eq $local_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
+            if ((($target eq $local_address) || ($target eq $local_mac) ) && (not exists $msg_hash->{'forward_to_gosa'})) {
                 $done = 1;
                 if ($source eq "GOSA") {
                     $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
@@ -1106,7 +1118,7 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if (($target eq $local_address) && (defined $forward_to_gosa)){
+            if ((($target eq $local_address) || ($target eq $local_mac) ) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
                 if ($gosa_at ne $local_address) {
                     $done = 1;
@@ -1139,7 +1151,7 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if (($target eq $local_address) && (defined $forward_to_gosa)){
+            if ((($target eq $local_address) || ($target eq $local_mac) ) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
                 if ($gosa_at eq $local_address) {
                     my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
@@ -1187,7 +1199,7 @@ sub msg_to_decrypt {
 
         # target is a server address -> forward to server
         if (not $done) {
-            $sql = "SELECT * FROM $known_server_tn WHERE hostname='$target'";
+            $sql = "SELECT * FROM $known_server_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
             $res = $known_server_db->select_dbentry($sql);
             if (keys(%$res) > 0) {
                 my $hostkey = $res->{1}->{'hostkey'};
@@ -1200,7 +1212,6 @@ sub msg_to_decrypt {
 
                 &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
                 $done = 1;
-                #print STDERR "target is a server address -> forward to server\n";
             } else {
 				$not_found_in_known_server_db = 1;
 			}

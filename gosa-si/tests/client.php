@@ -77,7 +77,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_get_client_for_login_usr</header> <target>GOSA</target> <source>GOSA</source> <usr>rettenbe</usr></xml>";
 
     # List all si-server providing opsi
-    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>opsi_com</module_name> </xml>";
+    #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.3.67.111:20081</target> <module_name>mailqueue_com</module_name> </xml>";
 
     ##################
     # recreate fai dbs
@@ -88,7 +88,8 @@ for($count = 1; $count <= $zahl; $count++)
     ###########
     # messaging 
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>00:01:6c:9d:aa:16</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
 
     ################
     # logHandling.pm
