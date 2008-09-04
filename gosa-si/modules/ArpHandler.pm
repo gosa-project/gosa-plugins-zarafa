@@ -40,16 +40,16 @@ my $ldap;
 
 my %cfg_defaults =
 (
-	"ArpHandler" => {
-		"enabled"           => [\$arp_enabled,         "true"],
-		"interface"       => [\$arp_interface,    "all"],
-	},
-	"server" => {
-		"ldap-uri"            => [\$ldap_uri,            ""],
-		"ldap-base"           => [\$ldap_base,           ""],
-		"ldap-admin-dn"       => [\$ldap_admin_dn,       ""],
-		"ldap-admin-password" => [\$ldap_admin_password, ""],
-	},
+    "ArpHandler" => {
+        "enabled"             => [\$arp_enabled,         "true"],
+        "interface"           => [\$arp_interface,       "all"],
+    },
+    "server" => {
+        "ldap-uri"            => [\$ldap_uri,            ""],
+        "ldap-base"           => [\$ldap_base,           ""],
+        "ldap-admin-dn"       => [\$ldap_admin_dn,       ""],
+        "ldap-admin-password" => [\$ldap_admin_password, ""],
+    },
 );
 
 #===  FUNCTION  ================================================================
@@ -58,7 +58,7 @@ my %cfg_defaults =
 #      RETURNS:  nothing
 #  DESCRIPTION:  read cfg_file and set variables
 #===============================================================================
-sub read_configfile {
+sub local_read_configfile {
 	my $cfg;
 	if( defined( $main::cfg_file) && ( (-s $main::cfg_file) > 0 )) {
 		if( -r $main::cfg_file ) {
@@ -82,7 +82,7 @@ sub get_module_info {
 		undef,
 	);
 
-	&read_configfile();
+	&local_read_configfile();
 	# Don't start if some of the modules are missing
 	if(($arp_enabled eq 'true') && $start_service) {
 		if($lookup_vendor) {
