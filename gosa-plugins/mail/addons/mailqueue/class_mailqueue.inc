@@ -103,7 +103,7 @@ class mailqueue extends plugin
         $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->OrderBy,$this->SortType,$this->range));
         if($this->si_queue->is_error()){
           unset($this->ServerList[$mac]);
-          msg_dialog::display(_("Error"),sprintf(_("The server '%s' from server list, due to daemon communication problems, the error was: %s"),$name,"<b>".msgPool::siError($this->si_queue->get_error()."</b>")),ERROR_DIALOG);
+          msg_dialog::display(_("Error"),sprintf(_("The server '%s' was removed from the server list, due to communication problems with the GOsa daemon, the error was: %s"),$name,"<b>".msgPool::siError($this->si_queue->get_error()."</b>")),ERROR_DIALOG);
         }
       }
     }else{
