@@ -33,6 +33,7 @@ my @functions = (
     "inform_all_other_si_server",
     "read_configfile",
     "check_opsi_res",
+    "calc_timestamp",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -44,6 +45,7 @@ use MIME::Base64;
 use XML::Simple;
 use Data::Dumper;
 use Net::DNS;
+use DateTime;
 
 
 my $op_hash = {
@@ -822,6 +824,34 @@ sub check_opsi_res {
         return 1, $main::opsi_client->status_line;
     }
     return 0;
+}
+
+sub calc_timestamp {
+    my ($timestamp, $operation, $value) = @_ ;
+    my $res_timestamp = 0;
+    
+    $value = int($value);
+    $timestamp = int($timestamp);
+    $timestamp =~ /(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/;
+    my $dt = DateTime->new( year   => $1,
+            month  => $2,
+            day    => $3,
+            hour   => $4,
+            minute => $5,
+            second => $6,
+            );
+
+    if ($operation eq "plus" || $operation eq "+") {
+        $dt->add( seconds => $value);
+        $res_timestamp = $dt->ymd('').$dt->hms('');
+    }
+
+    if ($operation eq "minus" || $operation eq "-") {
+        $dt->subtract(seconds => $value);
+        $res_timestamp = $dt->ymd('').$dt->hms('');
+    }
+
+    return $res_timestamp;
 }
 
 

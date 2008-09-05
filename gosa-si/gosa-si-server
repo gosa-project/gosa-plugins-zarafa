@@ -54,7 +54,6 @@ use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 use Time::HiRes qw( usleep);
-use DateTime;
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -210,6 +209,10 @@ my $job_queue_opsi_delay = 10;
 our $opsi_client;
 our $opsi_url;
  
+# Lifetime of logged in user information. If no update information comes after n seconds, 
+# the user is expeceted to be no longer logged in or the host is no longer running. Because
+# of this, the user is deleted from login_users_db
+our $logged_in_user_date_of_expiry = 600;
 
 
 %cfg_defaults = (
@@ -247,6 +250,7 @@ our $opsi_url;
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],
+    "user-date-of-expiry" => [\$logged_in_user_date_of_expiry, 600],
     },
 "ServerPackages"=> {
     "address"      => [\$foreign_server_string, ""],

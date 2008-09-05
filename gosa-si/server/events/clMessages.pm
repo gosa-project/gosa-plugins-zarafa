@@ -208,6 +208,20 @@ sub CURRENTLY_LOGGED_IN {
         &main::daemon_log("$session_id WARNING: delete user '$obsolete_user' at client '$source' from login_user_db", 3); 
     }
 
+    # Delete all users which logged in information is older than their logged_in_user_date_of_expiry
+    my $act_time = &get_time();
+    my $expiry_date = &calc_timestamp($act_time, "minus", $main::logged_in_user_date_of_expiry); 
+
+    $sql_statement = "SELECT * FROM $main::login_users_tn WHERE CAST(timestamp as INTEGER)<$expiry_date"; 
+    $db_res = $main::login_users_db->select_dbentry($sql_statement);
+
+    while( my($hit_id, $hit) = each(%{$db_res}) ) {
+        &main::daemon_log("$session_id INFO: user '".$hit->{'user'}."' is no longer reported to be logged in at host '".$hit->{'client'}."'", 5);
+        my $sql = "DELETE FROM $main::login_users_tn WHERE (client='".$hit->{'client'}."' AND user='".$hit->{'user'}."')"; 
+        my $res =  $main::login_users_db->del_dbentry($sql);
+        &main::daemon_log("$session_id INFO: delete user '".$hit->{'user'}."' at client '".$hit->{'client'}."' from login_user_db", 5); 
+    }
+
     return;
 }
 
