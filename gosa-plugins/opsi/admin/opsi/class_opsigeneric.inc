@@ -455,7 +455,7 @@ class opsiGeneric extends plugin
     $to_update = array();
     if( !$this->initially_was_account || 
         $this->s_selectedNetbootProduct != $this->s_initial_selectedNetbootProduct){
-      $to_update = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct];
+      $to_update = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
     }elseif(count($diffs)){
       $to_update = $diffs;
     }
