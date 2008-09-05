@@ -15,6 +15,7 @@ class opsiGeneric extends plugin
   /* Contains a list of all available netboot products 
    */
   private $a_availableNetbootProducts = array();
+  private $a_initial_availableNetbootProducts = array();
   private $s_selectedNetbootProduct = "";  
   private $s_initial_selectedNetbootProduct = "";  
 
@@ -90,7 +91,7 @@ class opsiGeneric extends plugin
 
     /* Try to load client infos from the gosa support daemon
      */
-    if($this->hostId != "new"){
+    if(! ($this->hostId == "new" || !empty($this->mac)  )){
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
 
@@ -114,14 +115,21 @@ class opsiGeneric extends plugin
       }
     }
 
-    /* Fetch all product infos from support daemon
-     */     
-    if(!$err){
+    /* Read informations about available netboot products. 
+        If not already done, before.
+     */
+    if(!$err && !count($this->a_availableNetbootProducts)){
       $this->a_availableNetbootProducts = $this->opsi->get_netboot_products();
+      ksort($this->a_availableNetbootProducts);
       $err |= $this->opsi->is_error();
     }
-    if(!$err) {
+
+    /* Read informations about available netboot products. 
+        If not already done, before.
+     */
+    if(!$err && !count($this->a_availableLocalProducts)) {
       $this->a_availableLocalProducts   = $this->opsi->get_local_products();
+      ksort($this->a_availableLocalProducts);
       $err |= $this->opsi->is_error();
     }
 
@@ -129,12 +137,22 @@ class opsiGeneric extends plugin
      */
     if(!$err && !empty($this->hostId)) {
       $tmp = array_keys($this->opsi->get_netboot_products($this->hostId));
-      if(count($tmp)){
+      $err |= $this->opsi->is_error();
+      if(count($tmp) && !$err && !isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
         $this->s_selectedNetbootProduct = $tmp[0];
+      
+        /* Read configuration for "Netboot Products" */
+        if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct])){
+          $CFG = $this->opsi->get_product_properties($this->s_selectedNetbootProduct,$this->hostId);
+          $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'] = $CFG;
+        }
       }
       $err |= $this->opsi->is_error();
     }
-    if(!$err && !empty($this->hostId)) {
+
+    /* Get all selected local products 
+     */
+    if(!$err && !empty($this->hostId) && !count($this->a_selectedLocalProducts)) {
       $tmp = $this->opsi->get_local_products($this->hostId); 
       $err |= $this->opsi->is_error();
       $this->a_selectedLocalProducts = $tmp;
@@ -144,28 +162,34 @@ class opsiGeneric extends plugin
      */
     if(!$err && !empty($this->hostId)) {
       foreach($this->a_selectedLocalProducts as $name => $data){
-        $CFG = $this->opsi->get_product_properties($name,$this->hostId);
-        $err |= $this->opsi->is_error();
-        $this->a_selectedLocalProducts[$name]['CFG'] = $CFG;
+        if(!$err && !isset($this->a_selectedLocalProducts[$name]['CFG'])){
+          $CFG = $this->opsi->get_product_properties($name,$this->hostId);
+          $err |= $this->opsi->is_error();
+          $this->a_selectedLocalProducts[$name]['CFG'] = $CFG;
+        }
       }
     }
   
     /* Check if everything went fine else reset everything and display a retry button 
      */
     if($err){
-      $this->a_availableNetbootProducts = array();
-      $this->s_selectedNetbootProduct = "";  
-      $this->s_initial_selectedNetbootProduct = "";  
-      $this->a_availableLocalProducts = array();
-      $this->a_selectedLocalProducts = array();
-      $this->a_initial_selectedLocalProducts = array();
       $this->init_failed = TRUE;
+      
     }else{
 
       /* Remember initial settings */ 
       $this->is_account = $this->initially_was_account;
       $this->a_initial_selectedLocalProducts = $this->a_selectedLocalProducts;
       $this->s_initial_selectedNetbootProduct = $this->s_selectedNetbootProduct;
+      $this->a_initial_availableNetbootProducts = $this->a_availableNetbootProducts;
+
+      /* Ensure that a valid netboot is selected product is.
+       */
+      if(empty($this->s_selectedNetbootProduct)){
+        $this->s_selectedNetbootProduct = key($this->a_availableNetbootProducts);
+        echo $this->s_selectedNetbootProduct;
+      }
+    
     }
   }
 
@@ -260,7 +284,6 @@ class opsiGeneric extends plugin
 
     /* Create list of available local products 
      */
-    ksort($this->a_availableLocalProducts);
     foreach($this->a_availableLocalProducts as $name => $data){
       if(isset($this->a_selectedLocalProducts[$name])) continue;
 
@@ -294,7 +317,14 @@ class opsiGeneric extends plugin
       $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
     }
 
-    ksort($this->a_availableNetbootProducts);
+    /* Check if netboot product is configurable 
+     */
+    $cfg_able =FALSE;
+    if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
+      $cfg_able = count($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']);
+    }
+
+    $smarty->assign("netboot_configurable",$cfg_able);
     $smarty->assign("hostId", $this->hostId);
     $smarty->assign("divSLP", $divSLP->DrawList());
     $smarty->assign("divALP", $divALP->DrawList());
@@ -334,10 +364,18 @@ class opsiGeneric extends plugin
       }
     }
 
+
+    /***********
+      Detect local netboot product changes
+       - Check which products were removed.
+       - Check which products were added. 
+     ***********/
+
+
     /* Detect which products were removed an which added.
      */
-    $add = array_diff_assoc($this->a_selectedLocalProducts,$this->a_initial_selectedLocalProducts);
     $del = array_diff_assoc($this->a_initial_selectedLocalProducts,$this->a_selectedLocalProducts);
+    $add = array_diff_assoc($this->a_selectedLocalProducts,$this->a_initial_selectedLocalProducts);
 
     /* Remove products from client
      */
@@ -350,6 +388,7 @@ class opsiGeneric extends plugin
     }
     
     /* Add products to client
+       And set the product properties.
      */
     foreach($add as $name => $data){
       $this->opsi->add_product_to_client($name,$this->hostId);
@@ -373,15 +412,21 @@ class opsiGeneric extends plugin
 
       /* Update product properties if there are changes 
        */
-      #if(serialize($data['CFG']) != serialize($this->a_initial_selectedLocalProducts[$name]['CFG'])){
-      if($data['CFG'] != $this->a_initial_selectedLocalProducts[$name]['CFG']){
-        $this->opsi->set_product_properties($name,$data['CFG'],$this->hostId);
+      $diffs = $this->get_config_changes($data['CFG'],$this->a_initial_selectedLocalProducts[$name]['CFG']);
+      if(count($diffs)){
+        $this->opsi->set_product_properties($name,$diffs,$this->hostId);
         if($this->opsi->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);    
           return;
         }
       }
     }
+
+    /*********
+      Detect Netboot product changes
+       - Check if another netboot product was selected. 
+       - Check if the product properties were changes.
+     *********/
 
     /* Update used netboot product. 
      */
@@ -399,6 +444,49 @@ class opsiGeneric extends plugin
         return;
       }
     }
+
+    /* Check if we have to update the netboot product properties 
+        This is the case, if this product is newly selected.
+        Or if there was at least one configuration attribute modified.
+     */
+    $cfg_1 = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
+    $cfg_2 = $this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
+    $diffs = $this->get_config_changes($cfg_1,$cfg_2);
+    $to_update = array();
+    if( !$this->initially_was_account || 
+        $this->s_selectedNetbootProduct != $this->s_initial_selectedNetbootProduct){
+      $to_update = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct];
+    }elseif(count($diffs)){
+      $to_update = $diffs;
+    }
+
+    if(count($to_update)){
+      $name = $this->s_selectedNetbootProduct;
+      $this->opsi->set_product_properties($name,$to_update,$this->hostId);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        return;
+      }
+    }
+  }
+
+  
+  public function get_config_changes($c1,$c2)
+  {
+    /* Get key which are not present in both entries 
+     */
+    $res = array();
+    foreach($c2 as $name => $value){
+      if(!isset($c1[$name]) || $c1[$name]['DEFAULT'] != $c2[$name]['DEFAULT']){
+        $res[$name] = $c2[$name];
+      }
+    }
+    foreach($c1 as $name => $value){
+      if(!isset($c2[$name]) || $c2[$name]['DEFAULT'] != $c1[$name]['DEFAULT']){
+        $res[$name] = $c1[$name];
+      }
+    }
+    return($res);
   }
 
 
@@ -438,8 +526,13 @@ class opsiGeneric extends plugin
       $CFG = $this->dialog->get_cfg();
       if(isset($this->a_selectedLocalProducts[$pro])){
         $this->a_selectedLocalProducts[$pro]['CFG'] = $CFG;
+        $this->dialog = NULL;
+      }elseif($this->s_selectedNetbootProduct == $pro){
+        $this->a_availableNetbootProducts[$pro]['CFG'] = $CFG;
+        $this->dialog = NULL;
+      }else{
+        trigger_error("Fatal, unknown product was configured.");
       }
-      $this->dialog = NULL;
     }
 
     /* Save html post
@@ -468,6 +561,15 @@ class opsiGeneric extends plugin
       if(isset($_POST['opsi_netboot_product'])){
         $SNP = trim($_POST['opsi_netboot_product']);
         if(isset($this->a_availableNetbootProducts[$SNP])){
+
+          if(!isset($this->a_availableNetbootProducts[$SNP]['CFG'])){
+            $CFG = $this->opsi->get_product_properties($SNP);
+            $this->a_availableNetbootProducts[$SNP]['CFG'] = $CFG;
+            if($this->opsi->is_error()){
+              $this->init_failed = TRUE;
+              return;
+            }
+          }
           $this->s_selectedNetbootProduct = $SNP;
         }
       }
@@ -475,6 +577,15 @@ class opsiGeneric extends plugin
       /* Add/remove/edit local products 
        */
       foreach($_POST as $name => $value){
+
+        /* Check if netboot product configuration is requested 
+         */
+        if(preg_match("/^configure_netboot/",$name)){
+          $pro = $this->s_selectedNetbootProduct;
+          $cfg = $this->a_availableNetbootProducts[$pro]['CFG'];
+          $this->dialog = new opsiProperties($this->config,$pro,$cfg,$this->hostId);
+          break;
+        }
       
         /* Add product 
          */
@@ -483,6 +594,10 @@ class opsiGeneric extends plugin
           if(isset($this->a_availableLocalProducts[$product]) && !isset($this->a_selectedLocalProducts[$product])){
             $this->a_selectedLocalProducts[$product] = $this->a_availableLocalProducts[$product];
             $CFG = $this->opsi->get_product_properties($product);
+            if($this->opsi->is_error()){
+              $this->init_failed = TRUE;
+              return;
+            }
             $this->a_selectedLocalProducts[$product]['CFG'] = $CFG;
           }
           break;
