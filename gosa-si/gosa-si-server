@@ -1085,7 +1085,8 @@ sub msg_to_decrypt {
 
         # target is own address without forward_to_gosa-tag -> process here
         if (not $done) {
-            if ((($target eq $local_address) || ($target eq $local_mac) ) && (not exists $msg_hash->{'forward_to_gosa'})) {
+            #if ((($target eq $local_address) || ($target eq $local_mac) ) && (not exists $msg_hash->{'forward_to_gosa'})) {
+            if (($target eq $local_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
                 $done = 1;
                 if ($source eq "GOSA") {
                     $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
@@ -1118,7 +1119,7 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if ((($target eq $local_address) || ($target eq $local_mac) ) && (defined $forward_to_gosa)){
+            if (($target eq $local_address) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
                 if ($gosa_at ne $local_address) {
                     $done = 1;
@@ -1151,7 +1152,7 @@ sub msg_to_decrypt {
             my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
             my $gosa_at;
             my $gosa_session_id;
-            if ((($target eq $local_address) || ($target eq $local_mac) ) && (defined $forward_to_gosa)){
+            if (($target eq $local_address) && (defined $forward_to_gosa)){
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
                 if ($gosa_at eq $local_address) {
                     my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
@@ -1865,32 +1866,75 @@ sub watch_for_delivery_messages {
 		my $send_succeed = 0;
 		foreach my $hit (@$res) {
 				my $receiver_host = @$hit[0];
+                my $delivered2host = 0;
 				&daemon_log("M DEBUG: user '$receiver' is logged in at host '$receiver_host'", 7);
 
-				# fetch key to encrypt msg propperly for usr/host
+				# Looking for host in know_clients_db 
 				my $sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$receiver_host')";
-				&daemon_log("0 DEBUG: $sql", 7);
 				my $res = $known_clients_db->exec_statement($sql);
 
-				# host is already down
-				if (not ref(@$res[0]) eq "ARRAY") { next; }
+                # Host is known in known_clients_db
+                if (ref(@$res[0]) eq "ARRAY") {
+                    my $receiver_key = @{@{$res}[0]}[2];
+                    my %data = ('subject' => $subject, 'message' => $message, 'usr' => $receiver);
+                    my $out_msg = &build_msg("usr_msg", $server_address, $receiver_host, \%data ); 
+                    my $error = &send_msg_to_target($out_msg, $receiver_host, $receiver_key, "usr_msg", 0); 
+                    if ($error == 0 ) {
+                        $send_succeed++ ;
+                        $delivered2host++ ;
+                        &daemon_log("M DEBUG: send message for user '$receiver' to host '$receiver_host'", 7); 
+                    } else {
+                        &daemon_log("M DEBUG: cannot send message for user '$receiver' to host '$receiver_host'", 7); 
+                    }
+                }
+                
+                # Message already send, do not need to do anything more, otherwise ...
+                if ($delivered2host) { next;}
+    
+                # ...looking for host in foreign_clients_db
+                $sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$receiver_host')";
+                $res = $foreign_clients_db->exec_statement($sql);
+  
+				# Host is known in foreign_clients_db 
+				if (ref(@$res[0]) eq "ARRAY") { 
+                    my $registration_server = @{@{$res}[0]}[2];
+                    
+                    # Fetch encryption key for registration server
+                    my $sql = "SELECT * FROM $known_server_tn WHERE (hostname='$registration_server')";
+                    my $res = $known_server_db->exec_statement($sql);
+                    if (ref(@$res[0]) eq "ARRAY") { 
+                        my $registration_server_key = @{@{$res}[0]}[3];
+                        my %data = ('subject' => $subject, 'message' => $message, 'usr' => $receiver);
+                        my $out_msg = &build_msg("usr_msg", $server_address, $receiver_host, \%data ); 
+                        my $error = &send_msg_to_target($out_msg, $registration_server, $registration_server_key, "usr_msg", 0); 
+                        if ($error == 0 ) {
+                            $send_succeed++ ;
+                            $delivered2host++ ;
+                            &daemon_log("M DEBUG: send message for user '$receiver' to server '$registration_server'", 7); 
+                        } else {
+                            &daemon_log("M ERROR: cannot send message for user '$receiver' to server '$registration_server'", 1); 
+                        }
 
-				# host is on
-				my $receiver_key = @{@{$res}[0]}[2];
-				my %data = ('subject' => $subject, 'message' => $message, 'usr' => $receiver);
-				my $out_msg = &build_msg("usr_msg", $server_address, $receiver_host, \%data ); 
-				my $error = &send_msg_to_target($out_msg, $receiver_host, $receiver_key, "usr_msg", 0); 
-				if ($error == 0 ) {
-				 	$send_succeed++ ;
-				}
+                    } else {
+                        &daemon_log("M ERROR: host '$receiver_host' is reported to be ".
+                                "registrated at server '$registration_server', ".
+                                "but no data available in known_server_db ", 1); 
+                    }
+                }
+                
+                if (not $delivered2host) {
+                    &daemon_log("M ERROR: unable to send user message to host '$receiver_host'", 1);
+                }
 		}
 
 		if ($send_succeed) {
 				# set outgoing msg at db to deliverd
 				my $sql = "UPDATE $messaging_tn SET flag='d' WHERE (id='$msg_id' AND direction='out' AND message_to='$receiver')"; 
-				&daemon_log("0 DEBUG: $sql", 7);
 				my $res = $messaging_db->exec_statement($sql); 
-		}
+                &daemon_log("M INFO: send message for user '$receiver' to logged in hosts", 5);
+		} else {
+            &daemon_log("M WARNING: failed to deliver message for user '$receiver'", 3); 
+        }
 	}
 
     $kernel->delay_set('watch_for_delivery_messages', $messaging_db_loop_delay); 

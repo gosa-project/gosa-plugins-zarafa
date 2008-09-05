@@ -69,7 +69,6 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>job_trigger_action_instant_update</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp> </xml>";
     #$data = "<xml> <header>gosa_new_ping</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
 
-
     # get_login_usr_for_client
     #$data = "<xml> <header>gosa_get_login_usr_for_client</header> <target>GOSA</target> <source>GOSA</source> <client>00:01:6c:9d:b9:fa</client></xml>";
 
@@ -78,6 +77,11 @@ for($count = 1; $count <= $zahl; $count++)
 
     # List all si-server providing opsi
     #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>mailqueue_com</module_name> </xml>";
+
+    # Send messages to a user and displayed message via konch
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
+    #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>rettenbe</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
 
     ##################
     # recreate fai dbs
@@ -176,21 +180,20 @@ for($count = 1; $count <= $zahl; $count++)
     #########################
     # Mailqueue communication
     
-    # writing data into a mailqueue
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
-    #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
-    $data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
+    # Writing data into a mailqueue
+    #echo sabber | mail -s test horst@woauchimmer.de    
 
+    # Querying the mailqueue at 
     #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
-    #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
 
-    # multiple xml tags msg_id are allowed
+    # Multiple xml tags msg_id are allowed
     #$data = "<xml> <header>gosa_mailqueue_hold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99C8ABEF23</msg_id> </xml>";
     #$data = "<xml> <header>gosa_mailqueue_unhold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>5657EBEEF7</msg_id> </xml>";
     #$data = "<xml> <header>gosa_mailqueue_requeue</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>11A09BEF04</msg_id> </xml>";
-    #$data = "<xml> <header>gosa_mailqueue_del</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> <msg_id></msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_del</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>CEAFDBEF45</msg_id> </xml>";
 
-    # only one xml tag msg_id is allowed
+    # Only one xml tag msg_id is allowed
     #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99E92BEF2B</msg_id> </xml>";
      
     ########################

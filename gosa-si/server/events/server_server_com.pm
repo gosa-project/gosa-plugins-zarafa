@@ -7,6 +7,7 @@ my @events = (
     'new_foreign_client',
     'trigger_wake',
     'foreign_job_updates',
+    'confirm_usr_msg',
     );
 @EXPORT = @events;
 
@@ -321,6 +322,13 @@ sub trigger_wake {
         close S;
     }
 
+    return;
+}
+
+
+sub confirm_usr_msg {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    &clMessages::confirm_usr_msg($msg, $msg_hash, $session_id);
     return;
 }
 

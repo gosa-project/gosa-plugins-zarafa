@@ -116,16 +116,25 @@ sub get_events { return \@events; }
 ###############################################################################
 sub usr_msg {
     my ($msg, $msg_hash) = @_;
-
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
 
     my $to = @{$msg_hash->{'usr'}}[0];
     my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
+
     system( "/usr/bin/goto-notify user-message '$to' '$subject' '$message'" );
 
     # give gosa-si-server feedback, that msg was received
     $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
-    return $msg;
+    my $out_hash = &create_xml_hash("confirm_usr_msg", $target, $source);
+    &add_content2xml_hash($out_hash, 'usr', $to);
+    &add_content2xml_hash($out_hash, 'subject', @{$msg_hash->{'subject'}}[0]);
+    &add_content2xml_hash($out_hash, 'message', @{$msg_hash->{'message'}}[0]);
+
+
+    return &create_xml_string($out_hash);
 }
 
 
