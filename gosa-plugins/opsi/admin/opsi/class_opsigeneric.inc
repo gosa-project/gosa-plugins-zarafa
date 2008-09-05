@@ -449,8 +449,13 @@ class opsiGeneric extends plugin
         This is the case, if this product is newly selected.
         Or if there was at least one configuration attribute modified.
      */
-    $cfg_1 = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
-    $cfg_2 = $this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
+    $cfg_1 = $cfg_2 = array();
+    if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
+      $cfg_1 = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
+    }
+    if($this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']){
+      $cfg_2 = $this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
+    }
     $diffs = $this->get_config_changes($cfg_1,$cfg_2);
     $to_update = array();
     if( !$this->initially_was_account || 
