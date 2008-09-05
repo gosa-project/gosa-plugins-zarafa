@@ -3,12 +3,10 @@
 	<font style='color: #FF0000;'>{msgPool type=siError p=$message}</font>
 	<input type='submit' name='reinit' value="{t}Retry{/t}">
 {else}
-	{if $type == 1}
+	{if $type == 0}
 		<h2><img class='center' alt='' src='plugins/opsi/images/hardware_info.png'>&nbsp;{t}Hardware information{/t}</h2>
-		<a href='{$plug}&amp;type=0'>Software info</a>
 	{else}
 		<h2><img class='center' alt='' src='plugins/opsi/images/software_info.png'>&nbsp;{t}Software information{/t}</h2>
-		<a href='{$plug}&amp;type=1'>Hardware info</a>
 	{/if}
 
 	{foreach from=$info item=item key=key}
