@@ -3037,10 +3037,12 @@ sub register_at_foreign_servers {
         # add locally loaded gosa-si modules to registration message
         my $loaded_modules = {};
         while (my ($package, $pck_info) = each %$known_modules) {
-            foreach my $act_module (keys(%{@$pck_info[2]})) {
-                $loaded_modules->{$act_module} = ""; 
-            }
+						next if ((!defined(@$pck_info[2])) || (!(ref (@$pck_info[2]) eq 'HASH')));
+						foreach my $act_module (keys(%{@$pck_info[2]})) {
+							$loaded_modules->{$act_module} = ""; 
+						}
         }
+
         map(&add_content2xml_hash($myhash, "loaded_modules", $_), keys(%$loaded_modules));
 
         # add macaddress to registration message
