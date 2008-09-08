@@ -21,7 +21,7 @@
 {/render}
    <br>
 {render acl=$acl}
-   <input type='text' name='addstatement' size='25' maxlength='80'>&nbsp;
+   <input type='text' name='addstatement' size='25' maxlength='250'>&nbsp;
 {/render}
 {render acl=$acl}
    <input type='submit' name='add_statement' value='{msgPool type=addButton}'>&nbsp;
@@ -42,7 +42,7 @@
 {/render}
    <br>
 {render acl=$acl}
-   <input type='text' name='addoption' size='25' maxlength='80'>&nbsp;
+   <input type='text' name='addoption' size='25' maxlength='250'>&nbsp;
 {/render}
 {render acl=$acl}
    <input type='submit' name='add_option' value='{msgPool type=addButton}'>&nbsp;
