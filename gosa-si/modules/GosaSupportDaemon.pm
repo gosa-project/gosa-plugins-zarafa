@@ -238,7 +238,7 @@ sub db_res2xml {
             if( $column_name eq "xmlmessage" ) {
                 $xml_content = &encode_base64($column_value);
             } else {
-                $xml_content = $column_value;
+                $xml_content = defined $column_value ? $column_value : "";
             }
             $xml .= $xml_content;
             $xml .= "</$column_name>"; 

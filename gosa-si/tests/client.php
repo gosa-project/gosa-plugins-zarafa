@@ -194,7 +194,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_mailqueue_del</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>CEAFDBEF45</msg_id> </xml>";
 
     # Only one xml tag msg_id is allowed
-    #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99E92BEF2B</msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>A9CBFBEF45</msg_id> </xml>";
      
     ########################
     # DAK Debian Archive Kit
