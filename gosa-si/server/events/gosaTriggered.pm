@@ -897,6 +897,7 @@ sub trigger_activate_new {
 			# $ldap_entry->dn("cn=$mac,$base");
 			&main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
 			$main::job_db->exec_statement("UPDATE jobs SET status = 'waiting', timestamp = '".&get_time()."' WHERE id = $jobdb_id");
+            return;
 		} else {
 			&main::daemon_log("ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
 		}
