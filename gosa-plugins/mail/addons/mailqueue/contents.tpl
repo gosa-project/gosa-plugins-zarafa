@@ -79,7 +79,8 @@
 			{$entries[$key].MailID}</td>
 		<td> 
 <!-- onclick="javascript: document.location.href='{$plug}&amp;act=header&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}'"-->
-			{$entries[$key].Server}</td>
+			{$entries[$key].ServerName}
+		</td>
 		<td>
 			{$entries[$key].Size}</td>
 		<td>

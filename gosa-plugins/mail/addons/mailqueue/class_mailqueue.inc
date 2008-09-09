@@ -77,7 +77,11 @@ class mailqueue extends plugin
     if($action == "header"){
 
       /* Create table which displays the header informations */
-      $this->disp_header = $this->si_queue->header($entry);
+      $data = $this->si_queue->header($entry,$server);
+      $this->disp_header = $data;
+      if($this->si_queue->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
+      }
     }
 
     /* Back is posted from the header display page */
@@ -100,20 +104,27 @@ class mailqueue extends plugin
       $entries = array();
       foreach($this->ServerList as $mac => $name){
         if(!tests::is_mac($mac)) continue;
-        $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->OrderBy,$this->SortType,$this->range));
+        $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->OrderBy,$this->SortType));
         if($this->si_queue->is_error()){
-          unset($this->ServerList[$mac]);
-          msg_dialog::display(_("Error"),sprintf(_("The server '%s' was removed from the server list, due to communication problems with the GOsa daemon, the error was: %s"),$name,"<b>".msgPool::siError($this->si_queue->get_error()."</b>")),ERROR_DIALOG);
+          msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
         }
       }
     }else{
-      $entries = $this->si_queue->query_mailqueue($this->Server,$this->OrderBy,$this->SortType,$this->Limit);
+      $entries = $this->si_queue->query_mailqueue($this->Server,$this->OrderBy,$this->SortType);
       if($this->si_queue->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
       }
     }
 
-    
+    $count = count($entries);
+    $entries = array_slice($entries,$this->Page,$this->range);
+
+    /* Add ServerName to results 
+     */
+    foreach($entries as $key => $data){
+      $entries[$key]['ServerName'] = $this->ServerList[$data['Server']];
+    }   
+ 
     /******************
       create html output 
      ******************/
@@ -133,7 +144,7 @@ class mailqueue extends plugin
     $smarty->assign("p_times"       , $this->getTimes());
     $smarty->assign("p_timeKeys"    , array_flip($this->getTimes()));
     $smarty->assign("search_for"    , $this->Search);
-    $smarty->assign("range_selector", range_selector(count($entries), $this->Page, $this->range,"EntriesPerPage")); 
+    $smarty->assign("range_selector", range_selector($count, $this->Page, $this->range,"EntriesPerPage")); 
     $smarty->assign("OrderBy"       , $this->OrderBy);
 
     /* Display sort arrow */

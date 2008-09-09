@@ -32,7 +32,7 @@ class si_mailqueue extends gosaSupportDaemon
   /*! \brief  Returns a list of all mail queue entries 
       @return Array   s.a.
    */
-  public function query_mailqueue($server,$sortby,$direction, $Limit)
+  public function query_mailqueue($server,$sortby,$direction)
   {
     $attrs = array("Size","Recipient","Sender","Arrival","MailID","Hold","Active","Error","Server");
 
@@ -50,15 +50,9 @@ class si_mailqueue extends gosaSupportDaemon
       $direction = "down";
     }
 
-    /* Check entry limit 
-     */  
-    if(!is_numeric($Limit) || $Limit < 1){
-      trigger_error("Invalid entry limt '".$Limit."'.");
-      $Limit = 20;
-    }
-
     /* Query mailqueue 
      */
+    $ids = array();
     $res = $this->send_data("gosa_mailqueue_query",$server,array(),TRUE);
     $items = array(); 
     if(isset($res['XML'][0])){
@@ -74,6 +68,7 @@ class si_mailqueue extends gosaSupportDaemon
           foreach($attrs as $source => $dest){
             $val[$dest] = $entry[0][$source][0]['VALUE'];
           }
+          $ids[] = $val['MailID'];
           $attrs = array(  
               "MSG_HOLD"   => "Hold",
               "MSG_ACTIVE" => "Active",
@@ -88,7 +83,11 @@ class si_mailqueue extends gosaSupportDaemon
 
           $val['Server'] = $server;
           $val['Arrival'] = strtotime($val['Arrival']);
-          $items[$val[$sortby]] = $val;
+          $n = $val[$sortby]."-".microtime(1);
+          while(isset($items[$n])){
+            $n = $val[$sortby]."-".microtime(1);
+          }
+          $items[$n] = $val;
         }
       }
     }   
@@ -100,7 +99,6 @@ class si_mailqueue extends gosaSupportDaemon
     }else{
       krsort($items);
     }
-
     return($items);
   }
 
@@ -109,8 +107,23 @@ class si_mailqueue extends gosaSupportDaemon
   {
     $data = array();
     $data['msg_id'] = $msg_id;
-    $res = $this->send_data("gosa_mailqueue_header",$this->target,$data,TRUE);
-    print_a($res);
+    $res = $this->send_data("gosa_mailqueue_header",$server,$data,TRUE);
+  
+    $attrs = array(
+        "RECIPIENT",
+        "SENDER",
+        "SUBJECT");
+
+    $data = array();
+    if(isset($res['XML'])){
+      foreach($attrs as $attr){
+        $data[$attr] = "";
+        if(isset($res['XML'][0][$attr])){
+          $data[$attr] = $res['XML'][0][$attr][0]['VALUE'];
+        }
+      }  
+    }
+    return($data);
   }
 
  
