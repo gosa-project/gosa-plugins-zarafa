@@ -235,9 +235,9 @@ sub mailqueue_hold {
             my $error = 0;   # clear error status
 
             # sanity check of each msg_id
-            if (not $msg_id =~ /^[0-9A-Z]{10}$/) {
+            if (not $msg_id =~ /^[0-9A-Z]{10,12}$/) {
                 $error = 1;
-                $error_string = "message ID is not valid ([0-9A-Z]{10}) : $msg_id";
+                $error_string = "message ID is not valid ([0-9A-Z]{10,12}) : $msg_id";
                 &main::daemon_log("ERROR: $error_string : $msg", 1);
             }
 
@@ -316,9 +316,9 @@ sub mailqueue_unhold {
             my $error = 0;   # clear error status
 
             # sanity check of each msg_id
-            if (not $msg_id =~ /^[0-9A-Z]{10}$/) {
+            if (not $msg_id =~ /^[0-9A-Z]{10,12}$/) {
                 $error = 1;
-                $error_string = "message ID is not valid ([0-9A-Z]{10}) : $msg_id";
+                $error_string = "message ID is not valid ([0-9A-Z]{10,12}) : $msg_id";
                 &main::daemon_log("ERROR: $error_string : $msg", 1);
             }
 
@@ -399,9 +399,9 @@ sub mailqueue_requeue {
             my $error = 0;   # clear error status
 
             # sanity check of each msg_id
-            if (not $msg_id =~ /^[0-9A-Z]{10}$/) {
+            if (not $msg_id =~ /^[0-9A-Z]{10,12}$/) {
                 $error = 1;
-                $error_string = "message ID is not valid ([0-9A-Z]{10}) : $msg_id";
+                $error_string = "message ID is not valid ([0-9A-Z]{10,12}) : $msg_id";
                 &main::daemon_log("ERROR: $error_string : $msg", 1);
             }
 
@@ -483,9 +483,9 @@ sub mailqueue_del {
             my $error = 0;   # clear error status
 
             # sanity check of each msg_id
-            if (not $msg_id =~ /^[0-9A-Z]{10}$/) {
+            if (not $msg_id =~ /^[0-9A-Z]{10,12}$/) {
                 $error = 1;
-                $error_string = "message ID is not valid ([0-9A-Z]{10}) : $msg_id";
+                $error_string = "message ID is not valid ([0-9A-Z]{10,12}) : $msg_id";
                 &main::daemon_log("ERROR: $error_string : $msg", 1);
             }
 
@@ -568,9 +568,9 @@ sub mailqueue_header {
     my $msg_id;
     if (not $error) {
         $msg_id = @{$msg_hash->{'msg_id'}}[0];
-        if (not $msg_id =~ /^[0-9A-Z]{10}$/) {
+        if (not $msg_id =~ /^[0-9A-Z]{10,12}$/) {
             $error = 1;
-            $error_string = "message ID is not valid ([0-9A-Z]{10}) : $msg_id";
+            $error_string = "message ID is not valid ([0-9A-Z]{10,12}) : $msg_id";
             &main::daemon_log("ERROR: $error_string : $msg", 1);
         }
     }
