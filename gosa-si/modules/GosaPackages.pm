@@ -271,7 +271,7 @@ sub process_job_msg {
                     scope => 'sub',
                     attrs => ['cn'],
                     filter => "(macAddress=$macaddress)");
-            if($mesg->code) {
+            if($mesg->code || ($mesg->count!=1)) {
                 &main::daemon_log($mesg->error, 1);
                 $plain_name = "none";
             } else {
