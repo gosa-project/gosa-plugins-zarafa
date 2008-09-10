@@ -144,7 +144,7 @@ sub mailqueue_query {
 
             $msg_id = $result_l[$i];
             $result_collection->{$j}->{'msg_id'} = $msg_id;
-            $result_l[$i+1] =~ /^([\!| ])\s+(\d+) (\w{3} \w{3} \d+ \d+:\d+:\d+)\s+([\w.-]+@[\w.-]+)\s+/ ;
+            $result_l[$i+1] =~ /^([\!| ])\s+(\d+)\s+(\w{3}\s+\w{3}\s+\d+\s+\d+:\d+:\d+)\s+([\w.-]+@[\w.-]+)\s+/ ;
             $result_collection->{$j}->{'msg_hold'} =  $1 eq "!" ? 1 : 0 ;
             $result_collection->{$j}->{'msg_size'} = $2;
             $result_collection->{$j}->{'arrival_time'} = $3;
