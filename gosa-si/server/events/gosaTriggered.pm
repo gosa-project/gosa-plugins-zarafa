@@ -861,6 +861,10 @@ sub trigger_activate_new {
         my $moddn_result = $ldap_entry->update($ldap_handle);
         if ($moddn_result->code() != 0) {
           &main::daemon_log("ERROR: Moving the system with mac address '$mac' to new base '$base' failed (code '".$moddn_result->code()."') with '".$moddn_result->{'errorMessage'}."'!", 1);
+          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
+          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
+          return undef;
+        } else {
           &main::daemon_log("INFO: System with mac address '$mac' was moved to base '".$main::ldap_base."'! Re-queuing job.", 4);
           $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
           $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
@@ -886,7 +890,7 @@ sub trigger_activate_new {
       $ldap_entry= $ldap_mesg->pop_entry();
       # Check for needed objectClasses
       my $oclasses = $ldap_entry->get_value('objectClass', asref => 1);
-      foreach my $oclass ("FAIobject", "GOhard") {
+      foreach my $oclass ("FAIobject", "GOhard", "gotoWorkstation") {
         if(!(scalar grep $_ eq $oclass, map {$_ => 1} @$oclasses)) {
           &main::daemon_log("Adding objectClass $oclass", 1);
           $ldap_entry->add(
