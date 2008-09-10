@@ -77,7 +77,7 @@ class faiManagement extends plugin
     $this->DivListFai = new divListFai($this->config,$this);
 
     /* Copy & Paste handler */
-    if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){
+    if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->CopyPasteHandler= new CopyPasteHandler($this->config);
     }
 

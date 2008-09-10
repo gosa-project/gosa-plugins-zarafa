@@ -49,7 +49,7 @@ class sudoManagement extends plugin
     $this->base   = sudo::get_sudoers_ou($this->config);
 
     /* Copy & Paste enabled ?*/
-    if ($this->config->get_cfg_value("enablecopypaste") == "true"){
+    if ($this->config->get_cfg_value("copyPaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
 

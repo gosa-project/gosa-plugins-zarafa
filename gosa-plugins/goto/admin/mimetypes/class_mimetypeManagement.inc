@@ -57,7 +57,7 @@ class mimetypeManagement extends plugin
     $this->ui       = &$ui;
 
     /* Check if copy & paste is activated */
-    if($this->config->get_cfg_value("enablecopypaste")){
+    if($this->config->get_cfg_value("copyPaste")){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
 

@@ -23,7 +23,7 @@ class blocklist extends plugin
     $this->DivListBlocklist = new divListBlocklist($this->config,$this);
 
     /* Initialize copy&paste queue */
-    if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){
+    if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->CopyPasteHandler= new CopyPasteHandler($this->config);
     }
   }

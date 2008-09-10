@@ -58,7 +58,7 @@ class applicationManagement extends plugin
     $this->ui       = &$ui;
 
     /* Check if copy & paste is activated */
-    if($this->config->boolValueIsTrue("MAIN","ENABLECOPYPASTE")){
+    if($this->config->boolValueIsTrue("MAIN","COPYPASTE")){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
 

@@ -48,7 +48,7 @@ class goFonMacro extends plugin
     $this->DivListMacro = new divListMacro($this->config,$this);
 
     /* Copy & Paste enabled ?*/
-    if ($this->config->get_cfg_value("enablecopypaste") == "true"){
+    if ($this->config->get_cfg_value("copyPaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
   }
