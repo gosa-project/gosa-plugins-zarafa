@@ -1718,16 +1718,16 @@ sub watch_for_new_jobs {
 			# Skip new jobs for host if there is a processing job
 			if(defined($res) and defined @{$res}[0]) {
 				# Prevent race condition if there is a trigger_activate job waiting and a goto-activation job processing
-				if(@{$res}[5] eq 'goto-activation') {
+				if(@{$res}[5] eq 'trigger_action_reinstall') {
 					my $sql_statement_2 =  "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='waiting' AND headertag = 'trigger_activate_new'"; 
 					my $res_2 = $job_db->exec_statement( $sql_statement_2 );
 					if(defined($res_2) and defined @{$res}[0]) {
 						# Set status from goto-activation to 'waiting' and update timestamp
 						$job_db->exec_statement = "UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'";
 						$job_db->exec_statement = "UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'";
-						next;
 					}
 				}
+				next;
 			}
 
 			foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
