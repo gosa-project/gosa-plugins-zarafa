@@ -815,8 +815,14 @@ sub trigger_activate_new {
         $ogroup_entry= $ldap_mesg->pop_entry();
       } elsif ($ldap_mesg->count == 0) {
         &main::daemon_log("ERROR: A GosaGroupOfNames with cn '$ogroup' was not found in base '".$main::ldap_base."'!", 1);
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
+        return undef;
       } else {
         &main::daemon_log("ERROR: More than one ObjectGroups with cn '$ogroup' was found in base '".$main::ldap_base."'!", 1);
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
+        $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
+        return undef;
       }
 
       # build the base, use optional base parameter or take it from ogroup
