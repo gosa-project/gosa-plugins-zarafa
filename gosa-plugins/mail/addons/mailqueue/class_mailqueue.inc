@@ -52,21 +52,41 @@ class mailqueue extends plugin
      ******************/
 
     $action = $server = $entry = "";
-    $types = array("delete","hold","unhold","header","requeue");
+    $types = array( 
+        "all_del"     => "del",
+        "all_hold"    => "hold",
+        "all_unhold"  => "unhold",
+        "all_requeue" => "requeue");
+    foreach($_POST as $name => $value){
+      foreach($types as $type => $target){
+        if(preg_match("/^".$type."/",$name)){
+          $entry  = $this->list_get_selected_items();
+          $action = $target;
+          break;
+        }
+      }
+      if(!empty($action)) break;
+    }
+  
+
+    $types = array("del","hold","unhold","header","requeue");
     foreach($_POST as $name => $value){
       foreach($types as $type){
         if(preg_match("/^".$type."__/",$name)){
           $action = $type;
-          $entry  = preg_replace("/^".$type."__([^_]*)__.*/","\\1",$name); 
           $server = preg_replace("/^".$type."__[^_]*__([^_]*)_.*/","\\1",$name); 
+          $entry[$server][] = preg_replace("/^".$type."__([^_]*)__.*/","\\1",$name); 
           break;
         }
       }
+      if(!empty($action)) break;
     }
 
     /* Send action for given mail id */
-    if(in_array($action,array("hold","unhold","requeue"))){
-      $this->si_queue->send_queue_action(array($entry),$server,$action);
+    if(in_array($action,array("del","hold","unhold","requeue"))){
+      foreach($entry as $server => $entries){
+        $this->si_queue->send_queue_action($entries,$server,$action);
+      }
     }
 
 
@@ -75,12 +95,15 @@ class mailqueue extends plugin
      ******************/
 
     if($action == "header"){
+      $server = key($entry);
+      $entry = $entry[$server];
 
       /* Create table which displays the header informations */
       $data = $this->si_queue->header($entry,$server);
       $this->disp_header = $data;
       if($this->si_queue->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
+        $this->disp_header = FALSE;
       }
     }
 
@@ -100,17 +123,24 @@ class mailqueue extends plugin
       Query mailqueues 
      ******************/
 
+    $within_minutes = -1;
+    if($this->Time != "nolimit"){
+      $within_minutes = 60*60*$this->Time;
+    }
+
     if($this->Server == "all"){
       $entries = array();
       foreach($this->ServerList as $mac => $name){
         if(!tests::is_mac($mac)) continue;
-        $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->OrderBy,$this->SortType));
+        $entries = array_merge($entries,$this->si_queue->query_mailqueue(
+              $mac,$this->OrderBy,$this->SortType,$this->Search,$within_minutes));
         if($this->si_queue->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
         }
       }
     }else{
-      $entries = $this->si_queue->query_mailqueue($this->Server,$this->OrderBy,$this->SortType);
+      $entries = $this->si_queue->query_mailqueue(
+          $this->Server,$this->OrderBy,$this->SortType,$this->Search,$within_minutes);
       if($this->si_queue->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
       }
@@ -295,6 +325,18 @@ class mailqueue extends plugin
             "header"          => _("Get header information")
           )
         ));
+  }
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^selected_*/",$name)){
+        $server = preg_replace("/^selected_.*_/","",$name) ;
+        $ids[$server][] = preg_replace("/^selected_([^_]*)_.*$/","\\1",$name);
+      }
+    }
+    return($ids);
   }
 
 

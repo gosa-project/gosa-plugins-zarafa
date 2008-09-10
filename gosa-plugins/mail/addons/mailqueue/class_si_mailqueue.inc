@@ -32,7 +32,7 @@ class si_mailqueue extends gosaSupportDaemon
   /*! \brief  Returns a list of all mail queue entries 
       @return Array   s.a.
    */
-  public function query_mailqueue($server,$sortby,$direction)
+  public function query_mailqueue($server,$sortby,$direction,$search_str,$time)
   {
     $attrs = array("Size","Recipient","Sender","Arrival","MailID","Hold","Active","Error","Server");
 
@@ -50,6 +50,10 @@ class si_mailqueue extends gosaSupportDaemon
       $direction = "down";
     }
 
+    /* Prepare search filter 
+     */
+    $search_str = preg_replace("/\\\\\*/",".*",normalizePreg($search_str));
+
     /* Query mailqueue 
      */
     $ids = array();
@@ -57,6 +61,7 @@ class si_mailqueue extends gosaSupportDaemon
     $items = array(); 
     if(isset($res['XML'][0])){
       foreach($res['XML'][0] as $name => $entry){
+
         if(preg_match("/^ANSWER[0-9]*$/",$name)){
           $attrs = array(
               "MSG_SIZE"      => "Size",
@@ -83,11 +88,29 @@ class si_mailqueue extends gosaSupportDaemon
 
           $val['Server'] = $server;
           $val['Arrival'] = strtotime($val['Arrival']);
-          $n = $val[$sortby]."-".microtime(1);
-          while(isset($items[$n])){
-            $n = $val[$sortby]."-".microtime(1);
+
+          /* Check arrival time.
+           */
+          if($time != -1 && !empty($val['Arrival'])){
+            if( ! ($val['Arrival'] > (time() - $time))){
+              continue;
+            }
           }
-          $items[$n] = $val;
+
+          /* Check if search string matches 
+           */
+          $found = FALSE;
+          foreach($val as $name => $value){
+            if(preg_match("/^".$search_str."$/",$value)){
+              $found =TRUE;
+              break;
+            }
+          }
+       
+          if($found){ 
+            $n = uniqid($val[$sortby]);
+            $items[$n] = $val;
+          }
         }
       }
     }   
@@ -150,7 +173,9 @@ class si_mailqueue extends gosaSupportDaemon
     }    
     
     $data['msg_id'] = $msg_ids;
-    $this->send_data("gosa_mailqueue_".$action,$this->target,$data,FALSE);
+
+    print_a(array("gosa_mailqueue_".$action,$server,$data));;
+    $this->send_data("gosa_mailqueue_".$action,$server,$data,FALSE);
     // There is no answer for this requests 
   }
 }

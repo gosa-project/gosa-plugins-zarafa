@@ -26,13 +26,17 @@
 	<input name="search" value="{t}Search{/t}" type="submit">
 			</td>
 			<td style="border-left:1px solid #A0A0A0; text-align:right;">&nbsp;
-				<input name="del_all"  src="images/lists/trash.png"			value="{t}Remove all messages{/t}" 		type="image" 
+				<input name="all_del"  src="images/lists/trash.png"		
+					value="{t}Remove all messages{/t}" type="image" 
 					title="{t}Remove all messages from selected servers queue{/t}">
-				<input name="hold_all"    src="plugins/mail/images/mailq_hold.png"			value="{t}Hold all messages{/t}" 		type="image"
+				<input name="all_hold" src="plugins/mail/images/mailq_hold.png"
+					value="{t}Hold all messages{/t}" type="image"
 					title="{t}Hold all messages in selected servers queue{/t}">
-				<input name="unhold_all"    src="plugins/mail/images/mailq_unhold.png"		value="{t}Release all messages{/t}" 	type="image"
+				<input name="all_unhold" src="plugins/mail/images/mailq_unhold.png"		
+					value="{t}Release all messages{/t}" 	type="image"
 					title="{t}Release all messages in selected servers queue{/t}">
-				<input name="requeue_all" src="images/lists/reload.png"		value="{t}Requeue all messages{/t}" 	type="image"
+				<input name="all_requeue" src="images/lists/reload.png"		
+					value="{t}Requeue all messages{/t}" type="image"
 					title="{t}Requeue all messages in selected servers queue{/t}">
    			</td>
 		</tr>
@@ -49,6 +53,9 @@
 <table style="border: 1px solid rgb(176, 176, 176); width: 100%; vertical-align: top; text-align: left;" summary=""
  border="0" cellpadding="2" cellspacing="1" rules="cols">
 	<tr style="background-color: rgb(232, 232, 232); height: 26px; font-weight: bold;">
+		<td style='width:20px'>
+    		<input type='checkbox' id='select_all' name='select_all' title='"._("Select all")."'
+               onClick="toggle_all_('^selected_.*$','select_all');"></td>
 		<td><a href="{$plug}&amp;sort=MailID"		>{t}ID{/t}			{if $OrderBy == "MailID"}	{$SortType}{/if}</a></td>
 		<td><a href="{$plug}&amp;sort=Server"		>{t}Server{/t}		{if $OrderBy == "Server"}	{$SortType}{/if}</a></td>
 		<td><a href="{$plug}&amp;sort=Size"			>{t}Size{/t}		{if $OrderBy == "Size"}		{$SortType}{/if}</a></td>
@@ -67,31 +74,20 @@
 	{else}
 		<tr style="height: 22px; background-color: rgb(245, 245, 245);">
 	{/if}
+		<td><input id="selected_{$entries[$key].MailID}" type='checkbox' name='selected_{$entries[$key].MailID}_{$entries[$key].Server}' class='center'></td>
 		<td >
-<!-- onlick="javascript:	document.mainform.header_server.value='{$entries[$key].Server}';
-								document.mainform.header_id.value='{$entries[$key].MailID}';
-								document.mainform.submit();"
--->
 			{if $entries[$key].Active == true}
 				<img class="center" src="plugins/mail/images/mailq_active.png" border=0 alt="{t}Active{/t}">
 			{/if}
-			
 			{$entries[$key].MailID}</td>
-		<td> 
-<!-- onclick="javascript: document.location.href='{$plug}&amp;act=header&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}'"-->
-			{$entries[$key].ServerName}
-		</td>
-		<td>
-			{$entries[$key].Size}</td>
-		<td>
-			{$entries[$key].Arrival}</td>
-		<td>
-			{$entries[$key].Sender}</td>
-		<td>
-			{$entries[$key].Recipient}</td>
+		<td>{$entries[$key].ServerName}</td>
+		<td>{$entries[$key].Size}</td>
+		<td>{$entries[$key].Arrival}</td>
+		<td>{$entries[$key].Sender}</td>
+		<td>{$entries[$key].Recipient}</td>
 		<td >{$entries[$key].Error}</td>
 		<td style="text-align:right">
-			<input type='image' name='delete__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
+			<input type='image' name='del__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
 				src="images/lists/trash.png" alt="{t}delete{/t}" title="{t}Delete this message{/t}">
 			{if $entries[$key].Hold == true}
 				<input type='image' name='unhold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
