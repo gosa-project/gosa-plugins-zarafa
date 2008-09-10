@@ -946,6 +946,8 @@ sub trigger_activate_new {
       if ($ogroup_result->code() != 0) {
         &main::daemon_log("ERROR: Updating the ObjectGroup '$ogroup' failed (code '".$ogroup_result->code()."') with '".$ogroup_result->{'errorMessage'}."'!", 1);
       }
+    } else {
+      &main::daemon_log("DEBUG: System with mac address '$mac' is already a member of ObjectGroup '$ogroup'.", 5);
     }
 
     # Finally set gotoMode to active
