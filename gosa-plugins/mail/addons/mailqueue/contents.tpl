@@ -82,7 +82,7 @@
 			{$entries[$key].MailID}</td>
 		<td>{$entries[$key].ServerName}</td>
 		<td>{$entries[$key].Size}</td>
-		<td>{$entries[$key].Arrival}</td>
+		<td>{$entries[$key].Arrival|date_format:"%d.%m.%Y %H:%M:%S"}</td>
 		<td>{$entries[$key].Sender}</td>
 		<td>{$entries[$key].Recipient}</td>
 		<td >{$entries[$key].Error}</td>
