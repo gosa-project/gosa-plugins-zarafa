@@ -248,7 +248,7 @@ our $logged_in_user_date_of_expiry = 600;
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
-		"new-systems-ou" => [\$new_systems_ou, 'ou=systems'],
+		"new-systems-ou" => [\$new_systems_ou, 'ou=workstations,ou=systems'],
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],
@@ -1717,7 +1717,16 @@ sub watch_for_new_jobs {
 
 			# Skip new jobs for host if there is a processing job
 			if(defined($res) and defined @{$res}[0]) {
-				next;
+				# Prevent race condition if there is a trigger_activate job waiting and a goto-activation job processing
+				if(@{$res}[5] eq 'goto-activation') {
+					my $sql_statement_2 =  "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='waiting' AND headertag = 'trigger_activate_new'"; 
+					my $res_2 = $job_db->exec_statement( $sql_statement_2 );
+					if(defined($res_2) and defined @{$res}[0]) {
+						# Set status from goto-activation to 'waiting' and update timestamp
+						$job_db->exec_statement = "UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'goto-activation'";
+						$job_db->exec_statement = "UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'goto-activation'";
+					}
+				}
 			}
 
 			foreach my $jobdb_headertag (keys %{$hits->{$macaddress}}) {
