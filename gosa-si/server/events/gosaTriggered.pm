@@ -823,6 +823,7 @@ sub trigger_activate_new {
       if(!(defined($base) && (length($base) > 0))) {
         # Subtract the ObjectGroup cn
         $base = $1 if $ogroup_entry->dn =~ /cn=$ogroup,ou=groups,(.*)$/;
+        &main::daemon_log("DEBUG: New base for system with mac address '$mac' is '$base'", 5);
       }
     }
 
@@ -838,7 +839,7 @@ sub trigger_activate_new {
 
     # TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
     if($ldap_mesg->count == 1) {
-      &main::daemon_log("DEBUG: One system with mac address '$mac' was found in base '".$main::ldap_base."'!", 6);
+      &main::daemon_log("DEBUG: One system with mac address '$mac' was found in base '".$main::ldap_base."'!", 5);
       # Get the entry from LDAP
       $ldap_entry= $ldap_mesg->pop_entry();
 
@@ -850,12 +851,21 @@ sub trigger_activate_new {
           deleteoldrdn => 1,
           newsuperior => $base,
         );
+        # To prevent replication problems just re-queue the job with 10 seconds in the future
+        my $moddn_result = $ldap_entry->update($ldap_handle);
+        if ($moddn_result->code() != 0) {
+          &main::daemon_log("ERROR: Moving the system with mac address '$mac' to new base '$base' failed (code '".$moddn_result->code()."') with '".$moddn_result->{'errorMessage'}."'!", 1);
+          &main::daemon_log("INFO: System with mac address '$mac' was moved to base '".$main::ldap_base."'! Re-queuing job.", 4);
+          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
+          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
+          return undef;
+        }
       }
 
     } elsif ($ldap_mesg->count == 0) {
       &main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
       $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time()."' WHERE id = $jobdb_id");
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(60)."' WHERE id = $jobdb_id");
       return undef;
     }
 
@@ -877,6 +887,9 @@ sub trigger_activate_new {
             objectClass => $oclass,
           );
           my $oclass_result = $ldap_entry->update($ldap_handle);
+          if ($oclass_result->code() != 0) {
+            &main::daemon_log("ERROR: Adding the ObjectClass '$oclass' failed (code '".$oclass_result->code()."') with '".$oclass_result->{'errorMessage'}."'!", 1);
+          }
         }
       }
 
@@ -887,12 +900,18 @@ sub trigger_activate_new {
             'FAIstate' => 'install'
           );
           my $replace_result = $ldap_entry->update($ldap_handle);
+          if ($replace_result->code() != 0) {
+            &main::daemon_log("ERROR: Setting the FAIstate to install failed with code '".$replace_result->code()."') and message '".$replace_result->{'errorMessage'}."'!", 1);
+          }
         }
       } else {
         $ldap_entry->add(
           'FAIstate' => 'install'
         );
         my $add_result = $ldap_entry->update($ldap_handle);
+        if ($add_result->code() != 0) {
+          &main::daemon_log("ERROR: Setting the FAIstate to install failed with code '".$add_result->code()."') and message '".$add_result->{'errorMessage'}."'!", 1);
+        }
       }
 
 
@@ -902,7 +921,7 @@ sub trigger_activate_new {
       # $ldap_entry->dn("cn=$mac,$base");
       &main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
       $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time()."' WHERE id = $jobdb_id");
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
       return undef;
     } else {
       &main::daemon_log("ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
@@ -954,7 +973,11 @@ sub trigger_activate_new {
       my @out_msg_l = ($out_msg);
 
       return @out_msg_l;
-    } 
+    }  else {
+      &main::daemon_log("WARNING: Activating system with mac address '$mac' failed! Re-queuing job.", 4);
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
+      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(10)."' WHERE id = $jobdb_id");
+    }
     return undef;
 }
 
