@@ -463,7 +463,9 @@ class DNS
      */
     $zN = trim($zoneName,".");
     $nN = trim($newName,".");
+    $oN = trim($oldName,".");
     $newName = preg_replace("/[\.]*".normalizePreg($zN)."$/i","",$nN);
+    $oldName = preg_replace("/[\.]*".normalizePreg($zN)."$/i","",$oN);
 
     /* If reverseZone can't be resolved ... this 
      *  can't be a valid entry, so remove this account
