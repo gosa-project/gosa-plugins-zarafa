@@ -185,7 +185,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     # Querying the mailqueue at 
     #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
-    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <q_tag>arrival_time</q_tag> <q_operator>gt</q_operator> <q_value>20080812120000</q_value> </xml>";
 
     # Multiple xml tags msg_id are allowed
     #$data = "<xml> <header>gosa_mailqueue_hold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99C8ABEF23</msg_id> </xml>";
@@ -194,7 +194,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_mailqueue_del</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>CEAFDBEF45</msg_id> </xml>";
 
     # Only one xml tag msg_id is allowed
-    #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>A9CBFBEF45</msg_id> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_header</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>EFD81BEF45</msg_id> </xml>";
      
     ########################
     # DAK Debian Archive Kit

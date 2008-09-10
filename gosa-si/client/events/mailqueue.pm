@@ -112,6 +112,11 @@ sub mailqueue_query {
     my $source = @{$msg_hash->{'source'}}[0];
     my $target = @{$msg_hash->{'target'}}[0];
     my $session_id = @{$msg_hash->{'session_id'}}[0];
+    # q_tag can be: msg_id | msg_hold | msg_size | arrival_time | sender | recipient
+    my $q_tag = exists $msg_hash->{'q_tag'} ? @{$msg_hash->{'q_tag'}}[0] : undef ;
+    # q_operator can be: eq | gt | lt
+    my $q_operator = exists $msg_hash->{'q_operator'} ? @{$msg_hash->{'q_operator'}}[0] : undef ;
+    my $q_value = exists $msg_hash->{'q_value'} ? @{$msg_hash->{'q_value'}}[0] : undef ;
     my $error = 0;
     my $error_string;
     my $msg_id;
@@ -120,6 +125,7 @@ sub mailqueue_query {
     my $arrival_time;
     my $sender;
     my $recipient;
+    my $status_message;
     my $out_hash;
     my $out_msg;
 
@@ -139,22 +145,84 @@ sub mailqueue_query {
         my $result_length = @result_l;
         my $j = 0;
         for (my $i = 1; $i < $result_length; $i+=2) {
-            $j++;
-            $result_collection->{$j} = {};
 
-            $msg_id = $result_l[$i];
-            $result_collection->{$j}->{'msg_id'} = $msg_id;
+            # Fetch and prepare all information 
+            my $act_result;
+            $act_result->{'msg_id'} = $result_l[$i];
             $result_l[$i+1] =~ /^([\!| ])\s+(\d+)\s+(\w{3}\s+\w{3}\s+\d+\s+\d+:\d+:\d+)\s+([\w.-]+@[\w.-]+)\s+/ ;
-            $result_collection->{$j}->{'msg_hold'} =  $1 eq "!" ? 1 : 0 ;
-            $result_collection->{$j}->{'msg_size'} = $2;
-            $result_collection->{$j}->{'arrival_time'} = $3;
-            $result_collection->{$j}->{'sender'} = $4;
+            $act_result->{'msg_hold'} =  $1 eq "!" ? 1 : 0 ;
+            $act_result->{'msg_size'} = $2;
+            $act_result->{'arrival_time'} = $3;
+            $act_result->{'sender'} = $4;
             my @info_l = split(/\n/, $result_l[$i+1]);
-            $result_collection->{$j}->{'recipient'} = $info_l[2] =~ /([\w.-]+@[\w.-]+)/ ? $1 : 'unknown' ;
+            $act_result->{'recipient'} = $info_l[2] =~ /([\w.-]+@[\w.-]+)/ ? $1 : 'unknown' ;
+            $act_result->{'msg_status'} = $info_l[1] =~ /^([\s\S]*)$/ ? $1 : 'unknown' ;
+
+            # If a query tag exists, perform the selection
+            my $query_positiv = 0;
+            if (defined $q_tag && defined $q_operator && defined $q_value) {
+
+                # Query for message id
+                if ( $q_tag eq 'msg_id') {
+                    if (not $q_operator eq 'eq') {
+                        &main::daemon_log("$session_id WARNING: query option '$q_operator' is not allowed with query tag '$q_tag'".
+                                ", return return complete mail queue as fallback", 3);
+                        &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
+                        $query_positiv++;
+                    } else {
+                        if ($act_result->{'msg_id'} eq $q_value) { $query_positiv++; }
+                    }
+
+                # Query for message size
+                } elsif ($q_tag eq 'msg_size') {
+                    my $result_size = int($act_result->{'msg_size'});
+                    my $query_size = int($q_value);
+                    if ( &_exec_op($result_size, $q_operator, $query_size) ) {
+                        $query_positiv++;
+                    }
+
+                # Query for arrival time
+                } elsif ($q_tag eq 'arrival_time') {
+                    my $result_time = int(&_parse_mailq_time($act_result->{'arrival_time'}));
+                    my $query_time = int($q_value);
+
+                    if ( &_exec_op($result_time, $q_operator, $query_time) ) {
+                        $query_positiv++;
+                    }
+
+                # Query for sender
+                }elsif ($q_tag eq 'sender') {
+                    if (not $q_operator eq 'eq') {
+                        &main::daemon_log("$session_id WARNING: query option '$q_operator' is not allowed with query tag '$q_tag'".
+                                ", return return complete mail queue as fallback", 3);
+                        &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
+                        $query_positiv++;
+                    } else {
+                        if ($act_result->{'sender'} eq $q_value) { $query_positiv++; }
+                    }
+
+                # Query for recipient
+                } elsif ($q_tag eq 'recipient') {
+                    if (not $q_operator eq 'eq') {
+                        &main::daemon_log("$session_id WARNING: query option '$q_operator' is not allowed with query tag '$q_tag'".
+                                ", return return complete mail queue as fallback", 3);
+                        &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
+                        $query_positiv++;
+                    } else {
+                        if ($act_result->{'recipient'} eq $q_value) { $query_positiv++; }
+                    }
+                }
+            }
+
+            # If query was successful, add resutls to answer
+            if ($query_positiv) {
+                $j++;   
+                $result_collection->{$j} = $act_result;    
+            }
         }
-    }    
-    
-    # create outgoing msg
+    }
+
+    #create outgoing msg
     $out_hash = &main::create_xml_hash("answer_$session_id", $target, $source);
     &add_content2xml_hash($out_hash, "session_id", $session_id);
     &add_content2xml_hash($out_hash, "error", $error);
@@ -611,6 +679,42 @@ sub mailqueue_header {
     return $out_msg;
 }
 
+sub _exec_op {
+    my ($a, $op, $b) = @_ ;
+    my $res;
+
+    if ($op eq "eq") {
+        $res = $a == $b ? 1 : 0 ;
+    } elsif ($op eq "gt") {
+        $res = $a > $b ? 1 : 0 ;
+    } elsif ($op eq "lt") {
+        $res = $a < $b ? 1 : 0 ;
+    } 
+
+    return $res;
+}
+
+my $mo_hash = { "Jan"=>'01', "Feb"=>'02',"Mar"=>'03',"Apr"=>'04',"May"=>'05',"Jun"=>'06',
+    "Jul"=>'07',"Aug"=>'08',"Sep"=>'09',"Oct"=>'10',"Nov"=>'11',"Dec"=>'12'};
+
+sub _parse_mailq_time {
+    my ($time) = @_ ;
+
+    my $local_time = &get_time();
+    my $local_year = substr($local_time,0,4);     
+
+    my ($dow, $mo, $dd, $date) = split(/\s/, $time);
+    my ($hh, $mi, $ss) = split(/:/, $date);
+    my $mailq_time = $local_year.$mo_hash->{$mo}."$dd$hh$mi$ss"; 
+
+    # This is realy nasty
+    if (int($local_time) < int($mailq_time)) {
+        # Mailq_time is in the future, this cannot be possible, so mail must be from last year
+        $mailq_time = int($local_year) - 1 .$mo_hash->{$mo}."$dd$hh$mi$ss";
+    }
+
+    return $mailq_time;
+}
 
 # vim:ts=4:shiftwidth:expandtab
 
