@@ -794,7 +794,7 @@ sub new_ldap_config {
 
 	# Sanity check
 	if ($mesg->count != 1) {
-		&main::daemon_log("$session_id WARNING: client with mac address $macaddress not found/unique/active - not sending ldap config".
+		&main::daemon_log("$session_id ERROR: client with mac address $macaddress not found/unique/active - not sending ldap config".
                 "\n\tbase: $ldap_base".
                 "\n\tscope: sub".
                 "\n\tattrs: dn, gotoLdapServer".
