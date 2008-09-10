@@ -87,6 +87,7 @@ our (%cfg_defaults, $log_file, $pid_file,
     $wake_on_lan_passwd, $job_synchronization, $modified_jobs_loop_delay,
     $arp_enabled, $arp_interface,
     $opsi_enabled, $opsi_server, $opsi_admin, $opsi_password,
+		$new_systems_ou,
 );
 
 # additional variable which should be globaly accessable
@@ -247,6 +248,7 @@ our $logged_in_user_date_of_expiry = 600;
     "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
+		"new-systems-ou" => [\$new_systems_ou, 'ou=systems'],
     },
 "ClientPackages" => {
     "key" => [\$ClientPackages_key, "none"],

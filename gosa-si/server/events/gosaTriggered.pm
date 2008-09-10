@@ -804,7 +804,6 @@ sub trigger_activate_new {
 	my $changed_attributes_counter = 0;
 	
 	eval {
-
 		my $ldap_mesg= $ldap_handle->search(
 			base => $main::ldap_base,
 			scope => 'sub',
@@ -835,7 +834,6 @@ sub trigger_activate_new {
 		);
 
 		# TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
-
 		if($ldap_mesg->count == 1) {
 			&main::daemon_log("DEBUG: One system with mac address '$mac' was found in base '".$main::ldap_base."'!", 6);
 			# Get the entry from LDAP
@@ -860,7 +858,6 @@ sub trigger_activate_new {
 		);
 
 		# TODO: Find a way to guess an ip address for hosts with no ldap entry (MAC->ARP->IP)
-
 		if($ldap_mesg->count == 1) {
 			$ldap_entry= $ldap_mesg->pop_entry();
 			# Check for needed objectClasses
@@ -896,7 +893,8 @@ sub trigger_activate_new {
 			# $ldap_entry = Net::LDAP::Entry->new();
 			# $ldap_entry->dn("cn=$mac,$base");
 			&main::daemon_log("WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
-			$main::job_db->exec_statement("UPDATE jobs SET status = 'waiting', timestamp = '".&get_time()."' WHERE id = $jobdb_id");
+			$main::job_db->exec_statement("UPDATE jobs SET status = 'waiting' WHERE id = $jobdb_id");
+			$main::job_db->exec_statement("UPDATE jobs SET timestamp = '".&get_time()."' WHERE id = $jobdb_id");
             return;
 		} else {
 			&main::daemon_log("ERROR: More than one system with mac address '$mac' was found in base '".$main::ldap_base."'!", 1);
@@ -938,8 +936,8 @@ sub trigger_activate_new {
 		&main::daemon_log("ERROR: activate_new failed with '$@'!", 1);
 	}
 
-	# Delete job
-	$main::job_db->exec_statement("DELETE FROM jobs WHERE id =  $jobdb_id");
+	# Set job to done
+	$main::job_db->exec_statement("UPDATE jobs SET status = 'done' WHERE id = $jobdb_id");
 
 	# create set_activated_for_installation message for delivery
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
