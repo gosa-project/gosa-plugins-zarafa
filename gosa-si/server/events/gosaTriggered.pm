@@ -981,10 +981,12 @@ sub trigger_activate_new {
       # Set job to done
       $main::job_db->exec_statement("UPDATE jobs SET status = 'done' WHERE id = $jobdb_id");
 
-      # create set_activated_for_installation message for delivery
-      my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
-      my $out_msg = &create_xml_string($out_hash);
-      my @out_msg_l = ($out_msg);
+      # create new_ldap_config and set_activated_for_installation messages for delivery
+      my $out_hash_ldap_config = &create_xml_hash("new_ldap_config", $source, $target);
+      my $out_msg_ldap_config = &create_xml_string($out_hash_ldap_config);
+      my $out_hash_activate = &create_xml_hash("set_activated_for_installation", $source, $target);
+      my $out_msg_activate = &create_xml_string($out_hash_activate);
+      my @out_msg_l = ($out_msg_ldap_config, $out_msg_activate);
 
       return @out_msg_l;
     }  else {
