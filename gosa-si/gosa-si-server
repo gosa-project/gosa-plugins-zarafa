@@ -78,9 +78,10 @@ my $max_clients;
 my %repo_files=();
 my $repo_path;
 my %repo_dirs=();
-# variables declared in config file are always set to 'our'
+
+# Variables declared in config file are always set to 'our'
 our (%cfg_defaults, $log_file, $pid_file, 
-    $server_ip, $server_port, $ClientPackages_key, 
+    $server_ip, $server_port, $ClientPackages_key, $dns_lookup,
     $arp_activ, $gosa_unit_tag,
     $GosaPackages_key, $gosa_timeout,
     $foreign_server_string, $server_domain, $ServerPackages_key, $foreign_servers_register_delay,
@@ -222,26 +223,26 @@ our $logged_in_user_date_of_expiry = 600;
     "pid-file" => [\$pid_file, "/var/run/".$prg.".pid"],
     },
 "server" => {
-    "ip" => [\$server_ip, "0.0.0.0"],
-    "port" => [\$server_port, "20081"],
-    "known-clients"        => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
-    "known-servers"        => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
-    "incoming"             => [\$incoming_file_name, '/var/lib/gosa-si/incoming.db'],
-    "login-users"          => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
-    "fai-server"           => [\$fai_server_file_name, '/var/lib/gosa-si/fai_server.db'],
-    "fai-release"          => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
-    "packages-list"        => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
-    "messaging"            => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
-    "foreign-clients"      => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
-    "source-list"          => [\$sources_list, '/etc/apt/sources.list'],
-    "repo-path"            => [\$repo_path, '/srv/www/repository'],
-    "ldap-uri"             => [\$ldap_uri, ""],
-    "ldap-base"            => [\$ldap_base, ""],
-    "ldap-admin-dn"        => [\$ldap_admin_dn, ""],
-    "ldap-admin-password"  => [\$ldap_admin_password, ""],
-    "gosa-unit-tag"        => [\$gosa_unit_tag, ""],
-    "max-clients"          => [\$max_clients, 10],
-    "wol-password"           => [\$wake_on_lan_passwd, ""],
+    "ip"                    => [\$server_ip, "0.0.0.0"],
+    "port"                  => [\$server_port, "20081"],
+    "known-clients"         => [\$known_clients_file_name, '/var/lib/gosa-si/clients.db' ],
+    "known-servers"         => [\$known_server_file_name, '/var/lib/gosa-si/servers.db'],
+    "incoming"              => [\$incoming_file_name, '/var/lib/gosa-si/incoming.db'],
+    "login-users"           => [\$login_users_file_name, '/var/lib/gosa-si/users.db'],
+    "fai-server"            => [\$fai_server_file_name, '/var/lib/gosa-si/fai_server.db'],
+    "fai-release"           => [\$fai_release_file_name, '/var/lib/gosa-si/fai_release.db'],
+    "packages-list"         => [\$packages_list_file_name, '/var/lib/gosa-si/packages.db'],
+    "messaging"             => [\$messaging_file_name, '/var/lib/gosa-si/messaging.db'],
+    "foreign-clients"       => [\$foreign_clients_file_name, '/var/lib/gosa-si/foreign_clients.db'],
+    "source-list"           => [\$sources_list, '/etc/apt/sources.list'],
+    "repo-path"             => [\$repo_path, '/srv/www/repository'],
+    "ldap-uri"              => [\$ldap_uri, ""],
+    "ldap-base"             => [\$ldap_base, ""],
+    "ldap-admin-dn"         => [\$ldap_admin_dn, ""],
+    "ldap-admin-password"   => [\$ldap_admin_password, ""],
+    "gosa-unit-tag"         => [\$gosa_unit_tag, ""],
+    "max-clients"           => [\$max_clients, 10],
+    "wol-password"          => [\$wake_on_lan_passwd, ""],
     },
 "GOsaPackages" => {
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
@@ -256,6 +257,7 @@ our $logged_in_user_date_of_expiry = 600;
     },
 "ServerPackages"=> {
     "address"      => [\$foreign_server_string, ""],
+    "dns-lookup"            => [\$dns_lookup, "true"],
     "domain"  => [\$server_domain, ""],
     "key"     => [\$ServerPackages_key, "none"],
     "key-lifetime" => [\$foreign_servers_register_delay, 120],
@@ -3200,37 +3202,49 @@ if ($foreign_server_string ne "") {
     foreach my $foreign_server (@cfg_foreign_server_list) {
         push(@foreign_server_list, $foreign_server);
     }
+
+    daemon_log("0 INFO: found foreign server in config file: ".join(", ", @foreign_server_list), 5);
 }
 
-# add foreign server from dns
-my @tmp_servers;
-if ( !$server_domain) {
-    # Try our DNS Searchlist
-    for my $domain(get_dns_domains()) {
-        chomp($domain);
-        my ($tmp_domains, $error_string) = &get_server_addresses($domain);
-        if(@$tmp_domains) {
-            for my $tmp_server(@$tmp_domains) {
-                push @tmp_servers, $tmp_server;
+# Perform a DNS lookup for server registration if flag is true
+if ($dns_lookup eq "true") {
+    # Add foreign server from dns
+    my @tmp_servers;
+    if (not $server_domain) {
+        # Try our DNS Searchlist
+        for my $domain(get_dns_domains()) {
+            chomp($domain);
+            my ($tmp_domains, $error_string) = &get_server_addresses($domain);
+            if(@$tmp_domains) {
+                for my $tmp_server(@$tmp_domains) {
+                    push @tmp_servers, $tmp_server;
+                }
             }
         }
+        if(@tmp_servers && length(@tmp_servers)==0) {
+            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+        }
+    } else {
+        @tmp_servers = &get_server_addresses($server_domain);
+        if( 0 == @tmp_servers ) {
+            daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+        }
     }
-    if(@tmp_servers && length(@tmp_servers)==0) {
-        daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
+
+    daemon_log("0 INFO: found foreign server via DNS ".join(", ", @tmp_servers), 5);    
+
+    foreach my $server (@tmp_servers) { 
+        unshift(@foreign_server_list, $server); 
     }
 } else {
-    @tmp_servers = &get_server_addresses($server_domain);
-    if( 0 == @tmp_servers ) {
-        daemon_log("0 WARNING: no foreign gosa-si-server found in DNS for domain '$server_domain'", 3);
-    }
+    daemon_log("0 INFO: DNS lookup for server registration is disabled", 5);
 }
-foreach my $server (@tmp_servers) { 
-    unshift(@foreign_server_list, $server); 
-}
+
+
 # eliminate duplicate entries
 @foreign_server_list = &del_doubles(@foreign_server_list);
 my $all_foreign_server = join(", ", @foreign_server_list);
-daemon_log("0 INFO: found foreign server in config file and DNS: $all_foreign_server", 5);
+daemon_log("0 INFO: found foreign server in config file and DNS: '$all_foreign_server'", 5);
 
 # add all found foreign servers to known_server
 my $act_timestamp = &get_time();
