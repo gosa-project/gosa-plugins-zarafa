@@ -25,14 +25,6 @@
 			<input type='submit' name='import' value='{t}Upload{/t}'>
 		</td>
 	</tr>
-	{if  $count}
-	<tr>
-		<td>{t}Start import{/t}</td>
-		<td>
-			<input type='submit' name='start_import' value='{t}Import{/t}'>
-		</td>
-	</tr>
-	{/if}
 </table>
 
 	{if  $count}
@@ -89,6 +81,7 @@
 <br>
 <p class='seperator'></p>
 <div style='text-align:right;width:99%; padding-right:5px; padding-top:5px;'>
+	<input type='submit' name='start_import' value='{t}Import{/t}' >&nbsp;
 	<input type='submit' name='import_abort' value='{msgPool type=backButton}'>
 </div>
 <br>

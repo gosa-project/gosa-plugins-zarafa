@@ -5,6 +5,7 @@ class goto_import_file extends plugin
 
   var $events     = array();
   var $csv_fields = array();
+  var $import_successful = FALSE; // Indicates that we have successfully imported everything.
 
   public function __construct($config,&$parent)
   {
@@ -128,6 +129,7 @@ class goto_import_file extends plugin
           }
         }
         msg_dialog::display(_("Import"),sprintf(_("Import complete: %s events successfully send, %s failed"),$success,$fail),INFO_DIALOG);
+        $this->import_successful = count($this->events) == 0;
       }
     }
 

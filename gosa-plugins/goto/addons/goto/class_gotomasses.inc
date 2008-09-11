@@ -340,7 +340,13 @@ class gotomasses extends plugin
     /* Display dialogs if currently opened */
     if(is_object($this->dialog)){
       $this->dialog->save_object();
-      return($this->dialog->execute());
+      $display = $this->dialog->execute();
+
+      if($this->dialog instanceOf goto_import_file && $this->dialog->import_successful){
+        $this->dialog = FALSE;
+      }else{
+        return($display);
+      }
     }
 
     /************
