@@ -1038,6 +1038,13 @@ if ($client_headURL =~ /\/tag\// ||
     $client_status = "developmental" ;
 }
 
+# Prepare log file
+my $root_uid = getpwnam('root');
+my $adm_gid = getgrnam('adm');
+chmod(0640, $log_file);
+chown($root_uid, $adm_gid, $log_file);
+
+
 daemon_log(" ", 1);
 daemon_log("$prg started!", 1);
 daemon_log("INFO: status: $client_status", 1);

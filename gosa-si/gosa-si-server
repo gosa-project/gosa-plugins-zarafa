@@ -314,7 +314,6 @@ sub daemon_log {
     if(not defined $level) { $level = 1 }
     if(defined $log_file){
         open(LOG_HANDLE, ">>$log_file");
-        chmod 0640, $log_file;
         if(not defined open( LOG_HANDLE, ">>$log_file" )) {
             print STDERR "cannot open $log_file: $!";
             return 
@@ -3136,6 +3135,12 @@ if ($server_headURL =~ /\/tag\// ||
 } else {
     $server_status = "developmental" ;
 }
+
+# Prepare log file
+my $root_uid = getpwnam('root');
+my $adm_gid = getgrnam('adm');
+chmod(0640, $log_file);
+chown($root_uid, $adm_gid, $log_file);
 
 
 daemon_log(" ", 1);
