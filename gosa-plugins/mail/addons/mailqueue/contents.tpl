@@ -14,10 +14,12 @@
 	<select size="1" name="p_server" title="{t}Select a server{/t}" onchange="mainform.submit()">
 	 {html_options values=$p_serverKeys output=$p_servers selected=$p_server}
 	</select>
+<!--
 	{t}with status{/t} : 
 	<select size="1" name="Stat" onchange="mainform.submit()">
 	 {html_options values=$stats output=$r_stats selected=$stat}
 	</select>
+-->
 	 &nbsp;{t}within the last{/t}&nbsp;
 	<select size="1" name="p_time" onchange="mainform.submit()">
 	 {html_options values=$p_timeKeys output=$p_times selected=$p_time}
