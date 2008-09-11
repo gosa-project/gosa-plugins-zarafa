@@ -719,8 +719,8 @@ sub input_from_unknown_host {
 		# check if module can open msg envelope with module key
 		($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key, $session_id);
 		if( (not defined $msg) || (not defined $msg_hash) ) {
-			daemon_log("$session_id ERROR: no msg returned!", 2) if (not defined $msg || "" eq $msg);
-			daemon_log("$session_id ERROR: no msg_hash returned!", 2) if (not defined $msg_hash || "" eq $msg_hash);
+			daemon_log("$session_id ERROR: no msg returned!", 2) if ((not defined $msg) || "" eq $msg);
+			daemon_log("$session_id ERROR: no msg_hash returned!", 2) if ((not defined $msg_hash) || "" eq $msg_hash);
 			next;
 		} else {
 			$module = $mod;
@@ -1719,13 +1719,14 @@ sub watch_for_new_jobs {
 			# Skip new jobs for host if there is a processing job
 			if(defined($res) and defined @{$res}[0]) {
 				# Prevent race condition if there is a trigger_activate job waiting and a goto-activation job processing
-				if(@{$res}[5] eq 'trigger_action_reinstall') {
+				my $row = @{$res}[0] if (ref $res eq 'ARRAY');
+				if(@{$row}[5] eq 'trigger_action_reinstall') {
 					my $sql_statement_2 =  "SELECT * FROM $job_queue_tn WHERE macaddress LIKE '$macaddress' AND status='waiting' AND headertag = 'trigger_activate_new'"; 
 					my $res_2 = $job_db->exec_statement( $sql_statement_2 );
-					if(defined($res_2) and defined @{$res}[0]) {
+					if(defined($res_2) and defined @{$res_2}[0]) {
 						# Set status from goto-activation to 'waiting' and update timestamp
-						$job_db->exec_statement = "UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'";
-						$job_db->exec_statement = "UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'";
+						$job_db->exec_statement("UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
+						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
 					}
 				}
 				next;
