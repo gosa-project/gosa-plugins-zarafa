@@ -962,6 +962,8 @@ sub trigger_activate_new {
         } else {
           $activate_client = 1;
         }
+      } else {
+          $activate_client = 1;
       }
     } else {
       $ldap_entry->add(
