@@ -45,6 +45,7 @@ class opsi extends gosaSupportDaemon
 {
   private $config = NULL;
   protected $use_alternative_xml_parse_method = TRUE;
+  protected $target = "";
 
   /*! \brief 		Create opsi object.
     @param
@@ -54,13 +55,26 @@ class opsi extends gosaSupportDaemon
   {
     $this->config = $config;
     gosaSupportDaemon::__construct($config);
-    $this->target = "00:01:6c:9d:b9:fa";
+
+    /* Detect the target opsi host 
+     */
+    $opsi_hosts = $this->get_hosts_with_module("opsi_com");
+      
+    /* Just use the first result of the opsi hosts 
+     */
+    $opsi_hosts[] = "asdfdasf";
+    if(count($opsi_hosts) == 1 && isset($opsi_hosts[0])){
+      $this->target = $opsi_hosts[0];
+    }elseif(count($opsi_hosts) > 1){
+      $this->target = $opsi_hosts[0];
+      msg_dialog::display(_("Opsi"),sprintf(_("More than one Opsi server were found, using the first result '%s'."),$this->target));
+    }
   }
 
   
   public function enabled()
   {
-    return(TRUE);
+    return(tests::is_mac($this->target));
   }
 
   /******************
