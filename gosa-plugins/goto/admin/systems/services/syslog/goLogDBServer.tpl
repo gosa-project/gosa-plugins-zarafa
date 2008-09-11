@@ -9,10 +9,18 @@
      </td>
     </tr>
     <tr>
+     <td>{t}Database{/t}{$must}</td>
+     <td>
+{render acl=$goLogDBACL}
+ 	<input type="text" name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
+{/render}
+     </td>
+    </tr>
+    <tr>
      <td>{t}Password{/t}{$must}</td>
      <td>
 {render acl=$goLogPasswordACL}
- 	<input type=password name="goLogPassword" id="goLogPassword" size=30 maxlength=60 value="{$goLogPassword}">
+ 	<input type="password" name="goLogPassword" id="goLogPassword" size=30 maxlength=60 value="{$goLogPassword}">
 {/render}
      </td>
     </tr>
