@@ -62,7 +62,6 @@ class opsi extends gosaSupportDaemon
       
     /* Just use the first result of the opsi hosts 
      */
-    $opsi_hosts[] = "asdfdasf";
     if(count($opsi_hosts) == 1 && isset($opsi_hosts[0])){
       $this->target = $opsi_hosts[0];
     }elseif(count($opsi_hosts) > 1){
