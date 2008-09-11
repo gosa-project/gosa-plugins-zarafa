@@ -1087,6 +1087,7 @@ sub msg_to_decrypt {
         if (not $done) {
             if ($target eq "GOSA" && $source eq "GOSA") {
                 $done = 1;                    
+                &daemon_log("$session_id DEBUG: target and source is 'GOSA' -> process here", 7);
             }
         }
 
@@ -1098,7 +1099,7 @@ sub msg_to_decrypt {
                 if ($source eq "GOSA") {
                     $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
                 }
-                #print STDERR "target is own address without forward_to_gosa-tag -> process here\n";
+                &daemon_log("$session_id DEBUG: target is own address without forward_to_gosa-tag -> process here", 7);
             }
         }
 
@@ -1110,11 +1111,11 @@ sub msg_to_decrypt {
 						$done = 1; 
 						my $hostname = $res->{1}->{'hostname'};
 						$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-                        #print STDERR "target is a client address in known_clients -> process here\n";
                         my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
                         if ($source eq "GOSA") {
                             $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
                         }
+                        &daemon_log("$session_id DEBUG: target is a client address in known_clients -> process here", 7);
 
 				} else {
 						$not_found_in_known_clients_db = 1;
@@ -1130,7 +1131,7 @@ sub msg_to_decrypt {
                 my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
                 if ($gosa_at ne $local_address) {
                     $done = 1;
-                    #print STDERR "target is own address with forward_to_gosa-tag not pointing to myself -> process here\n"; 
+                    &daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag not pointing to myself -> process here", 7); 
                 }
             }
         }
@@ -1172,7 +1173,7 @@ sub msg_to_decrypt {
                         &daemon_log("$session_id INFO: incoming '$header' message forwarded to GOsa", 5); 
                     }
                     $done = 1;
-                    #print STDERR "target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa\n";
+                    &daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa", 7);
                 }
             }
 
@@ -1199,7 +1200,7 @@ sub msg_to_decrypt {
                     &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
                 }
                 $done = 1;
-                #print STDERR "target is a client address in foreign_clients -> forward to registration server\n";
+                &daemon_log("$session_id DEBUG: target is a client address in foreign_clients -> forward to registration server", 7);
             } else {
 				$not_found_in_foreign_clients_db = 1;
 			}
@@ -1220,6 +1221,7 @@ sub msg_to_decrypt {
 
                 &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
                 $done = 1;
+                &daemon_log("$session_id DEBUG: target is a server address -> forward to server", 7);
             } else {
 				$not_found_in_known_server_db = 1;
 			}
@@ -1240,6 +1242,7 @@ sub msg_to_decrypt {
 								sessionid=>$session_id,
 								} );
 				$done = 1;
+                &daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
 		}
 
 

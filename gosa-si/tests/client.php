@@ -9,7 +9,7 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  $sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
+  $sock = new Socket_Client("127.0.0.1","20082",TRUE,5);
   $sock->setEncryptionKey("secret-gosa-password");
   #$sock = new Socket_Client("10.89.1.30","20081",TRUE,5);
   #$sock->setEncryptionKey("secret-gosa-password");
