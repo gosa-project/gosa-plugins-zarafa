@@ -696,42 +696,43 @@ sub input_from_known_client {
 
 
 sub input_from_unknown_host {
-    no strict "refs";
-    my ($input, $session_id) = @_ ;
-    my ($msg, $msg_hash, $module);
-    my $error_string;
-    
+	no strict "refs";
+	my ($input, $session_id) = @_ ;
+	my ($msg, $msg_hash, $module);
+	my $error_string;
+
 	my %act_modules = %$known_modules;
-	
-    while( my ($mod, $info) = each(%act_modules)) {
 
-        # check a key exists for this module
-        my $module_key = ${$mod."_key"};
-        if( not defined $module_key ) {
-            if( $mod eq 'ArpHandler' ) {
-                next;
-            }
-            daemon_log("$session_id ERROR: no key specified in config file for $mod", 1);
-            next;
-        }
-        daemon_log("$session_id DEBUG: $mod: $module_key", 7);
+	while( my ($mod, $info) = each(%act_modules)) {
 
-        # check if module can open msg envelope with module key
-        ($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key, $session_id);
-        if( (not defined $msg) || (not defined $msg_hash) ) {
-            next;
-        }
-        else {
-            $module = $mod;
-            last;
-        }
-    }
+		# check a key exists for this module
+		my $module_key = ${$mod."_key"};
+		if( not defined $module_key ) {
+			if( $mod eq 'ArpHandler' ) {
+				next;
+			}
+			daemon_log("$session_id ERROR: no key specified in config file for $mod", 1);
+			next;
+		}
+		daemon_log("$session_id DEBUG: $mod: $module_key", 7);
 
-    if( (!$msg) || (!$msg_hash) || (!$module)) {
-        daemon_log("$session_id DEBUG: Incoming message is not from an unknown host", 7);
-    }
+		# check if module can open msg envelope with module key
+		($msg, $msg_hash) = &check_key_and_xml_validity($input, $module_key, $session_id);
+		if( (not defined $msg) || (not defined $msg_hash) ) {
+			daemon_log("$session_id ERROR: no msg returned!", 2) if (not defined $msg || "" eq $msg);
+			daemon_log("$session_id ERROR: no msg_hash returned!", 2) if (not defined $msg_hash || "" eq $msg_hash);
+			next;
+		} else {
+			$module = $mod;
+			last;
+		}
+	}
 
-    return ($msg, $msg_hash, $module);
+	if( (!$msg) || (!$msg_hash) || (!$module)) {
+		daemon_log("$session_id DEBUG: Incoming message is not from an unknown host", 7);
+	}
+
+	return ($msg, $msg_hash, $module);
 }
 
 
