@@ -466,6 +466,7 @@ class workservice extends plugin
            */
           $p = $this->parent->by_object['ogroup'];
           foreach($p->memberList as $dn => $obj){
+            if(preg_match("/".normalizePreg(get_ou("incomingou"))."/",$dn)) continue;
             if(isset($p->objcache[$dn]['macAddress']) && !empty($p->objcache[$dn]['macAddress'])){
               $macs[] = $p->objcache[$dn]['macAddress'];
             }
@@ -475,7 +476,7 @@ class workservice extends plugin
           /* We are a workstation. Add current mac.
            */
           $mac = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
-          if(!empty($mac)){
+          if(!empty($mac) && !preg_match("/".normalizePreg(get_ou("incomingou"))."/",$this->orig_dn)){
             $macs[] = $mac;
           }          
         }
