@@ -1216,7 +1216,7 @@ sub get_hosts_with_module {
         $out_msg =~ s/<\/xml>/<result>host$hit_id<\/result> <\/xml>/;
         my $host_infos = "<ip>".$hit_hash->{'hostname'}."</ip>";
         $host_infos .= " <mac>".$hit_hash->{'macaddress'}."</mac>"; 
-        $out_msg =~  s/<\/xml>/\n<host$hit_id> $host_infos <\/host$hit_id> \n <\/xml>/;
+        $out_msg =~  s/<\/xml>/\n<answer$hit_id> $host_infos <\/answer$hit_id> \n <\/xml>/;
     }
 
     return $out_msg;
