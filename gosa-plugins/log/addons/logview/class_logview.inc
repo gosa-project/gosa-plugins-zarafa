@@ -98,8 +98,8 @@ class logview extends plugin
       }
 
       /* check of log database is available */
-      if (! @mysql_select_db("gomon")){
-        msg_dialog::display(_("Error"), msgPool::dbselect("gomon",@mysql_error(),"Log view"), ERROR_DIALOG);
+      if (! @mysql_select_db($cfg["DB"])){
+        msg_dialog::display(_("Error"), msgPool::dbselect($cfg["DB"],@mysql_error(),"Log view"), ERROR_DIALOG);
         new log("debug","log view","dbselect",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       }
@@ -196,8 +196,8 @@ class logview extends plugin
       new log("debug","log view","dbconnect",array(),@mysql_error());
       return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
     } else {
-      if (! @mysql_select_db("gomon")){
-        msg_dialog::display(_("Error"), msgPool::dbselect("gomon",@mysql_error(),"Log view"), ERROR_DIALOG);
+      if (! @mysql_select_db($cfg["DB"])){
+        msg_dialog::display(_("Error"), msgPool::dbselect($cfg["DB"],@mysql_error(),"Log view"), ERROR_DIALOG);
         new log("debug","log view","dbselect",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       } else {
