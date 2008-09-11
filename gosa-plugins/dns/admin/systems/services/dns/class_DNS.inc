@@ -395,12 +395,11 @@ class DNS
        */
       $zN = trim($attrs['zoneName'][0],".");
       $nN = trim($name,"."); 
-  
       $testname = $attrs['relativeDomainName'][0].".".$zN;
-    
+
       /* Check given host name with zone settings 
        */ 
-      if(preg_match("/".normalizePreg($testname)."[\.]*$/",$nN)){
+      if(preg_match("/".normalizePreg($testname)."[\.]*$/",$nN) || $attrs['relativeDomainName'][0] == $name){
         $ret['exists'] = true;
         $ret['zoneName'] = $id_tmp;
         foreach(array("dNSClass","dNSTTL") as $atr){
