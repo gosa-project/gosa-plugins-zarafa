@@ -170,7 +170,9 @@ sub mailqueue_query {
                         &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
                         $query_positiv++;
                     } else {
-                        if ($act_result->{'msg_id'} eq $q_value) { $query_positiv++; }
+                        if ( &_exec_op($act_result->{'msg_id'}, $q_operator, $q_value) ) { 
+                            $query_positiv++; 
+                        }
                     }
 
                 # Query for message size
@@ -198,7 +200,9 @@ sub mailqueue_query {
                         &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
                         $query_positiv++;
                     } else {
-                        if ($act_result->{'sender'} eq $q_value) { $query_positiv++; }
+                        if ( &_exec_op($act_result->{'sender'}, $q_operator, $q_value)) { 
+                            $query_positiv++; 
+                        }
                     }
 
                 # Query for recipient
@@ -209,7 +213,9 @@ sub mailqueue_query {
                         &main::daemon_log("$session_id DEBUG: \n$msg", 9); 
                         $query_positiv++;
                     } else {
-                        if ($act_result->{'recipient'} eq $q_value) { $query_positiv++; }
+                        if ( &_exec_op($act_result->{'recipient'}, $q_operator, $q_value)) { 
+                            $query_positiv++; 
+                        }
                     }
                 }
             }
@@ -684,7 +690,7 @@ sub _exec_op {
     my $res;
 
     if ($op eq "eq") {
-        $res = $a == $b ? 1 : 0 ;
+        $res = $a =~ /$b/ ? 1 : 0 ;
     } elsif ($op eq "gt") {
         $res = $a > $b ? 1 : 0 ;
     } elsif ($op eq "lt") {
