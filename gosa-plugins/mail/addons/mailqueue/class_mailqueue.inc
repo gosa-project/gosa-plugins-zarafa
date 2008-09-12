@@ -100,6 +100,7 @@ class mailqueue extends plugin
 
       /* Create table which displays the header informations */
       $data = $this->si_queue->header($entry,$server);
+      $data = preg_replace("/([^\s]*:)/","\n\\1",$data);
       $this->disp_header = $data;
       if($this->si_queue->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);

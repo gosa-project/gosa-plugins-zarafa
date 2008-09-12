@@ -131,22 +131,10 @@ class si_mailqueue extends gosaSupportDaemon
     $data = array();
     $data['msg_id'] = $msg_id;
     $res = $this->send_data("gosa_mailqueue_header",$server,$data,TRUE);
-  
-    $attrs = array(
-        "RECIPIENT",
-        "SENDER",
-        "SUBJECT");
-
-    $data = array();
-    if(isset($res['XML'])){
-      foreach($attrs as $attr){
-        $data[$attr] = "";
-        if(isset($res['XML'][0][$attr])){
-          $data[$attr] = $res['XML'][0][$attr][0]['VALUE'];
-        }
-      }  
+    if(isset($res['XML'][0]['MSG_HEADER'][0]['VALUE'])){
+      return($res['XML'][0]['MSG_HEADER'][0]['VALUE']);
     }
-    return($data);
+    return("");
   }
 
  

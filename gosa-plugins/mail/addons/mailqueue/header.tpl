@@ -1,17 +1,5 @@
-<table>
-	<tr>
-		<td>{t}Sender{/t}&nbsp;:</td>
-		<td>{$header.SENDER}</td>
-	</tr>
-	<tr>
-		<td>{t}Recipient{/t}&nbsp;:</td>
-		<td>{$header.RECIPIENT}</td>
-	</tr>
-	<tr>
-		<td>{t}Subject{/t}&nbsp;:</td>
-		<td><i>{$header.SUBJECT}</i></td>
-	</tr>
-</table>
+<pre>{$header}
+</pre>
 
 <p class="seperator">&nbsp;</p>
 <div style='text-align:right; padding:5px;'>
