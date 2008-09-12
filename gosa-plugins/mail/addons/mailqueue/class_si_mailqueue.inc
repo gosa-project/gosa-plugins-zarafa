@@ -51,6 +51,7 @@ class si_mailqueue extends gosaSupportDaemon
         if(preg_match("/^ANSWER[0-9]*$/",$name)){
           $attrs = array(
               "MSG_SIZE"      => "Size",
+              "MSG_STATUS"    => "Status",
               "RECIPIENT"     => "Recipient",
               "SENDER"        => "Sender",
               "ARRIVAL_TIME"  => "Arrival",

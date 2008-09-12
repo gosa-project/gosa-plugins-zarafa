@@ -64,7 +64,7 @@
 		<td><a href="{$plug}&amp;sort=Arrival"		>{t}Arrival{/t}		{if $OrderBy == "Arrival"}	{$SortType}{/if}</a></td>
 		<td><a href="{$plug}&amp;sort=Sender"		>{t}Sender{/t}		{if $OrderBy == "Sender"}	{$SortType}{/if}</a></td>
 		<td><a href="{$plug}&amp;sort=Recipient"	>{t}Recipient{/t}	{if $OrderBy == "Recipient"}{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&amp;sort=Error"		>{t}Error{/t}		{if $OrderBy == "Error"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Status"		>{t}Status{/t}		{if $OrderBy == "Status"}	{$SortType}{/if}</a></td>
 		<td>&nbsp;</td>
 	</tr>
 
@@ -87,7 +87,7 @@
 		<td>{$entries[$key].Arrival|date_format:"%d.%m.%Y %H:%M:%S"}</td>
 		<td>{$entries[$key].Sender}</td>
 		<td>{$entries[$key].Recipient}</td>
-		<td >{$entries[$key].Error}</td>
+		<td >{$entries[$key].Status}</td>
 		<td style="text-align:right">
 			<input type='image' name='del__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
 				src="images/lists/trash.png" alt="{t}delete{/t}" title="{t}Delete this message{/t}">
