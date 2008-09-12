@@ -101,6 +101,9 @@ our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
 our $known_modules;
+our $root_uid;
+our $adm_gid;
+
 
 # specifies the verbosity of the daemon_log
 $verbose = 0 ;
@@ -3135,8 +3138,8 @@ if ($server_headURL =~ /\/tag\// ||
 }
 
 # Prepare log file
-my $root_uid = getpwnam('root');
-my $adm_gid = getgrnam('adm');
+$root_uid = getpwnam('root');
+$adm_gid = getgrnam('adm');
 chmod(0640, $log_file);
 chown($root_uid, $adm_gid, $log_file);
 
