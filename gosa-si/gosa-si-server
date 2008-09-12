@@ -3157,46 +3157,46 @@ $incoming_db->create_table($incoming_tn, \@incoming_col_names);
 # connect to gosa-si job queue
 $job_db = GOSA::DBsqlite->new($job_queue_file_name);
 $job_db->create_table($job_queue_tn, \@job_queue_col_names);
-chmod(0640, $job_queue_file_name);
+chmod(0660, $job_queue_file_name);
 chown($root_uid, $adm_gid, $job_queue_file_name);
 
 
 # connect to known_clients_db
 $known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
-chmod(0640, $known_clients_file_name);
+chmod(0660, $known_clients_file_name);
 chown($root_uid, $adm_gid, $known_clients_file_name);
 
 # connect to foreign_clients_db
 $foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
 $foreign_clients_db->create_table($foreign_clients_tn, \@foreign_clients_col_names);
-chmod(0640, $foreign_clients_file_name);
+chmod(0660, $foreign_clients_file_name);
 chown($root_uid, $adm_gid, $foreign_clients_file_name);
 
 # connect to known_server_db
 unlink($known_server_file_name);
 $known_server_db = GOSA::DBsqlite->new($known_server_file_name);
 $known_server_db->create_table($known_server_tn, \@known_server_col_names);
-chmod(0640, $known_server_file_name);
+chmod(0660, $known_server_file_name);
 chown($root_uid, $adm_gid, $known_server_file_name);
 
 # connect to login_usr_db
 $login_users_db = GOSA::DBsqlite->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
-chmod(0640, $login_users_file_name);
+chmod(0660, $login_users_file_name);
 chown($root_uid, $adm_gid, $login_users_file_name);
 
 # connect to fai_server_db and fai_release_db
 unlink($fai_server_file_name);
 $fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
-chmod(0640, $fai_server_file_name);
+chmod(0660, $fai_server_file_name);
 chown($root_uid, $adm_gid, $fai_server_file_name);
 
 unlink($fai_release_file_name);
 $fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
 $fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
-chmod(0640, $fai_release_file_name);
+chmod(0660, $fai_release_file_name);
 chown($root_uid, $adm_gid, $fai_release_file_name);
 
 # connect to packages_list_db
@@ -3204,13 +3204,13 @@ chown($root_uid, $adm_gid, $fai_release_file_name);
 unlink($packages_list_under_construction);
 $packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
-chmod(0640, $packages_list_file_name);
+chmod(0660, $packages_list_file_name);
 chown($root_uid, $adm_gid, $packages_list_file_name);
 
 # connect to messaging_db
 $messaging_db = GOSA::DBsqlite->new($messaging_file_name);
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
-chmod(0640, $messaging_file_name);
+chmod(0660, $messaging_file_name);
 chown($root_uid, $adm_gid, $messaging_file_name);
 
 
