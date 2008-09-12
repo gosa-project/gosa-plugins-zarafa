@@ -16,9 +16,15 @@
 {t}Server path{/t}&nbsp;<input name="server_path" style="width:300px;" value="{$server_path}">
 <br>
 <br>
+{render acl=$ThisACL}
 {$divlist}
+{/render}
+{render acl=$ThisACL}
 <input type="file" size=50 name="newProfile" value="{t}Browse{/t}">
+{/render}
+{render acl=$ThisACL}
 <input type="submit" name="profileAdd" value="{msgPool type=addButton}">
+{/render}
 
 <p class='seperator'>&nbsp;</p>
 <div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">

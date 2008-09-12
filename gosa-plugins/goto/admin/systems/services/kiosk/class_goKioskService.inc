@@ -84,12 +84,14 @@ class goKioskService extends goService{
     /* Fill templating stuff */
     $smarty= get_smarty();
     $smarty->assign("baseDir",$this->baseDir);
+    $smarty->assign("ThisACL",$this->getacl(""));
     $display= "";
 
     /* Download kiosk profile 
      */
     if(isset($_GET['getkiosk'])){
       $id = $_GET['getkiosk'];
+
       foreach($this->gotoKioskProfiles as $profile){
         if($profile['name'] == $id){
           $name = $this->baseDir."/".$id;
@@ -105,7 +107,7 @@ class goKioskService extends goService{
     /* Add new kiosk profile
      * in profile directory ($this->baseDir);
      */
-    if((isset($_POST['profileAdd']))&&(isset($_FILES['newProfile']))){
+    if((isset($_POST['profileAdd']))&&(isset($_FILES['newProfile'])) && $this->acl_is_writeable("")){
       $file = $_FILES['newProfile'];
       if(!file_exists($this->baseDir.$file['name'])){
         $tmp = array(
@@ -122,7 +124,7 @@ class goKioskService extends goService{
     $only_once = true;
     foreach($_POST as $name => $value){
 
-      if((preg_match("/^delkiosk_/",$name))&&($only_once)){
+      if((preg_match("/^delkiosk_/",$name))&&($only_once) && $this->acl_is_writeable("")){
   
         /* Get id, name and path */
         $only_once = false;
@@ -171,11 +173,17 @@ class goKioskService extends goService{
     /* Display list of profiles */
     $divlist = new divSelectBox("KioskProfiles");
     $divlist -> SetHeight (300);
+
+
     foreach($this->gotoKioskProfiles as $key => $val ){
+      $del = "&nbsp;";
+      if($this->acl_is_writeable("")){
+        $del = "<input type='image' src='images/lists/trash.png'
+          class='center' alt='delete' name='delkiosk_".$key."'>";
+      }
       $divlist->AddEntry(array(
             array("string"=>"<a href='?plug=".$_GET['plug']."&getkiosk=".$val['name']."'>".$val['name']."</a>"),
-            array("string"=>"<input type='image' src='images/lists/trash.png'
-              class='center' alt='delete' name='delkiosk_".$key."'>" ,
+            array("string"=>$del,
               "attach"=>" style='border-right: 0px;width:24px; text-align:center;' ")
             ));
     }
