@@ -184,8 +184,8 @@ for($count = 1; $count <= $zahl; $count++)
     #echo sabber | mail -s test horst@woauchimmer.de    
 
     # Querying the mailqueue at 
-    #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:aa:16</target> </xml>";
-    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <q_tag>recipient</q_tag> <q_operator>eq</q_operator> <q_value>rett</q_value> </xml>";
+    #$data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> </xml>";
+    $data = "<xml> <header>gosa_mailqueue_query</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <q_tag>recipient</q_tag> <q_operator>eq</q_operator> <q_value>retta</q_value> </xml>";
 
     # Multiple xml tags msg_id are allowed
     #$data = "<xml> <header>gosa_mailqueue_hold</header> <source>GOSA</source> <target>00:01:6c:9d:b9:fa</target> <msg_id>99C8ABEF23</msg_id> </xml>";

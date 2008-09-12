@@ -42,6 +42,7 @@ use strict;
 use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
+use MIME::Base64;
 
 BEGIN {}
 
@@ -158,7 +159,7 @@ sub mailqueue_query {
             $act_result->{'recipient'} = $info_l[2] =~ /([\w.-]+@[\w.-]+)/ ? $1 : 'unknown' ;
             $act_result->{'msg_status'} = $info_l[1] =~ /^([\s\S]*)$/ ? $1 : 'unknown' ;
 
-            # If a query tag exists, perform the selection
+            # If all query tags exists, perform the selection
             my $query_positiv = 0;
             if (defined $q_tag && defined $q_operator && defined $q_value) {
 
@@ -218,7 +219,17 @@ sub mailqueue_query {
                         }
                     }
                 }
-            }
+            
+            # If no query tag exists, return all mails in mailqueue
+            } elsif ((not defined $q_tag) && (not defined $q_operator) && (not defined $q_value)) {
+                $query_positiv++; 
+
+            # If query tags are not complete return error message
+            } elsif ((not defined $q_tag) || (not defined $q_operator) || (not defined $q_value)) {
+                $error++;
+                $error_string = "'mailqueue_query'-msg is not complete, some query tags (q_tag, q_operator, q_value) are missing";
+                &main::daemon_log("$session_id WARNING: $error_string", 3);
+            }           
 
             # If query was successful, add resutls to answer
             if ($query_positiv) {
@@ -650,15 +661,14 @@ sub mailqueue_header {
     }
 
     # parsing information
+    my $msg_header;
     if (not $error) {
         my $cmd = "postcat -q $msg_id";
         &main::daemon_log("DEBUG: run '$cmd'", 7); 
         my $result = qx($cmd);
-        foreach (split(/\n/, $result)) {
-            if ($_ =~ /^To: ([\S]+)/) { $recipient = $1; }
-            if ($_ =~ /^From: ([\S]+)/) { $sender = $1; }
-            if ($_ =~ /^Subject: ([\s\S]+)/) { $subject = $1; }
-        }
+
+        my @header_l = split(/\n\n/, $result);
+        $msg_header = $header_l[0];
     }       
 
     # create outgoing msg
@@ -676,9 +686,8 @@ sub mailqueue_header {
 
     # add mail infos to outgoing msg
     } else {
-        &add_content2xml_hash($out_hash, "recipient", $recipient);        
-        &add_content2xml_hash($out_hash, "sender", $sender);        
-        &add_content2xml_hash($out_hash, "subject", $subject);        
+        #&add_content2xml_hash($out_hash, "msg_header", &decode_base64($msg_header));        
+        &add_content2xml_hash($out_hash, "msg_header", $msg_header);        
         $out_msg = &main::create_xml_string($out_hash);
     }
  
