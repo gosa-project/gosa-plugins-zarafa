@@ -133,22 +133,36 @@ class mailqueue extends plugin
       $entries = array();
       foreach($this->ServerList as $mac => $name){
         if(!tests::is_mac($mac)) continue;
-        $entries = array_merge($entries,$this->si_queue->query_mailqueue(
-              $mac,$this->OrderBy,$this->SortType,$this->Search,$within_minutes));
+        $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->Search,$within_minutes));
         if($this->si_queue->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
         }
       }
     }else{
-      $entries = $this->si_queue->query_mailqueue(
-          $this->Server,$this->OrderBy,$this->SortType,$this->Search,$within_minutes);
+      $entries = $this->si_queue->query_mailqueue($this->Server,$this->Search,$within_minutes);
       if($this->si_queue->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
       }
     }
 
-    $count = count($entries);
-    $entries = array_slice($entries,$this->Page,$this->range);
+    /* Sort entries 
+     */ 
+    $data = array();
+    foreach($entries as $entry){
+      $data[uniqid($entry[$this->OrderBy])] = $entry;
+    }
+
+    /* Sort entries by given direction 
+     */
+    if($this->SortType == "down"){
+      uksort($data, 'strnatcasecmp');
+    }else{
+      uksort($data, 'strnatcasecmp');
+      $data = array_reverse($data);
+    }
+
+    $count = count($data);
+    $entries = array_slice($data,$this->Page,$this->range);
 
     /* Add ServerName to results 
      */

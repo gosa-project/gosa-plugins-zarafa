@@ -32,23 +32,9 @@ class si_mailqueue extends gosaSupportDaemon
   /*! \brief  Returns a list of all mail queue entries 
       @return Array   s.a.
    */
-  public function query_mailqueue($server,$sortby,$direction,$search_str,$time)
+  public function query_mailqueue($server,$search_str,$time)
   {
     $attrs = array("Size","Recipient","Sender","Arrival","MailID","Hold","Active","Error","Server");
-
-    /* Check sorting paramter 
-     */
-    if(!in_array($sortby,$attrs)){
-      trigger_error("Invalid sorting option '".$sortby."'.");
-      $sortby = "Arrival";
-    }
-
-    /* Check sorting direction 
-     */
-    if(!in_array($direction,array("down","up"))){
-      trigger_error("Invalid sorting direction '".$direction."'.");
-      $direction = "down";
-    }
 
     /* Prepare search filter 
      */
@@ -106,22 +92,12 @@ class si_mailqueue extends gosaSupportDaemon
               break;
             }
           }
-       
-          if($found){ 
-            $n = uniqid($val[$sortby]);
-            $items[$n] = $val;
+          if($found){
+            $items[] = $val;
           }
         }
       }
     }   
-
-    /* Sort entries by given direction 
-     */
-    if($direction == "down"){
-      ksort($items);
-    }else{
-      krsort($items);
-    }
     return($items);
   }
 
