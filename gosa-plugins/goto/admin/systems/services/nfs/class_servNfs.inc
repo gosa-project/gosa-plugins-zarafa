@@ -12,7 +12,7 @@ class servnfs extends plugin
   var $description   ="";  // description
   var $type          ="";  // Type FS/Samba/NCP
   var $charset       ="";  // charset
-  var $host       ="";  // hostname
+  var $host          ="";  // hostname
   var $types         =array();  // Array Types NFS/Samba/NCP/netatalk
   var $charsets      =array();  // Array with charsets
   var $path          ="";  // Path
@@ -180,6 +180,10 @@ class servnfs extends plugin
 
     if(!tests::is_path($this->path)){
       $message[]= _("'Path / Volume' must contain at least one '/'!");
+    }
+
+    if(!in_array($this->type,$this->types)){
+      $message[]= msgPool::required(_("Type"));
     }
 
     // only 0-9a-z
