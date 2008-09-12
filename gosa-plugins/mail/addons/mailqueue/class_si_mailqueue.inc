@@ -34,7 +34,7 @@ class si_mailqueue extends gosaSupportDaemon
    */
   public function query_mailqueue($server,$search_str,$time)
   {
-    $attrs = array("Size","Recipient","Sender","Arrival","MailID","Hold","Active","Error","Server");
+    $attrs = array("Size","Recipient","Sender","Arrival","MailID","Hold","Active","Status","Server");
 
     /* Prepare search filter 
      */
@@ -63,8 +63,7 @@ class si_mailqueue extends gosaSupportDaemon
           $ids[] = $val['MailID'];
           $attrs = array(  
               "MSG_HOLD"   => "Hold",
-              "MSG_ACTIVE" => "Active",
-              "ERROR"      => "Error");
+              "MSG_ACTIVE" => "Active");
           foreach($attrs as $source => $dest){
             if(isset($entry[0][$source][0]['VALUE'])){
               $val[$dest] = $entry[0][$source][0]['VALUE'];
