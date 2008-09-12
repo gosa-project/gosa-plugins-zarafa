@@ -3142,7 +3142,7 @@ $root_uid = getpwnam('root');
 $adm_gid = getgrnam('adm');
 chmod(0640, $log_file);
 chown($root_uid, $adm_gid, $log_file);
-
+chown($root_uid, $adm_gid, "/var/lib/gosa-si");
 
 daemon_log(" ", 1);
 daemon_log("$0 started!", 1);
