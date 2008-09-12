@@ -23,9 +23,6 @@ sub new {
 	}
     my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
     my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
-    chmod(0640, $db_name);
-    chown($main::root_uid, $main::adm_gid, $db_name);
-
     $self->{dbh} = $dbh;
     $self->{db_name} = $db_name;
     $self->{db_lock} = $lock;
