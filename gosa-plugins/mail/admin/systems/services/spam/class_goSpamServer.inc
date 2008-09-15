@@ -178,10 +178,9 @@ class gospamserver extends goService{
     $DivRules = new divSelectBox("SpamRules");
     $DivRules->SetHeight(130);
 
-    if($this->acl_is_writeable("saTrustedNetworks")){
+    if(!$this->acl_is_writeable("saTrustedNetworks")){
       $actions = "";
     }else{
-    
       $actions = "<input type='image' src='images/lists/edit.png'      name='editRule_%s'>";
       if($this->acl_is_writeable("saRule")){
         $actions.= "<input type='image' src='images/lists/trash.png' name='delRule_%s'>";
