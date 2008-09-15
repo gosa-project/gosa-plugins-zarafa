@@ -62,7 +62,7 @@ class goNtpServer extends goService{
       }
     }
 
-    $smarty->assign("goNtpServerACL", $this->getacl("goNtpServer")) ;
+    $smarty->assign("goTimeSourceACL", $this->getacl("goTimeSource")) ;
     $smarty->assign("goTimeSource" , $this->goTimeSource); 
     return($smarty->fetch(get_template_path("goNtpServer.tpl",TRUE,dirname(__FILE__))));
   }
