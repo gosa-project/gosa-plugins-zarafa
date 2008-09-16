@@ -63,7 +63,7 @@ class printgeneric extends plugin
 
     /* Update dn, to ensure storing as printer instead of WS / terminal */
     if(preg_match("/Terminal/i",$this->BelongsTo) || preg_match("/TerminalTemplate/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalou'))."/",get_ou('printerou'),$this->dn);
+      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN'))."/",get_ou('printerou'),$this->dn);
     }
 
     if(preg_match("/Workstation/i",$this->BelongsTo) || preg_match("/WorkstationTemplate/i",$this->BelongsTo)){
@@ -220,7 +220,7 @@ class printgeneric extends plugin
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
       if(preg_match("/terminal/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".normalizePreg(get_ou('terminalou'))."/",get_ou('printerou'),$this->dn);
+        $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN'))."/",get_ou('printerou'),$this->dn);
       }
 
       if(preg_match("/workstation/i",$this->BelongsTo)){
@@ -569,7 +569,7 @@ class printgeneric extends plugin
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
       if(preg_match("/terminal/i",$this->BelongsTo)){
-        $this->dn= preg_replace("/".normalizePreg(get_ou('terminalou')).",/",get_ou('printerou'),$this->dn);
+        $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN')).",/",get_ou('printerou'),$this->dn);
       }
 
       if(preg_match("/workstation/i",$this->BelongsTo)){
@@ -716,7 +716,7 @@ class printgeneric extends plugin
     /* Update dn, to ensure storing as printer instead of WS / terminal
      */
     if(preg_match("/terminal/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalou')).",/",get_ou('printerou'),$this->dn);
+      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN')).",/",get_ou('printerou'),$this->dn);
     }
 
     if(preg_match("/workstation/i",$this->BelongsTo)){

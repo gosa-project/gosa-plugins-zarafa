@@ -45,7 +45,7 @@ class DAK
     }
     $res = array();
     $rest = get_sub_list("(&(macAddress=*)(FAIrepository=*)(objectClass=FAIrepositoryServer))",
-        "server",get_ou("serverou"),$config->current['BASE'],
+        "server",get_ou("serverRDN"),$config->current['BASE'],
         array("cn","FAIrepository","macAddress"),GL_SUBSEARCH);
 
     foreach($rest as $attrs){

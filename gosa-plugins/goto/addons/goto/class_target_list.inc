@@ -279,13 +279,13 @@ class target_list extends MultiSelectWindow
             array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT );
       $res= array_merge($res,get_list($filter, "workstation",  get_ou('workstationou').$base, 
             array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
-      $res= array_merge($res,get_list($filter, "server", get_ou('serverou').$base, 
+      $res= array_merge($res,get_list($filter, "server", get_ou('serverRDN').$base, 
             array("cn","objectClass","ipHostNumber","description"), GL_SIZELIMIT ));
 
       $deps_a = array(
           get_ou("workstationou"),
           get_ou("incominou"),
-          get_ou("serverou"),
+          get_ou("serverRDN"),
           get_ou("ogroupou"));
 
       $res = get_sub_list($filter,array("server","incoming","workstation","ogroup"), 

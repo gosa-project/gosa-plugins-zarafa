@@ -620,9 +620,9 @@ class sudo extends plugin
     $filter= "(&(|(objectClass=goServer)(objectClass=gotoWorkstation)(objectClass=gotoTerminal))$exclude(cn=*)(cn=$regex))";
 
     $res = array();
-    $res= array_merge($res,get_sub_list($filter, array("terminal"), get_ou("terminalou"),
+    $res= array_merge($res,get_sub_list($filter, array("terminal"), get_ou("terminalRDN"),
         get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));
-    $res= array_merge($res,get_sub_list($filter, array("server"), get_ou("serverou"), 
+    $res= array_merge($res,get_sub_list($filter, array("server"), get_ou("serverRDN"), 
         get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));
     $res= array_merge($res,get_sub_list($filter, array("workstation"), get_ou("workstationou"),
         get_ou("systemsou").$sysfilter['depselect'],          array("cn"), GL_SUBSEARCH | GL_SIZELIMIT));

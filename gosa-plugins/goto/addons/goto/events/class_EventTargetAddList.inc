@@ -80,7 +80,7 @@ class EventTargetAddList extends MultiSelectWindow
     /* Create a list of servers
      */
     $tmp = get_sub_list("(&(macAddress=*)(objectClass=goServer))",
-          "server",get_ou("serverou"),$config->current['BASE'],
+          "server",get_ou("serverRDN"),$config->current['BASE'],
           array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
     foreach($tmp as $server){
       $this->server_list[$server['dn']] = $server;
@@ -196,7 +196,7 @@ class EventTargetAddList extends MultiSelectWindow
     if($this->display_server){
       $_target_list = array_merge($_target_list,
             get_list("(&(cn=".$this->regex.")(objectClass=goServer))",
-            "server",get_ou("serverou").$this->selectedBase,
+            "server",get_ou("serverRDN").$this->selectedBase,
             array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
     }
     if($this->display_workstation){

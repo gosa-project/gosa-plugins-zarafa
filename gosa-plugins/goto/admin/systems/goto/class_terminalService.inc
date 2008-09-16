@@ -199,8 +199,8 @@ class termservice extends plugin
     $deps_a = array(
         get_people_ou(),
         get_ou("ogroupou"),
-        get_ou("serverou"),
-        get_ou("terminalou"),
+        get_ou("serverRDN"),
+        get_ou("terminalRDN"),
         get_ou("workstationou"),
         get_ou("printerou"),
         get_ou("componentou"),

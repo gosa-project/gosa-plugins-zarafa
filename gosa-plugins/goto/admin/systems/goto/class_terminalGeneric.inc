@@ -125,7 +125,7 @@ class termgeneric extends plugin
       $ui= get_userinfo();
       $this->base= dn2base($ui->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("terminalou"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("terminalRDN"))."/", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
@@ -426,7 +426,7 @@ class termgeneric extends plugin
     }
 
     /* Permissions for that base? */
-    $this->dn= "cn=".$this->cn.",".get_ou('terminalou').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('terminalRDN').$this->base;
 
     if ($this->cn == ""){
       $message[]= msgPool::required(_("Name"));

@@ -232,7 +232,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->terminal){
         $filter = "(objectClass=gotoTerminal)";
         $filter= "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_sub_list($filter,"terminal",get_ou('terminalou'),$base, 
+        $res= array_merge($res,get_sub_list($filter,"terminal",get_ou('terminalRDN'),$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
       if($this->workstation){
@@ -244,7 +244,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->server){
         $filter = "(objectClass=goServer)";
         $filter = "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_sub_list($filter, "server", get_ou('serverou'),$base, 
+        $res= array_merge($res,get_sub_list($filter, "server", get_ou('serverRDN'),$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
     }else{
@@ -252,7 +252,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->terminal){
         $filter = "(objectClass=gotoTerminal)";
         $filter= "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_list($filter,"terminal", get_ou('terminalou').$base, 
+        $res= array_merge($res,get_list($filter,"terminal", get_ou('terminalRDN').$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT ));
       }
       if($this->workstation){
@@ -264,7 +264,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->server){
         $filter = "(objectClass=goServer)";
         $filter = "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_list($filter, "server", get_ou('serverou').$base, 
+        $res= array_merge($res,get_list($filter, "server", get_ou('serverRDN').$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT ));
       }
     }
