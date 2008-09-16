@@ -2769,9 +2769,11 @@ sub create_packages_list_db {
 	close (CONFIG);
 
 
-	find(\&cleanup_and_extract, keys( %repo_dirs ));
-	&main::strip_packages_list_statements();
-	$packages_list_db->exec_statementlist(\@packages_list_statements);
+	if(keys(%repo_dirs)) {
+		find(\&cleanup_and_extract, keys( %repo_dirs ));
+		&main::strip_packages_list_statements();
+		$packages_list_db->exec_statementlist(\@packages_list_statements);
+	}
 	unlink($packages_list_under_construction);
 	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
 	return;
