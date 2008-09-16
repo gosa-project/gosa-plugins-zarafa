@@ -1972,7 +1972,7 @@ msgstr "Wählen Sie den Terminal-Modus"
 #: admin/ogroups/goto/termgroup.tpl:58
 #: admin/ogroups/goto/class_termgroup.inc:328
 msgid "Syslog server"
-msgstr "Protokoll-Server"
+msgstr "Syslog-Server"
 
 #: admin/systems/goto/workstation.tpl:68 admin/systems/goto/terminal.tpl:60
 #: admin/ogroups/goto/termgroup.tpl:61
