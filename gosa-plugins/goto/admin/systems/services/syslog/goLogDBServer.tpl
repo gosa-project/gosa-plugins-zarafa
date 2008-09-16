@@ -3,8 +3,8 @@
     <tr>
      <td>{t}Database{/t}{$must}</td>
      <td>
-{render acl=$goLogDBACL}
- 	<input type="text" name="gosaLogDB" id="goLogDB" size=30 maxlength=60 value="{$gosaLogDB}">
+{render acl=$gosaLogDBACL}
+ 	<input type="text" name="gosaLogDB" id="gosaLogDB" size=30 maxlength=60 value="{$gosaLogDB}">
 {/render}
      </td>
     </tr>
