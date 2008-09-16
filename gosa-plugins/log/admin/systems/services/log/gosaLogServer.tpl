@@ -1,6 +1,14 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}GOsa logging database{/t}</h2>
 <table summary="">
     <tr>
+     <td>{t}Database{/t}{$must}</td>
+     <td>
+{render acl=$goLogDBACL}
+ 	<input name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
+{/render}
+     </td>
+    </tr>
+    <tr>
      <td>{t}Database user{/t}{$must}</td>
      <td>
 {render acl=$goLogDBUserACL}
@@ -13,14 +21,6 @@
      <td>
 {render acl=$goLogDBPasswordACL}
  	<input type="password" name="goLogDBPassword" id="goLogDBPassword" size=30 maxlength=60 value="{$goLogDBPassword}">
-{/render}
-     </td>
-    </tr>
-    <tr>
-     <td>{t}Database{/t}{$must}</td>
-     <td>
-{render acl=$goLogDBACL}
- 	<input name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
 {/render}
      </td>
     </tr>
