@@ -3003,24 +3003,22 @@ sub store_fileinfo {
 
 
 sub cleanup_and_extract {
-    my $fileinfo = $repo_files{ $File::Find::name };
+	my $fileinfo = $repo_files{ $File::Find::name };
 
-    if( defined $fileinfo ) {
+	if( defined $fileinfo ) {
+		my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
+		my $sql;
+		my $package = $fileinfo->{ 'package' };
+		my $newver = $fileinfo->{ 'version' };
 
-        my $dir = "$outdir/$fileinfo->{ 'dist' }/debconf.d";
-        my $sql;
-        my $package = $fileinfo->{ 'package' };
-        my $newver = $fileinfo->{ 'version' };
-
-        mkpath($dir);
-        system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
+		mkpath($dir);
+		system( "dpkg -e '$File::Find::name' '$dir/DEBIAN'" );
 
 		if( -f "$dir/DEBIAN/templates" ) {
 
 			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 7);
 
-			my $tmpl= "";
-			{
+			my $tmpl= ""; {
 				local $/=undef;
 				open FILE, "$dir/DEBIAN/templates";
 				$tmpl = &encode_base64(<FILE>);
@@ -3029,11 +3027,11 @@ sub cleanup_and_extract {
 			rmtree("$dir/DEBIAN/templates");
 
 			$sql= "update $main::packages_list_tn set template = '$tmpl' where package = '$package' and version = '$newver';";
-        	push @packages_list_statements, $sql;
+			push @packages_list_statements, $sql;
 		}
-    }
+	}
 
-    return;
+	return;
 }
 
 
