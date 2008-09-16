@@ -501,8 +501,8 @@ class printgeneric extends plugin
 
     /* Parse selected ppd file */
     $config = session::get('config');
-    if ($config->get_cfg_value("ppd_path") != ""){
-      $path = $config->get_cfg_value("ppd_path");
+    if ($config->get_cfg_value("ppdPath") != ""){
+      $path = $config->get_cfg_value("ppdPath");
       if(!preg_match("/\/$/",$path)){
         $path = $path."/";
       }

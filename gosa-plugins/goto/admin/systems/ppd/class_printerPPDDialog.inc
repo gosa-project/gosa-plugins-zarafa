@@ -35,8 +35,8 @@ class printerPPDDialog extends plugin
 
     /* Get PPD path and remove double //, and add trailing /  */
     $config = session::get('config');
-    if($config->get_cfg_value("ppd_path") != ""){
-      $this->pathToPPD = $config->get_cfg_value("ppd_path");
+    if($config->get_cfg_value("ppdPath") != ""){
+      $this->pathToPPD = $config->get_cfg_value("ppdPath");
       $this->pathToPPD= preg_replace("/\/\//", "/", $this->pathToPPD);
       if(!preg_match("/\/$/",$this->pathToPPD)){
         $this->pathToPPD = $this->pathToPPD."/";

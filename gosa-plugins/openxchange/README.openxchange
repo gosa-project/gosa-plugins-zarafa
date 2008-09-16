@@ -46,7 +46,7 @@ my $ldap_userBase = 'ou=people,';
 - Put the Base in ldap.conf (/usr/local/openxchange/etc/groupware/ldap.conf)
 BASE    dc=example,dc=org
 
-- If you are using as GOsa dnmode "uid", You must change in ldap.properties 
+- If you are using as GOsa accountPrimaryAttribute "uid", You must change in ldap.properties 
 (/usr/local/openxchange/etc/groupware/ldap.properties):
 
 
@@ -68,7 +68,7 @@ com.openexchange.groupware.ldap.userBaseDN=ou\u003Dpeople
 
 
 
-- If you are using as GOsa dnmode "cn", the ldap.properties  
+- If you are using as GOsa accountPrimaryAttribute "cn", the ldap.properties  
 (/usr/local/openxchange/etc/groupware/ldap.properties) 
 configuration of open-xchange must be like this:
 
