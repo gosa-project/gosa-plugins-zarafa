@@ -1335,7 +1335,6 @@ sub process_task {
     my $header =  $task->{'headertag'};
     my $session_id = $task->{'sessionid'};
 		my $msg_hash;
-		daemon_log("DEBUG: '$msg'");
 		eval {
     	$msg_hash = $xml->XMLin($msg, ForceArray=>1);
 		}; 
