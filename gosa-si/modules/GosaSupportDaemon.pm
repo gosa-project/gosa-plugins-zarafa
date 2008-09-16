@@ -181,7 +181,7 @@ sub add_content2xml_hash {
 
 sub get_time {
 	  # Add an optional offset in seconds
-		my $offset = shift || 0;
+		my $offset = $1 if shift =~ /^(\d+)$/ || 0;
     my ($seconds, $minutes, $hours, $monthday, $month,
             $year, $weekday, $yearday, $sommertime) = localtime(time+$offset);
     $hours = $hours < 10 ? $hours = "0".$hours : $hours;
