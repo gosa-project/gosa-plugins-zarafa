@@ -58,22 +58,11 @@ class sudo extends plugin
     /***
       GET sudo base
      ***/
-    $base ="";
+    $base = get_ou("sudoRDN");
     if(empty($base)){
-      /* Default is ou=sudoers,BASE */
-      $base = "ou=sudoers,".$config->current['BASE'];
-    }else{
-
-      /* Append base to given sudoers ou if missing */
-      if(!preg_match("/".normalizePreg($config->current['BASE'])."$/i",$base)){
-        if(!preg_match("/,$/",$base)){
-          $base = $base.",".$config->current['BASE'];
-        }else{
-          $base = $base.$config->current['BASE'];
-        }
-      }
+      $base = "ou=sudoers,";
     }
-    return($base);
+    return($base.$config->current['BASE']);
   }
 
   /*! \brief  Initializes this sudo class, with all required attributes.
