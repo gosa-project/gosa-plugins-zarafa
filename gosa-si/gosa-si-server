@@ -190,7 +190,7 @@ our @fai_release_col_names = ("timestamp VARCHAR(14)", "fai_release VARCHAR(255)
 our $packages_list_db;
 our $packages_list_tn = "packages_list";
 my $packages_list_file_name;
-our @packages_list_col_names = ("distribution VARCHAR(255)", "package VARCHAR(255)", "version VARCHAR(255)", "section VARCHAR(255)", "description TEXT", "template BLOB", "timestamp VARCHAR(14)");
+our @packages_list_col_names = ("distribution VARCHAR(255)", "package VARCHAR(255)", "version VARCHAR(255)", "section VARCHAR(255)", "description TEXT", "template LONGBLOB", "timestamp VARCHAR(14)");
 my $outdir = "/tmp/packages_list_db";
 my $arch = "i386"; 
 
