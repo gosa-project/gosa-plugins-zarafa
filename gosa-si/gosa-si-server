@@ -48,7 +48,7 @@ use File::Basename;
 use File::Find;
 use File::Copy;
 use File::Path;
-use GOSA::DBsqlite;
+use GOSA::DBmysql;
 use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
@@ -100,6 +100,7 @@ our $verbose;
 our $forground;
 our $cfg_file;
 our ($ldap_uri, $ldap_base, $ldap_admin_dn, $ldap_admin_password, $ldap_server_dn);
+our ($mysql_username, $mysql_password, $mysql_database, $mysql_host);
 our $known_modules;
 our $root_uid;
 our $adm_gid;
@@ -123,81 +124,81 @@ my $watch_for_new_jobs_in_progress = 0;
 our $incoming_db;
 our $incoming_tn = 'incoming';
 my $incoming_file_name;
-my @incoming_col_names = ("id INTEGER PRIMARY KEY", 
-        "timestamp DEFAULT 'none'", 
-        "headertag DEFAULT 'none'",
-		"targettag DEFAULT 'none'",
-        "xmlmessage DEFAULT 'none'",
-        "module DEFAULT 'none'",
-        "sessionid DEFAULT '0'",
-        );
+my @incoming_col_names = ("id INTEGER PRIMARY KEY auto_increment",
+	"timestamp VARCHAR(14) DEFAULT 'none'", 
+	"headertag VARCHAR(255) DEFAULT 'none'",
+	"targettag VARCHAR(255) DEFAULT 'none'",
+	"xmlmessage TEXT",
+	"module VARCHAR(255) DEFAULT 'none'",
+	"sessionid VARCHAR(255) DEFAULT '0'",
+);
 
 # holds all gosa jobs
 our $job_db;
 our $job_queue_tn = 'jobs';
 my $job_queue_file_name;
-my @job_queue_col_names = ("id INTEGER PRIMARY KEY", 
-		"timestamp DEFAULT 'none'", 
-		"status DEFAULT 'none'", 
-		"result DEFAULT 'none'", 
-		"progress DEFAULT 'none'", 
-        "headertag DEFAULT 'none'", 
-		"targettag DEFAULT 'none'", 
-		"xmlmessage DEFAULT 'none'", 
-		"macaddress DEFAULT 'none'",
-		"plainname DEFAULT 'none'",
-        "siserver DEFAULT 'none'",
-        "modified DEFAULT '0'",
-		);
+my @job_queue_col_names = ("id INTEGER PRIMARY KEY auto_increment",
+	"timestamp VARCHAR(14) DEFAULT 'none'", 
+	"status VARCHAR(255) DEFAULT 'none'", 
+	"result TEXT",
+	"progress VARCHAR(255) DEFAULT 'none'",
+	"headertag VARCHAR(255) DEFAULT 'none'",
+	"targettag VARCHAR(255) DEFAULT 'none'", 
+	"xmlmessage TEXT", 
+	"macaddress VARCHAR(17) DEFAULT 'none'",
+	"plainname VARCHAR(255) DEFAULT 'none'",
+	"siserver VARCHAR(255) DEFAULT 'none'",
+	"modified INTEGER DEFAULT '0'",
+);
 
 # holds all other gosa-si-server
 our $known_server_db;
 our $known_server_tn = "known_server";
 my $known_server_file_name;
-my @known_server_col_names = ("hostname", "macaddress", "status", "hostkey", "loaded_modules", "timestamp");
+my @known_server_col_names = ("hostname VARCHAR(255)", "macaddress VARCHAR(17)", "status VARCHAR(255)", "hostkey VARCHAR(255)", "loaded_modules TEXT", "timestamp VARCHAR(14)");
 
 # holds all registrated clients
 our $known_clients_db;
 our $known_clients_tn = "known_clients";
 my $known_clients_file_name;
-my @known_clients_col_names = ("hostname", "status", "hostkey", "timestamp", "macaddress", "events", "keylifetime");
+my @known_clients_col_names = ("hostname VARCHAR(255)", "status VARCHAR(255)", "hostkey VARCHAR(255)", "timestamp VARCHAR(14)", "macaddress VARCHAR(17)", "events TEXT", "keylifetime VARCHAR(255)");
 
 # holds all registered clients at a foreign server
 our $foreign_clients_db;
 our $foreign_clients_tn = "foreign_clients"; 
 my $foreign_clients_file_name;
-my @foreign_clients_col_names = ("hostname", "macaddress", "regserver", "timestamp");
+my @foreign_clients_col_names = ("hostname VARCHAR(255)", "macaddress VARCHAR(17)", "regserver VARCHAR(255)", "timestamp VARCHAR(14)");
 
 # holds all logged in user at each client 
 our $login_users_db;
 our $login_users_tn = "login_users";
 my $login_users_file_name;
-my @login_users_col_names = ("client", "user", "timestamp");
+my @login_users_col_names = ("client VARCHAR(255)", "user VARCHAR(255)", "timestamp VARCHAR(14)");
 
 # holds all fai server, the debian release and tag
 our $fai_server_db;
 our $fai_server_tn = "fai_server"; 
 my $fai_server_file_name;
-our @fai_server_col_names = ("timestamp", "server", "release", "sections", "tag"); 
+our @fai_server_col_names = ("timestamp VARCHAR(14)", "server VARCHAR(255)", "fai_release VARCHAR(255)", "sections VARCHAR(255)", "tag VARCHAR(255)"); 
 
 our $fai_release_db;
 our $fai_release_tn = "fai_release"; 
 my $fai_release_file_name;
-our @fai_release_col_names = ("timestamp", "release", "class", "type", "state"); 
+our @fai_release_col_names = ("timestamp VARCHAR(14)", "fai_release VARCHAR(255)", "class VARCHAR(255)", "type VARCHAR(255)", "state VARCHAR(255)"); 
 
 # holds all packages available from different repositories
 our $packages_list_db;
 our $packages_list_tn = "packages_list";
 my $packages_list_file_name;
-our @packages_list_col_names = ("distribution", "package", "version", "section", "description", "template", "timestamp");
+our @packages_list_col_names = ("distribution VARCHAR(255)", "package VARCHAR(255)", "version VARCHAR(255)", "section VARCHAR(255)", "description VARCHAR(255)", "template VARCHAR(255)", "timestamp VARCHAR(14)");
 my $outdir = "/tmp/packages_list_db";
 my $arch = "i386"; 
 
 # holds all messages which should be delivered to a user
 our $messaging_db;
 our $messaging_tn = "messaging"; 
-our @messaging_col_names = ("id INTEGER", "subject", "message_from", "message_to", 
-        "flag", "direction", "delivery_time", "message", "timestamp" );
+our @messaging_col_names = ("id INTEGER", "subject TEXT", "message_from VARCHAR(255)", "message_to VARCHAR(255)", 
+        "flag VARCHAR(255)", "direction VARCHAR(255)", "delivery_time VARCHAR(255)", "message TEXT", "timestamp VARCHAR(14)" );
 my $messaging_file_name;
 
 # path to directory to store client install log files
@@ -246,6 +247,10 @@ our $logged_in_user_date_of_expiry = 600;
     "gosa-unit-tag"         => [\$gosa_unit_tag, ""],
     "max-clients"           => [\$max_clients, 10],
     "wol-password"          => [\$wake_on_lan_passwd, ""],
+		"mysql-username"        => [\$mysql_username, "gosa_si"],
+		"mysql-password"        => [\$mysql_password, ""],
+		"mysql-database"        => [\$mysql_database, "gosa_si"],
+		"mysql-host"            => [\$mysql_host, "127.0.0.1"],
     },
 "GOsaPackages" => {
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
@@ -1011,263 +1016,264 @@ sub sig_handler {
 
 
 sub msg_to_decrypt {
-    my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
-    my $session_id = $session->ID;
-    my ($msg, $msg_hash, $module);
-    my $error = 0;
+	my ($kernel, $session, $heap) = @_[KERNEL, SESSION, HEAP];
+	my $session_id = $session->ID;
+	my ($msg, $msg_hash, $module);
+	my $error = 0;
 
-    # hole neue msg aus @msgs_to_decrypt
-    my $next_msg = shift @msgs_to_decrypt;
-    
-    # entschlüssle sie
+	# hole neue msg aus @msgs_to_decrypt
+	my $next_msg = shift @msgs_to_decrypt;
 
-    # msg is from a new client or gosa
-    ($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
-    # msg is from a gosa-si-server
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
-    }
-    # msg is from a gosa-si-client
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        ($msg, $msg_hash, $module) = &input_from_known_client($next_msg, $heap->{'remote_ip'}, $session_id);
-    }
-    # an error occurred
-    if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
-        # could not understand a msg from its server the client cause a re-registering process
-        daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
-                "' to cause a re-registering of the client if necessary", 3);
-        my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
-        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-            my $host_name = $hit->{'hostname'};
-            my $host_key = $hit->{'hostkey'};
-            my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
-            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping", $session_id);
-            &update_jobdb_status_for_send_msgs($ping_msg, $error);
-        }
-        $error++;
-    }
+	# entschlüssle sie
+
+	# msg is from a new client or gosa
+	($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
+	# msg is from a gosa-si-server
+	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+		($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
+	}
+	# msg is from a gosa-si-client
+	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+		($msg, $msg_hash, $module) = &input_from_known_client($next_msg, $heap->{'remote_ip'}, $session_id);
+	}
+	# an error occurred
+	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
+		# if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
+		# could not understand a msg from its server the client cause a re-registering process
+		daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
+			"' to cause a re-registering of the client if necessary", 3);
+		my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
+		my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
+		while( my ($hit_num, $hit) = each %{ $query_res } ) {    
+			my $host_name = $hit->{'hostname'};
+			my $host_key = $hit->{'hostkey'};
+			my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
+			my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping", $session_id);
+			&update_jobdb_status_for_send_msgs($ping_msg, $error);
+		}
+		$error++;
+	}
 
 
-    my $header;
-    my $target;
-    my $source;
-    my $done = 0;
-    my $sql;
-    my $res;
+	my $header;
+	my $target;
+	my $source;
+	my $done = 0;
+	my $sql;
+	my $res;
 
-    # check whether this message should be processed here
-    if ($error == 0) {
-        $header = @{$msg_hash->{'header'}}[0];
-        $target = @{$msg_hash->{'target'}}[0];
-        $source = @{$msg_hash->{'source'}}[0];
+	# check whether this message should be processed here
+	if ($error == 0) {
+		$header = @{$msg_hash->{'header'}}[0];
+		$target = @{$msg_hash->{'target'}}[0];
+		$source = @{$msg_hash->{'source'}}[0];
 		my $not_found_in_known_clients_db = 0;
 		my $not_found_in_known_server_db = 0;
 		my $not_found_in_foreign_clients_db = 0;
-        my $local_address;
-        my $local_mac;
-        my ($target_ip, $target_port) = split(':', $target);
-        
-        # Determine the local ip address if target is an ip address
+		my $local_address;
+		my $local_mac;
+		my ($target_ip, $target_port) = split(':', $target);
+
+		# Determine the local ip address if target is an ip address
 		if ($target =~ /^\d+\.\d+\.\d+\.\d+:\d+$/) {
 			$local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
 		} else {
-            $local_address = $server_address;
-        }
+			$local_address = $server_address;
+		}
 
-        # Determine the local mac address if target is a mac address
-        if ($target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i) {
-            my $loc_ip = &get_local_ip_for_remote_ip($heap->{'remote_ip'});
-            my $network_interface= &get_interface_for_ip($loc_ip);
-            $local_mac = &get_mac_for_interface($network_interface);
-        } else {
-            $local_mac = $server_mac_address;
-        }
+		# Determine the local mac address if target is a mac address
+		if ($target =~ /^([0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2}:[0-9a-f]{2})$/i) {
+			my $loc_ip = &get_local_ip_for_remote_ip($heap->{'remote_ip'});
+			my $network_interface= &get_interface_for_ip($loc_ip);
+			$local_mac = &get_mac_for_interface($network_interface);
+		} else {
+			$local_mac = $server_mac_address;
+		}
 
-        # target and source is equal to GOSA -> process here
-        if (not $done) {
-            if ($target eq "GOSA" && $source eq "GOSA") {
-                $done = 1;                    
-                &daemon_log("$session_id DEBUG: target and source is 'GOSA' -> process here", 7);
-            }
-        }
-
-        # target is own address without forward_to_gosa-tag -> process here
-        if (not $done) {
-            #if ((($target eq $local_address) || ($target eq $local_mac) ) && (not exists $msg_hash->{'forward_to_gosa'})) {
-            if (($target eq $local_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
-                $done = 1;
-                if ($source eq "GOSA") {
-                    $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
-                }
-                &daemon_log("$session_id DEBUG: target is own address without forward_to_gosa-tag -> process here", 7);
-            }
-        }
-
-        # target is a client address in known_clients -> process here
+		# target and source is equal to GOSA -> process here
 		if (not $done) {
-				$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
-				$res = $known_clients_db->select_dbentry($sql);
-				if (keys(%$res) > 0) {
-						$done = 1; 
-						my $hostname = $res->{1}->{'hostname'};
-						$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-                        my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
-                        if ($source eq "GOSA") {
-                            $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
-                        }
-                        &daemon_log("$session_id DEBUG: target is a client address in known_clients -> process here", 7);
-
-				} else {
-						$not_found_in_known_clients_db = 1;
-				}
+			if ($target eq "GOSA" && $source eq "GOSA") {
+				$done = 1;                    
+				&daemon_log("$session_id DEBUG: target and source is 'GOSA' -> process here", 7);
+			}
 		}
-	
-        # target ist own address with forward_to_gosa-tag not pointing to myself -> process here
-        if (not $done) {
-            my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
-            my $gosa_at;
-            my $gosa_session_id;
-            if (($target eq $local_address) && (defined $forward_to_gosa)){
-                my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
-                if ($gosa_at ne $local_address) {
-                    $done = 1;
-                    &daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag not pointing to myself -> process here", 7); 
-                }
-            }
-        }
 
-        # if message should be processed here -> add message to incoming_db
+		# target is own address without forward_to_gosa-tag -> process here
+		if (not $done) {
+			#if ((($target eq $local_address) || ($target eq $local_mac) ) && (not exists $msg_hash->{'forward_to_gosa'})) {
+			if (($target eq $local_address) && (not exists $msg_hash->{'forward_to_gosa'})) {
+				$done = 1;
+				if ($source eq "GOSA") {
+					$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
+				}
+				&daemon_log("$session_id DEBUG: target is own address without forward_to_gosa-tag -> process here", 7);
+			}
+		}
+
+		# target is a client address in known_clients -> process here
+		if (not $done) {
+			$sql = "SELECT * FROM $known_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')"; 
+			$res = $known_clients_db->select_dbentry($sql);
+			if (keys(%$res) > 0) {
+				$done = 1; 
+				my $hostname = $res->{1}->{'hostname'};
+				$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
+				my $local_address = &get_local_ip_for_remote_ip($target_ip).":$server_port";
+				if ($source eq "GOSA") {
+					$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
+				}
+				&daemon_log("$session_id DEBUG: target is a client address in known_clients -> process here", 7);
+
+			} else {
+				$not_found_in_known_clients_db = 1;
+			}
+		}
+
+		# target ist own address with forward_to_gosa-tag not pointing to myself -> process here
+		if (not $done) {
+			my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
+			my $gosa_at;
+			my $gosa_session_id;
+			if (($target eq $local_address) && (defined $forward_to_gosa)){
+				my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
+				if ($gosa_at ne $local_address) {
+					$done = 1;
+					&daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag not pointing to myself -> process here", 7); 
+				}
+			}
+		}
+
+		# if message should be processed here -> add message to incoming_db
 		if ($done) {
-				# if a job or a gosa message comes from a foreign server, fake module to GosaPackages
-				# so gosa-si-server knows how to process this kind of messages
-				if ($header =~ /^gosa_/ || $header =~ /^job_/) {
-						$module = "GosaPackages";
-				}
+			# if a job or a gosa message comes from a foreign server, fake module to GosaPackages
+			# so gosa-si-server knows how to process this kind of messages
+			if ($header =~ /^gosa_/ || $header =~ /^job_/) {
+				$module = "GosaPackages";
+			}
 
-				my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
-								primkey=>[],
-								headertag=>$header,
-								targettag=>$target,
-								xmlmessage=>&encode_base64($msg),
-								timestamp=>&get_time,
-								module=>$module,
-								sessionid=>$session_id,
-								} );
+			my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+					primkey=>[],
+					headertag=>$header,
+					targettag=>$target,
+					xmlmessage=>&encode_base64($msg),
+					timestamp=>&get_time,
+					module=>$module,
+					sessionid=>$session_id,
+				} );
+
 		}
 
-        # target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa
-        if (not $done) {
-            my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
-            my $gosa_at;
-            my $gosa_session_id;
-            if (($target eq $local_address) && (defined $forward_to_gosa)){
-                my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
-                if ($gosa_at eq $local_address) {
-                    my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
-                    if( defined $session_reference ) {
-                        $heap = $session_reference->get_heap();
-                    }
-                    if(exists $heap->{'client'}) {
-                        $msg = &encrypt_msg($msg, $GosaPackages_key);
-                        $heap->{'client'}->put($msg);
-                        &daemon_log("$session_id INFO: incoming '$header' message forwarded to GOsa", 5); 
-                    }
-                    $done = 1;
-                    &daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa", 7);
-                }
-            }
+		# target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa
+		if (not $done) {
+			my $forward_to_gosa =  @{$msg_hash->{'forward_to_gosa'}}[0];
+			my $gosa_at;
+			my $gosa_session_id;
+			if (($target eq $local_address) && (defined $forward_to_gosa)){
+				my ($gosa_at, $gosa_session_id) = split(/,/, $forward_to_gosa);
+				if ($gosa_at eq $local_address) {
+					my $session_reference = $kernel->ID_id_to_session($gosa_session_id);
+					if( defined $session_reference ) {
+						$heap = $session_reference->get_heap();
+					}
+					if(exists $heap->{'client'}) {
+						$msg = &encrypt_msg($msg, $GosaPackages_key);
+						$heap->{'client'}->put($msg);
+						&daemon_log("$session_id INFO: incoming '$header' message forwarded to GOsa", 5); 
+					}
+					$done = 1;
+					&daemon_log("$session_id DEBUG: target is own address with forward_to_gosa-tag pointing at myself -> forward to gosa", 7);
+				}
+			}
 
-        }
+		}
 
-        # target is a client address in foreign_clients -> forward to registration server
-        if (not $done) {
-            $sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
-            $res = $foreign_clients_db->select_dbentry($sql);
-            if (keys(%$res) > 0) {
-		    my $hostname = $res->{1}->{'hostname'};
-		    my ($host_ip, $host_port) = split(/:/, $hostname);
-		    my $local_address =  &get_local_ip_for_remote_ip($host_ip).":$server_port";
-                my $regserver = $res->{1}->{'regserver'};
-                my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$regserver'"; 
-                my $res = $known_server_db->select_dbentry($sql);
-                if (keys(%$res) > 0) {
-                    my $regserver_key = $res->{1}->{'hostkey'};
-                    $msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
-                    $msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
-                    if ($source eq "GOSA") {
-                        $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
-                    }
-                    &send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
-                }
-                $done = 1;
-                &daemon_log("$session_id DEBUG: target is a client address in foreign_clients -> forward to registration server", 7);
-            } else {
+		# target is a client address in foreign_clients -> forward to registration server
+		if (not $done) {
+			$sql = "SELECT * FROM $foreign_clients_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
+			$res = $foreign_clients_db->select_dbentry($sql);
+			if (keys(%$res) > 0) {
+				my $hostname = $res->{1}->{'hostname'};
+				my ($host_ip, $host_port) = split(/:/, $hostname);
+				my $local_address =  &get_local_ip_for_remote_ip($host_ip).":$server_port";
+				my $regserver = $res->{1}->{'regserver'};
+				my $sql = "SELECT * FROM $known_server_tn WHERE hostname='$regserver'"; 
+				my $res = $known_server_db->select_dbentry($sql);
+				if (keys(%$res) > 0) {
+					my $regserver_key = $res->{1}->{'hostkey'};
+					$msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
+					$msg =~ s/<target>$target<\/target>/<target>$hostname<\/target>/;
+					if ($source eq "GOSA") {
+						$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
+					}
+					&send_msg_to_target($msg, $regserver, $regserver_key, $header, $session_id);
+				}
+				$done = 1;
+				&daemon_log("$session_id DEBUG: target is a client address in foreign_clients -> forward to registration server", 7);
+			} else {
 				$not_found_in_foreign_clients_db = 1;
 			}
-        }
+		}
 
-        # target is a server address -> forward to server
-        if (not $done) {
-            $sql = "SELECT * FROM $known_server_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
-            $res = $known_server_db->select_dbentry($sql);
-            if (keys(%$res) > 0) {
-                my $hostkey = $res->{1}->{'hostkey'};
+		# target is a server address -> forward to server
+		if (not $done) {
+			$sql = "SELECT * FROM $known_server_tn WHERE (hostname='$target' OR macaddress LIKE '$target')";
+			$res = $known_server_db->select_dbentry($sql);
+			if (keys(%$res) > 0) {
+				my $hostkey = $res->{1}->{'hostkey'};
 
-                if ($source eq "GOSA") {
-                    $msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
-                    $msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
+				if ($source eq "GOSA") {
+					$msg =~ s/<source>GOSA<\/source>/<source>$local_address<\/source>/;
+					$msg =~ s/<\/xml>/<forward_to_gosa>$local_address,$session_id<\/forward_to_gosa><\/xml>/;
 
-                }
+				}
 
-                &send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
-                $done = 1;
-                &daemon_log("$session_id DEBUG: target is a server address -> forward to server", 7);
-            } else {
+				&send_msg_to_target($msg, $target, $hostkey, $header, $session_id);
+				$done = 1;
+				&daemon_log("$session_id DEBUG: target is a server address -> forward to server", 7);
+			} else {
 				$not_found_in_known_server_db = 1;
 			}
-        }
-
-		
-		# target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here
-		if ( $not_found_in_foreign_clients_db 
-						&& $not_found_in_known_server_db
-						&& $not_found_in_known_clients_db) {
-				my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
-								primkey=>[],
-								headertag=>$header,
-								targettag=>$target,
-								xmlmessage=>&encode_base64($msg),
-								timestamp=>&get_time,
-								module=>$module,
-								sessionid=>$session_id,
-								} );
-				$done = 1;
-                &daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
 		}
 
 
-        if (not $done) {
-            daemon_log("$session_id ERROR: do not know what to do with this message: $msg", 1);
-            if ($source eq "GOSA") {
-                my %data = ('error_msg' => &encode_base64($msg), 'error_string' => "Do not know what to do with this message!");
-                my $error_msg = &build_msg("error", $local_address, "GOSA", \%data ); 
+		# target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here
+		if ( $not_found_in_foreign_clients_db 
+			&& $not_found_in_known_server_db
+			&& $not_found_in_known_clients_db) {
+			my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+					primkey=>[],
+					headertag=>$header,
+					targettag=>$target,
+					xmlmessage=>&encode_base64($msg),
+					timestamp=>&get_time,
+					module=>$module,
+					sessionid=>$session_id,
+				} );
+			$done = 1;
+			&daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
+		}
 
-                my $session_reference = $kernel->ID_id_to_session($session_id);
-                if( defined $session_reference ) {
-                    $heap = $session_reference->get_heap();
-                }
-                if(exists $heap->{'client'}) {
-                    $error_msg = &encrypt_msg($error_msg, $GosaPackages_key);
-                    $heap->{'client'}->put($error_msg);
-                }
-            }
-        }
 
-    }
+		if (not $done) {
+			daemon_log("$session_id ERROR: do not know what to do with this message: $msg", 1);
+			if ($source eq "GOSA") {
+				my %data = ('error_msg' => &encode_base64($msg), 'error_string' => "Do not know what to do with this message!");
+				my $error_msg = &build_msg("error", $local_address, "GOSA", \%data ); 
 
-    return;
+				my $session_reference = $kernel->ID_id_to_session($session_id);
+				if( defined $session_reference ) {
+					$heap = $session_reference->get_heap();
+				}
+				if(exists $heap->{'client'}) {
+					$error_msg = &encrypt_msg($error_msg, $GosaPackages_key);
+					$heap->{'client'}->put($error_msg);
+				}
+			}
+		}
+
+	}
+
+	return;
 }
 
 
@@ -1328,7 +1334,12 @@ sub process_task {
     my $module = $task->{'module'};
     my $header =  $task->{'headertag'};
     my $session_id = $task->{'sessionid'};
-    my $msg_hash = $xml->XMLin($msg, ForceArray=>1);
+		my $msg_hash;
+		daemon_log("DEBUG: '$msg'");
+		eval {
+    	$msg_hash = $xml->XMLin($msg, ForceArray=>1);
+		}; 
+		daemon_log("ERROR: XML failure '$@'") if ($@);
     my $source = @{$msg_hash->{'source'}}[0];
     
     # set timestamp of incoming client uptodate, so client will not 
@@ -1676,7 +1687,7 @@ sub watch_for_new_jobs {
 
 		# check gosa job quaeue for jobs with executable timestamp
 		my $timestamp = &get_time();
-		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST (timestamp AS INTEGER)) < $timestamp ORDER BY timestamp";
+		my $sql_statement = "SELECT * FROM $job_queue_tn WHERE status='waiting' AND (CAST(timestamp AS UNSIGNED)) < $timestamp ORDER BY timestamp";
 		my $res = $job_db->exec_statement( $sql_statement );
 
 		# Merge all new jobs that would do the same actions
@@ -1782,7 +1793,7 @@ sub watch_for_new_messages {
     
     # check messaging_db for new incoming messages with executable timestamp
     my $timestamp = &get_time();
-    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( (CAST(timestamp AS INTEGER))<$timestamp AND flag='n' AND direction='in' )";
+    my $sql_statement = "SELECT * FROM $messaging_tn WHERE ( (CAST(timestamp AS UNSIGNED))<$timestamp AND flag='n' AND direction='in' )";
     my $res = $messaging_db->exec_statement( $sql_statement );
  	foreach my $hit (@{$res}) {
 
@@ -2047,7 +2058,7 @@ sub watch_for_next_tasks {
         my $res = $incoming_db->exec_statement($sql);
     }
 
-    $kernel->delay_set('watch_for_next_tasks', 0.1); 
+    $kernel->delay_set('watch_for_next_tasks', 1); 
 }
 
 
@@ -2265,11 +2276,11 @@ sub run_create_fai_server_db {
 
 
 sub create_fai_server_db {
-    my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
+	my ($table_name, $kernel, $dont_create_packages_list, $session_id) = @_;
 	my $result;
 
 	if (not defined $session_id) { $session_id = 0; }
-    my $ldap_handle = &get_ldap_handle();
+	my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
 		daemon_log("$session_id INFO: create_fai_server_db: start", 5);
 		my $mesg= $ldap_handle->search(
@@ -2279,25 +2290,25 @@ sub create_fai_server_db {
 			filter => "(&(FAIrepository=*)(objectClass=FAIrepositoryServer))",
 		);
 		if($mesg->{'resultCode'} == 0 &&
-		   $mesg->count != 0) {
-		   foreach my $entry (@{$mesg->{entries}}) {
-			   if($entry->exists('FAIrepository')) {
-				   # Add an entry for each Repository configured for server
-				   foreach my $repo(@{$entry->get_value('FAIrepository', asref => 1)}) {
-						   my($tmp_url,$tmp_server,$tmp_release,$tmp_sections) = split(/\|/, $repo);
-						   my $tmp_tag= $entry->get_value('gosaUnitTag') || "";
-						   $result= $fai_server_db->add_dbentry( { 
-								   table => $table_name,
-								   primkey => ['server', 'release', 'tag'],
-								   server => $tmp_url,
-								   release => $tmp_release,
-								   sections => $tmp_sections,
-								   tag => (length($tmp_tag)>0)?$tmp_tag:"",
-							   } );
-					   }
-				   }
-			   }
-		   }
+			$mesg->count != 0) {
+			foreach my $entry (@{$mesg->{entries}}) {
+				if($entry->exists('FAIrepository')) {
+					# Add an entry for each Repository configured for server
+					foreach my $repo(@{$entry->get_value('FAIrepository', asref => 1)}) {
+						my($tmp_url,$tmp_server,$tmp_release,$tmp_sections) = split(/\|/, $repo);
+						my $tmp_tag= $entry->get_value('gosaUnitTag') || "";
+						$result= $fai_server_db->add_dbentry( { 
+								table => $table_name,
+								primkey => ['server', 'fai_release', 'tag'],
+								server => $tmp_url,
+								fai_release => $tmp_release,
+								sections => $tmp_sections,
+								tag => (length($tmp_tag)>0)?$tmp_tag:"",
+							} );
+					}
+				}
+			}
+		}
 		daemon_log("$session_id INFO: create_fai_server_db: finished", 5);
 
 		# TODO: Find a way to post the 'create_packages_list_db' event
@@ -2305,24 +2316,24 @@ sub create_fai_server_db {
 			&create_packages_list_db(undef, undef, $session_id);
 		}
 	}	
-    
-    $ldap_handle->disconnect;
-   	return $result;
+
+	$ldap_handle->disconnect;
+	return $result;
 }
 
 
 sub run_create_fai_release_db {
-    my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
+	my ($session, $heap, $table_name) = @_[SESSION, HEAP, ARG0];
 	my $session_id = $session->ID;
-    my $task = POE::Wheel::Run->new(
-            Program => sub { &create_fai_release_db($table_name, $session_id) },
-            StdoutEvent  => "session_run_result",
-            StderrEvent  => "session_run_debug",
-            CloseEvent   => "session_run_done",
-            );
+	my $task = POE::Wheel::Run->new(
+		Program => sub { &create_fai_release_db($table_name, $session_id) },
+		StdoutEvent  => "session_run_result",
+		StderrEvent  => "session_run_debug",
+		CloseEvent   => "session_run_done",
+	);
 
-    $heap->{task}->{ $task->ID } = $task;
-    return;
+	$heap->{task}->{ $task->ID } = $task;
+	return;
 }
 
 
@@ -2330,10 +2341,10 @@ sub create_fai_release_db {
 	my ($table_name, $session_id) = @_;
 	my $result;
 
-    # used for logging
-    if (not defined $session_id) { $session_id = 0; }
+	# used for logging
+	if (not defined $session_id) { $session_id = 0; }
 
-    my $ldap_handle = &get_ldap_handle();
+	my $ldap_handle = &get_ldap_handle();
 	if(defined($ldap_handle)) {
 		daemon_log("$session_id INFO: create_fai_release_db: start",5);
 		my $mesg= $ldap_handle->search(
@@ -2356,7 +2367,7 @@ sub create_fai_release_db {
 							if(defined($entry) && ref($entry) eq 'HASH') {
 								my $sql= 
 								"INSERT INTO $table_name "
-								."(timestamp, release, class, type, state) VALUES ("
+								."(timestamp, fai_release, class, type, state) VALUES ("
 								.$timestamp.","
 								."'".$entry->{'release'}."',"
 								."'".$entry->{'class'}."',"
@@ -2371,7 +2382,6 @@ sub create_fai_release_db {
 
 			daemon_log("$session_id DEBUG: Inserting ".scalar @sql_list." entries to DB",8);
 			if(@sql_list) {
-				unshift @sql_list, "VACUUM";
 				unshift @sql_list, "DELETE FROM $table_name";
 				$fai_release_db->exec_statementlist(\@sql_list);
 			}
@@ -2379,7 +2389,7 @@ sub create_fai_release_db {
 		}
 		daemon_log("$session_id INFO: create_fai_release_db: finished",5);
 	}
-    $ldap_handle->disconnect;
+	$ldap_handle->disconnect;
 	return $result;
 }
 
@@ -2761,7 +2771,6 @@ sub create_packages_list_db {
 
 	find(\&cleanup_and_extract, keys( %repo_dirs ));
 	&main::strip_packages_list_statements();
-	unshift @packages_list_statements, "VACUUM";
 	$packages_list_db->exec_statementlist(\@packages_list_statements);
 	unlink($packages_list_under_construction);
 	daemon_log("$session_id INFO: create_packages_list_db: finished", 5); 
@@ -3151,54 +3160,54 @@ daemon_log($server_status_hash->{$server_status}.": $server_revision", 1);
 
 # connect to incoming_db
 unlink($incoming_file_name);
-$incoming_db = GOSA::DBsqlite->new($incoming_file_name);
+$incoming_db = GOSA::DBmysql->new($incoming_file_name);
 $incoming_db->create_table($incoming_tn, \@incoming_col_names);
 
 # connect to gosa-si job queue
 unlink($job_queue_file_name);  ## just for debugging
-$job_db = GOSA::DBsqlite->new($job_queue_file_name);
+$job_db = GOSA::DBmysql->new($job_queue_file_name);
 $job_db->create_table($job_queue_tn, \@job_queue_col_names);
 chmod(0660, $job_queue_file_name);
 chown($root_uid, $adm_gid, $job_queue_file_name);
 
 # connect to known_clients_db
 unlink($known_clients_file_name);   ## just for debugging
-$known_clients_db = GOSA::DBsqlite->new($known_clients_file_name);
+$known_clients_db = GOSA::DBmysql->new($known_clients_file_name);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
 chmod(0660, $known_clients_file_name);
 chown($root_uid, $adm_gid, $known_clients_file_name);
 
 # connect to foreign_clients_db
 unlink($foreign_clients_file_name);
-$foreign_clients_db = GOSA::DBsqlite->new($foreign_clients_file_name);
+$foreign_clients_db = GOSA::DBmysql->new($foreign_clients_file_name);
 $foreign_clients_db->create_table($foreign_clients_tn, \@foreign_clients_col_names);
 chmod(0660, $foreign_clients_file_name);
 chown($root_uid, $adm_gid, $foreign_clients_file_name);
 
 # connect to known_server_db
 unlink($known_server_file_name);
-$known_server_db = GOSA::DBsqlite->new($known_server_file_name);
+$known_server_db = GOSA::DBmysql->new($known_server_file_name);
 $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 chmod(0660, $known_server_file_name);
 chown($root_uid, $adm_gid, $known_server_file_name);
 
 # connect to login_usr_db
 unlink($login_users_file_name);
-$login_users_db = GOSA::DBsqlite->new($login_users_file_name);
+$login_users_db = GOSA::DBmysql->new($login_users_file_name);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 chmod(0660, $login_users_file_name);
 chown($root_uid, $adm_gid, $login_users_file_name);
 
 # connect to fai_server_db 
 unlink($fai_server_file_name);
-$fai_server_db = GOSA::DBsqlite->new($fai_server_file_name);
+$fai_server_db = GOSA::DBmysql->new($fai_server_file_name);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
 chmod(0660, $fai_server_file_name);
 chown($root_uid, $adm_gid, $fai_server_file_name);
 
 # connect to fai_release_db
 unlink($fai_release_file_name);
-$fai_release_db = GOSA::DBsqlite->new($fai_release_file_name);
+$fai_release_db = GOSA::DBmysql->new($fai_release_file_name);
 $fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
 chmod(0660, $fai_release_file_name);
 chown($root_uid, $adm_gid, $fai_release_file_name);
@@ -3206,14 +3215,14 @@ chown($root_uid, $adm_gid, $fai_release_file_name);
 # connect to packages_list_db
 #unlink($packages_list_file_name);
 unlink($packages_list_under_construction);
-$packages_list_db = GOSA::DBsqlite->new($packages_list_file_name);
+$packages_list_db = GOSA::DBmysql->new($packages_list_file_name);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
 chmod(0660, $packages_list_file_name);
 chown($root_uid, $adm_gid, $packages_list_file_name);
 
 # connect to messaging_db
 unlink($messaging_file_name);
-$messaging_db = GOSA::DBsqlite->new($messaging_file_name);
+$messaging_db = GOSA::DBmysql->new($messaging_file_name);
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 chmod(0660, $messaging_file_name);
 chown($root_uid, $adm_gid, $messaging_file_name);
@@ -3312,22 +3321,22 @@ if ($opsi_enabled eq "true") {
 
 
 POE::Component::Server::TCP->new(
-    Alias => "TCP_SERVER",
+	Alias => "TCP_SERVER",
 	Port => $server_port,
 	ClientInput => sub {
-        my ($kernel, $input) = @_[KERNEL, ARG0];
-        push(@tasks, $input);
-        push(@msgs_to_decrypt, $input);
-        $kernel->yield("msg_to_decrypt");
-        },
-    InlineStates => {
-        msg_to_decrypt => \&msg_to_decrypt,
-        next_task => \&next_task,
-        task_result => \&handle_task_result,
-        task_done   => \&handle_task_done,
-        task_debug  => \&handle_task_debug,
-        child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
-    }
+		my ($kernel, $input) = @_[KERNEL, ARG0];
+		push(@tasks, $input);
+		push(@msgs_to_decrypt, $input);
+		$kernel->yield("msg_to_decrypt");
+	},
+	InlineStates => {
+		msg_to_decrypt => \&msg_to_decrypt,
+		next_task => \&next_task,
+		task_result => \&handle_task_result,
+		task_done   => \&handle_task_done,
+		task_debug  => \&handle_task_debug,
+		child_reap => sub { "Do nothing special. I'm just a comment, but i'm necessary!"  },
+	}
 );
 
 daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
