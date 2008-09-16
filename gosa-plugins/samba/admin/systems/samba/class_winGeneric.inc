@@ -201,7 +201,7 @@ class wingeneric extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
-    $this->dn= "cn=".$this->uid.",".get_ou('winstations').$this->base;
+    $this->dn= "cn=".$this->uid.",".get_ou('sambaMachineAccountRDN').$this->base;
 
     if(!$this->acl_is_createable()){
       $message[]= msgPool::permCreate();

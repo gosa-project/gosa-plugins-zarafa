@@ -137,7 +137,7 @@ class addressbook extends plugin
     /* Perform actions with CTI hook */
     if (isset($_GET['target'])
         && isset($_GET['dial'])
-        && $this->config->get_cfg_value("ctihook") != "" ){
+        && $this->config->get_cfg_value("ctiHook") != "" ){
 
       $dialmode= $_GET['dial'];
       if ($dialmode == "telephoneNumber" ||
@@ -183,7 +183,7 @@ class addressbook extends plugin
 
     /* Finally dial */
     if (isset($_POST['dial']) && session::is_set('source') && session::is_set('target')){
-      exec ($this->config->get_cfg_value("ctihook")." '".session::get('source')."' '".session::get('target')."'", $dummy, $retval);
+      exec ($this->config->get_cfg_value("ctiHook")." '".session::get('source')."' '".session::get('target')."'", $dummy, $retval);
       session::un_set('source');
       session::un_set('target');
     }

@@ -52,8 +52,8 @@ class goMailServer extends goService{
     $str = $this->config->data['TABS']['SERVERSERVICE'];
     $this->TransportProtocols =array("smtp"=>"SMTP");
     $this->RestrictionFilters = array("FILTER"=>"FILTER"); 
-    foreach(array("ADDITIONALRESTRICTIONFILTERS"=>"RestrictionFilters",
-          "ADDITIONALPROTOCOLLS"        =>"TransportProtocols") as $file => $var){
+    foreach(array("POSTFIXRESTRICTIONFILTERS"=>"RestrictionFilters",
+          "POSTFIXPROTOCOLS"        =>"TransportProtocols") as $file => $var){
       if($this->config->get_cfg_value($file) != ""){
         $file = $this->config->get_cfg_value($file);
         if((isset($file)) && is_readable($file)){
