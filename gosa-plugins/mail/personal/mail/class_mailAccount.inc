@@ -163,8 +163,8 @@ class mailAccount extends plugin
 
     /* Fill vacation array */
     $this->vacation= array();
-    if ($this->config->get_cfg_value("vacationdir") != ""){
-      $dir= $this->config->get_cfg_value("vacationdir");
+    if ($this->config->get_cfg_value("vacationTemplateDirectory") != ""){
+      $dir= $this->config->get_cfg_value("vacationTemplateDirectory");
       if (is_dir($dir) && is_readable($dir)){
 
         /* Look for files and build the vacation array */

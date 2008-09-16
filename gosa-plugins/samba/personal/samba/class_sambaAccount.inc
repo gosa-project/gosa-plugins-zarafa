@@ -135,7 +135,7 @@ class sambaAccount extends plugin
         if(isset($attrs['sambaAlgorithmicRidBase'])){
           $this->ridBase= $attrs['sambaAlgorithmicRidBase'][0];
         } else {
-          $this->ridBase= $this->config->get_cfg_value("ridbase");
+          $this->ridBase= $this->config->get_cfg_value("sambaRidBase");
         }
         if ($this->sambaDomainName == ""){
           $this->sambaDomainName= $attrs['sambaDomainName'][0];
@@ -144,8 +144,8 @@ class sambaAccount extends plugin
         if ($this->sambaDomainName == ""){
           $this->sambaDomainName= "DEFAULT";
         }
-        $this->ridBase= $this->config->get_cfg_value("ridbase");
-        $this->SID= $this->config->get_cfg_value("sid");
+        $this->ridBase= $this->config->get_cfg_value("sambaRidBase");
+        $this->SID= $this->config->get_cfg_value("sambaSid");
       }
 
       /* Save in order to compare later on */

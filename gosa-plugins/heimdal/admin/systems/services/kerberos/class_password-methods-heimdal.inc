@@ -138,7 +138,7 @@ class passwordMethodheimdal extends passwordMethod
 	function generate_hash($pwd)
 	{
     $mode= "kerberos";
-    if ($this->config->get_cfg_value("krbsasl") == "true"){
+    if ($this->config->get_cfg_value("useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
 
@@ -196,7 +196,7 @@ class passwordMethodheimdal extends passwordMethod
   function get_hash_name()
   {
     $mode= "kerberos";
-    if ($this->config->get_cfg_value("krbsasl") == "true"){
+    if ($this->config->get_cfg_value("useSaslForKerberos") == "true"){
       $mode= "sasl";
     }
     return "$mode";

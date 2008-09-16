@@ -33,19 +33,19 @@ class mailMethodCyrus extends mailMethod
     /* Check if the mail account identification attribute
        is overridden in the configuration file
      */
-    if($config->get_cfg_value("mail_attrib") != ""){
-      $new_uattrib= strtolower($config->get_cfg_value("mail_attrib"));
+    if($config->get_cfg_value("mailAttribute") != ""){
+      $new_uattrib= strtolower($config->get_cfg_value("mailAttribute"));
       if(in_array($new_uattrib,array("mail","uid"))){
         $this->uattrib = $new_uattrib;
       }else{
-        trigger_error(sprintf("Unsupported MAIL_ATTRIB in gosa configuration specified, use 'mail' or 'uid', instead of '%s'.",            $new_uattrib));
+        trigger_error(sprintf("Unsupported 'mailAttribute' in gosa configuration specified, use 'mail' or 'uid', instead of '%s'.",            $new_uattrib));
       }
     }
     
     /* Create the account prefix  user. user/ 
        Preset folder prefix. Will change it later to respect
        altnamespace. */
-    if ($config->get_cfg_value("cyrusunixstyle") == "true"){
+    if ($config->get_cfg_value("cyrusUseSlashes") == "true"){
       $this->user_prefix= "user/";
     }
 
