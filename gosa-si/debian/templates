@@ -1,0 +1,29 @@
+Template: gosa-si/database
+Type: string
+Default: gosa_si
+_Description: Name of the GOsa-SI Database
+ Please choose a name for the gosa-si database.
+
+Template: gosa-si/host
+Type: boolean
+Default: true
+_Description: Does the database server run on this host?
+ Please choose if the database server runs on this host or not.
+
+Template: gosa-si/automagic
+Type: boolean
+Default: true
+_Description: Should the database be created?
+ Please choose if you want the setup to create the gosa-si database 
+ and a privileged user account.
+
+Template: gosa-si/username
+Type: string
+Default: gosa_si
+_Description: Name of the GOsa-SI Database User
+ Please choose a name for the gosa-si database user.
+
+Template: gosa-si/password
+Type: password
+_Description: Password for the GOsa-SI Database User
+ Please enter a password for the gosa-si database user.
