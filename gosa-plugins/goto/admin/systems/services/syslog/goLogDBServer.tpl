@@ -1,18 +1,18 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Logging database information{/t}</h2>
 <table summary="">
     <tr>
-     <td>{t}Logging DB user{/t}{$must}</td>
+     <td>{t}Database{/t}{$must}</td>
      <td>
-{render acl=$goLogAdminACL}
-	<input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
+{render acl=$goLogDBACL}
+ 	<input type="text" name="gosaLogDB" id="goLogDB" size=30 maxlength=60 value="{$gosaLogDB}">
 {/render}
      </td>
     </tr>
     <tr>
-     <td>{t}Database{/t}{$must}</td>
+     <td>{t}Logging DB user{/t}{$must}</td>
      <td>
-{render acl=$goLogDBACL}
- 	<input type="text" name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
+{render acl=$goLogAdminACL}
+	<input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
 {/render}
      </td>
     </tr>

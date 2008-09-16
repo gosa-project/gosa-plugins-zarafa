@@ -8,7 +8,7 @@ class goLogDBServer extends goService{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goLogDBServer");
-  var $attributes       = array("goLogAdmin", "goLogPassword" , "goLogDB");
+  var $attributes       = array("goLogAdmin", "goLogPassword" , "gosaLogDB");
   var $StatusFlag       = "goLogDBServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */
@@ -21,7 +21,7 @@ class goLogDBServer extends goService{
   var $goLogDBServerStatus  = "";
   var $goLogAdmin           = "";
   var $goLogPassword        = "";  
-  var $goLogDB              = "gomon";  
+  var $gosaLogDB            = "gomon";  
   var $view_logged  =FALSE;
 
 
@@ -71,7 +71,7 @@ class goLogDBServer extends goService{
     if (empty($this->goLogPassword)){
       $message[]= msgPool::required(_("Password"));
     }
-    if (empty($this->goLogDB)){
+    if (empty($this->gosaLogDB)){
       $message[]= msgPool::required(_("Database"));
     }
     return($message);
@@ -103,7 +103,7 @@ class goLogDBServer extends goService{
             "restart"       => _("Restart"),
             "goLogAdmin"    => _("Admin"),
             "goLogPassword" => _("Password"),
-            "goLogDB"       => _("Database"))
+            "gosaLogDB"       => _("Database"))
           ));
   }
 }
