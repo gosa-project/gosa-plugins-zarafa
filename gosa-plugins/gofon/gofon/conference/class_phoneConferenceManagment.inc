@@ -323,7 +323,7 @@ class phoneConferenceManagment extends plugin
     /* Insert new entry*/    
     if($s_action == "new" ){
 
-      $dummy_dn = "cn=dummy,".get_ou('conferenceou').$this->DivListConference->selectedBase;      
+      $dummy_dn = "cn=dummy,".get_ou('phoneConferenceRDN').$this->DivListConference->selectedBase;      
       $acl = $this->ui->get_permissions($dummy_dn,"gofonconference/conference"); 
       if(preg_match("/c/",$acl)){
         /* Set up the users ACL's for this 'dn' */
@@ -423,7 +423,7 @@ class phoneConferenceManagment extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array(get_ou('conferenceou').$this->DivListConference->selectedBase));
+    return(array(get_ou('phoneConferenceRDN').$this->DivListConference->selectedBase));
   }
 
 
@@ -432,7 +432,7 @@ class phoneConferenceManagment extends plugin
    */
   function reload()
   {
-    $Base             = get_ou('conferenceou').$this->DivListConference->selectedBase;
+    $Base             = get_ou('phoneConferenceRDN').$this->DivListConference->selectedBase;
     $SubSearch        = $this->DivListConference->SubSearch;
     $Regex            = $this->DivListConference->Regex;
     $Flags            = GL_SIZELIMIT ; 

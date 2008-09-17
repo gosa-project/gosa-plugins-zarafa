@@ -89,7 +89,7 @@ class EventTargetAddList extends MultiSelectWindow
     /* Create a list of workstations
      */
     $tmp = get_sub_list("(&(macAddress=*)(objectClass=gotoWorkstation))",
-          "server",get_ou("workstationou"),$config->current['BASE'],
+          "server",get_ou("workstationRDN"),$config->current['BASE'],
           array("cn","objectClass","description","ipHostNumber","macAddress"),GL_SUBSEARCH);
     foreach($tmp as $server){
       $this->workstation_list[$server['dn']] = $server;
@@ -202,7 +202,7 @@ class EventTargetAddList extends MultiSelectWindow
     if($this->display_workstation){
       $_target_list = array_merge($_target_list,
             get_list("(&(cn=".$this->regex.")(objectClass=gotoWorkstation))",
-            "workstation",get_ou("workstationou").$this->selectedBase,
+            "workstation",get_ou("workstationRDN").$this->selectedBase,
             array("cn","objectClass","description","ipHostNumber","macAddress"),GL_NONE));
     }
     if($this->display_ogroup){

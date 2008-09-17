@@ -87,7 +87,7 @@ class faiManagement extends plugin
     if(!session::is_set("fai_filter")){
 
       /* Set intial release */
-      $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+      $rel = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
       $rels = array_flip($this->getBranches());
       if(isset($rels[$rel])){
         $rel = $rels[$rel];

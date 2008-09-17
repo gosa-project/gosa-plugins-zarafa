@@ -78,7 +78,7 @@ class worktabs extends tabs
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     $baseobject= $this->by_object['workgeneric'];
-    $this->dn= "cn=".$baseobject->cn.",".get_ou('workstationou').$baseobject->base;
+    $this->dn= "cn=".$baseobject->cn.",".get_ou('workstationRDN').$baseobject->base;
 
     if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
 

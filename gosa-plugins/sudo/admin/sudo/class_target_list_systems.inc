@@ -238,7 +238,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->workstation){
         $filter = "(objectClass=gotoWorkstation)";  
         $filter= "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_sub_list($filter, "workstation",  get_ou('workstationou'),$base, 
+        $res= array_merge($res,get_sub_list($filter, "workstation",  get_ou('workstationRDN'),$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT | GL_SUBSEARCH));
       }
       if($this->server){
@@ -258,7 +258,7 @@ class target_list_systems extends MultiSelectWindow
       if($this->workstation){
         $filter = "(objectClass=gotoWorkstation)";  
         $filter= "(&(cn=".$Regex.")(|".$filter."))";
-        $res= array_merge($res,get_list($filter, "workstation",  get_ou('workstationou').$base, 
+        $res= array_merge($res,get_list($filter, "workstation",  get_ou('workstationRDN').$base, 
               array("cn","objectClass","description"), GL_SIZELIMIT ));
       }
       if($this->server){

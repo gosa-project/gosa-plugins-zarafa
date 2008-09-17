@@ -1306,14 +1306,14 @@ class workstartup extends plugin
   function GetHookElements()
   {
     $ret = array();
-    $cmd= $this->config->search("servrepository", "REPOSITORY_HOOK",array('tabs'));
+    $cmd= $this->config->search("servrepository", "repositoryBranchHook",array('tabs'));
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);
       if((!$res)){
-        msg_dialog::display(_("Configuration error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::cmdexecfailed("repositoryBranchHook", $cmd), ERROR_DIALOG);
       }elseif(empty($res2)){
-        msg_dialog::display(_("Configuration error"), _("REPOSITORY_HOOK returned no result!"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), _("repositoryBranchHook returned no result!"), ERROR_DIALOG);
       }else{
         $tmp = split("\n",$res);
         foreach($tmp as $line){

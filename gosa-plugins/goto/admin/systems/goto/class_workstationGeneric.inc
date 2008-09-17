@@ -143,7 +143,7 @@ class workgeneric extends plugin
       $ui= get_userinfo();
       $this->base= dn2base($ui->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("workstationou"))."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("workstationRDN"))."/i", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
@@ -450,7 +450,7 @@ class workgeneric extends plugin
       $message= array_merge($message, $this->netConfigDNS->check());
     }
 
-    $this->dn= "cn=".$this->cn.",".get_ou('workstationou').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('workstationRDN').$this->base;
 
     if ($this->cn == ""){
       $message[]= msgPool::required(_("Name"));
@@ -472,7 +472,7 @@ class workgeneric extends plugin
       }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
-          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".get_ou('incomingou')."/", $ldap->getDN())){
+          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".get_ou('systemIncomingRDN')."/", $ldap->getDN())){
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){
@@ -502,7 +502,7 @@ class workgeneric extends plugin
     }else{
       /* Warn the user, that this host is currently installing */
       if($this->currently_installing && !$this->currently_installing_warned && 
-          !preg_match("/".normalizePreg(get_ou("incomingou"))."/",$this->orig_dn)){
+          !preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
       
         /* Force aborting without message dialog */
         $message[] = "";

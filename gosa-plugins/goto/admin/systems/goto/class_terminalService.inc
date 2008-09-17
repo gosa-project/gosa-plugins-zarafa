@@ -180,7 +180,7 @@ class termservice extends plugin
 
     /* Load phone hardware list 
      */
-    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneou")), 
+    $tmp = get_sub_list("(objectClass=goFonHardware)","",array(get_ou("phoneRDN")), 
                   $this->config->current['BASE'],array("cn","description"), GL_NO_ACL_CHECK);
     foreach($tmp as $attrs){
       $cn= $attrs['cn'][0];
@@ -201,10 +201,10 @@ class termservice extends plugin
         get_ou("ogroupou"),
         get_ou("serverRDN"),
         get_ou("terminalRDN"),
-        get_ou("workstationou"),
-        get_ou("printerou"),
-        get_ou("componentou"),
-        get_ou("phoneou"));
+        get_ou("workstationRDN"),
+        get_ou("printerRDN"),
+        get_ou("componentRDN"),
+        get_ou("phoneRDN"));
 
     $tmp = get_sub_list("(goFonHardware=*)","",$deps_a,$this->config->current['BASE'],
         array('cn','dn','goFonHardware'),GL_NO_ACL_CHECK);

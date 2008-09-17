@@ -368,7 +368,7 @@ class blocklist extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array(get_ou('blocklistou').$this->DivListBlocklist->selectedBase));
+    return(array(get_ou('faxBlocklistRDN').$this->DivListBlocklist->selectedBase));
   }
 
 
@@ -389,7 +389,7 @@ class blocklist extends plugin
     if($SubSearch){
       $Flags |= GL_SUBSEARCH;
     }else{
-      $base = get_ou('blocklistou').$base;
+      $base = get_ou('faxBlocklistRDN').$base;
     }  
 
     /* Create filter */

@@ -62,7 +62,7 @@ class addressbook extends plugin
     $this->config= &$config;
 
     /* Check if there is a special ldap-sub-tree specified, instead of dc=addressbook, */
-    $aoc = $this->config->search("addressbook", "LDAP_OBJECT_CLASS",array('menu'));
+    $aoc = $this->config->search("addressbook", "addressbookBaseDN",array('menu'));
     if ($aoc != ""){
       $this->abobjectclass  = $aoc;
     }

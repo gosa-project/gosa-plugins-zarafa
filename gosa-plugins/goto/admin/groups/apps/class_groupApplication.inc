@@ -36,7 +36,7 @@ class appgroup extends plugin
     $this->Releases   = $this->getReleases();
 
     /* Set intial release */
-    $this->FAIrelease = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+    $this->FAIrelease = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
     if(empty($this->FAIrelease) || !isset($this->Releases[$this->FAIrelease])){
       $this->FAIrelease = "/";
     }

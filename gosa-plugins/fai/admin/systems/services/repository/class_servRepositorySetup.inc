@@ -196,12 +196,12 @@ class servRepositorySetup  extends plugin
   function GetHookElements()
   {
     $ret = array();
-    $cmd = $this->config->search("servrepository", "REPOSITORY_HOOK",array('tabs'));
+    $cmd = $this->config->search("servrepository", "repositoryBranchHook",array('tabs'));
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);
       if(!$res || empty($res2)){
-        msg_dialog::display(_("Error"), msgPool::cmdexecfailed("REPOSITORY_HOOK", $cmd, _("Repository service")), ERROR_DIALOG);
+        msg_dialog::display(_("Error"), msgPool::cmdexecfailed("repositoryBranchHook", $cmd, _("Repository service")), ERROR_DIALOG);
       }else{  
         $tmp = split("\n",$res);
         foreach($tmp as $hook){

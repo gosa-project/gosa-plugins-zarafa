@@ -62,7 +62,7 @@ class phoneGeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("phoneou"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("phoneRDN"))."/", "", $this->dn);
     }
   
     if($this->goFonMSN != ""){
@@ -323,7 +323,7 @@ class phoneGeneric extends plugin
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
 
-    $this->dn= "cn=".$this->cn.",".get_ou('phoneou').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('phoneRDN').$this->base;
 
     /* To check for valid ip*/
     if($this->netConfigDNS->ipHostNumber == ""){

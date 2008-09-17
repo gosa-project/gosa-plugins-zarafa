@@ -449,7 +449,7 @@ class termgeneric extends plugin
       }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
-          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".normalizePreg(get_ou('incomingou'))."/", $ldap->getDN())){
+          if (preg_match("/cn=dhcp,/",$attrs['dn']) || preg_match ("/,".normalizePreg(get_ou('systemIncomingRDN'))."/", $ldap->getDN())){
             continue;
           } else {
             if ($attrs['dn'] != $this->orig_dn){

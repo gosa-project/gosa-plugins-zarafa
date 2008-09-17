@@ -84,7 +84,7 @@ class applicationManagement extends plugin
 
       /* Set intial release */
       $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
-      $rel = $config->search("faiManagement","DEFAULT_RELEASE",array("menu"));
+      $rel = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
       $rels = array_flip($this->getReleases());
       if(isset($rels[$rel])){
         $rel = $rels[$rel];
