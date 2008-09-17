@@ -4,6 +4,7 @@
 <h2><img class="center" alt="" align="middle" src="images/penguin.png"> {t}Boot parameters{/t}</h2>
 
    <table summary="" style="width:100%">
+	{if $fai_activated && $si_active && !$si_fai_action_failed}
     <tr>
      <td><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
      <td style="width:70%">
@@ -14,6 +15,7 @@
 {/render}
       </td>
     </tr>
+	{/if}
     <tr>
      <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
      <td>

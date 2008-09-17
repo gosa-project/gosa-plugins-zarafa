@@ -261,36 +261,6 @@ class workstartup extends plugin
         $this->update_fai_cache();
       }
     }
-
-#   /* Get list of boot kernels */
-#   if (isset($this->config->data['TABS'])){
-#     $command= $this->config->search(get_class($this), "KERNELS",array('tabs'));
-#     if (!check_command($command)){
-#       $message[]= sprintf(_("Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to exist."), $command,
-#           get_class($this));
-#     } else {
-#       $fh= popen($command, "r");
-#       while (!feof($fh)) {
-#         $buffer= trim(fgets($fh, 256));
-#         if(!empty($buffer)){
-#           $name=$value = $buffer;
-#           if(preg_match("/:/",$buffer)){
-#             $name = preg_replace("/:.*$/","",$buffer);
-#             $value= preg_replace("/^.*:/","",$buffer);
-#             $this->gotoBootKernels[$name]= $name.":".$value;
-#           }else{
-#             $this->gotoBootKernels[$name]= $value;
-#           }
-#         }
-#       }
-#       pclose($fh);
-#     }
-#   }
-#
-#    /* Turn to default, if we've nothing to inherit */
-#    if (!isset($this->gotoBootKernels['default-inherited']) && $this->gotoBootKernel == "default-inherited"){
-#      $this->gotoBootKernel= "default";
-#    }
   }
 
   
@@ -328,14 +298,14 @@ class workstartup extends plugin
 
     /* Add module */
     if (isset ($_POST['add_module'])){
-      if ($_POST['module'] != "" && $this->acl_is_writeable("gotoModule")){
+      if ($_POST['module'] != "" && $this->acl_is_writeable("gotoModules")){
         $this->add_list ($this->gotoModules, $_POST['module']);
       }
     }
 
     /* Delete module */
     if (isset ($_POST['delete_module'])){
-      if (count($_POST['modules_list']) && $this->acl_is_writeable("gotoModule")){
+      if (count($_POST['modules_list']) && $this->acl_is_writeable("gotoModules")){
         $this->del_list ($this->gotoModules, $_POST['modules_list']);
       }
     }
