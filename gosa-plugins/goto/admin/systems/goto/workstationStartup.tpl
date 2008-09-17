@@ -58,7 +58,9 @@
   
   <td style="vertical-align:top;">
 
-	{if !$si_active}
+	{if !$fai_activated}
+			<h2>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h2>			
+	{elseif !$si_active}
 		<b>{t}GOsa support daemon not configured{/t}</b><br>
 		{t}FAI settings cannot be modified{/t}
 	{elseif $si_fai_action_failed}
@@ -160,11 +162,7 @@
 			<input name="AddClass" value="{msgPool type=addButton}" type="submit"> 
 	{/render}
 	<!--		<input name="DelClass" value="{msgPool type=delButton}" type="submit"> -->
-		{/if}
-
-		{else}
-
-			<h2>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h2>			
+			{/if}
 
 		{/if}
   		</td>

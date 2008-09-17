@@ -61,7 +61,7 @@ class workstartup extends plugin
   {
     /* Check if FAI is active */
     $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
-    if(!empty($tmp)){
+    if(!empty($tmp) && class_available("faiManagement")){
       $this->fai_activated = TRUE;
     }else{
       $this->attributes = array("gotoLdapServer", "gotoBootKernel", "gotoKernelParameters", "gotoShare");
