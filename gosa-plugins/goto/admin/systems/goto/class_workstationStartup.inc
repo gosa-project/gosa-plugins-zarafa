@@ -179,7 +179,7 @@ class workstartup extends plugin
       }
     }
 
-    $this->otoShareSelections= $config->getShareList(true);
+    $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);
     $tmp2 = array();
   
@@ -466,12 +466,13 @@ class workstartup extends plugin
     /* if $_POST['gotoShareAdd'] is set, we will try to add a new entry
      * This entry will be, a combination of mountPoint and sharedefinitions
      */
-    if((isset($_POST['gotoShareAdd'])) && ($this->acl_is_writeable("gotoShare"))) {
+    if((isset($_POST['gotoShareAdd'])) && isset($_POST['gotoShareSelection']) && ($this->acl_is_writeable("gotoShare"))) {
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         msg_dialog::display(_("Error"), msgPool::required(_("Mount point")), ERROR_DIALOG);
       }else{
-        if(count($this->gotoAvailableShares)){
+    
+        if(isset($this->gotoAvailableShares[$_POST['gotoShareSelection']])){
           $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
           $s_mount = $_POST['gotoShareMountPoint'];
           /* Preparing the new assignment */
