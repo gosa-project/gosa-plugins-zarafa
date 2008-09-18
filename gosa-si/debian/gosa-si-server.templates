@@ -1,0 +1,28 @@
+Template: gosa-si/hostname
+Type: string
+Default: 127.0.0.1
+Description: Hostname or IP of the MySQL-Server
+ Please enter the full-qualified hostname or IP Address of the desired MySQL Host.
+
+Template: gosa-si/database
+Type: string
+Default: gosa_si
+Description: Name of the GOsa-SI Database
+ Please choose a name for the gosa-si database.
+
+Template: gosa-si/username
+Type: string
+Default: gosa_si
+Description: Name of the GOsa-SI Database User
+ Please choose a name for the gosa-si database user.
+
+Template: gosa-si/password
+Type: password
+Description: Password for the GOsa-SI Database User
+ Please enter a password for the gosa-si database user.
+
+Template: gosa-si/rootpw
+Type: password
+Description: Password for the Database Administrator 'root'
+ In order to create the privileged account, setup needs the password of the
+ database administrator. Please enter the password of the database user 'root'.
