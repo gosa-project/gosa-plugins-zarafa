@@ -134,7 +134,7 @@ class dhcpHost extends dhcpPlugin
     $message= array();
 
     $cache = array();
-    if(isset($this->parent)){
+    if(isset($this->parent) && isset($this->parent->dhcpObjectCache)){
       $cache = $this->parent->dhcpObjectCache;
     }
   
