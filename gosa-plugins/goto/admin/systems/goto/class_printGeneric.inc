@@ -337,7 +337,7 @@ class printgeneric extends plugin
         }
       }else{
         if(preg_match("/^Workstation$/i",$this->BelongsTo)){
-          $display= $this->show_disable_header(_("Add printer extension"),
+          $display= $this->show_enable_header(_("Add printer extension"),
               msgPool::featuresEnabled(_("printer")));
         }elseif(preg_match("/^Terminal$/i",$this->BelongsTo)){
           $display= $this->show_enable_header(_("Add printer extension"),
