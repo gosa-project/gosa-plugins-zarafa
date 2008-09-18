@@ -712,6 +712,7 @@ class workgeneric extends plugin
             "gotoSyslogServer"    => _("Syslog server"), 
             "gotoNtpServer"       => _("Ntp server"), 
             "gotoRootPasswd"      => _("Root password"),
+            "createFAICD"         => _("Create FAI CD"),
             "FAIstate"            => _("Action flag"))
           ));
   }
@@ -725,18 +726,26 @@ class workgeneric extends plugin
     if($this->member_of_ogroup && isset($this->parent->by_object['workservice'])){
       foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant",
             "gotoXResolution","gotoXColordepth","gotoXMouseType","gotoXMouseport") as $name){
-        $this->parent->by_object['workservice']->$name = "default"; 
+        if($this->parent->by_object['workservice']->acl_is_writeable($name)){
+          $this->parent->by_object['workservice']->$name = "default"; 
+        }
       }
     }
 
     /* Set workstation startup attributes to inherited */
     if($this->member_of_ogroup && isset($this->parent->by_object['workstartup'])){
-      $this->parent->by_object['workstartup']->gotoBootKernel = "default-inherited";
-      $this->parent->by_object['workstartup']->gotoLdapServer = "default-inherited";
-      $this->parent->by_object['workstartup']->FAIdebianMirror= "inherited";
-
-      $this->parent->by_object['workstartup']->gotoLdap_inherit = TRUE;
-      $this->parent->by_object['workstartup']->gotoLdapServers = array();
+      $obj = $this->parent->by_object['workstartup'];
+      if($obj->acl_is_writeable("gotoBootKernel")){
+        $this->parent->by_object['workstartup']->gotoBootKernel = "default-inherited";
+      }
+      if($obj->acl_is_writeable("gotoLdapServer")){
+        $this->parent->by_object['workstartup']->gotoLdapServer = "default-inherited";
+        $this->parent->by_object['workstartup']->gotoLdap_inherit = TRUE;
+        $this->parent->by_object['workstartup']->gotoLdapServers = array();
+      }
+      if($obj->acl_is_writeable("FAIdebianMirror")){
+        $this->parent->by_object['workstartup']->FAIdebianMirror= "inherited";
+      }
     }
   }
 }

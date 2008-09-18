@@ -210,7 +210,7 @@
  </tr>
 </table>
 
-
+<input type='hidden' name='workservicePosted' value='1'>
 <div style="height:40px;"></div>
 
 <script language="JavaScript" type="text/javascript">

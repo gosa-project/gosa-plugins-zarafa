@@ -359,7 +359,7 @@ class workservice extends plugin
   {
     plugin::save_object();
 
-    if((isset($_POST['gotoXDriver'])) && $this->acl_is_writeable("AutoSync")) {
+    if((isset($_POST['workservicePosted'])) && $this->acl_is_writeable("AutoSync")) {
       if(isset($_POST['AutoSync'])){
         $this->AutoSync = true;
       }else{
