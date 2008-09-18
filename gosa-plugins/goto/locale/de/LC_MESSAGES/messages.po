@@ -2807,7 +2807,7 @@ msgstr "Softwareverteilung"
 #: admin/systems/goto/class_workstationGeneric.inc:511
 msgid "This host is currently installing. If you want to save it, press 'OK'."
 msgstr ""
-"Dieses System installiert momentan. Wenn Sie es speichern möchten, drückens "
+"Dieses System installiert momentan. Wenn Sie es speichern möchten, drücken "
 "Sie 'OK'."
 
 #: admin/systems/goto/class_workstationGeneric.inc:694
