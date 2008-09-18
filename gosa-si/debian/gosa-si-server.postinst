@@ -1,18 +1,5 @@
 #!/bin/sh
 
-set -e
-
-. /usr/share/debconf/confmodule
-
-db_version 2.0
-
-for i in hostname database username password rootpw; do
-	  db_get gosa-si/$i || true
-		eval $i'="$RET"'
-done
-
-host="127.0.0.1"
-
 #DEBHELPER#
 
 # We exit unless the package is being configured
@@ -24,26 +11,10 @@ case "$1" in
         *)                     exit 0;
 esac
 
-# Setup database
-/usr/bin/mysqladmin -u root --password=$rootpw create "$database" &> /dev/null || true
-/usr/bin/mysql -u root --password=$rootpw -e "GRANT ALL PRIVILEGES ON $database.* to '$username'@'127.0.0.1' identified by '$password'"
-
 # Fix permission
 [ -f /etc/gosa-si/server.conf ] && chmod go-rwx /etc/gosa-si/server.conf
 
-# Apply DB settings to config file
-if [ -w /etc/gosa-si/server.conf ]; then
-  for i in database username password host; do
-    eval 'val=$'$i
-    grep -E "mysql-$i" /etc/gosa-si/server.conf | grep -vE '^ *#' && sed -i "/\[server\]/,/\[/s/mysql-$i\s*=\s*\(.*\)$/mysql-$i = $val/g" /etc/gosa-si/server.conf || sed -i "
-/\[server\]/ a\
-mysql-$i = $val" /etc/gosa-si/server.conf
-  done
-fi
-
 # Restart daemon
 invoke-rc.d gosa-si restart
-
-db_stop
 
 exit 0

@@ -11,7 +11,7 @@ use Socket;
 use XML::Simple;
 use File::Spec;
 use Data::Dumper;
-use GOSA::DBmysql;
+use GOSA::DBsqlite;
 use MIME::Base64;
 
 my $event_dir = "/usr/lib/gosa-si/server/GosaPackages";

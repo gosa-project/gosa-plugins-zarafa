@@ -1,4 +1,5 @@
-package GOSA::DBmysql;
+package GOSA::DBsqlite;
+
 
 use strict;
 use warnings;
@@ -7,42 +8,58 @@ use Data::Dumper;
 use GOSA::GosaSupportDaemon;
 use Time::HiRes qw(usleep);
 
+
 my $col_names = {};
 
 sub new {
     my $class = shift;
+    my $db_name = shift;
 
-    my $self = {dbh=>undef};
-    my $dbh = DBI->connect("dbi:mysql:database=$main::mysql_database;host=$main::mysql_host", $main::mysql_username, $main::mysql_password,{ RaiseError => 1, AutoCommit => 1 });
-		$dbh->{mysql_auto_reconnect} = 1;
+    my $lock = $db_name.".si.lock";
+	# delete existing lock - instance should be running only once
+	if(stat($lock)) {
+		&main::daemon_log("DEBUG: Removed existing lock $lock.", 7);
+		unlink($lock);
+	}
+    my $self = {dbh=>undef,db_name=>undef,db_lock=>undef,db_lock_handle=>undef};
+    my $dbh = DBI->connect("dbi:SQLite:dbname=$db_name", "", "", {RaiseError => 1, AutoCommit => 1});
     $self->{dbh} = $dbh;
-    bless($self,$class);
+    $self->{db_name} = $db_name;
+    $self->{db_lock} = $lock;
 
+    bless($self,$class);
     return($self);
 }
 
 
 sub create_table {
-	my $self = shift;
-	my $table_name = shift;
-	my $col_names_ref = shift;
-	my $recreate_table = shift || 0;
-	my @col_names;
-	my $col_names_string = join(", ", @$col_names_ref);
+    my $self = shift;
+    my $table_name = shift;
+    my $col_names_ref = shift;
+    my @col_names;
+    foreach my $col_name (@$col_names_ref) {
+        my @t = split(" ", $col_name);
+        $col_name = $t[0];
+        push(@col_names, $col_name);
+    }
 
-	if($recreate_table) {
-		$self->{dbh}->do("DROP TABLE $table_name");
-	}
-	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
-	# &main::daemon_log("DEBUG: $sql_statement");
+    $col_names->{ $table_name } = $col_names_ref;
+    my $col_names_string = join("', '", @col_names);
+    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
 	eval {
-		$self->{dbh}->do($sql_statement);
+		my $res = $self->{dbh}->do($sql_statement);
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+	}
+	eval {
+		my $res = $self->{dbh}->do($sql_statement);
 	};
 	if($@) {
 		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
 	}
 
-	return 0;
+    return 0;
 }
 
 
@@ -78,14 +95,16 @@ sub add_dbentry {
 		# check wether primkey is unique in table, otherwise return errorflag
 		my $sql_statement = "SELECT * FROM $table $prim_statement";
 		eval {
-			# &main::daemon_log("DEBUG: $sql_statement");
-			my $sth = $self->{dbh}->prepare($sql_statement);
-			$sth->execute;
-			$res = @{ $sth->fetchall_arrayref() };
-			$sth->finish;
+			$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
 		};
 		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+			$self->{dbh}->do("ANALYZE");
+			eval {
+				$res = @{ $self->{dbh}->selectall_arrayref($sql_statement) };
+			};
+			if($@) {
+				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+			}
 		}
 
 	}
@@ -95,13 +114,13 @@ sub add_dbentry {
 		# fetch column names of table
 		my $col_names = &get_table_columns($self, $table);
 
-		#my $create_id=0;
-		#foreach my $col_name (@{$col_names}) {
-		#	#if($col_name eq "id" && (! exists $arg->{$col_name})) {
-		#		#&main::daemon_log("0 DEBUG: id field found without value! Creating autoincrement statement!", 7);
-		#		$create_id=1;
-		#	}
-		#}
+		my $create_id=0;
+		foreach my $col_name (@{$col_names}) {
+			if($col_name eq "id" && (! exists $arg->{$col_name})) {
+				#&main::daemon_log("0 DEBUG: id field found without value! Creating autoincrement statement!", 7);
+				$create_id=1;
+			}
+		}
 
 		# assign values to column name variables
 		my @col_list;
@@ -109,24 +128,29 @@ sub add_dbentry {
 		foreach my $col_name (@{$col_names}) {
 			# use function parameter for column values
 			if (exists $arg->{$col_name}) {
-				push(@col_list, $col_name);
+				push(@col_list, "'".$col_name."'");
 				push(@val_list, "'".$arg->{$col_name}."'");
 			}
 		}    
 
 		my $sql_statement;
-		#if($create_id==1) {
-		#	$sql_statement = "INSERT INTO $table (id, ".join(", ", @col_list).") VALUES ((select coalesce(max(id),0)+1), ".join(", ", @val_list).")";
-		#} else {
+		if($create_id==1) {
+			$sql_statement = "INSERT INTO $table ('id', ".join(", ", @col_list).") VALUES ((select coalesce(max(id), 0)+1 from $table), ".join(", ", @val_list).")";
+		} else {
 			$sql_statement = "INSERT INTO $table (".join(", ", @col_list).") VALUES (".join(", ", @val_list).")";
-		#}
+		}
 		my $db_res;
-		# &main::daemon_log("DEBUG: $sql_statement",1);
 		eval {
 			$db_res = $self->{dbh}->do($sql_statement);
 		};
 		if($@) {
-			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+			$self->{dbh}->do("ANALYZE");
+			eval {
+				$db_res = $self->{dbh}->do($sql_statement);
+			};
+			if($@) {
+				&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+			}
 		}
 
 		if( $db_res != 1 ) {
@@ -160,7 +184,7 @@ sub update_dbentry {
 
 
 sub del_dbentry {
-    my ($self, $sql)= @_;
+    my ($self, $sql)= @_;;
     my $db_res= &exec_statement($self, $sql);
     return $db_res;
 }
@@ -169,24 +193,31 @@ sub del_dbentry {
 sub get_table_columns {
     my $self = shift;
     my $table = shift;
-	my @column_names;
+    my @column_names;
+    
+	if(exists $col_names->{$table}) {
+		@column_names = @{$col_names->{$table}};
+	} else {
+		my @res;
+		eval {
+			@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
+		};
+		if($@) {
+			$self->{dbh}->do("ANALYZE");
+			eval {
+				@res = @{$self->{dbh}->selectall_arrayref("pragma table_info('$table')")};
+			};
+			if($@) {
+				&main::daemon_log("ERROR: pragma table_info('$table') failed with $@", 1);
+			}
+		}
 
-	my @res;
-	eval {
-		my $sth = $self->{dbh}->prepare("describe $table") or &main::daemon_log("ERROR: Preparation of statement 'describe $table' failed!", 1);
-		$sth->execute or &main::daemon_log("ERROR: Execution of statement 'describe $table' failed!", 1);
-		@res = @{ $sth->fetchall_arrayref() };
-		$sth->finish or &main::daemon_log("ERROR: Finishing the statement handle failed!", 1);
-	};
-	if($@) {
-		&main::daemon_log("ERROR: describe ('$table') failed with $@", 1);
+		foreach my $column (@res) {
+			push(@column_names, @$column[1]);
+		}
 	}
+    return \@column_names;
 
-	foreach my $column (@res) {
-		push(@column_names, @$column[0]);
-	}
-
-	return \@column_names;
 }
 
 
@@ -243,35 +274,29 @@ sub show_table {
 
 
 sub exec_statement {
-	my $self = shift;
-	my $sql_statement = shift;
-	my $sth;
-	my @db_answer;
+    my $self = shift;
+    my $sql_statement = shift;
+    my @db_answer;
 
-	# print STDERR Dumper($sql_statement);
 	eval {
-		if($sql_statement =~ /^SELECT/i) {
-			$sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("ERROR: Preparation of statement '$sql_statement' failed!", 1);
-			$sth->execute or &main::daemon_log("ERROR: Execution of statement '$sql_statement' failed!", 1);
-			if($sth->rows > 0) {
-				@db_answer = @{ $sth->fetchall_arrayref() } or &main::daemon_log("ERROR: Fetch() failed!", 1);
-				# print STDERR Dumper(@db_answer);
-			}
-			$sth->finish or &main::daemon_log("ERROR: Finishing the statement handle failed!", 1);
-		} else {
-			$self->{dbh}->do($sql_statement);
-		}
+    	@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
 	};
 	if($@) {
-		&main::daemon_log("ERROR: $sql_statement failed with '$@'", 1);
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			@db_answer = @{$self->{dbh}->selectall_arrayref($sql_statement)};
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		}
 	}
 	# TODO : maybe an error handling and an erro feedback to invoking function
-	my $error = $self->{dbh}->err;
-	if ($error) {
-		&main::daemon_log("ERROR: ".@$self->{dbh}->errstr, 1);
-	}
+	#my $error = @$self->{dbh}->err;
+	#if ($error) {
+	#	my $error_string = @$self->{dbh}->errstr;
+	#}
 
-	return \@db_answer;
+    return \@db_answer;
 }
 
 
@@ -282,22 +307,19 @@ sub exec_statementlist {
 
 	foreach my $sql (@$sql_list) {
 		if(defined($sql) && length($sql) > 0) {
-			# &main::daemon_log("DEBUG: $sql");
 			eval {
-				if($sql =~ /^SELECT/i) {
-					my $sth = $self->{dbh}->prepare($sql);
-					# &main::daemon_log("DEBUG: ".$sth->execute);
-					if($sth->rows > 0) {
-						my @answer = @{$sth->fetchall_arrayref()};
-						push @db_answer, @answer;
-					}
-					$sth->finish;
-				} else {
-					$self->{dbh}->do($sql);
-				}
+				my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+				push @db_answer, @answer;
 			};
 			if($@) {
-				&main::daemon_log("ERROR: $sql failed with $@", 1);
+				$self->{dbh}->do("ANALYZE");
+				eval {
+					my @answer = @{$self->{dbh}->selectall_arrayref($sql)};
+					push @db_answer, @answer;
+				};
+				if($@) {
+					&main::daemon_log("ERROR: $sql failed with $@", 1);
+				}
 			}
 		} else {
 			next;
@@ -329,11 +351,28 @@ sub move_table {
 
 	eval {
 		$self->{dbh}->do($sql_statement_drop);
+	};
+	if($@) {
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do($sql_statement_drop);
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement_drop failed with $@", 1);
+		}
+	}
+
+	eval {
 		$self->{dbh}->do($sql_statement_alter);
 	};
-
 	if($@) {
-		&main::daemon_log("ERROR: $sql_statement_drop failed with $@", 1);
+		$self->{dbh}->do("ANALYZE");
+		eval {
+			$self->{dbh}->do($sql_statement_alter);
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement_alter failed with $@", 1);
+		}
 	}
 
 	return;

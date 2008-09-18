@@ -109,7 +109,7 @@ sub send_user_msg {
 
     # determine new message id
     my $new_msg_id = 1;
-	my $new_msg_id_sql = "SELECT MAX(id) FROM $main::messaging_tn";
+	my $new_msg_id_sql = "SELECT MAX(CAST(id AS INTEGER)) FROM $main::messaging_tn";
     my $new_msg_id_res = $main::messaging_db->exec_statement($new_msg_id_sql);
     if (defined @{@{$new_msg_id_res}[0]}[0] ) {
         $new_msg_id = int(@{@{$new_msg_id_res}[0]}[0]);
@@ -755,31 +755,31 @@ sub trigger_action_wake {
 
 
 sub get_available_kernel {
-  my ($msg, $msg_hash, $session_id) = @_;
+        my ($msg, $msg_hash, $session_id) = @_;
 
-  my $source = @{$msg_hash->{'source'}}[0];
-  my $target = @{$msg_hash->{'target'}}[0];
-  my $fai_release= @{$msg_hash->{'fai_release'}}[0];
+        my $source = @{$msg_hash->{'source'}}[0];
+        my $target = @{$msg_hash->{'target'}}[0];
+        my $release= @{$msg_hash->{'release'}}[0];
 
-  my @kernel;
-  # Get Kernel packages for release
-  my $sql_statement = "SELECT * FROM $main::packages_list_tn WHERE distribution='$fai_release' AND package LIKE 'linux\-image\-%'";
-  my $res_hash = $main::packages_list_db->select_dbentry($sql_statement);
-  my %data;
-  my $i=1;
+        my @kernel;
+        # Get Kernel packages for release
+        my $sql_statement = "SELECT * FROM $main::packages_list_tn WHERE distribution='$release' AND package LIKE 'linux\-image\-%'";
+        my $res_hash = $main::packages_list_db->select_dbentry($sql_statement);
+        my %data;
+        my $i=1;
 
-  foreach my $package (keys %{$res_hash}) {
-    $data{"answer".$i++}= $data{"answer".$i++}= ${$res_hash}{$package}->{'package'};
-  }
-  $data{"answer".$i++}= "default";
+        foreach my $package (keys %{$res_hash}) {
+                $data{"answer".$i++}= $data{"answer".$i++}= ${$res_hash}{$package}->{'package'};
+        }
+        $data{"answer".$i++}= "default";
 
-  my $out_msg = &build_msg("get_available_kernel", $target, $source, \%data);
-  my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
-  if (defined $forward_to_gosa) {
-    $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
-  }
+        my $out_msg = &build_msg("get_available_kernel", $target, $source, \%data);
+        my $forward_to_gosa = @{$msg_hash->{'forward_to_gosa'}}[0];
+        if (defined $forward_to_gosa) {
+            $out_msg =~s/<\/xml>/<forward_to_gosa>$forward_to_gosa<\/forward_to_gosa><\/xml>/;
+        }
 
-  return ( $out_msg );
+        return ( $out_msg );
 }
 
 
