@@ -35,7 +35,7 @@ esac
 if [ -w /etc/gosa-si/server.conf ]; then
   for i in database username password host; do
     eval 'val=$'$i
-    grep -E "mysql-$i" /etc/gosa-si/server.conf | grep -vE '^ *#' && sed -i "/\[server\]/,/\[/s/mysql-$i\s*=\s*\(.*\)$/mysql-$i = $val/g" /etc/gosa-si/server.conf || sed -i "
+    grep -E "mysql-$i" /etc/gosa-si/server.conf | grep -vE '^ *#' &> /dev/null && sed -i "/\[server\]/,/\[/s/mysql-$i\s*=\s*\(.*\)$/mysql-$i = $val/g" /etc/gosa-si/server.conf || sed -i "
 /\[server\]/ a\
 mysql-$i = $val" /etc/gosa-si/server.conf
   done
