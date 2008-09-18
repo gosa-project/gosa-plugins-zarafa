@@ -212,7 +212,7 @@ sub CURRENTLY_LOGGED_IN {
     my $act_time = &get_time();
     my $expiry_date = &calc_timestamp($act_time, "minus", $main::logged_in_user_date_of_expiry); 
 
-    $sql_statement = "SELECT * FROM $main::login_users_tn WHERE CAST(timestamp as INTEGER)<$expiry_date"; 
+    $sql_statement = "SELECT * FROM $main::login_users_tn WHERE CAST(timestamp as UNSIGNED)<$expiry_date"; 
     $db_res = $main::login_users_db->select_dbentry($sql_statement);
 
     while( my($hit_id, $hit) = each(%{$db_res}) ) {
