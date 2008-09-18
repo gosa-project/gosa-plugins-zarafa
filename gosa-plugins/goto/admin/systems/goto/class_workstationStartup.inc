@@ -1108,7 +1108,7 @@ class workstartup extends plugin
         return;
       }else{
         foreach($tmp as $entry){
-          $rel = $entry['FAI_RELEASE'];
+          $rel = $entry['RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
           $this->cache['SERVERS'][$entry['SERVER']][$rel] = $rel;
           uksort($this->cache['SERVERS']['auto'], 'strnatcasecmp');
