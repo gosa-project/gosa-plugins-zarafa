@@ -39,6 +39,7 @@ class sudoManagement extends plugin
   private $start_pasting_copied_objects = FALSE;
 
   public $acl_module = array("sudo");
+  public $CopyPasteHandler = NULL;
  
   /*! \brief */ 
   public function __construct(&$config, &$ui)
