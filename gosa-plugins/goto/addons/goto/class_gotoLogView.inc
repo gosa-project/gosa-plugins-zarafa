@@ -205,7 +205,7 @@ class gotoLogView extends plugin
           "plDepends"     => array(),
           "plPriority"    => 30,
           "plSection"     => array("administration"),
-          "plCategory"    => array("workstation"),
+          "plCategory"    => array("workstation","server"),
 
           "plProvidedAcls"=> array()
             ));
