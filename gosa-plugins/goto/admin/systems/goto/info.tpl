@@ -1,3 +1,8 @@
+
+{if !$ACL}
+	<h2>{msgPool type=permVietype=permVieww}</h2>
+{else}
+
 <h2><img class="center" alt="" align="middle" src="images/info_small.png"> {t}System information{/t}</h2>
 <table summary="" style="width:100%;">
  <tr>
@@ -131,4 +136,5 @@
   </td>
  </tr>
 </table>
+{/if}
 {/if}

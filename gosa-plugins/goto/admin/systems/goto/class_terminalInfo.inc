@@ -70,7 +70,10 @@ class terminfo extends plugin
 
     $smarty= get_smarty();
     $display= "";
-    if(!is_callable("snmpget")){
+    $smarty->assign("ACL",TRUE);
+    if(!preg_match("/r/",$this->getacl(""))){
+      $smarty->assign("ACL",FALSE);
+    }elseif(!is_callable("snmpget")){
       msg_dialog::display(_("Configuration error"), msgPool::missingext("snmp"), ERROR_DIALOG);
 
       $smarty->assign("load", progressbar(0,100,15,true));
@@ -240,6 +243,21 @@ class terminfo extends plugin
   {
   }
 
+
+  /* Return plugin informations for acl handling */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("System info"),
+          "plDescription" => _("System informations"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 33,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation","server","terminal"),
+          "plProvidedAcls"=> array()
+            ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
