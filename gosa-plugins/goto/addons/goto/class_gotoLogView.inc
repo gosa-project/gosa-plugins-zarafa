@@ -1,6 +1,6 @@
 <?php
 
-class goto_log_view extends plugin
+class gotoLogView extends plugin
 {
   
   var $mac;
@@ -65,6 +65,7 @@ class goto_log_view extends plugin
       $this->selected_date = key($res[$this->mac]);
       $this->logs = $res;
     }
+
   }
 
 
@@ -161,6 +162,7 @@ class goto_log_view extends plugin
       $divlist->AddEntry($entry);
     }
 
+    $smarty->assign("ACL",preg_match("/r/",$this->getacl("")));
     $smarty->assign("divlist",$divlist->DrawList());
     return($smarty->fetch(get_template_path('log_view.tpl', TRUE,dirname(__FILE__))));
   }
@@ -190,6 +192,23 @@ class goto_log_view extends plugin
       }
       $this->sort_by = $_GET['sort_by'];
     }
+  }
+
+
+  /* Return plugin informations for acl handling */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Log view"),
+          "plDescription" => _("Goto log view"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 30,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation"),
+
+          "plProvidedAcls"=> array()
+            ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
