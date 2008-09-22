@@ -1223,6 +1223,5 @@ sub get_hosts_with_module {
 }
 
 
-
 # vim:ts=4:shiftwidth:expandtab
 1;

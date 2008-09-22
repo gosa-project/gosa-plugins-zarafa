@@ -11,9 +11,13 @@ my $col_names = {};
 
 sub new {
     my $class = shift;
+    my $database = shift;
+    my $host = shift;
+    my $username = shift;
+    my $password = shift;
 
     my $self = {dbh=>undef};
-    my $dbh = DBI->connect("dbi:mysql:database=$main::mysql_database;host=$main::mysql_host", $main::mysql_username, $main::mysql_password,{ RaiseError => 1, AutoCommit => 1 });
+    my $dbh = DBI->connect("dbi:mysql:database=$database;host=$host", $username, $password,{ RaiseError => 1, AutoCommit => 1 });
 		$dbh->{mysql_auto_reconnect} = 1;
     $self->{dbh} = $dbh;
     bless($self,$class);

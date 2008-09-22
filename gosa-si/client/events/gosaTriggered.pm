@@ -41,6 +41,7 @@ my @events = (
     "trigger_action_reinstall",
     "trigger_action_update",
     "trigger_action_instant_update",
+    "trigger_goto_settings_reload",
     );
 @EXPORT = @events;
 
@@ -492,6 +493,15 @@ sub trigger_action_instant_update {
     # Execute update
     system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
 
+    return;
+}
+
+sub trigger_goto_settings_reload {
+    my ($msg, $msg_hash) = @_;
+
+    # Execute goto settings reload
+    system("/etc/init.d/goto-configure start");
+    
     return;
 }
 
