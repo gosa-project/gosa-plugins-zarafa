@@ -286,7 +286,7 @@ class target_list extends MultiSelectWindow
           get_ou("workstationRDN"),
           get_ou("incominou"),
           get_ou("serverRDN"),
-          get_ou("ogroupou"));
+          get_ou("ogroupRDN"));
 
       $res = get_sub_list($filter,array("server","incoming","workstation","ogroup"), 
                   $deps_a,get_ou("systemRDN").$base,array("cn","objectClass","ipHostNumber","description"),GL_SIZELIMIT);

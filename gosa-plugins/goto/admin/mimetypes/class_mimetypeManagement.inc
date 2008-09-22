@@ -75,7 +75,7 @@ class mimetypeManagement extends plugin
 
     /* Set default release */
     if(!$this->IsReleaseManagementActivated()){
-      $this->mime_base = get_ou("mimetypeou").$this->config->current['BASE'];
+      $this->mime_base = get_ou("mimetypeRDN").$this->config->current['BASE'];
       if(!session::is_set("mime_filter")){
 
         /* Set intial release */
@@ -88,7 +88,7 @@ class mimetypeManagement extends plugin
       $mime_filter     = session::get("mime_filter");
       $this->mime_base = $mime_filter['mime_base'];
     }else{
-      $this->mime_base = get_ou("mimetypeou").$this->config->current['BASE'];
+      $this->mime_base = get_ou("mimetypeRDN").$this->config->current['BASE'];
 
       /* Set intial release */
       $rel = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
@@ -682,7 +682,7 @@ class mimetypeManagement extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
-      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".normalizePreg(get_ou("mimetypeou"))."/","",$this->mime_base));
+      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".normalizePreg(get_ou("mimetypeRDN"))."/","",$this->mime_base));
       $this->CopyPasteHandler->SetVar("parent",$this);
       $data = $this->CopyPasteHandler->execute();
 
@@ -750,7 +750,7 @@ class mimetypeManagement extends plugin
       $mime_filter['mime_release'] = $this->mime_release;
       session::set("mime_filter",$mime_filter);
     }elseif(!$this->IsReleaseManagementActivated()){
-      $this->mime_base = get_ou("mimetypeou").$this->DivListMimeTypes->selectedBase;
+      $this->mime_base = get_ou("mimetypeRDN").$this->DivListMimeTypes->selectedBase;
       $mime_filter     = session::get("mime_filter");
       $mime_filter['mime_base'] = $this->mime_base;
       session::set("mime_filter",$mime_filter);

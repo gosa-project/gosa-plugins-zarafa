@@ -75,7 +75,7 @@ class applicationManagement extends plugin
 
     /* Set default release */
     if(!$this->IsReleaseManagementActivated()){
-      $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
+      $this->app_base = get_ou("applicationRDN").$this->config->current['BASE'];
       if(!session::is_set("app_filter")){
         session::set("app_filter",array("app_base" => $this->app_base));
       }
@@ -83,7 +83,7 @@ class applicationManagement extends plugin
     }else{
 
       /* Set intial release */
-      $this->app_base = get_ou("applicationou").$this->config->current['BASE'];
+      $this->app_base = get_ou("applicationRDN").$this->config->current['BASE'];
       $rel = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
       $rels = array_flip($this->getReleases());
       if(isset($rels[$rel])){
@@ -572,7 +572,7 @@ class applicationManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->app_base;
       if($SubSearch){
-        $use_base = preg_replace("/^".normalizePreg(get_ou("applicationou"))."/","",$use_base);
+        $use_base = preg_replace("/^".normalizePreg(get_ou("applicationRDN"))."/","",$use_base);
       }
     }else{
       $use_base = $this->app_release;
@@ -586,7 +586,7 @@ class applicationManagement extends plugin
     }
  
     if($SubSearch){ 
-      $res= get_sub_list($Filter, "application",get_ou("applicationou"), $use_base, $search_attrs, $Flags);
+      $res= get_sub_list($Filter, "application",get_ou("applicationRDN"), $use_base, $search_attrs, $Flags);
     }else{
       $res= get_list($Filter, "application",$use_base, $search_attrs, $Flags);
     }
@@ -738,7 +738,7 @@ class applicationManagement extends plugin
       $app_filter['app_release'] = $this->app_release;
       session::set("app_filter",$app_filter);
     }elseif(!$this->IsReleaseManagementActivated()){
-      $this->app_base = get_ou("applicationou").$this->DivListApplication->selectedBase;
+      $this->app_base = get_ou("applicationRDN").$this->DivListApplication->selectedBase;
       $app_filter     = session::get("app_filter");
       $app_filter['app_base'] = $this->app_base;
       session::set("app_filter",$app_filter);

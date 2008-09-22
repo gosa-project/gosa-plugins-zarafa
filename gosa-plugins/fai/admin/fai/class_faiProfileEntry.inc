@@ -75,7 +75,7 @@ class faiProfileEntry extends plugin
 
     /* If no search filter is set, create one */
     if (!session::is_set("SUBfaifilter")){
-      $SUBfaifilter= array("base" => get_ou('faiou').session::get('CurrentMainBase'), "Sregex" => "*");
+      $SUBfaifilter= array("base" => get_ou('faiBaseRDN').session::get('CurrentMainBase'), "Sregex" => "*");
       $SUBfaifilter['SShowTemplates'] = true;
       $SUBfaifilter['SShowScripts']   = true;
       $SUBfaifilter['SShowHooks']     = true;

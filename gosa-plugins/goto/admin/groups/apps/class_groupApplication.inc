@@ -140,26 +140,26 @@ class appgroup extends plugin
     */
   function getReleases()
   {
-    $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou('applicationou')));
+    $ret =array("/" => array("name" => "/", "found" => TRUE , "parts" => array(),"suffix" => get_ou('applicationRDN')));
     if($this->enableReleaseManagement){
 
       /* Only display those releases that we are able to read 
        */
-      $dn     = get_ou("applicationou").$this->config->current['BASE'];
+      $dn     = get_ou("applicationRDN").$this->config->current['BASE'];
       $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
       $res    = get_sub_list($filter,array("application","fai"), 
-          array(get_ou("applicationou"),get_ou("faiou")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
+          array(get_ou("applicationRDN"),get_ou("faiBaseRDN")),$dn, array("ou","FAIstate"), GL_SUBSEARCH);
 
       /* Go through all departments and check which department is a valid 
           department release.
        */
       foreach($res as $attrs){
-        if(preg_match("/".get_ou('applicationou')."/",$attrs['dn'])){
+        if(preg_match("/".get_ou('applicationRDN')."/",$attrs['dn'])){
 
           /* Parse all returned departments dns into a useable type.
              (ou=1.0.0,ou=halut,ou=apps  ==> halue/1.0.0)
            */
-          $bb     = preg_replace("/".get_ou('applicationou').".*/","",$attrs['dn']);
+          $bb     = preg_replace("/".get_ou('applicationRDN').".*/","",$attrs['dn']);
           $parts  = array_reverse(split("ou=",$bb));
 
           $str ="";
@@ -197,7 +197,7 @@ class appgroup extends plugin
               "found"    => $found,
               "FAIstate" => $FAIstate,
               "dn"       => $attrs['dn'], 
-              "parts"    => $parts,"suffix" => $bb.get_ou('applicationou'));
+              "parts"    => $parts,"suffix" => $bb.get_ou('applicationRDN'));
         }
       }
     }
@@ -468,7 +468,7 @@ class appgroup extends plugin
       if(in_array($app['cn'][0],$used_apps)){
         continue;
       }
-      if(!preg_match("/".get_ou('applicationou').normalizePreg($this->curbase)."$/",$app['dn'])){
+      if(!preg_match("/".get_ou('applicationRDN').normalizePreg($this->curbase)."$/",$app['dn'])){
         continue;
       }
 

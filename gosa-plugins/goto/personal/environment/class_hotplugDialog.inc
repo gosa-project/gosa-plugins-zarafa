@@ -81,7 +81,7 @@ class hotplugDialog extends plugin
   function getHotplugs()
   {
     $ldap= $this->config->get_ldap_link();
-    $ldap->cd(get_ou('deviceou').$this->depselect);
+    $ldap->cd(get_ou('deviceRDN').$this->depselect);
     $ldap->search("(&(objectClass=gotoDevice)(|(cn=".$this->regex.")(description=".$this->regex.")))",array("gotoHotplugDevice","cn","dn")); 
 
     $a_return = array();  

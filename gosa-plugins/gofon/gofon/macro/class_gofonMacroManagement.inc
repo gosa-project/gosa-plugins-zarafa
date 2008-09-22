@@ -525,7 +525,7 @@ class goFonMacro extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array(get_ou('macroou').$this->DivListMacro->selectedBase));
+    return(array(get_ou('phoneMacroRDN').$this->DivListMacro->selectedBase));
   }
 
 
@@ -543,7 +543,7 @@ class goFonMacro extends plugin
     if($SubSearch){
       $Flags |= GL_SUBSEARCH;
     }else{
-      $base = get_ou('macroou').$base;
+      $base = get_ou('phoneMacroRDN').$base;
     }
 
     /* Generate macro list */

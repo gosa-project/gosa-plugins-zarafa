@@ -57,7 +57,7 @@ class application extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,".get_ou('applicationou')."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".get_ou('applicationRDN')."/", "", $this->dn);
     }
 
     $this->orig_cn = $this->cn;
@@ -229,7 +229,7 @@ class application extends plugin
     restore_error_handler();
 
     /* Parse release out of object dn */
-    $release = preg_replace("/".get_ou("applicationou").normalizePreg($this->base)."$/","",$this->dn);
+    $release = preg_replace("/".get_ou("applicationRDN").normalizePreg($this->base)."$/","",$this->dn);
     $release = preg_replace("/^cn=[^,]+,/","",$release);
 
     /* Get a list of all groups 
@@ -413,7 +413,7 @@ class application extends plugin
 
     /* Permissions for that base? */
     if ($this->base != ""){
-      $new_dn= "cn=".$this->cn.",".get_ou('applicationou').$this->base;
+      $new_dn= "cn=".$this->cn.",".get_ou('applicationRDN').$this->base;
     } else {
       $new_dn= $this->dn;
     }
@@ -445,7 +445,7 @@ class application extends plugin
     if($this->is_release()){
       $base = $this->parent->parent->app_release;
     }else{
-      $base = get_ou('applicationou').$this->base;
+      $base = get_ou('applicationRDN').$this->base;
     }
 
     $ldap->ls("(&(objectClass=gosaApplication)(cn=".$this->cn."))",$base,array("cn"));

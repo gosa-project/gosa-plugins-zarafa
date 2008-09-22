@@ -82,7 +82,7 @@ class faiManagement extends plugin
     }
 
     /* Set default release */
-    $this->fai_base = get_ou("faiou").$this->config->current['BASE'];
+    $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
 
     if(!session::is_set("fai_filter")){
 
@@ -576,9 +576,9 @@ class faiManagement extends plugin
 
             $ldap->cd($bb);
             $ldap->recursive_remove();
-            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('applicationou'), $bb));
+            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiBaseRDN')).'/', ','.get_ou('applicationRDN'), $bb));
             $ldap->recursive_remove();
-            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiou')).'/', ','.get_ou('mimetypeou'), $bb));
+            $ldap->cd(preg_replace('/,'.normalizePreg(get_ou('faiBaseRDN')).'/', ','.get_ou('mimetypeRDN'), $bb));
             $ldap->recursive_remove();
 
             /* Search for all groups with configured application menus.
@@ -586,7 +586,7 @@ class faiManagement extends plugin
               - The search für menu configuration for the specified release and collect all those dns.
               - Remove entries
              */
-            $release_ou = preg_replace("/".normalizePreg(get_ou("faiou")).".*$/","",$bb);
+            $release_ou = preg_replace("/".normalizePreg(get_ou("faiBaseRDN")).".*$/","",$bb);
             $ldap->cd($this->config->current['BASE']);
             $ldap->search("(objectClass=posixGroup)",array("dn"));
           
@@ -728,11 +728,11 @@ class faiManagement extends plugin
           }
         }
 
-        $appsrc = preg_replace("/".normalizePreg(get_ou('faiou'))."/",get_ou('applicationou'),$baseToUse); 
-        $appdst = preg_replace("/".normalizePreg(get_ou('faiou'))."/",get_ou('applicationou'),"ou=".$name.",".$baseToUse) ; 
+        $appsrc = preg_replace("/".normalizePreg(get_ou('faiBaseRDN'))."/",get_ou('applicationRDN'),$baseToUse); 
+        $appdst = preg_replace("/".normalizePreg(get_ou('faiBaseRDN'))."/",get_ou('applicationRDN'),"ou=".$name.",".$baseToUse) ; 
 
-        $mimesrc = preg_replace("/".normalizePreg(get_ou('faiou'))."/",get_ou('mimetypeou'),$baseToUse); 
-        $mimedst = preg_replace("/".normalizePreg(get_ou('faiou'))."/",get_ou('mimetypeou'),"ou=".$name.",".$baseToUse) ; 
+        $mimesrc = preg_replace("/".normalizePreg(get_ou('faiBaseRDN'))."/",get_ou('mimetypeRDN'),$baseToUse); 
+        $mimedst = preg_replace("/".normalizePreg(get_ou('faiBaseRDN'))."/",get_ou('mimetypeRDN'),"ou=".$name.",".$baseToUse) ; 
 
         /* Check if source depeartments exist */
         foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){
@@ -1071,7 +1071,7 @@ class faiManagement extends plugin
   function get_used_snapshot_bases()
   {
     $tmp = array();
-    $types = array("faipartitionou","faiscriptou","faitemplateou","faihookou","faiprofileou","faivariableou","faipackageou");
+    $types = array("faiPartitionRDN","faiScriptRDN","faiTemplateRDN","faiHookRDN","faiProfileRDN","faiVariableRDN","faiPackageRDN");
     foreach($types as $type){
       $tmp[] = get_ou($type).$this->fai_release;
     }
@@ -1138,13 +1138,13 @@ class faiManagement extends plugin
      * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ... 
      */
     $ObjectTypes = array(
-        "FAIpartitionTable"  => array("OU"=> get_ou('faipartitionou') , "CHKBOX"=>"ShowPartitions"  ,"ACL" => "faiPartitionTable"),
-        "FAIpackageList"     => array("OU"=> get_ou('faipackageou')   , "CHKBOX"=>"ShowPackages"    ,"ACL" => "faiPackage"),
-        "FAIscript"          => array("OU"=> get_ou('faiscriptou')    , "CHKBOX"=>"ShowScripts"     ,"ACL" => "faiScript"),
-        "FAIvariable"        => array("OU"=> get_ou('faivariableou')  , "CHKBOX"=>"ShowVariables"   ,"ACL" => "faiVariable"),
-        "FAIhook"            => array("OU"=> get_ou('faihookou')      , "CHKBOX"=>"ShowHooks"       ,"ACL" => "faiHook"),
-        "FAIprofile"         => array("OU"=> get_ou('faiprofileou')   , "CHKBOX"=>"ShowProfiles"    ,"ACL" => "faiProfile"),
-        "FAItemplate"        => array("OU"=> get_ou('faitemplateou')  , "CHKBOX"=>"ShowTemplates"   ,"ACL" => "faiTemplate"));
+        "FAIpartitionTable"  => array("OU"=> get_ou('faiPartitionRDN') , "CHKBOX"=>"ShowPartitions"  ,"ACL" => "faiPartitionTable"),
+        "FAIpackageList"     => array("OU"=> get_ou('faiPackageRDN')   , "CHKBOX"=>"ShowPackages"    ,"ACL" => "faiPackage"),
+        "FAIscript"          => array("OU"=> get_ou('faiScriptRDN')    , "CHKBOX"=>"ShowScripts"     ,"ACL" => "faiScript"),
+        "FAIvariable"        => array("OU"=> get_ou('faiVariableRDN')  , "CHKBOX"=>"ShowVariables"   ,"ACL" => "faiVariable"),
+        "FAIhook"            => array("OU"=> get_ou('faiHookRDN')      , "CHKBOX"=>"ShowHooks"       ,"ACL" => "faiHook"),
+        "FAIprofile"         => array("OU"=> get_ou('faiProfileRDN')   , "CHKBOX"=>"ShowProfiles"    ,"ACL" => "faiProfile"),
+        "FAItemplate"        => array("OU"=> get_ou('faiTemplateRDN')  , "CHKBOX"=>"ShowTemplates"   ,"ACL" => "faiTemplate"));
 
     $filter = "";
     foreach($ObjectTypes as $key => $data){

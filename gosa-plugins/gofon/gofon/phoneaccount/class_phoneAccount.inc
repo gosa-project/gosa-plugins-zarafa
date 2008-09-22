@@ -178,7 +178,7 @@ class phoneAccount extends plugin
      */
     $deps_a = array(
         get_people_ou(),
-        get_ou("ogroupou"),
+        get_ou("ogroupRDN"),
         get_ou("serverRDN"),
         get_ou("terminalRDN"),
         get_ou("workstationRDN"),
@@ -200,7 +200,7 @@ class phoneAccount extends plugin
      * Search for all Macros that are visible and create 
      *  an array with name and parameters 
      */
-    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("macroou")),
+    $tmp = get_sub_list("(&(objectClass=goFonMacro)(goFonMacroVisible=1))","gofonmacro",array(get_ou("phoneMacroRDN")),
                   $this->config->current['BASE'],array("displayName","goFonMacroParameter","dn","cn"), GL_NO_ACL_CHECK | GL_SUBSEARCH );
     
 

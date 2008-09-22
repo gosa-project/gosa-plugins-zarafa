@@ -208,7 +208,7 @@ class EventTargetAddList extends MultiSelectWindow
     if($this->display_ogroup){
       $_target_list = array_merge($_target_list,
             get_list("(&(cn=".$this->regex.")(member=*)(objectClass=gosaGroupOfNames))",
-            "ogroups",get_ou("ogroupou").$this->selectedBase,
+            "ogroups",get_ou("ogroupRDN").$this->selectedBase,
             array("cn","objectClass","description","member"),GL_NONE));
     }
     $this->_target_list = $_target_list;

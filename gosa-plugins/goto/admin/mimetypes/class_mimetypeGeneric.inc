@@ -129,7 +129,7 @@ class mimetype extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^.*,".normalizePreg(get_ou("mimetypeou"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^.*,".normalizePreg(get_ou("mimetypeRDN"))."/", "", $this->dn);
     }
 
     /* Get icon data */
@@ -542,7 +542,7 @@ class mimetype extends plugin
     if($this->is_release()){
       $base = $this->parent->parent->mime_release;
     }else{
-      $base = get_ou("mimetypeou").$this->base;
+      $base = get_ou("mimetypeRDN").$this->base;
     }
 
     $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",$base,array("cn"));

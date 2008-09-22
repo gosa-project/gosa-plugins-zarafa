@@ -30,7 +30,7 @@ class apptabs extends tabs
     if($this->parent->IsReleaseManagementActivated()){
       $new_dn= "cn=".$baseobject->cn.",".$this->parent->app_release;
     }else{
-      $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationou').$baseobject->base;
+      $new_dn= "cn=".$baseobject->cn.",".get_ou('applicationRDN').$baseobject->base;
     }
 
     /* Move group? */

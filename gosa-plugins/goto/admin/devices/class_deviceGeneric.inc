@@ -55,7 +55,7 @@ class deviceGeneric extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base =preg_replace ("/^[^,]+,".get_ou('deviceou')."/","",$this->dn);
+      $this->base =preg_replace ("/^[^,]+,".get_ou('deviceRDN')."/","",$this->dn);
     }
     $this->orig_base = $this->base;
     $this->orig_dn   = $this->dn;

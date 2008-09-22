@@ -449,7 +449,7 @@ class deviceManagement extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array(get_ou('deviceou').$this->DivListDevices->selectedBase));
+    return(array(get_ou('deviceRDN').$this->DivListDevices->selectedBase));
   }
 
   function copyPasteHandling_from_queue($s_action,$s_entry)
@@ -535,11 +535,11 @@ class deviceManagement extends plugin
     if($SubSearch){
       $Flags    |= GL_SUBSEARCH;
     }else{
-      $base = get_ou('deviceou').$base;
+      $base = get_ou('deviceRDN').$base;
     }
 
     /* Get results and create index */
-    $res= get_sub_list($Filter,"devices",get_ou('deviceou'), $base, array("cn","gotoHotplugDevice","description","dn","objectClass"), $Flags);
+    $res= get_sub_list($Filter,"devices",get_ou('deviceRDN'), $base, array("cn","gotoHotplugDevice","description","dn","objectClass"), $Flags);
     $tmp2 = array();
     foreach ($res as $val){
       if (!isset($val['description']) && isset($val['gotoHotplugDevice'][0])) {
