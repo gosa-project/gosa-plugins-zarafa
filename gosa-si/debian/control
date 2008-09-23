@@ -18,7 +18,7 @@ Description: GOsa support infrastructure
 
 Package: gosa-si-server
 Architecture: any
-Depends: gosa-si-common, libcrypt-smbhash-perl
+Depends: gosa-si-common, libcrypt-smbhash-perl, libdbd-mysql-perl
 Suggests: gosa, gosa-si-server-postfix, gosa-si-server-dak
 Description: GOsa support infrastructure server
  This package provides everything you need in order to deploy a simple
