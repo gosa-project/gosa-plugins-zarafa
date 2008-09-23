@@ -450,7 +450,8 @@ sub import_modules {
         eval { require $file; };
         if ($@) {
             daemon_log("0 ERROR: gosa-si-server could not load module $file", 1);
-            daemon_log("$@", 5);
+            daemon_log("$@", 1);
+	    exit;
 		} else {
 			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
