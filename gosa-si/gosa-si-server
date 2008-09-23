@@ -455,7 +455,7 @@ sub import_modules {
         eval { require $file; };
         if ($@) {
             daemon_log("0 ERROR: gosa-si-server could not load module $file", 1);
-            daemon_log("$@", 5);
+            daemon_log("$@", 1);
 		} else {
 			my $info = eval($mod_name.'::get_module_info()');
 			# Only load module if get_module_info() returns a non-null object
@@ -2072,7 +2072,11 @@ sub get_ldap_handle {
 	if ($session_id == 0) {
 		daemon_log("$session_id DEBUG: get_ldap_handle invoked without a session_id, create a new ldap_handle", 7); 
 		$ldap_handle = Net::LDAP->new( $ldap_uri );
-		$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or daemon_log("$session_id ERROR: Bind to LDAP $ldap_uri as $ldap_admin_dn failed!"); 
+		if (defined $ldap_handle) {
+			$ldap_handle->bind($ldap_admin_dn, password => $ldap_admin_password) or daemon_log("$session_id ERROR: Bind to LDAP $ldap_uri as $ldap_admin_dn failed!"); 
+		} else {
+			daemon_log("$session_id ERROR: creation of a new LDAP handle failed (ldap_uri '$ldap_uri')");
+		}
 
 	} else {
 		my $session_reference = $global_kernel->ID_id_to_session($session_id);
