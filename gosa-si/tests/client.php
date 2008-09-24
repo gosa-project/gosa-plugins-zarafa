@@ -59,7 +59,7 @@ for($count = 1; $count <= $zahl; $count++)
 
 
     # trigger jobs at client
-    $data = "<xml> <header>gosa_trigger_goto_settings_reload</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
+    #$data = "<xml> <header>gosa_trigger_goto_settings_reload</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_detect_hardware</header> <target>10.89.1.31:20083</target> <source>GOSA</source> </xml>";
     #$data = "<xml> <header>gosa_new_key_for_client</header> <target>00:01:6c:9d:b9:fa</target> <source>10.89.1.31:20081</source> </xml>";
     #$data = "<xml> <header>job_trigger_action_wake</header> <target>00:01:6c:9d:b9:fa</target> <source>GOSA</source> <timestamp>19700101000000</timestamp></xml>";
@@ -83,6 +83,8 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>rettenbe</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
+    
+    $data = "<xml> <header>gosa_set_last_system</header> <target>10.89.1.31:20082</target> <source>GOSA</source> <mac_address>00:01:6c:9d:b9:fa</mac_address> <last_system>1.2.3.4</last_system> <last_system_login>20081212000000</last_system_login> </xml>";
 
     ##################
     # recreate fai dbs
