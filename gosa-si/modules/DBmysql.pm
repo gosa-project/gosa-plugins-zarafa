@@ -37,7 +37,7 @@ sub create_table {
 	if($recreate_table) {
 		$self->{dbh}->do("DROP TABLE $table_name");
 	}
-	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string )"; 
+	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( $col_names_string ) ENGINE=INNODB"; 
 	# &main::daemon_log("DEBUG: $sql_statement");
 	eval {
 		$self->{dbh}->do($sql_statement);
