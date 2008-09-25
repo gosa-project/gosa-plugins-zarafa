@@ -44,7 +44,6 @@ my @events = (
 #	"import_dak_key",
 #	"remove_dak_key",
 #    "get_dak_queue",
-    "set_last_system",
     );
 @EXPORT = @events;
 
@@ -1222,100 +1221,6 @@ sub get_hosts_with_module {
 
     return $out_msg;
 }
-
-## @method set_last_system()
-# @details Message set ldap attributes 'gosaLastSystemLogin' and 'gosaLastSystem'
-# @param msg - STRING - xml message with tag 'last_system_login' and 'last_system'
-# @param msg_hash - HASHREF - message information parsed into a hash
-# @param session_id - INTEGER - POE session id of the processing of this message
-sub set_last_system {
-    my ($msg, $msg_hash, $session_id) = @_;
-    my $header = @{$msg_hash->{'header'}}[0];
-    my $source = @{$msg_hash->{'source'}}[0];
-    my $target = @{$msg_hash->{'target'}}[0];
-    my ($last_system, $last_system_login, $mac);
-
-    # Sanity check of needed parameter
-    if (not exists $msg_hash->{'last_system'}){
-        &main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'last_system', message processing stopped!", 1);
-        &main::daemon_log($msg, 1);
-        return;
-    }
-    if (@{$msg_hash->{'last_system'}} != 1)  {
-        &main::daemon_log("$session_id ERROR: xml tag 'last_system' has no content or exists more than one time, message processing stopped!");
-        &ymain::daemon_log($msg, 1);
-        return;   
-    }
-    if (not exists $msg_hash->{'last_system_login'}){
-        &main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'last_system_login', message processing stopped!", 1);
-        &main::daemon_log($msg, 1);
-        return;
-    }
-    if (@{$msg_hash->{'last_system_login'}} != 1)  {
-        &main::daemon_log("$session_id ERROR: xml tag 'last_system_login' has no content or exists more than one time, message processing stopped!");
-        &ymain::daemon_log($msg, 1);
-        return;   
-    }
-    if (not exists $msg_hash->{'mac_address'}){
-        &main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'mac_address', message processing stopped!", 1);
-        &main::daemon_log($msg, 1);
-        return;
-    }
-    if (@{$msg_hash->{'mac_address'}} != 1)  {
-        &main::daemon_log("$session_id ERROR: xml tag 'mac_address' has no content or exists more than one time, message processing stopped!");
-        &ymain::daemon_log($msg, 1);
-        return;   
-    }
-     
-    # Fetch needed parameter
-    my $mac =  @{$msg_hash->{'mac_address'}}[0];
-    my $last_system =  @{$msg_hash->{'last_system'}}[0];
-    my $last_system_login =  @{$msg_hash->{'last_system_login'}}[0];
-
-    # Fetch ldap handle    
-    my $ldap_handle = &main::get_ldap_handle();
-
-    # Search for an existing entry
-    my $ldap_mesg= $ldap_handle->search(
-            base => $main::ldap_base,
-            scope => 'sub',
-            #filter => "(&(objectClass=GOhard)(|(macAddress=$mac)(dhcpHWaddress=$mac)))",
-            filter => "(&(objectClass=GOhard)(macAddress=$mac))",
-            );
-
-    # Sanity check of ldap resutl
-    if ($ldap_mesg->count == 0) {
-        &main::daemon_log("$session_id ERROR: no system with mac address '$mac' was found in base '".$main::ldap_base."', message processing stopped!", 1);
-    } else {
-
-        # Get the entry from LDAP
-        my $ldap_entry= $ldap_mesg->pop_entry();
-
-        # Set 'gosaLastSystem' and 'gosaLastSystemLogin'
-        if (defined($ldap_entry->get_value('gosaLastSystem'))) {
-            $ldap_entry->replace ( 'gosaLastSystem' => $last_system );
-        } else {
-            $ldap_entry->add( 'gosaLastSystem' => $last_system );
-        }    
-        if (defined($ldap_entry->get_value('gosaLastSystemLogin'))) {
-            $ldap_entry->replace ( 'gosaLastSystemLogin' => $last_system_login );
-        } else {
-            $ldap_entry->add( 'gosaLastSystemLogin' => $last_system_login );
-        }
-        my $result = $ldap_entry->update($ldap_handle);
-        if ($result->code() != 0) {
-            &main::daemon_log("$session_id ERROR: setting 'gosaLastSystem' and 'gosaLastSystemLogin' of system '$mac' failed: ".
-                    $result->{'errorMessage'}, 1);
-            &main::daemon_log("$session_id ERROR: $msg", 1);
-
-        }
-    } 
-
-    return;
-}
-
-
-
 
 # vim:ts=4:shiftwidth:expandtab
 1;
