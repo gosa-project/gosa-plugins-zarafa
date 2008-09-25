@@ -3343,7 +3343,7 @@ POE::Component::Server::TCP->new(
 	}
 );
 
-daemon_log("start socket for incoming xml messages at port '$server_port' ", 1);
+daemon_log("0 INFO: start socket for incoming xml messages at port '$server_port' ", 1);
 
 # create session for repeatedly checking the job queue for jobs
 POE::Session->create(

@@ -168,6 +168,9 @@ sub CURRENTLY_LOGGED_IN {
         &main::daemon_log("$session_id INFO: no logged in users reported from host '$source'", 5); 
         return;     
     }
+
+    # Invoke set_last_system
+	my $res = &set_last_system($msg, $msg_hash, $session_id);
     
     # fetch all user currently assigned to the client at login_users_db
     my %currently_logged_in_user = (); 
@@ -223,6 +226,112 @@ sub CURRENTLY_LOGGED_IN {
     }
 
     return;
+}
+
+
+## @method set_last_system()
+# @details Message set ldap attributes 'gosaLastSystemLogin' and 'gosaLastSystem'
+# @param msg - STRING - xml message with tag 'last_system_login' and 'last_system'
+# @param msg_hash - HASHREF - message information parsed into a hash
+# @param session_id - INTEGER - POE session id of the processing of this message
+sub set_last_system {
+	my ($msg, $msg_hash, $session_id) = @_;
+	my $header = @{$msg_hash->{'header'}}[0];
+	my $source = @{$msg_hash->{'source'}}[0];
+    my $login = @{$msg_hash->{$header}}[0];
+    
+	# Sanity check of needed parameter
+	if (not exists $msg_hash->{'timestamp'}){
+		&main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'timestamp', ".
+						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+		&main::daemon_log($msg, 1);
+		return;
+	}
+	if (@{$msg_hash->{'timestamp'}} != 1)  {
+		&main::daemon_log("$session_id ERROR: xml tag 'timestamp' has no content or exists more than one time, ".
+						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+		&ymain::daemon_log($msg, 1);
+		return;
+	}
+	if (not exists $msg_hash->{'macaddress'}){
+		&main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'mac_address', ".
+						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+		&main::daemon_log($msg, 1);
+		return;
+	}
+	if (@{$msg_hash->{'macaddress'}} != 1)  {
+		&main::daemon_log("$session_id ERROR: xml tag 'macaddress' has no content or exists more than one time, ".
+						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+		&ymain::daemon_log($msg, 1);
+		return;
+	}
+
+	# Fetch needed parameter
+	my $mac =  @{$msg_hash->{'macaddress'}}[0];
+	my $timestamp = @{$msg_hash->{'timestamp'}}[0];
+	
+	# Prepare login list
+	my @login_list = split(' ', @{$msg_hash->{$header}}[0] );
+
+	# Sanity check of login list
+	if (@login_list == 0) {
+		# TODO
+		return;
+	}
+
+	# Fetch ldap handle
+	my $ldap_handle = &main::get_ldap_handle();
+
+	# Get system info
+	my $ldap_mesg= $ldap_handle->search(
+					base => $main::ldap_base,
+					scope => 'sub',
+					filter => "macAddress=$mac",
+					);
+	if ($ldap_mesg->count == 0) {
+		&main::daemon_log("$session_id ERROR: no system with mac address='$mac' was found in base '".
+						$main::ldap_base."', setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+		return;
+	}
+	my $ldap_entry = $ldap_mesg->pop_entry();
+	my $system_dn = $ldap_entry->get_value('dn');
+	
+	# For each logged in user set gosaLastSystem and gosaLastSystemLogin
+	foreach my $user (@login_list) {
+		# Search user
+		my $ldap_mesg= $ldap_handle->search(
+						base => $main::ldap_base,
+						scope => 'sub',
+						filter => "uid=$user",
+						);
+		# Sanity check of user search
+		if ($ldap_mesg->count == 0) {
+			&main::daemon_log("$session_id ERROR: no user with uid='$user' was found in base '".
+							$main::ldap_base."', setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+
+		# Set gosaLastSystem and gosaLastSystemLogin
+		} else {
+			my $ldap_entry= $ldap_mesg->pop_entry();
+			if (defined($ldap_entry->get_value('gosaLastSystem'))) {
+					$ldap_entry->replace ( 'gosaLastSystem' => $system_dn );
+			} else {
+					$ldap_entry->add( 'gosaLastSystem' => $system_dn );
+			}
+			if (defined($ldap_entry->get_value('gosaLastSystemLogin'))) {
+					$ldap_entry->replace ( 'gosaLastSystemLogin' => $timestamp );
+			} else {
+					$ldap_entry->add( 'gosaLastSystemLogin' => $timestamp );
+			}
+			my $result = $ldap_entry->update($ldap_handle);
+			if ($result->code() != 0) {
+					&main::daemon_log("$session_id ERROR: setting 'gosaLastSystem' and 'gosaLastSystemLogin' at user '$user' failed: ".
+									$result->{'errorMessage'}, 1);
+					&main::daemon_log("$session_id ERROR: $msg", 1);
+			}
+		}
+	}
+
+	return;
 }
 
 
