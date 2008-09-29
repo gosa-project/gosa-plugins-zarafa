@@ -40,10 +40,12 @@ class oxchangeAccount extends plugin
   var $timezones=array();
   var $dnmode= "";
   var $uid ="";
+  var $parent = NULL;
 
-  function oxchangeAccount (&$config, $dn= NULL)
+  function oxchangeAccount (&$config, $dn= NULL,&$parent)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn,$parent);
+    $this->parent = &$parent;
     for ($i=0;$i<count($this->config->data['TABS']['CONNECTIVITY']);$i++){
       if($this->config->data['TABS']['CONNECTIVITY'][$i]['CLASS']=='oxchangeAccount') {
         $this->oxconf=$this->config->data['TABS']['CONNECTIVITY'][$i];
@@ -264,7 +266,6 @@ class oxchangeAccount extends plugin
   /* Save to LDAP */
   function save()
   {
-
     $needupdate=TRUE;
     $istemplate=FALSE;
 
@@ -276,10 +277,15 @@ class oxchangeAccount extends plugin
 	if($object=="gosaUserTemplate") $istemplate=TRUE;
       }
     }
+  
+    /* Detect accounts uid 
+     */
+    if(!isset($this->attrs[$this->dnmode][0])){
+      $uid = $this->parent->by_object['user']->uid;
+    }else{
+      $uid=$this->attrs[$this->dnmode][0];
+    }
 
-    $uidarray=array();
-    preg_match("/^(\w+(?=\=))=((\w|\s|\.)+(?=\,)),.*/",$this->dn,$uidarray);
-    $uid=$uidarray[2];
     if (trim($uid) == "") {
       msg_dialog::display(_("Error"), msgPool::invalid(_("Open-Xchange account name")), ERROR_DIALOG);
       return;
