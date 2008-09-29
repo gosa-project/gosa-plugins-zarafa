@@ -556,6 +556,7 @@ sub register_at_gosa_si_server {
 				$dnsname = `hostname`;
 			} else {
 	        		&write_to_file("goto-error-dns:$ip", $fai_logpath);
+                    &main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
         			exit(1);
 			}
       		}
