@@ -448,51 +448,6 @@ class workservice extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
 
-    /* Send SI event to reload goto settings if some options have changed.
-     */
-    if(count($this->attrs) && class_available("DaemonEvent")){
-      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
-
-      $o_queue = new gosaSupportDaemon();
-      if(isset($events['TRIGGERED']['DaemonEvent_goto_reload'])){
-        $evt = $events['TRIGGERED']['DaemonEvent_goto_reload'];
-        $macs = array();
-
-        /* Get list of macAddresses 
-         */
-        if(isset($this->parent->by_object['ogroup'])){
-
-          /* If we are an object group, add all member macs 
-           */
-          $p = $this->parent->by_object['ogroup'];
-          foreach($p->memberList as $dn => $obj){
-            if(preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$dn)) continue;
-            if(isset($p->objcache[$dn]['macAddress']) && !empty($p->objcache[$dn]['macAddress'])){
-              $macs[] = $p->objcache[$dn]['macAddress'];
-            }
-          }
-        }elseif(isset($this->parent->by_object['workgeneric']->netConfigDNS->macAddress)){
-
-          /* We are a workstation. Add current mac.
-           */
-          $mac = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
-          if(!empty($mac) && !preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
-            $macs[] = $mac;
-          }          
-        }
-
-        /* Trigger event for all member objects 
-         */
-        if(count($macs)){
-          $tmp = new $evt['CLASS_NAME']($this->config);
-          $tmp->set_type(TRIGGERED_EVENT);
-          $tmp->add_targets($macs);
-          if(!$o_queue->append($tmp)){
-            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-          }
-        }
-      }
-    }
 
     /* Send goto reload event to gosaSupportDaemon */
     if(count($this->attrs)){
@@ -564,26 +519,48 @@ class workservice extends plugin
    */
   function send_goto_reload()
   {
-    $targets = array();
-    if(isset($this->parent) && ($this->parent instanceOf worktabs)){
-      $targets[] = $this->parent->by_object['workgeneric']->netConfigDNS->ipHostNumber;
-    }
-    if(isset($this->parent) && ($this->parent instanceOf ogrouptabs)){
-      $member = $this->parent->by_object['ogroup']->member;
-      $oc = $this->parent->by_object['ogroup']->objcache;
-      foreach($member as $mem){
-        if(isset($oc[$mem]['macAddress'])){
-          $targets[] = $oc[$mem]['macAddress']; 
+    if(count($this->attrs) && class_available("DaemonEvent")){
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+      $o_queue = new gosaSupportDaemon();
+      if(isset($events['TRIGGERED']['DaemonEvent_goto_reload'])){
+        $evt = $events['TRIGGERED']['DaemonEvent_goto_reload'];
+        $macs = array();
+
+        /* Get list of macAddresses 
+         */
+        if(isset($this->parent->by_object['ogroup'])){
+
+          /* If we are an object group, add all member macs 
+           */
+          $p = $this->parent->by_object['ogroup'];
+          foreach($p->memberList as $dn => $obj){
+            if(preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$dn)) continue;
+            if(isset($p->objcache[$dn]['macAddress']) && !empty($p->objcache[$dn]['macAddress'])){
+              $macs[] = $p->objcache[$dn]['macAddress'];
+            }
+          }
+        }elseif(isset($this->parent->by_object['workgeneric']->netConfigDNS->macAddress)){
+
+          /* We are a workstation. Add current mac.
+           */
+          $mac = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
+          if(!empty($mac) && !preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
+            $macs[] = $mac;
+          }          
+        }
+
+        /* Trigger event for all member objects 
+         */
+        if(count($macs)){
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->add_targets($macs);
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
         }
       }
     }
-    if(count($targets) && class_available("gosaSupportDaemon") && class_available("DaemonEvent_goto_reload")){
-      $o_g = new gosaSupportDaemon();
-      $evt = new DaemonEvent_goto_reload($this->config);
-      $evt -> set_type(TRIGGERED_EVENT);
-      $evt -> add_targets($targets);
-      $o_g->append($evt);
-    } 
   }
 
 
