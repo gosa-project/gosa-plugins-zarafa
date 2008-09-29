@@ -295,13 +295,6 @@ class macro extends plugin
        */
       $tmp  = split(",", $s_linestr,3);
 
-      /* Multiple () are not supproted currently ... */  
-      if(substr_count($s_linestr,"(") >1 ){
-        return(sprintf(_("Not supported multiple brace in line %s!"),$i_linenum));
-      }
-      if(substr_count($s_linestr,")") >1 ){
-        return(sprintf(_("Not supported multiple brace in line %s!"),$i_linenum));
-      }
       /* Check if there is an application given */
       if(empty($tmp[1])){
         return(sprintf(_("Application missing in line %s!"),$i_linenum));
