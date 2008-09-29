@@ -318,8 +318,7 @@ class macro extends plugin
       $exten  = addslashes($tmp[0]);
       $prio   = addslashes($tmp[1]);
       $app    = addslashes(preg_replace("/\(.*\).*$/","",$tmp[2]));
-      $para   = addslashes(preg_replace("/^.*\(/","",$tmp[2]));
-      $para   = preg_replace("/\).*$/","",$para);
+      $para   = addslashes(preg_replace("/^[^(]*\((.*)\)[^)]*$/", "$1", $tmp[2]));
       $sql.= " ('".$context."','".$exten."','".$prio."','".$app."','".$para."'),";
     }
     
