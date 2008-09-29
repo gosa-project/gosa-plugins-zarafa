@@ -10,6 +10,7 @@ my @functions = (
     "create_xml_string",
     "transform_msg2hash",
     "get_time",
+    "get_utc_time",
     "build_msg",
     "db_res2xml",
     "db_res2si_msg",
@@ -190,6 +191,13 @@ sub get_time {
 	$monthday = $monthday < 10 ? $monthday = "0".$monthday : $monthday;
 	$year+=1900;
 	return "$year$month$monthday$hours$minutes$seconds";
+}
+
+
+sub get_utc_time {
+    my $utc_time = qx(date --utc +%Y%m%d%H%M%S);
+    $utc_time =~ s/\s$//;
+    return $utc_time;
 }
 
 

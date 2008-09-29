@@ -551,15 +551,15 @@ sub register_at_gosa_si_server {
       		# Check if our ip is resolvable - if not: don't try to register
       		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
       		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
-      		if(!defined($dnsname)) {
-			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
-				$dnsname = `hostname`;
-			} else {
-	        		&write_to_file("goto-error-dns:$ip", $fai_logpath);
+            if(!defined($dnsname)) {
+                if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+                    $dnsname = `hostname`;
+                } else {
+                    &write_to_file("goto-error-dns:$ip", $fai_logpath);
                     &main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
-        			exit(1);
-			}
-      		}
+                    exit(1);
+                }
+            }
 
       		# create registration msg
 			my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
@@ -806,7 +806,7 @@ sub fifo_got_record {
 
     my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
     &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
-    my $utc_ts = &get_utc_time(); 
+    my $utc_ts = &main::get_utc_time(); 
     &add_content2xml_hash($clmsg_hash, "timestamp", $utc_ts);
     my $clmsg = &create_xml_string($clmsg_hash);
     &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");

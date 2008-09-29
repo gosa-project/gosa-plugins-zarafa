@@ -316,16 +316,21 @@ sub set_last_system {
 					$ldap_entry->replace ( 'gosaLastSystem' => $system_dn );
 			} else {
 					$ldap_entry->add( 'gosaLastSystem' => $system_dn );
+                    &main::daemon_log("$session_id INFO: ldap entry 'uid=$user' do not know attribute 'gosaLastSystem', add attribute!");
 			}
 			if (defined($ldap_entry->get_value('gosaLastSystemLogin'))) {
 					$ldap_entry->replace ( 'gosaLastSystemLogin' => $timestamp );
 			} else {
 					$ldap_entry->add( 'gosaLastSystemLogin' => $timestamp );
+                    &main::daemon_log("$session_id INFO: ldap entry 'uid=$user' do not know attribute 'gosaLastSystemLogin', add attribute!");
 			}
 			my $result = $ldap_entry->update($ldap_handle);
 			if ($result->code() != 0) {
 					&main::daemon_log("$session_id ERROR: setting 'gosaLastSystem' and 'gosaLastSystemLogin' at user '$user' failed: ".
-									$result->{'errorMessage'}, 1);
+									$result->{'errorMessage'}."\n".
+                            "\tbase: $main::ldap_base\n".
+                            "\tscope: 'sub'\n".
+                            "\tfilter: 'uid=$user'", 1); 
 					&main::daemon_log("$session_id ERROR: $msg", 1);
 			}
 		}
