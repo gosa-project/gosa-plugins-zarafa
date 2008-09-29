@@ -825,7 +825,7 @@ class faiManagement extends plugin
             $evt = $events['TRIGGERED']['DaemonEvent_recreate_fai_release_db'];
             $tmp = new $evt['CLASS_NAME']($this->config);
             $tmp->set_type(TRIGGERED_EVENT);
-            $tmp->add_targets(array("GOsa"));
+            $tmp->add_targets(array("GOSA"));
             $o_queue = new gosaSupportDaemon();
             if(!$o_queue->append($tmp)){
               msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
