@@ -253,26 +253,26 @@ sub exec_statement {
 	my @db_answer;
 
 	# print STDERR Dumper($sql_statement);
-	eval {
+#	eval {
 		if($sql_statement =~ /^SELECT/i) {
-			$sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("ERROR: Preparation of statement '$sql_statement' failed!", 1);
-			$sth->execute or &main::daemon_log("ERROR: Execution of statement '$sql_statement' failed!", 1);
+			$sth = $self->{dbh}->prepare($sql_statement) or &main::daemon_log("0 ERROR: Preparation of statement '$sql_statement' failed!", 1);
+			$sth->execute or &main::daemon_log("0 ERROR: Execution of statement '$sql_statement' failed!", 1);
 			if($sth->rows > 0) {
-				@db_answer = @{ $sth->fetchall_arrayref() } or &main::daemon_log("ERROR: Fetch() failed!", 1);
+				@db_answer = @{ $sth->fetchall_arrayref() } or &main::daemon_log("0 ERROR: Fetch() failed!", 1);
 				# print STDERR Dumper(@db_answer);
 			}
-			$sth->finish or &main::daemon_log("ERROR: Finishing the statement handle failed!", 1);
+			$sth->finish or &main::daemon_log("0 ERROR: Finishing the statement handle failed!", 1);
 		} else {
 			$self->{dbh}->do($sql_statement);
 		}
-	};
-	if($@) {
-		&main::daemon_log("ERROR: $sql_statement failed with '$@'", 1);
-	}
+#	};
+#	if($@) {
+#		&main::daemon_log("0 ERROR: '$sql_statement' failed with '$@'", 1);
+#	}
 	# TODO : maybe an error handling and an erro feedback to invoking function
 	my $error = $self->{dbh}->err;
 	if ($error) {
-		&main::daemon_log("ERROR: ".@$self->{dbh}->errstr, 1);
+		&main::daemon_log("0 ERROR: ".@$self->{dbh}->errstr, 1);
 	}
 
 	return \@db_answer;
