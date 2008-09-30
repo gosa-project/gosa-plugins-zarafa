@@ -272,6 +272,7 @@ sub set_last_system {
 	
 	# Prepare login list
 	my @login_list = split(' ', @{$msg_hash->{$header}}[0] );
+    @login_list = &main::del_doubles(@login_list);
 
 	# Sanity check of login list
 	if (@login_list == 0) {
@@ -330,8 +331,8 @@ sub set_last_system {
 									$result->{'errorMessage'}."\n".
                             "\tbase: $main::ldap_base\n".
                             "\tscope: 'sub'\n".
-                            "\tfilter: 'uid=$user'", 1); 
-					&main::daemon_log("$session_id ERROR: $msg", 1);
+                            "\tfilter: 'uid=$user'\n".
+                            "\tmessage: $msg", 1); 
 			}
 		}
 	}
