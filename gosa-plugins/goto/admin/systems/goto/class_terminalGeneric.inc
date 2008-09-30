@@ -277,6 +277,19 @@ class termgeneric extends plugin
     $smarty->assign("modes", $this->modes);
 
     $tmp2 = array(); 
+    $tmp2['!']= _("Local swap");
+    foreach($this->config->data['SERVERS']['NBD'] as $server){
+      if($server != "default"){
+        $tmp2[$server]= $server;
+      }else{
+        if($this->member_of_ogroup){
+          $tmp2[$server]="["._("inherited")."]";
+        }
+      }
+    }
+  
+    $smarty->assign("swapservers",     $tmp2);
+    $tmp2 = array(); 
     foreach($this->config->data['SERVERS']['NFS'] as $server){
       if($server != "default"){
         $tmp2[$server]= $server;

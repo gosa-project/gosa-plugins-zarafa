@@ -87,7 +87,7 @@
      <td>
 {render acl=$gotoSwapServerACL}
       <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}">
-       {html_options options=$nfsservers selected=$gotoSwapServer_select}
+       {html_options options=$swapservers selected=$gotoSwapServer_select}
       </select>
 {/render}
      </td>

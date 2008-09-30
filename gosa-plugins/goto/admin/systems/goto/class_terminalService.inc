@@ -132,7 +132,7 @@ class termservice extends plugin
     }
 
     /* Additional values will be extracted from CONFIG_DIR.keyboardLayouts */
-    $this->XKbLayouts = array("de"=> "de","intl" =>"intl","us" =>"us");
+    $this->XKbLayouts = array("de"=> "de","en" =>"en", "es" => "es", "us" =>"us", "fr" => "fr");
     $this->XKbVariants= array("nodeadkeys"=>"nodeadkeys", "basic"=>"basic");
     $this->MouseTypes = array("ImPS/2"=>"ImPS/2","PS/2"=>"PS/2", "explorerps/2"=>"explorerps/2",
                               "Microsoft"=>"Microsoft","Logitech"=>"Logitech");
@@ -159,18 +159,18 @@ class termservice extends plugin
       }
     }
 
-    /* Terminal server methods 
-     */
+    /* Terminal server methods supported by LTSP */
     if($this->is_ogroup_member){
       $this->XMethods["default"]= _("inherited");
     }
     $this->XMethods["xdmcp"]  = _("XDMCP");
     $this->XMethods["ldm"]    = _("LDM");
-    $this->XMethods["rdp"]    = _("Windows RDP");
-    $this->XMethods["citrix"] = _("ICA client");
+    $this->XMethods["shell"]    = _("Shell");
+    $this->XMethods["telnet"]    = _("Telnet");
+    #$this->XMethods["rdp"]    = _("Windows RDP");
+    #$this->XMethods["citrix"] = _("ICA client");
 
-    /* Get selected gotoXdmcpServer 
-     */
+    /* Get selected gotoXdmcpServer */
     $this->selected_xdmcp_servers = array();
     if(isset($this->attrs['gotoXdmcpServer'])){
       for($i = 0 ; $i < $this->attrs['gotoXdmcpServer']['count'] ; $i++){

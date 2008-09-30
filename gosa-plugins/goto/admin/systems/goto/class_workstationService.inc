@@ -26,7 +26,6 @@ class workservice extends plugin
   var $base= "";
   var $cn= "";
   var $orig_dn= "";
-  var $XMethods= array();
   var $XDrivers= array();
   var $XResolutions = array();
   var $MouseTypes= array();
@@ -107,7 +106,7 @@ class workservice extends plugin
                              "/dev/input/mice"  => "/dev/input/mice");
 
     /* Additional values will be extracted from CONFIG_DIR./keyboardLayouts */
-    $this->XKbLayouts= array ("de"=> "de","intl" =>"intl","us" =>"us");
+    $this->XKbLayouts = array("de"=> "de","en" =>"en", "es" => "es", "us" =>"us", "fr" => "fr");
     $this->XKbVariants= array ("nodeadkeys"=>"nodeadkeys", "basic"=>"basic");
 
     /* try to read additional keyboard layouts 
@@ -127,17 +126,6 @@ class workservice extends plugin
         }
       }
     }
-
-    /* Initialize methods */
-    $this->XMethods["indirect"]= _("show chooser");
-    $this->XMethods["query"]= _("direct");
-    #$this->XMethods["squery"]= _("direct via ssh");
-    #$this->XMethods["nquery"]= _("direct via nx");
-    $this->XMethods["load"]= _("load balanced");
-    #$this->XMethods["sload"]= _("load balanced via ssh");
-    #$this->XMethods["nload"]= _("load balanced via nx");
-    $this->XMethods["rdp"]= _("Windows RDP");
-    $this->XMethods["citrix"]= _("ICA client");
 
     $this->orig_dn= $this->dn;
 
@@ -273,7 +261,7 @@ class workservice extends plugin
     }
 
     /* Arrays */ 
-    foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
+    foreach(array("XDrivers", "XResolutions", "XColordepths",
           "XKbModels", "XKbVariants",
           "MouseTypes", "MousePorts") as $val){
       $smarty->assign("$val", $this->$val);
