@@ -2052,6 +2052,8 @@ sub watch_for_next_tasks {
             next;
         }
         my $message_id = $hit->{'id'};
+        my $session_id = $hit->{'sessionid'};
+        &daemon_log("$session_id DEBUG: start processing for message with incoming id: '$message_id'", 7);
         $kernel->yield('next_task', $hit);
 
         my $sql = "DELETE FROM $incoming_tn WHERE id=$message_id";
