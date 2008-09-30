@@ -167,7 +167,7 @@ class termservice extends plugin
     $this->XMethods["ldm"]     = _("LDM");
     $this->XMethods["shell"]   = _("Shell");
     $this->XMethods["telnet"]  = _("Telnet");
-    $this->XMethods["rdp"]     = _("Windows RDP");
+    $this->XMethods["rdesltop"]     = _("Windows RDP");
     #$this->XMethods["citrix"] = _("ICA client");
 
     /* Get selected gotoXdmcpServer */
