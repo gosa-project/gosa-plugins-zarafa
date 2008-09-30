@@ -46,11 +46,11 @@
      </td>
     </tr>
     <tr>
-     <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
+     <td><LABEL for="gotoKernelParameters">{t}Custom options{/t}</LABEL></td>
      <td>
 {render acl=$gotoKernelParametersACL}
-      <input name="customParameters" id="customParameters"  size=25 maxlength=500
-                value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
+      <input name="gotoKernelParameters" id="gotoKernelParameters"  size=25 maxlength=500
+                value="{$gotoKernelParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
 {/render}
     </tr>
    </table>

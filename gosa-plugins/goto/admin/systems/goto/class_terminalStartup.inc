@@ -28,7 +28,6 @@ class termstartup extends plugin
   var $view_logged = FALSE;
 
   /* Helper */
-  var $customParameters= "";
   var $orig_dn= "";
   var $ignore_account= TRUE;
 
@@ -50,12 +49,6 @@ class termstartup extends plugin
       }
       sort ($this->$val);
       $this->$val= array_unique($this->$val);
-    }
-
-    if (preg_match("/ o /", $this->gotoKernelParameters)){
-      $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
-    } else {
-      $this->customParameters= "";
     }
 
     /* Prepare Shares */
@@ -308,7 +301,7 @@ class termstartup extends plugin
     }
 
     /* Values */
-    foreach(array("gotoBootKernel", "customParameters") as $val){
+    foreach(array("gotoBootKernel", "gotoKernelParameters") as $val){
       $smarty->assign($val, $this->$val);
     }
 
@@ -338,8 +331,8 @@ class termstartup extends plugin
       }
 
       /* Save kernel parameters */
-      if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
-        $this->customParameters= $_POST["customParameters"];
+      if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["gotoKernelParameters"])){
+        $this->gotoKernelParameters= $_POST["gotoKernelParameters"];
       }
     }
   }
@@ -378,17 +371,6 @@ class termstartup extends plugin
       }
     }
     
-    /* Add semi automatic values */
-    // FIXME: LDAP Server may not be set here...
-    $this->gotoKernelParameters= "root=/dev/nfs nfsroot=".
-      $this->gotoTerminalPath.
-      ",ro,hard,nolock,fg,rsize=8192 ".
-      "ip=::::::dhcp ldap=".base64_encode($this->gotoLdapServer);
-
-    if ($this->customParameters != ""){
-      $this->gotoKernelParameters.= " o ".$this->customParameters;
-    }
-
     plugin::save();
 
     /* Add missing arrays */
@@ -508,7 +490,7 @@ class termstartup extends plugin
 
     $source_o = new termstartup ($this->config, $source['dn']);
 
-    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","customParameters","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
+    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","gotoKernelParameters","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
