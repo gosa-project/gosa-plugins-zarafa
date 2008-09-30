@@ -31,10 +31,11 @@ class servnfs extends plugin
     $dn = $parent->dn;
     plugin::plugin ($config, $dn);
 
-    $this->types   = array("CIFS" => "CIFS", "NFS"=>"NFS","samba"=>"samba","netatalk"=>"netatalk","NCP"=>"NCP");
+    $this->types   = array("NBD" => "NBD", "CIFS" => "CIFS", "NFS"=>"NFS","samba"=>"samba","netatalk"=>"netatalk","NCP"=>"NCP");
     if($dn){
       $this->host = substr($dn, 3, strpos($dn, ',')-3);
     }
+    asort($this->types);
 
     $this->charsets = array();
 
@@ -178,8 +179,14 @@ class servnfs extends plugin
       $message[]= msgPool::required(_("Path"));
     }
 
-    if(!tests::is_path($this->path)){
-      $message[]= _("'Path / Volume' must contain at least one '/'!");
+    if($this->type == "NBD") {
+      if (!preg_match('/^[a-z0-9-]+:[0-9]+$/', $this->path)){
+        $message[]= _("'Path / Volume' must be of format 'server:port'!");
+      }
+    } else {
+      if (!tests::is_path($this->path)){
+        $message[]= _("'Path / Volume' must contain at least one '/'!");
+      }
     }
 
     if(!in_array($this->type,$this->types)){
