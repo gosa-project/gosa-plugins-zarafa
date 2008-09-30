@@ -33,7 +33,7 @@ class goTerminalServer extends goService{
     }
     $this->gotoSessionType = $tmp;
     #$this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
-    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "TELNET"); 
+    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "RDP", "TELNET"); 
   }
 
 
