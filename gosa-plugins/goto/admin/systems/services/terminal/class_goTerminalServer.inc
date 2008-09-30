@@ -2,10 +2,6 @@
 
 class goTerminalServer extends goService{
 	
-  var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports asterisk management.";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goTerminalServer");
   var $attributes       = array("goXdmcpIsEnabled","gotoSessionType");
@@ -36,7 +32,8 @@ class goTerminalServer extends goService{
       }
     }
     $this->gotoSessionType = $tmp;
-    $this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
+    #$this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
+    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "TELNET"); 
   }
 
 
@@ -155,7 +152,8 @@ class goTerminalServer extends goService{
       }
     }
     $this->gotoSessionType = $tmp;
-    $this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
+    #$this->gotoSessionTypes= array("LDM","XDCMP","RDP","CITRIX"); 
+    $this->gotoSessionTypes= array("LDM","XDCMP", "SHELL", "TELNET"); 
   }
 
 
