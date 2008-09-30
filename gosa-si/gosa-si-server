@@ -205,7 +205,7 @@ my $messaging_file_name;
 our $client_fai_log_dir = "/var/log/fai"; 
 
 # queue which stores taskes until one of the $max_children children are ready to process the task
-my @tasks = qw();
+#my @tasks = qw();
 my @msgs_to_decrypt = qw();
 my $max_children = 2;
 
@@ -3328,9 +3328,11 @@ POE::Component::Server::TCP->new(
 	Alias => "TCP_SERVER",
 	Port => $server_port,
 	ClientInput => sub {
-		my ($kernel, $input) = @_[KERNEL, ARG0];
-		push(@tasks, $input);
+		my ($kernel, $input, $heap, $session) = @_[KERNEL, ARG0, HEAP, SESSION];
+        my $session_id = $session->ID;
+        my $remote_ip = $heap->{'remote_ip'};
 		push(@msgs_to_decrypt, $input);
+        &daemon_log("$session_id DEBUG: incoming message from '$remote_ip'", 7);
 		$kernel->yield("msg_to_decrypt");
 	},
 	InlineStates => {
