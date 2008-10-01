@@ -230,7 +230,7 @@ sub CURRENTLY_LOGGED_IN {
 
 
 ## @method set_last_system()
-# @details Message set ldap attributes 'gosaLastSystemLogin' and 'gosaLastSystem'
+# @details Message set ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
 # @param msg - STRING - xml message with tag 'last_system_login' and 'last_system'
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
@@ -243,25 +243,25 @@ sub set_last_system {
 	# Sanity check of needed parameter
 	if (not exists $msg_hash->{'timestamp'}){
 		&main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'timestamp', ".
-						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+						"setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 		&main::daemon_log($msg, 1);
 		return;
 	}
 	if (@{$msg_hash->{'timestamp'}} != 1)  {
 		&main::daemon_log("$session_id ERROR: xml tag 'timestamp' has no content or exists more than one time, ".
-						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+						"setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 		&ymain::daemon_log($msg, 1);
 		return;
 	}
 	if (not exists $msg_hash->{'macaddress'}){
 		&main::daemon_log("$session_id ERROR: message does not contain needed xml tag 'mac_address', ".
-						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+						"setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 		&main::daemon_log($msg, 1);
 		return;
 	}
 	if (@{$msg_hash->{'macaddress'}} != 1)  {
 		&main::daemon_log("$session_id ERROR: xml tag 'macaddress' has no content or exists more than one time, ".
-						"setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+						"setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 		&ymain::daemon_log($msg, 1);
 		return;
 	}
@@ -291,13 +291,14 @@ sub set_last_system {
 					);
 	if ($ldap_mesg->count == 0) {
 		&main::daemon_log("$session_id ERROR: no system with mac address='$mac' was found in base '".
-						$main::ldap_base."', setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+						$main::ldap_base."', setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 		return;
 	}
+
 	my $ldap_entry = $ldap_mesg->pop_entry();
-	my $system_dn = $ldap_entry->get_value('dn');
+	my $system_dn = $ldap_entry->dn();
 	
-	# For each logged in user set gosaLastSystem and gosaLastSystemLogin
+	# For each logged in user set gotoLastSystem and gotoLastSystemLogin
 	foreach my $user (@login_list) {
 		# Search user
 		my $ldap_mesg= $ldap_handle->search(
@@ -308,26 +309,28 @@ sub set_last_system {
 		# Sanity check of user search
 		if ($ldap_mesg->count == 0) {
 			&main::daemon_log("$session_id ERROR: no user with uid='$user' was found in base '".
-							$main::ldap_base."', setting of 'gosaLastSystem' and 'gosaLastSystemLogin' stopped!", 1);
+							$main::ldap_base."', setting of 'gotoLastSystem' and 'gotoLastSystemLogin' stopped!", 1);
 
-		# Set gosaLastSystem and gosaLastSystemLogin
+		# Set gotoLastSystem and gotoLastSystemLogin
 		} else {
 			my $ldap_entry= $ldap_mesg->pop_entry();
-			if (defined($ldap_entry->get_value('gosaLastSystem'))) {
-					$ldap_entry->replace ( 'gosaLastSystem' => $system_dn );
+			if (defined($ldap_entry->get_value('gotoLastSystem'))) {
+					$ldap_entry->replace ( 'gotoLastSystem' => $system_dn );
+                    &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!");
 			} else {
-					$ldap_entry->add( 'gosaLastSystem' => $system_dn );
-                    &main::daemon_log("$session_id INFO: ldap entry 'uid=$user' do not know attribute 'gosaLastSystem', add attribute!");
+					$ldap_entry->add( 'gotoLastSystem' => $system_dn );
+                    &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!");
 			}
-			if (defined($ldap_entry->get_value('gosaLastSystemLogin'))) {
-					$ldap_entry->replace ( 'gosaLastSystemLogin' => $timestamp );
+			if (defined($ldap_entry->get_value('gotoLastSystemLogin'))) {
+					$ldap_entry->replace ( 'gotoLastSystemLogin' => $timestamp );
+                    &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!");
 			} else {
-					$ldap_entry->add( 'gosaLastSystemLogin' => $timestamp );
-                    &main::daemon_log("$session_id INFO: ldap entry 'uid=$user' do not know attribute 'gosaLastSystemLogin', add attribute!");
+					$ldap_entry->add( 'gotoLastSystemLogin' => $timestamp );
+                    &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!");
 			}
 			my $result = $ldap_entry->update($ldap_handle);
 			if ($result->code() != 0) {
-					&main::daemon_log("$session_id ERROR: setting 'gosaLastSystem' and 'gosaLastSystemLogin' at user '$user' failed: ".
+					&main::daemon_log("$session_id ERROR: setting 'gotoLastSystem' and 'gotoLastSystemLogin' at user '$user' failed: ".
 									$result->{'errorMessage'}."\n".
                             "\tbase: $main::ldap_base\n".
                             "\tscope: 'sub'\n".
