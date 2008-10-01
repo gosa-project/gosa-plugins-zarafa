@@ -314,29 +314,48 @@ sub set_last_system {
 		# Set gotoLastSystem and gotoLastSystemLogin
 		} else {
 			my $ldap_entry= $ldap_mesg->pop_entry();
-			if (defined($ldap_entry->get_value('gotoLastSystem'))) {
-					$ldap_entry->replace ( 'gotoLastSystem' => $system_dn );
-                    &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!");
-			} else {
-					$ldap_entry->add( 'gotoLastSystem' => $system_dn );
-                    &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!");
-			}
-			if (defined($ldap_entry->get_value('gotoLastSystemLogin'))) {
-					$ldap_entry->replace ( 'gotoLastSystemLogin' => $timestamp );
-                    &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!");
-			} else {
-					$ldap_entry->add( 'gotoLastSystemLogin' => $timestamp );
-                    &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!");
-			}
-			my $result = $ldap_entry->update($ldap_handle);
-			if ($result->code() != 0) {
-					&main::daemon_log("$session_id ERROR: setting 'gotoLastSystem' and 'gotoLastSystemLogin' at user '$user' failed: ".
-									$result->{'errorMessage'}."\n".
+            my $do_update = 0;
+
+            # Set gotoLastSystem information
+            my $last_system_dn = $ldap_entry->get_value('gotoLastSystem');
+            if ((defined $last_system_dn) && ($last_system_dn eq $system_dn)) {
+                &main::daemon_log("$session_id INFO: no new 'gotoLastSystem' inforamtion for ladp entry 'uid=$user', do nothing!", 5);
+            } elsif ((defined $last_system_dn) && ($last_system_dn ne $system_dn)) {
+                $ldap_entry->replace ( 'gotoLastSystem' => $system_dn );
+                &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!",5);
+                $do_update++;
+            } else {
+                $ldap_entry->add( 'gotoLastSystem' => $system_dn );
+                &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystem'='$system_dn' at ldap entry 'uid=$user'!", 5);
+                $do_update++;
+            }
+
+            # Set gotoLastSystemLogin information
+            # Attention: only write information if last_system_dn and system_dn differs
+            my $last_system_login = $ldap_entry->get_value('gotoLastSystemLogin');
+            if ((defined $last_system_login) && ($last_system_dn eq $system_dn)) {
+                &main::daemon_log("$session_id INFO: no new 'gotoLastSystemLogin' inforamtion for ladp entry 'uid=$user', do nothing!", 5);
+            } elsif ((defined $last_system_login) && ($last_system_dn ne $system_dn)) {
+                $ldap_entry->replace ( 'gotoLastSystemLogin' => $timestamp );
+                &main::daemon_log("$session_id INFO: update attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!", 5);
+                $do_update++;
+            } else {
+                $ldap_entry->add( 'gotoLastSystemLogin' => $timestamp );
+                &main::daemon_log("$session_id INFO: add attribute 'gotoLastSystemLogin'='$timestamp' at ldap entry 'uid=$user'!",5);
+                $do_update++;
+            }
+
+            if ($do_update) {
+                my $result = $ldap_entry->update($ldap_handle);
+                if ($result->code() != 0) {
+                    &main::daemon_log("$session_id ERROR: setting 'gotoLastSystem' and 'gotoLastSystemLogin' at user '$user' failed: ".
+                            $result->{'errorMessage'}."\n".
                             "\tbase: $main::ldap_base\n".
                             "\tscope: 'sub'\n".
                             "\tfilter: 'uid=$user'\n".
                             "\tmessage: $msg", 1); 
-			}
+                }
+            }
 		}
 	}
 
