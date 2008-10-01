@@ -48,12 +48,19 @@ use File::Basename;
 use File::Find;
 use File::Copy;
 use File::Path;
-use GOSA::DBmysql;
 use GOSA::GosaSupportDaemon;
 use POE qw(Component::Server::TCP Wheel::Run Filter::Reference);
 use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 use Time::HiRes qw( usleep);
+
+my $db_module = "DBsqlite";
+{
+no strict "refs";
+require ("GOSA/".$db_module.".pm");
+("GOSA/".$db_module)->import;
+daemon_log("0 INFO: importing database module '$db_module'", 1);
+}
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
@@ -1028,10 +1035,9 @@ sub msg_to_decrypt {
 	# hole neue msg aus @msgs_to_decrypt
 	my $next_msg = shift @msgs_to_decrypt;
 
-	# entschlüssle sie
-
 	# msg is from a new client or gosa
 	($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
+
 	# msg is from a gosa-si-server
 	if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
 		($msg, $msg_hash, $module) = &input_from_known_server($next_msg, $heap->{'remote_ip'}, $session_id);
@@ -3167,56 +3173,63 @@ daemon_log("$0 started!", 1);
 daemon_log("status: $server_status", 1);
 daemon_log($server_status_hash->{$server_status}.": $server_revision", 1); 
 
+{
+no strict "refs";
+
+require ("GOSA/".$db_module.".pm");
+("GOSA/".$db_module)->import;
+daemon_log("0 INFO: importing database module '$db_module'", 1);
+
 # connect to incoming_db
 unlink($incoming_file_name);
-$incoming_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$incoming_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $incoming_db->create_table($incoming_tn, \@incoming_col_names);
 
 # connect to gosa-si job queue
 unlink($job_queue_file_name);  ## just for debugging
-$job_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$job_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $job_db->create_table($job_queue_tn, \@job_queue_col_names);
 chmod(0660, $job_queue_file_name);
 chown($root_uid, $adm_gid, $job_queue_file_name);
 
 # connect to known_clients_db
 unlink($known_clients_file_name);   ## just for debugging
-$known_clients_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$known_clients_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $known_clients_db->create_table($known_clients_tn, \@known_clients_col_names);
 chmod(0660, $known_clients_file_name);
 chown($root_uid, $adm_gid, $known_clients_file_name);
 
 # connect to foreign_clients_db
 unlink($foreign_clients_file_name);
-$foreign_clients_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$foreign_clients_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $foreign_clients_db->create_table($foreign_clients_tn, \@foreign_clients_col_names);
 chmod(0660, $foreign_clients_file_name);
 chown($root_uid, $adm_gid, $foreign_clients_file_name);
 
 # connect to known_server_db
 unlink($known_server_file_name);
-$known_server_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$known_server_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $known_server_db->create_table($known_server_tn, \@known_server_col_names);
 chmod(0660, $known_server_file_name);
 chown($root_uid, $adm_gid, $known_server_file_name);
 
 # connect to login_usr_db
 unlink($login_users_file_name);
-$login_users_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$login_users_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $login_users_db->create_table($login_users_tn, \@login_users_col_names);
 chmod(0660, $login_users_file_name);
 chown($root_uid, $adm_gid, $login_users_file_name);
 
 # connect to fai_server_db 
 unlink($fai_server_file_name);
-$fai_server_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$fai_server_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $fai_server_db->create_table($fai_server_tn, \@fai_server_col_names);
 chmod(0660, $fai_server_file_name);
 chown($root_uid, $adm_gid, $fai_server_file_name);
 
 # connect to fai_release_db
 unlink($fai_release_file_name);
-$fai_release_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$fai_release_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $fai_release_db->create_table($fai_release_tn, \@fai_release_col_names);
 chmod(0660, $fai_release_file_name);
 chown($root_uid, $adm_gid, $fai_release_file_name);
@@ -3224,18 +3237,18 @@ chown($root_uid, $adm_gid, $fai_release_file_name);
 # connect to packages_list_db
 #unlink($packages_list_file_name);
 unlink($packages_list_under_construction);
-$packages_list_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$packages_list_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $packages_list_db->create_table($packages_list_tn, \@packages_list_col_names);
 chmod(0660, $packages_list_file_name);
 chown($root_uid, $adm_gid, $packages_list_file_name);
 
 # connect to messaging_db
 unlink($messaging_file_name);
-$messaging_db = GOSA::DBmysql->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
+$messaging_db = ("GOSA::".$db_module)->new($main::mysql_database, $main::mysql_host, $main::mysql_username, $main::mysql_password);
 $messaging_db->create_table($messaging_tn, \@messaging_col_names);
 chmod(0660, $messaging_file_name);
 chown($root_uid, $adm_gid, $messaging_file_name);
-
+}
 
 # create xml object used for en/decrypting
 $xml = new XML::Simple();
