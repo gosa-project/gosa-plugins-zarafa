@@ -528,7 +528,7 @@ sub check_key_and_xml_validity {
 
         if ($msg =~ /<xml>/i){
             $msg =~ s/\s+/ /g;  # just for better daemon_log
-            daemon_log("$session_id DEBUG: decrypted_msg: \n$msg", 8);
+            daemon_log("$session_id DEBUG: decrypted_msg: \n$msg", 9);
             $msg_hash = $xml->XMLin($msg, ForceArray=>1);
 
             ##############
@@ -656,6 +656,7 @@ sub input_from_known_server {
             $msg = $tmp_msg;
             $msg_hash = $tmp_msg_hash;
             $module = "ServerPackages";
+            daemon_log("$session_id DEBUG: check_key_and_xml_validity... ok", 7);
             last;
         }
     }
@@ -693,6 +694,7 @@ sub input_from_known_client {
         }
         else {
             $module = "ClientPackages";
+            daemon_log("$session_id DEBUG: check_key_and_xml_validity... ok", 7);
             last;
         }
     }
@@ -732,6 +734,7 @@ sub input_from_unknown_host {
 			next;
 		} else {
 			$module = $mod;
+            daemon_log("$session_id DEBUG: check_key_and_xml_validity... ok", 7);
 			last;
 		}
 	}
@@ -1241,6 +1244,7 @@ sub msg_to_decrypt {
 		if ( $not_found_in_foreign_clients_db 
 			&& $not_found_in_known_server_db
 			&& $not_found_in_known_clients_db) {
+			&daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
 			my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
 					primkey=>[],
 					headertag=>$header,
@@ -1251,7 +1255,6 @@ sub msg_to_decrypt {
 					sessionid=>$session_id,
 				} );
 			$done = 1;
-			&daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
 		}
 
 
@@ -2044,7 +2047,7 @@ sub watch_for_next_tasks {
 
     my $sql = "SELECT * FROM $incoming_tn";
     my $res = $incoming_db->select_dbentry($sql);
-
+    
     while ( my ($hit_num, $hit) = each %$res) {
         my $headertag = $hit->{'headertag'};
         if ($headertag =~ /^answer_(\d+)/) {
