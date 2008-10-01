@@ -740,8 +740,8 @@ sub trigger_action_wake {
 
     # build out message
     my $out_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
-    foreach (@{$msg_hash->{target}}) {
-        &add_content2xml_hash($out_hash, 'macAddress', $_);
+    foreach (@{$msg_hash->{'macaddress'}}) {
+        &add_content2xml_hash($out_hash, 'macaddress', $_);
     }
     my $out_msg = &create_xml_string($out_hash);
     
