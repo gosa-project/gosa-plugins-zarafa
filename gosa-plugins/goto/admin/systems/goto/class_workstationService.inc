@@ -229,6 +229,8 @@ class workservice extends plugin
 
   function execute()
   {
+    $this->send_goto_reload();
+
     /* Call parent execute */
     plugin::execute();
 
@@ -542,8 +544,10 @@ class workservice extends plugin
         if(count($macs)){
           $tmp = new $evt['CLASS_NAME']($this->config);
           $tmp->set_type(TRIGGERED_EVENT);
-          $tmp->add_targets($macs);
-          if(!$o_queue->append($tmp)){
+          $target = $o_queue->get_host().":".$o_queue->get_port();
+          $tmp->add_targets(array($target));
+          $tmp->set_macs($macs);
+          if(!$o_queue->append($tmp,TRUE)){
             msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
           }
         }
