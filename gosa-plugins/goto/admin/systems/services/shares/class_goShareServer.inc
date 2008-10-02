@@ -226,7 +226,7 @@ class goShareServer extends goService{
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=*|$id|*||*))", array("cn"));
-    if ($ldap->count != 0){
+    if ($ldap->count() != 0){
       while ($attrs= $ldap->fetch()){
         $obj[$ldap->getDN()]= $attrs['cn'][0];
       }
