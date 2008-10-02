@@ -26,7 +26,7 @@
 				</tr>
 				<tr>
 					<td>
-						{t}Path{/t} / {t}Volume{/t}
+						{t}Path{/t} / {t}Volume{/t} {$must}
 					</td>
 					<td>
 {render acl=$pathACL}
