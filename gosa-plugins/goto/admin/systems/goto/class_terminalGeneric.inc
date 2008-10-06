@@ -23,6 +23,7 @@ class termgeneric extends plugin
   var $ghSoundAdapter= "-";
   var $gotoLastUser= "-";
   var $netConfigDNS;
+  var $auto_activate= FALSE;
   
   /* Needed values and lists */
   var $base= "";
@@ -497,9 +498,8 @@ class termgeneric extends plugin
     /* Detect mode changes */
     $activate= (isset($this->saved_attributes['gotoMode']) &&
         $this->gotoMode != $this->saved_attributes['gotoMode'] &&
-        $this->gotoMode == "enabled" &&
-        tests::is_ip($this->netConfigDNS->ipHostNumber));
-
+        $this->gotoMode == "active" &&
+        tests::is_ip($this->netConfigDNS->ipHostNumber)) || $this->auto_activate;
     plugin::save();
 
     /* Strip out 'default' values */
