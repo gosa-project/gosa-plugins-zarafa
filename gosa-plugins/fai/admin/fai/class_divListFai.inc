@@ -74,9 +74,9 @@ class divListFai extends MultiSelectWindow
      */
     if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
       $this->AddCheckBox("ShowOpsiNetboot" , sprintf(_("Display objects of type '%s'."),
-        _("Opsi netboot product")),_("Show opsi netboot products")   ,true);
+        _("OPSI netboot product")),_("Show netboot products")   ,true);
       $this->AddCheckBox("ShowOpsiLocal" , sprintf(_("Display objects of type '%s'."),
-        _("Opsi local product")),_("Show opsi locale products")   ,true);
+        _("OPSI local product")),_("Show local products")   ,true);
     }
 
     /* Add SubSearch checkbox */
