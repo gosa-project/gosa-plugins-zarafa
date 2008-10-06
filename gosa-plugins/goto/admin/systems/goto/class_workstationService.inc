@@ -3,6 +3,8 @@
 class workservice extends plugin
 {
   var $gotoScannerEnable;
+  var $gotoLpdEnable;
+
   /* Generic terminal attributes */
   var $gotoXMonitor= "";
   var $gotoXDriver= "";
@@ -38,7 +40,7 @@ class workservice extends plugin
   var $attributes= array("gotoXMonitor",
       "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync",
-      "gotoScannerEnable", "gotoScannerClients",
+      "gotoScannerEnable","gotoLpdEnable", "gotoScannerClients",
       "gotoScannerBackend", "gotoXKbModel", "gotoXKbLayout", "gotoXKbVariant",
       "gotoXMouseType", "gotoXMouseport", "goFonHardware");
   var $objectclasses= array("GOhard");
@@ -229,8 +231,6 @@ class workservice extends plugin
 
   function execute()
   {
-    $this->send_goto_reload();
-
     /* Call parent execute */
     plugin::execute();
 
@@ -252,6 +252,29 @@ class workservice extends plugin
         $this->is_account= TRUE;
       }
     }
+
+    /**********
+      gotoLpdEnable 
+     **********/
+
+    if(isset($_POST['gotoLpdEnable_Close'])){
+      $this->dialog = NULL;
+    }
+
+    if(isset($_POST['gotoLpdEnable'])){
+      $this->dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this);
+    }
+
+    if($this->dialog instanceof plugin){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
+
+    /**********
+      Ende: gotoLpdEnable 
+     **********/
+
 
     /* Show main page */
     $smarty= get_smarty();
@@ -495,6 +518,7 @@ class workservice extends plugin
             "gotoXVsync"            => _("VSync"),
             "AutoSync"              => _("Use DDC"),
             "gotoScannerEnable"     => _("Scanner enabled"),
+            "gotoLpdEnable"         => _("Printer enabled"),
             "gotoXKbModel"          => _("Keyboard model"),
             "gotoXKbLayout"         => _("Keyboard layout"),
             "gotoXKbVariant"        => _("Keyboard variant"),
