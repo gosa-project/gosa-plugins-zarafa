@@ -734,7 +734,7 @@ sub opsi_set_product_properties {
         my ($res_err, $res_err_string) = &check_opsi_res($res);
 
         if ($res_err){
-            &man::daemon_log("$session_id ERROR: communication failed while setting '".$item->{'name'}[0]."': ".$res_err_string, 1);
+            &main::daemon_log("$session_id ERROR: communication failed while setting '".$item->{'name'}[0]."': ".$res_err_string, 1);
             &add_content2xml_hash($out_hash, "error", $res_err_string);
         }
     }
