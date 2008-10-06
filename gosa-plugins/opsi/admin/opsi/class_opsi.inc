@@ -73,9 +73,9 @@ class opsi extends gosaSupportDaemon
   
   public function enabled()
   {
-    return(TRUE);
-    return(tests::is_mac($this->target));
+    return(!empty($this->target));
   }
+
 
   /******************
     Opsi handling 
