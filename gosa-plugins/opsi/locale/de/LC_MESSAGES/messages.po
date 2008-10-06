@@ -1,0 +1,145 @@
+# translation of messages.po to
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-06 13:47+0200\n"
+"PO-Revision-Date: 2008-10-06 13:48+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team:  <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: admin/opsi/class_opsigeneric.inc:204 admin/opsi/class_opsigeneric.inc:209
+#: admin/opsi/class_opsigeneric.inc:212 admin/opsi/generic.tpl:18
+#: admin/opsi/generic.tpl:27
+msgid "Name"
+msgstr "Name"
+
+#: admin/opsi/class_opsigeneric.inc:210
+msgid "The field 'Name' must contain a domain part!"
+msgstr "Das Feld '%s' enthält ein reserviertes Schlüsselwort!"
+
+#: admin/opsi/class_opsigeneric.inc:218 admin/opsi/generic.tpl:22
+#: admin/opsi/generic.tpl:31
+msgid "MAC address"
+msgstr "MAC-Adresse"
+
+#: admin/opsi/class_opsigeneric.inc:254 admin/opsi/class_opsigeneric.inc:255
+#: admin/opsi/class_opsigeneric.inc:257 admin/opsi/class_opsigeneric.inc:258
+msgid "OPSI"
+msgstr "OPSI"
+
+#: admin/opsi/class_opsigeneric.inc:346 admin/opsi/class_opsigeneric.inc:359
+#: admin/opsi/class_opsigeneric.inc:383 admin/opsi/class_opsigeneric.inc:394
+#: admin/opsi/class_opsigeneric.inc:400 admin/opsi/class_opsigeneric.inc:417
+#: admin/opsi/class_opsigeneric.inc:435 admin/opsi/class_opsigeneric.inc:441
+#: admin/opsi/class_opsigeneric.inc:470 admin/opsi/class_opsigeneric.inc:502
+#: admin/opsi/class_opsigeneric.inc:638
+msgid "Error"
+msgstr "Fehler"
+
+#: admin/opsi/class_opsigeneric.inc:647
+msgid "Generic"
+msgstr "Allgemein"
+
+#: admin/opsi/class_opsigeneric.inc:648
+msgid "OPSI generic"
+msgstr "Allgemein"
+
+#: admin/opsi/class_opsigeneric.inc:653
+msgid "OPSI client"
+msgstr "OPSI-Client"
+
+#: admin/opsi/generic.tpl:2
+msgid "OPSI host"
+msgstr "OPSI-Client"
+
+#: admin/opsi/generic.tpl:8 admin/opsi/opsiware.tpl:4
+msgid "Retry"
+msgstr "Wiederholen"
+
+#: admin/opsi/generic.tpl:36
+msgid "Netboot product"
+msgstr "Netboot-Produkt"
+
+#: admin/opsi/generic.tpl:46 admin/opsi/generic.tpl:49
+msgid "Configure product"
+msgstr "Produkt bearbeiten"
+
+#: admin/opsi/generic.tpl:58
+msgid "Description"
+msgstr "Beschreibung"
+
+#: admin/opsi/generic.tpl:62
+msgid "Notes"
+msgstr "Notizen"
+
+#: admin/opsi/generic.tpl:75
+msgid "Installed products"
+msgstr "Installierte Produkte"
+
+#: admin/opsi/generic.tpl:78
+msgid "Available products"
+msgstr "Verfügbare Produkte"
+
+#: admin/opsi/generic.tpl:86
+msgid "Action"
+msgstr "Aktion"
+
+#: admin/opsi/generic.tpl:90
+msgid "Reinstall"
+msgstr "Neu-Installation"
+
+#: admin/opsi/generic.tpl:92
+msgid "Install"
+msgstr "Installieren"
+
+#: admin/opsi/generic.tpl:95
+msgid "Execute"
+msgstr "Ausführen"
+
+#: admin/opsi/opsiware.tpl:2
+msgid "Information"
+msgstr "Information"
+
+#: admin/opsi/opsiware.tpl:7
+msgid "Hardware information"
+msgstr "Hardware-Informationen"
+
+#: admin/opsi/opsiware.tpl:9
+msgid "Software information"
+msgstr "Software-Informationen"
+
+#: admin/opsi/opsiware.tpl:14
+msgid "Device"
+msgstr "Gerät"
+
+#: admin/opsi/properties.tpl:1
+msgid "OPSI product properties"
+msgstr "OPSI Produkteigenschaften"
+
+#: admin/opsi/properties.tpl:6
+msgid "This OPSI product has no options."
+msgstr "Dieses OPSI Produkt hat keine Optionen."
+
+#: admin/opsi/class_opsi.inc:69
+msgid "Opsi"
+msgstr "OPSI"
+
+#: admin/opsi/class_opsi.inc:69
+#, php-format
+msgid "More than one Opsi server were found, using the first result '%s'."
+msgstr "Es ist mehr als ein OPSI server verfügbar, verwende '%s'."
+
