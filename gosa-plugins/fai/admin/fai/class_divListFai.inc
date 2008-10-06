@@ -30,7 +30,7 @@ class divListFai extends MultiSelectWindow
 
     /* Set list strings */
     $this->SetTitle(  _("List of classes"));
-    $this->SetSummary(_("List of deployment classes and packages"));
+    $this->SetSummary(_("List of deployment classes and products"));
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
@@ -222,9 +222,9 @@ class divListFai extends MultiSelectWindow
         "FAItemplate"        => array("IMG"=> "plugins/fai/images/fai_template.png",       
           "NAME"=>_("Templates") ,     "KZL"=> "T",  "VAR"=>"ShowTemplates"),
         "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",       
-          "NAME"=>_("Opsi netboot package") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
+          "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
         "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",       
-          "NAME"=>_("Opsi local package")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
+          "NAME"=>_("OPSI local product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
 
     /* Dynamic action col, depending on snapshot icons */
