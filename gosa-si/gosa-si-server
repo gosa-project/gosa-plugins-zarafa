@@ -542,7 +542,7 @@ sub check_key_and_xml_validity {
             # check header
             if( not exists $msg_hash->{'header'} ) { die "no header specified"; }
             my $header_l = $msg_hash->{'header'};
-            if( 1 > @{$header_l} ) { die 'empty header tag'; }
+            if( (1 > @{$header_l}) || ( ( 'HASH' eq ref @{$header_l}[0]) && (1 > keys %{@{$header_l}[0]}) ) ) { die 'empty header tag'; }
             if( 1 < @{$header_l} ) { die 'more than one header specified'; }
             my $header = @{$header_l}[0];
             if( 0 == length $header) { die 'empty string in header tag'; }
@@ -551,7 +551,7 @@ sub check_key_and_xml_validity {
             # check source
             if( not exists $msg_hash->{'source'} ) { die "no source specified"; }
             my $source_l = $msg_hash->{'source'};
-            if( 1 > @{$source_l} ) { die 'empty source tag'; }
+            if( (1 > @{$source_l}) || ( ( 'HASH' eq ref @{$source_l}[0]) && (1 > keys %{@{$source_l}[0]}) ) ) { die 'empty source tag'; }
             if( 1 < @{$source_l} ) { die 'more than one source specified'; }
             my $source = @{$source_l}[0];
             if( 0 == length $source) { die 'source error'; }
@@ -560,7 +560,7 @@ sub check_key_and_xml_validity {
             # check target
             if( not exists $msg_hash->{'target'} ) { die "no target specified"; }
             my $target_l = $msg_hash->{'target'};
-            if( 1 > @{$target_l} ) { die 'empty target tag'; }
+            if( (1 > @{$target_l}) || ( ('HASH' eq ref @{$target_l}[0]) && (1 > keys %{@{$target_l}[0]}) ) ) { die 'empty target tag'; }
         }
     };
     if($@) {
