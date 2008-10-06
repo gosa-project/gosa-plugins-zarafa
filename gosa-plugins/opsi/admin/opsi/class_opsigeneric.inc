@@ -207,7 +207,7 @@ class opsiGeneric extends plugin
       /* The hostId must contain a domain part 
        */
       $messages[] = msgPool::invalid(_("Name"),$this->hostId,"",
-          _("The client name must contain a domain part (e.g. '.company.de')."));
+          _("The field 'Name' must contain a domain part!"));
     }elseif(preg_match("/[^a-z0-9\.\-_]/",$this->hostId)){
       $messages[] = msgPool::invalid(_("Name"),$this->hostId,"/[a-z0-9\.\-_]/");
     }
@@ -251,11 +251,11 @@ class opsiGeneric extends plugin
         }
       }
       if($this->is_account){
-        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("Opsi")), 
-            msgPool::featuresEnabled(_("Opsi")));
+        $display = $this->show_disable_header(msgPool::removeFeaturesButton(_("OPSI")), 
+            msgPool::featuresEnabled(_("OPSI")));
       }else{
-        $display = $this->show_enable_header(msgPool::addFeaturesButton(_("Opsi")), 
-            msgPool::featuresDisabled(_("Opsi")));
+        $display = $this->show_enable_header(msgPool::addFeaturesButton(_("OPSI")), 
+            msgPool::featuresDisabled(_("OPSI")));
         return($display);
       } 
     } 
@@ -645,12 +645,12 @@ class opsiGeneric extends plugin
   {
     return (array(
           "plShortName"   => _("Generic"),
-          "plDescription" => _("Opsi generic"),
+          "plDescription" => _("OPSI generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
-          "plCategory"    => array("opsi" => array("description"  => _("Opsi client"),
+          "plCategory"    => array("opsi" => array("description"  => _("OPSI client"),
                                                      "objectClass"  => "dummy_class_opsi")),
           "plProvidedAcls"=> array()
           ));

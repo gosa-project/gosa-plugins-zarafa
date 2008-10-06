@@ -1,5 +1,5 @@
 
-<h2><img src='plugins/opsi/images/client_generic.png' alt=' ' class='center'>&nbsp;{t}Opsi host{/t}</h2>
+<h2><img src='plugins/opsi/images/client_generic.png' alt=' ' class='center'>&nbsp;{t}OPSI host{/t}</h2>
 
 {if $init_failed}
 
@@ -33,7 +33,7 @@
     </tr>
     {/if}
     <tr>
-     <td>{t}Boot product{/t}</td>
+     <td>{t}Netboot product{/t}</td>
      <td>
       <select name="opsi_netboot_product" onChange="document.mainform.submit();">
 		{foreach from=$ANP item=item key=key}
@@ -43,10 +43,10 @@
       &nbsp;
       {if $netboot_configurable}
 		  <input type='image' name='configure_netboot' src='images/lists/edit.png'
-			title='{t}Configure package{/t}' class='center'>
+			title='{t}Configure product{/t}' class='center'>
       {else}
 <!--		  <input type='image' name='dummy_10' src='images/lists/edit_gray.png'
-			title='{t}Configure package{/t}' class='center'>-->
+			title='{t}Configure product{/t}' class='center'>-->
       {/if}
      </td>
     </tr>
