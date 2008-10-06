@@ -154,7 +154,7 @@ class servRepositorySetup  extends plugin
     }
 
     if(empty($this->Url)){
-      $message[] = msgPool::required(_("Url"));
+      $message[] = msgPool::required(_("URL"));
     }
 
     return ($message);

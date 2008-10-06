@@ -16,7 +16,7 @@ class divListRepository extends MultiSelectWindow
     $this->ui           = get_userinfo();
 
     $this->SetTitle("repositories");
-    $this->SetSummary(_("List of configured repositories."));
+    $this->SetSummary(_("List of configured repositories"));
     $this->SetInformation(_("This menu allows you to create, delete and edit repository settings."));
     $this->EnableCloseButton(FALSE);
     $this->EnableSaveButton(FALSE);
