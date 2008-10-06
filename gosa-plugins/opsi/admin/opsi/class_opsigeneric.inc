@@ -178,7 +178,7 @@ class opsiGeneric extends plugin
     }else{
 
       /* Remember initial settings */ 
-      $this->is_account = $this->initially_was_account;
+      $this->is_account = $this->initially_was_account = TRUE;
       $this->a_initial_selectedLocalProducts = $this->a_selectedLocalProducts;
       $this->s_initial_selectedNetbootProduct = $this->s_selectedNetbootProduct;
       $this->a_initial_availableNetbootProducts = $this->a_availableNetbootProducts;
@@ -187,9 +187,7 @@ class opsiGeneric extends plugin
        */
       if(empty($this->s_selectedNetbootProduct)){
         $this->s_selectedNetbootProduct = key($this->a_availableNetbootProducts);
-        echo $this->s_selectedNetbootProduct;
       }
-    
     }
   }
 
@@ -453,7 +451,7 @@ class opsiGeneric extends plugin
     if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
       $cfg_1 = $this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
     }
-    if($this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']){
+    if(isset($this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
       $cfg_2 = $this->a_initial_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'];
     }
     $diffs = $this->get_config_changes($cfg_1,$cfg_2);
