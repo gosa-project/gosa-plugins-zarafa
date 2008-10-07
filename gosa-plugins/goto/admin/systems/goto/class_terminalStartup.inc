@@ -3,9 +3,9 @@ class termstartup extends plugin
 {
   /* Generic terminal attributes */
   var $goLdapServerList= array();
-  var $gotoBootKernel= "default";
+  var $gotoBootKernel= "default-inherited";
   var $gotoKernelParameters= "";
-  var $gotoLdapServer= "";
+  var $gotoLdapServer= "default-inherited";
   var $gotoModules= array();
   var $gotoTerminalPath= "";
   var $gotoBootKernels= array();
@@ -26,6 +26,8 @@ class termstartup extends plugin
   var $attributes= array("gotoLdapServer", "gotoBootKernel", "gotoKernelParameters","gotoModules");
   var $objectclasses= array("GOhard");
   var $view_logged = FALSE;
+  var $member_of_ogroup = FALSE;
+  var $o_group_dn       = "";
 
   /* Helper */
   var $orig_dn= "";
@@ -109,9 +111,12 @@ class termstartup extends plugin
         $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
       }
     }
-    if(!count($this->gotoLdapServers)){
+    natcasesort($this->gotoLdapServerList);
+
+    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){
       $this->gotoLdap_inherit = TRUE;
     }
+
 
     /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
@@ -127,13 +132,19 @@ class termstartup extends plugin
         }
         switch ($name){
           case 'gotoBootKernel':
-            $this->gotoBootKernels["default"] = "["._("inherited")."]"; 
+		  /* Handle inheritance value "default" */
+		  if ($this->member_of_ogroup){
+			  $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']');
+		  }
           break;
           case 'gotoLdapServer':
             $this->goLdapServerList= array_merge(array('default-inherit' => _("inherited").' ['.$attrs[$name][0].']' ), $this->goLdapServerList);
             break;
         }
       }
+
+      $this->member_of_ogroup = TRUE;
+      $this->o_group_dn = $attrs['dn'];
     }
   }
 
@@ -182,8 +193,9 @@ class termstartup extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
+    $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
 
-       /* In this section server shares will be defined
+    /* In this section server shares will be defined
      * A user can select one of the given shares and a mount point
      *  and attach this combination to his setup.
      */
@@ -411,10 +423,8 @@ class termstartup extends plugin
     }
 
     /* Strip out 'default' values */
-    foreach(array("gotoBootKernel") as $value){
-      if (!isset($this->attrs[$value]) || $this->attrs[$value] == "default"){
-        $this->attrs[$value] = array();
-      } 
+    if ($this->attrs['gotoBootKernel'] == "default-inherited"){
+	    $this->attrs['gotoBootKernel']= array();
     }
 
      /* prepare share settings */
@@ -439,27 +449,6 @@ class termstartup extends plugin
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
     }
     $this->handle_post_events("modify");
-
-    /* Check if LDAP server has changed */
-    if (isset($this->attrs['gotoLdapServer']) && class_available("DaemonEvent")){
-      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
-      $o_queue = new gosaSupportDaemon();
-      if(isset($events['TRIGGERED']['DaemonEvent_reload_ldap_config'])){
-        $evt = $events['TRIGGERED']['DaemonEvent_reload_ldap_config'];
-        $macs = array($this->parent->by_object['termgeneric']->netConfigDNS->macAddress);
-  
-        /* Trigger event for all member objects 
-         */
-        foreach($macs as $mac){
-          $tmp = new $evt['CLASS_NAME']($this->config);
-          $tmp->set_type(TRIGGERED_EVENT);
-          $tmp->add_targets(array($mac));
-          if(!$o_queue->append($tmp)){
-            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-          }
-        }
-      }
-    }
   }
 
   /* Add value to array, check if unique */
