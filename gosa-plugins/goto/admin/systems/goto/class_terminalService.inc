@@ -76,7 +76,7 @@ class termservice extends plugin
      */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
+    $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))");
     if($ldap->count()){
       $this->is_ogroup_member = TRUE;
     }
@@ -233,7 +233,7 @@ class termservice extends plugin
         "gotoXMouseType", 
         "gotoXMethod",
         "gotoXMouseport");
-    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))",$map);
+    $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))",$map);
     if ($ldap->count() == 1){
       $attrs= $ldap->fetch();
       foreach ($map as $name){
@@ -536,10 +536,9 @@ class termservice extends plugin
     /* Convert to string */
     $this->gotoLpdEnable= $this->gotoLpdEnable?"Yes":"No";
 
-    if($this->is_ogroup){
-      $this->objectclasses = array("gotoWorkstationTemplate");
-    }else{
-      $this->objectclasses = array("GOhard");
+    /* remove objectclass GOhard if this is an ogroup tab */
+    if(isset($this->parent->by_object['ogroup'])){
+	    $this->objectclasses = array();
     }
 
     plugin::save();
@@ -578,6 +577,11 @@ class termservice extends plugin
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
     }
     $this->handle_post_events("modify");
+
+    /* Send goto reload event to gosaSupportDaemon */
+    if(count($this->attrs)){
+	    $this->send_goto_reload();
+    }
   }
 
 
@@ -603,6 +607,54 @@ class termservice extends plugin
       }
     }
     return($drivers);
+  }
+
+  function send_goto_reload()
+  {
+    if(count($this->attrs) && class_available("DaemonEvent")){
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+      $o_queue = new gosaSupportDaemon();
+      if(isset($events['TRIGGERED']['DaemonEvent_goto_reload'])){
+        $evt = $events['TRIGGERED']['DaemonEvent_goto_reload'];
+        $macs = array();
+
+        /* Get list of macAddresses
+         */
+        if(isset($this->parent->by_object['ogroup'])){
+
+          /* If we are an object group, add all member macs
+           */
+          $p = $this->parent->by_object['ogroup'];
+          foreach($p->memberList as $dn => $obj){
+            if(preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$dn)) continue;
+            if(isset($p->objcache[$dn]['macAddress']) && !empty($p->objcache[$dn]['macAddress'])){
+              $macs[] = $p->objcache[$dn]['macAddress'];
+            }
+          }
+        }elseif(isset($this->parent->by_object['workgeneric']->netConfigDNS->macAddress)){
+
+          /* We are a workstation. Add current mac.
+           */
+          $mac = $this->parent->by_object['workgeneric']->netConfigDNS->macAddress;
+          if(!empty($mac) && !preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
+            $macs[] = $mac;
+          }
+        }
+
+        /* Trigger event for all member objects
+         */
+        if(count($macs)){
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->set_type(TRIGGERED_EVENT);
+          $target = $o_queue->get_host().":".$o_queue->get_port();
+          $tmp->add_targets(array($target));
+          $tmp->set_macs($macs);
+          if(!$o_queue->append($tmp,TRUE)){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+      }
+    }
   }
 
 

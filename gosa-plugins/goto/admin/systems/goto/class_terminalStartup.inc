@@ -116,7 +116,7 @@ class termstartup extends plugin
     /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".LDAP::prepare4filter($this->dn)."))");
+    $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))");
     if ($ldap->count() == 1){
       $map= array("gotoLdapServer","gotoBootKernel");
       $attrs= $ldap->fetch();
@@ -341,6 +341,22 @@ class termstartup extends plugin
   /* Save to LDAP */
   function save()
   {
+   /* Depending on the baseobject (Ogroup / WS) we
+     *  use another set of objectClasses
+     * In case of TS itself, we use  "array("GOhard");"
+     * if we are currently editing from ogroup menu we use (array("goTerminalTemplate"))
+     */
+    if(isset($this->parent->by_object['ogroup'])){
+      $this->objectclasses = array("gotoTerminalTemplate");
+    }elseif(isset($this->parent->by_object['termgeneric'])){
+      $this->objectclasses = array("GOhard");
+    }else{
+      msg_dialog::display(_("Fatal error"),
+          "Object Type Configuration is unknown. Please contact the GOsa developers.",
+          FATAL_ERROR_DIALOG);
+      exit();
+    }
+
     /* Find proper terminal path for tftp configuration
        FIXME: This is suboptimal when the default has changed to
        another location! */
