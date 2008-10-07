@@ -71,6 +71,50 @@ class termstartup extends plugin
 
     $this->orig_dn= $this->dn;
 
+    foreach($this->config->data['SERVERS']['LDAP'] as $server) {
+      $this->gotoLdapServerList[]= $server;
+    }
+    if(isset($this->attrs['gotoLdapServer'])){
+      unset($this->attrs['gotoLdapServer']['count']);
+      sort($this->attrs['gotoLdapServer']);
+      foreach($this->attrs['gotoLdapServer'] as $value){
+        $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
+      }
+    }
+    natcasesort($this->gotoLdapServerList);
+
+    /* Load hardware list */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))");
+    if ($ldap->count() == 1){
+      $map= array("gotoLdapServer","gotoBootKernel");
+      $attrs= $ldap->fetch();
+      $this->member_of_ogroup = TRUE;
+      $this->o_group_dn = $attrs['dn'];
+
+      foreach ($map as $name){
+        if (!isset($attrs[$name][0])){
+          continue;
+        }
+        switch ($name){
+          case 'gotoBootKernel':
+		  /* Handle inheritance value "default" */
+		  if ($this->member_of_ogroup){
+			  $this->gotoBootKernels["default-inherited"]= _("inherited")." [".$attrs['gotoBootKernel'][0]."]";
+		  }
+          break;
+          case 'gotoLdapServer':
+            $this->goLdapServerList= array_merge(array('default-inherit' => _("inherited").' ['.$attrs[$name][0].']' ), $this->goLdapServerList);
+            break;
+        }
+      }
+    }
+
+    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){
+      $this->gotoLdap_inherit = TRUE;
+    }
+
     /* Get list of boot kernels */
     if (isset($this->config->data['TABS'])){
       $command= $this->config->search(get_class($this), "systemKernelsHook",array('tabs'));
@@ -101,50 +145,6 @@ class termstartup extends plugin
 
     }
     
-    foreach($this->config->data['SERVERS']['LDAP'] as $server) {
-      $this->gotoLdapServerList[]= $server;
-    }
-    if(isset($this->attrs['gotoLdapServer'])){
-      unset($this->attrs['gotoLdapServer']['count']);
-      sort($this->attrs['gotoLdapServer']);
-      foreach($this->attrs['gotoLdapServer'] as $value){
-        $this->gotoLdapServers[] = preg_replace("/^[0-9]*:/","",$value);
-      }
-    }
-    natcasesort($this->gotoLdapServerList);
-
-    /* Load hardware list */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))");
-    if ($ldap->count() == 1){
-      $map= array("gotoLdapServer","gotoBootKernel");
-      $attrs= $ldap->fetch();
-
-      foreach ($map as $name){
-        if (!isset($attrs[$name][0])){
-          continue;
-        }
-        switch ($name){
-          case 'gotoBootKernel':
-		  /* Handle inheritance value "default" */
-		  if ($this->member_of_ogroup){
-			  $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']');
-		  }
-          break;
-          case 'gotoLdapServer':
-            $this->goLdapServerList= array_merge(array('default-inherit' => _("inherited").' ['.$attrs[$name][0].']' ), $this->goLdapServerList);
-            break;
-        }
-      }
-
-      $this->member_of_ogroup = TRUE;
-      $this->o_group_dn = $attrs['dn'];
-    }
-
-    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){
-      $this->gotoLdap_inherit = TRUE;
-    }
   }
 
   function execute()
