@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:28+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -73,7 +73,7 @@ msgstr "创建一个新 DNS zone 条目"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
@@ -173,7 +173,7 @@ msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
 
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""
@@ -296,18 +296,18 @@ msgstr "服务"
 
 #: admin/systems/services/dns/class_servDNS.inc:585
 #, fuzzy
-msgid "Service start"
-msgstr "服务"
+msgid "Start service"
+msgstr "添加 DNS 服务"
 
 #: admin/systems/services/dns/class_servDNS.inc:586
 #, fuzzy
-msgid "Service stop"
-msgstr "服务"
+msgid "Stop service"
+msgstr "添加 DNS 服务"
 
 #: admin/systems/services/dns/class_servDNS.inc:587
 #, fuzzy
-msgid "Service restart"
-msgstr "在子树中查找"
+msgid "Restart service"
+msgstr "添加 DNS 服务"
 
 #: admin/systems/services/dns/class_servDNS.inc:592
 #, fuzzy
@@ -366,6 +366,18 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:466
 msgid "Remove"
 msgstr "删除"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "服务"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "服务"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "在子树中查找"
 
 #, fuzzy
 #~ msgid "The zone name is not valid!"

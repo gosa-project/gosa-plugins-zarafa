@@ -582,9 +582,9 @@ class servdns extends goService
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "start"         => _("Service start"),  // Remove this to hide the start button at all.
-            "stop"          => _("Service stop"),   // Remove this to hide the stop button at all.
-            "restart"       => _("Service restart"),// Remove this to hide the restart button at all.
+            "start"         => _("Start service"),  // Remove this to hide the start button at all.
+            "stop"          => _("Stop service"),   // Remove this to hide the stop button at all.
+            "restart"       => _("Restart service"),// Remove this to hide the restart button at all.
 
             "zoneName"      =>_("Zone name"),
             "ReverseZone"   =>_("Reverse zone"),

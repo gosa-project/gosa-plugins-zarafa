@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:28+0200\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
 msgstr ""
 
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""
@@ -296,18 +296,18 @@ msgstr "Servicios"
 
 #: admin/systems/services/dns/class_servDNS.inc:585
 #, fuzzy
-msgid "Service start"
-msgstr "Servicios"
+msgid "Start service"
+msgstr "Servicio DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:586
 #, fuzzy
-msgid "Service stop"
-msgstr "Servicios"
+msgid "Stop service"
+msgstr "Servicio DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:587
 #, fuzzy
-msgid "Service restart"
-msgstr "Servicios"
+msgid "Restart service"
+msgstr "Servicio DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:592
 #, fuzzy
@@ -365,6 +365,18 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:466
 msgid "Remove"
 msgstr "Eliminar"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "Servicios"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "Servicios"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "Servicios"
 
 #, fuzzy
 #~ msgid "The zone name is not valid!"

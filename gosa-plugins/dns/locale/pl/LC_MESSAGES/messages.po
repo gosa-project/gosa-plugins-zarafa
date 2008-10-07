@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:28+0200\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -73,7 +73,7 @@ msgstr "Utwórz nowy wpis strefy DNS"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_DNS.inc:161
 #: admin/systems/services/dns/class_DNS.inc:166
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #: admin/systems/services/dns/class_servDNS.inc:184
 #: admin/systems/services/dns/class_servDNS.inc:342
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
@@ -177,7 +177,7 @@ msgstr ""
 "Znaleziono więcej niż jedną strefę odwrotną dla strefy DNS '%s'. Anulowano "
 "przetwarzanie tej strefy."
 
-#: admin/systems/services/dns/class_DNS.inc:606
+#: admin/systems/services/dns/class_DNS.inc:628
 #, php-format
 msgid "Undefined zone name '%s'!"
 msgstr ""
@@ -301,18 +301,18 @@ msgstr "Usługi"
 
 #: admin/systems/services/dns/class_servDNS.inc:585
 #, fuzzy
-msgid "Service start"
-msgstr "Usługi"
+msgid "Start service"
+msgstr "Usługa DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:586
 #, fuzzy
-msgid "Service stop"
-msgstr "Usługi"
+msgid "Stop service"
+msgstr "Usługa DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:587
 #, fuzzy
-msgid "Service restart"
-msgstr "Szukaj wewnątrz tego poddrzewa"
+msgid "Restart service"
+msgstr "Usługa DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:592
 #, fuzzy
@@ -370,6 +370,18 @@ msgstr ""
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:466
 msgid "Remove"
 msgstr "Usuń"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "Usługi"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "Usługi"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "Szukaj wewnątrz tego poddrzewa"
 
 #, fuzzy
 #~ msgid "The zone name is not valid!"
