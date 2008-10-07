@@ -113,11 +113,6 @@ class termstartup extends plugin
     }
     natcasesort($this->gotoLdapServerList);
 
-    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){
-      $this->gotoLdap_inherit = TRUE;
-    }
-
-
     /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -145,6 +140,10 @@ class termstartup extends plugin
 
       $this->member_of_ogroup = TRUE;
       $this->o_group_dn = $attrs['dn'];
+    }
+
+    if(!count($this->gotoLdapServers) && $this->member_of_ogroup){
+      $this->gotoLdap_inherit = TRUE;
     }
   }
 
