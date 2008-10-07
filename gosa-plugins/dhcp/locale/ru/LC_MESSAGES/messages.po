@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:31+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -570,18 +570,18 @@ msgstr "Сервисы"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
 #, fuzzy
-msgid "Service start"
+msgid "Start service"
 msgstr "Сервисы"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
 #, fuzzy
-msgid "Service stop"
+msgid "Stop service"
 msgstr "Сервисы"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
 #, fuzzy
-msgid "Service restart"
-msgstr "Искать в поддеревьях"
+msgid "Restart service"
+msgstr "Сервер NTP"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 #, fuzzy
@@ -605,6 +605,18 @@ msgstr "Выберите тип мыши"
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:15
 msgid "Create"
 msgstr "Создать"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "Сервисы"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "Сервисы"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "Искать в поддеревьях"
 
 #, fuzzy
 #~ msgid "May lease time"

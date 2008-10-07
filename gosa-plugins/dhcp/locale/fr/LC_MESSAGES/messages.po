@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:31+0200\n"
 "PO-Revision-Date: 2008-08-12 12:46+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -64,7 +64,8 @@ msgstr "Adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:22
 msgid "Use hostname or IP-address to assign fixed address"
-msgstr "Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
+msgstr ""
+"Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:31
 msgid "Hardware type"
@@ -200,7 +201,8 @@ msgstr "Accepter les clients inconnus"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr "Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
+msgstr ""
+"Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Allow bootp clients"
@@ -224,7 +226,10 @@ msgid ""
 "This includes 'all' DHCP subsections that are located within this section. "
 "Please double check if your really want to do this since there is no way for "
 "GOsa to get your data back."
-msgstr "Ceci inclut toutes les sous sections DHCP qui sont dans cette section. Veuillez vérifier que vous voulez effectuer cette opération, étant donné qu'il est impossible pour GOsa de récupérer vos données."
+msgstr ""
+"Ceci inclut toutes les sous sections DHCP qui sont dans cette section. "
+"Veuillez vérifier que vous voulez effectuer cette opération, étant donné "
+"qu'il est impossible pour GOsa de récupérer vos données."
 
 #: admin/systems/services/dhcp/remove_dhcp.tpl:10
 msgid ""
@@ -278,7 +283,8 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
-msgid "Enter name of file that will be loaded via tftp after client has started"
+msgid ""
+"Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Entrez le nom du fichier qui doit être chargé via tftp après que le client "
 "aie démarré"
@@ -516,16 +522,19 @@ msgid "Services"
 msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
-msgid "Service start"
-msgstr "Démarrage du service"
+#, fuzzy
+msgid "Start service"
+msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
-msgid "Service stop"
-msgstr "Arrêt du service"
+#, fuzzy
+msgid "Stop service"
+msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
-msgid "Service restart"
-msgstr "Redémarrage du service"
+#, fuzzy
+msgid "Restart service"
+msgstr "Serveur suivant"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 msgid "Create new DHCP section"
@@ -547,3 +556,11 @@ msgstr "Choisissez le type de section à créer"
 msgid "Create"
 msgstr "Créer"
 
+#~ msgid "Service start"
+#~ msgstr "Démarrage du service"
+
+#~ msgid "Service stop"
+#~ msgstr "Arrêt du service"
+
+#~ msgid "Service restart"
+#~ msgstr "Redémarrage du service"

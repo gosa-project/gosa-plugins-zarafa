@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:31+0200\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -563,18 +563,18 @@ msgstr "服务"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
 #, fuzzy
-msgid "Service start"
+msgid "Start service"
 msgstr "服务"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
 #, fuzzy
-msgid "Service stop"
+msgid "Stop service"
 msgstr "服务"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
 #, fuzzy
-msgid "Service restart"
-msgstr "在子树中查找"
+msgid "Restart service"
+msgstr "NTP 服务器"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 #, fuzzy
@@ -598,6 +598,18 @@ msgstr "选择鼠标类型"
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:15
 msgid "Create"
 msgstr "创建"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "服务"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "服务"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "在子树中查找"
 
 #, fuzzy
 #~ msgid "May lease time"

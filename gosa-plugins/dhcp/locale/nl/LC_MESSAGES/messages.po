@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:31+0200\n"
 "PO-Revision-Date: 2008-06-09 18:26+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -523,18 +523,18 @@ msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
 #, fuzzy
-msgid "Service start"
+msgid "Start service"
 msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
 #, fuzzy
-msgid "Service stop"
+msgid "Stop service"
 msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
 #, fuzzy
-msgid "Service restart"
-msgstr "Zoek binnen subtree"
+msgid "Restart service"
+msgstr "Volgende server"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 msgid "Create new DHCP section"
@@ -555,3 +555,15 @@ msgstr "Selecteer het aan te maken sectie type"
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:15
 msgid "Create"
 msgstr "Aanmaken"
+
+#, fuzzy
+#~ msgid "Service start"
+#~ msgstr "Services"
+
+#, fuzzy
+#~ msgid "Service stop"
+#~ msgstr "Services"
+
+#, fuzzy
+#~ msgid "Service restart"
+#~ msgstr "Zoek binnen subtree"

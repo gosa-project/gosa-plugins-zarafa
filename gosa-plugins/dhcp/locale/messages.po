@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-07 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -504,15 +504,15 @@ msgid "Services"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
-msgid "Service start"
+msgid "Start service"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
-msgid "Service stop"
+msgid "Stop service"
 msgstr ""
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
-msgid "Service restart"
+msgid "Restart service"
 msgstr ""
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
