@@ -500,7 +500,7 @@ sub trigger_goto_settings_reload {
     my ($msg, $msg_hash) = @_;
 
     # Execute goto settings reload
-    my $cmd = "/etc/init.d/goto-configure";
+    my $cmd = "/etc/init.d/goto-agents";
     my $pram = "start";
     if (-f $cmd){
         my $feedback = system("$cmd $pram") or &main::daemon_log("ERROR: $@");
