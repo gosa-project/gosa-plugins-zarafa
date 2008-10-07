@@ -38,7 +38,6 @@ class termgroup extends plugin
      ***************/
 
     plugin::plugin($config, $dn, $parent);
-
     $ldap= $config->get_ldap_link();
 
     $this->is_account = true;
@@ -263,6 +262,12 @@ class termgroup extends plugin
   /* Save to LDAP */
   function save()
   {
+    if (isset($this->parent->by_name['termstartup'])){
+    	$this->objectclasses= array("gotoTerminalTemplate");
+    } else {
+    	$this->objectclasses= array("gotoWorkstationTemplate");
+    }
+
     plugin::save();
 
     /***************
