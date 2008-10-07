@@ -8,7 +8,8 @@ class termgroup extends plugin
   var $gotoMode           = "locked";
   var $gotoSyslogServer   = "";
   var $gotoNtpServer      = array();
-  var $gotoNtpServers     = array();
+  var $gotoTerminalPath   = array();
+  var $gotoSwapServer     = array();
   var $modes              = array();
   var $inheritTimeServer  = true;
   var $is_account		      = true; 
@@ -25,10 +26,13 @@ class termgroup extends plugin
                            # "sysinfo"         => "sysinfo"
 			   );
 
-  var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer");
+  var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer", "gotoTerminalPath", "gotoSwapServer");
   var $objectclasses  = array("gotoWorkstationTemplate");
   var $CopyPasteVars  = array("gotoNtpServers","modes","inheritTimeServer","members");
   var $view_logged    = FALSE;
+  var $nfsservers     = array();
+  var $swapservers    = array();
+  var $member_of_ogroup= false;
 
 
   function termgroup (&$config, $dn= NULL, $parent= NULL)
@@ -85,6 +89,32 @@ class termgroup extends plugin
         $this->gotoNtpServer[$server] = $server;
       }
     }
+
+    /* Get Share servers */
+    $tmp2 = array();
+    $tmp2['!']= _("Local swap");
+    foreach($this->config->data['SERVERS']['NBD'] as $server){
+      if($server != "default"){
+        $tmp2[$server]= $server;
+      }else{
+        if($this->member_of_ogroup){
+          $tmp2[$server]="["._("inherited")."]";
+        }
+      }
+    }
+    $this->swapservers= $tmp2;
+
+    $tmp2 = array();
+    foreach($this->config->data['SERVERS']['NFS'] as $server){
+      if($server != "default"){
+        $tmp2[$server]= $server;
+      }else{
+        if($this->member_of_ogroup){
+          $tmp2[$server]="["._("inherited")."]";
+        }
+      }
+    }
+    $this->nfsservers= $tmp2;
 
     /* Set inherit checkbox state */
     if(in_array("default",$this->gotoNtpServer)){
@@ -204,6 +234,12 @@ class termgroup extends plugin
     /* Set government mode */
     $smarty= get_smarty();
 
+    if (isset($this->parent->by_name['termstartup'])){
+    	$smarty->assign("is_termgroup", "1");
+    } else {
+    	$smarty->assign("is_termgroup", "0");
+    }
+
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated) {
       $smarty->assign($name."ACL",$this->getacl($name));
@@ -238,8 +274,18 @@ class termgroup extends plugin
     }
 
     $smarty->assign("gotoNtpServers",$tmp); 
+
+    $smarty->assign("nfsservers",     $this->nfsservers);
+    $smarty->assign("swapservers",    $this->swapservers);
+
     $smarty->assign("syslogservers", $this->config->data['SERVERS']['SYSLOG']); 
     $smarty->assign("gotoSyslogServer_select", $this->gotoSyslogServer); 
+
+    /* Variables */
+    foreach(array("gotoTerminalPath", "gotoSwapServer") as $val){
+	    $smarty->assign($val."_select", $this->$val);
+    }
+
 
     /* Show main page */
     return ($smarty->fetch (get_template_path('termgroup.tpl', TRUE, dirname(__FILE__))));
@@ -332,7 +378,9 @@ class termgroup extends plugin
             "gotoMode"          => _("Mode"),     
             "gotoSyslogServer"  => _("Syslog server"), 
             "FAIstate"          => _("Action flag"), 
-            "gotoNtpServer"     => _("Ntp server"))
+            "gotoNtpServer"     => _("Ntp server"),
+            "gotoTerminalPath"    => _("Root server"),
+            "gotoSwapServer"      => _("Swap server"))
           ));
   }
 

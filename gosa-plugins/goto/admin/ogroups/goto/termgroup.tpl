@@ -64,7 +64,29 @@
 {/render}
 				 </td>
 				</tr>
-				</table>
+				{if $is_termgroup}
+				    <tr>
+				     <td><LABEL for="gotoTerminalPath">{t}Root server{/t}</LABEL></td>
+				     <td>
+				{render acl=$gotoTerminalPathACL}
+				      <select name="gotoTerminalPath" id="gotoTerminalPath" title="{t}Select NFS root filesystem to use{/t}">
+				       {html_options options=$nfsservers selected=$gotoTerminalPath_select}
+				      </select>
+				{/render}
+				     </td>
+				    </tr>
+				    <tr>
+				     <td><LABEL for="gotoSwapServer">{t}Swap server{/t}</LABEL></td>
+				     <td>
+				{render acl=$gotoSwapServerACL}
+				      <select name="gotoSwapServer" id="gotoSwapServer" title="{t}Choose NFS filesystem to place swap files on{/t}">
+				       {html_options options=$swapservers selected=$gotoSwapServer_select}
+				      </select>
+				{/render}
+				     </td>
+				    </tr>
+				{/if}
+				   </table>
 		</td>
 	</tr>
 	<tr>
