@@ -3,7 +3,7 @@
 class workservice extends plugin
 {
   var $gotoScannerEnable;
-  var $gotoLpdEnable;
+  var $gotoLpdEnable = array();
 
   /* Generic terminal attributes */
   var $gotoXMonitor= "";
@@ -40,7 +40,7 @@ class workservice extends plugin
   var $attributes= array("gotoXMonitor",
       "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync",
-      "gotoScannerEnable","gotoLpdEnable", "gotoScannerClients",
+      "gotoScannerEnable", "gotoScannerClients",
       "gotoScannerBackend", "gotoXKbModel", "gotoXKbLayout", "gotoXKbVariant",
       "gotoXMouseType", "gotoXMouseport", "goFonHardware");
   var $objectclasses= array("GOhard");
@@ -253,15 +253,20 @@ class workservice extends plugin
       }
     }
 
+
     /**********
       gotoLpdEnable 
      **********/
-
     if(isset($_POST['gotoLpdEnable_Close'])){
       $this->dialog = NULL;
     }
+    if(isset($_POST['gotoLpdEnable_Ok'])){
+      $this->dialog->save_object();
+      $this->gotoLpdEnable = $this->dialog->save();
+      $this->dialog = NULL;
+    }
 
-    if(isset($_POST['gotoLpdEnable'])){
+    if(isset($_POST['gotoLpdEnable_Edit'])){
       $this->dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this);
     }
 

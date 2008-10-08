@@ -210,7 +210,7 @@
    <h2><img class="center" alt="" src="plugins/systems/images/select_printer.png"> {t}Printer{/t}</h2>
 
 {render acl=$gotoLpdEnableACL}
-	<input type='submit' name='gotoLpdEnable' value='{msgPool type=editButton}'>
+	<input type='submit' name='gotoLpdEnable_Edit' value='{msgPool type=editButton}'>
 {/render}
 	</td>
  </tr>
