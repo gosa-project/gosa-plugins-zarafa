@@ -21,7 +21,6 @@ class gotoLpdEnable extends plugin
 
   /* Option predefinition */
   private $a_Types = array();
-  private $a_Boolean = array();
   private $a_FlowControls = array(); //  
   private $a_Parities = array();    //  
   private $a_Speeds = array();      // 
@@ -31,22 +30,26 @@ class gotoLpdEnable extends plugin
   public    $attributes = array("s_Type","s_Device","i_Port","s_Options","s_WriteOnly",
       "s_Speed","s_FlowControl","s_Parity","i_Bit");
 
+  /*! \brief  Create gotoLpdEnable dialog, allows to edit printer settings.
+      @param  Object  $config  The GOsa configuration object.
+      @param  Array   $data    The values for attribute 'gotoLpdEnable'
+                      e.g.     array("USB:/dev/usb/lp0:9100:9600:S:E:0:Y:options",
+                               "USB:/dev/usb/lp1:9101:9600:S:E:5:Y:", ...)
+      @param  Object  $parent  A reference to the parent plugin-object. 
+      @return Object  gotoLpdEnable (plugin) 
+  */
 	public function __construct($config,$data,&$parent)
 	{
 		plugin::plugin($config,NULL);
 		$this->parent = $parent;
     $this->DevID = 0;
 
-    /****
-      Predefine values 
-     ****/ 
+    /* Predefine selectable values 
+     */ 
     $this->a_Types = array(
         "USB" => _("USB"),
         "Parallel" => _("Parallel port"),
         "Serial" => _("Serial"));
-    $this->a_Boolean = array(
-        "Y" => _("Yes"),
-        "N" => _("No"));
     $this->a_FlowControl = array(
         "S" => _("Software"),
         "H" => _("Hardware"));
@@ -81,8 +84,10 @@ class gotoLpdEnable extends plugin
     if(count($data) == 0){
       $this->is_account = FALSE;
     }else{
-      $this->is_account = TRUE;
       foreach($data as $dat){
+
+        if(substr_count($dat,":") < 8) continue;
+
         list($s_Type,$s_Device,$i_Port,$s_Speed,$s_FlowControl,$s_Parity,$i_Bit,$s_WriteOnly,$s_Options) = split("\:",$dat);
         $entry = array();
         foreach($this->attributes as $attr){
@@ -91,15 +96,26 @@ class gotoLpdEnable extends plugin
         $this->data[] = $entry;
       }
 
+      if(count($this->data)){
       /* Set first entry values 
        */
       foreach($this->attributes as $attr){
         $this->$attr = $this->data[$this->DevID][$attr];
       }
+        $this->is_account = TRUE;
+      }      
     }
     $this->initially_was_account = $this->is_account;
   }
 
+
+  /*! \brief  Create HTML output of this plugin.
+              Depending on the current plugin status, there is a 
+                'create' and a 'remove'account button displayed on top
+               followed by the gotoLpdEnable options.
+      @param  .
+      @return String  HTML content
+  */
 	public function execute()
 	{
     $display = "";
@@ -128,7 +144,7 @@ class gotoLpdEnable extends plugin
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
-    foreach(array("DevID","a_Types","a_Boolean","a_FlowControl","a_Parities","a_Speeds","a_Bits") as $attr){
+    foreach(array("DevID","a_Types","a_FlowControl","a_Parities","a_Speeds","a_Bits") as $attr){
       $smarty->assign($attr,$this->$attr);
     }
     ksort($this->data);
@@ -141,6 +157,11 @@ class gotoLpdEnable extends plugin
 	}
 
 
+  /*! \brief  Checks the given informations and returns an array 
+               with the error messages or an empty array if everything went fine.
+      @param  .
+      @return Array of Strings  Error messages.
+  */
   public function check()
   {
     $messages = plugin::check();
@@ -159,6 +180,10 @@ class gotoLpdEnable extends plugin
   }  
 
 
+  /*! \brief  Save all ui inputs. 
+      @param  .
+      @return .
+  */
   public function save_object()
   {
     if(!$this->is_account) return;
@@ -214,6 +239,12 @@ class gotoLpdEnable extends plugin
     }
   }
 
+
+  /*! \brief  Creates an array containing all gotoLpdEnabled values,
+               see constructor for more details.
+      @param  .
+      @return Array of gotoLpdEnabled Strings.
+  */
   public function save()
   {
     $ret = array();
@@ -229,16 +260,30 @@ class gotoLpdEnable extends plugin
   }
 
 
-  /* Allow every action, check are made in class service not here.
-   */
+  /*! \brief  .  
+      @param  .
+      @return .
+  */
   public function acl_is_writeable($attr,$skip_write = FALSE)
   { 
     return(TRUE);
   }
+
+
+  /*! \brief  .  
+      @param  .
+      @return .
+  */
   public function acl_is_removeable($skip_write = FALSE)
   { 
     return(TRUE);
   }
+
+
+  /*! \brief  .  
+      @param  .
+      @return .
+  */
   public function acl_is_createable($skip_write = FALSE)
   { 
     return(TRUE);

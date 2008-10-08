@@ -3,7 +3,6 @@
 class termservice extends plugin
 {
   /* Generic terminal attributes */
-  var $gotoLpdEnable= FALSE;
   var $gotoXMonitor= "";
   var $gotoXMethod= "default";
   var $gotoXdmcpServer= "";
@@ -23,6 +22,8 @@ class termservice extends plugin
   var $gotoScannerClients= "";
   var $gotoScannerBackend= "";
   var $goFonHardware= "automatic";
+
+  var $gotoLpdEnable = array();
 
   var $AutoSync = false;
   var $view_logged = FALSE;
@@ -48,7 +49,7 @@ class termservice extends plugin
   /* attribute list for save action */
   var $attributes= array("gotoLpdEnable", "gotoXMonitor", "gotoXMethod", "gotoXdmcpServer",
       "gotoXDriver", "gotoXResolution", "gotoXColordepth",
-      "gotoXHsync", "gotoXVsync", "gotoLpdEnable", "gotoLpdServer",
+      "gotoXHsync", "gotoXVsync", "gotoLpdServer",
       "gotoScannerEnable", "gotoScannerModel", "gotoScannerClients",
       "gotoScannerBackend", "gotoXKbModel", "gotoXKbLayout", "gotoXKbVariant",
       "gotoXMouseType", "gotoXMouseport", "goFonHardware");
@@ -79,6 +80,15 @@ class termservice extends plugin
     $ldap->search("(&(|(objectClass=gotoTerminalTemplate)(objectClass=gotoWorkstationTemplate))(member=".LDAP::prepare4filter($this->dn)."))");
     if($ldap->count()){
       $this->is_ogroup_member = TRUE;
+    }
+
+    /* Load gotoLpdEnable
+     */
+    $this->gotoLpdEnable = array();
+    if(isset($this->attrs['gotoLpdEnable']['count'])){
+      for($i = 0 ; $i < $this->attrs['gotoLpdEnable']['count']; $i ++){
+        $this->gotoLpdEnable[] = $this->attrs['gotoLpdEnable'][$i];
+      }
     }
 
     /* Get list of available xdrivers */
@@ -215,10 +225,6 @@ class termservice extends plugin
       }
     }
 
-    /* Convert gotoLpdEnable 
-     */
-    $this->gotoLpdEnable= preg_match("/yes/i",$this->gotoLpdEnable);
-
     /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -308,6 +314,39 @@ class termservice extends plugin
       return ($display);
     }
 
+
+    /**********
+      gotoLpdEnable
+     **********/
+    if(isset($_POST['gotoLpdEnable_Close'])){
+      $this->dialog = NULL;
+    }
+
+    if(isset($_POST['gotoLpdEnable_Ok'])){
+      $this->dialog->save_object();
+      $msgs = $this->dialog->check();
+      if(count($msgs)) {
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $this->gotoLpdEnable = $this->dialog->save();
+        $this->dialog = NULL;
+      }
+    }
+
+    if(isset($_POST['gotoLpdEnable_Edit'])){
+      $this->dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this);
+    }
+
+    if($this->dialog instanceof plugin){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
+    /**********
+      Ende: gotoLpdEnable
+     **********/
+
+
     /* Show main page */
     $smarty= get_smarty();
 
@@ -392,7 +431,7 @@ class termservice extends plugin
     $smarty->assign("staticAddress", "");
 
     /* Checkboxes */
-    foreach(array("gotoLpdEnable", "gotoScannerEnable") as $val){
+    foreach(array("gotoScannerEnable") as $val){
       if ($this->$val == TRUE) {
         $smarty->assign("$val", "checked");
       } else {
@@ -448,7 +487,7 @@ class termservice extends plugin
 
     /* Save checkbox state */
     if (isset ($_POST['gotoXMethod'])){
-      foreach (array("gotoLpdEnable", "gotoScannerEnable") as $val){
+      foreach (array("gotoScannerEnable") as $val){
 
         if($this->acl_is_writeable($val)){
           if (!isset ($_POST["$val"])){
@@ -533,9 +572,6 @@ class termservice extends plugin
   /* Save to LDAP */
   function save()
   {
-    /* Convert to string */
-    $this->gotoLpdEnable= $this->gotoLpdEnable?"Yes":"No";
-
     /* remove objectclass GOhard if this is an ogroup tab */
     if(isset($this->parent->by_object['ogroup'])){
 	    $this->objectclasses = array();
@@ -671,6 +707,7 @@ class termservice extends plugin
           "plCategory"    => array("terminal"),
 
           "plProvidedAcls"=> array(
+          
             "gotoXMonitor"            => _("Monitor"),
             "gotoXMethod"             => _("Method"),
             "gotoXdmcpServer"         => _("Remote desktop"),
@@ -680,7 +717,6 @@ class termservice extends plugin
             "gotoXHsync"              => _("HSync"),
             "gotoXVsync"              => _("VSync"),
             "AutoSync"                => _("Auto-Sync"),
-            "gotoLpdEnable"           => _("Printer service enabled"),
             "gotoLpdServer"           => _("Spool server"),
             "gotoScannerEnable"       => _("Scanner enabled"),
             "gotoXKbModel"            => _("Keyboard model"),
@@ -688,6 +724,7 @@ class termservice extends plugin
             "gotoXKbVariant"          => _("Keyboard variant"),
             "gotoXMouseType"          => _("Mouse type"),
             "gotoXMouseport"          => _("Mouse port"),
+            "gotoLpdEnable"         => _("Printer enabled"),
             "goFonHardware"           => _("Telephone hardware"))
           ));
   }

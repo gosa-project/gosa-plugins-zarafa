@@ -222,15 +222,28 @@
 </table>
 
 <table style="width:100%;" summary="">
- <tr><td><p class="plugbottom" style="margin-top:0px;"></p></td></tr>
  <tr>
-  <td style="vertical-align:top;">
+	<td colspan="2">
+		<p class="plugbottom" style="margin-top:0px;">
+		</p>
+	</td>
+ </tr>
+ <tr>
+  <td style="vertical-align:top; width:50%;">
    <h2><img class="center" alt="" align="middle" src="plugins/goto/images/scanner.png"> {t}Scan device{/t}</h2>
 {render acl=$gotoScannerEnableACL}
    <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} >
 {/render}
    {t}Provide scan services{/t}
+
   </td>
+	<td>
+   <h2><img class="center" alt="" src="plugins/systems/images/select_printer.png"> {t}Printer{/t}</h2>
+
+{render acl=$gotoLpdEnableACL}
+       <input type='submit' name='gotoLpdEnable_Edit' value='{msgPool type=editButton}'>
+{/render}
+	</td>
  </tr>
 </table>
 
