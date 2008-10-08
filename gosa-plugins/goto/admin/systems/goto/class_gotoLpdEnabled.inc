@@ -141,6 +141,24 @@ class gotoLpdEnable extends plugin
 	}
 
 
+  public function check()
+  {
+    $messages = plugin::check();
+    if(!$this->is_account){
+      return($messages);
+    }
+    foreach($this->data as $id => $entry){
+      if(!tests::is_id($entry['i_Port'])){
+        $messages[] = msgPool::invalid(_("Port"));
+      }
+      if(preg_match("/:/",$entry['s_Options'])){
+        $messages[] = msgPool::invalid(_("Options"));
+      }
+    }
+    return($messages);
+  }  
+
+
   public function save_object()
   {
     if(!$this->is_account) return;

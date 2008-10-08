@@ -269,10 +269,16 @@ class workservice extends plugin
     if(isset($_POST['gotoLpdEnable_Close'])){
       $this->dialog = NULL;
     }
+
     if(isset($_POST['gotoLpdEnable_Ok'])){
       $this->dialog->save_object();
-      $this->gotoLpdEnable = $this->dialog->save();
-      $this->dialog = NULL;
+      $msgs = $this->dialog->check();
+      if(count($msgs)) {
+        msg_dialog::displayChecks($msgs);
+      }else{
+        $this->gotoLpdEnable = $this->dialog->save();
+        $this->dialog = NULL;
+      }
     }
 
     if(isset($_POST['gotoLpdEnable_Edit'])){
