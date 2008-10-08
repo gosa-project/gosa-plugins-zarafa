@@ -3,7 +3,6 @@
 class workservice extends plugin
 {
   var $gotoScannerEnable;
-  var $gotoLpdEnable = array();
 
   /* Generic terminal attributes */
   var $gotoXMonitor= "";
@@ -37,8 +36,7 @@ class workservice extends plugin
 
 
   /* attribute list for save action */
-  var $attributes= array("gotoXMonitor","gotoLpdEnable",
-      "gotoXDriver", "gotoXResolution", "gotoXColordepth",
+  var $attributes= array("gotoXMonitor", "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync",
       "gotoScannerEnable", "gotoScannerClients",
       "gotoScannerBackend", "gotoXKbModel", "gotoXKbLayout", "gotoXKbVariant",
@@ -62,15 +60,6 @@ class workservice extends plugin
         "1280x1024" =>  "1280x1024",
         "1400x1050" =>  "1400x1050", 
         "1600x1200" =>  "1600x1200");
-
-    /* Load gotoLpdEnable 
-     */
-    $this->gotoLpdEnable = array();
-    if(isset($this->attrs['gotoLpdEnable']['count'])){
-      for($i = 0 ; $i < $this->attrs['gotoLpdEnable']['count']; $i ++){
-        $this->gotoLpdEnable[] = $this->attrs['gotoLpdEnable'][$i];
-      }
-    }
 
     if($this->config->get_cfg_value("resolutions") != ""){
       $file = $this->config->get_cfg_value("resolutions");
@@ -261,40 +250,6 @@ class workservice extends plugin
         $this->is_account= TRUE;
       }
     }
-
-
-    /**********
-      gotoLpdEnable 
-     **********/
-    if(isset($_POST['gotoLpdEnable_Close'])){
-      $this->dialog = NULL;
-    }
-
-    if(isset($_POST['gotoLpdEnable_Ok'])){
-      $this->dialog->save_object();
-      $msgs = $this->dialog->check();
-      if(count($msgs)) {
-        msg_dialog::displayChecks($msgs);
-      }else{
-        $this->gotoLpdEnable = $this->dialog->save();
-        $this->dialog = NULL;
-      }
-    }
-
-    if(isset($_POST['gotoLpdEnable_Edit'])){
-      $this->dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this);
-    }
-
-    if($this->dialog instanceof plugin){
-      $this->dialog->save_object();
-      return($this->dialog->execute());
-    }
-
-
-    /**********
-      Ende: gotoLpdEnable 
-     **********/
-
 
     /* Show main page */
     $smarty= get_smarty();
@@ -539,7 +494,6 @@ class workservice extends plugin
             "gotoXVsync"            => _("VSync"),
             "AutoSync"              => _("Use DDC"),
             "gotoScannerEnable"     => _("Scanner enabled"),
-            "gotoLpdEnable"         => _("Printer enabled"),
             "gotoXKbModel"          => _("Keyboard model"),
             "gotoXKbLayout"         => _("Keyboard layout"),
             "gotoXKbVariant"        => _("Keyboard variant"),
