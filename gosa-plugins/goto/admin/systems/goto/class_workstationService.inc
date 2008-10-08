@@ -37,7 +37,7 @@ class workservice extends plugin
 
 
   /* attribute list for save action */
-  var $attributes= array("gotoXMonitor",
+  var $attributes= array("gotoXMonitor","gotoLpdEnable",
       "gotoXDriver", "gotoXResolution", "gotoXColordepth",
       "gotoXHsync", "gotoXVsync",
       "gotoScannerEnable", "gotoScannerClients",
@@ -62,6 +62,15 @@ class workservice extends plugin
         "1280x1024" =>  "1280x1024",
         "1400x1050" =>  "1400x1050", 
         "1600x1200" =>  "1600x1200");
+
+    /* Load gotoLpdEnable 
+     */
+    $this->gotoLpdEnable = array();
+    if(isset($this->attrs['gotoLpdEnable']['count'])){
+      for($i = 0 ; $i < $this->attrs['gotoLpdEnable']['count']; $i ++){
+        $this->gotoLpdEnable[] = $this->attrs['gotoLpdEnable'][$i];
+      }
+    }
 
     if($this->config->get_cfg_value("resolutions") != ""){
       $file = $this->config->get_cfg_value("resolutions");

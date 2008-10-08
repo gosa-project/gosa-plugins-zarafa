@@ -3,7 +3,7 @@
 {else}
 <table style='width:100%;'>
 	<tr>
-		<td style='width:50%;'>
+		<td style='width:55%;'>
 			<table>
 				<tr>
 					<td>{t}Device{/t}&nbsp;#</td>
