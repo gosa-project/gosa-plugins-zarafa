@@ -40,7 +40,7 @@ class opsiGeneric extends plugin
   public  $initial_description  = ""; 
 
   private $init_failed = FALSE; // Is true if the opsi communication failed
-  private $parent_mode = TRUE;  // Is true if this is a standlone plugin. (Not samba)
+  private $standalone  = TRUE;  // Is true if this is a standlone plugin. (Not samba)
   private $is_installed= FALSE; // Is true is the hast is already installed.
 
   public $attributes = array("mac","note","description");
@@ -61,7 +61,7 @@ class opsiGeneric extends plugin
      */
     $this->parent = $parent;
     if($parent instanceof wingeneric){
-      $this->parent_mode = FALSE;
+      $this->standalone  = FALSE;
     }
 
     /* Get hostId 
@@ -88,6 +88,12 @@ class opsiGeneric extends plugin
     $err = FALSE;
     $this->init_failed = FALSE;
     $this->initially_was_account = FALSE; 
+
+    /* We are a standalone plugin.
+     */
+    if($this->standalone ) {
+      $this->is_account = TRUE;
+    }
 
     /* Try to load client infos from the gosa support daemon
      */
@@ -234,6 +240,7 @@ class opsiGeneric extends plugin
      */
     if($this->init_failed){
       $smarty = get_smarty();
+      $smarty->assign("standalone ", $this->standalone );
       $smarty->assign("init_failed",TRUE);
       $smarty->assign("message",$this->opsi->get_error());
       return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
@@ -243,7 +250,7 @@ class opsiGeneric extends plugin
        which has the opsi tab enabled.
        Check if the opsi is added or removed and display state buttons.
      */
-    if(!$this->parent_mode){
+    if(!$this->standalone ){
       if(isset($_POST['modify_state'])){
         if($this->is_account){
           $this->is_account= FALSE;
@@ -271,11 +278,10 @@ class opsiGeneric extends plugin
     /* Create HTML output of this plugin
      */
     $smarty = get_smarty();
+    $smarty->assign("standalone", $this->standalone );
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
-
-    $smarty->assign("parent_mode", $this->parent_mode);
     $smarty->assign("is_installed", $this->is_installed);
     $smarty->assign("init_failed",FALSE);
     $divSLP = new divSelectBox();
@@ -547,13 +553,13 @@ class opsiGeneric extends plugin
 
       /* Get hostId 
        */
-      if(isset($_POST['hostId']) && $this->parent_mode){
+      if(isset($_POST['hostId']) && $this->standalone ){
         $this->hostId = get_post('hostId');
       }
 
       /* Send actions like 'install' or 'wake' to the si server 
        */
-      if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->parent_mode){
+      if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->standalone ){
         $action = $_POST['opsi_action'];
         if($action == "install"){
           $this->install_client(); 

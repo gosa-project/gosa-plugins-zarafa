@@ -13,7 +13,7 @@
  <tr>
   <td>
    <table>
-    {if $parent_mode}
+    {if $standalone}
     <tr>
      <td>{t}Name{/t}</td>
      <td><input style='width:300px;' type='text' name='hostId' value='{$hostId}'></td>
@@ -82,7 +82,7 @@
  <tr>
   <td colspan="2">
    <p class='seperator'>&nbsp;</p><br>
-   {if $parent_mode}
+   {if $standalone}
     <h2><img src='images/rocket.png' alt="" class="center">&nbsp;{t}Action{/t}</h2>
 	<select name='opsi_action'>
 		<option>&nbsp;</option>
