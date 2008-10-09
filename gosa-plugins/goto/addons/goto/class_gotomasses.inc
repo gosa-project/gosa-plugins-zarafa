@@ -554,7 +554,11 @@ class gotomasses extends plugin
                       "attach" => $tooltip."style='".$color."'");
       $field1a= array("string" => $display2,
                       "attach" => "style='".$color.";width:120px;'");
-      $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
+      if ($task['TIMESTAMP'] == "19700101000000"){
+	      $field2 = array("string" => _("immediately"),"attach" => "style='".$color.";width:140px;'");
+      } else {
+	      $field2 = array("string" => date("d.m.Y H:i:s",strtotime($task['TIMESTAMP'])),"attach" => "style='".$color.";width:140px;'");
+      }
       $field3 = array("string" => $status,"attach" => "style='".$color.";width:80px;'");
       $field4 = array("string" => $prio_actions.$action,"attach" => "style='".$color.";text-align:right;width:140px;border-right:0px;'");
       $divlist->AddElement(array($field0,$field1,$field1a,$field2,$field3,$field4));
