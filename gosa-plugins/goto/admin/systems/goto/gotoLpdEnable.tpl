@@ -5,6 +5,7 @@
 	<tr>
 		<td style='width:55%;'>
 			<table>
+<!--
 				<tr>
 					<td>{t}Device{/t}&nbsp;#</td>
 					<td>
@@ -21,6 +22,7 @@
 						<input type="submit" name="del_printer" value="{msgPool type=delButton}">
 					</td>
 				</tr>
+-->
 				<tr>
 					<td>{t}Type{/t}</td>
 					<td>	
@@ -50,7 +52,7 @@
 				<tr>
 					<td>{t}Write only{/t}</td>
 					<td>
-						<input {if $s_WriteOnly} checked {/if} type='checkbox' name='s_WriteOnly' value='Y' >
+						<input {if $s_WriteOnly == "Y"} checked {/if} type='checkbox' name='s_WriteOnly' value='Y' >
 					</td>
 				</tr>
 			</table>

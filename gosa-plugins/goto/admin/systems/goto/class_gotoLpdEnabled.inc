@@ -85,9 +85,7 @@ class gotoLpdEnable extends plugin
       $this->is_account = FALSE;
     }else{
       foreach($data as $dat){
-
         if(substr_count($dat,":") < 8) continue;
-
         list($s_Type,$s_Device,$i_Port,$s_Speed,$s_FlowControl,$s_Parity,$i_Bit,$s_WriteOnly,$s_Options) = split("\:",$dat);
         $entry = array();
         foreach($this->attributes as $attr){
@@ -96,12 +94,13 @@ class gotoLpdEnable extends plugin
         $this->data[] = $entry;
       }
 
-      if(count($this->data)){
       /* Set first entry values 
+          From "$this->data[0]" to "$this->"
        */
-      foreach($this->attributes as $attr){
-        $this->$attr = $this->data[$this->DevID][$attr];
-      }
+      if(count($this->data)){
+        foreach($this->attributes as $attr){
+          $this->$attr = $this->data[$this->DevID][$attr];
+        }
         $this->is_account = TRUE;
       }      
     }
@@ -119,11 +118,20 @@ class gotoLpdEnable extends plugin
 	public function execute()
 	{
     $display = "";
+
+    /* Handle account add/remove 
+     */
     if(isset($_POST['modify_state'])){
       $this->is_account = !$this->is_account;
+
+      /* Reset account or create a new one
+       */
       if(!$this->is_account){
         $this->data = array();
       }else{
+      
+        /* Initialize plugin with default entries
+         */
         $entry = $this->default_entry;
         $entry['i_Port'] = $entry['i_Port'] + count($this->data);
         $entry['s_Device'] = $entry['s_Device'].count($this->data);
@@ -135,11 +143,16 @@ class gotoLpdEnable extends plugin
       }
     }
 
+    /* Add toggle plugin buttons on top of the generated page
+     */
     if($this->is_account){
         $display .= $this->show_disable_header(msgPool::removeFeaturesButton(_("Printer")),"",FALSE);
     }else{
         $display .= $this->show_enable_header(msgPool::addFeaturesButton(_("Printer")),"",FALSE);
     }
+
+    /* Set smarty variables 
+     */
 		$smarty = get_smarty();
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -151,7 +164,6 @@ class gotoLpdEnable extends plugin
     $smarty->assign("data_cnt",count($this->data));
     $smarty->assign("data",$this->data);
     $smarty->assign("a_DevIDs",array_keys($this->data));
-    $smarty->assign("s_WriteOnly", $this->s_WriteOnly == "Y");
     $smarty->assign("is_account",$this->is_account);
 		return($display.$smarty->fetch(get_template_path("gotoLpdEnable.tpl",TRUE,dirname(__FILE__))));
 	}
@@ -186,7 +198,13 @@ class gotoLpdEnable extends plugin
   */
   public function save_object()
   {
-    if(!$this->is_account) return;
+    if(!$this->is_account || !isset($_POST['gotoLpdEnable_entry_posted'])){
+      return;
+    }
+
+    /* Check if we have to propose device settings 
+        (current device info is empty and the printer type has changed)
+     */
     $propose_device = "";
     if(isset($_POST['s_Device']) && empty($_POST['s_Device']) && 
         isset($_POST['s_Type']) && $_POST['s_Type'] != $this->s_Type){
@@ -195,28 +213,34 @@ class gotoLpdEnable extends plugin
 
     plugin::save_object();
 
-    if(isset($_POST['gotoLpdEnable_entry_posted']) && isset($_POST['s_WriteOnly'])){
+    if(!empty($propose_device)){
+      $this->s_Device = $propose_device;
+    }
+
+    /* Get checkbox changes 
+      */
+    if(isset($_POST['s_WriteOnly'])){
       $this->s_WriteOnly = "Y";
     }else{
       $this->s_WriteOnly = "N";
     }
 
-    if(!empty($propose_device)){
-      $this->s_Device = $propose_device;
-    }
-
+    /* Write back attributes to data array ($this->data)
+     */
     foreach($this->attributes as $attr){
       $this->data[$this->DevID][$attr] = $this->$attr;
     } 
 
-    /* Device ID has changed */
+    /* Device ID has changed another printer was selected * /
     if(isset($_POST['DevID']) && $_POST['DevID'] != $this->DevID){
       $this->DevID = $_POST['DevID'];
       foreach($this->attributes as $attr){
         $this->$attr = $this->data[$this->DevID][$attr];
       }
-    }
+    } 
+    */
 
+    /* Add and remove additional printer settings 
     if(isset($_POST['del_printer'])){
       unset($this->data[$this->DevID]);
       $this->data = array_values($this->data);
@@ -237,6 +261,7 @@ class gotoLpdEnable extends plugin
         }
       }
     }
+    */
   }
 
 
