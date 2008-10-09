@@ -9,7 +9,7 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  $sock = new Socket_Client("127.0.0.1","20082",TRUE,5);
+  $sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
   $sock->setEncryptionKey("secret-gosa-password");
   #$sock = new Socket_Client("10.89.1.30","20081",TRUE,5);
   #$sock->setEncryptionKey("secret-gosa-password");
@@ -213,6 +213,9 @@ for($count = 1; $count <= $zahl; $count++)
     ##############################
     # SYSLOG reload
     #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
+
+
+	$data ="<xml><header>gosa_get_hosts_with_module</header><source>GOSA</source><target>10.3.67.137:20081</target><module_name>opsi_com</module_name></xml>";
 
     $sock->write($data);
     $answer = "nothing";

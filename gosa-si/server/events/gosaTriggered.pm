@@ -1203,7 +1203,10 @@ sub get_hosts_with_module {
         my ($local_ip, $local_port) = split(/:/, $target);
         my $network_interface= &get_interface_for_ip($local_ip);
         my $local_mac = &get_mac_for_interface($network_interface);
-        &add_content2xml_hash($out_hash, "answer0", $local_mac);
+        $out_msg =~ s/<\/xml>/<result>host0<\/result> <\/xml>/;
+        my $host_infos = "<ip>$local_ip</ip>";
+        $host_infos .= " <mac>$local_mac</mac>"; 
+        $out_msg =~  s/<\/xml>/\n<answer0> $host_infos <\/answer0> \n <\/xml>/;
     }
 
     
