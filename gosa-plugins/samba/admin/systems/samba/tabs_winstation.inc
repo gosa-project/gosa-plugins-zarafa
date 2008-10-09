@@ -36,7 +36,7 @@ class wintabs extends tabs
       $this->by_object[$key]->dn= $this->dn;
     }
 
-    tabs::save(TRUE);
+    tabs::save();
   }
 
 }

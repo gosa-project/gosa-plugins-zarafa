@@ -103,6 +103,7 @@ class opsiGeneric extends plugin
       foreach($list as $entry){
         if(preg_match("/^".normalizePreg($this->hostId)."$/i",$entry['NAME'][0]['VALUE'])){
           $this->initially_was_account = TRUE; 
+          $this->is_account = TRUE;
           foreach(array(
                 "is_installed" => "LASTSEEN",
                 "description"  => "DESCRIPTION",
@@ -178,8 +179,7 @@ class opsiGeneric extends plugin
       
     }else{
 
-      /* Remember initial settings */ 
-      $this->is_account = TRUE;
+      /* Remember initial settings */
       $this->a_initial_selectedLocalProducts = $this->a_selectedLocalProducts;
       $this->s_initial_selectedNetbootProduct = $this->s_selectedNetbootProduct;
       $this->a_initial_availableNetbootProducts = $this->a_availableNetbootProducts;
