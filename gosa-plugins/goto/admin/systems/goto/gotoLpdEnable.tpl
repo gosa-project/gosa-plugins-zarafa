@@ -61,7 +61,7 @@
 {if $s_Type == "Serial"}
 			<table>
 				<tr>
-					<td>{t}Speed{/t}</td>
+					<td>{t}Bit rate{/t}</td>
 					<td>
 						<select name='s_Speed'>
 							{html_options options=$a_Speeds selected=$s_Speed}

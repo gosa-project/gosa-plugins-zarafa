@@ -200,7 +200,7 @@ class gotoLogView extends plugin
   {
     return (array(
           "plShortName"   => _("Log view"),
-          "plDescription" => _("Goto log view"),
+          "plDescription" => _("GOto log view"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 30,

@@ -1313,7 +1313,7 @@ class workstartup extends plugin
       if((!$res)){
         msg_dialog::display(_("Configuration error"), msgPool::cmdexecfailed("repositoryBranchHook", $cmd), ERROR_DIALOG);
       }elseif(empty($res2)){
-        msg_dialog::display(_("Configuration error"), _("repositoryBranchHook returned no result!"), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), _("'repositoryBranchHook' returned no result!"), ERROR_DIALOG);
       }else{
         $tmp = split("\n",$res);
         foreach($tmp as $line){
