@@ -273,11 +273,16 @@ class gotoLpdEnable extends plugin
   public function save()
   {
     $ret = array();
+    $serial_only = array("s_Speed","s_FlowControl","s_Parity","i_Bit");
     $attrs = array("s_Type","s_Device","i_Port","s_Speed","s_FlowControl","s_Parity","i_Bit","s_WriteOnly","s_Options"); 
     foreach($this->data as $entry){
       $str = "";
       foreach($attrs as $attr){
-        $str .= $entry[$attr].":";
+        if(in_array($attr,$serial_only) && $entry['s_Type'] != "Serial"){
+          $str .= ":";
+        }else{
+          $str .= $entry[$attr].":";
+        }
       }
       $ret[] = preg_replace("/:$/","",$str);
     }
