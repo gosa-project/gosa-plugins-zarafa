@@ -1198,6 +1198,8 @@ sub get_hosts_with_module {
         return (&create_xml_string($out_hash));
     }
 
+    my $out_msg = &create_xml_string($out_hash);
+
     # Check localhost for module_name
     if (exists @{$main::known_modules->{'GosaPackages'}}[2]->{$module_name}) {
         my ($local_ip, $local_port) = split(/:/, $target);
@@ -1208,9 +1210,6 @@ sub get_hosts_with_module {
         $host_infos .= " <mac>$local_mac</mac>"; 
         $out_msg =~  s/<\/xml>/\n<answer0> $host_infos <\/answer0> \n <\/xml>/;
     }
-
-    
-    my $out_msg = &create_xml_string($out_hash);
 
     # Search for opsi hosts in server_db
     my $sql = "SELECT * FROM $main::known_server_tn WHERE loaded_modules LIKE '%$module_name%'"; 
