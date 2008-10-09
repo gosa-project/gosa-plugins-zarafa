@@ -91,7 +91,8 @@ class opsiGeneric extends plugin
 
     /* Try to load client infos from the gosa support daemon
      */
-    if(! ($this->hostId == "new" || !empty($this->mac)  )){
+    if(!empty($this->hostId)){
+
       $list = $this->opsi->list_clients($this->hostId);
       $err |= $this->opsi->is_error();
 
@@ -178,7 +179,7 @@ class opsiGeneric extends plugin
     }else{
 
       /* Remember initial settings */ 
-      $this->is_account = $this->initially_was_account = TRUE;
+      $this->is_account = TRUE;
       $this->a_initial_selectedLocalProducts = $this->a_selectedLocalProducts;
       $this->s_initial_selectedNetbootProduct = $this->s_selectedNetbootProduct;
       $this->a_initial_availableNetbootProducts = $this->a_availableNetbootProducts;

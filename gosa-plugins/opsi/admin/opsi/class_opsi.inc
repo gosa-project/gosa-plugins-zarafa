@@ -20,20 +20,24 @@
 
 /********
 
-  __construct($config)
-  get_hosts_for_system_management()
-  get_netboot_products($host = "")
-  get_local_products($host = "")
-  get_product_properties()
-  set_product_properties()
-  get_client_hardware()
-  get_client_software()
-  list_clients()
-  del_client()
-  job_opsi_install_client()
-  add_client()
-  add_product_to_client()
-  del_product_from_client()
+  public function __construct($config)
+  public function enabled()
+  function get_hosts_for_system_management()
+  private function xml_to_array($xml,$alternative_method = FALSE)
+  public function send_action($type,$hostId,$mac)
+  public function list_clients( $hostId = "")
+  public function add_client($hostId,$macaddress,$notes,$description)
+  public function modify_client($hostId,$mac,$notes,$description)
+  public function get_netboot_products($host = "")
+  public function get_local_products($host = "")
+  public function get_product_properties($productId,$hostId = "")
+  public function set_product_properties($productId,$cfg,$hostId = "")
+  public function add_product_to_client($productId,$hostId)
+  public function del_product_from_client($productId,$hostId)
+  public function get_client_hardware($hostId)
+  public function get_client_software($hostId)
+  public function del_client($hostId)
+  public function job_opsi_install_client($hostId,$mac)
 
  ********/
 
