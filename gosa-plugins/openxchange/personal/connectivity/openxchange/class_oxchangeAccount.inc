@@ -142,7 +142,7 @@ class oxchangeAccount extends plugin
 
   function remove_from_parent()
   {
-    if(!$this->acl_is_removeable())  return;
+    if(!$this->acl_is_removeable() || !$this->initially_was_account)  return;
     $this->attrs[$this->dnmode][0] = $this->dnModeValue;
     $sqldeluser=array(
         "delete from prg_notes where (user_right like '".$this->attrs[$this->dnmode][0]."') and (group_right like 's')",
