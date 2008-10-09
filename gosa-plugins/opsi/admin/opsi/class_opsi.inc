@@ -186,9 +186,7 @@ class opsi extends gosaSupportDaemon
   
     /* Add optional attributes */ 
     foreach(array("notes","description") as $attr) {
-      if(!empty($$attr)){
-        $data[$attr] = $$attr;
-      }
+      $data[$attr] = $$attr;
     }
 
     /* Query SI server */
