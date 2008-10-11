@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-07 18:31+0200\n"
-"PO-Revision-Date: 2008-08-12 12:46+0200\n"
+"PO-Revision-Date: 2008-10-09 15:25+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -64,8 +64,7 @@ msgstr "Adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:22
 msgid "Use hostname or IP-address to assign fixed address"
-msgstr ""
-"Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
+msgstr "Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:31
 msgid "Hardware type"
@@ -201,8 +200,7 @@ msgstr "Accepter les clients inconnus"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr ""
-"Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
+msgstr "Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Allow bootp clients"
@@ -283,8 +281,7 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
-msgid ""
-"Enter name of file that will be loaded via tftp after client has started"
+msgid "Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Entrez le nom du fichier qui doit être chargé via tftp après que le client "
 "aie démarré"
@@ -522,19 +519,16 @@ msgid "Services"
 msgstr "Services"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:701
-#, fuzzy
 msgid "Start service"
-msgstr "Services"
+msgstr "Démarrer le service"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:702
-#, fuzzy
 msgid "Stop service"
-msgstr "Services"
+msgstr "Arrêter le service"
 
 #: admin/systems/services/dhcp/class_servDHCP.inc:703
-#, fuzzy
 msgid "Restart service"
-msgstr "Serveur suivant"
+msgstr "Redémarrer le service"
 
 #: admin/systems/services/dhcp/dhcpNewSection.tpl:2
 msgid "Create new DHCP section"
@@ -556,11 +550,3 @@ msgstr "Choisissez le type de section à créer"
 msgid "Create"
 msgstr "Créer"
 
-#~ msgid "Service start"
-#~ msgstr "Démarrage du service"
-
-#~ msgid "Service stop"
-#~ msgstr "Arrêt du service"
-
-#~ msgid "Service restart"
-#~ msgstr "Redémarrage du service"

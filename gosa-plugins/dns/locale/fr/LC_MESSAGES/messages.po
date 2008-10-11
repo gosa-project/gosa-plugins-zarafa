@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-07 18:28+0200\n"
-"PO-Revision-Date: 2008-08-12 12:48+0200\n"
+"PO-Revision-Date: 2008-10-09 15:27+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,10 +144,8 @@ msgstr "Adresse réseau"
 #: admin/systems/services/dns/class_servDNSeditZone.inc:467
 #: admin/systems/services/dns/class_servDNSeditZone.inc:473
 #, php-format
-msgid ""
-"The specified network address and the network class (%s/%s) do not match!"
-msgstr ""
-"L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
+msgid "The specified network address and the network class (%s/%s) do not match!"
+msgstr "L'adresse réseau spécifiée et la classe réseau (%s/%s) ne concordent pas !"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:477
 #: admin/systems/services/dns/class_servDNS.inc:591
@@ -188,8 +186,7 @@ msgstr "Masque réseau"
 
 #: admin/systems/services/dns/servdnseditzone.tpl:38
 msgid "Zone is in use, network settings can't be modified."
-msgstr ""
-"La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
+msgstr "La zone est utilisée, les paramètres réseau ne peuvent pas être modifiés."
 
 #: admin/systems/services/dns/servdnseditzone.tpl:48
 #: admin/systems/services/dns/class_servDNS.inc:601
@@ -245,8 +242,7 @@ msgstr "Service DNS"
 #: admin/systems/services/dns/class_servDNS.inc:151
 #, php-format
 msgid "You are going to migrate the DNS setup from server '%s'."
-msgstr ""
-"Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
+msgstr "Vous êtes sur le point de migrer le serveur DNS depuis le serveur '%s'."
 
 #: admin/systems/services/dns/class_servDNS.inc:152
 msgid ""
@@ -261,8 +257,7 @@ msgid "Remove DNS service"
 msgstr "Suppression du service DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:167
-msgid ""
-"This server has DNS features enabled. You can disable them by clicking below."
+msgid "This server has DNS features enabled. You can disable them by clicking below."
 msgstr ""
 "Ce serveur à l'option DNS activée. Vous pouvez le désactiver en cliquant sur "
 "le bouton ci-dessous."
@@ -272,8 +267,7 @@ msgid "Add DNS service"
 msgstr "Ajouter un service DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:170
-msgid ""
-"This server has DNS features disabled. You can enable them by clicking below."
+msgid "This server has DNS features disabled. You can enable them by clicking below."
 msgstr ""
 "Ce serveur à l'option DNS désactivé. Vous pouvez l'activer en cliquant sur "
 "le bouton ci-dessous."
@@ -285,8 +279,7 @@ msgstr "Classe"
 #: admin/systems/services/dns/class_servDNS.inc:342
 #, php-format
 msgid "Cannot delete the selected zone. It is still in use by '%s'"
-msgstr ""
-"Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
+msgstr "Vous ne pouvez pas effacer cette zone car elle est encore utilisée par '%s'"
 
 #: admin/systems/services/dns/class_servDNS.inc:452
 #: admin/systems/services/dns/class_servDNS.inc:468
@@ -301,19 +294,16 @@ msgid "Services"
 msgstr "Services"
 
 #: admin/systems/services/dns/class_servDNS.inc:585
-#, fuzzy
 msgid "Start service"
-msgstr "Service DNS"
+msgstr "Démarrer le service"
 
 #: admin/systems/services/dns/class_servDNS.inc:586
-#, fuzzy
 msgid "Stop service"
-msgstr "Service DNS"
+msgstr "Arrêter le Service"
 
 #: admin/systems/services/dns/class_servDNS.inc:587
-#, fuzzy
 msgid "Restart service"
-msgstr "Service DNS"
+msgstr "Redémarrer le service"
 
 #: admin/systems/services/dns/class_servDNS.inc:592
 msgid "Zone entry editor"
@@ -359,24 +349,14 @@ msgstr "Les enregistrements '%s' ne peuvent pas être utilisés plus d'une fois.
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:307
 #, php-format
 msgid "Please fix the empty %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement vide '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:315
 #, php-format
 msgid "Please fix the duplicate %s record for entry '%s'."
-msgstr ""
-"Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
+msgstr "Veuillez corriger l'enregistrement double '%s' pour l'enregistrement '%s'."
 
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:466
 msgid "Remove"
 msgstr "Supprimer"
 
-#~ msgid "Service start"
-#~ msgstr "Démarrage du service"
-
-#~ msgid "Service stop"
-#~ msgstr "Arrêt du service"
-
-#~ msgid "Service restart"
-#~ msgstr "Redémarrage du service"

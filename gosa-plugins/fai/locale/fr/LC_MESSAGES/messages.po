@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-06 11:58+0200\n"
-"PO-Revision-Date: 2008-08-12 12:55+0200\n"
+"PO-Revision-Date: 2008-10-09 15:29+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,8 +24,7 @@ msgstr "Service de dépôt"
 #: admin/systems/services/repository/class_servRepository.inc:93
 #: admin/fai/class_faiSummaryTab.inc:178
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/systems/services/repository/class_servRepository.inc:142
 #: admin/systems/services/repository/class_servRepository.inc:177
@@ -139,14 +138,12 @@ msgid "Release"
 msgstr "Version"
 
 #: admin/systems/services/repository/class_divListRepositories.inc:19
-#, fuzzy
 msgid "List of configured repositories"
 msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:25
 msgid "Options"
@@ -186,8 +183,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:446
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -451,8 +447,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:357
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:490
 #, php-format
@@ -662,8 +657,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1063
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1076
 msgid "Error while fetching source dn - aborted!"
@@ -671,8 +665,7 @@ msgstr "Une erreur s'est produite lors de la récupération du dn - Arrêt !"
 
 #: admin/fai/class_FAI.inc:1158
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -1154,7 +1147,6 @@ msgid "List of classes"
 msgstr "Liste des classes"
 
 #: admin/fai/class_divListFai.inc:33
-#, fuzzy
 msgid "List of deployment classes and products"
 msgstr "Listes des classes et des paquets de déploiement"
 
@@ -1213,19 +1205,19 @@ msgstr "Afficher les partitions"
 
 #: admin/fai/class_divListFai.inc:77 admin/fai/class_divListFai.inc:225
 msgid "OPSI netboot product"
-msgstr ""
+msgstr "Produit netboot OPSI"
 
 #: admin/fai/class_divListFai.inc:77
 msgid "Show netboot products"
-msgstr ""
+msgstr "Montrer les produits netboot"
 
 #: admin/fai/class_divListFai.inc:79 admin/fai/class_divListFai.inc:227
 msgid "OPSI local product"
-msgstr ""
+msgstr "Produit local OPSI"
 
 #: admin/fai/class_divListFai.inc:79
 msgid "Show local products"
-msgstr ""
+msgstr "Montrer les produits locaux"
 
 #: admin/fai/class_divListFai.inc:87
 msgid "Display users matching"
@@ -1274,9 +1266,8 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: admin/fai/class_divListFai.inc:277
-#, fuzzy
 msgid "Edit product"
-msgstr "Editer un acl"
+msgstr "Editer un produit"
 
 #: admin/fai/class_divListFai.inc:286 admin/fai/class_divListFai.inc:291
 msgid "Edit class"
@@ -1343,8 +1334,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/faiScriptEntry.tpl:33
@@ -1483,6 +1473,3 @@ msgstr "Options des systèmes de fichier"
 msgid "Partition flags"
 msgstr "Indicateur des partitions"
 
-#, fuzzy
-#~ msgid "Opsi netboot package"
-#~ msgstr "Paquets utilisés"

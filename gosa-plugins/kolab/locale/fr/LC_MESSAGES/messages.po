@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-24 01:07+0200\n"
+"PO-Revision-Date: 2008-10-09 15:45+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,8 +73,7 @@ msgstr "Erreur LDAP"
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
-msgstr ""
-"Nombre de jours dans le futur à calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
@@ -111,7 +110,7 @@ msgstr "Nombre de jours futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:523
 msgid "Mail size restriction"
-msgstr ""
+msgstr "Restriction de taille des messages"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:524
 msgid "Free busy information"
@@ -354,5 +353,5 @@ msgstr "Machine utilisée pour relayer les mails"
 
 #: admin/systems/services/kolab/servkolab.tpl:231
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+
