@@ -1,5 +1,20 @@
 {if !$is_account}
 
+<table style='width:100%;'>
+	<tr>
+		<td style='width:55%;'>
+			<table>
+				<tr>
+					<td colspan="2">
+						<input class="center" type='checkbox' onChange="document.mainform.submit();" 
+							{if $is_account} checked {/if}
+							name='gotoLpdEnable_enabled'>&nbsp;{t}Enable printer settings{/t}</td>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
 {else}
 <table style='width:100%;'>
 	<tr>
@@ -23,6 +38,13 @@
 					</td>
 				</tr>
 -->
+				<tr>
+					<td colspan="2">
+						<input class="center" type='checkbox' onChange="document.mainform.submit();" 
+							{if $is_account} checked {/if}
+							name='gotoLpdEnable_enabled'>&nbsp;{t}Enable printer settings{/t}</td>
+					</TD>
+				</tr>
 				<tr>
 					<td>{t}Type{/t}</td>
 					<td>	
@@ -97,11 +119,5 @@
 		</td>
 	</tr>
 </table>
-<input type='hidden' name="gotoLpdEnable_entry_posted" value="1">
-<p class='seperator'>
-</p>
 {/if}
-<div style='width:100%; text-align: right; padding:5px;'>
-	<input type='submit' name='gotoLpdEnable_Ok' value='{msgPool type=okButton}'>&nbsp;
-	<input type='submit' name='gotoLpdEnable_Close' value='{msgPool type=cancelButton}'>
-</div>
+<input type='hidden' name="gotoLpdEnable_entry_posted" value="1">

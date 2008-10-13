@@ -90,6 +90,7 @@ class termservice extends plugin
         $this->gotoLpdEnable[] = $this->attrs['gotoLpdEnable'][$i];
       }
     }
+    $this->gotoLpdEnable_dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this); 
 
     /* Get list of available xdrivers */
     $this->XDrivers = $this->getListOfXDrivers();
@@ -314,41 +315,9 @@ class termservice extends plugin
       return ($display);
     }
 
-
-    /**********
-      gotoLpdEnable
-     **********/
-    if(isset($_POST['gotoLpdEnable_Close'])){
-      $this->dialog = NULL;
-    }
-
-    if(isset($_POST['gotoLpdEnable_Ok'])){
-      $this->dialog->save_object();
-      $msgs = $this->dialog->check();
-      if(count($msgs)) {
-        msg_dialog::displayChecks($msgs);
-      }else{
-        $this->gotoLpdEnable = $this->dialog->save();
-        $this->dialog = NULL;
-      }
-    }
-
-    if(isset($_POST['gotoLpdEnable_Edit'])){
-      $this->dialog = new gotoLpdEnable($this->config,$this->gotoLpdEnable,$this);
-    }
-
-    if($this->dialog instanceof plugin){
-      $this->dialog->save_object();
-      return($this->dialog->execute());
-    }
-
-    /**********
-      Ende: gotoLpdEnable
-     **********/
-
-
     /* Show main page */
     $smarty= get_smarty();
+    $smarty->assign("gotoLpdEnable_dialog", $this->gotoLpdEnable_dialog->execute());
 
     /* Assign acls */
     $tmp= $this->plInfo();
@@ -484,6 +453,13 @@ class termservice extends plugin
   function save_object()
   {
     plugin::save_object();
+
+    $this->gotoLpdEnable_dialog->save_object();
+    if($this->gotoLpdEnable_dialog->is_account){
+      $this->gotoLpdEnable = $this->gotoLpdEnable_dialog->save();
+    }else{
+      $this->gotoLpdEnable = array();
+    }
 
     /* Save checkbox state */
     if (isset ($_POST['gotoXMethod'])){

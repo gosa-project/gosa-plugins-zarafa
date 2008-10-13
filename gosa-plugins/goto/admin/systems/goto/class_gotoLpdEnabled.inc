@@ -119,38 +119,6 @@ class gotoLpdEnable extends plugin
 	{
     $display = "";
 
-    /* Handle account add/remove 
-     */
-    if(isset($_POST['modify_state'])){
-      $this->is_account = !$this->is_account;
-
-      /* Reset account or create a new one
-       */
-      if(!$this->is_account){
-        $this->data = array();
-      }else{
-      
-        /* Initialize plugin with default entries
-         */
-        $entry = $this->default_entry;
-        $entry['i_Port'] = $entry['i_Port'] + count($this->data);
-        $entry['s_Device'] = $entry['s_Device'].count($this->data);
-        $this->data = array(0 => $entry);
-        $this->DevID = 0; 
-        foreach($this->attributes as $attr){
-          $this->$attr = $this->data[$this->DevID][$attr];
-        }
-      }
-    }
-
-    /* Add toggle plugin buttons on top of the generated page
-     */
-    if($this->is_account){
-        $display .= $this->show_disable_header(msgPool::removeFeaturesButton(_("Printer")),"",FALSE);
-    }else{
-        $display .= $this->show_enable_header(msgPool::addFeaturesButton(_("Printer")),"",FALSE);
-    }
-
     /* Set smarty variables 
      */
 		$smarty = get_smarty();
@@ -198,8 +166,17 @@ class gotoLpdEnable extends plugin
   */
   public function save_object()
   {
-    if(!$this->is_account || !isset($_POST['gotoLpdEnable_entry_posted'])){
+
+    if(!isset($_POST['gotoLpdEnable_entry_posted'])){
       return;
+    }
+
+    /* Handle account add/remove 
+     */
+    if(isset($_POST['gotoLpdEnable_enabled'])){
+      $this->is_account = TRUE;
+    }else{
+      $this->is_account = FALSE;
     }
 
     /* Check if we have to propose device settings 
