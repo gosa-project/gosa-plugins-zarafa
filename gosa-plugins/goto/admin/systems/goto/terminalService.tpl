@@ -223,7 +223,7 @@
 
 <table style="width:100%;" summary="">
  <tr>
-	<td colspan="2">
+	<td colspan="4">
 		<p class="plugbottom" style="margin-top:0px;">
 		</p>
 	</td>
@@ -236,10 +236,15 @@
 {/render}
    {t}Provide scan services{/t}
 
-  </td>
+  	</td>
+	<td style="border-left:1px solid #A0A0A0;">
+	<td >&nbsp;
+	</td>
 	<td>
-   <h2><img class="center" alt="" src="plugins/systems/images/select_printer.png"> {t}Printer{/t}</h2>
-	{$gotoLpdEnable_dialog}
+   		<h2>
+			<img class="center" alt="" src="plugins/systems/images/select_printer.png"> {t}Printer{/t}
+		</h2>
+		{$gotoLpdEnable_dialog}
 	</td>
  </tr>
 </table>
