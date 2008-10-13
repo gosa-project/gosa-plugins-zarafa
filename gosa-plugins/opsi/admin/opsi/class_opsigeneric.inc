@@ -204,7 +204,6 @@ class opsiGeneric extends plugin
    */
   public function check()
   {
-    return(array());
     $messages = plugin::check();
 
     if(empty($this->hostId)){
