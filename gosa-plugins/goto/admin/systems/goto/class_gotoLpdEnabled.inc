@@ -8,7 +8,7 @@ class gotoLpdEnable extends plugin
   private $data = array();
   private $default_entry = array();
 
-  protected $s_Type = "USB";
+  protected $s_Type = "U";
   protected $s_Device = "/dev/usb/lp";
   protected $i_Port = 9100;   
   protected $s_Options = "";
@@ -33,8 +33,8 @@ class gotoLpdEnable extends plugin
   /*! \brief  Create gotoLpdEnable dialog, allows to edit printer settings.
       @param  Object  $config  The GOsa configuration object.
       @param  Array   $data    The values for attribute 'gotoLpdEnable'
-                      e.g.     array("USB:/dev/usb/lp0:9100:9600:S:E:0:Y:options",
-                               "USB:/dev/usb/lp1:9101:9600:S:E:5:Y:", ...)
+                      e.g.     array("U:/dev/usb/lp0:9100:9600:S:E:0:Y:options",
+                               "U:/dev/usb/lp1:9101:9600:S:E:5:Y:", ...)
       @param  Object  $parent  A reference to the parent plugin-object. 
       @return Object  gotoLpdEnable (plugin) 
   */
@@ -47,9 +47,9 @@ class gotoLpdEnable extends plugin
     /* Predefine selectable values 
      */ 
     $this->a_Types = array(
-        "USB" => _("USB"),
-        "Parallel" => _("Parallel port"),
-        "Serial" => _("Serial"));
+        "U" => _("USB"),
+        "P" => _("Parallel port"),
+        "S" => _("Serial"));
     $this->a_FlowControl = array(
         "S" => _("Software"),
         "H" => _("Hardware"));
@@ -69,9 +69,9 @@ class gotoLpdEnable extends plugin
     $this->a_Bits = array(
         5,6,7,8);
     $this->a_Devices = array(
-        "USB" => "/dev/usb/lp",
-        "Parallel" => "/dev/lp",
-        "Serial" => "/dev/ttyS");
+        "U" => "/dev/usb/lp",
+        "P" => "/dev/lp",
+        "S" => "/dev/ttyS");
 
     /* Create default entry 
      */

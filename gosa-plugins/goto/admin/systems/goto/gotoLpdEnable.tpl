@@ -80,7 +80,7 @@
 			</table>
 		</td>
 		<td>
-{if $s_Type == "Serial"}
+{if $s_Type == "S"}
 			<table>
 				<tr>
 					<td>{t}Bit rate{/t}</td>
