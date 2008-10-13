@@ -524,6 +524,7 @@ class termservice extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
+    $message = array_merge($message,$this->gotoLpdEnable_dialog->check());
 
     if($this->gotoXMethod != "default"){
       $xdmcp_types =  $this->config->data['SERVERS']['TERMINAL_SESSION_TYPES'];
