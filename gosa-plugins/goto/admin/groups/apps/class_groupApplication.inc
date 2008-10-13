@@ -1335,12 +1335,13 @@ class appgroup extends plugin
     /* Add new entries
      */
     foreach($Actions['Add'] as $dn => $data){
+      $this->tag_attrs($data,$dn,$this->gosaUnitTag);
       $ldap->cd($dn);
       $ldap->cat($dn);
       if(!$ldap->count()){
         $ldap->add($data);
         if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_ADD, get_class()));
         }
       }
     }
@@ -1348,12 +1349,13 @@ class appgroup extends plugin
     /* Modify entries
      */
     foreach($Actions['Edit'] as $dn => $data){
+      $this->tag_attrs($data,$dn,$this->gosaUnitTag);
       $ldap->cd($dn);
       $ldap->cat($dn);
       if($ldap->count()){
         $ldap->modify($data);
         if (!$ldap->success()){
-          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
         }
       }
     }
