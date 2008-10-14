@@ -19,7 +19,7 @@
      <td><input style='width:300px;' type='text' name='hostId' value='{$hostId}'></td>
     </tr>
     <tr>
-     <td>{t}MAC address{/t}</td>
+     <td>{t}MAC address{/t}{$must}</td>
      <td><input type='text' name="mac" value="{$mac}"></td>
 	</tr>
 	{else}
@@ -28,7 +28,7 @@
      <td><input style='width:300px;' type='text' disabled value="{$hostId}"></td>
     </tr>
     <tr>
-     <td>{t}MAC address{/t}</td>
+     <td>{t}MAC address{/t}{$must}</td>
      <td><input type='text' name="mac" value="{$mac}"></td>
     </tr>
     {/if}

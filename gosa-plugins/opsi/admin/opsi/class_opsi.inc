@@ -63,7 +63,7 @@ class opsi extends gosaSupportDaemon
     /* Detect the target opsi host 
      */
     $opsi_hosts = $this->get_hosts_with_module("opsi_com");
-      
+
     /* Just use the first result of the opsi hosts 
      */
     if(count($opsi_hosts) == 1 && isset($opsi_hosts[0])){
