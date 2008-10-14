@@ -51,6 +51,7 @@ class wingeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->objectclasses=array("ipHost","ieee802Device");
     $this->netConfigDNS->MACisMust = FALSE;
+    $this->netConfigDNS->IPisMust = TRUE;
 
     /* Set base */
     if ($this->dn == "new"){
@@ -75,6 +76,7 @@ class wingeneric extends plugin
     plugin::set_acl_base($base);
     $this->netConfigDNS->set_acl_base($base);
   }
+
 
   function set_acl_category($cat)
   {
@@ -134,7 +136,12 @@ class wingeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases"   , $this->get_allowed_bases());
+    
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
@@ -303,7 +310,8 @@ class wingeneric extends plugin
           "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
                                                           "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
-            "cn"                  => _("Workstation name"),
+            "cn"                  => _("Name"),
+            "base"                => _("Base"),
             "description"         => _("Description"))
           ));
   }
