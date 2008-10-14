@@ -31,7 +31,11 @@ class opsiProperties extends plugin
    */
   public function execute()
   {
+    $ui =get_userinfo();
+    $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
+
     $smarty = get_smarty();
+    $smarty->assign("ACL",$acl);
     $smarty->assign("cfg",$this->cfg);
     $smarty->assign("cfg_count",count($this->cfg));
     return($smarty->fetch(get_template_path("properties.tpl",TRUE,dirname(__FILE__))));
@@ -42,9 +46,12 @@ class opsiProperties extends plugin
    */
   public function save_object()
   {
-    foreach($this->cfg as $name => $value){
-      if(isset($_POST['value_'.$name])){
-        $this->cfg[$name]['DEFAULT'] = validate(get_post('value_'.$name));
+    $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
+    if(preg_match("/w/",$acl)){
+      foreach($this->cfg as $name => $value){
+        if(isset($_POST['value_'.$name])){
+          $this->cfg[$name]['DEFAULT'] = validate(get_post('value_'.$name));
+        }
       }
     }
   }
@@ -90,6 +97,23 @@ class opsiProperties extends plugin
   public function get_hostId()
   {
     return($this->hostId);
+  }
+
+
+  /* Return plugin informations for acl handling */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Products"),
+          "plDescription" => _("Product properties"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 10,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("opsi"),
+          "plProvidedAcls"=> array(
+            )
+          ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

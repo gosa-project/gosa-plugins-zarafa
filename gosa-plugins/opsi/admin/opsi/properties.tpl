@@ -14,6 +14,7 @@
 	<tr>
 		<td>{$key}</td>
 		<td>
+{render acl=$ACL}
 			{if $item.VALUE_CNT}
 				<select name="value_{$key}" style='width:180px;'>
 				{foreach from=$item.VALUE key=k item=i}
@@ -23,7 +24,7 @@
 			{else}
 				<input type='input' name='value_{$key}' value="{$item.DEFAULT}" style='width:280px;'>
 			{/if}
-
+{/render}
 		</td>
 	</tr>
 {/foreach}
