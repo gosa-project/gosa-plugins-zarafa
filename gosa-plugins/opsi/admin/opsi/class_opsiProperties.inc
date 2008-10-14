@@ -33,7 +33,6 @@ class opsiProperties extends plugin
   {
     $ui =get_userinfo();
     $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
-
     $smarty = get_smarty();
     $smarty->assign("ACL",$acl);
     $smarty->assign("cfg",$this->cfg);
@@ -46,6 +45,7 @@ class opsiProperties extends plugin
    */
   public function save_object()
   {
+    $ui =get_userinfo();
     $acl =  $ui->get_permissions($this->config->current['BASE'],"opsi/opsiProperties","");
     if(preg_match("/w/",$acl)){
       foreach($this->cfg as $name => $value){
