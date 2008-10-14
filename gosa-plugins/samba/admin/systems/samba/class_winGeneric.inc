@@ -49,6 +49,7 @@ class wingeneric extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
+    $this->netConfigDNS->objectclasses=array("ipHost");
     $this->netConfigDNS->MACisMust = FALSE;
 
     /* Set base */
