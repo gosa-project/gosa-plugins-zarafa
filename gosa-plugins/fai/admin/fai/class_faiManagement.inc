@@ -1199,30 +1199,32 @@ class faiManagement extends plugin
     /*  Append opsi objects, if opsi is available and if we are on the fai_base
      */
     if($this->opsi instanceof opsi && $this->opsi->enabled()){  
-
-      $err = FALSE;
-      if(!$err && $this->DivListFai->ShowOpsiNetboot){
-        $n_pro = $this->opsi->get_netboot_products();
-        $err |= $this->opsi->is_error();
-        foreach($n_pro as $name => $data){
-          $entry = array("cn" => $name,
-              "description" => $data['DESC'],
-              "type" => "opsi_netboot");
-          $this->objects[$name."_opsi_netboot"] = $entry;
+      $opsi_acl = $this->ui->get_permissions($object['dn'],"opsi/opsiProperties");
+      if(preg_match("/r/",$opsi_acl)){
+        $err = FALSE;
+        if(!$err && $this->DivListFai->ShowOpsiNetboot){
+          $n_pro = $this->opsi->get_netboot_products();
+          $err |= $this->opsi->is_error();
+          foreach($n_pro as $name => $data){
+            $entry = array("cn" => $name,
+                "description" => $data['DESC'],
+                "type" => "opsi_netboot");
+            $this->objects[$name."_opsi_netboot"] = $entry;
+          }  
+        }
+        if(!$err && $this->DivListFai->ShowOpsiLocal){
+          $l_pro = $this->opsi->get_local_products();
+          $err |= $this->opsi->is_error();
+          foreach($l_pro as $name => $data){
+            $entry = array("cn" => $name,
+                "description" => $data['DESC'],
+                "type" => "opsi_local");
+            $this->objects[$name."_opsi_local"] = $entry;
+          }  
         }  
-      }
-      if(!$err && $this->DivListFai->ShowOpsiLocal){
-        $l_pro = $this->opsi->get_local_products();
-        $err |= $this->opsi->is_error();
-        foreach($l_pro as $name => $data){
-          $entry = array("cn" => $name,
-              "description" => $data['DESC'],
-              "type" => "opsi_local");
-          $this->objects[$name."_opsi_local"] = $entry;
-        }  
-      }  
-      if($err){
-        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        if($err){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        }
       }
     }
 
