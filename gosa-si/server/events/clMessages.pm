@@ -117,6 +117,9 @@ sub LOGIN {
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
 
+    # Invoke set_last_system
+	my $res = &set_last_system($msg, $msg_hash, $session_id);
+
     my %add_hash = ( table=>$main::login_users_tn, 
         primkey=> ['client', 'user'],
         client=>$source,
