@@ -1467,7 +1467,16 @@ sub process_task {
                         }
                     }
                     if( $found_ip_flag == 0) {
-                        daemon_log("$session_id WARNING: no host found in known_clients with mac address '$answer_target'", 3);
+                        daemon_log("$session_id WARNING: no host found in known_clients or foreign_clients with mac address '$answer_target'", 3);
+                             
+                        # Sometimes the client is still booting or does not wake up, in this case reactivate the job (if it exists) with a delay of 30 sec
+                        my $delay_timestamp = &calc_timestamp(&get_time(), "plus", 30);
+                        my $sql = "UPDATE $job_queue_tn Set timestamp='$delay_timestamp', status='waiting' WHERE (macaddress='$answer_target' AND headertag='$answer_header')";
+                        my $res = $job_db->update_dbentry($sql);
+                        daemon_log("$session_id INFO: '$answer_header'-job will be reactivated at '$delay_timestamp' ".
+                                "cause client '$answer_target' is currently not available", 5);
+                        daemon_log("$session_id $sql", 7);
+
                     }
 
                 # Answer is for one specific host   
