@@ -63,7 +63,7 @@ class faiVariable extends plugin
 
   function acl_base_for_current_object($dn)
   {
-    if($dn == "new"){
+    if($dn == "new" || $dn == ""){
       if($this->dn == "new"){
         $dn = session::get('CurrentMainBase');
       }else{

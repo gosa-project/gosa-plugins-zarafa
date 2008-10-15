@@ -108,7 +108,7 @@ class faiScript extends plugin
   /* Return a valid dn to fetch acls. Because 'new' will not work. */
   function acl_base_for_current_object($dn)
   {
-    if($dn == "new"){
+    if($dn == "new" || $dn == ""){
       if($this->dn == "new"){
         $dn= "cn=dummy,".session::get('CurrentMainBase');
       }else{
