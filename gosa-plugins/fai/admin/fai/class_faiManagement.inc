@@ -1199,7 +1199,7 @@ class faiManagement extends plugin
     /*  Append opsi objects, if opsi is available and if we are on the fai_base
      */
     if($this->opsi instanceof opsi && $this->opsi->enabled()){  
-      $opsi_acl = $this->ui->get_permissions($object['dn'],"opsi/opsiProperties");
+      $opsi_acl = $this->ui->get_permissions($base,"opsi/opsiProperties");
       if(preg_match("/r/",$opsi_acl)){
         $err = FALSE;
         if(!$err && $this->DivListFai->ShowOpsiNetboot){
