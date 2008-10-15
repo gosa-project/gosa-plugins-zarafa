@@ -16,30 +16,48 @@
     {if $standalone}
     <tr>
      <td>{t}Name{/t}</td>
-     <td><input style='width:300px;' type='text' name='hostId' value='{$hostId}'></td>
+     <td>
+{render acl=$hostIdACL}
+		<input style='width:300px;' type='text' name='hostId' value='{$hostId}'>
+{/render}
+	 </td>
     </tr>
     <tr>
      <td>{t}MAC address{/t}{$must}</td>
-     <td><input type='text' name="mac" value="{$mac}"></td>
+     <td>
+{render acl=$macACL}
+		<input type='text' name="mac" value="{$mac}">
+{/render}
+	 </td>
 	</tr>
 	{else}
     <tr>
      <td>{t}Name{/t}</td>
-     <td><input style='width:300px;' type='text' disabled value="{$hostId}"></td>
+     <td>
+{render acl=$hostIdACL}
+		<input style='width:300px;' type='text' disabled value="{$hostId}">
+{/render}
+	 </td>
     </tr>
     <tr>
      <td>{t}MAC address{/t}{$must}</td>
-     <td><input type='text' name="mac" value="{$mac}"></td>
+     <td>
+{render acl=$macACL}
+		<input type='text' name="mac" value="{$mac}">
+{/render}
+	 </td>
     </tr>
     {/if}
     <tr>
      <td>{t}Netboot product{/t}</td>
      <td>
+{render acl=$netbootProductACL }
       <select name="opsi_netboot_product" onChange="document.mainform.submit();">
 		{foreach from=$ANP item=item key=key}
 			<option {if $key == $SNP} selected {/if} value="{$key}">{$key}</option>
 		{/foreach}
       </select>
+{/render}
       &nbsp;
       {if $netboot_configurable}
 		  <input type='image' name='configure_netboot' src='images/lists/edit.png'
@@ -56,11 +74,19 @@
    <table>
     <tr>
      <td>{t}Description{/t}</td>
-     <td><input type='text' name='description' value='{$description}'></td>
+     <td>
+{render acl=$descriptionACL}
+		<input type='text' name='description' value='{$description}'>
+{/render}
+	 </td>
     </tr>
     <tr>
      <td>{t}Notes{/t}</td>
-     <td><input type='text' name='note' value='{$note}'></td>
+     <td>
+{render acl=$descriptionACL}
+		<input type='text' name='note' value='{$note}'>
+{/render}
+	 </td>
     </tr>
    </table>
   </td>
@@ -73,10 +99,14 @@
  <tr>
   <td style="width:50%;"><h2><img class='center' src='plugins/opsi/images/product.png' 
 		alt=' '>&nbsp;{t}Installed products{/t}</h2>
+{render acl=$localProductACL}
 	{$divSLP}
+{/render}
   </td>
   <td style="width:50%;"><h2>{t}Available products{/t}</h2>
+{render acl=$localProductACL}
 	{$divALP}
+{/render}
   </td>
  </tr>
  <tr>
@@ -92,7 +122,9 @@
 		<option value="install">{t}Install{/t}</option>
 		{/if}
 	</select>
+{render acl=$triggerActionACL}
 	<input type='submit' name='opsi_trigger_action' value="{t}Execute{/t}">
+{/render}
    {/if}
   </td>
  </tr>

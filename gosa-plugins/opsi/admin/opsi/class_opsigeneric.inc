@@ -51,11 +51,12 @@ class opsiGeneric extends plugin
       @param  String    The Id of the host that we want to edit.
       @param  Object    The parent object. (in case of samba)
    */
-  public function __construct($config,$hostId,&$parent = NULL)
+  public function __construct(&$config,$hostId,&$parent = NULL)
   {
     /* Create opsi handle
      */
     $this->opsi = new opsi($config); 
+    $this->config = $config;
     
     /* Check if we are are part of a windows workstation 
      */
@@ -245,15 +246,18 @@ class opsiGeneric extends plugin
       return($smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
     }  
 
+
     /* If we are not a stand alone opsi client, we must be a samba client 
        which has the opsi tab enabled.
        Check if the opsi is added or removed and display state buttons.
      */
     if(!$this->standalone ){
+
+      /* Do we need to flip is_account state? */
       if(isset($_POST['modify_state'])){
-        if($this->is_account){
+        if($this->is_account && $this->acl_is_removeable()){
           $this->is_account= FALSE;
-        }elseif(!$this->is_account){
+        }elseif(!$this->is_account && $this->acl_is_createable()){
           $this->is_account= TRUE;
         }
       }
@@ -281,6 +285,13 @@ class opsiGeneric extends plugin
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    /* Assign ACLs */    
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     $smarty->assign("is_installed", $this->is_installed);
     $smarty->assign("init_failed",FALSE);
     $divSLP = new divSelectBox();
@@ -295,7 +306,12 @@ class opsiGeneric extends plugin
       $name_tab = array("string"   => $name);
       $desc_tab = array("string"   => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
           "attach"   => "title='".$data['DESC']."' style='border-right:0px;'");
-      $divALP->AddEntry(array($add_tab,$name_tab,$desc_tab));
+
+      if($this->acl_is_writeable("localProduct")){
+        $divALP->AddEntry(array($add_tab,$name_tab,$desc_tab));
+      }else{
+        $divALP->AddEntry(array($name_tab,$desc_tab));
+      }
     }
 
     /* Create list of selected local products 
@@ -318,7 +334,12 @@ class opsiGeneric extends plugin
 
       $opt_tab  = array("string" => $edit.$del,
           "attach" => "style='border-right:0px; width: 40px; text-align:right;'");
-      $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
+
+      if($this->acl_is_writeable("localProduct")){
+        $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
+      }else{
+        $divSLP->AddEntry(array($name_tab,$desc_tab));
+      }
     }
 
     /* Check if netboot product is configurable 
@@ -326,6 +347,7 @@ class opsiGeneric extends plugin
     $cfg_able =FALSE;
     if(isset($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG'])){
       $cfg_able = count($this->a_availableNetbootProducts[$this->s_selectedNetbootProduct]['CFG']);
+      $cfg_able &= $this->acl_is_readable("netbootProduct");
     }
 
     $smarty->assign("netboot_configurable",$cfg_able);
@@ -552,13 +574,16 @@ class opsiGeneric extends plugin
 
       /* Get hostId 
        */
-      if(isset($_POST['hostId']) && $this->standalone ){
+      if(isset($_POST['hostId']) && $this->standalone && $this->acl_is_writeable("hostId")){
         $this->hostId = get_post('hostId');
       }
 
       /* Send actions like 'install' or 'wake' to the si server 
        */
-      if(isset($_POST['opsi_action']) && isset($_POST['opsi_trigger_action']) && $this->standalone ){
+      if($this->acl_is_writeable("triggerAction") && 
+          isset($_POST['opsi_action']) && 
+          isset($_POST['opsi_trigger_action']) && 
+          $this->standalone ){
         $action = $_POST['opsi_action'];
         if($action == "install"){
           $this->install_client(); 
@@ -567,10 +592,9 @@ class opsiGeneric extends plugin
 
       /* Get selected netboot product.
        */
-      if(isset($_POST['opsi_netboot_product'])){
+      if(isset($_POST['opsi_netboot_product']) && $this->acl_is_writeable("netbootProduct")){
         $SNP = trim($_POST['opsi_netboot_product']);
         if(isset($this->a_availableNetbootProducts[$SNP])){
-
           if(!isset($this->a_availableNetbootProducts[$SNP]['CFG'])){
             $CFG = $this->opsi->get_product_properties($SNP);
             $this->a_availableNetbootProducts[$SNP]['CFG'] = $CFG;
@@ -589,7 +613,7 @@ class opsiGeneric extends plugin
 
         /* Check if netboot product configuration is requested 
          */
-        if(preg_match("/^configure_netboot/",$name)){
+        if(preg_match("/^configure_netboot/",$name) && $this->acl_is_readable("netbootProduct")){
           $pro = $this->s_selectedNetbootProduct;
           $cfg = $this->a_availableNetbootProducts[$pro]['CFG'];
           $this->dialog = new opsiProperties($this->config,$pro,$cfg,$this->hostId);
@@ -598,7 +622,7 @@ class opsiGeneric extends plugin
       
         /* Add product 
          */
-        if(preg_match("/^add_lp_/",$name)){
+        if(preg_match("/^add_lp_/",$name) && $this->acl_is_writeable("localProduct")){
           $product = preg_replace("/^add_lp_(.*)_.$/","\\1",$name);
           if(isset($this->a_availableLocalProducts[$product]) && !isset($this->a_selectedLocalProducts[$product])){
             $this->a_selectedLocalProducts[$product] = $this->a_availableLocalProducts[$product];
@@ -614,7 +638,7 @@ class opsiGeneric extends plugin
   
         /* Delete product 
          */
-        if(preg_match("/^del_lp_/",$name)){
+        if(preg_match("/^del_lp_/",$name) && $this->acl_is_writeable("localProduct")){
           $product = preg_replace("/^del_lp_(.*)_.$/","\\1",$name);
           if(isset($this->a_selectedLocalProducts[$product])){
             unset($this->a_selectedLocalProducts[$product]);
@@ -624,7 +648,7 @@ class opsiGeneric extends plugin
       
         /* Edit a product  
          */
-        if(preg_match("/^edit_lp_/",$name)){
+        if(preg_match("/^edit_lp_/",$name) && $this->acl_is_readable("localProduct")){
           $product = preg_replace("/^edit_lp_(.*)_.$/","\\1",$name);
           $this->dialog = new opsiProperties($this->config,
               $product,$this->a_selectedLocalProducts[$product]['CFG'],$this->hostId);
@@ -656,12 +680,19 @@ class opsiGeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),
-          "plCategory"    => array("opsi" => array("description"  => _("OPSI client"),
-                                                     "objectClass"  => "dummy_class_opsi")),
-          "plProvidedAcls"=> array()
+          "plCategory"    => array("opsi" => array("description"  => _("Opsi"),
+              "objectClass"  => "dummy_class_opsi")),
+
+          "plProvidedAcls"=> array(
+            "hostId"          => _("Name"),
+            "mac"             => _("MAC address"),
+            "description"     => _("Description"),
+            "note"            => _("Note"),
+            "netbootProduct"  => _("Netboot product"),
+            "localProduct"    => _("Local product"),
+            "triggerAction"   => _("Action"))
           ));
   }
-
 }
 
 

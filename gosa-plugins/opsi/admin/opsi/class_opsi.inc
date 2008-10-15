@@ -89,6 +89,7 @@ class opsi extends gosaSupportDaemon
   {
     $res = $this->list_clients();
     $data = array();
+    $ui = get_userinfo();
     foreach($res as $entry){
       if(!isset($entry['MAC'][0]['VALUE'])) $entry['MAC'][0]['VALUE'] = "";
       $obj = array(
@@ -98,10 +99,14 @@ class opsi extends gosaSupportDaemon
         "macAddress"  => array(0 => $entry['MAC'][0]['VALUE']),
         "opsi_notes"  => array(0 => $entry['NOTES'][0]['VALUE']));
 
-      if(!empty($entry['DESCRIPTION'][0]['VALUE'])){ 
-        $obj["description"] =$entry['DESCRIPTION'][0]['VALUE'];
+      /* Check permissions */
+      $opsi_acl = $ui->get_permissions($obj['dn'],"opsi/opsiGeneric");
+      if(preg_match("/r/",$opsi_acl)){
+        if(!empty($entry['DESCRIPTION'][0]['VALUE'])){ 
+          $obj["description"] =$entry['DESCRIPTION'][0]['VALUE'];
+        }
+        $data[] = $obj;
       }
-      $data[] = $obj;
     }
     return($data);
   }

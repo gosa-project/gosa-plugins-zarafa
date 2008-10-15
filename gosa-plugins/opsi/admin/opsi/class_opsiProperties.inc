@@ -8,7 +8,7 @@ class opsiProperties extends plugin
   private $product;
   private $cfg;
   private $hostId;
-
+  public $config;
 
   /*! \brief  Initializes the class.
       @param  Object  The gosa configuration object
