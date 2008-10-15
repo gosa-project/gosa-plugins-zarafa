@@ -20,7 +20,7 @@ class faiScriptEntry extends plugin
   
   function faiScriptEntry (&$config, $dn= NULL,$object=false)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, NULL);
     if($dn != "new"){
       $this->orig_cn= $object['cn'];
       $this->dn=$object['dn'];
