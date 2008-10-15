@@ -147,6 +147,10 @@ class faiTemplateEntry extends plugin
     /* Check if form is posted and we are not freezed */
     if((isset($_POST['SubObjectFormSubmitted'])) && !preg_match("/freeze/", $this->FAIstate)){
 
+      /* Remember destination current path 
+          depending on the ACLs we will assemble a new one later.
+       */
+      $cur_path = $this->FAItemplatePath;
       plugin::save_object();
 
       /* Set user.group (FAIowner) attribute */  
@@ -173,11 +177,20 @@ class faiTemplateEntry extends plugin
           $tmode= $tmode.$dest;
         }
         $this->FAImode= $tmode;
-
-        /* Assemble cn/FAItemplatePath */
-        $this->cn= preg_replace('/\/+/', '/', $this->FAItemplatePath.'/'.$this->cn);
-        $this->FAItemplatePath= $this->cn;
       }
+
+      /* Check if we are allowed to change the destination directory 
+       */
+      if($this->acl_is_writeable("FAItemplatePath")){
+        $cur_path = $this->FAItemplatePath.'/'.basename($cur_path);
+      }
+
+      /* Check if we are allowed to change the destination directory 
+       */
+      if($this->acl_is_writeable("cn")){
+        $cur_path = dirname($cur_path).'/'.$this->cn;
+      }
+      $this->FAItemplatePath = $cur_path;
     }
   }
 

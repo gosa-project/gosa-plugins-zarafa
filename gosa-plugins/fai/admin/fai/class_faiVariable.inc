@@ -276,11 +276,6 @@ class faiVariable extends plugin
   {
     if((isset($_POST['FAIvariable_posted'])) && !preg_match("/freeze/", $this->FAIstate) ){
       plugin::save_object();
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }
-      }
     }
   }
 

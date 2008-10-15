@@ -451,11 +451,6 @@ class faiScript extends plugin
   {
     if((isset($_POST['FAIscript_posted'])) && !preg_match("/freeze/", $this->FAIstate)){
       plugin::save_object();
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }
-      }
     }
     
     /* Get sort order */

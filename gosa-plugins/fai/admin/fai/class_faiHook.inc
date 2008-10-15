@@ -418,11 +418,6 @@ class faiHook extends plugin
   {
     if((isset($_POST['FAIhook_posted'])) && !preg_match("/^freeze/", $this->FAIstate)){
       plugin::save_object();
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }
-      }
     }
   }
 
