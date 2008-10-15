@@ -317,28 +317,30 @@ class opsiGeneric extends plugin
     /* Create list of selected local products 
      */
     ksort($this->a_selectedLocalProducts);
-    foreach($this->a_selectedLocalProducts as $name => $data){
+    if($this->acl_is_readable("localProduct")){
+      foreach($this->a_selectedLocalProducts as $name => $data){
 
-      $name_tab = array("string"   => $name);
-      $desc_tab = array(
-          "string" => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
-          "attach" => "title='".$data['DESC']."'");
+        $name_tab = array("string"   => $name);
+        $desc_tab = array(
+            "string" => "<div style='height: 14px;overflow:hidden;'>".$data['DESC']."</div>",
+            "attach" => "title='".$data['DESC']."'");
 
-      /* Only display edit button, if there is something to edit 
-       */
-      $edit = "<img src='images/empty.png' alt=' '>";
-      if(count($data['CFG'])){
-        $edit = "<input type='image' src='images/lists/edit.png' name='edit_lp_".$name."'>";
-      }
-      $del  = "<input type='image' src='images/lists/trash.png' name='del_lp_".$name."'>";  
+        /* Only display edit button, if there is something to edit 
+         */
+        $edit = "<img src='images/empty.png' alt=' '>";
+        if(count($data['CFG'])){
+          $edit = "<input type='image' src='images/lists/edit.png' name='edit_lp_".$name."'>";
+        }
+        $del  = "<input type='image' src='images/lists/trash.png' name='del_lp_".$name."'>";  
 
-      $opt_tab  = array("string" => $edit.$del,
-          "attach" => "style='border-right:0px; width: 40px; text-align:right;'");
+        $opt_tab  = array("string" => $edit.$del,
+            "attach" => "style='border-right:0px; width: 40px; text-align:right;'");
 
-      if($this->acl_is_writeable("localProduct")){
-        $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
-      }else{
-        $divSLP->AddEntry(array($name_tab,$desc_tab));
+        if($this->acl_is_writeable("localProduct")){
+          $divSLP->AddEntry(array($name_tab,$desc_tab,$opt_tab));
+        }else{
+          $divSLP->AddEntry(array($name_tab,$desc_tab));
+        }
       }
     }
 
@@ -556,10 +558,14 @@ class opsiGeneric extends plugin
       $pro = $this->dialog->get_product();
       $CFG = $this->dialog->get_cfg();
       if(isset($this->a_selectedLocalProducts[$pro])){
-        $this->a_selectedLocalProducts[$pro]['CFG'] = $CFG;
+        if($this->acl_is_writeable("localProduct")){
+          $this->a_selectedLocalProducts[$pro]['CFG'] = $CFG;
+        }
         $this->dialog = NULL;
       }elseif($this->s_selectedNetbootProduct == $pro){
-        $this->a_availableNetbootProducts[$pro]['CFG'] = $CFG;
+        if($this->acl_is_writeable("netbootProduct")){
+          $this->a_availableNetbootProducts[$pro]['CFG'] = $CFG;
+        }
         $this->dialog = NULL;
       }else{
         trigger_error("Fatal, unknown product was configured.");
