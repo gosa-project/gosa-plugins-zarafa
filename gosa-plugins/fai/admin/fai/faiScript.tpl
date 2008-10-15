@@ -45,7 +45,7 @@
 {if $sub_object_is_addable}
 						<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"	title="{msgPool type=addButton}" >
 {else}
-						<input type="submit" name="AddSubObject"     value="{msgPool type=addButton}"	title="{msgPool type=addButton}" disabled>
+						<input type="submit" name="Dummy2"     value="{msgPool type=addButton}"	title="{msgPool type=addButton}" disabled>
 {/if}
 					</td>
 				</tr>
