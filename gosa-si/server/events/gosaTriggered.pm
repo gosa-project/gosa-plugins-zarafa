@@ -640,6 +640,9 @@ sub trigger_action_reinstall {
 
     my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    # invoke trigger wake for this gosa-si-server
+    &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
+
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }
@@ -653,6 +656,9 @@ sub trigger_action_update {
 
     my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    # invoke trigger wake for this gosa-si-server
+    &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
+
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }
@@ -671,8 +677,12 @@ sub trigger_action_instant_update {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
+
     my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    # invoke trigger wake for this gosa-si-server
+    &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
+
     my @out_msg_l = ($wake_msg, $msg);  
     return @out_msg_l;
 }

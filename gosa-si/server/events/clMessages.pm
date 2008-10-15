@@ -116,9 +116,11 @@ sub LOGIN {
     my $header = @{$msg_hash->{'header'}}[0];
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
+    my $res;
+    my $error_str;
 
     # Invoke set_last_system
-	my $res = &set_last_system($msg, $msg_hash, $session_id);
+	$res = &set_last_system($msg, $msg_hash, $session_id);
 
     my %add_hash = ( table=>$main::login_users_tn, 
         primkey=> ['client', 'user'],
@@ -126,7 +128,7 @@ sub LOGIN {
         user=>$login,
         timestamp=>&get_time,
         ); 
-    my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
+    ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
     if ($res != 0)  {
         &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str");
         return;
