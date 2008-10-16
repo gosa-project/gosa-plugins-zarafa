@@ -564,9 +564,6 @@ class kolabAccount extends plugin
     if(in_array("kolabState",$this->multi_boxes)){
       $ret['is_account'] = $this->is_account;
     }
-
-    print_a($ret);
-  
     return($ret);
   }
 
@@ -662,7 +659,16 @@ class kolabAccount extends plugin
     }
   }
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
 
+    $this->is_account = FALSE;
+
+    if(isset($source['kolabDelegate']) || isset($source['calFBURL'])){
+      $this->is_account = TRUE;
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
