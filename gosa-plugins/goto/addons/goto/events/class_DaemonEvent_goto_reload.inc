@@ -22,7 +22,7 @@
 
 class DaemonEvent_goto_reload extends DaemonEvent
 {
-  var $visible_for = SYSTEM_EVENT;
+  var $visible_for = HIDDEN_EVENT;
   var $mac = array();
   protected $attributes = array("mac");
 
