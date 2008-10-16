@@ -76,7 +76,7 @@ class divListBlocklist extends MultiSelectWindow
   
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions($this->selectedBase,"gofaxlist/blocklist");
+    $acl      = $ui->get_permissions($this->selectedBase,"gofaxlist/blocklistGeneric");
     $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"gofaxlist");
 
     /* Add default header */
@@ -135,7 +135,7 @@ class divListBlocklist extends MultiSelectWindow
     $ui = get_userinfo();
     foreach($list as $key => $val){
 
-      $acl = $ui->get_permissions($val['dn'],"gofaxlist/blocklist");
+      $acl = $ui->get_permissions($val['dn'],"gofaxlist/blocklistGeneric");
       $acl_all  = $ui->has_complete_category_acls($val['dn'],"gofaxlist");
 
       if(!preg_match("/r/",$acl)){
@@ -145,7 +145,7 @@ class divListBlocklist extends MultiSelectWindow
       $action ="";
 
       /* Add copy & cut functionality */
-      $action.= $this->parent->get_copypaste_action($val['dn'],"gofaxlist","blocklist");
+      $action.= $this->parent->get_copypaste_action($val['dn'],"gofaxlist","blocklistGeneric");
 
       /* Edit link ; requires read access */
       $action.= "<input class='center' type='image' src='images/lists/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";

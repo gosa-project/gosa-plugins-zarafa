@@ -408,7 +408,7 @@ class blocklist extends plugin
     $tmp=array();
     foreach($this->blocklists as $tkey => $val ){
 
-      $acl = $this->ui ->get_permissions($base,"gofaxlist/blocklist");
+      $acl = $this->ui ->get_permissions($base,"gofaxlist/blocklistGeneric");
       if(preg_match("/r/",$acl)){
         $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
       }
