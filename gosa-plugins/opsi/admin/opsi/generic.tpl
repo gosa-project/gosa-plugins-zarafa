@@ -121,6 +121,7 @@
 		{else}
 		<option value="install">{t}Install{/t}</option>
 		{/if}
+		<option value="wake">{t}Wake{/t}</option>
 	</select>
 {render acl=$triggerActionACL}
 	<input type='submit' name='opsi_trigger_action' value="{t}Execute{/t}">

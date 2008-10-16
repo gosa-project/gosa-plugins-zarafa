@@ -594,6 +594,9 @@ class opsiGeneric extends plugin
         if($action == "install"){
           $this->install_client(); 
         }
+        if($action == "wake"){
+          $this->wake_client(); 
+        }
       }
 
       /* Get selected netboot product.
@@ -672,6 +675,23 @@ class opsiGeneric extends plugin
     $this->opsi->send_action("install",$this->hostId,$this->mac);
     if($this->opsi->is_error()){
       msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+    }
+  }
+
+
+  /* Wake up client
+   */
+  function wake_client()
+  {
+    /* Check if we are able to communicate with the GOsa supprot daemon
+     */
+    if(class_available("gosaSupportDaemon")){
+      $o = new gosaSupportDaemon();
+      if($o->connect() && class_available("DaemonEvent_wakeup")){
+        $evt = new DaemonEvent_wakeup($this->config);      
+        $evt->add_targets(array($this->mac));
+        $o->append($evt);
+      }
     }
   }
 
