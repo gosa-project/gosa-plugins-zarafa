@@ -116,8 +116,8 @@ class selectUserToPrinterDialog extends plugin
     $smarty->assign("regexPrinter"        , $this->regex);
     $smarty->assign("deplistPrinter"      , $deps);;//deplist);
     $smarty->assign("depselectPrinter"    , $this->depselect);
-    $smarty->assign("gotoPrinters"        , $tmp_printers);
-    $smarty->assign("gotoPrinterKeys"     , array_flip($tmp_printers));
+    $smarty->assign("gotoPrinters"        , array_values($tmp_printers));
+    $smarty->assign("gotoPrinterKeys"     , array_keys($tmp_printers));
     $smarty->assign("apply"               , apply_filter());
     $smarty->assign("alphabet"            , generate_alphabet());
     $smarty->assign("search_image"        , get_template_path('images/lists/search.png'));
