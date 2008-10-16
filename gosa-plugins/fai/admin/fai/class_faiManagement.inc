@@ -1397,7 +1397,7 @@ class faiManagement extends plugin
 
     if($oc == "FAIprofile"){
       $f = "";
-      $ocs = array("FAItemplate","FAIhook","FAIpartitionTable","FAIpackageList","FAIscript","FAIvariable");
+      $ocs = array("FAIprofile","FAItemplate","FAIhook","FAIpartitionTable","FAIpackageList","FAIscript","FAIvariable");
       foreach($ocs as $oc){
         $f .= "(objectClass=".$oc.")";
       } 
