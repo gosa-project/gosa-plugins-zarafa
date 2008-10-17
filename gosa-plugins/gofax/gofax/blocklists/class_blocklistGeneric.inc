@@ -17,12 +17,15 @@ class blocklistGeneric extends plugin
   var $goFaxBlocklist = array();
   var $readonly = FALSE;
   var $view_logged = FALSE;
-  var $attributes = array("cn","description");
+  var $attributes = array("cn","description","goFaxSBlocklist","goFaxRBlocklist");
 
   var $ignore_account = TRUE;
 
-   var $orig_base = "";
-   var $orig_dn = "";
+  var $orig_base = "";
+  var $orig_dn = "";
+
+  var $goFaxSBlocklist = array();
+  var $goFaxRBlocklist = array();
 
   
   function __construct($config,$dn = "new")
@@ -253,19 +256,16 @@ class blocklistGeneric extends plugin
 
     plugin::save();
 
-    /* Add list */
-    if (count($this->goFaxBlocklist)){
-      $this->attrs[$type]= $this->goFaxBlocklist;
-    }
+    /* Let clenaup() know what attributes to handle 
+     */ 
+    $this->attrs[$type] = $this->goFaxBlocklist;
+    $this->attributes [] = $type;
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->base);
     $ldap->cat($this->dn, array('dn'));
     if ($ldap->count()){
-      if (!isset($this->attrs[$type])){
-        $this->attrs[$type]= array();
-      }
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify($this->attrs);
@@ -275,6 +275,7 @@ class blocklistGeneric extends plugin
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
+      $this->cleanup();
       $ldap->add($this->attrs);
       new log("create","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
