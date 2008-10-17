@@ -43,7 +43,7 @@ if ($remove_lock){
                             "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> 
                             ".@LDAP::fix(session::get('objectinfo')));
   } else {
-    $display= print_header(get_template_path('images/macros.png'), _("Phone macro management"));
+    $display= print_header(get_template_path('plugins/gofon/images/macros.png'), _("Phone macro management"));
   }
 
   /* Reset requested? */
