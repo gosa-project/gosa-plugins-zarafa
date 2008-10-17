@@ -3,6 +3,8 @@
 class worktabs extends tabs
 {
 
+  public $was_activated = FALSE;
+
   function worktabs($config, $data, $dn,$category)
   {
     

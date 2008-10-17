@@ -2,6 +2,7 @@
 
 class termtabs extends tabs
 {
+  public $was_activated = FALSE;
 
   function termtabs($config, $data, $dn, $category)
   {
