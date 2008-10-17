@@ -283,7 +283,7 @@ class conference extends plugin
     if(isset($_POST['phoneConferenceGeneric'])){
 
       /* Get selected language */
-      if(isset($_POST['language']) && isset($this->languages[get_post('language')])){
+      if($this->acl_is_writeable("language") && isset($_POST['language']) && isset($this->languages[get_post('language')])){
         $this->language = get_post('language');
       }
 
@@ -777,6 +777,8 @@ class conference extends plugin
             "description"                   => _("Description"),
             "goFonPIN"                      => _("Conference PIN"),
 
+            "language"                      => _("Language"),
+  
             "goFonHomeServer"              => _("Home server"),
             "goFonConferenceOptionP"       => _("Preset PIN"),
             "goFonConferenceOptionr"       => _("Record conference"),

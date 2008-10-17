@@ -78,9 +78,11 @@
           <td>{t}Language{/t}
           </td>
           <td>
+{render acl=$languageACL}
             <select name="language" title="{t}Select language{/t}">
               {html_options options=$languages selected=$language}
             </select>
+{/render}
           </td>
         </tr>
       </table>
