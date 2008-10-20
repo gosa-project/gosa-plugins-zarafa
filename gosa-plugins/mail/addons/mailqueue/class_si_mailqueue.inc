@@ -138,7 +138,6 @@ class si_mailqueue extends gosaSupportDaemon
     
     $data['msg_id'] = $msg_ids;
 
-    print_a(array("gosa_mailqueue_".$action,$server,$data));;
     $this->send_data("gosa_mailqueue_".$action,$server,$data,FALSE);
     // There is no answer for this requests 
   }
