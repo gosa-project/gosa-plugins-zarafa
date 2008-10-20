@@ -17,7 +17,7 @@
      {/if}
     </td>
     <td>
-   
+{render acl=$ACL}   
     {if $options[$entry.NAME].TYPE == "STRING"}
      <!-- STRING  
       -->
@@ -66,10 +66,15 @@
       id="option_value__{$key}_{$entry_key}" 
           {if $entry.VALUE == "FALSE" ||  $entry.VALUE == "TRUE"} disabled {/if}>
     {/if}
+{/render}
     </td>
     <td style='width: 40px; text-align:right;'>
+{render acl=$ACL}   
      <input type='image' src='plugins/sudo/images/negate.png'     name='negOption_{$key}_{$entry_key}' class='center'>
+{/render}
+{render acl=$ACL}   
      <input type='image' src='images/lists/trash.png'  name='delOption_{$key}_{$entry_key}' class='center'>
+{/render}
     </td>
    </tr>
   {/foreach}
@@ -79,6 +84,7 @@
 <p class="seperator">&nbsp;</p>
 <br>
 <h2>{t}Available options{/t}:</h2>
+{render acl=$ACL}   
 <select name='option'>
 {foreach from=$options item=item key=key}
  {if !isset($sudoOption.$key) || ($sudoOption.$key && $item.TYPE == "LISTS")}
@@ -86,9 +92,11 @@
  {/if}
 {/foreach}
 </select>
+{/render}
 
+{render acl=$ACL}   
 <input type="submit" name="add_option" value="{msgPool type=addButton}">
-
+{/render}
 
 <script language="JavaScript" type="text/javascript">
  <!-- 

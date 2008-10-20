@@ -206,75 +206,79 @@ class sudoOption extends plugin
     /*****
       Handle Posts 
      *****/
-    foreach($_POST as $name => $value){
+    if($this->acl_is_writeable("")){
 
-      if(preg_match("/^negOption_/",$name)){
+      foreach($_POST as $name => $value){
 
-        $opt = preg_replace("/^negOption_/","",$name);
-        $opt = preg_replace("/_[^_]*$/","",$opt);
-        $id  = preg_replace("/^.*_([0-9])*$/","\\1",$opt);
-        $opt = preg_replace("/_[0-9]*$/","",$opt);
+        if(preg_match("/^negOption_/",$name)){
 
-        if(isset($this->sudoOption[$opt][$id])){
-          $val = $this->sudoOption[$opt][$id]["VALUE"];
+          $opt = preg_replace("/^negOption_/","",$name);
+          $opt = preg_replace("/_[^_]*$/","",$opt);
+          $id  = preg_replace("/^.*_([0-9])*$/","\\1",$opt);
+          $opt = preg_replace("/_[0-9]*$/","",$opt);
 
-          /*****
-            Negate STRING_BOOL && BOOL_INTEGER
-           *****/
-          if(in_array($this->options[$opt]['TYPE'],array('STRING_BOOL','BOOL_INTEGER'))){
-            if(in_array($val, array("TRUE","FALSE"))){
+          if(isset($this->sudoOption[$opt][$id])){
+            $val = $this->sudoOption[$opt][$id]["VALUE"];
+
+            /*****
+              Negate STRING_BOOL && BOOL_INTEGER
+             *****/
+            if(in_array($this->options[$opt]['TYPE'],array('STRING_BOOL','BOOL_INTEGER'))){
+              if(in_array($val, array("TRUE","FALSE"))){
+                if($val == "TRUE"){
+                  $this->sudoOption[$opt][$id]["VALUE"] = "FALSE";
+                }else{
+                  $this->sudoOption[$opt][$id]["VALUE"] = "TRUE";
+                }
+              }else{
+                $this->sudoOption[$opt][$id]['NEGATE'] = !$this->sudoOption[$opt][$id]['NEGATE']; 
+              }
+            }
+
+            /*****
+              Negate STRING / INTEGER
+             *****/
+            if(in_array($this->options[$opt]['TYPE'],array('STRING','INTEGER','LISTS'))){
+              $this->sudoOption[$opt][$id]['NEGATE'] = !$this->sudoOption[$opt][$id]['NEGATE']; 
+            }
+
+            /*****
+              Negate BOOLEAN
+             *****/
+            if(in_array($this->options[$opt]['TYPE'],array('BOOLEAN'))){
               if($val == "TRUE"){
                 $this->sudoOption[$opt][$id]["VALUE"] = "FALSE";
               }else{
                 $this->sudoOption[$opt][$id]["VALUE"] = "TRUE";
               }
-            }else{
-               $this->sudoOption[$opt][$id]['NEGATE'] = !$this->sudoOption[$opt][$id]['NEGATE']; 
             }
           }
+          break;
+        }
 
-          /*****
-            Negate STRING / INTEGER
-           *****/
-          if(in_array($this->options[$opt]['TYPE'],array('STRING','INTEGER','LISTS'))){
-            $this->sudoOption[$opt][$id]['NEGATE'] = !$this->sudoOption[$opt][$id]['NEGATE']; 
+        /*****
+          Remove options
+         *****/
+        if(preg_match("/^delOption/",$name)){
+          $opt = preg_replace("/^delOption_/","",$name);
+          $opt = preg_replace("/_[^_]*$/","",$opt);
+          $id  = preg_replace("/^.*_([0-9])*$/","\\1",$opt);
+          $opt = preg_replace("/_[0-9]*$/","",$opt);
+
+          if(isset($this->sudoOption[$opt][$id])){
+            unset($this->sudoOption[$opt][$id]);
           }
-
-          /*****
-            Negate BOOLEAN
-           *****/
-          if(in_array($this->options[$opt]['TYPE'],array('BOOLEAN'))){
-            if($val == "TRUE"){
-              $this->sudoOption[$opt][$id]["VALUE"] = "FALSE";
-            }else{
-              $this->sudoOption[$opt][$id]["VALUE"] = "TRUE";
-            }
+          if(!count($this->sudoOption[$opt])){
+            unset($this->sudoOption[$opt]);
           }
+          break;
         }
-        break;
-      }
-
-      /*****
-        Remove options
-       *****/
-      if(preg_match("/^delOption/",$name)){
-        $opt = preg_replace("/^delOption_/","",$name);
-        $opt = preg_replace("/_[^_]*$/","",$opt);
-        $id  = preg_replace("/^.*_([0-9])*$/","\\1",$opt);
-        $opt = preg_replace("/_[0-9]*$/","",$opt);
-
-        if(isset($this->sudoOption[$opt][$id])){
-          unset($this->sudoOption[$opt][$id]);
-        }
-        if(!count($this->sudoOption[$opt])){
-          unset($this->sudoOption[$opt]);
-        }
-        break;
       }
     }
 
  
     $smarty = get_smarty();
+    $smarty->assign("ACL",$this->getacl(""));
     $smarty->assign("map",  array("STRING" => _("string"), "BOOLEAN" => _("bool"),
       "INTEGER" => _("integer") , "BOOL_INTEGER" => _("integer")."-"._("bool") ,
       "STRING_BOOL" => _("string")."-"._("bool"),"LISTS" => _("list")));
@@ -310,71 +314,73 @@ class sudoOption extends plugin
    */
   function save_object()
   {
-    plugin::save_object();
+    if($this->acl_is_writeable("")){
+      plugin::save_object();
 
-    if(isset($_POST['add_option']) && isset($_POST['option'])){
-      $opt = get_post("option");
+      if(isset($_POST['add_option']) && isset($_POST['option'])){
+        $opt = get_post("option");
 
-      /* Append attribute only once, lists are handled below */
-      if(isset($this->options[$opt])){
-        $type = $this->options[$opt]['TYPE'];
-        $val  = $this->options[$opt]['DEFAULT'];
-        $option = array("NAME" => $opt, "VALUE" => $val , "NEGATE" => FALSE);
-        $this->sudoOption[$opt][] = $option;
+        /* Append attribute only once, lists are handled below */
+        if(isset($this->options[$opt])){
+          $type = $this->options[$opt]['TYPE'];
+          $val  = $this->options[$opt]['DEFAULT'];
+          $option = array("NAME" => $opt, "VALUE" => $val , "NEGATE" => FALSE);
+          $this->sudoOption[$opt][] = $option;
+        }
       }
-    }
 
-    foreach($this->sudoOption as $name => $opts){
-      foreach($opts as $id => $opt){
+      foreach($this->sudoOption as $name => $opts){
+        foreach($opts as $id => $opt){
 
-        /****
-          Get posted value for BOOLEAN
-         ****/
-        if(in_array($this->options[$name]['TYPE'],array("BOOLEAN"))){
-          if(isset($_POST['option_value__'.$name.'_'.$id])){
-            $this->sudoOption[$name][$id]["VALUE"] = get_post('option_value__'.$name.'_'.$id);
-          }
-        }
-
-        /****
-          Get posted value for STRING / INTEGER
-         ****/
-        if(in_array($this->options[$name]['TYPE'],array("STRING","INTEGER"))){
-          if(isset($_POST['option_value__'.$name.'_'.$id])){
-            $this->sudoOption[$name][$id]["VALUE"] = get_post('option_value__'.$name.'_'.$id);
-          }
-        }
-
-        /****
-          Get posted value for STRING_BOOL / BOOL_INTEGER
-         ****/
-        if(in_array($this->options[$name]['TYPE'],array("BOOL_INTEGER","STRING_BOOL"))){
-          if(isset($_POST['option_selection__'.$name.'_'.$id])){
-            $sel = get_post('option_selection__'.$name.'_'.$id);
-            $val = "";
+          /****
+            Get posted value for BOOLEAN
+           ****/
+          if(in_array($this->options[$name]['TYPE'],array("BOOLEAN"))){
             if(isset($_POST['option_value__'.$name.'_'.$id])){
-              $val = get_post('option_value__'.$name.'_'.$id);
-            }
-
-            if($sel == "FALSE" || $sel == "TRUE"){
-              $this->sudoOption[$name][$id]['VALUE'] = $sel;
-              $this->sudoOption[$name][$id]['NEGATE'] = FALSE;
-            }else{
-              $this->sudoOption[$name][$id]['VALUE'] = $val;
+              $this->sudoOption[$name][$id]["VALUE"] = get_post('option_value__'.$name.'_'.$id);
             }
           }
-        }
 
-        /****
-          Get posted value for LISTS
-         ****/
-        if(in_array($this->options[$name]['TYPE'],array("LISTS"))){
-          foreach($this->sudoOption[$name] as $entry_key => $entry){
-            if(isset($_POST['list_value__'.$name.'_'.$entry_key])){
-              $val = get_post('list_value__'.$name.'_'.$entry_key);
-              $this->sudoOption[$name][$entry_key]["VALUE"] = $val;
+          /****
+            Get posted value for STRING / INTEGER
+           ****/
+          if(in_array($this->options[$name]['TYPE'],array("STRING","INTEGER"))){
+            if(isset($_POST['option_value__'.$name.'_'.$id])){
+              $this->sudoOption[$name][$id]["VALUE"] = get_post('option_value__'.$name.'_'.$id);
             }
-          } 
+          }
+
+          /****
+            Get posted value for STRING_BOOL / BOOL_INTEGER
+           ****/
+          if(in_array($this->options[$name]['TYPE'],array("BOOL_INTEGER","STRING_BOOL"))){
+            if(isset($_POST['option_selection__'.$name.'_'.$id])){
+              $sel = get_post('option_selection__'.$name.'_'.$id);
+              $val = "";
+              if(isset($_POST['option_value__'.$name.'_'.$id])){
+                $val = get_post('option_value__'.$name.'_'.$id);
+              }
+
+              if($sel == "FALSE" || $sel == "TRUE"){
+                $this->sudoOption[$name][$id]['VALUE'] = $sel;
+                $this->sudoOption[$name][$id]['NEGATE'] = FALSE;
+              }else{
+                $this->sudoOption[$name][$id]['VALUE'] = $val;
+              }
+            }
+          }
+
+          /****
+            Get posted value for LISTS
+           ****/
+          if(in_array($this->options[$name]['TYPE'],array("LISTS"))){
+            foreach($this->sudoOption[$name] as $entry_key => $entry){
+              if(isset($_POST['list_value__'.$name.'_'.$entry_key])){
+                $val = get_post('list_value__'.$name.'_'.$entry_key);
+                $this->sudoOption[$name][$entry_key]["VALUE"] = $val;
+              }
+            } 
+          }
         }
       }
     }
@@ -520,6 +526,23 @@ class sudoOption extends plugin
     return($str);
   }
 
+
+  /*! \brief  Add ACL object
+      @return Returns the ACL object.
+   */
+  static function plInfo()
+  {
+    return (array(  
+          "plShortName" => _("Options"),
+          "plDescription" => _("Sudo options"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 2,
+          "plSection"     => array("admin"),
+          "plCategory"    => array("sudo"),
+          "plProvidedAcls"    => array()
+        ));
+  }
 
   /*!  \brief   Unescape special chars in function parameters.
        @param   String the string to that must be unescaped.
