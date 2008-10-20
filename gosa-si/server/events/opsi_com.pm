@@ -685,7 +685,8 @@ sub opsi_set_product_properties {
             return ( &create_xml_string($out_hash) );
         }
     }
-    if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} != 1) || (@{$msg_hash->{'hostId'}}[0] eq ref 'HASH'))  {
+    # if no hostId is given, set_product_properties will act on globally
+    if ((exists $msg_hash->{'hostId'}) && (@{$msg_hash->{'hostId'}} > 1))  {
         &add_content2xml_hash($out_hash, "error_string", "hostId contains no or more than one values");
         &add_content2xml_hash($out_hash, "error", "hostId");
         &main::daemon_log("$session_id ERROR: hostId contains no or more than one values: $msg", 1); 

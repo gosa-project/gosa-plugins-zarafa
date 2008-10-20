@@ -2193,16 +2193,12 @@ sub change_fai_state {
 				  my %tmp = map { $_ => 1 } $entry->get_value("objectClass");
 				  if (exists $tmp{'FAIobject'}){
 					  if ($state eq ''){
-						  $result= $ldap_handle->modify($entry->dn, changes => [
-							  delete => [ FAIstate => [] ] ]);
+						  $result= $ldap_handle->modify($entry->dn, changes => [ delete => [ FAIstate => [] ] ]);
 					  } else {
-						  $result= $ldap_handle->modify($entry->dn, changes => [
-							  replace => [ FAIstate => $state ] ]);
+						  $result= $ldap_handle->modify($entry->dn, changes => [ replace => [ FAIstate => $state ] ]);
 					  }
 				  } elsif ($state ne ''){
-					  $result= $ldap_handle->modify($entry->dn, changes => [
-						  add     => [ objectClass => 'FAIobject' ],
-						  add     => [ FAIstate => $state ] ]);
+					  $result= $ldap_handle->modify($entry->dn, changes => [ add => [ objectClass => 'FAIobject' ], add => [ FAIstate => $state ] ]);
 				  }
 
 				  # Errors?
@@ -2265,8 +2261,7 @@ sub change_goto_state {
 
             daemon_log("$session_id INFO: Setting gotoMode to '$state' for ".$entry->dn, 5);
             my $result;
-            $result= $ldap_handle->modify($entry->dn, changes => [
-                                                replace => [ gotoMode => $state ] ]);
+            $result= $ldap_handle->modify($entry->dn, changes => [replace => [ gotoMode => $state ] ]);
 
             # Errors?
             if ($result->code){
