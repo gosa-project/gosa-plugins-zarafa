@@ -239,7 +239,7 @@ class faxreport extends plugin
           "(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
           "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
           "(title=$s)))";
-  
+ 
       $res = get_list($filter, "users", $this->search_base, array("uid"), GL_SUBSEARCH );
 
       /* Check if we are allowed to collect fax data */
@@ -249,6 +249,12 @@ class faxreport extends plugin
         if(preg_match("/r/",$acl)){
           $fax_users[ $attrs['dn']]= $attrs["uid"][0];
         }
+      }
+
+      /* Add self uid, if we have self acl
+       */   
+      if(preg_match("/(r|w)/",$this->ui->get_permissions($this->ui->dn,"faxreport/faxreport",""))){
+        $fax_users[$this->ui->dn] = $this->ui->uid;
       }
 
       $this->fax_users = $fax_users;
