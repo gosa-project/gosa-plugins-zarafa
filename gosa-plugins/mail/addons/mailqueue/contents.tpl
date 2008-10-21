@@ -28,18 +28,26 @@
 	<input name="search" value="{t}Search{/t}" type="submit">
 			</td>
 			<td style="border-left:1px solid #A0A0A0; text-align:right;">&nbsp;
+				{if $delAll_W}
 				<input name="all_del"  src="images/lists/trash.png"		
 					value="{t}Remove all messages{/t}" type="image" 
 					title="{t}Remove all messages from selected servers queue{/t}">
+				{/if}
+				{if $holdAll_W}
 				<input name="all_hold" src="plugins/mail/images/mailq_hold.png"
 					value="{t}Hold all messages{/t}" type="image"
 					title="{t}Hold all messages in selected servers queue{/t}">
+				{/if}
+				{if $unholdAll_W}
 				<input name="all_unhold" src="plugins/mail/images/mailq_unhold.png"		
 					value="{t}Release all messages{/t}" 	type="image"
 					title="{t}Release all messages in selected servers queue{/t}">
+				{/if}
+				{if $requeueAll_W}
 				<input name="all_requeue" src="images/lists/reload.png"		
 					value="{t}Requeue all messages{/t}" type="image"
 					title="{t}Requeue all messages in selected servers queue{/t}">
+				{/if}
    			</td>
 		</tr>
 	</table>
@@ -89,19 +97,41 @@
 		<td>{$entries[$key].Recipient}</td>
 		<td >{$entries[$key].Status}</td>
 		<td style="text-align:right">
-			<input type='image' name='del__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
-				src="images/lists/trash.png" alt="{t}delete{/t}" title="{t}Delete this message{/t}">
-			{if $entries[$key].Hold == true}
-				<input type='image' name='unhold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
-					src="plugins/mail/images/mailq_unhold.png" alt="{t}unhold{/t}" title="{t}Release message{/t}">
+			{if $del_W}
+				<input type='image' name='del__{$entries[$key].MailID}__{$entries[$key].Server}' class="center" 
+					src="images/lists/trash.png" alt="{t}delete{/t}" title="{t}Delete this message{/t}">
 			{else}
-				<input type='image' name='hold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
-					src="plugins/mail/images/mailq_hold.png" alt="{t}hold{/t}" title="{t}Hold message{/t}">
+				<img src='images/empty.png' alt=' '>
 			{/if}
-            <input type='image' name='requeue__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
-                src="images/lists/reload.png" alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
-            <input type='image' name='header__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
-                src="plugins/mail/images/mailq_header.png" alt="{t}header{/t}" title="{t}Display header of this message{/t}">
+			{if $entries[$key].Hold == true}
+
+				{if $unhold_W}
+					<input type='image' name='unhold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+						src="plugins/mail/images/mailq_unhold.png" alt="{t}unhold{/t}" title="{t}Release message{/t}">
+				{else}
+					<img src='images/empty.png' alt=' '>
+				{/if}
+			{else}
+				{if $hold_W}
+					<input type='image' name='hold__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+						src="plugins/mail/images/mailq_hold.png" alt="{t}hold{/t}" title="{t}Hold message{/t}">
+				{else}
+					<img src='images/empty.png' alt=' '>
+				{/if}
+			{/if}
+			{if $requeue_W}
+				<input type='image' name='requeue__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+					src="images/lists/reload.png" alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
+			{else}
+				<img src='images/empty.png' alt=' '>
+			{/if}
+			{if $header_W}
+				<input type='image' name='header__{$entries[$key].MailID}__{$entries[$key].Server}' class="center"
+					src="plugins/mail/images/mailq_header.png" alt="{t}header{/t}" 
+					title="{t}Display header of this message{/t}">
+			{else}
+				<img src='images/empty.png' alt=' '>
+			{/if}
 		</td>
 	</tr>
 	{counter}
