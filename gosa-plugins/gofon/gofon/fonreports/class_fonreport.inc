@@ -108,7 +108,7 @@ class fonreport extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      new log("view","gofon/".get_class($this),$this->dn);
+      new log("view","fonreport/".get_class($this),$this->dn);
     }
 
     /*****************
@@ -133,7 +133,7 @@ class fonreport extends plugin
       Smarty 
      *****************/
     $bases      = array();
-    $cat_bases  = $this->ui->get_module_departments("gofon");
+    $cat_bases  = $this->ui->get_module_departments("fonreport");
     foreach($this->config->idepartments as $dn => $name){
       if(in_array_ics($dn,$cat_bases)){
         $bases[$dn] = $name;
@@ -217,13 +217,13 @@ class fonreport extends plugin
 
         if($attr == "duration") continue;
   
-        $acl = $this->ui->get_permissions($this->search_base,"gofon/fonreport",$attr);
+        $acl = $this->ui->get_permissions($this->search_base,"fonreport/fonreport",$attr);
         if(!preg_match("/r/",$acl)){
           $line[$attr] = $no_acl;
         }
       }
 
-      if($this->ui->get_permissions($this->search_base,"gofon/fonreport","calldate")){
+      if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","calldate")){
         $hour=  substr($line["calldate"], 11, 2);
         $minute=substr($line["calldate"], 14, 2);
         $format= _("Y-M-D");
@@ -244,7 +244,7 @@ class fonreport extends plugin
         }
       }
 
-      if($this->ui->get_permissions($this->search_base,"gofon/fonreport","duration")){
+      if($this->ui->get_permissions($this->search_base,"fonreport/fonreport","duration")){
         $append_str .= 	"<td>".$this->gen_duration($line["duration"])."</td>";
       }else{
         $append_str .= 	"<td>".$no_acl."</td>";
@@ -399,7 +399,11 @@ class fonreport extends plugin
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("administration"),
-        "plCategory"    => array("fonreport"),
+        "plCategory"    => array(
+          "fonreport" => array(
+            "description" => _("Phone reports"),
+            "objectClass" => "None")),
+
   
         "plProvidedAcls" => array(
           "calldate"      =>_("Date"), 
