@@ -101,7 +101,6 @@ class gotomasses extends plugin
         "/^remove_task_/"           =>  "remove",
         "/^new_task_/"              =>  "new_task");;
 
-
     foreach($arr as $regex => $action){
       foreach($_POST as $name => $value){
         if(preg_match($regex,$name)){
@@ -128,7 +127,7 @@ class gotomasses extends plugin
      * Import CSV file  
      ************/
     
-    if($s_action == "import_file"){
+    if($s_action == "import_file" && $this->acl_is_writeable("")){
       $this->dialog = new goto_import_file($this->config,$this);
     }
   
@@ -141,7 +140,7 @@ class gotomasses extends plugin
      * Handle Priority modifications  
      ************/
 
-    if(preg_match("/^prio_/",$s_action)){
+    if(preg_match("/^prio_/",$s_action) && $this->acl_is_writeable("")){
       switch($s_action){
         case 'prio_down'  : $this->update_priority($s_entry,"down");break;
         case 'prio_up'    : $this->update_priority($s_entry,"up");break;
@@ -153,21 +152,23 @@ class gotomasses extends plugin
      ************/
 
     if(preg_match("/^resume/",$s_action) || 
-       preg_match("/^pause/",$s_action) || 
-       preg_match("/^abort_process/",$s_action) || 
-       preg_match("/^execute_process/",$s_action)){
+        preg_match("/^pause/",$s_action) || 
+        preg_match("/^abort_process/",$s_action) || 
+        preg_match("/^execute_process/",$s_action)){
 
-      switch($s_action){
-        case 'resume'         : $this->resume_queue_entries   (array($s_entry));break; 
-        case 'pause'          : $this->pause_queue_entries    (array($s_entry));break; 
-        case 'execute_process': $this->execute_queue_entries  (array($s_entry));break; 
-        case 'abort_process'  : $this->abort_queue_entries    (array($s_entry));break; 
-        case 'resume_all'         : $this->resume_queue_entries   ($this->list_get_selected_items());break; 
-        case 'pause_all'          : $this->pause_queue_entries    ($this->list_get_selected_items());break; 
-        case 'execute_process_all': $this->execute_queue_entries  ($this->list_get_selected_items());break; 
-        case 'abort_process_all'  : $this->abort_queue_entries    ($this->list_get_selected_items());break; 
+      if($this->acl_is_writeable("")){
+        switch($s_action){
+          case 'resume'         : $this->resume_queue_entries   (array($s_entry));break; 
+          case 'pause'          : $this->pause_queue_entries    (array($s_entry));break; 
+          case 'execute_process': $this->execute_queue_entries  (array($s_entry));break; 
+          case 'abort_process'  : $this->abort_queue_entries    (array($s_entry));break; 
+          case 'resume_all'         : $this->resume_queue_entries   ($this->list_get_selected_items());break; 
+          case 'pause_all'          : $this->pause_queue_entries    ($this->list_get_selected_items());break; 
+          case 'execute_process_all': $this->execute_queue_entries  ($this->list_get_selected_items());break; 
+          case 'abort_process_all'  : $this->abort_queue_entries    ($this->list_get_selected_items());break; 
 
-        default : trigger_error("Undefined action setting used (".$s_action.").");
+          default : trigger_error("Undefined action setting used (".$s_action.").");
+        }
       }
       if($this->o_queue->is_error()){
         msg_dialog::display(_("Error"), $this->o_queue->get_error(), ERROR_DIALOG);
@@ -178,7 +179,7 @@ class gotomasses extends plugin
      * ADD 
      ************/
   
-    if(preg_match("/^add_event_/",$s_action)){
+    if(preg_match("/^add_event_/",$s_action) && $this->acl_is_writeable("")){
       $type = preg_replace("/^add_event_/","",$s_action);
       if(isset($this->events['BY_CLASS'][$type])){
         $e_data = $this->events['BY_CLASS'][$type];
@@ -190,7 +191,7 @@ class gotomasses extends plugin
      * EDIT
      ************/
 
-    if($s_action == "edit"){  
+    if($s_action == "edit" && $this->acl_is_writeable("")){  
       $id =  $s_entry;
       $type = FALSE;
       if(isset($this->entries[$id])){
@@ -208,7 +209,7 @@ class gotomasses extends plugin
      * LOG VIEW
      ************/
 
-    if($s_action == "logview"){  
+    if($s_action == "logview"  && $this->acl_is_readable("")){  
       $id =  $s_entry;
       $type = FALSE;
       if(isset($this->entries[$id])){
@@ -285,26 +286,28 @@ class gotomasses extends plugin
 
       /* Reboot hosts with not yet startet installations and timestamps in the past 
        */
-      timezone::get_default_timezone();
-      foreach($this->ids_to_remove as $id){
-        $entry = $this->o_queue->get_entries_by_id(array($id));
-        if(isset($entry['ANSWER1'])){
-          $entry = $entry['ANSWER1'];
-          if( $entry['STATUS'] == "waiting" && 
-              $entry['HEADERTAG'] == "trigger_action_reinstall"){
-            $evt = new DaemonEvent_reinstall($this->config,$entry);
-            if($evt->get_timestamp(FALSE)  < time()){
-              $r_evt = new DaemonEvent_localboot($this->config);
-              $r_evt->add_targets(array($entry['MACADDRESS']));
-              $r_evt->set_type(TRIGGERED_EVENT);
-              $this->o_queue->append($r_evt);
+      if($this->acl_is_removeable("")){
+        timezone::get_default_timezone();
+        foreach($this->ids_to_remove as $id){
+          $entry = $this->o_queue->get_entries_by_id(array($id));
+          if(isset($entry['ANSWER1'])){
+            $entry = $entry['ANSWER1'];
+            if( $entry['STATUS'] == "waiting" && 
+                $entry['HEADERTAG'] == "trigger_action_reinstall"){
+              $evt = new DaemonEvent_reinstall($this->config,$entry);
+              if($evt->get_timestamp(FALSE)  < time()){
+                $r_evt = new DaemonEvent_localboot($this->config);
+                $r_evt->add_targets(array($entry['MACADDRESS']));
+                $r_evt->set_type(TRIGGERED_EVENT);
+                $this->o_queue->append($r_evt);
+              }
             }
           }
         }
-      }
 
-      $this->o_queue->remove_entries($this->ids_to_remove);
-      $this->save();
+        $this->o_queue->remove_entries($this->ids_to_remove);
+        $this->save();
+      }
     }
 
     /* Remove aborted */
@@ -362,8 +365,10 @@ class gotomasses extends plugin
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>&nbsp;"._("Create")."\n";
 
-    foreach($this->events['SCHEDULED'] as $name =>  $event){
-      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
+    if($this->acl_is_writeable("")){
+      foreach($this->events['SCHEDULED'] as $name =>  $event){
+        $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|add_event_".$name."\n";
+      }
     }
     if($this->acl_is_removeable()){
       $s.= "..|---|\n";
@@ -422,7 +427,7 @@ class gotomasses extends plugin
 
       /* If WAITING add priority action
        */  
-      if(in_array($task['STATUS'],array("waiting"))){
+      if(in_array($task['STATUS'],array("waiting")) && $this->acl_is_writeable("")){
         $prio_actions.= "<input class='center' type='image' src='plugins/goto/images/prio_increase.png' 
           title='"._("Move up")."' name='prio_up_".$key."'>&nbsp;";
         $prio_actions.= "<input class='center' type='image' src='plugins/goto/images/prio_decrease.png' 
@@ -431,42 +436,42 @@ class gotomasses extends plugin
     
       /* If WAITING add pause action
        */  
-      if(in_array($task['STATUS'],array("waiting"))){
+      if(in_array($task['STATUS'],array("waiting")) && $this->acl_is_writeable("")){
         $prio_actions.= "<input class='center' type='image' src='images/status_pause.png' 
           title='"._("Pause job")."' name='pause_".$key."'>&nbsp;";
       }
 
       /* If PAUSED add resume action
        */  
-      if(in_array($task['STATUS'],array("paused"))){
+      if(in_array($task['STATUS'],array("paused")) && $this->acl_is_writeable("")){
         $prio_actions.= "<input class='center' type='image' src='images/status_start.png' 
           title='"._("Resume job")."' name='resume_".$key."'>&nbsp;";
       }
 
       /* If PAUSED or WAITING add execution action
        */  
-      if(in_array($task['STATUS'],array("paused","waiting"))){
+      if(in_array($task['STATUS'],array("paused","waiting")) && $this->acl_is_writeable("")){
         $prio_actions.= "<input class='center' type='image' src='images/rocket.png' 
           title='"._("Execute now")."' name='execute_process_".$key."'>&nbsp;";
       }
 
       /* Add logview button, currently ever.
        */  
-      if(TRUE){
+      if($this->acl_is_readable("")){
         $action .= "<input type='image' src='plugins/goto/images/view_logs.png' name='log_view_".$key."' 
           class='center' title='"._("View logs")."' alt='"._("View logs")."'>&nbsp;";
       }
 
       /* If PAUSED or WAITING add edit action
        */  
-      if(in_array($task['STATUS'],array("waiting"))){
+      if(in_array($task['STATUS'],array("waiting")) && $this->acl_is_writeable("")){
         $action.= "<input type='image' src='images/lists/edit.png' name='edit_task_".$key."' 
           class='center' title='"._("Edit")."' alt='"._("Edit")."'>";
       }
 
       /* If PROCESSING add abort action
        */  
-      if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG'])){
+      if(in_array($task['STATUS'],array("processing")) && preg_match("/install/",$task['HEADERTAG']) && $this->acl_is_writeable("")){
         $action.= "<img src='images/empty.png' alt=''>";
         $action.= "<input class='center' type='image' src='images/small_error.png' 
           title='"._("Abort job")."' name='abort_process_".$key."'>";
@@ -478,7 +483,7 @@ class gotomasses extends plugin
         $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
           class='center' title='"._("Remove")."' alt='"._("Remove")."'>";
       }
-      if(in_array($task['STATUS'],array("processing")) && !preg_match("/install/",$task['HEADERTAG'])){
+      if($this->acl_is_writeable("") && in_array($task['STATUS'],array("processing")) && !preg_match("/install/",$task['HEADERTAG'])){
         $action.= "<input type='image' src='images/lists/trash.png' name='remove_task_".$key."' 
           class='center' title='"._("Remove")."' alt='"._("Remove")."'>";
       }
