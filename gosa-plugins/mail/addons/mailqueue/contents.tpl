@@ -55,6 +55,9 @@
 </div>
 <br>
 
+{if !$query_allowed}
+	<b>{msgPool type=permView}</b>
+{else}
 
 {if $all_ok != true}
 <b>{t}Search returned no results{/t}...</b>
@@ -146,6 +149,8 @@
 <p class="plugbottom">&nbsp;</p>
 
 {/if}
+{/if}
+
 
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

@@ -45,6 +45,11 @@ class mailqueue extends plugin
     }
 
     $smarty= get_smarty();
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $desc){
+      $smarty->assign($name."ACL",$this->getacl($name));
+      $smarty->assign($name."_W",$this->acl_is_writeable($name));
+    }
     $error =false;
 
     /******************
@@ -59,7 +64,7 @@ class mailqueue extends plugin
         "all_requeue" => "requeue");
     foreach($_POST as $name => $value){
       foreach($types as $type => $target){
-        if(preg_match("/^".$type."/",$name)){
+        if(preg_match("/^".$type."/",$name) && $this->acl_is_writeable($target."All")){
           $entry  = $this->list_get_selected_items();
           $action = $target;
           break;
@@ -67,12 +72,11 @@ class mailqueue extends plugin
       }
       if(!empty($action)) break;
     }
-  
 
     $types = array("del","hold","unhold","header","requeue");
     foreach($_POST as $name => $value){
       foreach($types as $type){
-        if(preg_match("/^".$type."__/",$name)){
+        if(preg_match("/^".$type."__/",$name) && $this->acl_is_writeable($type)){
           $action = $type;
           $server = preg_replace("/^".$type."__[^_]*__([^_]*)_.*/","\\1",$name); 
           $entry[$server][] = preg_replace("/^".$type."__([^_]*)__.*/","\\1",$name); 
@@ -124,24 +128,27 @@ class mailqueue extends plugin
       Query mailqueues 
      ******************/
 
-    $within_minutes = -1;
-    if($this->Time != "nolimit"){
-      $within_minutes = 60*60*$this->Time;
-    }
+    $entries = array();
+    if($this->acl_is_readable("query")){
+      $within_minutes = -1;
+      if($this->Time != "nolimit"){
+        $within_minutes = 60*60*$this->Time;
+      }
 
-    if($this->Server == "all"){
-      $entries = array();
-      foreach($this->ServerList as $mac => $name){
-        if(!tests::is_mac($mac)) continue;
-        $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->Search,$within_minutes));
+      if($this->Server == "all"){
+        $entries = array();
+        foreach($this->ServerList as $mac => $name){
+          if(!tests::is_mac($mac)) continue;
+          $entries = array_merge($entries,$this->si_queue->query_mailqueue($mac,$this->Search,$within_minutes));
+          if($this->si_queue->is_error()){
+            msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+      }else{
+        $entries = $this->si_queue->query_mailqueue($this->Server,$this->Search,$within_minutes);
         if($this->si_queue->is_error()){
           msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
         }
-      }
-    }else{
-      $entries = $this->si_queue->query_mailqueue($this->Server,$this->Search,$within_minutes);
-      if($this->si_queue->is_error()){
-        msg_dialog::display(_("Error"),msgPool::siError($this->si_queue->get_error()),ERROR_DIALOG);
       }
     }
 
@@ -174,6 +181,7 @@ class mailqueue extends plugin
       create html output 
      ******************/
 
+    $smarty->assign("query_allowed",$this->acl_is_readable("query"));
     $smarty->assign("all_ok"        , count($entries));
     $smarty->assign("entries"       , $entries);
     $smarty->assign("plug"          , "?plug=".$_GET['plug']);
@@ -198,6 +206,7 @@ class mailqueue extends plugin
     }else{
       $smarty->assign("SortType","<img src='images/lists/sort-down.png' alt='"._("down")."' border='0'>");
     }
+
     return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
   }
 
@@ -328,10 +337,10 @@ class mailqueue extends plugin
         "plCategory"    => array("mailqueue" => array("objectClass" => "none", "description" => _("Mail queue addon"))),
 
         "plProvidedAcls" => array(
-            "unhold_all"      => _("Unhold all messages"),
-            "hold_all"        => _("Hold all messages"),
-            "del_all"         => _("Delete all messages"),
-            "requeue_all"     => _("Requeue all messages"),
+            "unholdAll"       => _("Unhold all messages"),
+            "holdAll"         => _("Hold all messages"),
+            "delAll"          => _("Delete all messages"),
+            "requeueAll"      => _("Requeue all messages"),
             "unhold"          => _("Unhold message"),
             "hold"            => _("Hold message"),
             "del"             => _("Delete message"),
