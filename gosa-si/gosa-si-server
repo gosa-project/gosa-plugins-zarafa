@@ -2796,7 +2796,6 @@ sub create_packages_list_db {
 
 	close (CONFIG);
 
-
 	if(keys(%repo_dirs)) {
 		find(\&cleanup_and_extract, keys( %repo_dirs ));
 		&main::strip_packages_list_statements();
@@ -2809,12 +2808,13 @@ sub create_packages_list_db {
 
 # This function should do some intensive task to minimize the db-traffic
 sub strip_packages_list_statements {
-    my @existing_entries= @{$packages_list_db->exec_statement("SELECT * FROM $main::packages_list_tn")};
+	my @existing_entries= @{$packages_list_db->exec_statement("SELECT * FROM $main::packages_list_tn")};
 	my @new_statement_list=();
 	my $hash;
 	my $insert_hash;
 	my $update_hash;
 	my $delete_hash;
+	my $known_packages_hash;
 	my $local_timestamp=get_time();
 
 	foreach my $existing_entry (@existing_entries) {
@@ -2833,6 +2833,9 @@ sub strip_packages_list_statements {
 					(! (@{$hash->{$distribution}->{$package}->{$version}}[4] eq $description))
 				) {
 					@{$update_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section,$description,undef);
+				} else {
+					# package is already present in database. cache this knowledge for later use
+					@{$known_packages_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section,$description,$template);
 				}
 			} else {
 				# Insert a non-existing entry to db
@@ -2863,9 +2866,26 @@ sub strip_packages_list_statements {
 		}
 	}
 
-	# TODO: Check for orphaned entries
+	# Check for orphaned entries
+	foreach my $existing_entry (@existing_entries) {
+		my $distribution= @{$existing_entry}[0];
+		my $package= @{$existing_entry}[1];
+		my $version= @{$existing_entry}[2];
+		my $section= @{$existing_entry}[3];
 
-	# unroll the insert_hash
+		if(
+			exists($insert_hash->{$distribution}->{$package}->{$version}) ||
+			exists($update_hash->{$distribution}->{$package}->{$version}) ||
+			exists($known_packages_hash->{$distribution}->{$package}->{$version})
+		) {
+			next;
+		} else {
+			# Insert entry to delete hash
+			@{$delete_hash->{$distribution}->{$package}->{$version}} = ($distribution,$package,$version,$section);
+		}
+	}
+
+	# unroll the insert hash
 	foreach my $distribution (keys %{$insert_hash}) {
 		foreach my $package (keys %{$insert_hash->{$distribution}}) {
 			foreach my $version (keys %{$insert_hash->{$distribution}->{$package}}) {
@@ -2898,10 +2918,20 @@ sub strip_packages_list_statements {
 					next;
 				}
 				push @new_statement_list, 
-					"UPDATE $main::packages_list_tn SET $set WHERE"
-					." distribution = '$distribution'"
-					." AND package = '$package'"
-					." AND version = '$version'";
+				"UPDATE $main::packages_list_tn SET $set WHERE"
+				." distribution = '$distribution'"
+				." AND package = '$package'"
+				." AND version = '$version'";
+			}
+		}
+	}
+	
+	# unroll the delete hash
+	foreach my $distribution (keys %{$delete_hash}) {
+		foreach my $package (keys %{$delete_hash->{$distribution}}) {
+			foreach my $version (keys %{$delete_hash->{$distribution}->{$package}}) {
+				my $section = @{$delete_hash->{$distribution}->{$package}->{$version}}[3];
+				push @new_statement_list, "DELETE FROM $main::packages_list_tn WHERE distribution='$distribution' AND package='$package' AND version='$version' AND section='$section'";
 			}
 		}
 	}
@@ -3045,7 +3075,7 @@ sub cleanup_and_extract {
 
 		if( -f "$dir/DEBIAN/templates" ) {
 
-			daemon_log("DEBUG: Found debconf templates in '$package' - $newver", 7);
+			daemon_log("0 DEBUG: Found debconf templates in '$package' - $newver", 7);
 
 			my $tmpl= ""; {
 				local $/=undef;
