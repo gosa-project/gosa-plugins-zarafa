@@ -55,6 +55,7 @@ class phoneGeneric extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
+    $this->netConfigDNS->MACisMust =TRUE;
 
     /* Set base */
     if ($this->dn == "new"){
@@ -423,6 +424,9 @@ class phoneGeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
       new log("create","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
@@ -434,6 +438,9 @@ class phoneGeneric extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       new log("modify","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+      }
 
       // $user_phone_reload   
       $ldap->cd ($this->config->current['BASE']); 
