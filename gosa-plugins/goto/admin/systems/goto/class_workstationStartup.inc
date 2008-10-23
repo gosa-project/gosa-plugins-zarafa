@@ -607,10 +607,15 @@ class workstartup extends plugin
 
       $div = new divSelectBox("WSFAIscriptClasses");
       $div -> SetHeight("110");
-      $str_up     = " &nbsp;<input type='image' src='images/lists/sort-up.png'    name='sort_up_%s'    value='%s'>";
-      $str_down   = " &nbsp;<input type='image' src='images/lists/sort-down.png'  name='sort_down_%s'  value='%s'>";
-      $str_remove = " &nbsp;<input type='image' src='images/lists/trash.png'  name='fai_remove_%s' value='%s'>";
+
       $str_empty  = " &nbsp;<img src='images/empty.png' alt=\"\" width='7'>"; 
+      if($this->acl_is_writeable("FAIclass")){
+        $str_up     = " &nbsp;<input type='image' src='images/lists/sort-up.png'    name='sort_up_%s'    value='%s'>";
+        $str_down   = " &nbsp;<input type='image' src='images/lists/sort-down.png'  name='sort_down_%s'  value='%s'>";
+        $str_remove = " &nbsp;<input type='image' src='images/lists/trash.png'  name='fai_remove_%s' value='%s'>";
+      }else{
+        $str_up=$str_down=$str_remove=$str_empty;
+      }
 
       /* Get classes */
       if($this->FAIdebianMirror == "inherited"){
@@ -624,57 +629,59 @@ class workstartup extends plugin
 
       /* Draw every single entry */
       $i = 1;
-      foreach($tmp as $class){
+      if($this->acl_is_readable("FAIclass")){
+        foreach($tmp as $class){
 
-        /* Mark invalid classes. (Not in selected release)
-         */
-        $marker = "";
-        if(in_array_ics($class,$invalid)){
-          $marker = "&nbsp;<font color='red'>("._("Not available in current setup").")</font>";
-        }
-
-        /* Create up/down priority icons  
-         * Skip this, if we have inherited the FAI classes.
-         */
-        if($this->FAIdebianMirror == "inherited"){
-          $str = "";
-        }else{
-          if($i==1){
-            $str = $str_empty.$str_down.$str_remove;
-          }elseif($i == count($this->FAIclass)){
-            $str = $str_up.$str_empty.$str_remove;
-          }else{
-            $str = $str_up.$str_down.$str_remove;
+          /* Mark invalid classes. (Not in selected release)
+           */
+          $marker = "";
+          if(in_array_ics($class,$invalid)){
+            $marker = "&nbsp;<font color='red'>("._("Not available in current setup").")</font>";
           }
-        }
-        $i ++ ; 
 
-        /* Get Description tag 
-         *  There may be several FAI objects with the same class name, 
-         *   use the description from FAIprofile, if possible.
-         */  
-        $desc = ""; 
-        if(isset($this->cache['CLASSES'][$this->FAIrelease][$class])){
-          foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
-            if(isset($types['Desc'])){
-              $desc= $types['Desc'];
-              if($types['Type'] == "FAIprofile"){
-                break;
+          /* Create up/down priority icons  
+           * Skip this, if we have inherited the FAI classes.
+           */
+          if($this->FAIdebianMirror == "inherited"){
+            $str = "";
+          }else{
+            if($i==1){
+              $str = $str_empty.$str_down.$str_remove;
+            }elseif($i == count($this->FAIclass)){
+              $str = $str_up.$str_empty.$str_remove;
+            }else{
+              $str = $str_up.$str_down.$str_remove;
+            }
+          }
+          $i ++ ; 
+
+          /* Get Description tag 
+           *  There may be several FAI objects with the same class name, 
+           *   use the description from FAIprofile, if possible.
+           */  
+          $desc = ""; 
+          if(isset($this->cache['CLASSES'][$this->FAIrelease][$class])){
+            foreach($this->cache['CLASSES'][$this->FAIrelease][$class] as $types ){
+              if(isset($types['Desc'])){
+                $desc= $types['Desc'];
+                if($types['Type'] == "FAIprofile"){
+                  break;
+                }
               }
             }
           }
-        }
-        if(!empty($desc)){
-          $desc = "&nbsp;[".trim($desc)."]";
-        }        
+          if(!empty($desc)){
+            $desc = "&nbsp;[".trim($desc)."]";
+          }        
 
-        $div->AddEntry(array(
-              array("string"=>$class.$desc.$marker),
-              array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
-              ));
-      }  
-      $smarty->assign("FAIScriptlist",$div->DrawList()); 
+          $div->AddEntry(array(
+                array("string"=>$class.$desc.$marker),
+                array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
+                ));
+        }  
+      }// END FAI output generation 
     }// END FAI output generation 
+    $smarty->assign("FAIScriptlist",$div->DrawList()); 
 
     /* Radio button group */
     if (preg_match("/G/", $this->bootmode)) {
