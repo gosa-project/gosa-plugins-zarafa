@@ -148,37 +148,37 @@
 
 {$netconfig}
 {/if}
-
-<table width="100%">
-<tr><td style="width:50%; border-right:1px solid #AAA">
-{if $fai_activated}
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
-<h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
-<table summary="">
- <tr>
-  <td>
-{render acl=$gotoNtpServerACL}
-   <select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
-    <option disabled>&nbsp;</option>
-    {html_options options=$actions}
-   </select>
-{/render}
-  </td>
-  <td>
-{render acl=$gotoNtpServerACL}
-   <input type=submit name="action" value="{t}Execute{/t}">
-{/render}
-  </td>
- </tr>
-</table>
-{/if}
-</td>
-<td>
-{if $member_of_ogroup}
-   <input type='submit' name='inheritAll' value='{t}Inherit all{/t}'>
-{/if}
-</td>
-</tr>
+<table width="100%">
+	<tr>
+		<td style="width:50%; border-right:1px solid #AAA">
+		{if $fai_activated}
+			<h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
+				<table summary="">
+				 	<tr>
+				  		<td>
+							{render acl=$gotoNtpServerACL}
+	   						<select size="1" name="saction" title="{t}Select action to execute for this terminal{/t}">
+								<option disabled>&nbsp;</option>
+								{html_options options=$actions}
+							</select>
+							{/render}
+						</td>
+	  					<td>
+							{render acl=$gotoNtpServerACL}
+							<input type=submit name="action" value="{t}Execute{/t}">
+							{/render}
+					  	</td>
+					</tr>
+				</table>
+			{/if}
+		</td>
+		<td>
+			{if $member_of_ogroup}
+			   <input type='submit' name='inheritAll' value='{t}Inherit all{/t}'>
+			{/if}
+		</td>
+	</tr>
 </table>
 
 <input type="hidden" name="termgeneric_posted" value="1">
