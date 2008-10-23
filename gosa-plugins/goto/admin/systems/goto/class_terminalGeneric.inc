@@ -660,17 +660,21 @@ class termgeneric extends plugin
           "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
-                                                        "objectClass"  => "gotoTerminal")),
+              "objectClass"  => "gotoTerminal")),
           "plProvidedAcls"=> array(
-            "gotoMode"            => _("Mode"),
-            "gotoTerminalPath"    => _("Root server"),
-            "gotoSwapServer"      => _("Swap server"),
-            "gotoSyslogServer"    => _("Syslog server enabled"),
-            "gotoNtpServer"       => _("Ntp server settings"),
-            "base"                => _("Base"),
             "cn"                  => _("Name"),
             "description"         => _("Description"),
+            "base"                => _("Base"),
+
+            "gotoMode"            => _("Mode"),
+            "gotoSyslogServer"    => _("Syslog server enabled"),
+
+            "gotoTerminalPath"    => _("Root server"),
+            "gotoSwapServer"      => _("Swap server"),
+
+            "gotoNtpServer"       => _("Ntp server settings"),
             "gotoRootPasswd"      => _("Root password"),
+
             "FAIstate"            => _("Action flag"))
           ));
   }
