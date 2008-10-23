@@ -20,6 +20,7 @@ class printerPPDDialog extends plugin
       
   /* Object Info */
   var $cn                   = "" ;          // Used to tag the ppds modified by the printer object, 
+  var $ui;
 
   /* If there is already a ppd file for the same type of printer, 
    *  remember the path to ppd file and display a dialog which allows 
@@ -32,6 +33,8 @@ class printerPPDDialog extends plugin
   {
     plugin::plugin ($config, $dn);
     $this->depselect = $this->config->current['BASE'];
+
+    $this->ui = get_userinfo();
 
     /* Get PPD path and remove double //, and add trailing /  */
     $config = session::get('config');
@@ -94,8 +97,11 @@ class printerPPDDialog extends plugin
     $smarty->assign("ppdString", _("Can't get ppd informations."));
     $smarty->assign("showOptions", "");
     $smarty->assign("path_valid", TRUE);
+    $smarty->assign("acl",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"));
 
-    if(empty($this->ppdPath)){
+    $acl = $this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD");
+
+    if(empty($this->pathToPPD)){
 
         /* Print out template */
         $smarty->assign("path_valid", FALSE);
@@ -108,11 +114,12 @@ class printerPPDDialog extends plugin
 
     /* If one of our required paths is not available, stop here and display some info */
     foreach($paths as $path){
-    
+
       /* Check if path is write/readable*/
       $is_r = @is_readable($path);  
       if(((!is_dir($path))||(empty($path)) || (!$is_r)) && (!@mkdir($path))){
-        msg_dialog::display(_("Configuration error"), sprintf(_("Cannot open PPD path '%s' for reading and writing!"), $path), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), 
+            sprintf(_("Cannot open PPD path '%s' for reading and writing!"), $path), ERROR_DIALOG);
 
         /* Print out template */
         $display.= $smarty->fetch(get_template_path('printerPPDDialog.tpl', TRUE,dirname(__FILE__)));
@@ -123,14 +130,16 @@ class printerPPDDialog extends plugin
     // PPD selection / upload / dialog handling 
 
     /* Is there a new PPD file uploaded ? */
-    if((isset($_FILES['NewPPDFile']))&&(isset($_POST['SubmitNewPPDFile']))){
-      $file = ($_FILES['NewPPDFile']);
-      if($file['size'] != 0 ){
-        if($name = $this->AddPPD($file['tmp_name'])){
-          $this->SelectPPD($name); 
+    if(preg_match("/w/",$acl)){
+      if((isset($_FILES['NewPPDFile']))&&(isset($_POST['SubmitNewPPDFile']))){
+        $file = ($_FILES['NewPPDFile']);
+        if($file['size'] != 0 ){
+          if($name = $this->AddPPD($file['tmp_name'])){
+            $this->SelectPPD($name); 
+          }
+        }else{
+          msg_dialog::display(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
         }
-      }else{
-        msg_dialog::display(_("PPD error"), msgPool::incorrectUpload(_("file is empty")), ERROR_DIALOG);
       }
     }
 
@@ -144,8 +153,10 @@ class printerPPDDialog extends plugin
     } 
 
     /* Open a dialog that allow us to select different PPDs */
-    if(isset($_POST['SelectPPD'])){
-      $this->dialog= new printerPPDSelectionDialog($this->config,$this->dn,$this->ppdList,$this->ppdListHeader,$this->selectedPPD);
+    if(preg_match("/w/",$acl)){
+      if(isset($_POST['SelectPPD'])){
+        $this->dialog= new printerPPDSelectionDialog($this->config,$this->dn,$this->ppdList,$this->ppdListHeader,$this->selectedPPD);
+      }
     }
 
     /* The selection dialog fpr PPDs is canceled */
@@ -381,10 +392,12 @@ class printerPPDDialog extends plugin
       return;
     }
 
-    foreach($this->ppdConfig as $cat => $obj){
-      foreach($obj as $attr => $attributes){
-        if(isset($_POST[base64_encode($attributes['_name'])])){
-          $this->ppdConfig[$cat][$attr]['_default'] = $_POST[base64_encode($attributes['_name'])];
+    if(preg_match("/w/",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"))){
+      foreach($this->ppdConfig as $cat => $obj){
+        foreach($obj as $attr => $attributes){
+          if(isset($_POST[base64_encode($attributes['_name'])])){
+            $this->ppdConfig[$cat][$attr]['_default'] = $_POST[base64_encode($attributes['_name'])];
+          }
         }
       }
     }
@@ -482,6 +495,11 @@ class printerPPDDialog extends plugin
             }
           }
 
+          $acl ="";
+          if(!preg_match("/w/",$this->ui->get_permissions($this->dn,"printer/printgeneric","gotoPrinterPPD"))){
+            $acl = "disabled";
+          }
+
           /* preparing Html output
            * Supported types are PickOne/Boolean
            */
@@ -489,7 +507,7 @@ class printerPPDDialog extends plugin
           /* If type is PickOne, create a select box */
           if(($type == "PickOne")||(($type=="Boolean")&&(count($values)>1))){
 
-            $str  .=  "<select name='".base64_encode($name)."'>\n";
+            $str  .=  "<select name='".base64_encode($name)."' $acl >\n";
             foreach($values as $optionKey => $value){
               $selected = "";
               if($optionKey == $default){
@@ -502,7 +520,7 @@ class printerPPDDialog extends plugin
           }elseif($type == "Boolean"){
 
             /* If type is Boolean & no values are given */
-            $str  .=  "<select name='".base64_encode($name)."'>\n";
+            $str  .=  "<select name='".base64_encode($name)."' $acl>\n";
             if($default == "False"){
               $str  .=    "<option value='True' >"._("True")."</option>\n";
               $str  .=    "<option value='False' selected>"._("False")."</option>\n";

@@ -8,12 +8,18 @@
 		<tr>
 			<td width="50%" style="vertical-align:top">
 				{t}Model{/t}: <i>{$ppdString}</i>&nbsp;
+				{render acl=$acl}
 				<input type="submit" name="SelectPPD" value="{t}Select{/t}">
+				{/render}
 			</td>
 			<td style="border-left: 1px solid rgb(160, 160, 160);padding-left:10px;">
 				{t}New driver{/t}&nbsp;
+				{render acl=$acl}
 				<input type="file" value="" name="NewPPDFile">
+				{/render}
+				{render acl=$acl}
 				<input type="submit" name="SubmitNewPPDFile" value="{t}Upload{/t}">
+				{/render}
 			</td>
 		</tr>
 	</table>
@@ -26,7 +32,9 @@
 <p class="plugbottom">
 	<input type="hidden" name="PPDDisSubmitted" value="1">
 	{if $path_valid}
+	{render acl=$acl}
 	<input type="submit" name="SavePPD" value="{msgPool type=applyButton}">
+	{/render}
 	{/if}
 	<input type="submit" name="ClosePPD" value="{msgPool type=cancelButton}">
 </p>
