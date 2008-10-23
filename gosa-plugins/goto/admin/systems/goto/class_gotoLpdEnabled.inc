@@ -26,7 +26,6 @@ class gotoLpdEnable extends plugin
   private $a_Speeds = array();      // 
   private $a_Bits = array();        //
   private $a_Devices = array();
-
   public    $attributes = array("s_Type","s_Device","i_Port","s_Options","s_WriteOnly",
       "s_Speed","s_FlowControl","s_Parity","i_Bit");
 
@@ -122,6 +121,7 @@ class gotoLpdEnable extends plugin
     /* Set smarty variables 
      */
 		$smarty = get_smarty();
+    $smarty->assign("acl",$this->parent->getacl("gotoLpdEnable"));
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -166,6 +166,9 @@ class gotoLpdEnable extends plugin
   */
   public function save_object()
   {
+    if(!$this->parent->acl_is_writeable("gotoLpdEnable")){
+      return;
+    }
 
     if(!isset($_POST['gotoLpdEnable_entry_posted'])){
       return;
