@@ -209,7 +209,7 @@ class termstartup extends plugin
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         msg_dialog::display(_("Error"), msgPool::invalid(_("Mount point")), WARNING_DIALOG);
-      }else{
+      }elseif(!empty($_POST['gotoShareSelection'])){
         $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
         $s_mount = $_POST['gotoShareMountPoint'];
         /* Preparing the new assignment */
