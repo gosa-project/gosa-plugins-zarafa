@@ -280,9 +280,9 @@ class printerPPDDialog extends plugin
     $res  = @$this->ppdManager->loadDescription($_PathOnHdd);
     if($res){
       $tmp = split("\n",$res);
-      $name   = trim(preg_replace("/^\-/","",trim($tmp[1])));
-      $vendor = trim($tmp[0]);
-      $model  = trim(preg_replace("/".$vendor."/","",$name));
+      $name   = @trim(preg_replace("/^\-/","",trim($tmp[1])));
+      $vendor = @trim($tmp[0]);
+      $model  = @trim(preg_replace("/".$vendor."/","",$name));
     }    
 
     /* Check if parse was successfull */
