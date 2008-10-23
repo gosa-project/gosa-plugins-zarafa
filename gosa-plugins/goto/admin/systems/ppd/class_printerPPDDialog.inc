@@ -45,6 +45,12 @@ class printerPPDDialog extends plugin
       $this->pathToPPD = "";
     }
 
+    /* Check if ppdPath is set in gosa.conf. 
+     */
+    if(empty($this->pathToPPD)){
+      msg_dialog::display(_("Configuration error"), msgPool::invalidConfigurationAttribute("ppdPath"), ERROR_DIALOG);
+    }
+
     /* It seams that we have an existing PPD path, so go on */
     if(!((!is_dir($this->pathToPPD))||(empty($this->pathToPPD)))){ 
 
@@ -87,6 +93,15 @@ class printerPPDDialog extends plugin
     $smarty= get_smarty();
     $smarty->assign("ppdString", _("Can't get ppd informations."));
     $smarty->assign("showOptions", "");
+    $smarty->assign("path_valid", TRUE);
+
+    if(empty($this->ppdPath)){
+
+        /* Print out template */
+        $smarty->assign("path_valid", FALSE);
+        $display.= $smarty->fetch(get_template_path('printerPPDDialog.tpl', TRUE,dirname(__FILE__)));
+        return($display);
+    }
 
     /* Check these paths */
     $paths = array($this->pathToPPD, $this->pathToPPD.$this->pathToModified);
