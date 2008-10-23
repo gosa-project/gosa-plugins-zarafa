@@ -372,7 +372,9 @@ class workservice extends plugin
         $val= preg_replace ("/\s/", "", $this->gotoXVsync);
 
         if($this->acl_is_writeable("gotoXVsync")){
-          if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
+          if(empty($val)){
+            $message[]= msgPool::required(_("VSync"));
+          }elseif (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
             $message[]= msgPool::invalid(_("VSync"));
           } else{
             list($v1,$v2)= preg_split ("/[-+]/", $val);
@@ -387,7 +389,9 @@ class workservice extends plugin
         /* Check hsync for correct usage */
         $val= preg_replace ("/\s/", "", $this->gotoXHsync);
         if($this->acl_is_writeable("gotoXHsync")){
-          if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
+          if(empty($val)){
+            $message[]= msgPool::required(_("HSync"));
+          }elseif (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
             $message[]= msgPool::invalid(_("HSync"));
           } else{
             list($v1,$v2)= preg_split ("/[-+]/", $val);
