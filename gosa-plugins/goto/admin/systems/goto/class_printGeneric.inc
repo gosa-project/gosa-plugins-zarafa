@@ -716,7 +716,7 @@ class printgeneric extends plugin
     /* Update dn, to ensure storing as printer instead of WS / terminal
      */
     if(preg_match("/terminal/i",$this->BelongsTo)){
-      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN')).",/",get_ou('printerRDN'),$this->dn);
+      $this->dn= preg_replace("/".normalizePreg(get_ou('terminalRDN'))."/",get_ou('printerRDN'),$this->dn);
     }
 
     if(preg_match("/workstation/i",$this->BelongsTo)){
