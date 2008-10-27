@@ -17,8 +17,10 @@ class selectUserToPrinterDialog extends plugin
   var $baseAddition         = "";
   var $type                 = "";
   var $search_cat           = ""; 
+
+  var $dns_used             = array();
  
-  function selectUserToPrinterDialog (&$config, $dn= NULL,$type=false )
+  function selectUserToPrinterDialog (&$config, $dn= NULL,$type=false,$already_assigned )
   {
     plugin::plugin ($config, $dn);
     $this->depselect = $this->config->current['BASE'];
@@ -55,6 +57,13 @@ class selectUserToPrinterDialog extends plugin
     }
     $this->type = $type;
 
+    /* Collect already assigned object dns */
+    $this->dns_used = array();
+    if(isset($already_assigned[$type])){
+      foreach($already_assigned[$type] as $entry){
+        $this->dns_used[] = $entry['dn'];
+      }
+    }
   }
 
   function execute()
@@ -170,6 +179,12 @@ class selectUserToPrinterDialog extends plugin
       $res= get_list($filter,$cat,$base,$attrs);
     }
     foreach($res as $printer){
+
+      /* Skip already used entries */
+      if(in_array($printer['dn'],$this->dns_used)) {
+        continue;
+      }
+
       if(($detailed ==true)){
         if(isset($printer[$this->searchAppend])){
           $a_return[$printer[$this->searchAppend][0]] = $printer;

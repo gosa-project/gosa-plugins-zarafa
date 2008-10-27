@@ -393,16 +393,16 @@ class printgeneric extends plugin
     }
 
     if(isset($_POST['AddUser'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddUser");
+      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddUser",$this->member);
     }
     if(isset($_POST['AddGroup'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddGroup");
+      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddGroup",$this->member);
     }
     if(isset($_POST['AddAdminUser'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminUser");
+      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminUser",$this->member);
     }
     if(isset($_POST['AddAdminGroup'])){
-      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminGroup");
+      $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddAdminGroup",$this->member);
     }
 
     /* Display ppd configure/select dialog      */
