@@ -35,6 +35,7 @@ my @functions = (
     "read_configfile",
     "check_opsi_res",
     "calc_timestamp",
+    "opsi_callobj2string",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -861,5 +862,19 @@ sub calc_timestamp {
     return $res_timestamp;
 }
 
+sub opsi_callobj2string {
+    my ($callobj) = @_;
+    my @callobj_string;
+    while(my ($key, $value) = each(%$callobj)) {
+        my $value_string = "";
+        if (ref($value) eq "ARRAY") {
+            $value_string = join(",", @$value);
+        } else {
+            $value_string = $value;
+        }
+        push(@callobj_string, "$key=$value_string")
+    }
+    return join(", ", @callobj_string);
+}
 
 1;
