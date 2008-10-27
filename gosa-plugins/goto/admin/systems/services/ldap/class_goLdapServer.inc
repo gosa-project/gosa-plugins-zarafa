@@ -19,6 +19,7 @@ class goLdapServer extends goService{
   var $cn                  = "";
   var $goLdapServerStatus  = "";
   var $goLdapBase          = ""; 
+  var $oldBase             = ""; 
   var $view_logged  =FALSE;
 
   var $krb_service_prefix = "ldap/";
@@ -37,6 +38,7 @@ class goLdapServer extends goService{
       }
       $this->goLdapBase= "ldap://$srv:389/".$config->current['BASE'];
     }
+    $this->oldBase = $this->goLdapBase;
   }
 
 
@@ -89,6 +91,34 @@ class goLdapServer extends goService{
       plugin::save_object();
     }
   } 
+
+  
+  function save()
+  {
+    goService::save();
+
+    /* Update object relation */
+    if(!empty($this->oldBase) && $this->oldBase != $this->goLdapBase){
+      $new = array();
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search('(&(objectClass=GOhard)(gotoLdapServer=*'.$this->oldBase.'))',array("cn","gotoLdapServer"));
+      while($attrs = $ldap->fetch()){
+        $ldapServer = array();
+        for($i = 0 ; $i < $attrs['gotoLdapServer']['count'] ; $i ++ ){
+          $ldapServer[] = preg_replace("/".normalizePreg($this->oldBase)."/",$this->goLdapBase,$attrs['gotoLdapServer'][$i]);
+        }
+        $new[$attrs['dn']]['gotoLdapServer'] = $ldapServer;
+      }
+      foreach($new as $dn => $data){
+        $ldap->cd($dn);
+        $ldap->modify($data); 
+        if(!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+        }
+      }
+    }
+  }
 
 
   /* Return plugin informations for acl handling */
