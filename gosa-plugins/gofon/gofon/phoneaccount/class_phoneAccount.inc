@@ -842,13 +842,11 @@ class phoneAccount extends plugin
       }
 
       // Perform queries ...
-      if($this->goFonHardware != "automatic"){
-        foreach($SQL_query_array as $query){
-          @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
-          if(!@mysql_query($query,$new_connection)){
-            $this->generate_error =  msgPool::dbquery("GOfon",@mysql_error($old_connection));
-            return false;
-          }
+      foreach($SQL_query_array as $query){
+        @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__,$query, "Database query");
+        if(!@mysql_query($query,$new_connection)){
+          $this->generate_error =  msgPool::dbquery("GOfon",@mysql_error($old_connection));
+          return false;
         }
       }
     }
