@@ -405,6 +405,7 @@ sub opsi_get_netboot_products {
     my $hostId;
     my $xml_msg;
 
+&main::daemon_log("\n================================== 0", 1);
     # Build return message with twisted target and source
     my $out_hash = &main::create_xml_hash("answer_$header", $main::server_address, $source);
     if (defined $forward_to_gosa) {
@@ -418,8 +419,8 @@ sub opsi_get_netboot_products {
     }
 
     &add_content2xml_hash($out_hash, "xxx", "");
-    $xml_msg= &create_xml_string($out_hash);
-
+    $xml_msg = &create_xml_string($out_hash);
+&main::daemon_log("\n================================== 1", 1);
     # For hosts, only return the products that are or get installed
     my $callobj;
     $callobj = {
@@ -432,9 +433,12 @@ sub opsi_get_netboot_products {
     my %r = ();
     for (@{$res->result}) { $r{$_} = 1 }
 
+&main::daemon_log("\n================================== 2", 1);
     if (not &check_opsi_res($res)){
 
         if (defined $hostId){
+
+&main::daemon_log("\n================================== 3.1", 1);
             $callobj = {
                 method  => 'getProductStates_hash',
                 params  => [ $hostId ],
@@ -480,6 +484,7 @@ sub opsi_get_netboot_products {
             }
 
         } else {
+&main::daemon_log("\n================================== 3.2", 1);
             foreach my $r (@{$res->result}) {
                 $callobj = {
                     method  => 'getProduct_hash',
@@ -503,6 +508,7 @@ sub opsi_get_netboot_products {
     }
     $xml_msg=~ s/<xxx><\/xxx>//;
 
+&main::daemon_log("\n================================== 4", 1);
     # Return message
     return ( $xml_msg );
 }
