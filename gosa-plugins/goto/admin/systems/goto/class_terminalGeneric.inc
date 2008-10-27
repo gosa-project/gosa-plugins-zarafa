@@ -673,7 +673,7 @@ class termgeneric extends plugin
             "gotoSwapServer"      => _("Swap server"),
 
             "gotoNtpServer"       => _("Ntp server settings"),
-            "gotoRootPasswd"      => _("Root password"),
+            "userPassword"      => _("Root password"),
 
             "FAIstate"            => _("Action flag"))
           ));

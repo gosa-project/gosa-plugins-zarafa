@@ -711,7 +711,7 @@ class workgeneric extends plugin
             "gotoMode"            => _("Goto mode"), 
             "gotoSyslogServer"    => _("Syslog server"), 
             "gotoNtpServer"       => _("Ntp server"), 
-            "gotoRootPasswd"      => _("Root password"),
+            "userPassword"      => _("Root password"),
             "createFAICD"         => _("Create FAI CD"),
             "FAIstate"            => _("Action flag"))
           ));
