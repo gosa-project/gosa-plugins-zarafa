@@ -585,6 +585,9 @@ class workstartup extends plugin
     $this->update_fai_cache();
     $smarty->assign("si_fai_action_failed",$this->si_fai_action_failed);
     $smarty->assign("si_active",$this->si_active);
+
+    $div = new divSelectBox("WSFAIscriptClasses");
+    $div -> SetHeight("110");
   
     if(!$this->si_fai_action_failed && $this->si_active && $this->fai_activated){
 
@@ -604,9 +607,6 @@ class workstartup extends plugin
 
       $smarty->assign("gotoBootKernels",$this->cache['KERNELS'][$release]);
       $smarty->assign("InheritedFAIrelease",$this->InheritedFAIrelease);
-
-      $div = new divSelectBox("WSFAIscriptClasses");
-      $div -> SetHeight("110");
 
       $str_empty  = " &nbsp;<img src='images/empty.png' alt=\"\" width='7'>"; 
       if($this->acl_is_writeable("FAIclass")){
