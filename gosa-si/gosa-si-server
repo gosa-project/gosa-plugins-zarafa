@@ -1848,7 +1848,7 @@ sub watch_for_new_messages {
 								foreach my $entry (@entries) {
 										my @receivers= $entry->get_value("memberUid");
 										foreach my $receiver (@receivers) { 
-												$receiver_h{$1} = 0;
+												$receiver_h{$receiver} = 0;
 										}
 								}
 						} 
