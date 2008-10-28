@@ -278,7 +278,7 @@ sub new_foreign_client {
 sub trigger_wake {
     my ($msg, $msg_hash, $session_id) = @_ ;
 
-    foreach (@{$msg_hash->{macAddress}}){
+    foreach (@{$msg_hash->{macaddress}}){
         &main::daemon_log("$session_id INFO: trigger wake for $_", 5);
         my $host    = $_;
         my $ipaddr  = '255.255.255.255';

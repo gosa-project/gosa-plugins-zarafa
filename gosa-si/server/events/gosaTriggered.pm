@@ -638,7 +638,7 @@ sub trigger_action_reinstall {
 
     &main::change_fai_state('reinstall', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server 
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id); 
@@ -653,7 +653,7 @@ sub trigger_action_update {
 
     &main::change_fai_state('update', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server 
  	&main::server_server_com::trigger_wake($msg, $msg_hash, $session_id); 
@@ -675,7 +675,7 @@ sub trigger_action_instant_update {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
@@ -747,8 +747,8 @@ sub trigger_action_wake {
 
     # build out message
     my $out_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
-    foreach (@{$msg_hash->{target}}) {
-        &add_content2xml_hash($out_hash, 'macAddress', $_);
+    foreach (@{$msg_hash->{macaddress}}) {
+        &add_content2xml_hash($out_hash, 'macaddress', $_);
     }
     my $out_msg = &create_xml_string($out_hash);
     
