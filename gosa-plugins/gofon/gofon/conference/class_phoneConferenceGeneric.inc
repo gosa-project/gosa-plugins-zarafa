@@ -767,7 +767,7 @@ class conference extends plugin
           "plSelfModify"  => TRUE,
           "plDepends"     => array(),
           "plPriority"    => 0,
-          "plSection"     => array("addons" => _("Addons")),
+          "plSection"     => array("administration")),
           "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
               "objectClass" => "gofonConference")),
 

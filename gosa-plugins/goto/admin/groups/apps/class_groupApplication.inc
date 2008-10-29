@@ -1375,7 +1375,7 @@ class appgroup extends plugin
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 7,
-          "plSection"     => array("admin"),
+          "plSection"     => array("administration"),
           "plCategory"    => array("groups"),
           "plProvidedAcls"=> array(
             "gosaMemberApplication"     => _("Application"),

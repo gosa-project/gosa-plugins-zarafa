@@ -662,7 +662,7 @@ class sudo extends plugin
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
-          "plSection"     => array("admin"),
+          "plSection"     => array("administration"),
           "plCategory"    => array("sudo" => array("objectClass" => "sudoRole", "description" => _("Sudo role"))),
 
           "plProvidedAcls"    => array(
