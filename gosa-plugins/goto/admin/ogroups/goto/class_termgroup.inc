@@ -15,14 +15,14 @@ class termgroup extends plugin
   var $orig_dn            = "";
   var $didAction          = FALSE;
   var $mapActions   = array("halt"            => "halt",
-                            "reboot"          => "localboot",
+                            "reboot"          => "reboot",
                             "update"          => "update",
                             "reinstall"       => "reinstall",
                             "rescan"          => "rescan",
                             "wake"            => "wakeup",
-			   # These are currently not supported by the tftp daemon
-                           # "memcheck"        => "memcheck",
-                           # "sysinfo"         => "sysinfo"
+			                      # These are currently not supported by the tftp daemon
+                            # "memcheck"      => "memcheck",
+                            # "sysinfo"       => "sysinfo"
 			   );
 
   var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer");
@@ -220,13 +220,13 @@ class termgroup extends plugin
     }
 
     $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
-          "instant_update" => _("Instant update"),
-          "update" => _("Scheduled update"),
+          "update" => _("Software update"),
           "wake" => _("Wake"),
           "reinstall" => _("Reinstall"),
           "rescan" => _("Rescan hardware"),
-          "memcheck" => _("Memory test"),
-          "sysinfo"  => _("System analysis")));
+          #"memcheck" => _("Memory test"),
+          #"sysinfo"  => _("System analysis")
+          ));
 
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
     $smarty->assign("modes", $this->modes);
