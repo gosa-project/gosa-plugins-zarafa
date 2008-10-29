@@ -326,7 +326,7 @@ class appgroup extends plugin
               for($p = 0 ; $p < $attrs['gosaApplicationParameter']['count'] ; $p ++){
                 if(preg_match("/:/",$attrs['gosaApplicationParameter'][$p])){
                   $tmp = split(":",$attrs['gosaApplicationParameter'][$p]);
-                  $data['PARAMETER'][$tmp[0]] = $tmp[1];
+									$data['PARAMETER'][$tmp[0]] = preg_replace('/^[^:]+:/', '', $attrs['gosaApplicationParameter'][$p]);
                 }elseif($attrs['gosaApplicationParameter'][$p] == "*separator*"){
                   $type = "SEPERATOR";
                   $data['PARAMETER'] = array();
