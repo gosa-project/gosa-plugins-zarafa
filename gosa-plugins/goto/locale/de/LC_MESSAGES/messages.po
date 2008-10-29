@@ -3452,7 +3452,7 @@ msgstr "Wählen Sie den Teilbaum, in den die Anwendung plaziert werden soll."
 
 #: admin/applications/generic.tpl:82 admin/mimetypes/generic.tpl:84
 msgid "Update"
-msgstr "Anwenden"
+msgstr "Aktualisieren"
 
 #: admin/applications/generic.tpl:82
 msgid "Reload picture from LDAP"
