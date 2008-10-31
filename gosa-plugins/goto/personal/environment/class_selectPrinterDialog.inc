@@ -80,12 +80,12 @@ class selectPrinterDialog extends plugin
     }
 
     $printer_list = $this->getPrinter(); 
+		asort($printer_list);
 
     $smarty->assign("regexPrinter"    ,$this->regex);
     $smarty->assign("deplistPrinter"  ,$this->deplist);
     $smarty->assign("depselectPrinter",$this->depselect);
     $smarty->assign("gotoPrinters",$printer_list);
-    $smarty->assign("gotoPrinterKeys",array_flip($printer_list));
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
     $smarty->assign("subtrees", $this->subtreesearch?"checked":"");

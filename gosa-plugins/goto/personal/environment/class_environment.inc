@@ -996,7 +996,6 @@ class environment extends plugin
     }
 
     $smarty->assign("gotoPrinter",$this->printOutPrinterDevices());
-    $smarty->assign("gotoPrinterKeys",array_flip($this->printOutPrinterDevices()));
 
     /* General behavior */
     if(is_object($this->dialog)){
@@ -1360,7 +1359,7 @@ class environment extends plugin
 
     if(is_array($this->gotoPrinter)){
       foreach($this->gotoPrinter as $printer){
-        if($printer['mode'] == "admin"){
+        if($printer['mode'] == 'admin'){
           $a_return[$printer['cn'][0]]= $printer['cn'][0]." - "._("Administrator");
         }else{
           $a_return[$printer['cn'][0]]= $printer['cn'][0]; 
@@ -1370,6 +1369,7 @@ class environment extends plugin
         }
       }
     }
+		asort($a_return);
     return($a_return);
   }
 

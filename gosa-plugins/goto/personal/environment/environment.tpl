@@ -345,7 +345,7 @@
      <td>
 {render acl=$gotoPrinterACL}
       <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 id="gotoPrinter">
-       {html_options values=$gotoPrinterKeys output=$gotoPrinter}
+       {html_options options=$gotoPrinter}
        <option disabled>&nbsp;</option>
       </select>
 {/render}
@@ -378,7 +378,7 @@
      <td>
 {render acl=$gotoPrinterACL}
       <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 id="gotoPrinter">
-       {html_options values=$gotoPrinterKeys output=$gotoPrinter}
+       {html_options options=$gotoPrinter}
        <option disabled>&nbsp;</option>
       </select>
 {/render}

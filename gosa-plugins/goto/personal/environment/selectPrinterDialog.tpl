@@ -13,7 +13,7 @@
    				<div class="contentboxb">
     				<p class="contentboxb" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
 		                <select style="width:100%;height:450px" size=20 name="gotoPrinter[]" id="gotoPrinter" multiple>
-        		        {html_options values=$gotoPrinterKeys output=$gotoPrinters}
+        		        {html_options options=$gotoPrinters}
                 		<option disabled>&nbsp;</option>
                			 </select><br>
 					</p>
