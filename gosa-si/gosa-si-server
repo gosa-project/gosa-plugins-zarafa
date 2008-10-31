@@ -1235,7 +1235,12 @@ sub msg_to_decrypt {
 		if ( $not_found_in_foreign_clients_db 
 						&& $not_found_in_known_server_db
 						&& $not_found_in_known_clients_db) {
-				my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
+			if ($header =~ /^gosa_/ || $header =~ /^job_/) {
+				$module = "GosaPackages";
+			}
+
+					
+			my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
 								primkey=>[],
 								headertag=>$header,
 								targettag=>$target,
