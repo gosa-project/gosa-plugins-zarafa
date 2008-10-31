@@ -114,8 +114,6 @@ class workstartup extends plugin
      */
     if($this->fai_activated) {
 
-      $this->update_fai_cache(TRUE);
-
       /* Parse used FAIclasses (stored as string).
        * The single classes are seperated by ' '.
        * There is also the release type given, after first
@@ -234,6 +232,7 @@ class workstartup extends plugin
       }
     }
 
+    $this->update_fai_cache();
 
     if($this->fai_activated && !$this->si_fai_action_failed && $this->si_active){
 
@@ -1085,6 +1084,7 @@ class workstartup extends plugin
         $this->cache = array();
         return;
       }else{
+
         foreach($tmp as $entry){
           $rel = $entry['FAI_RELEASE'];
           $this->cache['SERVERS']['auto'][$rel] = $rel;
