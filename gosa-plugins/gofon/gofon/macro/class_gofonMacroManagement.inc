@@ -282,7 +282,7 @@ class goFonMacro extends plugin
 
           $dns_names = array();
           foreach($this->dns as $dn){
-            $dns_names[] = @LDAP::fix($dn);
+            $dns_names[] = LDAP::fix($dn);
           }
 
           /* Add entry locks */
@@ -363,7 +363,7 @@ class goFonMacro extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
-        $smarty->assign("intro", msgPool::deleteInfo(@LDAP::fix($this->dn),_("macro")));
+        $smarty->assign("intro", msgPool::deleteInfo(LDAP::fix($this->dn),_("macro")));
         $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {

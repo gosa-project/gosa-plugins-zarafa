@@ -106,7 +106,7 @@ class goLdapServer extends goService{
       while($attrs = $ldap->fetch()){
         $ldapServer = array();
         for($i = 0 ; $i < $attrs['gotoLdapServer']['count'] ; $i ++ ){
-          $ldapServer[] = preg_replace("/".preg_quote($this->oldBase)."/",$this->goLdapBase,$attrs['gotoLdapServer'][$i]);
+          $ldapServer[] = preg_replace("/".preg_quote($this->oldBase, '/')."/",$this->goLdapBase,$attrs['gotoLdapServer'][$i]);
         }
         $new[$attrs['dn']]['gotoLdapServer'] = $ldapServer;
       }

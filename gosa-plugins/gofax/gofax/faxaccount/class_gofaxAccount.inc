@@ -456,7 +456,7 @@ class gofaxAccount extends plugin
       /* Fetch all returned departments an add them to our divlist */
       while($value = $ldap->fetch()){
         if($value["description"][0]!=".."){
-          $this->departments[$value['dn']]=@LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
+          $this->departments[$value['dn']]=LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
         }else{
           $this->departments[$value['dn']]=$value["description"][0];
         }
@@ -538,7 +538,7 @@ class gofaxAccount extends plugin
       /* Get all departments */
       while($value = $ldap->fetch()){
         if(isset($value["description"][0])){
-          $this->departments[$value['dn']]=@LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
+          $this->departments[$value['dn']]=LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
         }else{
           $this->departments[$value['dn']]=$value["description"][0];
         }

@@ -186,7 +186,7 @@ class divListConference extends MultiSelectWindow
       }  
 
       /* Create title */
-      $title = " title='".preg_replace("/ /","&nbsp;",@LDAP::fix($data['dn']))."' ";
+      $title = " title='".preg_replace("/ /","&nbsp;",LDAP::fix($data['dn']))."' ";
 
       /* Cutted objects should be displayed in light grey */
       $display = $conference['cn'][0].$number;

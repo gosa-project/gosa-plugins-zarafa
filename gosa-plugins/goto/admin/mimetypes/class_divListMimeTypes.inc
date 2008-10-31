@@ -203,7 +203,7 @@ class divListMimeTypes extends MultiSelectWindow
         $action.= "<img src='images/empty.png' alt='&nbsp;' class='center'>";
       }
 
-      $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
+      $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
 
       if(!isset($val['description'][0])){
         $desc = "";

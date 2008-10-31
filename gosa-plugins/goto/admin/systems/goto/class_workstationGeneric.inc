@@ -143,7 +143,7 @@ class workgeneric extends plugin
       $ui= get_userinfo();
       $this->base= dn2base($ui->dn);
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("workstationRDN"))."/i", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("workstationRDN"), '/')."/i", "", $this->dn);
     }
 
     /* Create an array of all Syslog servers */
@@ -502,7 +502,7 @@ class workgeneric extends plugin
     }else{
       /* Warn the user, that this host is currently installing */
       if($this->currently_installing && !$this->currently_installing_warned && 
-          !preg_match("/".preg_quote(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
+          !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->orig_dn)){
       
         /* Force aborting without message dialog */
         $message[] = "";

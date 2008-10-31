@@ -229,7 +229,7 @@ class application extends plugin
     restore_error_handler();
 
     /* Parse release out of object dn */
-    $release = preg_replace("/".get_ou("applicationRDN").preg_quote($this->base)."$/","",$this->dn);
+    $release = preg_replace("/".get_ou("applicationRDN").preg_quote($this->base, '/')."$/","",$this->dn);
     $release = preg_replace("/^cn=[^,]+,/","",$release);
 
     /* Get a list of all groups 
@@ -249,7 +249,7 @@ class application extends plugin
       $ldap->cd($release.$group);
       $ldap->search("(objectClass=gotoMenuEntry)",array("dn"));
       while($attrs = $ldap->fetch()){
-        $info = preg_replace("/".preg_quote($release.$group)."$/","",$attrs['dn']); 
+        $info = preg_replace("/".preg_quote($release.$group, '/')."$/","",$attrs['dn']); 
         if(preg_match("/^cn=".$this->cn."/",$info) && !preg_match("/ou=[^,]+,/",$info)){
           $found[] = $attrs['dn'];
         }

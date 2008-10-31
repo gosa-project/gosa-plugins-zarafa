@@ -307,9 +307,9 @@ class gosa_logview extends plugin
         if(isset($this->uid_map[$line['user']])){
           $user = $this->uid_map[$line['user']];
         }else{
-          $user = preg_replace("/,".preg_quote($this->config->current['BASE'])."/",$base,$line['user']);
+          $user = preg_replace("/,".preg_quote($this->config->current['BASE'], '/')."/",$base,$line['user']);
         }
-        $object = preg_replace("/,".preg_quote($this->config->current['BASE'])."/",$base,$line['object']);
+        $object = preg_replace("/,".preg_quote($this->config->current['BASE'], '/')."/",$base,$line['object']);
 
         $res.=" <tr style=\"$col\">\n";
         $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";

@@ -155,7 +155,7 @@ class mailMethodCyrus extends mailMethod
 
         /* Cut domain name */
         $val = preg_replace("/@.*$/","",$val);
-        $result[]=preg_replace ("/^.*".preg_quote($folder)."/","INBOX", mb_convert_encoding($val, "UTF-8", "UTF7-IMAP"));
+        $result[]=preg_replace ("/^.*".preg_quote($folder, '/')."/","INBOX", mb_convert_encoding($val, "UTF-8", "UTF7-IMAP"));
       }
     }
 

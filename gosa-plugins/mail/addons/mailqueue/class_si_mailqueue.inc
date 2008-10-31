@@ -38,7 +38,7 @@ class si_mailqueue extends gosaSupportDaemon
 
     /* Prepare search filter 
      */
-    $search_str = preg_replace("/\\\\\*/",".*",preg_quote($search_str));
+    $search_str = preg_replace("/\\\\\*/",".*",preg_quote($search_str, '/'));
 
     /* Query mailqueue 
      */

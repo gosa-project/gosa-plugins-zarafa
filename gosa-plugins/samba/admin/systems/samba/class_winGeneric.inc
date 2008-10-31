@@ -59,7 +59,7 @@ class wingeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_winstations_ou())."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_winstations_ou(), '/')."/", "", $this->dn);
     }
 
     $this->cn= preg_replace("/\\\$\$/","",$this->cn);

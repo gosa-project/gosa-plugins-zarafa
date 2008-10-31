@@ -167,7 +167,7 @@ class target_list_users extends MultiSelectWindow
 
       if(in_array($val['cn'][0],$this->Targets_used)) continue;
 
-      $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
+      $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
       if(!isset($val['description'][0])){
         $desc = "";
       }else{

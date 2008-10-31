@@ -108,7 +108,7 @@ class opsiGeneric extends plugin
          #FIXME Implement an opsi method which returns infos for only one opsi client, not all. 
        */
       foreach($list as $entry){
-        if(preg_match("/^".preg_quote($this->hostId)."$/i",$entry['NAME'][0]['VALUE'])){
+        if(preg_match("/^".preg_quote($this->hostId, '/')."$/i",$entry['NAME'][0]['VALUE'])){
           $this->initially_was_account = TRUE; 
           $this->is_account = TRUE;
           foreach(array(

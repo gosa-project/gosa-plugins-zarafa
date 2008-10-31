@@ -318,7 +318,7 @@ class faiManagement extends plugin
 
 				/* Lock the current entry, so nobody will edit it during deletion */
 				add_lock ($this->dn, $this->ui->dn);
-				$smarty->assign("warning",msgPool::deleteInfo(@LDAP::fix($this->dn),_("FAI object")));
+				$smarty->assign("warning",msgPool::deleteInfo(LDAP::fix($this->dn),_("FAI object")));
         $smarty->assign("multiple", false);
 				return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
 			} else {
@@ -363,7 +363,7 @@ class faiManagement extends plugin
           $dns_names = array();
           foreach($this->dns as $dn){
             add_lock ($dn, $this->ui->dn);
-            $dns_names[] = @LDAP::fix($dn);
+            $dns_names[] = LDAP::fix($dn);
           }
 
           /* Lock the current entry, so nobody will edit it during deletion */
@@ -540,7 +540,7 @@ class faiManagement extends plugin
            we're allowed to remove this 'dn' */
         if($this->acl_is_removeable()){
           $smarty->assign("release_hidden",base64_encode($this->fai_release));
-          $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->fai_release),_("FAI branch/freeze")));
+          $smarty->assign("info", msgPool::deleteInfo(LDAP::fix($this->fai_release),_("FAI branch/freeze")));
           return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
         } else {
           msg_dialog::display(_("Permission error"), _("You have no permission to delete this release!"), ERROR_DIALOG);
@@ -576,9 +576,9 @@ class faiManagement extends plugin
 
             $ldap->cd($bb);
             $ldap->recursive_remove();
-            $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN')).'/', ','.get_ou('applicationRDN'), $bb));
+            $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/', ','.get_ou('applicationRDN'), $bb));
             $ldap->recursive_remove();
-            $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN')).'/', ','.get_ou('mimetypeRDN'), $bb));
+            $ldap->cd(preg_replace('/,'.preg_quote(get_ou('faiBaseRDN'), '/').'/', ','.get_ou('mimetypeRDN'), $bb));
             $ldap->recursive_remove();
 
             /* Search for all groups with configured application menus.
@@ -586,7 +586,7 @@ class faiManagement extends plugin
               - The search für menu configuration for the specified release and collect all those dns.
               - Remove entries
              */
-            $release_ou = preg_replace("/".preg_quote(get_ou("faiBaseRDN")).".*$/","",$bb);
+            $release_ou = preg_replace("/".preg_quote(get_ou("faiBaseRDN"), '/').".*$/","",$bb);
             $ldap->cd($this->config->current['BASE']);
             $ldap->search("(objectClass=posixGroup)",array("dn"));
           
@@ -604,7 +604,7 @@ class faiManagement extends plugin
               $ldap->cd($dn);
               $ldap->search("(objectClass=FAIbranch)",array("dn"));
               while($attrs = $ldap->fetch()){
-                if(preg_match("/^".preg_quote($release_ou)."/",$attrs['dn'])){
+                if(preg_match("/^".preg_quote($release_ou, '/')."/",$attrs['dn'])){
                   $dns[] = $attrs['dn'];
                 }
               }
@@ -728,11 +728,11 @@ class faiManagement extends plugin
           }
         }
 
-        $appsrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'))."/",get_ou('applicationRDN'),$baseToUse); 
-        $appdst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'))."/",get_ou('applicationRDN'),"ou=".$name.",".$baseToUse) ; 
+        $appsrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/",get_ou('applicationRDN'),$baseToUse); 
+        $appdst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/",get_ou('applicationRDN'),"ou=".$name.",".$baseToUse) ; 
 
-        $mimesrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'))."/",get_ou('mimetypeRDN'),$baseToUse); 
-        $mimedst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'))."/",get_ou('mimetypeRDN'),"ou=".$name.",".$baseToUse) ; 
+        $mimesrc = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/",get_ou('mimetypeRDN'),$baseToUse); 
+        $mimedst = preg_replace("/".preg_quote(get_ou('faiBaseRDN'), '/')."/",get_ou('mimetypeRDN'),"ou=".$name.",".$baseToUse) ; 
 
         /* Check if source depeartments exist */
         foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){

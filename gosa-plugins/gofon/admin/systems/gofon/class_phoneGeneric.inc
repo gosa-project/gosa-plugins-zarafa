@@ -63,7 +63,7 @@ class phoneGeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("phoneRDN"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("phoneRDN"), '/')."/", "", $this->dn);
     }
   
     if($this->goFonMSN != ""){

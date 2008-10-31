@@ -366,7 +366,7 @@ class mimetypeManagement extends plugin
 
           $dns_names = array();
           foreach($this->dns as $dn){
-            $dns_names[] = @LDAP::fix($dn);
+            $dns_names[] = LDAP::fix($dn);
           }
 
           add_lock ($this->dns, $this->ui->dn);
@@ -453,7 +453,7 @@ class mimetypeManagement extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
-        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn),_("Mime type")));
+        $smarty->assign("info", msgPool::deleteInfo(LDAP::fix($this->dn),_("Mime type")));
         $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
@@ -585,7 +585,7 @@ class mimetypeManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->mime_base;
       if($SubSearch){
-        $use_base = preg_replace("/^".preg_quote(get_ou("mimeou"))."/","",$use_base);
+        $use_base = preg_replace("/^".preg_quote(get_ou("mimeou"), '/')."/","",$use_base);
       }
     }else{
       $use_base = $this->mime_release;
@@ -682,7 +682,7 @@ class mimetypeManagement extends plugin
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
 
       /* Get dialog */
-      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".preg_quote(get_ou("mimetypeRDN"))."/","",$this->mime_base));
+      $this->CopyPasteHandler->SetVar("base",preg_replace("/^".preg_quote(get_ou("mimetypeRDN"), '/')."/","",$this->mime_base));
       $this->CopyPasteHandler->SetVar("parent",$this);
       $data = $this->CopyPasteHandler->execute();
 

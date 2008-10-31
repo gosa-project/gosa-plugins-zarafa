@@ -198,7 +198,7 @@ class divListApplication extends MultiSelectWindow
         $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
       }
 
-      $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
+      $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
 
       if(!isset($val['description'][0])){
         $desc = "";

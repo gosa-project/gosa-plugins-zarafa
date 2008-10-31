@@ -356,7 +356,7 @@ class applicationManagement extends plugin
           $dns_names = array();
           foreach($this->dns as $dn){
             add_lock ($dn, $this->ui->dn);
-            $dns_names[] =@LDAP::fix($dn);
+            $dns_names[] =LDAP::fix($dn);
           }
 
           /* Lock the current entry, so nobody will edit it during deletion */
@@ -441,7 +441,7 @@ class applicationManagement extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
-        $smarty->assign("intro",msgPool::deleteInfo(@LDAP::fix($this->dn),_("application")));
+        $smarty->assign("intro",msgPool::deleteInfo(LDAP::fix($this->dn),_("application")));
         $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
@@ -572,7 +572,7 @@ class applicationManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->app_base;
       if($SubSearch){
-        $use_base = preg_replace("/^".preg_quote(get_ou("applicationRDN"))."/","",$use_base);
+        $use_base = preg_replace("/^".preg_quote(get_ou("applicationRDN"), '/')."/","",$use_base);
       }
     }else{
       $use_base = $this->app_release;

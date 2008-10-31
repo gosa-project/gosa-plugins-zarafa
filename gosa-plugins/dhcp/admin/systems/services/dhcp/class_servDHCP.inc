@@ -253,7 +253,7 @@ class servdhcp extends goService
         if (isset($this->dhcpObjectCache[$dn])){
           $this->current_object= $dn;
           $this->dialog= 1;
-          $smarty->assign("warning", msgPool::deleteInfo(@LDAP::fix($dn),_("DHCP section")));
+          $smarty->assign("warning", msgPool::deleteInfo(LDAP::fix($dn),_("DHCP section")));
           return($smarty->fetch(get_template_path('remove_dhcp.tpl', TRUE, dirname(__FILE__))));
         }
       }
@@ -438,7 +438,7 @@ class servdhcp extends goService
     foreach ($this->dhcpObjectCache as $dn => $data){
 
       if($this->dn != $this->orig_dn){
-        $dn = preg_replace("/".preg_quote($this->orig_dn)."$/i",$this->dn,$dn);
+        $dn = preg_replace("/".preg_quote($this->orig_dn, '/')."$/i",$this->dn,$dn);
       }
 
       /* Remove entry? */
@@ -492,7 +492,7 @@ class servdhcp extends goService
       
           if(in_array($attribute,array("dhcpPrimaryDN","dhcpSecondaryDN","dhcpServerDN","dhcpFailOverPeerDN"))){
             foreach($values as $v_key => $value){
-              $values[$v_key] = preg_replace("/".preg_quote($this->orig_dn)."$/i",$this->dn,$value);
+              $values[$v_key] = preg_replace("/".preg_quote($this->orig_dn, '/')."$/i",$this->dn,$value);
             }
           }
 
@@ -542,7 +542,7 @@ class servdhcp extends goService
 
     $this->dhcpServiceDN= $this->serviceDN;
     if($this->dn != $this->orig_dn){
-      $this->dhcpServiceDN= preg_replace("/".preg_quote($this->orig_dn)."$/i",$this->dn,$this->dhcpServiceDN);
+      $this->dhcpServiceDN= preg_replace("/".preg_quote($this->orig_dn, '/')."$/i",$this->dn,$this->dhcpServiceDN);
     }
 
     /* Replace 'new' dn */ 
@@ -720,7 +720,7 @@ class servdhcp extends goService
     while($attrs = $ldap->fetch()){
 
       /* Skip own config */
-      if($this->dn != "new" && preg_match("/".preg_quote($this->dn)."$/",$attrs['dn'])){
+      if($this->dn != "new" && preg_match("/".preg_quote($this->dn, '/')."$/",$attrs['dn'])){
         continue;
       }
 

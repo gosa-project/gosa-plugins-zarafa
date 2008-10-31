@@ -178,7 +178,7 @@ class divListSudo extends MultiSelectWindow
           src='images/lists/trash.png' alt='".msgPool::delButton()."' name='sudo_del_%KEY%' title='"._("Delete this entry")."'>";
       }
 
-      $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
+      $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
 
       if(!isset($val['description'][0])){
         $desc = "";

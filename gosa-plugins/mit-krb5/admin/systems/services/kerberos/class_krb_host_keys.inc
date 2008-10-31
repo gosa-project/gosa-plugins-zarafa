@@ -183,7 +183,7 @@ class krbHostKeys extends plugin
            */
           foreach($this->server_list as $server => $data){
             foreach($data['PRINCIPALS'] as $p_name){
-              if(preg_match("/\/".preg_quote($this->namingAttr)."\@/",$p_name)){
+              if(preg_match("/\/".preg_quote($this->namingAttr, '/')."\@/",$p_name)){
                 $pre = preg_replace("/\/.*$/","/",$p_name);
                 $this->delete_key($server, $pre.$this->namingAttr."@".$data['REALM']);
                 $this->create_key($server, $pre.$this->object->cn."@".$data['REALM']);
@@ -204,7 +204,7 @@ class krbHostKeys extends plugin
 
             /* Collect all principals for the current host. 
              */
-            if(preg_match("/\/".preg_quote($this->namingAttr)."\@/",$p_name)){
+            if(preg_match("/\/".preg_quote($this->namingAttr, '/')."\@/",$p_name)){
               $pre = preg_replace("/\/.*$/","/",$p_name);
               $found[] = "<b>".$pre.$this->namingAttr."@".$data['REALM']."</b> ".
                 _("updated to").
@@ -265,7 +265,7 @@ class krbHostKeys extends plugin
       $master_princ = $prefix.$this->namingAttr."@".$realm;
 
       foreach($server['PRINCIPALS'] as $id => $princ){
-        if(preg_match("/^".preg_quote($master_princ)."$/i",$princ)){
+        if(preg_match("/^".preg_quote($master_princ, '/')."$/i",$princ)){
           $found = TRUE;
           break;
         }
@@ -297,8 +297,8 @@ class krbHostKeys extends plugin
        */
       if(!$service_plugin){
         foreach($server['PRINCIPALS'] as $id => $princ){
-          if(preg_match("/".preg_quote("/".$this->namingAttr."@")."/i",$princ) &&
-              !preg_match("/^".preg_quote($prefix)."/",$princ)){
+          if(preg_match("/".preg_quote("/".$this->namingAttr."@", '/')."/i",$princ) &&
+              !preg_match("/^".preg_quote($prefix, '/')."/",$princ)){
 
             /* Display buttons to "create" or to "remove/recreate" wheteher the prefix esists or not 
              */
@@ -428,7 +428,7 @@ class krbHostKeys extends plugin
 
         /* Detect all principals for the current host.
          */
-        if(preg_match("/".preg_quote($prefix.$this->namingAttr)."\@/",$p_name)){
+        if(preg_match("/".preg_quote($prefix.$this->namingAttr, '/')."\@/",$p_name)){
           $this->delete_key($server, $p_name);
         }
       }

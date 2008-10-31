@@ -183,7 +183,7 @@ class target_list extends MultiSelectWindow
       if(in_array($val['cn'][0],$this->Targets_used) || 
          isset($val['macAddress'][0]) && in_array($val['macAddress'][0],$this->Targets_used)) continue;
 
-      $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
+      $title = "title='".preg_replace('/ /', '&nbsp;', LDAP::fix($val['dn']))."'";
       if(!isset($val['description'][0])){
         $desc = "";
       }else{

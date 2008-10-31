@@ -257,12 +257,12 @@ class faiVariable extends plugin
       $ldap = $this->config->get_ldap_link();
       $ldap->cd ($this->dn);
       $release = $this->parent->parent->fai_release;
-      $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
+      $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i", $release, $this->dn);
       new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
       FAI::prepare_to_save_FAI_object($use_dn,array(),true);
 
       foreach($this->SubObjects as $name => $obj){
-        $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $obj['dn']);
+        $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i", $release, $obj['dn']);
         FAI::prepare_to_save_FAI_object($use_dn,array(),true);
       }
       $this->handle_post_events("remove");

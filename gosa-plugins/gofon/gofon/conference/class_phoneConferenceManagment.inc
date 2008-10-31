@@ -197,7 +197,7 @@ class phoneConferenceManagment extends plugin
           /* Prepare entry list to be displayed */
           $dns_names = array();
           foreach($this->dns as $dn){
-            $dns_names[] = @LDAP::fix($dn);
+            $dns_names[] = LDAP::fix($dn);
           }
 
           /* Lock the current entry, so nobody will edit it during deletion */
@@ -265,7 +265,7 @@ class phoneConferenceManagment extends plugin
           return(gen_locked_message($conf, $this->dn));
         } else {
           add_lock ($this->dn, $this->ui->dn);
-          $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn),_("conference")));
+          $smarty->assign("info", msgPool::deleteInfo(LDAP::fix($this->dn),_("conference")));
           $smarty->assign("multiple", false);
           $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
           return ($display);

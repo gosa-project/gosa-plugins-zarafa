@@ -42,7 +42,7 @@ class faiPartitionTable extends plugin
       foreach($res as $obj){
 
         /* Skip not relevant objects */
-        if(!preg_match("/".preg_quote($this->dn)."$/i",$obj['dn'])) continue;
+        if(!preg_match("/".preg_quote($this->dn, '/')."$/i",$obj['dn'])) continue;
 
         $objects = array();
         $objects['description']  = "";
@@ -60,7 +60,7 @@ class faiPartitionTable extends plugin
         foreach($res as $obj){
 
           /* Skip not relevant objects */
-          if(!preg_match("/".preg_quote($disk['dn'])."$/i",$obj['dn'])) continue;
+          if(!preg_match("/".preg_quote($disk['dn'], '/')."$/i",$obj['dn'])) continue;
 
           $objects = array();
           $objects['status']      = "edited";
@@ -324,17 +324,17 @@ class faiPartitionTable extends plugin
     $ldap->cd ($this->dn);
 
     $release = $this->parent->parent->fai_release;
-    $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
+    $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i", $release, $this->dn);
 
     FAI::prepare_to_save_FAI_object($use_dn,array(),true);
     new log("remove","fai/".get_class($this),$use_dn,$this->attributes);   
     foreach($this->disks as $disk){
       $disk_dn = "cn=".$disk['cn'].",".$this->dn;
-      $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i",$release, $disk_dn);
+      $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i",$release, $disk_dn);
       FAI::prepare_to_save_FAI_object($use_dn,array(),true);
       foreach($disk['partitions'] as $key => $partition){    
         $partition_dn= "FAIpartitionNr=".$partition['FAIpartitionNr'].",".$disk_dn;      
-        $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $partition_dn);
+        $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn), '/')."/i", $release, $partition_dn);
         FAI::prepare_to_save_FAI_object($use_dn,array(),true);
       }
     }
@@ -502,7 +502,7 @@ class faiPartitionTable extends plugin
     foreach($res as $obj){
 
       /* Skip not relevant objects */
-      if(!preg_match("/".preg_quote($source['dn'])."$/i",$obj['dn'])) continue;
+      if(!preg_match("/".preg_quote($source['dn'], '/')."$/i",$obj['dn'])) continue;
 
       $objects = array();
       $objects['description']  = "";
@@ -520,7 +520,7 @@ class faiPartitionTable extends plugin
       foreach($res as $obj){
 
         /* Skip not relevant objects */
-        if(!preg_match("/".preg_quote($disk['dn'])."$/i",$obj['dn'])) continue;
+        if(!preg_match("/".preg_quote($disk['dn'], '/')."$/i",$obj['dn'])) continue;
 
         $objects = array();
         $objects['status']      = "edited";
