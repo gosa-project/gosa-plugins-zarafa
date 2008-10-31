@@ -787,8 +787,8 @@ class addressbook extends plugin
     $acls = "";
   
     /* Use addressbook acls */
-    if(preg_match("/".normalizePreg($this->abobjectclass)."/",$dn))  {
-      $dn = preg_replace("/".normalizePreg($this->abobjectclass).",/","",$dn);
+    if(preg_match("/".preg_quote($this->abobjectclass)."/",$dn))  {
+      $dn = preg_replace("/".preg_quote($this->abobjectclass).",/","",$dn);
       $acls = $this->ui->get_permissions($dn,"addressbook/addressbook",$attr);
     }
     

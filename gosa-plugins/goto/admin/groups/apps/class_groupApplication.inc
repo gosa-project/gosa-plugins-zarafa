@@ -92,7 +92,7 @@ class appgroup extends plugin
           and fetch all applications from those departments.
        */
       foreach($app_deps as $dep){
-        if(preg_match("/^".normalizePreg($release_info['suffix'])."/",$dep)){
+        if(preg_match("/^".preg_quote($release_info['suffix'])."/",$dep)){
           $ret = array_merge($ret,get_list("(objectClass=gosaApplication)","application",$dep,array("*"),GL_NONE));
         }
       }
@@ -187,7 +187,7 @@ class appgroup extends plugin
           $all = $this->_get_all_entries();
           $found = FALSE;
           foreach($all as $entry){
-            if(isset($entry['DN']) && preg_match("/^".normalizePreg($bb)."/",$entry['DN'])){
+            if(isset($entry['DN']) && preg_match("/^".preg_quote($bb)."/",$entry['DN'])){
               $found =TRUE;
               break;
             }
@@ -259,7 +259,7 @@ class appgroup extends plugin
        */
       $cur          = &$this->a_Structure[0]['ENTRIES'];
       $parent_id    = $base['UNIQID'];
-      $sub_dn       = preg_replace("/,".normalizePreg($this->dn)."$/","",$attrs['dn']);
+      $sub_dn       = preg_replace("/,".preg_quote($this->dn)."$/","",$attrs['dn']);
       $sub_dn_array = split("\,",$sub_dn);
 
       /* Walk through our menu structure array while we have found 
@@ -431,7 +431,7 @@ class appgroup extends plugin
       $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
       foreach($res as $value){
         $fdn = $value['dn'];
-        $fdn = preg_replace("/".normalizePreg($this->curbase)."/","",$fdn);
+        $fdn = preg_replace("/".preg_quote($this->curbase)."/","",$fdn);
         $fdn= @LDAP::fix($fdn);
         if($value["description"][0]!=".."){
           $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
@@ -468,7 +468,7 @@ class appgroup extends plugin
       if(in_array($app['cn'][0],$used_apps)){
         continue;
       }
-      if(!preg_match("/".get_ou('applicationRDN').normalizePreg($this->curbase)."$/",$app['dn'])){
+      if(!preg_match("/".get_ou('applicationRDN').preg_quote($this->curbase)."$/",$app['dn'])){
         continue;
       }
 

@@ -241,7 +241,7 @@ class mailqueue extends plugin
     foreach($hosts as $mac){
       $found = FALSE;
       foreach($res as $entry){
-        if(preg_match("/^".normalizePreg($mac)."$/i",$entry['macAddress'][0])){
+        if(preg_match("/^".preg_quote($mac)."$/i",$entry['macAddress'][0])){
           $ret[$mac] = $entry['cn'][0];
           $found = TRUE;
           break;

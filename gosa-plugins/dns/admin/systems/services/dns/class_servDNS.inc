@@ -61,7 +61,7 @@ class servdns extends goService
     $dns = array();
     while($attrs = $ldap->fetch()){
       /* Skip own config */
-      if($this->dn != "new" && preg_match("/".normalizePreg($this->dn)."$/",$attrs['dn'])){
+      if($this->dn != "new" && preg_match("/".preg_quote($this->dn)."$/",$attrs['dn'])){
         continue;
       }
       $dn = preg_replace("/^zoneName=[^,]+,/","",$attrs['dn']);
@@ -398,7 +398,7 @@ class servdns extends goService
       $ldap->ls("(objectClass=dnsZone)",$src,array('cn'));
       while($attrs = $ldap->fetch()){
         $src_zone = $attrs['dn'];
-        $dst_zone = preg_replace("/".normalizePreg($src)."$/",$this->dn,$src_zone);
+        $dst_zone = preg_replace("/".preg_quote($src)."$/",$this->dn,$src_zone);
         $res = plugin::recursive_move($src_zone, $dst_zone);
 
         if($res){
@@ -435,7 +435,7 @@ class servdns extends goService
     foreach($tmp as $key1 => $data1){
       $tmp2[$key1] = array();
       foreach($data1 as $key2 => $data2){
-        $tmp2[$key1][preg_replace("/".normalizePreg($old_dn)."$/",$this->dn,$key2)] = $data2;
+        $tmp2[$key1][preg_replace("/".preg_quote($old_dn)."$/",$this->dn,$key2)] = $data2;
       }
     }
     $tmp = $tmp2;

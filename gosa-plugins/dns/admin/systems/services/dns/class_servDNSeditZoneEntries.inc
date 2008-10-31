@@ -170,7 +170,7 @@ class servDNSeditZoneEntries extends plugin
             $found = false;
             $ip = $value;
             $match = preg_replace("/^[^\/]*+\//","",$this->reverseName);
-            $ip = preg_replace("/^".normalizePreg($match)."/","",$ip);
+            $ip = preg_replace("/^".preg_quote($match)."/","",$ip);
             $ip = preg_replace("/^\./","",$ip);
 
             foreach($this->Devices[$Name]['RECORDS'] as $key => $dev){

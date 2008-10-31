@@ -572,7 +572,7 @@ class applicationManagement extends plugin
     if(!$this->IsReleaseManagementActivated()){
       $use_base = $this->app_base;
       if($SubSearch){
-        $use_base = preg_replace("/^".normalizePreg(get_ou("applicationRDN"))."/","",$use_base);
+        $use_base = preg_replace("/^".preg_quote(get_ou("applicationRDN"))."/","",$use_base);
       }
     }else{
       $use_base = $this->app_release;

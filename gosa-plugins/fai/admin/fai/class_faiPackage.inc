@@ -173,7 +173,7 @@ class faiPackage extends plugin
 
       /* Assemble release name */
       $release = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/[,]*'.normalizePreg(get_ou('faiBaseRDN')).'.*$/', '', $release);
+      $tmp= preg_replace('/[,]*'.preg_quote(get_ou('faiBaseRDN')).'.*$/', '', $release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "/";
@@ -407,13 +407,13 @@ class faiPackage extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
     $release = $this->parent->parent->fai_release;
-    $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
+    $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $this->dn);
     FAI::prepare_to_save_FAI_object($use_dn,array(),true);
     new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
     foreach($this->ConfiguredPackages as $pkgname => $attrs){
       foreach($attrs as $name => $attr){
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
-        $use_dn = preg_replace("/".normalizePreg(FAI::get_release_dn($this->dn))."/i", $release, $pkgdn);
+        $use_dn = preg_replace("/".preg_quote(FAI::get_release_dn($this->dn))."/i", $release, $pkgdn);
         FAI::prepare_to_save_FAI_object($use_dn,array(),true);
       }
     }
@@ -495,7 +495,7 @@ class faiPackage extends plugin
     if($this->FAIdebianRelease == "ClearFromCopyPaste"){
 
       $current_release  = $this->parent->parent->fai_release;
-      $tmp= preg_replace('/,'.normalizePreg(get_ou('faiBaseRDN')).'.*$/', '', $current_release);
+      $tmp= preg_replace('/,'.preg_quote(get_ou('faiBaseRDN')).'.*$/', '', $current_release);
       $tmp= preg_replace('/ou=/', '', $tmp);
       $rev= array_reverse(split(',', $tmp));
       $this->FAIdebianRelease= "";

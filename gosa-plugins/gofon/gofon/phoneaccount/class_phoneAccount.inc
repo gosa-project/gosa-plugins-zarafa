@@ -217,7 +217,7 @@ class phoneAccount extends plugin
       /* Skip all macros we are not able to read 
           execpt, the currently selected macro.
        */
-      if(!preg_match("/r/",$acl) && !preg_match("/^".normalizePreg($attrs['dn'])."/",$this->goFonMacro)){
+      if(!preg_match("/r/",$acl) && !preg_match("/^".preg_quote($attrs['dn'])."/",$this->goFonMacro)){
         continue;
       }
 

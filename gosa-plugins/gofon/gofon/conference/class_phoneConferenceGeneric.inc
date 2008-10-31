@@ -119,7 +119,7 @@ class conference extends plugin
     } else {
 
       /* Get base */ 
-      $this->base = preg_replace ("/^[^,]+,".normalizePreg(get_ou('phoneConferenceRDN'))."/i","",$this->dn);;
+      $this->base = preg_replace ("/^[^,]+,".preg_quote(get_ou('phoneConferenceRDN'))."/i","",$this->dn);;
     }
 
     $this->goFonConferenceOwner=$this->ui->dn;

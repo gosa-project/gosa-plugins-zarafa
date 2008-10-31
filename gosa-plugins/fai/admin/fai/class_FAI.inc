@@ -70,7 +70,7 @@ class FAI
         foreach($res_tmp as $attr){
 
           $buffer = array();
-          $name = preg_replace("/".normalizePreg($release)."/i","",$attr['dn']);
+          $name = preg_replace("/".preg_quote($release)."/i","",$attr['dn']);
 
           if(isset($attr['FAIstate'][0])){
             if(preg_match("/removed$/",$attr['FAIstate'][0])){
@@ -83,7 +83,7 @@ class FAI
 
           /* Seems to be an inherited class, apply current FAIstate to this classes 
            */
-          if(!preg_match("/".normalizePreg($base_release)."$/i",$attr['dn'])){
+          if(!preg_match("/".preg_quote($base_release)."$/i",$attr['dn'])){
             $buffer['FAIstate'] = $FAIstate; 
           }else{
 
@@ -151,7 +151,7 @@ class FAI
   {
     global $config;
 
-    if(!preg_match("/".normalizePreg(get_ou('faiBaseRDN'))."/",$dn)){
+    if(!preg_match("/".preg_quote(get_ou('faiBaseRDN'))."/",$dn)){
       $base = get_ou('faiBaseRDN').$dn;
     }else{
       $base = $dn;
@@ -163,7 +163,7 @@ class FAI
     $ldap->search("(objectClass=FAIbranch)",array("ou","dn"));
     while($attrs = $ldap->fetch()){
       if($appendedName){
-        $res[$attrs['dn']] = convert_department_dn(preg_replace("/,".normalizePreg(get_ou('faiBaseRDN')).".*$/","",$attrs['dn']));
+        $res[$attrs['dn']] = convert_department_dn(preg_replace("/,".preg_quote(get_ou('faiBaseRDN')).".*$/","",$attrs['dn']));
       }else{
         $res[$attrs['dn']] = $attrs['ou'][0];
       }
@@ -207,7 +207,7 @@ class FAI
 
       /* Dont't try to modify non FAIclasses  
        */
-      if(!preg_match("/[^,]+,".normalizePreg(get_ou("faiBaseRDN"))."/",$obj_dn)){
+      if(!preg_match("/[^,]+,".preg_quote(get_ou("faiBaseRDN"))."/",$obj_dn)){
         trigger_error("PLEASE check fai class handling in ".__LINE__." -> ".__FILE__);        
         echo "<br>-->".$Current_DN."<br>";
         echo "<br>-->".$obj_dn."<br>";
@@ -247,8 +247,8 @@ class FAI
 
               /* Check if this Profile uses the source class ($cn)
                */
-              if(preg_match("/".normalizePreg($cn)."/",$attrs['FAIclass'])){
-                $attrs['FAIclass'] = preg_replace("/[ ]*".normalizePreg($cn)."[ ]*/i"," ",$attrs['FAIclass']);
+              if(preg_match("/".preg_quote($cn)."/",$attrs['FAIclass'])){
+                $attrs['FAIclass'] = preg_replace("/[ ]*".preg_quote($cn)."[ ]*/i"," ",$attrs['FAIclass']);
                 if(empty($attrs['FAIclass'])){
                   $attrs['FAIclass'] = array();
                 }
@@ -595,7 +595,7 @@ class FAI
 
           $buffer = array();
 #        $name = str_ireplace($release,"",$attr['dn']);
-          $name = preg_replace("/".normalizePreg($release)."/i","",$attr['dn']);
+          $name = preg_replace("/".preg_quote($release)."/i","",$attr['dn']);
 
           if(isset($attr['FAIstate'][0])&&(preg_match("/removed$/",$attr['FAIstate'][0]))){
 
@@ -703,7 +703,7 @@ class FAI
 
     /* Get dn suffix. Example  "FAIvairableEntry=keksdose,FAIvariable=Keksregal," */
 #  $dn_suffix = str_ireplace($base_release,"",$dn);
-    $dn_suffix = preg_replace("/".normalizePreg($base_release)."/i","",$dn);
+    $dn_suffix = preg_replace("/".preg_quote($base_release)."/i","",$dn);
 
     /* Check if given object also exists whitin one of these releases */
     foreach($sub_releases as $p_release => $name){
@@ -744,7 +744,7 @@ class FAI
 
     /* Get dn suffix. Example  "FAIvairableEntry=keksdose,FAIvariable=Keksregal," */
 #  $dn_suffix = str_ireplace($base_release,"",$dn);
-    $dn_suffix = preg_replace("/".normalizePreg($base_release)."/i","",$dn);
+    $dn_suffix = preg_replace("/".preg_quote($base_release)."/i","",$dn);
 
     /* Check if given object also exists whitin one of these releases */
     foreach($previous_releases as $p_release){
@@ -768,7 +768,7 @@ class FAI
     $ret = array();
 
     /* Explode dns into pieces, to be able to build parent dns */
-    $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$dn));
+    $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".preg_quote(",".$config->current['BASE'])."/i","",$dn));
 
     if(!is_array($dns_to_check)){
       return;  
@@ -902,7 +902,7 @@ class FAI
     $ldap->search("(objectClass=FAIbranch)",array("ou","FAIstate"));
     while($attrs = $ldap->fetch()){
       foreach($sub_releases as $sub_rel){
-        if(preg_match("/^".normalizePreg($sub_rel.get_ou('faiBaseRDN'))."/",$attrs['dn'])){
+        if(preg_match("/^".preg_quote($sub_rel.get_ou('faiBaseRDN'))."/",$attrs['dn'])){
           $f_releases[$sub_rel.get_ou('faiBaseRDN')] = $attrs;
         }
       }
@@ -979,7 +979,7 @@ class FAI
     }else{
       $source_dns = array();
       foreach($g_releases as $dn => $data){
-        if(preg_match("/^".normalizePreg($source_dn)."/",$dn)){
+        if(preg_match("/^".preg_quote($source_dn)."/",$dn)){
           $source_dns[$dn] = $data; 
         }
       }
@@ -992,7 +992,7 @@ class FAI
       $ldap->cd($dn);
       $ldap->ls("(|(objectClass=gotoSubmenuEntry)(objectClass=gotoMenuEntry))",$dn,array("dn"));
       while($attrs = $ldap->fetch()){
-        $destination = preg_replace("/".normalizePreg($dn)."$/","ou=".$destination_name.",".$dn,$attrs['dn']);
+        $destination = preg_replace("/".preg_quote($dn)."$/","ou=".$destination_name.",".$dn,$attrs['dn']);
         $to_copy[$attrs['dn']] = $destination;
       }
     }
@@ -1200,7 +1200,7 @@ class FAI
     $ldap->cd($config->current['BASE']);
 
     /* Split dn into pices */ 
-    $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$Current_DN));
+    $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".preg_quote(",".$config->current['BASE'])."/i","",$Current_DN));
 
     if(!is_array($dns_to_check)){
       return;  

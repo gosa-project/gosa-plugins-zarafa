@@ -363,8 +363,8 @@ class DNS
          */
         $zN = trim($zone,".");
         $nN = trim($name,".");  
-        if(preg_match("/".normalizePreg($zN)."$/",$nN)){
-          $nN = preg_replace("/[\.]*".normalizePreg($zN)."[\.]*$/","",$nN);
+        if(preg_match("/".preg_quote($zN)."$/",$nN)){
+          $nN = preg_replace("/[\.]*".preg_quote($zN)."[\.]*$/","",$nN);
         }else{
           $nN = $name;
         }
@@ -399,7 +399,7 @@ class DNS
 
       /* Check given host name with zone settings 
        */ 
-      if(preg_match("/".normalizePreg($testname)."[\.]*$/",$nN) || $attrs['relativeDomainName'][0] == $name){
+      if(preg_match("/".preg_quote($testname)."[\.]*$/",$nN) || $attrs['relativeDomainName'][0] == $name){
         $ret['exists'] = true;
         $ret['zoneName'] = $id_tmp;
         foreach(array("dNSClass","dNSTTL") as $atr){
@@ -463,8 +463,8 @@ class DNS
     $zN = trim($zoneName,".");
     $nN = trim($newName,".");
     $oN = trim($oldName,".");
-    $newName = preg_replace("/[\.]*".normalizePreg($zN)."$/i","",$nN);
-    $oldName = preg_replace("/[\.]*".normalizePreg($zN)."$/i","",$oN);
+    $newName = preg_replace("/[\.]*".preg_quote($zN)."$/i","",$nN);
+    $oldName = preg_replace("/[\.]*".preg_quote($zN)."$/i","",$oN);
 
     /* If reverseZone can't be resolved ... this 
      *  can't be a valid entry, so remove this account
