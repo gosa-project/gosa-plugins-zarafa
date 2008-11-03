@@ -1234,7 +1234,7 @@ sub opsi_install_client {
     # Build wakeup message for client
         if (not $error) {
             my $wakeup_hash = &create_xml_hash("trigger_wake", "GOSA", "KNOWN_SERVER");
-            &add_content2xml_hash($wakeup_hash, 'macAddress', $macaddress);
+            &add_content2xml_hash($wakeup_hash, 'macaddress', $macaddress);
             my $wakeup_msg = &create_xml_string($wakeup_hash);
             push(@out_msg_l, $wakeup_msg);
 

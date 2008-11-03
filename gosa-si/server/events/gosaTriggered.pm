@@ -95,7 +95,7 @@ sub send_user_msg {
     # keep job queue uptodate if necessary 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -157,7 +157,7 @@ sub recreate_fai_server_db {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -177,7 +177,7 @@ sub recreate_fai_release_db {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7);
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -197,7 +197,7 @@ sub recreate_packages_list_db {
 
 	my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
 	if( defined $jobdb_id) {
-		my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+		my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
 		&main::daemon_log("$session_id DEBUG: $sql_statement", 7);
 		my $res = $main::job_db->exec_statement($sql_statement);
 	}
@@ -218,7 +218,7 @@ sub get_login_usr_for_client {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -245,7 +245,7 @@ sub get_client_for_login_usr {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -276,7 +276,7 @@ sub ping {
     my ($sql, $res);
 
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -292,10 +292,6 @@ sub ping {
         $host_key = @{@$res[0]}[2];
     } else {
         &main::daemon_log("$session_id ERROR: cannot determine host_name and host_key from known_clients_db at function ping\n$msg", 1);
-        my %data = ( 'answer_xml'  => 'host not found in known_clients_db',
-                'macaddress' => $target,
-                );
-        $answer_msg = &build_msg("got_ping_error", $main::server_address, $source, \%data);
         $error = 1;
     }
 
@@ -396,7 +392,7 @@ sub detect_hardware {
     my $target = @{$msg_hash->{target}}[0];
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -422,7 +418,7 @@ sub trigger_reload_syslog_config {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -445,7 +441,7 @@ sub trigger_reload_ntp_config {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -463,7 +459,7 @@ sub trigger_reload_ldap_config {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -485,7 +481,7 @@ sub set_activated_for_installation {
 	# update status of job 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -533,7 +529,7 @@ sub trigger_action_lock {
     &main::change_goto_state('locked', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -551,7 +547,7 @@ sub trigger_action_activate {
     &main::change_goto_state('active', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -572,7 +568,7 @@ sub trigger_action_localboot {
     &main::change_fai_state('localboot', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -588,7 +584,7 @@ sub trigger_action_halt {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -605,7 +601,7 @@ sub trigger_action_reboot {
     &main::change_fai_state('reboot', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -622,7 +618,7 @@ sub trigger_action_memcheck {
     &main::change_fai_state('memcheck', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -638,7 +634,7 @@ sub trigger_action_reinstall {
 
     &main::change_fai_state('reinstall', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
@@ -654,7 +650,7 @@ sub trigger_action_update {
 
     &main::change_fai_state('update', \@{$msg_hash->{macaddress}}, $session_id);
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
@@ -672,13 +668,13 @@ sub trigger_action_instant_update {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
 
-    my %data = ( 'macAddress'  => \@{$msg_hash->{macaddress}} );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
     my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
     # invoke trigger wake for this gosa-si-server
     &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
@@ -695,7 +691,7 @@ sub trigger_action_sysinfo {
     &main::change_fai_state('sysinfo', \@{$msg_hash->{macaddress}}, $session_id);
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -710,7 +706,7 @@ sub new_key_for_client {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -726,7 +722,7 @@ sub trigger_action_rescan {
 
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }
@@ -743,7 +739,7 @@ sub trigger_action_wake {
     
     my $jobdb_id = @{$msg_hash->{'jobdb_id'}}[0];
     if( defined $jobdb_id) {
-        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=jobdb_id";
+        my $sql_statement = "UPDATE $main::job_queue_tn SET status='processed' WHERE id=$jobdb_id";
         &main::daemon_log("$session_id DEBUG: $sql_statement", 7); 
         my $res = $main::job_db->exec_statement($sql_statement);
     }

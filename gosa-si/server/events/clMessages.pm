@@ -119,7 +119,7 @@ sub LOGIN {
     my $res;
     my $error_str;
 
-    # Invoke set_last_system
+    # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
 	$res = &set_last_system($msg, $msg_hash, $session_id);
 
     my %add_hash = ( table=>$main::login_users_tn, 
@@ -174,7 +174,7 @@ sub CURRENTLY_LOGGED_IN {
         return;     
     }
 
-    # Invoke set_last_system
+    # Invoke set_last_system; message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
 	my $res = &set_last_system($msg, $msg_hash, $session_id);
     
     # fetch all user currently assigned to the client at login_users_db
@@ -230,12 +230,17 @@ sub CURRENTLY_LOGGED_IN {
         &main::daemon_log("$session_id INFO: delete user '".$hit->{'user'}."' at client '".$hit->{'client'}."' from login_user_db", 5); 
     }
 
+    # TODO
+    # Inform all other server which users are logged in at clients registered at local server
+
+    # sende allen anderen server eine nachricht, "foreign_user_updates" zum beispiel
+
     return;
 }
 
 
 ## @method set_last_system()
-# @details Message set ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
+# @details Message sets ldap attributes 'gotoLastSystemLogin' and 'gotoLastSystem'
 # @param msg - STRING - xml message with tag 'last_system_login' and 'last_system'
 # @param msg_hash - HASHREF - message information parsed into a hash
 # @param session_id - INTEGER - POE session id of the processing of this message
@@ -387,7 +392,7 @@ sub GOTOACTIVATION {
     $header =~ s/CLMSG_//g;
 
     my $sql_statement = "UPDATE $main::job_queue_tn ".
-            "SET status='processing', progress='goto-activation', modified='1' ".
+            "SET progress='goto-activation', modified='1' ".
             "WHERE status='processing' AND macaddress LIKE '$macaddress'"; 
     &main::daemon_log("$session_id DEBUG: $sql_statement", 7);         
     my $res = $main::job_db->update_dbentry($sql_statement);

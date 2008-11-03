@@ -1261,6 +1261,9 @@ sub msg_to_decrypt {
 			&& $not_found_in_known_server_db
 			&& $not_found_in_known_clients_db) {
 			&daemon_log("$session_id DEBUG: target is not in foreign_clients_db, known_server_db or known_clients_db, maybe it is a complete new one -> process here", 7);
+            if ($header =~ /^gosa_/ || $header =~ /^job_/) { 
+                $module = "GosaPackages"; 
+            }
 			my $res = $incoming_db->add_dbentry( {table=>$incoming_tn,
 					primkey=>[],
 					headertag=>$header,
@@ -1831,7 +1834,7 @@ sub watch_for_new_messages {
 		my %receiver_h; 
 		foreach my $receiver (@message_to_l) {
 			if ($receiver =~ /^u_([\s\S]*)$/) {
-				$receiver_h{$1} = 0;
+				$receiver_h{$receiver} = 0;
 			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
 				my $group_name = $1;
 				# fetch all group members from ldap and add them to receiver hash
@@ -1921,9 +1924,10 @@ sub watch_for_delivery_messages {
         #&daemon_log("0 DEBUG: $sql", 7);
         my $res = $login_users_db->exec_statement($sql);
 
-        # reciver is logged in nowhere
+        # receiver is logged in nowhere
         if (not ref(@$res[0]) eq "ARRAY") { next; }    
 
+        # receiver ist logged in at a client registered at local server
 		my $send_succeed = 0;
 		foreach my $hit (@$res) {
 				my $receiver_host = @$hit[0];
