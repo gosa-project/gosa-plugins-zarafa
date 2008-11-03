@@ -71,9 +71,21 @@ class termstartup extends plugin
 
     $this->orig_dn= $this->dn;
 
-    foreach($this->config->data['SERVERS']['LDAP'] as $server) {
-      $this->gotoLdapServerList[]= $server;
+    /* Creating a list of valid Mirrors
+     * none will not be saved to ldap.
+     */
+    $ldap   = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ui = get_userinfo();
+    foreach($this->config->data['SERVERS']['LDAP'] as $dn => $data){
+      if($ui->get_category_permissions($data['dn'],"server",TRUE)){
+        for($i = 0; $i < $data['goLdapBase']['count']; $i ++){
+          $name = $data["cn"][0].":".$data["goLdapBase"][$i];
+          $this->gotoLdapServerList[]= $name;
+        }
+      }
     }
+
     if(isset($this->attrs['gotoLdapServer'])){
       unset($this->attrs['gotoLdapServer']['count']);
       sort($this->attrs['gotoLdapServer']);

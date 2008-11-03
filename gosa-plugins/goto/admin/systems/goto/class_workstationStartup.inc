@@ -90,8 +90,14 @@ class workstartup extends plugin
      */
     $ldap   = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    foreach($this->config->data['SERVERS']['LDAP'] as $server) {
-      $this->gotoLdapServerList[]= $server; 
+    $ui = get_userinfo();
+    foreach($this->config->data['SERVERS']['LDAP'] as $dn => $data){
+      if($ui->get_category_permissions($data['dn'],"server",TRUE)){
+        for($i = 0; $i < $data['goLdapBase']['count']; $i ++){
+          $name = $data["cn"][0].":".$data["goLdapBase"][$i];
+          $this->gotoLdapServerList[]= $name; 
+        }
+      }
     }
 
     /* Get list of assigned ldap servers 
