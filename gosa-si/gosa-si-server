@@ -1010,7 +1010,7 @@ sub update_jobdb_status_for_send_msgs {
             
         # sending msg faild
         if( $error ) {
-            if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
+            if ((not $answer =~ /<header>trigger_action_reinstall<\/header>/) || (not $answer =~ /<header>trigger_action_update<\/header>/)) {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
