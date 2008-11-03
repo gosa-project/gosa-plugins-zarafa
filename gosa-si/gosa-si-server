@@ -1774,10 +1774,18 @@ sub watch_for_new_jobs {
 					my $header = $1 ;
 					my $func_error = &send_msg_to_target($job_msg, $server_address, $GosaPackages_key, $header, "J");
 
-					# update status in job queue to 'processing'
-					$sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id=$jobdb_id";
-					my $res = $job_db->update_dbentry($sql_statement);
-# TODO: abfangen ob alles in ordnung ist oder nicht, wenn nicht error schmeißen					
+					# update status in job queue to ...
+                    # ... 'processing', for jobs: 'reinstall', 'update'
+                    if (($header =~ /gosa_trigger_action_reinstall/) || ($header =~ /gosa_trigger_action_update/)) {
+                        my $sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id=$jobdb_id";
+                        my $dbres = $job_db->update_dbentry($sql_statement);
+                    }
+
+                    # ... 'done', for all other jobs, they are no longer needed in the jobqueue
+                    else {
+                        my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
+                        my $dbres = $job_db->update_dbentry($sql_statement);
+                    }
 
 					# We don't want parallel processing
 					last;
