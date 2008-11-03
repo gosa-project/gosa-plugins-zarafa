@@ -80,6 +80,7 @@ class selectPrinterDialog extends plugin
     }
 
     $printer_list = $this->getPrinter(); 
+		asort($printer_list);
 
     $smarty->assign("regexPrinter"    ,$this->regex);
     $smarty->assign("deplistPrinter"  ,$this->deplist);
