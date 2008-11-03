@@ -10,6 +10,7 @@ my @functions = (
     "create_xml_string",
     "transform_msg2hash",
     "get_time",
+    "get_utc_time",
     "build_msg",
     "db_res2xml",
     "db_res2si_msg",
@@ -34,6 +35,7 @@ my @functions = (
     "read_configfile",
     "check_opsi_res",
     "calc_timestamp",
+    "opsi_callobj2string",
     ); 
 @EXPORT = @functions;
 use strict;
@@ -180,10 +182,8 @@ sub add_content2xml_hash {
 
 
 sub get_time {
-	  # Add an optional offset in seconds
-		my $offset = $1 if shift =~ /^(\d+)$/ || 0;
     my ($seconds, $minutes, $hours, $monthday, $month,
-            $year, $weekday, $yearday, $sommertime) = localtime(time+$offset);
+            $year, $weekday, $yearday, $sommertime) = localtime;
     $hours = $hours < 10 ? $hours = "0".$hours : $hours;
     $minutes = $minutes < 10 ? $minutes = "0".$minutes : $minutes;
     $seconds = $seconds < 10 ? $seconds = "0".$seconds : $seconds;
@@ -193,6 +193,12 @@ sub get_time {
     $year+=1900;
     return "$year$month$monthday$hours$minutes$seconds";
 
+}
+
+sub get_utc_time {
+    my $utc_time = qx(date --utc +%Y%m%d%H%M%S);
+    $utc_time =~ s/\s$//;
+    return $utc_time;
 }
 
 
@@ -856,5 +862,18 @@ sub calc_timestamp {
     return $res_timestamp;
 }
 
-
+sub opsi_callobj2string { 
+    my ($callobj) = @_; 
+    my @callobj_string; 
+    while(my ($key, $value) = each(%$callobj)) { 
+        my $value_string = ""; 
+        if (ref($value) eq "ARRAY") { 
+            $value_string = join(",", @$value); 
+        } else { 
+            $value_string = $value; 
+        } 
+        push(@callobj_string, "$key=$value_string") 
+    } 
+    return join(", ", @callobj_string); 
+} 
 1;
