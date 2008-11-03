@@ -185,7 +185,7 @@ sub process_gosa_msg {
             my $client_events = $res->{'1'}->{'events'};
 
             # client is registered for this event, deliver this message to client
-            if ($client_events =~ /,$header,/) {
+            if (($client_events =~ /^$header,/) || ($client_events =~ /,$header,/) || ($client_events =~ /,$header$/)) {
                 &main::daemon_log("$session_id INFO: client '$target' is registerd for event '$header', forward message to client.", 5);
                 @out_msg_l = ( $msg );
 
