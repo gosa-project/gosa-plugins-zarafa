@@ -344,6 +344,12 @@ class passwordMethodMIT extends passwordMethod
     return "{".$mode."}".$this->attrs['uid'][0]."@".$this->goKrbRealm;
   }
 
+  
+  public function create_template_hash($attrs)
+  {
+    return($this->generate_hash());
+  }
+
 
   /*! \brief  Removes this principal.
    */
@@ -573,6 +579,19 @@ class passwordMethodMIT extends passwordMethod
   }
 
 
+  /*! \brief  Adapt account settings from given dn 
+   */ 
+  public function adapt_from_template ($dn)
+  {
+    $source = new passwordMethodMIT($this->config,$dn);
+    $attrs = array("PRINC_EXPIRE_TIME","PW_EXPIRATION","POLICY","MAX_LIFE","MAX_RENEWABLE_LIFE","MASK","used_flags");
+     foreach($attrs as $attr){
+      $this->$attr = $source->$attr;
+    }
+    print_a($this);
+  }
+
+
   /*! \brief Saves changes back to the SI daemon.
    */
   public function save($dn)
@@ -638,6 +657,9 @@ class passwordMethodMIT extends passwordMethod
       }
     }
   }
+
+  
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
