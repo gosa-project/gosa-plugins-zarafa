@@ -16,7 +16,7 @@ class termgroup extends plugin
   var $orig_dn            = "";
   var $didAction          = FALSE;
   var $mapActions   = array("halt"            => "halt",
-                            "reboot"          => "localboot",
+                            "reboot"          => "reboot",
                             "update"          => "update",
                             "reinstall"       => "reinstall",
                             "rescan"          => "rescan",
