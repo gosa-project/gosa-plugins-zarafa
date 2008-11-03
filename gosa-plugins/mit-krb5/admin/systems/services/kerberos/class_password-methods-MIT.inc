@@ -588,7 +588,6 @@ class passwordMethodMIT extends passwordMethod
      foreach($attrs as $attr){
       $this->$attr = $source->$attr;
     }
-    print_a($this);
   }
 
 
