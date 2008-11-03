@@ -85,7 +85,7 @@ class passwordMethodMIT extends passwordMethod
   var $LAST_SUCCESS             = 0;
   var $MOD_DATE                 = 0;
 
-  var $POLICY                   = "";
+  var $POLICY                   = "_none_";
   var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
 
 
