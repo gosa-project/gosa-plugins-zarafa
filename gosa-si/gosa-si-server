@@ -1661,7 +1661,7 @@ sub watch_for_opsi_jobs {
 sub watch_for_modified_jobs {
     my ($kernel,$heap) = @_[KERNEL, HEAP];
 
-    my $sql_statement = "SELECT * FROM $job_queue_tn WHERE ((siserver='localhost') AND (modified='1'))"; 
+    my $sql_statement = "SELECT * FROM $job_queue_tn WHERE (modified='1')"; 
     my $res = $job_db->select_dbentry( $sql_statement );
     
     # if db contains no jobs which should be update, do nothing
