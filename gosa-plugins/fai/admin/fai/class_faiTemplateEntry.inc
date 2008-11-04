@@ -126,14 +126,12 @@ class faiTemplateEntry extends plugin
       }
     }
 
-    $smarty->assign("FAItemplateFile","");
-
     foreach($this->attributes as $attr){
       $smarty->assign($attr."ACL",$this->getacl($attr,preg_match("/freeze/",$this->FAIstate)));
     }
 
     /* We now split cn/FAItemplatePath to make things more clear... */
-    $smarty->assign("cn", basename($this->FAItemplatePath));
+    $smarty->assign("templateFile", basename($this->FAItemplatePath));
     $smarty->assign("templatePath", dirname($this->FAItemplatePath));
     $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));;
 
@@ -182,15 +180,15 @@ class faiTemplateEntry extends plugin
       /* Check if we are allowed to change the destination directory 
        */
       if($this->acl_is_writeable("FAItemplatePath")){
-        $cur_path = $this->FAItemplatePath.'/'.basename($cur_path);
+        $cur_path = get_post('templatePath').'/'.basename($cur_path);
       }
 
       /* Check if we are allowed to change the destination directory 
        */
       if($this->acl_is_writeable("cn")){
-        $cur_path = dirname($cur_path).'/'.$this->cn;
+        $cur_path = dirname($cur_path).'/'.get_post('templateFile');
       }
-      $this->FAItemplatePath = $cur_path;
+      $this->FAItemplatePath = $this->cn= $cur_path;
     }
   }
 
@@ -244,7 +242,6 @@ class faiTemplateEntry extends plugin
       $tmp[$attrs] = $this->$attrs;
     }
 
-    $tmp['cn']      = $this->FAItemplatePath;
     if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){
       $tmp['remove']['from']  = $this->orig_cn;
       $tmp['remove']['to']    = $tmp['cn'];

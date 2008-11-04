@@ -11,7 +11,7 @@
 		    </td>
 		    <td>
 {render acl=$cnACL}
-		<input value="{$cn}" name="cn" size="45" maxlength="80">&nbsp;&nbsp;
+		<input value="{$templateFile}" name="templateFile" size="45" maxlength="80">&nbsp;&nbsp;
 {/render}
 		    </td>
 		   </tr>
@@ -23,7 +23,7 @@
 				</td>
 			<td>
 {render acl=$FAItemplatePathACL}
-				<input type="text" name="FAItemplatePath" value="{$templatePath}" id="templatePath" size="45">
+				<input type="text" name="templatePath" value="{$templatePath}" id="templatePath" size="45">
 {/render}
 				</td>
 		  </tr>
