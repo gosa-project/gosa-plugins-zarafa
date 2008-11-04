@@ -1041,6 +1041,7 @@ sub update_jobdb_status_for_send_msgs {
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
                 my $res = $job_db->update_dbentry($sql_statement);
+                &daemon_log("D \n$sql_statement\n$answer", 1);
 
             }
 
