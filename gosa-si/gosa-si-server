@@ -261,7 +261,7 @@ our $logged_in_user_date_of_expiry = 600;
     },
 "GOsaPackages" => {
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
-    "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
+    "job-queue-loop-delay" => [\$job_queue_loop_delay, 10],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
 		"new-systems-ou" => [\$new_systems_ou, 'ou=workstations,ou=systems'],
@@ -1855,7 +1855,9 @@ sub watch_for_new_jobs {
 
 					# update status in job queue to ...
                     # ... 'processing', for jobs: 'reinstall', 'update'
-                    if (($header =~ /gosa_trigger_action_reinstall/) || ($header =~ /gosa_trigger_action_update/)) {
+                    if (($header =~ /gosa_trigger_action_reinstall/) 
+                            || ($header =~ /gosa_trigger_activate_new/)
+                            || ($header =~ /gosa_trigger_action_update/)) {
                         my $sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id=$jobdb_id";
                         my $dbres = $job_db->update_dbentry($sql_statement);
                     }
