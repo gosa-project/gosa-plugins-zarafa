@@ -558,7 +558,13 @@ sub trigger_action_activate {
     }
     my $out_msg = &create_xml_string($out_hash);
 
-    return ( $out_msg );
+    my %data = ( 'macaddress'  => \@{$msg_hash->{macaddress}} );
+    my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
+
+    my @out_msg_l = ($wake_msg, $out_msg);  
+    return @out_msg_l;
+
 }
 
 
