@@ -177,7 +177,7 @@ class divListConference extends MultiSelectWindow
 
       /* Get conference owner name */
       $ldap= $this->parent->config->get_ldap_link();
-      $ldap->cat($conference['goFonConferenceOwner'][0], array('cn'));
+      $ldap->cat($conference['goFonConferenceOwner'][0], array('cn','dn'));
       $data = $ldap->fetch();
       if(isset($data['cn'][0])){
         $cn = $data['cn'][0];
@@ -186,7 +186,10 @@ class divListConference extends MultiSelectWindow
       }  
 
       /* Create title */
-      $title = " title='".preg_replace("/ /","&nbsp;",LDAP::fix($data['dn']))."' ";
+      $title="";
+      if(isset($data['dn'])){
+        $title = " title='".preg_replace("/ /","&nbsp;",LDAP::fix($data['dn']))."' ";
+      }
 
       /* Cutted objects should be displayed in light grey */
       $display = $conference['cn'][0].$number;
