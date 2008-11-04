@@ -188,7 +188,9 @@ class faiTemplateEntry extends plugin
       if($this->acl_is_writeable("cn")){
         $cur_path = dirname($cur_path).'/'.get_post('templateFile');
       }
-      $this->FAItemplatePath = $this->cn= $cur_path;
+      if(!isset($_POST['TmpFileUpload'])){
+        $this->FAItemplatePath = $this->cn= $cur_path;
+      }
     }
   }
 
