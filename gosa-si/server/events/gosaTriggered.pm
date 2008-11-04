@@ -793,6 +793,8 @@ sub get_available_kernel {
 sub trigger_activate_new {
 	my ($msg, $msg_hash, $session_id) = @_;
 
+    return undef;
+
 	my $source = @{$msg_hash->{'source'}}[0];
 	my $target = @{$msg_hash->{'target'}}[0];
 	my $header= @{$msg_hash->{'header'}}[0];
