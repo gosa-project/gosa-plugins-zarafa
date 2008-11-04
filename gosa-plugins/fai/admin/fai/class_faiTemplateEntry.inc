@@ -244,6 +244,7 @@ class faiTemplateEntry extends plugin
       $tmp[$attrs] = $this->$attrs;
     }
 
+    $tmp['cn']      = $this->FAItemplatePath;
     if(($this->orig_cn)&&($tmp['cn']!=$this->orig_cn)){
       $tmp['remove']['from']  = $this->orig_cn;
       $tmp['remove']['to']    = $tmp['cn'];
