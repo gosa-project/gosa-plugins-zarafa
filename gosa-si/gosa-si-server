@@ -261,7 +261,7 @@ our $logged_in_user_date_of_expiry = 600;
     },
 "GOsaPackages" => {
     "job-queue" => [\$job_queue_file_name, '/var/lib/gosa-si/jobs.db'],
-    "job-queue-loop-delay" => [\$job_queue_loop_delay, 10],
+    "job-queue-loop-delay" => [\$job_queue_loop_delay, 3],
     "messaging-db-loop-delay" => [\$messaging_db_loop_delay, 3],
     "key" => [\$GosaPackages_key, "none"],
 		"new-systems-ou" => [\$new_systems_ou, 'ou=workstations,ou=systems'],
