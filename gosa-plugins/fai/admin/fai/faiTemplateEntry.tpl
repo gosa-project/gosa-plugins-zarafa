@@ -63,7 +63,7 @@
 			<br>
 			<br>
 {render acl=$FAItemplateFileACL}
-			<input type="file" name="FAItemplateFile" value="{$FAItemplateFile}" id="FAItemplateFile">
+			<input type="file" name="FAItemplateFile" value="" id="FAItemplateFile">
 {/render}
 {render acl=$FAItemplateFileACL}
 			&nbsp;<input type="submit" value="{t}Upload{/t}" name="TmpFileUpload">
