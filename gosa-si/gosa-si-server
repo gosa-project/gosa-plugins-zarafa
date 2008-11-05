@@ -180,7 +180,7 @@ my @foreign_clients_col_names = ("hostname VARCHAR(255)", "macaddress VARCHAR(17
 our $login_users_db;
 our $login_users_tn = "login_users";
 my $login_users_file_name;
-my @login_users_col_names = ("client VARCHAR(255)", "user VARCHAR(255)", "timestamp VARCHAR(14)");
+my @login_users_col_names = ("client VARCHAR(255)", "user VARCHAR(255)", "timestamp VARCHAR(14)", "regserver VARCHAR(255) DEFAULT 'localhost'");
 
 # holds all fai server, the debian release and tag
 our $fai_server_db;
@@ -1016,9 +1016,6 @@ sub update_jobdb_status_for_send_msgs {
             
         # sending msg failed
         if( $error ) {
-
-            # JUST FOR TESTING
-            daemon_log("D \n$error\n$answer");
 
             # set jobs to done, jobs do not need to deliver their message in any case
             if (($job_header eq "trigger_action_localboot")
