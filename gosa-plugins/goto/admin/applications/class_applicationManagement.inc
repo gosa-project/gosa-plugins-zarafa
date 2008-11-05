@@ -233,7 +233,14 @@ class applicationManagement extends plugin
       /* Create new usertab object */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
       $this->apptabs->parent = &$this;
-      $this->apptabs->set_acl_base($this->acl_base);
+
+      /* Check if there is a snapshot dialog open */
+      if($this->IsReleaseManagementActivated()){
+        $this->apptabs->set_acl_base($this->acl_base);
+      }else{
+        $this->apptabs->set_acl_base($this->DivListApplication->selectedBase);
+      }
+
     }
 
 
