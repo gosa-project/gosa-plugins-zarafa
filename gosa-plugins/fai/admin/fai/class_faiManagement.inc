@@ -853,10 +853,6 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
-
-        echo $this->acl_base;
-        echo "->".$this->ui->get_permissions($this->acl_base,"fai/faiManagement");  
-
         if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
           msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
