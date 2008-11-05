@@ -802,6 +802,7 @@ class faiManagement extends plugin
 
         echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
           <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
+          <input type='hidden' name='php_c_check' value='1'>
           </form></div>";
 
         echo "<script language=\"javascript\" type=\"text/javascript\">scrollDown2();</script>" ;
