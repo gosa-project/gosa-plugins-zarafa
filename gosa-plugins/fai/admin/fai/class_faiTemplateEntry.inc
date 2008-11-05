@@ -131,8 +131,8 @@ class faiTemplateEntry extends plugin
     }
 
     /* We now split cn/FAItemplatePath to make things more clear... */
-    $smarty->assign("templateFile", basename($this->FAItemplatePath));
-    $smarty->assign("templatePath", dirname($this->FAItemplatePath));
+    $smarty->assign("templateFile", preg_replace("/^.*\//","",$this->FAItemplatePath));
+    $smarty->assign("templatePath", preg_replace("/[^\/]*$/","",$this->FAItemplatePath));
     $smarty->assign("freeze", preg_match("/freeze/i",$this->FAIstate));;
 
     $display.=  $smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
