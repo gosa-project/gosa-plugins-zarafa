@@ -72,8 +72,8 @@ class faiTemplateEntry extends plugin
         $this->FAItemplateFile = $str;
 
         /* If we don't have a filename set it from upload filename. */
-        if( 0 == strlen( $this->FAItemplatePath )){
-          $this->FAItemplatePath = $_FILES['FAItemplateFile']['name'];
+        if( 0 == strlen(preg_replace("/^.*\//","",$this->FAItemplatePath))){
+          $this->FAItemplatePath = preg_replace("/[^\/]*$/","",$this->FAItemplatePath).$_FILES['FAItemplateFile']['name'];
         }
 
         session::set('binary',$this->FAItemplateFile);
