@@ -85,7 +85,11 @@
 	{render acl=$FAIdebianMirrorACL}
 						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
 							{foreach from=$FAIservers item=val key=key}
-								<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{$key}</option>
+								{if $key == "inherited" || $key == "auto"} 
+									<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
+								{else}
+									<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{$key}</option>
+								{/if}
 							{/foreach}
 						</select>
 	{/render}
@@ -121,7 +125,11 @@
 	{render acl=$FAIdebianMirrorACL}
 						<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
 							{foreach from=$FAIservers item=val key=key}
-								<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{$key}</option>
+								{if $key == "inherited" || $key == "auto"} 
+									<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{t}{$key}{/t}</option>
+								{else}
+									<option value="{$key}" {if $FAIdebianMirror == $key} selected {/if}>{$key}</option>
+								{/if}
 							{/foreach}
 						</select>
 	{/render}
