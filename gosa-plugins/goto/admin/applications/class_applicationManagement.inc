@@ -34,6 +34,7 @@ class applicationManagement extends plugin
   var $enableReleaseManagement  = false;
   var $start_pasting_copied_objects = FALSE;
 
+  var $acl_base     ="";
   var $app_base     ="";
   var $app_release  ="";
   var $acl_module   = array("application");  
@@ -56,6 +57,7 @@ class applicationManagement extends plugin
     /* Save configuration for internal use */
     $this->config   = &$config;
     $this->ui       = &$ui;
+    $this->acl_base = $this->config->current['BASE'];
 
     /* Check if copy & paste is activated */
     if($this->config->boolValueIsTrue("MAIN","COPYPASTE")){
@@ -231,7 +233,7 @@ class applicationManagement extends plugin
       /* Create new usertab object */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
       $this->apptabs->parent = &$this;
-      $this->apptabs->set_acl_base($this->app_base);
+      $this->apptabs->set_acl_base($this->acl_base);
     }
 
 
