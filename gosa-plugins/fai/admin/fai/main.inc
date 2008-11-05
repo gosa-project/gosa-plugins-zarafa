@@ -30,7 +30,6 @@ if ($remove_lock){
 	if (!session::is_set('FAI') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$FAI= new faiManagement($config, $ui);
 		$FAI->set_acl_category("fai");
-		$FAI->set_acl_base(session::get('CurrentMainBase'));
 		session::set('FAI',$FAI);
 	}
 	$FAI = session::get('FAI');

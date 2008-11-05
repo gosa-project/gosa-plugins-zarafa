@@ -51,6 +51,7 @@ class faiManagement extends plugin
   var $allow_freeze_object_attach = TRUE;
 
   var $no_save;
+  var $acl_base     ="";
   var $fai_base     ="";
   var $fai_release  ="";
 
@@ -82,9 +83,8 @@ class faiManagement extends plugin
     }
 
     /* Set default release 
-       !! If you change the base here you have to update the base in 
-           class_divListFai.inc too, all ACL checks use ($this->config->current['BASE']).
      */
+    $this->acl_base = $this->config->current['BASE'];
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
 
     if(!session::is_set("fai_filter")){
@@ -451,7 +451,7 @@ class faiManagement extends plugin
       Delete confirmed 
      ****************/
 
-		/* Deltetion was confirmed, so delete this entry
+		/* Deletion was confirmed, so delete this entry
      */
     if (isset($_POST['delete_terminal_confirm'])){
 
@@ -541,7 +541,7 @@ class faiManagement extends plugin
       if("" != $this->config->search("faiManagement", "POSTREMOVE",array('menu','tabs'))){
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
-        if($this->acl_is_removeable()){
+        if(preg_match("/d/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
           $smarty->assign("release_hidden",base64_encode($this->fai_release));
           $smarty->assign("info", msgPool::deleteInfo(LDAP::fix($this->fai_release),_("FAI branch/freeze")));
           return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
@@ -574,7 +574,7 @@ class faiManagement extends plugin
 
           $br = $this->getBranches();
 
-          if(isset($br[$bb]) && $this->acl_is_removeable()){
+          if(isset($br[$bb]) && preg_match("/d/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
             $name = $br[$bb];
 
             $ldap->cd($bb);
@@ -692,7 +692,7 @@ class faiManagement extends plugin
 
     if(isset($_GET['PerformBranch'])){
     
-      if(!$this->acl_is_createable()){
+      if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
         msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
       }else{
 
@@ -853,8 +853,12 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
-        if(!$this->acl_is_createable()){
-        msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
+
+        echo $this->acl_base;
+        echo "->".$this->ui->get_permissions($this->acl_base,"fai/faiManagement");  
+
+        if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
+          msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
           $this->dispNewBranch=true;
           $smarty->assign("iframe",false);
@@ -874,7 +878,7 @@ class faiManagement extends plugin
      */
     if("" != $this->config->search("faiManagement", "POSTCREATE",array('menu','tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
-        if(!$this->acl_is_createable()){
+        if(!preg_match("/c/",$this->ui->get_permissions($this->acl_base,"fai/faiManagement"))){
           msg_dialog::display(_("Permission error"), msgPool::permCreate(_("Branch")), ERROR_DIALOG);
         }else{
           $this->dispNewFreeze = true;
@@ -1133,7 +1137,7 @@ class faiManagement extends plugin
       }
     }
     $this->base = $base;
-    $this->set_acl_base($this->base);
+    $this->set_acl_base($this->acl_base);
 
     $this->lock_type = FAI::get_release_tag(FAI::get_release_dn($base));
 
