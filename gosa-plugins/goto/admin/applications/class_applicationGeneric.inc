@@ -62,6 +62,7 @@ class application extends plugin
 
     $this->orig_cn = $this->cn;
     $this->orig_base = $this->base;
+    $this->gosaApplicationFlags = preg_replace("/[^GDLMO]/","",$this->gosaApplicationFlags);
   }
 
 
@@ -312,14 +313,15 @@ class application extends plugin
                       "placeInStartmenu"    => "M",
                       "overwriteConfig"     => "O");
 
+
       /* Save application flags */
       foreach($checks as $name => $flag){
         if($this->acl_is_writeable($name)){
           $set = isset($_POST[$name]) && $_POST[$name] == 1;
-          if(!$set && preg_match("/".$flag."/",$this->gosaApplicationFlags)){
-            $this->gosaApplicationFlags = preg_replace("/".$flag."/","",$this->gosaApplicationFlags);  
+          if(!$set && strstr($this->gosaApplicationFlags,$flag)){
+            $this->gosaApplicationFlags = str_replace($flag,"",$this->gosaApplicationFlags);  
           }elseif($set && !preg_match("/".$flag."/",$this->gosaApplicationFlags)){
-            $this->gosaApplicationFlags = preg_replace("/]/",$flag."]",$this->gosaApplicationFlags); 
+            $this->gosaApplicationFlags .= $flag;
           }
         }  
       }
@@ -474,6 +476,7 @@ class application extends plugin
     /* Get application script without header part, to check if we must save the script itself */
     $script = preg_replace('/.*### END HEADER ###/s', '', $this->gotoLogonScript);
 
+    $this->gosaApplicationFlags ="[{$this->gosaApplicationFlags}]";
     plugin::save();
     $this->attrs["gosaApplicationIcon"]= $this->gosaApplicationIcon;
 
