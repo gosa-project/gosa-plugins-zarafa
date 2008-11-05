@@ -2,6 +2,7 @@ package server_server_com;
 use Exporter;
 @ISA = qw(Exporter);
 my @events = (
+    'information_sharing',
     'new_server',
     'confirm_new_server',
     'new_foreign_client',
@@ -29,6 +30,75 @@ sub get_events {
     return \@events;
 }
 
+
+sub information_sharing {
+    my ($msg, $msg_hash, $session_id) = @_ ;
+    my $header = @{$msg_hash->{'header'}}[0];
+    my $source = @{$msg_hash->{'source'}}[0];
+    my $target = @{$msg_hash->{'target'}}[0];
+
+    # Handling of msg tag 'new_user'
+    if (exists $msg_hash->{'new_user'}) {
+        my $new_user_list = $msg_hash->{'new_user'};
+
+        # Sanity check of new_user_list
+        if (ref($new_user_list) eq 'HASH') {
+            &main::daemon_log("$session_id ERROR: 'new_user'-tag in incoming msg has no content!", 1);
+
+        } else {
+            # Add each user to login_users_db
+            foreach my $new_user_info (@$new_user_list) {
+                my ($client, $user) = split(/;/, $new_user_info);
+                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'");
+                my %add_hash = ( table=>$main::login_users_tn, 
+                        primkey=> ['client', 'user'],
+                        client=>$client,
+                        user=>$user,
+                        timestamp=>&get_time,
+                        regserver=>$source,
+                        ); 
+                my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
+                if ($res != 0)  {
+                    &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str", 1);
+                }
+            }
+        }
+    }
+
+    # Handling of msg tag 'user_db'
+    if (exists $msg_hash->{'user_db'}) {
+        my $user_db_list = $msg_hash->{'user_db'};
+
+        # Sanity check of user_db_list
+        if (ref($user_db_list) eq 'HASH') {
+            &main::daemon_log("$session_id ERROR: 'user_db'-tag in incoming msg has no content!", 1);
+
+        } else {
+            # Delete all old login information
+            my $sql = "DELETE FROM $main::login_users_tn WHERE regserver='$source'"; 
+            my $res = $main::login_users_db->exec_statement($sql);
+
+            # Add each user to login_users_db
+            foreach my $user_db_info (@$user_db_list) {
+                my ($client, $user) = split(/;/, $user_db_info);
+                &main::daemon_log("$session_id INFO: server '$source' reports user '$user' is logged in at client '$client'");
+                my %add_hash = ( table=>$main::login_users_tn, 
+                        primkey=> ['client', 'user'],
+                        client=>$client,
+                        user=>$user,
+                        timestamp=>&get_time,
+                        regserver=>$source,
+                        ); 
+                my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
+                if ($res != 0)  {
+                    &main::daemon_log("$session_id ERROR: cannot add entry to known_clients: $error_str", 1);
+                }
+            }
+        }
+    }
+
+    return;
+}
 
 sub foreign_job_updates {
     my ($msg, $msg_hash, $session_id) = @_ ;
