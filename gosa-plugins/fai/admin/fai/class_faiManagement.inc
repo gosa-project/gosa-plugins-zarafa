@@ -904,7 +904,7 @@ class faiManagement extends plugin
                     "new_package"       =>  _("package list"));
 
     if(isset($types[$s_action])){
-      $acl = $this->ui->get_permissions($this->fai_base,"fai/".$type_acl_mapping[$types[$s_action]]);
+      $acl = $this->ui->get_permissions($this->acl_base,"fai/".$type_acl_mapping[$types[$s_action]]);
       if(preg_match("/c/",$acl)){
         $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
         $this->dialog->parent = &$this;
