@@ -238,7 +238,7 @@ sub CURRENTLY_LOGGED_IN {
     }
 
     # Inform all other server which users are logged in at clients registered at local server
-    my $info_sql = "SELECT * FROM $main::login_users_tn";
+    my $info_sql = "SELECT * FROM $main::login_users_tn WHERE regserver='localhost'";
     my $info_res = $main::login_users_db->select_dbentry($info_sql);
     my $info_msg_hash = &create_xml_hash("information_sharing", $main::server_address, "KNOWN_SERVER");
     while (my ($hit_id, $hit) = each(%$info_res)) {
