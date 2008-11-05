@@ -81,7 +81,10 @@ class faiManagement extends plugin
       $this->CopyPasteHandler= new CopyPasteHandler($this->config);
     }
 
-    /* Set default release */
+    /* Set default release 
+       !! If you change the base here you have to update the base in 
+           class_divListFai.inc too, all ACL checks use ($this->config->current['BASE']).
+     */
     $this->fai_base = get_ou("faiBaseRDN").$this->config->current['BASE'];
 
     if(!session::is_set("fai_filter")){

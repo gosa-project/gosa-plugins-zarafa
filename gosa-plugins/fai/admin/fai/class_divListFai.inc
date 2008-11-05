@@ -129,7 +129,7 @@ class divListFai extends MultiSelectWindow
     $add_sep = false;
 
     /* Get complete fai acls, to be able to check if we must show or hide the snapshot abilities */ 
-    $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
+    $acl_all = $ui->has_complete_category_acls($this->config->current['BASE'],$this->module);
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header(false);
@@ -143,7 +143,7 @@ class divListFai extends MultiSelectWindow
     $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
 
-    $acl = $ui->get_permissions($this->parent->fai_base,"fai/faiProfile");
+    $acl = $ui->get_permissions($this->config->current['BASE'],"fai/faiProfile");
     if($this->parent->lock_type == "freeze" && !$this->parent->allow_freeze_object_attach){
       $s.= "...|<input class='center' type='image' src='plugins/fai/images/freeze.png' alt=''>".
         "&nbsp;"._("Freezed")."|\n";
@@ -169,7 +169,7 @@ class divListFai extends MultiSelectWindow
             "Create_package"   , _("PK") , "faiPackage"));
 
       foreach($arr as $ar){
-        $acl = $ui->get_permissions($this->parent->fai_base,"fai/".$ar[4]);
+        $acl = $ui->get_permissions($this->config->current['BASE'],"fai/".$ar[4]);
         if(preg_match("/c/",$acl)){
           $s.= "...|<input class='center' type='image' src='".$ar[0]."' alt=''>".
             "&nbsp;".$ar[1]."|".$ar[2]."|\n";
@@ -269,7 +269,7 @@ class divListFai extends MultiSelectWindow
        /* Add copy & cut icons */
        $ui = get_userinfo();
        $action ="";
-       $acl_all = $ui->has_complete_category_acls($this->parent->fai_base,$this->module);
+       $acl_all = $ui->has_complete_category_acls($this->config->current['BASE'],$this->module);
 
        if(preg_match("/^opsi_/",$type)){
          $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_opsi_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
