@@ -801,6 +801,25 @@ sub trigger_activate_new {
 	my $dhcp_statement= (defined($msg_hash->{'dhcp'}))?@{$msg_hash->{'dhcp'}}[0]:undef;
 	my $jobdb_id= (defined($msg_hash->{'jobdb_id'}))?@{$msg_hash->{'jobdb_id'}}[0]:undef;
 
+    # Sanity check for base
+    if (ref($base) eq "HASH") {
+        # Incoming msg has a xml tag 'base' but no content
+        $base = undef;
+    }
+
+    # In case that the client is sleeping, wake it up
+    my %data = ( 'macaddress'  => $mac );
+    my $wake_msg = &build_msg("trigger_wake", "GOSA", "KNOWN_SERVER", \%data);
+    &main::server_server_com::trigger_wake($msg, $msg_hash, $session_id);
+    my $sql_statement= "SELECT * FROM $main::known_server_tn";
+    my $query_res = $main::known_server_db->select_dbentry( $sql_statement );
+    while( my ($hit_num, $hit) = each %{ $query_res } ) {
+        my $host_name = $hit->{hostname};
+        my $host_key = $hit->{hostkey};
+        $wake_msg =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/g;
+        my $error = &main::send_msg_to_target($wake_msg, $host_name, $host_key, $header, $session_id);
+    }
+
 	my $ldap_handle = &main::get_ldap_handle();
 	my $ldap_entry;
 	my $ogroup_entry;
@@ -877,8 +896,10 @@ sub trigger_activate_new {
 
     } elsif ($ldap_mesg->count == 0) {
       &main::daemon_log("$session_id WARNING: No System with mac address '$mac' was found in base '".$main::ldap_base."'! Re-queuing job.", 4);
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-      $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".&get_time(60)."' WHERE id = $jobdb_id");
+      my $sql_statement = "UPDATE ".$main::job_queue_tn.
+              " SET status='waiting', timestamp = '".(&calc_timestamp(&get_time(), 'plus', 60))."' ".
+              " WHERE id = $jobdb_id";
+      $main::job_db->exec_statement($sql_statement);
       return undef;
     }
 

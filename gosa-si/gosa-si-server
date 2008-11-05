@@ -979,27 +979,76 @@ sub send_msg_to_target {
 
 
 sub update_jobdb_status_for_send_msgs {
-    my ($answer, $error) = @_;
+    my ($session_id, $answer, $error) = @_;
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
         my $jobdb_id = $1;
-            
-        # sending msg faild
+        $answer =~ /<header>(.*)<\/header>/; 
+        my $job_header = $1; 
+        $answer =~ /<target>(.*)<\/target>/; 
+        my $job_target = $1; 
+
+        # sending msg failed
         if( $error ) {
-            if (not $answer =~ /<header>trigger_action_reinstall<\/header>/) {
+
+            # set jobs to done, jobs do not need to deliver their message in any case
+            if (($job_header eq "trigger_action_localboot")
+                    ||($job_header eq "trigger_action_lock")
+                    ||($job_header eq "trigger_action_halt")
+                    ) {
+                my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
+                my $res = $job_db->update_dbentry($sql_statement);
+
+            # reactivate jobs, jobs need to deliver their message
+            } elsif (($job_header eq "trigger_action_activate")
+                    ||($job_header eq "trigger_action_update")
+                    ||($job_header eq "trigger_action_reinstall")
+                    ) {
+                &reactivate_job_with_delay($session_id, $job_target, $job_header, 30 );
+
+            # for all other messages
+            } else {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
                 my $res = $job_db->update_dbentry($sql_statement);
+                &daemon_log("D \n$sql_statement\n$answer", 1);
+
             }
 
         # sending msg was successful
         } else {
-            my $sql_statement = "UPDATE $job_queue_tn ".
-                "SET status='done' ".
-                "WHERE id=$jobdb_id AND status='processed'";
-            my $res = $job_db->update_dbentry($sql_statement);
+            # set jobs localboot, lock, activate, halt, reboot and wake to done
+            # jobs reinstall, update, inst_update do themself setting to done
+            if (($job_header eq "trigger_action_localboot")
+                    ||($job_header eq "trigger_action_lock")
+                    ||($job_header eq "trigger_action_activate")
+                    ||($job_header eq "trigger_action_halt")
+                    ||($job_header eq "trigger_action_reboot")
+                    ||($job_header eq "trigger_action_wake")
+                    ) {
+
+                my $sql_statement = "UPDATE $job_queue_tn ".
+                    "SET status='done' ".
+                    "WHERE id=$jobdb_id AND status='processed'";
+                my $res = $job_db->update_dbentry($sql_statement);
+            }
         }
     }
+}
+
+sub reactivate_job_with_delay {
+    my ($session_id, $target, $header, $delay) = @_ ;
+    # Sometimes the client is still booting or does not wake up, in this case reactivate the job (if it exists) with a delay of n sec
+
+    if (not defined $delay) { $delay = 30 } ;
+    my $delay_timestamp = &calc_timestamp(&get_time(), "plus", $delay);
+
+    my $sql = "UPDATE $job_queue_tn Set timestamp='$delay_timestamp', status='waiting' WHERE (macaddress='$target' AND headertag='$header')";
+    my $res = $job_db->update_dbentry($sql);
+    daemon_log("$session_id INFO: '$header'-job will be reactivated at '$delay_timestamp' ".
+            "cause client '$target' is currently not available", 5);
+    daemon_log("$session_id $sql", 7);
+    return;
 }
 
 
@@ -1473,15 +1522,7 @@ sub process_task {
                     }
                     if( $found_ip_flag == 0) {
                         daemon_log("$session_id WARNING: no host found in known_clients or foreign_clients with mac address '$answer_target'", 3);
-                             
-                        # Sometimes the client is still booting or does not wake up, in this case reactivate the job (if it exists) with a delay of 30 sec
-                        my $delay_timestamp = &calc_timestamp(&get_time(), "plus", 30);
-                        my $sql = "UPDATE $job_queue_tn Set timestamp='$delay_timestamp', status='waiting' WHERE (macaddress='$answer_target' AND headertag='$answer_header')";
-                        my $res = $job_db->update_dbentry($sql);
-                        daemon_log("$session_id INFO: '$answer_header'-job will be reactivated at '$delay_timestamp' ".
-                                "cause client '$answer_target' is currently not available", 5);
-                        daemon_log("$session_id $sql", 7);
-
+                        &reactivate_job_with_delay($session_id, $answer_target, $answer_header, 30);
                     }
 
                 # Answer is for one specific host   
@@ -1776,7 +1817,9 @@ sub watch_for_new_jobs {
 
 					# update status in job queue to ...
                     # ... 'processing', for jobs: 'reinstall', 'update'
-                    if (($header =~ /gosa_trigger_action_reinstall/) || ($header =~ /gosa_trigger_action_update/)) {
+                    if (($header =~ /gosa_trigger_action_reinstall/) 
+                            || ($header =~ /gosa_trigger_activate_new/)
+                            || ($header =~ /gosa_trigger_action_update/)) {
                         my $sql_statement = "UPDATE $job_queue_tn SET status='processing' WHERE id=$jobdb_id";
                         my $dbres = $job_db->update_dbentry($sql_statement);
                     }
