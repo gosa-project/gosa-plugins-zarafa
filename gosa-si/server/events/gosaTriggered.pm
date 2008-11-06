@@ -144,7 +144,7 @@ sub send_user_msg {
     if (not $res == 0) {
         &main::daemon_log("$session_id ERROR: gosaTriggered.pm: cannot add message to message_db: $res", 1);
     } else {
-        &main::daemon_log("$session_id INFO: gosaTriggered.pm: message with subject '$subject' successfully added to message_db", 5);
+        &main::daemon_log("$session_id INFO: gosaTriggered.pm: message with subject '".&decode_base64($subject)."' successfully added to message_db", 5);
     }
 
     return;

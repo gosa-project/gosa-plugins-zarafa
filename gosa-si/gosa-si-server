@@ -1895,7 +1895,7 @@ sub watch_for_new_messages {
 		my %receiver_h; 
 		foreach my $receiver (@message_to_l) {
 			if ($receiver =~ /^u_([\s\S]*)$/) {
-				$receiver_h{$receiver} = 0;
+				$receiver_h{$1} = 0;
 			} elsif ($receiver =~ /^g_([\s\S]*)$/) {
 				my $group_name = $1;
 				# fetch all group members from ldap and add them to receiver hash
