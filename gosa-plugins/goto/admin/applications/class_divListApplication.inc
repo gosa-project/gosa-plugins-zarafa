@@ -94,16 +94,22 @@ class divListApplication extends MultiSelectWindow
 
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions($this->selectedBase,"application/application");
-    $acl_all  = $ui->has_complete_category_acls($this->parent->app_base,"application");
+
+    if($this->parent->IsReleaseManagementActivated()){
+      $acl      = $ui->get_permissions($this->parent->acl_base,"application/application");
+      $acl_all  = $ui->has_complete_category_acls($this->parent->acl_base,"application");
+    }else{
+      $acl      = $ui->get_permissions($this->selectedBase,"application/application");
+      $acl_all  = $ui->has_complete_category_acls($this->parent->app_base,"application");
+    }
 
     /* Create Layers menu */
     $s  = ".|"._("Actions")."|\n";
 
     /* Append create options */
+    $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Create")."|\n";
     if(preg_match("/c/",$acl)) {
-      $s .= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Create")."|\n";
       $s.= "...|<input class='center' type='image' src='images/list_new_app' alt=''>".
         "&nbsp;"._("Application")."|appl_new|\n";
     }
