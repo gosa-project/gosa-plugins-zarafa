@@ -166,11 +166,12 @@ class workstartup extends plugin
     #} else {
     #  $this->bootmode= "T";
     #}
-    if (preg_match("/ o /", $this->gotoKernelParameters)){
-      $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
-    } else {
-      $this->customParameters= "";
-    }
+    #if (preg_match("/ o /", $this->gotoKernelParameters)){
+    #  $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
+    #} else {
+    #  $this->customParameters= "";
+    #}
+    $this->customParameters= preg_replace ("/^o /", "", $this->gotoKernelParameters);
 
     /* Prepare Shares */
     if((isset($this->attrs['gotoShare']))&&(is_array($this->attrs['gotoShare']))){
