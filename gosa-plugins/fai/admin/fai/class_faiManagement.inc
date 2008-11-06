@@ -918,7 +918,7 @@ class faiManagement extends plugin
     if($s_action == "new_profile"){
       $this->dn = "new" ;
 
-      $acl = $this->ui->get_permissions($this->fai_base,"fai/faiProfile");
+      $acl = $this->ui->get_permissions($this->acl_base,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
         $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
         $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");

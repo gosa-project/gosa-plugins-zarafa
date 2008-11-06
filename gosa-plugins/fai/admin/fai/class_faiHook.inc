@@ -102,7 +102,7 @@ class faiHook extends plugin
   {
     if($dn == "new" || $dn == ""){
       if($this->dn == "new"){
-        $dn = session::get('CurrentMainBase');
+        $dn= $this->parent->parent->acl_base;
       }else{
         $dn = $this->dn;
       }
