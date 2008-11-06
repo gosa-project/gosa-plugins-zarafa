@@ -7,7 +7,9 @@ class workstartup extends plugin
   var $gotoLdap_inherit   = FALSE;
 
   /* Generic terminal attributes */
-  var $bootmode             = "G";
+	# This is disabled as long there is no possiblilty to set these parameters
+  #var $bootmode             = "G";
+  var $bootmode             = "";
   var $gotoBootKernel       = "default-inherited";
   var $gotoKernelParameters = "";
   var $gotoLdapServer       = "default-inherited";
@@ -155,15 +157,15 @@ class workstartup extends plugin
     }
 
     /* Parse Kernel Parameters to decide what boot mode is enabled */
-    if (preg_match("/ splash=silent/", $this->gotoKernelParameters)){
-      $this->bootmode= "G";
-    } elseif (preg_match("/ debug/", $this->gotoKernelParameters)){
-      $this->bootmode= "D";
-    } elseif ($this->gotoKernelParameters == "") {
-      $this->bootmode= "G";
-    } else {
-      $this->bootmode= "T";
-    }
+    #if (preg_match("/ splash/", $this->gotoKernelParameters)){
+    #  $this->bootmode= "G";
+    #} elseif (preg_match("/ debug/", $this->gotoKernelParameters)){
+    #  $this->bootmode= "D";
+    #} elseif ($this->gotoKernelParameters == "") {
+    #  $this->bootmode= "G";
+    #} else {
+    #  $this->bootmode= "T";
+    #}
     if (preg_match("/ o /", $this->gotoKernelParameters)){
       $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
     } else {
@@ -808,19 +810,20 @@ class workstartup extends plugin
     }
 
     /* Add semi automatic values */
-    // FIXME: LDAP Server may not be set here...
-    $this->gotoKernelParameters= "ldap=".base64_encode($this->gotoLdapServer);
+    $this->gotoKernelParameters= "";
 
     switch ($this->bootmode){
       case "D":
         $this->gotoKernelParameters.= " debug";
       break;
       case "G":
-        $this->gotoKernelParameters.= " splash=silent";
+        $this->gotoKernelParameters.= " splash quiet";
       break;
     }
     if ($this->customParameters != ""){
-      $this->gotoKernelParameters.= " o ".$this->customParameters;
+			# This should be enabled after boot-mode is available again
+      #$this->gotoKernelParameters.= " o ".$this->customParameters;
+      $this->gotoKernelParameters= $this->customParameters;
     }
 
     plugin::save();
