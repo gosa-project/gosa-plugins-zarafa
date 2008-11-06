@@ -50,6 +50,7 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use MIME::Base64;
+use Data::Random qw(:all);
 
 BEGIN {}
 
@@ -125,17 +126,23 @@ sub usr_msg {
     my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
 
-    system( "/usr/bin/goto-notify user-message '$to' '$subject' '$message'" );
+    my $rand_file = "/tmp/goto_notify_".join("",rand_chars(set=>'alphanumeric', min=>16, max=>16));
+    open(DATEI, ">$rand_file");
+    print DATEI "source:$source\ntarget:$target\nusr:$to\nsubject:".@{$msg_hash->{'subject'}}[0]."\nmessage:".@{$msg_hash->{'message'}}[0]."\n";
+    close DATEI;
+
+    my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' &" );
 
     # give gosa-si-server feedback, that msg was received
-    $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
-    my $out_hash = &create_xml_hash("confirm_usr_msg", $target, $source);
-    &add_content2xml_hash($out_hash, 'usr', $to);
-    &add_content2xml_hash($out_hash, 'subject', @{$msg_hash->{'subject'}}[0]);
-    &add_content2xml_hash($out_hash, 'message', @{$msg_hash->{'message'}}[0]);
+#    $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
+#    my $out_hash = &create_xml_hash("confirm_usr_msg", $target, $source);
+#    &add_content2xml_hash($out_hash, 'usr', $to);
+#    &add_content2xml_hash($out_hash, 'subject', @{$msg_hash->{'subject'}}[0]);
+#    &add_content2xml_hash($out_hash, 'message', @{$msg_hash->{'message'}}[0]);
 
 
-    return &create_xml_string($out_hash);
+#    return &create_xml_string($out_hash);
+    return
 }
 
 
