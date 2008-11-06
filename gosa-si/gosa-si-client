@@ -824,7 +824,7 @@ sub trigger_seen_messages {
             my %data = ('usr'=>$usr, 'subject'=>$subject, 'message'=>$message);
             my $confirm_msg = &build_msg("confirm_usr_msg", $target, $source, \%data);
             my $send_error = &send_msg_to_target($confirm_msg, $server_address, $server_key);
-            
+
             # Delete file
             if (not $send_error) {
                 system("rm $goto_dir/$goto_file");

@@ -133,15 +133,6 @@ sub usr_msg {
 
     my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' &" );
 
-    # give gosa-si-server feedback, that msg was received
-#    $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
-#    my $out_hash = &create_xml_hash("confirm_usr_msg", $target, $source);
-#    &add_content2xml_hash($out_hash, 'usr', $to);
-#    &add_content2xml_hash($out_hash, 'subject', @{$msg_hash->{'subject'}}[0]);
-#    &add_content2xml_hash($out_hash, 'message', @{$msg_hash->{'message'}}[0]);
-
-
-#    return &create_xml_string($out_hash);
     return
 }
 
