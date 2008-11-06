@@ -427,7 +427,8 @@ sub opsi_get_netboot_products {
         id  => 1,
     };
 
-    #&main::daemon_log("$session_id DEBUG: send callobj to opsi_client: ".&opsi_callobj2string($callobj), 7);
+    &main::daemon_log("$session_id DEBUG: send callobj to opsi_client: ".&opsi_callobj2string($callobj), 7);
+    &main::daemon_log("$session_id DEBUG: opsi_url $main::opsi_url", 7);
     &main::daemon_log("$session_id DEBUG: waiting for answer from opsi_client!", 7);
     my $res = $main::opsi_client->call($main::opsi_url, $callobj);
     &main::daemon_log("$session_id DEBUG: get answer from opsi_client with number of entries: ".length(@$res), 7);
