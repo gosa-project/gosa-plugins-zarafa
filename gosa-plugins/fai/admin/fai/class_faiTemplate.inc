@@ -185,7 +185,7 @@ class faiTemplate extends plugin
 
     /* Add new sub object */
     if(isset($_POST['AddSubObject']) && !preg_match("/freeze/",$this->FAIstate)){
-      $acl_dn = "cn=dummy,".$this->acl_base_for_current_object($this->dn);
+      $acl_dn = $this->acl_base_for_current_object($this->dn);
       $acl    = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
 
       if(preg_match("/c/",$acl)){
@@ -344,7 +344,7 @@ class faiTemplate extends plugin
   {
     if($dn == "new"){
       if($this->dn == "new"){
-        $dn = session::get('CurrentMainBase');
+        $dn= $this->parent->parent->acl_base;
       }else{
         $dn = $this->dn;
       }

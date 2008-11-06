@@ -110,7 +110,7 @@ class faiScript extends plugin
   {
     if($dn == "new"){
       if($this->dn == "new"){
-        $dn= "cn=dummy,".session::get('CurrentMainBase');
+        $dn= $this->parent->parent->acl_base;
       }else{
         $dn = $this->dn;
       }

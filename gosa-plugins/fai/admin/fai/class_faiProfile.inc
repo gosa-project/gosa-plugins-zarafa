@@ -120,7 +120,7 @@ class faiProfile extends plugin
   {
     if($dn == "new"){
       if($this->dn == "new"){
-        $dn = session::get('CurrentMainBase');
+        $dn= $this->parent->parent->acl_base;
       }else{
         $dn = $this->dn;
       }

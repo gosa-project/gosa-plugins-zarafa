@@ -916,14 +916,12 @@ class faiManagement extends plugin
     /* New Profile */
     if($s_action == "new_profile"){
       $this->dn = "new" ;
-
-      $acl = $this->ui->get_permissions($this->fai_base,"fai/faiProfile");
+      $acl = $this->ui->get_permissions($this->acl_base,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
         $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
         $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->dialog->set_acl_base($this->base);
+        $this->dialog->set_acl_base($this->acl_base);
         $this->dialog->parent = &$this;
-
         $this->is_dialog = false;
       }else{
         msg_dialog::display(_("Permission error"), sprintf(_("You have no permission to create a new %s!"), _("profile")), ERROR_DIALOG);
@@ -948,7 +946,7 @@ class faiManagement extends plugin
 
         if(class_exists($a_setup[0])){
           $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-          $this->dialog->set_acl_base($this->base);
+          $this->dialog->set_acl_base($this->acl_base);
           $this->dialog->by_object[$a_setup[1]]->cn = $name;
           $this->dialog->parent = &$this;
           $this->is_dialog = true;
