@@ -62,22 +62,29 @@ class opsi extends gosaSupportDaemon
 
     /* Detect the target opsi host 
      */
-    $opsi_hosts = $this->get_hosts_with_module("opsi_com");
+    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+    if(!empty($tmp) && class_available("faiManagement")){
+      $opsi_hosts = $this->get_hosts_with_module("opsi_com");
 
-    /* Just use the first result of the opsi hosts 
-     */
-    if(count($opsi_hosts) == 1 && isset($opsi_hosts[0])){
-      $this->target = $opsi_hosts[0];
-    }elseif(count($opsi_hosts) > 1){
-      $this->target = $opsi_hosts[0];
-      msg_dialog::display(_("Opsi"),sprintf(_("More than one Opsi server were found, using the first result '%s'."),$this->target));
+      /* Just use the first result of the opsi hosts 
+       */
+      if(count($opsi_hosts) == 1 && isset($opsi_hosts[0])){
+        $this->target = $opsi_hosts[0];
+      }elseif(count($opsi_hosts) > 1){
+        $this->target = $opsi_hosts[0];
+        msg_dialog::display(_("Opsi"),sprintf(_("More than one Opsi server were found, using the first result '%s'."),$this->target));
+      }
     }
   }
 
   
   public function enabled()
   {
-    return(!empty($this->target));
+    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+    if(!empty($tmp) && class_available("faiManagement") && !empty($this->target)){
+      return(TRUE);
+    }   
+    return(FALSE);
   }
 
 
