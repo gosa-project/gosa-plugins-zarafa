@@ -9,10 +9,10 @@ $zahl= 1;
 for($count = 1; $count <= $zahl; $count++)
 {
 
-  #$sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
-  #$sock->setEncryptionKey("secret-gosa-password");
-  $sock = new Socket_Client("10.89.1.42","20081",TRUE,5);
+  $sock = new Socket_Client("127.0.0.1","20081",TRUE,5);
   $sock->setEncryptionKey("secret-gosa-password");
+  #$sock = new Socket_Client("10.89.1.42","20081",TRUE,5);
+  #$sock->setEncryptionKey("secret-gosa-password");
 
   if($sock->connected()){
 
@@ -84,7 +84,7 @@ for($count = 1; $count <= $zahl; $count++)
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>10.89.1.30:20081</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from> <user>rettenbe</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>";
     
-    $data = "<xml> <header>gosa_set_last_system</header> <target>10.89.1.31:20082</target> <source>GOSA</source> <mac_address>00:01:6c:9d:b9:fa</mac_address> <last_system>1.2.3.4</last_system> <last_system_login>20081212000000</last_system_login> </xml>";
+    #$data = "<xml> <header>gosa_set_last_system</header> <target>10.89.1.31:20082</target> <source>GOSA</source> <mac_address>00:01:6c:9d:b9:fa</mac_address> <last_system>1.2.3.4</last_system> <last_system_login>20081212000000</last_system_login> </xml>";
 
     ##################
     # recreate fai dbs
@@ -124,7 +124,7 @@ for($count = 1; $count <= $zahl; $count++)
     # Opsi testing
 
     # Get all netboot products
-    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    $data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Get netboot product for specific host
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
@@ -213,8 +213,6 @@ for($count = 1; $count <= $zahl; $count++)
     ##############################
     # SYSLOG reload
     #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
-
-    $data ="<xml><header>gosa_krb5_get_policy</header><policy>6chars</policy><source>GOSA</source><target>00:01:6c:9d:aa:16</   target></xml>";
 
     $sock->write($data);
     $answer = "nothing";
