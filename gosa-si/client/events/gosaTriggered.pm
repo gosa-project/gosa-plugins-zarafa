@@ -50,7 +50,7 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use MIME::Base64;
-use Data::Random qw(:all);
+use File::Temp qw/ tempfile/;
 
 BEGIN {}
 
@@ -126,10 +126,9 @@ sub usr_msg {
     my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
 
-    my $rand_file = "/tmp/goto_notify_".join("",rand_chars(set=>'alphanumeric', min=>16, max=>16));
-    open(DATEI, ">$rand_file");
-    print DATEI "source:$source\ntarget:$target\nusr:$to\nsubject:".@{$msg_hash->{'subject'}}[0]."\nmessage:".@{$msg_hash->{'message'}}[0]."\n";
-    close DATEI;
+    my ($rand_fh, $rand_file) = tempfile( SUFFIX => '.goto_notify');
+    print $rand_fh "source:$source\ntarget:$target\nusr:$to\nsubject:".@{$msg_hash->{'subject'}}[0]."\nmessage:".@{$msg_hash->{'message'}}[0]."\n";
+    close $rand_fh;
 
     my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' &" );
 
