@@ -1124,7 +1124,10 @@ class workstartup extends plugin
 
       /* Check if the selected release is available */
       if($this->FAIdebianMirror != "inherited" && !isset($this->cache['SERVERS'][$this->FAIdebianMirror][$this->FAIrelease])){
-        trigger_error("There was a problem with the selected FAIrelease. This release ('".$this->FAIrelease."') is not available");
+
+        if($this->FAIrelease != ""){
+          trigger_error("There was a problem with the selected FAIrelease. This release ('".$this->FAIrelease."') is not available");
+        }
         $this->FAIrelease = key($this->cache['SERVERS'][$this->FAIdebianMirror]);
       }
     }
