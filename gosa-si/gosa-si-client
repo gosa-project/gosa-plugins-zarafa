@@ -889,30 +889,37 @@ sub save_fai_log {
     my ($fai_log_dir) = @_ ;
     my $FAI_DIR;
 
-    opendir($FAI_DIR, $fai_log_dir);
-    if (not defined $FAI_DIR) {  
-        daemon_log("ERROR: can not open directory $fai_log_dir: $!", 1);
+    my $log_dir = File::Spec->catdir($fai_log_dir, "localhost/last");
+
+    if (not -r -d $log_dir) { 
+        daemon_log("ERROR: cannot open directory $log_dir", 1);
         return; 
     }
 
+    opendir($FAI_DIR, "$log_dir");
     my @log_files = readdir($FAI_DIR);
     closedir($FAI_DIR);   
-    my @log_list;
 
+    my @log_list;
     foreach my $log_file (@log_files) {
         if( $log_file eq "." || $log_file eq ".." ) { next; }
+
         my $log = "log_file:$log_file:";
-        $log_file = File::Spec->catfile( $fai_log_dir, $log_file );
-        open(my $FILE, "<$log_file"); 
-        if (not defined $FILE ) {
-            daemon_log("ERROR: can not open '$log_file': $!", 1);
+        $log_file = File::Spec->catfile( $log_dir, $log_file );
+
+        if (not -r -f $log_file) {
+            daemon_log("ERROR: cannot read $log_file", 1);
             next;
         }
-        my @lines = <$FILE>;
-        my $log_string = join("", @lines); 
-        $log .= &encode_base64($log_string);
-        push(@log_list, $log); 
-        close ($FILE);
+
+        if (-r -f $log_file) {
+            open(FILE, "<$log_file");
+            my @lines = <FILE> ;
+            close (FILE);
+            my $log_string = join("", @lines); 
+            $log .= &encode_base64($log_string);
+            push(@log_list, $log); 
+        }
     }
 
     my $all_log_string = join("\n", @log_list); 
