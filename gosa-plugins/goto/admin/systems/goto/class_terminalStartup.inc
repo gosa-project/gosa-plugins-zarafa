@@ -352,11 +352,6 @@ class termstartup extends plugin
       }else{
         $this->gotoLdap_inherit = FALSE;
       }
-
-      /* Save kernel parameters */
-      if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["gotoKernelParameters"])){
-        $this->gotoKernelParameters= $_POST["gotoKernelParameters"];
-      }
     }
   }
 

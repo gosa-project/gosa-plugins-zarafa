@@ -31,7 +31,6 @@ class workstartup extends plugin
   var $gotoAvailableShares= array();// Available Shares for this account
 
   /* Helper */
-  var $customParameters   = "";
   var $orig_dn            = "";
   var $ignore_account     = TRUE;
  
@@ -155,23 +154,6 @@ class workstartup extends plugin
       sort ($this->$val);
       $this->$val= array_unique($this->$val);
     }
-
-    /* Parse Kernel Parameters to decide what boot mode is enabled */
-    #if (preg_match("/ splash/", $this->gotoKernelParameters)){
-    #  $this->bootmode= "G";
-    #} elseif (preg_match("/ debug/", $this->gotoKernelParameters)){
-    #  $this->bootmode= "D";
-    #} elseif ($this->gotoKernelParameters == "") {
-    #  $this->bootmode= "G";
-    #} else {
-    #  $this->bootmode= "T";
-    #}
-    #if (preg_match("/ o /", $this->gotoKernelParameters)){
-    #  $this->customParameters= preg_replace ("/^.* o /", "", $this->gotoKernelParameters);
-    #} else {
-    #  $this->customParameters= "";
-    #}
-    $this->customParameters= preg_replace ("/^o /", "", $this->gotoKernelParameters);
 
     /* Prepare Shares */
     if((isset($this->attrs['gotoShare']))&&(is_array($this->attrs['gotoShare']))){
@@ -583,7 +565,7 @@ class workstartup extends plugin
     }
 
     /* Values */
-    foreach(array("gotoBootKernel", "customParameters", "gotoShare","FAIclasses","FAIclass","FAIdebianMirror","FAIrelease") as $val){
+    foreach(array("gotoBootKernel","gotoShare","FAIclasses","FAIclass","FAIdebianMirror","FAIrelease") as $val){
       $smarty->assign($val, $this->$val);
     }
 
@@ -709,6 +691,7 @@ class workstartup extends plugin
     }
 
     /* Show main page */
+    $smarty->assign("gotoKernelParameters",$this->gotoKernelParameters);
     return($smarty->fetch (get_template_path('workstationStartup.tpl', TRUE,dirname(__FILE__))));
   }
 
@@ -743,11 +726,6 @@ class workstartup extends plugin
       /* Save group radio buttons */
       if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
         $this->bootmode= $_POST["bootmode"];
-      }
-
-      /* Save kernel parameters */
-      if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
-        $this->customParameters= $_POST["customParameters"];
       }
     }
   }
@@ -808,23 +786,6 @@ class workstartup extends plugin
           break;
         }
       }
-    }
-
-    /* Add semi automatic values */
-    $this->gotoKernelParameters= "";
-
-    switch ($this->bootmode){
-      case "D":
-        $this->gotoKernelParameters.= " debug";
-      break;
-      case "G":
-        $this->gotoKernelParameters.= " splash quiet";
-      break;
-    }
-    if ($this->customParameters != ""){
-			# This should be enabled after boot-mode is available again
-      #$this->gotoKernelParameters.= " o ".$this->customParameters;
-      $this->gotoKernelParameters= $this->customParameters;
     }
 
     plugin::save();
@@ -1014,7 +975,7 @@ class workstartup extends plugin
     plugin::PrepareForCopyPaste($source);    
     $source_o = new workstartup ($this->config, $source['dn']);
     foreach(array("FAIclass","gotoModules", "gotoAutoFs", "gotoFilesystem",
-          "gotoKernelParameters","gotoShares","customParameters") as $attr){
+          "gotoKernelParameters","gotoShares") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }
