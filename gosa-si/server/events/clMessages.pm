@@ -75,7 +75,10 @@ sub save_fai_log {
     my $all_logs = @{$msg_hash->{$header}}[0];
 
     # if there is nothing to log
-    if( ref($all_logs) eq "HASH" ) { return; }
+    if( ref($all_logs) eq "HASH" ) { 
+        &main::daemon_log("$session_id INFO: There is nothing to log!", 5);
+        return; 
+    }
         
     my $client_fai_log_dir = $main::client_fai_log_dir;
     if (not -d $client_fai_log_dir) {
