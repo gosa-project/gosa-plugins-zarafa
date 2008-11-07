@@ -40,7 +40,7 @@ if ($remove_lock){
   if (session::is_set('objectinfo')){
     $display= print_header(get_template_path($MimeTypeManagement->plIcon), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(session::get('objectinfo')));
   } else {
-    $display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
+    $display= print_header(get_template_path($MimeTypeManagement->plIcon), _("Mimetype management"));
   }
 
   /* Reset requested? */

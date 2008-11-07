@@ -34,6 +34,7 @@ class mimetypeManagement extends plugin
   var $start_pasting_copied_objects   = FALSE;
   var $enableReleaseManagement        = false;
 
+  var $acl_base     = "";
   var $mime_base    = "";
   var $mime_release = "";
 
@@ -76,6 +77,7 @@ class mimetypeManagement extends plugin
     /* Set default release */
     if(!$this->IsReleaseManagementActivated()){
       $this->mime_base = get_ou("mimetypeRDN").$this->config->current['BASE'];
+      $this->acl_base      = $this->config->current['BASE'];
       if(!session::is_set("mime_filter")){
 
         /* Set intial release */
@@ -89,6 +91,7 @@ class mimetypeManagement extends plugin
       $this->mime_base = $mime_filter['mime_base'];
     }else{
       $this->mime_base = get_ou("mimetypeRDN").$this->config->current['BASE'];
+      $this->acl_base = &$this->DivListMimeTypes->selectedBase;
 
       /* Set intial release */
       $rel = $config->search("faiManagement","DEFAULTFAIRELEASE",array("menu"));
@@ -234,7 +237,7 @@ class mimetypeManagement extends plugin
 
     /* New mime type? */
     $ui = get_userinfo();
-    $acl = $ui->get_permissions($this->mime_base,"mimetypes/mimetype");
+    $acl = $ui->get_permissions($this->acl_base,"mimetypes/mimetype");
     if (($s_action=="new") && preg_match("/c/",$acl)){
 
       /* By default we set 'dn' to 'new', all relevant plugins will
@@ -244,7 +247,7 @@ class mimetypeManagement extends plugin
       /* Create new usertab object */
       $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
       $this->mimetabs->parent = &$this;
-      $this->mimetabs->set_acl_base($this->mime_base);
+      $this->mimetabs->set_acl_base($this->acl_base);
     }   
 
 

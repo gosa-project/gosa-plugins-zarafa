@@ -98,8 +98,8 @@ class divListMimeTypes extends MultiSelectWindow
 
     /* Get acls */
     $ui       = get_userinfo();
-    $acl      = $ui->get_permissions($this->parent->mime_base,"mimetypes/mimetype");
-    $acl_all  = $ui->has_complete_category_acls($this->parent->mime_base,"mimetypes") ;
+    $acl      = $ui->get_permissions($this->parent->acl_base,"mimetypes/mimetype");
+    $acl_all  = $ui->has_complete_category_acls($this->parent->acl_base,"mimetypes") ;
 
 
     /* If this is true we add an additional seperator. Just look a few lines below */  
