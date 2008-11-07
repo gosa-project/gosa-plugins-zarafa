@@ -313,7 +313,11 @@ class divListFai extends MultiSelectWindow
 
         $display = "<div style='overflow:hidden; height:1em;'>".$display."</div>";
 
-       /* Create each field */
+        /* Some objects are non ldap objects which do not have a dn.
+         */
+        if(!isset($value['dn'])) $value['dn'] = "";
+
+        /* Create each field */
        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
            "attach" => "style='width:20px;'");
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
