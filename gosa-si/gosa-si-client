@@ -83,8 +83,11 @@ $gosa_si_client_fifo = "/var/run/gosa-si-client.socket";
 my $delay_set_time = 10;
 our $prg= basename($0);
 
-# all x seconds the client reports logged_in users to gosa-si-server
+# all n seconds the client reports logged_in users to gosa-si-server
 my $trigger_logged_in_users_report_delay = 600;
+
+# all n seconds the client reports messages seen by user
+my $trigger_seen_messages_delay = 30;
 
 # directory where all log files from installation are stored
 my $fai_log_dir = "/var/log/fai"; 
@@ -551,14 +554,15 @@ sub register_at_gosa_si_server {
       		# Check if our ip is resolvable - if not: don't try to register
       		my $ip= &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
       		my $dnsname= gethostbyaddr(inet_aton($ip), AF_INET);
-      		if(!defined($dnsname)) {
-			if( defined($client_force_hostname) && $client_force_hostname eq "true") {
-				$dnsname = `hostname`;
-			} else {
-	        		&write_to_file("goto-error-dns:$ip", $fai_logpath);
-        			exit(1);
-			}
-      		}
+            if(!defined($dnsname)) {
+                if( defined($client_force_hostname) && $client_force_hostname eq "true") {
+                    $dnsname = `hostname`;
+                } else {
+                    &write_to_file("goto-error-dns:$ip", $fai_logpath);
+                    &main::daemon_log("ERROR: ip is not resolvable, no registration possible. Write 'goto-error-dns:$ip' to $fai_logpath", 1);
+                    exit(1);
+                }
+            }
 
       		# create registration msg
 			my $local_ip = &get_local_ip_for_remote_ip(sprintf("%s", $server =~ /^([0-9\.]*?):.*$/));
@@ -772,6 +776,68 @@ sub trigger_logged_in_users_report {
 }
 
 
+sub trigger_seen_messages {
+    my ($kernel) = $_[KERNEL] ;
+
+    # Select all files under /tmp with prefix 'goto_notify'
+    my $goto_dir = "/tmp";
+    opendir(DIR, $goto_dir);
+    my @goto_files = grep { /^goto_notify_/ && -f "$goto_dir/$_" } readdir(DIR);
+    closedir DIR;
+
+    # Check if file has 'seen' tag
+    foreach my $goto_file (@goto_files) {
+        open(FILE, "$goto_dir/$goto_file");
+        my @lines = <FILE>;
+        close FILE;
+
+        my $source;
+        my $target;
+        my $usr;
+        my $subject;
+        my $message;
+        my $seen = 0;
+        chomp(@lines);
+        foreach my $line (@lines) {
+            if ($line =~ /^source:([\S\s]*)$/) {
+                $source = $1
+            }
+            if ($line =~ /^target:([\S\s]*)$/) {
+                $target = $1;
+            }
+            if ($line =~ /^usr:([\S\s]*)$/) {
+                $usr = $1;
+            }
+            if ($line =~ /^subject:([\S\s]*)$/) {
+                $subject = $1;
+            }
+            if ($line =~ /^message:([\S\s]*)$/) {
+                $message = $1;
+            }
+            if ($line =~ /^seen$/) {
+                $seen++;
+            }
+        }
+
+        # Send 'confirm_usr_msg' back to msg-hosting server
+        if ($seen) {
+            my %data = ('usr'=>$usr, 'subject'=>$subject, 'message'=>$message);
+            my $confirm_msg = &build_msg("confirm_usr_msg", $target, $source, \%data);
+            my $send_error = &send_msg_to_target($confirm_msg, $server_address, $server_key);
+
+            # Delete file
+            if (not $send_error) {
+                system("rm $goto_dir/$goto_file");
+            }
+        }
+    }
+
+    $kernel->delay_set('trigger_seen_messages', $trigger_seen_messages_delay);
+
+    return;
+}
+
+
 sub generic_file_error {
     my ( $heap, $operation, $errno, $error_string, $wheel_id ) =
       @_[ HEAP, ARG0, ARG1, ARG2, ARG3 ];
@@ -805,6 +871,8 @@ sub fifo_got_record {
 
     my $clmsg_hash = &create_xml_hash("CLMSG_$header", $client_address, $server_address, $content);
     &add_content2xml_hash($clmsg_hash, "macaddress", $client_mac_address);
+    my $utc_ts = &main::get_utc_time(); 
+    &add_content2xml_hash($clmsg_hash, "timestamp", $utc_ts);
     my $clmsg = &create_xml_string($clmsg_hash);
     &send_msg_to_target($clmsg, $server_address, $server_key, "CLMSG_$header");
 
@@ -890,6 +958,7 @@ sub _start {
         $heap->{watchers}->{ $watcher->ID } = $watcher;
     }
     $kernel->yield('trigger_logged_in_users_report'); 
+    $kernel->yield('trigger_seen_messages');
 }
 
 
@@ -1163,6 +1232,7 @@ POE::Session->create(
         # trigger periodical tasks
         trigger_new_key => \&trigger_new_key,
         trigger_logged_in_users_report => \&trigger_logged_in_users_report,
+        trigger_seen_messages => \&trigger_seen_messages,
         
         # handle records from each defined file differently
         fifo_record => \&fifo_got_record,

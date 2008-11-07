@@ -172,7 +172,7 @@ my @foreign_clients_col_names = ("hostname", "macaddress", "regserver", "timesta
 our $login_users_db;
 our $login_users_tn = "login_users";
 my $login_users_file_name;
-my @login_users_col_names = ("client", "user", "timestamp");
+my @login_users_col_names = ("client", "user", "timestamp", "regserver");
 
 # holds all fai server, the debian release and tag
 our $fai_server_db;

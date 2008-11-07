@@ -117,11 +117,13 @@ sub LOGIN {
     my $source = @{$msg_hash->{'source'}}[0];
     my $login = @{$msg_hash->{$header}}[0];
 
+    # Add user to login_users_db 
     my %add_hash = ( table=>$main::login_users_tn, 
         primkey=> ['client', 'user'],
         client=>$source,
         user=>$login,
         timestamp=>&get_time,
+        regserver=>'localhost',
         ); 
     my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
     if ($res != 0)  {
@@ -129,7 +131,11 @@ sub LOGIN {
         return;
     }
 
-    return;   
+    # Share login information with all other si-server 
+    my %data = ( 'new_user'  => "$source;$login" ); 
+    my $info_msg = &build_msg("information_sharing", $main::server_address, "KNOWN_SERVER", \%data); 
+
+    return ($info_msg);  
 }
 
 
@@ -187,6 +193,7 @@ sub CURRENTLY_LOGGED_IN {
                 client=>$source,
                 user=>$user,
                 timestamp=>&get_time,
+                regserver=>'localhost',
                 ); 
         my ($res, $error_str) = $main::login_users_db->add_dbentry( \%add_hash );
         if ($res != 0)  {
@@ -222,7 +229,16 @@ sub CURRENTLY_LOGGED_IN {
         &main::daemon_log("$session_id INFO: delete user '".$hit->{'user'}."' at client '".$hit->{'client'}."' from login_user_db", 5); 
     }
 
-    return;
+    # Inform all other server which users are logged in at clients registered at local server
+    my $info_sql = "SELECT * FROM $main::login_users_tn"; 
+    my $info_res = $main::login_users_db->select_dbentry($info_sql); 
+    my $info_msg_hash = &create_xml_hash("information_sharing", $main::server_address, "KNOWN_SERVER"); 
+    while (my ($hit_id, $hit) = each(%$info_res)) { 
+        &add_content2xml_hash($info_msg_hash, 'user_db', $hit->{'client'}.";".$hit->{'user'}); 
+    } 
+    my $info_msg = &create_xml_string($info_msg_hash); 
+
+    return ($info_msg);   
 }
 
 

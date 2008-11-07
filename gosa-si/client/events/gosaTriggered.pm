@@ -41,6 +41,7 @@ my @events = (
     "trigger_action_reinstall",
     "trigger_action_update",
     "trigger_action_instant_update",
+    "trigger_goto_settings_reload",
     );
 @EXPORT = @events;
 
@@ -49,6 +50,7 @@ use warnings;
 use GOSA::GosaSupportDaemon;
 use Data::Dumper;
 use MIME::Base64;
+use Data::Random qw(:all);
 
 BEGIN {}
 
@@ -124,17 +126,14 @@ sub usr_msg {
     my $subject = &decode_base64(@{$msg_hash->{'subject'}}[0]);
     my $message = &decode_base64(@{$msg_hash->{'message'}}[0]);
 
-    system( "/usr/bin/goto-notify user-message '$to' '$subject' '$message'" );
+    my $rand_file = "/tmp/goto_notify_".join("",rand_chars(set=>'alphanumeric', min=>16, max=>16));
+    open(DATEI, ">$rand_file");
+    print DATEI "source:$source\ntarget:$target\nusr:$to\nsubject:".@{$msg_hash->{'subject'}}[0]."\nmessage:".@{$msg_hash->{'message'}}[0]."\n";
+    close DATEI;
 
-    # give gosa-si-server feedback, that msg was received
-    $msg =~ s/<header>usr_msg<\/header>/<header>confirm_usr_msg<\/header>/g;
-    my $out_hash = &create_xml_hash("confirm_usr_msg", $target, $source);
-    &add_content2xml_hash($out_hash, 'usr', $to);
-    &add_content2xml_hash($out_hash, 'subject', @{$msg_hash->{'subject'}}[0]);
-    &add_content2xml_hash($out_hash, 'message', @{$msg_hash->{'message'}}[0]);
+    my $feedback = system("/usr/bin/goto-notify user-message '$to' '$subject' '$message' '$rand_file' &" );
 
-
-    return &create_xml_string($out_hash);
+    return
 }
 
 
@@ -491,6 +490,21 @@ sub trigger_action_instant_update {
 
     # Execute update
     system( "DEBIAN_FRONTEND=noninteractive /usr/sbin/fai-softupdate &" );
+
+    return;
+}
+
+sub trigger_goto_settings_reload {
+    my ($msg, $msg_hash) = @_;
+
+    # Execute goto settings reload
+    my $cmd = "/etc/init.d/goto-agents";
+    my $pram = "start";
+    if (-f $cmd){
+        my $feedback = system("$cmd $pram") or &main::daemon_log("ERROR: $@");
+    } else {
+        &main::daemon_log("ERROR: cannot exec $cmd, file not found!");
+    }
 
     return;
 }
