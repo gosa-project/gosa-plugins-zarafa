@@ -331,7 +331,7 @@ class fonreport extends plugin
         "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))";
 
     $attrs  = array("uid");
-    $res    = get_sub_list($filter,"users",get_people_ou(),$this->search_base,$attrs);
+    $res    = get_sub_list($filter,"fonreport/fonreport",get_people_ou(),$this->search_base,$attrs);
     
     $str = " AND (";
     $fields = array("dstchannel","channel");
