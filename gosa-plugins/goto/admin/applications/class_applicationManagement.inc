@@ -57,7 +57,6 @@ class applicationManagement extends plugin
     /* Save configuration for internal use */
     $this->config   = &$config;
     $this->ui       = &$ui;
-    $this->acl_base = $this->config->current['BASE'];
 
     /* Check if copy & paste is activated */
     if($this->config->boolValueIsTrue("MAIN","COPYPASTE")){
@@ -68,11 +67,15 @@ class applicationManagement extends plugin
     $this->DivListApplication = new divListApplication($this->config,$this);
 
     if($this->IsReleaseManagementActivated()){
-    /* Check if we should enable the release selection */
+      $this->acl_base = $this->config->current['BASE'];
+
+      /* Check if we should enable the release selection */
       $this->enableReleaseManagement = true;
 
       /* Hide SubSearch checkbox */
       $this->DivListApplication->DisableCheckBox("SubSearch");
+    }else{
+      $this->acl_base = &$this->DivListApplication->selectedBase;
     }
 
     /* Set default release */
@@ -233,14 +236,7 @@ class applicationManagement extends plugin
       /* Create new usertab object */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
       $this->apptabs->parent = &$this;
-
-      /* Check if there is a snapshot dialog open */
-      if($this->IsReleaseManagementActivated()){
-        $this->apptabs->set_acl_base($this->acl_base);
-      }else{
-        $this->apptabs->set_acl_base($this->DivListApplication->selectedBase);
-      }
-
+      $this->apptabs->set_acl_base($this->acl_base);
     }
 
 

@@ -93,7 +93,7 @@ class divListApplication extends MultiSelectWindow
     }
 
     /* Get acls */
-    $ui       = get_userinfo();
+    $ui = get_userinfo();
 
     if($this->parent->IsReleaseManagementActivated()){
       $acl      = $ui->get_permissions($this->parent->acl_base,"application/application");
