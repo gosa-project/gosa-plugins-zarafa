@@ -921,8 +921,10 @@ sub trigger_activate_new {
             objectClass => $oclass,
           );
           my $oclass_result = $ldap_entry->update($ldap_handle);
-          if ($oclass_result->code() != 0) {
+          if (defined($oclass_result) && $oclass_result->code() != 0) {
             &main::daemon_log("$session_id ERROR: Adding the ObjectClass '$oclass' failed (code '".$oclass_result->code()."') with '".$oclass_result->{'errorMessage'}."'!", 1);
+          } else {
+            &main::daemon_log("$session_id ERROR: Adding the ObjectClass '$oclass' failed (no result)!", 1);
           }
         }
       }
@@ -934,8 +936,10 @@ sub trigger_activate_new {
             'FAIstate' => 'install'
           );
           my $replace_result = $ldap_entry->update($ldap_handle);
-          if ($replace_result->code() != 0) {
+          if (defined($replace_result) && $replace_result->code() != 0) {
             &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed with code '".$replace_result->code()."') and message '".$replace_result->{'errorMessage'}."'!", 1);
+          } else {
+            &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed (no result)!", 1);
           }
         }
       } else {
@@ -943,8 +947,10 @@ sub trigger_activate_new {
           'FAIstate' => 'install'
         );
         my $add_result = $ldap_entry->update($ldap_handle);
-        if ($add_result->code() != 0) {
+        if (defined($add_result) && $add_result->code() != 0) {
           &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed with code '".$add_result->code()."') and message '".$add_result->{'errorMessage'}."'!", 1);
+        } else {
+          &main::daemon_log("$session_id ERROR: Setting the FAIstate to install failed (no result)!", 1);
         }
       }
 
