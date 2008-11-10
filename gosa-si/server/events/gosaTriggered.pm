@@ -882,10 +882,10 @@ sub trigger_activate_new {
         # To prevent replication problems just re-queue the job with 10 seconds in the future
         my $moddn_result = $ldap_entry->update($ldap_handle);
         if ($moddn_result->code() != 0) {
-          &main::daemon_log("$session_id ERROR: Moving the system with mac address '$mac' to new base '$base' failed (code '".$moddn_result->code()."') with '".$moddn_result->{'errorMessage'}."'!", 1);
-          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
-          $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET timestamp = '".(&calc_timestamp(&get_time(), 'plus', 10))."' WHERE id = $jobdb_id");
-          return undef;
+                my $error_string = "Moving the system with mac address '$mac' to new base '$base' failed (code '".$moddn_result->code()."') with '".$moddn_result->{'errorMessage'}."'!";
+                &main::daemon_log("$session_id ERROR: $error_string", 1);
+                my $sql = "UPDATE $main::job_queue_tn SET status='error', result='$error_string' WHERE id=$jobdb_id";
+                return undef;
         } else {
           &main::daemon_log("$session_id INFO: System with mac address '$mac' was moved to base '".$main::ldap_base."'! Re-queuing job.", 4);
           $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
