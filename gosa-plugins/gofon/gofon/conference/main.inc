@@ -47,7 +47,6 @@ if ($remove_lock){
 	}
 
 	/* Show and save dialog */
-	$conference->save_object();
 	$display.= $output;
 	session::set('conference',$conference);
 }
