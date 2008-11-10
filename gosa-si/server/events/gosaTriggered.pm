@@ -966,7 +966,11 @@ sub trigger_activate_new {
     }
 
     # Add to ObjectGroup
-    if(!(scalar grep $_ eq $ldap_entry->dn, @{$ogroup_entry->get_value('member', asref => 1)})) {
+    my $ogroup_member = $ogroup_entry->get_value('member', asref => 1);
+    if( (!defined($ogroup_member)) ||
+        (!defined($ldap_entry)) ||
+        (!defined($ldap_entry->dn)) ||
+        (!(scalar grep $_ eq $ldap_entry->dn, @{$ogroup_member}))) {
       $ogroup_entry->add (
         'member' => $ldap_entry->dn(),
       );
