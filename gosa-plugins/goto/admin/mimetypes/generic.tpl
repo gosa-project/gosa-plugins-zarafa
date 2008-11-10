@@ -140,7 +140,7 @@
 	</tr>
 	<tr>	
 		<td colspan="2">
-			<h2><img src='images/mime_embedding.png' class='center' alt='{t}Embedding{/t}'>&nbsp;{t}Embedding{/t}</h2>
+			<h2><img src='plugins/goto/images/mime_embedding.png' class='center' alt='{t}Embedding{/t}'>&nbsp;{t}Embedding{/t}</h2>
 		</td>
 	</tr>
 	<tr>
