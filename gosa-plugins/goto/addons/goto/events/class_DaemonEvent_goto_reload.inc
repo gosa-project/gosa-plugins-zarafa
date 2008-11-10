@@ -30,7 +30,7 @@ class DaemonEvent_goto_reload extends DaemonEvent
     $this->s_Event_Name = _("Reload goto settings"); 
     $this->s_Schedule_Action= "job_trigger_goto_settings_reload";
     $this->s_Trigger_Action = "gosa_trigger_goto_settings_reload";
-    $this->s_Queued_Action  = "trigger_action_wake";
+    $this->s_Queued_Action  = "trigger_action_settings_reload";
     $this->s_Menu_Image = "images/lists/reload.png";
     $this->s_List_Image = "images/lists/reload.png";
   }
