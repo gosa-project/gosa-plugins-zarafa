@@ -121,8 +121,8 @@ class divListApplication extends MultiSelectWindow
 
     /* Add Copy & Paste header */
     if($this->parent->IsReleaseManagementActivated()){
-      $s .= $this->parent->get_copypaste_header($this->acl_base,$this->module);
-      $s .= $this->parent->get_snapshot_header($this->acl_base,$this->module);
+      $s .= $this->parent->get_copypaste_header($this->parent->acl_base,$this->module);
+      $s .= $this->parent->get_snapshot_header($this->parent->acl_base,$this->module);
     }else{
       $s .= $this->parent->get_copypaste_header($this->selectedBase,$this->module);
       $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
