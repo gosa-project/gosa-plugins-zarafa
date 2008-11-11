@@ -1005,6 +1005,7 @@ sub send_msg_to_target {
 
 sub update_jobdb_status_for_send_msgs {
     my ($session_id, $answer, $error) = @_;
+    &daemon_log("$session_id DEBUG: try to update job status", 7); 
     if( $answer =~ /<jobdb_id>(\d+)<\/jobdb_id>/ ) {
         my $jobdb_id = $1;
     
@@ -1014,37 +1015,38 @@ sub update_jobdb_status_for_send_msgs {
         $answer =~ /<target>(.*)<\/target>/;
         my $job_target = $1;
             
-        # sending msg failed
+        # Sending msg failed
         if( $error ) {
 
-            # set jobs to done, jobs do not need to deliver their message in any case
+            # Set jobs to done, jobs do not need to deliver their message in any case
             if (($job_header eq "trigger_action_localboot")
                     ||($job_header eq "trigger_action_lock")
                     ||($job_header eq "trigger_action_halt") 
                     ) {
                 my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
+                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
-
-            # reactivate jobs, jobs need to deliver their message
+                
+            # Reactivate jobs, jobs need to deliver their message
             } elsif (($job_header eq "trigger_action_activate")
                     ||($job_header eq "trigger_action_update")
                     ||($job_header eq "trigger_action_reinstall") 
+                    ||($job_header eq "trigger_activate_new")
                     ) {
                 &reactivate_job_with_delay($session_id, $job_target, $job_header, 30 );
 
-            # for all other messages
+            # For all other messages
             } else {
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
+                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
-                &daemon_log("D \n$sql_statement\n$answer", 1);
-
             }
 
-        # sending msg was successful
+        # Sending msg was successful
         } else {
-            # set jobs localboot, lock, activate, halt, reboot and wake to done
+            # Set jobs localboot, lock, activate, halt, reboot and wake to done
             # jobs reinstall, update, inst_update do themself setting to done
             if (($job_header eq "trigger_action_localboot")
                     ||($job_header eq "trigger_action_lock")
@@ -1052,14 +1054,20 @@ sub update_jobdb_status_for_send_msgs {
                     ||($job_header eq "trigger_action_halt") 
                     ||($job_header eq "trigger_action_reboot")
                     ||($job_header eq "trigger_action_wake")
+                    ||($job_header eq "trigger_wake")
                     ) {
 
                 my $sql_statement = "UPDATE $job_queue_tn ".
                     "SET status='done' ".
                     "WHERE id=$jobdb_id AND status='processed'";
+                &daemon_log("$session_id DEBUG: $sql_statement", 7); 
                 my $res = $job_db->update_dbentry($sql_statement);
-            }
-        }
+            } else { 
+                &daemon_log("$session_id WARNING: sending message succeed but cannot update job status.", 3); 
+            } 
+        } 
+    } else { 
+        &daemon_log("$session_id ERROR: cannot update job status, msg has no jobdb_id-tag: $answer", 1); 
     }
 }
 
@@ -1466,7 +1474,7 @@ sub process_task {
                         my $host_name = $hit->{hostname};
                         my $host_key = $hit->{hostkey};
                         my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
+                        &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                     }
                 }
 
@@ -1480,7 +1488,7 @@ sub process_task {
                         my $host_key = $hit->{hostkey};
                         $answer =~ s/<target>\S+<\/target>/<target>$host_name<\/target>/g;
                         my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
+                        &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                     }
                 }
 
@@ -1502,7 +1510,7 @@ sub process_task {
                     my $header;
                     if( defined $1 ) { $header = $1; }
                     my $error = &send_msg_to_target($answer, $server_address, $GosaPackages_key, $header, $session_id);
-                    &update_jobdb_status_for_send_msgs($answer, $error);
+                    &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                 }
 
                 # Target of msg is a mac address
@@ -1519,7 +1527,7 @@ sub process_task {
                         $answer =~ s/$answer_target/$host_name/g;
                         daemon_log("$session_id INFO: found host '$host_name', associated to '$answer_target'", 5);
                         my $error = &send_msg_to_target($answer, $host_name, $host_key, $answer_header, $session_id);
-                        &update_jobdb_status_for_send_msgs($answer, $error);
+                        &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                         $found_ip_flag++ ;
                     }   
 
@@ -1548,7 +1556,7 @@ sub process_task {
                             if (defined $reg_server_key) {
                                 $answer =~ s/$answer_target/$host_name/g;
                                 my $error = &send_msg_to_target($answer, $reg_server, $reg_server_key, $answer_header, $session_id);
-                                &update_jobdb_status_for_send_msgs($answer, $error);
+                                &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                                 $found_ip_flag++ ;
                             }
                         }
@@ -1570,7 +1578,7 @@ sub process_task {
                         next;
                     }
                     my $error = &send_msg_to_target($answer, $answer_target, $encrypt_key, $answer_header,$session_id);
-                    &update_jobdb_status_for_send_msgs($answer, $error);
+                    &update_jobdb_status_for_send_msgs($session_id, $answer, $error);
                 }
             }
         }
@@ -1822,7 +1830,7 @@ sub watch_for_new_jobs {
 					if(defined($res_2) and defined @{$res_2}[0]) {
 						# Set status from goto-activation to 'waiting' and update timestamp
 						$job_db->exec_statement("UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
-						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
+						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&calc_timestamp(&get_time(), 'plus', 30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
 					}
 				}
 				next;

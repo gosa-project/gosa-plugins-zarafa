@@ -751,6 +751,9 @@ sub trigger_action_wake {
     foreach (@{$msg_hash->{'macaddress'}}) {
         &add_content2xml_hash($out_hash, 'macaddress', $_);
     }
+    if (defined $jobdb_id){
+        &add_content2xml_hash($out_hash, 'jobdb_id', $jobdb_id);
+    }
     my $out_msg = &create_xml_string($out_hash);
     
     # invoke trigger wake for this gosa-si-server
