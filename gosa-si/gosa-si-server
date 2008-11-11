@@ -997,14 +997,14 @@ sub update_jobdb_status_for_send_msgs {
                     ||($job_header eq "trigger_action_halt")
                     ) {
                 my $sql_statement = "UPDATE $job_queue_tn SET status='done' WHERE id=$jobdb_id";
-		&daemon_log("$session_id DEBUG: $sql_statement", 7);
+                &daemon_log("$session_id DEBUG: $sql_statement", 7);
                 my $res = $job_db->update_dbentry($sql_statement);
 
             # reactivate jobs, jobs need to deliver their message
             } elsif (($job_header eq "trigger_action_activate")
                     ||($job_header eq "trigger_action_update")
                     ||($job_header eq "trigger_action_reinstall")
-		    ||($job_header eq "trigger_activate_new")
+                    ||($job_header eq "trigger_activate_new")
                     ) {
                 &reactivate_job_with_delay($session_id, $job_target, $job_header, 30 );
 
@@ -1027,7 +1027,7 @@ sub update_jobdb_status_for_send_msgs {
                     ||($job_header eq "trigger_action_halt")
                     ||($job_header eq "trigger_action_reboot")
                     ||($job_header eq "trigger_action_wake")
-		    ||($job_header eq "trigger_wake")
+                    ||($job_header eq "trigger_wake")
                     ) {
 
                 my $sql_statement = "UPDATE $job_queue_tn ".
@@ -1795,7 +1795,7 @@ sub watch_for_new_jobs {
 					if(defined($res_2) and defined @{$res_2}[0]) {
 						# Set status from goto-activation to 'waiting' and update timestamp
 						$job_db->exec_statement("UPDATE $job_queue_tn SET status='waiting' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
-						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&get_time(30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
+						$job_db->exec_statement("UPDATE $job_queue_tn SET timestamp='".&calc_timestamp(&get_time(), 'plus', 30)."' WHERE macaddress LIKE '$macaddress' AND headertag = 'trigger_action_reinstall'");
 					}
 				}
 				next;
