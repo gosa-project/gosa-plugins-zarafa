@@ -21,6 +21,8 @@ class application extends plugin
   var $orig_cn = "";
   var $orig_dn = "";
 
+  var $copy_source_dn ="";
+
   /* attribute list for save action */
   var $attributes= array("cn", "description", "gosaApplicationExecute", "gosaApplicationName","gosaApplicationIcon",
       "gosaApplicationFlags","gotoLogonScript");
@@ -458,13 +460,22 @@ class application extends plugin
     }
 
     /* Check if we are allowed to create or move this object 
-     */
-    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
-      $message[] = msgPool::permCreate();
-    }elseif($this->orig_dn != "new" && $this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
-      $message[] = msgPool::permMove();
-    }
 
+        Special handling if object was copied. 
+        LHM only fix. Check the acls of the source object.
+  
+     */
+    if($this->copy_source_dn != ""){
+      if(!$this->acl_is_createable($this->copy_source_dn)){
+        $message[] = msgPool::permCreate();
+      }
+    }else{
+      if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+        $message[] = msgPool::permCreate();
+      }elseif($this->orig_dn != "new" && $this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+        $message[] = msgPool::permMove();
+      }
+    }
     return $message;
   }
 
@@ -588,6 +599,7 @@ class application extends plugin
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
+    $this->copy_source_dn = $source['dn'];
     $source_o = new application($this->config,$source['dn']);
     $this->gosaApplicationIcon = $source_o->gosaApplicationIcon;     
   }
