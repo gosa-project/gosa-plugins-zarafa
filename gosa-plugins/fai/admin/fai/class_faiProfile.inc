@@ -424,6 +424,10 @@ class faiProfile extends plugin
 
     $this->attrs['FAIclass']=trim($this->FAIclass);
 
+    /* Tag object */
+    $ui= get_userinfo();
+    $this->tag_attrs($this->attrs, $this->dn, $ui->gosaUnitTag);
+
     /* Remove the old FAI profile, if the dn has changed.
      */
     if($this->cn != $this->old_cn && $this->old_cn != ""){
