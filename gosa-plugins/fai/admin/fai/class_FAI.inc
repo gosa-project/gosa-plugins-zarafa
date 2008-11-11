@@ -641,7 +641,7 @@ class FAI
     $ldap->cd($dn);
 
     $ui= get_userinfo();
-    $this->tag_attrs($attrs, $dn, $ui->gosaUnitTag);
+    FAI::tag_attrs($attrs, $dn, $ui->gosaUnitTag);
 
     $ldap->cat($dn,array("dn"));
     if($ldap->count()){
@@ -1238,7 +1238,7 @@ class FAI
   }
 
 
-  function tag_attrs(&$at, $dn= "", $tag= "", $show= false)
+  static function tag_attrs(&$at, $dn= "", $tag= "", $show= false)
   {                                                        
     /* Remove tags that may already be here... */                         
     remove_objectClass("gosaAdministrativeUnitTag", $at);                 
