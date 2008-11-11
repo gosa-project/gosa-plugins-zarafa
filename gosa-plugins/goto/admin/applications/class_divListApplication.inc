@@ -120,10 +120,13 @@ class divListApplication extends MultiSelectWindow
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
     /* Add Copy & Paste header */
-    $s .= $this->parent->get_copypaste_header($this->selectedBase,$this->module);
-
-    /* Add snapshot icons */
-    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
+    if($this->parent->IsReleaseManagementActivated()){
+      $s .= $this->parent->get_copypaste_header($this->acl_base,$this->module);
+      $s .= $this->parent->get_snapshot_header($this->acl_base,$this->module);
+    }else{
+      $s .= $this->parent->get_copypaste_header($this->selectedBase,$this->module);
+      $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
+    }
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
