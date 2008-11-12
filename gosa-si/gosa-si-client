@@ -429,6 +429,10 @@ sub send_msg_to_target {
     if( $msg_header ) { $msg_header = "'$msg_header'-"; }
     else { $msg_header = ""; }
 
+    # Memorize own source address
+    $msg =~ /<source>(\S+)<\/source>/;
+    my $own_source_address = $1;
+
     # encrypt xml msg
     my $crypted_msg = &encrypt_msg($msg, $encrypt_key);
 
@@ -447,7 +451,7 @@ sub send_msg_to_target {
     
     # send xml msg
     if( $error == 0 ) {
-        print $socket $crypted_msg."\n";
+        print $socket $crypted_msg.";$own_source_address\n";
         daemon_log("INFO: send ".$msg_header."msg to $address", 5);
         daemon_log("DEBUG: message:\n$msg", 9);
     }
