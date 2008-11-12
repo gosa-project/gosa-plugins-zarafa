@@ -1014,7 +1014,10 @@ sub update_jobdb_status_for_send_msgs {
                     "SET status='error', result='can not deliver msg, please consult log file' ".
                     "WHERE id=$jobdb_id";
                 my $res = $job_db->update_dbentry($sql_statement);
+<<<<<<< .mine
+=======
 		&daemon_log("$session_id DEBUG: $sql_statement", 7);
+>>>>>>> .r13007
             }
 
         # sending msg was successful
@@ -1074,11 +1077,10 @@ sub msg_to_decrypt {
     my ($msg, $msg_hash, $module);
     my $error = 0;
 
-    # hole neue msg aus @msgs_to_decrypt
-    my $next_msg = shift @msgs_to_decrypt;
+    # fetch new msg out of @msgs_to_decrypt
+    my $tmp_next_msg = shift @msgs_to_decrypt;
+    my ($next_msg, $msg_source) = split(/;/, $tmp_next_msg);
     
-    # entschlüssle sie
-
     # msg is from a new client or gosa
     ($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
     # msg is from a gosa-si-server
@@ -1091,22 +1093,15 @@ sub msg_to_decrypt {
     }
     # an error occurred
     if(( !$msg ) || ( !$msg_hash ) || ( !$module )){
-        # if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
-        # could not understand a msg from its server the client cause a re-registering process
-        daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
-                "' to cause a re-registering of the client if necessary", 3);
-        my $sql_statement = "SELECT * FROM $main::known_clients_tn WHERE (hostname LIKE '".$heap->{'remote_ip'}."%')";
-        my $query_res = $known_clients_db->select_dbentry( $sql_statement ); 
-        while( my ($hit_num, $hit) = each %{ $query_res } ) {    
-            my $host_name = $hit->{'hostname'};
-            my $host_key = $hit->{'hostkey'};
-            my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source> <target>$host_name</target></xml>";
-            my $error = &send_msg_to_target($ping_msg, $host_name, $host_key, "gosa_ping", $session_id);
-            &update_jobdb_status_for_send_msgs($session_id, $ping_msg, $error);
-        }
-        $error++;
-    }
+	# if an incoming msg could not be decrypted (maybe a wrong key), send client a ping. If the client
+	# could not understand a msg from its server the client cause a re-registering process
+	my $ping_msg = "<xml> <header>gosa_ping</header> <source>$server_address</source><target>$msg_source</target></xml>";
+	my ($test_error, $test_error_string) = &send_msg_to_target($ping_msg, "$msg_source", "dummy-key", "gosa_ping", $session_id);
 
+	daemon_log("$session_id WARNING cannot understand incoming msg, send 'ping'-msg to all host with ip '".$heap->{remote_ip}.
+		"' to cause a re-registering of the client if necessary", 3);
+	$error++;
+    }
 
     my $header;
     my $target;
