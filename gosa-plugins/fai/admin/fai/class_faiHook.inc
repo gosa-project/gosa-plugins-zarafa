@@ -195,12 +195,14 @@ class faiHook extends plugin
     if(isset($_GET['act']) && isset($_GET['id'])){
       if($_GET['act'] == "edit" && isset($this->SubObjects[base64_decode($_GET['id'])])){
         $obj = $this->SubObjects[base64_decode($_GET['id'])];
-          if($obj['status'] == "FreshLoaded"){
+        if($obj['status'] == "FreshLoaded"){
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
         $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->acl = $this->acl;
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+        $this->dialog->set_acl_category("fai");
         session::set('objectinfo',$obj['dn']);
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
