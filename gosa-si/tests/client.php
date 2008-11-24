@@ -78,6 +78,7 @@ for($count = 1; $count <= $zahl; $count++)
 
     # List all si-server providing opsi
     #$data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>10.89.1.31:20081</target> <module_name>mailqueue_com</module_name> </xml>";
+    $data = "<xml> <header>gosa_get_hosts_with_module</header> <source>GOSA</source> <target>linux-cl-2:20081</target> <module_name>mailqueue_com</module_name> </xml>";
 
     # Send messages to a user and displayed message via konch
     #$data = "<xml> <header>gosa_send_user_msg</header> <target>GOSA</target> <source>GOSA</source> <subject>".base64_encode("eine wichtige nachricht")."</subject> <from>admin</from>  <user>polle</user> <user>harald</user> <delivery_time>20130101235959</delivery_time> <message>".base64_encode("kaffeepause")."</message> </xml>"; 
@@ -124,7 +125,7 @@ for($count = 1; $count <= $zahl; $count++)
     # Opsi testing
 
     # Get all netboot products
-    $data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
+    #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> </xml>";
 
     # Get netboot product for specific host
     #$data = "<xml> <header>gosa_opsi_get_netboot_products</header> <source>GOSA</source> <target>GOSA</target> <hostId>linux-cl-2.intranet.gonicus.de</hostId></xml>";
@@ -213,6 +214,9 @@ for($count = 1; $count <= $zahl; $count++)
     ##############################
     # SYSLOG reload
     #$data = "<xml> <header>gosa_trigger_reload_syslog_config</header> <source>GOSA</source> <target>GOSA</target> <macaddress>00:01:6c:9d:b9:fa</macaddress> </xml>"; 
+
+
+
 
     $sock->write($data);
     $answer = "nothing";

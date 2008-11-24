@@ -1101,9 +1101,9 @@ sub msg_to_decrypt {
 	my ($msg, $msg_hash, $module);
 	my $error = 0;
 
-	# hole neue msg aus @msgs_to_decrypt
-	my $next_msg = shift @msgs_to_decrypt;
-    my ($next_msg, $msg_source) = split(/;/, $next_msg);
+	# fetch new msg out of @msgs_to_decrypt
+	my $tmp_next_msg = shift @msgs_to_decrypt;
+    my ($next_msg, $msg_source) = split(/;/, $tmp_next_msg);
 
 	# msg is from a new client or gosa
 	($msg, $msg_hash, $module) = &input_from_unknown_host($next_msg, $session_id);
