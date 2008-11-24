@@ -799,7 +799,7 @@ sub read_configfile {
     my $cfg;
     if( defined( $cfg_file) && ( (-s $cfg_file) > 0 )) {
         if( -r $cfg_file ) {
-            $cfg = Config::IniFiles->new( -file => $cfg_file );
+            $cfg = Config::IniFiles->new( -file => $cfg_file, -nocase => 1 );
         } else {
             print STDERR "Couldn't read config file!";
         }
