@@ -341,24 +341,33 @@ class divListFai extends MultiSelectWindow
      $template_str   = sprintf(_("Number of listed '%s'"),_("templates"));
      $package_str    = sprintf(_("Number of listed '%s'"),_("packages"));   
      $dep_str        = sprintf(_("Number of listed '%s'"),_("departments"));
+     $opsi_netboot   = sprintf(_("Number of listed '%s'"),_("netboot products"));
+     $opsi_local     = sprintf(_("Number of listed '%s'"),_("local products"));
 
-     $str = "<img class='center' src='".$objects['FAIprofile']['IMG']."'
-       title='".$profile_str."' alt='".$profile_str."'>&nbsp;".$cnts['FAIprofile']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAIpartitionTable']['IMG']."'
-       title='".$partition_str."' alt='".$partition_str."'>&nbsp;".$cnts['FAIpartitionTable']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAIscript']['IMG']."'
-       title='".$script_str."' alt='".$script_str."'>&nbsp;".$cnts['FAIscript']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAIhook']['IMG']."'
-       title='".$hook_str."' alt='".$hook_str."'>&nbsp;".$cnts['FAIhook']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAIvariable']['IMG']."'
-       title='".$variable_str."' alt='".$variable_str."'>&nbsp;".$cnts['FAIvariable']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAItemplate']['IMG']."'
-       title='".$template_str."' alt='".$template_str."'>&nbsp;".$cnts['FAItemplate']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='".$objects['FAIpackageList']['IMG']."'
-       title='".$package_str."' alt='".$package_str."'>&nbsp;".$cnts['FAIpackageList']."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $str.= "<img class='center' src='images/lists/folder.png'
-       title='".$dep_str."' alt='".$dep_str."'>&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
-     $this->set_List_Bottom_Info($str);
+     $str = "<img class=\"center\" src=\"".$objects['FAIprofile']['IMG']."\"
+       title=\"".$profile_str."\" alt=\"".$profile_str."\">&nbsp;".$cnts['FAIprofile']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAIpartitionTable']['IMG']."\"
+       title=\"".$partition_str."\" alt=\"".$partition_str."\">&nbsp;".$cnts['FAIpartitionTable']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAIscript']['IMG']."\"
+       title=\"".$script_str."\" alt=\"".$script_str."\">&nbsp;".$cnts['FAIscript']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAIhook']['IMG']."\"
+       title=\"".$hook_str."\" alt=\"".$hook_str."\">&nbsp;".$cnts['FAIhook']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAIvariable']['IMG']."\"
+       title=\"".$variable_str."\" alt=\"".$variable_str."\">&nbsp;".$cnts['FAIvariable']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAItemplate']['IMG']."\"
+       title=\"".$template_str."\" alt=\"".$template_str."\">&nbsp;".$cnts['FAItemplate']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src=\"".$objects['FAIpackageList']['IMG']."\"
+       title=\"".$package_str."\" alt=\"".$package_str."\">&nbsp;".$cnts['FAIpackageList']."&nbsp;&nbsp;&nbsp;&nbsp;";
+     $str.= "<img class=\"center\" src='images/lists/folder.png'
+       title=\"".$dep_str."\" alt=\"".$dep_str."\">&nbsp;".$num_deps."&nbsp;&nbsp;&nbsp;&nbsp;";
+
+    if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
+      $str.= "<img class=\"center\" src=\"".$objects['opsi_netboot']['IMG']."\"
+        title=\"".$opsi_netboot."\" alt=\"".$opsi_netboot."\">&nbsp;".$cnts['opsi_netboot']."&nbsp;&nbsp;&nbsp;&nbsp;";
+      $str.= "<img class=\"center\" src=\"".$objects['opsi_local']['IMG']."\"
+        title=\"".$opsi_local."\" alt=\"".$opsi_local."\">&nbsp;".$cnts['opsi_local']."&nbsp;&nbsp;&nbsp;&nbsp;";
+    }
+    $this->set_List_Bottom_Info($str);
   }
 
   function Save()
