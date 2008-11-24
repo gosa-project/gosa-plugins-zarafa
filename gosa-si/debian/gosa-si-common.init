@@ -14,7 +14,6 @@
 ### END INIT INFO
 
 # Load defaults
-DEBUG=-vvv
 [ -r /etc/default/gosa-si ] && . /etc/default/gosa-si
 
 # Load LSB support functions
