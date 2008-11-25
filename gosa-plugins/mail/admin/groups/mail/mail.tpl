@@ -171,6 +171,21 @@
 	</div>
 {/if}
 
+<p class="seperator">&nbsp;</p>
+
+<h2><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Advanced mail options{/t}</h2> 
+<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="2" border="0">
+ <tr>
+  <td>
+{render acl=$gosaMailDeliveryModeIACL}
+   <input type="checkbox" name="only_local" value="1" {$only_local} 
+	title="{t}Select if user can only send and receive inside his own domain{/t}">
+{/render}
+	{t}User is only allowed to send and receive local mails{/t}
+  </td> 
+ </tr>
+ </table> 
+
   </td>
   <td style="vertical-align:top;width:50%">
    <h2>
@@ -210,6 +225,7 @@
 {render acl=$gosaMailForwardingAddressACL}
    <input type=submit value="{msgPool type=delButton}" name="delete_forwarder">
 {/render}
+
   </td>
  </tr>
 </table>

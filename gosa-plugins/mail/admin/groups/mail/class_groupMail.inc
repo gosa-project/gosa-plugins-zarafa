@@ -736,6 +736,12 @@ class mailgroup extends plugin
     $smarty->assign("Forward_all",$this->gosaMailForwardingAddress);
     $smarty->assign("Forward_some",$this->gosaMailForwardingAddress_Some);
 
+    if (preg_match("/I/", $this->gosaMailDeliveryMode)) {
+      $smarty->assign("only_local", "checked");
+    }else{
+      $smarty->assign("only_local", "");
+    }
+
     $smarty->assign("multiple_support",$this->multiple_support_active);
     $display.= $smarty->fetch (get_template_path('mail.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -1292,6 +1298,7 @@ I: Only insider delivery */
             "kolabFolderType"           => _("Folder type")." ("._("Kolab").")",
             "gosaMailAlternateAddress"  => _("Alternate addresses"),
             "gosaMailForwardingAddress" => _("Forwarding addresses"),
+            "gosaMailDeliveryModeI"     => _("Only local"),
             "acl"                       => _("Permissions"))
           ));
   }
