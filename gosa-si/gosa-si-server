@@ -54,6 +54,13 @@ use Net::LDAP;
 use Net::LDAP::Util qw(:escape);
 use Time::HiRes qw( usleep);
 
+# revision number of server and program name
+my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev: 10826 $';
+my $server_headURL;
+my $server_revision;
+my $server_status;
+our $prg= basename($0);
+
 my $db_module = "DBsqlite";
 {
 no strict "refs";
@@ -64,13 +71,6 @@ daemon_log("0 INFO: importing database module '$db_module'", 1);
 
 my $modules_path = "/usr/lib/gosa-si/modules";
 use lib "/usr/lib/gosa-si/modules";
-
-# revision number of server and program name
-my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev: 10826 $';
-my $server_headURL;
-my $server_revision;
-my $server_status;
-our $prg= basename($0);
 
 our $global_kernel;
 my ($foreground, $ping_timeout);
