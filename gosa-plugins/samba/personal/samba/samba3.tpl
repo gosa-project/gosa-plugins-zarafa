@@ -17,7 +17,6 @@
 {/render}
 {render acl=$sambaHomeDriveACL  checkbox=$multiple_support checked=$use_sambaHomeDrive}
       <select size="1" name="sambaHomeDrive">
-       <option disabled>&nbsp;</option>
        {html_options values=$drives output=$drives selected=$sambaHomeDrive}
       </select>
 {/render}
@@ -110,7 +109,6 @@
 {/render}
 {render acl=$AllowLoginOnTerminalServerACL  checkbox=$multiple_support checked=$use_CtxWFHomeDirDrive}
       <select size="1" id="CtxWFHomeDirDrive" name="CtxWFHomeDirDrive"  {$tsloginstate}>
-       <option disabled>&nbsp;</option>
        {html_options values=$drives output=$drives selected=$CtxWFHomeDirDrive}
       </select>
 {/render}
