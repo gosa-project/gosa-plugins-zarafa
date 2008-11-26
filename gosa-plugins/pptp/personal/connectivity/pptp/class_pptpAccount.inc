@@ -175,7 +175,7 @@ class pptpAccount extends plugin
   {
     return (array(
           "plShortName"     => _("PPTP"),
-          "plDescription"   => _("PPTP account")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"   => _("PPTP account")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 28,                                 // Position in tabs

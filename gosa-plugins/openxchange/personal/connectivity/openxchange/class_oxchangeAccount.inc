@@ -436,7 +436,7 @@ class oxchangeAccount extends plugin
   {
     return (array(
           "plShortName"     => _("Open-Xchange"),
-          "plDescription"   => _("Open-Xchange account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"   => _("Open-Xchange account settings")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 27,                                 // Position in tabs

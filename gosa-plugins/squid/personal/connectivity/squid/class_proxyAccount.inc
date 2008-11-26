@@ -328,7 +328,7 @@ class proxyAccount extends plugin
   {
     return (array(
           "plShortName"     => _("Proxy"),
-          "plDescription"   => _("Proxy account")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"   => _("Proxy account")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 21,                                 // Position in tabs

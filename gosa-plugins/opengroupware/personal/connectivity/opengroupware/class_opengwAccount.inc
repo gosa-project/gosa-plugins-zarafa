@@ -336,7 +336,7 @@ class opengwAccount extends plugin
   {
     return (array(
           "plShortName"     => _("Opengroupware"),
-          "plDescription"   => _("Open groupware account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"   => _("Open groupware account settings")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 26,                                 // Position in tabs

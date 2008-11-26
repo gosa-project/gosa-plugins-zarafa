@@ -510,7 +510,7 @@ class kolabAccount extends plugin
   {
     return (array(	
           "plShortName"     => _("Kolab"),
-          "plDescription"   => _("Kolab account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"   => _("Kolab account settings")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 20,                                 // Position in tabs
