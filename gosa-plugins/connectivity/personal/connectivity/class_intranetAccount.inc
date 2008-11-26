@@ -209,7 +209,7 @@ class intranetAccount extends plugin
           "plCategory"    => array("users"),
           "plOptions"       => array(),
 
-          "plDescription"       => _("Intranet account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
+          "plDescription"       => _("Intranet account settings")."&nbsp;("._("Connectivity addon").")",
           "plSelfModify"        => TRUE,
 
           "plProvidedAcls"  => array()
