@@ -88,6 +88,21 @@ class passwordMethodMIT extends passwordMethod
   var $POLICY                   = "_none_";
   var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
 
+  public function is_locked($config,$dn = "")
+  {
+    return(FALSE);
+  }
+
+  public function lock_account($config,$dn = "")
+  {
+    return(FALSE);
+  }
+
+  public function unlock_account($config,$dn = "")
+  {
+    return(FALSE);
+  }
+
   public function __construct(&$config,$dn = "new")  
   {
     $this->config= $config;
