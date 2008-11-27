@@ -88,7 +88,6 @@ class passwordMethodMIT extends passwordMethod
   var $POLICY                   = "_none_";
   var $POLICIES                 = array(); // Policies provided by the corrently selected realm/server
 
-
   public function __construct(&$config,$dn = "new")  
   {
     $this->config= $config;
