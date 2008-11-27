@@ -33,33 +33,33 @@ sub new {
 
 
 sub create_table {
-    my $self = shift;
-    my $table_name = shift;
-    my $col_names_ref = shift;
-    my @col_names;
-    foreach my $col_name (@$col_names_ref) {
-        my @t = split(" ", $col_name);
-        $col_name = $t[0];
-        push(@col_names, $col_name);
-    }
+	my $self = shift;
+	my $table_name = shift;
+	my $col_names_ref = shift;
+	my @col_names;
+	foreach my $col_name (@$col_names_ref) {
+		my @t = split(" ", $col_name);
+		$col_name = $t[0];
+		push(@col_names, $col_name);
+	}
 
-    $col_names->{ $table_name } = $col_names_ref;
-    my $col_names_string = join("', '", @col_names);
-    my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
+	$col_names->{ $table_name } = $col_names_ref;
+	my $col_names_string = join("', '", @col_names);
+	my $sql_statement = "CREATE TABLE IF NOT EXISTS $table_name ( '$col_names_string' )"; 
 	eval {
 		my $res = $self->{dbh}->do($sql_statement);
 	};
 	if($@) {
 		$self->{dbh}->do("ANALYZE");
-	}
-	eval {
-		my $res = $self->{dbh}->do($sql_statement);
-	};
-	if($@) {
-		&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		eval {
+			my $res = $self->{dbh}->do($sql_statement);
+		};
+		if($@) {
+			&main::daemon_log("ERROR: $sql_statement failed with $@", 1);
+		}
 	}
 
-    return 0;
+	return 0;
 }
 
 
