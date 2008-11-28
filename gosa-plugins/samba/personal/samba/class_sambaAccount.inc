@@ -282,7 +282,7 @@ class sambaAccount extends plugin
       $smarty->assign($var."ACL",$this->getacl($var,$SkipWrite));
     }
 
-    if(!session::is_set('edit')){
+    if(!session::is_set('edit') && !isset($this->parent)){
       $smarty->assign("sambaLogonHoursACL","");
     }
 

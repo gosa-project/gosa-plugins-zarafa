@@ -108,10 +108,11 @@ class goImapServer extends goService {
     $message = plugin::check();
     if(empty($this->goImapName)){
       $message[] = msgPool::required(_("Server identifier"));
-    }  
+    } 
+
     if(empty($this->goImapConnect)){
       $message[] = msgPool::required(_("Connect URL"));
-    }elseif(!preg_match('/^\{[^:]+:[0-9]+.*\}$/', $this->goImapConnect)){
+    }elseif(!preg_match('/^\{[^:]+:[0-9]*\/.*\}$/', $this->goImapConnect)){
       $message[]= msgPool::invalid(_("Connect URL"),"","","{server-name:port/options}");
     } 
 
@@ -154,6 +155,8 @@ class goImapServer extends goService {
           }
         }
       }
+      $this->goImapConnect = trim($this->goImapConnect);
+      $this->goImapSieveServer = trim($this->goImapSieveServer);
     }
   }
 
