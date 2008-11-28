@@ -568,14 +568,14 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.37 NAME 'goGlpiServer' SUP top AUXILIARY
 
 # Spamassassin definitions
 objectclass (1.3.6.1.4.1.10098.1.2.1.38 NAME 'goSpamServer' SUP top AUXILIARY
-	DESC 'Spam server definition (v2.5)'
+	DESC 'Spam server definition (v2.6.1)'
 	MUST ( cn )
 	MAY  ( saRewriteHeader $ saTrustedNetworks $ saRequiredScore $ saFlags $
 	       saRule $ saStatus ) )
 
 # Clamav definitions
 objectclass (1.3.6.1.4.1.10098.1.2.1.39 NAME 'goVirusServer' SUP top AUXILIARY
-	DESC 'Virus server definition (v2.5)'
+	DESC 'Virus server definition (v2.6.1)'
 	MUST ( cn )
 	MAY  ( avMaxThreads $ avMaxDirectoryRecursions $ avUser $ avFlags $
                avArchiveMaxFileSize $ avArchiveMaxRecursion $ avArchiveMaxCompressionRatio $
