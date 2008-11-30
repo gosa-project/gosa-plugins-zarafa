@@ -1,6 +1,6 @@
 <br>
 <p class="seperator">
-{t}This system has no system type configured. Please choose a system type for this object and an optional inheritance group. Press the 'continue' button to procreed.{/t}
+{t}This system has no system type configured. Please choose a system type for this object and an optional inheritance group. Press the 'continue' button to proceed.{/t}
 <br>
 <br>
 </p>

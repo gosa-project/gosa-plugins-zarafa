@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-09 14:01+0200\n"
-"PO-Revision-Date: 2008-10-09 15:44+0200\n"
+"PO-Revision-Date: 2008-11-30 23:57+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -764,7 +764,6 @@ msgid "Task"
 msgstr "Tâches"
 
 #: addons/goto/class_gotomasses.inc:406
-#, fuzzy
 msgid "Schedule"
 msgstr "Planificateur"
 
@@ -869,7 +868,7 @@ msgstr "Le job n'a pas pu être annulé, la classe requise '%s' n'a pas été tr
 #: addons/goto/class_gotomasses.inc:811
 #, php-format
 msgid "Cannot load queue entries: %s"
-msgstr ""
+msgstr "Impossible de charger les entrées de la queue: %s"
 
 #: addons/goto/class_gotomasses.inc:905 addons/goto/class_gotomasses.inc:911
 msgid "System mass deployment"
@@ -887,7 +886,7 @@ msgstr "Importer de tâches"
 msgid ""
 "You can import a list of jobs into the GOsa job queue. This should be a "
 "semicolon seperated list of items in the following format:"
-msgstr ""
+msgstr "Vous pouvez importer une liste de jobs dans la queue des jobs GOsa. Cela doit être un liste séparée par un point virgule dans le format suivant :"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "timestamp"
@@ -907,7 +906,7 @@ msgstr "Groupes d'objets"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "import base"
-msgstr ""
+msgstr "base pour l'importation"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "full hostname"
@@ -1011,7 +1010,7 @@ msgstr ""
 
 #: addons/goto/class_target_list.inc:58
 msgid "Select the target objects for your scheduled action."
-msgstr ""
+msgstr "Sélectionnez les objets de destination pour votre action programmée."
 
 #: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
 msgid "Available targets"
@@ -1059,7 +1058,7 @@ msgstr "Sélectionnez pour rechercher dans plage IP spécifique"
 
 #: addons/goto/class_target_list.inc:80
 msgid "Match IP range"
-msgstr ""
+msgstr "Correspondance de la plage d'adresses IP"
 
 #: addons/goto/class_target_list.inc:83
 msgid "Regular expression for matching group names"
@@ -1165,7 +1164,7 @@ msgstr "Deverrouillé"
 #: addons/goto/events/DaemonEvent_reinstall.tpl:9
 #: addons/goto/events/DaemonEvent_reboot.tpl:9
 msgid "Time schedule"
-msgstr ""
+msgstr "Horaire"
 
 #: addons/goto/events/DaemonEvent_goto_reload.tpl:18
 #: addons/goto/events/DaemonEvent_rescan.tpl:18
@@ -1250,6 +1249,8 @@ msgid ""
 "This dialog shows all available targets for your event, check the targets "
 "you want to add and use the 'Use' button to accept."
 msgstr ""
+"Cette fenêtre montre tous les objets disponibles pour votre événement, vérifier les objets que"
+"vous souhaitez ajouter et d'utiliser le bouton 'Utiliser' pour accepter."
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:60
 #: addons/goto/events/class_EventTargetAddList.inc:66
@@ -1292,7 +1293,7 @@ msgstr "Verrouillé"
 #: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
 #: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
 msgid "Installation activation"
-msgstr ""
+msgstr "Activation de l'installation"
 
 #: addons/goto/events/timestamp_select.tpl:3
 msgid "Year"
@@ -1438,7 +1439,7 @@ msgstr "Progression"
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
 msgid "Goto reload"
-msgstr ""
+msgstr "Rechargement de Goto"
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
 msgid "Reload goto settings"
@@ -1569,7 +1570,7 @@ msgstr "Activé"
 #: admin/ogroups/goto/class_termgroup.inc:95
 #: admin/systems/goto/class_terminalGeneric.inc:281
 msgid "Local swap"
-msgstr ""
+msgstr "swap locale"
 
 #: admin/ogroups/goto/class_termgroup.inc:101
 #: admin/ogroups/goto/class_termgroup.inc:113
@@ -1721,7 +1722,7 @@ msgstr "Options"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:53
 msgid "Write only"
-msgstr ""
+msgstr "En écriture seulement"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:64
 msgid "Bit rate"
@@ -1729,7 +1730,7 @@ msgstr ""
 
 #: admin/systems/goto/gotoLpdEnable.tpl:72
 msgid "Flow control"
-msgstr ""
+msgstr "Contrôle de flux"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:80
 msgid "Parity"
@@ -1781,7 +1782,7 @@ msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé.
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
-msgstr ""
+msgstr "Le service GOsa n'est pas configuré"
 
 #: admin/systems/goto/workstationStartup.tpl:67
 msgid "FAI settings cannot be modified"
@@ -1837,6 +1838,8 @@ msgid ""
 "this object and an optional inheritance group. Press the 'continue' button "
 "to procreed."
 msgstr ""
+"Ce système n'a pas de type de système configuré. S'il vous plaît choisissez un type de système pour"
+"cet objet et un héritage de groupe facultatif. Appuyez sur le bouton 'Continuer' pour procéder."
 
 #: admin/systems/goto/SelectDeviceType.tpl:10
 msgid ""
@@ -2550,7 +2553,7 @@ msgstr "Fréquence de synchronisation Horizontale"
 msgid ""
 "Remote desktop settings contains servers that do not support the selected "
 "connection method."
-msgstr ""
+msgstr "Les paramètres Remote desktop contiennent des serveurs qui ne prennent pas en compte la méthode de connexion sélectionnée."
 
 #: admin/systems/goto/class_terminalService.inc:702
 #: admin/systems/services/terminal/goTerminalServer.tpl:4
@@ -2579,7 +2582,7 @@ msgstr "Imprimante activée"
 
 #: admin/systems/goto/class_workstationGeneric.inc:500
 msgid "A valid LDAP server assignement is missing!"
-msgstr ""
+msgstr "Un serveur LDAP valide est manquant !"
 
 #: admin/systems/goto/class_workstationGeneric.inc:510
 msgid "Software deployment"
@@ -2613,7 +2616,7 @@ msgid ""
 "can integrate this device into your running DHCP/DNS infrastructure by "
 "submitting this form. The device entry will disappear from the list of the "
 "systems and move to the DNS/DHCP configuration."
-msgstr ""
+msgstr "Le périphérique actuel à été détecté par le moniteur ARP utilisé par GOsa. Vous pouvez intégrer ce périphérique dans votre infrastructure DNS/DHCP en soumettant ce formulaire. Ce périphérique vas disparaître de la liste des systèmes et apparaître dans la configuration DNS/DHCP."
 
 #: admin/systems/goto/ArpNewDevice.tpl:9
 msgid "DNS name"
@@ -2962,7 +2965,7 @@ msgstr "Gérer les profil Kiosk"
 
 #: admin/systems/services/kiosk/goKioskService.tpl:16
 msgid "Server path"
-msgstr ""
+msgstr "Chemin du serveur"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:31
 #: admin/systems/services/syslog/class_goLogDBServer.inc:59
@@ -3463,7 +3466,7 @@ msgstr "Editer cette entrée"
 #: admin/applications/class_divListApplication.inc:193
 #: admin/mimetypes/class_divListMimeTypes.inc:198
 msgid "Freezed"
-msgstr ""
+msgstr "Gelée"
 
 #: admin/applications/class_divListApplication.inc:196
 #: admin/mimetypes/class_divListMimeTypes.inc:201
