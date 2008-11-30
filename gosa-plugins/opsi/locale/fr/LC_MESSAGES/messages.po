@@ -1,0 +1,164 @@
+# translation of messages.po to french
+# translation of messages.po to
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+#
+#
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-28 11:52+0100\n"
+"PO-Revision-Date: 2008-11-30 19:54+0100\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: french <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/opsi/opsiware.tpl:2
+msgid "Information"
+msgstr ""
+
+#: admin/opsi/opsiware.tpl:4 admin/opsi/generic.tpl:8
+msgid "Retry"
+msgstr "Réessayer"
+
+#: admin/opsi/opsiware.tpl:7
+msgid "Hardware information"
+msgstr "Information Hardware"
+
+#: admin/opsi/opsiware.tpl:9
+msgid "Software information"
+msgstr "Informations Logiciels"
+
+#: admin/opsi/opsiware.tpl:14
+msgid "Device"
+msgstr "Périphériques"
+
+#: admin/opsi/generic.tpl:2
+msgid "OPSI host"
+msgstr "Client OPSI"
+
+#: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:35
+#: admin/opsi/class_opsigeneric.inc:211 admin/opsi/class_opsigeneric.inc:216
+#: admin/opsi/class_opsigeneric.inc:219 admin/opsi/class_opsigeneric.inc:713
+msgid "Name"
+msgstr "Nom"
+
+#: admin/opsi/generic.tpl:26 admin/opsi/generic.tpl:43
+#: admin/opsi/class_opsigeneric.inc:225 admin/opsi/class_opsigeneric.inc:714
+msgid "MAC address"
+msgstr "Adresse MAC"
+
+#: admin/opsi/generic.tpl:52 admin/opsi/class_opsigeneric.inc:717
+msgid "Netboot product"
+msgstr "Produit Netboot"
+
+#: admin/opsi/generic.tpl:64 admin/opsi/generic.tpl:67
+msgid "Configure product"
+msgstr "Configurer le produit"
+
+#: admin/opsi/generic.tpl:76 admin/opsi/class_opsigeneric.inc:715
+msgid "Description"
+msgstr ""
+
+#: admin/opsi/generic.tpl:84
+msgid "Notes"
+msgstr ""
+
+#: admin/opsi/generic.tpl:101
+msgid "Installed products"
+msgstr "Produits installés"
+
+#: admin/opsi/generic.tpl:106
+msgid "Available products"
+msgstr "Produits disponibles"
+
+#: admin/opsi/generic.tpl:116 admin/opsi/class_opsigeneric.inc:719
+msgid "Action"
+msgstr ""
+
+#: admin/opsi/generic.tpl:120
+msgid "Reinstall"
+msgstr "Réinstaller"
+
+#: admin/opsi/generic.tpl:122
+msgid "Install"
+msgstr "Installer"
+
+#: admin/opsi/generic.tpl:124
+msgid "Wake"
+msgstr "Réveiller"
+
+#: admin/opsi/generic.tpl:127
+msgid "Execute"
+msgstr "Exécuter"
+
+#: admin/opsi/properties.tpl:1
+msgid "OPSI product properties"
+msgstr "Propriétés des produits OPSI"
+
+#: admin/opsi/properties.tpl:6
+msgid "This OPSI product has no options."
+msgstr "Ce produit OPSI n'a pas d'options."
+
+#: admin/opsi/class_opsigeneric.inc:217
+msgid "The field 'Name' must contain a domain part!"
+msgstr "Le champ 'nom' doit contenir le nom complet incluant le domaine !"
+
+#: admin/opsi/class_opsigeneric.inc:265 admin/opsi/class_opsigeneric.inc:266
+#: admin/opsi/class_opsigeneric.inc:268 admin/opsi/class_opsigeneric.inc:269
+msgid "OPSI"
+msgstr ""
+
+#: admin/opsi/class_opsigeneric.inc:376 admin/opsi/class_opsigeneric.inc:389
+#: admin/opsi/class_opsigeneric.inc:413 admin/opsi/class_opsigeneric.inc:424
+#: admin/opsi/class_opsigeneric.inc:430 admin/opsi/class_opsigeneric.inc:447
+#: admin/opsi/class_opsigeneric.inc:465 admin/opsi/class_opsigeneric.inc:471
+#: admin/opsi/class_opsigeneric.inc:500 admin/opsi/class_opsigeneric.inc:532
+#: admin/opsi/class_opsigeneric.inc:677
+msgid "Error"
+msgstr "Erreur"
+
+#: admin/opsi/class_opsigeneric.inc:703
+msgid "Generic"
+msgstr "Informations"
+
+#: admin/opsi/class_opsigeneric.inc:704
+msgid "OPSI generic"
+msgstr "Informations OPSI"
+
+#: admin/opsi/class_opsigeneric.inc:709 admin/opsi/class_opsi.inc:75
+msgid "Opsi"
+msgstr ""
+
+#: admin/opsi/class_opsigeneric.inc:716
+msgid "Note"
+msgstr ""
+
+#: admin/opsi/class_opsigeneric.inc:718
+msgid "Local product"
+msgstr "Produit local"
+
+#: admin/opsi/class_opsi.inc:75
+#, php-format
+msgid "More than one Opsi server were found, using the first result '%s'."
+msgstr "Plus d'un serveur Opsi on été trouvés, j'utilise le premier '%s'."
+
+#: admin/opsi/class_opsiProperties.inc:107
+msgid "Products"
+msgstr "Produits"
+
+#: admin/opsi/class_opsiProperties.inc:108
+msgid "Product properties"
+msgstr "Propriétés du produit"
+
