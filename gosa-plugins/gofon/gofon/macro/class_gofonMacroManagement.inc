@@ -232,7 +232,7 @@ class goFonMacro extends plugin
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($user= get_lock($this->dn)) != ""){
-          return(gen_locked_message ($user, $this->dn));
+          return(gen_locked_message ($user, $this->dn,TRUE));
         }
 
         /* Lock the current entry, so everyone will get the
@@ -412,7 +412,12 @@ class goFonMacro extends plugin
       $display= $this->macrotabs->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if (!$this->macrotabs->by_object[$this->macrotabs->current]->dialog){
+
+      if(($this->macrotabs instanceOf tabs || $this->macrotabs instanceOf plugin) && $this->macrotabs->read_only == TRUE){
+        $display.= "<p style=\"text-align:right\">
+          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+          </p>";
+      }elseif (!$this->macrotabs->by_object[$this->macrotabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
         $display.= "&nbsp;\n";

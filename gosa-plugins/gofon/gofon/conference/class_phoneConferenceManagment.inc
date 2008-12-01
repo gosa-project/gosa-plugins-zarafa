@@ -303,7 +303,7 @@ class phoneConferenceManagment extends plugin
       $this->dn= $this->conferences[$s_entry]['dn'];
 
       if (($conf= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($conf, $this->dn));
+        return(gen_locked_message ($conf, $this->dn,TRUE));
       }
 
       /* Lock the current entry, so everyone will get the  above dialog */
@@ -380,7 +380,12 @@ class phoneConferenceManagment extends plugin
       $display= $this->conftab->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if (!$this->conftab->by_object[$this->conftab->current]->dialog){
+
+      if(($this->conftab instanceOf tabs || $this->conftab instanceOf plugin) && $this->conftab->read_only == TRUE){
+        $display.= "<p style=\"text-align:right\">
+          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+          </p>";
+      }elseif (!$this->conftab->by_object[$this->conftab->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
         $display.= "&nbsp;\n";
@@ -552,11 +557,12 @@ class phoneConferenceManagment extends plugin
    */
   function remove_lock()
   {
-    if($this->dn) del_lock($this->dn);
-    if(is_array($this->dns) && count($this->dns)) del_lock($this->dns);
-    if(isset($this->conftab) && isset($this->conftab->dn)){
+    if($this->dn) {
+      del_lock($this->dn);
+    }elseif(isset($this->conftab) && isset($this->conftab->dn)){
       del_lock ($this->conftab->dn);
     }
+    if(is_array($this->dns) && count($this->dns)) del_lock($this->dns);
   }
 
 

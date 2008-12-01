@@ -185,7 +185,7 @@ class blocklist extends plugin
       $this->dn=$this->blocklists[$s_entry]['dn'];
 
       if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message($user, $this->dn));
+        return(gen_locked_message($user, $this->dn,TRUE));
       }else{
         add_lock ($this->dn, $this->ui->dn);
       }

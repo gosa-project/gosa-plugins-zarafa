@@ -509,7 +509,7 @@ class faiManagement extends plugin
 
 			/* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
 			if (($user= get_lock($this->dn)) != ""){
-				return(gen_locked_message ($user, $this->dn));
+				return(gen_locked_message ($user, $this->dn, TRUE));
 			}
 			add_lock ($this->dn, $this->ui->dn);
 
@@ -1022,7 +1022,11 @@ class faiManagement extends plugin
 
         $obj = $this->dialog->by_object[$this->dialog->current];
 
-        if((isset($obj->is_dialog) && (!$obj->is_dialog)) || (isset($obj->dialog) && (!$obj->dialog))){
+        if(($this->dialog instanceOf tabs || $this->dialog instanceOf plugin) && $this->dialog->read_only == TRUE){
+          $display.= "<p style=\"text-align:right\">
+            <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+            </p>";
+        }elseif((isset($obj->is_dialog) && (!$obj->is_dialog)) || (isset($obj->dialog) && (!$obj->dialog))){
 
           $display.= "<p style=\"text-align:right\">\n";
           if(!$this->no_save){

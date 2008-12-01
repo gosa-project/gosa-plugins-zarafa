@@ -28,6 +28,7 @@ class worktabs extends tabs
 
       $this->by_object[$tab['CLASS']]->parent= &$this;
       $this->by_object[$tab['CLASS']]->set_acl_category($category);
+      $this->read_only |= $this->by_object[$tab['CLASS']]->read_only;
 
       /* Initialize current */
       if ($this->current == ""){

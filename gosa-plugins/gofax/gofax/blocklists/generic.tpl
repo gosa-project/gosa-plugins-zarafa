@@ -96,10 +96,12 @@
 </table>
 
 <p class="plugbottom">
+  {if !$read_only}
   <input type=submit name="edit_finish" style="width:80px" value="{msgPool type=okButton}">
 	{if $dn != "new"}
 	  <input type=submit name="edit_apply" value="{msgPool type=applyButton}">
 	{/if}
+  {/if}
   <input type=submit name="edit_cancel" value="{msgPool type=cancelButton}">
 </p>
 <input type='hidden' name='blocklist_posted' value="1">
