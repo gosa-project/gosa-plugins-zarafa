@@ -317,7 +317,7 @@ class mimetypeManagement extends plugin
       /* Check locking, save current plugin in 'back_plugin', so
          the dialog knows where to return. */
       if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($user, $this->dn));
+        return(gen_locked_message ($user, $this->dn,TRUE));
       }
 
       /* Lock the current entry, so everyone will get the
@@ -517,7 +517,12 @@ class mimetypeManagement extends plugin
       $display= $this->mimetabs->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if (!$this->mimetabs->by_object[$this->mimetabs->current]->dialog){
+
+      if(($this->mimetabs instanceOf tabs || $this->mimetabs instanceOf plugin) && $this->mimetabs->read_only == TRUE){
+        $display.= "<p style=\"text-align:right\">
+          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+          </p>";
+      }elseif (!$this->mimetabs->by_object[$this->mimetabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
 
         if(isset($this->mimetabs->FAIstate) && !preg_match("/freeze/i",$this->mimetabs->FAIstate)){
@@ -727,8 +732,7 @@ class mimetypeManagement extends plugin
   {
     if (isset($this->mimetabs->dn)){
       del_lock ($this->mimetabs->dn);
-    }
-    if(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+    }elseif(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
       del_lock($this->dn);
     }
     if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
