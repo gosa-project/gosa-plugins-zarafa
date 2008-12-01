@@ -29,6 +29,10 @@ Defines the location for the pid file.
 
 =over 4
 
+=item ip = 1.2.3.4
+
+Defines the ip address GOsa-SI-server should use. Default: GOsa-SI determines the the ip address based on the destination address.
+
 =item port = 20081
 
 Defines the port GOsa-SI-server is listening for incoming messages.
