@@ -686,8 +686,6 @@ class sieveManagement extends plugin
    */
   function add_new_element_to_current_script($type,$id,$position)
   {
-    print_a(array($type,$id,$position));
-
     /* Test given data */
     if(!in_array_ics($position,array("above","below"))){
       trigger_error("Can't add new element with \$position=".$position.". Only 'above','below' are allowed here.");
