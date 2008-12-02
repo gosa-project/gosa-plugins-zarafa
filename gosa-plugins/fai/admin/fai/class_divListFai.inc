@@ -50,7 +50,6 @@ class divListFai extends MultiSelectWindow
 
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
-    $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Class name"),  "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
@@ -127,9 +126,6 @@ class divListFai extends MultiSelectWindow
 
     /* Add seperator */
     $add_sep = false;
-
-    /* Get complete fai acls, to be able to check if we must show or hide the snapshot abilities */ 
-    $acl_all = $ui->has_complete_category_acls($this->parent->acl_base,$this->module);
 
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header(false);
@@ -229,103 +225,60 @@ class divListFai extends MultiSelectWindow
 
     /* Dynamic action col, depending on snapshot icons */
     $action_col_size = 130;
-#   if($this->parent->snapshotEnabled()){
-#     $action_col_size += 32;
-#   }
 
     /********************
       Attach objects
      ********************/
 
+    /* Initialize summary attributes 
+     */
     $cnts = array();
     foreach($objects as $key => $data){
       $cnts[$key] = 0;
     }
 
-     foreach($list as $key => $value){
-       $info     = "";
-       $img      = "";
-       $type     = $value['type'];
-       $abort    =false;
+    /* Walk through entries an build up a printable row for each object 
+     */
+    foreach($list as $key => $value){
 
-       $cnts[$type] ++;
+      /* Build up edit icons - depending on read acls for the current type 
+       */
+      $name = "";
+      $name = "";
+      $icon_list = "";
+      foreach($objects as $type => $type_data){
+        if(isset($value[$type])){
+          $name = $value[$type]['cn'];
+          $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."' 
+            alt='".$type_data['KZL']."' class='center' name='edit_".$key."_".$type."'>\n";
+          $cnts[$type] ++;
+        }else{
+          $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
+        }
+      }
 
-       if(isset($objects[$type])){
-         $img   = "<img class='center' src='".$objects[$type]['IMG']."' title='".$objects[$type]['NAME']."' alt='".$objects[$type]['KZL']."'>";
-         $info  = $objects[$type]['NAME'];
-         $var   = $objects[$type]['VAR'];
-       }else{
-         $img   = "<img class='center' src='images/empty.png' alt=''>";
-         $info  = "";
-         $var   = "";
-       }
+      /* Create actions string
+       */
+      $actions = "";
+      
 
-       if((isset($value['description']))&&(!empty($value['description']))){
-         $desc= " [".$value['description']."]";
-       }else{
-         $desc= "";
-       }
+      /* Create list 
+       */
+      $field1 = array(
+          "string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+          "attach" => "style='width:20px;'");
+      $field2 = array(
+          "string" => $name,
+          "attach" => "style=''");
+      $field3 = array(
+          "string" => $icon_list ,
+          "attach" => "style='width:200px;'");
+      $field4 = array(
+          "string" => $actions,
+          "attach" => "style='width:".$action_col_size."px;border-right:  0px;text-align:right;'");
 
-       /* Add copy & cut icons */
-       $ui = get_userinfo();
-       $action ="";
-       $acl_all = $ui->has_complete_category_acls($this->parent->acl_base,$this->module);
-
-       if(preg_match("/^opsi_/",$type)){
-         $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_opsi_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-         $action.=  "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
-           name='entry_opsi_edit_%KEY%' title='"._("Edit product")."'><img src='images/empty.png' alt=' ' class='center'>";
-       }else{
-
-         /* Add copy & cut functionality */
-         $action.= $this->parent->get_copypaste_action($value['dn'],"fai",$value['class'],TRUE,FALSE);
-
-         if(preg_match("/^freeze/", $value['FAIstate'])){
-           $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_freeze_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-           $action.=  "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
-             name='entry_freeze_edit_%KEY%' title='"._("Edit class")."'>";
-           $action.=  "<img src='images/lists/locked.png' alt='F' class='center'>";
-         }else{
-           $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
-           $action.= "<input class='center' type='image' src='images/lists/edit.png'  alt='"._("edit")."'
-             name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-           if(preg_match("/d/",$value['acl'])){
-             $action.= "<input class='center' type='image' src='images/lists/trash.png' alt='"._("delete")."'
-               name='entry_delete_%KEY%' title='"._("Delete class")."'>";
-           }
-         }
-       }
-
-#      $action.= $this->parent->get_snapshot_action($val['dn'],$this->module);
-
-       /* Cutted objects should be displayed in light grey */
-       $display = $value['cn'].$desc;
-       if($this->parent->CopyPasteHandler){
-         foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
-           if($queue_data['dn'] == $value['dn']) {
-             $display = "<font color='#999999'>".$display."</font>";
-             break;
-           }
-         }
-       }
-       $edi = $editlink;
-       $acti = $action;
-
-        $display = "<div style='overflow:hidden; height:1em;'>".$display."</div>";
-
-        /* Some objects are non ldap objects which do not have a dn.
-         */
-        if(!isset($value['dn'])) $value['dn'] = "";
-
-        /* Create each field */
-       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
-           "attach" => "style='width:20px;'");
-       $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
-       $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$display,preg_replace('/ /', '&nbsp;', LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
-       $field3 = array("string" => $info, "attach" => "style='width:200px;'");
-       $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
-       $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
-     }
+      $this->AddElement(array($field1,$field2,$field3,$field4));
+    }
 
      /* Create summary string for list footer */
      $num_deps=0;

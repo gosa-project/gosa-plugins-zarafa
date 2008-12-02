@@ -151,16 +151,12 @@ class faiManagement extends plugin
           break;
         }
       }
-			if(preg_match("/^entry_edit_.*/",$name)){
-				$s_entry = preg_replace("/^entry_edit_/","",$name);
-				$s_entry = preg_replace("/_.*$/","",$s_entry);
+			if(preg_match("/^edit_[0-9]*_.*$/",$name)){
+
+        $i_entryID  = preg_replace("/^edit_([0-9]*)_.*$/i","\\1",$name);
+        $s_entryType= preg_replace("/^edit_[0-9]*_([^_]*)_.*$/i","\\1",$name);
         $s_action = "edit";
-        break;
-      }elseif(preg_match("/^entry_freeze_edit_.*/",$name)){
-        $s_entry = preg_replace("/^entry_freeze_edit_/","",$name);
-        $s_entry = preg_replace("/_.*$/","",$s_entry);
-        $s_action = "edit";
-        $no_save = TRUE;
+
         break;
       }elseif(preg_match("/^entry_delete_.*/",$name)){
         $s_entry = preg_replace("/^entry_delete_/","",$name);
@@ -185,17 +181,6 @@ class faiManagement extends plugin
 		if($this->opsi instanceof opsi && $this->opsi->enabled() && isset($_GET['edit_opsi_entry'])){
 			$s_entry = $_GET['edit_opsi_entry'];
 			$s_action = "opsi_edit";
-		}
-
-		if(isset($_GET['edit_entry'])){
-			$s_entry = $_GET['edit_entry'];
-			$s_action = "edit";
-		}
-
-		if(isset($_GET['edit_freeze_entry'])){
-			$s_entry = $_GET['edit_freeze_entry'];
-			$s_action = "edit";
-      $no_save = TRUE;
 		}
 
     if(isset($_GET['act']) && $_GET['act'] == "freeze_branch"){
@@ -503,23 +488,25 @@ class faiManagement extends plugin
      ****************/
 
 		if(($s_action == "edit") && (!isset($this->dialog->config))){
-			$entry    = $this->objects[$s_entry];
-			$a_setup  = $this->get_type($entry);
-			$this->dn = $entry['dn'];
+      if(isset($this->objects[$i_entryID][$s_entryType])){
+        $entry    = $this->objects[$i_entryID][$s_entryType];
+        $a_setup  = $this->get_type($entry);
+        $this->dn = $entry['dn'];
 
-			/* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
-			if (($user= get_lock($this->dn)) != ""){
-				return(gen_locked_message ($user, $this->dn, TRUE));
-			}
-			add_lock ($this->dn, $this->ui->dn);
+        /* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
+        if (($user= get_lock($this->dn)) != ""){
+          return(gen_locked_message ($user, $this->dn, TRUE));
+        }
+        add_lock ($this->dn, $this->ui->dn);
 
-			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-      $this->dialog->parent = &$this;
-      $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
-      $this->dialog->set_acl_base($this->dn);
-			$this->is_dialog  = true;
-			session::set('objectinfo',$this->dn);
-		}
+        $this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+        $this->dialog->parent = &$this;
+        $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
+        $this->dialog->set_acl_base($this->dn);
+        $this->is_dialog  = true;
+        session::set('objectinfo',$this->dn);
+      }
+    }
 
 
     /*  Branch handling 
@@ -1198,8 +1185,8 @@ class faiManagement extends plugin
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
 
-          $this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;
-          $this->objects[strtolower($obj['cn']).$obj['cn'].$type]['type']=$type;
+          $this->objects[$obj['cn']][$type] = $obj;
+          $this->objects[$obj['cn']][$type]['type']=$type;
         }
 			}
 		}
@@ -1217,7 +1204,7 @@ class faiManagement extends plugin
             $entry = array("cn" => $name,
                 "description" => $data['DESC'],
                 "type" => "opsi_netboot");
-            $this->objects[$name."_opsi_netboot"] = $entry;
+            $this->objects[$name]['opse_netboot'] = $entry;
           }  
         }
         if(!$err && $this->DivListFai->ShowOpsiLocal){
@@ -1227,7 +1214,7 @@ class faiManagement extends plugin
             $entry = array("cn" => $name,
                 "description" => $data['DESC'],
                 "type" => "opsi_local");
-            $this->objects[$name."_opsi_local"] = $entry;
+            $this->objects[$name]["opsi_local"] = $entry;
           }  
         }  
         if($err){
@@ -1235,17 +1222,10 @@ class faiManagement extends plugin
         }
       }
     }
-
-		ksort($this->objects);
+ 
+    uksort($this->objects, 'strnatcasecmp');
 		reset ($this->objects);
-	
-		/* use numeric index, thats a bit more secure */	
-		$tmp0 = array();
-		foreach($this->objects as $obj){
-			$tmp0[]= $obj;
-		}
-		$this->objects = array();
-		$this->objects = $tmp0;
+		$this->objects = array_values($this->objects);
 	}
 
 	function remove_lock()
