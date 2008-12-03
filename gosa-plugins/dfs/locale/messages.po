@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,17 +16,49 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: addons/godfs/generic.tpl:4
+msgid "DFS Properties"
+msgstr ""
+
+#: addons/godfs/generic.tpl:8
+msgid "Name of dfs Share"
+msgstr ""
+
+#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
+msgid "Description"
+msgstr ""
+
+#: addons/godfs/generic.tpl:16
+msgid "Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:20
+msgid "Share on Fileserver"
+msgstr ""
+
+#: addons/godfs/generic.tpl:30
+msgid "DFS Location"
+msgstr ""
+
+#: addons/godfs/generic.tpl:34
+msgid "Location"
+msgstr ""
+
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#: addons/godfs/class_dfsManagment.inc:148
+msgid "LDAP error"
+msgstr ""
+
+#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+msgid "Distributed File System Administration"
+msgstr ""
+
 #: addons/godfs/class_dfsManagment.inc:8
 msgid "DFS Management"
 msgstr ""
 
 #: addons/godfs/class_dfsManagment.inc:9
 msgid "This does something"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:148
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-msgid "LDAP error"
 msgstr ""
 
 #: addons/godfs/class_dfsManagment.inc:168
@@ -69,34 +101,6 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: addons/godfs/generic.tpl:4
-msgid "DFS Properties"
-msgstr ""
-
-#: addons/godfs/generic.tpl:8
-msgid "Name of dfs Share"
-msgstr ""
-
-#: addons/godfs/generic.tpl:12 addons/godfs/generic.tpl:38
-msgid "Description"
-msgstr ""
-
-#: addons/godfs/generic.tpl:16
-msgid "Fileserver"
-msgstr ""
-
-#: addons/godfs/generic.tpl:20
-msgid "Share on Fileserver"
-msgstr ""
-
-#: addons/godfs/generic.tpl:30
-msgid "DFS Location"
-msgstr ""
-
-#: addons/godfs/generic.tpl:34
-msgid "Location"
-msgstr ""
-
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
 msgstr ""
@@ -122,8 +126,4 @@ msgstr ""
 
 #: addons/godfs/contents.tpl:44
 msgid "Regular expression for matching dfs share names"
-msgstr ""
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
-msgid "Distributed File System Administration"
 msgstr ""

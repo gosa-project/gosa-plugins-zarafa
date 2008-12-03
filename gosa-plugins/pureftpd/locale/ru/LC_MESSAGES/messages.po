@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "Аккаунт FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "Пропускная способность"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+msgid "Upload bandwidth"
+msgstr "Пропускная способность (на сервер)"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "Кб/с"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
+msgid "Download bandwidth"
+msgstr "Пропускная способность (с сервера)"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Квота"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "Файлы"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "Размер"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "Мб"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "Отношение"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "Загрузка на сервер / с сервера"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "Отметьте, чтобы отключить доступ к FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "Временно отключить доступ к FTP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
 msgid "FTP"
@@ -27,16 +86,6 @@ msgstr "Что-то будет"
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-msgid "Upload bandwidth"
-msgstr "Пропускная способность (на сервер)"
-
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-msgid "Download bandwidth"
-msgstr "Пропускная способность (с сервера)"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
@@ -102,55 +151,6 @@ msgstr "Пропускная способность (с сервера)"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "Состояние"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:6
-msgid "FTP account"
-msgstr "Аккаунт FTP"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:17
-msgid "Bandwidth"
-msgstr "Пропускная способность"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:26
-#: personal/connectivity/pureftpd/pureftpd.tpl:34
-msgid "kb/s"
-msgstr "Кб/с"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:45
-msgid "Quota"
-msgstr "Квота"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:49
-msgid "Files"
-msgstr "Файлы"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:57
-msgid "Size"
-msgstr "Размер"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:62
-msgid "MB"
-msgstr "Мб"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:73
-msgid "Ratio"
-msgstr "Отношение"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:77
-msgid "Uploaded / downloaded files"
-msgstr "Загрузка на сервер / с сервера"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:95
-msgid "Miscellaneous"
-msgstr "Разное"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:100
-msgid "Check to disable FTP Access"
-msgstr "Отметьте, чтобы отключить доступ к FTP"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:102
-msgid "Temporary disable FTP access"
-msgstr "Временно отключить доступ к FTP"
 
 #, fuzzy
 #~ msgid "Removing of user/pureftpd account with dn '%s' failed."

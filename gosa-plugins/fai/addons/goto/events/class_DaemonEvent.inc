@@ -116,7 +116,7 @@ class DaemonEvent
     $this->time_select_used = FALSE;
     $this->target_list_used = FALSE;
 
-    $str = "<h2>"._("This job has no template.")."</h2>";
+    $str = "<h2>"._("This job has no template!")."</h2>";
     $str.= "<p class='seperator'></p>";
     $str.= "<div style='text-align:right;width:100%;padding:3px;'>
       <input type='submit' name='abort_event_dialog' value='".msgPool::cancelButton()."'>

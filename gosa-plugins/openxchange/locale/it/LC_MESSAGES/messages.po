@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,82 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:432
-msgid "Open-Xchange"
-msgstr "Open-Xchange"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
-msgid "This does something"
-msgstr "Questo fa qualcosa"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:187
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:296
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
-msgid "Error"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:191
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:300
-#, fuzzy
-msgid "Open-Xchange database"
-msgstr "Opzioni di posta dell'identità"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:195
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:304
-#, fuzzy
-msgid "Configuration error"
-msgstr "File di configurazione"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:205
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:218
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:324
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:333
-#, fuzzy
-msgid "LDAP error"
-msgstr "Errore LDAP"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:284
-#, fuzzy
-msgid "Open-Xchange account name"
-msgstr "Opzioni di posta dell'identità"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:422
-#, fuzzy
-msgid "Cannot save Open-Xchange account!"
-msgstr "Opzioni di posta dell'identità"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
-#, fuzzy
-msgid "Open-Xchange account settings"
-msgstr "Opzioni di posta dell'identità"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:433
-#, fuzzy
-msgid "Connectivity addon"
-msgstr "Connettività"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:437
-msgid "My account"
-msgstr "Identità"
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:442
-msgid "OXAppointmentDays"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
-msgid "OXTaskDays"
-msgstr ""
-
-#: personal/connectivity/openxchange/class_oxchangeAccount.inc:444
-msgid "OXTimeZone"
-msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -128,6 +52,82 @@ msgstr ""
 
 #: personal/connectivity/openxchange/oxchange.tpl:65
 msgid "User Timezone"
+msgstr ""
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:438
+msgid "Open-Xchange"
+msgstr "Open-Xchange"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:25
+msgid "This does something"
+msgstr "Questo fa qualcosa"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:302
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+msgid "Error"
+msgstr ""
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:193
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:306
+#, fuzzy
+msgid "Open-Xchange database"
+msgstr "Opzioni di posta dell'identità"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:197
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:310
+#, fuzzy
+msgid "Configuration error"
+msgstr "File di configurazione"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:207
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:220
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:330
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:339
+#, fuzzy
+msgid "LDAP error"
+msgstr "Errore LDAP"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:290
+#, fuzzy
+msgid "Open-Xchange account name"
+msgstr "Opzioni di posta dell'identità"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:428
+#, fuzzy
+msgid "Cannot save Open-Xchange account!"
+msgstr "Opzioni di posta dell'identità"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#, fuzzy
+msgid "Open-Xchange account settings"
+msgstr "Opzioni di posta dell'identità"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:439
+#, fuzzy
+msgid "Connectivity addon"
+msgstr "Connettività"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:443
+msgid "My account"
+msgstr "Identità"
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:448
+msgid "OXAppointmentDays"
+msgstr ""
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:449
+msgid "OXTaskDays"
+msgstr ""
+
+#: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
+msgid "OXTimeZone"
 msgstr ""
 
 #, fuzzy

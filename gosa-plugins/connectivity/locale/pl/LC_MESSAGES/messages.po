@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr "Połączenia"
 
@@ -36,6 +36,10 @@ msgstr "Moje konto "
 msgid "Connectivity addon"
 msgstr "Konto połączeń"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Konto Intranet"
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -50,10 +54,6 @@ msgstr "błąd LDAP:"
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Ustawienia konta Intranet"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Konto Intranet"
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "To konto nie posiada rozszerzeń do Połączeń"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-07 18:31+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -14,68 +14,313 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
 
-#: admin/systems/services/dhcp/dhcp_pool.tpl:2
-#: admin/systems/services/dhcp/dhcp_host.tpl:2
-#: admin/systems/services/dhcp/dhcp_service.tpl:1
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:2
-#: admin/systems/services/dhcp/dhcp_group.tpl:2
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:2
-msgid "Generic"
-msgstr "Общее"
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
+#, fuzzy
+msgid "Hide advanced settings"
+msgstr "Настройки телефона"
 
-#: admin/systems/services/dhcp/dhcp_pool.tpl:6
-#: admin/systems/services/dhcp/dhcp_host.tpl:8
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:15
+#, fuzzy
+msgid "DHCP statements"
+msgstr "Подразделения"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:36
+#, fuzzy
+msgid "DHCP options"
+msgstr "Добавить параметр"
+
+#: admin/systems/services/dhcp/dhcp_advanced.tpl:59
+#, fuzzy
+msgid "Show advanced settings"
+msgstr "Настройки телефона"
+
+#: admin/systems/services/dhcp/servdhcp.tpl:5
+msgid ""
+"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
+"abort."
+msgstr ""
+
+#: admin/systems/services/dhcp/servdhcp.tpl:14
+msgid "Take over dhcp configuration from following server"
+msgstr ""
+
+#: admin/systems/services/dhcp/servdhcp.tpl:24
+#, fuzzy
+msgid "DHCP sections"
+msgstr "Проверка конфигурации PHP"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:33
+#: admin/systems/services/dhcp/class_servDHCP.inc:692
+#: admin/systems/services/dhcp/class_servDHCP.inc:693
+#: admin/systems/services/dhcp/class_servDHCP.inc:739
+#, fuzzy
+msgid "DHCP service"
+msgstr "Добавить сервис DHCP"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:35
+#, fuzzy
+msgid "Logging"
+msgstr "Имя пользователя"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:36
+#: admin/systems/services/dhcp/class_servDHCP.inc:301
+#: admin/systems/services/dhcp/class_servDHCP.inc:604
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
+#, fuzzy
+msgid "Global options"
+msgstr "Почтовые настройки"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:37
+#, fuzzy
+msgid "Class"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:38
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
+#, fuzzy
+msgid "Subclass"
+msgstr "Экспорт успешен."
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:39
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
+#, fuzzy
+msgid "Host"
+msgstr "отправка"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:40
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
+msgid "Group"
+msgstr "Группа"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:41
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
+#, fuzzy
+msgid "Pool"
+msgstr "Английский"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:42
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
+#, fuzzy
+msgid "Subnet"
+msgstr "Установить"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:43
+#, fuzzy
+msgid "Failover peer"
+msgstr "Фильтры"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:44
+#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
+#, fuzzy
+msgid "Shared network"
+msgstr "Атрибуты UNIX"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:103
+#, fuzzy, php-format
+msgid ""
+"You have requested a migration of the DHCP setup from server '%s' to the "
+"current one."
+msgstr "Вы собираетесь удалить объект %s."
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:105
+msgid "The migration will be started when you save this system."
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:108
+#: admin/systems/services/dhcp/remove_dhcp.tpl:2
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:222
+#, fuzzy
+msgid "Permission error"
+msgstr "Права для членов группы"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:256
+#, fuzzy
+msgid "DHCP section"
+msgstr "Проверка конфигурации PHP"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:325
+#: admin/systems/services/dhcp/class_servDHCP.inc:328
+msgid "Insert new DHCP section"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:326
+#: admin/systems/services/dhcp/class_servDHCP.inc:329
+#: admin/systems/services/dhcp/class_servDHCP.inc:330
+#, fuzzy
+msgid "Edit DHCP section"
+msgstr "Проверка конфигурации PHP"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:327
+#: admin/systems/services/dhcp/class_servDHCP.inc:331
+#, fuzzy
+msgid "Remove DHCP section"
+msgstr "Удалить сервис DHCP"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:378
+#: admin/systems/services/dhcp/class_servDHCP.inc:395
+#: admin/systems/services/dhcp/class_servDHCP.inc:450
+#: admin/systems/services/dhcp/class_servDHCP.inc:526
+#: admin/systems/services/dhcp/class_servDHCP.inc:534
+#: admin/systems/services/dhcp/class_servDHCP.inc:561
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:681
 #: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:10
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:96
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:99
-#: admin/systems/services/dhcp/class_dhcpGroup.inc:107
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:56
+#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:69
+msgid "Error"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:681
+#, fuzzy
+msgid ""
+"The DHCP configuration set is unkown. Please contact your system "
+"administrator."
+msgstr ""
+"Не удается начать сеанс на LDAP-сервере. Обратитесь к системному "
+"администратору."
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:693
+msgid "Services"
+msgstr "Сервисы"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:701
+#, fuzzy
+msgid "Start service"
+msgstr "Сервисы"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:702
+#, fuzzy
+msgid "Stop service"
+msgstr "Сервисы"
+
+#: admin/systems/services/dhcp/class_servDHCP.inc:703
+#, fuzzy
+msgid "Restart service"
+msgstr "Сервер NTP"
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:169
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:187
 #: admin/systems/services/dhcp/class_dhcpSubnet.inc:159
+#: admin/systems/services/dhcp/class_dhcpPool.inc:113
+#: admin/systems/services/dhcp/class_dhcpPool.inc:121
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
+#: admin/systems/services/dhcp/dhcp_pool.tpl:6
 #: admin/systems/services/dhcp/dhcp_group.tpl:6
 #: admin/systems/services/dhcp/class_dhcpHost.inc:143
 #: admin/systems/services/dhcp/class_dhcpHost.inc:151
-#: admin/systems/services/dhcp/class_dhcpPool.inc:113
-#: admin/systems/services/dhcp/class_dhcpPool.inc:121
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:169
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:187
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:96
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:99
+#: admin/systems/services/dhcp/class_dhcpGroup.inc:107
+#: admin/systems/services/dhcp/dhcp_host.tpl:8
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:10
 msgid "Name"
 msgstr "Фамилия"
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:173
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:55
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:59
+#: admin/systems/services/dhcp/class_dhcpService.inc:151
+#, fuzzy
+msgid "Default lease time"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:174
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:64
+#, fuzzy
+msgid "Max. lease time"
+msgstr "Сообщение"
+
+#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:175
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:73
+msgid "Min. lease time"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:148
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:168
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
+#, fuzzy
+msgid "Network address"
+msgstr "Сетевые устройства"
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:151
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:16
+#: admin/systems/services/dhcp/dhcp_network.tpl:17
+msgid "Netmask"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:170
+#: admin/systems/services/dhcp/class_dhcpPool.inc:128
+#: admin/systems/services/dhcp/class_dhcpPool.inc:132
+#: admin/systems/services/dhcp/class_dhcpPool.inc:136
+#: admin/systems/services/dhcp/dhcp_pool.tpl:13
+#, fuzzy
+msgid "Range"
+msgstr "Название"
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:179
+#, fuzzy
+msgid "Network range"
+msgstr "Сетевые устройства"
+
+#: admin/systems/services/dhcp/class_dhcpSubnet.inc:185
+#: admin/systems/services/dhcp/class_dhcpPool.inc:150
+#, fuzzy
+msgid "'Range' is not inside the configured network."
+msgstr "Вы собираетесь удалить объект %s."
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
+#: admin/systems/services/dhcp/dhcp_network.tpl:25
+msgid "Broadcast"
+msgstr ""
+
+#: admin/systems/services/dhcp/class_dhcpNetwork.inc:218
+#, php-format
+msgid "Error in definition of '%s'!"
+msgstr ""
+
+#: admin/systems/services/dhcp/dhcp_pool.tpl:2
+#: admin/systems/services/dhcp/dhcp_group.tpl:2
+#: admin/systems/services/dhcp/dhcp_service.tpl:1
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:2
+#: admin/systems/services/dhcp/dhcp_host.tpl:2
+#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:2
+msgid "Generic"
+msgstr "Общее"
 
 #: admin/systems/services/dhcp/dhcp_pool.tpl:9
 #, fuzzy
 msgid "Name of pool"
 msgstr "Имя стоп-листа"
 
-#: admin/systems/services/dhcp/dhcp_pool.tpl:13
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:169
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:170
-#: admin/systems/services/dhcp/class_dhcpPool.inc:128
-#: admin/systems/services/dhcp/class_dhcpPool.inc:132
-#: admin/systems/services/dhcp/class_dhcpPool.inc:136
+#: admin/systems/services/dhcp/dhcp_group.tpl:11
 #, fuzzy
-msgid "Range"
-msgstr "Название"
+msgid "Name of group"
+msgstr "Название группы"
 
-#: admin/systems/services/dhcp/dhcp_host.tpl:12
+#: admin/systems/services/dhcp/class_dhcpHost.inc:65
 #, fuzzy
-msgid "Name of host"
-msgstr "Имя стоп-листа"
+msgid "Ethernet"
+msgstr "Фильтры"
 
-#: admin/systems/services/dhcp/dhcp_host.tpl:17
-#, fuzzy
-msgid "Fixed address"
-msgstr "MAC-адрес"
-
-#: admin/systems/services/dhcp/dhcp_host.tpl:22
-msgid "Use hostname or IP-address to assign fixed address"
+#: admin/systems/services/dhcp/class_dhcpHost.inc:66
+msgid "FDDI"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_host.tpl:31
-msgid "Hardware type"
+#: admin/systems/services/dhcp/class_dhcpHost.inc:67
+msgid "Token Ring"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_host.tpl:41
 #: admin/systems/services/dhcp/class_dhcpHost.inc:160
+#: admin/systems/services/dhcp/dhcp_host.tpl:41
 #, fuzzy
 msgid "Hardware address"
 msgstr "Основной адрес"
@@ -110,29 +355,71 @@ msgstr "Размер квоты"
 msgid "Enter maximum lease time in seconds."
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:45
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:56
-#: admin/systems/services/dhcp/class_dhcpAdvanced.inc:69
-#: admin/systems/services/dhcp/class_servDHCP.inc:681
-msgid "Error"
+#: admin/systems/services/dhcp/dhcp_subnet.tpl:32
+msgid "Range for dynamic address assignment"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:151
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:167
-#: admin/systems/services/dhcp/dhcp_network.tpl:17
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:16
-msgid "Netmask"
+#: admin/systems/services/dhcp/dhcpNewSection.tpl:2
+#, fuzzy
+msgid "Create new DHCP section"
+msgstr "Создать приложения"
+
+#: admin/systems/services/dhcp/dhcpNewSection.tpl:6
+msgid "Please choose one of the following DHCP section types."
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:211
-#: admin/systems/services/dhcp/dhcp_network.tpl:25
-msgid "Broadcast"
+#: admin/systems/services/dhcp/dhcpNewSection.tpl:9
+#, fuzzy
+msgid "Section"
+msgstr "Действие"
+
+#: admin/systems/services/dhcp/dhcpNewSection.tpl:10
+#, fuzzy
+msgid "Choose section type to create"
+msgstr "Выберите тип мыши"
+
+#: admin/systems/services/dhcp/dhcpNewSection.tpl:15
+msgid "Create"
+msgstr "Создать"
+
+#: admin/systems/services/dhcp/remove_dhcp.tpl:6
+#, fuzzy
+msgid ""
+"This includes 'all' DHCP subsections that are located within this section. "
+"Please double check if your really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+"Сюда входит <b>вся</b> информация о системе и ее настройках. Подумайте еще "
+"раз, действительно ли вам нужно удаление, так как GOsa не сможет отменить "
+"результаты этой операции."
+
+#: admin/systems/services/dhcp/remove_dhcp.tpl:10
+#, fuzzy
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Лучше всего перед удалением сохранить резервную копию текущего дерева LDAP в "
+"файл. Если вы сделали это и действительно хотите выполнить удаление, нажмите "
+"<i>Удалить</i>, иначе нажмите <i>Отмена</i>."
+
+#: admin/systems/services/dhcp/dhcp_host.tpl:12
+#, fuzzy
+msgid "Name of host"
+msgstr "Имя стоп-листа"
+
+#: admin/systems/services/dhcp/dhcp_host.tpl:17
+#, fuzzy
+msgid "Fixed address"
+msgstr "MAC-адрес"
+
+#: admin/systems/services/dhcp/dhcp_host.tpl:22
+msgid "Use hostname or IP-address to assign fixed address"
 msgstr ""
 
-#: admin/systems/services/dhcp/class_dhcpNetwork.inc:218
-#, php-format
-msgid "Error in definition of '%s'!"
+#: admin/systems/services/dhcp/dhcp_host.tpl:31
+msgid "Hardware type"
 msgstr ""
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:13
@@ -163,14 +450,6 @@ msgstr "Рабочие станции"
 msgid "Leases"
 msgstr "Набор правил"
 
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:55
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:59
-#: admin/systems/services/dhcp/class_dhcpService.inc:151
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:173
-#, fuzzy
-msgid "Default lease time"
-msgstr "Выберите, чтобы просмотреть серверы"
-
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:59
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:68
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:77
@@ -178,22 +457,11 @@ msgstr "Выберите, чтобы просмотреть серверы"
 msgid "seconds"
 msgstr "отправка"
 
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:64
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:174
-#, fuzzy
-msgid "Max. lease time"
-msgstr "Сообщение"
-
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:68
 #: admin/systems/services/dhcp/class_dhcpService.inc:151
 #, fuzzy
 msgid "Maximum lease time"
 msgstr "Размер квоты"
-
-#: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:73
-#: admin/systems/services/dhcp/class_dhcpSharedNetwork.inc:175
-msgid "Min. lease time"
-msgstr ""
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:77
 #, fuzzy
@@ -231,55 +499,15 @@ msgstr "У вас недостаточно прав для удаления эт
 msgid "Allow booting"
 msgstr ""
 
-#: admin/systems/services/dhcp/remove_dhcp.tpl:2
-#: admin/systems/services/dhcp/class_servDHCP.inc:108
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: admin/systems/services/dhcp/remove_dhcp.tpl:6
+#: admin/systems/services/dhcp/class_dhcpService.inc:145
 #, fuzzy
-msgid ""
-"This includes 'all' DHCP subsections that are located within this section. "
-"Please double check if your really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Сюда входит <b>вся</b> информация о системе и ее настройках. Подумайте еще "
-"раз, действительно ли вам нужно удаление, так как GOsa не сможет отменить "
-"результаты этой операции."
+msgid "Lease time"
+msgstr "Сообщение"
 
-#: admin/systems/services/dhcp/remove_dhcp.tpl:10
+#: admin/systems/services/dhcp/class_dhcpService.inc:148
 #, fuzzy
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Лучше всего перед удалением сохранить резервную копию текущего дерева LDAP в "
-"файл. Если вы сделали это и действительно хотите выполнить удаление, нажмите "
-"<i>Удалить</i>, иначе нажмите <i>Отмена</i>."
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:148
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:168
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:8
-#, fuzzy
-msgid "Network address"
-msgstr "Сетевые устройства"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:179
-#, fuzzy
-msgid "Network range"
-msgstr "Сетевые устройства"
-
-#: admin/systems/services/dhcp/class_dhcpSubnet.inc:185
-#: admin/systems/services/dhcp/class_dhcpPool.inc:150
-#, fuzzy
-msgid "'Range' is not inside the configured network."
-msgstr "Вы собираетесь удалить объект %s."
-
-#: admin/systems/services/dhcp/dhcp_group.tpl:11
-#, fuzzy
-msgid "Name of group"
-msgstr "Название группы"
+msgid "Max lease time"
+msgstr "Сообщение"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:5
 #, fuzzy
@@ -368,64 +596,6 @@ msgstr ""
 msgid "Assign hostnames from host declarations"
 msgstr ""
 
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:8
-#, fuzzy
-msgid "Hide advanced settings"
-msgstr "Настройки телефона"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:15
-#, fuzzy
-msgid "DHCP statements"
-msgstr "Подразделения"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:36
-#, fuzzy
-msgid "DHCP options"
-msgstr "Добавить параметр"
-
-#: admin/systems/services/dhcp/dhcp_advanced.tpl:59
-#, fuzzy
-msgid "Show advanced settings"
-msgstr "Настройки телефона"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:145
-#, fuzzy
-msgid "Lease time"
-msgstr "Сообщение"
-
-#: admin/systems/services/dhcp/class_dhcpService.inc:148
-#, fuzzy
-msgid "Max lease time"
-msgstr "Сообщение"
-
-#: admin/systems/services/dhcp/servdhcp.tpl:5
-msgid ""
-"DHCP take over will take place when saving this entry. Choose 'Cancel' to "
-"abort."
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:14
-msgid "Take over dhcp configuration from following server"
-msgstr ""
-
-#: admin/systems/services/dhcp/servdhcp.tpl:24
-#, fuzzy
-msgid "DHCP sections"
-msgstr "Проверка конфигурации PHP"
-
-#: admin/systems/services/dhcp/class_dhcpHost.inc:65
-#, fuzzy
-msgid "Ethernet"
-msgstr "Фильтры"
-
-#: admin/systems/services/dhcp/class_dhcpHost.inc:66
-msgid "FDDI"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_dhcpHost.inc:67
-msgid "Token Ring"
-msgstr ""
-
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:56
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:69
 msgid "Cannot delete automatic statements!"
@@ -435,176 +605,6 @@ msgstr ""
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:93
 msgid "automatic"
 msgstr "автоматически"
-
-#: admin/systems/services/dhcp/dhcp_subnet.tpl:32
-msgid "Range for dynamic address assignment"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:33
-#: admin/systems/services/dhcp/class_servDHCP.inc:692
-#: admin/systems/services/dhcp/class_servDHCP.inc:693
-#: admin/systems/services/dhcp/class_servDHCP.inc:739
-#, fuzzy
-msgid "DHCP service"
-msgstr "Добавить сервис DHCP"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:35
-#, fuzzy
-msgid "Logging"
-msgstr "Имя пользователя"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:36
-#: admin/systems/services/dhcp/class_servDHCP.inc:301
-#: admin/systems/services/dhcp/class_servDHCP.inc:604
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:26
-#, fuzzy
-msgid "Global options"
-msgstr "Почтовые настройки"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:37
-#, fuzzy
-msgid "Class"
-msgstr "Выберите тип мыши"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:38
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:28
-#, fuzzy
-msgid "Subclass"
-msgstr "Экспорт успешен."
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:39
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:29
-#, fuzzy
-msgid "Host"
-msgstr "отправка"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:40
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:30
-msgid "Group"
-msgstr "Группа"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:41
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:31
-#, fuzzy
-msgid "Pool"
-msgstr "Английский"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:42
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:32
-#, fuzzy
-msgid "Subnet"
-msgstr "Установить"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:43
-#, fuzzy
-msgid "Failover peer"
-msgstr "Фильтры"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:44
-#: admin/systems/services/dhcp/class_dhcpNewSectionDialog.inc:33
-#, fuzzy
-msgid "Shared network"
-msgstr "Атрибуты UNIX"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:103
-#, fuzzy, php-format
-msgid ""
-"You have requested a migration of the DHCP setup from server '%s' to the "
-"current one."
-msgstr "Вы собираетесь удалить объект %s."
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:105
-msgid "The migration will be started when you save this system."
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:222
-#, fuzzy
-msgid "Permission error"
-msgstr "Права для членов группы"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:256
-#, fuzzy
-msgid "DHCP section"
-msgstr "Проверка конфигурации PHP"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:325
-#: admin/systems/services/dhcp/class_servDHCP.inc:328
-msgid "Insert new DHCP section"
-msgstr ""
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:326
-#: admin/systems/services/dhcp/class_servDHCP.inc:329
-#: admin/systems/services/dhcp/class_servDHCP.inc:330
-#, fuzzy
-msgid "Edit DHCP section"
-msgstr "Проверка конфигурации PHP"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:327
-#: admin/systems/services/dhcp/class_servDHCP.inc:331
-#, fuzzy
-msgid "Remove DHCP section"
-msgstr "Удалить сервис DHCP"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:378
-#: admin/systems/services/dhcp/class_servDHCP.inc:395
-#: admin/systems/services/dhcp/class_servDHCP.inc:450
-#: admin/systems/services/dhcp/class_servDHCP.inc:526
-#: admin/systems/services/dhcp/class_servDHCP.inc:534
-#: admin/systems/services/dhcp/class_servDHCP.inc:561
-#, fuzzy
-msgid "LDAP error"
-msgstr "Ошибка LDAP:"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:681
-#, fuzzy
-msgid ""
-"The DHCP configuration set is unkown. Please contact your system "
-"administrator."
-msgstr ""
-"Не удается начать сеанс на LDAP-сервере. Обратитесь к системному "
-"администратору."
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:693
-msgid "Services"
-msgstr "Сервисы"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:701
-#, fuzzy
-msgid "Start service"
-msgstr "Сервисы"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:702
-#, fuzzy
-msgid "Stop service"
-msgstr "Сервисы"
-
-#: admin/systems/services/dhcp/class_servDHCP.inc:703
-#, fuzzy
-msgid "Restart service"
-msgstr "Сервер NTP"
-
-#: admin/systems/services/dhcp/dhcpNewSection.tpl:2
-#, fuzzy
-msgid "Create new DHCP section"
-msgstr "Создать приложения"
-
-#: admin/systems/services/dhcp/dhcpNewSection.tpl:6
-msgid "Please choose one of the following DHCP section types."
-msgstr ""
-
-#: admin/systems/services/dhcp/dhcpNewSection.tpl:9
-#, fuzzy
-msgid "Section"
-msgstr "Действие"
-
-#: admin/systems/services/dhcp/dhcpNewSection.tpl:10
-#, fuzzy
-msgid "Choose section type to create"
-msgstr "Выберите тип мыши"
-
-#: admin/systems/services/dhcp/dhcpNewSection.tpl:15
-msgid "Create"
-msgstr "Создать"
 
 #, fuzzy
 #~ msgid "Service start"

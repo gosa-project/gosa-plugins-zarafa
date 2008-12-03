@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 11:52+0100\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2008-11-30 19:54+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -24,29 +24,13 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/opsi/opsiware.tpl:2
-msgid "Information"
-msgstr ""
-
-#: admin/opsi/opsiware.tpl:4 admin/opsi/generic.tpl:8
-msgid "Retry"
-msgstr "Réessayer"
-
-#: admin/opsi/opsiware.tpl:7
-msgid "Hardware information"
-msgstr "Information Hardware"
-
-#: admin/opsi/opsiware.tpl:9
-msgid "Software information"
-msgstr "Informations Logiciels"
-
-#: admin/opsi/opsiware.tpl:14
-msgid "Device"
-msgstr "Périphériques"
-
 #: admin/opsi/generic.tpl:2
 msgid "OPSI host"
 msgstr "Client OPSI"
+
+#: admin/opsi/generic.tpl:8 admin/opsi/opsiware.tpl:4
+msgid "Retry"
+msgstr "Réessayer"
 
 #: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:35
 #: admin/opsi/class_opsigeneric.inc:211 admin/opsi/class_opsigeneric.inc:216
@@ -103,6 +87,14 @@ msgstr "Réveiller"
 msgid "Execute"
 msgstr "Exécuter"
 
+#: admin/opsi/class_opsiProperties.inc:107
+msgid "Products"
+msgstr "Produits"
+
+#: admin/opsi/class_opsiProperties.inc:108
+msgid "Product properties"
+msgstr "Propriétés du produit"
+
 #: admin/opsi/properties.tpl:1
 msgid "OPSI product properties"
 msgstr "Propriétés des produits OPSI"
@@ -110,6 +102,15 @@ msgstr "Propriétés des produits OPSI"
 #: admin/opsi/properties.tpl:6
 msgid "This OPSI product has no options."
 msgstr "Ce produit OPSI n'a pas d'options."
+
+#: admin/opsi/class_opsi.inc:75 admin/opsi/class_opsigeneric.inc:709
+msgid "Opsi"
+msgstr ""
+
+#: admin/opsi/class_opsi.inc:75
+#, php-format
+msgid "More than one Opsi server were found, using the first result '%s'."
+msgstr "Plus d'un serveur Opsi on été trouvés, j'utilise le premier '%s'."
 
 #: admin/opsi/class_opsigeneric.inc:217
 msgid "The field 'Name' must contain a domain part!"
@@ -137,10 +138,6 @@ msgstr "Informations"
 msgid "OPSI generic"
 msgstr "Informations OPSI"
 
-#: admin/opsi/class_opsigeneric.inc:709 admin/opsi/class_opsi.inc:75
-msgid "Opsi"
-msgstr ""
-
 #: admin/opsi/class_opsigeneric.inc:716
 msgid "Note"
 msgstr ""
@@ -149,16 +146,18 @@ msgstr ""
 msgid "Local product"
 msgstr "Produit local"
 
-#: admin/opsi/class_opsi.inc:75
-#, php-format
-msgid "More than one Opsi server were found, using the first result '%s'."
-msgstr "Plus d'un serveur Opsi on été trouvés, j'utilise le premier '%s'."
+#: admin/opsi/opsiware.tpl:2
+msgid "Information"
+msgstr "Information"
 
-#: admin/opsi/class_opsiProperties.inc:107
-msgid "Products"
-msgstr "Produits"
+#: admin/opsi/opsiware.tpl:7
+msgid "Hardware information"
+msgstr "Information Hardware"
 
-#: admin/opsi/class_opsiProperties.inc:108
-msgid "Product properties"
-msgstr "Propriétés du produit"
+#: admin/opsi/opsiware.tpl:9
+msgid "Software information"
+msgstr "Informations Logiciels"
 
+#: admin/opsi/opsiware.tpl:14
+msgid "Device"
+msgstr "Périphériques"

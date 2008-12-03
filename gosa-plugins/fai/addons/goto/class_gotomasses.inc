@@ -737,7 +737,7 @@ class gotomasses extends plugin
       }
     }else{
       msg_dialog::display(_("Error"),
-          sprintf(_("The job could not be aborted, the required class '%s' was not found."),
+          sprintf(_("Required class '%s' cannot be found: job not aborted!"),
             "DaemonEvent_faireboot") , ERROR_DIALOG);
     }
   }
@@ -907,13 +907,13 @@ class gotomasses extends plugin
   static function plInfo()
   {
     return (array(
-          "plShortName"   => _("System mass deployment"),
-          "plDescription" => _("Provide a mechanism to automatically activate a set of systems"),
+          "plShortName"   => _("System deployment"),
+          "plDescription" => _("Provide a mechanism to automatically activate systems"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("addon"),
-          "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System mass deployment"))),
+          "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System deployment"))),
           "plProvidedAcls" => array("Comment"   => _("Description")) 
           ));
   }

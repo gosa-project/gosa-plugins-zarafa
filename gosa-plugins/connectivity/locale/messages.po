@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr ""
 
@@ -37,6 +37,10 @@ msgstr ""
 msgid "Connectivity addon"
 msgstr ""
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr ""
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -49,8 +53,4 @@ msgstr ""
 
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
-msgstr ""
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
 msgstr ""

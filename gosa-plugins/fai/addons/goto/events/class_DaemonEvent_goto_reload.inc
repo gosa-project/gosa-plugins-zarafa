@@ -34,8 +34,8 @@ class DaemonEvent_goto_reload extends DaemonEvent
   public function __construct($config,$data = array())
   {
     DaemonEvent::__construct($config,$data);
-    $this->s_Menu_Name  = _("Goto reload"); 
-    $this->s_Event_Name = _("Reload goto settings"); 
+    $this->s_Menu_Name  = _("GOto reload"); 
+    $this->s_Event_Name = _("Reload GOto settings"); 
     $this->s_Schedule_Action= "job_trigger_goto_settings_reload";
     $this->s_Trigger_Action = "gosa_trigger_goto_settings_reload";
     $this->s_Queued_Action  = "trigger_action_goto_settings_reload";

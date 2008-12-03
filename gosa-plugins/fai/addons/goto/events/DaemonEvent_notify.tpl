@@ -25,7 +25,7 @@
       </table>
     </td>
     <td style='width:50%; vertical-align:top;'>
-	  <b>{t}Time schedule{/t}</b>
+	  <b>{t}Schedule{/t}</b>
       <table>
         <tr>
           <td colspan="2" style='vertical-align:top'>{$timestamp}<br><br></td>

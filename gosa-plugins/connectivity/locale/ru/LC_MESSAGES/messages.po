@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr "Подключение"
 
@@ -36,6 +36,11 @@ msgstr "Моя учетная запись"
 msgid "Connectivity addon"
 msgstr "Подключение"
 
+#: personal/connectivity/intranet.tpl:4
+#, fuzzy
+msgid "Intranet account"
+msgstr "Создать телефонный аккаунт"
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -50,11 +55,6 @@ msgstr "Ошибка LDAP:"
 #: personal/connectivity/class_intranetAccount.inc:212
 #, fuzzy
 msgid "Intranet account settings"
-msgstr "Создать телефонный аккаунт"
-
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intranet account"
 msgstr "Создать телефонный аккаунт"
 
 #~ msgid "This account has no connectivity extensions."

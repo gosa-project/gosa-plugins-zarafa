@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr "Conectividad"
 
@@ -38,6 +38,10 @@ msgstr "Mi cuenta"
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr ""
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -52,10 +56,6 @@ msgstr "Servicio LDAP"
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Configuración de la cuenta de intranet"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr ""
 
 #~ msgid "This account has no connectivity extensions."
 #~ msgstr "Esta cuenta no tiene extensión de conectividad"

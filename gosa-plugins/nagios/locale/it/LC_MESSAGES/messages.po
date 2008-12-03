@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,125 +15,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: personal/nagios/class_nagiosAccount.inc:18
-#: personal/nagios/class_nagiosAccount.inc:105
-#: personal/nagios/class_nagiosAccount.inc:114
-#: personal/nagios/class_nagiosAccount.inc:116
-#: personal/nagios/class_nagiosAccount.inc:273
-msgid "Nagios"
-msgstr "Nagios"
-
-#: personal/nagios/class_nagiosAccount.inc:19
-msgid "This does something"
-msgstr "Questo fa qualcosa"
-
-#: personal/nagios/class_nagiosAccount.inc:173
-#: personal/nagios/class_nagiosAccount.inc:258
-#, fuzzy
-msgid "LDAP error"
-msgstr "Errore LDAP"
-
-#: personal/nagios/class_nagiosAccount.inc:194
-#: personal/nagios/class_nagiosAccount.inc:284 personal/nagios/nagios.tpl:8
-#, fuzzy
-msgid "Alias"
-msgstr "Italiano"
-
-#: personal/nagios/class_nagiosAccount.inc:197
-#: personal/nagios/class_nagiosAccount.inc:201
-#: personal/nagios/class_nagiosAccount.inc:205
-msgid "Mail"
-msgstr "Posta"
-
-#: personal/nagios/class_nagiosAccount.inc:274
-#, fuzzy
-msgid "Nagios account settings"
-msgstr "Opzioni di posta dell'identità"
-
-#: personal/nagios/class_nagiosAccount.inc:278
-msgid "My account"
-msgstr "Identità"
-
-#: personal/nagios/class_nagiosAccount.inc:285 personal/nagios/nagios.tpl:17
-msgid "Mail address"
-msgstr "Indirizzo principale"
-
-#: personal/nagios/class_nagiosAccount.inc:286 personal/nagios/nagios.tpl:27
-#, fuzzy
-msgid "Host notification period"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:287 personal/nagios/nagios.tpl:40
-#, fuzzy
-msgid "Service notification period"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:288 personal/nagios/nagios.tpl:66
-#, fuzzy
-msgid "Host notification options"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:289 personal/nagios/nagios.tpl:53
-#, fuzzy
-msgid "Service notification options"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:290
-#, fuzzy
-msgid "Pager number"
-msgstr "Numero di telefono"
-
-#: personal/nagios/class_nagiosAccount.inc:292 personal/nagios/nagios.tpl:90
-#, fuzzy
-msgid "Service notification commands"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:293 personal/nagios/nagios.tpl:100
-#, fuzzy
-msgid "Host notification commands"
-msgstr "Opzioni applicazione"
-
-#: personal/nagios/class_nagiosAccount.inc:294
-#, fuzzy
-msgid "View system informations"
-msgstr "Informazioni organizzazione"
-
-#: personal/nagios/class_nagiosAccount.inc:295
-#, fuzzy
-msgid "View configuration information"
-msgstr "Informazioni organizzazione"
-
-#: personal/nagios/class_nagiosAccount.inc:296
-#, fuzzy
-msgid "Trigger system commands"
-msgstr "Informazioni organizzazione"
-
-#: personal/nagios/class_nagiosAccount.inc:297
-#, fuzzy
-msgid "View all services"
-msgstr "Dispositivi del client"
-
-#: personal/nagios/class_nagiosAccount.inc:298
-msgid "View all hosts"
-msgstr ""
-
-#: personal/nagios/class_nagiosAccount.inc:299
-#, fuzzy
-msgid "Trigger all service commands"
-msgstr "Dispositivi del client"
-
-#: personal/nagios/class_nagiosAccount.inc:300
-msgid "Trigger all host commands"
-msgstr ""
-
 #: personal/nagios/nagios.tpl:5
 #, fuzzy
 msgid "Nagios Account"
 msgstr "Contatto"
 
+#: personal/nagios/nagios.tpl:8 personal/nagios/class_nagiosAccount.inc:194
+#: personal/nagios/class_nagiosAccount.inc:284
+#, fuzzy
+msgid "Alias"
+msgstr "Italiano"
+
+#: personal/nagios/nagios.tpl:17 personal/nagios/class_nagiosAccount.inc:285
+msgid "Mail address"
+msgstr "Indirizzo principale"
+
+#: personal/nagios/nagios.tpl:27 personal/nagios/class_nagiosAccount.inc:286
+#, fuzzy
+msgid "Host notification period"
+msgstr "Opzioni applicazione"
+
+#: personal/nagios/nagios.tpl:40 personal/nagios/class_nagiosAccount.inc:287
+#, fuzzy
+msgid "Service notification period"
+msgstr "Opzioni applicazione"
+
+#: personal/nagios/nagios.tpl:53 personal/nagios/class_nagiosAccount.inc:289
+#, fuzzy
+msgid "Service notification options"
+msgstr "Opzioni applicazione"
+
+#: personal/nagios/nagios.tpl:66 personal/nagios/class_nagiosAccount.inc:288
+#, fuzzy
+msgid "Host notification options"
+msgstr "Opzioni applicazione"
+
 #: personal/nagios/nagios.tpl:79
 msgid "Pager"
 msgstr "Pager"
+
+#: personal/nagios/nagios.tpl:90 personal/nagios/class_nagiosAccount.inc:292
+#, fuzzy
+msgid "Service notification commands"
+msgstr "Opzioni applicazione"
+
+#: personal/nagios/nagios.tpl:100 personal/nagios/class_nagiosAccount.inc:293
+#, fuzzy
+msgid "Host notification commands"
+msgstr "Opzioni applicazione"
 
 #: personal/nagios/nagios.tpl:115
 msgid "Nagios authentification"
@@ -169,7 +98,78 @@ msgstr ""
 msgid "trigger all host commands"
 msgstr ""
 
-#: personal/nagios/main.inc:125
+#: personal/nagios/class_nagiosAccount.inc:18
+#: personal/nagios/class_nagiosAccount.inc:105
+#: personal/nagios/class_nagiosAccount.inc:114
+#: personal/nagios/class_nagiosAccount.inc:116
+#: personal/nagios/class_nagiosAccount.inc:273
+msgid "Nagios"
+msgstr "Nagios"
+
+#: personal/nagios/class_nagiosAccount.inc:19
+msgid "This does something"
+msgstr "Questo fa qualcosa"
+
+#: personal/nagios/class_nagiosAccount.inc:173
+#: personal/nagios/class_nagiosAccount.inc:258
+#, fuzzy
+msgid "LDAP error"
+msgstr "Errore LDAP"
+
+#: personal/nagios/class_nagiosAccount.inc:197
+#: personal/nagios/class_nagiosAccount.inc:201
+#: personal/nagios/class_nagiosAccount.inc:205
+msgid "Mail"
+msgstr "Posta"
+
+#: personal/nagios/class_nagiosAccount.inc:274
+#, fuzzy
+msgid "Nagios account settings"
+msgstr "Opzioni di posta dell'identità"
+
+#: personal/nagios/class_nagiosAccount.inc:278
+msgid "My account"
+msgstr "Identità"
+
+#: personal/nagios/class_nagiosAccount.inc:290
+#, fuzzy
+msgid "Pager number"
+msgstr "Numero di telefono"
+
+#: personal/nagios/class_nagiosAccount.inc:294
+#, fuzzy
+msgid "View system informations"
+msgstr "Informazioni organizzazione"
+
+#: personal/nagios/class_nagiosAccount.inc:295
+#, fuzzy
+msgid "View configuration information"
+msgstr "Informazioni organizzazione"
+
+#: personal/nagios/class_nagiosAccount.inc:296
+#, fuzzy
+msgid "Trigger system commands"
+msgstr "Informazioni organizzazione"
+
+#: personal/nagios/class_nagiosAccount.inc:297
+#, fuzzy
+msgid "View all services"
+msgstr "Dispositivi del client"
+
+#: personal/nagios/class_nagiosAccount.inc:298
+msgid "View all hosts"
+msgstr ""
+
+#: personal/nagios/class_nagiosAccount.inc:299
+#, fuzzy
+msgid "Trigger all service commands"
+msgstr "Dispositivi del client"
+
+#: personal/nagios/class_nagiosAccount.inc:300
+msgid "Trigger all host commands"
+msgstr ""
+
+#: personal/nagios/main.inc:130
 #, fuzzy
 msgid "Nagios settings"
 msgstr "Opzioni di posta dell'identità"

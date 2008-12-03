@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr "互联"
 
@@ -39,6 +39,10 @@ msgstr "我的账号"
 msgid "Connectivity addon"
 msgstr "互联"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "内联网账号"
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -53,10 +57,6 @@ msgstr "LDAP 错误:"
 #: personal/connectivity/class_intranetAccount.inc:212
 #, fuzzy
 msgid "Intranet account settings"
-msgstr "内联网账号"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
 msgstr "内联网账号"
 
 #~ msgid "This account has no connectivity extensions."

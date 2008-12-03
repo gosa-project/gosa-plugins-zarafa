@@ -1,4 +1,4 @@
-# translation of messages.po to Deutsch
+# translation of messages.po to deutsch
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
@@ -12,14 +12,143 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-05-27 10:41+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"PO-Revision-Date: 2008-12-03 15:12+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: Deutsch <de@li.org>\n"
+"Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:73
+#, php-format
+msgid "This policy is referenced %d times."
+msgstr "Diese Richtlinie wird %d mal verwendet."
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:103
+#: admin/systems/services/kerberos/class_krb5_policy.inc:106
+#: admin/systems/services/kerberos/class_krb5_policy.inc:110
+#: admin/systems/services/kerberos/krb5_policy.tpl:7
+msgid "Policy name"
+msgstr "Richtlinien-Name"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:115
+#: admin/systems/services/kerberos/class_krb5_policy.inc:117
+#: admin/systems/services/kerberos/krb5_policy.tpl:19
+msgid "Password history size"
+msgstr "Größe der Passwort-Historie"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:122
+#: admin/systems/services/kerberos/class_krb5_policy.inc:124
+#: admin/systems/services/kerberos/class_krb5_policy.inc:134
+#: admin/systems/services/kerberos/krb5_policy.tpl:11
+msgid "Minimum password length"
+msgstr "Minimale Passwortlänge"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:129
+#: admin/systems/services/kerberos/class_krb5_policy.inc:131
+#: admin/systems/services/kerberos/class_krb5_policy.inc:134
+#: admin/systems/services/kerberos/krb5_policy.tpl:15
+msgid "Required different characters"
+msgstr "Anzahl der unterschiedlichen Zeichen"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:133
+#: admin/systems/services/kerberos/class_krb5_policy.inc:150
+#, php-format
+msgid ""
+"The value specified for '%s' must be smaller than the value specified for '%"
+"s'!"
+msgstr "Der für '%s' angegebene Wert muss kleiner als der für '%s' sein!"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:139
+#: admin/systems/services/kerberos/class_krb5_policy.inc:141
+#: admin/systems/services/kerberos/class_krb5_policy.inc:151
+#: admin/systems/services/kerberos/krb5_policy.tpl:28
+msgid "Minimum password lifetime"
+msgstr "Minimale Passwort-Lebenszeit"
+
+#: admin/systems/services/kerberos/class_krb5_policy.inc:146
+#: admin/systems/services/kerberos/class_krb5_policy.inc:148
+#: admin/systems/services/kerberos/class_krb5_policy.inc:151
+#: admin/systems/services/kerberos/krb5_policy.tpl:32
+msgid "Password lifetime"
+msgstr "Passwort-Lebenszeit"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:1
+msgid "Kerberos kadmin access"
+msgstr "Kerberos-Zugang via kadmin"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:8
+msgid "Kerberos Realm"
+msgstr "Kerberos Realm"
+
+#: admin/systems/services/kerberos/goKrbServer.tpl:19
+#: admin/systems/services/kerberos/class_goKrbServer.inc:394
+msgid "Policies"
+msgstr "Richtlinien"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:210
+msgid "updated to"
+msgstr "aktualisiert nach"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:219
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:473
+#: admin/systems/services/kerberos/class_goKrbServer.inc:385
+msgid "Kerberos"
+msgstr "Kerberos"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:219
+#, php-format
+msgid ""
+"The principal name of this system has changed. Do you want to update your "
+"principals? The affected principals are listed below: %s"
+msgstr "Der Prinzipal-Name dieses Systems hat sich geändert. Soll er aktualisiert werden? Die betroffenen Prinzipale:"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:236
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:237
+msgid "Create key"
+msgstr "Schlüssel anlegen"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:243
+msgid "Recreate key"
+msgstr "Schlüssel auffrischen"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:245
+msgid "Remove key"
+msgstr "Schlüssel entfernen"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:284
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:314
+msgid "installed"
+msgstr "installiert"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:340
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:373
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:236
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:291
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:318
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:378
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:393
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:669
+#: admin/systems/services/kerberos/class_goKrbServer.inc:74
+#: admin/systems/services/kerberos/class_goKrbServer.inc:359
+#: admin/systems/services/kerberos/class_goKrbServer.inc:368
+#: admin/systems/services/kerberos/class_goKrbServer.inc:372
+msgid "Service infrastructure"
+msgstr "Dienst-Infrastruktur"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:454
+msgid "Kerberos key"
+msgstr "Kerberos-Schlüssel"
+
+#: admin/systems/services/kerberos/class_krb_host_keys.inc:455
+msgid "Kerberos host key"
+msgstr "Kerberos-Host-Schlüssel"
+
+#: admin/systems/services/kerberos/krb_host_keys.tpl:4
+msgid "Kerberos keys"
+msgstr "Kerberos-Schlüssel"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:4
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:21
@@ -47,12 +176,12 @@ msgid "Policy"
 msgstr "Richtlinie"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:57
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:567
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:587
 msgid "Ticket max life"
 msgstr "Maximale Ticketlebensdauer"
 
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:65
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:570
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:590
 msgid "Ticket max renew"
 msgstr "Maximale Ticket-Erneuerbarkeit"
 
@@ -101,7 +230,7 @@ msgstr "Fehlgeschlagene Anmeldungen"
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:189
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:193
 #: admin/systems/services/kerberos/pwd_kerberos_mit.tpl:197
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:308
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:322
 msgid "none"
 msgstr "keine"
 
@@ -181,123 +310,29 @@ msgstr "Sichern"
 msgid "Policy settings"
 msgstr "Richtlinien-Einstellungen"
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:7
-#: admin/systems/services/kerberos/class_krb5_policy.inc:103
-#: admin/systems/services/kerberos/class_krb5_policy.inc:106
-#: admin/systems/services/kerberos/class_krb5_policy.inc:110
-msgid "Policy name"
-msgstr "Richtlinien-Name"
-
-#: admin/systems/services/kerberos/krb5_policy.tpl:11
-#: admin/systems/services/kerberos/class_krb5_policy.inc:122
-#: admin/systems/services/kerberos/class_krb5_policy.inc:124
-#: admin/systems/services/kerberos/class_krb5_policy.inc:134
-msgid "Minimum password length"
-msgstr "Minimale Passwortlänge"
-
-#: admin/systems/services/kerberos/krb5_policy.tpl:15
-#: admin/systems/services/kerberos/class_krb5_policy.inc:129
-#: admin/systems/services/kerberos/class_krb5_policy.inc:131
-#: admin/systems/services/kerberos/class_krb5_policy.inc:134
-msgid "Required different characters"
-msgstr "Anzahl der unterschiedlichen Zeichen"
-
-#: admin/systems/services/kerberos/krb5_policy.tpl:19
-#: admin/systems/services/kerberos/class_krb5_policy.inc:115
-#: admin/systems/services/kerberos/class_krb5_policy.inc:117
-msgid "Password history size"
-msgstr "Größe der Passwort-Historie"
-
-#: admin/systems/services/kerberos/krb5_policy.tpl:28
-#: admin/systems/services/kerberos/class_krb5_policy.inc:139
-#: admin/systems/services/kerberos/class_krb5_policy.inc:141
-#: admin/systems/services/kerberos/class_krb5_policy.inc:151
-msgid "Minimum password lifetime"
-msgstr "Minimale Passwort-Lebenszeit"
-
 #: admin/systems/services/kerberos/krb5_policy.tpl:29
 #: admin/systems/services/kerberos/krb5_policy.tpl:33
 msgid "seconds"
 msgstr "Sekunden"
 
-#: admin/systems/services/kerberos/krb5_policy.tpl:32
-#: admin/systems/services/kerberos/class_krb5_policy.inc:146
-#: admin/systems/services/kerberos/class_krb5_policy.inc:148
-#: admin/systems/services/kerberos/class_krb5_policy.inc:151
-msgid "Password lifetime"
-msgstr "Passwort-Lebenszeit"
-
-#: admin/systems/services/kerberos/class_krb5_policy.inc:73
-#, php-format
-msgid "This policy is referenced %d times."
-msgstr "Diese Richtlinie wird %d mal verwendet."
-
-#: admin/systems/services/kerberos/class_krb5_policy.inc:133
-#: admin/systems/services/kerberos/class_krb5_policy.inc:150
-#, php-format
-msgid ""
-"The value specified for '%s' must be smaller than the value specified for '%"
-"s'!"
-msgstr "Der für '%s' angegebene Wert muss kleiner als der für '%s' sein!"
-
-#: admin/systems/services/kerberos/krb_host_keys.tpl:4
-#, fuzzy
-msgid "Kerberos keys"
-msgstr "Kerberos Realms"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:1
-msgid "Kerberos kadmin access"
-msgstr "Kerberos-Zugang via kadmin"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:8
-#, fuzzy
-msgid "Kerberos Realm"
-msgstr "Kerberos Realms"
-
-#: admin/systems/services/kerberos/goKrbServer.tpl:17
-#: admin/systems/services/kerberos/class_goKrbServer.inc:394
-msgid "Policies"
-msgstr "Richtlinien"
-
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:221
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:235
 #, php-format
 msgid "Cannot load principal '%s', from server '%s'!"
 msgstr "Kann Principal '%s' nicht von Server '%s' beziehen!"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:222
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:277
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:304
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:358
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:373
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:637
-#: admin/systems/services/kerberos/class_goKrbServer.inc:74
-#: admin/systems/services/kerberos/class_goKrbServer.inc:359
-#: admin/systems/services/kerberos/class_goKrbServer.inc:368
-#: admin/systems/services/kerberos/class_goKrbServer.inc:372
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:339
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:372
-msgid "Service infrastructure"
-msgstr "Dienst-Infrastruktur"
-
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:276
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:290
 #, php-format
 msgid "Cannot load principals from server '%s'!"
 msgstr "Kann die Liste der Principals nicht von Server '%s' beziehen!"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:303
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:317
 #, php-format
 msgid "Cannot load policies from server '%s'!"
 msgstr "Kann die Liste der Richtlinien nicht von Server '%s' beziehen!"
 
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:408
+#: admin/systems/services/kerberos/class_password-methods-MIT.inc:428
 msgid "Daemon based"
 msgstr "Dienst basierend"
-
-#: admin/systems/services/kerberos/class_password-methods-MIT.inc:453
-#: admin/systems/services/kerberos/class_goKrbServer.inc:385
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:219
-msgid "Kerberos"
-msgstr "Kerberos"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:58
 msgid "Kerberos service"
@@ -308,8 +343,7 @@ msgid "Kerberos service (kadmin access informations)"
 msgstr "Kerberos Dienst (kadmin Zugangs-Informationen)"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:182
-msgid ""
-"Cannot apply policy changes! The defined kerberos server has no mac address."
+msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
 msgstr ""
 "Kann die Richtlinienänderungen nicht anwenden! Der verwendete Kerberos-"
 "Server hat keine MAC-Adresse."
@@ -326,28 +360,3 @@ msgstr "Kerberos Zugangs-Information"
 msgid "Services"
 msgstr "Dienste"
 
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:210
-msgid "updated to"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:219
-#, php-format
-msgid ""
-"The principal name of this system has changed. Do you want to update your "
-"principals? The affected principals are listed below: %s"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:283
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:313
-msgid "installed"
-msgstr ""
-
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:453
-#, fuzzy
-msgid "Kerberos key"
-msgstr "Kerberos Realms"
-
-#: admin/systems/services/kerberos/class_krb_host_keys.inc:454
-#, fuzzy
-msgid "Kerberos host key"
-msgstr "Kerberos Realms"

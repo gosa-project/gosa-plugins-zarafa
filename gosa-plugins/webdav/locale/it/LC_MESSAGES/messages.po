@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,11 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: personal/connectivity/webdav/webdav.tpl:5
-#: personal/connectivity/webdav/class_webdavAccount.inc:167
-msgid "WebDAV account"
-msgstr "Estenzioni WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:6
 #: personal/connectivity/webdav/class_webdavAccount.inc:166
@@ -34,6 +29,11 @@ msgstr "Questo fa qualcosa"
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
+
+#: personal/connectivity/webdav/class_webdavAccount.inc:167
+#: personal/connectivity/webdav/webdav.tpl:5
+msgid "WebDAV account"
+msgstr "Estenzioni WebDAV"
 
 #: personal/connectivity/webdav/class_webdavAccount.inc:167
 #, fuzzy

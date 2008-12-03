@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:03+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,147 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: html/getvcard.php:39
+#, fuzzy
+msgid "Internal error"
+msgstr "终端服务器"
+
+#: html/getvcard.php:39
+#, fuzzy
+msgid "Missing parameters!"
+msgstr "应用程序名称"
+
+#: addons/addressbook/address_edit.tpl:7
+msgid "Choose the department to store entry in"
+msgstr "选择放置条目的部门"
+
+#: addons/addressbook/address_edit.tpl:24
+#: addons/addressbook/address_info.tpl:18
+msgid "Personal"
+msgstr "个人"
+
+#: addons/addressbook/address_edit.tpl:30
+msgid "Last name"
+msgstr "姓"
+
+#: addons/addressbook/address_edit.tpl:33
+msgid "First name"
+msgstr "名"
+
+#: addons/addressbook/address_edit.tpl:48
+#: addons/addressbook/address_info.tpl:32
+#: addons/addressbook/class_addressbook.inc:832
+msgid "Initials"
+msgstr "中间名"
+
+#: addons/addressbook/address_edit.tpl:60
+#: addons/addressbook/address_info.tpl:40
+msgid "Personal title"
+msgstr "个人称谓"
+
+#: addons/addressbook/address_edit.tpl:74
+#: addons/addressbook/address_info.tpl:53 addons/addressbook/contents.tpl:15
+msgid "Private"
+msgstr "私人电话"
+
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+msgid "Address"
+msgstr "住址"
+
+#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+#: addons/addressbook/class_addressbook.inc:689
+#: addons/addressbook/contents.tpl:14
+msgid "Phone"
+msgstr "电话"
+
+#: addons/addressbook/address_edit.tpl:106
+#: addons/addressbook/address_info.tpl:75
+#: addons/addressbook/class_addressbook.inc:698
+#: addons/addressbook/contents.tpl:15
+msgid "Mobile"
+msgstr "手机"
+
+#: addons/addressbook/address_edit.tpl:118
+#: addons/addressbook/address_info.tpl:83
+#: addons/addressbook/class_addressbook.inc:713
+msgid "Email"
+msgstr "邮件"
+
+#: addons/addressbook/address_edit.tpl:134
+#: addons/addressbook/address_info.tpl:99
+msgid "Organizational"
+msgstr "组织"
+
+#: addons/addressbook/address_edit.tpl:143
+#: addons/addressbook/address_info.tpl:109
+msgid "Company"
+msgstr "公司"
+
+#: addons/addressbook/address_edit.tpl:155
+#: addons/addressbook/address_info.tpl:117
+#: addons/addressbook/class_addressbook.inc:827
+msgid "Department"
+msgstr "部门"
+
+#: addons/addressbook/address_edit.tpl:167
+#: addons/addressbook/address_info.tpl:125
+msgid "City"
+msgstr "城市"
+
+#: addons/addressbook/address_edit.tpl:179
+#: addons/addressbook/address_info.tpl:133
+msgid "Postal code"
+msgstr "邮编"
+
+#: addons/addressbook/address_edit.tpl:191
+#: addons/addressbook/address_info.tpl:141
+msgid "Country"
+msgstr "国家"
+
+#: addons/addressbook/address_edit.tpl:233
+#: addons/addressbook/address_info.tpl:171
+msgid "FAX"
+msgstr "传真"
+
+#: addons/addressbook/address_edit.tpl:246
+#: addons/addressbook/address_info.tpl:179
+#: addons/addressbook/class_addressbook.inc:701
+#: addons/addressbook/class_addressbook.inc:825
+msgid "Pager"
+msgstr "呼机"
+
+#: addons/addressbook/address_info.tpl:24
+#: addons/addressbook/class_addressbook.inc:631
+#: addons/addressbook/class_addressbook.inc:671
+#: addons/addressbook/class_addressbook.inc:681
+#: addons/addressbook/class_addressbook.inc:708
+#: addons/addressbook/contents.tpl:14
+msgid "Name"
+msgstr "名称"
+
+#: addons/addressbook/remove.tpl:2
+msgid "Warning"
+msgstr "警告"
+
+#: addons/addressbook/remove.tpl:6
+msgid ""
+"This includes all addressbook data in this entry. Please double check if "
+"your really want to do this since there is no way for GOsa to get your data "
+"back."
+msgstr ""
+"这个条目包含所有的地址簿数据，请再次检查您是否要这么做，因为 GOsa 没有办法将"
+"您的数据找回。"
+
+#: addons/addressbook/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
 #: addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:808
@@ -93,14 +234,6 @@ msgid "All"
 msgstr "全部"
 
 #: addons/addressbook/class_addressbook.inc:631
-#: addons/addressbook/class_addressbook.inc:671
-#: addons/addressbook/class_addressbook.inc:681
-#: addons/addressbook/class_addressbook.inc:708
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_info.tpl:24
-msgid "Name"
-msgstr "名称"
-
-#: addons/addressbook/class_addressbook.inc:631
 #: addons/addressbook/class_addressbook.inc:675
 #: addons/addressbook/class_addressbook.inc:684
 #: addons/addressbook/class_addressbook.inc:705
@@ -124,14 +257,6 @@ msgstr "住宅电话"
 msgid "User ID"
 msgstr "用户 ID"
 
-#: addons/addressbook/class_addressbook.inc:689
-#: addons/addressbook/contents.tpl:14 addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-msgid "Phone"
-msgstr "电话"
-
 #: addons/addressbook/class_addressbook.inc:692
 #, fuzzy
 msgid "Telephone number"
@@ -141,25 +266,6 @@ msgstr "电话号码"
 #: addons/addressbook/contents.tpl:14
 msgid "Fax"
 msgstr "传真"
-
-#: addons/addressbook/class_addressbook.inc:698
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:106
-#: addons/addressbook/address_info.tpl:75
-msgid "Mobile"
-msgstr "手机"
-
-#: addons/addressbook/class_addressbook.inc:701
-#: addons/addressbook/class_addressbook.inc:825
-#: addons/addressbook/address_edit.tpl:246
-#: addons/addressbook/address_info.tpl:179
-msgid "Pager"
-msgstr "呼机"
-
-#: addons/addressbook/class_addressbook.inc:713
-#: addons/addressbook/address_edit.tpl:118
-#: addons/addressbook/address_info.tpl:83
-msgid "Email"
-msgstr "邮件"
 
 #: addons/addressbook/class_addressbook.inc:721
 msgid ""
@@ -212,12 +318,6 @@ msgstr "邮件地址"
 msgid "Organization"
 msgstr "组织/公司"
 
-#: addons/addressbook/class_addressbook.inc:827
-#: addons/addressbook/address_edit.tpl:155
-#: addons/addressbook/address_info.tpl:117
-msgid "Department"
-msgstr "部门"
-
 #: addons/addressbook/class_addressbook.inc:828
 msgid "Location"
 msgstr "位置"
@@ -231,12 +331,6 @@ msgstr "地址"
 msgid "State"
 msgstr "州/省"
 
-#: addons/addressbook/class_addressbook.inc:832
-#: addons/addressbook/address_edit.tpl:48
-#: addons/addressbook/address_info.tpl:32
-msgid "Initials"
-msgstr "中间名"
-
 #: addons/addressbook/class_addressbook.inc:833
 msgid "Title"
 msgstr "称谓"
@@ -248,32 +342,6 @@ msgstr "住宅地址"
 #: addons/addressbook/class_addressbook.inc:835
 msgid "Common name"
 msgstr "常用名"
-
-#: addons/addressbook/remove.tpl:2
-msgid "Warning"
-msgstr "警告"
-
-#: addons/addressbook/remove.tpl:6
-msgid ""
-"This includes all addressbook data in this entry. Please double check if "
-"your really want to do this since there is no way for GOsa to get your data "
-"back."
-msgstr ""
-"这个条目包含所有的地址簿数据，请再次检查您是否要这么做，因为 GOsa 没有办法将"
-"您的数据找回。"
-
-#: addons/addressbook/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
-
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "拨号中..."
-
-#: addons/addressbook/contents.tpl:15 addons/addressbook/address_edit.tpl:74
-#: addons/addressbook/address_info.tpl:53
-msgid "Private"
-msgstr "私人电话"
 
 #: addons/addressbook/contents.tpl:15
 msgid "Contact"
@@ -352,74 +420,9 @@ msgstr "查询"
 msgid "Search string"
 msgstr "查找字符串"
 
-#: addons/addressbook/address_edit.tpl:7
-msgid "Choose the department to store entry in"
-msgstr "选择放置条目的部门"
-
-#: addons/addressbook/address_edit.tpl:24
-#: addons/addressbook/address_info.tpl:18
-msgid "Personal"
-msgstr "个人"
-
-#: addons/addressbook/address_edit.tpl:30
-msgid "Last name"
-msgstr "姓"
-
-#: addons/addressbook/address_edit.tpl:33
-msgid "First name"
-msgstr "名"
-
-#: addons/addressbook/address_edit.tpl:60
-#: addons/addressbook/address_info.tpl:40
-msgid "Personal title"
-msgstr "个人称谓"
-
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-msgid "Address"
-msgstr "住址"
-
-#: addons/addressbook/address_edit.tpl:134
-#: addons/addressbook/address_info.tpl:99
-msgid "Organizational"
-msgstr "组织"
-
-#: addons/addressbook/address_edit.tpl:143
-#: addons/addressbook/address_info.tpl:109
-msgid "Company"
-msgstr "公司"
-
-#: addons/addressbook/address_edit.tpl:167
-#: addons/addressbook/address_info.tpl:125
-msgid "City"
-msgstr "城市"
-
-#: addons/addressbook/address_edit.tpl:179
-#: addons/addressbook/address_info.tpl:133
-msgid "Postal code"
-msgstr "邮编"
-
-#: addons/addressbook/address_edit.tpl:191
-#: addons/addressbook/address_info.tpl:141
-msgid "Country"
-msgstr "国家"
-
-#: addons/addressbook/address_edit.tpl:233
-#: addons/addressbook/address_info.tpl:171
-msgid "FAX"
-msgstr "传真"
-
-#: html/getvcard.php:39
-#, fuzzy
-msgid "Internal error"
-msgstr "终端服务器"
-
-#: html/getvcard.php:39
-#, fuzzy
-msgid "Missing parameters!"
-msgstr "应用程序名称"
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "拨号中..."
 
 #~ msgid "You're about to delete the entry %s."
 #~ msgstr "您将要删除条目 %s。"

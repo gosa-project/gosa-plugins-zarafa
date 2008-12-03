@@ -12,37 +12,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-28 11:52+0100\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2008-11-28 11:58+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
-
-#: admin/opsi/opsiware.tpl:2
-msgid "Information"
-msgstr "Information"
-
-#: admin/opsi/opsiware.tpl:4 admin/opsi/generic.tpl:8
-msgid "Retry"
-msgstr "Wiederholen"
-
-#: admin/opsi/opsiware.tpl:7
-msgid "Hardware information"
-msgstr "Hardware-Informationen"
-
-#: admin/opsi/opsiware.tpl:9
-msgid "Software information"
-msgstr "Software-Informationen"
-
-#: admin/opsi/opsiware.tpl:14
-msgid "Device"
-msgstr "Gerät"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: admin/opsi/generic.tpl:2
 msgid "OPSI host"
 msgstr "OPSI-Client"
+
+#: admin/opsi/generic.tpl:8 admin/opsi/opsiware.tpl:4
+msgid "Retry"
+msgstr "Wiederholen"
 
 #: admin/opsi/generic.tpl:18 admin/opsi/generic.tpl:35
 #: admin/opsi/class_opsigeneric.inc:211 admin/opsi/class_opsigeneric.inc:216
@@ -99,6 +83,14 @@ msgstr "Aufwecken"
 msgid "Execute"
 msgstr "Ausführen"
 
+#: admin/opsi/class_opsiProperties.inc:107
+msgid "Products"
+msgstr "Produkte"
+
+#: admin/opsi/class_opsiProperties.inc:108
+msgid "Product properties"
+msgstr "Produkteigenschaften"
+
 #: admin/opsi/properties.tpl:1
 msgid "OPSI product properties"
 msgstr "OPSI Produkteigenschaften"
@@ -106,6 +98,15 @@ msgstr "OPSI Produkteigenschaften"
 #: admin/opsi/properties.tpl:6
 msgid "This OPSI product has no options."
 msgstr "Dieses OPSI Produkt hat keine Optionen."
+
+#: admin/opsi/class_opsi.inc:75 admin/opsi/class_opsigeneric.inc:709
+msgid "Opsi"
+msgstr "OPSI"
+
+#: admin/opsi/class_opsi.inc:75
+#, php-format
+msgid "More than one Opsi server were found, using the first result '%s'."
+msgstr "Es ist mehr als ein OPSI server verfügbar, verwende '%s'."
 
 #: admin/opsi/class_opsigeneric.inc:217
 msgid "The field 'Name' must contain a domain part!"
@@ -133,10 +134,6 @@ msgstr "Allgemein"
 msgid "OPSI generic"
 msgstr "Allgemein"
 
-#: admin/opsi/class_opsigeneric.inc:709 admin/opsi/class_opsi.inc:75
-msgid "Opsi"
-msgstr "OPSI"
-
 #: admin/opsi/class_opsigeneric.inc:716
 msgid "Note"
 msgstr "Notiz"
@@ -145,18 +142,21 @@ msgstr "Notiz"
 msgid "Local product"
 msgstr "Lokales Produkt"
 
-#: admin/opsi/class_opsi.inc:75
-#, php-format
-msgid "More than one Opsi server were found, using the first result '%s'."
-msgstr "Es ist mehr als ein OPSI server verfügbar, verwende '%s'."
+#: admin/opsi/opsiware.tpl:2
+msgid "Information"
+msgstr "Information"
 
-#: admin/opsi/class_opsiProperties.inc:107
-msgid "Products"
-msgstr "Produkte"
+#: admin/opsi/opsiware.tpl:7
+msgid "Hardware information"
+msgstr "Hardware-Informationen"
 
-#: admin/opsi/class_opsiProperties.inc:108
-msgid "Product properties"
-msgstr "Produkteigenschaften"
+#: admin/opsi/opsiware.tpl:9
+msgid "Software information"
+msgstr "Software-Informationen"
+
+#: admin/opsi/opsiware.tpl:14
+msgid "Device"
+msgstr "Gerät"
 
 #~ msgid "OPSI client"
 #~ msgstr "OPSI-Client"

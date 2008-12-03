@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2008-07-24 01:58+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -16,70 +16,140 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/sudo/class_target_list_systems.inc:50
-msgid "Select the target objects for your scheduled action."
-msgstr "Sélectionnez les objets cibles pour votre action programmée."
+#: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
+#: admin/sudo/paste_generic.tpl:1
+msgid "Generic"
+msgstr "Informations"
 
-#: admin/sudo/class_target_list_systems.inc:51
-#: admin/sudo/class_target_list_systems.inc:52
-msgid "Available systems"
-msgstr "Systèmes disponibles"
+#: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
+msgid "global defaults"
+msgstr "Paramètres globaux par défaut"
 
-#: admin/sudo/class_target_list_systems.inc:61
+#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
+#: admin/sudo/paste_generic.tpl:5 admin/sudo/class_divListSudo.inc:78
+#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
+#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:669
+msgid "Name"
+msgstr "Nom"
+
+#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
+#: admin/sudo/class_sudoGeneric.inc:670
+msgid "Description"
+msgstr ""
+
+#: admin/sudo/generic.tpl:55
+msgid "System trust"
+msgstr "Système de Confiance"
+
+#: admin/sudo/generic.tpl:56
+msgid "Trust mode"
+msgstr "Mode de confiance"
+
+#: admin/sudo/generic.tpl:87
+msgid "Users and groups"
+msgstr "Utilisateurs et groupes"
+
+#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
+msgid "Add from list"
+msgstr "Ajouter à la liste"
+
+#: admin/sudo/generic.tpl:102
+msgid "Systems"
+msgstr "Systèmes"
+
+#: admin/sudo/generic.tpl:120
+msgid "Commands"
+msgstr "Commandes"
+
+#: admin/sudo/generic.tpl:132
+msgid "Run as"
+msgstr "Exécuter comme"
+
+#: admin/sudo/options.tpl:5
+msgid "Option name"
+msgstr "Nom de l'option"
+
+#: admin/sudo/options.tpl:7
+msgid "Value"
+msgstr "Valeur"
+
+#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
+msgid "Options"
+msgstr ""
+
+#: admin/sudo/options.tpl:86
+msgid "Available options"
+msgstr "Options disponibles"
+
+#: admin/sudo/class_target_list_users.inc:47
+msgid "Select the target objects"
+msgstr "Sélectionner les objets cible"
+
+#: admin/sudo/class_target_list_users.inc:48
+#: admin/sudo/class_target_list_users.inc:49
+msgid "Available members"
+msgstr "Membres disponibles"
+
 #: admin/sudo/class_target_list_users.inc:58
+#: admin/sudo/class_target_list_systems.inc:61
 msgid "Object name"
 msgstr "Nom de l'objet"
 
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Select to see terminals"
-msgstr "Voir les terminaux"
+#: admin/sudo/class_target_list_users.inc:60
+msgid "Select to see users"
+msgstr "Voir les utilisateurs"
 
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Show terminals"
-msgstr "Montrer les terminaux"
+#: admin/sudo/class_target_list_users.inc:60
+msgid "Show users"
+msgstr "Montrer les utilisateurs"
 
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Select to see servers"
-msgstr "Sélectionnez pour voir les serveurs"
+#: admin/sudo/class_target_list_users.inc:61
+msgid "Select to see groups"
+msgstr "Voir les groupes"
 
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Show servers"
-msgstr "Montrer les serveurs"
+#: admin/sudo/class_target_list_users.inc:61
+msgid "Show groups"
+msgstr "Montrer les groupes"
 
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Select to see workstations"
-msgstr "Voir les stations de travail"
-
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Show workstations"
-msgstr "Montrer les stations de travail"
-
-#: admin/sudo/class_target_list_systems.inc:73
 #: admin/sudo/class_target_list_users.inc:70
+#: admin/sudo/class_target_list_systems.inc:73
 msgid "Regular expression for matching group names"
 msgstr "Expression régulière correspondant à des noms de groupe"
 
-#: admin/sudo/class_target_list_systems.inc:140
 #: admin/sudo/class_target_list_users.inc:137
+#: admin/sudo/class_target_list_systems.inc:140
 msgid "Base"
 msgstr ""
 
-#: admin/sudo/class_target_list_systems.inc:142
 #: admin/sudo/class_target_list_users.inc:139
+msgid "Apply"
+msgstr "Appliquer"
+
+#: admin/sudo/class_target_list_users.inc:139
+#: admin/sudo/class_target_list_systems.inc:142
 msgid "Submit"
 msgstr "Soumettre"
 
-#: admin/sudo/class_target_list_systems.inc:183
-msgid "Server"
-msgstr "Serveur"
+#: admin/sudo/class_target_list_users.inc:177
+#: admin/sudo/class_sudoGeneric.inc:384
+msgid "User"
+msgstr "Utilisateur"
 
-#: admin/sudo/class_target_list_systems.inc:185
-msgid "Workstation"
-msgstr "Stations de travail"
+#: admin/sudo/class_target_list_users.inc:178
+#: admin/sudo/class_sudoGeneric.inc:385
+msgid "Group"
+msgstr "Groupes"
 
-#: admin/sudo/class_target_list_systems.inc:187
-msgid "Terminal"
+#: admin/sudo/remove.tpl:2
+msgid "Warning"
+msgstr "Avertissement"
+
+#: admin/sudo/remove.tpl:9
+msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
+"Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour "
+"arrêter."
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
@@ -90,22 +160,31 @@ msgstr "Option inconnue"
 msgid "The sudo option '%s' is invalid!"
 msgstr "L'option sudo '%s' est non valide !"
 
-#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:280
+#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:284
 msgid "string"
 msgstr "chaîne"
 
-#: admin/sudo/class_sudoOption.inc:278 admin/sudo/class_sudoOption.inc:279
-#: admin/sudo/class_sudoOption.inc:280
+#: admin/sudo/class_sudoOption.inc:282 admin/sudo/class_sudoOption.inc:283
+#: admin/sudo/class_sudoOption.inc:284
 msgid "bool"
 msgstr "booléen"
 
-#: admin/sudo/class_sudoOption.inc:279
+#: admin/sudo/class_sudoOption.inc:283
 msgid "integer"
 msgstr "entier"
 
-#: admin/sudo/class_sudoOption.inc:280
+#: admin/sudo/class_sudoOption.inc:284
 msgid "list"
 msgstr "liste"
+
+#: admin/sudo/class_sudoOption.inc:537
+#, fuzzy
+msgid "Sudo options"
+msgstr "Options des journaux systèmes"
+
+#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
+msgid "Sudo role administration"
+msgstr "Administration des rôles sudo"
 
 #: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
 msgid "List of sudo roles"
@@ -114,14 +193,6 @@ msgstr "Liste des rôles sudo"
 #: admin/sudo/class_divListSudo.inc:72
 msgid "Select all"
 msgstr "Sélectionner tout"
-
-#: admin/sudo/class_divListSudo.inc:78 admin/sudo/class_sudoGeneric.inc:565
-#: admin/sudo/class_sudoGeneric.inc:570 admin/sudo/class_sudoGeneric.inc:575
-#: admin/sudo/class_sudoGeneric.inc:584 admin/sudo/class_sudoGeneric.inc:687
-#: admin/sudo/paste_generic.tpl:5 admin/sudo/generic.tpl:7
-#: admin/sudo/generic.tpl:34
-msgid "Name"
-msgstr "Nom"
 
 #: admin/sudo/class_divListSudo.inc:78
 msgid "Department"
@@ -169,15 +240,50 @@ msgstr "Supprimer cette entrée"
 msgid "Number of listed roles"
 msgstr "Nombre de rôles listés"
 
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr "Avertissement"
+#: admin/sudo/class_target_list_systems.inc:50
+msgid "Select the target objects for your scheduled action."
+msgstr "Sélectionnez les objets cibles pour votre action programmée."
 
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+#: admin/sudo/class_target_list_systems.inc:51
+#: admin/sudo/class_target_list_systems.inc:52
+msgid "Available systems"
+msgstr "Systèmes disponibles"
+
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Select to see terminals"
+msgstr "Voir les terminaux"
+
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Show terminals"
+msgstr "Montrer les terminaux"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Select to see servers"
+msgstr "Sélectionnez pour voir les serveurs"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Show servers"
+msgstr "Montrer les serveurs"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Select to see workstations"
+msgstr "Voir les stations de travail"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Show workstations"
+msgstr "Montrer les stations de travail"
+
+#: admin/sudo/class_target_list_systems.inc:183
+msgid "Server"
+msgstr "Serveur"
+
+#: admin/sudo/class_target_list_systems.inc:185
+msgid "Workstation"
+msgstr "Stations de travail"
+
+#: admin/sudo/class_target_list_systems.inc:187
+msgid "Terminal"
 msgstr ""
-"Si vous êtes sur, cliquez sur 'Effacer' pour continuer ou 'Annuler' pour "
-"arrêter."
 
 #: admin/sudo/class_sudoManagement.inc:31
 msgid "Sudo roles"
@@ -187,163 +293,18 @@ msgstr "Rôles Sudo"
 msgid "Manage sudo roles"
 msgstr "Gèrer les rôles sudo"
 
-#: admin/sudo/class_sudoManagement.inc:246
+#: admin/sudo/class_sudoManagement.inc:247
 msgid "Permission"
 msgstr "Permissions"
 
-#: admin/sudo/class_sudoManagement.inc:261
-#: admin/sudo/class_sudoGeneric.inc:679 admin/sudo/class_sudoGeneric.inc:684
+#: admin/sudo/class_sudoManagement.inc:262
+#: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
 msgid "Sudo role"
 msgstr "Rôle sudo"
 
-#: admin/sudo/class_sudoManagement.inc:294
+#: admin/sudo/class_sudoManagement.inc:295
 msgid "Permission error"
 msgstr "Erreur de permissions"
-
-#: admin/sudo/class_sudoGeneric.inc:313
-msgid "Error"
-msgstr "Erreur"
-
-#: admin/sudo/class_sudoGeneric.inc:355
-msgid "disabled"
-msgstr "désactivé"
-
-#: admin/sudo/class_sudoGeneric.inc:356
-msgid "full access"
-msgstr "accès complet"
-
-#: admin/sudo/class_sudoGeneric.inc:357
-msgid "allow access to these hosts"
-msgstr "permettre l'accès a ces hôtes"
-
-#: admin/sudo/class_sudoGeneric.inc:402
-#: admin/sudo/class_target_list_users.inc:177
-msgid "User"
-msgstr "Utilisateur"
-
-#: admin/sudo/class_sudoGeneric.inc:403
-#: admin/sudo/class_target_list_users.inc:178
-msgid "Group"
-msgstr "Groupes"
-
-#: admin/sudo/class_sudoGeneric.inc:551
-msgid "LDAP error"
-msgstr "Erreur LDAP"
-
-#: admin/sudo/class_sudoGeneric.inc:678
-msgid "Sudo"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:688 admin/sudo/generic.tpl:15
-#: admin/sudo/generic.tpl:44
-msgid "Description"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:689
-msgid "Users"
-msgstr "Utilisateurs"
-
-#: admin/sudo/class_sudoGeneric.inc:690
-msgid "Host"
-msgstr "Hôte"
-
-#: admin/sudo/class_sudoGeneric.inc:691
-msgid "Command"
-msgstr "Commande"
-
-#: admin/sudo/class_sudoGeneric.inc:692
-msgid "Run as user"
-msgstr "Exécuter comme un utilisateur"
-
-#: admin/sudo/class_sudoGeneric.inc:693
-msgid "Access control list"
-msgstr "Contrôle d'accès (ACL)"
-
-#: admin/sudo/options.tpl:5
-msgid "Option name"
-msgstr "Nom de l'option"
-
-#: admin/sudo/options.tpl:7
-msgid "Value"
-msgstr "Valeur"
-
-#: admin/sudo/options.tpl:8
-msgid "Options"
-msgstr ""
-
-#: admin/sudo/options.tpl:81
-msgid "Available options"
-msgstr "Options disponibles"
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-#: admin/sudo/generic.tpl:30
-msgid "Generic"
-msgstr "Informations"
-
-#: admin/sudo/paste_generic.tpl:1 admin/sudo/generic.tpl:3
-msgid "global defaults"
-msgstr "Paramètres globaux par défaut"
-
-#: admin/sudo/generic.tpl:55
-msgid "System trust"
-msgstr "Système de Confiance"
-
-#: admin/sudo/generic.tpl:56
-msgid "Trust mode"
-msgstr "Mode de confiance"
-
-#: admin/sudo/generic.tpl:87
-msgid "Users and groups"
-msgstr "Utilisateurs et groupes"
-
-#: admin/sudo/generic.tpl:98 admin/sudo/generic.tpl:113
-msgid "Add from list"
-msgstr "Ajouter à la liste"
-
-#: admin/sudo/generic.tpl:102
-msgid "Systems"
-msgstr "Systèmes"
-
-#: admin/sudo/generic.tpl:120
-msgid "Commands"
-msgstr "Commandes"
-
-#: admin/sudo/generic.tpl:132
-msgid "Run as"
-msgstr "Exécuter comme"
-
-#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
-msgid "Sudo role administration"
-msgstr "Administration des rôles sudo"
-
-#: admin/sudo/class_target_list_users.inc:47
-msgid "Select the target objects"
-msgstr "Sélectionner les objets cible"
-
-#: admin/sudo/class_target_list_users.inc:48
-#: admin/sudo/class_target_list_users.inc:49
-msgid "Available members"
-msgstr "Membres disponibles"
-
-#: admin/sudo/class_target_list_users.inc:60
-msgid "Select to see users"
-msgstr "Voir les utilisateurs"
-
-#: admin/sudo/class_target_list_users.inc:60
-msgid "Show users"
-msgstr "Montrer les utilisateurs"
-
-#: admin/sudo/class_target_list_users.inc:61
-msgid "Select to see groups"
-msgstr "Voir les groupes"
-
-#: admin/sudo/class_target_list_users.inc:61
-msgid "Show groups"
-msgstr "Montrer les groupes"
-
-#: admin/sudo/class_target_list_users.inc:139
-msgid "Apply"
-msgstr "Appliquer"
 
 #: admin/sudo/trust_machines.tpl:6
 msgid "Select systems to add"
@@ -364,3 +325,47 @@ msgstr "Afficher les systèmes correspondant"
 #: admin/sudo/trust_machines.tpl:31
 msgid "Regular expression for matching addresses"
 msgstr "Expression régulière pour sélectionner les adresses correspondantes"
+
+#: admin/sudo/class_sudoGeneric.inc:295
+msgid "Error"
+msgstr "Erreur"
+
+#: admin/sudo/class_sudoGeneric.inc:337
+msgid "disabled"
+msgstr "désactivé"
+
+#: admin/sudo/class_sudoGeneric.inc:338
+msgid "full access"
+msgstr "accès complet"
+
+#: admin/sudo/class_sudoGeneric.inc:339
+msgid "allow access to these hosts"
+msgstr "permettre l'accès a ces hôtes"
+
+#: admin/sudo/class_sudoGeneric.inc:533
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: admin/sudo/class_sudoGeneric.inc:660
+msgid "Sudo"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:671
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: admin/sudo/class_sudoGeneric.inc:672
+msgid "Host"
+msgstr "Hôte"
+
+#: admin/sudo/class_sudoGeneric.inc:673
+msgid "Command"
+msgstr "Commande"
+
+#: admin/sudo/class_sudoGeneric.inc:674
+msgid "Run as user"
+msgstr "Exécuter comme un utilisateur"
+
+#: admin/sudo/class_sudoGeneric.inc:675
+msgid "Access control list"
+msgstr "Contrôle d'accès (ACL)"

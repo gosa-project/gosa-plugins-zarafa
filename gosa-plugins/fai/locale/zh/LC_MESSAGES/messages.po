@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 11:58+0200\n"
+"POT-Creation-Date: 2008-12-03 15:54+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,158 +16,551 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/services/repository/class_servRepository.inc:26
-#: admin/systems/services/repository/class_servRepository.inc:308
-#: admin/systems/services/repository/class_servRepository.inc:344
+#: admin/fai/class_debconfTemplate.inc:207
+msgid "This package has no debconf options."
+msgstr "这个软件包没有 debconf 选项。"
+
+#: admin/fai/tabsScript.inc:33 admin/fai/tabsProfile.inc:33
+#: admin/fai/class_faiPackage.inc:272 admin/fai/class_FAI.inc:535
+#: admin/fai/class_faiPartitionTable.inc:180
+#: admin/fai/class_faiTemplate.inc:212 admin/fai/class_faiManagement.inc:275
+#: admin/fai/class_faiManagement.inc:486 admin/fai/class_faiManagement.inc:664
+#: admin/fai/class_faiManagement.inc:670 admin/fai/class_faiManagement.inc:946
+#: admin/fai/class_faiManagement.inc:989
+#: admin/fai/class_faiManagement.inc:1237 admin/fai/tabsPartition.inc:34
+#: admin/fai/class_faiSummaryTab.inc:89 admin/fai/tabsTemplate.inc:33
+#: admin/fai/class_faiScript.inc:229 admin/fai/class_faiHook.inc:239
+#: admin/fai/class_faiProfile.inc:262 admin/fai/class_faiVariable.inc:142
+#: admin/fai/tabsHook.inc:32 admin/fai/class_faiScriptEntry.inc:59
+#: admin/fai/class_faiScriptEntry.inc:62 admin/fai/class_faiHookEntry.inc:62
+#: admin/fai/class_faiHookEntry.inc:65 admin/fai/tabsVariable.inc:33
+#: admin/fai/tabsPackage.inc:33
 #: admin/systems/services/repository/class_servRepositorySetup.inc:204
-#, fuzzy
-msgid "Repository service"
-msgstr "仓库"
-
-#: admin/systems/services/repository/class_servRepository.inc:93
-#: admin/fai/class_faiSummaryTab.inc:178
-msgid "You can't use this plugin until FAI is activated."
-msgstr "直到激活 FAI，您不能使用这个插件。"
-
 #: admin/systems/services/repository/class_servRepository.inc:142
 #: admin/systems/services/repository/class_servRepository.inc:177
 #: admin/systems/services/repository/class_servRepository.inc:182
-#: admin/systems/services/repository/class_servRepositorySetup.inc:204
-#: admin/fai/class_faiPackage.inc:272 admin/fai/tabsHook.inc:32
-#: admin/fai/class_faiHookEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
-#: admin/fai/tabsPackage.inc:33 admin/fai/class_faiManagement.inc:288
-#: admin/fai/class_faiManagement.inc:490 admin/fai/class_faiManagement.inc:658
-#: admin/fai/class_faiManagement.inc:664 admin/fai/class_faiManagement.inc:939
-#: admin/fai/class_faiManagement.inc:982
-#: admin/fai/class_faiManagement.inc:1225 admin/fai/class_faiHook.inc:237
-#: admin/fai/tabsTemplate.inc:33 admin/fai/class_FAI.inc:535
-#: admin/fai/tabsProfile.inc:33 admin/fai/class_faiSummaryTab.inc:89
-#: admin/fai/tabsScript.inc:33 admin/fai/class_faiVariable.inc:142
-#: admin/fai/class_faiTemplate.inc:211 admin/fai/tabsVariable.inc:33
-#: admin/fai/tabsPartition.inc:34 admin/fai/class_faiScript.inc:229
-#: admin/fai/class_faiPartitionTable.inc:180
-#: admin/fai/class_faiScriptEntry.inc:59 admin/fai/class_faiScriptEntry.inc:62
-#: admin/fai/class_faiProfile.inc:262
+#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
+#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
+#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr "错误"
 
-#: admin/systems/services/repository/class_servRepository.inc:142
+#: admin/fai/tabsScript.inc:33 admin/fai/tabsProfile.inc:33
+#: admin/fai/tabsPartition.inc:34 admin/fai/tabsTemplate.inc:33
+#: admin/fai/tabsHook.inc:32 admin/fai/tabsVariable.inc:33
+#: admin/fai/tabsPackage.inc:33
 #, fuzzy
-msgid "FAI release"
-msgstr "自动化安装（FAI）类"
+msgid "Moving the tree failed. Destination tree is subtree of source tree."
+msgstr "移动树失败。目标树是源树的子树。"
 
-#: admin/systems/services/repository/class_servRepository.inc:177
-#: admin/fai/class_faiPackage.inc:456 admin/fai/class_faiPackage.inc:581
-#: admin/fai/faiScript.tpl:9 admin/fai/faiPartitionTable.tpl:9
-#: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
-#: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
-#: admin/fai/class_faiManagement.inc:658 admin/fai/class_faiManagement.inc:664
-#: admin/fai/class_faiHook.inc:443 admin/fai/class_faiHook.inc:563
-#: admin/fai/class_faiTemplateEntry.inc:192
-#: admin/fai/class_faiTemplateEntry.inc:258
-#: admin/fai/class_faiSummaryTab.inc:343 admin/fai/class_faiVariable.inc:301
-#: admin/fai/class_faiVariable.inc:402 admin/fai/faiHook.tpl:9
-#: admin/fai/class_faiTemplate.inc:420 admin/fai/class_faiTemplate.inc:543
-#: admin/fai/class_askClassName.inc:142 admin/fai/class_askClassName.inc:146
-#: admin/fai/class_askClassName.inc:150 admin/fai/faiVariable.tpl:9
-#: admin/fai/class_faiScript.inc:327 admin/fai/class_faiScript.inc:488
-#: admin/fai/class_faiScript.inc:650 admin/fai/faiHookEntry.tpl:9
+#: admin/fai/faiTemplateEntry.tpl:3 admin/fai/faiVariableEntry.tpl:5
+#: admin/fai/faiProfile.tpl:4 admin/fai/faiProfile.tpl:36
+#: admin/fai/faiTemplate.tpl:4 admin/fai/faiHook.tpl:4
+#: admin/fai/faiPartitionTable.tpl:4 admin/fai/faiHookEntry.tpl:5
+#: admin/fai/faiScriptEntry.tpl:5 admin/fai/faiPackage.tpl:4
+#: admin/fai/faiVariable.tpl:4 admin/fai/faiScript.tpl:4
+#: admin/fai/faiPartitionTableEntry.tpl:2
+msgid "Generic"
+msgstr "通用配置"
+
+#: admin/fai/faiTemplateEntry.tpl:10 admin/fai/class_faiTemplateEntry.inc:220
+#, fuzzy
+msgid "File name"
+msgstr "文件名"
+
+#: admin/fai/faiTemplateEntry.tpl:21 admin/fai/class_faiTemplateEntry.inc:215
+msgid "Destination path"
+msgstr "目标路径"
+
+#: admin/fai/faiTemplateEntry.tpl:33 admin/fai/faiVariableEntry.tpl:19
+#: admin/fai/faiProfile.tpl:21 admin/fai/faiTemplate.tpl:21
+#: admin/fai/class_faiPackage.inc:582 admin/fai/faiHook.tpl:21
+#: admin/fai/class_faiPartitionTable.inc:550
+#: admin/fai/class_faiTemplate.inc:545 admin/fai/faiPartitionTable.tpl:21
+#: admin/fai/faiHookEntry.tpl:19 admin/fai/faiScriptEntry.tpl:19
+#: admin/fai/faiPackage.tpl:21 admin/fai/class_faiScript.inc:646
+#: admin/fai/faiVariable.tpl:21 admin/fai/class_faiHook.inc:562
+#: admin/fai/class_faiVariableEntry.inc:138 admin/fai/faiScript.tpl:21
+#: admin/fai/class_faiProfile.inc:479 admin/fai/class_faiVariable.inc:398
+#: admin/fai/faiPartitionTableEntry.tpl:13
+#: admin/fai/class_faiScriptEntry.inc:190
+#: admin/fai/class_faiTemplateEntry.inc:274
+#: admin/fai/class_faiHookEntry.inc:197
+#: admin/fai/class_faiPartitionTableEntry.inc:470
+#: addons/goto/class_gotomasses.inc:917
+msgid "Description"
+msgstr "描述"
+
+#: admin/fai/faiTemplateEntry.tpl:45
+msgid "Template attributes"
+msgstr "模板属性"
+
+#: admin/fai/faiTemplateEntry.tpl:53 admin/fai/class_faiTemplateEntry.inc:211
+#: addons/goto/class_gotoLogView.inc:113
+msgid "File"
+msgstr "文件"
+
+#: admin/fai/faiTemplateEntry.tpl:60
+msgid "Save template"
+msgstr "保存模板"
+
+#: admin/fai/faiTemplateEntry.tpl:69 addons/goto/goto_import_file.tpl:25
+msgid "Upload"
+msgstr "上传"
+
+#: admin/fai/faiTemplateEntry.tpl:76
+#, fuzzy
+msgid "Full path"
+msgstr "字体路径"
+
+#: admin/fai/faiTemplateEntry.tpl:92
+msgid "Owner"
+msgstr "所有者"
+
+#: admin/fai/faiTemplateEntry.tpl:103 admin/fai/faiTemplateEntry.tpl:145
+#: admin/fai/class_faiTemplateEntry.inc:230
+#: admin/fai/class_faiTemplateEntry.inc:233
+#: admin/fai/class_faiTemplateEntry.inc:235
+#: addons/goto/events/class_EventTargetAddUsersList.inc:173
+msgid "Group"
+msgstr "组"
+
+#: admin/fai/faiTemplateEntry.tpl:114
+msgid "Access"
+msgstr "访问"
+
+#: admin/fai/faiTemplateEntry.tpl:120
+msgid "Class"
+msgstr "类"
+
+#: admin/fai/faiTemplateEntry.tpl:121
+msgid "Read"
+msgstr "读"
+
+#: admin/fai/faiTemplateEntry.tpl:122
+msgid "Write"
+msgstr "写"
+
+#: admin/fai/faiTemplateEntry.tpl:123 addons/goto/class_gotomasses.inc:383
+msgid "Execute"
+msgstr "执行"
+
+#: admin/fai/faiTemplateEntry.tpl:125
+msgid "Special"
+msgstr "特殊"
+
+#: admin/fai/faiTemplateEntry.tpl:128 admin/fai/class_faiTemplateEntry.inc:224
+#: admin/fai/class_faiTemplateEntry.inc:226
+#: addons/goto/events/class_EventTargetAddUsersList.inc:171
+msgid "User"
+msgstr "用户"
+
+#: admin/fai/faiTemplateEntry.tpl:142
+msgid "SUID"
+msgstr "SUID"
+
+#: admin/fai/faiTemplateEntry.tpl:159
+msgid "SGID"
+msgstr "SGID"
+
+#: admin/fai/faiTemplateEntry.tpl:162
+msgid "Others"
+msgstr "其他"
+
+#: admin/fai/faiTemplateEntry.tpl:176
+msgid "sticky"
+msgstr "置顶"
+
+#: admin/fai/faiVariableEntry.tpl:9 admin/fai/faiProfile.tpl:9
+#: admin/fai/faiTemplate.tpl:9 admin/fai/class_faiPackage.inc:456
+#: admin/fai/class_faiPackage.inc:581 admin/fai/faiHook.tpl:9
 #: admin/fai/class_faiPartitionTable.inc:371
 #: admin/fai/class_faiPartitionTable.inc:549
+#: admin/fai/class_faiTemplate.inc:421 admin/fai/class_faiTemplate.inc:544
+#: admin/fai/class_faiManagement.inc:664 admin/fai/class_faiManagement.inc:670
+#: admin/fai/faiPartitionTable.tpl:9 admin/fai/faiHookEntry.tpl:9
+#: admin/fai/faiScriptEntry.tpl:9 admin/fai/class_faiSummaryTab.inc:343
+#: admin/fai/faiPackage.tpl:9 admin/fai/class_faiScript.inc:327
+#: admin/fai/class_faiScript.inc:483 admin/fai/class_faiScript.inc:645
+#: admin/fai/faiVariable.tpl:9 admin/fai/class_askClassName.inc:142
+#: admin/fai/class_askClassName.inc:146 admin/fai/class_askClassName.inc:150
+#: admin/fai/class_faiHook.inc:440 admin/fai/class_faiHook.inc:561
+#: admin/fai/class_faiVariableEntry.inc:90
+#: admin/fai/class_faiVariableEntry.inc:99
+#: admin/fai/class_faiVariableEntry.inc:102
+#: admin/fai/class_faiVariableEntry.inc:137 admin/fai/faiScript.tpl:9
+#: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
+#: admin/fai/class_faiProfile.inc:478 admin/fai/class_faiVariable.inc:296
+#: admin/fai/class_faiVariable.inc:397 admin/fai/faiPartitionTableEntry.tpl:6
 #: admin/fai/class_faiScriptEntry.inc:137
 #: admin/fai/class_faiScriptEntry.inc:142
 #: admin/fai/class_faiScriptEntry.inc:145
 #: admin/fai/class_faiScriptEntry.inc:189
-#: admin/fai/class_faiVariableEntry.inc:90
-#: admin/fai/class_faiVariableEntry.inc:99
-#: admin/fai/class_faiVariableEntry.inc:102
-#: admin/fai/class_faiVariableEntry.inc:137
-#: admin/fai/faiPartitionTableEntry.tpl:6 admin/fai/faiTemplate.tpl:9
-#: admin/fai/class_faiProfile.inc:395 admin/fai/class_faiProfile.inc:405
-#: admin/fai/class_faiProfile.inc:478 admin/fai/faiPackage.tpl:9
-#: admin/fai/faiScriptEntry.tpl:9 admin/fai/faiVariableEntry.tpl:9
-#: admin/fai/faiProfile.tpl:9 admin/fai/class_faiPartitionTableEntry.inc:371
+#: admin/fai/class_faiTemplateEntry.inc:207
+#: admin/fai/class_faiTemplateEntry.inc:273
+#: admin/fai/class_faiHookEntry.inc:145 admin/fai/class_faiHookEntry.inc:150
+#: admin/fai/class_faiHookEntry.inc:153 admin/fai/class_faiHookEntry.inc:196
+#: admin/fai/class_faiPartitionTableEntry.inc:371
 #: admin/fai/class_faiPartitionTableEntry.inc:374
 #: admin/fai/class_faiPartitionTableEntry.inc:469
+#: admin/systems/services/repository/class_servRepository.inc:177
 msgid "Name"
 msgstr "名称"
 
-#: admin/systems/services/repository/class_servRepository.inc:326
-#: admin/fai/class_faiPackage.inc:478 admin/fai/class_faiManagement.inc:831
-#: admin/fai/class_faiPackageConfiguration.inc:35 admin/fai/class_FAI.inc:553
-#: admin/fai/class_faiPackageEntry.inc:53
-#: admin/fai/class_faiPackageEntry.inc:193
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "在子树中查找"
+#: admin/fai/faiVariableEntry.tpl:33
+msgid "Variable attributes"
+msgstr "变量属性"
 
-#: admin/systems/services/repository/class_servRepository.inc:343
-#: admin/systems/services/repository/servRepositorySetup.tpl:1
-#: admin/fai/faiPackage.tpl:33
-msgid "Repository"
-msgstr "仓库"
+#: admin/fai/faiVariableEntry.tpl:38 admin/fai/class_faiVariableEntry.inc:139
+msgid "Variable content"
+msgstr "变量内容"
 
-#: admin/systems/services/repository/class_servRepository.inc:344
-msgid "Services"
-msgstr "服务"
+#: admin/fai/faiProfileEntry.tpl:6
+msgid "List of FAI objects (Fully Automatic Installation)"
+msgstr "FAI （全自动安装）对象列表"
 
-#: admin/systems/services/repository/class_servRepository.inc:357
-#: admin/systems/services/repository/servRepositorySetup.tpl:8
-#, fuzzy
-msgid "Parent server"
-msgstr "保留"
+#: admin/fai/faiProfileEntry.tpl:21 admin/fai/faiPackageEntry.tpl:20
+msgid "Information"
+msgstr "提示信息"
 
-#: admin/systems/services/repository/class_servRepository.inc:358
-#: admin/fai/branch_selector.tpl:2
-#, fuzzy
-msgid "Releases"
-msgstr "发行"
+#: admin/fai/faiProfileEntry.tpl:26
+msgid ""
+"This menu allows you to select FAI class names and to add them to the "
+"currently edited profile."
+msgstr "这个菜单允许您为当前编辑的配置添加 FAI 类名。"
 
-#: admin/systems/services/repository/class_servRepository.inc:359
-#: admin/systems/services/repository/servRepositorySetup.tpl:28
-#: admin/systems/services/repository/class_servRepositorySetup.inc:157
-msgid "URL"
-msgstr ""
+#: admin/fai/faiProfileEntry.tpl:31 admin/fai/faiPackageEntry.tpl:30
+msgid "Filters"
+msgstr "过滤器"
 
-#: admin/systems/services/repository/class_servRepository.inc:360
-#: admin/systems/services/repository/servRepositorySetup.tpl:39
-#: admin/systems/services/repository/class_divListRepositories.inc:24
-#: admin/systems/services/repository/class_divListRepositories.inc:64
-#, fuzzy
-msgid "Sections"
-msgstr "节"
+#: admin/fai/faiProfileEntry.tpl:39
+msgid "Show only classes with templates"
+msgstr "只显示带有模板的分类"
 
-#: admin/systems/services/repository/servRepositorySetup.tpl:19
-#: admin/systems/services/repository/class_servRepositorySetup.inc:153
-#: admin/systems/services/repository/class_divListRepositories.inc:23
-#: admin/fai/class_faiPackage.inc:587 admin/fai/branch_selector.tpl:25
-#: admin/fai/faiPackage.tpl:37
-msgid "Release"
-msgstr "发行"
+#: admin/fai/faiProfileEntry.tpl:41
+msgid "Show only classes with scripts"
+msgstr "只显示带有脚本的分类"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:19
-#, fuzzy
-msgid "List of configured repositories"
-msgstr "用户列表"
+#: admin/fai/faiProfileEntry.tpl:43
+msgid "Show only classes with hooks"
+msgstr "只显示带有钩子的分类"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:20
-#, fuzzy
-msgid "This menu allows you to create, delete and edit repository settings."
-msgstr "这个菜单允许您创建，删除和修改 FAI 分类。"
+#: admin/fai/faiProfileEntry.tpl:45
+msgid "Show only classes with variables"
+msgstr "只显示带有变量的分类"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:25
-msgid "Options"
-msgstr "选项"
+#: admin/fai/faiProfileEntry.tpl:47
+msgid "Show only classes with packages"
+msgstr "只显示带有软件包的分类"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:26
+#: admin/fai/faiProfileEntry.tpl:49
+msgid "Show only classes with partitions"
+msgstr "只显示带有分区的分类"
+
+#: admin/fai/faiProfileEntry.tpl:54 admin/fai/faiProfileEntry.tpl:55
+#: admin/fai/faiPackageEntry.tpl:40
+msgid "Display objects matching"
+msgstr "显示匹配对象"
+
 #: admin/fai/faiProfileEntry.tpl:59 admin/fai/faiPackageEntry.tpl:44
+#: admin/systems/services/repository/class_divListRepositories.inc:26
 msgid "Regular expression for matching object names"
 msgstr "匹配对象名的正则表达式"
 
-#: admin/systems/services/repository/class_divListRepositories.inc:33
+#: admin/fai/faiProfile.tpl:36 admin/fai/class_faiProfile.inc:480
+msgid "FAI classes"
+msgstr "自动化安装（FAI）类"
+
+#: admin/fai/faiProfile.tpl:37
+msgid "Choose a priority"
+msgstr "选择一个优先级"
+
+#: admin/fai/faiTemplate.tpl:33 admin/fai/faiHook.tpl:38
+#: admin/fai/class_faiProfileEntry.inc:175 admin/fai/faiPartitionTable.tpl:36
+#: admin/fai/faiVariable.tpl:36 admin/fai/faiScript.tpl:38
+msgid "Objects"
+msgstr "对象"
+
+#: admin/fai/faiTemplate.tpl:34
+msgid "List of template files"
+msgstr "模板文件列表"
+
+#: admin/fai/class_divListFai.inc:32
 #, fuzzy
-msgid "Add repository"
-msgstr "目录"
+msgid "List of classes"
+msgstr "FAI 类列表"
+
+#: admin/fai/class_divListFai.inc:33
+#, fuzzy
+msgid "List of deployment classes and products"
+msgstr "只显示带有软件包的分类"
+
+#: admin/fai/class_divListFai.inc:48
+#, fuzzy
+msgid "Select all"
+msgstr "选择"
+
+#: admin/fai/class_divListFai.inc:53 admin/fai/paste_generic.tpl:5
+#: admin/fai/class_faiProfileEntry.inc:174 admin/fai/askClassName.tpl:32
+#: admin/fai/askClassName.tpl:54
+msgid "Class name"
+msgstr "类名"
+
+#: admin/fai/class_divListFai.inc:54
+msgid "Class type"
+msgstr "分类类型"
+
+#: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
+#: addons/goto/class_gotomasses.inc:365
+msgid "Actions"
+msgstr "动作"
+
+#: admin/fai/class_divListFai.inc:57 admin/fai/class_divListFai.inc:59
+#: admin/fai/class_divListFai.inc:61 admin/fai/class_divListFai.inc:63
+#: admin/fai/class_divListFai.inc:65 admin/fai/class_divListFai.inc:67
+#: admin/fai/class_divListFai.inc:69 admin/fai/class_divListFai.inc:75
+#: admin/fai/class_divListFai.inc:77
+#, fuzzy, php-format
+msgid "Display objects of type '%s'."
+msgstr "显示匹配对象"
+
+#: admin/fai/class_divListFai.inc:58 admin/fai/class_divListFai.inc:149
+#: admin/fai/class_divListFai.inc:217 admin/fai/class_faiGroupHandle.inc:110
+#: admin/fai/class_askClassName.inc:84 admin/fai/class_faiProfile.inc:470
+#, fuzzy
+msgid "Profile"
+msgstr "Profiles"
+
+#: admin/fai/class_divListFai.inc:58
+msgid "Show profiles"
+msgstr "显示 profiles"
+
+#: admin/fai/class_divListFai.inc:60 admin/fai/class_divListFai.inc:66
+#: admin/fai/class_faiVariable.inc:389
+msgid "Variable"
+msgstr "变量"
+
+#: admin/fai/class_divListFai.inc:60
+msgid "Show templates"
+msgstr "显示模板"
+
+#: admin/fai/class_divListFai.inc:62 admin/fai/faiHookEntry.tpl:56
+#: admin/fai/faiScriptEntry.tpl:56 admin/fai/class_faiScript.inc:637
+#: admin/fai/class_faiScriptEntry.inc:150 admin/fai/class_faiHookEntry.inc:158
+msgid "Script"
+msgstr "脚本"
+
+#: admin/fai/class_divListFai.inc:62
+msgid "Show scripts"
+msgstr "显示脚本"
+
+#: admin/fai/class_divListFai.inc:64 admin/fai/class_faiHook.inc:553
+#, fuzzy
+msgid "Hook"
+msgstr "钩子"
+
+#: admin/fai/class_divListFai.inc:64
+msgid "Show hooks"
+msgstr "显示钩子"
+
+#: admin/fai/class_divListFai.inc:66
+msgid "Show variables"
+msgstr "显示变量"
+
+#: admin/fai/class_divListFai.inc:68 admin/fai/class_faiPackage.inc:573
+#: admin/fai/faiPackageConfiguration.tpl:1
+msgid "Package"
+msgstr "软件包"
+
+#: admin/fai/class_divListFai.inc:68
+msgid "Show packages"
+msgstr "显示软件包"
+
+#: admin/fai/class_divListFai.inc:70
+#, fuzzy
+msgid "Partition"
+msgstr "分区"
+
+#: admin/fai/class_divListFai.inc:70
+msgid "Show partitions"
+msgstr "显示分区"
+
+#: admin/fai/class_divListFai.inc:76 admin/fai/class_divListFai.inc:221
+#: admin/fai/class_faiGroupHandle.inc:114
+msgid "OPSI netboot product"
+msgstr ""
+
+#: admin/fai/class_divListFai.inc:76
+#, fuzzy
+msgid "Show netboot products"
+msgstr "对象组"
+
+#: admin/fai/class_divListFai.inc:78 admin/fai/class_divListFai.inc:223
+#, fuzzy
+msgid "OPSI localboot product"
+msgstr "对象组"
+
+#: admin/fai/class_divListFai.inc:78
+#, fuzzy
+msgid "Show localboot products"
+msgstr "对象组"
+
+#: admin/fai/class_divListFai.inc:86
+msgid "Display users matching"
+msgstr "显示匹配的用户"
+
+#: admin/fai/class_divListFai.inc:140 addons/goto/class_gotomasses.inc:366
+msgid "Create"
+msgstr "创建"
+
+#: admin/fai/class_divListFai.inc:145
+#, fuzzy
+msgid "Freezed"
+msgstr "频率"
+
+#: admin/fai/class_divListFai.inc:154 admin/fai/class_divListFai.inc:207
+#: admin/fai/class_faiGroupHandle.inc:100
+#: admin/fai/class_faiPartitionTable.inc:541
+#: admin/fai/class_faiProfileEntry.inc:143
+#: admin/fai/class_faiSummaryTab.inc:48 admin/fai/class_askClassName.inc:79
+#: admin/fai/class_faiProfile.inc:297
+msgid "Partition table"
+msgstr "分区表"
+
+#: admin/fai/class_divListFai.inc:155
+msgid "PT"
+msgstr "PT"
+
+#: admin/fai/class_divListFai.inc:156 admin/fai/class_divListFai.inc:211
+#: admin/fai/class_faiGroupHandle.inc:104 admin/fai/class_faiSummaryTab.inc:44
+msgid "Scripts"
+msgstr "脚本"
+
+#: admin/fai/class_divListFai.inc:157
+msgid "S"
+msgstr "S"
+
+#: admin/fai/class_divListFai.inc:158 admin/fai/class_divListFai.inc:215
+#: admin/fai/class_faiGroupHandle.inc:108 admin/fai/class_faiSummaryTab.inc:45
+msgid "Hooks"
+msgstr "钩子"
+
+#: admin/fai/class_divListFai.inc:159
+msgid "H"
+msgstr "H"
+
+#: admin/fai/class_divListFai.inc:160 admin/fai/class_divListFai.inc:213
+#: admin/fai/class_faiGroupHandle.inc:106 admin/fai/class_faiSummaryTab.inc:46
+msgid "Variables"
+msgstr "变量"
+
+#: admin/fai/class_divListFai.inc:161
+msgid "V"
+msgstr "V"
+
+#: admin/fai/class_divListFai.inc:162
+#, fuzzy
+msgid "Templates "
+msgstr "模板"
+
+#: admin/fai/class_divListFai.inc:163
+#, fuzzy
+msgid "I"
+msgstr "NI"
+
+#: admin/fai/class_divListFai.inc:164 admin/fai/class_divListFai.inc:209
+#: admin/fai/class_faiGroupHandle.inc:102 admin/fai/class_faiSummaryTab.inc:49
+msgid "Package list"
+msgstr "软件包列表"
+
+#: admin/fai/class_divListFai.inc:165
+msgid "PK"
+msgstr "PK"
+
+#: admin/fai/class_divListFai.inc:178
+#: admin/fai/class_faiPartitionTableEntry.inc:288
+#: admin/fai/class_faiPartitionTableEntry.inc:290
+#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
+#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
+#: addons/goto/events/class_DaemonEvent.inc:230
+msgid "Remove"
+msgstr "删除"
+
+#: admin/fai/class_divListFai.inc:219 admin/fai/class_faiGroupHandle.inc:112
+#: admin/fai/class_faiSummaryTab.inc:47
+msgid "Templates"
+msgstr "模板"
+
+#: admin/fai/class_divListFai.inc:294 admin/fai/class_divListFai.inc:295
+#: admin/fai/class_divListFai.inc:296 admin/fai/class_divListFai.inc:297
+#: admin/fai/class_divListFai.inc:298 admin/fai/class_divListFai.inc:299
+#: admin/fai/class_divListFai.inc:300 admin/fai/class_divListFai.inc:301
+#: admin/fai/class_divListFai.inc:302 admin/fai/class_divListFai.inc:303
+#, fuzzy, php-format
+msgid "Number of listed '%s'"
+msgstr "部门名称"
+
+#: admin/fai/class_divListFai.inc:294
+#, fuzzy
+msgid "profiles"
+msgstr "Profiles"
+
+#: admin/fai/class_divListFai.inc:295
+#, fuzzy
+msgid "partitions"
+msgstr "%s 分区"
+
+#: admin/fai/class_divListFai.inc:296
+#, fuzzy
+msgid "scripts"
+msgstr "脚本"
+
+#: admin/fai/class_divListFai.inc:297
+#, fuzzy
+msgid "hooks"
+msgstr "钩子"
+
+#: admin/fai/class_divListFai.inc:298
+#, fuzzy
+msgid "variables"
+msgstr "变量"
+
+#: admin/fai/class_divListFai.inc:299
+#, fuzzy
+msgid "templates"
+msgstr "模板"
+
+#: admin/fai/class_divListFai.inc:300
+#, fuzzy
+msgid "packages"
+msgstr "软件包"
+
+#: admin/fai/class_divListFai.inc:301
+#, fuzzy
+msgid "departments"
+msgstr "提交部门"
+
+#: admin/fai/class_divListFai.inc:302
+#, fuzzy
+msgid "netboot products"
+msgstr "对象组"
+
+#: admin/fai/class_divListFai.inc:303
+#, fuzzy
+msgid "localboot products"
+msgstr "对象组"
+
+#: admin/fai/paste_generic.tpl:1
+#, fuzzy
+msgid "FAI settings"
+msgstr "自动化安装（FAI）类"
+
+#: admin/fai/class_faiGroupHandle.inc:116
+msgid "OPSI local product"
+msgstr ""
 
 #: admin/fai/class_faiPackage.inc:329 admin/fai/class_faiPackage.inc:330
 #, fuzzy
@@ -202,32 +595,21 @@ msgid ""
 "Please choose a valid release/section combination for your repository setup!"
 msgstr "请为您仓库的设置选择一个有效的组合。"
 
-#: admin/fai/class_faiPackage.inc:573 admin/fai/faiPackageConfiguration.tpl:1
-#: admin/fai/class_divListFai.inc:69
-msgid "Package"
-msgstr "软件包"
+#: admin/fai/class_faiPackage.inc:478 admin/fai/class_faiPackageEntry.inc:53
+#: admin/fai/class_faiPackageEntry.inc:193 admin/fai/class_FAI.inc:553
+#: admin/fai/class_faiManagement.inc:838
+#: admin/fai/class_faiPackageConfiguration.inc:35
+#: admin/systems/services/repository/class_servRepository.inc:326
+#: addons/goto/class_gotomasses.inc:328
+#: addons/goto/class_goto_import_file.inc:124
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "在子树中查找"
 
 #: admin/fai/class_faiPackage.inc:574
 #, fuzzy
 msgid "FAI Package list"
 msgstr "软件包列表"
-
-#: admin/fai/class_faiPackage.inc:582 admin/fai/faiScript.tpl:21
-#: admin/fai/faiPartitionTable.tpl:21 admin/fai/faiTemplateEntry.tpl:33
-#: admin/fai/class_faiHookEntry.inc:197 admin/fai/class_faiHook.inc:564
-#: admin/fai/class_faiTemplateEntry.inc:259
-#: admin/fai/class_faiVariable.inc:403 admin/fai/faiHook.tpl:21
-#: admin/fai/class_faiTemplate.inc:544 admin/fai/faiVariable.tpl:21
-#: admin/fai/class_faiScript.inc:651 admin/fai/faiHookEntry.tpl:19
-#: admin/fai/class_faiPartitionTable.inc:550
-#: admin/fai/class_faiScriptEntry.inc:190
-#: admin/fai/class_faiVariableEntry.inc:138
-#: admin/fai/faiPartitionTableEntry.tpl:13 admin/fai/faiTemplate.tpl:21
-#: admin/fai/class_faiProfile.inc:479 admin/fai/faiPackage.tpl:21
-#: admin/fai/faiScriptEntry.tpl:19 admin/fai/faiVariableEntry.tpl:19
-#: admin/fai/faiProfile.tpl:21 admin/fai/class_faiPartitionTableEntry.inc:470
-msgid "Description"
-msgstr "描述"
 
 #: admin/fai/class_faiPackage.inc:583
 msgid "Packages"
@@ -238,7 +620,7 @@ msgid "Section"
 msgstr "节"
 
 #: admin/fai/class_faiPackage.inc:584 admin/fai/class_faiPackage.inc:587
-#: admin/fai/class_faiTemplate.inc:543 admin/fai/class_faiScript.inc:650
+#: admin/fai/class_faiTemplate.inc:544 admin/fai/class_faiScript.inc:645
 #, fuzzy
 msgid "Readonly"
 msgstr "读"
@@ -253,387 +635,26 @@ msgstr "安装方法"
 msgid "Package configuration"
 msgstr "Schema 配置"
 
-#: admin/fai/faiScript.tpl:4 admin/fai/faiPartitionTable.tpl:4
-#: admin/fai/faiTemplateEntry.tpl:3 admin/fai/faiHook.tpl:4
-#: admin/fai/faiVariable.tpl:4 admin/fai/faiHookEntry.tpl:5
-#: admin/fai/faiPartitionTableEntry.tpl:2 admin/fai/faiTemplate.tpl:4
-#: admin/fai/faiPackage.tpl:4 admin/fai/faiScriptEntry.tpl:5
-#: admin/fai/faiVariableEntry.tpl:5 admin/fai/faiProfile.tpl:4
-#: admin/fai/faiProfile.tpl:36
-msgid "Generic"
-msgstr "通用配置"
+#: admin/fai/class_faiPackage.inc:587 admin/fai/faiPackage.tpl:37
+#: admin/fai/branch_selector.tpl:25
+#: admin/systems/services/repository/class_divListRepositories.inc:23
+#: admin/systems/services/repository/servRepositorySetup.tpl:19
+#: admin/systems/services/repository/class_servRepositorySetup.inc:153
+msgid "Release"
+msgstr "发行"
 
-#: admin/fai/faiScript.tpl:38 admin/fai/faiPartitionTable.tpl:36
-#: admin/fai/class_faiProfileEntry.inc:175 admin/fai/faiHook.tpl:38
-#: admin/fai/faiVariable.tpl:36 admin/fai/faiTemplate.tpl:33
-msgid "Objects"
-msgstr "对象"
+#: admin/fai/faiHook.tpl:39
+msgid "List of hook scripts"
+msgstr "钩子脚本列表"
 
-#: admin/fai/faiScript.tpl:39
-msgid "List of scripts"
-msgstr "脚本列表"
+#: admin/fai/class_faiPackageEntry.inc:38
+msgid "Please enter your search string here"
+msgstr "请在这里输入您的查询字符串"
 
-#: admin/fai/faiPartitionTable.tpl:38
-msgid "Discs"
-msgstr "Discs"
-
-#: admin/fai/faiPartitionTable.tpl:44
-msgid "Choose a disk to delete or edit"
-msgstr "选择一个要删除或修改的磁盘"
-
-#: admin/fai/faiPartitionTable.tpl:54 admin/fai/class_faiHook.inc:310
-#: admin/fai/class_faiHook.inc:312 admin/fai/faiVariable.tpl:53
-msgid "Edit"
-msgstr "编辑"
-
-#: admin/fai/class_debconfTemplate.inc:207
-msgid "This package has no debconf options."
-msgstr "这个软件包没有 debconf 选项。"
-
-#: admin/fai/faiTemplateEntry.tpl:10 admin/fai/class_faiTemplateEntry.inc:205
-#, fuzzy
-msgid "File name"
-msgstr "文件名"
-
-#: admin/fai/faiTemplateEntry.tpl:21 admin/fai/class_faiTemplateEntry.inc:200
-msgid "Destination path"
-msgstr "目标路径"
-
-#: admin/fai/faiTemplateEntry.tpl:45
-msgid "Template attributes"
-msgstr "模板属性"
-
-#: admin/fai/faiTemplateEntry.tpl:53 admin/fai/class_faiTemplateEntry.inc:196
-msgid "File"
-msgstr "文件"
-
-#: admin/fai/faiTemplateEntry.tpl:60
-msgid "Save template"
-msgstr "保存模板"
-
-#: admin/fai/faiTemplateEntry.tpl:69
-msgid "Upload"
-msgstr "上传"
-
-#: admin/fai/faiTemplateEntry.tpl:76
-#, fuzzy
-msgid "Full path"
-msgstr "字体路径"
-
-#: admin/fai/faiTemplateEntry.tpl:92
-msgid "Owner"
-msgstr "所有者"
-
-#: admin/fai/faiTemplateEntry.tpl:103 admin/fai/faiTemplateEntry.tpl:145
-#: admin/fai/class_faiTemplateEntry.inc:215
-#: admin/fai/class_faiTemplateEntry.inc:218
-#: admin/fai/class_faiTemplateEntry.inc:220
-msgid "Group"
-msgstr "组"
-
-#: admin/fai/faiTemplateEntry.tpl:114
-msgid "Access"
-msgstr "访问"
-
-#: admin/fai/faiTemplateEntry.tpl:120
-msgid "Class"
-msgstr "类"
-
-#: admin/fai/faiTemplateEntry.tpl:121
-msgid "Read"
-msgstr "读"
-
-#: admin/fai/faiTemplateEntry.tpl:122
-msgid "Write"
-msgstr "写"
-
-#: admin/fai/faiTemplateEntry.tpl:123
-msgid "Execute"
-msgstr "执行"
-
-#: admin/fai/faiTemplateEntry.tpl:125
-msgid "Special"
-msgstr "特殊"
-
-#: admin/fai/faiTemplateEntry.tpl:128 admin/fai/class_faiTemplateEntry.inc:209
-#: admin/fai/class_faiTemplateEntry.inc:211
-msgid "User"
-msgstr "用户"
-
-#: admin/fai/faiTemplateEntry.tpl:142
-msgid "SUID"
-msgstr "SUID"
-
-#: admin/fai/faiTemplateEntry.tpl:159
-msgid "SGID"
-msgstr "SGID"
-
-#: admin/fai/faiTemplateEntry.tpl:162
-msgid "Others"
-msgstr "其他"
-
-#: admin/fai/faiTemplateEntry.tpl:176
-msgid "sticky"
-msgstr "置顶"
-
-#: admin/fai/tabsHook.inc:32 admin/fai/tabsPackage.inc:33
-#: admin/fai/tabsTemplate.inc:33 admin/fai/tabsProfile.inc:33
-#: admin/fai/tabsScript.inc:33 admin/fai/tabsVariable.inc:33
-#: admin/fai/tabsPartition.inc:34
-#, fuzzy
-msgid "Moving the tree failed. Destination tree is subtree of source tree."
-msgstr "移动树失败。目标树是源树的子树。"
-
-#: admin/fai/class_faiHookEntry.inc:65 admin/fai/class_faiScriptEntry.inc:62
-#, fuzzy
-msgid "file is empty"
-msgstr "选择的文件为空。"
-
-#: admin/fai/class_faiHookEntry.inc:80 admin/fai/class_faiHook.inc:324
-#: admin/fai/class_faiTemplate.inc:299 admin/fai/class_faiScript.inc:330
-#: admin/fai/class_faiScript.inc:358 admin/fai/class_faiScriptEntry.inc:88
-msgid "Download"
-msgstr "下载"
-
-#: admin/fai/class_faiHookEntry.inc:158 admin/fai/class_faiScript.inc:642
-#: admin/fai/faiHookEntry.tpl:56 admin/fai/class_faiScriptEntry.inc:150
-#: admin/fai/class_divListFai.inc:63 admin/fai/faiScriptEntry.tpl:56
-msgid "Script"
-msgstr "脚本"
-
-#: admin/fai/class_faiHookEntry.inc:188
-#, fuzzy
-msgid "Hook entry"
-msgstr "删除记录"
-
-#: admin/fai/class_faiHookEntry.inc:189
-#, fuzzy
-msgid "FAI hook entry"
-msgstr "添加记录"
-
-#: admin/fai/class_faiHookEntry.inc:198 admin/fai/faiHookEntry.tpl:38
-msgid "Task"
-msgstr "任务"
-
-#: admin/fai/class_faiHookEntry.inc:199 admin/fai/class_faiScript.inc:643
-#, fuzzy
-msgid "FAI script"
-msgstr "导入脚本"
-
-#: admin/fai/remove_branch.tpl:2 admin/fai/class_faiManagement.inc:564
-#: admin/fai/class_faiManagement.inc:1299 admin/fai/remove.tpl:2
-msgid "Warning"
-msgstr "警告"
-
-#: admin/fai/remove_branch.tpl:6
+#: admin/fai/class_faiPackageEntry.inc:103
 msgid ""
-"This includes all account data, system access, etc. for this branch. Please "
-"double check if your really want to do this since there is no way for GOsa "
-"to get your data back."
-msgstr ""
-"这个分支包含所有账号信息，系统访问等等。请再次检查您是否要这么做，因为 GOsa "
-"没有办法将您的数据找回。"
-
-#: admin/fai/remove_branch.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
-
-#: admin/fai/class_faiManagement.inc:25 admin/fai/main.inc:47
-#: admin/fai/main.inc:49
-msgid "Software deployment"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:26
-msgid "Manage software packages and deployment reciepes"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:321 admin/fai/class_faiManagement.inc:370
-#, fuzzy
-msgid "FAI object"
-msgstr "自动化安装（FAI）对象树"
-
-#: admin/fai/class_faiManagement.inc:327 admin/fai/class_faiManagement.inc:415
-#: admin/fai/class_faiManagement.inc:485 admin/fai/class_faiManagement.inc:546
-#: admin/fai/class_faiManagement.inc:693 admin/fai/class_faiManagement.inc:854
-#: admin/fai/class_faiManagement.inc:875 admin/fai/class_faiManagement.inc:909
-#: admin/fai/class_faiManagement.inc:926
-#, fuzzy
-msgid "Permission error"
-msgstr "允许"
-
-#: admin/fai/class_faiManagement.inc:357
-#, fuzzy
-msgid "Branch locked"
-msgstr "分支"
-
-#: admin/fai/class_faiManagement.inc:357
-#, php-format
-msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:490
-#, fuzzy, php-format
-msgid "Cannot delete '%s': object does not exist!"
-msgstr "软件包文件 '%s' 不存在。"
-
-#: admin/fai/class_faiManagement.inc:543
-msgid "FAI branch/freeze"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:546
-#, fuzzy
-msgid "You have no permission to delete this release!"
-msgstr "您无权删除这个发行版！"
-
-#: admin/fai/class_faiManagement.inc:564
-msgid "Release remove aborted because the release name check failed!"
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:693 admin/fai/class_faiManagement.inc:854
-#: admin/fai/class_faiManagement.inc:875
-#, fuzzy
-msgid "Branch"
-msgstr "分支"
-
-#: admin/fai/class_faiManagement.inc:801
-#: admin/fai/class_faiManagement.inc:1036
-#: admin/fai/class_faiManagement.inc:1042
-msgid "Continue"
-msgstr "继续"
-
-#: admin/fai/class_faiManagement.inc:836 admin/fai/class_FAI.inc:1157
-#, fuzzy
-msgid "Fatal error"
-msgstr "终端服务器"
-
-#: admin/fai/class_faiManagement.inc:896
-#, fuzzy
-msgid "partition table"
-msgstr "分区表"
-
-#: admin/fai/class_faiManagement.inc:897
-#, fuzzy
-msgid "script"
-msgstr "脚本"
-
-#: admin/fai/class_faiManagement.inc:898
-#, fuzzy
-msgid "hook"
-msgstr "钩子"
-
-#: admin/fai/class_faiManagement.inc:899
-#, fuzzy
-msgid "variable"
-msgstr "变量"
-
-#: admin/fai/class_faiManagement.inc:900
-#, fuzzy
-msgid "template"
-msgstr "模板"
-
-#: admin/fai/class_faiManagement.inc:901
-#, fuzzy
-msgid "package list"
-msgstr "软件包列表"
-
-#: admin/fai/class_faiManagement.inc:909 admin/fai/class_faiManagement.inc:926
-#, fuzzy, php-format
-msgid "You have no permission to create a new %s!"
-msgstr "您无权删除这个对象组！"
-
-#: admin/fai/class_faiManagement.inc:926
-#, fuzzy
-msgid "profile"
-msgstr "Profiles"
-
-#: admin/fai/class_faiManagement.inc:1299
-msgid ""
-"The selected release is not available anymore. All triggered actions are "
-"skipped."
-msgstr ""
-
-#: admin/fai/class_faiManagement.inc:1419
-#, fuzzy
-msgid "FAI releases"
-msgstr "自动化安装（FAI）类"
-
-#: admin/fai/class_faiManagement.inc:1420
-#, fuzzy
-msgid "FAI release management"
-msgstr "Asterisk 管理"
-
-#: admin/fai/class_faiManagement.inc:1425
-msgid "FAI"
-msgstr "自动化安装"
-
-#: admin/fai/askClassName.tpl:6
-msgid ""
-"Adding a new class to the FAI management, requires a class name. You have to "
-"specify a unique class name for unique types of FAI classes, while you can "
-"use the same class name for different types of FAI classes. In the laste "
-"case, FAI will automatically enclose all these different class types to one "
-"unique class name."
-msgstr ""
-"在 FAI 管理中添加一个新分类，需要一个分类名。您必须为唯一的 FAI 分类提供一个"
-"唯一类名，而您可以为不同的 FAI 分类使用相同的类名。在最后一种情况，FAI 会自动"
-"包含所有不同分类类型到唯一一个类名中。"
-
-#: admin/fai/askClassName.tpl:12
-msgid ""
-"Please use one of the following methods to choose the name for the new FAI "
-"class."
-msgstr "请使用下面的一个方法来选择新 FAI 分类的名称。"
-
-#: admin/fai/askClassName.tpl:26
-msgid "Enter FAI class name manually"
-msgstr "手工输入 FAI 分类名称"
-
-#: admin/fai/askClassName.tpl:32 admin/fai/askClassName.tpl:54
-#: admin/fai/class_faiProfileEntry.inc:174 admin/fai/paste_generic.tpl:5
-#: admin/fai/class_divListFai.inc:54
-msgid "Class name"
-msgstr "类名"
-
-#: admin/fai/askClassName.tpl:48
-msgid "Choose FAI class name from a list of existing classes"
-msgstr "从现存类的列表中选择一个 FAI 分类名称"
-
-#: admin/fai/askClassName.tpl:54
-msgid "Choose class name"
-msgstr "选择分类名"
-
-#: admin/fai/askClassName.tpl:70 admin/fai/askClassName.tpl:77
-msgid "Use"
-msgstr "使用"
-
-#: admin/fai/askClassName.tpl:74
-msgid "A new class name."
-msgstr "一个新类名称。"
-
-#: admin/fai/class_faiPackageConfiguration.inc:68
-#, php-format
-msgid "Debconf information for package '%s'"
-msgstr "软件包'%s' 的 Debconf 信息"
-
-#: admin/fai/class_faiHook.inc:314
-msgid "Delete"
-msgstr "删除"
-
-#: admin/fai/class_faiHook.inc:555 admin/fai/class_divListFai.inc:65
-#, fuzzy
-msgid "Hook"
-msgstr "钩子"
-
-#: admin/fai/class_faiHook.inc:556
-#, fuzzy
-msgid "FAI hook"
-msgstr "显示 FAI 钩子"
-
-#: admin/fai/class_faiHook.inc:563 admin/fai/class_faiVariable.inc:402
-#: admin/fai/class_faiPartitionTable.inc:549
-#, fuzzy
-msgid "Read only"
-msgstr "读"
+"This list displays all assigned package names for this repository settings."
+msgstr "对于该仓库的设置，这个列表显示所有已分配的软件包名称。"
 
 #: admin/fai/class_FAI.inc:259 admin/fai/class_FAI.inc:662
 #, fuzzy
@@ -694,50 +715,63 @@ msgstr "无法创建 '%s'，目标名称已经存在。"
 msgid "Error while fetching source dn - aborted!"
 msgstr "当获取源 dn 时错误──退出！"
 
+#: admin/fai/class_FAI.inc:1157 admin/fai/class_faiManagement.inc:843
+#, fuzzy
+msgid "Fatal error"
+msgstr "终端服务器"
+
 #: admin/fai/class_FAI.inc:1158
 #, php-format
 msgid ""
 "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 
-#: admin/fai/class_faiTemplateEntry.inc:90
-msgid "no file uploaded yet"
-msgstr "还没有上传文件"
-
-#: admin/fai/class_faiTemplateEntry.inc:96
+#: admin/fai/class_faiPartitionTable.inc:301
+#: admin/fai/class_faiPartitionTable.inc:307
 #, php-format
-msgid "exists in database (size: %s bytes)"
-msgstr "存在于数据库 （大小： %s 字节）"
+msgid "%s partition"
+msgstr "%s 分区"
 
-#: admin/fai/class_faiTemplateEntry.inc:250
-#, fuzzy
-msgid "Template entry"
-msgstr "模板用户"
+#: admin/fai/class_faiPartitionTable.inc:303
+#: admin/fai/class_faiPartitionTable.inc:309
+#, php-format
+msgid "%s partition(s)"
+msgstr "%s 分区"
 
-#: admin/fai/class_faiTemplateEntry.inc:251
+#: admin/fai/class_faiPartitionTable.inc:542
 #, fuzzy
-msgid "FAI template entry"
-msgstr "创建 FAI template 条目失败"
+msgid "FAI partition table"
+msgstr "新分区表"
 
-#: admin/fai/class_faiTemplateEntry.inc:260
+#: admin/fai/class_faiPartitionTable.inc:549 admin/fai/class_faiHook.inc:561
+#: admin/fai/class_faiVariable.inc:397
 #, fuzzy
-msgid "Template file"
-msgstr "模板集"
+msgid "Read only"
+msgstr "读"
 
-#: admin/fai/class_faiTemplateEntry.inc:261
-#, fuzzy
-msgid "Template path"
-msgstr "模板名称"
+#: admin/fai/class_faiTemplate.inc:286 admin/fai/class_faiTemplate.inc:288
+#: admin/fai/class_faiScript.inc:344 admin/fai/class_faiScript.inc:346
+msgid "edit"
+msgstr "编辑"
 
-#: admin/fai/class_faiTemplateEntry.inc:262
-#, fuzzy
-msgid "File owner"
-msgstr "文件名"
+#: admin/fai/class_faiTemplate.inc:290 admin/fai/class_faiScript.inc:348
+msgid "delete"
+msgstr "删除"
 
-#: admin/fai/class_faiTemplateEntry.inc:263
+#: admin/fai/class_faiTemplate.inc:300 admin/fai/class_faiScript.inc:330
+#: admin/fai/class_faiScript.inc:358 admin/fai/class_faiHook.inc:326
+#: admin/fai/class_faiScriptEntry.inc:88 admin/fai/class_faiHookEntry.inc:80
+msgid "Download"
+msgstr "下载"
+
+#: admin/fai/class_faiTemplate.inc:536
+msgid "Template"
+msgstr "模板"
+
+#: admin/fai/class_faiTemplate.inc:537
 #, fuzzy
-msgid "File permissions"
-msgstr "允许"
+msgid "FAI template"
+msgstr "新模板"
 
 #: admin/fai/class_faiProfileEntry.inc:138 admin/fai/class_askClassName.inc:83
 #: admin/fai/class_faiProfile.inc:292
@@ -764,41 +798,231 @@ msgstr "变量集"
 msgid "Package bundle"
 msgstr "软件包集合"
 
-#: admin/fai/class_faiProfileEntry.inc:143
-#: admin/fai/class_faiSummaryTab.inc:48 admin/fai/class_askClassName.inc:79
-#: admin/fai/class_faiPartitionTable.inc:541
-#: admin/fai/class_faiProfile.inc:297 admin/fai/class_divListFai.inc:158
-#: admin/fai/class_divListFai.inc:211
-msgid "Partition table"
-msgstr "分区表"
-
 #: admin/fai/class_faiProfileEntry.inc:172 admin/fai/class_faiProfile.inc:289
 msgid "This list displays all assigned class names for this profile."
 msgstr "这个列表显示该 profile 所有分配的类名。"
 
-#: admin/fai/class_faiSummaryTab.inc:44 admin/fai/class_divListFai.inc:160
-#: admin/fai/class_divListFai.inc:215
-msgid "Scripts"
+#: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:570
+#: admin/fai/class_faiManagement.inc:1305 admin/fai/remove_branch.tpl:2
+#: addons/goto/remove.tpl:2
+msgid "Warning"
+msgstr "警告"
+
+#: admin/fai/remove.tpl:7
+msgid ""
+"This includes 'all' object information. Please double check if your really "
+"want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"这包含“所有”对象信息。请再次检查您是否要这么做，因为 GOsa 没有办法将您的数据"
+"找回。"
+
+#: admin/fai/remove.tpl:11
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
+"这么做了，按“删除”继续或者按“取消”退出。"
+
+#: admin/fai/class_faiManagement.inc:25 admin/fai/main.inc:46
+#: admin/fai/main.inc:48
+msgid "Software deployment"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:26
+msgid "Manage software packages and deployment reciepes"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:352 admin/fai/class_faiManagement.inc:481
+#: admin/fai/class_faiManagement.inc:552 admin/fai/class_faiManagement.inc:699
+#: admin/fai/class_faiManagement.inc:861 admin/fai/class_faiManagement.inc:882
+#: admin/fai/class_faiManagement.inc:916 admin/fai/class_faiManagement.inc:933
+#, fuzzy
+msgid "Permission error"
+msgstr "允许"
+
+#: admin/fai/class_faiManagement.inc:398
+#, fuzzy
+msgid "Branch locked"
+msgstr "分支"
+
+#: admin/fai/class_faiManagement.inc:398
+#, php-format
+msgid "The following entries are locked, you can't remove them %s."
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:413
+#, fuzzy
+msgid "FAI object"
+msgstr "自动化安装（FAI）对象树"
+
+#: admin/fai/class_faiManagement.inc:486
+#, fuzzy, php-format
+msgid "Cannot delete '%s': object does not exist!"
+msgstr "软件包文件 '%s' 不存在。"
+
+#: admin/fai/class_faiManagement.inc:549
+msgid "FAI branch/freeze"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:552
+#, fuzzy
+msgid "You have no permission to delete this release!"
+msgstr "您无权删除这个发行版！"
+
+#: admin/fai/class_faiManagement.inc:570
+msgid "Release remove aborted because the release name check failed!"
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:699 admin/fai/class_faiManagement.inc:861
+#: admin/fai/class_faiManagement.inc:882
+#, fuzzy
+msgid "Branch"
+msgstr "分支"
+
+#: admin/fai/class_faiManagement.inc:807
+#: admin/fai/class_faiManagement.inc:1047
+#: admin/fai/class_faiManagement.inc:1053
+msgid "Continue"
+msgstr "继续"
+
+#: admin/fai/class_faiManagement.inc:903
+#, fuzzy
+msgid "partition table"
+msgstr "分区表"
+
+#: admin/fai/class_faiManagement.inc:904
+#, fuzzy
+msgid "script"
 msgstr "脚本"
 
-#: admin/fai/class_faiSummaryTab.inc:45 admin/fai/class_divListFai.inc:162
-#: admin/fai/class_divListFai.inc:219
-msgid "Hooks"
+#: admin/fai/class_faiManagement.inc:905
+#, fuzzy
+msgid "hook"
 msgstr "钩子"
 
-#: admin/fai/class_faiSummaryTab.inc:46 admin/fai/class_divListFai.inc:164
-#: admin/fai/class_divListFai.inc:217
-msgid "Variables"
+#: admin/fai/class_faiManagement.inc:906
+#, fuzzy
+msgid "variable"
 msgstr "变量"
 
-#: admin/fai/class_faiSummaryTab.inc:47 admin/fai/class_divListFai.inc:223
-msgid "Templates"
+#: admin/fai/class_faiManagement.inc:907
+#, fuzzy
+msgid "template"
 msgstr "模板"
 
-#: admin/fai/class_faiSummaryTab.inc:49 admin/fai/class_divListFai.inc:168
-#: admin/fai/class_divListFai.inc:213
-msgid "Package list"
+#: admin/fai/class_faiManagement.inc:908
+#, fuzzy
+msgid "package list"
 msgstr "软件包列表"
+
+#: admin/fai/class_faiManagement.inc:916 admin/fai/class_faiManagement.inc:933
+#, fuzzy, php-format
+msgid "You have no permission to create a new %s!"
+msgstr "您无权删除这个对象组！"
+
+#: admin/fai/class_faiManagement.inc:933
+#, fuzzy
+msgid "profile"
+msgstr "Profiles"
+
+#: admin/fai/class_faiManagement.inc:1305
+msgid ""
+"The selected release is not available anymore. All triggered actions are "
+"skipped."
+msgstr ""
+
+#: admin/fai/class_faiManagement.inc:1425
+#, fuzzy
+msgid "FAI releases"
+msgstr "自动化安装（FAI）类"
+
+#: admin/fai/class_faiManagement.inc:1426
+#, fuzzy
+msgid "FAI release management"
+msgstr "Asterisk 管理"
+
+#: admin/fai/class_faiManagement.inc:1431
+msgid "FAI"
+msgstr "自动化安装"
+
+#: admin/fai/faiPackageEntry.tpl:6
+msgid "List of available packages"
+msgstr "可用软件包列表"
+
+#: admin/fai/faiPackageEntry.tpl:24
+msgid ""
+"This menu allows you to select multiple packages to add them to the "
+"currently edited package list."
+msgstr "这个菜单允许您为当前编辑的软件包列表添加多个软件包。"
+
+#: admin/fai/faiPartitionTable.tpl:38
+msgid "Discs"
+msgstr "Discs"
+
+#: admin/fai/faiPartitionTable.tpl:44
+msgid "Choose a disk to delete or edit"
+msgstr "选择一个要删除或修改的磁盘"
+
+#: admin/fai/faiPartitionTable.tpl:54 admin/fai/faiVariable.tpl:53
+#: admin/fai/class_faiHook.inc:312 admin/fai/class_faiHook.inc:314
+#: addons/goto/class_gotomasses.inc:469
+msgid "Edit"
+msgstr "编辑"
+
+#: admin/fai/faiHookEntry.tpl:33 admin/fai/faiHookEntry.tpl:54
+msgid "Hook attributes"
+msgstr "钩子属性"
+
+#: admin/fai/faiHookEntry.tpl:38 admin/fai/class_faiHookEntry.inc:198
+#: addons/goto/class_gotomasses.inc:409
+msgid "Task"
+msgstr "任务"
+
+#: admin/fai/faiHookEntry.tpl:41
+msgid "Choose an existing FAI task"
+msgstr "选择一个已存在的 FAI 任务"
+
+#: admin/fai/faiHookEntry.tpl:75 admin/fai/faiScriptEntry.tpl:75
+msgid "Import script"
+msgstr "导入脚本"
+
+#: admin/fai/class_faiPackageConfiguration.inc:68
+#, php-format
+msgid "Debconf information for package '%s'"
+msgstr "软件包'%s' 的 Debconf 信息"
+
+#: admin/fai/faiScriptEntry.tpl:33
+msgid "Properties"
+msgstr "属性"
+
+#: admin/fai/faiScriptEntry.tpl:33 admin/fai/faiScriptEntry.tpl:54
+msgid "Script attributes"
+msgstr "脚本属性"
+
+#: admin/fai/faiScriptEntry.tpl:38 admin/fai/class_faiScript.inc:328
+msgid "Priority"
+msgstr "优先级"
+
+#: admin/fai/faiScriptEntry.tpl:43
+msgid ""
+"Choose a priority. Low values result in an earlier, high values in a later "
+"execution."
+msgstr ""
+
+#: admin/fai/remove_branch.tpl:6
+msgid ""
+"This includes all account data, system access, etc. for this branch. Please "
+"double check if your really want to do this since there is no way for GOsa "
+"to get your data back."
+msgstr ""
+"这个分支包含所有账号信息，系统访问等等。请再次检查您是否要这么做，因为 GOsa "
+"没有办法将您的数据找回。"
+
+#: admin/fai/remove_branch.tpl:10 addons/goto/remove.tpl:9
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
 #: admin/fai/class_faiSummaryTab.inc:50
 msgid "Profiles"
@@ -807,6 +1031,11 @@ msgstr "Profiles"
 #: admin/fai/class_faiSummaryTab.inc:89
 msgid "Unknown FAI information source!"
 msgstr ""
+
+#: admin/fai/class_faiSummaryTab.inc:178
+#: admin/systems/services/repository/class_servRepository.inc:93
+msgid "You can't use this plugin until FAI is activated."
+msgstr "直到激活 FAI，您不能使用这个插件。"
 
 #: admin/fai/class_faiSummaryTab.inc:220
 msgid "This object has no FAI classes assigned."
@@ -850,258 +1079,24 @@ msgstr "挂载点"
 msgid "Type"
 msgstr "类型"
 
-#: admin/fai/class_faiVariable.inc:394 admin/fai/class_divListFai.inc:61
-#: admin/fai/class_divListFai.inc:67
-msgid "Variable"
-msgstr "变量"
+#: admin/fai/faiPackage.tpl:33
+#: admin/systems/services/repository/servRepositorySetup.tpl:1
+#: admin/systems/services/repository/class_servRepository.inc:343
+msgid "Repository"
+msgstr "仓库"
 
-#: admin/fai/class_faiVariable.inc:395
+#: admin/fai/faiPackage.tpl:53
+msgid "Install method"
+msgstr "安装方法"
+
+#: admin/fai/faiPackage.tpl:57
 #, fuzzy
-msgid "FAI variable"
-msgstr "显示 FAI 变量"
+msgid "Please select the installation method"
+msgstr "请选择一个有效文件。"
 
-#: admin/fai/faiHook.tpl:39
-msgid "List of hook scripts"
-msgstr "钩子脚本列表"
-
-#: admin/fai/class_faiTemplate.inc:285 admin/fai/class_faiTemplate.inc:287
-#: admin/fai/class_faiScript.inc:344 admin/fai/class_faiScript.inc:346
-#: admin/fai/class_divListFai.inc:276 admin/fai/class_divListFai.inc:285
-#: admin/fai/class_divListFai.inc:290
-msgid "edit"
-msgstr "编辑"
-
-#: admin/fai/class_faiTemplate.inc:289 admin/fai/class_faiScript.inc:348
-#: admin/fai/class_divListFai.inc:293
-msgid "delete"
-msgstr "删除"
-
-#: admin/fai/class_faiTemplate.inc:535
-msgid "Template"
-msgstr "模板"
-
-#: admin/fai/class_faiTemplate.inc:536
-#, fuzzy
-msgid "FAI template"
-msgstr "新模板"
-
-#: admin/fai/remove.tpl:7
-msgid ""
-"This includes 'all' object information. Please double check if your really "
-"want to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"这包含“所有”对象信息。请再次检查您是否要这么做，因为 GOsa 没有办法将您的数据"
-"找回。"
-
-#: admin/fai/remove.tpl:11
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
-"这么做了，按“删除”继续或者按“取消”退出。"
-
-#: admin/fai/class_askClassName.inc:79 admin/fai/class_askClassName.inc:80
-#: admin/fai/class_askClassName.inc:81 admin/fai/class_askClassName.inc:82
-#: admin/fai/class_askClassName.inc:83 admin/fai/class_askClassName.inc:84
-#: admin/fai/class_askClassName.inc:85 admin/fai/class_askClassName.inc:86
-msgid "Create new FAI object"
-msgstr "创建新 FAI 对象"
-
-#: admin/fai/class_askClassName.inc:84 admin/fai/class_faiProfile.inc:470
-#: admin/fai/class_divListFai.inc:59 admin/fai/class_divListFai.inc:153
-#: admin/fai/class_divListFai.inc:221
-#, fuzzy
-msgid "Profile"
-msgstr "Profiles"
-
-#: admin/fai/faiVariable.tpl:38
-msgid "List of assigned variables"
-msgstr "已分配变量列表"
-
-#: admin/fai/faiVariable.tpl:44
-msgid "Choose a variable to delete or edit"
-msgstr "选择一个要删除或修改的变量"
-
-#: admin/fai/faiProfileEntry.tpl:6
-msgid "List of FAI objects (Fully Automatic Installation)"
-msgstr "FAI （全自动安装）对象列表"
-
-#: admin/fai/faiProfileEntry.tpl:21 admin/fai/faiPackageEntry.tpl:20
-msgid "Information"
-msgstr "提示信息"
-
-#: admin/fai/faiProfileEntry.tpl:26
-msgid ""
-"This menu allows you to select FAI class names and to add them to the "
-"currently edited profile."
-msgstr "这个菜单允许您为当前编辑的配置添加 FAI 类名。"
-
-#: admin/fai/faiProfileEntry.tpl:31 admin/fai/faiPackageEntry.tpl:30
-msgid "Filters"
-msgstr "过滤器"
-
-#: admin/fai/faiProfileEntry.tpl:39
-msgid "Show only classes with templates"
-msgstr "只显示带有模板的分类"
-
-#: admin/fai/faiProfileEntry.tpl:41
-msgid "Show only classes with scripts"
-msgstr "只显示带有脚本的分类"
-
-#: admin/fai/faiProfileEntry.tpl:43
-msgid "Show only classes with hooks"
-msgstr "只显示带有钩子的分类"
-
-#: admin/fai/faiProfileEntry.tpl:45
-msgid "Show only classes with variables"
-msgstr "只显示带有变量的分类"
-
-#: admin/fai/faiProfileEntry.tpl:47
-msgid "Show only classes with packages"
-msgstr "只显示带有软件包的分类"
-
-#: admin/fai/faiProfileEntry.tpl:49
-msgid "Show only classes with partitions"
-msgstr "只显示带有分区的分类"
-
-#: admin/fai/faiProfileEntry.tpl:54 admin/fai/faiProfileEntry.tpl:55
-#: admin/fai/faiPackageEntry.tpl:40
-msgid "Display objects matching"
-msgstr "显示匹配对象"
-
-#: admin/fai/class_faiScript.inc:314 admin/fai/class_faiScript.inc:316
-#, fuzzy
-msgid "Sort direction"
-msgstr "节"
-
-#: admin/fai/class_faiScript.inc:328 admin/fai/faiScriptEntry.tpl:38
-msgid "Priority"
-msgstr "优先级"
-
-#: admin/fai/class_faiScript.inc:332
-msgid "Action"
-msgstr "行动"
-
-#: admin/fai/faiHookEntry.tpl:33 admin/fai/faiHookEntry.tpl:54
-msgid "Hook attributes"
-msgstr "钩子属性"
-
-#: admin/fai/faiHookEntry.tpl:41
-msgid "Choose an existing FAI task"
-msgstr "选择一个已存在的 FAI 任务"
-
-#: admin/fai/faiHookEntry.tpl:75 admin/fai/faiScriptEntry.tpl:75
-msgid "Import script"
-msgstr "导入脚本"
-
-#: admin/fai/class_faiPartitionTable.inc:301
-#: admin/fai/class_faiPartitionTable.inc:307
-#, php-format
-msgid "%s partition"
-msgstr "%s 分区"
-
-#: admin/fai/class_faiPartitionTable.inc:303
-#: admin/fai/class_faiPartitionTable.inc:309
-#, php-format
-msgid "%s partition(s)"
-msgstr "%s 分区"
-
-#: admin/fai/class_faiPartitionTable.inc:542
-#, fuzzy
-msgid "FAI partition table"
-msgstr "新分区表"
-
-#: admin/fai/paste_generic.tpl:1
-#, fuzzy
-msgid "FAI settings"
-msgstr "自动化安装（FAI）类"
-
-#: admin/fai/class_faiScriptEntry.inc:181
-#: admin/fai/class_faiScriptEntry.inc:191
-#, fuzzy
-msgid "Script entry"
-msgstr "编辑记录"
-
-#: admin/fai/class_faiScriptEntry.inc:182
-#, fuzzy
-msgid "FAI script entry"
-msgstr "编辑记录"
-
-#: admin/fai/class_faiScriptEntry.inc:192
-#, fuzzy
-msgid "Script Priority"
-msgstr "优先级"
-
-#: admin/fai/branch_selector.tpl:8
-msgid "Current release"
-msgstr "当前版本"
-
-#: admin/fai/branch_selector.tpl:20 admin/fai/branch_selector.tpl:26
-#, fuzzy
-msgid "Create release"
-msgstr "当前版本"
-
-#: admin/fai/branch_selector.tpl:23 admin/fai/branch_selector.tpl:29
-#, fuzzy
-msgid "Create read-only release"
-msgstr "当前版本"
-
-#: admin/fai/branch_selector.tpl:28
-#, fuzzy
-msgid "Freeze"
-msgstr "频率"
-
-#: admin/fai/branch_selector.tpl:35
-msgid "Delete current release"
-msgstr "删除当前版本"
-
-#: admin/fai/faiPackageEntry.tpl:6
-msgid "List of available packages"
-msgstr "可用软件包列表"
-
-#: admin/fai/faiPackageEntry.tpl:24
-msgid ""
-"This menu allows you to select multiple packages to add them to the "
-"currently edited package list."
-msgstr "这个菜单允许您为当前编辑的软件包列表添加多个软件包。"
-
-#: admin/fai/class_faiVariableEntry.inc:94
-#, fuzzy
-msgid "Content"
-msgstr "继续"
-
-#: admin/fai/class_faiVariableEntry.inc:129
-#, fuzzy
-msgid "Variable entry"
-msgstr "变量内容"
-
-#: admin/fai/class_faiVariableEntry.inc:130
-#, fuzzy
-msgid "FAI variable entry "
-msgstr "变量内容"
-
-#: admin/fai/class_faiVariableEntry.inc:139 admin/fai/faiVariableEntry.tpl:38
-msgid "Variable content"
-msgstr "变量内容"
-
-#: admin/fai/faiPartitionTableEntry.tpl:2
-msgid "Device"
-msgstr "设备"
-
-#: admin/fai/faiPartitionTableEntry.tpl:24
-msgid "Partition entries"
-msgstr "分区条目"
-
-#: admin/fai/faiPartitionTableEntry.tpl:29
-#: admin/fai/faiPartitionTableEntry.tpl:31
-msgid "Add partition"
-msgstr "添加分区"
-
-#: admin/fai/faiTemplate.tpl:34
-msgid "List of template files"
-msgstr "模板文件列表"
+#: admin/fai/faiPackage.tpl:71
+msgid "Used packages"
+msgstr "使用软件包"
 
 #: admin/fai/faiNewBranch.tpl:5
 msgid ""
@@ -1156,6 +1151,92 @@ msgstr "执行请求的操作。"
 msgid "Initiate operation"
 msgstr "初始操作"
 
+#: admin/fai/class_faiScript.inc:314 admin/fai/class_faiScript.inc:316
+#, fuzzy
+msgid "Sort direction"
+msgstr "节"
+
+#: admin/fai/class_faiScript.inc:332 addons/goto/class_gotomasses.inc:415
+msgid "Action"
+msgstr "行动"
+
+#: admin/fai/class_faiScript.inc:638 admin/fai/class_faiHookEntry.inc:199
+#, fuzzy
+msgid "FAI script"
+msgstr "导入脚本"
+
+#: admin/fai/faiVariable.tpl:38
+msgid "List of assigned variables"
+msgstr "已分配变量列表"
+
+#: admin/fai/faiVariable.tpl:44
+msgid "Choose a variable to delete or edit"
+msgstr "选择一个要删除或修改的变量"
+
+#: admin/fai/class_askClassName.inc:79 admin/fai/class_askClassName.inc:80
+#: admin/fai/class_askClassName.inc:81 admin/fai/class_askClassName.inc:82
+#: admin/fai/class_askClassName.inc:83 admin/fai/class_askClassName.inc:84
+#: admin/fai/class_askClassName.inc:85 admin/fai/class_askClassName.inc:86
+msgid "Create new FAI object"
+msgstr "创建新 FAI 对象"
+
+#: admin/fai/class_faiHook.inc:316
+msgid "Delete"
+msgstr "删除"
+
+#: admin/fai/class_faiHook.inc:554
+#, fuzzy
+msgid "FAI hook"
+msgstr "显示 FAI 钩子"
+
+#: admin/fai/class_faiVariableEntry.inc:94
+#, fuzzy
+msgid "Content"
+msgstr "继续"
+
+#: admin/fai/class_faiVariableEntry.inc:129
+#, fuzzy
+msgid "Variable entry"
+msgstr "变量内容"
+
+#: admin/fai/class_faiVariableEntry.inc:130
+#, fuzzy
+msgid "FAI variable entry "
+msgstr "变量内容"
+
+#: admin/fai/faiScript.tpl:39
+msgid "List of scripts"
+msgstr "脚本列表"
+
+#: admin/fai/branch_selector.tpl:2
+#: admin/systems/services/repository/class_servRepository.inc:358
+#, fuzzy
+msgid "Releases"
+msgstr "发行"
+
+#: admin/fai/branch_selector.tpl:8
+msgid "Current release"
+msgstr "当前版本"
+
+#: admin/fai/branch_selector.tpl:20 admin/fai/branch_selector.tpl:26
+#, fuzzy
+msgid "Create release"
+msgstr "当前版本"
+
+#: admin/fai/branch_selector.tpl:23 admin/fai/branch_selector.tpl:29
+#, fuzzy
+msgid "Create read-only release"
+msgstr "当前版本"
+
+#: admin/fai/branch_selector.tpl:28
+#, fuzzy
+msgid "Freeze"
+msgstr "频率"
+
+#: admin/fai/branch_selector.tpl:35
+msgid "Delete current release"
+msgstr "删除当前版本"
+
 #: admin/fai/class_faiProfile.inc:300
 msgid "Remove class from profile"
 msgstr "从 profile 中删除分类"
@@ -1177,246 +1258,132 @@ msgstr ""
 msgid "FAI profile"
 msgstr "新配置"
 
-#: admin/fai/class_faiProfile.inc:480 admin/fai/faiProfile.tpl:36
-msgid "FAI classes"
-msgstr "自动化安装（FAI）类"
-
-#: admin/fai/class_divListFai.inc:32
+#: admin/fai/class_faiVariable.inc:390
 #, fuzzy
-msgid "List of classes"
-msgstr "FAI 类列表"
+msgid "FAI variable"
+msgstr "显示 FAI 变量"
 
-#: admin/fai/class_divListFai.inc:33
+#: admin/fai/faiPartitionTableEntry.tpl:2
+msgid "Device"
+msgstr "设备"
+
+#: admin/fai/faiPartitionTableEntry.tpl:24
+msgid "Partition entries"
+msgstr "分区条目"
+
+#: admin/fai/faiPartitionTableEntry.tpl:29
+#: admin/fai/faiPartitionTableEntry.tpl:31
+msgid "Add partition"
+msgstr "添加分区"
+
+#: admin/fai/class_faiScriptEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
+#: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
-msgid "List of deployment classes and products"
-msgstr "只显示带有软件包的分类"
+msgid "file is empty"
+msgstr "选择的文件为空。"
 
-#: admin/fai/class_divListFai.inc:48
+#: admin/fai/class_faiScriptEntry.inc:181
+#: admin/fai/class_faiScriptEntry.inc:191
 #, fuzzy
-msgid "Select all"
-msgstr "选择"
+msgid "Script entry"
+msgstr "编辑记录"
 
-#: admin/fai/class_divListFai.inc:55
-msgid "Class type"
-msgstr "分类类型"
-
-#: admin/fai/class_divListFai.inc:56 admin/fai/class_divListFai.inc:142
-msgid "Actions"
-msgstr "动作"
-
-#: admin/fai/class_divListFai.inc:58 admin/fai/class_divListFai.inc:60
-#: admin/fai/class_divListFai.inc:62 admin/fai/class_divListFai.inc:64
-#: admin/fai/class_divListFai.inc:66 admin/fai/class_divListFai.inc:68
-#: admin/fai/class_divListFai.inc:70 admin/fai/class_divListFai.inc:76
-#: admin/fai/class_divListFai.inc:78
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "显示匹配对象"
-
-#: admin/fai/class_divListFai.inc:59
-msgid "Show profiles"
-msgstr "显示 profiles"
-
-#: admin/fai/class_divListFai.inc:61
-msgid "Show templates"
-msgstr "显示模板"
-
-#: admin/fai/class_divListFai.inc:63
-msgid "Show scripts"
-msgstr "显示脚本"
-
-#: admin/fai/class_divListFai.inc:65
-msgid "Show hooks"
-msgstr "显示钩子"
-
-#: admin/fai/class_divListFai.inc:67
-msgid "Show variables"
-msgstr "显示变量"
-
-#: admin/fai/class_divListFai.inc:69
-msgid "Show packages"
-msgstr "显示软件包"
-
-#: admin/fai/class_divListFai.inc:71
+#: admin/fai/class_faiScriptEntry.inc:182
 #, fuzzy
-msgid "Partition"
-msgstr "分区"
+msgid "FAI script entry"
+msgstr "编辑记录"
 
-#: admin/fai/class_divListFai.inc:71
-msgid "Show partitions"
-msgstr "显示分区"
-
-#: admin/fai/class_divListFai.inc:77 admin/fai/class_divListFai.inc:225
-msgid "OPSI netboot product"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:77
+#: admin/fai/class_faiScriptEntry.inc:192
 #, fuzzy
-msgid "Show netboot products"
-msgstr "对象组"
+msgid "Script Priority"
+msgstr "优先级"
 
-#: admin/fai/class_divListFai.inc:79 admin/fai/class_divListFai.inc:227
-msgid "OPSI local product"
-msgstr ""
-
-#: admin/fai/class_divListFai.inc:79
-#, fuzzy
-msgid "Show local products"
-msgstr "对象组"
-
-#: admin/fai/class_divListFai.inc:87
-msgid "Display users matching"
-msgstr "显示匹配的用户"
-
-#: admin/fai/class_divListFai.inc:144
-msgid "Create"
-msgstr "创建"
-
-#: admin/fai/class_divListFai.inc:149
-#, fuzzy
-msgid "Freezed"
-msgstr "频率"
-
-#: admin/fai/class_divListFai.inc:159
-msgid "PT"
-msgstr "PT"
-
-#: admin/fai/class_divListFai.inc:161
-msgid "S"
-msgstr "S"
-
-#: admin/fai/class_divListFai.inc:163
-msgid "H"
-msgstr "H"
-
-#: admin/fai/class_divListFai.inc:165
-msgid "V"
-msgstr "V"
-
-#: admin/fai/class_divListFai.inc:166
-#, fuzzy
-msgid "Templates "
-msgstr "模板"
-
-#: admin/fai/class_divListFai.inc:167
-#, fuzzy
-msgid "I"
-msgstr "NI"
-
-#: admin/fai/class_divListFai.inc:169
-msgid "PK"
-msgstr "PK"
-
-#: admin/fai/class_divListFai.inc:182
-#: admin/fai/class_faiPartitionTableEntry.inc:288
-#: admin/fai/class_faiPartitionTableEntry.inc:290
-msgid "Remove"
-msgstr "删除"
-
-#: admin/fai/class_divListFai.inc:277
-#, fuzzy
-msgid "Edit product"
-msgstr "编辑宏"
-
-#: admin/fai/class_divListFai.inc:286 admin/fai/class_divListFai.inc:291
-msgid "Edit class"
-msgstr "编辑分类"
-
-#: admin/fai/class_divListFai.inc:294
-msgid "Delete class"
-msgstr "删除分类"
-
-#: admin/fai/class_divListFai.inc:332 admin/fai/class_divListFai.inc:333
-#: admin/fai/class_divListFai.inc:334 admin/fai/class_divListFai.inc:335
-#: admin/fai/class_divListFai.inc:336 admin/fai/class_divListFai.inc:337
-#: admin/fai/class_divListFai.inc:338 admin/fai/class_divListFai.inc:339
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "部门名称"
-
-#: admin/fai/class_divListFai.inc:332
-#, fuzzy
-msgid "profiles"
-msgstr "Profiles"
-
-#: admin/fai/class_divListFai.inc:333
-#, fuzzy
-msgid "partitions"
-msgstr "%s 分区"
-
-#: admin/fai/class_divListFai.inc:334
-#, fuzzy
-msgid "scripts"
-msgstr "脚本"
-
-#: admin/fai/class_divListFai.inc:335
-#, fuzzy
-msgid "hooks"
-msgstr "钩子"
-
-#: admin/fai/class_divListFai.inc:336
-#, fuzzy
-msgid "variables"
-msgstr "变量"
-
-#: admin/fai/class_divListFai.inc:337
-#, fuzzy
-msgid "templates"
-msgstr "模板"
-
-#: admin/fai/class_divListFai.inc:338
-#, fuzzy
-msgid "packages"
-msgstr "软件包"
-
-#: admin/fai/class_divListFai.inc:339
-#, fuzzy
-msgid "departments"
-msgstr "提交部门"
-
-#: admin/fai/faiPackage.tpl:53
-msgid "Install method"
-msgstr "安装方法"
-
-#: admin/fai/faiPackage.tpl:57
-#, fuzzy
-msgid "Please select the installation method"
-msgstr "请选择一个有效文件。"
-
-#: admin/fai/faiPackage.tpl:71
-msgid "Used packages"
-msgstr "使用软件包"
-
-#: admin/fai/class_faiPackageEntry.inc:38
-msgid "Please enter your search string here"
-msgstr "请在这里输入您的查询字符串"
-
-#: admin/fai/class_faiPackageEntry.inc:103
+#: admin/fai/askClassName.tpl:6
 msgid ""
-"This list displays all assigned package names for this repository settings."
-msgstr "对于该仓库的设置，这个列表显示所有已分配的软件包名称。"
-
-#: admin/fai/faiScriptEntry.tpl:33
-msgid "Properties"
-msgstr "属性"
-
-#: admin/fai/faiScriptEntry.tpl:33 admin/fai/faiScriptEntry.tpl:54
-msgid "Script attributes"
-msgstr "脚本属性"
-
-#: admin/fai/faiScriptEntry.tpl:43
-msgid ""
-"Choose a priority. Low values result in an earlier, high values in a later "
-"execution."
+"Adding a new class to the FAI management, requires a class name. You have to "
+"specify a unique class name for unique types of FAI classes, while you can "
+"use the same class name for different types of FAI classes. In the laste "
+"case, FAI will automatically enclose all these different class types to one "
+"unique class name."
 msgstr ""
+"在 FAI 管理中添加一个新分类，需要一个分类名。您必须为唯一的 FAI 分类提供一个"
+"唯一类名，而您可以为不同的 FAI 分类使用相同的类名。在最后一种情况，FAI 会自动"
+"包含所有不同分类类型到唯一一个类名中。"
 
-#: admin/fai/faiVariableEntry.tpl:33
-msgid "Variable attributes"
-msgstr "变量属性"
+#: admin/fai/askClassName.tpl:12
+msgid ""
+"Please use one of the following methods to choose the name for the new FAI "
+"class."
+msgstr "请使用下面的一个方法来选择新 FAI 分类的名称。"
 
-#: admin/fai/faiProfile.tpl:37
-msgid "Choose a priority"
-msgstr "选择一个优先级"
+#: admin/fai/askClassName.tpl:26
+msgid "Enter FAI class name manually"
+msgstr "手工输入 FAI 分类名称"
+
+#: admin/fai/askClassName.tpl:48
+msgid "Choose FAI class name from a list of existing classes"
+msgstr "从现存类的列表中选择一个 FAI 分类名称"
+
+#: admin/fai/askClassName.tpl:54
+msgid "Choose class name"
+msgstr "选择分类名"
+
+#: admin/fai/askClassName.tpl:70 admin/fai/askClassName.tpl:77
+msgid "Use"
+msgstr "使用"
+
+#: admin/fai/askClassName.tpl:74
+msgid "A new class name."
+msgstr "一个新类名称。"
+
+#: admin/fai/class_faiTemplateEntry.inc:90
+msgid "no file uploaded yet"
+msgstr "还没有上传文件"
+
+#: admin/fai/class_faiTemplateEntry.inc:96
+#, php-format
+msgid "exists in database (size: %s bytes)"
+msgstr "存在于数据库 （大小： %s 字节）"
+
+#: admin/fai/class_faiTemplateEntry.inc:265
+#, fuzzy
+msgid "Template entry"
+msgstr "模板用户"
+
+#: admin/fai/class_faiTemplateEntry.inc:266
+#, fuzzy
+msgid "FAI template entry"
+msgstr "创建 FAI template 条目失败"
+
+#: admin/fai/class_faiTemplateEntry.inc:275
+#, fuzzy
+msgid "Template file"
+msgstr "模板集"
+
+#: admin/fai/class_faiTemplateEntry.inc:276
+#, fuzzy
+msgid "Template path"
+msgstr "模板名称"
+
+#: admin/fai/class_faiTemplateEntry.inc:277
+#, fuzzy
+msgid "File owner"
+msgstr "文件名"
+
+#: admin/fai/class_faiTemplateEntry.inc:278
+#, fuzzy
+msgid "File permissions"
+msgstr "允许"
+
+#: admin/fai/class_faiHookEntry.inc:188
+#, fuzzy
+msgid "Hook entry"
+msgstr "删除记录"
+
+#: admin/fai/class_faiHookEntry.inc:189
+#, fuzzy
+msgid "FAI hook entry"
+msgstr "添加记录"
 
 #: admin/fai/faiSummary.tpl:4
 msgid "FAI object tree"
@@ -1535,6 +1502,859 @@ msgstr "查看系统信息"
 msgid "Partition flags"
 msgstr "分区"
 
+#: admin/systems/services/repository/class_divListRepositories.inc:19
+#, fuzzy
+msgid "List of configured repositories"
+msgstr "用户列表"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:20
+#, fuzzy
+msgid "This menu allows you to create, delete and edit repository settings."
+msgstr "这个菜单允许您创建，删除和修改 FAI 分类。"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:24
+#: admin/systems/services/repository/class_divListRepositories.inc:64
+#: admin/systems/services/repository/servRepositorySetup.tpl:39
+#: admin/systems/services/repository/class_servRepository.inc:360
+#, fuzzy
+msgid "Sections"
+msgstr "节"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:25
+msgid "Options"
+msgstr "选项"
+
+#: admin/systems/services/repository/class_divListRepositories.inc:33
+#, fuzzy
+msgid "Add repository"
+msgstr "目录"
+
+#: admin/systems/services/repository/servRepositorySetup.tpl:8
+#: admin/systems/services/repository/class_servRepository.inc:357
+#, fuzzy
+msgid "Parent server"
+msgstr "保留"
+
+#: admin/systems/services/repository/servRepositorySetup.tpl:28
+#: admin/systems/services/repository/class_servRepositorySetup.inc:157
+#: admin/systems/services/repository/class_servRepository.inc:359
+msgid "URL"
+msgstr ""
+
+#: admin/systems/services/repository/class_servRepositorySetup.inc:204
+#: admin/systems/services/repository/class_servRepository.inc:26
+#: admin/systems/services/repository/class_servRepository.inc:308
+#: admin/systems/services/repository/class_servRepository.inc:344
+#, fuzzy
+msgid "Repository service"
+msgstr "仓库"
+
+#: admin/systems/services/repository/class_servRepository.inc:142
+#, fuzzy
+msgid "FAI release"
+msgstr "自动化安装（FAI）类"
+
+#: admin/systems/services/repository/class_servRepository.inc:344
+msgid "Services"
+msgstr "服务"
+
+#: addons/goto/class_gotomasses.inc:26
+#, fuzzy
+msgid "Deployment status"
+msgstr "当前版本"
+
+#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
+#, fuzzy
+msgid "System deployment status"
+msgstr "系统管理"
+
+#: addons/goto/class_gotomasses.inc:230
+#, fuzzy
+msgid "Permission"
+msgstr "允许"
+
+#: addons/goto/class_gotomasses.inc:270
+#, php-format
+msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:360
+#, fuzzy
+msgid "This menu allows you to remove and change the properties of GOsa tasks."
+msgstr ""
+"这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
+"统。"
+
+#: addons/goto/class_gotomasses.inc:361
+#, fuzzy
+msgid "List of queued jobs"
+msgstr "部门列表"
+
+#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
+#: addons/goto/class_goto_import_file.inc:29
+#: addons/goto/class_goto_import_file.inc:89
+#: addons/goto/class_goto_import_file.inc:131
+msgid "Import"
+msgstr "导入"
+
+#: addons/goto/class_gotomasses.inc:380
+#, fuzzy
+msgid "Resume"
+msgstr "删除"
+
+#: addons/goto/class_gotomasses.inc:381
+#, fuzzy
+msgid "Pause"
+msgstr "粘贴"
+
+#: addons/goto/class_gotomasses.inc:382
+#, fuzzy
+msgid "Abort"
+msgstr "端口"
+
+#: addons/goto/class_gotomasses.inc:400
+#, fuzzy
+msgid "Reload"
+msgstr "读"
+
+#: addons/goto/class_gotomasses.inc:408
+#: addons/goto/events/DaemonEvent_halt.tpl:47
+#: addons/goto/events/DaemonEvent_wakeup.tpl:47
+#: addons/goto/events/DaemonEvent_faireboot.tpl:47
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
+#: addons/goto/events/DaemonEvent_activate.tpl:47
+#: addons/goto/events/DaemonEvent_rescan.tpl:47
+#: addons/goto/events/DaemonEvent_memcheck.tpl:47
+#: addons/goto/events/class_DaemonEvent_notify.inc:77
+#: addons/goto/events/class_DaemonEvent_notify.inc:78
+#: addons/goto/events/class_DaemonEvent_notify.inc:103
+#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_reboot.tpl:47
+#: addons/goto/events/DaemonEvent_lock.tpl:47
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
+#: addons/goto/events/DaemonEvent_localboot.tpl:47
+#: addons/goto/events/DaemonEvent_reinstall.tpl:51
+#: addons/goto/events/DaemonEvent_notify.tpl:81
+#, fuzzy
+msgid "Target"
+msgstr "芯片组"
+
+#: addons/goto/class_gotomasses.inc:411
+#: addons/goto/events/DaemonEvent_halt.tpl:9
+#: addons/goto/events/DaemonEvent_wakeup.tpl:9
+#: addons/goto/events/DaemonEvent_faireboot.tpl:9
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_rescan.tpl:9
+#: addons/goto/events/DaemonEvent_memcheck.tpl:9
+#: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/events/DaemonEvent_reboot.tpl:9
+#: addons/goto/events/DaemonEvent_lock.tpl:9
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
+#: addons/goto/events/DaemonEvent_localboot.tpl:9
+#: addons/goto/events/DaemonEvent_reinstall.tpl:9
+#: addons/goto/events/DaemonEvent_notify.tpl:28
+#, fuzzy
+msgid "Schedule"
+msgstr "PHPscheduleit"
+
+#: addons/goto/class_gotomasses.inc:413
+#: addons/goto/events/DaemonEvent_halt.tpl:39
+#: addons/goto/events/DaemonEvent_wakeup.tpl:39
+#: addons/goto/events/DaemonEvent_faireboot.tpl:39
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_activate.tpl:39
+#: addons/goto/events/DaemonEvent_rescan.tpl:39
+#: addons/goto/events/DaemonEvent_memcheck.tpl:39
+#: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/events/DaemonEvent_reboot.tpl:39
+#: addons/goto/events/DaemonEvent_lock.tpl:39
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
+#: addons/goto/events/DaemonEvent_localboot.tpl:39
+#: addons/goto/events/DaemonEvent_reinstall.tpl:43
+#: addons/goto/events/DaemonEvent_notify.tpl:73
+msgid "Status"
+msgstr "状态"
+
+#: addons/goto/class_gotomasses.inc:432
+#, fuzzy
+msgid "Move up"
+msgstr "模式"
+
+#: addons/goto/class_gotomasses.inc:434
+#, fuzzy
+msgid "Move down"
+msgstr "模式"
+
+#: addons/goto/class_gotomasses.inc:441
+msgid "Pause job"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:448
+msgid "Resume job"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:455
+#, fuzzy
+msgid "Execute now"
+msgstr "执行"
+
+#: addons/goto/class_gotomasses.inc:462
+msgid "View logs"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:477
+#, fuzzy
+msgid "Abort job"
+msgstr "端口"
+
+#: addons/goto/class_gotomasses.inc:521
+#, fuzzy
+msgid "Waiting"
+msgstr "警告"
+
+#: addons/goto/class_gotomasses.inc:527
+#, fuzzy
+msgid "Processed"
+msgstr "处理"
+
+#: addons/goto/class_gotomasses.inc:538
+msgid "Locked"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:542
+#, fuzzy
+msgid "Detection"
+msgstr "节"
+
+#: addons/goto/class_gotomasses.inc:550
+msgid "in progress"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:563
+msgid "immediately"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
+#: addons/goto/class_gotomasses.inc:775
+#, fuzzy, php-format
+msgid "Cannot update queue entry: %s"
+msgstr "未知 FAIstate %s"
+
+#: addons/goto/class_gotomasses.inc:691
+#, php-format
+msgid "Cannot update queue entries."
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:740
+#, php-format
+msgid "Required class '%s' cannot be found: job not aborted!"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:816
+#, fuzzy, php-format
+msgid "Cannot load queue entries: %s"
+msgstr "未知 FAIstate %s"
+
+#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
+#, fuzzy
+msgid "System deployment"
+msgstr "系统管理"
+
+#: addons/goto/class_gotomasses.inc:911
+msgid "Provide a mechanism to automatically activate systems"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_rescan.inc:28
+#: addons/goto/events/class_DaemonEvent_rescan.inc:29
+msgid "Rescan hardware"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_halt.tpl:18
+#: addons/goto/events/DaemonEvent_wakeup.tpl:18
+#: addons/goto/events/DaemonEvent_faireboot.tpl:18
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
+#: addons/goto/events/DaemonEvent_activate.tpl:18
+#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_memcheck.tpl:18
+#: addons/goto/events/DaemonEvent_update.tpl:18
+#: addons/goto/events/DaemonEvent_reboot.tpl:18
+#: addons/goto/events/DaemonEvent_lock.tpl:18
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
+#: addons/goto/events/DaemonEvent_localboot.tpl:18
+#: addons/goto/events/DaemonEvent_reinstall.tpl:18
+#, fuzzy
+msgid "System list"
+msgstr "信赖的系统"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:35
+#: addons/goto/events/DaemonEvent_wakeup.tpl:35
+#: addons/goto/events/DaemonEvent_faireboot.tpl:35
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_activate.tpl:35
+#: addons/goto/events/DaemonEvent_rescan.tpl:35
+#: addons/goto/events/DaemonEvent_memcheck.tpl:35
+#: addons/goto/events/DaemonEvent_update.tpl:35
+#: addons/goto/events/DaemonEvent_reboot.tpl:35
+#: addons/goto/events/DaemonEvent_lock.tpl:35
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
+#: addons/goto/events/DaemonEvent_localboot.tpl:35
+#: addons/goto/events/DaemonEvent_reinstall.tpl:35
+#: addons/goto/events/DaemonEvent_notify.tpl:69
+#, fuzzy
+msgid "ID"
+msgstr "GID"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:43
+#: addons/goto/events/DaemonEvent_wakeup.tpl:43
+#: addons/goto/events/DaemonEvent_faireboot.tpl:43
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_activate.tpl:43
+#: addons/goto/events/DaemonEvent_rescan.tpl:43
+#: addons/goto/events/DaemonEvent_memcheck.tpl:43
+#: addons/goto/events/DaemonEvent_update.tpl:43
+#: addons/goto/events/DaemonEvent_reboot.tpl:43
+#: addons/goto/events/DaemonEvent_lock.tpl:43
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
+#: addons/goto/events/DaemonEvent_localboot.tpl:43
+#: addons/goto/events/DaemonEvent_reinstall.tpl:47
+#: addons/goto/events/DaemonEvent_notify.tpl:77
+msgid "Result"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_halt.tpl:51
+#: addons/goto/events/DaemonEvent_wakeup.tpl:51
+#: addons/goto/events/DaemonEvent_faireboot.tpl:51
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_activate.tpl:51
+#: addons/goto/events/DaemonEvent_rescan.tpl:51
+#: addons/goto/events/DaemonEvent_memcheck.tpl:51
+#: addons/goto/events/DaemonEvent_update.tpl:51
+#: addons/goto/events/DaemonEvent_reboot.tpl:51
+#: addons/goto/events/DaemonEvent_lock.tpl:51
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
+#: addons/goto/events/DaemonEvent_localboot.tpl:51
+#: addons/goto/events/DaemonEvent_reinstall.tpl:55
+#: addons/goto/events/DaemonEvent_notify.tpl:85
+#: addons/goto/goto_import_file.tpl:37
+#, fuzzy
+msgid "Timestamp"
+msgstr "过期"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:45
+#: addons/goto/events/class_EventTargetAddList.inc:51
+#, fuzzy
+msgid "Targets"
+msgstr "芯片组"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:49
+msgid ""
+"This dialog shows all available targets for your event, check the targets "
+"you want to add and use the 'Use' button to accept."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:60
+#: addons/goto/events/class_EventTargetAddList.inc:66
+#, fuzzy
+msgid "System / Department"
+msgstr "部门"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:65
+#, fuzzy
+msgid "Display users"
+msgstr "显示匹配的用户"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:66
+#, fuzzy
+msgid "Display groups"
+msgstr "显示用户组"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/events/class_EventTargetAddList.inc:161
+#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
+msgid "Base"
+msgstr "位置"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
+msgid "Submit department"
+msgstr "提交部门"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
+msgid "Submit"
+msgstr "提交"
+
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
+#, fuzzy
+msgid "Abort installation"
+msgstr "Windows 工作站"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
+msgid "GOto reload"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
+#, fuzzy
+msgid "Reload GOto settings"
+msgstr "Posix 设置"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
+msgid "Reload fai server db"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
+#, fuzzy
+msgid "System analysis"
+msgstr "系统"
+
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
+#, fuzzy
+msgid "Installation activation"
+msgstr "Windows 工作站"
+
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
+#, fuzzy
+msgid "Reload LDAP config"
+msgstr "重新加载列表"
+
+#: addons/goto/events/DaemonEvent_activate.tpl:9
+#, fuzzy
+msgid "Time schedule"
+msgstr "PHPscheduleit"
+
+#: addons/goto/events/class_DaemonEvent_halt.inc:31
+#: addons/goto/events/class_DaemonEvent_halt.inc:32
+msgid "Switch off"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
+msgid "Unlock"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
+msgid "Wake up"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
+msgid "Wake system"
+msgstr ""
+
+#: addons/goto/events/timestamp_select.tpl:3
+#, fuzzy
+msgid "Year"
+msgstr "查找"
+
+#: addons/goto/events/timestamp_select.tpl:4
+#, fuzzy
+msgid "Month"
+msgstr "月"
+
+#: addons/goto/events/timestamp_select.tpl:5
+#, fuzzy
+msgid "Day"
+msgstr "五月"
+
+#: addons/goto/events/timestamp_select.tpl:7
+msgid "Hour"
+msgstr "小时"
+
+#: addons/goto/events/timestamp_select.tpl:8
+#, fuzzy
+msgid "Minute"
+msgstr "打印机"
+
+#: addons/goto/events/timestamp_select.tpl:9
+#, fuzzy
+msgid "Second"
+msgstr "节"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
+#, fuzzy
+msgid "Reload fai release db"
+msgstr "上传"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:46
+#: addons/goto/events/class_DaemonEvent_notify.inc:47
+#, fuzzy
+msgid "Send message"
+msgstr "挂起邮件"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:94
+#: addons/goto/events/DaemonEvent_notify.tpl:14
+#, fuzzy
+msgid "Subject"
+msgstr "对象"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:97
+#: addons/goto/events/DaemonEvent_notify.tpl:18
+msgid "Message"
+msgstr "信息"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:100
+msgid "From"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent.inc:119
+msgid "This job has no template!"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent.inc:135
+#, fuzzy, php-format
+msgid "Create '%s' job"
+msgstr "创建新 FAI 对象"
+
+#: addons/goto/events/class_DaemonEvent.inc:234
+msgid "Add"
+msgstr "添加"
+
+#: addons/goto/events/target_list.tpl:5
+msgid "Apply"
+msgstr "应用"
+
+#: addons/goto/events/target_list.tpl:6
+msgid "Cancel"
+msgstr "取消"
+
+#: addons/goto/events/class_EventTargetAddList.inc:55
+msgid ""
+"This dialog shows all available targets for the event. Check the targets you "
+"want to add and use the 'Apply' button."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddList.inc:73
+#, fuzzy
+msgid "Display server"
+msgstr "显示名称"
+
+#: addons/goto/events/class_EventTargetAddList.inc:74
+#, fuzzy
+msgid "Display workstation"
+msgstr "工作站"
+
+#: addons/goto/events/class_EventTargetAddList.inc:75
+#, fuzzy
+msgid "Display object groups"
+msgstr "对象组列表"
+
+#: addons/goto/events/class_EventTargetAddList.inc:76
+msgid "Filter by IP range"
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/class_target_list.inc:201
+msgid "Server"
+msgstr "服务器"
+
+#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/class_target_list.inc:203
+msgid "Workstation"
+msgstr "工作站"
+
+#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
+msgid "Object group"
+msgstr "对象组"
+
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
+msgid "Reinstall"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_localboot.inc:28
+#: addons/goto/events/class_DaemonEvent_localboot.inc:29
+msgid "Force localboot"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
+msgid "Memory test"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+#, fuzzy
+msgid "Activate new"
+msgstr "活动"
+
+#: addons/goto/events/class_DaemonEvent_reboot.inc:29
+#: addons/goto/events/class_DaemonEvent_reboot.inc:30
+msgid "Reboot"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_reinstall.tpl:39
+#, fuzzy
+msgid "Progress"
+msgstr "处理"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:7
+#, fuzzy
+msgid "Message settings"
+msgstr "用户设置"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:10
+#, fuzzy
+msgid "Sender"
+msgstr "发送者"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:37
+#, fuzzy
+msgid "Target users"
+msgstr "域用户"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:44
+#, fuzzy
+msgid "Target groups"
+msgstr "部门"
+
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+msgid "Lock"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_update.inc:29
+#: addons/goto/events/class_DaemonEvent_update.inc:30
+msgid "Software update"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:58
+msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
+#, fuzzy
+msgid "Available targets"
+msgstr "可用的应用程序"
+
+#: addons/goto/class_target_list.inc:69
+msgid "Object name"
+msgstr "对象名称"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Select to see object groups"
+msgstr "选择查看 GOsa 组"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Show object groups"
+msgstr "对象组"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Select to see servers"
+msgstr "选择显示服务器"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Show servers"
+msgstr "显示服务器"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Select to see workstations"
+msgstr "选择查看工作站"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Show workstations"
+msgstr "显示工作站"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Select to see incoming objects"
+msgstr "选择查看电话"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Show new objects"
+msgstr "成员对象"
+
+#: addons/goto/class_target_list.inc:80
+msgid "Select to search for a specific IP range only"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:80
+msgid "Match IP range"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:83
+msgid "Regular expression for matching group names"
+msgstr "用于匹配组名的正则表达式"
+
+#: addons/goto/class_target_list.inc:84
+msgid "IP range start"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:85
+msgid "IP range end"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+msgid "IP range"
+msgstr ""
+
+#: addons/goto/log_view.tpl:7
+#, fuzzy
+msgid "Available logs"
+msgstr "可用的应用程序"
+
+#: addons/goto/log_view.tpl:12
+#, fuzzy
+msgid "Selected log"
+msgstr "选择"
+
+#: addons/goto/log_view.tpl:17
+#, fuzzy
+msgid "No logs for this host available!"
+msgstr "文件可用。"
+
+#: addons/goto/goto_import_file.tpl:1
+#, fuzzy
+msgid "Import jobs"
+msgstr "导入"
+
+#: addons/goto/goto_import_file.tpl:3
+msgid ""
+"You can import a list of jobs into the GOsa job queue. This should be a "
+"semicolon seperated list of items in the following format:"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "timestamp"
+msgstr "过期"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "MAC-address"
+msgstr "住址"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "job type"
+msgstr "文件系统类型"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "object group"
+msgstr "对象组"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "import base"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "full hostname"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "IP-address"
+msgstr "住址"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "DHCP group"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:9
+msgid "Example"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:21
+#, fuzzy
+msgid "Select list to import"
+msgstr "选择查看打印机"
+
+#: addons/goto/goto_import_file.tpl:24
+#, fuzzy
+msgid "Browse"
+msgstr "位置"
+
+#: addons/goto/goto_import_file.tpl:38
+#: addons/goto/class_goto_import_file.inc:168
+#, fuzzy
+msgid "MAC"
+msgstr "ACL"
+
+#: addons/goto/goto_import_file.tpl:39
+#: addons/goto/class_goto_import_file.inc:171
+msgid "Event"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:42
+msgid "FQDN"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:43
+#, fuzzy
+msgid "IP"
+msgstr "NI"
+
+#: addons/goto/goto_import_file.tpl:44
+msgid "DHCP"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:90
+msgid ""
+"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:131
+#, php-format
+msgid "Import complete: %s events successfully send, %s failed"
+msgstr ""
+
+#: addons/goto/class_gotoLogView.inc:87
+msgid "none"
+msgstr "无"
+
+#: addons/goto/class_gotoLogView.inc:115
+#, fuzzy
+msgid "Date"
+msgstr "粘贴"
+
+#: addons/goto/class_gotoLogView.inc:202
+msgid "Log view"
+msgstr ""
+
+#: addons/goto/class_gotoLogView.inc:203
+#, fuzzy
+msgid "GOto log view"
+msgstr "GOsa 帮助浏览器"
+
+#, fuzzy
+#~ msgid "System mass deployment"
+#~ msgstr "系统管理"
+
+#, fuzzy
+#~ msgid "Edit product"
+#~ msgstr "编辑宏"
+
+#~ msgid "Edit class"
+#~ msgstr "编辑分类"
+
+#~ msgid "Delete class"
+#~ msgstr "删除分类"
+
 #, fuzzy
 #~ msgid "Opsi netboot package"
 #~ msgstr "使用软件包"
@@ -1542,9 +2362,6 @@ msgstr "分区"
 #, fuzzy
 #~ msgid "Copy"
 #~ msgstr "复制"
-
-#~ msgid "Paste"
-#~ msgstr "粘贴"
 
 #~ msgid "copy"
 #~ msgstr "复制"
@@ -1555,10 +2372,6 @@ msgstr "分区"
 #, fuzzy
 #~ msgid "Sudo generic"
 #~ msgstr "通用配置"
-
-#, fuzzy
-#~ msgid "Upload failed!"
-#~ msgstr "上传"
 
 #~ msgid "package is configured"
 #~ msgstr "软件包已配置"
@@ -1571,15 +2384,6 @@ msgstr "分区"
 
 #~ msgid "Create new locked branch"
 #~ msgstr "创建新锁定分支"
-
-#~ msgid "Base"
-#~ msgstr "位置"
-
-#~ msgid "Submit department"
-#~ msgstr "提交部门"
-
-#~ msgid "Submit"
-#~ msgstr "提交"
 
 #, fuzzy
 #~ msgid "Cut"
@@ -1658,12 +2462,6 @@ msgstr "分区"
 #~ msgid "Ok"
 #~ msgstr "好"
 
-#~ msgid "Apply"
-#~ msgstr "应用"
-
-#~ msgid "Cancel"
-#~ msgstr "取消"
-
 #~ msgid "Packages bundle"
 #~ msgstr "软件包集合"
 
@@ -1723,9 +2521,6 @@ msgstr "分区"
 
 #~ msgid "The specified class name is already in use for this object type."
 #~ msgstr "对于此对象类，指定的类名已经被使用了。"
-
-#~ msgid "Add"
-#~ msgstr "添加"
 
 #, fuzzy
 #~ msgid "There is already a variable with the given name."

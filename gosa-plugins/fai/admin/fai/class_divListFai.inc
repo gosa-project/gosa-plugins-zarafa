@@ -75,7 +75,7 @@ class divListFai extends MultiSelectWindow
       $this->AddCheckBox("ShowOpsiNetboot" , sprintf(_("Display objects of type '%s'."),
         _("OPSI netboot product")),_("Show netboot products")   ,true);
       $this->AddCheckBox("ShowOpsiLocal" , sprintf(_("Display objects of type '%s'."),
-        _("OPSI local product")),_("Show local products")   ,true);
+        _("OPSI localboot product")),_("Show localboot products")   ,true);
     }
 
     /* Add SubSearch checkbox */
@@ -221,7 +221,7 @@ class divListFai extends MultiSelectWindow
         "opsi_netboot"       => array("IMG"=> "plugins/opsi/images/netboot_package.png",       
           "NAME"=>_("OPSI netboot product") ,     "KZL"=> "ON",  "VAR"=>"ShowOpsiNetboot"),
         "opsi_local"         => array("IMG"=> "plugins/opsi/images/local_package.png",       
-          "NAME"=>_("OPSI local product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
+          "NAME"=>_("OPSI localboot product")   ,     "KZL"=> "OL",  "VAR"=>"ShowOpsiLocal"));
 
 
     /* Dynamic action col, depending on snapshot icons */
@@ -319,7 +319,7 @@ class divListFai extends MultiSelectWindow
      $package_str    = sprintf(_("Number of listed '%s'"),_("packages"));   
      $dep_str        = sprintf(_("Number of listed '%s'"),_("departments"));
      $opsi_netboot   = sprintf(_("Number of listed '%s'"),_("netboot products"));
-     $opsi_local     = sprintf(_("Number of listed '%s'"),_("local products"));
+     $opsi_local     = sprintf(_("Number of listed '%s'"),_("localboot products"));
 
      $str = "<img class=\"center\" src=\"".$objects['FAIprofile']['IMG']."\"
        title=\"".$profile_str."\" alt=\"".$profile_str."\">&nbsp;".$cnts['FAIprofile']."&nbsp;&nbsp;&nbsp;&nbsp;";

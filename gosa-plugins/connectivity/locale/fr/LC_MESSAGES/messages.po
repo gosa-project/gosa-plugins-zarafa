@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
 "PO-Revision-Date: 2008-06-04 09:19+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:121
+#: personal/connectivity/main.inc:125
 msgid "Connectivity"
 msgstr "Connectivité"
 
@@ -35,6 +35,10 @@ msgstr "Mon Compte"
 msgid "Connectivity addon"
 msgstr "Extension Connectivité"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Compte Intranet"
+
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205
 msgid "Intranet"
@@ -48,7 +52,3 @@ msgstr "Erreur LDAP"
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Intranet account settings"
 msgstr "Paramètres du compte Intranet"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Compte Intranet"

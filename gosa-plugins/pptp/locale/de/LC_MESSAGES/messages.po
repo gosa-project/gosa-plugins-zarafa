@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2008-04-03 16:13+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -20,11 +20,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-
-#: personal/connectivity/pptp/pptp.tpl:3
-#: personal/connectivity/pptp/class_pptpAccount.inc:178
-msgid "PPTP account"
-msgstr "PPTP-Konto"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:26
 #: personal/connectivity/pptp/class_pptpAccount.inc:177
@@ -39,6 +34,11 @@ msgstr "Dies tut etwas"
 #: personal/connectivity/pptp/class_pptpAccount.inc:158
 msgid "LDAP error"
 msgstr "LDAP-Fehler"
+
+#: personal/connectivity/pptp/class_pptpAccount.inc:178
+#: personal/connectivity/pptp/pptp.tpl:3
+msgid "PPTP account"
+msgstr "PPTP-Konto"
 
 #: personal/connectivity/pptp/class_pptpAccount.inc:178
 msgid "Connectivity addon"

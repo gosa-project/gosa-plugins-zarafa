@@ -1,27 +1,41 @@
-# translation of messages.po to Deutsch
+# translation of messages.po to deutsch
 # GOsa2 Translations
 # Copyright (C) 2003 GONICUS GmbH, Germany
 # This file is distributed under the same license as the GOsa2 package.
 #
 #
 # Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006, 2008.
 # Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005, 2008.
 # Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-06-10 16:38+0200\n"
-"Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
+"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"PO-Revision-Date: 2008-12-03 15:39+0100\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: addons/dak/class_dakqueue.inc:57
+msgid "DAK queue"
+msgstr "DAK-Warteschlange"
+
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+msgid "Addon"
+msgstr "Zusätzliches"
+
+#: addons/dak/class_dakqueue.inc:58
+msgid "DAK queue management"
+msgstr "DAK-Warteschlangen-Verwaltung"
 
 #: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
@@ -35,53 +49,27 @@ msgstr "Suchen"
 
 #: addons/dak/dak_keyring.tpl:22
 msgid "Import"
-msgstr ""
-
-#: addons/dak/class_dakqueue.inc:57
-#, fuzzy
-msgid "DAK queue"
-msgstr "Warteschlange"
-
-#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
-#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
-#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
-#, fuzzy
-msgid "Addon"
-msgstr "Zusätzliches"
-
-#: addons/dak/class_dakqueue.inc:58
-#, fuzzy
-msgid "DAK queue management"
-msgstr "ACL-Verwaltung"
+msgstr "Importieren"
 
 #: addons/dak/dak_queue.tpl:11
-#, fuzzy
 msgid "Repositories"
-msgstr "Repository"
+msgstr "Repositorien"
 
 #: addons/dak/class_dakrepository.inc:43
 msgid "DAK repository"
 msgstr "DAK Repository"
 
 #: addons/dak/class_dakrepository.inc:44
-#, fuzzy
 msgid "DAK repository  management"
-msgstr "DAK Repository"
-
-#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
-#: addons/dak/class_DAK.inc:113
-msgid "Error"
-msgstr "Fehler"
+msgstr "DAK Repository-Verwaltung"
 
 #: addons/dak/class_dakkeyring.inc:114
-#, fuzzy
 msgid "Key ID"
-msgstr "Benutzer-ID"
+msgstr "Schlüssel-ID"
 
 #: addons/dak/class_dakkeyring.inc:115
-#, fuzzy
 msgid "Length"
-msgstr "Stärke"
+msgstr "Länge"
 
 #: addons/dak/class_dakkeyring.inc:116
 msgid "Status"
@@ -96,289 +84,36 @@ msgid "Action"
 msgstr "Aktion"
 
 #: addons/dak/class_dakkeyring.inc:139
-#, fuzzy, php-format
+#, php-format
 msgid "Created: %s"
-msgstr "Anlegen"
+msgstr "Angelegt: %s"
 
 #: addons/dak/class_dakkeyring.inc:140
-#, fuzzy
 msgid "Valid"
-msgstr "gültig"
+msgstr "Gültig"
 
 #: addons/dak/class_dakkeyring.inc:141
-#, fuzzy
 msgid "Expired: "
-msgstr "abgelaufen"
+msgstr "Abgelaufen: "
 
 #: addons/dak/class_dakkeyring.inc:142
-#, fuzzy
 msgid "Expires: "
-msgstr "abgelaufen"
+msgstr "Läuft ab: "
 
 #: addons/dak/class_dakkeyring.inc:276
 msgid "DAK keyring"
-msgstr ""
+msgstr "DAK-Schlüsselbund"
 
 #: addons/dak/class_dakkeyring.inc:277
-#, fuzzy
 msgid "DAK keyring management"
-msgstr "Abteilungsverwaltung"
+msgstr "DAK-Schlüsselbund-Verwaltung"
 
 #: addons/dak/main.inc:32
 msgid "DAK"
 msgstr "DAK"
 
-#~ msgid "Description"
-#~ msgstr "Beschreibung"
+#: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
+#: addons/dak/class_DAK.inc:113
+msgid "Error"
+msgstr "Fehler"
 
-#~ msgid "Addressbook"
-#~ msgstr "Adressbuch"
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "Dial from %s to %s now?"
-#~ msgstr "Soll von %s nach %s gewählt werden?"
-
-#~ msgid ""
-#~ "You need to set your personal phone number in order to perform direct "
-#~ "dials."
-#~ msgstr ""
-#~ "Um direkt wählen zu können müssen Sie zuerst Ihre persönliche "
-#~ "Telefonnummer einstellen."
-
-#~ msgid "LDAP error"
-#~ msgstr "LDAP-Fehler"
-
-#~ msgid "Dial"
-#~ msgstr "Wählen"
-
-#~ msgid "Save contact for %s as vcard"
-#~ msgstr "Speichere Kontakt für %s als vcard"
-
-#~ msgid "Send mail to %s"
-#~ msgstr "Sende eine Mail an %s"
-
-#~ msgid "global addressbook"
-#~ msgstr "dem globalen Adressbuch"
-
-#~ msgid "user database"
-#~ msgstr "Fax-Datenbank"
-
-#~ msgid "Contact stored in '%s'"
-#~ msgstr "Kontakt wurde in '%s' abgelegt"
-
-#~ msgid "Creating new entry in"
-#~ msgstr "Erzeugen eines neuen Eintrags in"
-
-#~ msgid "All"
-#~ msgstr "Alle"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "Given name"
-#~ msgstr "Vorname"
-
-#~ msgid "Work phone"
-#~ msgstr "Telefon (Arbeit)"
-
-#~ msgid "Cell phone"
-#~ msgstr "Mobiltelefon"
-
-#~ msgid "Home phone"
-#~ msgstr "Telefon (zu Hause)"
-
-#~ msgid "Phone"
-#~ msgstr "Telefon"
-
-#~ msgid "Telephone number"
-#~ msgstr "Telefonnummer"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Mobile"
-#~ msgstr "Mobiltelefon"
-
-#~ msgid "Pager"
-#~ msgstr "Pager"
-
-#~ msgid "Email"
-#~ msgstr "Email"
-
-#~ msgid ""
-#~ "Cannot create a unique DN for your entry. Please fill more formular "
-#~ "fields."
-#~ msgstr ""
-#~ "Es kann kein eindeutiger DN für diesen Eintrag erzeugt werden. Füllen Sie "
-#~ "bitte weitere Felder aus."
-
-#~ msgid "Addressbook entry acls"
-#~ msgstr "ACLs der Adressbuch-Einträge"
-
-#~ msgid "Surename"
-#~ msgstr "Nachname"
-
-#~ msgid "Telefon number"
-#~ msgstr "Telefonnummer"
-
-#~ msgid "Fax number"
-#~ msgstr "Faxnummer"
-
-#~ msgid "Mobile number"
-#~ msgstr "Mobiltelefon"
-
-#~ msgid "Home phone number"
-#~ msgstr "Telefonnummer (privat)"
-
-#~ msgid "User identification"
-#~ msgstr "Benutzerkennung"
-
-#~ msgid "Mail address"
-#~ msgstr "Mail-Adresse"
-
-#~ msgid "Organization"
-#~ msgstr "Organisation"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Location"
-#~ msgstr "Ort"
-
-#~ msgid "Postal address"
-#~ msgstr "Adresse"
-
-#~ msgid "State"
-#~ msgstr "Land"
-
-#~ msgid "Initials"
-#~ msgstr "Initialien"
-
-#~ msgid "Title"
-#~ msgstr "Titel"
-
-#~ msgid "Home postal address"
-#~ msgstr "Private Adresse"
-
-#~ msgid "Common name"
-#~ msgstr "Name"
-
-#~ msgid "Warning"
-#~ msgstr "Warnung"
-
-#~ msgid ""
-#~ "This includes all addressbook data in this entry. Please double check if "
-#~ "your really want to do this since there is no way for GOsa to get your "
-#~ "data back."
-#~ msgstr ""
-#~ "Dies umfasst alle in diesem Eintrag gespeicherten Informationen. "
-#~ "Überlegen Sie genau, was Sie tun, da es keine Möglichkeit für GOsa gibt, "
-#~ "die Daten wiederherzustellen."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Wenn Sie sicher sind, drücken Sie 'Entfernen' um fortzufahren oder "
-#~ "'Abbrechen' zum Abbruch."
-
-#~ msgid "Dial connection..."
-#~ msgstr "Wähle Verbindung..."
-
-#~ msgid "Private"
-#~ msgstr "Privat"
-
-#~ msgid "Contact"
-#~ msgstr "Kontakt"
-
-#~ msgid "Information"
-#~ msgstr "Information"
-
-#~ msgid ""
-#~ "The telephone list plugin provides list and search facilities for the "
-#~ "people in your site. You may want to specify the asterisk [*] like in "
-#~ "'Go*us' to find 'Gonicus'. Use the filters below to narrow down your "
-#~ "search."
-#~ msgstr ""
-#~ "Das Telefonlistenmodul bietet Auflistungs- und Suchfunktionen für die "
-#~ "Mitarbeiter Ihrer Organisation. Bei Eingaben wie 'gon' wird "
-#~ "dementsprechend sowohl 'Gonicus' als auch 'gone' gefunden."
-
-#~ msgid "Actions"
-#~ msgstr "Aktionen"
-
-#~ msgid "Add entry"
-#~ msgstr "Eintrag hinzufügen"
-
-#~ msgid "Edit entry"
-#~ msgstr "Eintrag bearbeiten"
-
-#~ msgid "Remove entry"
-#~ msgstr "Eintrag entfernen"
-
-#~ msgid "Select to see regular users"
-#~ msgstr "Wählen Sie dies, um gewöhnliche Benutzer anzuzeigen"
-
-#~ msgid "Show organizational entries"
-#~ msgstr "Zeige Benutzer der Organisation"
-
-#~ msgid "Select to see users in addressbook"
-#~ msgstr "Wählen, um Adressbucheinträge zu sehen"
-
-#~ msgid "Show addressbook entries"
-#~ msgstr "Zeige Adressbuch-Einträge"
-
-#~ msgid "Display results for department"
-#~ msgstr "Zeige Ergebnisse der Abteilung"
-
-#~ msgid "Choose the department the search will be based on"
-#~ msgstr "Wählen Sie die Abteilung, auf die die Suchfunktion angewandt wird"
-
-#~ msgid "Match object"
-#~ msgstr "Untersuchtes Objekt"
-
-#~ msgid "Choose the object that will be searched in"
-#~ msgstr "Wählen Sie das Objekt, auf das die Suchfunktion angewandt wird"
-
-#~ msgid "Search for"
-#~ msgstr "Suche nach"
-
-#~ msgid "Search string"
-#~ msgstr "Suchtext"
-
-#~ msgid "Choose the department to store entry in"
-#~ msgstr "Wählen Sie die Abteilung, in der der Eintrag abgelegt werden soll"
-
-#~ msgid "Personal"
-#~ msgstr "Persönlich"
-
-#~ msgid "Last name"
-#~ msgstr "Nachname"
-
-#~ msgid "First name"
-#~ msgstr "Vorname"
-
-#~ msgid "Personal title"
-#~ msgstr "Titel"
-
-#~ msgid "Address"
-#~ msgstr "Adresse"
-
-#~ msgid "Organizational"
-#~ msgstr "Organisationsbezogen"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
-
-#~ msgid "City"
-#~ msgstr "Stadt"
-
-#~ msgid "Postal code"
-#~ msgstr "Postleitzahl"
-
-#~ msgid "Country"
-#~ msgstr "Land"
-
-#~ msgid "FAX"
-#~ msgstr "Fax"
