@@ -18,11 +18,13 @@ class faiGroupHandle{
     }
 
     /* Preset required values */
+    $select_set = FALSE;
     foreach($FAI_group as $type => $data){
       $FAI_group[$type]['selected'] = FALSE;
       $FAI_group[$type]['freezed'] = isset($data['FAIstate']) && preg_match("/freeze/",$data['FAIstate']);
-      if(($this->mode == "cut" || $this->mode == "edit") && !$FAI_group[$type]['freezed']){
+      if(!$select_set && ($this->mode == "cut" || $this->mode == "edit") && !$FAI_group[$type]['freezed']){
         $FAI_group[$type]['selected'] = TRUE;
+        $select_set =TRUE;
       }
     }
     $this->FAI_group = $FAI_group;
