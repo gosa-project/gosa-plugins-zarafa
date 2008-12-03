@@ -153,6 +153,11 @@ class faiManagement extends plugin
           break;
         }
       }
+      if(preg_match("/^edit_[0-9]*_.*$/",$name)){
+        $i_entryID  = preg_replace("/^edit_([0-9]*)_.*$/i","\\1",$name);
+        $s_entryType= preg_replace("/^edit_[0-9]*_([^_]*)_.*$/i","\\1",$name);
+        $s_action = "edit";
+      }
     }
 
     if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
@@ -415,7 +420,7 @@ class faiManagement extends plugin
       Edit entry 
      ****************/
 
-		if($this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "edit"){
+		if($s_action == "edit" || $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "edit"){
 
       $entry = array();
       if($this->dialog instanceOf faiGroupHandle){
