@@ -107,7 +107,6 @@ class faiManagement extends plugin
     /* Call parent execute */
     plugin::execute();
 
-
     /* Initialise vars and smarty */
 		$smarty 	= get_smarty();
 		$smarty->assign("BranchName","");
@@ -163,52 +162,16 @@ class faiManagement extends plugin
         $s_action = "delete";
         break;
       }
-
-      /* Get posts from opsi onjects 
-       */  
-      if($this->opsi instanceof opsi && $this->opsi->enabled()){
-        if(preg_match("/^entry_opsi_edit_/",$name)){
-          $s_entry = preg_replace("/^entry_opsi_edit_([0-9]*).*$/","\\1",$name);
-          $s_action = "opsi_edit";
-          break;
-        }
+    }
+    foreach(array("freeze_branch" => "freeze_branch",
+          "branch_branch" => "branch_branch",
+          "remove_branch" => "remove_branch") as $from => $to){
+      if(isset($_GET['act']) && $_GET['act'] == $from){
+        $s_action = $to;
       }
     }
-
-    /* Get posts from opsi objects 
-     */ 
-		if($this->opsi instanceof opsi && $this->opsi->enabled() && isset($_GET['edit_opsi_entry'])){
-			$s_entry = $_GET['edit_opsi_entry'];
-			$s_action = "opsi_edit";
-		}
-
-    if(isset($_GET['act']) && $_GET['act'] == "freeze_branch"){
-      $s_action = "freeze_branch";
-    }
-    if(isset($_GET['act']) && $_GET['act'] == "branch_branch"){
-      $s_action = "branch_branch";
-    }
-    if(isset($_GET['act']) && $_GET['act'] == "remove_branch"){
-      $s_action = "remove_branch";
-    }
-    
-    if((isset($_POST['CancelBranchName'])) || (isset($_POST['CloseIFrame']))){
-      $this->dispNewBranch = false;
-      $this->dispNewFreeze = false;
-    }
-
-
-    $type_acl_mapping = array(
-        "FAIpartitionTable"  => "faiPartitionTable", 
-        "FAIpackageList"     => "faiPackage",
-        "FAIscript"          => "faiScript",
-        "FAIvariable"        => "faiVariable",
-        "FAIhook"            => "faiHook",
-        "FAIprofile"         => "faiProfile",
-        "FAItemplate"        => "faiTemplate");
-
-
-    /* handle C&P from layers menu */
+  
+    /* handle C&P from layer menu */
     if(isset($_POST['menu_action']) && preg_match("/^multiple_copy_systems/",$_POST['menu_action'])){
       $s_action = "copy_multiple";
     }
@@ -217,6 +180,12 @@ class faiManagement extends plugin
     }
     if(isset($_POST['menu_action']) && preg_match("/^editPaste/",$_POST['menu_action'])){
       $s_action = "editPaste";
+    }
+
+
+    if((isset($_POST['CancelBranchName'])) || (isset($_POST['CloseIFrame']))){
+      $this->dispNewBranch = false;
+      $this->dispNewFreeze = false;
     }
 
     /* Create options */
@@ -292,8 +261,14 @@ class faiManagement extends plugin
     if($s_action == "group_remove"){
       if(isset($this->objects[$s_entry])){
         $group = $this->objects[$s_entry];
-        $this->dialog = new faiGroupHandle($group,"remove");
 
+        /* Do not allow to remove opsi products */
+        foreach(array("opsi_netboot","opsi_local") as $type){
+          if(isset($group[$type])) unset($group[$type]);
+        }
+        if(count($group)){
+          $this->dialog = new faiGroupHandle($group,"remove");
+        }
       }
     }elseif($s_action == "group_edit"){
       if(isset($this->objects[$s_entry])){
@@ -324,27 +299,21 @@ class faiManagement extends plugin
 
       /* Remove user by user and check acls before removeing them */
       foreach($this->dns as $key => $dn){
-
         $ldap->cat($dn, array('objectClass'));
         $attrs  = $ldap->fetch();
         $type   = $this->get_type($attrs);
-
         $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
         if(preg_match("/d/",$acl)){
-
           $this->dialog = new $type[0]($this->config, $this->config->data['TABS'][$type[2]], $dn,"fai");
           $this->dialog->parent = &$this;
           $this->dialog->set_acl_base($dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
-          unset ($this->dialog);
           $this->dialog= FALSE;
           $to_del = FAI::clean_up_releases($dn);
           FAI::save_release_changes_now();
-
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
           }
-
         } else {
 
           /* Normally this shouldn't be reached, send some extra
@@ -368,37 +337,39 @@ class faiManagement extends plugin
     if ($s_action=="del_multiple" || 
         $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "remove"){
  
-      /* Collect objects to delete and check if object is freezed
+      /* Collect objects to delete and check if objects are freezed
        */ 
       $dns = array();
       $errors = "";
       $this->dns = array();
       if($this->dialog instanceOf faiGroupHandle){
         $to_delete = $this->dialog->get_selected();
-        foreach($to_delete as $obj){
-          if(!preg_match('/^freeze/', $obj['FAIstate'])){
-            $this->dns[] = $obj['dn'];
-          }else{
-            $errors .= $obj['cn'].", ";
-          }
-        }
       }else{
         $ids = $this->list_get_selected_items();
+        $to_delete = array();
         foreach($ids as $id){
-          foreach($this->objects[$id] as $obj){
-            if(!preg_match('/^freeze/', $obj['FAIstate'])){
-              $this->dns[] = $obj['dn'];
-            }else{
-              $errors .= $obj['cn'].", ";
-            }
-          }
+          $to_delete = array_merge($to_delete,$this->objects[$id]);
+        }
+      } 
+
+      foreach($to_delete as $obj){
+        if(isset($obj['type']) && in_array($obj['type'],array("opsi_netboot","opsi_local"))){
+          continue;
+        }
+        if(isset($obj['FAIstate']) && preg_match('/^freeze/', $obj['FAIstate'])){
+          $errors .= $obj['cn'].", ";
+        }else{
+          $this->dns[] = $obj['dn'];
         }
       }
+
       if($errors != ""){
         msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
               "<br><br>".trim($errors,", ")),INFO_DIALOG);
       }
 
+      /* Check locking 
+       */
       if(count($this->dns)){
         if ($user= get_multiple_locks($this->dns)){
           return(gen_locked_message($user,$this->dns));
@@ -409,7 +380,6 @@ class faiManagement extends plugin
             add_lock ($dn, $this->ui->dn);
             $dns_names[] = LDAP::fix($dn);
           }
-          /* Lock the current entry, so nobody will edit it during deletion */
 				  $smarty->assign("warning",msgPool::deleteInfo($dns_names,_("FAI object")));
           $smarty->assign("multiple", true);
           return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
@@ -431,67 +401,6 @@ class faiManagement extends plugin
 
 
     /****************
-      Delete aborted  
-     ****************/
-
-		/* Delete canceled? */
-		if (isset($_POST['delete_cancel'])){
-      $this->remove_lock();
-		}
-
-
-    /****************
-      Delete confirmed 
-     ****************/
-
-		/* Deletion was confirmed, so delete this entry
-     */
-    if (isset($_POST['delete_terminal_confirm'])){
-
-      /* Some nice guy may send this as POST, so we've to check
-         for the permissions again. */
-
-      /* Find out more about the object type */
-      $ldap	  = $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('objectClass'));
-      if($ldap->count()){
-        $attrs	= $ldap->fetch();
-        $type	  = $this->get_type($attrs);			
-
-        $acl  = $this->ui->get_permissions($this->dn,"fai/".$type[1]);
-        if(preg_match("/d/",$acl)){
-
-          $this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
-          $this->dialog->set_acl_base($this->dn);
-          $this->dialog->parent = &$this;
-          $this->dialog->by_object[$type[1]]->remove_from_parent ();
-          unset ($this->dialog);
-          $this->dialog= FALSE;
-          $to_del = FAI::clean_up_releases($this->dn);
-          FAI::save_release_changes_now();
-
-          foreach($to_del as $dn){
-            $ldap->rmdir_recursive($dn);
-          }
-
-        } else {
-
-          /* Normally this shouldn't be reached, send some extra
-             logs to notify the administrator */
-          msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
-          new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
-        }
-
-      }else{
-        msg_dialog::display(_("Error"), sprintf(_("Cannot delete '%s': object does not exist!"), $this->dn) , ERROR_DIALOG);
-      }
-
-      /* Remove lock file after successfull deletion */
-      $this->remove_lock();
-    }
-
-
-    /****************
       Edit entry 
      ****************/
 
@@ -507,20 +416,38 @@ class faiManagement extends plugin
 
       if(count($entry)){
         $a_setup  = $this->get_type($entry);
-        $this->dn = $entry['dn'];
 
-        /* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
-        if (($user= get_lock($this->dn)) != ""){
-          return(gen_locked_message ($user, $this->dn, TRUE));
+        /* Special handling for opsi products 
+         */
+
+        if(in_array($entry['type'],array("opsi_local","opsi_netboot")) && 
+            $this->opsi instanceof opsi && $this->opsi->enabled() ){
+
+          $name = $entry['cn'];
+          $cfg = $this->opsi->get_product_properties($name);
+          $this->dialog = new tabs_opsiProdConfig($this->config, $this->config->data['TABS']['OPSIPRODCONFIG'],"","opsi");
+          if(isset($this->dialog->by_object['opsiProperties'])){
+            $this->dialog->by_object['opsiProperties']->set_cfg($cfg);
+            $this->dialog->by_object['opsiProperties']->set_product($name);
+          }else{
+            trigger_error("Unknown tab, please check config.");
+          }
+        }elseif(count($a_setup)){
+
+          $this->dn = $entry['dn'];
+          /* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
+          if (($user= get_lock($this->dn)) != ""){
+            return(gen_locked_message ($user, $this->dn, TRUE));
+          }
+          add_lock ($this->dn, $this->ui->dn);
+
+          $this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+          $this->dialog->parent = &$this;
+          $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
+          $this->dialog->set_acl_base($this->dn);
+          $this->is_dialog  = true;
+          session::set('objectinfo',$this->dn);
         }
-        add_lock ($this->dn, $this->ui->dn);
-
-        $this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
-        $this->dialog->parent = &$this;
-        $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
-        $this->dialog->set_acl_base($this->dn);
-        $this->is_dialog  = true;
-        session::set('objectinfo',$this->dn);
       }
     }
 
@@ -908,6 +835,16 @@ class faiManagement extends plugin
                     "new_package"       =>  _("package list"));
 
     if(isset($types[$s_action])){
+
+      $type_acl_mapping = array(
+          "FAIpartitionTable"  => "faiPartitionTable", 
+          "FAIpackageList"     => "faiPackage",
+          "FAIscript"          => "faiScript",
+          "FAIvariable"        => "faiVariable",
+          "FAIhook"            => "faiHook",
+          "FAIprofile"         => "faiProfile",
+          "FAItemplate"        => "faiTemplate");
+
       $acl = $this->ui->get_permissions($this->acl_base,"fai/".$type_acl_mapping[$types[$s_action]]);
       if(preg_match("/c/",$acl)){
         $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
@@ -936,7 +873,7 @@ class faiManagement extends plugin
 
 
     /****************
-      Get from ask class name dialog 
+      Get name from ask_class_name dialog 
      ****************/
 
     if($s_action == "select_class_name_finished"){
@@ -971,6 +908,31 @@ class faiManagement extends plugin
 			session::un_set('objectinfo');
       $this->remove_lock();
 		}
+
+
+    /****************
+     Handle opsi dialogs  
+     ****************/
+      
+    if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['cancel_properties'])){
+      $this->dialog = NULL;
+    }
+    if($this->dialog instanceof tabs_opsiProdConfig && isset($_POST['save_properties'])){
+      $this->dialog->save_object();
+      $op    = $this->dialog->by_object['opsiProperties'];
+      $name  = $op->get_product();
+      $cfg   = $op->get_cfg();
+      $this->opsi->set_product_properties($name,$cfg);
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      }else{
+        $this->dialog = NULL;
+      }
+    }
+    if($this->dialog instanceof tabs_opsiProdConfig){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
 
 
     /****************
@@ -1217,10 +1179,11 @@ class faiManagement extends plugin
           $n_pro = $this->opsi->get_netboot_products();
           $err |= $this->opsi->is_error();
           foreach($n_pro as $name => $data){
-            $entry = array("cn" => $name,
+            $entry = array(
+                "cn" => $name,
                 "description" => $data['DESC'],
                 "type" => "opsi_netboot");
-            $this->objects[$name]['opse_netboot'] = $entry;
+            $this->objects[$name]['opsi_netboot'] = $entry;
           }  
         }
         if(!$err && $this->DivListFai->ShowOpsiLocal){
@@ -1255,6 +1218,7 @@ class faiManagement extends plugin
 	}
 
 	function get_type($array){
+    if(!isset($array['objectClass'])) return(array());
 		if(in_array("FAIpartitionTable",$array['objectClass'])){
 			return(array("tabsPartition","faiPartitionTable","FAIPARTITIONTABS"));
 		}
@@ -1277,6 +1241,7 @@ class faiManagement extends plugin
 		if(in_array("FAIpackageList",$array['objectClass'])){
 			return(array("tabsPackage","faiPackage","FAIPACKAGETABS"));
 		}
+    return(array());
 	}
 
   function CheckNewBranchName($name,$base)
