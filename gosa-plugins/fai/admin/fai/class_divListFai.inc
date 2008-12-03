@@ -246,31 +246,44 @@ class divListFai extends MultiSelectWindow
       $name = "";
       $name = "";
       $icon_list = "";
+      $opsi_only = TRUE;
       foreach($objects as $type => $type_data){
         if(isset($value[$type])){
           $name = $value[$type]['cn'];
           $icon_list .= "<input type='image' src='".$type_data['IMG']."' title='".$type_data['NAME']."' 
             alt='".$type_data['KZL']."' class='center' name='edit_".$key."_".$type."'>\n";
           $cnts[$type] ++;
+          if(!in_array($type,array("opsi_local","opsi_netboot"))){
+            $opsi_only = FALSE;
+          }
         }else{
           $icon_list .= "<img src='images/empty.png' alt=' ' class='center'>\n";
         }
       }
 
+      /* Create checkbox
+       */
+      $checkbox = "&nbsp;";
+      if(!$opsi_only){
+        $checkbox = "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>";
+      }
+  
       /* Create actions string
        */
       $actions = "";
-      
       $actions.= "<input type='image' name='group_edit_".$key."' class='center'
         src='images/lists/edit.png'>";
-      $actions.= "<input type='image' name='group_remove_".$key."' class='center'
-        src='images/lists/trash.png'>";
-      
+      if(!$opsi_only){
+        $actions.= "<input type='image' name='group_remove_".$key."' class='center'
+          src='images/lists/trash.png'>";
+      }else{
+        $actions.= "<img class='center' src='images/empty.png' alt=' '>";
+      }
 
       /* Create list 
        */
       $field1 = array(
-          "string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+          "string" => $checkbox ,
           "attach" => "style='width:20px;'");
       $field2 = array(
           "string" => $name,
