@@ -51,7 +51,7 @@ class divListFai extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => _("Class name"),  "attach" => "style=''"));
-    $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
+    $this->AddHeader(array("string" => _("Class types"),         "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     $this->AddCheckBox("ShowProfiles"   , sprintf(_("Display objects of type '%s'."),

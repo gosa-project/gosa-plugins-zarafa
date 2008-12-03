@@ -42,7 +42,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td><i>({$item.description)</i>}
+		<td><i>({$item.description})</i>
 		</td>
 	</tr>
 {/foreach}
@@ -65,7 +65,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td><i>({$item.description)</i>}
+		<td><i>({$item.description})</i>
 		</td>
 	</tr>
 {/foreach}
@@ -92,8 +92,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td><i>({$item.description})</i>
-		</td>
+		<td><i>({$item.description})</i> </td>
 	</tr>
 {/foreach}
 </table>
