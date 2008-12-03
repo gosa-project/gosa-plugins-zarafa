@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:05+0100\n"
-"PO-Revision-Date: 2008-07-24 01:58+0200\n"
+"PO-Revision-Date: 2008-12-03 23:19+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -178,9 +178,8 @@ msgid "list"
 msgstr "liste"
 
 #: admin/sudo/class_sudoOption.inc:537
-#, fuzzy
 msgid "Sudo options"
-msgstr "Options des journaux systèmes"
+msgstr "Options Sudo"
 
 #: admin/sudo/main.inc:42 admin/sudo/main.inc:46
 msgid "Sudo role administration"
@@ -369,3 +368,4 @@ msgstr "Exécuter comme un utilisateur"
 #: admin/sudo/class_sudoGeneric.inc:675
 msgid "Access control list"
 msgstr "Contrôle d'accès (ACL)"
+

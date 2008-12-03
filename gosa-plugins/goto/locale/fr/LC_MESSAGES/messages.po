@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:04+0100\n"
-"PO-Revision-Date: 2008-11-30 23:57+0100\n"
+"PO-Revision-Date: 2008-12-03 23:22+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1710,8 +1710,7 @@ msgstr "Recharger"
 msgid ""
 "FAI Object assignment disabled. You can't use this feature until FAI is "
 "activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette option tant que FAI n'est pas activé."
 
 #: admin/systems/goto/workstationStartup.tpl:66
 msgid "GOsa support daemon not configured"
@@ -2232,7 +2231,6 @@ msgid "Other network component"
 msgstr "Autre composant réseau"
 
 #: admin/systems/goto/SelectDeviceType.tpl:3
-#, fuzzy
 msgid ""
 "This system has no system type configured. Please choose a system type for "
 "this object and an optional inheritance group. Press the 'continue' button "
@@ -2300,8 +2298,7 @@ msgstr "Erreur interne"
 
 #: admin/systems/goto/class_printGeneric.inc:106
 #, php-format
-msgid ""
-"Cannot determine a valid department for this object. Setting base to '%s'!"
+msgid "Cannot determine a valid department for this object. Setting base to '%s'!"
 msgstr ""
 "Impossible d'obtenir un département valide pour cet objet. Je met la base à "
 "'%s' ! "
@@ -2325,8 +2322,7 @@ msgstr ""
 
 #: admin/systems/goto/class_printGeneric.inc:271
 msgid "This is a workstation template, printer tab is disabled."
-msgstr ""
-"Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
+msgstr "Ceci est un modèle de station de travail, l'onglet imprimante est désactivé."
 
 #: admin/systems/goto/class_printGeneric.inc:276
 msgid "This is a terminal template, printer tab is disabled."
@@ -2431,9 +2427,8 @@ msgstr "'%s' n'existe pas !"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:12
 #: admin/systems/goto/gotoLpdEnable.tpl:48
-#, fuzzy
 msgid "Enable printer settings"
-msgstr "Paramètres de l'imprimante"
+msgstr "Active les paramètres de l'imprimante"
 
 #: admin/systems/goto/gotoLpdEnable.tpl:87
 msgid "Write only"
@@ -2458,13 +2453,11 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:234
 #, php-format
 msgid "FAI mirror '%s' is not available - setting to mirror 'auto'!"
-msgstr ""
-"Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
+msgstr "Le miroir FAI '%s' n'est pas disponible - miroir mis sur 'automatique' !"
 
 #: admin/systems/goto/class_workstationStartup.inc:247
 #, php-format
-msgid ""
-"FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
+msgid "FAI release '%s' is not available on mirror '%s' - setting to release '%s'!"
 msgstr ""
 "La version FAI '%s' n'est pas disponible sur le miroir '%s' - la version "
 "sera '%s' !"
@@ -2701,8 +2694,7 @@ msgstr "Impossible de lire le PPD '%s' !"
 #: admin/systems/ppd/class_printerPPDDialog.inc:122
 #, php-format
 msgid "Cannot open PPD path '%s' for reading and writing!"
-msgstr ""
-"Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
+msgstr "Impossible de lire et d'écrire dans le chemin spécifié pour le PPD '%s' !"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:141
 #: admin/systems/ppd/class_printerPPDDialog.inc:341
@@ -2722,8 +2714,7 @@ msgstr "Ecrasement du PPD existant"
 msgid ""
 "There is already a ppd file for this kind of printer. Do you want to "
 "overwrite it?"
-msgstr ""
-"Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
+msgstr "Il y a déjà un fichier ppd pour ce type d'imprimante. Voulez vous l'écraser ?"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:465
 msgid "Section"
@@ -2955,8 +2946,7 @@ msgstr ""
 
 #: personal/environment/class_environment.inc:364
 #, php-format
-msgid ""
-"Profile server '%s' is not available anymore. Kiosk profile will be disabled."
+msgid "Profile server '%s' is not available anymore. Kiosk profile will be disabled."
 msgstr ""
 "Le serveur de profil sélectionné '%s' n'est plus disponible. Le profil Kiosk "
 "sera désactivé."
@@ -3078,8 +3068,7 @@ msgstr "Sélectionner le département où sera effectuée la recherche"
 
 #: personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
-msgstr ""
-"Expression régulière concordant avec les noms des périphériques hotplug"
+msgstr "Expression régulière concordant avec les noms des périphériques hotplug"
 
 #: personal/environment/environment.tpl:3
 msgid "The environment extension is currently disabled."
@@ -3173,340 +3162,3 @@ msgstr "Afficher/Cacher l'administrateur"
 msgid "Toggle default"
 msgstr "Afficher/Cacher réglages par défaut"
 
-#~ msgid "Available logs"
-#~ msgstr "Journaux systèmes disponibles"
-
-#~ msgid "Selected log"
-#~ msgstr "Sélectionner le journal système"
-
-#~ msgid "No logs for this host available!"
-#~ msgstr "Pas de journaux systèmes disponibles pour cet hôte !"
-
-#~ msgid "Deployment status"
-#~ msgstr "Etat du déploiement"
-
-#~ msgid "System deployment status"
-#~ msgstr "Etat du déploiement des systèmes"
-
-#~ msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-#~ msgstr ""
-#~ "Les jobs suivants ne peuvent pas être effacés, il doivent être annulés: %s"
-
-#~ msgid ""
-#~ "This menu allows you to remove and change the properties of GOsa tasks."
-#~ msgstr ""
-#~ "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
-
-#~ msgid "List of queued jobs"
-#~ msgstr "Liste des tâches dans la queue"
-
-#~ msgid "Resume"
-#~ msgstr "Redémarrer"
-
-#~ msgid "Abort"
-#~ msgstr "Annuler"
-
-#~ msgid "Target"
-#~ msgstr "Cible"
-
-#~ msgid "Task"
-#~ msgstr "Tâches"
-
-#~ msgid "Schedule"
-#~ msgstr "Planificateur"
-
-#~ msgid "Status"
-#~ msgstr "Statut"
-
-#~ msgid "Resume job"
-#~ msgstr "Redémarrer le job"
-
-#~ msgid "Execute now"
-#~ msgstr "Exécuter maintenant"
-
-#~ msgid "View logs"
-#~ msgstr "Voir les journaux systèmes"
-
-#~ msgid "Abort job"
-#~ msgstr "Annuler le job"
-
-#~ msgid "Waiting"
-#~ msgstr "Avertissement"
-
-#~ msgid "Processed"
-#~ msgstr "Terminé"
-
-#~ msgid "Detection"
-#~ msgstr "Détection"
-
-#~ msgid "in progress"
-#~ msgstr "en cours"
-
-#~ msgid "immediately"
-#~ msgstr "Immédiatement"
-
-#~ msgid "Cannot update queue entry: %s"
-#~ msgstr "Impossible de mettre à jour les files d'attente: %s"
-
-#~ msgid "Cannot update queue entries."
-#~ msgstr "Impossible de mettre à jour les files d'attentes."
-
-#~ msgid "The job could not be aborted, the required class '%s' was not found."
-#~ msgstr ""
-#~ "Le job n'a pas pu être annulé, la classe requise '%s' n'a pas été trouvée."
-
-#~ msgid "Cannot load queue entries: %s"
-#~ msgstr "Impossible de charger les entrées de la queue: %s"
-
-#~ msgid "System mass deployment"
-#~ msgstr "Déploiement de système en masse"
-
-#~ msgid "Provide a mechanism to automatically activate a set of systems"
-#~ msgstr ""
-#~ "Procure un mécanisme pour activer un ensemble de systèmes automatiquement"
-
-#~ msgid "Import jobs"
-#~ msgstr "Importer de tâches"
-
-#~ msgid ""
-#~ "You can import a list of jobs into the GOsa job queue. This should be a "
-#~ "semicolon seperated list of items in the following format:"
-#~ msgstr ""
-#~ "Vous pouvez importer une liste de jobs dans la queue des jobs GOsa. Cela "
-#~ "doit être un liste séparée par un point virgule dans le format suivant :"
-
-#~ msgid "MAC-address"
-#~ msgstr "Adresse mac"
-
-#~ msgid "job type"
-#~ msgstr "Type de job"
-
-#~ msgid "object group"
-#~ msgstr "Groupes d'objets"
-
-#~ msgid "import base"
-#~ msgstr "base pour l'importation"
-
-#~ msgid "full hostname"
-#~ msgstr "Nom complet de l'hôte"
-
-#~ msgid "IP-address"
-#~ msgstr "Adresse ip"
-
-#~ msgid "DHCP group"
-#~ msgstr "Groupe DHCP"
-
-#~ msgid "Example"
-#~ msgstr "Exemple"
-
-#~ msgid "Select list to import"
-#~ msgstr "Sélectionnez la liste à importer"
-
-#~ msgid "Timestamp"
-#~ msgstr "Date"
-
-#~ msgid "MAC"
-#~ msgstr "MAC"
-
-#~ msgid "Event"
-#~ msgstr "Evenement"
-
-#~ msgid "Select the target objects for your scheduled action."
-#~ msgstr ""
-#~ "Sélectionnez les objets de destination pour votre action programmée."
-
-#~ msgid "Available targets"
-#~ msgstr "Cibles disponibles"
-
-#~ msgid "Object name"
-#~ msgstr "Nom de l'objet"
-
-#~ msgid "Select to see object groups"
-#~ msgstr "Groupe d'objets"
-
-#~ msgid "Show object groups"
-#~ msgstr "Montrez les groupes d'objets"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Sélectionnez pour voir les serveurs"
-
-#~ msgid "Show servers"
-#~ msgstr "Montrez les serveurs"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Station de travail Windows"
-
-#~ msgid "Show workstations"
-#~ msgstr "Station de travail Windows"
-
-#~ msgid "Select to see incoming objects"
-#~ msgstr "Sélectionner pour voir les objets qui arrivent"
-
-#~ msgid "Show new objects"
-#~ msgstr "Montrer les nouveaux objets"
-
-#~ msgid "Select to search for a specific IP range only"
-#~ msgstr "Sélectionnez pour rechercher dans plage IP spécifique"
-
-#~ msgid "Match IP range"
-#~ msgstr "Correspondance de la plage d'adresses IP"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Expression régulière correspondant à des noms de groupe"
-
-#~ msgid "IP range start"
-#~ msgstr "Début de la plage ip"
-
-#~ msgid "IP range end"
-#~ msgstr "Fin de la plage ip"
-
-#~ msgid "IP range"
-#~ msgstr "Plage ip"
-
-#~ msgid ""
-#~ "Selected entries will be skipped because of errors. Do you want to "
-#~ "proceed?"
-#~ msgstr ""
-#~ "Les entrées sélectionnées seront ignorées à cause des erreurs qu'elle "
-#~ "contiennent. Voulez vous continuer ?"
-
-#~ msgid "Import complete: %s events successfully send, %s failed"
-#~ msgstr ""
-#~ "L'importation est finie : %s évènements ont été envoyés, %s ont échoués"
-
-#~ msgid "Reload fai release db"
-#~ msgstr "Recharger la base de données fai"
-
-#~ msgid "Reload ldap config"
-#~ msgstr "Recharger le configuration ldap"
-
-#~ msgid "Unlock"
-#~ msgstr "Deverrouillé"
-
-#~ msgid "Time schedule"
-#~ msgstr "Horaire"
-
-#~ msgid "System list"
-#~ msgstr "Liste des systèmes"
-
-#~ msgid "Result"
-#~ msgstr "Résultat"
-
-#~ msgid "Targets"
-#~ msgstr "Cibles"
-
-#~ msgid ""
-#~ "This dialog shows all available targets for your event, check the targets "
-#~ "you want to add and use the 'Use' button to accept."
-#~ msgstr ""
-#~ "Cette fenêtre montre tous les objets disponibles pour votre événement, "
-#~ "vérifier les objets quevous souhaitez ajouter et d'utiliser le bouton "
-#~ "'Utiliser' pour accepter."
-
-#~ msgid "System / Department"
-#~ msgstr "Systèmes / Département"
-
-#~ msgid "Display users"
-#~ msgstr "Afficher les utilisateurs"
-
-#~ msgid "Display groups"
-#~ msgstr "Afficher les groupes"
-
-#~ msgid "Lock"
-#~ msgstr "Verrouillé"
-
-#~ msgid "Installation activation"
-#~ msgstr "Activation de l'installation"
-
-#~ msgid "Year"
-#~ msgstr "Année"
-
-#~ msgid "Month"
-#~ msgstr "Mois"
-
-#~ msgid "Day"
-#~ msgstr "Jour"
-
-#~ msgid "Hour"
-#~ msgstr "Heure"
-
-#~ msgid "Minute"
-#~ msgstr "Minutes"
-
-#~ msgid "Second"
-#~ msgstr "Secondes"
-
-#~ msgid "Activate new"
-#~ msgstr "Activé les nouveaux"
-
-#~ msgid "Abort installation"
-#~ msgstr "Annuler l'installation"
-
-#~ msgid "Reload fai server db"
-#~ msgstr "Recharger la base de données FAI"
-
-#~ msgid "Apply"
-#~ msgstr "Appliquer"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
-
-#~ msgid "Message settings"
-#~ msgstr "Paramètres des messages"
-
-#~ msgid "Sender"
-#~ msgstr "Expéditeur"
-
-#~ msgid "Subject"
-#~ msgstr "Sujet"
-
-#~ msgid "Target users"
-#~ msgstr "Utilisateurs cibles"
-
-#~ msgid "Target groups"
-#~ msgstr "Groupes cibles"
-
-#~ msgid "This job has no template."
-#~ msgstr "Ce job n'a pas de modèles"
-
-#~ msgid "Create '%s' job"
-#~ msgstr "Création du job '%s'"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Start a system"
-#~ msgstr "Démarrer un système"
-
-#~ msgid "Display server"
-#~ msgstr "Afficher les serveurs"
-
-#~ msgid "Display workstation"
-#~ msgstr "Afficher les stations de travail"
-
-#~ msgid "Display object groups"
-#~ msgstr "Afficher les groupes objets correspondants"
-
-#~ msgid "Filter by IP range"
-#~ msgstr "Filtrer les adresse IP par étendue"
-
-#~ msgid "Progress"
-#~ msgstr "Progression"
-
-#~ msgid "Goto reload"
-#~ msgstr "Rechargement de Goto"
-
-#~ msgid "Reload goto settings"
-#~ msgstr "Recharger les paramètres goto"
-
-#~ msgid "Send message"
-#~ msgstr "Envoyer un message"
-
-#~ msgid "From"
-#~ msgstr "Depuis"
-
-#~ msgid "File"
-#~ msgstr "Fichier"
-
-#~ msgid "Spool server"
-#~ msgstr "Serveur de file d'attente"

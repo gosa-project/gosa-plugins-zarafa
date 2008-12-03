@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:05+0100\n"
-"PO-Revision-Date: 2008-08-12 13:58+0200\n"
+"PO-Revision-Date: 2008-12-03 23:12+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,18 +104,16 @@ msgstr ""
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:236
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:237
-#, fuzzy
 msgid "Create key"
-msgstr "Créer"
+msgstr "Créer un clefs"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:243
 msgid "Recreate key"
-msgstr ""
+msgstr "Récréer une clefs"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:245
-#, fuzzy
 msgid "Remove key"
-msgstr "Enlever"
+msgstr "Enlever un clefs"
 
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:284
 #: admin/systems/services/kerberos/class_krb_host_keys.inc:314
@@ -342,8 +340,7 @@ msgid "Kerberos service (kadmin access informations)"
 msgstr "Service Kerberos ( accès information kadmin )"
 
 #: admin/systems/services/kerberos/class_goKrbServer.inc:182
-msgid ""
-"Cannot apply policy changes! The defined kerberos server has no mac address."
+msgid "Cannot apply policy changes! The defined kerberos server has no mac address."
 msgstr ""
 "Impossible d'appliquer les changement de polices de sécurité ! Le serveur "
 "Kerberos défini n'a pas d'adresse MAC."
@@ -359,3 +356,4 @@ msgstr "Information d'accès Kerberos"
 #: admin/systems/services/kerberos/class_goKrbServer.inc:386
 msgid "Services"
 msgstr ""
+

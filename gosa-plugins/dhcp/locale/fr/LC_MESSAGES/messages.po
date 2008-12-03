@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:04+0100\n"
-"PO-Revision-Date: 2008-10-09 15:25+0200\n"
+"PO-Revision-Date: 2008-12-03 23:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: admin/systems/services/dhcp/dhcp_advanced.tpl:8
 msgid "Hide advanced settings"
-msgstr "Afficher/Cacher la configuration avancée"
+msgstr "Cacher la configuration avancée"
 
 #: admin/systems/services/dhcp/dhcp_advanced.tpl:15
 msgid "DHCP statements"
@@ -377,8 +377,7 @@ msgstr "Adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:22
 msgid "Use hostname or IP-address to assign fixed address"
-msgstr ""
-"Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
+msgstr "Utiliser le nom de l'hôte ou de l'adresse ip pour assigner une adresse fixe"
 
 #: admin/systems/services/dhcp/dhcp_host.tpl:31
 msgid "Hardware type"
@@ -439,8 +438,7 @@ msgstr "Accepter les clients inconnus"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Select if bootp clients should get dynamic IP addresses"
-msgstr ""
-"Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
+msgstr "Sélectionner si les clients bootp doivent recevoir une adresse ip dynamique"
 
 #: admin/systems/services/dhcp/dhcp_sharedNetwork.tpl:100
 msgid "Allow bootp clients"
@@ -485,8 +483,7 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: admin/systems/services/dhcp/dhcp_network.tpl:42
-msgid ""
-"Enter name of file that will be loaded via tftp after client has started"
+msgid "Enter name of file that will be loaded via tftp after client has started"
 msgstr ""
 "Entrez le nom du fichier qui doit être chargé via tftp après que le client "
 "aie démarré"
@@ -552,3 +549,4 @@ msgstr "Impossible d'effacer les déclarations automatiques !"
 #: admin/systems/services/dhcp/class_dhcpAdvanced.inc:93
 msgid "automatic"
 msgstr "automatique"
+
