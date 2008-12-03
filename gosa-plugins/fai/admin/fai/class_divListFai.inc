@@ -277,10 +277,7 @@ class divListFai extends MultiSelectWindow
           src='images/lists/edit.png'>";
         $actions.= "<img class='center' src='images/empty.png' alt=' '>";
       }else{
-
-        $actions.= '<input class="center" src="images/lists/cut.png" alt="Ausschneiden" name="cut_10" 
-          title="Diesen Eintrag ausschneiden" type="image">&nbsp;
-        <input class="center" src="images/lists/copy.png" alt="Kopieren" name="copy_10" 
+        $actions.= '<input class="center" src="images/lists/copy.png" alt="Kopieren" name="group_copy_'.$key.'" 
           title="Diesen Eintrag kopieren" type="image">&nbsp;';
 
         $actions.= "<input type='image' name='group_edit_".$key."' class='center'

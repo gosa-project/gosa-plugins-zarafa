@@ -52,6 +52,60 @@
 	</tr>
 {/foreach}
 </table>
+
+{elseif $mode == "copy"}
+
+<h2>{t}Copy entries{/t}</h2>
+<br>
+{t}Select the entry you want to copy.{/t}
+<br>
+<br>
+<table>
+{foreach from=$FAI_group item=item key=key}
+	<tr>
+		<td>
+			<input type='checkbox' name='{$mode}_{$key}'
+    	   		{if $item.selected} checked {/if}>
+		</td>
+		<td>
+			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
+				class='center'>
+		</td>
+		<td style='width:150px;'>{$types.$key.NAME}</td>
+		<td>{$item.description}
+		</td>
+	</tr>
+{/foreach}
+</table>
+
+{elseif $mode == "cut"}
+
+<h2>{t}Cut entries{/t}</h2>
+<br>
+{t}Select the entry you want to cut.{/t}
+<br>
+<br>
+<table>
+{foreach from=$FAI_group item=item key=key}
+	<tr>
+		<td>
+			{if $item.freezed}
+				<img src="images/lists/locked.png" class='center'>
+			{else}
+				<input type='checkbox' name='{$mode}_{$key}'
+    	     		{if $item.selected} checked {/if}>
+			{/if}
+		</td>
+		<td>
+			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
+				class='center'>
+		</td>
+		<td style='width:150px;'>{$types.$key.NAME}</td>
+		<td>{$item.description}
+		</td>
+	</tr>
+{/foreach}
+</table>
 {/if}
 <br>
 <br>

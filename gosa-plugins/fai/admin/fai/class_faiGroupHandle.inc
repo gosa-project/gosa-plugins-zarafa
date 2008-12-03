@@ -10,7 +10,7 @@ class faiGroupHandle{
 
   public function __construct($FAI_group, $Action)
   {
-    if(in_array($Action,array("edit","remove"))){
+    if(in_array($Action,array("edit","remove","copy","cut"))){
       $this->mode = $Action;
     }else{
       trigger_error("Wrong action type '".$Action."'.");
@@ -21,7 +21,7 @@ class faiGroupHandle{
     foreach($FAI_group as $type => $data){
       $FAI_group[$type]['selected'] = FALSE;
       $FAI_group[$type]['freezed'] = isset($data['FAIstate']) && preg_match("/freeze/",$data['FAIstate']);
-      if($this->mode == "edit" && !$FAI_group[$type]['freezed']){
+      if(($this->mode == "cut" || $this->mode == "edit") && !$FAI_group[$type]['freezed']){
         $FAI_group[$type]['selected'] = TRUE;
       }
     }
@@ -40,7 +40,7 @@ class faiGroupHandle{
   function save_object()
   {
     if(isset($_POST['faiGroupHandle'])){
-      if($this->mode == "remove"){
+      if(in_array($this->mode,array("copy","cut","remove"))){
         foreach($this->FAI_group as $key => $group){
           if(isset($_POST[$this->mode."_".$key])){
             $this->FAI_group[$key]['selected'] = TRUE;

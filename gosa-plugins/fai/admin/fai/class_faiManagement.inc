@@ -140,6 +140,8 @@ class faiManagement extends plugin
 
                     "/^edit_continue$/"               => "select_class_name_finished",
 
+                    "/^group_copy/"                   => "group_copy",
+                    "/^group_cut/"                    => "group_cut",
                     "/^group_edit/"                   => "group_edit",
                     "/^group_remove/"                 => "group_remove");
 		foreach($_POST as $name => $value){
@@ -199,16 +201,6 @@ class faiManagement extends plugin
 
     if(!empty($s_action)){
       $this->no_save = $no_save;
-    }
-
-    /********************
-      Copy & Paste
-     ********************/
-
-    /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
-    if($ret){
-      return($ret);
     }
 
 
@@ -272,6 +264,16 @@ class faiManagement extends plugin
         $group = $this->objects[$s_entry];
         $this->dialog = new faiGroupHandle($group,"edit");
       }
+    }elseif($s_action == "group_cut"){
+      if(isset($this->objects[$s_entry])){
+        $group = $this->objects[$s_entry];
+        $this->dialog = new faiGroupHandle($group,"cut");
+      }
+    }elseif($s_action == "group_copy"){
+      if(isset($this->objects[$s_entry])){
+        $group = $this->objects[$s_entry];
+        $this->dialog = new faiGroupHandle($group,"copy");
+      }
     }
     if($this->dialog instanceOf faiGroupHandle){
       $this->dialog->save_object();
@@ -284,6 +286,16 @@ class faiManagement extends plugin
           $this->dialog = FALSE;
         }
       }
+    }
+
+    /********************
+      Copy & Paste
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
     }
 
 
@@ -398,7 +410,6 @@ class faiManagement extends plugin
       $this->remove_lock();
       $this->dns = array();
     }
-
 
     /****************
       Edit entry 
@@ -1297,16 +1308,21 @@ class faiManagement extends plugin
     $ui = get_userinfo();
 
     /* Add a single entry to queue */
-    if($s_action == "copy"){
+    if($this->dialog instanceOf faiGroupHandle && !$this->dialog->is_open()){
 
-      /* Cleanup object queue */
-      $this->CopyPasteHandler->cleanup_queue();
-      $entry    = $this->objects[$s_entry];
-      $a_setup  = $this->get_type($entry);
-      $dn = $entry['dn'];
+      if(in_array($this->dialog->get_mode(),array("copy"))){      
 
-      if($ui->is_copyable($dn,"fai",$a_setup[1])){
-        $this->CopyPasteHandler->add_to_queue($dn,$s_action,$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+        /* Cleanup object queue */
+        $this->CopyPasteHandler->cleanup_queue();
+        $group = $this->dialog->get_selected();
+        foreach($group as $entry){
+          $a_setup  = $this->get_type($entry);
+          $dn = $entry['dn'];
+          if($ui->is_copyable($dn,"fai",$a_setup[1])){
+            $this->CopyPasteHandler->add_to_queue($dn,$this->dialog->get_mode(),$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+          }
+        }
+        $this->dialog = FALSE;
       }
     }
 
@@ -1318,14 +1334,14 @@ class faiManagement extends plugin
 
       /* Add new entries to CP queue */
       foreach($this->list_get_selected_items() as $id){
+        $group    = $this->objects[$id];
+        foreach($group as $entry){
+          $a_setup  = $this->get_type($entry);
+          $dn = $entry['dn'];
 
-        /* Cleanup object queue */
-        $entry    = $this->objects[$id];
-        $a_setup  = $this->get_type($entry);
-        $dn = $entry['dn'];
-
-        if($s_action == "copy_multiple" && $ui->is_copyable($dn,"fai",$a_setup[1])){
-          $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+          if($s_action == "copy_multiple" && $ui->is_copyable($dn,"fai",$a_setup[1])){
+            $this->CopyPasteHandler->add_to_queue($dn,"copy",$a_setup[0],$a_setup[2],"fai");//$a_setup[1]);
+          }
         }
       }
     }
