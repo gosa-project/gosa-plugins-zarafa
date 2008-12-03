@@ -1,7 +1,7 @@
 
 {if $mode == "remove"}
 
-<h2>{t}Edit entry{/t}</h2>
+<h2>{t}Remove entry{/t}</h2>
 <br>
 {t}Select the entries you want to remove.{/t}
 <br>
@@ -10,16 +10,20 @@
 {foreach from=$FAI_group item=item key=key}
 	<tr>
 		<td>
-			<input type='checkbox' name='{$mode}_{$key}'
-         		{if $item.selected} checked {/if}>
+			{if $item.freezed}
+				<img src="images/lists/locked.png" class='center'>
+			{else}
+				<input type='checkbox' name='{$mode}_{$key}'
+    	     		{if $item.selected} checked {/if}>
+			{/if}
 		</td>
 		<td>
 			<img src='{$types.$key.IMG}' alt='{$types.$key.KZL}' title='{$types.$key.NAME}'
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td>{$item.description}
-		</td>
+		<td style='width:80px;'>{if $item.freezed}<i>({t}Freezed{/t})</i>{/if}</td>
+		<td>{$item.description}</td>
 	</tr>
 {/foreach}
 </table>

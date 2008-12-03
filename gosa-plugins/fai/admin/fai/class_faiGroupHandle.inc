@@ -20,12 +20,10 @@ class faiGroupHandle{
     /* Preset required values */
     foreach($FAI_group as $type => $data){
       $FAI_group[$type]['selected'] = FALSE;
-    }
-    
-    /* Select first entry in edit mode */
-    if($this->mode == "edit"){
-      reset($FAI_group);
-      $FAI_group[key($FAI_group)]['selected'] = TRUE;
+      $FAI_group[$type]['freezed'] = isset($data['FAIstate']) && preg_match("/freeze/",$data['FAIstate']);
+      if($this->mode == "edit" && !$FAI_group[$type]['freezed']){
+        $FAI_group[$type]['selected'] = TRUE;
+      }
     }
     $this->FAI_group = $FAI_group;
   }

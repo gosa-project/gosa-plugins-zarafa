@@ -272,13 +272,21 @@ class divListFai extends MultiSelectWindow
       /* Create actions string
        */
       $actions = "";
-      $actions.= "<input type='image' name='group_edit_".$key."' class='center'
-        src='images/lists/edit.png'>";
-      if(!$opsi_only){
+      if($opsi_only){
+        $actions.= "<input type='image' name='group_edit_".$key."' class='center'
+          src='images/lists/edit.png'>";
+        $actions.= "<img class='center' src='images/empty.png' alt=' '>";
+      }else{
+
+        $actions.= '<input class="center" src="images/lists/cut.png" alt="Ausschneiden" name="cut_10" 
+          title="Diesen Eintrag ausschneiden" type="image">&nbsp;
+        <input class="center" src="images/lists/copy.png" alt="Kopieren" name="copy_10" 
+          title="Diesen Eintrag kopieren" type="image">&nbsp;';
+
+        $actions.= "<input type='image' name='group_edit_".$key."' class='center'
+          src='images/lists/edit.png'>";
         $actions.= "<input type='image' name='group_remove_".$key."' class='center'
           src='images/lists/trash.png'>";
-      }else{
-        $actions.= "<img class='center' src='images/empty.png' alt=' '>";
       }
 
       /* Create list 

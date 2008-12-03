@@ -277,9 +277,12 @@ class faiManagement extends plugin
       $this->dialog->save_object();
       if($this->dialog->is_open()){
         return($this->dialog->execute());
-      }
-      if($this->dialog->is_canceled() || isset($_POST['cancel_lock'])){
+      }elseif($this->dialog->is_canceled() || isset($_POST['cancel_lock'])){
         $this->dialog = FALSE;
+      }else{
+        if(!count($this->dialog->get_selected())){
+          $this->dialog = FALSE;
+        }
       }
     }
 
