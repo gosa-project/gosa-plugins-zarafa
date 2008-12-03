@@ -1,9 +1,6 @@
-
 {if $mode == "remove"}
 
-<h2>{t}Remove entry{/t}</h2>
-<br>
-{t}Select the entries you want to remove.{/t}
+<b>{t}Please select the objects you want to remove:{/t}</b>
 <br>
 <br>
 <table>
@@ -23,16 +20,14 @@
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
 		<td style='width:80px;'>{if $item.freezed}<i>({t}Freezed{/t})</i>{/if}</td>
-		<td>{$item.description}</td>
+		<td><i>({$item.description})</i></td>
 	</tr>
 {/foreach}
 </table>
 
 {elseif $mode == "edit"}
 
-<h2>{t}Edit entry{/t}</h2>
-<br>
-{t}Select the entry you want to edit.{/t}
+<b>{t}Select the object you want to edit:{/t}</b>
 <br>
 <br>
 <table>
@@ -47,7 +42,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td>{$item.description}
+		<td><i>({$item.description)</i>}
 		</td>
 	</tr>
 {/foreach}
@@ -55,9 +50,7 @@
 
 {elseif $mode == "copy"}
 
-<h2>{t}Copy entries{/t}</h2>
-<br>
-{t}Select the entry you want to copy.{/t}
+<b>{t}Select the object you want to copy:{/t}</b>
 <br>
 <br>
 <table>
@@ -72,7 +65,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td>{$item.description}
+		<td><i>({$item.description)</i>}
 		</td>
 	</tr>
 {/foreach}
@@ -80,9 +73,7 @@
 
 {elseif $mode == "cut"}
 
-<h2>{t}Cut entries{/t}</h2>
-<br>
-{t}Select the entry you want to cut.{/t}
+<b>{t}Select the object you want to cut:{/t}</b>
 <br>
 <br>
 <table>
@@ -101,7 +92,7 @@
 				class='center'>
 		</td>
 		<td style='width:150px;'>{$types.$key.NAME}</td>
-		<td>{$item.description}
+		<td><i>({$item.description})</i>
 		</td>
 	</tr>
 {/foreach}
