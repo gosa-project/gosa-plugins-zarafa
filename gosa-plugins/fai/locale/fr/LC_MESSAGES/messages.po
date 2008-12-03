@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 16:19+0100\n"
-"PO-Revision-Date: 2008-10-09 15:29+0200\n"
+"PO-Revision-Date: 2008-12-03 23:01+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -306,9 +306,8 @@ msgid "Class name"
 msgstr "Nom de la classe"
 
 #: admin/fai/class_divListFai.inc:54
-#, fuzzy
 msgid "Class types"
-msgstr "Type de la classe"
+msgstr "Types de classes"
 
 #: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
 #: addons/goto/class_gotomasses.inc:365
@@ -392,12 +391,10 @@ msgid "Show netboot products"
 msgstr "Montrer les produits netboot"
 
 #: admin/fai/class_divListFai.inc:78 admin/fai/class_divListFai.inc:224
-#, fuzzy
 msgid "OPSI localboot product"
 msgstr "Produit local OPSI"
 
 #: admin/fai/class_divListFai.inc:78
-#, fuzzy
 msgid "Show localboot products"
 msgstr "Montrer les produits locaux"
 
@@ -526,14 +523,12 @@ msgid "departments"
 msgstr "département"
 
 #: admin/fai/class_divListFai.inc:321
-#, fuzzy
 msgid "netboot products"
 msgstr "Montrer les produits netboot"
 
 #: admin/fai/class_divListFai.inc:322
-#, fuzzy
 msgid "localboot products"
-msgstr "Montrer les produits locaux"
+msgstr "Montrer les produits localboot"
 
 #: admin/fai/paste_generic.tpl:1
 msgid "FAI settings"
@@ -568,8 +563,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:446
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -618,24 +612,20 @@ msgid "Release"
 msgstr "Version"
 
 #: admin/fai/faiGroupHandle.tpl:3
-#, fuzzy
 msgid "Please select the objects you want to remove:"
-msgstr "Veuillez entrer un nouveau nom pour le groupe d'objet"
+msgstr "Veuillez sélectionner les objets que vous voulez enlever:"
 
 #: admin/fai/faiGroupHandle.tpl:30
-#, fuzzy
 msgid "Select the object you want to edit:"
-msgstr "Sélectionnez les objets à ajouter"
+msgstr "Sélectionnez l'objet que vous voulez éditer:"
 
 #: admin/fai/faiGroupHandle.tpl:53
-#, fuzzy
 msgid "Select the object you want to copy:"
-msgstr "Liste des groupes d'objets"
+msgstr "Veuillez sélectionner l'objet que vous voulez copier:"
 
 #: admin/fai/faiGroupHandle.tpl:76
-#, fuzzy
 msgid "Select the object you want to cut:"
-msgstr "Liste des groupes d'objets"
+msgstr "Veuillez sélectionner l'objet que vous voulez copier:"
 
 #: admin/fai/faiHook.tpl:39
 msgid "List of hook scripts"
@@ -646,8 +636,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/class_FAI.inc:259 admin/fai/class_FAI.inc:662
@@ -701,8 +690,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1063
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1076
 msgid "Error while fetching source dn - aborted!"
@@ -714,8 +702,7 @@ msgstr "Erreur Fatale"
 
 #: admin/fai/class_FAI.inc:1158
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -841,8 +828,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:384
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:400
 msgid "FAI object"
@@ -1020,8 +1006,7 @@ msgstr "Source d'information FAI inconnue !"
 #: admin/fai/class_faiSummaryTab.inc:178
 #: admin/systems/services/repository/class_servRepository.inc:93
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:220
 msgid "This object has no FAI classes assigned."
@@ -1477,8 +1462,7 @@ msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
@@ -1522,14 +1506,12 @@ msgid "Services"
 msgstr ""
 
 #: addons/goto/class_gotomasses.inc:26
-#, fuzzy
 msgid "Deployment status"
-msgstr "Statut actuel"
+msgstr "Etat du déploiement"
 
 #: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
-#, fuzzy
 msgid "System deployment status"
-msgstr "Déploiement de logiciels"
+msgstr "Etat du déploiement des systèmes"
 
 #: addons/goto/class_gotomasses.inc:230
 msgid "Permission"
@@ -1538,36 +1520,30 @@ msgstr "Permissions"
 #: addons/goto/class_gotomasses.inc:270
 #, php-format
 msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
+msgstr "Les jobs suivants ne peuvent pas être effaces, il doit être annulés: %s"
 
 #: addons/goto/class_gotomasses.inc:360
-#, fuzzy
 msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet d'effacer et d'éditer les propriétés des tâches GOsa."
 
 #: addons/goto/class_gotomasses.inc:361
-#, fuzzy
 msgid "List of queued jobs"
-msgstr "Liste des utilisateurs"
+msgstr "Liste des jobs dans la queue"
 
 #: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
 #: addons/goto/class_goto_import_file.inc:29
 #: addons/goto/class_goto_import_file.inc:89
 #: addons/goto/class_goto_import_file.inc:131
-#, fuzzy
 msgid "Import"
-msgstr "Importez un script"
+msgstr "Importer"
 
 #: addons/goto/class_gotomasses.inc:380
-#, fuzzy
 msgid "Resume"
-msgstr "Supprimer"
+msgstr "Reprendre"
 
 #: addons/goto/class_gotomasses.inc:381
-#, fuzzy
 msgid "Pause"
-msgstr "Faux"
+msgstr "suspendre"
 
 #: addons/goto/class_gotomasses.inc:382
 msgid "Abort"
@@ -1597,9 +1573,8 @@ msgstr "Recharger"
 #: addons/goto/events/DaemonEvent_localboot.tpl:47
 #: addons/goto/events/DaemonEvent_reinstall.tpl:51
 #: addons/goto/events/DaemonEvent_notify.tpl:81
-#, fuzzy
 msgid "Target"
-msgstr "Vrai"
+msgstr "Cible"
 
 #: addons/goto/class_gotomasses.inc:411
 #: addons/goto/events/DaemonEvent_halt.tpl:9
@@ -1618,7 +1593,7 @@ msgstr "Vrai"
 #: addons/goto/events/DaemonEvent_reinstall.tpl:9
 #: addons/goto/events/DaemonEvent_notify.tpl:28
 msgid "Schedule"
-msgstr ""
+msgstr "Planification"
 
 #: addons/goto/class_gotomasses.inc:413
 #: addons/goto/events/DaemonEvent_halt.tpl:39
@@ -1641,98 +1616,90 @@ msgid "Status"
 msgstr "Statut"
 
 #: addons/goto/class_gotomasses.inc:432
-#, fuzzy
 msgid "Move up"
-msgstr "Bouger"
+msgstr "Remonter"
 
 #: addons/goto/class_gotomasses.inc:434
-#, fuzzy
 msgid "Move down"
-msgstr "Bouger"
+msgstr "Descendre"
 
 #: addons/goto/class_gotomasses.inc:441
 msgid "Pause job"
-msgstr ""
+msgstr "Suspendre le job"
 
 #: addons/goto/class_gotomasses.inc:448
 msgid "Resume job"
-msgstr ""
+msgstr "Reprendre le job"
 
 #: addons/goto/class_gotomasses.inc:455
-#, fuzzy
 msgid "Execute now"
-msgstr "Exécuter"
+msgstr "Exécuter maintenant"
 
 #: addons/goto/class_gotomasses.inc:462
 msgid "View logs"
-msgstr ""
+msgstr "Voir les journaux"
 
 #: addons/goto/class_gotomasses.inc:477
-#, fuzzy
 msgid "Abort job"
-msgstr "Annuler"
+msgstr "Annuler le job"
 
 #: addons/goto/class_gotomasses.inc:521
-#, fuzzy
 msgid "Waiting"
-msgstr "Avertissement"
+msgstr "Attendre"
 
 #: addons/goto/class_gotomasses.inc:527
-#, fuzzy
 msgid "Processed"
 msgstr "Traitement en cours"
 
 #: addons/goto/class_gotomasses.inc:538
 msgid "Locked"
-msgstr ""
+msgstr "Verouillé"
 
 #: addons/goto/class_gotomasses.inc:542
-#, fuzzy
 msgid "Detection"
-msgstr "Section"
+msgstr ""
 
 #: addons/goto/class_gotomasses.inc:550
 msgid "in progress"
-msgstr ""
+msgstr "en cours"
 
 #: addons/goto/class_gotomasses.inc:563
 msgid "immediately"
-msgstr ""
+msgstr "immédiatement"
 
 #: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
 #: addons/goto/class_gotomasses.inc:775
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot update queue entry: %s"
-msgstr "Impossible d'enlever l'entrée %s !"
+msgstr "Impossible de mettre à jour l'entrée %s de la queue !"
 
 #: addons/goto/class_gotomasses.inc:691
 #, php-format
 msgid "Cannot update queue entries."
-msgstr ""
+msgstr "Impossible de mettre à jour les entrées de la queue."
 
 #: addons/goto/class_gotomasses.inc:740
 #, php-format
 msgid "Required class '%s' cannot be found: job not aborted!"
-msgstr ""
+msgstr "La classe requise '%s' n'a pas été trouvée: job non annulé !"
 
 #: addons/goto/class_gotomasses.inc:816
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot load queue entries: %s"
-msgstr "Impossible d'enlever l'entrée %s !"
+msgstr "Impossible de charger les entrées de la queue: %s"
 
 #: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
-#, fuzzy
 msgid "System deployment"
-msgstr "Déploiement de logiciels"
+msgstr "Déploiement de systèmes"
 
 #: addons/goto/class_gotomasses.inc:911
 msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
+msgstr "Fourni un mécanisme pour installer automatiquement des systèmes"
 
 #: addons/goto/events/class_DaemonEvent_rescan.inc:28
 #: addons/goto/events/class_DaemonEvent_rescan.inc:29
 msgid "Rescan hardware"
-msgstr ""
+msgstr "Redétecter matériel"
 
 #: addons/goto/events/DaemonEvent_halt.tpl:18
 #: addons/goto/events/DaemonEvent_wakeup.tpl:18
@@ -1749,9 +1716,8 @@ msgstr ""
 #: addons/goto/events/DaemonEvent_installation_activation.tpl:18
 #: addons/goto/events/DaemonEvent_localboot.tpl:18
 #: addons/goto/events/DaemonEvent_reinstall.tpl:18
-#, fuzzy
 msgid "System list"
-msgstr "Système de Confiance"
+msgstr "Liste des systèmes"
 
 #: addons/goto/events/DaemonEvent_halt.tpl:35
 #: addons/goto/events/DaemonEvent_wakeup.tpl:35
@@ -1769,9 +1735,8 @@ msgstr "Système de Confiance"
 #: addons/goto/events/DaemonEvent_localboot.tpl:35
 #: addons/goto/events/DaemonEvent_reinstall.tpl:35
 #: addons/goto/events/DaemonEvent_notify.tpl:69
-#, fuzzy
 msgid "ID"
-msgstr "SUID"
+msgstr ""
 
 #: addons/goto/events/DaemonEvent_halt.tpl:43
 #: addons/goto/events/DaemonEvent_wakeup.tpl:43
@@ -1790,7 +1755,7 @@ msgstr "SUID"
 #: addons/goto/events/DaemonEvent_reinstall.tpl:47
 #: addons/goto/events/DaemonEvent_notify.tpl:77
 msgid "Result"
-msgstr ""
+msgstr "Résultat"
 
 #: addons/goto/events/DaemonEvent_halt.tpl:51
 #: addons/goto/events/DaemonEvent_wakeup.tpl:51
@@ -1815,29 +1780,28 @@ msgstr "Date"
 #: addons/goto/events/class_EventTargetAddUsersList.inc:45
 #: addons/goto/events/class_EventTargetAddList.inc:51
 msgid "Targets"
-msgstr ""
+msgstr "Cibles"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:49
 msgid ""
 "This dialog shows all available targets for your event, check the targets "
 "you want to add and use the 'Use' button to accept."
 msgstr ""
+"Cette fenêtre montre toute les cibles pour votre événement, vérifier les cibles"
+"que vous souhaitez ajouter et utilisez le bouton 'Utiliser' pour accepter."
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:60
 #: addons/goto/events/class_EventTargetAddList.inc:66
-#, fuzzy
 msgid "System / Department"
-msgstr "Département"
+msgstr "Système / Département"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:65
-#, fuzzy
 msgid "Display users"
-msgstr "Afficher les utilisateurs correspondants"
+msgstr "Afficher les utilisateurs"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:66
-#, fuzzy
 msgid "Display groups"
-msgstr "Afficher les groupes contenant des utilisateurs"
+msgstr "Afficher les groupes"
 
 #: addons/goto/events/class_EventTargetAddUsersList.inc:130
 #: addons/goto/events/class_EventTargetAddList.inc:161
@@ -1859,29 +1823,26 @@ msgstr "Soumettre"
 
 #: addons/goto/events/class_DaemonEvent_faireboot.inc:28
 #: addons/goto/events/class_DaemonEvent_faireboot.inc:29
-#, fuzzy
 msgid "Abort installation"
-msgstr " "
+msgstr "Annuler l'installation "
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
 msgid "GOto reload"
-msgstr ""
+msgstr "Rechargement de GOto"
 
 #: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
-#, fuzzy
 msgid "Reload GOto settings"
-msgstr "Effacer %s paramètres"
+msgstr "Rechargement des paramètres de GOto"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
 msgid "Reload fai server db"
-msgstr ""
+msgstr "Recharger la base de données fai"
 
 #: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
 #: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
-#, fuzzy
 msgid "System analysis"
-msgstr "Systèmes"
+msgstr "Analyse du système"
 
 #: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
 #: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
@@ -1891,74 +1852,69 @@ msgstr " "
 
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
 #: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
-#, fuzzy
 msgid "Reload LDAP config"
-msgstr "Recharger la liste"
+msgstr "Recharger la configuration LDAP"
 
 #: addons/goto/events/DaemonEvent_activate.tpl:9
 msgid "Time schedule"
-msgstr ""
+msgstr "Calendrier"
 
 #: addons/goto/events/class_DaemonEvent_halt.inc:31
 #: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
-msgstr ""
+msgstr "Eteindre"
 
 #: addons/goto/events/class_DaemonEvent_activate.inc:29
 #: addons/goto/events/class_DaemonEvent_activate.inc:30
 msgid "Unlock"
-msgstr ""
+msgstr "Déverrouillé"
 
 #: addons/goto/events/class_DaemonEvent_wakeup.inc:29
 msgid "Wake up"
-msgstr ""
+msgstr "Réveiller"
 
 #: addons/goto/events/class_DaemonEvent_wakeup.inc:30
 msgid "Wake system"
-msgstr ""
+msgstr "Réveiller le système"
 
 #: addons/goto/events/timestamp_select.tpl:3
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: addons/goto/events/timestamp_select.tpl:4
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: addons/goto/events/timestamp_select.tpl:5
-#, fuzzy
 msgid "Day"
-msgstr "Mai"
+msgstr "Jour"
 
 #: addons/goto/events/timestamp_select.tpl:7
 msgid "Hour"
-msgstr ""
+msgstr "Heure"
 
 #: addons/goto/events/timestamp_select.tpl:8
 msgid "Minute"
 msgstr ""
 
 #: addons/goto/events/timestamp_select.tpl:9
-#, fuzzy
 msgid "Second"
-msgstr "Section"
+msgstr "Secondes"
 
 #: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
 #: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
-#, fuzzy
 msgid "Reload fai release db"
-msgstr "Le téléchargement à échoué !"
+msgstr "Recharger la base de données des versions fai"
 
 #: addons/goto/events/class_DaemonEvent_notify.inc:46
 #: addons/goto/events/class_DaemonEvent_notify.inc:47
 msgid "Send message"
-msgstr ""
+msgstr "Envoyer un message"
 
 #: addons/goto/events/class_DaemonEvent_notify.inc:94
 #: addons/goto/events/DaemonEvent_notify.tpl:14
-#, fuzzy
 msgid "Subject"
-msgstr "Objet"
+msgstr "Sujet"
 
 #: addons/goto/events/class_DaemonEvent_notify.inc:97
 #: addons/goto/events/DaemonEvent_notify.tpl:18
@@ -1967,16 +1923,16 @@ msgstr ""
 
 #: addons/goto/events/class_DaemonEvent_notify.inc:100
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: addons/goto/events/class_DaemonEvent.inc:119
 msgid "This job has no template!"
-msgstr ""
+msgstr "Ce job n'a pas de modèle !"
 
 #: addons/goto/events/class_DaemonEvent.inc:135
-#, fuzzy, php-format
+#, php-format
 msgid "Create '%s' job"
-msgstr "Créer un objet"
+msgstr "Créer le job '%s'"
 
 #: addons/goto/events/class_DaemonEvent.inc:234
 msgid "Add"
@@ -1994,26 +1950,23 @@ msgstr "Annuler"
 msgid ""
 "This dialog shows all available targets for the event. Check the targets you "
 "want to add and use the 'Apply' button."
-msgstr ""
+msgstr "Cette fenêtre vous montre toute les cibles disponible pour votre évènement. Vérifiez les cibles que vous voulez ajouter et utilisez le bouton 'Appliquer'. "
 
 #: addons/goto/events/class_EventTargetAddList.inc:73
-#, fuzzy
 msgid "Display server"
-msgstr "Afficher les utilisateurs du département"
+msgstr "Afficher le serveur"
 
 #: addons/goto/events/class_EventTargetAddList.inc:74
-#, fuzzy
 msgid "Display workstation"
-msgstr "stations de travail"
+msgstr "Afficher la station de travail"
 
 #: addons/goto/events/class_EventTargetAddList.inc:75
-#, fuzzy
 msgid "Display object groups"
-msgstr "Liste des groupes d'objets"
+msgstr "Afficher les groupes d'objets"
 
 #: addons/goto/events/class_EventTargetAddList.inc:76
 msgid "Filter by IP range"
-msgstr ""
+msgstr "Filtrer par plage d'adresses IP"
 
 #: addons/goto/events/class_EventTargetAddList.inc:238
 #: addons/goto/class_target_list.inc:201
@@ -2033,124 +1986,109 @@ msgstr "Groupes d'objets"
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:32
 #: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
-msgstr ""
+msgstr "Réinstaller"
 
 #: addons/goto/events/class_DaemonEvent_localboot.inc:28
 #: addons/goto/events/class_DaemonEvent_localboot.inc:29
 msgid "Force localboot"
-msgstr ""
+msgstr "Forcer un démarrage local"
 
 #: addons/goto/events/class_DaemonEvent_memcheck.inc:28
 #: addons/goto/events/class_DaemonEvent_memcheck.inc:29
 msgid "Memory test"
-msgstr ""
+msgstr "Test mémoire"
 
 #: addons/goto/events/class_DaemonEvent_activate_new.inc:40
 #: addons/goto/events/class_DaemonEvent_activate_new.inc:41
-#, fuzzy
 msgid "Activate new"
-msgstr "Numéro de téléphone privé"
+msgstr "Activer les nouveaux"
 
 #: addons/goto/events/class_DaemonEvent_reboot.inc:29
 #: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
-msgstr ""
+msgstr "Redémarrer"
 
 #: addons/goto/events/DaemonEvent_reinstall.tpl:39
-#, fuzzy
 msgid "Progress"
 msgstr "Traitement en cours"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:7
-#, fuzzy
 msgid "Message settings"
-msgstr "Préférences utilisateur"
+msgstr "Paramètres des messages"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:10
-#, fuzzy
 msgid "Sender"
-msgstr "Sexe"
+msgstr "Expéditeur"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:37
-#, fuzzy
 msgid "Target users"
-msgstr "Gèrer les utilisateurs"
+msgstr "Utilisateurs cibles"
 
 #: addons/goto/events/DaemonEvent_notify.tpl:44
-#, fuzzy
 msgid "Target groups"
-msgstr "groupes de départements"
+msgstr "Groupes cibles"
 
 #: addons/goto/events/class_DaemonEvent_lock.inc:29
 #: addons/goto/events/class_DaemonEvent_lock.inc:30
 msgid "Lock"
-msgstr ""
+msgstr "Verrouiller"
 
 #: addons/goto/events/class_DaemonEvent_update.inc:29
 #: addons/goto/events/class_DaemonEvent_update.inc:30
-#, fuzzy
 msgid "Software update"
-msgstr "Déploiement de logiciels"
+msgstr "Mise à jour logicielle"
 
 #: addons/goto/class_target_list.inc:58
 msgid "Select the target objects for your scheduled action."
-msgstr ""
+msgstr "Sélectionnez les objets cibles pour votre action programmée."
 
 #: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
-#, fuzzy
 msgid "Available targets"
-msgstr "Type de rôles disponibles"
+msgstr "Cibles disponibles"
 
 #: addons/goto/class_target_list.inc:69
 msgid "Object name"
 msgstr "Nom de l'objet"
 
 #: addons/goto/class_target_list.inc:72
-#, fuzzy
 msgid "Select to see object groups"
 msgstr "Liste des groupes d'objets"
 
 #: addons/goto/class_target_list.inc:72
-#, fuzzy
 msgid "Show object groups"
-msgstr "Groupes d'objets"
+msgstr "Montrer les groupes d'objets"
 
 #: addons/goto/class_target_list.inc:73
 msgid "Select to see servers"
 msgstr "Sélectionnez pour voir les serveurs"
 
 #: addons/goto/class_target_list.inc:73
-#, fuzzy
 msgid "Show servers"
-msgstr "serveurs"
+msgstr "Montrer les serveurs"
 
 #: addons/goto/class_target_list.inc:74
-#, fuzzy
 msgid "Select to see workstations"
-msgstr "Bouger les stations de travail sélectionnées"
+msgstr "Sélectionner pour voir les stations de travail"
 
 #: addons/goto/class_target_list.inc:74
-#, fuzzy
 msgid "Show workstations"
-msgstr "stations de travail"
+msgstr "Montrer les stations de travail"
 
 #: addons/goto/class_target_list.inc:75
-#, fuzzy
 msgid "Select to see incoming objects"
-msgstr "Sélectionner pour chercher dans le sous arbre"
+msgstr "Sélectionner pour voir les objets dans incoming"
 
 #: addons/goto/class_target_list.inc:75
-#, fuzzy
 msgid "Show new objects"
-msgstr "Bouger un objet"
+msgstr "Montrer les nouveaux objets"
 
 #: addons/goto/class_target_list.inc:80
 msgid "Select to search for a specific IP range only"
-msgstr ""
+msgstr "Sélectionnez pour chercher sur une plage d'adresses IP spécifique"
 
 #: addons/goto/class_target_list.inc:80
 msgid "Match IP range"
-msgstr ""
+msgstr "Faire correspondre la plage d'adresses IP"
 
 #: addons/goto/class_target_list.inc:83
 msgid "Regular expression for matching group names"
@@ -2158,91 +2096,83 @@ msgstr "Expression régulière correspondant à des noms de groupe"
 
 #: addons/goto/class_target_list.inc:84
 msgid "IP range start"
-msgstr ""
+msgstr "Début de la plage d'adresses IP"
 
 #: addons/goto/class_target_list.inc:85
 msgid "IP range end"
-msgstr ""
+msgstr "Fin de la plage d'adresses IP"
 
 #: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
 msgid "IP range"
-msgstr ""
+msgstr "Plage d'adresses IP"
 
 #: addons/goto/log_view.tpl:7
-#, fuzzy
 msgid "Available logs"
-msgstr "Type de rôles disponibles"
+msgstr "Journaux disponibles"
 
 #: addons/goto/log_view.tpl:12
-#, fuzzy
 msgid "Selected log"
-msgstr "Tout sélectionner"
+msgstr "Journal sélectionné"
 
 #: addons/goto/log_view.tpl:17
-#, fuzzy
 msgid "No logs for this host available!"
-msgstr "Erreur: Méthode de changement de mot de passe non disponible!"
+msgstr "Pas de journaux disponible pour cet hôte !"
 
 #: addons/goto/goto_import_file.tpl:1
-#, fuzzy
 msgid "Import jobs"
-msgstr "Importez un script"
+msgstr "Importez des jobs"
 
 #: addons/goto/goto_import_file.tpl:3
 msgid ""
 "You can import a list of jobs into the GOsa job queue. This should be a "
 "semicolon seperated list of items in the following format:"
 msgstr ""
+"Vous pouvez importer une liste de jobs dans la file d'attente GOsa. Cela devrait être une"
+"liste d'articles séparée par un point virgule dans le format suivant:"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "timestamp"
-msgstr "Date"
+msgstr ""
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "MAC-address"
-msgstr "Adresse"
+msgstr "Adresse MAC"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "job type"
-msgstr "FS type"
+msgstr "Type de job"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "object group"
 msgstr "Groupes d'objets"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "import base"
-msgstr "Base pour les snapshots"
+msgstr "Base pour l'importation"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "full hostname"
-msgstr ""
+msgstr "Nom complet de l'hôte"
 
 #: addons/goto/goto_import_file.tpl:5
-#, fuzzy
 msgid "IP-address"
-msgstr "Adresse"
+msgstr "Adresse IP"
 
 #: addons/goto/goto_import_file.tpl:5
 msgid "DHCP group"
-msgstr ""
+msgstr "Groupe DHCP"
 
 #: addons/goto/goto_import_file.tpl:9
 msgid "Example"
 msgstr "Exemple"
 
 #: addons/goto/goto_import_file.tpl:21
-#, fuzzy
 msgid "Select list to import"
-msgstr "Sélectionner les hôtes à ajouter"
+msgstr "Sélectionner la liste à importer"
 
 #: addons/goto/goto_import_file.tpl:24
 msgid "Browse"
-msgstr ""
+msgstr "Parcourir"
 
 #: addons/goto/goto_import_file.tpl:38
 #: addons/goto/class_goto_import_file.inc:168
@@ -2252,7 +2182,7 @@ msgstr ""
 #: addons/goto/goto_import_file.tpl:39
 #: addons/goto/class_goto_import_file.inc:171
 msgid "Event"
-msgstr ""
+msgstr "Evénement"
 
 #: addons/goto/goto_import_file.tpl:42
 msgid "FQDN"
@@ -2267,47 +2197,27 @@ msgid "DHCP"
 msgstr ""
 
 #: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
-msgstr ""
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr "Les entrées sélectionnés seront ignorés en raison d'erreurs. Voulez-vous continuer ?"
 
 #: addons/goto/class_goto_import_file.inc:131
 #, php-format
 msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
+msgstr "Importation complète: %s événements on été envoyés, %s ont échoués"
 
 #: addons/goto/class_gotoLogView.inc:87
 msgid "none"
 msgstr "aucun"
 
 #: addons/goto/class_gotoLogView.inc:115
-#, fuzzy
 msgid "Date"
-msgstr "Supprimer"
+msgstr ""
 
 #: addons/goto/class_gotoLogView.inc:202
 msgid "Log view"
 msgstr ""
 
 #: addons/goto/class_gotoLogView.inc:203
-#, fuzzy
 msgid "GOto log view"
-msgstr "Aide en ligne de GOsa"
+msgstr ""
 
-#~ msgid "Cannot delete '%s': object does not exist!"
-#~ msgstr "L'objet '%s' n'a pas pu être effacé, l'objet n'existe pas."
-
-#, fuzzy
-#~ msgid "The job could not be aborted, the required class '%s' was not found."
-#~ msgstr ""
-#~ "La fonctionnalité pour les copie instantanées est activée, mais la "
-#~ "variable requise '%s' n'est pas configurée."
-
-#~ msgid "Edit product"
-#~ msgstr "Editer un produit"
-
-#~ msgid "Edit class"
-#~ msgstr "Editer la classe"
-
-#~ msgid "Delete class"
-#~ msgstr "Effacer la classe"
