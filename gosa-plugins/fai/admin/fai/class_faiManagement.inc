@@ -295,6 +295,11 @@ class faiManagement extends plugin
         $this->dialog = new faiGroupHandle($group,"remove");
 
       }
+    }elseif($s_action == "group_edit"){
+      if(isset($this->objects[$s_entry])){
+        $group = $this->objects[$s_entry];
+        $this->dialog = new faiGroupHandle($group,"edit");
+      }
     }
     if($this->dialog instanceOf faiGroupHandle){
       $this->dialog->save_object();
@@ -490,9 +495,17 @@ class faiManagement extends plugin
       Edit entry 
      ****************/
 
-		if(($s_action == "edit") && (!isset($this->dialog->config))){
-      if(isset($this->objects[$i_entryID][$s_entryType])){
-        $entry    = $this->objects[$i_entryID][$s_entryType];
+		if(($s_action == "edit") || $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "edit"){
+
+      $entry = array();
+      if($this->dialog instanceOf faiGroupHandle){
+        $entries = $this->dialog->get_selected();
+        $entry = array_pop($entries);
+      }elseif(isset($this->objects[$i_entryID][$s_entryType])){
+        $entry = $this->objects[$i_entryID][$s_entryType];
+      }
+
+      if(count($entry)){
         $a_setup  = $this->get_type($entry);
         $this->dn = $entry['dn'];
 

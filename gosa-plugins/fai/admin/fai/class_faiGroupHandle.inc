@@ -12,11 +12,20 @@ class faiGroupHandle{
   {
     if(in_array($Action,array("edit","remove"))){
       $this->mode = $Action;
+    }else{
+      trigger_error("Wrong action type '".$Action."'.");
+      exit();
     }
 
     /* Preset required values */
     foreach($FAI_group as $type => $data){
       $FAI_group[$type]['selected'] = FALSE;
+    }
+    
+    /* Select first entry in edit mode */
+    if($this->mode == "edit"){
+      reset($FAI_group);
+      $FAI_group[key($FAI_group)]['selected'] = TRUE;
     }
     $this->FAI_group = $FAI_group;
   }
@@ -33,20 +42,28 @@ class faiGroupHandle{
   function save_object()
   {
     if(isset($_POST['faiGroupHandle'])){
-      foreach($this->FAI_group as $key => $group){
-        if(isset($_POST[$this->mode."_".$key])){
-          $this->FAI_group[$key]['selected'] = TRUE;
-        }else{
-          $this->FAI_group[$key]['selected'] = FALSE;
+      if($this->mode == "remove"){
+        foreach($this->FAI_group as $key => $group){
+          if(isset($_POST[$this->mode."_".$key])){
+            $this->FAI_group[$key]['selected'] = TRUE;
+          }else{
+            $this->FAI_group[$key]['selected'] = FALSE;
+          }
+        } 
+      }else{
+        if(isset($_POST['edit_selected']) && isset($this->FAI_group[get_post('edit_selected')])){
+          foreach($this->FAI_group as $key => $obj){
+            $this->FAI_group[$key]['selected'] = FALSE;
+          }
+          $this->FAI_group[get_post('edit_selected')]['selected'] = TRUE;
         }
-      } 
+      }
       if(isset($_POST['faiGroupHandle_apply']) || isset($_POST['faiGroupHandle_cancel'])){
         $this->open = FALSE;
       }
       if(isset($_POST['faiGroupHandle_cancel'])){
         $this->canceled = TRUE;
       }
-    
     }
   }
 

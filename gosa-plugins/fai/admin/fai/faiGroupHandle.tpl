@@ -9,6 +9,9 @@
 			{if $mode == "remove"}
 				<input type='checkbox' name='{$mode}_{$key}'
          			{if $item.selected} checked {/if}>
+			{elseif $mode == "edit"}
+	            <input type='radio' name='{$mode}_selected' value='{$key}'
+                    {if $item.selected} checked {/if}>
 			{/if}
 		</td>
 		<td>
