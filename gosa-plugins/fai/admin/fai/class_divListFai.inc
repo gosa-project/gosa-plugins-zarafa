@@ -261,6 +261,11 @@ class divListFai extends MultiSelectWindow
        */
       $actions = "";
       
+      $actions.= "<input type='image' name='group_edit_".$key."' class='center'
+        src='images/lists/edit.png'>";
+      $actions.= "<input type='image' name='group_remove_".$key."' class='center'
+        src='images/lists/trash.png'>";
+      
 
       /* Create list 
        */

@@ -49,14 +49,11 @@ class faiManagement extends plugin
   /* Allow inserting of new elements if freezed releases 
   */
   var $allow_freeze_object_attach = TRUE;
-
   var $no_save;
   var $acl_base     ="";
   var $fai_base     ="";
   var $fai_release  ="";
-
   var $acl_module = array("fai");
-
   var $opsi = NULL;
 
 	/* construction/reconstruction 
@@ -121,8 +118,7 @@ class faiManagement extends plugin
     $no_save = FALSE;   // hide Apply / Save buttons
     
     /* If an entry was locked, these vars will be stored in a session to allow direct edit */
-    session::set('LOCK_VARS_TO_USE',array("/^edit_freeze_entry$/","/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/","/^menu_action/"));
-
+    session::set('LOCK_VARS_TO_USE',array("/^edit_freeze_entry$/","/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/","/^menu_action/","/^faiGroupHandle_apply$/"));
 
     /****************
       Handle posts 
@@ -131,17 +127,22 @@ class faiManagement extends plugin
 		/* Check ImageButton posts
 		 * Create new tab ich new_xx is posted
 		 */
-    $posts = array( "/remove_branch/"=>"remove_branch",    "/branch_branch/"=>"branch_branch",
-                    "/freeze_branch/"=>"freeze_branch",    "/create_partition/i"=>"new_partition",
-                    "/create_script/i"=>"new_script",      "/create_hook/i"=>"new_hook",
-                    "/create_variable/i"=>"new_variable",  "/create_template/i"=>"new_template",
-                    "/create_package/i"=>"new_package",    "/create_profile/i"=>"new_profile",
-                    "/edit_continue/"=>"select_class_name_finished",
-                    "/^multiple_copy_fai/" => "copy_multiple", 
-                    "/^multiple_cut_fai/" => "cut_multiple", 
-                    "/^copy/" => "copy",
-                    "/^remove_multiple_fai_objects/" => "del_multiple");
+    $posts = array( "/^remove_branch/"                =>"remove_branch",    
+                    "/^branch_branch/"                =>"branch_branch",
+                    "/^freeze_branch/"                =>"freeze_branch",   
+ 
+                    "/^create_partition/i"            =>"new_partition",
+                    "/^create_script/i"               =>"new_script",      
+                    "/^create_hook/i"                 =>"new_hook",
+                    "/^create_variable/i"             =>"new_variable",  
+                    "/^create_template/i"             =>"new_template",
+                    "/^create_package/i"              =>"new_package",    
+                    "/^create_profile/i"              =>"new_profile",
 
+                    "/^edit_continue$/"               => "select_class_name_finished",
+
+                    "/^group_edit/"                   => "group_edit",
+                    "/^group_remove/"                 => "group_remove");
 		foreach($_POST as $name => $value){
       foreach($posts as $reg => $act ){
         if(preg_match($reg,$name)){
@@ -152,11 +153,9 @@ class faiManagement extends plugin
         }
       }
 			if(preg_match("/^edit_[0-9]*_.*$/",$name)){
-
         $i_entryID  = preg_replace("/^edit_([0-9]*)_.*$/i","\\1",$name);
         $s_entryType= preg_replace("/^edit_[0-9]*_([^_]*)_.*$/i","\\1",$name);
         $s_action = "edit";
-
         break;
       }elseif(preg_match("/^entry_delete_.*/",$name)){
         $s_entry = preg_replace("/^entry_delete_/","",$name);
@@ -286,79 +285,24 @@ class faiManagement extends plugin
 
 
     /****************
-      Delete confirme dialog 
+      Delete a group of FAI objects 
+        (Group = same name & different classes)
      ****************/
 
-		if ($s_action=="delete"){
+    if($s_action == "group_remove"){
+      if(isset($this->objects[$s_entry])){
+        $group = $this->objects[$s_entry];
+        $this->dialog = new faiGroupHandle($group,"remove");
 
-      /* Get 'dn' from posted termlinst */
-      $this->dn= $this->objects[$s_entry]['dn'];
-
-			/* Load permissions for selected 'dn' and check if
-			   we're allowed to remove this 'dn' */
-      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type_acl_mapping[$this->objects[$s_entry]['type']]);
-      if(preg_match("/d/",$acl)){
-
-				/* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
-				if (($user= get_lock($this->dn)) != ""){
-					return(gen_locked_message ($user, $this->dn));
-				}
-
-				/* Lock the current entry, so nobody will edit it during deletion */
-				add_lock ($this->dn, $this->ui->dn);
-				$smarty->assign("warning",msgPool::deleteInfo(LDAP::fix($this->dn),_("FAI object")));
-        $smarty->assign("multiple", false);
-				return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-			} else {
-
-				/* Obviously the user isn't allowed to delete. Show message and clean session. */
-        msg_dialog::display(_("Permission error"), msgPool::permDelete(),ERROR_DIALOG);
-			}
-		}
-
-
-    /********************
-      Delete MULTIPLE entries requested, display confirm dialog
-     ********************/
-
-    if ($s_action=="del_multiple"){
-      $this->dns = array();
-      $ids = $this->list_get_selected_items();
-
-      if(count($ids)){
-
-        $errors = "";
-        foreach($ids as $id){
-          $dn = $this->objects[$id]['dn'];
-          $cn = $this->objects[$id]['cn'];
-          if(!preg_match('/^freeze/', $this->objects[$id]['FAIstate'])){
-            $this->dns[$id] = $dn;
-          }else{
-            $errors .= $cn.", ";
-          }
-        }
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
-        }
-
-        if($errors != ""){
-          msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
-            "<br><br>".trim($errors,", ")),INFO_DIALOG);
-        }
-
-        if(count($this->dns)){
-
-          $dns_names = array();
-          foreach($this->dns as $dn){
-            add_lock ($dn, $this->ui->dn);
-            $dns_names[] = LDAP::fix($dn);
-          }
-
-          /* Lock the current entry, so nobody will edit it during deletion */
-				  $smarty->assign("warning",msgPool::deleteInfo($dns_names,_("FAI object")));
-          $smarty->assign("multiple", true);
-          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-        }
+      }
+    }
+    if($this->dialog instanceOf faiGroupHandle){
+      $this->dialog->save_object();
+      if($this->dialog->is_open()){
+        return($this->dialog->execute());
+      }
+      if($this->dialog->is_canceled() || isset($_POST['cancel_lock'])){
+        $this->dialog = FALSE;
       }
     }
 
@@ -408,7 +352,66 @@ class faiManagement extends plugin
       /* Remove lock file after successfull deletion */
       $this->remove_lock();
       $this->dns = array();
+      $this->dialog = FALSE;
     }
+
+
+    /****************
+      Delete confirme dialog 
+     ****************/
+
+    if ($s_action=="del_multiple" || 
+        $this->dialog instanceOf faiGroupHandle && $this->dialog->get_mode() == "remove"){
+ 
+      /* Collect objects to delete and check if object is freezed
+       */ 
+      $dns = array();
+      $errors = "";
+      $this->dns = array();
+      if($this->dialog instanceOf faiGroupHandle){
+        $to_delete = $this->dialog->get_selected();
+        foreach($to_delete as $obj){
+          if(!preg_match('/^freeze/', $obj['FAIstate'])){
+            $this->dns[] = $obj['dn'];
+          }else{
+            $errors .= $obj['cn'].", ";
+          }
+        }
+      }else{
+        $ids = $this->list_get_selected_items();
+        foreach($ids as $id){
+          foreach($this->objects[$id] as $obj){
+            if(!preg_match('/^freeze/', $obj['FAIstate'])){
+              $this->dns[] = $obj['dn'];
+            }else{
+              $errors .= $obj['cn'].", ";
+            }
+          }
+        }
+      }
+      if($errors != ""){
+        msg_dialog::display(_("Branch locked"),sprintf(_("The following entries are locked, you can't remove them %s."),
+              "<br><br>".trim($errors,", ")),INFO_DIALOG);
+      }
+
+      if(count($this->dns)){
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
+        }
+        if(count($this->dns)){
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            add_lock ($dn, $this->ui->dn);
+            $dns_names[] = LDAP::fix($dn);
+          }
+          /* Lock the current entry, so nobody will edit it during deletion */
+				  $smarty->assign("warning",msgPool::deleteInfo($dns_names,_("FAI object")));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
+      }
+    }
+
 
 
     /********************
@@ -417,8 +420,8 @@ class faiManagement extends plugin
 
     /* Remove lock */
     if(isset($_POST['delete_multiple_fai_object_cancel'])){
-      $this->dns = array();
       $this->remove_lock();
+      $this->dns = array();
     }
 
 
