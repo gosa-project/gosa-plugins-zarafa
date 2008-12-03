@@ -202,6 +202,7 @@ class divListFai extends MultiSelectWindow
       Variable init
      ********************/
 
+    $edit_link = "<a href=\"?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit\">%s</a>";
     $objects = array(
         "FAIpartitionTable"  => array("IMG"=> "plugins/fai/images/fai_partitionTable.png", 
           "NAME"=>_("Partition table"),"KZL"=> "PT", "VAR"=>"ShowPartitions"),
@@ -286,7 +287,7 @@ class divListFai extends MultiSelectWindow
           "string" => $checkbox ,
           "attach" => "style='width:20px;'");
       $field2 = array(
-          "string" => $name,
+          "string" => sprintf($edit_link,$key,$name),
           "attach" => "style=''");
       $field3 = array(
           "string" => $icon_list ,
