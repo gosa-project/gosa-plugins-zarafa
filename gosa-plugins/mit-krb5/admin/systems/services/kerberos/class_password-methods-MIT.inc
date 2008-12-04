@@ -111,7 +111,7 @@ class passwordMethodMIT extends passwordMethod
     /* No config object given, this may be the case 
        if there is only a is_available() request triggered.
      */
-    if(!is_object($config)){
+    if(!is_object($config) || !$this->is_available()){
       return;
     }  
 
@@ -337,8 +337,9 @@ class passwordMethodMIT extends passwordMethod
    */ 
   public function is_available()
   {
+  
     $o = new gosaSupportDaemon(FALSE);
-    if(count($this->server_list) && $o->connect()){
+    if(count($this->server_list) && $o->connect() && $o->is_configured()){
       return TRUE; 
     }
     return(FALSE);  

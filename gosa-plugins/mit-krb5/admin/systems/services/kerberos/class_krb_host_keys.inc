@@ -111,6 +111,9 @@ class krbHostKeys extends plugin
       /* Create password handle, it has already a working principal parsing 
        */
       $this->pwd_handle = new passwordMethodMIT($this->config);
+      if(!$this->pwd_handle->is_available()){
+        return;
+      }
   
       /* Check class initialation */
       if(!($this->pwd_handle instanceOf passwordMethodMIT)){
