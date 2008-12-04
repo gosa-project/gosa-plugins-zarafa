@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-04 11:07+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -33,6 +33,9 @@ msgstr "Устройства"
 #: admin/systems/goto/class_terminalGeneric.inc:667
 #: admin/systems/goto/class_printGeneric.inc:930
 #: admin/systems/goto/class_workstationGeneric.inc:710
+#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/events/class_EventTargetAddList.inc:161
+#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
 msgid "Base"
 msgstr "Ветка"
 
@@ -58,6 +61,7 @@ msgstr "Имя сервера"
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: personal/environment/logonManagement.tpl:17
 #: personal/environment/class_logonManagementDialog.inc:111
+#: addons/goto/class_gotomasses.inc:917
 msgid "Description"
 msgstr "Описание"
 
@@ -197,6 +201,12 @@ msgstr "Идентификатор отправителя"
 #: personal/environment/class_environment.inc:841
 #: personal/environment/class_environment.inc:892
 #: personal/environment/class_environment.inc:988
+#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
+#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
+#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr ""
 
@@ -297,7 +307,7 @@ msgstr "Устройства"
 #: personal/environment/class_environment.inc:139
 #: personal/environment/class_environment.inc:307
 #: personal/environment/class_environment.inc:360
-#: personal/environment/class_environment.inc:364
+#: personal/environment/class_environment.inc:364 addons/goto/remove.tpl:2
 msgid "Warning"
 msgstr "Предупреждение"
 
@@ -312,7 +322,7 @@ msgstr ""
 "результаты этой операции."
 
 #: admin/devices/remove.tpl:9 admin/mimetypes/remove.tpl:9
-#: admin/applications/remove.tpl:9
+#: admin/applications/remove.tpl:9 addons/goto/remove.tpl:9
 #, fuzzy
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
@@ -349,6 +359,7 @@ msgstr "Подразделение"
 #: admin/mimetypes/class_divListMimeTypes.inc:109
 #: admin/applications/class_divListApplication.inc:52
 #: admin/applications/class_divListApplication.inc:107
+#: addons/goto/class_gotomasses.inc:365
 msgid "Actions"
 msgstr "Действия"
 
@@ -360,6 +371,9 @@ msgstr "Показать подходяшие адреса"
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 #, fuzzy
 msgid "Submit department"
 msgstr "Показать подразделения"
@@ -367,13 +381,16 @@ msgstr "Показать подразделения"
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 msgid "Submit"
 msgstr ""
 
 #: admin/devices/class_divListDevices.inc:92
 #: admin/mimetypes/class_divListMimeTypes.inc:114
 #: admin/applications/class_divListApplication.inc:111
-#: admin/systems/goto/chooser.tpl:16
+#: admin/systems/goto/chooser.tpl:16 addons/goto/class_gotomasses.inc:366
 msgid "Create"
 msgstr "Создать"
 
@@ -387,6 +404,9 @@ msgstr "Создать"
 #: admin/systems/goto/terminalService.tpl:212
 #: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
 #: admin/groups/apps/app_list.tpl:132 personal/environment/environment.tpl:238
+#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
+#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
+#: addons/goto/events/class_DaemonEvent.inc:230
 msgid "Remove"
 msgstr "Удалить"
 
@@ -446,6 +466,7 @@ msgstr "Дисковод"
 #: admin/devices/class_deviceManagement.inc:246
 #: admin/mimetypes/class_mimetypeManagement.inc:360
 #: admin/applications/class_applicationManagement.inc:352
+#: addons/goto/class_gotomasses.inc:230
 #, fuzzy
 msgid "Permission"
 msgstr "Права для членов группы"
@@ -745,7 +766,7 @@ msgid "Choose NFS filesystem to place swap files on"
 msgstr "Выберите файловую систему NFS для файлов подкачки"
 
 #: admin/ogroups/goto/termgroup.tpl:110 admin/systems/goto/workstation.tpl:130
-#: admin/systems/goto/terminal.tpl:156
+#: admin/systems/goto/terminal.tpl:156 addons/goto/class_gotomasses.inc:415
 msgid "Action"
 msgstr "Действие"
 
@@ -759,6 +780,7 @@ msgstr "Выберите действие, которое нужно выпол�
 #: admin/applications/class_applicationGeneric.inc:609
 #: admin/systems/goto/workstation.tpl:146
 #: admin/systems/goto/workstation.tpl:150 admin/systems/goto/terminal.tpl:169
+#: addons/goto/class_gotomasses.inc:383
 msgid "Execute"
 msgstr "Выполнить"
 
@@ -772,6 +794,7 @@ msgstr "Личный"
 #: admin/ogroups/goto/class_termgroup.inc:49
 #: admin/systems/goto/class_terminalGeneric.inc:121
 #: admin/systems/goto/class_workstationGeneric.inc:139
+#: addons/goto/class_gotomasses.inc:538
 msgid "Locked"
 msgstr ""
 
@@ -827,6 +850,8 @@ msgstr ""
 #: admin/systems/goto/class_workstationStartup.inc:1113
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
+#: addons/goto/class_gotomasses.inc:328
+#: addons/goto/class_goto_import_file.inc:124
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Искать в поддеревьях"
@@ -847,12 +872,16 @@ msgstr ""
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:265
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_halt.inc:31
+#: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
 msgstr "Выключить"
 
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:266
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_reboot.inc:29
+#: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
 msgstr "Перезагрузить"
 
@@ -874,21 +903,29 @@ msgstr "Вернуть в обычный режим"
 #: admin/ogroups/goto/class_termgroup.inc:261
 #: admin/systems/goto/class_workstationGeneric.inc:300
 #: admin/systems/goto/class_workstationGeneric.inc:308
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
 msgstr ""
 
 #: admin/ogroups/goto/class_termgroup.inc:262
 #: admin/systems/goto/class_workstationGeneric.inc:301
+#: addons/goto/events/class_DaemonEvent_rescan.inc:28
+#: addons/goto/events/class_DaemonEvent_rescan.inc:29
 #, fuzzy
 msgid "Rescan hardware"
 msgstr "Телефонное оборудование"
 
 #: admin/ogroups/goto/class_termgroup.inc:263
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
 #, fuzzy
 msgid "Memory test"
 msgstr "Память"
 
 #: admin/ogroups/goto/class_termgroup.inc:264
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
 #, fuzzy
 msgid "System analysis"
 msgstr "Системные журналы"
@@ -991,12 +1028,16 @@ msgstr "Путь к сценариям"
 
 #: admin/applications/generic.tpl:139
 #: personal/environment/logonManagement.tpl:65
+#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
+#: addons/goto/class_goto_import_file.inc:29
+#: addons/goto/class_goto_import_file.inc:89
+#: addons/goto/class_goto_import_file.inc:131
 msgid "Import"
 msgstr "Импортировать"
 
 #: admin/applications/generic.tpl:142
 #: admin/systems/ppd/printerPPDDialog.tpl:21
-#: admin/groups/apps/edit_entry.tpl:28
+#: admin/groups/apps/edit_entry.tpl:28 addons/goto/goto_import_file.tpl:25
 #, fuzzy
 msgid "Upload"
 msgstr "Загрузка процессора"
@@ -1158,6 +1199,8 @@ msgstr "Имя системы"
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: personal/environment/environment.tpl:135
+#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/class_target_list.inc:201
 msgid "Server"
 msgstr "Сервер"
 
@@ -1199,6 +1242,7 @@ msgstr "сброс"
 #: admin/systems/services/shares/goShareServer.tpl:17
 #: admin/systems/goto/printer.tpl:68 admin/groups/apps/app_list.tpl:88
 #: admin/groups/apps/app_list.tpl:134 personal/environment/environment.tpl:274
+#: addons/goto/class_gotomasses.inc:469
 msgid "Edit"
 msgstr "Изменить"
 
@@ -1298,6 +1342,7 @@ msgstr "Сервер системных журналов"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
 #: admin/systems/goto/class_printGeneric.inc:908
+#: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr "Пользователь"
 
@@ -1415,6 +1460,7 @@ msgid "Server path"
 msgstr "Имя сервера"
 
 #: admin/systems/services/kiosk/goKioskService.tpl:23
+#: addons/goto/goto_import_file.tpl:24
 msgid "Browse"
 msgstr "Просмотр"
 
@@ -1440,6 +1486,8 @@ msgstr ""
 
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: admin/systems/goto/class_workstationGeneric.inc:704
+#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/class_target_list.inc:203
 msgid "Workstation"
 msgstr "Рабочая станция"
 
@@ -1451,6 +1499,7 @@ msgid "Terminal"
 msgstr "Терминалы"
 
 #: admin/systems/goto/class_SelectDeviceType.inc:59
+#: addons/goto/class_gotoLogView.inc:87
 msgid "none"
 msgstr "нет"
 
@@ -1839,6 +1888,7 @@ msgstr "Список групп"
 #: admin/systems/goto/workstationStartup.tpl:36
 #: admin/systems/goto/terminalStartup.tpl:14
 #: admin/systems/goto/terminalService.tpl:184
+#: addons/goto/class_gotomasses.inc:400
 #, fuzzy
 msgid "Reload"
 msgstr "чтение"
@@ -2332,6 +2382,7 @@ msgstr "Системная информация"
 
 #: admin/systems/goto/class_terminalGeneric.inc:271
 #: admin/systems/goto/class_workstationGeneric.inc:307
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
 msgid "Wake up"
 msgstr "Вернуть в обычный режим"
 
@@ -2445,6 +2496,8 @@ msgid "Choose an object group as template"
 msgstr "Объект группы"
 
 #: admin/systems/goto/SelectDeviceType.tpl:36
+#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Объект группы"
 
@@ -2565,6 +2618,7 @@ msgstr "Сетевой принтер"
 
 #: admin/systems/goto/class_printGeneric.inc:903
 #: admin/systems/goto/class_printGeneric.inc:905
+#: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr "Группа"
 
@@ -2723,12 +2777,16 @@ msgstr "Удалить изображение"
 
 #: admin/systems/goto/class_workstationGeneric.inc:299
 #: admin/systems/goto/class_workstationGeneric.inc:309
+#: addons/goto/events/class_DaemonEvent_update.inc:29
+#: addons/goto/events/class_DaemonEvent_update.inc:30
 #, fuzzy
 msgid "Software update"
 msgstr "Создать телефонный аккаунт"
 
 #: admin/systems/goto/class_workstationGeneric.inc:303
 #: admin/systems/goto/class_workstationGeneric.inc:311
+#: addons/goto/events/class_DaemonEvent_localboot.inc:28
+#: addons/goto/events/class_DaemonEvent_localboot.inc:29
 msgid "Force localboot"
 msgstr ""
 
@@ -2905,6 +2963,7 @@ msgstr ""
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:141
 #: admin/systems/ppd/class_printerPPDDialog.inc:341
+#: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
 msgid "file is empty"
 msgstr "Удалить"
@@ -3032,12 +3091,12 @@ msgid "Folder"
 msgstr "Фильтры"
 
 #: admin/groups/apps/app_list.tpl:82 admin/groups/apps/app_list.tpl:103
-#: admin/groups/apps/app_list.tpl:128
+#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:432
 msgid "Move up"
 msgstr ""
 
 #: admin/groups/apps/app_list.tpl:84 admin/groups/apps/app_list.tpl:105
-#: admin/groups/apps/app_list.tpl:130
+#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:434
 #, fuzzy
 msgid "Move down"
 msgstr "Домен"
@@ -3426,302 +3485,696 @@ msgstr "Личная информация"
 msgid "Toggle default"
 msgstr "по умолчанию"
 
+#: addons/goto/class_gotomasses.inc:26
 #, fuzzy
-#~ msgid "Available logs"
-#~ msgstr "Доступные приложения"
+msgid "Deployment status"
+msgstr "Состояние системы"
 
+#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
 #, fuzzy
-#~ msgid "Selected log"
-#~ msgstr "Удалить"
+msgid "System deployment status"
+msgstr "Системы"
 
+#: addons/goto/class_gotomasses.inc:270
+#, php-format
+msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:360
 #, fuzzy
-#~ msgid "Deployment status"
-#~ msgstr "Состояние системы"
+msgid "This menu allows you to remove and change the properties of GOsa tasks."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять свойства "
+"отдельных систем. Вы можете только добавлять системы которые однажды уже "
+"были запущены."
 
+#: addons/goto/class_gotomasses.inc:361
 #, fuzzy
-#~ msgid "System deployment status"
-#~ msgstr "Системы"
+msgid "List of queued jobs"
+msgstr "Список пользователей"
 
+#: addons/goto/class_gotomasses.inc:380
 #, fuzzy
-#~ msgid "List of queued jobs"
-#~ msgstr "Список пользователей"
+msgid "Resume"
+msgstr "сброс"
 
+#: addons/goto/class_gotomasses.inc:381
 #, fuzzy
-#~ msgid "Resume"
-#~ msgstr "сброс"
+msgid "Pause"
+msgstr "Дата"
 
+#: addons/goto/class_gotomasses.inc:382
 #, fuzzy
-#~ msgid "Pause"
-#~ msgstr "Дата"
+msgid "Abort"
+msgstr "Порт"
 
+#: addons/goto/class_gotomasses.inc:408
+#: addons/goto/events/DaemonEvent_halt.tpl:47
+#: addons/goto/events/DaemonEvent_wakeup.tpl:47
+#: addons/goto/events/DaemonEvent_faireboot.tpl:47
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
+#: addons/goto/events/DaemonEvent_activate.tpl:47
+#: addons/goto/events/DaemonEvent_rescan.tpl:47
+#: addons/goto/events/DaemonEvent_memcheck.tpl:47
+#: addons/goto/events/class_DaemonEvent_notify.inc:77
+#: addons/goto/events/class_DaemonEvent_notify.inc:78
+#: addons/goto/events/class_DaemonEvent_notify.inc:103
+#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_reboot.tpl:47
+#: addons/goto/events/DaemonEvent_lock.tpl:47
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
+#: addons/goto/events/DaemonEvent_localboot.tpl:47
+#: addons/goto/events/DaemonEvent_reinstall.tpl:51
+#: addons/goto/events/DaemonEvent_notify.tpl:81
 #, fuzzy
-#~ msgid "Abort"
-#~ msgstr "Порт"
+msgid "Target"
+msgstr "сброс"
 
+#: addons/goto/class_gotomasses.inc:409
+msgid "Task"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:411
+#: addons/goto/events/DaemonEvent_halt.tpl:9
+#: addons/goto/events/DaemonEvent_wakeup.tpl:9
+#: addons/goto/events/DaemonEvent_faireboot.tpl:9
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_rescan.tpl:9
+#: addons/goto/events/DaemonEvent_memcheck.tpl:9
+#: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/events/DaemonEvent_reboot.tpl:9
+#: addons/goto/events/DaemonEvent_lock.tpl:9
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
+#: addons/goto/events/DaemonEvent_localboot.tpl:9
+#: addons/goto/events/DaemonEvent_reinstall.tpl:9
+#: addons/goto/events/DaemonEvent_notify.tpl:28
 #, fuzzy
-#~ msgid "Target"
-#~ msgstr "сброс"
+msgid "Schedule"
+msgstr "Учетная запись Groupware"
 
+#: addons/goto/class_gotomasses.inc:413
+#: addons/goto/events/DaemonEvent_halt.tpl:39
+#: addons/goto/events/DaemonEvent_wakeup.tpl:39
+#: addons/goto/events/DaemonEvent_faireboot.tpl:39
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_activate.tpl:39
+#: addons/goto/events/DaemonEvent_rescan.tpl:39
+#: addons/goto/events/DaemonEvent_memcheck.tpl:39
+#: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/events/DaemonEvent_reboot.tpl:39
+#: addons/goto/events/DaemonEvent_lock.tpl:39
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
+#: addons/goto/events/DaemonEvent_localboot.tpl:39
+#: addons/goto/events/DaemonEvent_reinstall.tpl:43
+#: addons/goto/events/DaemonEvent_notify.tpl:73
+msgid "Status"
+msgstr "Состояние"
+
+#: addons/goto/class_gotomasses.inc:441
 #, fuzzy
-#~ msgid "Schedule"
-#~ msgstr "Учетная запись Groupware"
+msgid "Pause job"
+msgstr "Дата"
 
-#~ msgid "Status"
-#~ msgstr "Состояние"
-
+#: addons/goto/class_gotomasses.inc:448
 #, fuzzy
-#~ msgid "Execute now"
-#~ msgstr "Выполнить"
+msgid "Resume job"
+msgstr "сброс"
 
+#: addons/goto/class_gotomasses.inc:455
 #, fuzzy
-#~ msgid "Abort job"
-#~ msgstr "Отчество"
+msgid "Execute now"
+msgstr "Выполнить"
 
+#: addons/goto/class_gotomasses.inc:462
 #, fuzzy
-#~ msgid "Waiting"
-#~ msgstr "Предупреждение"
+msgid "View logs"
+msgstr "Доступные приложения"
 
+#: addons/goto/class_gotomasses.inc:477
 #, fuzzy
-#~ msgid "Processed"
-#~ msgstr "Свойства"
+msgid "Abort job"
+msgstr "Отчество"
 
+#: addons/goto/class_gotomasses.inc:521
 #, fuzzy
-#~ msgid "Detection"
-#~ msgstr "Действие"
+msgid "Waiting"
+msgstr "Предупреждение"
 
+#: addons/goto/class_gotomasses.inc:527
 #, fuzzy
-#~ msgid "in progress"
-#~ msgstr "Свойства"
+msgid "Processed"
+msgstr "Свойства"
+
+#: addons/goto/class_gotomasses.inc:542
+#, fuzzy
+msgid "Detection"
+msgstr "Действие"
+
+#: addons/goto/class_gotomasses.inc:550
+#, fuzzy
+msgid "in progress"
+msgstr "Свойства"
+
+#: addons/goto/class_gotomasses.inc:563
+msgid "immediately"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
+#: addons/goto/class_gotomasses.inc:775
+#, fuzzy, php-format
+msgid "Cannot update queue entry: %s"
+msgstr "состояние неизвестно"
+
+#: addons/goto/class_gotomasses.inc:691
+#, php-format
+msgid "Cannot update queue entries."
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:740
+#, php-format
+msgid "Required class '%s' cannot be found: job not aborted!"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:816
+#, fuzzy, php-format
+msgid "Cannot load queue entries: %s"
+msgstr "состояние неизвестно"
+
+#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
+#, fuzzy
+msgid "System deployment"
+msgstr "Управление системами"
+
+#: addons/goto/class_gotomasses.inc:911
+msgid "Provide a mechanism to automatically activate systems"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_halt.tpl:18
+#: addons/goto/events/DaemonEvent_wakeup.tpl:18
+#: addons/goto/events/DaemonEvent_faireboot.tpl:18
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
+#: addons/goto/events/DaemonEvent_activate.tpl:18
+#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_memcheck.tpl:18
+#: addons/goto/events/DaemonEvent_update.tpl:18
+#: addons/goto/events/DaemonEvent_reboot.tpl:18
+#: addons/goto/events/DaemonEvent_lock.tpl:18
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
+#: addons/goto/events/DaemonEvent_localboot.tpl:18
+#: addons/goto/events/DaemonEvent_reinstall.tpl:18
+#, fuzzy
+msgid "System list"
+msgstr "Системные журналы"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:35
+#: addons/goto/events/DaemonEvent_wakeup.tpl:35
+#: addons/goto/events/DaemonEvent_faireboot.tpl:35
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_activate.tpl:35
+#: addons/goto/events/DaemonEvent_rescan.tpl:35
+#: addons/goto/events/DaemonEvent_memcheck.tpl:35
+#: addons/goto/events/DaemonEvent_update.tpl:35
+#: addons/goto/events/DaemonEvent_reboot.tpl:35
+#: addons/goto/events/DaemonEvent_lock.tpl:35
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
+#: addons/goto/events/DaemonEvent_localboot.tpl:35
+#: addons/goto/events/DaemonEvent_reinstall.tpl:35
+#: addons/goto/events/DaemonEvent_notify.tpl:69
+#, fuzzy
+msgid "ID"
+msgstr "GID"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:43
+#: addons/goto/events/DaemonEvent_wakeup.tpl:43
+#: addons/goto/events/DaemonEvent_faireboot.tpl:43
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_activate.tpl:43
+#: addons/goto/events/DaemonEvent_rescan.tpl:43
+#: addons/goto/events/DaemonEvent_memcheck.tpl:43
+#: addons/goto/events/DaemonEvent_update.tpl:43
+#: addons/goto/events/DaemonEvent_reboot.tpl:43
+#: addons/goto/events/DaemonEvent_lock.tpl:43
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
+#: addons/goto/events/DaemonEvent_localboot.tpl:43
+#: addons/goto/events/DaemonEvent_reinstall.tpl:47
+#: addons/goto/events/DaemonEvent_notify.tpl:77
+#, fuzzy
+msgid "Result"
+msgstr "Разрешение"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:51
+#: addons/goto/events/DaemonEvent_wakeup.tpl:51
+#: addons/goto/events/DaemonEvent_faireboot.tpl:51
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_activate.tpl:51
+#: addons/goto/events/DaemonEvent_rescan.tpl:51
+#: addons/goto/events/DaemonEvent_memcheck.tpl:51
+#: addons/goto/events/DaemonEvent_update.tpl:51
+#: addons/goto/events/DaemonEvent_reboot.tpl:51
+#: addons/goto/events/DaemonEvent_lock.tpl:51
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
+#: addons/goto/events/DaemonEvent_localboot.tpl:51
+#: addons/goto/events/DaemonEvent_reinstall.tpl:55
+#: addons/goto/events/DaemonEvent_notify.tpl:85
+#: addons/goto/goto_import_file.tpl:37
+#, fuzzy
+msgid "Timestamp"
+msgstr "Таймаут (с)"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:45
+#: addons/goto/events/class_EventTargetAddList.inc:51
+#, fuzzy
+msgid "Targets"
+msgstr "сброс"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:49
+msgid ""
+"This dialog shows all available targets for your event, check the targets "
+"you want to add and use the 'Use' button to accept."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:60
+#: addons/goto/events/class_EventTargetAddList.inc:66
+#, fuzzy
+msgid "System / Department"
+msgstr "Подразделение"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:65
+#, fuzzy
+msgid "Display users"
+msgstr "Устройство отображения"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:66
+#, fuzzy
+msgid "Display groups"
+msgstr "Показать совпадения объектов"
+
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
+#, fuzzy
+msgid "Abort installation"
+msgstr "Рабочая станция"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
+#, fuzzy
+msgid "GOto reload"
+msgstr "в папку"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
+#, fuzzy
+msgid "Reload GOto settings"
+msgstr "Атрибуты UNIX"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
+msgid "Reload fai server db"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
+#, fuzzy
+msgid "Installation activation"
+msgstr "Рабочая станция"
+
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
+msgid "Reload LDAP config"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_activate.tpl:9
+#, fuzzy
+msgid "Time schedule"
+msgstr "Выберите режим терминала"
+
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
+msgid "Unlock"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
+#, fuzzy
+msgid "Wake system"
+msgstr "Системы"
+
+#: addons/goto/events/timestamp_select.tpl:3
+#, fuzzy
+msgid "Year"
+msgstr "Поиск"
+
+#: addons/goto/events/timestamp_select.tpl:4
+#, fuzzy
+msgid "Month"
+msgstr "месяц"
+
+#: addons/goto/events/timestamp_select.tpl:5
+#, fuzzy
+msgid "Day"
+msgstr "день"
+
+#: addons/goto/events/timestamp_select.tpl:7
+#, fuzzy
+msgid "Hour"
+msgstr "час"
+
+#: addons/goto/events/timestamp_select.tpl:8
+#, fuzzy
+msgid "Minute"
+msgstr "Принтер"
+
+#: addons/goto/events/timestamp_select.tpl:9
+#, fuzzy
+msgid "Second"
+msgstr "Действие"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
+#, fuzzy
+msgid "Reload fai release db"
+msgstr "Ошибка при регистрации. Ответ сервера: \"%s\"."
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:46
+#: addons/goto/events/class_DaemonEvent_notify.inc:47
+#, fuzzy
+msgid "Send message"
+msgstr "Домашняя страница"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:94
+#: addons/goto/events/DaemonEvent_notify.tpl:14
+#, fuzzy
+msgid "Subject"
+msgstr "Удалить"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:97
+#: addons/goto/events/DaemonEvent_notify.tpl:18
+msgid "Message"
+msgstr "Сообщение"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:100
+#, fuzzy
+msgid "From"
+msgstr "и"
+
+#: addons/goto/events/class_DaemonEvent.inc:119
+#, fuzzy
+msgid "This job has no template!"
+msgstr "Это DN не соответствует терминалу."
+
+#: addons/goto/events/class_DaemonEvent.inc:135
+#, fuzzy, php-format
+msgid "Create '%s' job"
+msgstr "Объект группы"
+
+#: addons/goto/events/class_DaemonEvent.inc:234
+msgid "Add"
+msgstr "Добавить"
+
+#: addons/goto/events/target_list.tpl:5
+msgid "Apply"
+msgstr "Применить"
+
+#: addons/goto/events/target_list.tpl:6
+msgid "Cancel"
+msgstr "Отмена"
+
+#: addons/goto/events/class_EventTargetAddList.inc:55
+msgid ""
+"This dialog shows all available targets for the event. Check the targets you "
+"want to add and use the 'Apply' button."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddList.inc:73
+#, fuzzy
+msgid "Display server"
+msgstr "Устройство отображения"
+
+#: addons/goto/events/class_EventTargetAddList.inc:74
+#, fuzzy
+msgid "Display workstation"
+msgstr "Рабочая станция Windows"
+
+#: addons/goto/events/class_EventTargetAddList.inc:75
+#, fuzzy
+msgid "Display object groups"
+msgstr "Показать совпадения объектов"
+
+#: addons/goto/events/class_EventTargetAddList.inc:76
+msgid "Filter by IP range"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+#, fuzzy
+msgid "Activate new"
+msgstr "Личный"
+
+#: addons/goto/events/DaemonEvent_reinstall.tpl:39
+#, fuzzy
+msgid "Progress"
+msgstr "Свойства"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:7
+#, fuzzy
+msgid "Message settings"
+msgstr "Почтовые настройки пользователя"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:10
+#, fuzzy
+msgid "Sender"
+msgstr "Сервер"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:37
+#, fuzzy
+msgid "Target users"
+msgstr "сброс"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:44
+#, fuzzy
+msgid "Target groups"
+msgstr "сброс"
+
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+msgid "Lock"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:58
+msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
+#, fuzzy
+msgid "Available targets"
+msgstr "Доступные приложения"
+
+#: addons/goto/class_target_list.inc:69
+msgid "Object name"
+msgstr "Имя объекта"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Select to see object groups"
+msgstr "Объект группы"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Show object groups"
+msgstr "Объединения"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Select to see servers"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Show servers"
+msgstr "Показать серверы"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Select to see workstations"
+msgstr "Выберите чтобы посмотреть рабочие станции"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Show workstations"
+msgstr "Показать рабочие станции"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Select to see incoming objects"
+msgstr "Искать в поддеревьях"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Show new objects"
+msgstr "Включаемые объекты"
+
+#: addons/goto/class_target_list.inc:80
+msgid "Select to search for a specific IP range only"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:80
+msgid "Match IP range"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:83
+msgid "Regular expression for matching group names"
+msgstr "Регулярное выражение, соответствующее именам групп"
+
+#: addons/goto/class_target_list.inc:84
+msgid "IP range start"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:85
+msgid "IP range end"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#, fuzzy
+msgid "IP range"
+msgstr "Кадровая синхронизация"
+
+#: addons/goto/log_view.tpl:7
+#, fuzzy
+msgid "Available logs"
+msgstr "Доступные приложения"
+
+#: addons/goto/log_view.tpl:12
+#, fuzzy
+msgid "Selected log"
+msgstr "Удалить"
+
+#: addons/goto/log_view.tpl:17
+msgid "No logs for this host available!"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:1
+#, fuzzy
+msgid "Import jobs"
+msgstr "Импортировать"
+
+#: addons/goto/goto_import_file.tpl:3
+msgid ""
+"You can import a list of jobs into the GOsa job queue. This should be a "
+"semicolon seperated list of items in the following format:"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "timestamp"
+msgstr "Таймаут (с)"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "MAC-address"
+msgstr "Адрес"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "job type"
+msgstr "Тип"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "object group"
+msgstr "Объект группы"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "import base"
+msgstr "Импортировать"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "full hostname"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "IP-address"
+msgstr "Адрес"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "DHCP group"
+msgstr "группы"
+
+#: addons/goto/goto_import_file.tpl:9
+msgid "Example"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:21
+#, fuzzy
+msgid "Select list to import"
+msgstr "Выбрать номера для добавления"
+
+#: addons/goto/goto_import_file.tpl:38
+#: addons/goto/class_goto_import_file.inc:168
+#, fuzzy
+msgid "MAC"
+msgstr "Доступ"
+
+#: addons/goto/goto_import_file.tpl:39
+#: addons/goto/class_goto_import_file.inc:171
+#, fuzzy
+msgid "Event"
+msgstr "Окружение"
+
+#: addons/goto/goto_import_file.tpl:42
+msgid "FQDN"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:43
+msgid "IP"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:44
+msgid "DHCP"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:90
+msgid ""
+"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:131
+#, php-format
+msgid "Import complete: %s events successfully send, %s failed"
+msgstr ""
+
+#: addons/goto/class_gotoLogView.inc:113
+#, fuzzy
+msgid "File"
+msgstr "Файлы"
+
+#: addons/goto/class_gotoLogView.inc:115
+#, fuzzy
+msgid "Date"
+msgstr "Дата"
+
+#: addons/goto/class_gotoLogView.inc:202
+#, fuzzy
+msgid "Log view"
+msgstr "Имя пользователя"
+
+#: addons/goto/class_gotoLogView.inc:203
+#, fuzzy
+msgid "GOto log view"
+msgstr "в папку"
 
 #, fuzzy
 #~ msgid "System mass deployment"
 #~ msgstr "Управление системами"
-
-#, fuzzy
-#~ msgid "Import jobs"
-#~ msgstr "Импортировать"
-
-#, fuzzy
-#~ msgid "timestamp"
-#~ msgstr "Таймаут (с)"
-
-#, fuzzy
-#~ msgid "MAC-address"
-#~ msgstr "Адрес"
-
-#, fuzzy
-#~ msgid "job type"
-#~ msgstr "Тип"
-
-#, fuzzy
-#~ msgid "object group"
-#~ msgstr "Объект группы"
-
-#, fuzzy
-#~ msgid "import base"
-#~ msgstr "Импортировать"
-
-#, fuzzy
-#~ msgid "IP-address"
-#~ msgstr "Адрес"
-
-#, fuzzy
-#~ msgid "DHCP group"
-#~ msgstr "группы"
-
-#, fuzzy
-#~ msgid "Select list to import"
-#~ msgstr "Выбрать номера для добавления"
-
-#, fuzzy
-#~ msgid "Timestamp"
-#~ msgstr "Таймаут (с)"
-
-#, fuzzy
-#~ msgid "MAC"
-#~ msgstr "Доступ"
-
-#, fuzzy
-#~ msgid "Event"
-#~ msgstr "Окружение"
-
-#, fuzzy
-#~ msgid "Available targets"
-#~ msgstr "Доступные приложения"
-
-#~ msgid "Object name"
-#~ msgstr "Имя объекта"
-
-#, fuzzy
-#~ msgid "Select to see object groups"
-#~ msgstr "Объект группы"
-
-#, fuzzy
-#~ msgid "Show object groups"
-#~ msgstr "Объединения"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Выберите, чтобы просмотреть серверы"
-
-#~ msgid "Show servers"
-#~ msgstr "Показать серверы"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Выберите чтобы посмотреть рабочие станции"
-
-#~ msgid "Show workstations"
-#~ msgstr "Показать рабочие станции"
-
-#, fuzzy
-#~ msgid "Select to see incoming objects"
-#~ msgstr "Искать в поддеревьях"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Регулярное выражение, соответствующее именам групп"
-
-#, fuzzy
-#~ msgid "Time schedule"
-#~ msgstr "Выберите режим терминала"
-
-#, fuzzy
-#~ msgid "System list"
-#~ msgstr "Системные журналы"
-
-#, fuzzy
-#~ msgid "Result"
-#~ msgstr "Разрешение"
-
-#, fuzzy
-#~ msgid "Targets"
-#~ msgstr "сброс"
-
-#, fuzzy
-#~ msgid "System / Department"
-#~ msgstr "Подразделение"
-
-#, fuzzy
-#~ msgid "Display users"
-#~ msgstr "Устройство отображения"
-
-#, fuzzy
-#~ msgid "Display groups"
-#~ msgstr "Показать совпадения объектов"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Поиск"
-
-#, fuzzy
-#~ msgid "Month"
-#~ msgstr "месяц"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "день"
-
-#, fuzzy
-#~ msgid "Hour"
-#~ msgstr "час"
-
-#, fuzzy
-#~ msgid "Minute"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "Second"
-#~ msgstr "Действие"
-
-#, fuzzy
-#~ msgid "Activate new"
-#~ msgstr "Личный"
-
-#, fuzzy
-#~ msgid "Abort installation"
-#~ msgstr "Рабочая станция"
-
-#~ msgid "Apply"
-#~ msgstr "Применить"
-
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
-
-#, fuzzy
-#~ msgid "Message settings"
-#~ msgstr "Почтовые настройки пользователя"
-
-#, fuzzy
-#~ msgid "Sender"
-#~ msgstr "Сервер"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Удалить"
-
-#~ msgid "Message"
-#~ msgstr "Сообщение"
-
-#, fuzzy
-#~ msgid "Target users"
-#~ msgstr "сброс"
-
-#, fuzzy
-#~ msgid "Target groups"
-#~ msgstr "сброс"
-
-#, fuzzy
-#~ msgid "This job has no template."
-#~ msgstr "Это DN не соответствует терминалу."
-
-#~ msgid "Add"
-#~ msgstr "Добавить"
-
-#, fuzzy
-#~ msgid "Start a system"
-#~ msgstr "Системы"
-
-#, fuzzy
-#~ msgid "Display server"
-#~ msgstr "Устройство отображения"
-
-#, fuzzy
-#~ msgid "Display workstation"
-#~ msgstr "Рабочая станция Windows"
-
-#, fuzzy
-#~ msgid "Display object groups"
-#~ msgstr "Показать совпадения объектов"
-
-#, fuzzy
-#~ msgid "Progress"
-#~ msgstr "Свойства"
-
-#, fuzzy
-#~ msgid "Goto reload"
-#~ msgstr "в папку"
-
-#, fuzzy
-#~ msgid "Reload goto settings"
-#~ msgstr "Атрибуты UNIX"
-
-#, fuzzy
-#~ msgid "Send message"
-#~ msgstr "Домашняя страница"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Файлы"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Log view"
-#~ msgstr "Имя пользователя"
-
-#, fuzzy
-#~ msgid "GOto log view"
-#~ msgstr "в папку"
 
 #~ msgid "Spool server"
 #~ msgstr "Сервер для хранения запросов и временных файлов"
@@ -4282,10 +4735,6 @@ msgstr "по умолчанию"
 #, fuzzy
 #~ msgid "GOsa setup wizard"
 #~ msgstr "Почтовые настройки пользователя"
-
-#, fuzzy
-#~ msgid "Installation"
-#~ msgstr "Рабочая станция"
 
 #, fuzzy
 #~ msgid "Setup"
@@ -5149,10 +5598,6 @@ msgstr "по умолчанию"
 #~ msgstr "Невозможно выполнить запрос к базе данных!"
 
 #, fuzzy
-#~ msgid "Upload failed!"
-#~ msgstr "Ошибка при регистрации. Ответ сервера: \"%s\"."
-
-#, fuzzy
 #~ msgid "Upload failed: %s"
 #~ msgstr "Служба печати"
 
@@ -5201,10 +5646,6 @@ msgstr "по умолчанию"
 #, fuzzy
 #~ msgid "Cannot send abort event for entry %s!"
 #~ msgstr "Удалить"
-
-#, fuzzy
-#~ msgid "Cannot remove entry %s!"
-#~ msgstr "состояние неизвестно"
 
 #, fuzzy
 #~ msgid "FATAL: Error when connecting the LDAP. Server said '%s'."
@@ -5383,10 +5824,6 @@ msgstr "по умолчанию"
 #~ msgstr "Вам не разрешено менять пароль."
 
 #, fuzzy
-#~ msgid "from"
-#~ msgstr "и"
-
-#, fuzzy
 #~ msgid "Restore"
 #~ msgstr "Повторить"
 
@@ -5524,14 +5961,6 @@ msgstr "по умолчанию"
 #, fuzzy
 #~ msgid "Show/hide advanced settings"
 #~ msgstr "Настройки телефона"
-
-#, fuzzy
-#~ msgid "Create objects"
-#~ msgstr "Объект группы"
-
-#, fuzzy
-#~ msgid "Move objects"
-#~ msgstr "Включаемые объекты"
 
 #, fuzzy
 #~ msgid "Remove objects"
@@ -5977,9 +6406,6 @@ msgstr "по умолчанию"
 #, fuzzy
 #~ msgid "Cannot find any RIDBASE for '%s'!"
 #~ msgstr "Удалить"
-
-#~ msgid "GID"
-#~ msgstr "GID"
 
 #, fuzzy
 #~ msgid "Cannot allocate a free ID!"

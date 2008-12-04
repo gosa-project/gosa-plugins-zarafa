@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-04 11:07+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -38,6 +38,9 @@ msgstr "Apparaten"
 #: admin/systems/goto/class_terminalGeneric.inc:667
 #: admin/systems/goto/class_printGeneric.inc:930
 #: admin/systems/goto/class_workstationGeneric.inc:710
+#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/events/class_EventTargetAddList.inc:161
+#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
 msgid "Base"
 msgstr "Basis"
 
@@ -62,6 +65,7 @@ msgstr "Apparaat naam"
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: personal/environment/logonManagement.tpl:17
 #: personal/environment/class_logonManagementDialog.inc:111
+#: addons/goto/class_gotomasses.inc:917
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -200,6 +204,12 @@ msgstr "Afzender ID"
 #: personal/environment/class_environment.inc:841
 #: personal/environment/class_environment.inc:892
 #: personal/environment/class_environment.inc:988
+#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
+#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
+#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr "Fout"
 
@@ -299,7 +309,7 @@ msgstr "Apparaat"
 #: personal/environment/class_environment.inc:139
 #: personal/environment/class_environment.inc:307
 #: personal/environment/class_environment.inc:360
-#: personal/environment/class_environment.inc:364
+#: personal/environment/class_environment.inc:364 addons/goto/remove.tpl:2
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -314,7 +324,7 @@ msgstr ""
 "te halen."
 
 #: admin/devices/remove.tpl:9 admin/mimetypes/remove.tpl:9
-#: admin/applications/remove.tpl:9
+#: admin/applications/remove.tpl:9 addons/goto/remove.tpl:9
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
@@ -350,6 +360,7 @@ msgstr "Afdeling"
 #: admin/mimetypes/class_divListMimeTypes.inc:109
 #: admin/applications/class_divListApplication.inc:52
 #: admin/applications/class_divListApplication.inc:107
+#: addons/goto/class_gotomasses.inc:365
 msgid "Actions"
 msgstr "Acties"
 
@@ -360,19 +371,25 @@ msgstr "Toon overeenkomende apparaten"
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 msgid "Submit department"
 msgstr "Verwerk afdeling"
 
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 msgid "Submit"
 msgstr "Verwerk"
 
 #: admin/devices/class_divListDevices.inc:92
 #: admin/mimetypes/class_divListMimeTypes.inc:114
 #: admin/applications/class_divListApplication.inc:111
-#: admin/systems/goto/chooser.tpl:16
+#: admin/systems/goto/chooser.tpl:16 addons/goto/class_gotomasses.inc:366
 msgid "Create"
 msgstr "Aanmaken"
 
@@ -386,6 +403,9 @@ msgstr "Aanmaken"
 #: admin/systems/goto/terminalService.tpl:212
 #: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
 #: admin/groups/apps/app_list.tpl:132 personal/environment/environment.tpl:238
+#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
+#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
+#: addons/goto/events/class_DaemonEvent.inc:230
 msgid "Remove"
 msgstr "Verwijderen"
 
@@ -440,6 +460,7 @@ msgstr "Hotplug apparaten toevoegen"
 #: admin/devices/class_deviceManagement.inc:246
 #: admin/mimetypes/class_mimetypeManagement.inc:360
 #: admin/applications/class_applicationManagement.inc:352
+#: addons/goto/class_gotomasses.inc:230
 #, fuzzy
 msgid "Permission"
 msgstr "Rechten"
@@ -739,7 +760,7 @@ msgid "Choose NFS filesystem to place swap files on"
 msgstr "Kies het NFS bestandssysteem waarop de swapbestanden geplaatst worden"
 
 #: admin/ogroups/goto/termgroup.tpl:110 admin/systems/goto/workstation.tpl:130
-#: admin/systems/goto/terminal.tpl:156
+#: admin/systems/goto/terminal.tpl:156 addons/goto/class_gotomasses.inc:415
 msgid "Action"
 msgstr "Actie"
 
@@ -753,6 +774,7 @@ msgstr "Selecteer de voor deze terminal uit te voeren actie"
 #: admin/applications/class_applicationGeneric.inc:609
 #: admin/systems/goto/workstation.tpl:146
 #: admin/systems/goto/workstation.tpl:150 admin/systems/goto/terminal.tpl:169
+#: addons/goto/class_gotomasses.inc:383
 msgid "Execute"
 msgstr "Commando"
 
@@ -765,6 +787,7 @@ msgstr "Geactiveerd"
 #: admin/ogroups/goto/class_termgroup.inc:49
 #: admin/systems/goto/class_terminalGeneric.inc:121
 #: admin/systems/goto/class_workstationGeneric.inc:139
+#: addons/goto/class_gotomasses.inc:538
 msgid "Locked"
 msgstr "Geblokkeerd"
 
@@ -820,6 +843,8 @@ msgstr "overerfd"
 #: admin/systems/goto/class_workstationStartup.inc:1113
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
+#: addons/goto/class_gotomasses.inc:328
+#: addons/goto/class_goto_import_file.inc:124
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Zoek binnen subtree"
@@ -841,12 +866,16 @@ msgstr ""
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:265
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_halt.inc:31
+#: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
 msgstr "Uitschakelen"
 
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:266
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_reboot.inc:29
+#: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
 msgstr "Herstarten"
 
@@ -866,19 +895,27 @@ msgstr "Aanzetten"
 #: admin/ogroups/goto/class_termgroup.inc:261
 #: admin/systems/goto/class_workstationGeneric.inc:300
 #: admin/systems/goto/class_workstationGeneric.inc:308
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
 msgstr "Herinstalleer"
 
 #: admin/ogroups/goto/class_termgroup.inc:262
 #: admin/systems/goto/class_workstationGeneric.inc:301
+#: addons/goto/events/class_DaemonEvent_rescan.inc:28
+#: addons/goto/events/class_DaemonEvent_rescan.inc:29
 msgid "Rescan hardware"
 msgstr "Hardware opnieuw scannen"
 
 #: admin/ogroups/goto/class_termgroup.inc:263
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
 msgid "Memory test"
 msgstr "Geheugentest"
 
 #: admin/ogroups/goto/class_termgroup.inc:264
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
 msgid "System analysis"
 msgstr "Systeem analyse"
 
@@ -975,12 +1012,16 @@ msgstr "Script"
 
 #: admin/applications/generic.tpl:139
 #: personal/environment/logonManagement.tpl:65
+#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
+#: addons/goto/class_goto_import_file.inc:29
+#: addons/goto/class_goto_import_file.inc:89
+#: addons/goto/class_goto_import_file.inc:131
 msgid "Import"
 msgstr "Importeren"
 
 #: admin/applications/generic.tpl:142
 #: admin/systems/ppd/printerPPDDialog.tpl:21
-#: admin/groups/apps/edit_entry.tpl:28
+#: admin/groups/apps/edit_entry.tpl:28 addons/goto/goto_import_file.tpl:25
 msgid "Upload"
 msgstr "Uploaden"
 
@@ -1134,6 +1175,8 @@ msgstr "Volume"
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: personal/environment/environment.tpl:135
+#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/class_target_list.inc:201
 msgid "Server"
 msgstr "Server"
 
@@ -1172,6 +1215,7 @@ msgstr "Shares"
 #: admin/systems/services/shares/goShareServer.tpl:17
 #: admin/systems/goto/printer.tpl:68 admin/groups/apps/app_list.tpl:88
 #: admin/groups/apps/app_list.tpl:134 personal/environment/environment.tpl:274
+#: addons/goto/class_gotomasses.inc:469
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -1271,6 +1315,7 @@ msgstr "Syslog Service"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
 #: admin/systems/goto/class_printGeneric.inc:908
+#: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr "Gebruiker"
 
@@ -1384,6 +1429,7 @@ msgid "Server path"
 msgstr "Servernaam"
 
 #: admin/systems/services/kiosk/goKioskService.tpl:23
+#: addons/goto/goto_import_file.tpl:24
 msgid "Browse"
 msgstr "Doorzoek"
 
@@ -1408,6 +1454,8 @@ msgstr ""
 
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: admin/systems/goto/class_workstationGeneric.inc:704
+#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/class_target_list.inc:203
 msgid "Workstation"
 msgstr "Werkstation"
 
@@ -1418,6 +1466,7 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/systems/goto/class_SelectDeviceType.inc:59
+#: addons/goto/class_gotoLogView.inc:87
 msgid "none"
 msgstr "geen"
 
@@ -1797,6 +1846,7 @@ msgstr "Lijst met groepen"
 #: admin/systems/goto/workstationStartup.tpl:36
 #: admin/systems/goto/terminalStartup.tpl:14
 #: admin/systems/goto/terminalService.tpl:184
+#: addons/goto/class_gotomasses.inc:400
 #, fuzzy
 msgid "Reload"
 msgstr "Lezen"
@@ -2277,6 +2327,7 @@ msgstr "Systeem informatie"
 
 #: admin/systems/goto/class_terminalGeneric.inc:271
 #: admin/systems/goto/class_workstationGeneric.inc:307
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
 msgid "Wake up"
 msgstr "Aanzetten"
 
@@ -2394,6 +2445,8 @@ msgid "Choose an object group as template"
 msgstr "Selecteer een objectgroep als sjabloon"
 
 #: admin/systems/goto/SelectDeviceType.tpl:36
+#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Objectgroep"
 
@@ -2517,6 +2570,7 @@ msgstr "Netwerk printer"
 
 #: admin/systems/goto/class_printGeneric.inc:903
 #: admin/systems/goto/class_printGeneric.inc:905
+#: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr "Groep"
 
@@ -2678,12 +2732,16 @@ msgstr "Plaatje verwijderen"
 
 #: admin/systems/goto/class_workstationGeneric.inc:299
 #: admin/systems/goto/class_workstationGeneric.inc:309
+#: addons/goto/events/class_DaemonEvent_update.inc:29
+#: addons/goto/events/class_DaemonEvent_update.inc:30
 #, fuzzy
 msgid "Software update"
 msgstr "Onmiddelijk bijwerken"
 
 #: admin/systems/goto/class_workstationGeneric.inc:303
 #: admin/systems/goto/class_workstationGeneric.inc:311
+#: addons/goto/events/class_DaemonEvent_localboot.inc:28
+#: addons/goto/events/class_DaemonEvent_localboot.inc:29
 msgid "Force localboot"
 msgstr ""
 
@@ -2854,6 +2912,7 @@ msgstr ""
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:141
 #: admin/systems/ppd/class_printerPPDDialog.inc:341
+#: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
 msgid "file is empty"
 msgstr "Verwijder deze invoer"
@@ -2975,12 +3034,12 @@ msgid "Folder"
 msgstr "Filters"
 
 #: admin/groups/apps/app_list.tpl:82 admin/groups/apps/app_list.tpl:103
-#: admin/groups/apps/app_list.tpl:128
+#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:432
 msgid "Move up"
 msgstr "Omhoog verplaatsen"
 
 #: admin/groups/apps/app_list.tpl:84 admin/groups/apps/app_list.tpl:105
-#: admin/groups/apps/app_list.tpl:130
+#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:434
 msgid "Move down"
 msgstr "Omlaag verplaatsen"
 
@@ -3341,319 +3400,697 @@ msgstr "Beheerders omschakeling"
 msgid "Toggle default"
 msgstr "Standaard omschakeling"
 
+#: addons/goto/class_gotomasses.inc:26
 #, fuzzy
-#~ msgid "Available logs"
-#~ msgstr "Beschikbare programma's"
+msgid "Deployment status"
+msgstr "Systeem status"
 
+#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
 #, fuzzy
-#~ msgid "Selected log"
-#~ msgstr "Selecteer"
+msgid "System deployment status"
+msgstr "Systeemtype"
 
+#: addons/goto/class_gotomasses.inc:270
+#, php-format
+msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:360
 #, fuzzy
-#~ msgid "Deployment status"
-#~ msgstr "Systeem status"
+msgid "This menu allows you to remove and change the properties of GOsa tasks."
+msgstr ""
+"Dit menu maakt het mogelijk om FAI verzamelplaatsen aan te maken, bewerken "
+"en verwijderen."
 
+#: addons/goto/class_gotomasses.inc:361
 #, fuzzy
-#~ msgid "System deployment status"
-#~ msgstr "Systeemtype"
+msgid "List of queued jobs"
+msgstr "Lijst met apparaten"
 
+#: addons/goto/class_gotomasses.inc:380
 #, fuzzy
-#~ msgid ""
-#~ "This menu allows you to remove and change the properties of GOsa tasks."
-#~ msgstr ""
-#~ "Dit menu maakt het mogelijk om FAI verzamelplaatsen aan te maken, "
-#~ "bewerken en verwijderen."
+msgid "Resume"
+msgstr "Herinstalleer"
 
+#: addons/goto/class_gotomasses.inc:381
 #, fuzzy
-#~ msgid "List of queued jobs"
-#~ msgstr "Lijst met apparaten"
+msgid "Pause"
+msgstr "Plakken"
 
+#: addons/goto/class_gotomasses.inc:382
 #, fuzzy
-#~ msgid "Resume"
-#~ msgstr "Herinstalleer"
+msgid "Abort"
+msgstr "Poort"
 
+#: addons/goto/class_gotomasses.inc:408
+#: addons/goto/events/DaemonEvent_halt.tpl:47
+#: addons/goto/events/DaemonEvent_wakeup.tpl:47
+#: addons/goto/events/DaemonEvent_faireboot.tpl:47
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
+#: addons/goto/events/DaemonEvent_activate.tpl:47
+#: addons/goto/events/DaemonEvent_rescan.tpl:47
+#: addons/goto/events/DaemonEvent_memcheck.tpl:47
+#: addons/goto/events/class_DaemonEvent_notify.inc:77
+#: addons/goto/events/class_DaemonEvent_notify.inc:78
+#: addons/goto/events/class_DaemonEvent_notify.inc:103
+#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_reboot.tpl:47
+#: addons/goto/events/DaemonEvent_lock.tpl:47
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
+#: addons/goto/events/DaemonEvent_localboot.tpl:47
+#: addons/goto/events/DaemonEvent_reinstall.tpl:51
+#: addons/goto/events/DaemonEvent_notify.tpl:81
 #, fuzzy
-#~ msgid "Pause"
-#~ msgstr "Plakken"
+msgid "Target"
+msgstr "Chipset"
 
+#: addons/goto/class_gotomasses.inc:409
+msgid "Task"
+msgstr "Taak"
+
+#: addons/goto/class_gotomasses.inc:411
+#: addons/goto/events/DaemonEvent_halt.tpl:9
+#: addons/goto/events/DaemonEvent_wakeup.tpl:9
+#: addons/goto/events/DaemonEvent_faireboot.tpl:9
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_rescan.tpl:9
+#: addons/goto/events/DaemonEvent_memcheck.tpl:9
+#: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/events/DaemonEvent_reboot.tpl:9
+#: addons/goto/events/DaemonEvent_lock.tpl:9
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
+#: addons/goto/events/DaemonEvent_localboot.tpl:9
+#: addons/goto/events/DaemonEvent_reinstall.tpl:9
+#: addons/goto/events/DaemonEvent_notify.tpl:28
 #, fuzzy
-#~ msgid "Abort"
-#~ msgstr "Poort"
+msgid "Schedule"
+msgstr "PHPScheduleIt"
 
+#: addons/goto/class_gotomasses.inc:413
+#: addons/goto/events/DaemonEvent_halt.tpl:39
+#: addons/goto/events/DaemonEvent_wakeup.tpl:39
+#: addons/goto/events/DaemonEvent_faireboot.tpl:39
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_activate.tpl:39
+#: addons/goto/events/DaemonEvent_rescan.tpl:39
+#: addons/goto/events/DaemonEvent_memcheck.tpl:39
+#: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/events/DaemonEvent_reboot.tpl:39
+#: addons/goto/events/DaemonEvent_lock.tpl:39
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
+#: addons/goto/events/DaemonEvent_localboot.tpl:39
+#: addons/goto/events/DaemonEvent_reinstall.tpl:43
+#: addons/goto/events/DaemonEvent_notify.tpl:73
+msgid "Status"
+msgstr "Status"
+
+#: addons/goto/class_gotomasses.inc:441
 #, fuzzy
-#~ msgid "Target"
-#~ msgstr "Chipset"
+msgid "Pause job"
+msgstr "Plakken"
 
-#~ msgid "Task"
-#~ msgstr "Taak"
-
+#: addons/goto/class_gotomasses.inc:448
 #, fuzzy
-#~ msgid "Schedule"
-#~ msgstr "PHPScheduleIt"
+msgid "Resume job"
+msgstr "Herinstalleer"
 
-#~ msgid "Status"
-#~ msgstr "Status"
-
+#: addons/goto/class_gotomasses.inc:455
 #, fuzzy
-#~ msgid "Execute now"
-#~ msgstr "Commando"
+msgid "Execute now"
+msgstr "Commando"
 
+#: addons/goto/class_gotomasses.inc:462
 #, fuzzy
-#~ msgid "Abort job"
-#~ msgstr "Initialen"
+msgid "View logs"
+msgstr "Beschikbare programma's"
 
+#: addons/goto/class_gotomasses.inc:477
 #, fuzzy
-#~ msgid "Waiting"
-#~ msgstr "Waarschuwing"
+msgid "Abort job"
+msgstr "Initialen"
 
+#: addons/goto/class_gotomasses.inc:521
 #, fuzzy
-#~ msgid "Processed"
-#~ msgstr "Eigenschappen"
+msgid "Waiting"
+msgstr "Waarschuwing"
 
+#: addons/goto/class_gotomasses.inc:527
 #, fuzzy
-#~ msgid "Detection"
-#~ msgstr "Sectie"
+msgid "Processed"
+msgstr "Eigenschappen"
 
+#: addons/goto/class_gotomasses.inc:542
 #, fuzzy
-#~ msgid "in progress"
-#~ msgstr "Eigenschappen"
+msgid "Detection"
+msgstr "Sectie"
+
+#: addons/goto/class_gotomasses.inc:550
+#, fuzzy
+msgid "in progress"
+msgstr "Eigenschappen"
+
+#: addons/goto/class_gotomasses.inc:563
+msgid "immediately"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
+#: addons/goto/class_gotomasses.inc:775
+#, fuzzy, php-format
+msgid "Cannot update queue entry: %s"
+msgstr "Onbekende FAI status %s"
+
+#: addons/goto/class_gotomasses.inc:691
+#, php-format
+msgid "Cannot update queue entries."
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:740
+#, php-format
+msgid "Required class '%s' cannot be found: job not aborted!"
+msgstr ""
+
+#: addons/goto/class_gotomasses.inc:816
+#, fuzzy, php-format
+msgid "Cannot load queue entries: %s"
+msgstr "Onbekende FAI status %s"
+
+#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
+#, fuzzy
+msgid "System deployment"
+msgstr "Systeembeheer"
+
+#: addons/goto/class_gotomasses.inc:911
+msgid "Provide a mechanism to automatically activate systems"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_halt.tpl:18
+#: addons/goto/events/DaemonEvent_wakeup.tpl:18
+#: addons/goto/events/DaemonEvent_faireboot.tpl:18
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
+#: addons/goto/events/DaemonEvent_activate.tpl:18
+#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_memcheck.tpl:18
+#: addons/goto/events/DaemonEvent_update.tpl:18
+#: addons/goto/events/DaemonEvent_reboot.tpl:18
+#: addons/goto/events/DaemonEvent_lock.tpl:18
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
+#: addons/goto/events/DaemonEvent_localboot.tpl:18
+#: addons/goto/events/DaemonEvent_reinstall.tpl:18
+#, fuzzy
+msgid "System list"
+msgstr "Systeem analyse"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:35
+#: addons/goto/events/DaemonEvent_wakeup.tpl:35
+#: addons/goto/events/DaemonEvent_faireboot.tpl:35
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_activate.tpl:35
+#: addons/goto/events/DaemonEvent_rescan.tpl:35
+#: addons/goto/events/DaemonEvent_memcheck.tpl:35
+#: addons/goto/events/DaemonEvent_update.tpl:35
+#: addons/goto/events/DaemonEvent_reboot.tpl:35
+#: addons/goto/events/DaemonEvent_lock.tpl:35
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
+#: addons/goto/events/DaemonEvent_localboot.tpl:35
+#: addons/goto/events/DaemonEvent_reinstall.tpl:35
+#: addons/goto/events/DaemonEvent_notify.tpl:69
+#, fuzzy
+msgid "ID"
+msgstr "GID"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:43
+#: addons/goto/events/DaemonEvent_wakeup.tpl:43
+#: addons/goto/events/DaemonEvent_faireboot.tpl:43
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_activate.tpl:43
+#: addons/goto/events/DaemonEvent_rescan.tpl:43
+#: addons/goto/events/DaemonEvent_memcheck.tpl:43
+#: addons/goto/events/DaemonEvent_update.tpl:43
+#: addons/goto/events/DaemonEvent_reboot.tpl:43
+#: addons/goto/events/DaemonEvent_lock.tpl:43
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
+#: addons/goto/events/DaemonEvent_localboot.tpl:43
+#: addons/goto/events/DaemonEvent_reinstall.tpl:47
+#: addons/goto/events/DaemonEvent_notify.tpl:77
+#, fuzzy
+msgid "Result"
+msgstr "Resolutie"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:51
+#: addons/goto/events/DaemonEvent_wakeup.tpl:51
+#: addons/goto/events/DaemonEvent_faireboot.tpl:51
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_activate.tpl:51
+#: addons/goto/events/DaemonEvent_rescan.tpl:51
+#: addons/goto/events/DaemonEvent_memcheck.tpl:51
+#: addons/goto/events/DaemonEvent_update.tpl:51
+#: addons/goto/events/DaemonEvent_reboot.tpl:51
+#: addons/goto/events/DaemonEvent_lock.tpl:51
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
+#: addons/goto/events/DaemonEvent_localboot.tpl:51
+#: addons/goto/events/DaemonEvent_reinstall.tpl:55
+#: addons/goto/events/DaemonEvent_notify.tpl:85
+#: addons/goto/goto_import_file.tpl:37
+#, fuzzy
+msgid "Timestamp"
+msgstr "Timeout"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:45
+#: addons/goto/events/class_EventTargetAddList.inc:51
+#, fuzzy
+msgid "Targets"
+msgstr "Shares"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:49
+msgid ""
+"This dialog shows all available targets for your event, check the targets "
+"you want to add and use the 'Use' button to accept."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:60
+#: addons/goto/events/class_EventTargetAddList.inc:66
+#, fuzzy
+msgid "System / Department"
+msgstr "Afdeling"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:65
+#, fuzzy
+msgid "Display users"
+msgstr "Scherm"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:66
+#, fuzzy
+msgid "Display groups"
+msgstr "Toon overeenkomende objecten"
+
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
+#, fuzzy
+msgid "Abort installation"
+msgstr "Werkstation"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
+#, fuzzy
+msgid "GOto reload"
+msgstr "naar map"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
+#, fuzzy
+msgid "Reload GOto settings"
+msgstr "Posix instellingen"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
+msgid "Reload fai server db"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
+#, fuzzy
+msgid "Installation activation"
+msgstr "Windows werkstation"
+
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
+msgid "Reload LDAP config"
+msgstr ""
+
+#: addons/goto/events/DaemonEvent_activate.tpl:9
+#, fuzzy
+msgid "Time schedule"
+msgstr "Geplande bijwerking"
+
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
+#, fuzzy
+msgid "Unlock"
+msgstr "Geblokkeerd"
+
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
+#, fuzzy
+msgid "Wake system"
+msgstr "Systeem"
+
+#: addons/goto/events/timestamp_select.tpl:3
+#, fuzzy
+msgid "Year"
+msgstr "Zoeken"
+
+#: addons/goto/events/timestamp_select.tpl:4
+#, fuzzy
+msgid "Month"
+msgstr "maand"
+
+#: addons/goto/events/timestamp_select.tpl:5
+#, fuzzy
+msgid "Day"
+msgstr "dag"
+
+#: addons/goto/events/timestamp_select.tpl:7
+#, fuzzy
+msgid "Hour"
+msgstr "uur"
+
+#: addons/goto/events/timestamp_select.tpl:8
+#, fuzzy
+msgid "Minute"
+msgstr "Printer"
+
+#: addons/goto/events/timestamp_select.tpl:9
+#, fuzzy
+msgid "Second"
+msgstr "Sectie"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
+#, fuzzy
+msgid "Reload fai release db"
+msgstr "Gebruikers inlog mislukt. De LDAP server meldt: '%s'."
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:46
+#: addons/goto/events/class_DaemonEvent_notify.inc:47
+#, fuzzy
+msgid "Send message"
+msgstr "Bericht in wachtstand plaatsen"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:94
+#: addons/goto/events/DaemonEvent_notify.tpl:14
+#, fuzzy
+msgid "Subject"
+msgstr "Selecteer"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:97
+#: addons/goto/events/DaemonEvent_notify.tpl:18
+msgid "Message"
+msgstr "Bericht"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:100
+#, fuzzy
+msgid "From"
+msgstr "willekeurig"
+
+#: addons/goto/events/class_DaemonEvent.inc:119
+#, fuzzy
+msgid "This job has no template!"
+msgstr "Deze 'dn' heeft geen terminal mogelijkheden."
+
+#: addons/goto/events/class_DaemonEvent.inc:135
+#, fuzzy, php-format
+msgid "Create '%s' job"
+msgstr "Nieuw FAI object aanmaken"
+
+#: addons/goto/events/class_DaemonEvent.inc:234
+msgid "Add"
+msgstr "Toevoegen"
+
+#: addons/goto/events/target_list.tpl:5
+msgid "Apply"
+msgstr "Toepassen"
+
+#: addons/goto/events/target_list.tpl:6
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: addons/goto/events/class_EventTargetAddList.inc:55
+msgid ""
+"This dialog shows all available targets for the event. Check the targets you "
+"want to add and use the 'Apply' button."
+msgstr ""
+
+#: addons/goto/events/class_EventTargetAddList.inc:73
+#, fuzzy
+msgid "Display server"
+msgstr "Scherm"
+
+#: addons/goto/events/class_EventTargetAddList.inc:74
+#, fuzzy
+msgid "Display workstation"
+msgstr "Windows werkstation"
+
+#: addons/goto/events/class_EventTargetAddList.inc:75
+#, fuzzy
+msgid "Display object groups"
+msgstr "Toon overeenkomende objecten"
+
+#: addons/goto/events/class_EventTargetAddList.inc:76
+msgid "Filter by IP range"
+msgstr ""
+
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+#, fuzzy
+msgid "Activate new"
+msgstr "Geactiveerd"
+
+#: addons/goto/events/DaemonEvent_reinstall.tpl:39
+#, fuzzy
+msgid "Progress"
+msgstr "Eigenschappen"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:7
+#, fuzzy
+msgid "Message settings"
+msgstr "Gebruikersinstellingen"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:10
+#, fuzzy
+msgid "Sender"
+msgstr "Server"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:37
+#, fuzzy
+msgid "Target users"
+msgstr "Shares"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:44
+#, fuzzy
+msgid "Target groups"
+msgstr "Shares"
+
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+#, fuzzy
+msgid "Lock"
+msgstr "Geblokkeerd"
+
+#: addons/goto/class_target_list.inc:58
+msgid "Select the target objects for your scheduled action."
+msgstr ""
+
+#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
+#, fuzzy
+msgid "Available targets"
+msgstr "Beschikbare programma's"
+
+#: addons/goto/class_target_list.inc:69
+msgid "Object name"
+msgstr "Objectnaam"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Select to see object groups"
+msgstr "Selecteer een objectgroep"
+
+#: addons/goto/class_target_list.inc:72
+#, fuzzy
+msgid "Show object groups"
+msgstr "Objectgroepen"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Select to see servers"
+msgstr "Selecteer om servers te zien"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Show servers"
+msgstr "Toon servers"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Select to see workstations"
+msgstr "Selecteer om werkstations te zien"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Show workstations"
+msgstr "Toon werkstations"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Select to see incoming objects"
+msgstr "Selecteer om binnen subonderdelen te zoeken"
+
+#: addons/goto/class_target_list.inc:75
+#, fuzzy
+msgid "Show new objects"
+msgstr "Lidmaatschap objecten"
+
+#: addons/goto/class_target_list.inc:80
+msgid "Select to search for a specific IP range only"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:80
+msgid "Match IP range"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:83
+msgid "Regular expression for matching group names"
+msgstr "Reguliere expressie voor overeenkomende groepnamen"
+
+#: addons/goto/class_target_list.inc:84
+msgid "IP range start"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:85
+msgid "IP range end"
+msgstr ""
+
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#, fuzzy
+msgid "IP range"
+msgstr "VSync"
+
+#: addons/goto/log_view.tpl:7
+#, fuzzy
+msgid "Available logs"
+msgstr "Beschikbare programma's"
+
+#: addons/goto/log_view.tpl:12
+#, fuzzy
+msgid "Selected log"
+msgstr "Selecteer"
+
+#: addons/goto/log_view.tpl:17
+#, fuzzy
+msgid "No logs for this host available!"
+msgstr "Bestand is beschikbaar"
+
+#: addons/goto/goto_import_file.tpl:1
+#, fuzzy
+msgid "Import jobs"
+msgstr "Importeren"
+
+#: addons/goto/goto_import_file.tpl:3
+msgid ""
+"You can import a list of jobs into the GOsa job queue. This should be a "
+"semicolon seperated list of items in the following format:"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "timestamp"
+msgstr "Timeout"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "MAC-address"
+msgstr "Adres"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "job type"
+msgstr "MIME-type"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "object group"
+msgstr "Objectgroep"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "import base"
+msgstr "Importeren"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "full hostname"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "IP-address"
+msgstr "Adres"
+
+#: addons/goto/goto_import_file.tpl:5
+#, fuzzy
+msgid "DHCP group"
+msgstr "Groep toevoegen"
+
+#: addons/goto/goto_import_file.tpl:9
+msgid "Example"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:21
+#, fuzzy
+msgid "Select list to import"
+msgstr "Selecteer de toe te voegen printer"
+
+#: addons/goto/goto_import_file.tpl:38
+#: addons/goto/class_goto_import_file.inc:168
+#, fuzzy
+msgid "MAC"
+msgstr "Rechten"
+
+#: addons/goto/goto_import_file.tpl:39
+#: addons/goto/class_goto_import_file.inc:171
+#, fuzzy
+msgid "Event"
+msgstr "Omgeving"
+
+#: addons/goto/goto_import_file.tpl:42
+msgid "FQDN"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:43
+msgid "IP"
+msgstr ""
+
+#: addons/goto/goto_import_file.tpl:44
+msgid "DHCP"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:90
+msgid ""
+"Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr ""
+
+#: addons/goto/class_goto_import_file.inc:131
+#, php-format
+msgid "Import complete: %s events successfully send, %s failed"
+msgstr ""
+
+#: addons/goto/class_gotoLogView.inc:113
+msgid "File"
+msgstr "Bestand"
+
+#: addons/goto/class_gotoLogView.inc:115
+#, fuzzy
+msgid "Date"
+msgstr "Plakken"
+
+#: addons/goto/class_gotoLogView.inc:202
+#, fuzzy
+msgid "Log view"
+msgstr "Inlognaam"
+
+#: addons/goto/class_gotoLogView.inc:203
+#, fuzzy
+msgid "GOto log view"
+msgstr "naar map"
 
 #, fuzzy
 #~ msgid "System mass deployment"
 #~ msgstr "Systeembeheer"
-
-#, fuzzy
-#~ msgid "Import jobs"
-#~ msgstr "Importeren"
-
-#, fuzzy
-#~ msgid "timestamp"
-#~ msgstr "Timeout"
-
-#, fuzzy
-#~ msgid "MAC-address"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "job type"
-#~ msgstr "MIME-type"
-
-#, fuzzy
-#~ msgid "object group"
-#~ msgstr "Objectgroep"
-
-#, fuzzy
-#~ msgid "import base"
-#~ msgstr "Importeren"
-
-#, fuzzy
-#~ msgid "IP-address"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "DHCP group"
-#~ msgstr "Groep toevoegen"
-
-#, fuzzy
-#~ msgid "Select list to import"
-#~ msgstr "Selecteer de toe te voegen printer"
-
-#, fuzzy
-#~ msgid "Timestamp"
-#~ msgstr "Timeout"
-
-#, fuzzy
-#~ msgid "MAC"
-#~ msgstr "Rechten"
-
-#, fuzzy
-#~ msgid "Event"
-#~ msgstr "Omgeving"
-
-#, fuzzy
-#~ msgid "Available targets"
-#~ msgstr "Beschikbare programma's"
-
-#~ msgid "Object name"
-#~ msgstr "Objectnaam"
-
-#, fuzzy
-#~ msgid "Select to see object groups"
-#~ msgstr "Selecteer een objectgroep"
-
-#, fuzzy
-#~ msgid "Show object groups"
-#~ msgstr "Objectgroepen"
-
-#~ msgid "Select to see servers"
-#~ msgstr "Selecteer om servers te zien"
-
-#~ msgid "Show servers"
-#~ msgstr "Toon servers"
-
-#~ msgid "Select to see workstations"
-#~ msgstr "Selecteer om werkstations te zien"
-
-#~ msgid "Show workstations"
-#~ msgstr "Toon werkstations"
-
-#, fuzzy
-#~ msgid "Select to see incoming objects"
-#~ msgstr "Selecteer om binnen subonderdelen te zoeken"
-
-#~ msgid "Regular expression for matching group names"
-#~ msgstr "Reguliere expressie voor overeenkomende groepnamen"
-
-#, fuzzy
-#~ msgid "Unlock"
-#~ msgstr "Geblokkeerd"
-
-#, fuzzy
-#~ msgid "Time schedule"
-#~ msgstr "Geplande bijwerking"
-
-#, fuzzy
-#~ msgid "System list"
-#~ msgstr "Systeem analyse"
-
-#, fuzzy
-#~ msgid "Result"
-#~ msgstr "Resolutie"
-
-#, fuzzy
-#~ msgid "Targets"
-#~ msgstr "Shares"
-
-#, fuzzy
-#~ msgid "System / Department"
-#~ msgstr "Afdeling"
-
-#, fuzzy
-#~ msgid "Display users"
-#~ msgstr "Scherm"
-
-#, fuzzy
-#~ msgid "Display groups"
-#~ msgstr "Toon overeenkomende objecten"
-
-#, fuzzy
-#~ msgid "Lock"
-#~ msgstr "Geblokkeerd"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Zoeken"
-
-#, fuzzy
-#~ msgid "Month"
-#~ msgstr "maand"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "dag"
-
-#, fuzzy
-#~ msgid "Hour"
-#~ msgstr "uur"
-
-#, fuzzy
-#~ msgid "Minute"
-#~ msgstr "Printer"
-
-#, fuzzy
-#~ msgid "Second"
-#~ msgstr "Sectie"
-
-#, fuzzy
-#~ msgid "Activate new"
-#~ msgstr "Geactiveerd"
-
-#, fuzzy
-#~ msgid "Abort installation"
-#~ msgstr "Werkstation"
-
-#~ msgid "Apply"
-#~ msgstr "Toepassen"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuleren"
-
-#, fuzzy
-#~ msgid "Message settings"
-#~ msgstr "Gebruikersinstellingen"
-
-#, fuzzy
-#~ msgid "Sender"
-#~ msgstr "Server"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Selecteer"
-
-#~ msgid "Message"
-#~ msgstr "Bericht"
-
-#, fuzzy
-#~ msgid "Target users"
-#~ msgstr "Shares"
-
-#, fuzzy
-#~ msgid "Target groups"
-#~ msgstr "Shares"
-
-#, fuzzy
-#~ msgid "This job has no template."
-#~ msgstr "Deze 'dn' heeft geen terminal mogelijkheden."
-
-#~ msgid "Add"
-#~ msgstr "Toevoegen"
-
-#, fuzzy
-#~ msgid "Start a system"
-#~ msgstr "Systeem"
-
-#, fuzzy
-#~ msgid "Display server"
-#~ msgstr "Scherm"
-
-#, fuzzy
-#~ msgid "Display workstation"
-#~ msgstr "Windows werkstation"
-
-#, fuzzy
-#~ msgid "Display object groups"
-#~ msgstr "Toon overeenkomende objecten"
-
-#, fuzzy
-#~ msgid "Progress"
-#~ msgstr "Eigenschappen"
-
-#, fuzzy
-#~ msgid "Goto reload"
-#~ msgstr "naar map"
-
-#, fuzzy
-#~ msgid "Reload goto settings"
-#~ msgstr "Posix instellingen"
-
-#, fuzzy
-#~ msgid "Send message"
-#~ msgstr "Bericht in wachtstand plaatsen"
-
-#~ msgid "File"
-#~ msgstr "Bestand"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Plakken"
-
-#, fuzzy
-#~ msgid "Log view"
-#~ msgstr "Inlognaam"
-
-#, fuzzy
-#~ msgid "GOto log view"
-#~ msgstr "naar map"
 
 #~ msgid "Spool server"
 #~ msgstr "Spool server"
@@ -4339,10 +4776,6 @@ msgstr "Standaard omschakeling"
 #, fuzzy
 #~ msgid "GOsa setup wizard"
 #~ msgstr "GOsa help"
-
-#, fuzzy
-#~ msgid "Installation"
-#~ msgstr "Windows werkstation"
 
 #, fuzzy
 #~ msgid "Setup"
@@ -5243,10 +5676,6 @@ msgstr "Standaard omschakeling"
 #~ msgstr "De database zoekopdracht is mislukt"
 
 #, fuzzy
-#~ msgid "Upload failed!"
-#~ msgstr "Gebruikers inlog mislukt. De LDAP server meldt: '%s'."
-
-#, fuzzy
 #~ msgid "Upload failed: %s"
 #~ msgstr "Log DB gebruiker"
 
@@ -5295,10 +5724,6 @@ msgstr "Standaard omschakeling"
 #, fuzzy
 #~ msgid "Cannot send abort event for entry %s!"
 #~ msgstr "Kan bestand '%s' niet aanmaken."
-
-#, fuzzy
-#~ msgid "Cannot remove entry %s!"
-#~ msgstr "Onbekende FAI status %s"
 
 #~ msgid "FATAL: Error when connecting the LDAP. Server said '%s'."
 #~ msgstr ""
@@ -5488,10 +5913,6 @@ msgstr "Standaard omschakeling"
 #~ msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
 
 #, fuzzy
-#~ msgid "from"
-#~ msgstr "willekeurig"
-
-#, fuzzy
 #~ msgid "Restore"
 #~ msgstr "Opnieuw proberen"
 
@@ -5629,14 +6050,6 @@ msgstr "Standaard omschakeling"
 #, fuzzy
 #~ msgid "Show/hide advanced settings"
 #~ msgstr "Geavanceerde telefoon instellingen"
-
-#, fuzzy
-#~ msgid "Create objects"
-#~ msgstr "Nieuw FAI object aanmaken"
-
-#, fuzzy
-#~ msgid "Move objects"
-#~ msgstr "Lidmaatschap objecten"
 
 #, fuzzy
 #~ msgid "Remove objects"
@@ -5931,10 +6344,6 @@ msgstr "Standaard omschakeling"
 #~ msgid "Applying a template"
 #~ msgstr "Sjablonen"
 
-#, fuzzy
-#~ msgid "No templates available!"
-#~ msgstr "Bestand is beschikbaar"
-
 #~ msgid "List of users"
 #~ msgstr "Lijst met gebruikers"
 
@@ -6083,9 +6492,6 @@ msgstr "Standaard omschakeling"
 #, fuzzy
 #~ msgid "Cannot find any RIDBASE for '%s'!"
 #~ msgstr "Kan bestand '%s' niet aanmaken."
-
-#~ msgid "GID"
-#~ msgstr "GID"
 
 #, fuzzy
 #~ msgid "Cannot allocate a free ID!"

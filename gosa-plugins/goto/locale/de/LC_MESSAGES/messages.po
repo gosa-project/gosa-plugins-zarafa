@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
-"PO-Revision-Date: 2008-12-03 15:12+0100\n"
+"POT-Creation-Date: 2008-12-04 11:07+0100\n"
+"PO-Revision-Date: 2008-12-04 11:18+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,9 @@ msgstr "Geräte"
 #: admin/systems/goto/class_terminalGeneric.inc:667
 #: admin/systems/goto/class_printGeneric.inc:930
 #: admin/systems/goto/class_workstationGeneric.inc:710
+#: addons/goto/events/class_EventTargetAddUsersList.inc:130
+#: addons/goto/events/class_EventTargetAddList.inc:161
+#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
 msgid "Base"
 msgstr "Basis"
 
@@ -65,6 +68,7 @@ msgstr "Gerätename"
 #: admin/systems/goto/class_workstationGeneric.inc:708
 #: personal/environment/logonManagement.tpl:17
 #: personal/environment/class_logonManagementDialog.inc:111
+#: addons/goto/class_gotomasses.inc:917
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -194,6 +198,12 @@ msgstr "Lieferanten-ID"
 #: personal/environment/class_environment.inc:841
 #: personal/environment/class_environment.inc:892
 #: personal/environment/class_environment.inc:988
+#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
+#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
+#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr "Fehler"
 
@@ -288,7 +298,7 @@ msgstr "Geräte-ID"
 #: personal/environment/class_environment.inc:139
 #: personal/environment/class_environment.inc:307
 #: personal/environment/class_environment.inc:360
-#: personal/environment/class_environment.inc:364
+#: personal/environment/class_environment.inc:364 addons/goto/remove.tpl:2
 msgid "Warning"
 msgstr "Warnung"
 
@@ -302,7 +312,7 @@ msgstr ""
 "Daten wiederherzustellen."
 
 #: admin/devices/remove.tpl:9 admin/mimetypes/remove.tpl:9
-#: admin/applications/remove.tpl:9
+#: admin/applications/remove.tpl:9 addons/goto/remove.tpl:9
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 "Wenn Sie sicher sind, drücken Sie 'Entfernen' um fortzufahren oder "
@@ -335,6 +345,7 @@ msgstr "Abteilung"
 #: admin/mimetypes/class_divListMimeTypes.inc:109
 #: admin/applications/class_divListApplication.inc:52
 #: admin/applications/class_divListApplication.inc:107
+#: addons/goto/class_gotomasses.inc:365
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -345,19 +356,25 @@ msgstr "Zeige die Geräte, auf die das Folgende passt"
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 msgid "Submit department"
 msgstr "Aktualisieren"
 
 #: admin/devices/class_divListDevices.inc:84
 #: admin/mimetypes/class_divListMimeTypes.inc:95
 #: admin/applications/class_divListApplication.inc:92
+#: addons/goto/events/class_EventTargetAddUsersList.inc:132
+#: addons/goto/events/class_EventTargetAddList.inc:163
+#: addons/goto/class_target_list.inc:154
 msgid "Submit"
 msgstr "Übertragen"
 
 #: admin/devices/class_divListDevices.inc:92
 #: admin/mimetypes/class_divListMimeTypes.inc:114
 #: admin/applications/class_divListApplication.inc:111
-#: admin/systems/goto/chooser.tpl:16
+#: admin/systems/goto/chooser.tpl:16 addons/goto/class_gotomasses.inc:366
 msgid "Create"
 msgstr "Anlegen"
 
@@ -371,6 +388,9 @@ msgstr "Anlegen"
 #: admin/systems/goto/terminalService.tpl:212
 #: admin/groups/apps/app_list.tpl:86 admin/groups/apps/app_list.tpl:107
 #: admin/groups/apps/app_list.tpl:132 personal/environment/environment.tpl:238
+#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
+#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
+#: addons/goto/events/class_DaemonEvent.inc:230
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -422,6 +442,7 @@ msgstr "Hotplug-Geräte verwalten"
 #: admin/devices/class_deviceManagement.inc:246
 #: admin/mimetypes/class_mimetypeManagement.inc:360
 #: admin/applications/class_applicationManagement.inc:352
+#: addons/goto/class_gotomasses.inc:230
 msgid "Permission"
 msgstr "Berechtigung"
 
@@ -699,7 +720,7 @@ msgstr ""
 "werden sollen"
 
 #: admin/ogroups/goto/termgroup.tpl:110 admin/systems/goto/workstation.tpl:130
-#: admin/systems/goto/terminal.tpl:156
+#: admin/systems/goto/terminal.tpl:156 addons/goto/class_gotomasses.inc:415
 msgid "Action"
 msgstr "Aktion"
 
@@ -713,6 +734,7 @@ msgstr "Wählen Sie die auszuführende Aktion für dieses Terminal"
 #: admin/applications/class_applicationGeneric.inc:609
 #: admin/systems/goto/workstation.tpl:146
 #: admin/systems/goto/workstation.tpl:150 admin/systems/goto/terminal.tpl:169
+#: addons/goto/class_gotomasses.inc:383
 msgid "Execute"
 msgstr "Ausführen"
 
@@ -725,6 +747,7 @@ msgstr "Aktiv"
 #: admin/ogroups/goto/class_termgroup.inc:49
 #: admin/systems/goto/class_terminalGeneric.inc:121
 #: admin/systems/goto/class_workstationGeneric.inc:139
+#: addons/goto/class_gotomasses.inc:538
 msgid "Locked"
 msgstr "Gesperrt"
 
@@ -779,6 +802,8 @@ msgstr "geerbt"
 #: admin/systems/goto/class_workstationStartup.inc:1113
 #: admin/systems/goto/class_workstationGeneric.inc:212
 #: admin/systems/goto/class_workstationGeneric.inc:635
+#: addons/goto/class_gotomasses.inc:328
+#: addons/goto/class_goto_import_file.inc:124
 msgid "Service infrastructure"
 msgstr "Dienst-Infrastruktur"
 
@@ -798,12 +823,16 @@ msgstr "Das Ereignis '%s' ist nicht verfügbar!"
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:265
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_halt.inc:31
+#: addons/goto/events/class_DaemonEvent_halt.inc:32
 msgid "Switch off"
 msgstr "Ausschalten"
 
 #: admin/ogroups/goto/class_termgroup.inc:257
 #: admin/systems/goto/class_terminalGeneric.inc:266
 #: admin/systems/goto/class_workstationGeneric.inc:298
+#: addons/goto/events/class_DaemonEvent_reboot.inc:29
+#: addons/goto/events/class_DaemonEvent_reboot.inc:30
 msgid "Reboot"
 msgstr "Neustarten"
 
@@ -822,19 +851,27 @@ msgstr "Aufwecken"
 #: admin/ogroups/goto/class_termgroup.inc:261
 #: admin/systems/goto/class_workstationGeneric.inc:300
 #: admin/systems/goto/class_workstationGeneric.inc:308
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
+#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
 msgid "Reinstall"
 msgstr "Neu-Installation"
 
 #: admin/ogroups/goto/class_termgroup.inc:262
 #: admin/systems/goto/class_workstationGeneric.inc:301
+#: addons/goto/events/class_DaemonEvent_rescan.inc:28
+#: addons/goto/events/class_DaemonEvent_rescan.inc:29
 msgid "Rescan hardware"
 msgstr "Hardware neu erkennen"
 
 #: admin/ogroups/goto/class_termgroup.inc:263
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
+#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
 msgid "Memory test"
 msgstr "Speichertest"
 
 #: admin/ogroups/goto/class_termgroup.inc:264
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
+#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
 msgid "System analysis"
 msgstr "Systemanalyse"
 
@@ -927,12 +964,16 @@ msgstr "Skript"
 
 #: admin/applications/generic.tpl:139
 #: personal/environment/logonManagement.tpl:65
+#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
+#: addons/goto/class_goto_import_file.inc:29
+#: addons/goto/class_goto_import_file.inc:89
+#: addons/goto/class_goto_import_file.inc:131
 msgid "Import"
 msgstr "Importieren"
 
 #: admin/applications/generic.tpl:142
 #: admin/systems/ppd/printerPPDDialog.tpl:21
-#: admin/groups/apps/edit_entry.tpl:28
+#: admin/groups/apps/edit_entry.tpl:28 addons/goto/goto_import_file.tpl:25
 msgid "Upload"
 msgstr "Hochladen"
 
@@ -1078,6 +1119,8 @@ msgstr "Volume"
 #: admin/systems/services/nfs/servnfs.tpl:39
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: personal/environment/environment.tpl:135
+#: addons/goto/events/class_EventTargetAddList.inc:238
+#: addons/goto/class_target_list.inc:201
 msgid "Server"
 msgstr "Server"
 
@@ -1116,6 +1159,7 @@ msgstr "Freigaben"
 #: admin/systems/services/shares/goShareServer.tpl:17
 #: admin/systems/goto/printer.tpl:68 admin/groups/apps/app_list.tpl:88
 #: admin/groups/apps/app_list.tpl:134 personal/environment/environment.tpl:274
+#: addons/goto/class_gotomasses.inc:469
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -1203,6 +1247,7 @@ msgstr "Protokoll-Dienst Datenbank"
 
 #: admin/systems/services/syslog/class_goLogDBServer.inc:69
 #: admin/systems/goto/class_printGeneric.inc:908
+#: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr "Benutzer"
 
@@ -1306,6 +1351,7 @@ msgid "Server path"
 msgstr "Server-Pfad"
 
 #: admin/systems/services/kiosk/goKioskService.tpl:23
+#: addons/goto/goto_import_file.tpl:24
 msgid "Browse"
 msgstr "Durchsuchen"
 
@@ -1329,6 +1375,8 @@ msgstr "Unterstützte Sitzungstypen"
 
 #: admin/systems/goto/class_SelectDeviceType.inc:39
 #: admin/systems/goto/class_workstationGeneric.inc:704
+#: addons/goto/events/class_EventTargetAddList.inc:249
+#: addons/goto/class_target_list.inc:203
 msgid "Workstation"
 msgstr "Arbeitsstation"
 
@@ -1339,6 +1387,7 @@ msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/systems/goto/class_SelectDeviceType.inc:59
+#: addons/goto/class_gotoLogView.inc:87
 msgid "none"
 msgstr "keine"
 
@@ -1711,6 +1760,7 @@ msgstr "von Gruppe übernehmen"
 #: admin/systems/goto/workstationStartup.tpl:36
 #: admin/systems/goto/terminalStartup.tpl:14
 #: admin/systems/goto/terminalService.tpl:184
+#: addons/goto/class_gotomasses.inc:400
 msgid "Reload"
 msgstr "Neu laden"
 
@@ -2165,6 +2215,7 @@ msgstr "System-Informationen"
 
 #: admin/systems/goto/class_terminalGeneric.inc:271
 #: admin/systems/goto/class_workstationGeneric.inc:307
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
 msgid "Wake up"
 msgstr "Aufwecken"
 
@@ -2277,6 +2328,8 @@ msgid "Choose an object group as template"
 msgstr "Wählen Sie eine Objektgruppe als Vorlageobjekt"
 
 #: admin/systems/goto/SelectDeviceType.tpl:36
+#: addons/goto/events/class_EventTargetAddList.inc:259
+#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
 msgid "Object group"
 msgstr "Objektgruppe"
 
@@ -2396,6 +2449,7 @@ msgstr "Das Objekt ist kein Drucker!"
 
 #: admin/systems/goto/class_printGeneric.inc:903
 #: admin/systems/goto/class_printGeneric.inc:905
+#: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr "Gruppe"
 
@@ -2541,11 +2595,15 @@ msgstr "Entferne gewählten Server"
 
 #: admin/systems/goto/class_workstationGeneric.inc:299
 #: admin/systems/goto/class_workstationGeneric.inc:309
+#: addons/goto/events/class_DaemonEvent_update.inc:29
+#: addons/goto/events/class_DaemonEvent_update.inc:30
 msgid "Software update"
 msgstr "Softwareupdate"
 
 #: admin/systems/goto/class_workstationGeneric.inc:303
 #: admin/systems/goto/class_workstationGeneric.inc:311
+#: addons/goto/events/class_DaemonEvent_localboot.inc:28
+#: addons/goto/events/class_DaemonEvent_localboot.inc:29
 msgid "Force localboot"
 msgstr "Erzwinge lokalen Systemstart"
 
@@ -2715,6 +2773,7 @@ msgstr "Kann PPD-Pfad '%s' nicht zum Lesen und Schreiben öffnen!"
 
 #: admin/systems/ppd/class_printerPPDDialog.inc:141
 #: admin/systems/ppd/class_printerPPDDialog.inc:341
+#: addons/goto/class_goto_import_file.inc:29
 msgid "file is empty"
 msgstr "Datei ist leer"
 
@@ -2828,12 +2887,12 @@ msgid "Folder"
 msgstr "Verzeichnis"
 
 #: admin/groups/apps/app_list.tpl:82 admin/groups/apps/app_list.tpl:103
-#: admin/groups/apps/app_list.tpl:128
+#: admin/groups/apps/app_list.tpl:128 addons/goto/class_gotomasses.inc:432
 msgid "Move up"
 msgstr "Nach oben bewegen"
 
 #: admin/groups/apps/app_list.tpl:84 admin/groups/apps/app_list.tpl:105
-#: admin/groups/apps/app_list.tpl:130
+#: admin/groups/apps/app_list.tpl:130 addons/goto/class_gotomasses.inc:434
 msgid "Move down"
 msgstr "Nach unten bewegen"
 
@@ -3178,4 +3237,626 @@ msgstr "Admin-Modus umschalten"
 #: personal/environment/environment.tpl:396
 msgid "Toggle default"
 msgstr "Standard umschalten"
+
+#: addons/goto/class_gotomasses.inc:26
+msgid "Deployment status"
+msgstr "Verteilungs-Status"
+
+#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
+msgid "System deployment status"
+msgstr "Systemverteilungs-Status"
+
+#: addons/goto/class_gotomasses.inc:270
+#, php-format
+msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
+msgstr ""
+"Die folgenden Aufträge konnten nicht gelöscht werden, sie müssen abgebrochen "
+"werden: %s"
+
+#: addons/goto/class_gotomasses.inc:360
+msgid "This menu allows you to remove and change the properties of GOsa tasks."
+msgstr ""
+"Dieses Menü erlaubt es Ihnen, GOsa-Aufgaben zu entfernen oder die "
+"Eigenschaften zu verändern."
+
+#: addons/goto/class_gotomasses.inc:361
+msgid "List of queued jobs"
+msgstr "Liste der geplanten Vorgänge"
+
+#: addons/goto/class_gotomasses.inc:380
+msgid "Resume"
+msgstr "Fortsetzen"
+
+#: addons/goto/class_gotomasses.inc:381
+msgid "Pause"
+msgstr "Pause"
+
+#: addons/goto/class_gotomasses.inc:382
+msgid "Abort"
+msgstr "Abbrechen"
+
+#: addons/goto/class_gotomasses.inc:408
+#: addons/goto/events/DaemonEvent_halt.tpl:47
+#: addons/goto/events/DaemonEvent_wakeup.tpl:47
+#: addons/goto/events/DaemonEvent_faireboot.tpl:47
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
+#: addons/goto/events/DaemonEvent_activate.tpl:47
+#: addons/goto/events/DaemonEvent_rescan.tpl:47
+#: addons/goto/events/DaemonEvent_memcheck.tpl:47
+#: addons/goto/events/class_DaemonEvent_notify.inc:77
+#: addons/goto/events/class_DaemonEvent_notify.inc:78
+#: addons/goto/events/class_DaemonEvent_notify.inc:103
+#: addons/goto/events/DaemonEvent_update.tpl:47
+#: addons/goto/events/DaemonEvent_reboot.tpl:47
+#: addons/goto/events/DaemonEvent_lock.tpl:47
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
+#: addons/goto/events/DaemonEvent_localboot.tpl:47
+#: addons/goto/events/DaemonEvent_reinstall.tpl:51
+#: addons/goto/events/DaemonEvent_notify.tpl:81
+msgid "Target"
+msgstr "Ziel"
+
+#: addons/goto/class_gotomasses.inc:409
+msgid "Task"
+msgstr "Vorgang"
+
+#: addons/goto/class_gotomasses.inc:411
+#: addons/goto/events/DaemonEvent_halt.tpl:9
+#: addons/goto/events/DaemonEvent_wakeup.tpl:9
+#: addons/goto/events/DaemonEvent_faireboot.tpl:9
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
+#: addons/goto/events/DaemonEvent_rescan.tpl:9
+#: addons/goto/events/DaemonEvent_memcheck.tpl:9
+#: addons/goto/events/DaemonEvent_update.tpl:9
+#: addons/goto/events/DaemonEvent_reboot.tpl:9
+#: addons/goto/events/DaemonEvent_lock.tpl:9
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
+#: addons/goto/events/DaemonEvent_localboot.tpl:9
+#: addons/goto/events/DaemonEvent_reinstall.tpl:9
+#: addons/goto/events/DaemonEvent_notify.tpl:28
+msgid "Schedule"
+msgstr "Plan"
+
+#: addons/goto/class_gotomasses.inc:413
+#: addons/goto/events/DaemonEvent_halt.tpl:39
+#: addons/goto/events/DaemonEvent_wakeup.tpl:39
+#: addons/goto/events/DaemonEvent_faireboot.tpl:39
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
+#: addons/goto/events/DaemonEvent_activate.tpl:39
+#: addons/goto/events/DaemonEvent_rescan.tpl:39
+#: addons/goto/events/DaemonEvent_memcheck.tpl:39
+#: addons/goto/events/DaemonEvent_update.tpl:39
+#: addons/goto/events/DaemonEvent_reboot.tpl:39
+#: addons/goto/events/DaemonEvent_lock.tpl:39
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
+#: addons/goto/events/DaemonEvent_localboot.tpl:39
+#: addons/goto/events/DaemonEvent_reinstall.tpl:43
+#: addons/goto/events/DaemonEvent_notify.tpl:73
+msgid "Status"
+msgstr "Status"
+
+#: addons/goto/class_gotomasses.inc:441
+msgid "Pause job"
+msgstr "Vorgang pausieren"
+
+#: addons/goto/class_gotomasses.inc:448
+msgid "Resume job"
+msgstr "Vorgang fortsetzen"
+
+#: addons/goto/class_gotomasses.inc:455
+msgid "Execute now"
+msgstr "Sofort ausführen"
+
+#: addons/goto/class_gotomasses.inc:462
+msgid "View logs"
+msgstr "Protokolle einsehen"
+
+#: addons/goto/class_gotomasses.inc:477
+msgid "Abort job"
+msgstr "Vorgang abbrechen"
+
+#: addons/goto/class_gotomasses.inc:521
+msgid "Waiting"
+msgstr "Wartend"
+
+#: addons/goto/class_gotomasses.inc:527
+msgid "Processed"
+msgstr "Durchgeführt"
+
+#: addons/goto/class_gotomasses.inc:542
+msgid "Detection"
+msgstr "Erkennung"
+
+#: addons/goto/class_gotomasses.inc:550
+msgid "in progress"
+msgstr "in Bearbeitung"
+
+#: addons/goto/class_gotomasses.inc:563
+msgid "immediately"
+msgstr "sofort"
+
+#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
+#: addons/goto/class_gotomasses.inc:775
+#, php-format
+msgid "Cannot update queue entry: %s"
+msgstr "Kann Warteschlangeneintrag nicht aktualisieren: %s"
+
+#: addons/goto/class_gotomasses.inc:691
+#, php-format
+msgid "Cannot update queue entries."
+msgstr "Kann Warteschlangeneinträge nicht aktualisieren."
+
+#: addons/goto/class_gotomasses.inc:740
+#, php-format
+msgid "Required class '%s' cannot be found: job not aborted!"
+msgstr "Die erforderliche Klasse '%s' wurde nicht gefunden: Auftrag abgebrochen!"
+
+#: addons/goto/class_gotomasses.inc:816
+#, php-format
+msgid "Cannot load queue entries: %s"
+msgstr "Kann Warteschlangeneinträge nicht laden: %s"
+
+#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
+msgid "System deployment"
+msgstr "System-Verteilung"
+
+#: addons/goto/class_gotomasses.inc:911
+msgid "Provide a mechanism to automatically activate systems"
+msgstr "Stelle einen Mechanismus bereit um Systemen automatisch zu aktivieren"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:18
+#: addons/goto/events/DaemonEvent_wakeup.tpl:18
+#: addons/goto/events/DaemonEvent_faireboot.tpl:18
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
+#: addons/goto/events/DaemonEvent_activate.tpl:18
+#: addons/goto/events/DaemonEvent_rescan.tpl:18
+#: addons/goto/events/DaemonEvent_memcheck.tpl:18
+#: addons/goto/events/DaemonEvent_update.tpl:18
+#: addons/goto/events/DaemonEvent_reboot.tpl:18
+#: addons/goto/events/DaemonEvent_lock.tpl:18
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
+#: addons/goto/events/DaemonEvent_localboot.tpl:18
+#: addons/goto/events/DaemonEvent_reinstall.tpl:18
+msgid "System list"
+msgstr "Systemliste"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:35
+#: addons/goto/events/DaemonEvent_wakeup.tpl:35
+#: addons/goto/events/DaemonEvent_faireboot.tpl:35
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
+#: addons/goto/events/DaemonEvent_activate.tpl:35
+#: addons/goto/events/DaemonEvent_rescan.tpl:35
+#: addons/goto/events/DaemonEvent_memcheck.tpl:35
+#: addons/goto/events/DaemonEvent_update.tpl:35
+#: addons/goto/events/DaemonEvent_reboot.tpl:35
+#: addons/goto/events/DaemonEvent_lock.tpl:35
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
+#: addons/goto/events/DaemonEvent_localboot.tpl:35
+#: addons/goto/events/DaemonEvent_reinstall.tpl:35
+#: addons/goto/events/DaemonEvent_notify.tpl:69
+msgid "ID"
+msgstr "ID"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:43
+#: addons/goto/events/DaemonEvent_wakeup.tpl:43
+#: addons/goto/events/DaemonEvent_faireboot.tpl:43
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
+#: addons/goto/events/DaemonEvent_activate.tpl:43
+#: addons/goto/events/DaemonEvent_rescan.tpl:43
+#: addons/goto/events/DaemonEvent_memcheck.tpl:43
+#: addons/goto/events/DaemonEvent_update.tpl:43
+#: addons/goto/events/DaemonEvent_reboot.tpl:43
+#: addons/goto/events/DaemonEvent_lock.tpl:43
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
+#: addons/goto/events/DaemonEvent_localboot.tpl:43
+#: addons/goto/events/DaemonEvent_reinstall.tpl:47
+#: addons/goto/events/DaemonEvent_notify.tpl:77
+msgid "Result"
+msgstr "Ergebnis"
+
+#: addons/goto/events/DaemonEvent_halt.tpl:51
+#: addons/goto/events/DaemonEvent_wakeup.tpl:51
+#: addons/goto/events/DaemonEvent_faireboot.tpl:51
+#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
+#: addons/goto/events/DaemonEvent_activate.tpl:51
+#: addons/goto/events/DaemonEvent_rescan.tpl:51
+#: addons/goto/events/DaemonEvent_memcheck.tpl:51
+#: addons/goto/events/DaemonEvent_update.tpl:51
+#: addons/goto/events/DaemonEvent_reboot.tpl:51
+#: addons/goto/events/DaemonEvent_lock.tpl:51
+#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
+#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
+#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
+#: addons/goto/events/DaemonEvent_localboot.tpl:51
+#: addons/goto/events/DaemonEvent_reinstall.tpl:55
+#: addons/goto/events/DaemonEvent_notify.tpl:85
+#: addons/goto/goto_import_file.tpl:37
+msgid "Timestamp"
+msgstr "Zeitstempel"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:45
+#: addons/goto/events/class_EventTargetAddList.inc:51
+msgid "Targets"
+msgstr "Ziele"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:49
+msgid ""
+"This dialog shows all available targets for your event, check the targets "
+"you want to add and use the 'Use' button to accept."
+msgstr ""
+"Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie die "
+"zu verwendenden Ziele und drücken Sie auf den Knopf 'Verwenden' um die "
+"Auswahl zu übernehmen."
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:60
+#: addons/goto/events/class_EventTargetAddList.inc:66
+msgid "System / Department"
+msgstr "System / Abteilung"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:65
+msgid "Display users"
+msgstr "Zeige Benutzer"
+
+#: addons/goto/events/class_EventTargetAddUsersList.inc:66
+msgid "Display groups"
+msgstr "Zeige Gruppen"
+
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
+#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
+msgid "Abort installation"
+msgstr "Installation abbrechen"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
+msgid "GOto reload"
+msgstr "GOto Aktualisieren"
+
+#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
+msgid "Reload GOto settings"
+msgstr "GOto-Einstellungen aktualisieren"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
+msgid "Reload fai server db"
+msgstr "FAI-Server-Datenbank neu laden"
+
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
+#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
+msgid "Installation activation"
+msgstr "Aktivierung der Installation"
+
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
+#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
+msgid "Reload LDAP config"
+msgstr "LDAP-Konfiguration neu laden"
+
+#: addons/goto/events/DaemonEvent_activate.tpl:9
+msgid "Time schedule"
+msgstr "Zeitplan"
+
+#: addons/goto/events/class_DaemonEvent_activate.inc:29
+#: addons/goto/events/class_DaemonEvent_activate.inc:30
+msgid "Unlock"
+msgstr "Sperre aufheben"
+
+#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
+msgid "Wake system"
+msgstr "System aufwecken"
+
+#: addons/goto/events/timestamp_select.tpl:3
+msgid "Year"
+msgstr "Jahr"
+
+#: addons/goto/events/timestamp_select.tpl:4
+msgid "Month"
+msgstr "Monat"
+
+#: addons/goto/events/timestamp_select.tpl:5
+msgid "Day"
+msgstr "Tag"
+
+#: addons/goto/events/timestamp_select.tpl:7
+msgid "Hour"
+msgstr "Stunde"
+
+#: addons/goto/events/timestamp_select.tpl:8
+msgid "Minute"
+msgstr "Minute"
+
+#: addons/goto/events/timestamp_select.tpl:9
+msgid "Second"
+msgstr "Sekunde"
+
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
+#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
+msgid "Reload fai release db"
+msgstr "FAI-Release-Datenbank neu laden"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:46
+#: addons/goto/events/class_DaemonEvent_notify.inc:47
+msgid "Send message"
+msgstr "Nachricht senden"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:94
+#: addons/goto/events/DaemonEvent_notify.tpl:14
+msgid "Subject"
+msgstr "Betreff"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:97
+#: addons/goto/events/DaemonEvent_notify.tpl:18
+msgid "Message"
+msgstr "Nachricht"
+
+#: addons/goto/events/class_DaemonEvent_notify.inc:100
+msgid "From"
+msgstr "Von"
+
+#: addons/goto/events/class_DaemonEvent.inc:119
+msgid "This job has no template!"
+msgstr "Dieser Auftrag hat keine Vorlage!"
+
+#: addons/goto/events/class_DaemonEvent.inc:135
+#, php-format
+msgid "Create '%s' job"
+msgstr "Erstelle '%s'-Vorgang"
+
+#: addons/goto/events/class_DaemonEvent.inc:234
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: addons/goto/events/target_list.tpl:5
+msgid "Apply"
+msgstr "Anwenden"
+
+#: addons/goto/events/target_list.tpl:6
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: addons/goto/events/class_EventTargetAddList.inc:55
+msgid ""
+"This dialog shows all available targets for the event. Check the targets you "
+"want to add and use the 'Apply' button."
+msgstr ""
+"Dieser Dialog zeigt alle verfügbaren Ziele für Ihr Ereignis, wählen Sie die "
+"zu verwendenden Ziele und drücken Sie auf den Knopf 'Anwenden' um die "
+"Auswahl zu übernehmen."
+
+#: addons/goto/events/class_EventTargetAddList.inc:73
+msgid "Display server"
+msgstr "Zeige Server"
+
+#: addons/goto/events/class_EventTargetAddList.inc:74
+msgid "Display workstation"
+msgstr "Zeige Arbeitsstation"
+
+#: addons/goto/events/class_EventTargetAddList.inc:75
+msgid "Display object groups"
+msgstr "Zeige die Objektgruppen, auf die Folgendes passt"
+
+#: addons/goto/events/class_EventTargetAddList.inc:76
+msgid "Filter by IP range"
+msgstr "IP-Bereichsfilter"
+
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
+#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
+msgid "Activate new"
+msgstr "Neue Geräte Aktivieren"
+
+#: addons/goto/events/DaemonEvent_reinstall.tpl:39
+msgid "Progress"
+msgstr "Fortschritt"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:7
+msgid "Message settings"
+msgstr "Nachrichteneinstellungen"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:10
+msgid "Sender"
+msgstr "Absender"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:37
+msgid "Target users"
+msgstr "Zielbenutzer"
+
+#: addons/goto/events/DaemonEvent_notify.tpl:44
+msgid "Target groups"
+msgstr "Zielgruppen"
+
+#: addons/goto/events/class_DaemonEvent_lock.inc:29
+#: addons/goto/events/class_DaemonEvent_lock.inc:30
+msgid "Lock"
+msgstr "Sperre"
+
+#: addons/goto/class_target_list.inc:58
+msgid "Select the target objects for your scheduled action."
+msgstr "Wählen Sie die Zielobjekte für den geplanten Vorgang."
+
+#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
+msgid "Available targets"
+msgstr "Verfügbare Ziele"
+
+#: addons/goto/class_target_list.inc:69
+msgid "Object name"
+msgstr "Objektname"
+
+#: addons/goto/class_target_list.inc:72
+msgid "Select to see object groups"
+msgstr "Auswählen um Objektgruppen zu sehen"
+
+#: addons/goto/class_target_list.inc:72
+msgid "Show object groups"
+msgstr "Zeige Objektgruppen"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Select to see servers"
+msgstr "Wählen um Server anzuzeigen"
+
+#: addons/goto/class_target_list.inc:73
+msgid "Show servers"
+msgstr "Zeige Server"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Select to see workstations"
+msgstr "Auswählen um Arbeitsstationen zu sehen"
+
+#: addons/goto/class_target_list.inc:74
+msgid "Show workstations"
+msgstr "Zeige Arbeitsstationen"
+
+#: addons/goto/class_target_list.inc:75
+msgid "Select to see incoming objects"
+msgstr "Auswählen um neue Objekte zu sehen"
+
+#: addons/goto/class_target_list.inc:75
+msgid "Show new objects"
+msgstr "Zeige neue Objekte"
+
+#: addons/goto/class_target_list.inc:80
+msgid "Select to search for a specific IP range only"
+msgstr "Auswählen um nur in einem bestimmten IP-Bereich zu suchen"
+
+#: addons/goto/class_target_list.inc:80
+msgid "Match IP range"
+msgstr "IP-Bereich"
+
+#: addons/goto/class_target_list.inc:83
+msgid "Regular expression for matching group names"
+msgstr "Regulärer Ausdruck zum Erkennen von Gruppennamen"
+
+#: addons/goto/class_target_list.inc:84
+msgid "IP range start"
+msgstr "Beginn des IP-Bereichs"
+
+#: addons/goto/class_target_list.inc:85
+msgid "IP range end"
+msgstr "Ende des IP-Bereichs"
+
+#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
+msgid "IP range"
+msgstr "IP-Bereich"
+
+#: addons/goto/log_view.tpl:7
+msgid "Available logs"
+msgstr "Verfügbare Protokolle"
+
+#: addons/goto/log_view.tpl:12
+msgid "Selected log"
+msgstr "Ausgewähltes Protokoll"
+
+#: addons/goto/log_view.tpl:17
+msgid "No logs for this host available!"
+msgstr "Es sind keine Protokolle für dieses System verfügbar!"
+
+#: addons/goto/goto_import_file.tpl:1
+msgid "Import jobs"
+msgstr "Vorgänge importieren"
+
+#: addons/goto/goto_import_file.tpl:3
+msgid ""
+"You can import a list of jobs into the GOsa job queue. This should be a "
+"semicolon seperated list of items in the following format:"
+msgstr ""
+"Sie können eine Liste von Aufträgen in die GOsa Auftragsliste importieren. "
+"Die Liste sollte aus Einträgen im folgenden Format bestehen, die jeweils "
+"durch ein Semikolon getrennt werden:"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "timestamp"
+msgstr "Zeitstempel"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "MAC-address"
+msgstr "MAC-Adresse"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "job type"
+msgstr "Auftrags-Typ"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "object group"
+msgstr "Objektgruppe"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "import base"
+msgstr "Basis für Import"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "full hostname"
+msgstr "Voll qualifizierter Hostname"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "IP-address"
+msgstr "IP-Adresse"
+
+#: addons/goto/goto_import_file.tpl:5
+msgid "DHCP group"
+msgstr "DHCP-Gruppe"
+
+#: addons/goto/goto_import_file.tpl:9
+msgid "Example"
+msgstr "Beispiel"
+
+#: addons/goto/goto_import_file.tpl:21
+msgid "Select list to import"
+msgstr "Wählen Sie die zu importierende Liste"
+
+#: addons/goto/goto_import_file.tpl:38
+#: addons/goto/class_goto_import_file.inc:168
+msgid "MAC"
+msgstr "MAC"
+
+#: addons/goto/goto_import_file.tpl:39
+#: addons/goto/class_goto_import_file.inc:171
+msgid "Event"
+msgstr "Ereignis"
+
+#: addons/goto/goto_import_file.tpl:42
+msgid "FQDN"
+msgstr "FQDN"
+
+#: addons/goto/goto_import_file.tpl:43
+msgid "IP"
+msgstr "IP"
+
+#: addons/goto/goto_import_file.tpl:44
+msgid "DHCP"
+msgstr "DHCP"
+
+#: addons/goto/class_goto_import_file.inc:90
+msgid "Selected entries will be skipped because of errors. Do you want to proceed?"
+msgstr ""
+"Die ausgewählten Einträge sind fehlerhaft und werden nicht berücksichtig. "
+"Möchten Sie fortfahren?"
+
+#: addons/goto/class_goto_import_file.inc:131
+#, php-format
+msgid "Import complete: %s events successfully send, %s failed"
+msgstr "Import abgeschlossen: %s Vorgänge importiert, %s fehlgeschlagen"
+
+#: addons/goto/class_gotoLogView.inc:113
+msgid "File"
+msgstr "Datei"
+
+#: addons/goto/class_gotoLogView.inc:115
+msgid "Date"
+msgstr "Datum"
+
+#: addons/goto/class_gotoLogView.inc:202
+msgid "Log view"
+msgstr "Log-Ansicht"
+
+#: addons/goto/class_gotoLogView.inc:203
+msgid "GOto log view"
+msgstr "GOto Log-Ansicht"
 
