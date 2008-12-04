@@ -111,7 +111,7 @@ class passwordMethodMIT extends passwordMethod
     /* No config object given, this may be the case 
        if there is only a is_available() request triggered.
      */
-    if(!is_object($config) || !$this->is_available()){
+    if(!is_object($config)){
       return;
     }  
 
@@ -284,14 +284,16 @@ class passwordMethodMIT extends passwordMethod
     $cache = session::get("MIT_PRINCIPAL_CACHE");
     if(!isset($cache[$server])){
       $o = new gosaSupportDaemon();
-      $tmp = $o->krb5_list_principals($server);
-      if($o->is_error()){
-        $this->si_error     = TRUE;
-        $this->si_error_msg = sprintf(_("Cannot load principals from server '%s'!"),$server).":&nbsp;<br>".$o->get_error(); 
-        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
-        return(array());
-      }else{
-        $cache[$server] = $tmp;
+      if($o->is_configured()){
+        $tmp = $o->krb5_list_principals($server);
+        if($o->is_error()){
+          $this->si_error     = TRUE;
+          $this->si_error_msg = sprintf(_("Cannot load principals from server '%s'!"),$server).":&nbsp;<br>".$o->get_error(); 
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o->get_error()),ERROR_DIALOG);
+          return(array());
+        }else{
+          $cache[$server] = $tmp;
+        }
       }
       session::set("MIT_PRINCIPAL_CACHE",$cache);
     }
@@ -339,6 +341,7 @@ class passwordMethodMIT extends passwordMethod
   {
   
     $o = new gosaSupportDaemon(FALSE);
+
     if(count($this->server_list) && $o->connect() && $o->is_configured()){
       return TRUE; 
     }
