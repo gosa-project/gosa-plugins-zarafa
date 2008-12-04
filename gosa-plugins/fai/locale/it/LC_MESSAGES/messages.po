@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 16:19+0100\n"
+"POT-Creation-Date: 2008-12-04 11:26+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -39,12 +39,6 @@ msgstr "Questa identità non possiede estensioni telefoniche"
 #: admin/systems/services/repository/class_servRepository.inc:142
 #: admin/systems/services/repository/class_servRepository.inc:177
 #: admin/systems/services/repository/class_servRepository.inc:182
-#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
-#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
-#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
-#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr ""
 
@@ -90,7 +84,6 @@ msgstr "Destinazione"
 #: admin/fai/class_faiTemplateEntry.inc:274
 #: admin/fai/class_faiHookEntry.inc:197
 #: admin/fai/class_faiPartitionTableEntry.inc:470
-#: addons/goto/class_gotomasses.inc:917
 msgid "Description"
 msgstr "Descrizione"
 
@@ -100,7 +93,6 @@ msgid "Template attributes"
 msgstr "Attributo DN delle persone"
 
 #: admin/fai/faiTemplateEntry.tpl:53 admin/fai/class_faiTemplateEntry.inc:211
-#: addons/goto/class_gotoLogView.inc:113
 msgid "File"
 msgstr ""
 
@@ -109,7 +101,7 @@ msgstr ""
 msgid "Save template"
 msgstr "Nuovo template"
 
-#: admin/fai/faiTemplateEntry.tpl:69 addons/goto/goto_import_file.tpl:25
+#: admin/fai/faiTemplateEntry.tpl:69
 msgid "Upload"
 msgstr ""
 
@@ -126,7 +118,6 @@ msgstr ""
 #: admin/fai/class_faiTemplateEntry.inc:230
 #: admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:235
-#: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr "Gruppo"
 
@@ -150,7 +141,7 @@ msgstr "leggere"
 msgid "Write"
 msgstr "scrivere"
 
-#: admin/fai/faiTemplateEntry.tpl:123 addons/goto/class_gotomasses.inc:383
+#: admin/fai/faiTemplateEntry.tpl:123
 msgid "Execute"
 msgstr "Esegui"
 
@@ -161,7 +152,6 @@ msgstr "Terminali"
 
 #: admin/fai/faiTemplateEntry.tpl:128 admin/fai/class_faiTemplateEntry.inc:224
 #: admin/fai/class_faiTemplateEntry.inc:226
-#: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr ""
 
@@ -336,7 +326,6 @@ msgid "Class types"
 msgstr "Scegli il tuo numero di telefono personale"
 
 #: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
-#: addons/goto/class_gotomasses.inc:365
 msgid "Actions"
 msgstr "Azioni"
 
@@ -440,7 +429,7 @@ msgstr "Gruppi di oggetti"
 msgid "Display users matching"
 msgstr "Mostra utenti che corrispondono a"
 
-#: admin/fai/class_divListFai.inc:140 addons/goto/class_gotomasses.inc:366
+#: admin/fai/class_divListFai.inc:140
 msgid "Create"
 msgstr "Creare"
 
@@ -512,9 +501,6 @@ msgstr ""
 #: admin/fai/class_divListFai.inc:178
 #: admin/fai/class_faiPartitionTableEntry.inc:288
 #: admin/fai/class_faiPartitionTableEntry.inc:290
-#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
-#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
-#: addons/goto/events/class_DaemonEvent.inc:230
 msgid "Remove"
 msgstr "Rimuovi"
 
@@ -628,8 +614,6 @@ msgstr "Specificare una dimenzione valida per le mail da rigettare."
 #: admin/fai/class_faiManagement.inc:781
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/systems/services/repository/class_servRepository.inc:326
-#: addons/goto/class_gotomasses.inc:328
-#: addons/goto/class_goto_import_file.inc:124
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Seleziona per mostrare le applicazioni"
@@ -858,7 +842,6 @@ msgstr ""
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:513
 #: admin/fai/class_faiManagement.inc:1286 admin/fai/remove_branch.tpl:2
-#: addons/goto/remove.tpl:2
 msgid "Warning"
 msgstr "Attenzione"
 
@@ -1015,7 +998,6 @@ msgstr ""
 
 #: admin/fai/faiPartitionTable.tpl:54 admin/fai/faiVariable.tpl:53
 #: admin/fai/class_faiHook.inc:312 admin/fai/class_faiHook.inc:314
-#: addons/goto/class_gotomasses.inc:469
 msgid "Edit"
 msgstr "Modifica"
 
@@ -1025,7 +1007,6 @@ msgid "Hook attributes"
 msgstr "Attributo DN delle persone"
 
 #: admin/fai/faiHookEntry.tpl:38 admin/fai/class_faiHookEntry.inc:198
-#: addons/goto/class_gotomasses.inc:409
 msgid "Task"
 msgstr ""
 
@@ -1070,7 +1051,7 @@ msgid ""
 "to get your data back."
 msgstr ""
 
-#: admin/fai/remove_branch.tpl:10 addons/goto/remove.tpl:9
+#: admin/fai/remove_branch.tpl:10
 #, fuzzy
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
@@ -1214,7 +1195,7 @@ msgstr "Contatto"
 msgid "Sort direction"
 msgstr "Azione"
 
-#: admin/fai/class_faiScript.inc:332 addons/goto/class_gotomasses.inc:415
+#: admin/fai/class_faiScript.inc:332
 msgid "Action"
 msgstr "Azione"
 
@@ -1343,7 +1324,6 @@ msgid "Add partition"
 msgstr ""
 
 #: admin/fai/class_faiScriptEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
-#: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
 msgid "file is empty"
 msgstr "Rimuovi"
@@ -1630,783 +1610,323 @@ msgstr "Scegli il tuo numero di telefono personale"
 msgid "Services"
 msgstr "Servizi"
 
-#: addons/goto/class_gotomasses.inc:26
-#, fuzzy
-msgid "Deployment status"
-msgstr "Stato"
-
-#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
-#, fuzzy
-msgid "System deployment status"
-msgstr "Dipartimento"
-
-#: addons/goto/class_gotomasses.inc:230
-#, fuzzy
-msgid "Permission"
-msgstr "Permessi"
-
-#: addons/goto/class_gotomasses.inc:270
-#, php-format
-msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:360
-msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:361
-#, fuzzy
-msgid "List of queued jobs"
-msgstr "Lista dei dipartimenti"
-
-#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
-#: addons/goto/class_goto_import_file.inc:29
-#: addons/goto/class_goto_import_file.inc:89
-#: addons/goto/class_goto_import_file.inc:131
-msgid "Import"
-msgstr "Importa"
-
-#: addons/goto/class_gotomasses.inc:380
-#, fuzzy
-msgid "Resume"
-msgstr "Rimuovi"
-
-#: addons/goto/class_gotomasses.inc:381
-#, fuzzy
-msgid "Pause"
-msgstr "Data"
-
-#: addons/goto/class_gotomasses.inc:382
-msgid "Abort"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:400
-#, fuzzy
-msgid "Reload"
-msgstr "leggere"
-
-#: addons/goto/class_gotomasses.inc:408
-#: addons/goto/events/DaemonEvent_halt.tpl:47
-#: addons/goto/events/DaemonEvent_wakeup.tpl:47
-#: addons/goto/events/DaemonEvent_faireboot.tpl:47
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
-#: addons/goto/events/DaemonEvent_activate.tpl:47
-#: addons/goto/events/DaemonEvent_rescan.tpl:47
-#: addons/goto/events/DaemonEvent_memcheck.tpl:47
-#: addons/goto/events/class_DaemonEvent_notify.inc:77
-#: addons/goto/events/class_DaemonEvent_notify.inc:78
-#: addons/goto/events/class_DaemonEvent_notify.inc:103
-#: addons/goto/events/DaemonEvent_update.tpl:47
-#: addons/goto/events/DaemonEvent_reboot.tpl:47
-#: addons/goto/events/DaemonEvent_lock.tpl:47
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
-#: addons/goto/events/DaemonEvent_localboot.tpl:47
-#: addons/goto/events/DaemonEvent_reinstall.tpl:51
-#: addons/goto/events/DaemonEvent_notify.tpl:81
-#, fuzzy
-msgid "Target"
-msgstr "reset"
-
-#: addons/goto/class_gotomasses.inc:411
-#: addons/goto/events/DaemonEvent_halt.tpl:9
-#: addons/goto/events/DaemonEvent_wakeup.tpl:9
-#: addons/goto/events/DaemonEvent_faireboot.tpl:9
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
-#: addons/goto/events/DaemonEvent_rescan.tpl:9
-#: addons/goto/events/DaemonEvent_memcheck.tpl:9
-#: addons/goto/events/DaemonEvent_update.tpl:9
-#: addons/goto/events/DaemonEvent_reboot.tpl:9
-#: addons/goto/events/DaemonEvent_lock.tpl:9
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
-#: addons/goto/events/DaemonEvent_localboot.tpl:9
-#: addons/goto/events/DaemonEvent_reinstall.tpl:9
-#: addons/goto/events/DaemonEvent_notify.tpl:28
-#, fuzzy
-msgid "Schedule"
-msgstr "Estenzioni PHPGroupware"
-
-#: addons/goto/class_gotomasses.inc:413
-#: addons/goto/events/DaemonEvent_halt.tpl:39
-#: addons/goto/events/DaemonEvent_wakeup.tpl:39
-#: addons/goto/events/DaemonEvent_faireboot.tpl:39
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
-#: addons/goto/events/DaemonEvent_activate.tpl:39
-#: addons/goto/events/DaemonEvent_rescan.tpl:39
-#: addons/goto/events/DaemonEvent_memcheck.tpl:39
-#: addons/goto/events/DaemonEvent_update.tpl:39
-#: addons/goto/events/DaemonEvent_reboot.tpl:39
-#: addons/goto/events/DaemonEvent_lock.tpl:39
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
-#: addons/goto/events/DaemonEvent_localboot.tpl:39
-#: addons/goto/events/DaemonEvent_reinstall.tpl:43
-#: addons/goto/events/DaemonEvent_notify.tpl:73
-msgid "Status"
-msgstr "Stato"
-
-#: addons/goto/class_gotomasses.inc:432
-#, fuzzy
-msgid "Move up"
-msgstr "Dominio"
-
-#: addons/goto/class_gotomasses.inc:434
-#, fuzzy
-msgid "Move down"
-msgstr "Dominio"
-
-#: addons/goto/class_gotomasses.inc:441
-msgid "Pause job"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:448
-msgid "Resume job"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:455
-#, fuzzy
-msgid "Execute now"
-msgstr "Esegui"
-
-#: addons/goto/class_gotomasses.inc:462
-msgid "View logs"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:477
-msgid "Abort job"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:521
-#, fuzzy
-msgid "Waiting"
-msgstr "Attenzione"
-
-#: addons/goto/class_gotomasses.inc:527
-msgid "Processed"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:538
-msgid "Locked"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:542
-#, fuzzy
-msgid "Detection"
-msgstr "Azione"
-
-#: addons/goto/class_gotomasses.inc:550
-msgid "in progress"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:563
-msgid "immediately"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
-#: addons/goto/class_gotomasses.inc:775
-#, fuzzy, php-format
-msgid "Cannot update queue entry: %s"
-msgstr "Rimuovi"
-
-#: addons/goto/class_gotomasses.inc:691
-#, php-format
-msgid "Cannot update queue entries."
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:740
-#, php-format
-msgid "Required class '%s' cannot be found: job not aborted!"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:816
-#, fuzzy, php-format
-msgid "Cannot load queue entries: %s"
-msgstr "Rimuovi"
-
-#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
-#, fuzzy
-msgid "System deployment"
-msgstr "Dipartimento"
-
-#: addons/goto/class_gotomasses.inc:911
-msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_rescan.inc:28
-#: addons/goto/events/class_DaemonEvent_rescan.inc:29
-msgid "Rescan hardware"
-msgstr ""
-
-#: addons/goto/events/DaemonEvent_halt.tpl:18
-#: addons/goto/events/DaemonEvent_wakeup.tpl:18
-#: addons/goto/events/DaemonEvent_faireboot.tpl:18
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
-#: addons/goto/events/DaemonEvent_activate.tpl:18
-#: addons/goto/events/DaemonEvent_rescan.tpl:18
-#: addons/goto/events/DaemonEvent_memcheck.tpl:18
-#: addons/goto/events/DaemonEvent_update.tpl:18
-#: addons/goto/events/DaemonEvent_reboot.tpl:18
-#: addons/goto/events/DaemonEvent_lock.tpl:18
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
-#: addons/goto/events/DaemonEvent_localboot.tpl:18
-#: addons/goto/events/DaemonEvent_reinstall.tpl:18
-#, fuzzy
-msgid "System list"
-msgstr "Accesso ai sistemi"
-
-#: addons/goto/events/DaemonEvent_halt.tpl:35
-#: addons/goto/events/DaemonEvent_wakeup.tpl:35
-#: addons/goto/events/DaemonEvent_faireboot.tpl:35
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
-#: addons/goto/events/DaemonEvent_activate.tpl:35
-#: addons/goto/events/DaemonEvent_rescan.tpl:35
-#: addons/goto/events/DaemonEvent_memcheck.tpl:35
-#: addons/goto/events/DaemonEvent_update.tpl:35
-#: addons/goto/events/DaemonEvent_reboot.tpl:35
-#: addons/goto/events/DaemonEvent_lock.tpl:35
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
-#: addons/goto/events/DaemonEvent_localboot.tpl:35
-#: addons/goto/events/DaemonEvent_reinstall.tpl:35
-#: addons/goto/events/DaemonEvent_notify.tpl:69
-#, fuzzy
-msgid "ID"
-msgstr "GID"
-
-#: addons/goto/events/DaemonEvent_halt.tpl:43
-#: addons/goto/events/DaemonEvent_wakeup.tpl:43
-#: addons/goto/events/DaemonEvent_faireboot.tpl:43
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
-#: addons/goto/events/DaemonEvent_activate.tpl:43
-#: addons/goto/events/DaemonEvent_rescan.tpl:43
-#: addons/goto/events/DaemonEvent_memcheck.tpl:43
-#: addons/goto/events/DaemonEvent_update.tpl:43
-#: addons/goto/events/DaemonEvent_reboot.tpl:43
-#: addons/goto/events/DaemonEvent_lock.tpl:43
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
-#: addons/goto/events/DaemonEvent_localboot.tpl:43
-#: addons/goto/events/DaemonEvent_reinstall.tpl:47
-#: addons/goto/events/DaemonEvent_notify.tpl:77
-msgid "Result"
-msgstr ""
-
-#: addons/goto/events/DaemonEvent_halt.tpl:51
-#: addons/goto/events/DaemonEvent_wakeup.tpl:51
-#: addons/goto/events/DaemonEvent_faireboot.tpl:51
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
-#: addons/goto/events/DaemonEvent_activate.tpl:51
-#: addons/goto/events/DaemonEvent_rescan.tpl:51
-#: addons/goto/events/DaemonEvent_memcheck.tpl:51
-#: addons/goto/events/DaemonEvent_update.tpl:51
-#: addons/goto/events/DaemonEvent_reboot.tpl:51
-#: addons/goto/events/DaemonEvent_lock.tpl:51
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
-#: addons/goto/events/DaemonEvent_localboot.tpl:51
-#: addons/goto/events/DaemonEvent_reinstall.tpl:55
-#: addons/goto/events/DaemonEvent_notify.tpl:85
-#: addons/goto/goto_import_file.tpl:37
-#, fuzzy
-msgid "Timestamp"
-msgstr "Timeout"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:45
-#: addons/goto/events/class_EventTargetAddList.inc:51
-#, fuzzy
-msgid "Targets"
-msgstr "reset"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:49
-msgid ""
-"This dialog shows all available targets for your event, check the targets "
-"you want to add and use the 'Use' button to accept."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:60
-#: addons/goto/events/class_EventTargetAddList.inc:66
-#, fuzzy
-msgid "System / Department"
-msgstr "Dipartimento"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:65
-#, fuzzy
-msgid "Display users"
-msgstr "Mostra utenti che corrispondono a"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:66
-#, fuzzy
-msgid "Display groups"
-msgstr "Mostra gruppi di utenti"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
-#: addons/goto/events/class_EventTargetAddList.inc:161
-#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
-msgid "Base"
-msgstr "Base"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/class_target_list.inc:154
-msgid "Submit department"
-msgstr "Imposta dipartimento"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/class_target_list.inc:154
-msgid "Submit"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
-#, fuzzy
-msgid "Abort installation"
-msgstr "Amministrazione"
-
-#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
-msgid "GOto reload"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
-#, fuzzy
-msgid "Reload GOto settings"
-msgstr "Impostazioni Unix"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
-msgid "Reload fai server db"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
-#, fuzzy
-msgid "System analysis"
-msgstr "Sistemi"
-
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
-#, fuzzy
-msgid "Installation activation"
-msgstr "Amministrazione"
-
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
-msgid "Reload LDAP config"
-msgstr ""
-
-#: addons/goto/events/DaemonEvent_activate.tpl:9
-#, fuzzy
-msgid "Time schedule"
-msgstr "Estenzioni PHPGroupware"
-
-#: addons/goto/events/class_DaemonEvent_halt.inc:31
-#: addons/goto/events/class_DaemonEvent_halt.inc:32
-msgid "Switch off"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_activate.inc:29
-#: addons/goto/events/class_DaemonEvent_activate.inc:30
-msgid "Unlock"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
-msgid "Wake up"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
-msgid "Wake system"
-msgstr ""
-
-#: addons/goto/events/timestamp_select.tpl:3
-#, fuzzy
-msgid "Year"
-msgstr "Cerca"
-
-#: addons/goto/events/timestamp_select.tpl:4
-#, fuzzy
-msgid "Month"
-msgstr "mese"
-
-#: addons/goto/events/timestamp_select.tpl:5
-#, fuzzy
-msgid "Day"
-msgstr "giorno"
-
-#: addons/goto/events/timestamp_select.tpl:7
-#, fuzzy
-msgid "Hour"
-msgstr "ora"
-
-#: addons/goto/events/timestamp_select.tpl:8
-#, fuzzy
-msgid "Minute"
-msgstr "Stampante"
-
-#: addons/goto/events/timestamp_select.tpl:9
-#, fuzzy
-msgid "Second"
-msgstr "Azione"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
-#, fuzzy
-msgid "Reload fai release db"
-msgstr "Nome applicazione"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:46
-#: addons/goto/events/class_DaemonEvent_notify.inc:47
-#, fuzzy
-msgid "Send message"
-msgstr "Home Page"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:94
-#: addons/goto/events/DaemonEvent_notify.tpl:14
-#, fuzzy
-msgid "Subject"
-msgstr "Oggetto"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:97
-#: addons/goto/events/DaemonEvent_notify.tpl:18
-#, fuzzy
-msgid "Message"
-msgstr "Home Page"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:100
-msgid "From"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent.inc:119
-msgid "This job has no template!"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent.inc:135
-#, fuzzy, php-format
-msgid "Create '%s' job"
-msgstr "Gruppo di oggetti"
-
-#: addons/goto/events/class_DaemonEvent.inc:234
-msgid "Add"
-msgstr "Aggiungi"
-
-#: addons/goto/events/target_list.tpl:5
-msgid "Apply"
-msgstr "Applica"
-
-#: addons/goto/events/target_list.tpl:6
-msgid "Cancel"
-msgstr "Annulla"
-
-#: addons/goto/events/class_EventTargetAddList.inc:55
-msgid ""
-"This dialog shows all available targets for the event. Check the targets you "
-"want to add and use the 'Apply' button."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddList.inc:73
-#, fuzzy
-msgid "Display server"
-msgstr "Mostra il nome"
-
-#: addons/goto/events/class_EventTargetAddList.inc:74
-#, fuzzy
-msgid "Display workstation"
-msgstr "Mostra utenti che corrispondono a"
-
-#: addons/goto/events/class_EventTargetAddList.inc:75
 #, fuzzy
-msgid "Display object groups"
-msgstr "Nome del gruppo"
+#~ msgid "Deployment status"
+#~ msgstr "Stato"
 
-#: addons/goto/events/class_EventTargetAddList.inc:76
-msgid "Filter by IP range"
-msgstr ""
+#, fuzzy
+#~ msgid "System deployment status"
+#~ msgstr "Dipartimento"
+
+#, fuzzy
+#~ msgid "Permission"
+#~ msgstr "Permessi"
+
+#, fuzzy
+#~ msgid "List of queued jobs"
+#~ msgstr "Lista dei dipartimenti"
+
+#~ msgid "Import"
+#~ msgstr "Importa"
+
+#, fuzzy
+#~ msgid "Resume"
+#~ msgstr "Rimuovi"
+
+#, fuzzy
+#~ msgid "Pause"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Reload"
+#~ msgstr "leggere"
+
+#, fuzzy
+#~ msgid "Target"
+#~ msgstr "reset"
+
+#, fuzzy
+#~ msgid "Schedule"
+#~ msgstr "Estenzioni PHPGroupware"
 
-#: addons/goto/events/class_EventTargetAddList.inc:238
-#: addons/goto/class_target_list.inc:201
-msgid "Server"
-msgstr "Server"
+#~ msgid "Status"
+#~ msgstr "Stato"
 
-#: addons/goto/events/class_EventTargetAddList.inc:249
-#: addons/goto/class_target_list.inc:203
-msgid "Workstation"
-msgstr ""
+#, fuzzy
+#~ msgid "Move up"
+#~ msgstr "Dominio"
+
+#, fuzzy
+#~ msgid "Move down"
+#~ msgstr "Dominio"
+
+#, fuzzy
+#~ msgid "Execute now"
+#~ msgstr "Esegui"
+
+#, fuzzy
+#~ msgid "Waiting"
+#~ msgstr "Attenzione"
+
+#, fuzzy
+#~ msgid "Detection"
+#~ msgstr "Azione"
+
+#, fuzzy
+#~ msgid "Cannot update queue entry: %s"
+#~ msgstr "Rimuovi"
+
+#, fuzzy
+#~ msgid "Cannot load queue entries: %s"
+#~ msgstr "Rimuovi"
 
-#: addons/goto/events/class_EventTargetAddList.inc:259
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-msgid "Object group"
-msgstr "Gruppo di oggetti"
+#, fuzzy
+#~ msgid "System deployment"
+#~ msgstr "Dipartimento"
 
-#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
-#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
-msgid "Reinstall"
-msgstr ""
+#, fuzzy
+#~ msgid "System list"
+#~ msgstr "Accesso ai sistemi"
 
-#: addons/goto/events/class_DaemonEvent_localboot.inc:28
-#: addons/goto/events/class_DaemonEvent_localboot.inc:29
-msgid "Force localboot"
-msgstr ""
+#, fuzzy
+#~ msgid "ID"
+#~ msgstr "GID"
 
-#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
-#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
-msgid "Memory test"
-msgstr ""
+#, fuzzy
+#~ msgid "Timestamp"
+#~ msgstr "Timeout"
 
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
 #, fuzzy
-msgid "Activate new"
-msgstr "Privato"
+#~ msgid "Targets"
+#~ msgstr "reset"
 
-#: addons/goto/events/class_DaemonEvent_reboot.inc:29
-#: addons/goto/events/class_DaemonEvent_reboot.inc:30
-msgid "Reboot"
-msgstr ""
+#, fuzzy
+#~ msgid "System / Department"
+#~ msgstr "Dipartimento"
 
-#: addons/goto/events/DaemonEvent_reinstall.tpl:39
 #, fuzzy
-msgid "Progress"
-msgstr "Profili"
+#~ msgid "Display users"
+#~ msgstr "Mostra utenti che corrispondono a"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:7
 #, fuzzy
-msgid "Message settings"
-msgstr "Opzioni di posta dell'identità"
+#~ msgid "Display groups"
+#~ msgstr "Mostra gruppi di utenti"
+
+#~ msgid "Base"
+#~ msgstr "Base"
+
+#~ msgid "Submit department"
+#~ msgstr "Imposta dipartimento"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:10
 #, fuzzy
-msgid "Sender"
-msgstr "Generale"
+#~ msgid "Abort installation"
+#~ msgstr "Amministrazione"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:37
 #, fuzzy
-msgid "Target users"
-msgstr "Utenti di Dominio"
+#~ msgid "Reload GOto settings"
+#~ msgstr "Impostazioni Unix"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:44
 #, fuzzy
-msgid "Target groups"
-msgstr "dipartimenti"
+#~ msgid "System analysis"
+#~ msgstr "Sistemi"
 
-#: addons/goto/events/class_DaemonEvent_lock.inc:29
-#: addons/goto/events/class_DaemonEvent_lock.inc:30
-msgid "Lock"
-msgstr ""
+#, fuzzy
+#~ msgid "Installation activation"
+#~ msgstr "Amministrazione"
 
-#: addons/goto/events/class_DaemonEvent_update.inc:29
-#: addons/goto/events/class_DaemonEvent_update.inc:30
-msgid "Software update"
-msgstr ""
+#, fuzzy
+#~ msgid "Time schedule"
+#~ msgstr "Estenzioni PHPGroupware"
 
-#: addons/goto/class_target_list.inc:58
-msgid "Select the target objects for your scheduled action."
-msgstr ""
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Cerca"
 
-#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
 #, fuzzy
-msgid "Available targets"
-msgstr "Applicazioni disponibili"
+#~ msgid "Month"
+#~ msgstr "mese"
 
-#: addons/goto/class_target_list.inc:69
-msgid "Object name"
-msgstr "Nome dell'oggetto"
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "giorno"
 
-#: addons/goto/class_target_list.inc:72
 #, fuzzy
-msgid "Select to see object groups"
-msgstr "Mostra gruppi che contengono gruppi"
+#~ msgid "Hour"
+#~ msgstr "ora"
 
-#: addons/goto/class_target_list.inc:72
 #, fuzzy
-msgid "Show object groups"
-msgstr "Gruppi di oggetti"
+#~ msgid "Minute"
+#~ msgstr "Stampante"
 
-#: addons/goto/class_target_list.inc:73
-msgid "Select to see servers"
-msgstr ""
+#, fuzzy
+#~ msgid "Second"
+#~ msgstr "Azione"
 
-#: addons/goto/class_target_list.inc:73
-msgid "Show servers"
-msgstr "Mostra server"
+#, fuzzy
+#~ msgid "Reload fai release db"
+#~ msgstr "Nome applicazione"
 
-#: addons/goto/class_target_list.inc:74
 #, fuzzy
-msgid "Select to see workstations"
-msgstr "Seleziona per mostrare le applicazioni"
+#~ msgid "Send message"
+#~ msgstr "Home Page"
 
-#: addons/goto/class_target_list.inc:74
-msgid "Show workstations"
-msgstr "Mostra workstation"
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Oggetto"
 
-#: addons/goto/class_target_list.inc:75
 #, fuzzy
-msgid "Select to see incoming objects"
-msgstr "Seleziona per mostrare le applicazioni"
+#~ msgid "Message"
+#~ msgstr "Home Page"
 
-#: addons/goto/class_target_list.inc:75
 #, fuzzy
-msgid "Show new objects"
-msgstr "Oggetti membri"
+#~ msgid "Create '%s' job"
+#~ msgstr "Gruppo di oggetti"
+
+#~ msgid "Add"
+#~ msgstr "Aggiungi"
 
-#: addons/goto/class_target_list.inc:80
-msgid "Select to search for a specific IP range only"
-msgstr ""
+#~ msgid "Apply"
+#~ msgstr "Applica"
 
-#: addons/goto/class_target_list.inc:80
-msgid "Match IP range"
-msgstr ""
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
 
-#: addons/goto/class_target_list.inc:83
-msgid "Regular expression for matching group names"
-msgstr "Espressioni regolare per selezionare il nome del gruppo"
+#, fuzzy
+#~ msgid "Display server"
+#~ msgstr "Mostra il nome"
+
+#, fuzzy
+#~ msgid "Display workstation"
+#~ msgstr "Mostra utenti che corrispondono a"
 
-#: addons/goto/class_target_list.inc:84
-msgid "IP range start"
-msgstr ""
+#, fuzzy
+#~ msgid "Display object groups"
+#~ msgstr "Nome del gruppo"
 
-#: addons/goto/class_target_list.inc:85
-msgid "IP range end"
-msgstr ""
+#~ msgid "Server"
+#~ msgstr "Server"
 
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-msgid "IP range"
-msgstr ""
+#~ msgid "Object group"
+#~ msgstr "Gruppo di oggetti"
 
-#: addons/goto/log_view.tpl:7
 #, fuzzy
-msgid "Available logs"
-msgstr "Applicazioni disponibili"
+#~ msgid "Activate new"
+#~ msgstr "Privato"
 
-#: addons/goto/log_view.tpl:12
 #, fuzzy
-msgid "Selected log"
-msgstr "Rimuovi"
+#~ msgid "Progress"
+#~ msgstr "Profili"
 
-#: addons/goto/log_view.tpl:17
-msgid "No logs for this host available!"
-msgstr ""
+#, fuzzy
+#~ msgid "Message settings"
+#~ msgstr "Opzioni di posta dell'identità"
 
-#: addons/goto/goto_import_file.tpl:1
 #, fuzzy
-msgid "Import jobs"
-msgstr "Importa"
+#~ msgid "Sender"
+#~ msgstr "Generale"
 
-#: addons/goto/goto_import_file.tpl:3
-msgid ""
-"You can import a list of jobs into the GOsa job queue. This should be a "
-"semicolon seperated list of items in the following format:"
-msgstr ""
+#, fuzzy
+#~ msgid "Target users"
+#~ msgstr "Utenti di Dominio"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "timestamp"
-msgstr "Timeout"
+#~ msgid "Target groups"
+#~ msgstr "dipartimenti"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "MAC-address"
-msgstr "Indirizzo"
+#~ msgid "Available targets"
+#~ msgstr "Applicazioni disponibili"
 
-#: addons/goto/goto_import_file.tpl:5
+#~ msgid "Object name"
+#~ msgstr "Nome dell'oggetto"
+
 #, fuzzy
-msgid "job type"
-msgstr "Tipo"
+#~ msgid "Select to see object groups"
+#~ msgstr "Mostra gruppi che contengono gruppi"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "object group"
-msgstr "Gruppo di oggetti"
+#~ msgid "Show object groups"
+#~ msgstr "Gruppi di oggetti"
+
+#~ msgid "Show servers"
+#~ msgstr "Mostra server"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "import base"
-msgstr "Nome applicazione"
+#~ msgid "Select to see workstations"
+#~ msgstr "Seleziona per mostrare le applicazioni"
 
-#: addons/goto/goto_import_file.tpl:5
-msgid "full hostname"
-msgstr ""
+#~ msgid "Show workstations"
+#~ msgstr "Mostra workstation"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "IP-address"
-msgstr "Indirizzo"
+#~ msgid "Select to see incoming objects"
+#~ msgstr "Seleziona per mostrare le applicazioni"
 
-#: addons/goto/goto_import_file.tpl:5
-msgid "DHCP group"
-msgstr ""
+#, fuzzy
+#~ msgid "Show new objects"
+#~ msgstr "Oggetti membri"
+
+#~ msgid "Regular expression for matching group names"
+#~ msgstr "Espressioni regolare per selezionare il nome del gruppo"
+
+#, fuzzy
+#~ msgid "Available logs"
+#~ msgstr "Applicazioni disponibili"
 
-#: addons/goto/goto_import_file.tpl:9
-msgid "Example"
-msgstr ""
+#, fuzzy
+#~ msgid "Selected log"
+#~ msgstr "Rimuovi"
 
-#: addons/goto/goto_import_file.tpl:21
 #, fuzzy
-msgid "Select list to import"
-msgstr "Seleziona un sistema da aggiungere"
+#~ msgid "Import jobs"
+#~ msgstr "Importa"
 
-#: addons/goto/goto_import_file.tpl:24
 #, fuzzy
-msgid "Browse"
-msgstr "Base"
+#~ msgid "timestamp"
+#~ msgstr "Timeout"
 
-#: addons/goto/goto_import_file.tpl:38
-#: addons/goto/class_goto_import_file.inc:168
 #, fuzzy
-msgid "MAC"
-msgstr "ACL"
+#~ msgid "MAC-address"
+#~ msgstr "Indirizzo"
 
-#: addons/goto/goto_import_file.tpl:39
-#: addons/goto/class_goto_import_file.inc:171
-msgid "Event"
-msgstr ""
+#, fuzzy
+#~ msgid "job type"
+#~ msgstr "Tipo"
 
-#: addons/goto/goto_import_file.tpl:42
-msgid "FQDN"
-msgstr ""
+#, fuzzy
+#~ msgid "object group"
+#~ msgstr "Gruppo di oggetti"
 
-#: addons/goto/goto_import_file.tpl:43
 #, fuzzy
-msgid "IP"
-msgstr "Unix"
+#~ msgid "import base"
+#~ msgstr "Nome applicazione"
 
-#: addons/goto/goto_import_file.tpl:44
-msgid "DHCP"
-msgstr ""
+#, fuzzy
+#~ msgid "IP-address"
+#~ msgstr "Indirizzo"
 
-#: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
-msgstr ""
+#, fuzzy
+#~ msgid "Select list to import"
+#~ msgstr "Seleziona un sistema da aggiungere"
 
-#: addons/goto/class_goto_import_file.inc:131
-#, php-format
-msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
+#, fuzzy
+#~ msgid "Browse"
+#~ msgstr "Base"
 
-#: addons/goto/class_gotoLogView.inc:87
-msgid "none"
-msgstr "nessuno"
+#, fuzzy
+#~ msgid "MAC"
+#~ msgstr "ACL"
 
-#: addons/goto/class_gotoLogView.inc:115
 #, fuzzy
-msgid "Date"
-msgstr "Data"
+#~ msgid "IP"
+#~ msgstr "Unix"
 
-#: addons/goto/class_gotoLogView.inc:202
-msgid "Log view"
-msgstr ""
+#~ msgid "none"
+#~ msgstr "nessuno"
 
-#: addons/goto/class_gotoLogView.inc:203
-msgid "GOto log view"
-msgstr ""
+#, fuzzy
+#~ msgid "Date"
+#~ msgstr "Data"
 
 #, fuzzy
 #~ msgid "System mass deployment"

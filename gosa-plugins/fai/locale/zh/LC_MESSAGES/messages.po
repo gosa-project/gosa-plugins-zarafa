@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 16:19+0100\n"
+"POT-Creation-Date: 2008-12-04 11:26+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -39,12 +39,6 @@ msgstr "这个软件包没有 debconf 选项。"
 #: admin/systems/services/repository/class_servRepository.inc:142
 #: admin/systems/services/repository/class_servRepository.inc:177
 #: admin/systems/services/repository/class_servRepository.inc:182
-#: addons/goto/class_gotomasses.inc:174 addons/goto/class_gotomasses.inc:524
-#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:691
-#: addons/goto/class_gotomasses.inc:735 addons/goto/class_gotomasses.inc:739
-#: addons/goto/class_gotomasses.inc:775 addons/goto/class_gotomasses.inc:816
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-#: addons/goto/class_gotoLogView.inc:57 addons/goto/class_gotoLogView.inc:175
 msgid "Error"
 msgstr "错误"
 
@@ -90,7 +84,6 @@ msgstr "目标路径"
 #: admin/fai/class_faiTemplateEntry.inc:274
 #: admin/fai/class_faiHookEntry.inc:197
 #: admin/fai/class_faiPartitionTableEntry.inc:470
-#: addons/goto/class_gotomasses.inc:917
 msgid "Description"
 msgstr "描述"
 
@@ -99,7 +92,6 @@ msgid "Template attributes"
 msgstr "模板属性"
 
 #: admin/fai/faiTemplateEntry.tpl:53 admin/fai/class_faiTemplateEntry.inc:211
-#: addons/goto/class_gotoLogView.inc:113
 msgid "File"
 msgstr "文件"
 
@@ -107,7 +99,7 @@ msgstr "文件"
 msgid "Save template"
 msgstr "保存模板"
 
-#: admin/fai/faiTemplateEntry.tpl:69 addons/goto/goto_import_file.tpl:25
+#: admin/fai/faiTemplateEntry.tpl:69
 msgid "Upload"
 msgstr "上传"
 
@@ -124,7 +116,6 @@ msgstr "所有者"
 #: admin/fai/class_faiTemplateEntry.inc:230
 #: admin/fai/class_faiTemplateEntry.inc:233
 #: admin/fai/class_faiTemplateEntry.inc:235
-#: addons/goto/events/class_EventTargetAddUsersList.inc:173
 msgid "Group"
 msgstr "组"
 
@@ -144,7 +135,7 @@ msgstr "读"
 msgid "Write"
 msgstr "写"
 
-#: admin/fai/faiTemplateEntry.tpl:123 addons/goto/class_gotomasses.inc:383
+#: admin/fai/faiTemplateEntry.tpl:123
 msgid "Execute"
 msgstr "执行"
 
@@ -154,7 +145,6 @@ msgstr "特殊"
 
 #: admin/fai/faiTemplateEntry.tpl:128 admin/fai/class_faiTemplateEntry.inc:224
 #: admin/fai/class_faiTemplateEntry.inc:226
-#: addons/goto/events/class_EventTargetAddUsersList.inc:171
 msgid "User"
 msgstr "用户"
 
@@ -315,7 +305,6 @@ msgid "Class types"
 msgstr "分类类型"
 
 #: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
-#: addons/goto/class_gotomasses.inc:365
 msgid "Actions"
 msgstr "动作"
 
@@ -413,7 +402,7 @@ msgstr "对象组"
 msgid "Display users matching"
 msgstr "显示匹配的用户"
 
-#: admin/fai/class_divListFai.inc:140 addons/goto/class_gotomasses.inc:366
+#: admin/fai/class_divListFai.inc:140
 msgid "Create"
 msgstr "创建"
 
@@ -484,9 +473,6 @@ msgstr "PK"
 #: admin/fai/class_divListFai.inc:178
 #: admin/fai/class_faiPartitionTableEntry.inc:288
 #: admin/fai/class_faiPartitionTableEntry.inc:290
-#: addons/goto/class_gotomasses.inc:269 addons/goto/class_gotomasses.inc:376
-#: addons/goto/class_gotomasses.inc:484 addons/goto/class_gotomasses.inc:488
-#: addons/goto/events/class_DaemonEvent.inc:230
 msgid "Remove"
 msgstr "删除"
 
@@ -601,8 +587,6 @@ msgstr "请为您仓库的设置选择一个有效的组合。"
 #: admin/fai/class_faiManagement.inc:781
 #: admin/fai/class_faiPackageConfiguration.inc:35
 #: admin/systems/services/repository/class_servRepository.inc:326
-#: addons/goto/class_gotomasses.inc:328
-#: addons/goto/class_goto_import_file.inc:124
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "在子树中查找"
@@ -825,7 +809,6 @@ msgstr "这个列表显示该 profile 所有分配的类名。"
 
 #: admin/fai/remove.tpl:2 admin/fai/class_faiManagement.inc:513
 #: admin/fai/class_faiManagement.inc:1286 admin/fai/remove_branch.tpl:2
-#: addons/goto/remove.tpl:2
 msgid "Warning"
 msgstr "警告"
 
@@ -983,7 +966,6 @@ msgstr "选择一个要删除或修改的磁盘"
 
 #: admin/fai/faiPartitionTable.tpl:54 admin/fai/faiVariable.tpl:53
 #: admin/fai/class_faiHook.inc:312 admin/fai/class_faiHook.inc:314
-#: addons/goto/class_gotomasses.inc:469
 msgid "Edit"
 msgstr "编辑"
 
@@ -992,7 +974,6 @@ msgid "Hook attributes"
 msgstr "钩子属性"
 
 #: admin/fai/faiHookEntry.tpl:38 admin/fai/class_faiHookEntry.inc:198
-#: addons/goto/class_gotomasses.inc:409
 msgid "Task"
 msgstr "任务"
 
@@ -1036,7 +1017,7 @@ msgstr ""
 "这个分支包含所有账号信息，系统访问等等。请再次检查您是否要这么做，因为 GOsa "
 "没有办法将您的数据找回。"
 
-#: admin/fai/remove_branch.tpl:10 addons/goto/remove.tpl:9
+#: admin/fai/remove_branch.tpl:10
 msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
@@ -1172,7 +1153,7 @@ msgstr "初始操作"
 msgid "Sort direction"
 msgstr "节"
 
-#: admin/fai/class_faiScript.inc:332 addons/goto/class_gotomasses.inc:415
+#: admin/fai/class_faiScript.inc:332
 msgid "Action"
 msgstr "行动"
 
@@ -1293,7 +1274,6 @@ msgid "Add partition"
 msgstr "添加分区"
 
 #: admin/fai/class_faiScriptEntry.inc:62 admin/fai/class_faiHookEntry.inc:65
-#: addons/goto/class_goto_import_file.inc:29
 #, fuzzy
 msgid "file is empty"
 msgstr "选择的文件为空。"
@@ -1574,788 +1554,356 @@ msgstr "自动化安装（FAI）类"
 msgid "Services"
 msgstr "服务"
 
-#: addons/goto/class_gotomasses.inc:26
-#, fuzzy
-msgid "Deployment status"
-msgstr "当前版本"
-
-#: addons/goto/class_gotomasses.inc:27 addons/goto/main.inc:52
-#, fuzzy
-msgid "System deployment status"
-msgstr "系统管理"
-
-#: addons/goto/class_gotomasses.inc:230
-#, fuzzy
-msgid "Permission"
-msgstr "允许"
-
-#: addons/goto/class_gotomasses.inc:270
-#, php-format
-msgid "The following jobs couldn't be deleted, they have to be aborted: %s"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:360
-#, fuzzy
-msgid "This menu allows you to remove and change the properties of GOsa tasks."
-msgstr ""
-"这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
-"统。"
-
-#: addons/goto/class_gotomasses.inc:361
-#, fuzzy
-msgid "List of queued jobs"
-msgstr "部门列表"
-
-#: addons/goto/class_gotomasses.inc:375 addons/goto/goto_import_file.tpl:84
-#: addons/goto/class_goto_import_file.inc:29
-#: addons/goto/class_goto_import_file.inc:89
-#: addons/goto/class_goto_import_file.inc:131
-msgid "Import"
-msgstr "导入"
-
-#: addons/goto/class_gotomasses.inc:380
-#, fuzzy
-msgid "Resume"
-msgstr "删除"
-
-#: addons/goto/class_gotomasses.inc:381
-#, fuzzy
-msgid "Pause"
-msgstr "粘贴"
-
-#: addons/goto/class_gotomasses.inc:382
-#, fuzzy
-msgid "Abort"
-msgstr "端口"
-
-#: addons/goto/class_gotomasses.inc:400
-#, fuzzy
-msgid "Reload"
-msgstr "读"
-
-#: addons/goto/class_gotomasses.inc:408
-#: addons/goto/events/DaemonEvent_halt.tpl:47
-#: addons/goto/events/DaemonEvent_wakeup.tpl:47
-#: addons/goto/events/DaemonEvent_faireboot.tpl:47
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:47
-#: addons/goto/events/DaemonEvent_activate.tpl:47
-#: addons/goto/events/DaemonEvent_rescan.tpl:47
-#: addons/goto/events/DaemonEvent_memcheck.tpl:47
-#: addons/goto/events/class_DaemonEvent_notify.inc:77
-#: addons/goto/events/class_DaemonEvent_notify.inc:78
-#: addons/goto/events/class_DaemonEvent_notify.inc:103
-#: addons/goto/events/DaemonEvent_update.tpl:47
-#: addons/goto/events/DaemonEvent_reboot.tpl:47
-#: addons/goto/events/DaemonEvent_lock.tpl:47
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:47
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:47
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:47
-#: addons/goto/events/DaemonEvent_localboot.tpl:47
-#: addons/goto/events/DaemonEvent_reinstall.tpl:51
-#: addons/goto/events/DaemonEvent_notify.tpl:81
-#, fuzzy
-msgid "Target"
-msgstr "芯片组"
-
-#: addons/goto/class_gotomasses.inc:411
-#: addons/goto/events/DaemonEvent_halt.tpl:9
-#: addons/goto/events/DaemonEvent_wakeup.tpl:9
-#: addons/goto/events/DaemonEvent_faireboot.tpl:9
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:9
-#: addons/goto/events/DaemonEvent_rescan.tpl:9
-#: addons/goto/events/DaemonEvent_memcheck.tpl:9
-#: addons/goto/events/DaemonEvent_update.tpl:9
-#: addons/goto/events/DaemonEvent_reboot.tpl:9
-#: addons/goto/events/DaemonEvent_lock.tpl:9
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:9
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:9
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:9
-#: addons/goto/events/DaemonEvent_localboot.tpl:9
-#: addons/goto/events/DaemonEvent_reinstall.tpl:9
-#: addons/goto/events/DaemonEvent_notify.tpl:28
-#, fuzzy
-msgid "Schedule"
-msgstr "PHPscheduleit"
-
-#: addons/goto/class_gotomasses.inc:413
-#: addons/goto/events/DaemonEvent_halt.tpl:39
-#: addons/goto/events/DaemonEvent_wakeup.tpl:39
-#: addons/goto/events/DaemonEvent_faireboot.tpl:39
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:39
-#: addons/goto/events/DaemonEvent_activate.tpl:39
-#: addons/goto/events/DaemonEvent_rescan.tpl:39
-#: addons/goto/events/DaemonEvent_memcheck.tpl:39
-#: addons/goto/events/DaemonEvent_update.tpl:39
-#: addons/goto/events/DaemonEvent_reboot.tpl:39
-#: addons/goto/events/DaemonEvent_lock.tpl:39
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:39
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:39
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:39
-#: addons/goto/events/DaemonEvent_localboot.tpl:39
-#: addons/goto/events/DaemonEvent_reinstall.tpl:43
-#: addons/goto/events/DaemonEvent_notify.tpl:73
-msgid "Status"
-msgstr "状态"
-
-#: addons/goto/class_gotomasses.inc:432
-#, fuzzy
-msgid "Move up"
-msgstr "模式"
-
-#: addons/goto/class_gotomasses.inc:434
-#, fuzzy
-msgid "Move down"
-msgstr "模式"
-
-#: addons/goto/class_gotomasses.inc:441
-msgid "Pause job"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:448
-msgid "Resume job"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:455
-#, fuzzy
-msgid "Execute now"
-msgstr "执行"
-
-#: addons/goto/class_gotomasses.inc:462
-msgid "View logs"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:477
-#, fuzzy
-msgid "Abort job"
-msgstr "端口"
-
-#: addons/goto/class_gotomasses.inc:521
-#, fuzzy
-msgid "Waiting"
-msgstr "警告"
-
-#: addons/goto/class_gotomasses.inc:527
-#, fuzzy
-msgid "Processed"
-msgstr "处理"
-
-#: addons/goto/class_gotomasses.inc:538
-msgid "Locked"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:542
-#, fuzzy
-msgid "Detection"
-msgstr "节"
-
-#: addons/goto/class_gotomasses.inc:550
-msgid "in progress"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:563
-msgid "immediately"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:655 addons/goto/class_gotomasses.inc:735
-#: addons/goto/class_gotomasses.inc:775
-#, fuzzy, php-format
-msgid "Cannot update queue entry: %s"
-msgstr "未知 FAIstate %s"
-
-#: addons/goto/class_gotomasses.inc:691
-#, php-format
-msgid "Cannot update queue entries."
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:740
-#, php-format
-msgid "Required class '%s' cannot be found: job not aborted!"
-msgstr ""
-
-#: addons/goto/class_gotomasses.inc:816
-#, fuzzy, php-format
-msgid "Cannot load queue entries: %s"
-msgstr "未知 FAIstate %s"
-
-#: addons/goto/class_gotomasses.inc:910 addons/goto/class_gotomasses.inc:916
-#, fuzzy
-msgid "System deployment"
-msgstr "系统管理"
-
-#: addons/goto/class_gotomasses.inc:911
-msgid "Provide a mechanism to automatically activate systems"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_rescan.inc:28
-#: addons/goto/events/class_DaemonEvent_rescan.inc:29
-msgid "Rescan hardware"
-msgstr ""
-
-#: addons/goto/events/DaemonEvent_halt.tpl:18
-#: addons/goto/events/DaemonEvent_wakeup.tpl:18
-#: addons/goto/events/DaemonEvent_faireboot.tpl:18
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:18
-#: addons/goto/events/DaemonEvent_activate.tpl:18
-#: addons/goto/events/DaemonEvent_rescan.tpl:18
-#: addons/goto/events/DaemonEvent_memcheck.tpl:18
-#: addons/goto/events/DaemonEvent_update.tpl:18
-#: addons/goto/events/DaemonEvent_reboot.tpl:18
-#: addons/goto/events/DaemonEvent_lock.tpl:18
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:18
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:18
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:18
-#: addons/goto/events/DaemonEvent_localboot.tpl:18
-#: addons/goto/events/DaemonEvent_reinstall.tpl:18
-#, fuzzy
-msgid "System list"
-msgstr "信赖的系统"
-
-#: addons/goto/events/DaemonEvent_halt.tpl:35
-#: addons/goto/events/DaemonEvent_wakeup.tpl:35
-#: addons/goto/events/DaemonEvent_faireboot.tpl:35
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:35
-#: addons/goto/events/DaemonEvent_activate.tpl:35
-#: addons/goto/events/DaemonEvent_rescan.tpl:35
-#: addons/goto/events/DaemonEvent_memcheck.tpl:35
-#: addons/goto/events/DaemonEvent_update.tpl:35
-#: addons/goto/events/DaemonEvent_reboot.tpl:35
-#: addons/goto/events/DaemonEvent_lock.tpl:35
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:35
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:35
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:35
-#: addons/goto/events/DaemonEvent_localboot.tpl:35
-#: addons/goto/events/DaemonEvent_reinstall.tpl:35
-#: addons/goto/events/DaemonEvent_notify.tpl:69
-#, fuzzy
-msgid "ID"
-msgstr "GID"
-
-#: addons/goto/events/DaemonEvent_halt.tpl:43
-#: addons/goto/events/DaemonEvent_wakeup.tpl:43
-#: addons/goto/events/DaemonEvent_faireboot.tpl:43
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:43
-#: addons/goto/events/DaemonEvent_activate.tpl:43
-#: addons/goto/events/DaemonEvent_rescan.tpl:43
-#: addons/goto/events/DaemonEvent_memcheck.tpl:43
-#: addons/goto/events/DaemonEvent_update.tpl:43
-#: addons/goto/events/DaemonEvent_reboot.tpl:43
-#: addons/goto/events/DaemonEvent_lock.tpl:43
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:43
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:43
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:43
-#: addons/goto/events/DaemonEvent_localboot.tpl:43
-#: addons/goto/events/DaemonEvent_reinstall.tpl:47
-#: addons/goto/events/DaemonEvent_notify.tpl:77
-msgid "Result"
-msgstr ""
-
-#: addons/goto/events/DaemonEvent_halt.tpl:51
-#: addons/goto/events/DaemonEvent_wakeup.tpl:51
-#: addons/goto/events/DaemonEvent_faireboot.tpl:51
-#: addons/goto/events/DaemonEvent_sysinfo.tpl:51
-#: addons/goto/events/DaemonEvent_activate.tpl:51
-#: addons/goto/events/DaemonEvent_rescan.tpl:51
-#: addons/goto/events/DaemonEvent_memcheck.tpl:51
-#: addons/goto/events/DaemonEvent_update.tpl:51
-#: addons/goto/events/DaemonEvent_reboot.tpl:51
-#: addons/goto/events/DaemonEvent_lock.tpl:51
-#: addons/goto/events/DaemonEvent_reload_ldap_config.tpl:51
-#: addons/goto/events/DaemonEvent_goto_reload.tpl:51
-#: addons/goto/events/DaemonEvent_installation_activation.tpl:51
-#: addons/goto/events/DaemonEvent_localboot.tpl:51
-#: addons/goto/events/DaemonEvent_reinstall.tpl:55
-#: addons/goto/events/DaemonEvent_notify.tpl:85
-#: addons/goto/goto_import_file.tpl:37
-#, fuzzy
-msgid "Timestamp"
-msgstr "过期"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:45
-#: addons/goto/events/class_EventTargetAddList.inc:51
-#, fuzzy
-msgid "Targets"
-msgstr "芯片组"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:49
-msgid ""
-"This dialog shows all available targets for your event, check the targets "
-"you want to add and use the 'Use' button to accept."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:60
-#: addons/goto/events/class_EventTargetAddList.inc:66
-#, fuzzy
-msgid "System / Department"
-msgstr "部门"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:65
-#, fuzzy
-msgid "Display users"
-msgstr "显示匹配的用户"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:66
-#, fuzzy
-msgid "Display groups"
-msgstr "显示用户组"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:130
-#: addons/goto/events/class_EventTargetAddList.inc:161
-#: addons/goto/class_target_list.inc:152 addons/goto/goto_import_file.tpl:41
-msgid "Base"
-msgstr "位置"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/class_target_list.inc:154
-msgid "Submit department"
-msgstr "提交部门"
-
-#: addons/goto/events/class_EventTargetAddUsersList.inc:132
-#: addons/goto/events/class_EventTargetAddList.inc:163
-#: addons/goto/class_target_list.inc:154
-msgid "Submit"
-msgstr "提交"
-
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:28
-#: addons/goto/events/class_DaemonEvent_faireboot.inc:29
-#, fuzzy
-msgid "Abort installation"
-msgstr "Windows 工作站"
-
-#: addons/goto/events/class_DaemonEvent_goto_reload.inc:37
-msgid "GOto reload"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_goto_reload.inc:38
-#, fuzzy
-msgid "Reload GOto settings"
-msgstr "Posix 设置"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_server_db.inc:31
-msgid "Reload fai server db"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:28
-#: addons/goto/events/class_DaemonEvent_sysinfo.inc:29
-#, fuzzy
-msgid "System analysis"
-msgstr "系统"
-
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:28
-#: addons/goto/events/class_DaemonEvent_installation_activation.inc:29
-#, fuzzy
-msgid "Installation activation"
-msgstr "Windows 工作站"
-
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:28
-#: addons/goto/events/class_DaemonEvent_reload_ldap_config.inc:29
-#, fuzzy
-msgid "Reload LDAP config"
-msgstr "重新加载列表"
-
-#: addons/goto/events/DaemonEvent_activate.tpl:9
-#, fuzzy
-msgid "Time schedule"
-msgstr "PHPscheduleit"
-
-#: addons/goto/events/class_DaemonEvent_halt.inc:31
-#: addons/goto/events/class_DaemonEvent_halt.inc:32
-msgid "Switch off"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_activate.inc:29
-#: addons/goto/events/class_DaemonEvent_activate.inc:30
-msgid "Unlock"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_wakeup.inc:29
-msgid "Wake up"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent_wakeup.inc:30
-msgid "Wake system"
-msgstr ""
-
-#: addons/goto/events/timestamp_select.tpl:3
-#, fuzzy
-msgid "Year"
-msgstr "查找"
-
-#: addons/goto/events/timestamp_select.tpl:4
-#, fuzzy
-msgid "Month"
-msgstr "月"
-
-#: addons/goto/events/timestamp_select.tpl:5
-#, fuzzy
-msgid "Day"
-msgstr "五月"
-
-#: addons/goto/events/timestamp_select.tpl:7
-msgid "Hour"
-msgstr "小时"
-
-#: addons/goto/events/timestamp_select.tpl:8
-#, fuzzy
-msgid "Minute"
-msgstr "打印机"
-
-#: addons/goto/events/timestamp_select.tpl:9
-#, fuzzy
-msgid "Second"
-msgstr "节"
-
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:30
-#: addons/goto/events/class_DaemonEvent_recreate_fai_release_db.inc:31
-#, fuzzy
-msgid "Reload fai release db"
-msgstr "上传"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:46
-#: addons/goto/events/class_DaemonEvent_notify.inc:47
-#, fuzzy
-msgid "Send message"
-msgstr "挂起邮件"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:94
-#: addons/goto/events/DaemonEvent_notify.tpl:14
-#, fuzzy
-msgid "Subject"
-msgstr "对象"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:97
-#: addons/goto/events/DaemonEvent_notify.tpl:18
-msgid "Message"
-msgstr "信息"
-
-#: addons/goto/events/class_DaemonEvent_notify.inc:100
-msgid "From"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent.inc:119
-msgid "This job has no template!"
-msgstr ""
-
-#: addons/goto/events/class_DaemonEvent.inc:135
-#, fuzzy, php-format
-msgid "Create '%s' job"
-msgstr "创建新 FAI 对象"
-
-#: addons/goto/events/class_DaemonEvent.inc:234
-msgid "Add"
-msgstr "添加"
+#, fuzzy
+#~ msgid "Deployment status"
+#~ msgstr "当前版本"
+
+#, fuzzy
+#~ msgid "System deployment status"
+#~ msgstr "系统管理"
+
+#, fuzzy
+#~ msgid "Permission"
+#~ msgstr "允许"
+
+#, fuzzy
+#~ msgid ""
+#~ "This menu allows you to remove and change the properties of GOsa tasks."
+#~ msgstr ""
+#~ "这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
+#~ "统。"
+
+#, fuzzy
+#~ msgid "List of queued jobs"
+#~ msgstr "部门列表"
+
+#~ msgid "Import"
+#~ msgstr "导入"
+
+#, fuzzy
+#~ msgid "Resume"
+#~ msgstr "删除"
+
+#, fuzzy
+#~ msgid "Pause"
+#~ msgstr "粘贴"
+
+#, fuzzy
+#~ msgid "Abort"
+#~ msgstr "端口"
+
+#, fuzzy
+#~ msgid "Reload"
+#~ msgstr "读"
+
+#, fuzzy
+#~ msgid "Target"
+#~ msgstr "芯片组"
+
+#, fuzzy
+#~ msgid "Schedule"
+#~ msgstr "PHPscheduleit"
+
+#~ msgid "Status"
+#~ msgstr "状态"
+
+#, fuzzy
+#~ msgid "Move up"
+#~ msgstr "模式"
+
+#, fuzzy
+#~ msgid "Move down"
+#~ msgstr "模式"
 
-#: addons/goto/events/target_list.tpl:5
-msgid "Apply"
-msgstr "应用"
-
-#: addons/goto/events/target_list.tpl:6
-msgid "Cancel"
-msgstr "取消"
-
-#: addons/goto/events/class_EventTargetAddList.inc:55
-msgid ""
-"This dialog shows all available targets for the event. Check the targets you "
-"want to add and use the 'Apply' button."
-msgstr ""
-
-#: addons/goto/events/class_EventTargetAddList.inc:73
 #, fuzzy
-msgid "Display server"
-msgstr "显示名称"
+#~ msgid "Execute now"
+#~ msgstr "执行"
 
-#: addons/goto/events/class_EventTargetAddList.inc:74
 #, fuzzy
-msgid "Display workstation"
-msgstr "工作站"
+#~ msgid "Abort job"
+#~ msgstr "端口"
 
-#: addons/goto/events/class_EventTargetAddList.inc:75
 #, fuzzy
-msgid "Display object groups"
-msgstr "对象组列表"
+#~ msgid "Waiting"
+#~ msgstr "警告"
 
-#: addons/goto/events/class_EventTargetAddList.inc:76
-msgid "Filter by IP range"
-msgstr ""
+#, fuzzy
+#~ msgid "Processed"
+#~ msgstr "处理"
 
-#: addons/goto/events/class_EventTargetAddList.inc:238
-#: addons/goto/class_target_list.inc:201
-msgid "Server"
-msgstr "服务器"
+#, fuzzy
+#~ msgid "Detection"
+#~ msgstr "节"
 
-#: addons/goto/events/class_EventTargetAddList.inc:249
-#: addons/goto/class_target_list.inc:203
-msgid "Workstation"
-msgstr "工作站"
+#, fuzzy
+#~ msgid "Cannot update queue entry: %s"
+#~ msgstr "未知 FAIstate %s"
 
-#: addons/goto/events/class_EventTargetAddList.inc:259
-#: addons/goto/class_target_list.inc:205 addons/goto/goto_import_file.tpl:40
-msgid "Object group"
-msgstr "对象组"
+#, fuzzy
+#~ msgid "Cannot load queue entries: %s"
+#~ msgstr "未知 FAIstate %s"
 
-#: addons/goto/events/class_DaemonEvent_reinstall.inc:32
-#: addons/goto/events/class_DaemonEvent_reinstall.inc:33
-msgid "Reinstall"
-msgstr ""
+#, fuzzy
+#~ msgid "System deployment"
+#~ msgstr "系统管理"
 
-#: addons/goto/events/class_DaemonEvent_localboot.inc:28
-#: addons/goto/events/class_DaemonEvent_localboot.inc:29
-msgid "Force localboot"
-msgstr ""
+#, fuzzy
+#~ msgid "System list"
+#~ msgstr "信赖的系统"
 
-#: addons/goto/events/class_DaemonEvent_memcheck.inc:28
-#: addons/goto/events/class_DaemonEvent_memcheck.inc:29
-msgid "Memory test"
-msgstr ""
+#, fuzzy
+#~ msgid "ID"
+#~ msgstr "GID"
 
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:40
-#: addons/goto/events/class_DaemonEvent_activate_new.inc:41
 #, fuzzy
-msgid "Activate new"
-msgstr "活动"
+#~ msgid "Timestamp"
+#~ msgstr "过期"
 
-#: addons/goto/events/class_DaemonEvent_reboot.inc:29
-#: addons/goto/events/class_DaemonEvent_reboot.inc:30
-msgid "Reboot"
-msgstr ""
+#, fuzzy
+#~ msgid "Targets"
+#~ msgstr "芯片组"
 
-#: addons/goto/events/DaemonEvent_reinstall.tpl:39
 #, fuzzy
-msgid "Progress"
-msgstr "处理"
+#~ msgid "System / Department"
+#~ msgstr "部门"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:7
 #, fuzzy
-msgid "Message settings"
-msgstr "用户设置"
+#~ msgid "Display users"
+#~ msgstr "显示匹配的用户"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:10
 #, fuzzy
-msgid "Sender"
-msgstr "发送者"
+#~ msgid "Display groups"
+#~ msgstr "显示用户组"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:37
+#~ msgid "Base"
+#~ msgstr "位置"
+
+#~ msgid "Submit department"
+#~ msgstr "提交部门"
+
+#~ msgid "Submit"
+#~ msgstr "提交"
+
 #, fuzzy
-msgid "Target users"
-msgstr "域用户"
+#~ msgid "Abort installation"
+#~ msgstr "Windows 工作站"
 
-#: addons/goto/events/DaemonEvent_notify.tpl:44
 #, fuzzy
-msgid "Target groups"
-msgstr "部门"
+#~ msgid "Reload GOto settings"
+#~ msgstr "Posix 设置"
 
-#: addons/goto/events/class_DaemonEvent_lock.inc:29
-#: addons/goto/events/class_DaemonEvent_lock.inc:30
-msgid "Lock"
-msgstr ""
+#, fuzzy
+#~ msgid "System analysis"
+#~ msgstr "系统"
 
-#: addons/goto/events/class_DaemonEvent_update.inc:29
-#: addons/goto/events/class_DaemonEvent_update.inc:30
-msgid "Software update"
-msgstr ""
+#, fuzzy
+#~ msgid "Installation activation"
+#~ msgstr "Windows 工作站"
 
-#: addons/goto/class_target_list.inc:58
-msgid "Select the target objects for your scheduled action."
-msgstr ""
+#, fuzzy
+#~ msgid "Reload LDAP config"
+#~ msgstr "重新加载列表"
 
-#: addons/goto/class_target_list.inc:59 addons/goto/class_target_list.inc:60
 #, fuzzy
-msgid "Available targets"
-msgstr "可用的应用程序"
+#~ msgid "Time schedule"
+#~ msgstr "PHPscheduleit"
 
-#: addons/goto/class_target_list.inc:69
-msgid "Object name"
-msgstr "对象名称"
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "查找"
 
-#: addons/goto/class_target_list.inc:72
 #, fuzzy
-msgid "Select to see object groups"
-msgstr "选择查看 GOsa 组"
+#~ msgid "Month"
+#~ msgstr "月"
 
-#: addons/goto/class_target_list.inc:72
 #, fuzzy
-msgid "Show object groups"
-msgstr "对象组"
+#~ msgid "Day"
+#~ msgstr "五月"
 
-#: addons/goto/class_target_list.inc:73
-msgid "Select to see servers"
-msgstr "选择显示服务器"
+#~ msgid "Hour"
+#~ msgstr "小时"
+
+#, fuzzy
+#~ msgid "Minute"
+#~ msgstr "打印机"
 
-#: addons/goto/class_target_list.inc:73
-msgid "Show servers"
-msgstr "显示服务器"
+#, fuzzy
+#~ msgid "Second"
+#~ msgstr "节"
 
-#: addons/goto/class_target_list.inc:74
-msgid "Select to see workstations"
-msgstr "选择查看工作站"
+#, fuzzy
+#~ msgid "Reload fai release db"
+#~ msgstr "上传"
 
-#: addons/goto/class_target_list.inc:74
-msgid "Show workstations"
-msgstr "显示工作站"
+#, fuzzy
+#~ msgid "Send message"
+#~ msgstr "挂起邮件"
 
-#: addons/goto/class_target_list.inc:75
 #, fuzzy
-msgid "Select to see incoming objects"
-msgstr "选择查看电话"
+#~ msgid "Subject"
+#~ msgstr "对象"
+
+#~ msgid "Message"
+#~ msgstr "信息"
 
-#: addons/goto/class_target_list.inc:75
 #, fuzzy
-msgid "Show new objects"
-msgstr "成员对象"
+#~ msgid "Create '%s' job"
+#~ msgstr "创建新 FAI 对象"
 
-#: addons/goto/class_target_list.inc:80
-msgid "Select to search for a specific IP range only"
-msgstr ""
+#~ msgid "Add"
+#~ msgstr "添加"
 
-#: addons/goto/class_target_list.inc:80
-msgid "Match IP range"
-msgstr ""
+#~ msgid "Apply"
+#~ msgstr "应用"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#, fuzzy
+#~ msgid "Display server"
+#~ msgstr "显示名称"
+
+#, fuzzy
+#~ msgid "Display workstation"
+#~ msgstr "工作站"
 
-#: addons/goto/class_target_list.inc:83
-msgid "Regular expression for matching group names"
-msgstr "用于匹配组名的正则表达式"
+#, fuzzy
+#~ msgid "Display object groups"
+#~ msgstr "对象组列表"
 
-#: addons/goto/class_target_list.inc:84
-msgid "IP range start"
-msgstr ""
+#~ msgid "Server"
+#~ msgstr "服务器"
 
-#: addons/goto/class_target_list.inc:85
-msgid "IP range end"
-msgstr ""
+#~ msgid "Workstation"
+#~ msgstr "工作站"
 
-#: addons/goto/class_target_list.inc:250 addons/goto/class_target_list.inc:254
-msgid "IP range"
-msgstr ""
+#~ msgid "Object group"
+#~ msgstr "对象组"
 
-#: addons/goto/log_view.tpl:7
 #, fuzzy
-msgid "Available logs"
-msgstr "可用的应用程序"
+#~ msgid "Activate new"
+#~ msgstr "活动"
 
-#: addons/goto/log_view.tpl:12
 #, fuzzy
-msgid "Selected log"
-msgstr "选择"
+#~ msgid "Progress"
+#~ msgstr "处理"
 
-#: addons/goto/log_view.tpl:17
 #, fuzzy
-msgid "No logs for this host available!"
-msgstr "文件可用。"
+#~ msgid "Message settings"
+#~ msgstr "用户设置"
 
-#: addons/goto/goto_import_file.tpl:1
 #, fuzzy
-msgid "Import jobs"
-msgstr "导入"
+#~ msgid "Sender"
+#~ msgstr "发送者"
 
-#: addons/goto/goto_import_file.tpl:3
-msgid ""
-"You can import a list of jobs into the GOsa job queue. This should be a "
-"semicolon seperated list of items in the following format:"
-msgstr ""
+#, fuzzy
+#~ msgid "Target users"
+#~ msgstr "域用户"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "timestamp"
-msgstr "过期"
+#~ msgid "Target groups"
+#~ msgstr "部门"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "MAC-address"
-msgstr "住址"
+#~ msgid "Available targets"
+#~ msgstr "可用的应用程序"
 
-#: addons/goto/goto_import_file.tpl:5
+#~ msgid "Object name"
+#~ msgstr "对象名称"
+
 #, fuzzy
-msgid "job type"
-msgstr "文件系统类型"
+#~ msgid "Select to see object groups"
+#~ msgstr "选择查看 GOsa 组"
 
-#: addons/goto/goto_import_file.tpl:5
 #, fuzzy
-msgid "object group"
-msgstr "对象组"
+#~ msgid "Show object groups"
+#~ msgstr "对象组"
+
+#~ msgid "Select to see servers"
+#~ msgstr "选择显示服务器"
 
-#: addons/goto/goto_import_file.tpl:5
-msgid "import base"
-msgstr ""
+#~ msgid "Show servers"
+#~ msgstr "显示服务器"
 
-#: addons/goto/goto_import_file.tpl:5
-msgid "full hostname"
-msgstr ""
+#~ msgid "Select to see workstations"
+#~ msgstr "选择查看工作站"
 
-#: addons/goto/goto_import_file.tpl:5
+#~ msgid "Show workstations"
+#~ msgstr "显示工作站"
+
+#, fuzzy
+#~ msgid "Select to see incoming objects"
+#~ msgstr "选择查看电话"
+
 #, fuzzy
-msgid "IP-address"
-msgstr "住址"
+#~ msgid "Show new objects"
+#~ msgstr "成员对象"
 
-#: addons/goto/goto_import_file.tpl:5
-msgid "DHCP group"
-msgstr ""
+#~ msgid "Regular expression for matching group names"
+#~ msgstr "用于匹配组名的正则表达式"
+
+#, fuzzy
+#~ msgid "Available logs"
+#~ msgstr "可用的应用程序"
 
-#: addons/goto/goto_import_file.tpl:9
-msgid "Example"
-msgstr ""
+#, fuzzy
+#~ msgid "Selected log"
+#~ msgstr "选择"
 
-#: addons/goto/goto_import_file.tpl:21
 #, fuzzy
-msgid "Select list to import"
-msgstr "选择查看打印机"
+#~ msgid "No logs for this host available!"
+#~ msgstr "文件可用。"
 
-#: addons/goto/goto_import_file.tpl:24
 #, fuzzy
-msgid "Browse"
-msgstr "位置"
+#~ msgid "Import jobs"
+#~ msgstr "导入"
 
-#: addons/goto/goto_import_file.tpl:38
-#: addons/goto/class_goto_import_file.inc:168
 #, fuzzy
-msgid "MAC"
-msgstr "ACL"
+#~ msgid "timestamp"
+#~ msgstr "过期"
 
-#: addons/goto/goto_import_file.tpl:39
-#: addons/goto/class_goto_import_file.inc:171
-msgid "Event"
-msgstr ""
+#, fuzzy
+#~ msgid "MAC-address"
+#~ msgstr "住址"
 
-#: addons/goto/goto_import_file.tpl:42
-msgid "FQDN"
-msgstr ""
+#, fuzzy
+#~ msgid "job type"
+#~ msgstr "文件系统类型"
 
-#: addons/goto/goto_import_file.tpl:43
 #, fuzzy
-msgid "IP"
-msgstr "NI"
+#~ msgid "object group"
+#~ msgstr "对象组"
 
-#: addons/goto/goto_import_file.tpl:44
-msgid "DHCP"
-msgstr ""
+#, fuzzy
+#~ msgid "IP-address"
+#~ msgstr "住址"
 
-#: addons/goto/class_goto_import_file.inc:90
-msgid ""
-"Selected entries will be skipped because of errors. Do you want to proceed?"
-msgstr ""
+#, fuzzy
+#~ msgid "Select list to import"
+#~ msgstr "选择查看打印机"
 
-#: addons/goto/class_goto_import_file.inc:131
-#, php-format
-msgid "Import complete: %s events successfully send, %s failed"
-msgstr ""
+#, fuzzy
+#~ msgid "Browse"
+#~ msgstr "位置"
 
-#: addons/goto/class_gotoLogView.inc:87
-msgid "none"
-msgstr "无"
+#, fuzzy
+#~ msgid "MAC"
+#~ msgstr "ACL"
 
-#: addons/goto/class_gotoLogView.inc:115
 #, fuzzy
-msgid "Date"
-msgstr "粘贴"
+#~ msgid "IP"
+#~ msgstr "NI"
 
-#: addons/goto/class_gotoLogView.inc:202
-msgid "Log view"
-msgstr ""
+#~ msgid "none"
+#~ msgstr "无"
+
+#, fuzzy
+#~ msgid "Date"
+#~ msgstr "粘贴"
 
-#: addons/goto/class_gotoLogView.inc:203
 #, fuzzy
-msgid "GOto log view"
-msgstr "GOsa 帮助浏览器"
+#~ msgid "GOto log view"
+#~ msgstr "GOsa 帮助浏览器"
 
 #, fuzzy
 #~ msgid "Cannot delete '%s': object does not exist!"
