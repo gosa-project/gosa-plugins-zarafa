@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-04 11:26+0100\n"
-"PO-Revision-Date: 2008-10-09 15:29+0200\n"
+"PO-Revision-Date: 2008-12-04 14:27+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,9 +296,8 @@ msgid "Class name"
 msgstr "Nom de la classe"
 
 #: admin/fai/class_divListFai.inc:54
-#, fuzzy
 msgid "Class types"
-msgstr "Type de la classe"
+msgstr "Type de classes"
 
 #: admin/fai/class_divListFai.inc:55 admin/fai/class_divListFai.inc:138
 msgid "Actions"
@@ -381,14 +380,12 @@ msgid "Show netboot products"
 msgstr "Montrer les produits netboot"
 
 #: admin/fai/class_divListFai.inc:78 admin/fai/class_divListFai.inc:224
-#, fuzzy
 msgid "OPSI localboot product"
-msgstr "Produit local OPSI"
+msgstr "Produit localboot OPSI"
 
 #: admin/fai/class_divListFai.inc:78
-#, fuzzy
 msgid "Show localboot products"
-msgstr "Montrer les produits locaux"
+msgstr "Montrer les produits localboot"
 
 #: admin/fai/class_divListFai.inc:86
 msgid "Display users matching"
@@ -512,14 +509,12 @@ msgid "departments"
 msgstr "département"
 
 #: admin/fai/class_divListFai.inc:321
-#, fuzzy
 msgid "netboot products"
-msgstr "Montrer les produits netboot"
+msgstr "produits netboot"
 
 #: admin/fai/class_divListFai.inc:322
-#, fuzzy
 msgid "localboot products"
-msgstr "Montrer les produits locaux"
+msgstr "produits localboot"
 
 #: admin/fai/paste_generic.tpl:1
 msgid "FAI settings"
@@ -554,8 +549,7 @@ msgid "Please select a least one package!"
 msgstr "Veuillez sélectionner au moins un paquet !"
 
 #: admin/fai/class_faiPackage.inc:446
-msgid ""
-"Please choose a valid release/section combination for your repository setup!"
+msgid "Please choose a valid release/section combination for your repository setup!"
 msgstr ""
 "Veuillez choisir une combinaison valable version/section pour la création de "
 "votre dépôt de paquets !"
@@ -602,24 +596,20 @@ msgid "Release"
 msgstr "Version"
 
 #: admin/fai/faiGroupHandle.tpl:3
-#, fuzzy
 msgid "Please select the objects you want to remove:"
-msgstr "Veuillez entrer un nouveau nom pour le groupe d'objet"
+msgstr "Veuillez sélectionner les objets que vous voulez enlever :"
 
 #: admin/fai/faiGroupHandle.tpl:30
-#, fuzzy
 msgid "Select the object you want to edit:"
-msgstr "Sélectionnez les objets à ajouter"
+msgstr "Sélectionnez les objets que vous voulez éditer :"
 
 #: admin/fai/faiGroupHandle.tpl:53
-#, fuzzy
 msgid "Select the object you want to copy:"
-msgstr "Sélectionnez les objets à ajouter"
+msgstr "Sélectionnez les objets que vous voulez copier :"
 
 #: admin/fai/faiGroupHandle.tpl:76
-#, fuzzy
 msgid "Select the object you want to cut:"
-msgstr "Sélectionnez les objets à ajouter"
+msgstr "Sélectionnez les objets que vous voulez couper :"
 
 #: admin/fai/faiHook.tpl:39
 msgid "List of hook scripts"
@@ -630,8 +620,7 @@ msgid "Please enter your search string here"
 msgstr "Veuillez indiquer une chaîne de caractères a rechercher"
 
 #: admin/fai/class_faiPackageEntry.inc:103
-msgid ""
-"This list displays all assigned package names for this repository settings."
+msgid "This list displays all assigned package names for this repository settings."
 msgstr "Cette liste affiche tout les paquets assigné à ce dépôt."
 
 #: admin/fai/class_FAI.inc:259 admin/fai/class_FAI.inc:662
@@ -685,8 +674,7 @@ msgstr "Traitement en cours"
 
 #: admin/fai/class_FAI.inc:1063
 msgid "Could not create new release, the destination dn is already in use."
-msgstr ""
-"Impossible de créer une nouvelle version, le dn de destination existe déjà."
+msgstr "Impossible de créer une nouvelle version, le dn de destination existe déjà."
 
 #: admin/fai/class_FAI.inc:1076
 msgid "Error while fetching source dn - aborted!"
@@ -698,8 +686,7 @@ msgstr "Erreur Fatale"
 
 #: admin/fai/class_FAI.inc:1158
 #, php-format
-msgid ""
-"Release creation failed due to ldap errors. Additional informations '%s'."
+msgid "Release creation failed due to ldap errors. Additional informations '%s'."
 msgstr ""
 "La création de la version à échoué du à des erreurs ldap. Information "
 "additionnelles '%s'."
@@ -824,8 +811,7 @@ msgstr "Branche verrouillée"
 #: admin/fai/class_faiManagement.inc:384
 #, php-format
 msgid "The following entries are locked, you can't remove them %s."
-msgstr ""
-"Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
+msgstr "Les entrées suivantes %s sont vérouillées, vous ne pouvez pas les effacer."
 
 #: admin/fai/class_faiManagement.inc:400
 msgid "FAI object"
@@ -1001,8 +987,7 @@ msgstr "Source d'information FAI inconnue !"
 #: admin/fai/class_faiSummaryTab.inc:178
 #: admin/systems/services/repository/class_servRepository.inc:93
 msgid "You can't use this plugin until FAI is activated."
-msgstr ""
-"Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
+msgstr "Vous ne pouvez pas utiliser cette extension tant que FAI n'est pas activé."
 
 #: admin/fai/class_faiSummaryTab.inc:220
 msgid "This object has no FAI classes assigned."
@@ -1457,8 +1442,7 @@ msgstr "Liste des dépôts configurés."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:20
 msgid "This menu allows you to create, delete and edit repository settings."
-msgstr ""
-"Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
+msgstr "Ce menu vous permet de créer, effacer et éditer les paramètres des dépôts."
 
 #: admin/systems/services/repository/class_divListRepositories.inc:24
 #: admin/systems/services/repository/class_divListRepositories.inc:64
@@ -1501,14 +1485,3 @@ msgstr "Version FAI"
 msgid "Services"
 msgstr ""
 
-#~ msgid "Cannot delete '%s': object does not exist!"
-#~ msgstr "L'objet '%s' n'a pas pu être effacé, l'objet n'existe pas."
-
-#~ msgid "Edit product"
-#~ msgstr "Editer un produit"
-
-#~ msgid "Edit class"
-#~ msgstr "Editer la classe"
-
-#~ msgid "Delete class"
-#~ msgstr "Effacer la classe"
