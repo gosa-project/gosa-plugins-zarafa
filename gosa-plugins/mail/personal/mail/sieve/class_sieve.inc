@@ -282,10 +282,12 @@ class sieve
   function sieve_login()
   {
 
-    $this->fp=@fsockopen($this->host,$this->port);
-    if($this->fp == false)
+    $this->fp=@fsockopen($this->host,$this->port,$err_id,$err_str);
+    if($this->fp == false){
+        $this->error_raw = $err_str;
         return false;
- 
+    }
+
     $this->line=fgets($this->fp,1024);
 
     //Hack for older versions of Sieve Server.  They do not respond with the Cyrus v2. standard
@@ -515,13 +517,16 @@ class sieve
             while(sieve::status($this->line) == F_DATA)
                $this->line=fgets($this->fp,1024);
 
-             if(sieve::status($this->line) == F_NO)
+             if(sieve::status($this->line) == F_NO){
+               $this->error_raw = "Failed to authenticate!";
                return false;
+             }
              $this->loggedin=true;
                return true;    
              break;
 
         default:
+            $this->error_raw = "Unsupported authentication method '".$this->auth_in_use."'!";
             return false;
             break;
 
