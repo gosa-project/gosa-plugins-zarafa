@@ -487,7 +487,7 @@ class sieve
 
 	/* Check if a TLS bases connection is required 
      */
-	if(preg_match("/^tls$/",$this->options)){
+	if($this->options == "tls"){
 
 		/* Check if PHP supports TLS encryption for sockets 
          */
@@ -518,7 +518,7 @@ class sieve
                $this->line=fgets($this->fp,1024);
 
              if(sieve::status($this->line) == F_NO){
-               $this->error_raw = "Failed to authenticate!";
+               $this->error_raw = $this->line;
                return false;
              }
              $this->loggedin=true;
