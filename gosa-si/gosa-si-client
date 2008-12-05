@@ -895,7 +895,7 @@ sub save_fai_log {
 
     my $log_dir = File::Spec->catdir($fai_log_dir, "localhost/last");
 
-    if (not -r -d $log_dir) { 
+    if (not -d $log_dir) { 
         daemon_log("ERROR: cannot open directory $log_dir", 1);
         return; 
     }
@@ -911,19 +911,17 @@ sub save_fai_log {
         my $log = "log_file:$log_file:";
         $log_file = File::Spec->catfile( $log_dir, $log_file );
 
-        if (not -r -f $log_file) {
+        if (not -f $log_file) {
             daemon_log("ERROR: cannot read $log_file", 1);
             next;
         }
 
-        if (-r -f $log_file) {
-            open(FILE, "<$log_file");
-            my @lines = <FILE> ;
-            close (FILE);
-            my $log_string = join("", @lines); 
-            $log .= &encode_base64($log_string);
-            push(@log_list, $log); 
-        }
+        open(FILE, "<$log_file");
+        my @lines = <FILE> ;
+        close (FILE);
+        my $log_string = join("", @lines); 
+        $log .= &encode_base64($log_string);
+        push(@log_list, $log); 
     }
 
     my $all_log_string = join("\n", @log_list); 
