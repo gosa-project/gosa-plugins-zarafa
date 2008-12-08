@@ -1,115 +1,111 @@
-<input type="hidden" name="mailedit" value="1">
-<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
-
- <!-- Headline container -->
+<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
-  <td style="width:50%; border-right:1px solid #A0A0A0; vertical-align:top">
-   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png"> {t}Generic{/t}</h2>
+  <td style="width:50%; vertical-align:top;">
+   <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
    <table summary="">
     <tr>
-     <td><LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}</td>
+     <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
-{if $multiple_support}
-	<input id="dummy1" name="dummy1" size="25" maxlength="65" 
-		value="{t}Multiple edit{/t}" disabled>
-{else}
-	{render acl=$mailACL}
-		<input id="mail" name="mail" size="25" maxlength="65" value="{$mail}" title="{t}Primary mail address for this shared folder{/t}">
-	{/render}
-{/if}
+	 {if !$isModifyableMail && $initially_was_account}
+		<input disabled size=30 value="{$mail}">
+	 {else}
+		 {if $domainSelectionEnabled}
+			{render acl=$mailACL}
+				<input id="mail" name="mail" size=20 maxlength=65 value="{$mail}"
+					{if $mailEqualsCN} disabled {/if}
+				>
+			{/render}
+			@<select name='MailDomain'>
+				{html_options values=$MailDomains output=$MailDomains selected=$MailDomain}
+			</select>
+		{else}
+			{if $mailEqualsCN}
+				<input type='text' disabled name='dummy' value='{$mail}'>
+				@<input type='text' value="{$MailDomain}" name="MailDomain">
+			{else}
+			{render acl=$mailACL}
+				<input id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
+			{/render}
+			{/if}
+		{/if}
+    {/if}
      </td>
     </tr>
     <tr>
-     <td><LABEL for="gosaMailServer">{t}Server{/t}</LABEL></td>
+     <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
-{render acl=$gosaMailServerACL checkbox=$multiple_support checked=$use_gosaMailServer}
-      <select size="1" name="gosaMailServer" title="{t}Select mail server to place user on{/t}">
-       {html_options values=$mailServers output=$mailServers selected=$gosaMailServer}
-	   <option disabled>&nbsp;</option>
+{render acl=$gosaMailServerACL}
+      <select size="1" id="gosaMailServer" name="gosaMailServer" 
+		title="{t}Specify the mail server where the user will  be hosted on{/t}">
+        {html_options values=$MailServers output=$MailServers selected=$gosaMailServer}
+        <option disabled>&nbsp;</option>
       </select>
 {/render}
      </td>
     </tr>
     <tr>
-     <td>
-      <br>
-     	<LABEL for="gosaMailQuota"> {t}Quota usage{/t}</LABEL>
-     </td>
-     <td>
-      <br>
-{if $quotadefined eq "true"}
-	{$quotausage}
-{else}
-      	{t}not defined{/t}
-{/if}
+     <td>&nbsp;
      </td>
     </tr>
+{if $quotaEnabled}
     <tr>
-     <td>{t}Quota size{/t}</td>
+     <td>{t}Quota usage{/t}</td>
+     <td>{$quotaUsage}</td>
+    </tr>
+    <tr>
+     <td><label for="gosaMailQuota">{t}Quota size{/t}</label></td>
      <td>
-{render acl=$gosaMailQuotaACL  checkbox=$multiple_support checked=$use_gosaMailQuota}
-	<input id="gosaMailQuota" name="gosaMailQuota" size="6" align=middle maxlength="30" value="{$gosaMailQuota}">
-{/render}
-	 {t}MB{/t}
-	</td>
-</tr>
-	{if $kolab}
+{render acl=$gosaMailQuotaACL}
+      <input id="gosaMailQuota" name="gosaMailQuota" size="6" align="middle" maxlength="60"
+        value="{$gosaMailQuota}"> MB
+            {/render}
+     </td>
+    </tr>
+{/if}
+
+{if $folderTypesEnabled && !$multiple_support}
 	<tr>
 		<td>
 			{t}Folder type{/t}
 		</td>
 		<td>
-		
-		{if $multiple_support}
-			<input type='checkbox' name='use_kolabFolderType' id='use_kolabFolderType' class="center"
-				{if $use_kolabFolderType} checked {/if}
-				onClick="changeState('kolabFolderTypeType');changeState('kolabFolderTypeSubType');"			
-			>
-			<select id="kolabFolderTypeType" name="kolabFolderTypeType" onChange="document.mainform.submit();"
-				{if !$use_kolabFolderType} disabled {/if}>
-				{html_options options=$kolabFolderTypeTypes selected=$kolabFolderTypeType}
+			<select id="FolderTypeCAT" name="FolderTypeCAT" onChange="document.mainform.submit();">
+				{foreach from=$AvailableFolderTypes.CAT item=item key=key}
+					<option {if $key == $FolderType.CAT} selected {/if} value="{$key}">{$item}</option>
+				{/foreach}
 			</select>
-			<select id="kolabFolderTypeSubType" name="kolabFolderTypeSubType" onChange="document.mainform.submit();"
-				{if !$use_kolabFolderType} disabled {/if}>
-				{html_options options=$kolabFolderTypeSubTypes selected=$kolabFolderTypeSubType}
+			<select id="FolderTypeSUB_CAT" name="FolderTypeSUB_CAT" onChange="document.mainform.submit();">
+				{foreach from=$AvailableFolderTypes.SUB_CAT item=item key=key}
+                    {if $key == $FolderType.CAT} 
+						{foreach from=$item item=item2 key=key2}
+							<option {if $key2 == $FolderType.SUB_CAT} selected {/if}
+								value='{$key2}'>{$item2}</option>
+						{/foreach}
+					{/if}
+				{/foreach}
 			</select>
-		{else}
-			<select id="kolabFolderTypeType" name="kolabFolderTypeType" onChange="document.mainform.submit();">
-				{html_options options=$kolabFolderTypeTypes selected=$kolabFolderTypeType}
-			</select>
-			<select id="kolabFolderTypeSubType" name="kolabFolderTypeSubType" onChange="document.mainform.submit();">
-				{html_options options=$kolabFolderTypeSubTypes selected=$kolabFolderTypeSubType}
-			</select>
-		{/if}
-			{if !$JS}
-				<input type='image' src='images/lists/reload.png' class='center' alt='{t}Reload{/t}'>
-			{/if}
+			<input type='image' src='images/lists/reload.png' class='center' alt='{t}Reload{/t}'>
 		</td>
 	</tr>
 	{/if}
    </table>
-     
   </td>
 
-{if $multiple_support}
-
-{else}
-
+<!-- Alternate addresses -->
+{if !$multiple_support}
   <td style="vertical-align:top;padding-left:2px;">
-
-	
-
-   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png"> {t}Alternative addresses{/t}</h2>
+   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png"> 
+	{t}Alternative addresses{/t}
+   </h2>
 
 {render acl=$gosaMailAlternateAddressACL}
-   <select style="width:100%;" name="alternates_list[]" size=10 multiple title="{t}List of alternative mail addresses{/t}">
+   <select style="width:100%;" name="alternates_list[]" size=10 multiple 
+	title="{t}List of alternative mail addresses{/t}">
     {html_options values=$gosaMailAlternateAddress output=$gosaMailAlternateAddress}
 	<option disabled>&nbsp;</option>
    </select>
 {/render}
-
    <br>
-
 {render acl=$gosaMailAlternateAddressACL}
    <input name="alternate_address" size="30" align=middle maxlength="60" value="">
 {/render}
@@ -121,55 +117,52 @@
 {render acl=$gosaMailAlternateAddressACL}
    <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 {/render}
-
   </td>
 {/if}
  </tr>
-
 </table>
+
 <p class="seperator">&nbsp;</p>
 
+{if !$multiple_support}
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td style="vertical-align:top;width:50%; border-right:1px solid #A0A0A0">
-   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/shared_folder.png"> {t}IMAP shared folders{/t}</h2>
-{if $multiple_support}
-
-	<input class="center" type='checkbox' name="use_acl" value="1" {if $use_acl} checked {/if} 
-		onClick="toggle('acl_div');">{t}Set shared folder permissions{/t}
-	{if $use_acl}
-		<div style="visibility:visible;" id="acl_div">
-	{else}
-		<div style="visibility:hidden;" id="acl_div">
-	{/if}
-{/if}      
+   <h2><img class="center" alt="" align="middle" src="plugins/mail/images/shared_folder.png"> 
+		{t}IMAP shared folders{/t}
+   </h2>
+   <input type='hidden' name='mail_acls_posted' value='1'>
    <table summary="" cellpadding=0 border=0>
-    <tr>
-     <td><LABEL for="default_permissions">{t}Default permission{/t}</LABEL></td>
-     <td>
+	{foreach from=$folder_acls item=item key=user}
+		<tr>
+		{if $user == "__anyone__"}
+     		<td><LABEL for="default_permissions">{t}Default permission{/t}</LABEL></td>
+		{elseif $user == "__member__"}
+     		<td><LABEL for="member_permissions">{t}Member permission{/t}</LABEL></td>
+		{else}
+     		<td>
+				<input type='input' name='acl_user_{$item.post_name}' value='{$user}'>
+			</td>
+		{/if}
+		 <td>
 {render acl=$aclACL}
-      <select size="1" id="default_permissions" name="default_permissions">
-       {html_options options=$perms selected=$default_permissions}
-	   <option disabled>&nbsp;</option>
-      </select>
+		  <select size="1" name="acl_value_{$item.post_name}">
+		   {html_options options=$AclTypes selected=$item.acl}
+		   <option disabled>&nbsp;</option>
+		  </select>
+			{if !($user == "__anyone__" || $user == "__member__")}
+		  		<input type='submit' value='{msgPool type=delButton}' name='remove_acl_user_{$item.post_name}'>
+			{/if}
 {/render}
-     </td>
-    </tr>
-    <tr>
-     <td><LABEL for="member_permissions">{t}Member permission{/t}</LABEL></td>
-     <td>
-{render acl=$aclACL}
-      <select id="member_permissions" size="1" name="member_permissions">
-       {html_options options=$perms selected=$member_permissions}
-      </select>
-{/render}
-     </td>
-    </tr>
-	{$plusattributes}
+		 </td>
+		</tr>
+	{/foreach}
+		<tr>
+			<td colspan="1"></td>
+			<td><input type='submit' value='{msgPool type=addButton}' name='add_acl_user'>
+		</tr>
    </table>
-{if $multiple_support}
-	</div>
-{/if}
+{/if}      
 
 <p class="seperator">&nbsp;</p>
 
@@ -229,6 +222,7 @@
   </td>
  </tr>
 </table>
+<input type="hidden" name='mailedit' value='1'>
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

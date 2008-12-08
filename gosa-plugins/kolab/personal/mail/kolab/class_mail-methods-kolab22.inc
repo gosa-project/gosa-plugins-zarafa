@@ -1,7 +1,7 @@
 <?php
 
 
-class mailMethodKolab extends mailMethodCyrus
+class mailMethodKolab22 extends mailMethodCyrus
 {
 
   /* Allow modification of account_ids for existing mail accounts */
@@ -11,7 +11,7 @@ class mailMethodKolab extends mailMethodCyrus
   protected $mailEqualsCN   = TRUE; 
 
   /* Enabled mail domain selection. If enabled getMailDomains must the domain parts */ 
-  protected $enableDomainSelection= FALSE;
+  protected $enableDomainSelection= TRUE;
   protected $enableQuota          = TRUE;
   protected $enableSieveManager   = TRUE;
   protected $enableVacationRange  = TRUE;

@@ -21,40 +21,34 @@
 class mailMethodSendmailCyrus extends mailMethodCyrus
 {
 
-  function mailMethodSendmailCyrus(&$config)
-  {
-    /* Check if the mail account identification attribute
-       is overridden in the configuration file
-     */
-    if($config->get_cfg_value("mailAttribute") != ""){
-      $new_uattrib= strtolower($config->get_cfg_value("mailAttribute"));
-      if(in_array($new_uattrib,array("mail","uid"))){
-        $this->uattrib = $new_uattrib;
-      }else{
-        trigger_error(sprintf("Unsupported 'mailAttribute' in gosa configuration specified, use 'mail' or 'uid', instead of '%s'.",            $new_uattrib));
-      }
-    }
-
-    $this->config= $config->data['SERVERS']['IMAP'];
-  }
-
-  function fixAttributesOnLoad(&$mailObject)
+  public function fixAttributesOnLoad()
   {
     /* Remove possible local alias from forwarders */
-    $newForwarder= array();
-    foreach ($mailObject->gosaMailForwardingAddress as $addr){
-      if (!preg_match('/^\\\\/', $addr)){
-        $newForwarder[]= $addr;
+    mailMethodCyrus::fixAttributesOnLoad();
+    if(isset($this->parent->attrs['gosaMailForwardingAddress'])){
+      $newForwarder= array();
+      for($i = 0; $i < $this->parent->attrs['gosaMailForwardingAddress']['count']; $i++){
+        $addr = $this->parent->attrs['gosaMailForwardingAddress'][$i];
+        if (!preg_match('/^\\\\/', $addr)){
+          $newForwarder[]= $addr;
+        }
       }
+      $newForwarder['count'] = count($newForwarder);
+      $this->parent->attrs['gosaMailForwardingAddress'] = $newForwarder;
     }
-    $mailObject->gosaMailForwardingAddress= $newForwarder;
   }
 
-  function fixAttributesOnStore(&$mailObject)
+  public function fixAttributesOnStore()
   {
+    mailMethodCyrus::fixAttributesOnStore();
+
     /* Add local user if checked */
+    $uattrib = $this->getUAttrib();
     if (preg_match("/L/", $mailObject->gosaMailDeliveryMode)) {
-      $mailObject->gosaMailForwardingAddress[]= "\\".$mailObject->uid;
+      if(!isset($this->parent->attrs['gosaMailForwardingAddress'])){
+        $this->parent->attrs['gosaMailForwardingAddress'] = array();
+      }
+      $this->parent->attrs['gosaMailForwardingAddress'][]= "\\".$this->parent->$uattrib;
     }
   }
 

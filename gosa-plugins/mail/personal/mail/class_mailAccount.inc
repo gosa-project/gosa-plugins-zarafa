@@ -1,27 +1,62 @@
 <?php
-/*! \brief   mail plugin
-  \author  Cajus Pollmeier <pollmeier@gonicus.de>
-  \version 2.00
-  \date    24.07.2003
+/*! 
+  \brief   mail plugin
+  \author  Fabian Hicker  <Fabian.Hickert@GONICUS.de>
+  \version 2.6.2
+  \date    03.12.2007
 
   This class provides the functionality to read and write all attributes
-  relevant for gosaMailAccounts from/to the LDAP. It does syntax checking
-  and displays the formulars required.
+  relevant for gosaMailAccounts from/to the LDAP. 
+  It does syntax checking and displays the formulars required.
+  Special handling like sieve or imap actions will be implemented 
+  by the mailMethods.
+
+
+Functions :
+
+ - mailAccount (&$config, $dn= NULL)
+ - execute()
+ - save_object()
+ - get_vacation_templates()
+ - addForwarder($address)
+ - delForwarder($addresses)
+ - addAlternate($address)
+ - delAlternate($addresses)
+ - prepare_vacation_template($contents)
+ - display_forward_dialog()
+ - remove_from_parent()
+ - save()
+ - check()
+ - adapt_from_template($dn, $skip= array())
+ - getCopyDialog()
+ - saveCopyDialog()
+ - PrepareForCopyPaste($source)
+ - get_multi_edit_values()
+ - multiple_check()
+ - set_multi_edit_values($values)
+ - init_multiple_support($attrs,$all)
+ - get_multi_init_values()
+ - multiple_execute()
+ - multiple_save_object()
+ - make_name($attrs)
+ - plInfo()
+
+
  */
 
 class mailAccount extends plugin
 {
   /* Definitions */
-  var $plHeadline         = "Mail";
-  var $plDescription      = "This does something";
-  var $method             = "mailMethod";
+  var $plHeadline     = "Mail";
+  var $plDescription  = "This does something";
+  var $view_logged    = FALSE;
+  var $is_account     = FALSE;
+  var $initially_was_account = FALSE;
 
+  /* GOsa mail attributes */
+  var $mail                               = "";
   var $gosaVacationStart                  = 0;
   var $gosaVacationStop                   = 0;
-  var $view_logged = FALSE;
-
-  /* plugin specific values */
-  var $mail                               = "";
   var $gosaMailAlternateAddress           = array();
   var $gosaMailForwardingAddress          = array();
   var $gosaMailDeliveryMode               = "[L        ]";
@@ -32,77 +67,94 @@ class mailAccount extends plugin
   var $gosaSpamSortLevel                  = "";
   var $gosaSpamMailbox                    = "";
 
-  var $quotaUsage                         = 0;
-  var $forward_dialog                     = FALSE;
-  var $user_prefix                        = "";
-  var $folder_prefix                      = "";
-
-  var $mailboxList                        = array("INBOX");
-  var $default_permissions                = "none";
-  var $member_permissions                 = "post";
-  var $members                            = array();
-  var $admins                             = array();
-  var $vacations                          = array();
-  var $perms                              = array(  "lrs"       => "read", 
-                                                    "lrsp"      => "post", 
-                                                    "lrsip"     => "append",
-                                                    "lrswipcd"  => "write", 
-                                                    "lrswipcda" => "all" );
-
-  /* attribute list for save action */
-  var $attributes= array("mail", "gosaMailServer", "gosaMailQuota", "gosaMailMaxSize","gosaMailForwardingAddress",
-      "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress","gosaVacationStart","gosaVacationStop",
-      "gosaVacationMessage", "gosaMailAlternateAddress", "gosaMailForwardingAddress");
-  var $objectclasses= array("gosaMailAccount");
-  var $uid              = "";
-
+  /* The methods defaults */
+  var $mailMethod      = NULL;
+  var $MailDomain      = "";
+  var $sieveManagementUsed = FALSE;
+  var $multiple_support = FALSE;
+  var $vacationTemplates = array();
   var $sieve_management = NULL;
-  var $multiple_support = TRUE;
+  var $forward_dialog = FALSE;
+  var $initial_uid    = "";
+  var $mailDomainPart = "";
+  var $mailDomainParts = array();
+  var $MailBoxes = array("INBOX");
 
-  /* constructor, if 'dn' is set, the node loads the given
-     'dn' from LDAP */
-  function mailAccount (&$config, $dn= NULL)
+  /* Used LDAP attributes && classes */
+  var $attributes= array(
+      "mail", "gosaMailServer","gosaMailQuota", "gosaMailMaxSize","gosaMailForwardingAddress",
+      "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress",
+      "gosaVacationStart","gosaVacationStop", "gosaVacationMessage", "gosaMailAlternateAddress", 
+      "gosaMailForwardingAddress");
+  var $objectclasses= array("gosaMailAccount");
+
+
+  /*! \brief  Initialize the mailAccount 
+   */
+  function __construct (&$config, $dn= NULL)
   {
-    global $class_mapping;
+    plugin::plugin($config,$dn); 
 
-    $this->gosaVacationStart = time();
-    $this->gosaVacationStop = time();
+    /* Intialize the used mailMethod
+     */
+    $tmp = new mailMethod($config,$this);
+    $this->mailMethod       = $tmp->get_method();
+    $this->mailMethod->fixAttributesOnLoad();
+    $this->mailDomainParts  = $this->mailMethod->getMailDomains();
+    $this->SpamLevels = $this->mailMethod->getSpamLevels();
 
-    /* Load bases attributes */
-    plugin::plugin($config, $dn);
+    /* Remember account status 
+     */
+    $this->initially_was_account = $this->is_account;
 
-    /* Set uid */
-    if(isset($this->attrs['uid'])){
-      $this->uid = $this->attrs['uid'][0];
+    /* Initialize vacation settings 
+     */   
+    if(empty($this->gosaVacationStart)){
+      $this->gosaVacationStart = time();
+      $this->gosaVacationStop = time();
     }
- 
-    if(is_array($this->gosaMailServer) && isset($this->gosaMailServer[0])){
-      $this->gosaMailServer = $this->gosaMailServer[0];
-    }
 
-    /* Save initial account state */
-    $this->initially_was_account= $this->is_account;
+    /* Read vacation templates 
+     */
+    $this->vacationTemplates = $this->get_vacation_templates();
 
-    /*  Set mailMethod to the one defined in gosa.conf */
-    if ($this->config->get_cfg_value("mailmethod") != ""){
-      $method= $this->config->get_cfg_value("mailmethod");
+    /* Initialize configured values 
+     */ 
+    if($this->is_account){
 
-      $cls = get_correct_class_name("mailMethod$method");
-      if ($cls && class_exists($cls)){
-        $this->method= $cls;
-      } else {
-        msg_dialog::display(_("Configuration error"), sprintf(_("Mail method '%s' is unknown!"), $method), ERROR_DIALOG);
+      if($this->mailMethod->connect() && $this->mailMethod->account_exists()){
+
+        /* Read quota */
+        $this->gosaMailQuota = $this->mailMethod->getQuota($this->gosaMailQuota);
+        if($this->mailMethod->is_error()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
+        
+        /* Read mailboxes */
+        $this->MailBoxes = $this->mailMethod->getMailboxList($this->MailBoxes);
+        if($this->mailMethod->is_error()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot get list of mailboxes! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
+          
+      }elseif(!$this->mailMethod->is_connected()){
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+              $this->mailMethod->get_error()), ERROR_DIALOG);
+      }elseif(!$this->mailMethod->account_exists()){
+        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox doesn't exists on mail server: %s."), 
+              $this->gosaMailServer), ERROR_DIALOG);
       }
-    }
 
-    /* get user and folder prefix */
-    $method = new $this->method($this->config);
-    $this->user_prefix = $method->user_prefix;
-    $this->folder_prefix = $method->folder_prefix;
-
-    
-    /* This is not a new account, parse additional attributes */
-    if (($dn !== NULL) && ($dn != "new") && $this->is_account){
+      /* If the doamin part is selectable, we have to split the mail address
+       */
+      if($this->mailMethod->domainSelectionEnabled()){
+        $this->mailDomainPart = preg_replace("/^[^@]*+@/","",$this->mail);
+        $this->mail = preg_replace("/@.*$/","\\1",$this->mail);
+        if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
+          $this->mailDomainParts[] = $this->mailDomainPart;
+        }
+      }
 
       /* Load attributes containing arrays */
       foreach (array("gosaMailAlternateAddress", "gosaMailForwardingAddress") as $val){
@@ -113,78 +165,16 @@ class mailAccount extends plugin
           }
         }
       }
-
-
-      /* Only do IMAP actions if gosaMailServer attribute is set */
-      if (isset ($this->attrs["gosaMailServer"][0])){
-
-        $id     = $method->uattrib;
-
-        /* Adapt attributes if needed */
-        $method->fixAttributesOnLoad($this);
-
-        /* FixAttributesOnLoad possibly creates an array out of gosaMailServer.
-            If the mail tab wasn't opened once before saving, the account can't be saved */
-        if(is_array($this->gosaMailServer)){
-          $this->gosaMailServer = $this->gosaMailServer[0];
-        }
-
-        if ($method->connect($this->attrs["gosaMailServer"][0])){
-
-          /* Update quota values */
-          $quota= $method->getQuota($this->user_prefix.$this->$id);
-         
-          if($quota){
-            if ($quota['gosaMailQuota'] == 2147483647){
-              $this->quotaUsage     = "";
-              $this->gosaMailQuota  = "";
-            } else {
-              $this->quotaUsage     = $quota['quotaUsage'];
-              $this->gosaMailQuota  = $quota['gosaMailQuota'];
-            }
-          }else{
-            $this->quotaUsage     = "";
-            $this->gosaMailQuota  = "";
-          }
-
-          /* Get mailboxes / folder like INBOX ..*/
-          $this->mailboxList= $method->getMailboxList($this->user_prefix.$this->$id,$this->$id);
-          
-          $method->disconnect();
-        }else{
-          /* Could not connect to ldap.
-           */
-          if (isset($this->attrs['gosaMailQuota'][0])){
-            $this->gosaMailQuota = $this->attrs['gosaMailQuota'][0];
-          }
-        }
-      }
     }
 
-    /* Fill vacation array */
-    $this->vacation= array();
-    if ($this->config->get_cfg_value("vacationTemplateDirectory") != ""){
-      $dir= $this->config->get_cfg_value("vacationTemplateDirectory");
-      if (is_dir($dir) && is_readable($dir)){
-
-        /* Look for files and build the vacation array */
-        $dh= opendir($dir);
-        while ($file = readdir($dh)){
-          $description= $this->parse_vacation("$dir/$file");
-          if ($description != ""){
-            $this->vacation["$dir/$file"]= $description;
-          }
-        }
-        closedir($dh);
-      }
+    /* Intialize sieveManagement if necessary */
+    if($this->mailMethod->allowSieveManagement()){
+      $this->mailboxList = &$this->MailBoxes;
+      $this->sieve_management = new sieveManagement($this->config,$this->dn,$this,$this->mailMethod->getUAttrib());
     }
 
-    /* Create sieve management class */
-    $method = new $this->method($this->config);
-    $id     = $method->uattrib;
-    $this->sieve_management = new sieveManagement($this->config,$this->dn,$this,$id);
-
-    /* Get global filter config */
+    /* Get global filter config used in add local forward
+     */
     if (!session::is_set("mailfilter")){
       $ui= get_userinfo();
       $base= get_base_from_people($ui->dn);
@@ -193,34 +183,17 @@ class mailAccount extends plugin
           "regex"           => "*");
       session::set("mailfilter", $mailfilter);
     }
-  }
 
-
-  function parse_vacation($file)
-  {
-    $desc= "";
-
-    if (is_file($file)){
-      $fh = fopen($file, "r");
-      $line= fgets($fh, 256);
-
-      if (!preg_match('/^DESC:/', $line)){
-        msg_dialog::display(_("Configuration error"), sprintf(_("No DESC tag in vacation template '%s'!"), $file), ERROR_DIALOG);
-        return $desc;
-      }
-      fclose ($fh);
-
-      $desc= trim(preg_replace('/^DESC:\s*/', '', $line));
-    }
-
-    return $desc;
+    /* Disconnect mailMethod. Connect on demand later. 
+     */
+    $this->mailMethod->disconnect();
   }
 
 
   function execute()
   {
     /* Call parent execute */
-    plugin::execute();
+    $display = plugin::execute();
 
     /* Log view */
     if($this->is_account && !$this->view_logged){
@@ -228,114 +201,85 @@ class mailAccount extends plugin
       new log("view","users/".get_class($this),$this->dn);
     }
 
-    /* Initialise vars */
 
-    /* Load templating engine */
-    $smarty= get_smarty();
-    $display= "";
+    /****************
+      Account status
+     ****************/
 
-    /* Get available mailserver */
-    $mailserver= array();
-    $ui = get_userinfo();
-    foreach ($this->config->data['SERVERS']['IMAP'] as $key => $val){
-      if( $this->gosaMailServer == $key || 
-          preg_match("/r/",$ui->get_permissions($val['server_dn'],"server/goImapServer",""))){
-        $mailserver[]= $key;
-      }
-    }
-
-    /* 
-     * Sieve Management 
-     */
-    if(isset($_POST['sieveManagement']) 
-        && preg_match("/C/",$this->gosaMailDeliveryMode)
-        && $this->acl_is_writeable("sieveManagement")) {
-
-      $this->dialog = $this->sieve_management;
-    }
-   
-    /* Cancel sieve edit */
-    if(isset($_POST['sieve_cancel'])){
-      $this->dialog = FALSE;
-    }
- 
-    /* Save sieve changes */
-    if(isset($_POST['sieve_finish'])){
-      $this->sieve_management = $this->dialog;
-      $this->dialog = FALSE;
-    }
- 
-    if(is_object($this->dialog)){
-      $this->dialog->save_object();
-      return($this->dialog->execute());
-    } 
-
-
-    /* Handle account state */
-    /* Do we need to flip is_account state? */
     if(isset($_POST['modify_state'])){
-      if($this->is_account && $this->acl_is_removeable()){
+      if($this->is_account && $this->acl_is_removeable() && $this->mailMethod->accountRemoveAble()){
         $this->is_account= FALSE;
-      }elseif(!$this->is_account && $this->acl_is_createable()){
+      }elseif(!$this->is_account && $this->acl_is_createable() && $this->mailMethod->accountCreateable()){
         $this->is_account= TRUE;
       }
     }
-
-    /* Do we represent a valid account? */
     if(!$this->multiple_support_active){
       if (!$this->is_account && $this->parent === NULL){
         $display= "<img alt=\"\" src=\"images/small-error.png\" align=\"middle\">&nbsp;<b>".
           msgPool::noValidExtension(_("Mail"))."</b>";
-
         $display.= back_to_main();
         return ($display);
       }
-
-      /* Show tab dialog headers */
       if ($this->parent !== NULL){
-        if ($this->is_account){
-          if($this->accountDelegationsConfigured()){
-            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),
-                _("Mail settings cannot be removed while there are delegations configured!"),TRUE,TRUE);
+        if ($this->is_account){ 
+          $reason = "";
+          if(!$this->mailMethod->accountRemoveable($reason)){
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),$reason ,TRUE,TRUE);
           }else{
-            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),
-                msgPool::featuresEnabled(_("Mail")));
+            $display= $this->show_disable_header(msgPool::removeFeaturesButton(_("Mail")),msgPool::featuresEnabled(_("Mail")));
           }
         } else {
-          $display= $this->show_enable_header(msgPool::addFeaturesButton(_("Mail")),
-                msgPool::featuresDisabled(_("Mail")));
+          $reason = "";
+          if(!$this->mailMethod->accountCreateable($reason)){
+            $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Mail")),$reason ,TRUE,TRUE);
+          }else{
+            $display= $this->show_disable_header(msgPool::addFeaturesButton(_("Mail")),msgPool::featuresDisabled(_("Mail")));
+          }
           return ($display);
         }
       }
     }
 
-    /* Forwarder  subdialog */
+    /****************
+      Sieve Management Dialog
+     ****************/
+    if($this->mailMethod->allowSieveManagement()){
+      if(isset($_POST['sieveManagement'])
+          && preg_match("/C/",$this->gosaMailDeliveryMode)
+          && $this->acl_is_writeable("sieveManagement") 
+          && $this->mailMethod->allowSieveManagement()) {
+        $this->dialog = $this->sieve_management;
+      }
+      if(isset($_POST['sieve_cancel'])){
+        $this->dialog = FALSE;
+      }
+      if(isset($_POST['sieve_finish'])){
+        $this->sieve_management = $this->dialog;
+        $this->dialog = FALSE;
+      }
+      if(is_object($this->dialog)){
+        $this->dialog->save_object();
+        return($this->dialog->execute());
+      }
+    }
 
-    /* Trigger forward add dialog? */
+    /****************
+      Forward addresses 
+     ****************/
     if (isset($_POST['add_local_forwarder'])){
       $this->forward_dialog= TRUE;
       $this->dialog= TRUE;
     }
-
-    /* Cancel forward add dialog? */
     if (isset($_POST['add_locals_cancel'])){
       $this->forward_dialog= FALSE;
       $this->dialog= FALSE;
     }
-
-    /* Finished adding of locals? */
     if (isset($_POST['add_locals_finish'])){
-
       if (isset($_POST['local_list'])){
-
-        /* Check if we are able to write gosaMailForwardingAddress */
         if($this->acl_is_writeable("gosaMailForwardingAddress")){
-
-          /* Walk through list of forwarders, ignore own addresses */
           foreach ($_POST['local_list'] as $val){
             if (!in_array ($val, $this->gosaMailAlternateAddress) &&
                 $val != $this->mail){
-
               $this->addForwarder($val);
               $this->is_modified= TRUE;
             }
@@ -347,12 +291,8 @@ class mailAccount extends plugin
         msg_dialog::display(_("Error"), _("Please select an entry!"), ERROR_DIALOG);
       }
     }
-
-    /* Add forward email addresses */
     if (isset($_POST['add_forwarder'])){
       if ($_POST['forward_address'] != ""){
-
-        /* Valid email address specified? */
         $address= $_POST['forward_address'];
         $valid= FALSE;
         if (!tests::is_email($address)){
@@ -360,9 +300,8 @@ class mailAccount extends plugin
             if ($this->is_template){
               $valid= TRUE;
             } else {
-              msg_dialog::display(_("Error"), 
-                  msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
-                  ERROR_DIALOG);
+              msg_dialog::display(_("Error"), msgPool::invalid(_("Mail address"),
+                    "","","your-address@your-domain.com"),ERROR_DIALOG);
             }
           }
         } elseif ($address == $this->mail
@@ -371,10 +310,7 @@ class mailAccount extends plugin
         } else {
           $valid= TRUE;
         }
-
         if ($valid){
-
-          /* Add it, if we are able to write gosaMailForwardingAddress */
           if($this->acl_is_writeable("gosaMailForwardingAddress")){
             $this->addForwarder ($address);
             $this->is_modified= TRUE;
@@ -382,205 +318,92 @@ class mailAccount extends plugin
         }
       }
     }
-
-    /* Delete forward email addresses */
     if (isset($_POST['delete_forwarder'])){
       $this->delForwarder ($_POST['forwarder_list']);
     }
+    if ($this->forward_dialog){
+      return($this->display_forward_dialog());
+    }
 
 
-    /* Add alternate email addresses */
+    /****************
+      Alternate addresses 
+     ****************/
+
     if (isset($_POST['add_alternate'])){
-
       $valid= FALSE;
       if (!tests::is_email($_POST['alternate_address'])){
         if ($this->is_template){
           if (!(tests::is_email($_POST['alternate_address'], TRUE))){
-            msg_dialog::display(_("Error"), 
-                msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
-                ERROR_DIALOG);
-
+            msg_dialog::display(_("Error"),msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),ERROR_DIALOG);
           } else {
             $valid= TRUE;
           }
         } else {
-          msg_dialog::display(_("Error"), 
-              msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),
-              ERROR_DIALOG);
+          msg_dialog::display(_("Error"),msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com"),ERROR_DIALOG);
         }
-
       } else {
         $valid= TRUE;
       }
-
       if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
         $ui= get_userinfo();
         if ($user != $ui->username){
           msg_dialog::display(_("Error"), msgPool::duplicated(_("Mail address"))."&nbsp;".
-            sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
+              sprintf(_("Address is already in use by user '%s'."), $user), ERROR_DIALOG);
         }
       }
     }
-
-    /* Delete alternate email addresses */
     if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
       $this->delAlternate ($_POST['alternates_list']);
     }
 
-  
-    /* Vacation message */
-  
-    /* Import vacation message? */
-    if (isset($_POST["import_vacation"]) && isset($this->vacation[$_POST["vacation_template"]])){
-
-      
-      /* Save message */
-      if($this->multiple_support_active){
-        $contents = file_get_contents($_POST["vacation_template"]);
-      }else{
-        $contents = $this->prepare_vacation_template(file_get_contents($_POST["vacation_template"]));
-      }
-      $this->gosaVacationMessage= htmlspecialchars($contents);
-    }
-
-  
-    /* Display forward dialog if requested above */
-
-    /* Show forward add dialog */
-    if ($this->forward_dialog){
-      $ldap= $this->config->get_ldap_link();
-
-      /* Save data */
-      $mailfilter= session::get("mailfilter");
-      foreach( array("depselect", "muser", "regex") as $type){
-        if (isset($_POST[$type])){
-          $mailfilter[$type]= $_POST[$type];
-        }
-      }
-      if (isset($_GET['search'])){
-        $s= mb_substr($_GET['search'], 0, 1, "UTF8")."*";
-        if ($s == "**"){
-          $s= "*";
-        }
-        $mailfilter['regex']= $s;
-      }
-      session::set("mailfilter", $mailfilter);
-
-      /* Get actual list */
-      $mailusers= array ();
-      if ($mailfilter['regex'] != '*' && $mailfilter['regex'] != ""){
-        $regex= $mailfilter['regex'];
-        $filter= "(|(mail=$regex)(gosaMailAlternateAddress=$regex))";
-      } else {
-        $filter= "";
-      }
-      if ($mailfilter['muser'] != ""){
-        $user= $mailfilter['muser'];
-        $filter= "$filter(|(uid=$user)(cn=$user)(givenName=$user)(sn=$user))";
-      }
-
-      /* Add already present people to the filter */
-      $exclude= "";
-      foreach ($this->gosaMailForwardingAddress as $mail){
-        $exclude.= "(mail=$mail)";
-      }
-      if ($exclude != ""){
-        $filter.= "(!(|$exclude))";
-      }
-
-      $res= get_list("(&(objectClass=gosaMailAccount)$filter)", "users", $mailfilter['depselect'], 
-                     array("sn", "mail", "givenName"), GL_SIZELIMIT | GL_SUBSEARCH);
-      $ldap->cd($mailfilter['depselect']);
-      $ldap->search ("(&(objectClass=gosaMailAccount)$filter)", array("sn", "mail", "givenName"));
-      error_reporting (0);
-      while ($attrs= $ldap->fetch()){
-        if(preg_match('/%/', $attrs['mail'][0])){
-          continue;
-        }
-        $name= $this->make_name($attrs);
-        $mailusers[$attrs['mail'][0]]= $name."&lt;".
-          $attrs['mail'][0]."&gt;";
-      }
-      error_reporting (E_ALL | E_STRICT);
-      natcasesort ($mailusers);
-      reset ($mailusers);
-
-      /* Show dialog */
-      $smarty->assign("search_image", get_template_path('images/lists/search.png'));
-      $smarty->assign("usearch_image", get_template_path('images/lists/search-user.png'));
-      $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
-      $smarty->assign("infoimage", get_template_path('images/info.png'));
-      $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
-      $smarty->assign("mailusers", $mailusers);
-      if (isset($_POST['depselect'])){
-        $smarty->assign("depselect", $_POST['depselect']);
-      }
-      $smarty->assign("deplist", $this->config->idepartments);
-      $smarty->assign("apply", apply_filter());
-      $smarty->assign("alphabet", generate_alphabet());
-      $smarty->assign("hint", print_sizelimit_warning());
-      foreach( array("depselect", "muser", "regex") as $type){
-        $smarty->assign("$type", $mailfilter[$type]);
-      }
-      $smarty->assign("hint", print_sizelimit_warning());
-
-      $display.= $smarty->fetch (get_template_path('mail_locals.tpl', TRUE, dirname(__FILE__)));
-      return ($display);
-    }
-
-    /* Display mail account tab */
-
-    $smarty->assign("mailServers", $mailserver);
+    /****************
+      SMARTY- Assign smarty variables 
+     ****************/
+    $smarty = get_smarty();
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
-
     $tmp  = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $transl){
       $smarty->assign("$name"."ACL", $this->getacl($name,$SkipWrite));
     }
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr,$this->$attr);
+    }
+    $smarty->assign("quotaEnabled", $this->mailMethod->quotaEnabled());
+    if($this->mailMethod->is_connected()){
+      $smarty->assign("quotaUsage",   $this->mailMethod->getQuotaUsage());
+    }else{
+      $smarty->assign("quotaUsage",   _("Unknown"));
+    }
+    $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
+    $smarty->assign("domainSelectionEnabled", $this->mailMethod->domainSelectionEnabled());
+    $smarty->assign("MailDomains", $this->mailDomainParts);
+    $smarty->assign("MailDomain" , $this->mailDomainPart);
+    $smarty->assign("MailServers", $this->mailMethod->getMailServers());
+    $smarty->assign("allowSieveManagement", $this->mailMethod->allowSieveManagement());
+    $smarty->assign("own_script",  $this->sieveManagementUsed);
 
-    foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
-          "gosaMailAlternateAddress", "gosaMailForwardingAddress",
-          "gosaVacationMessage", "gosaMailDeliveryMode", "gosaVacationStart",
-          "gosaVacationStop", "gosaMailMaxSize", "gosaSpamSortLevel", "gosaSpamMailbox") as $val){
-      $smarty->assign("$val", $this->$val);
+    /* _Multiple users vars_ */
+    foreach($this->attributes as $attr){
+      $u_attr = "use_".$attr;
+      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
+    }
+    foreach(array("only_local","gosaMailForwardingAddress","use_mailsize_limit","drop_own_mails","use_vacation","use_spam_filter") as $attr){
+      $u_attr = "use_".$attr;
+      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
     }
 
-    if (is_numeric($this->gosaMailQuota) && $this->gosaMailQuota != 0){
-      $smarty->assign("quotausage", progressbar(round(($this->quotaUsage * 100)/ $this->gosaMailQuota),100,15,true));
-      $smarty->assign("quotadefined", "true");
-    } else {
-      $smarty->assign("quotadefined", "false");
-    }
 
-    /* Disable mail field if needed */
-    $method= new $this->method($this->config);
-    if ($method->uattrib == "mail" && $this->initially_was_account){
-      $smarty->assign("mailACL", preg_replace("/w/","",$this->getacl("mail",$SkipWrite)));
-    }
-
-    /* Disable/Enable range select, but do not disable them twice 
-     *  if they are already diabled by "use own sieve script"
-     */
-    if (preg_match('/V/', $this->gosaMailDeliveryMode) || preg_match("/C/",$this->gosaMailDeliveryMode)){
-      $smarty->assign('rangeEnabled', "");
-    } else {
-      $smarty->assign('rangeEnabled', "disabled");
-    }
-
-    if (!preg_match("/L/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("only_local", "checked");
-    } else {
-      $smarty->assign("only_local", "");
-    }
+    /****************
+      SMARTY- Assign flags 
+     ****************/
 
     $types = array(
-          "V"=>"use_vacation",
-          "S"=>"use_spam_filter",
-          "R"=>"use_mailsize_limit",
-          "I"=>"drop_own_mails",
-          "C"=>"own_script");
-
-    /* Fill checkboxes */
+        "V"=>"use_vacation",
+        "S"=>"use_spam_filter",
+        "R"=>"use_mailsize_limit",
+        "I"=>"drop_own_mails",
+        "C"=>"own_script");
     foreach($types as $option => $varname){
       if (preg_match("/".$option."/", $this->gosaMailDeliveryMode)) {
         $smarty->assign($varname, "checked");
@@ -588,46 +411,21 @@ class mailAccount extends plugin
         $smarty->assign($varname, "");
       }
     }
-   
-    /* Display mail account tab */
-    if($this->gosaVacationStart ==0){
-      $date= getdate(time());
-    }else{
-      $date= getdate($this->gosaVacationStart);
+    if (!preg_match("/L/", $this->gosaMailDeliveryMode)) {
+      $smarty->assign("only_local", "checked");
+    } else {
+      $smarty->assign("only_local", "");
     }
-    $days= array();
-    for($d= 1; $d<32; $d++){
-      $days[$d]= $d;
-    }
-    $years= array();
-    for($y= $date['year']-10; $y<$date['year']+10; $y++){
-      $years[]= $y;
-    }
-    $months= msgPool::months();
-    $smarty->assign("start_day", $date["mday"]);
-    $smarty->assign("days", $days);
-    $smarty->assign("months", $months);
-    $smarty->assign("start_month", $date["mon"]-1);
-    $smarty->assign("years", $years);
-    $smarty->assign("start_year", $date["year"]);
-
-    if($this->gosaVacationStop ==0){
-      $date= getdate(time());
-      $date["mday"]++;
-    }else{
-      $date= getdate($this->gosaVacationStop);
-    }
-    $smarty->assign("end_day", $date["mday"]);
-    $smarty->assign("end_month", $date["mon"]-1);
-    $smarty->assign("end_year", $date["year"]);
 
 
- 
-    /* Have vacation templates? */
+    /****************
+      Smarty- Vacation settings 
+     ****************/
+    $smarty->assign("rangeEnabled", FALSE);
     $smarty->assign("template", "");
-    if (count($this->vacation)){
+    if (count($this->vacationTemplates)){
       $smarty->assign("show_templates", "true");
-      $smarty->assign("vacationtemplates", $this->vacation);
+      $smarty->assign("vacationtemplates", $this->vacationTemplates);
       if (isset($_POST['vacation_template'])){
         $smarty->assign("template", $_POST['vacation_template']);
       }
@@ -635,101 +433,53 @@ class mailAccount extends plugin
       $smarty->assign("show_templates", "false");
     }
 
-    /* Fill spam selector */
-    $spamlevel= array();
-    for ($i= 0; $i<21; $i++){
-      $spamlevel[]= $i;
-    }
-    $smarty->assign("spamlevel", $spamlevel);
-    $smarty->assign("spambox", $this->mailboxList);
-
-    foreach($this->attributes as $attr){
-      $u_attr = "use_".$attr;
-      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
-    }
-
-    foreach(array("only_local","gosaMailForwardingAddress","use_mailsize_limit","drop_own_mails","use_vacation","use_spam_filter") as $attr){
-      $u_attr = "use_".$attr;
-      $smarty->assign($u_attr,in_array($attr,$this->multi_boxes));
-    }
-
-    $smarty->assign("multiple_support",$this->multiple_support_active);
-    $display.= $smarty->fetch (get_template_path('generic.tpl', TRUE, dirname(__FILE__)));
-    return ($display);
-  }
-
-
-  /* remove object from parent */
-  function remove_from_parent()
-  {
-    /* Cancel if there's nothing to do here */
-    if (!$this->initially_was_account){
-      return;
-    }
-    
-    /* include global link_info */
-    $ldap= $this->config->get_ldap_link();
-
-    /* Remove and write to LDAP */
-    plugin::remove_from_parent();
-
-    /* Zero arrays */
-    $this->attrs['gosaMailAlternateAddress']= array();
-    $this->attrs['gosaMailForwardingAddress']= array();
-
-    /* Adapt attributes if needed */
-    $method= new $this->method($this->config);
-    $method->fixAttributesOnRemove($this);
-
-    @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save");
-    $ldap->cd($this->dn);
-    $this->cleanup();
-
-    $ldap->modify ($this->attrs); 
-
-    /* Add "view" to logging class */ 
-    new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
-    }
-
-    /* Connect to IMAP server for account deletion */
-    if ($this->gosaMailServer != ""){
-      $method= new $this->method($this->config);
-      $id= $method->uattrib;
-      if ($method->connect($this->gosaMailServer)){
-
-        /* Remove account from IMAP server */
-        $method->deleteMailbox($this->user_prefix.$this->$id);
-        $method->disconnect();
+    /* Vacation range assigments
+     */
+    if($this->mailMethod->vacationRangeEnabled()){
+      $smarty->assign("rangeEnabled", TRUE);
+      if($this->gosaVacationStop ==0){
+        $date= getdate(time());
+        $date["mday"]++;
+      }else{
+        $date= getdate($this->gosaVacationStop);
       }
-    }
+      $smarty->assign("end_day", $date["mday"]);
+      $smarty->assign("end_month", $date["mon"]-1);
+      $smarty->assign("end_year", $date["year"]);
 
-    /* Update shared folder membership, ACL may need to be updated */
-    $this->updateSharedFolder(); 
-
-    /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove",array("uid" => $this->uid));
-  }
-
-  
-  /* check if we have some delegations configured, those delegations must be removed first */
-  function accountDelegationsConfigured()
-  { 
-    /* We are in administrational edit mode.
-        Check tab configurations directly */
-    if(isset($this->attrs)){
-      $checkArray  = array("kolabInvitationPolicy","unrestrictedMailSize", "calFBURL","kolabDelegate","kolabFreeBusyFuture");
-      foreach($checkArray as $index){
-        if(isset($this->attrs[$index])){
-           return(true);
-        }
+      if($this->gosaVacationStart == 0){
+        $date= getdate(time());
+      }else{
+        $date= getdate($this->gosaVacationStart);
       }
+      $smarty->assign("start_day", $date["mday"]);
+      $smarty->assign("start_month", $date["mon"]-1);
+      $smarty->assign("start_year", $date["year"]);
+      $days= array();
+      for($d= 1; $d<32; $d++){
+        $days[$d]= $d;
+      }
+      $years= array();
+      for($y= $date['year']-10; $y<$date['year']+10; $y++){
+        $years[]= $y;
+      }
+      $months= msgPool::months();
+      $smarty->assign("months", $months);
+      $smarty->assign("years", $years);
+      $smarty->assign("days", $days);
+
     }
-    return(false); 
+
+    /* fill filter settings 
+     */
+    $smarty->assign("spamlevel", $this->SpamLevels);
+    $smarty->assign("spambox"  , $this->MailBoxes);
+
+    $smarty->assign("multiple_support",$this->multiple_support_active);  
+    return($display.$smarty->fetch(get_template_path("generic.tpl",TRUE,dirname(__FILE__))));
   }
- 
+
+
 
   /* Save data to object */
   function save_object()
@@ -739,14 +489,32 @@ class mailAccount extends plugin
       /* Save ldap attributes */
       plugin::save_object();
 
+      /* Get posted mail domain part, if necessary  
+       */
+      if($this->mailMethod->domainSelectionEnabled() && isset($_POST['MailDomain'])){
+        if(in_array(get_post('MailDomain'), $this->mailDomainParts)){
+          $this->mailDomainPart = get_post('MailDomain');
+        }
+      }
 
+      /* Import vacation message? 
+       */
+      if (isset($_POST["import_vacation"]) && isset($this->vacationTemplates[$_POST["vacation_template"]])){
+        if($this->multiple_support_active){
+          $contents = file_get_contents($_POST["vacation_template"]);
+        }else{
+          $contents = $this->prepare_vacation_template(file_get_contents($_POST["vacation_template"]));
+        }
+        $this->gosaVacationMessage= htmlspecialchars($contents);
+      }
+
+      /* Handle flags 
+       */
       if(isset($_POST['own_script'])){
-
         if(!preg_match("/C/",$this->gosaMailDeliveryMode)){
           $str= preg_replace("/[\[\]]/","",$this->gosaMailDeliveryMode);
           $this->gosaMailDeliveryMode = "[".$str."C]";
         }
-
       }else{
 
         /* Assemble mail delivery mode
@@ -754,13 +522,13 @@ class mailAccount extends plugin
            be called when 'mail' is set, because checkboxes may not be set when
            we're in some other dialog.
 
-          Example for gosaMailDeliveryMode [LR        ]
-          L: Local delivery
-          R: Reject when exceeding mailsize limit
-          S: Use spam filter
-          V: Use vacation message
-          C: Use custm sieve script
-          I: Only insider delivery */
+           Example for gosaMailDeliveryMode [LR        ]
+           L -  Local delivery
+           R -  Reject when exceeding mailsize limit
+           S -  Use spam filter
+           V -  Use vacation message
+           C -  Use custm sieve script
+           I -  Only insider delivery */
 
         $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
 
@@ -773,8 +541,7 @@ class mailAccount extends plugin
             $tmp = preg_replace("/L/","",$tmp);
           }
         }
-
-        $opts = array(     
+        $opts = array(
             "R"   => "use_mailsize_limit",
             "S"   => "use_spam_filter",
             "V"   => "use_vacation",
@@ -796,14 +563,14 @@ class mailAccount extends plugin
           $this->is_modified= TRUE;
         }
         $this->gosaMailDeliveryMode= $tmp;
-
-
-        if($this->acl_is_writeable("gosaVacationMessage") && preg_match("/V/",$this->gosaMailDeliveryMode)){
-          if(isset($_POST['gosaVacationStart'])){
-            $this->gosaVacationStart = $_POST['gosaVacationStart'];
-          }
-          if(isset($_POST['gosaVacationStop'])){
-            $this->gosaVacationStop = $_POST['gosaVacationStop'];
+        if($this->mailMethod->vacationRangeEnabled()){
+          if($this->acl_is_writeable("gosaVacationMessage") && preg_match("/V/",$this->gosaMailDeliveryMode)){
+            if(isset($_POST['gosaVacationStart'])){
+              $this->gosaVacationStart = $_POST['gosaVacationStart'];
+            }
+            if(isset($_POST['gosaVacationStop'])){
+              $this->gosaVacationStop = $_POST['gosaVacationStop'];
+            }
           }
         }
       }
@@ -811,58 +578,345 @@ class mailAccount extends plugin
   }
 
 
-  /* Save data to LDAP, depending on is_account we save or delete */
+  /*! \brief  Parse vacation templates and build up an array
+    containing 'filename' => 'description'. 
+    Used to fill vacation dropdown box.
+    @return Array   All useable vacation templates.
+   */ 
+  function get_vacation_templates()
+  {
+    $vct = array();
+    if ($this->config->get_cfg_value("vacationTemplateDirectory") != ""){
+      $dir= $this->config->get_cfg_value("vacationTemplateDirectory");
+      if (is_dir($dir) && is_readable($dir)){
+        $dh = opendir($dir);
+        while($file = readdir($dh)){
+          $description= "";
+          if (is_file($dir."/".$file)){
+            $fh = fopen($dir."/".$file, "r");
+            $line= fgets($fh, 256);
+            if (!preg_match('/^DESC:/', $line)){
+              msg_dialog::display(_("Configuration error"), sprintf(_("No DESC tag in vacation template '%s'!"), $file), ERROR_DIALOG);
+            }else{
+              $description= trim(preg_replace('/^DESC:\s*/', '', $line));
+            }
+            fclose ($fh);
+          }
+          if ($description != ""){
+            $vct["$dir/$file"]= $description;
+          }
+        }
+        closedir($dh);
+      }
+    }
+    return($vct); 
+  }
+
+
+  /*! \brief  Adds the given mail address to the list of mail forwarders 
+   */ 
+  function addForwarder($address)
+  {
+    if(empty($address)) return;
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      $this->gosaMailForwardingAddress[]= $address;
+      $this->gosaMailForwardingAddress= array_unique ($this->gosaMailForwardingAddress);
+      sort ($this->gosaMailForwardingAddress);
+      reset ($this->gosaMailForwardingAddress);
+      $this->is_modified= TRUE;
+    }else{
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
+    }
+  }
+
+
+  /*! \brief  Removes the given mail address from the list of mail forwarders 
+   */ 
+  function delForwarder($addresses)
+  {
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      $this->gosaMailForwardingAddress= array_remove_entries ($addresses, $this->gosaMailForwardingAddress);
+      $this->is_modified= TRUE;
+    }else{
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
+    }
+  }
+
+
+  /*! \brief  Add given mail address to the list of alternate adresses ,
+    .          check if this mal address is used, skip adding in this case 
+   */ 
+  function addAlternate($address)
+  {
+    if(empty($address)) return;
+    if($this->acl_is_writeable("gosaMailAlternateAddress")){
+      $ldap= $this->config->get_ldap_link();
+      $address= strtolower($address);
+
+      /* Is this address already assigned in LDAP? */
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)".
+          "(alias=$address)(gosaMailAlternateAddress=$address)))", array("uid"));
+      if ($ldap->count() > 0){
+        $attrs= $ldap->fetch ();
+        return ($attrs["uid"][0]);
+      }
+      if (!in_array($address, $this->gosaMailAlternateAddress)){
+        $this->gosaMailAlternateAddress[]= $address;
+        $this->is_modified= TRUE;
+      }
+      sort ($this->gosaMailAlternateAddress);
+      reset ($this->gosaMailAlternateAddress);
+      return ("");
+    }else{
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
+    }
+  }
+
+
+  /*! \brief  Removes the given mail address from the alternate addresses list 
+   */ 
+  function delAlternate($addresses)
+  {
+    if($this->acl_is_writeable("gosaMailAlternateAddress")){
+      $this->gosaMailAlternateAddress= array_remove_entries ($addresses,$this->gosaMailAlternateAddress);
+      $this->is_modified= TRUE;
+    }else{
+      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
+    }
+  }
+
+
+  /*! \brief  Prepare importet vacation string. \
+    .         Replace placeholder like %givenName a.s.o.
+    @param  string  Vacation string
+    @return string  Completed vacation string
+   */
+  private function prepare_vacation_template($contents)
+  {
+    /* Replace attributes */
+    $attrs = array();
+    $obj   = NULL;
+    if(isset($this->parent->by_object['user'])){
+      $attrs  = $this->parent->by_object['user']->attributes;
+      $obj    = $this->parent->by_object['user'];
+    }else{
+      $obj    = new user($this->config,$this->dn);
+      $attrs  = $obj->attributes;
+    }
+    if($obj){
+      foreach ($attrs as $val){
+        if(preg_match("/dateOfBirth/",$val)){
+          if($obj->use_dob){
+            $contents= preg_replace("/%$val/",date("Y-d-m",$obj->dateOfBirth),$contents);
+          }
+        }else {
+          $contents= preg_replace("/%$val/",
+              $obj->$val, $contents);
+        }
+
+        /* Replace vacation start and end time */
+        if(preg_match("/%start/",$contents)){
+          $contents = preg_replace("/%start/",date("d.m.Y",$this->gosaVacationStart),$contents);
+        }
+        if(preg_match("/%end/",$contents)){
+          $contents = preg_replace("/%end/",date("d.m.Y",$this->gosaVacationStop),$contents);
+        }
+      }
+    }
+    $contents = ltrim(preg_replace("/^DESC:.*$/m","",$contents),"\n ");
+    return($contents);
+  }
+
+
+  /*! \brief  Displays a dialog that allows mail address selection.
+   */ 
+  function display_forward_dialog()
+  {
+    restore_error_handler();
+
+    $smarty = get_smarty();
+    $ldap= $this->config->get_ldap_link();
+
+    /* Save data */
+    $mailfilter= session::get("mailfilter");
+    foreach( array("depselect", "muser", "regex") as $type){
+      if (isset($_POST[$type])){
+        $mailfilter[$type]= $_POST[$type];
+      }
+    }
+    if (isset($_GET['search'])){
+      $s= mb_substr($_GET['search'], 0, 1, "UTF8")."*";
+      if ($s == "**"){
+        $s= "*";
+      }
+      $mailfilter['regex']= $s;
+    }
+    session::set("mailfilter", $mailfilter);
+
+    /* Get actual list */
+    $mailusers= array ();
+    if ($mailfilter['regex'] != '*' && $mailfilter['regex'] != ""){
+      $regex= $mailfilter['regex'];
+      $filter= "(|(mail=$regex)(gosaMailAlternateAddress=$regex))";
+    } else {
+      $filter= "";
+    }
+    if ($mailfilter['muser'] != ""){
+      $user= $mailfilter['muser'];
+      $filter= "$filter(|(uid=$user)(cn=$user)(givenName=$user)(sn=$user))";
+    }
+
+    /* Add already present people to the filter */
+    $exclude= "";
+    foreach ($this->gosaMailForwardingAddress as $mail){
+      $exclude.= "(mail=$mail)";
+    }
+    if ($exclude != ""){
+      $filter.= "(!(|$exclude))";
+    }
+    $res= get_list("(&(objectClass=gosaMailAccount)$filter)", "users", $mailfilter['depselect'],
+        array("sn", "mail", "givenName"), GL_SIZELIMIT | GL_SUBSEARCH);
+    $ldap->cd($mailfilter['depselect']);
+    $ldap->search ("(&(objectClass=gosaMailAccount)$filter)", array("sn", "mail", "givenName"));
+    while ($attrs= $ldap->fetch()){
+      if(preg_match('/%/', $attrs['mail'][0])){
+        continue;
+      }
+      $name= $this->make_name($attrs);
+      $mailusers[$attrs['mail'][0]]= $name."&lt;".
+        $attrs['mail'][0]."&gt;";
+    }
+    natcasesort ($mailusers);
+    reset ($mailusers);
+
+    /* Show dialog */
+    $smarty->assign("search_image", get_template_path('images/lists/search.png'));
+    $smarty->assign("usearch_image", get_template_path('images/lists/search-user.png'));
+    $smarty->assign("tree_image", get_template_path('images/lists/search-subtree.png'));
+    $smarty->assign("infoimage", get_template_path('images/info.png'));
+    $smarty->assign("launchimage", get_template_path('images/lists/action.png'));
+    $smarty->assign("mailusers", $mailusers);
+    if (isset($_POST['depselect'])){
+      $smarty->assign("depselect", $_POST['depselect']);
+    }
+    $smarty->assign("deplist", $this->config->idepartments);
+    $smarty->assign("apply", apply_filter());
+    $smarty->assign("alphabet", generate_alphabet());
+    $smarty->assign("hint", print_sizelimit_warning());
+    foreach( array("depselect", "muser", "regex") as $type){
+      $smarty->assign("$type", $mailfilter[$type]);
+    }
+    $smarty->assign("hint", print_sizelimit_warning());
+    $display= $smarty->fetch (get_template_path('mail_locals.tpl', TRUE, dirname(__FILE__)));
+    return ($display);
+  }
+
+
+  /*! \brief  Removes the mailAccount extension from ldap 
+   */  
+  function remove_from_parent()
+  {
+    /* Cancel if there's nothing to do here */
+    if (!$this->initially_was_account){
+      return;
+    }
+
+    /* If domain part was selectable, contruct mail address */
+    if($this->mailMethod->domainSelectionEnabled()){
+      $this->mail = $this->mail."@".$this->mailDomainPart;
+    }
+
+    /* Remove GOsa attributes */
+    plugin::remove_from_parent();
+
+    /* Zero arrays */
+    $this->attrs['gosaMailAlternateAddress'] = array();
+    $this->attrs['gosaMailForwardingAddress']= array();
+
+
+    $this->mailMethod->fixAttributesOnRemove();
+    $this->cleanup();
+
+    @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save");
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->modify ($this->attrs);
+
+    /* Add "view" to logging class */
+    new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+    }
+    
+    /* Let the mailMethod remove this mailbox, e.g. from imap and
+       update shared folder membership, ACL may need to be updated. 
+     */
+    if (!$this->is_template){
+
+      if(!$this->mailMethod->connect()){
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+              $this->mailMethod->get_error()), ERROR_DIALOG);
+      }else{
+        if(!$this->mailMethod->deleteMailbox()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
+        if(!$this->mailMethod->updateSharedFolder()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
+      }
+    }
+    $this->mailMethod->disconnect();
+
+    /* Optionally execute a command after we're done */
+    $this->handle_post_events("remove",array("uid" => $this->uid));
+  }
+
+
+  /*! \brief  Save the mailAccount settings to the ldap database.
+   */
   function save()
   {
     $ldap= $this->config->get_ldap_link();
+
+    /* If domain part was selectable, contruct mail address */
+    if($this->mailMethod->domainSelectionEnabled()){
+      $this->mail = $this->mail."@".$this->mailDomainPart;
+    }
+    
+    /* Enforce lowercase mail address and trim whitespaces
+     */
+    $this->mail = trim(strtolower($this->mail));
 
     /* Call parents save to prepare $this->attrs */
     plugin::save();
 
     /* Save arrays */
-    $this->attrs['gosaMailAlternateAddress']= $this->gosaMailAlternateAddress;
+    $this->attrs['gosaMailAlternateAddress'] = $this->gosaMailAlternateAddress;
     $this->attrs['gosaMailForwardingAddress']= $this->gosaMailForwardingAddress;
 
-    /* Adapt attributes if needed */
-    $method= new $this->method($this->config);
-    $id= $method->uattrib;
-
-    $method->fixAttributesOnStore($this);
-
-    /* Remove Mailquota if = "" or "0"  */
-    if((isset($this->attrs['gosaMailQuota']))&&(!$this->attrs['gosaMailQuota'])) {
-      $this->attrs['gosaMailQuota']=0;
-    }
-
-    if(empty($this->attrs['gosaSpamMailbox'])){
-      unset($this->attrs['gosaSpamMailbox']);
-    }
-
-    $this->attrs['mail'] = strtolower($this->attrs['mail']); 
-
-        /* Remove attributes - if not needed */
-    if (!preg_match('/V/', $this->gosaMailDeliveryMode)){
+    if(!$this->mailMethod->vacationRangeEnabled()){
+      $this->attrs['gosaVacationStart'] = $this->attrs['gosaVacationStop'] = array();
+    }elseif (!preg_match('/V/', $this->gosaMailDeliveryMode)){
       unset($this->attrs['gosaVacationStart']);
       unset($this->attrs['gosaVacationStop']);
     }
 
-
-    /* Remove attributes - if not needed */
-    if (!preg_match('/V/', $this->gosaMailDeliveryMode)){
-      unset($this->attrs['gosaVacationStart']);
-      unset($this->attrs['gosaVacationStop']);
-    }
-
+    /* Map method attributes */ 
+    $this->mailMethod->fixAttributesOnStore();
+    
     /* Save data to LDAP */
     $ldap->cd($this->dn);
     $this->cleanup();
-    $ldap->modify ($this->attrs); 
+    $ldap->modify ($this->attrs);
 
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
     }
 
-    /* Log last action */ 
+    /* Log last action */
     if($this->initially_was_account){
       new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
@@ -871,33 +925,39 @@ class mailAccount extends plugin
 
     /* Only do IMAP actions if we are not a template */
     if (!$this->is_template){
+      $this->mailMethod->connect();
+      if(!$this->mailMethod->is_connected()){
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+              $this->mailMethod->get_error()), ERROR_DIALOG);
+      }else{
+        if(!$this->mailMethod->updateMailbox()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update mailbox! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
+        if(!$this->mailMethod->setQuota($this->gosaMailQuota)){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot write quota settings! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
+        }
 
-      if ($method->connect($this->gosaMailServer)){
-        $method->updateMailbox($this->user_prefix.$this->$id);
-        
-        $method->setQuota($this->user_prefix.$this->$id, $this->gosaMailQuota);
-        $method->disconnect();
-
-        /* Ensure that this is an existing account */
-        if(1==1 || $this->initially_was_account){
-
-          /* Write sieve information only if not in C mode */
-          if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
-            $method->configureFilter($this->$id,
-                $this->gosaMailDeliveryMode,
-                $this->mail,
-                $this->gosaMailAlternateAddress,
-                $this->gosaMailMaxSize,
-                $this->gosaSpamMailbox,
-                $this->gosaSpamSortLevel,
-                $this->gosaVacationMessage);
-            $this->is_modified = TRUE;
-          }else{
-            $this->sieve_management->save();
+        if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
+          if(!$this->mailMethod->saveSieveSettings()){
+            msg_dialog::display(_("Mail error"), $this->mailMethod->get_error(), ERROR_DIALOG);
           }
+        }else{
+      
+         echo "Check sieve management here";
+
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, 
+              "User uses an own sieve script, skipping sieve update.".$str."</b>","");
+        }
+
+        if(!$this->mailMethod->updateSharedFolder()){
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."), 
+                $this->mailMethod->get_error()), ERROR_DIALOG);
         }
       }
     }
+    $this->mailMethod->disconnect();
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
@@ -907,15 +967,16 @@ class mailAccount extends plugin
     } else {
       $this->handle_post_events("add", array("uid" => $this->uid));
     }
-
-    $this->updateSharedFolder();
   }
 
 
-  /* Check formular input */
+  /*! \brief  Check given values 
+   */
   function check()
   {
-    if(!$this->is_account) return(array());
+    if(!$this->is_account){
+      return(array());
+    }
 
     $ldap= $this->config->get_ldap_link();
 
@@ -926,25 +987,30 @@ class mailAccount extends plugin
       $message[]= msgPool::noserver(_("Mail"));
     }
 
-    /* must: mail */
-    if ($this->mail == ""){
+    /* Mail address checks */
+    $mail = $this->mail;
+    if($this->mailMethod->domainSelectionEnabled()){
+      $mail.= "@".$this->mailDomainPart;
+    }
+
+    if (empty($mail)){
       $message[]= msgPool::required(_("Primary address"));
     }
     if ($this->is_template){
-      if (!tests::is_email($this->mail, TRUE)){
+      if (!tests::is_email($mail, TRUE)){
         $message[]= msgPool::invalid(_("Mail address"),"","","%givenName.%sn@your-domain.com");
       }
     } else {
-      if (!tests::is_email($this->mail)){
-        $message[]= msgPool::invalid(_("Mail address"),"","","your-domain@your-domain.com");
+      if (!tests::is_email($mail)){
+        $message[]= msgPool::invalid(_("Mail address"),"","","your-address@your-domain.com");
       }
     }
 
+    /* Check if this mail address is already in use */
     $ldap->cd($this->config->current['BASE']);
     $filter = "(&(!(objectClass=gosaUserTemplate))(!(uid=".$this->uid."))".
       "(objectClass=gosaMailAccount)".
-      "(|(mail=".$this->mail.")(alias=".$this->mail.")(gosaMailAlternateAddress=".$this->mail.")))";
-
+      "(|(mail=".$mail.")(alias=".$mail.")(gosaMailAlternateAddress=".$mail.")))";
     $ldap->search($filter,array("uid"));
     if ($ldap->count() != 0){
       $message[]= msgPool::duplicated(_("Mail address"));
@@ -978,15 +1044,17 @@ class mailAccount extends plugin
       $message[]= msgPool::required(_("Spam folder"));
     }
 
-    if (preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart >= $this->gosaVacationStop){
+    if ($this->mailMethod->vacationRangeEnabled() 
+        && preg_match('/V/', $this->gosaMailDeliveryMode) 
+        && $this->gosaVacationStart > $this->gosaVacationStop){
       $message[]= msgPool::invalid(_("Vacation interval"));
     }
-
-    return ($message);
+    return($message);
   }
 
 
-  /* Adapt from template, using 'dn' */
+  /*! \brief  Adapt from template, using 'dn' 
+   */
   function adapt_from_template($dn, $skip= array())
   {
     plugin::adapt_from_template($dn, $skip);
@@ -1014,103 +1082,13 @@ class mailAccount extends plugin
   }
 
 
-  /* Add entry to forwarder list */
-  function addForwarder($address)
-  {
-    if($this->acl_is_writeable("gosaMailForwardingAddress")){
-      $this->gosaMailForwardingAddress[]= $address;
-      $this->gosaMailForwardingAddress= array_unique ($this->gosaMailForwardingAddress);
-      sort ($this->gosaMailForwardingAddress);
-      reset ($this->gosaMailForwardingAddress);
-      $this->is_modified= TRUE;
-    }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
-    }
-  }
-
-
-  /* Remove list of addresses from forwarder list */
-  function delForwarder($addresses)
-  {
-    if($this->acl_is_writeable("gosaMailForwardingAddress")){
-      $this->gosaMailForwardingAddress= array_remove_entries ($addresses, $this->gosaMailForwardingAddress);
-      $this->is_modified= TRUE;
-    }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
-    }
-  }
-
-
-  /* Add given mail address to the list of alternate adresses , 
-     check if this mal address is used, skip adding in this case */
-  function addAlternate($address)
-  {
-    if($this->acl_is_writeable("gosaMailAlternateAddress")){
-      $ldap= $this->config->get_ldap_link();
-      $address= strtolower($address);
-
-      /* Is this address already assigned in LDAP? */
-      $ldap->cd ($this->config->current['BASE']);
-      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)".
-          "(alias=$address)(gosaMailAlternateAddress=$address)))", array("uid"));
-
-      if ($ldap->count() > 0){
-        $attrs= $ldap->fetch ();
-        return ($attrs["uid"][0]);
-      }
-
-      /* Add to list of alternates */
-      if (!in_array($address, $this->gosaMailAlternateAddress)){
-        $this->gosaMailAlternateAddress[]= $address;
-        $this->is_modified= TRUE;
-      }
-
-      sort ($this->gosaMailAlternateAddress);
-      reset ($this->gosaMailAlternateAddress);
-      return ("");
-    }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
-    }
-  }
-
-
-  function delAlternate($addresses)
-  {
-    if($this->acl_is_writeable("gosaMailAlternateAddress")){
-      $this->gosaMailAlternateAddress= array_remove_entries ($addresses,$this->gosaMailAlternateAddress);
-      $this->is_modified= TRUE;
-    }else{
-      msg_dialog::display(_("Permission error"), _("You have no permission to modify these addresses!"), ERROR_DIALOG);
-    }
-  }
-
-  function make_name($attrs)
-  {
-    $name= "";
-    if (isset($attrs['sn'][0])){
-      $name= $attrs['sn'][0];
-    }
-    if (isset($attrs['givenName'][0])){
-      if ($name != ""){
-        $name.= ", ".$attrs['givenName'][0];
-      } else {
-        $name.= $attrs['givenName'][0];
-      }
-    }
-    if ($name != ""){
-      $name.= " ";
-    }
-
-    return ($name);
-  }
-
-  
-  /* Create the mail part for the copy & paste dialog */
+  /*! \brief  Creates the mail part for the copy & paste dialog 
+   */ 
   function getCopyDialog()
   {
     if(!$this->is_account) return("");
     $smarty = get_smarty();
-    $smarty->assign("mail",$this->mail); 
+    $smarty->assign("mail",$this->mail);
     $smarty->assign("gosaMailAlternateAddress",$this->gosaMailAlternateAddress);
     $smarty->assign("gosaMailForwardingAddress",$this->gosaMailForwardingAddress);
     $str = $smarty->fetch(get_template_path("copypaste.tpl",TRUE, dirname(__FILE__)));
@@ -1121,197 +1099,40 @@ class mailAccount extends plugin
     return($ret);
   }
 
+    
+  /*! \brief  save_object for copy&paste vars 
+   */  
   function saveCopyDialog()
   {
-    if(!$this->is_account) return;  
+    if(!$this->is_account) return;
 
     /* Execute to save mailAlternateAddress && gosaMailForwardingAddress */
     $this->execute();
-    
     if(isset($_POST['mail'])){
       $this->mail = $_POST['mail'];
     }
-
   }
 
-  function allow_remove()
-  {
-    if ($this->config->get_cfg_value("mailmethod") != ""){
-      $method= $this->config->get_cfg_value("mailmethod");
-      if(preg_match("/olab/i",$method)){
-        $ldap = $this->config->get_ldap_link();
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->cat($this->dn);
-        if($ldap->count()){
-          $attrs = $ldap->fetch();
-          if(isset($attrs['kolabDeleteFlag'])){ 
-            return(_("Waiting for kolab to remove mail properties..."));
-          }elseif(in_array("gosaMailAccount",$attrs['objectClass'])){
-            return(_("Please remove the mail settings first to allow kolab to call its remove methods!"));
-          }
-        }
-      }
-    }
-  }
-
-   
+  
+  /*! \brief  Prepare this account to be copied 
+   */
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
 
     /* Reset alternate mail addresses */
-    $this->gosaMailAlternateAddress = array();    
-   }
-
-
-  static function plInfo()
-  {
-    return (array(
-          "plShortName"     => _("Mail"),
-          "plDescription"   => _("Mail settings"),
-          "plSelfModify"    => TRUE,
-          "plDepends"       => array("user"),                     // This plugin depends on
-          "plPriority"      => 4,                                 // Position in tabs
-          "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users"),
-          "plOptions"       => array(),
-  
-          "plProvidedAcls"  => array(
-            "mail"                      =>  _("Mail address"),
-            "gosaMailServer"            =>  _("Mail server"),
-            "gosaMailQuota"             =>  _("Quota size"),
-
-            "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
-            "gosaVacationMessage"       =>  _("Vacation message"),
-
-            "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
-            "gosaSpamSortLevel"         =>  _("Spam level"),
-            "gosaSpamMailbox"           =>  _("Spam mail box"),
-
-            "sieveManagement"           =>  _("Sieve management"),
-
-            "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
-            "gosaMailMaxSize"           =>  _("Mail max size"),
-
-            "gosaMailForwardingAddress" =>  _("Forwarding address"),
-            "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryModeI"     =>  _("No delivery to own mailbox "),     // This is flag of gosaMailDeliveryMode
-            "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
-
-            "gosaMailForwardingAddress" =>  _("Forwarding address"),
-            "gosaMailDeliveryModeC"     =>  _("Use custom sieve script"))   // This is flag of gosaMailDeliveryMode
-        ));
+    $this->gosaMailAlternateAddress = array();
   }
 
 
-  /*! \brief  Prepare importet vacation string. \
-              Replace placeholder like %givenName a.s.o.
-      @param  string  Vacation string
-      @return string  Completed vacation string
-   */  
-  private function prepare_vacation_template($contents)
-  {
-    /* Replace attributes */
-    $attrs = array();
-    $obj   = NULL;
-    if(isset($this->parent->by_object['user'])){
-      $attrs  = $this->parent->by_object['user']->attributes;
-      $obj    = $this->parent->by_object['user'];
-    }else{
-      $obj    = new user($this->config,$this->dn);
-      $attrs  = $obj->attributes;
-    }
-
-    if($obj){
-      foreach ($attrs as $val){
-        if(preg_match("/dateOfBirth/",$val)){
-          if($obj->use_dob){
-            $contents= preg_replace("/%$val/",date("Y-d-m",$obj->dateOfBirth),$contents);
-          }
-        }else {
-          $contents= preg_replace("/%$val/",
-              $obj->$val, $contents);
-        }
-
-        /* Replace vacation start and end time */
-        if(preg_match("/%start/",$contents)){
-          $contents = preg_replace("/%start/",date("d.m.Y",$this->gosaVacationStart),$contents);
-        }
-        if(preg_match("/%end/",$contents)){
-          $contents = preg_replace("/%end/",date("d.m.Y",$this->gosaVacationStop),$contents);
-        }
-      }
-    }
-    return($contents);
-  }
-
-  
-
-  /* Upated shared folder ACLs 
+  /*! \brief  Prepare this class the be useable when editing multiple users at once 
    */
-  function updateSharedFolder()
-  {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaMailAccount)(memberUid=".$this->uid."))",array('dn','cn'));
-    if(class_exists("grouptabs")){
-      while($attrs = $ldap->fetch()){
-        $tmp = new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $attrs['dn']);
-        if(isset($tmp->by_object['mailgroup'])){
-          $tmp->by_object['mailgroup']->members= $tmp->by_object['group']->memberUid;
-          if(!$this->is_account){
-            $tmp->by_object['mailgroup']->removeUserAcl($this->uid);
-            $tmp->by_object['mailgroup']->removeUserAcl($this->mail);
-          }
-          $tmp->by_object['mailgroup']->save();
-        }
-      }
-    } 
-  }
-
-  /* Initialize plugin with given atribute arrays
-   */
-  function init_multiple_support($attrs,$all)
-  {
-    plugin::init_multiple_support($attrs,$all);
-
-    if(isset($this->multi_attrs['gosaMailQuota'])){
-      $this->gosaMailQuota = $this->multi_attrs['gosaMailQuota'];
-    }
-  }
-
-  function get_multi_init_values()
-  {
-    $attrs = plugin::get_multi_init_values();
-    $attrs['gosaMailQuota'] = $this->gosaMailQuota;
-    return($attrs);
-  }
-
-  function multiple_execute()
-  {
-    return($this->execute());
-  }
-
-  function multiple_save_object()
-  {
-    plugin::multiple_save_object();
-
-    $this->save_object();
-    foreach(array("only_local","gosaMailForwardingAddress","use_mailsize_limit","drop_own_mails","use_vacation","use_spam_filter") as $attr){
-      if(isset($_POST["use_".$attr])){
-        $this->multi_boxes[] = $attr;
-      }
-    }
-  }
-
   function get_multi_edit_values()
   {
     $ret = plugin::get_multi_edit_values();
-
     if(in_array("gosaMailQuota",$this->multi_boxes)){
       $ret['gosaMailQuota'] = $this->gosaMailQuota;
     }
-
     $flag_add = $flag_remove = array();
     $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
     $opts = array(
@@ -1321,7 +1142,6 @@ class mailAccount extends plugin
         "V"   => "use_vacation",
         "C"   => "own_script",
         "I"   => "drop_own_mails");
-
     foreach($opts as $flag => $post){
       if(in_array($post, $this->multi_boxes)){
         if(preg_match("/".$flag."/",$tmp)){
@@ -1331,13 +1151,14 @@ class mailAccount extends plugin
         }
       }
     }
-  
     $ret['flag_add'] = $flag_add;
     $ret['flag_remove'] = $flag_remove;
     return($ret);
   }
 
 
+  /*! \brief  Check given input for multiple user edit 
+   */
   function multiple_check()
   {
     $message = plugin::multiple_check();
@@ -1369,13 +1190,15 @@ class mailAccount extends plugin
     }
 
     if (  in_array("use_vacation",$this->multi_boxes) &&
-          preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
+        preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
       $message[]= msgPool::invalid(_("Vacation interval"));
     }
     return($message);
   }
 
-
+  
+  /*! \brief  ...
+   */
   function set_multi_edit_values($values)
   {
     plugin::set_multi_edit_values($values);
@@ -1396,12 +1219,123 @@ class mailAccount extends plugin
     }
     $this->gosaMailDeliveryMode = "[".$tmp."]";
 
-    /* Set vacation message and replace placeholder like %givenName 
+    /* Set vacation message and replace placeholder like %givenName
      */
     if(isset($values['gosaVacationMessage'])){
       $this->gosaVacationMessage = $this->prepare_vacation_template($values['gosaVacationMessage']);
     }
   }
+
+
+  /*! \brief  Initialize plugin to be used as multiple edit class. 
+   */
+  function init_multiple_support($attrs,$all)
+  {
+    plugin::init_multiple_support($attrs,$all);
+    if(isset($this->multi_attrs['gosaMailQuota'])){
+      $this->gosaMailQuota = $this->multi_attrs['gosaMailQuota'];
+    }
+  }
+
+  
+  /*! \brief  
+   */
+  function get_multi_init_values()
+  {
+    $attrs = plugin::get_multi_init_values();
+    $attrs['gosaMailQuota'] = $this->gosaMailQuota;
+    return($attrs);
+  }
+
+  
+  /*! \brief  Display multiple edit dialog 
+   */
+  function multiple_execute()
+  {
+    return($this->execute());
+  }
+
+  
+  /*! \brief  Save posts from multiple edit dialog 
+   */
+  function multiple_save_object()
+  {
+    plugin::multiple_save_object();
+
+    $this->save_object();
+    foreach(array("only_local","gosaMailForwardingAddress","use_mailsize_limit","drop_own_mails","use_vacation","use_spam_filter") as $attr){
+      if(isset($_POST["use_".$attr])){
+        $this->multi_boxes[] = $attr;
+      }
+    }
+  }
+
+
+  /*! \brief  Creates the user names for the add_local_forward dialog
+   */
+  function make_name($attrs)
+  {
+    $name= "";
+    if (isset($attrs['sn'][0])){
+      $name= $attrs['sn'][0];
+    }
+    if (isset($attrs['givenName'][0])){
+      if ($name != ""){
+        $name.= ", ".$attrs['givenName'][0];
+      } else {
+        $name.= $attrs['givenName'][0];
+      }
+    }
+    if ($name != ""){
+      $name.= " ";
+    }
+
+    return ($name);
+  }
+
+
+  /*! \brief  ACL settings 
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"     => _("Mail"),
+          "plDescription"   => _("Mail settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("user"),                     // This plugin depends on
+          "plPriority"      => 4,                                 // Position in tabs
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "mail"                      =>  _("Mail address"),
+            "gosaMailServer"            =>  _("Mail server"),
+            "gosaMailQuota"             =>  _("Quota size"),
+
+            "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
+            "gosaVacationMessage"       =>  _("Vacation message"),
+
+            "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
+            "gosaSpamSortLevel"         =>  _("Spam level"),
+            "gosaSpamMailbox"           =>  _("Spam mail box"),
+
+            "sieveManagement"           =>  _("Sieve management"),
+
+            "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+            "gosaMailMaxSize"           =>  _("Mail max size"),
+
+            "gosaMailForwardingAddress" =>  _("Forwarding address"),
+            "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryModeI"     =>  _("No delivery to own mailbox "),     // This is flag of gosaMailDeliveryMode
+            "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
+
+            "gosaMailForwardingAddress" =>  _("Forwarding address"),
+            "gosaMailDeliveryModeC"     =>  _("Use custom sieve script"))   // This is flag of gosaMailDeliveryMode
+              ));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

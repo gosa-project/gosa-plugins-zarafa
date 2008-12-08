@@ -1,68 +1,44 @@
 <?php
-/*
-   This code is part of GOsa (https://gosa.gonicus.de)
-   Copyright (C) 2004  Cajus Pollmeier
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+class mailMethodCyrus extends mailMethod{
 
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  protected $ServerList = array();
+  protected $imap_handle = NULL;
+  protected $quota_loaded = FALSE;
+   
+  /* Allow modification of account_ids for existing mail accounts */
+  protected $modifyableMail = FALSE;
 
-class mailMethodCyrus extends mailMethod
-{
-  var $mbox= "-";
-  var $config;
-  var $gosaMailServer= "";
-  var $uattrib= "uid";
+  /* Enforces same value for 'mail' as used for 'cn' */
+  protected $mailEqualsCN   = FALSE; 
 
-  var $folder_prefix  = "share.";
-  var $user_prefix    = "user.";
+  protected $enableDomainSelection= FALSE;
+  protected $enableQuota          = TRUE;
+  protected $enableSieveManager   = TRUE;
+  protected $enableVacationRange  = TRUE;
+  protected $enableFolderTypes    = FALSE;
 
-  function mailMethodCyrus(&$config)
+  protected function init()
   {
-    /* Check if the mail account identification attribute
-       is overridden in the configuration file
-     */
-    if($config->get_cfg_value("mailAttribute") != ""){
-      $new_uattrib= strtolower($config->get_cfg_value("mailAttribute"));
-      if(in_array($new_uattrib,array("mail","uid"))){
-        $this->uattrib = $new_uattrib;
-      }else{
-        trigger_error(sprintf("Unsupported 'mailAttribute' in gosa configuration specified, use 'mail' or 'uid', instead of '%s'.",            $new_uattrib));
-      }
-    }
-    
-    /* Create the account prefix  user. user/ 
-       Preset folder prefix. Will change it later to respect
-       altnamespace. */
-    if ($config->get_cfg_value("cyrusUseSlashes") == "true"){
-      $this->user_prefix= "user/";
-    }
-
-    $this->config= $config->data['SERVERS']['IMAP'];
+    mailMethod::init();
+    $this->ServerList = $this->config->data['SERVERS']['IMAP']; 
   }
 
-  function connect($gosaMailServer)
+  
+  public function connect()
   {
-    $cfg=array();
-
-    /* Connect to IMAP server. I don't want to see these warning here... */
-    $this->gosaMailServer= $gosaMailServer;
-    if (!isset($this->config[$gosaMailServer])){
-      msg_dialog::display(_("Warning"), _("Mail server for this account is invalid!"), WARNING_DIALOG);
+    mailMethod::connect();
+ 
+    if (!isset($this->ServerList[$this->MailServer])){
+      $this->error = _("Mail server for this account is invalid!");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
+          "<b>The selected mail server '".$this->MailServer."' is invalid.</b>",""); 
+      return(FALSE);
     } else {
-      $cfg= $this->config[$gosaMailServer];
+      $cfg= $this->ServerList[$this->MailServer];
     }
+
     /* For some reason, hiding errors with @ does not wor here... */
     if(!isset($cfg['connect']))   $cfg['connect']="";
     if(!isset($cfg['admin']))     $cfg['admin']="";
@@ -72,252 +48,428 @@ class mailMethodCyrus extends mailMethod
         else the GOsa UI may freeze for 60 seconds.
        (PHP default is 'default_socket_timeout = 60') */
     imap_timeout(1, 10 );
-
-    $this->mbox = @imap_open($cfg['connect'], $cfg['admin'], $cfg['password'], OP_HALFOPEN);
+    $this->imap_handle = @imap_open($cfg['connect'], $cfg['admin'], $cfg['password'], OP_HALFOPEN);
 
     /* Mailbox reachable? */
-    if ($this->mbox === FALSE){
-      msg_dialog::display(_("IMAP error"), _("Cannot store mail settings on IMAP server!"), ERROR_DIALOG);
+    if ($this->imap_handle === FALSE){
+      $this->error = imap_last_error();
       return (FALSE);
+      $this->connected = FALSE;
     }
+    $this->connected = TRUE;
+
     return (TRUE);
   }
 
-  function disconnect()
+
+  public function account_exists()
   {
-    imap_close ($this->mbox);
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(array());
+    }
+
+    /* Get server config */
+    $cfg= $this->ServerList[$this->MailServer];
+    $list = @imap_listmailbox($this->imap_handle, $cfg["connect"], $this->account_id);
+    $res = is_array($list) && count($list);
+    if($res){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","<b>Account exists in imap server.</b>"); 
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","<b>Account seems NOT to exists in imap server.</b>"); 
+    }
+    return($res);
   }
 
-  function getQuota($folder)
+  public function disconnect()
   {
-    $result= array('quotaUsage' => '', 'gosaMailQuota' => '');
+    mailMethod::disconnect();
+    if($this->is_connected()){
+      @imap_close ($this->imap_handle);
+    }
+  }
+
+
+  public function is_connected()
+  {
+    $ret =    mailMethod::is_connected();
+    return($ret && $this->imap_handle);
+  }
+
+  protected function loadQuota()
+  {
+    if(!$this->quotaEnabled()) return(TRUE);
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(FALSE);
+    }
 
     /* Load quota settings */
-    error_reporting (0);
-    $quota_value = @imap_get_quota($this->mbox, $folder);
-    if(is_array($quota_value)) {
+    $result = array("quotaUsage"=>"","gosaMailQuota"=>"");
+    $quota_value = @imap_get_quota($this->imap_handle, $this->account_id);
+
+    if(is_array($quota_value) && count($quota_value)) {
       if (isset($quota_value["STORAGE"]) && is_array($quota_value["STORAGE"])){
+
         /* use for PHP >= 4.3 */
         if($quota_value["STORAGE"]['limit'] == 2147483647){
           $result['quotaUsage']=    (int) ($quota_value["STORAGE"]['usage'] / 1024);
-          $result['gosaMailQuota']= (int) ($quota_value["STORAGE"]['limit'] );
+          $result['gosaMailQuota']=  "";
         }else{
           $result['quotaUsage']=    (int) ($quota_value["STORAGE"]['usage'] / 1024);
           $result['gosaMailQuota']= (int) ($quota_value["STORAGE"]['limit'] / 1024);
         }
       } else {
+
         /* backward icompatible */
         if($quota_value['usage'] == 2147483647){
           $result['quotaUsage']=    (int) ($quota_value['usage'] / 1024);
-          $result['gosaMailQuota']= (int) ($quota_value['limit'] );
+          $result['gosaMailQuota']= "";
         }else{
           $result['quotaUsage']=    (int) ($quota_value['usage'] / 1024);
           $result['gosaMailQuota']= (int) ($quota_value['limit'] / 1024);
         }
       }
-    }elseif(!$quota_value){
-      /* If there is no quota defined for this account, the function imap_get_quota returns false. */
-      return(array("quotaUsage"=>"","gosaMailQuota"=>""));
     }
- 
-    error_reporting (E_ALL | E_STRICT);
-    return ($result);
+    $this->quotaValue = $result['gosaMailQuota'];
+    $this->quotaUsage = $result['quotaUsage'];
+
+    /* Write debug output */
+    if(is_array($quota_value)){
+      if($this->quotaValue == ""){
+        $quota = "(".$this->quotaUsage." / unlimited)";
+      }else{
+        $quota = "(".$this->quotaUsage." / ".$this->quotaValue.")";
+      }
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, $quota , 
+          "<b>Successfully received account quota</b>");
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, imap_last_error() , 
+          "<b>Failed to receive account quota</b>");
+    }
+  }
+
+  public function getQuota($quota)
+  {
+    mailMethod::getQuota($quota);
+    if(!$this->quota_loaded){
+      $this->quota_loaded = TRUE;
+      $this->loadQuota();
+    }
+    return($this->quotaValue);
+  }
+
+  public function getQuotaUsage()
+  {
+    mailMethod::getQuotaUsage();
+    if(!$this->quota_loaded){
+      $this->quota_loaded = TRUE;
+      $this->loadQuota();
+    }
+    return($this->quotaUsage);
+  }
+
+  public function setQuota($number)
+  {
+    mailMethod::setQuota($number);    
+
+    if(!$this->quotaEnabled()) return(TRUE);
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(FALSE);
+    }
+
+    $this->build_account_id();
+
+    /* Workaround for the php imap extension */
+    if (($this->quotaValue == "") || ($this->quotaValue== "2147483647")){
+      $this->quotaValue= "2147483647";
+    }elseif($this->quotaValue > 0){
+      $this->quotaValue = $this->quotaValue *1024;
+    }
+    $debug_number = $this->quotaValue." KB";
+    if($this->quotaValue == "2147483647"){
+      $debug_number .= "<i>Unlimited</i>";
+    }
+
+    if (!imap_set_quota($this->imap_handle, $this->account_id, $this->quotaValue)){
+      msg_dialog::display(_("IMAP error"), sprintf(_("Cannot modify IMAP mailbox quota: %s"),
+            '<br><br><i>'.imap_last_error().'</i>'), ERROR_DIALOG);
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id.": (".$debug_number.")</b>" , 
+          "<b>Set account quota</b> on server '".$this->MailServer."' <b>".imap_last_error()."</b>");
+      return (FALSE);
+    }
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id.": (".$debug_number.")</b>" , 
+        "<b>Set account quota</b> on server :".$this->MailServer);
+    return (TRUE);
   }
 
 
-  /* return all folders of the users mailbox*/
-  function getMailboxList($folder, $uid)
+  public function updateMailbox()
   {
-    global $config;
-    $result = array();
+    mailMethod::updateMailbox();
 
-    /* Get domain an mail address if uid is an mail address */
-    $domain = "";
-    if(preg_match("/@/",$folder)){
-      $domain = "@".preg_replace("/^.*@/","",$folder);
-      $folder = preg_replace("/@.*$/","",$folder);
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(FALSE);
+    }
+  
+    $this->build_account_id ();
+    if($this->is_connected()){
+      $cfg= $this->ServerList[$this->MailServer];
+      $list = imap_listmailbox($this->imap_handle, $cfg["connect"], $this->account_id);
+      if ($list === FALSE){
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id."</b>" , 
+          "<b>Add/Update account</b> on server :".$this->MailServer);
+        if (!imap_createmailbox($this->imap_handle, $cfg["connect"]. $this->account_id)){
+          $this->error = imap_last_error();
+          return(FALSE);
+        }
+      }
+    }
+    return(TRUE);
+  }
+
+
+  public function deleteMailbox()
+  {
+    mailMethod::deleteMailbox();
+
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(FALSE);
     }
 
-    /* Get list of mailboxes for combo box */
-    $cfg= $this->config[$this->gosaMailServer];
+    $this->build_account_id ();
 
-    /* Create search pattern
-         (user/kekse*@domain.de
-          user.kekse*@domain.de
-          user.kekse*  )
-       depending on given folder name) */
-    $q = $folder."*".$domain;
-    $list = imap_listmailbox($this->mbox, $cfg["connect"], $q);
+    $cfg= $this->ServerList[$this->MailServer];
+    @imap_setacl ($this->imap_handle, $this->account_id, $cfg["admin"], "lrswipcda");
+    if (!imap_deletemailbox($this->imap_handle, $cfg["connect"].$this->account_id)){
+      $this->error = imap_last_error();
+      return (FALSE);
+    }
+    return (TRUE);
+  }
+
+  
+  public function getMailboxList()
+  {
+    mailMethod::getMailboxList();
+
+    if(!$this->is_connected() || !$this->imap_handle){
+      trigger_error("Method not connected, catch error.");
+      return(array());
+    }
+
+    $result = array();
+
+    /* Get server config */
+    $cfg= $this->ServerList[$this->MailServer];
+
+    /* Create search string
+       And prepare replacements 
+     */ 
+    if(preg_match("/\@/",$this->account_id)){
+      $search = preg_replace("/\@/","*@",$this->account_id);
+      $with_domain = TRUE;
+    }else{
+      $search = $this->account_id."*";
+      $with_domain = FALSE;
+    }
+    $folder = $this->account_id;
+    if(preg_match("/\@/",$folder)){
+      $folder = preg_replace("/\@.*$/","",$folder);
+    }
+
+    /* Contact imap server */
+    $list = @imap_listmailbox($this->imap_handle, $cfg["connect"], $search);
 
     /* Create list of returned folder names */
     if (is_array($list)){
       foreach ($list as $val){
-
-        /* Cut domain name */
-        $val = preg_replace("/@.*$/","",$val);
-        $result[]=preg_replace ("/^.*".preg_quote($folder, '/')."/","INBOX", mb_convert_encoding($val, "UTF-8", "UTF7-IMAP"));
+        $str = trim(preg_replace("/^\{[^\}]*+\}/","",$val));
+        if($with_domain){
+          $str = trim(preg_replace("/\@.*$/","",$str));
+        }
+        $str = preg_replace ("/^.*".preg_quote($folder, '/')."/","INBOX", 
+          mb_convert_encoding($str, "UTF-8", "UTF7-IMAP"));
+        $result[] = $str;      
       }
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim(implode($result,", "),", "),
+          "<b>Received mailbox folders.</b>");
+      $this->error = imap_last_error();
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,imap_last_error(),
+          "<b>Cannot receive mailbox folders.</b>");
+      $this->error = imap_last_error();
+      return(array());
     }
 
     /* Append "INBOX" to the folder array if result is empty and request comes from user dialog */
-    if(empty($result) && !empty($uid)){
+    if(!count($result)){
       $result[] = "INBOX";
     }
 
-    return ($result);
+    return($result);
   }
 
 
-  function updateMailbox($folder)
+  /*! \brief  Returns configured acls
+   */
+  public function  getFolderACLs($folder_acls)
   {
-    /* Check if mailbox exists */
-    $cfg= $this->config[$this->gosaMailServer];
-    $list = imap_listmailbox($this->mbox, $cfg["connect"], $folder);
-    if ($list === FALSE){
-      if (!imap_createmailbox($this->mbox, $cfg["connect"]. $folder)){
-        msg_dialog::display(_("IMAP error"), sprintf(_("Cannot create IMAP mailbox: %s"), '<br><br><i>'.imap_last_error().'</i>'), ERROR_DIALOG);
-        return;
-      }
-    }
-  }
-
-
-  function setQuota($folder, $gosaMailQuota)
-  {
-    /* Workaround for the php imap extension */
-    if (($gosaMailQuota == "") || ($gosaMailQuota== "2147483647")){
-      $gosaMailQuota= "2147483647";
-    }elseif($gosaMailQuota > 0){
-      $gosaMailQuota = $gosaMailQuota *1024;
-    }
-    
-    
-    /* Write mail quota */
-    if (!imap_set_quota($this->mbox, $folder, $gosaMailQuota)){
-      msg_dialog::display(_("IMAP error"), sprintf(_("Cannot modify IMAP mailbox quota: %s"), '<br><br><i>'.imap_last_error().'</i>'), ERROR_DIALOG);
-      return (FALSE);
-    }
-    return (TRUE);
-  }
-
-
-  function setSharedFolderPermissions($folder, $permissions)
-  {
-    /* Get list of subfolders */
-    $folders= $this->getMailboxList($folder, "");
-    $folders[]= $folder;
-    
-    foreach ($folders as $subfolder){
-
-      /* Set shared folder acl's */
-      if (function_exists('imap_getacl')){
-
-        /* Remove all acl's for this folder */
-        $users= @imap_getacl ($this->mbox, $subfolder);
-        if(is_array($users)){
-          foreach ($users as $userid => $perms){
-            imap_setacl ($this->mbox, $subfolder, $userid, "");
-          }
-        }
-      } else {
-        msg_dialog::display(_("Internal error"), _("Cannot remove IMAP ACL: imap_getacl not implemented!"), ERROR_DIALOG);
-      }
-
-      /* Set permissions for this folder */
-      foreach ($permissions as $user => $acl){
-        imap_setacl ($this->mbox, $subfolder, $user, $acl);
-      }
-    }
-
-  }
-
-
-  function getSharedFolderPermissions($folder)
-  {
-    $result= array();
+    $this->reset_error();
 
     /* imap_getacl available? */
     if (!function_exists('imap_getacl')){
-      msg_dialog::display(_("Internal error"), _("Cannot retrieve IMAP ACL: imap_getacl not implemented!"), ERROR_DIALOG);
+      $this->error = _("The module imap_getacl is not implemented!");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"The imap_getacl module is missing!",
+          "<b>Cannot set folder acls.</b>");
+      return($folder_acls);
     }
 
-    /* Get permissions in case of shared folders */
-    else {
-      $users= imap_getacl ($this->mbox, $folder);
+    /* Get ACLs and merge them with the already given acls (ldap)
+     */
+    $this->build_account_id();
+    $acls = imap_getacl ($this->imap_handle, $this->account_id);
+    foreach($acls as $user => $acl){
+      if($user == "anyone") $user = "__anyone__"; // Map to internal placeholder
+      $folder_acls[$user] = $acl;
+    }
 
-      foreach ($users as $userid => $perms){
-        $result[preg_replace('/^user\./', '', $userid)]= $perms;
+    return($folder_acls);
+  }
+
+
+
+  /*! \brief  Write ACLs back to imap or what ever
+   */
+  public function  setFolderACLs($permissions)
+  {
+    $this->reset_error();
+
+    /* imap_getacl available? */
+    if (!function_exists('imap_getacl')){
+      $this->error = _("The module imap_getacl is not implemented!");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"The imap_getacl module is missing!",
+          "<b>Cannot set folder acls.</b>");
+      return(FALSE);
+    }
+
+    /* Get list of subfolders */
+    $folders= $this->getMailboxList();
+    foreach ($folders as $subfolder){
+      $folder_id = $this->create_folder_id($subfolder);
+      echo $folder_id."<br>";
+
+      /* Remove all acl's for this folder */
+      $users= @imap_getacl ($this->imap_handle, $folder_id);
+      
+      if(is_array($users)){
+        foreach ($users as $userid => $perms){
+          $userid = strtolower($userid);
+          imap_setacl ($this->imap_handle, $folder_id, $userid, "");
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$folder_id." -> ".$userid,
+              "<b>Removing folder permissions.</b>");
+        }
       }
-
     }
 
-    return ($result);
+    /* Set permissions for this folder */
+    foreach($folders as $subfolder){
+      $folder_id = $this->create_folder_id($subfolder);
+
+      foreach ($permissions as $user => $acl){
+        imap_setacl ($this->imap_handle, $folder_id, $user, $acl);
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$folder_id." -> ".$user.": ".$acl,
+            "<b>Setting new folder permissions.</b>");
+      }
+    }
+    return(TRUE);
   }
 
 
-  function deleteMailbox($folder)
+  public function saveSieveSettings()
   {
-    $cfg= $this->config[$this->gosaMailServer];
-    imap_setacl ($this->mbox, $folder, $cfg["admin"], "lrswipcda");
-    if (!imap_deletemailbox($this->mbox, $cfg["connect"].$folder)){
-      msg_dialog::display(_("IMAP error"), sprintf(_('Cannot remove IMAP mailbox: %s'), '<br><br><i>'.imap_last_error().'</i>'), ERROR_DIALOG);
-      return (FALSE);
+    mailMethod::saveSieveSettings();
+
+    /* Map attribute from parent class 
+     */
+    $mail = $this->parent->mail;
+    $gosaMailDeliveryMode = $this->parent->gosaMailDeliveryMode;
+    $gosaMailAlternateAddress = $this->parent->gosaMailAlternateAddress;
+    $gosaMailMaxSize = $this->parent->gosaMailMaxSize;
+    $gosaSpamMailbox = $this->parent->gosaSpamMailbox;
+    $gosaSpamSortLevel = $this->parent->gosaSpamSortLevel;
+    $gosaVacationMessage = $this->parent->gosaVacationMessage;
+
+    /* Try to login into sieve
+     */ 
+    $cfg = $this->ServerList[$this->MailServer];
+    $sieve= new sieve($cfg["sieve_server"], $cfg["sieve_port"], $this->getUAttribValue(),
+        $cfg["password"], $cfg["admin"],$cfg["sieve_option"]);
+    if (!$sieve->sieve_login()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$sieve->error_raw ,"<b>SIEVE: login failed.</b>");
+      $this->error = $sieve->error_raw;
+      return(FALSE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "Options: ".$cfg["sieve_option"] ,
+          "SIEVE: <b>login successfull.</b>");
     }
-    return (TRUE);
-  }
-
-
-  function configureFilter($user, $gosaMailDeliveryMode,
-      $mail, $gosaMailAlternateAddress,
-      $gosaMailMaxSize,
-      $gosaSpamMailbox, $gosaSpamSortLevel,
-      $gosaVacationMessage)
-  {
-    $cfg= $this->config[$this->gosaMailServer];
 
     /* Build spamlevel. Spamassassin tags mails with "*" for each integer
        point of spam. So a spam level of 5.3 gets "*****" which can be
        checked easily by spam filters */
-    $spamlevel= "";
-    for ($i= 0; $i<$gosaSpamSortLevel; $i++){
-      $spamlevel .= "*";
-    }
+    $spamlevel= str_pad("",(int) $gosaSpamSortLevel,"*");
 
-    /* Log into the mail server */
-    $sieve= new sieve($cfg["sieve_server"], $cfg["sieve_port"], $user,
-        $cfg["password"], $cfg["admin"],$cfg["sieve_option"]);
-
-    if (!$sieve->sieve_login()){
-      msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot log into SIEVE server: %s"), '<br><br><i>'.to_string($sieve->error_raw).'</i>'), ERROR_DIALOG);
-      return;
-    }
-
-    /* Load current script from server and remove everything between the comments
-       "###GOSA" */
+    /* Get current sieve script named 'gosa'.
+        Check if it valid ("###GOSA" must be the first string).
+        If it is valid just replace it, if it is NOT valid
+         create a backup of the old 
+     */
     $script= "";
     if($sieve->sieve_listscripts()){
       if (in_array("gosa", $sieve->response)){
-
-        /* get old GOsa script */
         if(!$sieve->sieve_getscript("gosa")){
-          msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot retrieve SIEVE script: %s"), '<br><br><i>'.to_string($sieve->error_raw).'</i>'), ERROR_DIALOG);
-          return;
+          $this->error = sprintf(_("Cannot retrieve SIEVE script: %s"),to_string($sieve->error_raw));
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$sieve->error_raw ,
+              "SIEVE: <b>Connot read 'gosa' sieve script.</b>");
+          $this->error = $sieve->error_raw;
+          return(FALSE);
+        }else{
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$sieve->error_raw ,
+              "SIEVE: <b>Sieve script named 'gosa' found.</b>");
         }
 
+        $is_valid_script = FALSE;
         foreach ($sieve->response as $line){
-          if (preg_match ("/^###GOSA/", $line)){
-            break;
+          if(empty($line)) continue;
+          if (preg_match ("/^###GOSA/", $line) && strlen($script) == 0){
+            $is_valid_script = TRUE;
           }
           $line= rtrim($line);
-          if (!preg_match ('/^\s*$/', $line)){
-            $script .= $line."\n";
-          }
+          $script .= $line;
         }
 
+        if($is_valid_script || strlen($script) == 0 || empty($script)){
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"" ,
+              "SIEVE: Sieve script 'gosa' was a valid GOsa script and will be replaced.");
+        }else{
+          $new_name = "non_gosa_".date("Ymd_H-i-s");
+          $sieve->sieve_sendscript($new_name, $script);
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$this->sieve->error_raw ,
+              "SIEVE: Non GOsa sieve script. <b>Creating backup of the current sieve script '".$new_name."'.</b>");
+        }
       }
     }
 
+
+    /*****
+      Build up new sieve script here.
+     *****/
+
     /* Only create a new one, if it is not empty */
+    $script= "";
     if (is_integer(strpos($gosaMailDeliveryMode, "R")) ||
         is_integer(strpos($gosaMailDeliveryMode, "C")) ||
         !is_integer(strpos($gosaMailDeliveryMode, "L")) ||
@@ -364,24 +516,29 @@ class mailMethodCyrus extends mailMethod
       eval ("\$script.=\"$text\";");
     }
 
-    /* Just be aware of null scripts... */
-    if (!isset ($script)){
-      $script= "";
-    }
+    /****
+      Sieve script build complete
+     ****/
 
     /* Upload script and make it the default one */
     if (!$sieve->sieve_sendscript("gosa", $script)){
-      msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot store SIEVE script: %s"), '<br><br><i>'.to_string($sieve->error_raw).'</i>'), ERROR_DIALOG);
-      return;
-    }
-    if(!$sieve->sieve_setactivescript("gosa")){
-      msg_dialog::display(_("SIEVE error"), sprintf(_("Cannot activate SIEVE script: %s"), '<br><br><i>'.to_string($sieve->error_raw).'</i>'), ERROR_DIALOG);
-      return;
+      $this->error = sprintf(_("Cannot store SIEVE script: %s"), to_string($sieve->error_raw));
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "Error was: ".to_string($sieve->error_raw) ,
+        "SIEVE: <b>Writing new Sieve script failed!</b>");
+      return(FALSE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Successfully written!</b>" ,
+        "SIEVE: <b>NEW sieve script 'gosa' contains '".strlen($script)."' characters.</b>");
     }
 
+    if(!$sieve->sieve_setactivescript("gosa")){
+      $this->error = sprintf(_("Cannot activate SIEVE script: %s"), to_string($sieve->error_raw));
+      return(FALSE);
+    }
+
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","SIEVE: <b>Logout</b>");
     $sieve->sieve_logout();
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
