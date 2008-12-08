@@ -46,7 +46,7 @@ class mailgroup extends plugin
 
     /* Intialize the used mailMethod
      */
-    $tmp = new MailMethod_base($config,$this,"group");
+    $tmp = new mailMethod($config,$this,"group");
     $this->mailMethod           = $tmp->get_method();
     $this->mailDomainParts      = $this->mailMethod->getMailDomains();
     $this->AvailableFolderTypes = $this->mailMethod->getAvailableFolderTypes();
