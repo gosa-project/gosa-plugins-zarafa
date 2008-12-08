@@ -240,6 +240,12 @@ class mailMethod{
   }
 
 
+  public function get_account_id()
+  {
+    $this->build_account_id();
+    return($this->account_id);
+  }
+
   /*! \brief  Create a new account id, like 'user/name@domain.com'.
    */
   protected function build_account_id()
@@ -250,10 +256,12 @@ class mailMethod{
     }else{
       $str = $this->share_prefix;
     }
+
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $str = preg_replace("/\./","/",$str);
+      $str = preg_replace("/[^\\\\]\./","/",$str);
     }
+    $str = preg_replace("/\\\\([\.\/])/","\\1",$str);
     $str = trim(strtolower($str . $this->parent->$uattrib));
     if($this->account_id != $str){
       $this->account_id = $str;
