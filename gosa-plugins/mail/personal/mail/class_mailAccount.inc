@@ -194,6 +194,7 @@ class mailAccount extends plugin
 
   function execute()
   {
+
     /* Call parent execute */
     $display = plugin::execute();
 
@@ -841,6 +842,25 @@ class mailAccount extends plugin
       $this->mail = $this->mail."@".$this->mailDomainPart;
     }
 
+    /* Update sharedFolder dependencies. 
+       Open each shared folder and remove this account. 
+       Then Save the group to ensure that all necessary 
+        actions will be taken (imap acls updated aso.).
+     */
+    $ldap = $this->config->get_ldap_link();    
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaMailAccount)(memberUid=".$this->uid."))",array("dn"));
+    while($attrs = $ldap->fetch()){
+      $grp = new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $attrs['dn']);
+      if(isset($grp->by_object['mailgroup']) && isset($grp->by_object['group'])){
+        $grp->by_object['group']->removeUser($this->uid);
+
+        /* Do not save the complete group! This will quit the complete membership 
+         */
+        $grp->by_object['mailgroup']->save();
+      } 
+    }
+
     /* Remove GOsa attributes */
     plugin::remove_from_parent();
 
@@ -874,10 +894,6 @@ class mailAccount extends plugin
       }else{
         if(!$this->mailMethod->deleteMailbox()){
           msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox! Error was: %s."), 
-                $this->mailMethod->get_error()), ERROR_DIALOG);
-        }
-        if(!$this->mailMethod->updateSharedFolder()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
       }
@@ -929,8 +945,6 @@ class mailAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs);
-  
-
 
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
@@ -961,7 +975,6 @@ class mailAccount extends plugin
 
         if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
 
-
           /* Do not write sieve settings if this account is new and 
              doesn't seem to exist.
            */
@@ -974,20 +987,32 @@ class mailAccount extends plugin
             }
           }
         }else{
-      
          echo "Check sieve management here";
-
           @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, 
               "User uses an own sieve script, skipping sieve update.".$str."</b>","");
-        }
-
-        if(!$this->mailMethod->updateSharedFolder()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."), 
-                $this->mailMethod->get_error()), ERROR_DIALOG);
         }
       }
     }
     $this->mailMethod->disconnect();
+
+    /* Update sharedFolder dependencies.
+       Open each shared folder and remove this account.
+       Then Save the group to ensure that all necessary
+       actions will be taken (imap acls updated aso.).
+     */
+    if(!$this->initially_was_account){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaMailAccount)(memberUid=".$this->uid."))",array("dn"));
+      while($attrs = $ldap->fetch()){
+        $grp = new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $attrs['dn']);
+        if(isset($grp->by_object['mailgroup'])){
+          /* Do not save the complete group! This will quit the complete membership
+           */
+          $grp->by_object['mailgroup']->save();
+        }
+      }
+    }
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

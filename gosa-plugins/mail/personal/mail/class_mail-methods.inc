@@ -44,7 +44,6 @@ class mailMethod{
   protected $parent             = NULL;   
   protected $MailServer         = "";
 
-
   protected $acl_map = array(
       "lrsw"     => "read",
       "lrswp"    => "post",
