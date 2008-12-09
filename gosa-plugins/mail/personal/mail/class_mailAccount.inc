@@ -148,11 +148,13 @@ class mailAccount extends plugin
 
       /* If the doamin part is selectable, we have to split the mail address
        */
-      if($this->mailMethod->domainSelectionEnabled()){
-        $this->mailDomainPart = preg_replace("/^[^@]*+@/","",$this->mail);
-        $this->mail = preg_replace("/@.*$/","\\1",$this->mail);
-        if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
-          $this->mailDomainParts[] = $this->mailDomainPart;
+      if(!(!$this->mailMethod->isModifyableMail() && $this->is_account)){
+        if($this->mailMethod->domainSelectionEnabled()){
+          $this->mailDomainPart = preg_replace("/^[^@]*+@/","",$this->mail);
+          $this->mail = preg_replace("/@.*$/","\\1",$this->mail);
+          if(!in_array($this->mailDomainPart,$this->mailDomainParts)){
+            $this->mailDomainParts[] = $this->mailDomainPart;
+          }
         }
       }
 
@@ -493,13 +495,19 @@ class mailAccount extends plugin
     if (isset($_POST['mailTab'])){
 
       /* Save ldap attributes */
+      $mail = $this->mail;
       plugin::save_object();
 
-      /* Get posted mail domain part, if necessary  
-       */
-      if($this->mailMethod->domainSelectionEnabled() && isset($_POST['MailDomain'])){
-        if(in_array(get_post('MailDomain'), $this->mailDomainParts)){
-          $this->mailDomainPart = get_post('MailDomain');
+      if(!$this->mailMethod->isModifyableMail() && $this->initially_was_account){
+        $this->mail = $mail;
+      }else{
+
+        /* Get posted mail domain part, if necessary  
+         */
+        if($this->mailMethod->domainSelectionEnabled() && isset($_POST['MailDomain'])){
+          if(in_array(get_post('MailDomain'), $this->mailDomainParts)){
+            $this->mailDomainPart = get_post('MailDomain');
+          }
         }
       }
 
@@ -888,13 +896,17 @@ class mailAccount extends plugin
     $ldap= $this->config->get_ldap_link();
 
     /* If domain part was selectable, contruct mail address */
-    if($this->mailMethod->domainSelectionEnabled()){
-      $this->mail = $this->mail."@".$this->mailDomainPart;
+    if(!(!$this->mailMethod->isModifyableMail() && $this->initially_was_account)){
+
+      if($this->mailMethod->domainSelectionEnabled()){
+        $this->mail = $this->mail."@".$this->mailDomainPart;
+      }
+
+      /* Enforce lowercase mail address and trim whitespaces
+       */
+      $this->mail = trim(strtolower($this->mail));
     }
-    
-    /* Enforce lowercase mail address and trim whitespaces
-     */
-    $this->mail = trim(strtolower($this->mail));
+
 
     /* Call parents save to prepare $this->attrs */
     plugin::save();
@@ -917,6 +929,8 @@ class mailAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs);
+  
+
 
     if (!$ldap->success()){
       msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
@@ -1005,31 +1019,34 @@ class mailAccount extends plugin
 
     /* Mail address checks */
     $mail = $this->mail;
-    if($this->mailMethod->domainSelectionEnabled()){
-      $mail.= "@".$this->mailDomainPart;
-    }
+    if(!(!$this->mailMethod->isModifyableMail() && $this->initially_was_account)){
 
-    if (empty($mail)){
-      $message[]= msgPool::required(_("Primary address"));
-    }
-    if ($this->is_template){
-      if (!tests::is_email($mail, TRUE)){
-        $message[]= msgPool::invalid(_("Mail address"),"","","%givenName.%sn@your-domain.com");
+      if($this->mailMethod->domainSelectionEnabled()){
+        $mail.= "@".$this->mailDomainPart;
       }
-    } else {
-      if (!tests::is_email($mail)){
-        $message[]= msgPool::invalid(_("Mail address"),"","","your-address@your-domain.com");
-      }
-    }
 
-    /* Check if this mail address is already in use */
-    $ldap->cd($this->config->current['BASE']);
-    $filter = "(&(!(objectClass=gosaUserTemplate))(!(uid=".$this->uid."))".
-      "(objectClass=gosaMailAccount)".
-      "(|(mail=".$mail.")(alias=".$mail.")(gosaMailAlternateAddress=".$mail.")))";
-    $ldap->search($filter,array("uid"));
-    if ($ldap->count() != 0){
-      $message[]= msgPool::duplicated(_("Mail address"));
+      if (empty($mail)){
+        $message[]= msgPool::required(_("Primary address"));
+      }
+      if ($this->is_template){
+        if (!tests::is_email($mail, TRUE)){
+          $message[]= msgPool::invalid(_("Mail address"),"","","%givenName.%sn@your-domain.com");
+        }
+      } else {
+        if (!tests::is_email($mail)){
+          $message[]= msgPool::invalid(_("Mail address"),"","","your-address@your-domain.com");
+        }
+      }
+
+      /* Check if this mail address is already in use */
+      $ldap->cd($this->config->current['BASE']);
+      $filter = "(&(!(objectClass=gosaUserTemplate))(!(uid=".$this->uid."))".
+        "(objectClass=gosaMailAccount)".
+        "(|(mail=".$mail.")(alias=".$mail.")(gosaMailAlternateAddress=".$mail.")))";
+      $ldap->search($filter,array("uid"));
+      if ($ldap->count() != 0){
+        $message[]= msgPool::duplicated(_("Mail address"));
+      }
     }
 
 
