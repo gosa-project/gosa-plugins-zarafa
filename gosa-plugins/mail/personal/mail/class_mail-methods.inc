@@ -112,6 +112,9 @@ class mailMethod{
       if(isset($this->parent->$source)){
         $this->parent->$dest = $this->parent->$source;
       }
+      if(isset($this->parent->attrs[$source][0])){
+        $this->parent->saved_attributes[$source] = $this->parent->attrs[$source][0];
+      }
     }
   }
 

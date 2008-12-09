@@ -1,7 +1,7 @@
 <?php
 
 
-class mailMethodKolab22 extends mailMethodCyrus
+class mailMethodKolab22 extends mailMethodKolab
 {
 
   /* Allow modification of account_ids for existing mail accounts */
@@ -17,137 +17,16 @@ class mailMethodKolab22 extends mailMethodCyrus
   protected $enableVacationRange  = TRUE;
   protected $enableFolderTypes    = TRUE;
 
-  protected $attributes           = array(
-      "alias" => "gosaMailAlternateAddress",
-      "cyrus-userquota" => "gosaMailQuota",
-      "kolabHomeServer" => "gosaMailServer");
-
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
-  public function fixAttributesOnStore()
-  {
-    mailMethod::fixAttributesOnStore();
-    $this->build_account_id();
-    $this->parent->attrs['kolabDeleteFlag'] = array();
-    if($this->type == "group"){ 
-      $this->parent->attrs['gosaSharedFolderTarget'] = "kolab+shared.".$this->parent->mail;
-    }
-  }
-
-  public function fixAttributesOnRemove()
-  {
-    mailMethod::fixAttributesOnRemove();
-    foreach($this->attributes as $source => $dest){
-      $this->attrs[$dest]   = array();
-      $this->attrs[$source] = array();
-    }
-    if($this->type == "user"){
-      $ocs = $this->userObjectClasses;
-    }else{
-      $ocs = $this->shareObjectClasses;
-    }
-    $this->parent->attrs['objectClass'] = array_merge( $this->parent->attrs['objectClass'],$ocs);
-    $this->parent->attrs['objectClass'] = array_unique($this->parent->attrs['objectClass']);
-    $this->parent->attrs['gosaSharedFolderTarget'] =array();
-    $this->parent->attrs['kolabDeleteFlag'] = $this->parent->gosaMailServer;
-    if($this->folderTypesEnabled()){
-      $this->parent->attrs['kolabFolderType'] =array();
-    }
-  }
-
-
-  /* \brief   Some method require special folder types, "kolab" for example.
-      !! Those values are dummy values, the base class doesn't use folder types;
-     @return  Array Return folder types.
+  /*! \brief Returns a list of configured mail domains 
+      @return Array A list of mail domains
    */
-  public function getAvailableFolderTypes()
+  public function getMailDomains()
   {
-    $ret = array();
-    $ret['CAT'][''] = _("Unspecified"); 
-    $ret['CAT']['mail']= _("Mails"); 
-    $ret['CAT']['task']= _("Tasks"); 
-    $ret['CAT']['journal']= _("Journals"); 
-    $ret['CAT']['calendar']= _("Calendar"); 
-    $ret['CAT']['contact']= _("Contacts"); 
-    $ret['CAT']['note']= _("Notes"); 
-
-    $ret['SUB_CAT']['']['']     = _("Unspecified"); 
-    $ret['SUB_CAT']['mail'][''] = _("Unspecified"); 
-    $ret['SUB_CAT']['mail']['inbox']      = _("Inbox"); 
-    $ret['SUB_CAT']['mail']['drafts']     = _("Drafts"); 
-    $ret['SUB_CAT']['mail']['sentitems']  = _("Sent items"); 
-    $ret['SUB_CAT']['mail']['junkemail']  = _("Junk mail"); 
-
-    $ret['SUB_CAT']['task']['defailt']     = _("Default"); 
-    $ret['SUB_CAT']['journal']['defailt']  = _("Default"); 
-    $ret['SUB_CAT']['calendar']['defailt'] = _("Default"); 
-    $ret['SUB_CAT']['contact']['defailt']  = _("Default"); 
-    $ret['SUB_CAT']['note']['defailt']     = _("Default"); 
-
-    return($ret);
-  }
-
-
-  /* \brief  Returns the selected folder type. 
-      !! Those values are dummy values, the base class doesn't use folder types;
-     @return  Array  The folde type.
-   */
-  public function getFolderType($default)
-  {
-    if($this->enableFolderTypes && $this->parent->attrs['kolabFolderType'][0]){
-      list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
-      return(array("CAT" => $cat, "SUB_CAT" => $sub));
-    }else{
-      return($default);
-    }
-  }
-
- 
-  /* \brief  Returns the selected folder type. 
-      !! Those values are dummy values, the base class doesn't use folder types;
-     @return  Array  The folde type.
-   */
-  public function setFolderType($type)
-  {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->parent->dn);
-    $ldap->modify(array("kolabFolderType" => $type['CAT'].".".$type['SUB_CAT']));
-    echo "Move me to KOLAB";
-  }
-
-
-  public function setQuota($number)
-  {
-    mailMethod::setQuota($number);
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Skipped, part of kolabd!</b>", 
-        "<b>Set account quota</b> on server '".$this->MailServer);
-    return(TRUE);
-  }
-
-  public function  setFolderACLs($permissions)
-  {
-    mailMethod::setFolderACLs($permissions);
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Skipped, part of kolabd!</b>", 
-        "<b>Setting folder ACLs!</b>","");
-    return(TRUE);
-  }
-
-  public function updateMailbox()
-  {
-    mailMethod::updateMailbox();
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Skipped, part of kolabd!</b>", 
-        "<b>Add/Update account</b> on server :".$this->MailServer);
-    return(TRUE);
-  }
-
-  public function deleteMailbox()
-  {
-    mailMethod::deleteMailbox();
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "Skipped, part of kolabd!", 
-      "<b>Setting Quota</b>");
-    return(TRUE);
-  }
+    return(array("gonicus.de"));
+  } 
 }
 
 

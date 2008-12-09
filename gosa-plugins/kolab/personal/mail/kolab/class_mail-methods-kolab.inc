@@ -18,6 +18,8 @@ class mailMethodKolab extends mailMethodCyrus
   protected $enableFolderTypes    = TRUE;
 
   protected $attributes           = array(
+      "kolabDeleteflag" => "kolabDeleteflag",
+      "kolabFolderType" => "kolabFolderType",
       "alias" => "gosaMailAlternateAddress",
       "cyrus-userquota" => "gosaMailQuota",
       "kolabHomeServer" => "gosaMailServer");
@@ -28,11 +30,17 @@ class mailMethodKolab extends mailMethodCyrus
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
+  public function fixAttributesOnLoad()
+  {
+    mailMethodCyrus::fixAttributesOnLoad();
+  }
+
   public function fixAttributesOnStore()
   {
     mailMethod::fixAttributesOnStore();
     $this->build_account_id();
-    $this->parent->attrs['kolabDeleteFlag'] = array();
+    $this->parent->attrs['kolabDeleteflag'] = array();
+    $this->parent->attrs['kolabFolderType'] = array();
     if($this->type == "group"){ 
       $this->parent->attrs['gosaSharedFolderTarget'] = "kolab+shared.".$this->parent->mail;
     }
