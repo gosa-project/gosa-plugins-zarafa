@@ -383,6 +383,8 @@ class mailAccount extends plugin
     $smarty->assign("allowSieveManagement", $this->mailMethod->allowSieveManagement());
     $smarty->assign("own_script",  $this->sieveManagementUsed);
 
+    print_a($this->multi_boxes);
+
     /* _Multiple users vars_ */
     foreach($this->attributes as $attr){
       $u_attr = "use_".$attr;
@@ -501,7 +503,7 @@ class mailAccount extends plugin
        */
       if (isset($_POST["import_vacation"]) && isset($this->vacationTemplates[$_POST["vacation_template"]])){
         if($this->multiple_support_active){
-          $contents = file_get_contents($_POST["vacation_template"]);
+          $contents = ltrim(preg_replace("/^DESC:.*$/m","",file_get_contents($_POST["vacation_template"])));
         }else{
           $contents = $this->prepare_vacation_template(file_get_contents($_POST["vacation_template"]));
         }
@@ -1163,6 +1165,15 @@ class mailAccount extends plugin
     }
     $ret['flag_add'] = $flag_add;
     $ret['flag_remove'] = $flag_remove;
+
+    echo "1";
+    if($this->mailMethod->vacationRangeEnabled()){
+      echo "2";
+      if(in_array("V",$flag_add)){
+        $ret['gosaVacationStart'] =  $this->gosaVacationStart = $_POST['gosaVacationStart'];
+        $ret['gosaVacationStop'] =  $this->gosaVacationStop = $_POST['gosaVacationStop'];
+      }
+    }
     return($ret);
   }
 
@@ -1247,8 +1258,8 @@ class mailAccount extends plugin
     }
   }
 
-  
-  /*! \brief  
+ 
+  /*! \brief
    */
   function get_multi_init_values()
   {
@@ -1257,7 +1268,7 @@ class mailAccount extends plugin
     return($attrs);
   }
 
-  
+
   /*! \brief  Display multiple edit dialog 
    */
   function multiple_execute()

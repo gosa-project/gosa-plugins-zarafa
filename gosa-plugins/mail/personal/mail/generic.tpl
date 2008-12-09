@@ -4,6 +4,7 @@
 
    <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
    <table summary="">
+{if !$multiple_support}
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
@@ -32,6 +33,7 @@
 {/render}
      </td>
     </tr>
+{/if}
 
 	<tr>
  	 <td>&nbsp;
@@ -45,7 +47,7 @@
 	<tr>
 	 <td><label for="gosaMailQuota">{t}Quota size{/t}</label></td>
 	 <td>
-{render acl=$gosaMailQuotaACL}
+{render acl=$gosaMailQuotaACL checkbox=$multiple_support checked=$use_gosaMailQuota}
 	  <input id="gosaMailQuota" name="gosaMailQuota" size="6" align="middle" maxlength="60"
 		value="{$gosaMailQuota}"> MB
 			{/render}
@@ -58,6 +60,7 @@
     &nbsp;
   </td>
   <td>
+{if !$multiple_support}
    <h2><img class="center" alt="" align="middle" src="plugins/mail/images/alternatemail.png" /><label for="alternates_list"> {t}Alternative addresses{/t}</    label></h2>
 {render acl=$gosaMailAlternateAddressACL}
    <select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15" multiple
@@ -76,6 +79,7 @@
 {render acl=$gosaMailAlternateAddressACL}
    <input type=submit value="{msgPool type=delButton}" name="delete_alternate">
 {/render}
+{/if}
   </td>
  </tr>
  <tr>
