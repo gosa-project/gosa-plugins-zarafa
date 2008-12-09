@@ -71,7 +71,6 @@ class mailAccount extends plugin
   var $mailMethod      = NULL;
   var $MailDomain      = "";
   var $sieveManagementUsed = FALSE;
-  var $multiple_support = FALSE;
   var $vacationTemplates = array();
   var $sieve_management = NULL;
   var $forward_dialog = FALSE;
@@ -88,6 +87,7 @@ class mailAccount extends plugin
       "gosaMailForwardingAddress");
   var $objectclasses= array("gosaMailAccount");
 
+  var $multiple_support = TRUE;
 
   /*! \brief  Initialize the mailAccount 
    */
@@ -940,8 +940,18 @@ class mailAccount extends plugin
         }
 
         if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
-          if(!$this->mailMethod->saveSieveSettings()){
-            msg_dialog::display(_("Mail error"), $this->mailMethod->get_error(), ERROR_DIALOG);
+
+
+          /* Do not write sieve settings if this account is new and 
+             doesn't seem to exist.
+           */
+          if(!$this->initially_was_account && !$this->mailMethod->account_exists()){
+            @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
+                "Skipping sieve settings, the account doesn't seem to be created already.</b>","");
+          }else{
+            if(!$this->mailMethod->saveSieveSettings()){
+              msg_dialog::display(_("Mail error"), $this->mailMethod->get_error(), ERROR_DIALOG);
+            }
           }
         }else{
       
