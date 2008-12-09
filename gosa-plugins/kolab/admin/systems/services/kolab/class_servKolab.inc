@@ -3,7 +3,7 @@
 class servkolab extends goService {
   var $postfix_mydomain                 = "";
   var $cyrus_admins                     = "";
-  var $postfix_mydestination            = "";
+  var $postfix_mydestination            = array();
   var $postfix_mynetworks               = "127.0.0.1/8";
   var $postfix_enable_virus_scan        = "TRUE";
   var $postfix_relayhost                = "";
@@ -69,7 +69,16 @@ class servkolab extends goService {
         $this->is_account            = true;
         $this->initially_was_account = true;
       }
-    } 
+    }
+
+    /* Get list of configured domains 
+     */ 
+    $this->postfix_mydestination = array();
+    if(isset($this->attrs['postfix-mydestination'])){
+      for($i=0; $i < $this->attrs['postfix-mydestination']['count']; $i++){
+        $this->postfix_mydestination[] = $this->attrs['postfix-mydestination'][$i];
+      }
+    }
   }
 
 
@@ -133,6 +142,20 @@ class servkolab extends goService {
 
     $smarty->assign("fbfuture", $fbfuture);
     $smarty->assign("quotastr", $quotastr);
+
+    /* Create mail domain divlist  (postfix_mydestination)
+     */
+    $divlist = new divSelectBox("fuse");
+    $divlist->setHeight(100);
+    foreach($this->postfix_mydestination as $key => $domain){
+      $f1 = array("string" => $domain);
+      $f2 = array("string" => "<input type='image' src='images/lists/trash.png' 
+                                  name='remove_domain_".$key."'
+                                  title='"._("Remove")."' alt='"._("Remove")."'>", 
+                  "attach" => "style='border-right:0px; width: 20px;'");
+      $divlist->AddEntry(array($f1,$f2));
+    }
+    $smarty->assign("mdDiv",$divlist->DrawList());
 
     /* Load Template */
     $display.=$smarty->fetch(get_template_path('servkolab.tpl', TRUE,dirname(__FILE__)));
@@ -223,7 +246,26 @@ class servkolab extends goService {
     if (isset($_POST['kolabtab'])){
       plugin::save_object();
 
+      /* Domain name added/removed 
+       */
+      foreach($_POST as $name => $value){
+        if(preg_match("/^remove_domain_/",$name)){
+          $id = preg_replace("/^remove_domain_([0-9]*)_.*$/","\\1",$name);
+          if(isset($this->postfix_mydestination[$id])){
+            unset($this->postfix_mydestination[$id]);
+          }
+          break;
+        }
+      }
+      if(isset($_POST['add_domain_name']) && isset($_POST['new_domain_name'])){
+        $new_domain = trim(get_post('new_domain_name'));
+        if(!empty($new_domain) && tests::is_domain($new_domain)){
+          $this->postfix_mydestination[] = $new_domain;
+        }
+      }
 
+      /* Map attrinutes 
+       */
       foreach($this->attributes as $attr){
         if(($this->acl_is_writeable(preg_replace("/_/","",$attr))) && (isset($_POST[$attr]))){
           $this->$attr = $_POST[$attr];
@@ -275,6 +317,10 @@ class servkolab extends goService {
 
     if(empty($this->postfix_mynetworks)) { 
       $message[] = msgPool::required(_("Privileged networks"));
+    }
+
+    if(!count($this->postfix_mydestination)){
+      $message[] = msgPool::required(_("Mail domains")." (postfix-mydestination)" );
     }
 
     return ($message);

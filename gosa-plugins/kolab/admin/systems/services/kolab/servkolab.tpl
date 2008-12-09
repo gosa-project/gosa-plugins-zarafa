@@ -1,7 +1,7 @@
 <table summary="" style="width:100%">
  <tr>
   <td style="vertical-align:top; border-right:1px solid #A0A0A0; padding-right:5px;" width="50%">
-   <table summary="">
+   <table summary="" width="100%">
     <tr>
 	 <td colspan="2"><b>{t}Generic{/t}</b></td>
 	</tr>
@@ -15,20 +15,24 @@
 		</td>
 	</tr>
 	<tr>
-		<td>{t}Postfix mydestination{/t}
-		</td>
-		<td>
-{render acl=$postfixmydestinationACL}
-			<input type="text" name="postfix_mydestination" value="{$postfix_mydestination}">
-{/render}
-		</td>
-	</tr>
-	<tr>
 		<td>{t}Cyrus admins{/t}
 		</td>
 		<td>
 {render acl=$cyrusadminsACL}
 			<input type="text" name="cyrus_admins" value="{$cyrus_admins}">
+{/render}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">{t}Mail domains{/t}&nbsp;({t}Postfix mydestination{/t})<br>
+{render acl=$postfixmydestinationACL}
+		{$mdDiv}
+{/render}
+{render acl=$postfixmydestinationACL}
+		<input size="30" type='text' name='new_domain_name' value=''>
+{/render}
+{render acl=$postfixmydestinationACL}
+		<input type='submit' name='add_domain_name' value='{msgPool type=addButton}'>
 {/render}
 		</td>
 	</tr>
