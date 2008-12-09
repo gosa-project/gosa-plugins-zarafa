@@ -893,11 +893,16 @@ sub save_fai_log {
     my ($fai_log_dir) = @_ ;
     my $FAI_DIR;
 
+	# Directory for log files after a softupdate
     my $log_dir = File::Spec->catdir($fai_log_dir, "localhost/last");
 
     if (not -d $log_dir) { 
-        daemon_log("ERROR: cannot open directory $log_dir", 1);
-        return; 
+		# Directory for log files after a new installation
+		$log_dir = "/tmp/fai";
+		if (not -d $log_dir) {
+				daemon_log("ERROR: cannot open directory $log_dir", 1);
+				return; 
+		}
     }
 
     opendir($FAI_DIR, "$log_dir");
