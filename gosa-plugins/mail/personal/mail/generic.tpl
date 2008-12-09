@@ -8,6 +8,9 @@
     <tr>
      <td><label for="mail">{t}Primary address{/t}</label>{$must}</td>
      <td>
+     {if !$isModifyableMail && $initially_was_account}
+		<input disabled size=30 value="{$mail}">
+     {else}
 	 {if $domainSelectionEnabled}
 		{render acl=$mailACL}
 			<input id="mail" name="mail" size=20 maxlength=65 value="{$mail}">
@@ -20,17 +23,23 @@
             <input id="mail" name="mail" size=35 maxlength=65 value="{$mail}">
         {/render}
 	{/if}
+	{/if}
      </td>
     </tr>
     <tr>
      <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
+     {if !$isModifyableMail && $initially_was_account}
+        <input disabled size=30 value="{$gosaMailServer}">
+     {else}
+
 {render acl=$gosaMailServerACL}
       <select size="1" id="gosaMailServer" name="gosaMailServer" title="{t}Specify the mail server where the user will be hosted on{/t}">
 		{html_options values=$MailServers output=$MailServers selected=$gosaMailServer}
 		<option disabled>&nbsp;</option>
       </select>
 {/render}
+     {/if}
      </td>
     </tr>
 {/if}

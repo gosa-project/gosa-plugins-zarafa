@@ -361,6 +361,10 @@ class mailAccount extends plugin
       SMARTY- Assign smarty variables 
      ****************/
     $smarty = get_smarty();
+    $smarty->assign("initially_was_account", $this->initially_was_account);
+    $smarty->assign("isModifyableMail", $this->mailMethod->isModifyableMail());
+    $smarty->assign("mailEqualsCN", $this->mailMethod->mailEqualsCN());
+
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
     $tmp  = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $transl){
