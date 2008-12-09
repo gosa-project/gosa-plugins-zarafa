@@ -665,7 +665,11 @@ class mailMethod{
   {
     return($this->enableFolderTypes);
   }
-   
+
+  public function allow_remove(&$reason)
+  {
+    return(TRUE);
+  }
 }
 
 

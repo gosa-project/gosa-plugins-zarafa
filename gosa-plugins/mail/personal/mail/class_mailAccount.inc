@@ -1336,6 +1336,17 @@ class mailAccount extends plugin
   }
 
 
+  function allow_remove()
+  {
+    $resason = "";
+    if(!$this->mailMethod->allow_remove($reason)){
+      return($reason);
+    }
+    return("");
+  }
+
+
+
   /*! \brief  ACL settings 
    */
   static function plInfo()
