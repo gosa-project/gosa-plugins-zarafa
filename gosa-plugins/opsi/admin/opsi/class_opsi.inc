@@ -110,11 +110,13 @@ class opsi extends gosaSupportDaemon
       $opsi_acl = $ui->get_permissions($obj['dn'],"opsi/opsiGeneric");
       if(preg_match("/r/",$opsi_acl)){
         if(!empty($entry['DESCRIPTION'][0]['VALUE'])){ 
-          $obj["description"] =$entry['DESCRIPTION'][0]['VALUE'];
+          $obj["description"]= array();
+          $obj["description"][0]= $entry['DESCRIPTION'][0]['VALUE'];
         }
         $data[] = $obj;
       }
     }
+
     return($data);
   }
 
