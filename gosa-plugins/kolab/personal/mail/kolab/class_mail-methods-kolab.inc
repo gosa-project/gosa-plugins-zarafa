@@ -30,6 +30,15 @@ class mailMethodKolab extends mailMethodCyrus
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
+  protected $acl_map = array(
+      "lrsw"     => "read",
+      "lrswp"    => "post",
+      "p"        => "external post",
+      "lrswip"   => "append",
+      "lrswipcd" => "write",
+      "lrswipcda"=> "admin",
+      "lrswipkxtecda"=> "full-admin",
+      " "         => "none");
   public function fixAttributesOnLoad()
   {
     mailMethodCyrus::fixAttributesOnLoad();
