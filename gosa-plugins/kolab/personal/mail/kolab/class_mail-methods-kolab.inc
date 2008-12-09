@@ -22,6 +22,9 @@ class mailMethodKolab extends mailMethodCyrus
       "cyrus-userquota" => "gosaMailQuota",
       "kolabHomeServer" => "gosaMailServer");
 
+  protected $user_prefix    = 'user.';
+  protected $share_prefix   = 'shared\\.';
+
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
@@ -87,6 +90,25 @@ class mailMethodKolab extends mailMethodCyrus
 
     return($ret);
   }
+
+
+  /*! \brief  Checks whether this account is removeable or not.
+              There may be some dependencies left, eg. kolab.
+   */
+  public function accountRemoveable(&$reason = "")
+  {
+    if(isset($this->parent->attrs)){
+      $checkArray  = array("kolabInvitationPolicy","unrestrictedMailSize", "calFBURL","kolabDelegate","kolabFreeBusyFuture");
+      foreach($checkArray as $index){
+        if(isset($this->parent->attrs[$index])){
+          $reason = _("Mail settings cannot be removed while there are delegations configured!");
+          return(false);
+        }
+      }
+    }
+    return(true);
+  }
+
 
 
   /* \brief  Returns the selected folder type. 
