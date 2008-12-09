@@ -172,14 +172,14 @@ class kolabAccount extends plugin
           }
         } else {
 
-          $ldap= $this->config->get_ldap_link();
-          $ldap->cd ($this->config->current['BASE']);
-          $ldap->search('(mail='.$address.')',array("mail"));
-          if ($ldap->count() == 0){
-            msg_dialog::display(_("Error"), msgPool::duplicated(_("Primary mail address")));
-          } else {
+#         $ldap= $this->config->get_ldap_link();
+#         $ldap->cd ($this->config->current['BASE']);
+#         $ldap->search('(mail='.$address.')',array("mail"));
+#         if ($ldap->count() == 0){
+#           msg_dialog::display(_("Error"), msgPool::duplicated(_("Primary mail address")));
+#         } else {
             $valid= TRUE;
-          }
+#          }
         }
 
         if ($valid){
@@ -347,7 +347,7 @@ class kolabAccount extends plugin
     $message= plugin::check();
 
     /* FBFuture is in days... */
-    if ($this->kolabFreeBusyFuture != ""){
+    if ($this->kolabFreeBusyFuture == ""){
       $message[]= msgPool::required(_("Free Busy future"));
     }
     if(!preg_match('/^[0-9]+$/', $this->kolabFreeBusyFuture)){
@@ -355,7 +355,7 @@ class kolabAccount extends plugin
     }
 
     /* Check for URL scheme... */
-    if(!empty($this->calFBURL)){
+    if(empty($this->calFBURL)){
       $message[]= msgPool::required(_("Free Busy url"));
     }
     if(!preg_match("/^http+(s)*:\/\//",$this->calFBURL)){
