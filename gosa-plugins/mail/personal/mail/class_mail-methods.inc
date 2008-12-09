@@ -676,6 +676,24 @@ class mailMethod{
   {
     return(TRUE);
   }
+
+
+  /*! \brief  Returns the configured mailMethod
+      @return String  the configured mail method or ""
+   */
+  static public function get_current_method($config)
+  {
+    global $class_mapping;
+    $method= $config->get_cfg_value("mailmethod");
+    $cls = get_correct_class_name("mailMethod$method");
+    foreach($class_mapping as $class => $path){
+      if($class == $cls){
+        return($class);
+      }
+    }
+    return("");
+  }
+
 }
 
 
