@@ -241,26 +241,28 @@ sub new_ntp_config {
     open (FILE, "<$chrony_file");
     my @file = <FILE>;
     close FILE;
+	my @new_file;
     foreach my $line (@file) {
-        if ($line =~ /server /) {
-            if ($found_server_flag) {
-                $line =~ s/^server [\s\S]+$//;
+        if ($line =~ /^server\s+/) {
+            if ($found_server_flag) {	
+                $line =~ s/^server\s+[\S]+\s+$//;
             } else {
-                $line =~ s/^server [\s\S]+$/$ntp_servers_string/;
+                $line =~ s/^server\s+[\S]+\s+$/$ntp_servers_string/;
             }
             $found_server_flag++;
         }
+		push(@new_file, $line);
     }
 
     # Append new server if no old server configuration found
     if (not $found_server_flag) {
-        push(@file, "\n# ntp server configuration written by GOsa-si\n");
-        push(@file, $ntp_servers_string);
+        push(@new_file, "\n# ntp server configuration written by GOsa-si\n");
+        push(@new_file, $ntp_servers_string);
     }
 
     # Write changes to file and close it
     open (FILE, ">$chrony_file");
-    print FILE join("", @file); 
+    print FILE join("", @new_file); 
     close FILE;
     &main::daemon_log("INFO: wrote new configuration file: $chrony_file", 5);
 
