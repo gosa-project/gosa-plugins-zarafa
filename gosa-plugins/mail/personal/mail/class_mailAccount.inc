@@ -142,8 +142,8 @@ class mailAccount extends plugin
         msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }elseif(!$this->mailMethod->account_exists()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox doesn't exists on mail server: %s."), 
-              $this->gosaMailServer), ERROR_DIALOG);
+        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox '%s' doesn't exists on mail server: %s."), 
+              $this->mailMethod->get_account_id(),$this->gosaMailServer), ERROR_DIALOG);
       }
 
       /* If the doamin part is selectable, we have to split the mail address

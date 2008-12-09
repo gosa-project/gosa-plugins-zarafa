@@ -257,12 +257,16 @@ class mailMethod{
       $str = $this->share_prefix;
     }
 
+    /* Create account prefix and respect "cyrusUseSlashes" 
+       Do not replace escaped dots for cyrusUseSlashes.
+     */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $str = preg_replace("/[^\\\\]\./","/",$str);
+      $str = preg_replace('/([^\\\\])\./',"\\1/",$str);
     }
     $str = preg_replace("/\\\\([\.\/])/","\\1",$str);
     $str = trim(strtolower($str . $this->parent->$uattrib));
+
     if($this->account_id != $str){
       $this->account_id = $str;
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "accountID generated: <b>".$str."</b>","");
@@ -296,10 +300,16 @@ class mailMethod{
       $str = $this->share_prefix;
     } 
 
+    /* Create account prefix and respect "cyrusUseSlashes"
+       Do not replace escaped dots for cyrusUseSlashes.
+     */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $str = preg_replace("/\./","/",$str);
+      $str = preg_replace('/([^\\\\])\./',"\\1/",$str);
     }
+    $str = preg_replace("/\\\\([\.\/])/","\\1",$str);
+    $str = trim(strtolower($str . $this->parent->$uattrib));
+
     if(preg_match("/\@/",$this->parent->$uattrib)){
       list($mail,$domain) = split("\@",$this->parent->$uattrib);
       $str = trim(strtolower($str . $mail . $folder . "@" . $domain));
@@ -478,7 +488,7 @@ class mailMethod{
    */
   public function getMailDomains()
   {
-    return(array("gonicus.de","test.intranet.de"));
+    return(array("Unconfigured"));
   } 
 
   
@@ -533,22 +543,6 @@ class mailMethod{
    */
   public function accountRemoveable(&$reason = ""){
     return(TRUE);
-
-     /* We are in administrational edit mode.
-        Check tab configurations directly * /
-
-    $
-    if(isset($this->attrs)){
-      $checkArray  = array("kolabInvitationPolicy","unrestrictedMailSize", "calFBURL","kolabDelegate","kolabFreeBusyFuture");
-      foreach($checkArray as $index){
-        if(isset($this->attrs[$index])){
-           return(true);
-        }
-      }
-    }
-    return(false);
-
-    */
   }
 
   
