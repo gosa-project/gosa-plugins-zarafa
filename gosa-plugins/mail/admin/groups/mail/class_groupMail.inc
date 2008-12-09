@@ -1206,6 +1206,16 @@ class mailgroup extends plugin
     }
     return($ret);
   }
+
+  
+  function allow_remove()
+  {
+    $resason = "";
+    if(!$this->mailMethod->allow_remove($reason)){
+      return($reason);
+    }
+    return("");
+  }
 }
 
   // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
