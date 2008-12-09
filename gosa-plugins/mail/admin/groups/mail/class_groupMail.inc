@@ -44,10 +44,12 @@ class mailgroup extends plugin
   {
     plugin::plugin($config, $dn);
 
+
     /* Intialize the used mailMethod
      */
     $tmp = new mailMethod($config,$this,"group");
     $this->mailMethod           = $tmp->get_method();
+    $this->mailMethod->fixAttributesOnLoad();
     $this->mailDomainParts      = $this->mailMethod->getMailDomains();
     $this->AvailableFolderTypes = $this->mailMethod->getAvailableFolderTypes();
     $this->AclTypes             = $this->mailMethod->getAclTypes();
@@ -490,10 +492,8 @@ class mailgroup extends plugin
     $this->attrs['gosaMailForwardingAddress']= array();
     $this->attrs['gosaSharedFolderTarget']= array();
 
-    $this->cleanup();
-
     $this->mailMethod->fixAttributesOnRemove();
-
+    $this->cleanup();
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->modify ($this->attrs); 
@@ -669,13 +669,17 @@ class mailgroup extends plugin
     $ldap= $this->config->get_ldap_link();
 
     /* If domain part was selectable, contruct mail address */
-    if($this->mailMethod->domainSelectionEnabled() || $this->mailMethod->mailEqualsCN()){
-      $this->mail = $this->mail."@".$this->mailDomainPart;
+    if(!(!$this->mailMethod->isModifyableMail() && $this->initially_was_account)){
+
+      if($this->mailMethod->domainSelectionEnabled() || $this->mailMethod->mailEqualsCN()){
+        $this->mail = $this->mail."@".$this->mailDomainPart;
+      }
     }
 
     /* Enforce lowercase mail address and trim whitespaces
      */
     $this->mail = trim(strtolower($this->mail));
+    
 
     /* Create acls 
      */
