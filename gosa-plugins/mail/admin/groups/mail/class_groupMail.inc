@@ -52,7 +52,6 @@ class mailgroup extends plugin
     $this->mailMethod->fixAttributesOnLoad();
     $this->mailDomainParts      = $this->mailMethod->getMailDomains();
     $this->AvailableFolderTypes = $this->mailMethod->getAvailableFolderTypes();
-    $this->AclTypes             = $this->mailMethod->getAclTypes();
     $this->MailBoxes = array();
 
     /* Remember account status
@@ -149,6 +148,7 @@ class mailgroup extends plugin
     /* Disconnect mailMethod. Connect on demand later.
      */
     $this->mailMethod->disconnect();
+    $this->AclTypes = $this->mailMethod->getAclTypes();
 
     /* Summarize most used ACLs as member acl 
      */

@@ -27,23 +27,6 @@ class mailMethodKolab22 extends mailMethodKolab
   {
     return(array("gonicus.de"));
   } 
-
-
-  /*! \brief  Returns a list of all possible acls.
-      @return Array   ACLs.
-  */
-  public function getAclTypes()
-  {
-    $acls["lrsw"]     = _("read");
-    $acls["lrswp"]    = _("post");
-    $acls["p"]        = _("external post");
-    $acls["lrswip"]   = _("append");
-    $acls["lrswipcd"] = _("write");
-    $acls["lrswipcda"]= _("admin");
-    $acls["lrswipkxtecda"]= _("super-admin");
-    $acls[" "]= _("none");
-    return($acls);
-  }
 }
 
 

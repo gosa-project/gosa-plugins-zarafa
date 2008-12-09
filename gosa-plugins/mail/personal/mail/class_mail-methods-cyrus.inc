@@ -337,6 +337,15 @@ class mailMethodCyrus extends mailMethod{
       $folder_acls[$user] = $acl;
     }
 
+    /* Merge given ACL with acl mapping
+       This ensures that no ACL will accidentally overwritten by gosa.
+     */
+    foreach($folder_acls as $user => $acl){
+      if(!isset($this->acl_mapping[$acl])){
+        $this->acl_mapping[$acl] = $acl;
+      }
+    }
+
     return($folder_acls);
   }
 

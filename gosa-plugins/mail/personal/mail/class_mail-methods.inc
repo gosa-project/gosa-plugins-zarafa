@@ -43,6 +43,18 @@ class mailMethod{
   protected $error              = "";
   protected $parent             = NULL;   
   protected $MailServer         = "";
+
+
+  protected $acl_map = array(
+      "lrsw"     => "read",
+      "lrswp"    => "post",
+      "p"        => "external post",
+      "lrswip"   => "append",
+      "lrswipcd" => "write",
+      "lrswipcda"=> "admin",
+      " "         => "none");
+
+  protected $acl_mapping = array();
  
 
   /*! \brief  Constructs the mail class 
@@ -98,6 +110,12 @@ class mailMethod{
             sprintf(_("The configured mail attribute '%s' is unsupported!"), $new_uattrib), ERROR_DIALOG);
       }
     }
+
+    /* Create ACL map */
+    foreach($this->acl_map as $acl => $name){
+      $this->acl_mapping[$acl] = _($name);
+    }
+
     $this->build_account_id();
     $this->initial_account_id = $this->account_id;
   }
@@ -591,13 +609,8 @@ class mailMethod{
   public function getAvailableFolderTypes()
   {
     $ret = array();
-    $ret['CAT']['mail'] = _("Mail"); 
-    $ret['CAT']['peter']= _("User"); 
-    $ret['SUB_CAT']['mail']['a'] = "a";
-    $ret['SUB_CAT']['mail']['b'] = "b";
-    $ret['SUB_CAT']['peter']['tt'] = "tt";
-    $ret['SUB_CAT']['peter']['dd'] = "dd";
-    $ret['SUB_CAT']['peter']['did'] = "did";
+    $ret['CAT'][''] = _("None"); 
+    $ret['SUB_CAT'][''][''] = _("None");
     return($ret);
   }
 
@@ -608,12 +621,7 @@ class mailMethod{
    */
   public function getFolderType($default)
   {
-    if($this->enableFolderTypes && $this->parent->attrs['kolabFolderType'][0]){
-      list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
-      return(array("CAT" => $cat, "SUB_CAT" => $sub));
-    }else{
-      return($default);
-    }
+    return($default);
   }
 
  
@@ -623,10 +631,7 @@ class mailMethod{
    */
   public function setFolderType($type)
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->parent->dn);
-    $ldap->modify(array("kolabFolderType" => $type['CAT'].".".$type['SUB_CAT']));
-    echo "Move me to KOLAB";
+    return(TRUE) ;   
   }
 
 
@@ -634,6 +639,15 @@ class mailMethod{
    */
   public function  getFolderACLs($folder_acls)
   {
+    /* Merge given ACL with acl mapping 
+       This ensures that no ACL will accidentally overwritten by gosa.
+     */
+    foreach($folder_acls as $user => $acl){
+      if(!isset($this->acl_mapping[$acl])){
+        $this->acl_mapping[$acl] = $acl;
+      }
+    }
+
     return($folder_acls);
   }
 
@@ -651,14 +665,7 @@ class mailMethod{
   */
   public function getAclTypes()
   {
-    $acls["lrsw"]     = _("read");
-    $acls["lrswp"]    = _("post");
-    $acls["p"]        = _("external post");
-    $acls["lrswip"]   = _("append");
-    $acls["lrswipcd"] = _("write");
-    $acls["lrswipcda"]= _("admin");
-    $acls[" "]= _("none");
-    return($acls);
+    return( $this->acl_mapping);
   }
 
   public function folderTypesEnabled()
