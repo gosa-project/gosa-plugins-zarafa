@@ -20,6 +20,16 @@ class mailMethodKolab22 extends mailMethodKolab
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
+  protected $acl_map = array(
+      "lrs"           => "read",
+      "lrsp"          => "post",
+//      "p"             => "external post",
+      "lrsip"         => "append",
+      "lrswipkxte"    => "write",
+      "lrxte"         => "delete",
+      "lrswipkxtecda" => "admin",
+      " "             => "none");
+
   /*! \brief Returns a list of configured mail domains 
       @return Array A list of mail domains
    */
