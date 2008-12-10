@@ -38,7 +38,7 @@ class mailgroup extends plugin
       "acl","gosaSharedFolderTarget", "gosaVacationMessage");
 
   var $objectclasses= array("gosaMailAccount");
-  var $multiple_support = TRUE;
+  var $multiple_support = FALSE; // Not tested yet
 
   function __construct (&$config, $dn= NULL, $ui= NULL)
   {
