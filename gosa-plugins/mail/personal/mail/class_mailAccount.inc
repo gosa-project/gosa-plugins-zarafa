@@ -501,7 +501,7 @@ class mailAccount extends plugin
       $server = $this->gosaMailServer;
       plugin::save_object();
 
-      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account)){
+      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account){
         $this->gosaMailServer = $server;
       }
 
