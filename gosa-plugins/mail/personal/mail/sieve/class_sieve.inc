@@ -491,13 +491,18 @@ class sieve
       /* Check if PHP supports TLS encryption for sockets 
        */
       if(function_exists("stream_socket_enable_crypto")){
+      
+        /* Initiate TLS and get response 
+         */
         if (@ fputs ($this->fp, "STARTTLS\r\n") === false) {
           $this->error_raw = "fputs() returned 'false'"; return (false);
         } @ $linha = fgets ($this->fp, 1024); if ($linha === false) {
           $this->error_raw = "fgets() returned 'false'"; return (false);
-        } if (! preg_match ("/\\s*OK\\s/i", $linha)) {
+        }
+        if (! preg_match ("/\\s*OK\\s/i", $linha)) {
           $this->error_raw = "expected an 'OK', but server replied: '" . trim ($linha) . "'"; return (false);
-        } if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+        } 
+        if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
           $this->error_raw = "stream_socket_enable_crypto() returned 'false'"; return (false);
         }
       }
