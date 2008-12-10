@@ -19,7 +19,20 @@ class mailMethod{
   protected $user_prefix    = "user.";  
   protected $share_prefix   = "share.";
 
-  /* Account ID creation */
+  /* Account ID creation 
+
+      !!Depends on the attributes 'user_prefix'/'share_prefix' and the option 'cyrusUseSlashes'
+
+      Examples - based on defaults : 
+        __PREFIX__    => "user." or "user/" (Depending on cyrusUseSlashes=FALSE/TRUE) 
+        __CN__        => "technik"          (The groups cn)
+        __UID__       => "herbert"          (The users uid)
+        __MAIL__      => "herbert@domain.de"(The mail address)
+        __DOMAIN__    => "domain.de"        (The domain part of the specified mail)
+        __MAILPART__  => "herbert"          (The mail address without domain)
+        __UATTRIB__   => "herbert"/"herbert@domains.de"
+                                            (Configured in gosa.conf mailAttribute="mail"/"uid")
+   */
   protected $user_id    = "__PREFIX____UATTRIB__";  
   protected $share_id   = "__PREFIX____UATTRIB__";
 
@@ -302,15 +315,15 @@ class mailMethod{
     $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
    
     $domain = $mailpart = "";
-    if(preg_match("/\@/",$this->parent->$uattrib)){
-      $mailpart = preg_replace("/\@.*$/","",$this->parent->$uattrib);
-      $domain   = preg_replace("/^[^\@]*+\@(.*)$/","\\1",$this->parent->$uattrib);
+    $mail = $this->parent->mail;
+    if(preg_match("/\@/",$mail)){
+      list($mailpart,$domain) = split("\@",$mail);
     }
 
     /* Create account_id 
      */ 
-    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/");
-    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart);
+    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/","/__MAIL__/");
+    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart,$mail);
  
     $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
 
@@ -356,22 +369,23 @@ class mailMethod{
     $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
 
     $domain = $mailpart = "";
-    if(preg_match("/\@/",$this->parent->$uattrib)){
-      list($mailpart,$domain) = split("\@",$this->parent->$uattrib);
+    $mail = $this->parent->mail;
+    if(preg_match("/\@/",$mail)){
+      list($mailpart,$domain) = split("\@",$mail);
     }
 
     /* Create account_id
      */
-    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/");
-    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart);
+    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/","/__MAIL__/");
+    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart,$mail);
 
     $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
 
     if(preg_match("/\@/",$acc_id)){
       list($mail,$domain) = split("\@",$acc_id);
-      $str = trim(strtolower($mail . $folder . "@" . $domain));
+      $str = trim($mail . $folder . "@" . $domain);
     }else{
-      $str = trim(strtolower($acc_id . $folder));
+      $str = trim($acc_id . $folder);
     }
     return($str) ;
   }
