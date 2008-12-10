@@ -20,7 +20,7 @@
 #     REVISION:  ---
 #===============================================================================
 
-my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev: 10826 $';
+my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev$';
 
 use strict;
 use warnings;
