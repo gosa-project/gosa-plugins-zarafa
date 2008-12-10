@@ -55,6 +55,8 @@ class mailMethodKolab extends mailMethodCyrus
     mailMethod::fixAttributesOnStore();
     $this->build_account_id();
     $this->parent->attrs['kolabDeleteflag'] = array();
+
+    /* The folderType is set by ::setFolderType(...) */
     $this->parent->attrs['kolabFolderType'] = array();
     if($this->type == "group"){ 
       $this->parent->attrs['gosaSharedFolderTarget'] = "kolab+shared.".$this->parent->mail;
@@ -141,7 +143,14 @@ class mailMethodKolab extends mailMethodCyrus
   public function getFolderType($default)
   {
     if($this->enableFolderTypes && isset($this->parent->attrs['kolabFolderType'][0])){
-      list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
+      $type = $this->parent->attrs['kolabFolderType'][0];
+      if(strpos($type,".")){
+        list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
+      }else{
+        $sub = "";
+        $cat = $type;
+      }
+
       return(array("CAT" => $cat, "SUB_CAT" => $sub));
     }else{
       return($default);
@@ -155,10 +164,26 @@ class mailMethodKolab extends mailMethodCyrus
    */
   public function setFolderType($type)
   {
+
+    $type_str = trim($type['CAT'].".".$type['SUB_CAT']);
+    $type_str = trim($type_str,".");
+    $attrs = array();
+    if(empty($type_str)){
+      $attrs['kolabFolderType'] = array();
+    }else{
+      $attrs['kolabFolderType'] = $type_str;
+    }
+
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->parent->dn);
-    $ldap->modify(array("kolabFolderType" => $type['CAT'].".".$type['SUB_CAT']));
-    echo "Move me to KOLAB";
+    $ldap->modify($attrs);
+    if($ldap->success()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Successful</b>", 
+          "<b>MAIL:</b> Set folderType to '".$type_str."'");
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>Failed: </b>".$ldap->get_error(), 
+          "<b>MAIL:</b> Set folderType to '".$type_str."'");
+    }
   }
 
 
