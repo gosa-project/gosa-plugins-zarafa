@@ -93,9 +93,9 @@ class mailMethod{
      */
     if ($this->config->get_cfg_value("cyrusUseSlashes") == "true"){
       $this->cyrusUseSlashes = TRUE;
-      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "cyrusUseSlashes: <b>Enabled</b>","");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL:</b> cyrusUseSlashes: <b>Enabled</b>");
     }else{
-      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "cyrusUseSlashes: <b>Disabled</b>","");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL:</b> cyrusUseSlashes: <b>Disabled</b>");
     }
 
     /* Check if the mail account identification attribute
@@ -107,7 +107,7 @@ class mailMethod{
         $this->uattrib = $new_uattrib;
       }else{
         @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$new_uattrib."</b>",
-            "Unsupported 'mailAttribute' in gosa configuration specified");
+          "<b>MAIL:</b> Unsupported 'mailAttribute' in gosa configuration specified");
         msg_dialog::display(_("Configuration error"), 
             sprintf(_("The configured mail attribute '%s' is unsupported!"), $new_uattrib), ERROR_DIALOG);
       }
@@ -193,8 +193,8 @@ class mailMethod{
   public function connect()
   {
     $this->reset_error();
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Connect method</b>: ".get_class($this),"");
-    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Current server</b>: ".$this->MailServer,"");
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","<b>MAIL: Connect method</b>: ".get_class($this));
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","<b>MAIL: Current server</b>: ".$this->MailServer);
  
     $this->connected = TRUE;
     return(TRUE);
@@ -217,7 +217,7 @@ class mailMethod{
   {
     $this->reset_error();
     if($this->is_connected()){
-      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Disconnect method</b>: ".get_class($this),"");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"","<b>MAIL: Disconnect method</b>: ".get_class($this));
       $this->connected =FALSE; 
     }
   }
@@ -298,7 +298,7 @@ class mailMethod{
 
     if($this->account_id != $str){
       $this->account_id = $str;
-      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "accountID generated: <b>".$str."</b>","");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> AccountID generated: <b>".$str."</b>");
     }
   }
 
@@ -360,13 +360,13 @@ class mailMethod{
       $method= $this->config->get_cfg_value("mailmethod");
       $cls = get_correct_class_name("mailMethod$method");
       if(isset($methods[$cls])){
-        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "Selected mailMethod: <b>".$cls."</b>","");
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> Selected mailMethod: <b>".$cls."</b>");
         $tmp = new $cls($this->config,$this->parent,$this->type);
         $tmp->init();
         return($tmp);
       }else{
-        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "Invalid mailMethod defined <b>".$cls.
-            "</b> falling back to <b>".get_class($this)."</b>","");
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL: Invalid mailMethod defined: <b>".$cls.
+            "</b> falling back to <b>".get_class($this)."</b>");
 
         /* Print out configuration errors directly, we can't catch them everywhere. 
          */
@@ -417,28 +417,8 @@ class mailMethod{
     $this->reset_error();
 
     @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<b>".$this->account_id."</b>" ,
-        "<b>Remove account</b> from server :".$this->MailServer);
+        "<b>MAIL: Remove account</b> from server :".$this->MailServer);
 
-    return(TRUE);
-
-    /* No imap actions here, just updated shared folder membership 
-     */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaMailAccount)(memberUid=".$account."))",array('dn','cn'));
-    if(class_exists("grouptabs")){
-      while($attrs = $ldap->fetch()){
-        $tmp = new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $attrs['dn']);
-        if(isset($tmp->by_object['mailgroup'])){
-          $tmp->by_object['mailgroup']->members= $tmp->by_object['group']->memberUid;
-          if(!$this->is_account){
-            $tmp->by_object['mailgroup']->removeUserAcl($account);
-            $tmp->by_object['mailgroup']->removeUserAcl($this->mail);
-          }
-          $tmp->by_object['mailgroup']->save();
-        }
-      }
-    }
     return(TRUE);
   }
 
