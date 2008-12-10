@@ -672,9 +672,8 @@ sub get_local_ip_for_remote_ip {
                 last;
             }
         }
-    } else {
-		daemon_log("0 WARNING: get_local_ip_for_remote_ip() was called with a non-ip parameter: '$remote_ip'", 1);
-	}
+    } 
+
 	return $result;
 }
 
