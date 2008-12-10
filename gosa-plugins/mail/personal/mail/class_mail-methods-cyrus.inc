@@ -113,9 +113,15 @@ class mailMethodCyrus extends mailMethod{
       return(FALSE);
     }
 
+    $this->reset_error();
+
     /* Load quota settings */
     $result = array("quotaUsage"=>"","gosaMailQuota"=>"");
     $quota_value = @imap_get_quota($this->imap_handle, $this->account_id);
+
+    /* Reset error queue, imap_qet_quota() will fail if the quota wasn't set yet.
+     */
+    imap_errors();
 
     if(is_array($quota_value) && count($quota_value)) {
       if (isset($quota_value["STORAGE"]) && is_array($quota_value["STORAGE"])){
