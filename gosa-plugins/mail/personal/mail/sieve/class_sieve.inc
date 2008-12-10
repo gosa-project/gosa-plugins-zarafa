@@ -308,10 +308,8 @@ class sieve
 
           if(strcmp($this->item[0], "SIEVE") == 0){
             $this->cap_type="modules";
-            $this->modules = split(" ", $this->item[1]);
           }else{
             $this->cap_type="auth";
-            $this->modules = $this->item;
           }
 
           $this->modules = split(" ", $this->item[1]);
