@@ -20,10 +20,7 @@
 #     REVISION:  ---
 #===============================================================================
 
-
-# TODO
-#
-# max_children wird momentan nicht mehr verwendet, jede eingehende nachricht bekommt ein eigenes POE child
+my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev: 10826 $';
 
 use strict;
 use warnings;
@@ -55,7 +52,6 @@ use Net::LDAP::Util qw(:escape);
 use Time::HiRes qw( usleep);
 
 # revision number of server and program name
-my $server_version = '$HeadURL: https://oss.gonicus.de/repositories/gosa/trunk/gosa-si/gosa-si-server $:$Rev: 10826 $';
 my $server_headURL;
 my $server_revision;
 my $server_status;
