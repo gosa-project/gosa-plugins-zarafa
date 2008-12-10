@@ -725,6 +725,17 @@ class mailMethod{
     return("");
   }
 
+
+  static function quota_to_image($use,$quota)
+  {
+    if($use == -1 ){ 
+      return(_("Unknown"));
+    }elseif($quota == 0){
+      return(progressbar(100,100,15,true));
+    }else{
+      return(progressbar(round(($use * 100)/ $quota),100,15,true));
+    }
+  }
 }
 
 

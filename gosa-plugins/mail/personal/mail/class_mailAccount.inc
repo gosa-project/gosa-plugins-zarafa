@@ -68,6 +68,8 @@ class mailAccount extends plugin
   var $gosaSpamMailbox                    = "";
 
   /* The methods defaults */
+  var $quotaUsage     = -1; // Means unknown
+
   var $mailMethod      = NULL;
   var $MailDomain      = "";
   var $sieveManagementUsed = FALSE;
@@ -140,6 +142,7 @@ class mailAccount extends plugin
 
         /* Read quota */
         $this->gosaMailQuota = $this->mailMethod->getQuota($this->gosaMailQuota);
+        $this->quotaUsage    = $this->mailMethod->getQuotaUsage($this->quotaUsage);
         if($this->mailMethod->is_error()){
           msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
@@ -392,12 +395,10 @@ class mailAccount extends plugin
       $smarty->assign($attr,$this->$attr);
     }
     $smarty->assign("quotaEnabled", $this->mailMethod->quotaEnabled());
-    if($this->mailMethod->is_connected()){
-      $smarty->assign("quotaUsage",   $this->mailMethod->getQuotaUsage());
-    }else{
-      $smarty->assign("quotaUsage",   _("Unknown"));
+    if($this->mailMethod->quotaEnabled()){
+      $smarty->assign("quotaUsage",   mailMethod::quota_to_image($this->quotaUsage,$this->gosaMailQuota));
+      $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
     }
-    $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
     $smarty->assign("domainSelectionEnabled", $this->mailMethod->domainSelectionEnabled());
     $smarty->assign("MailDomains", $this->mailDomainParts);
     $smarty->assign("MailDomain" , $this->mailDomainPart);

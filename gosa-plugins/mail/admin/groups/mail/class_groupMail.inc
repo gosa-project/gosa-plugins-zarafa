@@ -11,7 +11,6 @@ class mailgroup extends plugin
   var $gosaMailForwardingAddress  = array();  // Forwarding also empty
   var $gosaMailServer             = "";       // Selected mailserver 
   var $gosaMailQuota              = "";       // Defined Quota 
-  var $quotaUsage                 = 0;        // Currently used quota
   var $gosaVacationMessage        = "";       // Vocation message 
   var $gosaSpamSortLevel          = "";     
   var $gosaSpamMailbox            = "";
@@ -19,6 +18,8 @@ class mailgroup extends plugin
   var $gosaMailDeliveryMode       = "[L        ]";   // 
   var $gosaMailMaxSize            = "";       // 
   var $FolderType                 = array("CAT" => '', "SUB_CAT" => '');
+
+  var $quotaUsage                 = -1;        // -1 Means undefined
 
   /* Internal */
   var $AclTypes                   = array();
@@ -100,6 +101,7 @@ class mailgroup extends plugin
 
         /* Read quota */
         $this->gosaMailQuota = $this->mailMethod->getQuota($this->gosaMailQuota);
+        $this->quotaUsage = $this->mailMethod->getQuotaUsage($this->quotaUsage);
         if($this->mailMethod->is_error()){
           msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
@@ -408,11 +410,9 @@ class mailgroup extends plugin
     $smarty->assign("AclTypes" ,    $this->AclTypes);
   
     $smarty->assign("quotaEnabled", $this->mailMethod->quotaEnabled());
-    $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
-    if($this->mailMethod->is_connected()){ 
-      $smarty->assign("quotaUsage", $this->mailMethod->getQuotaUsage());
-    }else{
-      $smarty->assign("quotaUsage", _("Unknown")); 
+    if($this->mailMethod->quotaEnabled()){
+      $smarty->assign("gosaMailQuota",$this->gosaMailQuota);
+      $smarty->assign("quotaUsage",   mailMethod::quota_to_image($this->quotaUsage,$this->gosaMailQuota)); 
     }
 
     $smarty->assign("MailDomains", $this->mailDomainParts);
