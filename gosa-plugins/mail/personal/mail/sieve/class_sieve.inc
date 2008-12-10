@@ -222,6 +222,9 @@ class sieve
     $this->error= "";
     $this->error_raw="";
     $this->options = $options;
+
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, $this->error_raw,
+        "<b>SIEVE: Host: $host:$port. Options: $options - Auth Types: $auth_types </b>");
   }
 
   function parse_for_quotes($string)
@@ -284,6 +287,10 @@ class sieve
 
     $this->fp=@fsockopen($this->host,$this->port,$err_id,$err_str);
     if($this->fp == false){
+
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$this->error_raw,
+          "<b>SIEVE: Socket connection failed. (".$this->host.":".$this->port.")</b>");
+
       $this->error_raw = $err_str;
       return false;
     }
@@ -358,6 +365,10 @@ class sieve
 
     if(sieve::status($this->line) == F_NO){		//here we should do some returning of error codes?
       $this->error=EC_UNKNOWN;
+
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$this->error_raw,
+          "<b>SIEVE: Unknown sieve response, giving up.</b>");
+
       $this->error_raw = "Server not allowing connections.";
       return false;
     }
@@ -380,6 +391,14 @@ class sieve
       return false;
     }
 
+    /* DEBUG */    
+    $imp = "";
+    if(isset($this->capabilities['implementation'])){
+      $imp = $this->capabilities['implementation'];
+    }
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,$imp,
+        "<b>SIEVE: Socket connection established. </b>");
+
     /* call our authentication program */  
     return sieve::authenticate();
 
@@ -392,6 +411,10 @@ class sieve
 
     fputs($this->fp,"LOGOUT\r\n");
     fclose($this->fp);
+
+    @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+        "<b>SIEVE: Logout!</b>");
+
     $this->loggedin=false;
     return true;
   }
@@ -405,8 +428,15 @@ class sieve
     fputs($this->fp, "PUTSCRIPT \"$scriptname\" {".$len."+}\r\n");
     fputs($this->fp, "$this->script\r\n");
 
-    return sieve::get_response();
-
+    if(sieve::get_response()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+          "<b>SIEVE: Script '".$scriptname."' successfully send!</b>");
+      return(TRUE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim($this->error_raw),
+          "<b>SIEVE: Script couldn't be send!</b>");
+      return(FALSE);
+    }
   }  
 
   //it appears the timsieved does not honor the NUMBER type.  see lex.c in timsieved src.
@@ -425,9 +455,17 @@ class sieve
     if($this->loggedin==false)
       return false;
 
-    fputs($this->fp, "SETACTIVE \"$scriptname\"\r\n");   
-    return sieve::get_response();
+    fputs($this->fp, "SETACTIVE \"$scriptname\"\r\n");  
 
+    if(sieve::get_response()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+          "<b>SIEVE: Set active script '".$scriptname."' was successful!</b>");
+      return(TRUE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim($this->error_raw),
+          "<b>SIEVE: Set active script '".$scriptname."' failed!</b>");
+      return(FALSE);
+    }
   }
 
   function sieve_getscript($scriptname)
@@ -437,8 +475,16 @@ class sieve
       return false;
 
     fputs($this->fp, "GETSCRIPT \"$scriptname\"\r\n");
-    return sieve::get_response();
 
+    if(sieve::get_response()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+          "<b>SIEVE: Get script '".$scriptname."' was successful!</b>");
+      return(TRUE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim($this->error_raw),
+          "<b>SIEVE: Get script '".$scriptname."' failed!</b>");
+      return(FALSE);
+    }
   }
 
 
@@ -449,7 +495,15 @@ class sieve
 
     fputs($this->fp, "DELETESCRIPT \"$scriptname\"\r\n");    
 
-    return sieve::get_response();
+    if(sieve::get_response()){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+          "<b>SIEVE: Delete script '".$scriptname."' was successful!</b>");
+      return(TRUE);
+    }else{
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim($this->error_raw),
+          "<b>SIEVE: Delete  script '".$scriptname."' failed!</b>");
+      return(FALSE);
+    }
   }
 
 
@@ -457,11 +511,15 @@ class sieve
   { 
     fputs($this->fp, "LISTSCRIPTS\r\n"); 
     sieve::get_response();		//should always return true, even if there are no scripts...
-    if(isset($this->found_script) and $this->found_script)
+    if(isset($this->found_script) and $this->found_script){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, implode($this->response,", "),
+          "<b>SIEVE: List scripts was successful!</b>");
       return true;
-    else{
+    }else{
       $this->error=EC_NOSCRIPTS;	//sieve::getresponse has no way of telling wether a script was found...
       $this->error_raw="No scripts found for this account.";
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, $this->error_raw,
+          "<b>SIEVE: List scripts returned no scripts</b>");
       return false;
     }
   }
@@ -491,48 +549,75 @@ class sieve
       /* Check if PHP supports TLS encryption for sockets 
        */
       if(function_exists("stream_socket_enable_crypto")){
-      
+
         /* Initiate TLS and get response 
          */
         if (@ fputs ($this->fp, "STARTTLS\r\n") === false) {
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"couldn't send data to socket.",
+              "<b>SIEVE: TLS couldn't be initiated. </b>");
           $this->error_raw = "fputs() returned 'false'"; return (false);
-        } @ $linha = fgets ($this->fp, 1024); if ($linha === false) {
-          $this->error_raw = "fgets() returned 'false'"; return (false);
+        } 
+        @ $linha = fgets ($this->fp, 1024); 
+        if ($linha === false) {
+          $this->error_raw = "fgets() returned 'false'"; 
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"couldn't read data from socket.",
+              "<b>SIEVE: TLS couldn't be initiated. </b>");
+          return (false);
         }
         if (! preg_match ("/\\s*OK\\s/i", $linha)) {
-          $this->error_raw = "expected an 'OK', but server replied: '" . trim ($linha) . "'"; return (false);
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"server returned '".trim ($linha)."' instead of 'OK'",
+              "<b>SIEVE: TLS couldn't be initiated. </b>");
+          $this->error_raw = "expected an 'OK', but server replied: '" . trim ($linha) . "'"; 
+          return (false);
         } 
         if (! @ stream_socket_enable_crypto ($this->fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
-          $this->error_raw = "stream_socket_enable_crypto() returned 'false'"; return (false);
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
+              "The socket doesn't seem to support STREAM_CRYPTO_METHOD_TLS_CLIENT",
+              "<b>SIEVE: TLS couldn't be initiated. </b>");
+          $this->error_raw = "stream_socket_enable_crypto() returned 'false'"; 
+          return (false);
         }
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+            "<b>SIEVE: TLS successfully initiated. </b>");
       }
     }
 
     switch ($this->auth_in_use) {
 
       case "PLAIN":
+      {
         $auth=base64_encode("$this->user\0$this->auth\0$this->pass");
 
-      $this->len=strlen($auth);			
-      fputs($this->fp, "AUTHENTICATE \"PLAIN\" {".$this->len."+}\r\n");
-      fputs($this->fp, "$auth\r\n");
+        $this->len=strlen($auth);			
+        fputs($this->fp, "AUTHENTICATE \"PLAIN\" {".$this->len."+}\r\n");
+        fputs($this->fp, "$auth\r\n");
 
-      $this->line=fgets($this->fp,1024);		
-      while(sieve::status($this->line) == F_DATA)
-        $this->line=fgets($this->fp,1024);
+        $this->line=fgets($this->fp,1024);		
+        while(sieve::status($this->line) == F_DATA)
+          $this->line=fgets($this->fp,1024);
 
-      if(sieve::status($this->line) == F_NO){
-        $this->error_raw = $this->line;
-        return false;
-      }
-      $this->loggedin=true;
-      return true;    
-      break;
+        if(sieve::status($this->line) == F_NO){
+          $this->error_raw = $this->line;
+          @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,trim($this->error_raw),
+              "<b>SIEVE: Authentication for '".$this->user."-".$this->auth_in_use."' failed.</b>");
+
+          return false;
+        }
+
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"",
+            "<b>SIEVE: Authentication for '".$this->user."-".$this->auth_in_use."' was successful.</b>");
+        $this->loggedin=true;
+        return true;    
+      }break;
 
       default:
-      $this->error_raw = "Unsupported authentication method '".$this->auth_in_use."'!";
-      return false;
-      break;
+      {
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"Unsupported authentication method '".$this->auth_in_use."'!",
+            "<b>SIEVE: Authentication for '".$this->user."' with type '".$this->auth_in_use."' failed.</b>");
+
+        $this->error_raw = "Unsupported authentication method '".$this->auth_in_use."'!";
+        return false;
+      }   break;
 
     }//end switch
 
