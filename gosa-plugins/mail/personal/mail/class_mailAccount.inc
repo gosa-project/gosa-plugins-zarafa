@@ -365,7 +365,8 @@ class mailAccount extends plugin
      ****************/
     $smarty = get_smarty();
     $smarty->assign("initially_was_account", $this->initially_was_account);
-    $smarty->assign("isModifyableMail", $this->mailMethod->isModifyableMail());
+    $smarty->assign("isModifyableMail"  , $this->mailMethod->isModifyableMail());
+    $smarty->assign("isModifyableServer", $this->mailMethod->isModifyableServer());
     $smarty->assign("mailEqualsCN", $this->mailMethod->mailEqualsCN());
 
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !session::is_set('edit');
@@ -496,8 +497,13 @@ class mailAccount extends plugin
     if (isset($_POST['mailTab'])){
 
       /* Save ldap attributes */
-      $mail = $this->mail;
+      $mail   = $this->mail;
+      $server = $this->gosaMailServer;
       plugin::save_object();
+
+      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account)){
+        $this->gosaMailServer = $server;
+      }
 
       if(!$this->mailMethod->isModifyableMail() && $this->initially_was_account){
         $this->mail = $mail;

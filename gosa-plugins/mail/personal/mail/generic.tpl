@@ -29,7 +29,7 @@
     <tr>
      <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
-     {if !$isModifyableMail && $initially_was_account}
+     {if !$isModifyableServer && $initially_was_account}
         <input disabled size=30 value="{$gosaMailServer}">
      {else}
 
