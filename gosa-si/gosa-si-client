@@ -18,6 +18,8 @@
 #     REVISION:  ---
 #===============================================================================
 
+my $client_version = '$HeadURL$:$Rev$';
+
 use strict;
 use warnings;
 use Getopt::Long;
@@ -40,7 +42,6 @@ use File::Spec;
 # Workaround: need pure perl to make it work with UTF-8 :-(
 $XML::Simple::PREFERRED_PARSER= "XML::SAX::PurePerl";
 
-my $client_version = '$HeadURL$:$Rev$';
 my $client_headURL;
 my $client_revision;
 my $client_status;
