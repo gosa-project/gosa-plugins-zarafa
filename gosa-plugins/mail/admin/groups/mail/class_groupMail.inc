@@ -40,10 +40,22 @@ class mailgroup extends plugin
   var $objectclasses= array("gosaMailAccount");
   var $multiple_support = FALSE; // Not tested yet
 
+  var $uid = "";
+  var $cn ="";
+
   function __construct (&$config, $dn= NULL, $ui= NULL)
   {
     plugin::plugin($config, $dn);
 
+    /* Get attributes from parent object
+     */
+    foreach(array("uid","cn") as $attr){
+      if(isset($this->parent->by_object['group']) && isset($this->parent->by_object['group']->$attr)){
+        $this->$attr = &$this->parent->by_object['group']->$attr;
+      }elseif(isset($this->attrs[$attr])){
+        $this->$attr = $this->attrs[$attr][0];
+      }
+    }
 
     /* Intialize the used mailMethod
      */
@@ -390,6 +402,7 @@ class mailgroup extends plugin
     $smarty= get_smarty();
     $smarty->assign("initially_was_account", $this->initially_was_account);
     $smarty->assign("isModifyableMail", $this->mailMethod->isModifyableMail());
+    $smarty->assign("isModifyableServer", $this->mailMethod->isModifyableServer());
     $smarty->assign("mailEqualsCN", $this->mailMethod->mailEqualsCN());
     $smarty->assign("folder_acls" , $this->postable_acls());
     $smarty->assign("AclTypes" ,    $this->AclTypes);
@@ -546,8 +559,12 @@ class mailgroup extends plugin
     if (isset($_POST['mailedit'])){
 
       $mail = $this->mail;
+      $server = $this->gosaMailServer;
       plugin::save_object();
 
+      if(!$this->mailMethod->isModifyableServer() && $this->initially_was_account){
+        $this->gosaMailServer = $server;
+      }
       if(!$this->mailMethod->isModifyableMail() && $this->initially_was_account){
         $this->mail = $mail;
       }else{

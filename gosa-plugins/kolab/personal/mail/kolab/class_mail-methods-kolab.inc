@@ -29,6 +29,10 @@ class mailMethodKolab extends mailMethodCyrus
   protected $user_prefix    = 'user.';
   protected $share_prefix   = 'shared\\.';
 
+  /* Account ID creation */
+  protected $user_id    = "__PREFIX____UATTRIB__";  
+  protected $share_id   = "__PREFIX____CN__@__DOMAIN__";
+
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");
 
@@ -136,7 +140,7 @@ class mailMethodKolab extends mailMethodCyrus
    */
   public function getFolderType($default)
   {
-    if($this->enableFolderTypes && $this->parent->attrs['kolabFolderType'][0]){
+    if($this->enableFolderTypes && isset($this->parent->attrs['kolabFolderType'][0])){
       list($cat,$sub) = split("\.",$this->parent->attrs['kolabFolderType'][0]);
       return(array("CAT" => $cat, "SUB_CAT" => $sub));
     }else{

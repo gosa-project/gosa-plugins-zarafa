@@ -34,6 +34,9 @@
     <tr>
      <td><label for="gosaMailServer">{t}Server{/t}</label></td>
      <td>
+     {if !$isModifyableServer && $initially_was_account}
+        <input disabled size=30 value="{$gosaMailServer}">
+     {else}
 {render acl=$gosaMailServerACL}
       <select size="1" id="gosaMailServer" name="gosaMailServer" 
 		title="{t}Specify the mail server where the user will be hosted on{/t}">
@@ -41,6 +44,7 @@
         <option disabled>&nbsp;</option>
       </select>
 {/render}
+     {/if}
      </td>
     </tr>
     <tr>
