@@ -4,7 +4,10 @@
 class mailMethod{
 
   /* Allow modification of account_ids for existing mail accounts */
-  protected $modifyableMail = TRUE;
+  protected $modifyableMail   = TRUE;
+
+  /* Allow modification of the mail server attribute existing mail accounts */
+  protected $modifyableServer = TRUE;
 
   /* Enforces same value for 'mail' as used for 'cn' */
   protected $mailEqualsCN   = FALSE; 
@@ -242,6 +245,12 @@ class mailMethod{
   public function isModifyableMail()
   {
     return($this->modifyableMail);
+  }
+
+
+  public function isModifyableServer()
+  {
+    return($this->modifyableServer);
   }
 
 

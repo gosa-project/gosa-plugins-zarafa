@@ -8,7 +8,10 @@ class mailMethodCyrus extends mailMethod{
   protected $quota_loaded = FALSE;
    
   /* Allow modification of account_ids for existing mail accounts */
-  protected $modifyableMail = FALSE;
+  protected $modifyableMail   = FALSE;
+
+  /* Allow modification of the mail server attribute existing mail accounts */
+  protected $modifyableServer = FALSE;
 
   /* Enforces same value for 'mail' as used for 'cn' */
   protected $mailEqualsCN   = FALSE; 

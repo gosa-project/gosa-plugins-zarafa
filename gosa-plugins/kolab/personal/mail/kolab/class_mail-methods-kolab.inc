@@ -3,9 +3,11 @@
 
 class mailMethodKolab extends mailMethodCyrus
 {
-
   /* Allow modification of account_ids for existing mail accounts */
-  protected $modifyableMail = FALSE;
+  protected $modifyableMail   = FALSE;
+
+  /* Allow modification of the mail server attribute existing mail accounts */
+  protected $modifyableServer = TRUE;
 
   /* Enforces same value for 'mail' as used for 'cn' */
   protected $mailEqualsCN   = TRUE; 
