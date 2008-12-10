@@ -19,6 +19,10 @@ class mailMethod{
   protected $user_prefix    = "user.";  
   protected $share_prefix   = "share.";
 
+  /* Account ID creation */
+  protected $user_id    = "__PREFIX____UATTRIB__";  
+  protected $share_id   = "__PREFIX____UATTRIB__";
+
   /* Create accounts in cyrus style with '/' instead of '.' */
   protected $cyrusUseSlashes= FALSE;
 
@@ -281,9 +285,11 @@ class mailMethod{
   {
     /* Build account identicator */
     if($this->type == "user"){
-      $str = $this->user_prefix;
+      $prefix = $this->user_prefix;
+      $acc_string = $this->user_id;
     }else{
-      $str = $this->share_prefix;
+      $prefix = $this->share_prefix;
+      $acc_string = $this->share_id;
     }
 
     /* Create account prefix and respect "cyrusUseSlashes" 
@@ -291,14 +297,26 @@ class mailMethod{
      */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $str = preg_replace('/([^\\\\])\./',"\\1/",$str);
+      $prefix = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
     }
-    $str = preg_replace("/\\\\([\.\/])/","\\1",$str);
-    $str = trim(strtolower($str . $this->parent->$uattrib));
+    $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
+   
+    $domain = $mailpart = "";
+    if(preg_match("/\@/",$this->parent->$uattrib)){
+      $mailpart = preg_replace("/\@.*$/","",$this->parent->$uattrib);
+      $domain   = preg_replace("/^[^\@]*+\@(.*)$/","\\1",$this->parent->$uattrib);
+    }
 
-    if($this->account_id != $str){
-      $this->account_id = $str;
-      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> AccountID generated: <b>".$str."</b>");
+    /* Create account_id 
+     */ 
+    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/");
+    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart);
+ 
+    $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
+
+    if($this->account_id != $acc_id){
+      $this->account_id = $acc_id;
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"", "<b>MAIL:</b> AccountID generated: <b>".$acc_id."</b>");
     }
   }
 
@@ -320,30 +338,40 @@ class mailMethod{
     }
 
     /* Build account identicator */
-    if($type == ""){
-      $type = $this->type;
-    }
-    if($type == "user"){
-      $str = $this->user_prefix;
+    if($this->type == "user"){
+      $prefix = $this->user_prefix;
+      $acc_string = $this->user_id;
     }else{
-      $str = $this->share_prefix;
-    } 
+      $prefix = $this->share_prefix;
+      $acc_string = $this->share_id;
+    }
 
     /* Create account prefix and respect "cyrusUseSlashes"
        Do not replace escaped dots for cyrusUseSlashes.
      */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $str = preg_replace('/([^\\\\])\./',"\\1/",$str);
+      $prefix = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
     }
-    $str = preg_replace("/\\\\([\.\/])/","\\1",$str);
-    $str = trim(strtolower($str . $this->parent->$uattrib));
+    $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
 
+    $domain = $mailpart = "";
     if(preg_match("/\@/",$this->parent->$uattrib)){
-      list($mail,$domain) = split("\@",$this->parent->$uattrib);
-      $str = trim(strtolower($str . $mail . $folder . "@" . $domain));
+      list($mailpart,$domain) = split("\@",$this->parent->$uattrib);
+    }
+
+    /* Create account_id
+     */
+    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/");
+    $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart);
+
+    $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
+
+    if(preg_match("/\@/",$acc_id)){
+      list($mail,$domain) = split("\@",$acc_id);
+      $str = trim(strtolower($mail . $folder . "@" . $domain));
     }else{
-      $str = trim(strtolower($str . $this->parent->$uattrib));
+      $str = trim(strtolower($acc_id . $folder));
     }
     return($str) ;
   }

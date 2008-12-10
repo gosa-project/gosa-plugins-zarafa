@@ -89,11 +89,25 @@ class mailAccount extends plugin
 
   var $multiple_support = TRUE;
 
+  var $uid = "";
+  var $cn  = "";
+
+
   /*! \brief  Initialize the mailAccount 
    */
   function __construct (&$config, $dn= NULL)
   {
     plugin::plugin($config,$dn); 
+
+    /* Get attributes from parent object 
+     */
+    foreach(array("uid","cn") as $attr){
+      if(isset($this->parent->by_object['group']) && isset($this->parent->by_object['group']->$attr)){
+        $this->$attr = &$this->parent->by_object['group']->$attr;
+      }elseif(isset($this->attrs[$attr])){
+        $this->$attr = $this->attrs[$attr][0];
+      }
+    }
 
     /* Intialize the used mailMethod
      */
