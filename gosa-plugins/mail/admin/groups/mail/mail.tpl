@@ -36,7 +36,7 @@
      <td>
 {render acl=$gosaMailServerACL}
       <select size="1" id="gosaMailServer" name="gosaMailServer" 
-		title="{t}Specify the mail server where the user will  be hosted on{/t}">
+		title="{t}Specify the mail server where the user will be hosted on{/t}">
         {html_options values=$MailServers output=$MailServers selected=$gosaMailServer}
         <option disabled>&nbsp;</option>
       </select>

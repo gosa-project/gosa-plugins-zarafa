@@ -127,22 +127,22 @@ class mailAccount extends plugin
         /* Read quota */
         $this->gosaMailQuota = $this->mailMethod->getQuota($this->gosaMailQuota);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings! Error was: %s."), 
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
         
         /* Read mailboxes */
         $this->MailBoxes = $this->mailMethod->getMailboxList($this->MailBoxes);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot get list of mailboxes! Error was: %s."), 
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot get list of mailboxes: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
           
       }elseif(!$this->mailMethod->is_connected()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+        msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"), 
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }elseif(!$this->mailMethod->account_exists()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox '%s' doesn't exists on mail server: %s."), 
+        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox '%s' doesn't exists on mail server: %s"), 
               $this->mailMethod->get_account_id(),$this->gosaMailServer), ERROR_DIALOG);
       }
 
@@ -895,11 +895,11 @@ class mailAccount extends plugin
     if (!$this->is_template){
 
       if(!$this->mailMethod->connect()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+        msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"), 
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }else{
         if(!$this->mailMethod->deleteMailbox()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox! Error was: %s."), 
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
       }
@@ -967,15 +967,15 @@ class mailAccount extends plugin
     if (!$this->is_template){
       $this->mailMethod->connect();
       if(!$this->mailMethod->is_connected()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."), 
+        msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"), 
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }else{
         if(!$this->mailMethod->updateMailbox()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update mailbox! Error was: %s."), 
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update mailbox: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
         if(!$this->mailMethod->setQuota($this->gosaMailQuota)){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot write quota settings! Error was: %s."), 
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot write quota settings: %s"), 
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
 

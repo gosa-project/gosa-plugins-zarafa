@@ -89,36 +89,36 @@ class mailgroup extends plugin
         /* Read quota */
         $this->gosaMailQuota = $this->mailMethod->getQuota($this->gosaMailQuota);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot read quota settings: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
 
         /* Read mailboxes */
         $this->MailBoxes = $this->mailMethod->getMailboxList($this->MailBoxes);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot get list of mailboxes! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot get list of mailboxes: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
 
         /* Receive folder types */
         $this->FolderType = $this->mailMethod->getFolderType($this->FolderType);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Could not receive folder types! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot receive folder types: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
 
         /* Receive permissions */  
         $this->folder_acls = $this->mailMethod->getFolderACLs($this->folder_acls);
         if($this->mailMethod->is_error()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Could not receive folder permissions! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot receive folder permissions: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
 
       }elseif(!$this->mailMethod->is_connected()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"),
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }elseif(!$this->mailMethod->account_exists()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox '%s' doesn't exists on mail server: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Mailbox '%s' doesn't exists on mail server: %s"),
               $this->mailMethod->get_account_id(),$this->gosaMailServer), ERROR_DIALOG);
       }
 
@@ -510,15 +510,15 @@ class mailgroup extends plugin
     if (!$this->is_template && $this->remove_folder_from_imap){
 
       if(!$this->mailMethod->connect()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"),
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }else{
         if(!$this->mailMethod->deleteMailbox()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot remove mailbox: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
         if(!$this->mailMethod->updateSharedFolder()){
-          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."),
+          msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions: %s"),
                 $this->mailMethod->get_error()), ERROR_DIALOG);
         }
       }
@@ -608,7 +608,7 @@ class mailgroup extends plugin
           }
         }
         if(isset($_POST['add_acl_user'])){
-          $new_acls[_('new')] = $this->folder_acls['__anyone__'];
+          $new_acls[_('New')] = $this->folder_acls['__anyone__'];
         }
         $this->folder_acls = $new_acls;
       }
@@ -726,15 +726,15 @@ class mailgroup extends plugin
      */
     $this->mailMethod->connect();
     if(!$this->mailMethod->is_connected()){
-      msg_dialog::display(_("Mail error"), sprintf(_("Cannot connect mail method! Error was: %s."),
+      msg_dialog::display(_("Mail error"), sprintf(_("Mail method cannot connect: %s"),
             $this->mailMethod->get_error()), ERROR_DIALOG);
     }else{
       if(!$this->mailMethod->updateMailbox()){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot update mailbox! Error was: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot update mailbox: %s"),
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }
       if(!$this->mailMethod->setQuota($this->gosaMailQuota)){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot write quota settings! Error was: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot write quota settings: %s"),
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }
       /* Save Folder Types, if available 
@@ -743,7 +743,7 @@ class mailgroup extends plugin
         $this->mailMethod->setFolderType($this->FolderType);
       }
       if(!$this->mailMethod->setFolderACLs($this->folder_acls)){
-        msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions! Error was: %s."),
+        msg_dialog::display(_("Mail error"), sprintf(_("Cannot update shared folder permissions: %s"),
               $this->mailMethod->get_error()), ERROR_DIALOG);
       }
     }

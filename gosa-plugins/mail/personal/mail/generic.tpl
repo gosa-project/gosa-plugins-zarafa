@@ -216,7 +216,7 @@
     <label for="gosaSpamSortLevel">{t}Move mails tagged with spam level greater than{/t}</label>
 {render acl=$gosaSpamSortLevelACL checkbox=$multiple_support checked=$use_gosaSpamSortLevel}
     <select {if $own_script != ""} disabled {/if} id="gosaSpamSortLevel" size="1" name="gosaSpamSortLevel" 
-     title="{t}Choose spam level - smaller values are     more sensitive{/t}">
+     title="{t}Choose spam level - smaller values are more sensitive{/t}">
      {html_options values=$spamlevel output=$spamlevel selected=$gosaSpamSortLevel}
     </select>
 {/render}
