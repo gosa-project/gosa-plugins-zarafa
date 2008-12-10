@@ -345,7 +345,7 @@ sub krb5_list_policies {
     if (not defined $kadm5){
       &add_content2xml_hash($out_hash, "error", "Cannot connect to kadmin server");
     } else {
-      my @policies= $kadm5->get_policies() or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
+      my @policies= $kadm5->get_policies(); # or &add_content2xml_hash($out_hash, "error", Authen::Krb5::Admin::error);
       for my $policy (@policies) {
         &add_content2xml_hash($out_hash, "policy", $policy);
       }
