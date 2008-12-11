@@ -25,15 +25,22 @@ class mailMethodCyrus extends mailMethod{
   protected function init()
   {
     mailMethod::init();
-    $this->ServerList = $this->config->data['SERVERS']['IMAP']; 
+    if(isset($this->config->data['SERVERS']['IMAP'])){
+      $this->ServerList = $this->config->data['SERVERS']['IMAP']; 
+    }
   }
 
   
   public function connect()
   {
     mailMethod::connect();
- 
-    if (!isset($this->ServerList[$this->MailServer])){
+
+    if(!count($this->ServerList)){
+      $this->error = _("There are no imap compatible mail servers defined!");
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
+          "<b>IMAP: No mail servers configured, check systems->server->service->imap.</b>","");
+      return(FALSE);
+    }elseif (!isset($this->ServerList[$this->MailServer])){
       $this->error = _("Mail server for this account is invalid!");
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
           "<b>IMAP: The selected mail server '".$this->MailServer."' is invalid.</b>",""); 
