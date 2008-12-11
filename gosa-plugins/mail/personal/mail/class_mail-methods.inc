@@ -735,7 +735,7 @@ class mailMethod{
     }elseif(empty($quota)){
       return("&nbsp;&nbsp;"._("Unlimited"));
     }else{
-      $usage =(int) ($use/$quota) * 100;
+      $usage =round(($use/$quota) * 100);
       return("<img src='progress.php?x=100&amp;y=17&amp;p=$usage'>");
     }
   }

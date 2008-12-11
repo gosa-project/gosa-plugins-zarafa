@@ -406,8 +406,6 @@ class mailAccount extends plugin
     $smarty->assign("allowSieveManagement", $this->mailMethod->allowSieveManagement());
     $smarty->assign("own_script",  $this->sieveManagementUsed);
 
-    print_a($this->multi_boxes);
-
     /* _Multiple users vars_ */
     foreach($this->attributes as $attr){
       $u_attr = "use_".$attr;
