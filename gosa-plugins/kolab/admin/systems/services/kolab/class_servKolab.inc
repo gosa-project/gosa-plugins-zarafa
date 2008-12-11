@@ -302,7 +302,7 @@ class servkolab extends goService {
     $message= plugin::check();
 
     if(mailMethod::get_current_method($this->config) != "mailMethodKolab22" && count($this->postfix_mydestination) != 1){
-      $message[] = _("Only kolab version >= 2.2 is able to handle multiple mail domains. Please provide only one mail domain.");
+#      $message[] = _("Only kolab version >= 2.2 is able to handle multiple mail domains. Please provide only one mail domain.");
     }
 
     if(($this->kolabFreeBusyFuture==""))    {
