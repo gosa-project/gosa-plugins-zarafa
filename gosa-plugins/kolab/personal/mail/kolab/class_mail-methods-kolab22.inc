@@ -40,6 +40,9 @@ class mailMethodKolab22 extends mailMethodKolab
 "read hidden/post" => "read hidden/post",
 "all"              => "all");
 
+  protected $default_acls = array("__anyone__" => "none", "__member__" => "write");
+
+
   /*! \brief  Returns configured acls
    */
   public function  getFolderACLs($ldap_acls)
