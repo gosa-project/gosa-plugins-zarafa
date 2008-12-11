@@ -64,6 +64,8 @@ class mailMethod{
   protected $parent             = NULL;   
   protected $MailServer         = "";
 
+  protected $default_acls = array("__anyone__" => "p", "__member__" => "lrswp");
+
   protected $acl_map = array(
       "lrsw"     => "read",
       "lrswp"    => "post",
@@ -736,6 +738,18 @@ class mailMethod{
       $usage =(int) ($use/$quota) * 100;
       return("<img src='progress.php?x=100&amp;y=17&amp;p=$usage'>");
     }
+  }
+
+ 
+  /*! \brief  Returns the default sharedFolder ACLs for this method.
+      @return Array Returns an array containg acls for __member__ and __anyone__
+   */ 
+  public function getDefaultACLs()
+  {
+    $tmp = $this->default_acls;
+    if(!isset($tmp['__member__'])) $tmp['__member__'] = " ";
+    if(!isset($tmp['__anyone__'])) $tmp['__anyone__'] = " ";
+    return($tmp);
   }
 }
 
