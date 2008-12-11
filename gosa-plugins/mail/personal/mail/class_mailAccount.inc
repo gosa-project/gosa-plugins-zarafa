@@ -1246,9 +1246,7 @@ class mailAccount extends plugin
     $ret['flag_add'] = $flag_add;
     $ret['flag_remove'] = $flag_remove;
 
-    echo "1";
     if($this->mailMethod->vacationRangeEnabled()){
-      echo "2";
       if(in_array("V",$flag_add)){
         $ret['gosaVacationStart'] =  $this->gosaVacationStart = $_POST['gosaVacationStart'];
         $ret['gosaVacationStop'] =  $this->gosaVacationStop = $_POST['gosaVacationStop'];
@@ -1290,7 +1288,7 @@ class mailAccount extends plugin
       $message[]= msgPool::required(_("Spam folder"));
     }
 
-    if (  in_array("use_vacation",$this->multi_boxes) &&
+    if ($this->mailMethod->vacationRangeEnabled() && in_array("use_vacation",$this->multi_boxes) &&
         preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart > $this->gosaVacationStop){
       $message[]= msgPool::invalid(_("Vacation interval"));
     }
