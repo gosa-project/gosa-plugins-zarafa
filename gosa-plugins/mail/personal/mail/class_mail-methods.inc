@@ -728,12 +728,13 @@ class mailMethod{
 
   static function quota_to_image($use,$quota)
   {
-    if($use == -1 ){ 
-      return(_("Unknown"));
-    }elseif($quota == 0){
-      return(progressbar(100,100,15,true));
+    if($use == -1){
+      return("&nbsp;&nbsp;"._("Unknown"));
+    }elseif(empty($quota)){
+      return("&nbsp;&nbsp;"._("Unlimited"));
     }else{
-      return(progressbar(round(($use * 100)/ $quota),100,15,true));
+      $usage =(int) ($use/$quota) * 100;
+      return("<img src='progress.php?x=100&amp;y=17&amp;p=$usage'>");
     }
   }
 }
