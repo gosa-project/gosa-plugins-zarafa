@@ -43,6 +43,7 @@ class mailgroup extends plugin
 
   var $uid = "";
   var $cn ="";
+  var $orig_cn = "";
 
   function __construct (&$config, $dn= NULL, $ui= NULL)
   {
@@ -57,6 +58,7 @@ class mailgroup extends plugin
         $this->$attr = $this->attrs[$attr][0];
       }
     }
+    $this->orig_cn = $this->cn;
 
     /* Intialize the used mailMethod
      */
@@ -296,6 +298,16 @@ class mailgroup extends plugin
           }
         }
         return ($display);
+      }
+    }
+
+    
+    /****************
+      Preset mail attribute
+     ****************/
+    if(empty($this->mail) && $this->mailMethod->mailEqualsCN() && !$this->initially_was_account){
+      if($this->mailMethod->domainSelectionEnabled()){
+        $this->mail = &$this->parent->by_object['group']->cn;
       }
     }
 
@@ -786,8 +798,18 @@ class mailgroup extends plugin
     if(!$this->is_account) return array();
     $ldap= $this->config->get_ldap_link();
 
+
     /* Call common method to give check the hook */
     $message= plugin::check();
+
+    /* Ensure that this group isn't renamed if the mailMethod enforces cn mailAttributes 
+     */
+    if($this->mailMethod->mailEqualsCN() && $this->initially_was_account){
+      if($this->cn != $this->orig_cn){
+        $message[] = sprintf(_("The groups 'cn' has changed!  The cn attribute can't be changed due to the fact that this mail method '%s' relies on it.")
+            ,get_class($this->mailMethod));
+      }
+    }
 
     if(empty($this->gosaMailServer)){
       $message[]= msgPool::noserver(_("Mail"));
