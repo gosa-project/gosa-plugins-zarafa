@@ -123,9 +123,9 @@ class mailAccount extends plugin
      */
     $this->initially_was_account = $this->is_account;
 
-    /* Initialize vacation settings 
+    /* Initialize vacation settings, if enabled.
      */   
-    if(empty($this->gosaVacationStart)){
+    if(empty($this->gosaVacationStart) && $this->mailMethod->vacationRangeEnabled()){
       $this->gosaVacationStart = time();
       $this->gosaVacationStop = time();
     }
@@ -492,7 +492,6 @@ class mailAccount extends plugin
       $smarty->assign("months", $months);
       $smarty->assign("years", $years);
       $smarty->assign("days", $days);
-
     }
 
     /* fill filter settings 
@@ -599,6 +598,9 @@ class mailAccount extends plugin
           $this->is_modified= TRUE;
         }
         $this->gosaMailDeliveryMode= $tmp;
+
+        /* Get start/stop values for vacation scope of application
+         */
         if($this->mailMethod->vacationRangeEnabled()){
           if($this->acl_is_writeable("gosaVacationMessage") && preg_match("/V/",$this->gosaMailDeliveryMode)){
             if(isset($_POST['gosaVacationStart'])){
@@ -741,6 +743,24 @@ class mailAccount extends plugin
       $attrs  = $obj->attributes;
     }
     if($obj){
+
+      /* Replace vacation start and end time */
+      if($this->mailMethod->vacationRangeEnabled()){
+        if(preg_match("/%start/",$contents)){
+          $contents = preg_replace("/%start/",date("d.m.Y",$this->gosaVacationStart),$contents);
+        }
+        if(preg_match("/%end/",$contents)){
+          $contents = preg_replace("/%end/",date("d.m.Y",$this->gosaVacationStop),$contents);
+        }
+      }else{
+        if(preg_match("/%start/",$contents)){
+          $contents = preg_replace("/%start/", _("unknown"),$contents);
+        }
+        if(preg_match("/%end/",$contents)){
+          $contents = preg_replace("/%end/", _("unknown"), $contents);
+        }
+      }
+
       foreach ($attrs as $val){
         if(preg_match("/dateOfBirth/",$val)){
           if($obj->use_dob){
@@ -751,13 +771,6 @@ class mailAccount extends plugin
               $obj->$val, $contents);
         }
 
-        /* Replace vacation start and end time */
-        if(preg_match("/%start/",$contents)){
-          $contents = preg_replace("/%start/",date("d.m.Y",$this->gosaVacationStart),$contents);
-        }
-        if(preg_match("/%end/",$contents)){
-          $contents = preg_replace("/%end/",date("d.m.Y",$this->gosaVacationStop),$contents);
-        }
       }
     }
     $contents = ltrim(preg_replace("/^DESC:.*$/m","",$contents),"\n ");
