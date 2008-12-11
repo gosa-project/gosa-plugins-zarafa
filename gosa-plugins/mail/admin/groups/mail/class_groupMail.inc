@@ -74,9 +74,8 @@ class mailgroup extends plugin
     /* Load folder_acls with defaults.
       anyone -- The default acl, will be written to ldap.
       member -- The ACL used for the members.
-     */
-    $this->folder_acls['__anyone__'] = "p";
-    $this->folder_acls['__member__'] = "lrswp";
+     */ 
+    $this->folder_acls = $this->mailMethod->getDefaultACLs();
 
     /* Load acls
        The most used acl will be used as member acl, this
