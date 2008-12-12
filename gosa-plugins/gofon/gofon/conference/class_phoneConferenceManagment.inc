@@ -261,7 +261,6 @@ class phoneConferenceManagment extends plugin
 
         /* Check locking */
         if (($conf= get_lock($this->dn)) != ""){
-          session::set('dn',$this->dn);
           return(gen_locked_message($conf, $this->dn));
         } else {
           add_lock ($this->dn, $this->ui->dn);

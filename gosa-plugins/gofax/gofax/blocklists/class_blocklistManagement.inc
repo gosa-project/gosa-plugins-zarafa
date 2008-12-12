@@ -299,7 +299,6 @@ class blocklist extends plugin
 
       /* Check locking */
       if (($user= get_lock($this->dn)) != ""){
-        session::set('dn',$this->dn);
         return(gen_locked_message($user, $this->dn));
       } else {
 

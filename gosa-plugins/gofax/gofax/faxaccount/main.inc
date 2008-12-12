@@ -41,7 +41,6 @@ if (!$remove_lock){
 
 			/* Lock the current entry */
 			add_lock ($ui->dn, $ui->dn);
-			session::set('dn',$ui->dn);
 			session::set('edit',TRUE);
 		}
 	}
