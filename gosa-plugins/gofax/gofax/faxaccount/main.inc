@@ -1,17 +1,19 @@
 <?php
 
-$display  ="";
-$lock_msg = "";
-
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('gofaxAccount');
-  session::un_set ('edit');
+/* Remove locks created by this plugin
+*/
+if ($remove_lock){
+  if(session::is_set('gofaxAccount') && session::is_set('edit')){
+    del_lock($ui->dn);
+  }
 }
 
-
-if (!$remove_lock){
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('gofaxAccount');
+  session::un_set('edit');
+}else{
 
 	/* Reset requested? */
 	if (isset($_POST['edit_cancel']) ||

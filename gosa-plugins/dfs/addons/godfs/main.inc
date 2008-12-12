@@ -1,23 +1,21 @@
 <?php
 
 
-
-
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('dfsManagment');
+/* Remove locks created by this plugin
+*/
+if ($remove_lock){
+  if(session::is_set('dfsManagment') && session::is_set('edit')){
+    $dfsManagment  = session::get('dfsManagment');
+    $dfsManagment->remove_lock();
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('dfsManagment');
+}else{
 
-   if ($remove_lock) {
-     if (session::is_set('dfsManagment')) {
-       $dfsManagment  = session::get('dfsManagment');
-       $dfsManagment->remove_lock();
-       del_lock($ui->dn);
-       session::un_set('dfsManagment');
-     }
-   } else {
      # create dfsManagment object
      if (!session::is_set('dfsManagment') || 
         (isset($_GET['reset']) && $_GET['reset'] == 1)) {

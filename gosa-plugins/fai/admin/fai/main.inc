@@ -18,19 +18,22 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('FAI');
+
+/* Remove locks created by this plugin
+*/
+if ($remove_lock){
+  if(session::is_set('FAI')){
+      $macl = session::get('FAI');
+      $macl->remove_lock();
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('FAI');
+}else{
 
-if ($remove_lock){
-        if(session::is_set('FAI')){
-                $FAI = session::get('FAI');
-                $FAI->remove_lock();
-        }
-} else {
 	/* Create usermanagement object on demand */
 	if (!session::is_set('FAI') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$FAI= new faiManagement($config, $ui);

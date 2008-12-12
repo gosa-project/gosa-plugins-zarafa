@@ -18,23 +18,24 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-$lock_msg ="";
-$display  =""; 
 
-/* Remove classes and variables from session
- */
+/* Remove locks created by this plugin
+*/
+$lock_msg="";
+if ($remove_lock){
+  if(session::is_set('mailAccount') && session::is_set('edit')){
+    del_lock($ui->dn);
+  }
+}
+
+/* Remove this plugin from session
+*/
 if ( $cleanup ){
   session::un_set('mailAccount');
   session::un_set('edit');
-}
-
-
-if ( $remove_lock){
-  if(session::is_set('mailAccount') && session::is_set('edit')){
-    del_lock ($ui->dn);
-  }
 
 }else{
+
 
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) || 

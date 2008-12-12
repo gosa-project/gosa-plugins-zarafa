@@ -22,9 +22,9 @@
  */
 if ( $cleanup ){
   session::un_set('addressbook');
-}
 
-if (!$remove_lock){
+}else{
+
 	/* Create phonelist object on demand */
 	if (!session::is_set('addressbook') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$addressbook = new addressbook ($config);

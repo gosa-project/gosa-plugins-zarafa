@@ -2,12 +2,11 @@
 
 /* Remove classes and variables from session
  */
+$lock_msg ="";
 if ( $cleanup ){
   session::un_set('fonreport');
-}
+}else{
 
-
-if (!$remove_lock){
 	/* Create fonreport object on demand */
 	if (!session::is_set('fonreport') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		session::set('fonreport',new fonreport ($config, $ui));

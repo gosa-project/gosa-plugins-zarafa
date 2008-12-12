@@ -20,17 +20,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('gotomasses');
+
+/* Remove locks created by this plugin
+*/
+if ($remove_lock){
+  if(session::is_set('gotomasses')){
+    // Nothing to unlock here
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('gotomasses');
+}else{
 
-if (!$remove_lock){
 
 	/* Create gotomasses object on demand */
-	if (!session::is_set('gotomasses') || (isset($_GET['reset']) && $_GET['reset'] == 1) || isset($_POST['reload_gotomass_data'])){
+	if (!session::is_set('gotomasses') 
+		|| (isset($_GET['reset']) && $_GET['reset'] == 1) 
+		|| isset($_POST['reload_gotomass_data'])){
 		$gotomasses= new gotomasses ($config);
 		$gotomasses->set_acl_category("gotomasses");
 

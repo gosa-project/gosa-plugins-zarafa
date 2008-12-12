@@ -18,17 +18,23 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-$display 	= "";
-$lock_msg 	= "";
-
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('phoneAccount');
+/* Remove locks created by this plugin
+*/
+$lock_msg ="";
+if ($remove_lock){
+  if(session::is_set('phoneAccount') && session::is_set('edit')){
+    del_lock($ui->dn);
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('phoneAccount');
+  session::un_set('edit');
 
-if (!$remove_lock){
+}else{
+
 	/* Reset requested? */
 	if (isset($_POST['edit_cancel']) ||
 		(isset($_GET['reset']) && $_GET['reset'] == 1)){

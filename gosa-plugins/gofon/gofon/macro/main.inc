@@ -18,19 +18,22 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('macroManagement');
-}
-
-
+/* Remove locks created by this plugin
+*/
+$lock_msg ="";
 if ($remove_lock){
   if(session::is_set('macroManagement')){
-    $macroManagement = session::get('macroManagement');
-    $macroManagement->remove_lock();
+      $macl = session::get('macroManagement');
+      $macl->remove_lock();
   }
-} else {
+}
+
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('macroManagement');
+}else{
+
 
   /* Create macroManagement object on demand */
   if (!session::is_set('macroManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){

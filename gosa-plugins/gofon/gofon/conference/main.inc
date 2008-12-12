@@ -18,19 +18,23 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('conference');
+/* Remove locks created by this plugin
+*/
+$lock_msg ="";
+if ($remove_lock){
+  if(session::is_set('conference')){
+      $macl = session::get('conference');
+      $macl->remove_lock();
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('conference');
+}else{
 
-if ($remove_lock){
-        if(session::is_set('conference')){
-                $conference = session::get('conference');
-                $conference->remove_lock();
-        }
-} else {
+
 	/* Create usermanagement object on demand */
 	if (!session::is_set('conference') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		session::set("conference",new phoneConferenceManagment($config, $ui));

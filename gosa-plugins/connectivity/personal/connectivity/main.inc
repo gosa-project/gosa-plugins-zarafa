@@ -18,19 +18,23 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* Remove classes and variables from session
- */
+/* Remove locks created by this plugin
+*/
+$lock_msg="";
+if ($remove_lock){
+  if(session::is_set('connectivity') && session::is_set('edit')){
+    del_lock($ui->dn);
+  }
+}
+
+/* Remove this plugin from session
+*/
 if ( $cleanup ){
   session::un_set('connectivity');
   session::un_set('edit');
-}
 
-
-if ( $remove_lock){
-  if(session::is_set('connectivity') && session::is_set('edit')){
-    del_lock ($ui->dn);
-  }
 }else{
+
 
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) ||
@@ -47,7 +51,7 @@ if ( $remove_lock){
 
   /* Create connectivity object on demand */
   if (!session::is_set('connectivity') || (isset($_GET['reset']) &&
-      $_GET['reset'] == 1)){
+        $_GET['reset'] == 1)){
     $connectivity= new connectivity ($config, $ui->dn);
     $connectivity->enable_CSN_check();
     $connectivity->set_acl_base($ui->dn);
@@ -104,33 +108,31 @@ if ( $remove_lock){
 
   /* Execute formular */
   $info= "";
-  if(!isset($display)){
-    $display= $connectivity->execute ();
+  $display= $connectivity->execute ();
 
-    /* Store changes  in session */
-    if (session::is_set('edit')){
-      session::set('connectivity',$connectivity);
-    }
-
-
-    $display.="<div align='right'>";
-    if (session::is_set('edit')){
-      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
-      $display.= "&nbsp;";
-      $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
-      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png').
-        "\"> ".$ui->dn."&nbsp;";
-    } else {
-      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
-        "\"> ".$ui->dn."&nbsp;";
-
-      $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
-        "\">".msgPool::clickEditToChange();
-      $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
-      $display.= "<input type=\"hidden\" name=\"ignore\">\n";
-    }
-    $display.="</div>";
+  /* Store changes  in session */
+  if (session::is_set('edit')){
+    session::set('connectivity',$connectivity);
   }
+
+
+  $display.="<div align='right'>";
+  if (session::is_set('edit')){
+    $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
+    $display.= "&nbsp;";
+    $display.= "<input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">\n";
+    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png').
+      "\"> ".$ui->dn."&nbsp;";
+  } else {
+    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/unlocked.png').
+      "\"> ".$ui->dn."&nbsp;";
+
+    $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/on.png').
+      "\">".msgPool::clickEditToChange();
+    $display.= "<input type=submit name=\"edit\" value=\"".msgPool::editButton()."\">\n";
+    $display.= "<input type=\"hidden\" name=\"ignore\">\n";
+  }
+  $display.="</div>";
 
   /* Page header*/
   $display= print_header(get_template_path($connectivity->plIcon),

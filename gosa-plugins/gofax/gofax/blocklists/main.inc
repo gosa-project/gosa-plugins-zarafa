@@ -1,18 +1,20 @@
 <?php
 
-/* Remove classes and variables from session
- */
-if ( $cleanup ){
-  session::un_set('blocklist');
+/* Remove locks created by this plugin
+*/
+if ($remove_lock){
+  if(session::is_set('blocklist')){
+      $macl = session::get('blocklist');
+      $macl->remove_lock();
+  }
 }
 
+/* Remove this plugin from session
+*/
+if ( $cleanup ){
+  session::un_set('blocklist');
+}else{
 
-if ($remove_lock){
-        if(session::is_set('blocklist')){
-                $blocklist = session::get('blocklist');
-                $blocklist->remove_lock ($ui->dn);
-        }
-} else {
 	/* Create blocklist object on demand */
 	if (!session::is_set('blocklist') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$blocklist= new blocklist($config, $ui);
