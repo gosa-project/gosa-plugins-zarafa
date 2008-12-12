@@ -19,7 +19,13 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-if (!$remove_lock){
+if ( $remove_lock){
+  if(session::is_set('scalixAccount') && session::is_set('edit')){
+    del_lock ($ui->dn);
+  }
+
+}else{
+
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) || 
       (isset($_GET['reset']) && $_GET['reset'] == 1)){
@@ -61,7 +67,6 @@ if (!$remove_lock){
 
       /* Lock the current entry */
       add_lock ($ui->dn, $ui->dn);
-      session::set('dn',$ui->dn);
       session::set('edit',TRUE);
     }
   }
