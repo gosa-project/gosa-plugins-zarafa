@@ -149,7 +149,7 @@ class deviceManagement extends plugin
     if (isset($_POST['edit_cancel']) && is_object($this->devicetabs)){
       $this->remove_lock();
       $this->devicetabs= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -179,7 +179,7 @@ class deviceManagement extends plugin
           }
           unset ($this->devicetabs);
           $this->devicetabs= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -219,7 +219,7 @@ class deviceManagement extends plugin
       /* Register devicetabs to trigger edit dialog */
       $this->devicetabs= new devicetabs($this->config,$this->config->data['TABS']['DEVICETABS'], $this->dn,"devices");
       $this->devicetabs->set_acl_base($this->dn);
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -395,7 +395,7 @@ class deviceManagement extends plugin
     /* Delete device canceled? */
     if (isset($_POST['delete_cancel'])){
       $this->remove_lock();
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     /* Show tab dialog if object is present */

@@ -37,11 +37,11 @@ if ($remove_lock){
   $output= $macroManagement->execute();
 
   /* Page header*/
-  if (session::is_set('objectinfo')){
+  if (get_object_info() != ""){
     $display= print_header( get_template_path('images/macros.png'), 
                             _("Phone macro management"), 
                             "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> 
-                            ".LDAP::fix(session::get('objectinfo')));
+                            ".LDAP::fix(get_object_info()));
   } else {
     $display= print_header(get_template_path('plugins/gofon/images/macros.png'), _("Phone macro management"));
   }

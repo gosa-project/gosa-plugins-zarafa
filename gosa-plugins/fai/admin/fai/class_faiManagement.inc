@@ -462,7 +462,7 @@ class faiManagement extends plugin
           $this->dialog->by_object[$a_setup[1]]->FAIstate = $entry['FAIstate'];
           $this->dialog->set_acl_base($this->dn);
           $this->is_dialog  = true;
-          session::set('objectinfo',$this->dn);
+          set_object_info($this->dn);
         }
       }
     }
@@ -921,7 +921,7 @@ class faiManagement extends plugin
 		if(isset($_POST['edit_cancel'])){
 			$this->dialog=FALSE;
 			$this->is_dialog = false;
-			session::un_set('objectinfo');
+			set_object_info();
       $this->remove_lock();
 		}
 
@@ -973,7 +973,7 @@ class faiManagement extends plugin
           $this->remove_lock();
           $this->dialog=FALSE;
           $this->is_dialog=false;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */

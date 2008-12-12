@@ -168,7 +168,7 @@ class goFonMacro extends plugin
       $this->remove_lock();
       unset ($this->macrotabs);
       $this->macrotabs= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -201,7 +201,7 @@ class goFonMacro extends plugin
 
           unset ($this->macrotabs);
           $this->macrotabs= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -242,7 +242,7 @@ class goFonMacro extends plugin
         /* Register macrotabs to trigger edit dialog */
         $this->macrotabs= new macrotabs($this->config,
             $this->config->data['TABS']['MACROTABS'], $this->dn,"gofonmacro");
-        session::set('objectinfo',$this->dn);
+        set_object_info($this->dn);
       }
     }
 

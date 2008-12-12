@@ -248,7 +248,7 @@ class applicationManagement extends plugin
     if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
       $this->remove_lock();
       $this->apptabs= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -279,7 +279,7 @@ class applicationManagement extends plugin
             $this->remove_lock();
           }
           $this->apptabs= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -322,7 +322,7 @@ class applicationManagement extends plugin
       }
       $this->apptabs->parent = &$this;
       $this->apptabs->set_acl_base($this->dn);
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -500,7 +500,7 @@ class applicationManagement extends plugin
     /* Delete application canceled? */
     if (isset($_POST['delete_cancel'])){
       $this->remove_lock();
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     /* Show tab dialog if object is present */

@@ -144,7 +144,7 @@ class faiScript extends plugin
     }
 
     if($this->dn != "new"){
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
     /* File download requested */
@@ -199,7 +199,7 @@ class faiScript extends plugin
       $this->dialog->set_acl_category("fai");
 
       /* Assign some additional dialog informations like headline and parent  */
-      session::set('objectinfo',$obj['dn']);
+      set_object_info($obj['dn']);
       $this->dialog->parent = &$this;
       $this->is_dialog=true;
     }

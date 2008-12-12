@@ -148,7 +148,7 @@ class phoneConferenceManagment extends plugin
       $this->conftab= NULL;
       $this->lognames= array();;
       $this->cn= "";
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -311,7 +311,7 @@ class phoneConferenceManagment extends plugin
       /* Register conftab to trigger edit dialog */
       $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofonconference");
       $this->conftab->set_acl_base($this->dn);
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -329,7 +329,7 @@ class phoneConferenceManagment extends plugin
         $this->dn= "new";
         $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofonconference");
         $this->conftab->set_acl_base($dummy_dn);
-        session::un_set('objectinfo');
+        set_object_info();
       }
     }
 
@@ -355,7 +355,7 @@ class phoneConferenceManagment extends plugin
         if (!isset($_POST['edit_apply'])){
           $this->remove_lock();
           $this->conftab= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */

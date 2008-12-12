@@ -127,7 +127,7 @@ class blocklist extends plugin
 
       $this->remove_lock();
       $this->dialog = NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -149,7 +149,7 @@ class blocklist extends plugin
           $this->remove_lock();
           $this->dn= "";
           $this->dialog = NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -189,7 +189,7 @@ class blocklist extends plugin
       }else{
         add_lock ($this->dn, $this->ui->dn);
       }
-      session::set('objectinfo',trim($this->dn));
+      set_object_info(trim($this->dn));
       $this->dialog = new faxblocktabs($this->config,$this->config->data['TABS']['FAXBLOCKTABS'],$this->dn);
       $this->dialog->set_acl_base($this->dn);
     }    

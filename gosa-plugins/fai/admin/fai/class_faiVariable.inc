@@ -99,7 +99,7 @@ class faiVariable extends plugin
     }
 
     if($this->dn != "new"){
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -113,7 +113,7 @@ class faiVariable extends plugin
       $this->dialog->set_acl_base($c_dn);
       $this->dialog->FAIstate = $this->FAIstate;
       $this->dialog->parent = &$this;
-      session::set('objectinfo',$this->SubObjects[$var]['dn']);
+      set_object_info($this->SubObjects[$var]['dn']);
       $this->is_dialog=true;
     }
     

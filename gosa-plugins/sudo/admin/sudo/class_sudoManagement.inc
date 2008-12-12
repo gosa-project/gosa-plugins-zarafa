@@ -180,7 +180,7 @@ class sudoManagement extends plugin
           }
           unset ($this->sudotabs);
           $this->sudotabs= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -216,7 +216,7 @@ class sudoManagement extends plugin
       /* Register sudotabs to trigger edit dialog */
       $this->sudotabs= new sudotabs($this->config,$this->config->data['TABS']['SUDOTABS'], $this->dn);
       $this->sudotabs->set_acl_base($this->base);
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -321,7 +321,7 @@ class sudoManagement extends plugin
     if (isset($_POST['edit_cancel']) && is_object($this->sudotabs)){
       $this->remove_lock();
       $this->sudotabs= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 

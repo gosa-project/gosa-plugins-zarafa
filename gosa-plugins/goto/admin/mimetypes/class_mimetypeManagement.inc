@@ -259,7 +259,7 @@ class mimetypeManagement extends plugin
     if (isset($_POST['edit_cancel'])){
       $this->remove_lock();
       $this->mimetabs= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -288,7 +288,7 @@ class mimetypeManagement extends plugin
           }
           unset ($this->mimetabs);
           $this->mimetabs= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
 
           /* Reinitialize tab */
@@ -331,7 +331,7 @@ class mimetypeManagement extends plugin
       }
       $this->mimetabs->parent = &$this;
       $this->mimetabs->set_acl_base($this->dn);
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
 
@@ -509,7 +509,7 @@ class mimetypeManagement extends plugin
     /* Delete mime type canceled? */
     if (isset($_POST['delete_cancel'])){
       $this->remove_lock();
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     /* Show tab dialog if object is present */

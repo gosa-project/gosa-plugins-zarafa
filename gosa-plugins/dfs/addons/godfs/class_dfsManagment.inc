@@ -96,7 +96,7 @@ class dfsManagment extends plugin {
         $this->dfstab = new dfstabs($this->config, $this->config->data['TABS']['DFSTABS'], $this->dn);
         $this->dfstab->set_acl($this->acl);
         $this->dfstab->save_object();
-        session::set('objectinfo',$this->dn);
+        set_object_info($this->dn);
       }
     } 
       
@@ -120,11 +120,11 @@ class dfsManagment extends plugin {
 
     # cancel pressed
     if (isset($_POST['edit_cancel'])) {
-      del_lock (session::get('objectinfo'));
+      del_lock (get_object_info());
       unset ($this->dfstab);
       $this->dfstab = NULL;
       $this->dn = "";
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     # delete pressed
@@ -148,11 +148,11 @@ class dfsManagment extends plugin {
 	      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->basedn, LDAP_DEL, get_class()));
       }
       
-      del_lock (session::get('objectinfo'));
+      del_lock (get_object_info());
       unset ($this->dfstab);
       $this->dfstab = NULL;
       $this->dn = "";
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     # generate main page no tabs

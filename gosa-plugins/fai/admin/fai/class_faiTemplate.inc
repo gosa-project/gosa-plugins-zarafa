@@ -134,7 +134,7 @@ class faiTemplate extends plugin
           $this->dialog->FAIstate = $this->FAIstate;
           $this->dialog->set_acl_category("fai");
 
-          session::set('objectinfo',$obj['dn']);
+          set_object_info($obj['dn']);
           $this->dialog->parent = &$this;
           $this->is_dialog=true;
         }
@@ -178,7 +178,7 @@ class faiTemplate extends plugin
         $this->dialog->FAIstate = $this->FAIstate;
         $this->dialog->acl = $this->acl;
         $this->dialog->set_acl_category("fai");
-        session::set('objectinfo',$obj['dn']);
+        set_object_info($obj['dn']);
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
       }
@@ -200,7 +200,7 @@ class faiTemplate extends plugin
     }
 
     if($this->dn != "new"){
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
     }
 
     /* Save Dialog */

@@ -40,8 +40,8 @@ if ($remove_lock){
 		session::un_set ('FAI');
 	}
 	/* Page header*/
-	if (session::is_set('objectinfo')){
-		$display= print_header(get_template_path($FAI->plIcon), _("Software deployment"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(session::get('objectinfo')));
+	if (get_object_info() != ""){
+		$display= print_header(get_template_path($FAI->plIcon), _("Software deployment"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
 	} else {
 		$display= print_header(get_template_path($FAI->plIcon), _("Software deployment"));
 	}
