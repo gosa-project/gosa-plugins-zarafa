@@ -1,4 +1,15 @@
 <?php
+
+
+
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('dfsManagment');
+}
+
+
    if ($remove_lock) {
      if (session::is_set('dfsManagment')) {
        $dfsManagment  = session::get('dfsManagment');

@@ -1,5 +1,12 @@
 <?php
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('faxreport');
+}
+
+
 if (!$remove_lock){
 	/* Create faxreport object on demand */
 	if (!session::is_set('faxreport') || (isset($_GET['reset']) && $_GET['reset'] == 1)){

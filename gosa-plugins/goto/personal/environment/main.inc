@@ -18,6 +18,14 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 $lock_msg = "";
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('environment');
+  session::un_set('edit');
+}
+
 if ( $remove_lock){
   if(session::is_set('environment') && session::is_set('edit')){
     del_lock ($ui->dn);

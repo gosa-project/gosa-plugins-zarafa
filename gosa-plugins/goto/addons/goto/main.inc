@@ -20,6 +20,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('gotomasses');
+}
+
+
 if (!$remove_lock){
 
 	/* Create gotomasses object on demand */

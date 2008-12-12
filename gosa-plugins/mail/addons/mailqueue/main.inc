@@ -18,6 +18,12 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('mailqueue');
+}
+
 if (!$remove_lock){
 	/* Create mailqueue object on demand */
 	if (!session::is_set('mailqueue') || (isset($_GET['reset']) && $_GET['reset'] == 1)){

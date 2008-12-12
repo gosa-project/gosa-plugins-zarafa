@@ -20,6 +20,14 @@
 
 $display 	= "";
 $lock_msg 	= "";
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('phoneAccount');
+}
+
+
 if (!$remove_lock){
 	/* Reset requested? */
 	if (isset($_POST['edit_cancel']) ||

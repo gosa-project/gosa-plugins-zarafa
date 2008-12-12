@@ -3,6 +3,14 @@
 $display  ="";
 $lock_msg = "";
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('gofaxAccount');
+  session::un_set ('edit');
+}
+
+
 if (!$remove_lock){
 
 	/* Reset requested? */

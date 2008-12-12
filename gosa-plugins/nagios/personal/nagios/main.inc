@@ -21,6 +21,14 @@
 $display    = "";
 $lock_msg   = "";
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('nagiosAccount');
+  session::un_set('edit');
+}
+
+
 if ( $remove_lock){
   if(session::is_set('nagiosAccount') && session::is_set('edit')){
     del_lock ($ui->dn);

@@ -20,6 +20,15 @@
 
 $lock_msg ="";
 $display  =""; 
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('mailAccount');
+  session::un_set('edit');
+}
+
+
 if ( $remove_lock){
   if(session::is_set('mailAccount') && session::is_set('edit')){
     del_lock ($ui->dn);

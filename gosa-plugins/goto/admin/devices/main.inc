@@ -18,11 +18,17 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('DeviceManagement');
+}
+
+
 if ($remove_lock){
   if(session::is_set('DeviceManagement')){
     $DeviceManagement = session::get('DeviceManagement');
     $DeviceManagement->remove_lock();
-    session::un_set ('DeviceManagement');
   }
 } else {
 

@@ -20,11 +20,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('sudoManagement');
+}
+
+
 if ($remove_lock){
   if(session::is_set('sudoManagement')){
     $sudoManagement = session::get('sudoManagement');
     $sudoManagement->remove_lock();
-    session::un_set ('sudoManagement');
   }
 } else {
   /* Create sudoManagement object on demand */

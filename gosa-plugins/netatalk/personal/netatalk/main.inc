@@ -20,6 +20,14 @@
  */
 
 $lock_msg = "";
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('netatalk');
+  session::un_set('edit');
+}
+
 if ( $remove_lock){
   if(session::is_set('netatalk') && session::is_set('edit')){
     del_lock ($ui->dn);
@@ -89,7 +97,7 @@ if ( $remove_lock){
   }
 
   /* Execute formular */
-  if(!empty($lock_msg(){
+  if(!empty($lock_msg)){
     $display = $lock_msg;
   }else{
     $display.= $netatalk->execute ();

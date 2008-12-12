@@ -18,11 +18,17 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('conference');
+}
+
+
 if ($remove_lock){
         if(session::is_set('conference')){
                 $conference = session::get('conference');
                 $conference->remove_lock();
-                session::un_set ('conference');
         }
 } else {
 	/* Create usermanagement object on demand */

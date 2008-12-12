@@ -1,9 +1,16 @@
 <?php
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('blocklist');
+}
+
+
 if ($remove_lock){
         if(session::is_set('blocklist')){
                 $blocklist = session::get('blocklist');
                 $blocklist->remove_lock ($ui->dn);
-                session::un_set ('blocklist');
         }
 } else {
 	/* Create blocklist object on demand */

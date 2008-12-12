@@ -20,6 +20,14 @@
 
 $display  = "";
 $lock_msg = "";
+
+/* Remove classes and variables from session
+ */
+if ( $cleanup ){
+  session::un_set('sambaAccount');
+  session::un_set('edit');
+}
+
 if ( $remove_lock){
   if(session::is_set('sambaAccount') && session::is_set('edit')){
     del_lock ($ui->dn);
