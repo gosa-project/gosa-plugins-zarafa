@@ -22,7 +22,6 @@ if ($remove_lock){
         if(session::is_set('FAI')){
                 $FAI = session::get('FAI');
                 $FAI->remove_lock();
-                del_lock ($ui->dn);
                 session::un_set ('FAI');
         }
 } else {
@@ -38,7 +37,6 @@ if ($remove_lock){
 
 	/* Reset requested? */
 	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		del_lock ($ui->dn);
 		session::un_set ('FAI');
 	}
 	/* Page header*/

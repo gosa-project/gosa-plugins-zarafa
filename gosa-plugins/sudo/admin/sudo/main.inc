@@ -24,7 +24,6 @@ if ($remove_lock){
   if(session::is_set('sudoManagement')){
     $sudoManagement = session::get('sudoManagement');
     $sudoManagement->remove_lock();
-    del_lock ($ui->dn);
     session::un_set ('sudoManagement');
   }
 } else {
@@ -50,7 +49,6 @@ if ($remove_lock){
 
   /* Reset requested? */
   if (isset($_GET['reset']) && $_GET['reset'] == 1){
-    del_lock ($ui->dn);
     session::un_set ('sudoManagement');
   }
 

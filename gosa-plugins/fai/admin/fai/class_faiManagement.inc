@@ -1225,7 +1225,7 @@ class faiManagement extends plugin
 
 	function remove_lock()
 	{
-		if (isset($this->dn)){
+		if (isset($this->dn) && !empty($this->dn)){
 			del_lock ($this->dn);
 		}
     if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
