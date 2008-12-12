@@ -33,7 +33,7 @@ if ( $cleanup ){
 }else{
 
 	/* Create mailqueue object on demand */
-	if (!session::is_set('mailqueue') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('mailqueue')){
 		$ui = get_userinfo();
 		$mailqueue= new mailqueue ($config);
 		$mailqueue->set_acl_category("mailqueue");

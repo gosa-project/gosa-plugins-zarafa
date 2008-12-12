@@ -32,7 +32,7 @@ if ( $cleanup ){
   session::un_set('dak_plug');
 }else{
 
-	if (!session::is_set('dak_plug') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('dak_plug')){
 		session::set('dak_plug',new dakplug($config));
 	}
 	$dak_plug = session::get('dak_plug');

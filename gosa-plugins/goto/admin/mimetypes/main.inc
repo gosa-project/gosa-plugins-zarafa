@@ -34,7 +34,7 @@ if ( $cleanup ){
 }else{
 
   /* Create MimeTypeManagement object on demand */
-  if (!session::is_set('MimeTypeManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+  if (!session::is_set('MimeTypeManagement')){
     session::set('MimeTypeManagement',new mimetypeManagement ($config, $ui));
   }
 

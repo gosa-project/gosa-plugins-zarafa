@@ -16,7 +16,7 @@ if ( $cleanup ){
 }else{
 
 	/* Create blocklist object on demand */
-	if (!session::is_set('blocklist') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('blocklist')){
 		$blocklist= new blocklist($config, $ui);
 	 	$blocklist->set_acl_category("gofaxlist");
 		session::set('blocklist',$blocklist);

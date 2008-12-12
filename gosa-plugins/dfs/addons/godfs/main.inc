@@ -17,8 +17,7 @@ if ( $cleanup ){
 }else{
 
      # create dfsManagment object
-     if (!session::is_set('dfsManagment') || 
-        (isset($_GET['reset']) && $_GET['reset'] == 1)) {
+     if (!session::is_set('dfsManagment')){ 
        session::set('dfsManagment',new dfsManagment($config, $ui));
      }
      $dfsManagment  = session::get('dfsManagment');

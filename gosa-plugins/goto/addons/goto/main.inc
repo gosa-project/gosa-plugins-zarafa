@@ -37,9 +37,7 @@ if ( $cleanup ){
 
 
 	/* Create gotomasses object on demand */
-	if (!session::is_set('gotomasses') 
-		|| (isset($_GET['reset']) && $_GET['reset'] == 1) 
-		|| isset($_POST['reload_gotomass_data'])){
+	if (!session::is_set('gotomasses') || isset($_POST['reload_gotomass_data'])){
 		$gotomasses= new gotomasses ($config);
 		$gotomasses->set_acl_category("gotomasses");
 

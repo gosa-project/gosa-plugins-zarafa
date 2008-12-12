@@ -7,7 +7,7 @@ if ( $cleanup ){
 }else{
 
 	/* Create faxreport object on demand */
-	if (!session::is_set('faxreport') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('faxreport')){
 		session::set('faxreport',new faxreport ($config, $ui));
 	}
 	$faxreport = session::get('faxreport');

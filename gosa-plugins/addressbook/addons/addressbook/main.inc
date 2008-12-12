@@ -26,7 +26,7 @@ if ( $cleanup ){
 }else{
 
 	/* Create phonelist object on demand */
-	if (!session::is_set('addressbook') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('addressbook')){
 		$addressbook = new addressbook ($config);
 		$addressbook -> set_acl_base($ui->dn);
 		$addressbook -> set_acl_category("addressbook");	

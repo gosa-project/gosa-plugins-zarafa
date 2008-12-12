@@ -8,7 +8,7 @@ if ( $cleanup ){
 }else{
 
 	/* Create fonreport object on demand */
-	if (!session::is_set('fonreport') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('fonreport')){
 		session::set('fonreport',new fonreport ($config, $ui));
 	}
 	$fonreport = session::get('fonreport');

@@ -35,7 +35,7 @@ if ( $cleanup ){
 
 
 	/* Create logview object on demand */
-	if (!session::is_set('log_tabs') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('log_tabs')){
 		session::set('log_tabs',new log_tabs($config, $config->data['TABS']['LOGTABS'],""));
 	}
 	$log_tabs = session::get('log_tabs');

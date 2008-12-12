@@ -37,7 +37,7 @@ if ( $cleanup ){
 }else{
 
   /* Create sudoManagement object on demand */
-  if (!session::is_set('sudoManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+  if (!session::is_set('sudoManagement')){
     session::set('sudoManagement',new sudoManagement ($config, $ui));
   }
   $sudoManagement = session::get('sudoManagement');

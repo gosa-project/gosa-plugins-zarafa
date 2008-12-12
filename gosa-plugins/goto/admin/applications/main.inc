@@ -36,7 +36,7 @@ if ( $cleanup ){
 
 
 	/* Create applicationManagement object on demand */
-	if (!session::is_set('applicationManagement') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('applicationManagement')){
 		session::set('applicationManagement',new applicationManagement ($config, $ui));
 	}
 	$applicationManagement = session::get('applicationManagement');
