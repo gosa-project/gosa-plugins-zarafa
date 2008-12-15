@@ -392,15 +392,17 @@ class mailMethod{
       $acc_string = $this->share_id;
     }
 
-    /* Create account prefix and respect "cyrusUseSlashes"
+    /* Create account prefix and respect "cyrusUseSlashes" 
        Do not replace escaped dots for cyrusUseSlashes.
      */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $prefix = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
+      $prefix     = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
+      $acc_string = preg_replace('/([^\\\\])\./',"\\1/",$acc_string); 
     }
     $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
-
+    $acc_string = preg_replace("/\\\\([\.\/])/","\\1",$acc_string); 
+  
     $domain = $mailpart = "";
     $mail = $this->parent->mail;
     if(preg_match("/\@/",$mail)){
@@ -409,10 +411,22 @@ class mailMethod{
 
     /* Create account_id
      */
-    $from = array("/%CN%/","/%UID%/","/%PREFIX%/","/%UATTRIB%/","/%DOMAIN%/","/%MAILPART%/","/%MAIL%/");
+    $from = array("/%cn%/i","/%uid%/i","/%prefix%/i","/%uattrib%/i","/%domain%/i","/%mailpart%/i","/%mail%/i");
     $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart,$mail);
-
     $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
+
+    /* Check for not replaced pattern.
+     */
+    if(preg_match("/%/",$acc_id)){
+      $notr = preg_replace("/^[^%]*/","",$acc_id);
+      if(!empty($notr)){
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Warning</b>", 
+            sprintf("<b>MAIL: WARNING unknown pattern in account creation string '%s' near '%s'</b>", $acc_id, $notr));
+
+        /* Remove incomprehensible patterns */
+        $acc_id = preg_replace("/%[^%]+%/","",$acc_id);
+      }
+    }
 
     if(preg_match("/\@/",$acc_id)){
       list($mail,$domain) = split("\@",$acc_id);

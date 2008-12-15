@@ -391,7 +391,6 @@ class mailMethodCyrus extends mailMethod{
     $folders= $this->getMailboxList();
     foreach ($folders as $subfolder){
       $folder_id = $this->create_folder_id($subfolder);
-      echo $folder_id."<br>";
 
       /* Remove all acl's for this folder */
       $users= @imap_getacl ($this->imap_handle, $folder_id);
