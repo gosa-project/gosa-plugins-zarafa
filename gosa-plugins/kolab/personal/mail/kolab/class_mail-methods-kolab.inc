@@ -30,8 +30,8 @@ class mailMethodKolab extends mailMethodCyrus
   protected $share_prefix   = 'shared\\.';
 
   /* Account ID creation */
-  protected $user_id    = "__PREFIX____UATTRIB__";  
-  protected $share_id   = "__PREFIX____CN__@__DOMAIN__";
+  protected $user_id    = "%prefix%%uattrib%";  
+  protected $share_id   = "%prefix%%cn%@%domain%";
 
   protected $userObjectClasses = array("kolabInetOrgPerson");
   protected $shareObjectClasses = array("kolabSharedFolder");

@@ -24,17 +24,17 @@ class mailMethod{
       !!Depends on the attributes 'user_prefix'/'share_prefix' and the option 'cyrusUseSlashes'
 
       Examples - based on defaults : 
-        __PREFIX__    => "user." or "user/" (Depending on cyrusUseSlashes=FALSE/TRUE) 
-        __CN__        => "technik"          (The groups cn)
-        __UID__       => "herbert"          (The users uid)
-        __MAIL__      => "herbert@domain.de"(The mail address)
-        __DOMAIN__    => "domain.de"        (The domain part of the specified mail)
-        __MAILPART__  => "herbert"          (The mail address without domain)
-        __UATTRIB__   => "herbert"/"herbert@domains.de"
+        %PREFIX%    => "user." or "user/" (Depending on cyrusUseSlashes=FALSE/TRUE) 
+        %CN%        => "technik"          (The groups cn)
+        %UID%       => "herbert"          (The users uid)
+        %MAIL%      => "herbert@domain.de"(The mail address)
+        %DOMAIN%    => "domain.de"        (The domain part of the specified mail)
+        %MAILPART%  => "herbert"          (The mail address without domain)
+        %UATTRIB%   => "herbert"/"herbert@domains.de"
                                             (Configured in gosa.conf mailAttribute="mail"/"uid")
    */
-  protected $user_id    = "__PREFIX____UATTRIB__";  
-  protected $share_id   = "__PREFIX____UATTRIB__";
+  protected $user_id    = "%PREFIX%%UATTRIB%";  
+  protected $share_id   = "%PREFIX%%UATTRIB%";
 
   /* Create accounts in cyrus style with '/' instead of '.' */
   protected $cyrusUseSlashes= FALSE;
@@ -76,7 +76,7 @@ class mailMethod{
       " "         => "none");
 
   protected $acl_mapping = array();
- 
+
 
   /*! \brief  Constructs the mail class 
       @param  Object  Config  The GOsa configuration object
@@ -101,6 +101,7 @@ class mailMethod{
     }else{
       $this->type = $type;
     }
+
   }
 
   
@@ -135,6 +136,21 @@ class mailMethod{
     /* Create ACL map */
     foreach($this->acl_map as $acl => $name){
       $this->acl_mapping[$acl] = _($name);
+    }
+
+    /* Check if we have an individual user/folder creation syntax 
+     */
+    $tmp = $this->config->get_cfg_value("mailUserCreation");
+    if(!empty($tmp)){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
+          "<b>MAIL:</b> User creation set to");
+      $this->user_id  = $tmp;
+    }
+    $tmp = $this->config->get_cfg_value("mailFolderCreation");
+    if(!empty($tmp)){
+      @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "<i>".$tmp."</i>",
+          "<b>MAIL:</b> Shared folder creation set to");
+      $this->share_id = $tmp;
     }
 
     $this->build_account_id();
@@ -324,10 +340,23 @@ class mailMethod{
 
     /* Create account_id 
      */ 
-    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/","/__MAIL__/");
+    $from = array("/%cn%/i","/%uid%/i","/%prefix%/i","/%uattrib%/i","/%domain%/i","/%mailpart%/i","/%mail%/i");
     $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart,$mail);
- 
     $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
+
+    /* Check for not replaced pattern.
+     */
+    if(preg_match("/%/",$acc_id)){
+      $notr = preg_replace("/^[^%]*/","",$acc_id);
+      if(!empty($notr)){
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,"<b>Warning</b>", 
+            sprintf("<b>MAIL: WARNING unknown pattern in account creation string '%s' near '%s'</b>", $acc_id, $notr));
+
+        /* Remove incomprehensible patterns */
+        $acc_id = preg_replace("/%[^%]+%/","",$acc_id);
+      }
+    }
+
 
     if($this->account_id != $acc_id){
       $this->account_id = $acc_id;
@@ -378,7 +407,7 @@ class mailMethod{
 
     /* Create account_id
      */
-    $from = array("/__CN__/","/__UID__/","/__PREFIX__/","/__UATTRIB__/","/__DOMAIN__/","/__MAILPART__/","/__MAIL__/");
+    $from = array("/%CN%/","/%UID%/","/%PREFIX%/","/%UATTRIB%/","/%DOMAIN%/","/%MAILPART%/","/%MAIL%/");
     $to   = array($this->parent->cn,$this->parent->uid,$prefix,$this->parent->$uattrib, $domain, $mailpart,$mail);
 
     $acc_id = trim(strtolower(preg_replace($from,$to,$acc_string)));
