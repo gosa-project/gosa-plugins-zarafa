@@ -328,10 +328,12 @@ class mailMethod{
      */
     $uattrib = $this->uattrib;
     if($this->cyrusUseSlashes){
-      $prefix = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
+      $prefix     = preg_replace('/([^\\\\])\./',"\\1/",$prefix);
+      $acc_string = preg_replace('/([^\\\\])\./',"\\1/",$acc_string); 
     }
     $prefix = preg_replace("/\\\\([\.\/])/","\\1",$prefix);
-   
+    $acc_string = preg_replace("/\\\\([\.\/])/","\\1",$acc_string); 
+  
     $domain = $mailpart = "";
     $mail = $this->parent->mail;
     if(preg_match("/\@/",$mail)){
