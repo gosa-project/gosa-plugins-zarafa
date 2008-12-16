@@ -454,8 +454,8 @@ class mailMethod{
         $tmp->init();
         return($tmp);
       }else{
-        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL: Invalid mailMethod defined: <b>".$cls.
-            "</b> falling back to <b>".get_class($this)."</b>");
+        @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__, "","<b>MAIL: Invalid mailMethod defined: ".$cls.
+            " falling back to ".get_class($this)."</b>");
 
         /* Print out configuration errors directly, we can't catch them everywhere. 
          */
