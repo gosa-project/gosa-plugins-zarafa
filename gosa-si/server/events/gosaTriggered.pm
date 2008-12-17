@@ -486,6 +486,11 @@ sub set_activated_for_installation {
         my $res = $main::job_db->exec_statement($sql_statement);
     }
 
+    # If a client gets a 'set_activated_for_installation' msg, always deliver a fresh 'new_ldap_config'
+    # just for backup and robustness purposes
+    my $ldap_out_msg = &ClientPackages::new_ldap_config($mac, $session_id);
+    push(@out_msg_l, $ldap_out_msg);
+
 	# create set_activated_for_installation message for delivery
     my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
     if( defined $jobdb_id ) { 
@@ -1017,19 +1022,17 @@ sub trigger_activate_new {
         # Create delivery list
         my @out_msg_l;
 
-      # Set job to done
-      $main::job_db->exec_statement("UPDATE jobs SET status = 'done' WHERE id = $jobdb_id");
+        # Set job to done
+        $main::job_db->exec_statement("UPDATE jobs SET status = 'done' WHERE id = $jobdb_id");
 
-        # Add new_ldap_config message to delivery list
-       	my $ldap_out_msg = &ClientPackages::new_ldap_config($mac, $session_id);
-        push(@out_msg_l, $ldap_out_msg);
+        # create set_activated_for_installation message for delivery
+        my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
+        my $out_msg = &create_xml_string($out_hash);
+        push(@out_msg_l, $out_msg);
 
-      # create set_activated_for_installation message for delivery
-      my $out_hash = &create_xml_hash("set_activated_for_installation", $source, $target);
-      my $out_msg = &create_xml_string($out_hash);
-      push(@out_msg_l, $out_msg);
+        # Return delivery list of messages
+        return @out_msg_l;
 
-      return @out_msg_l;
     }  else {
       &main::daemon_log("$session_id WARNING: Activating system with mac address '$mac' failed! Re-queuing job.", 4);
       $main::job_db->exec_statement("UPDATE ".$main::job_queue_tn." SET status = 'waiting' WHERE id = $jobdb_id");
