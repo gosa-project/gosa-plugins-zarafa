@@ -476,6 +476,7 @@ sub set_activated_for_installation {
     my $header = @{$msg_hash->{header}}[0];
     my $source = @{$msg_hash->{source}}[0];
     my $target = @{$msg_hash->{target}}[0];
+	my $mac= (defined($msg_hash->{'macaddress'}))?@{$msg_hash->{'macaddress'}}[0]:undef;
 	my @out_msg_l;
 
 	# update status of job 
