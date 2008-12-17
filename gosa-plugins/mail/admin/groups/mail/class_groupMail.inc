@@ -255,8 +255,6 @@ class mailgroup extends plugin
       new log("view","groups/".get_class($this),$this->dn);
     }
 
-    $this->get_member();
- 
     /****************
       Account status
      ****************/
@@ -720,6 +718,12 @@ class mailgroup extends plugin
     $member = $this->get_member();
     $new_folder_acls = array("anyone" => $this->folder_acls['__anyone__']);
     foreach($member['mail'] as $uid => $mail){
+
+      /* Do not save overridden acls */
+      if(isset($this->folder_acls[$mail])){
+        continue;
+      }
+
       $this->acl[] = $mail." ".$this->folder_acls['__member__'];
       $new_folder_acls[$mail]=$this->folder_acls['__member__'];
     }
@@ -730,7 +734,7 @@ class mailgroup extends plugin
     }
     $this->folder_acls = $new_folder_acls;
     $this->acl = array_unique($this->acl);
-      
+     
     /* Call parents save to prepare $this->attrs */
     plugin::save();
 
