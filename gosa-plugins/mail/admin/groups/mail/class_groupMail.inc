@@ -172,10 +172,12 @@ class mailgroup extends plugin
      */
     if(count($this->folder_acls) > 2){
       $acl_usage = array();
-      $most_acl = "";
+      $most_acl = $this->folder_acls['__member__'];
       $most_cnt = 0;
       $member = $this->get_member();
       foreach($this->folder_acls as $user => $acl){
+        if(preg_match("/^__/",$user)) continue;
+        if(!in_array($user,$member['mail'])) continue; 
         if(!isset($acl_usage[$acl])) $acl_usage[$acl]=0;
         $acl_usage[$acl] ++;
         if($acl_usage[$acl] > $most_cnt){

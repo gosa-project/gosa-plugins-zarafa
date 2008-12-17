@@ -58,6 +58,15 @@ class mailMethodKolab22 extends mailMethodKolab
       }
     }
 
+    /* Merge given ACL with acl mapping
+       This ensures that no ACL will accidentally overwritten by gosa.
+     */
+    foreach($ldap_acls as $user => $acl){
+      if(!isset($this->acl_mapping[$acl])){
+        $this->acl_mapping[$acl] = $acl;
+      }
+    }
+
     return($ldap_acls);
   }
 
