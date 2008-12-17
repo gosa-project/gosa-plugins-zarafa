@@ -526,6 +526,12 @@ sub import_events {
         while (defined (my $event = readdir ($DIR))) {
             if( $event eq "." || $event eq ".." ) { next; }  
 
+			# Check config file to exclude disabled event plugins (i.e. Opsi)
+			if ($event eq "opsi_com.pm" &&  $main::opsi_enabled ne "true")  { 
+				&main::daemon_log("WARNING: opsi-module is installed but not enabled in config file, please set under section '[OPSI]': 'enabled=true'", 3);	
+				next; 
+			}
+
             # try to import event module
             eval{ require $event; };
             if( $@ ) {
