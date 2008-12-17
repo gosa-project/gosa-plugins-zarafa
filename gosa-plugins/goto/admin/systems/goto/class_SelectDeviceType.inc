@@ -36,7 +36,10 @@ class SelectDeviceType extends plugin
     asort($tmp, SORT_LOCALE_STRING);
     $this->ObjectGroups= $tmp;
 
-    $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"), "opsi_client"=>_("Windows workstation"));
+    $this->SystemTypes =array("workstation"=>_("Workstation"), "terminal"=>_("Terminal"), "server"=>_("Server"));
+    if(class_available("opsi")){
+    $this->SystemTypes["opsi_client"]= _("Windows workstation");
+    }
   }
 
   function execute()
