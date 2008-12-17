@@ -44,6 +44,7 @@ class mailgroup extends plugin
   var $uid = "";
   var $cn ="";
   var $orig_cn = "";
+  var $show_effective_memeber = FALSE;
 
   function __construct (&$config, $dn= NULL, $ui= NULL)
   {
@@ -254,7 +255,7 @@ class mailgroup extends plugin
       $this->view_logged = TRUE;
       new log("view","groups/".get_class($this),$this->dn);
     }
-
+ 
     /****************
       Account status
      ****************/
@@ -422,6 +423,8 @@ class mailgroup extends plugin
     $smarty->assign("mailEqualsCN", $this->mailMethod->mailEqualsCN());
     $smarty->assign("folder_acls" , $this->postable_acls());
     $smarty->assign("AclTypes" ,    $this->AclTypes);
+    $smarty->assign("Effective",    $this->get_effective_member_acls());
+    $smarty->assign("show_effective_memeber",    $this->show_effective_memeber);
   
     $smarty->assign("quotaEnabled", $this->mailMethod->quotaEnabled());
     if($this->mailMethod->quotaEnabled()){
@@ -571,6 +574,10 @@ class mailgroup extends plugin
       }
     }
     if (isset($_POST['mailedit'])){
+
+      if(isset($_POST['show_effective_memeber'])){
+        $this->show_effective_memeber = !$this->show_effective_memeber;
+      }
 
       $mail = $this->mail;
       $server = $this->gosaMailServer;
@@ -1254,7 +1261,25 @@ class mailgroup extends plugin
     return($ret);
   }
 
-  
+
+  function get_effective_member_acls()
+  {
+    $tmp = array();
+    $member = $this->get_member();
+    foreach($member['mail'] as $uid => $mail){
+
+      /* Do not save overridden acls */
+      if(isset($this->folder_acls[$mail])){
+        continue;
+      }
+
+      
+      $tmp[$mail]  = $this->folder_acls['__member__'];
+    }
+    return($tmp);
+  }
+
+
   function allow_remove()
   {
     $resason = "";

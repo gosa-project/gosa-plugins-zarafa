@@ -158,9 +158,23 @@
 		  		<input type='submit' value='{msgPool type=delButton}' name='remove_acl_user_{$item.post_name}'>
 			{/if}
 {/render}
+			{if $user == "__member__"}
+				{if $show_effective_memeber}
+					<input type='submit' name='show_effective_memeber' value='{t}Hide{/t}'> 
+				{else}
+					<input type='submit' name='show_effective_memeber' value='{t}Show{/t}'> 
+				{/if}
+			{/if}
 		 </td>
 		</tr>
+		{if $user == "__member__" && $show_effective_memeber}
+			{foreach from=$Effective item=i key=k}
+				<tr><td>&nbsp;&nbsp;<i>{$k}</i></td></tr>
+			{/foreach}
+		{/if}
 	{/foreach}
+
+		
 		<tr>
 			<td colspan="1"></td>
 			<td><input type='submit' value='{msgPool type=addButton}' name='add_acl_user'>
