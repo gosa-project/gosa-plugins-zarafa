@@ -292,10 +292,10 @@ class mailMethodCyrus extends mailMethod{
        And prepare replacements 
      */ 
     if(preg_match("/\@/",$this->account_id)){
-      $search = preg_replace("/\@/","*@",$this->account_id);
+      $search = preg_replace("/\@/","/*@",$this->account_id);
       $with_domain = TRUE;
     }else{
-      $search = $this->account_id."*";
+      $search = $this->account_id."/*";
       $with_domain = FALSE;
     }
     $folder = $this->account_id;
@@ -304,7 +304,8 @@ class mailMethodCyrus extends mailMethod{
     }
 
     /* Contact imap server */
-    $list = @imap_listmailbox($this->imap_handle, $cfg["connect"], $search);
+    $list = @imap_listmailbox($this->imap_handle, $cfg["connect"], $this->account_id);
+    $list = array_merge($list,@imap_listmailbox($this->imap_handle, $cfg["connect"], $search));
 
     /* Create list of returned folder names */
     if (is_array($list)){
