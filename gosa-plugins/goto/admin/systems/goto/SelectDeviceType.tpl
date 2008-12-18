@@ -21,7 +21,8 @@
     <tr>
      <td> 
       {t}System type{/t}&nbsp;
-	  <select name="SystemType" title="{t}System type{/t}" style="width:120px;">
+	  <select name="SystemType" title="{t}System type{/t}" style="width:120px;"
+			onChange="document.mainform.submit();">
        {html_options values=$SystemTypeKeys output=$SystemTypes selected=$SystemType}
       </select>
      </td>
@@ -34,7 +35,10 @@
      <td> 
       {t}Choose an object group as template{/t}&nbsp;
 	  <select name="ObjectGroup" title="{t}Object group{/t}" style="width:120px;">
-       {html_options values=$ObjectGroupKeys output=$ObjectGroups selected=$ObjectGroup}
+		{if $dns_cnt == 1}
+		<option value='none'>{t}none{/t}</option>	
+		{/if}
+       {html_options options=$ogroups selected=$ObjectGroup}
       </select>
      </td>
     </tr>
