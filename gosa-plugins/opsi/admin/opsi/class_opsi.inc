@@ -141,6 +141,23 @@ class opsi extends gosaSupportDaemon
     }
   }
 
+  
+  public function job_opsi_activate_client($id,$mac)
+  {
+    $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+    $o_queue = new gosaSupportDaemon();
+    if(isset($events['TRIGGERED']['DaemonEvent_activate'])){
+      $evt = $events['TRIGGERED']['DaemonEvent_activate'];
+      $tmp = new $evt['CLASS_NAME']($this->config);
+      $tmp->set_type(TRIGGERED_EVENT);
+      $tmp->add_targets(array($mac));
+      if(!$o_queue->append($tmp)){
+        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+      }
+    }
+  }
+
+
 
   /******************
     SI Communication functions
