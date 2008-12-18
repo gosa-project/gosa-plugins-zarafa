@@ -305,10 +305,16 @@ class mailMethodCyrus extends mailMethod{
 
     /* Contact imap server */
     $list = @imap_listmailbox($this->imap_handle, $cfg["connect"], $this->account_id);
-    $list = array_merge($list,@imap_listmailbox($this->imap_handle, $cfg["connect"], $search));
+    $list2 = @imap_listmailbox($this->imap_handle, $cfg["connect"], $search);
 
     /* Create list of returned folder names */
     if (is_array($list)){
+
+      /* Merge in subfolders */
+      if(is_array($list2)){
+        $list = array_merge($list,$list2);
+      }
+
       foreach ($list as $val){
         $str = trim(preg_replace("/^\{[^\}]*+\}/","",$val));
         if($with_domain){

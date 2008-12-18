@@ -59,7 +59,7 @@ class mailgroup extends plugin
         $this->$attr = $this->attrs[$attr][0];
       }
     }
-    $this->orig_cn = $this->cn;
+    $this->orig_cn = $this->uid = $this->cn;
 
     /* Intialize the used mailMethod
      */
