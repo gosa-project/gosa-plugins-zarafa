@@ -75,8 +75,6 @@ class SelectDeviceType extends plugin
   /* Save data to object */
   function save_object()
   {
-
-    echo "Calleed";
     plugin::save_object();
     foreach($this->attributes as $attr){
       if(isset($_POST[$attr])){

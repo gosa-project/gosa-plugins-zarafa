@@ -30,7 +30,7 @@ class opsiGeneric extends plugin
   private $opsi;            // The opsi handle
   public  $parent = NULL;   // The parent object (in case of samba)
 
-  private $hostId       = ""; // The host Id of the currently edit opsi host  
+  public  $hostId       = ""; // The host Id of the currently edit opsi host  
   public  $mac          = ""; // The hosts mac address
   public  $note         = ""; // A note
   public  $description  = ""; // The client description
