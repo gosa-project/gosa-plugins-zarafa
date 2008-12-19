@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:03+0100\n"
+"POT-Creation-Date: 2008-12-19 08:28+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -24,110 +24,10 @@ msgstr "Terminal Server"
 msgid "Missing parameters!"
 msgstr "Parametr aplikacji"
 
-#: addons/addressbook/address_edit.tpl:7
-msgid "Choose the department to store entry in"
-msgstr "Wybierz departament do przechowania wpisu"
-
-#: addons/addressbook/address_edit.tpl:24
 #: addons/addressbook/address_info.tpl:18
+#: addons/addressbook/address_edit.tpl:24
 msgid "Personal"
 msgstr "Osobiste"
-
-#: addons/addressbook/address_edit.tpl:30
-msgid "Last name"
-msgstr "Nazwisko"
-
-#: addons/addressbook/address_edit.tpl:33
-msgid "First name"
-msgstr "Imię"
-
-#: addons/addressbook/address_edit.tpl:48
-#: addons/addressbook/address_info.tpl:32
-#: addons/addressbook/class_addressbook.inc:832
-msgid "Initials"
-msgstr "Inicjały"
-
-#: addons/addressbook/address_edit.tpl:60
-#: addons/addressbook/address_info.tpl:40
-msgid "Personal title"
-msgstr "Osobisty tytuł"
-
-#: addons/addressbook/address_edit.tpl:74
-#: addons/addressbook/address_info.tpl:53 addons/addressbook/contents.tpl:15
-msgid "Private"
-msgstr "Prywatne"
-
-#: addons/addressbook/address_edit.tpl:80
-#: addons/addressbook/address_edit.tpl:207
-#: addons/addressbook/address_info.tpl:59
-#: addons/addressbook/address_info.tpl:155
-msgid "Address"
-msgstr "Adres"
-
-#: addons/addressbook/address_edit.tpl:94
-#: addons/addressbook/address_edit.tpl:221
-#: addons/addressbook/address_info.tpl:67
-#: addons/addressbook/address_info.tpl:163
-#: addons/addressbook/class_addressbook.inc:689
-#: addons/addressbook/contents.tpl:14
-msgid "Phone"
-msgstr "Telefon"
-
-#: addons/addressbook/address_edit.tpl:106
-#: addons/addressbook/address_info.tpl:75
-#: addons/addressbook/class_addressbook.inc:698
-#: addons/addressbook/contents.tpl:15
-msgid "Mobile"
-msgstr "Komórka"
-
-#: addons/addressbook/address_edit.tpl:118
-#: addons/addressbook/address_info.tpl:83
-#: addons/addressbook/class_addressbook.inc:713
-msgid "Email"
-msgstr "Email"
-
-#: addons/addressbook/address_edit.tpl:134
-#: addons/addressbook/address_info.tpl:99
-msgid "Organizational"
-msgstr "Organizacyjne"
-
-#: addons/addressbook/address_edit.tpl:143
-#: addons/addressbook/address_info.tpl:109
-msgid "Company"
-msgstr "Firma"
-
-#: addons/addressbook/address_edit.tpl:155
-#: addons/addressbook/address_info.tpl:117
-#: addons/addressbook/class_addressbook.inc:827
-msgid "Department"
-msgstr "Departament"
-
-#: addons/addressbook/address_edit.tpl:167
-#: addons/addressbook/address_info.tpl:125
-msgid "City"
-msgstr "Miasto"
-
-#: addons/addressbook/address_edit.tpl:179
-#: addons/addressbook/address_info.tpl:133
-msgid "Postal code"
-msgstr "Kod pocztowy"
-
-#: addons/addressbook/address_edit.tpl:191
-#: addons/addressbook/address_info.tpl:141
-msgid "Country"
-msgstr "Kraj"
-
-#: addons/addressbook/address_edit.tpl:233
-#: addons/addressbook/address_info.tpl:171
-msgid "FAX"
-msgstr "FAX"
-
-#: addons/addressbook/address_edit.tpl:246
-#: addons/addressbook/address_info.tpl:179
-#: addons/addressbook/class_addressbook.inc:701
-#: addons/addressbook/class_addressbook.inc:825
-msgid "Pager"
-msgstr "Pager"
 
 #: addons/addressbook/address_info.tpl:24
 #: addons/addressbook/class_addressbook.inc:631
@@ -137,6 +37,92 @@ msgstr "Pager"
 #: addons/addressbook/contents.tpl:14
 msgid "Name"
 msgstr "Imię"
+
+#: addons/addressbook/address_info.tpl:32
+#: addons/addressbook/class_addressbook.inc:832
+#: addons/addressbook/address_edit.tpl:48
+msgid "Initials"
+msgstr "Inicjały"
+
+#: addons/addressbook/address_info.tpl:40
+#: addons/addressbook/address_edit.tpl:60
+msgid "Personal title"
+msgstr "Osobisty tytuł"
+
+#: addons/addressbook/address_info.tpl:53
+#: addons/addressbook/address_edit.tpl:74 addons/addressbook/contents.tpl:15
+msgid "Private"
+msgstr "Prywatne"
+
+#: addons/addressbook/address_info.tpl:59
+#: addons/addressbook/address_info.tpl:155
+#: addons/addressbook/address_edit.tpl:80
+#: addons/addressbook/address_edit.tpl:207
+msgid "Address"
+msgstr "Adres"
+
+#: addons/addressbook/address_info.tpl:67
+#: addons/addressbook/address_info.tpl:163
+#: addons/addressbook/class_addressbook.inc:689
+#: addons/addressbook/address_edit.tpl:94
+#: addons/addressbook/address_edit.tpl:221 addons/addressbook/contents.tpl:14
+msgid "Phone"
+msgstr "Telefon"
+
+#: addons/addressbook/address_info.tpl:75
+#: addons/addressbook/class_addressbook.inc:698
+#: addons/addressbook/address_edit.tpl:106 addons/addressbook/contents.tpl:15
+msgid "Mobile"
+msgstr "Komórka"
+
+#: addons/addressbook/address_info.tpl:83
+#: addons/addressbook/class_addressbook.inc:713
+#: addons/addressbook/address_edit.tpl:118
+msgid "Email"
+msgstr "Email"
+
+#: addons/addressbook/address_info.tpl:99
+#: addons/addressbook/address_edit.tpl:134
+msgid "Organizational"
+msgstr "Organizacyjne"
+
+#: addons/addressbook/address_info.tpl:109
+#: addons/addressbook/address_edit.tpl:143
+msgid "Company"
+msgstr "Firma"
+
+#: addons/addressbook/address_info.tpl:117
+#: addons/addressbook/class_addressbook.inc:827
+#: addons/addressbook/address_edit.tpl:155
+msgid "Department"
+msgstr "Departament"
+
+#: addons/addressbook/address_info.tpl:125
+#: addons/addressbook/address_edit.tpl:167
+msgid "City"
+msgstr "Miasto"
+
+#: addons/addressbook/address_info.tpl:133
+#: addons/addressbook/address_edit.tpl:179
+msgid "Postal code"
+msgstr "Kod pocztowy"
+
+#: addons/addressbook/address_info.tpl:141
+#: addons/addressbook/address_edit.tpl:191
+msgid "Country"
+msgstr "Kraj"
+
+#: addons/addressbook/address_info.tpl:171
+#: addons/addressbook/address_edit.tpl:233
+msgid "FAX"
+msgstr "FAX"
+
+#: addons/addressbook/address_info.tpl:179
+#: addons/addressbook/class_addressbook.inc:701
+#: addons/addressbook/class_addressbook.inc:825
+#: addons/addressbook/address_edit.tpl:246
+msgid "Pager"
+msgstr "Pager"
 
 #: addons/addressbook/remove.tpl:2
 msgid "Warning"
@@ -158,9 +144,20 @@ msgstr ""
 "Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
 "anulować."
 
+#: addons/addressbook/dial.tpl:3
+msgid "Dial connection..."
+msgstr "Połączenie dzwonienia..."
+
+#: addons/addressbook/dial.tpl:10 addons/addressbook/class_addressbook.inc:444
+#: addons/addressbook/class_addressbook.inc:451
+#: addons/addressbook/class_addressbook.inc:455
+#: addons/addressbook/class_addressbook.inc:571
+msgid "Dial"
+msgstr "Dzwonienie"
+
 #: addons/addressbook/class_addressbook.inc:6
 #: addons/addressbook/class_addressbook.inc:808
-#: addons/addressbook/class_addressbook.inc:814 addons/addressbook/main.inc:37
+#: addons/addressbook/class_addressbook.inc:814 addons/addressbook/main.inc:43
 msgid "Addressbook"
 msgstr "Książka adresowa"
 
@@ -196,13 +193,6 @@ msgstr "błąd LDAP:"
 #, fuzzy
 msgid "Permission"
 msgstr "Uprawnienia"
-
-#: addons/addressbook/class_addressbook.inc:444
-#: addons/addressbook/class_addressbook.inc:451
-#: addons/addressbook/class_addressbook.inc:455
-#: addons/addressbook/class_addressbook.inc:571 addons/addressbook/dial.tpl:10
-msgid "Dial"
-msgstr "Dzwonienie"
 
 #: addons/addressbook/class_addressbook.inc:461
 #, php-format
@@ -342,6 +332,18 @@ msgstr "Adres domowy"
 msgid "Common name"
 msgstr "Nazwa potoczna"
 
+#: addons/addressbook/address_edit.tpl:7
+msgid "Choose the department to store entry in"
+msgstr "Wybierz departament do przechowania wpisu"
+
+#: addons/addressbook/address_edit.tpl:30
+msgid "Last name"
+msgstr "Nazwisko"
+
+#: addons/addressbook/address_edit.tpl:33
+msgid "First name"
+msgstr "Imię"
+
 #: addons/addressbook/contents.tpl:15
 msgid "Contact"
 msgstr "Kontakt"
@@ -419,10 +421,6 @@ msgstr "Szukaj dla"
 #: addons/addressbook/contents.tpl:112
 msgid "Search string"
 msgstr "Poszukiwany napis"
-
-#: addons/addressbook/dial.tpl:3
-msgid "Dial connection..."
-msgstr "Połączenie dzwonienia..."
 
 #~ msgid "You're about to delete the entry %s."
 #~ msgstr "Zamierzasz usunąć element %s."

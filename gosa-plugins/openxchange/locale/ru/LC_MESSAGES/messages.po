@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:35+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,49 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid "Open-Xchange Account"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no Postgresql support detected. Or the specified database can't be "
-"reached"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:18
-#, fuzzy
-msgid "Open-Xchange account"
-msgstr "Удалить телефонный аккаунт"
-
-#: personal/connectivity/openxchange/oxchange.tpl:29
-#, fuzzy
-msgid "Remember"
-msgstr "Декабрь"
-
-#: personal/connectivity/openxchange/oxchange.tpl:33
-msgid "Appointment Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:39
-#: personal/connectivity/openxchange/oxchange.tpl:49
-#, fuzzy
-msgid "days"
-msgstr "день"
-
-#: personal/connectivity/openxchange/oxchange.tpl:42
-msgid "Task Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:61
-#, fuzzy
-msgid "User Information"
-msgstr "Информация"
-
-#: personal/connectivity/openxchange/oxchange.tpl:65
-msgid "User Timezone"
-msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
@@ -131,6 +88,49 @@ msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
 msgid "OXTimeZone"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid "Open-Xchange Account"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no Postgresql support detected. Or the specified database can't be "
+"reached"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:18
+#, fuzzy
+msgid "Open-Xchange account"
+msgstr "Удалить телефонный аккаунт"
+
+#: personal/connectivity/openxchange/oxchange.tpl:29
+#, fuzzy
+msgid "Remember"
+msgstr "Декабрь"
+
+#: personal/connectivity/openxchange/oxchange.tpl:33
+msgid "Appointment Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:39
+#: personal/connectivity/openxchange/oxchange.tpl:49
+#, fuzzy
+msgid "days"
+msgstr "день"
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+msgid "Task Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:61
+#, fuzzy
+msgid "User Information"
+msgstr "Информация"
+
+#: personal/connectivity/openxchange/oxchange.tpl:65
+msgid "User Timezone"
 msgstr ""
 
 #, fuzzy

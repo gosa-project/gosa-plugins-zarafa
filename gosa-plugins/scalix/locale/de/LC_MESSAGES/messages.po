@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2008-04-04 09:28+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -77,8 +77,8 @@ msgid "Notify user"
 msgstr "Benachrichtige Benutzer"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 msgid "Scalix email addresses"
 msgstr "Scalix Email-Adressen"
 
@@ -263,12 +263,12 @@ msgstr "Limitiere Mailbox"
 msgid "My account"
 msgstr "Mein Konto"
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Betätigen sie den 'Bearbeiten'-Schalter unten um Informationen in diesem "
 "Dialog zu ändern"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 msgid "Scalix settings"
 msgstr "Scalix-Einstellungen"

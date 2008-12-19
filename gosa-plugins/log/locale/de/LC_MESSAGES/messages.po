@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:33+0100\n"
 "PO-Revision-Date: 2008-04-03 14:22+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -64,6 +64,63 @@ msgstr "GOsa Protokoll-Datenbank"
 #: admin/systems/services/log/gosaLogServer.tpl:12
 msgid "Database user"
 msgstr "Datenbank-Benutzer"
+
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr "Filter"
+
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr "Zeige Rechner"
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "Aktion"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "Zeit-Intervall"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "Suche nach"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Zu suchende Zeichenkette"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "Regelsatz"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "Suchen"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "Datum"
+
+#: addons/logview/gosa_log_contents.tpl:85
+msgid "Object type"
+msgstr "Objekttyp"
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "Objekt"
+
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "Nachricht"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "Die Suche verlief ergebnislos..."
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
 #: addons/logview/class_gosa_logview.inc:6
@@ -155,78 +212,9 @@ msgstr "Protokollanzeige"
 msgid "Log view addon"
 msgstr "Protokollanzeige-Erweiterung"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Filter"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Zeige Rechner"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Aktion"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Zeit-Intervall"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Suche nach"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Zu suchende Zeichenkette"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Regelsatz"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Suchen"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Datum"
-
-#: addons/logview/gosa_log_contents.tpl:85
-msgid "Object type"
-msgstr "Objekttyp"
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Objekt"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Nachricht"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "Die Suche verlief ergebnislos..."
-
-#: addons/logview/main.inc:34
+#: addons/logview/main.inc:49
 msgid "System log view"
 msgstr "Systemprotokolle"
-
-#: addons/logview/contents.tpl:20
-msgid "Log level"
-msgstr "Priorität"
-
-#: addons/logview/contents.tpl:82
-msgid "Level"
-msgstr "Level"
-
-#: addons/logview/contents.tpl:83
-msgid "Hostname"
-msgstr "Hostname"
 
 #: addons/logview/class_gosa_logview.inc:201
 msgid "You have insufficient permissions to view syslog entries."
@@ -240,3 +228,15 @@ msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
 msgstr ""
 "Fehlende Protokollierungstabelle (%s.%s). Aktualisieren Sie Ihr GOsa "
 "Protokolldatenbank-Schema."
+
+#: addons/logview/contents.tpl:20
+msgid "Log level"
+msgstr "Priorität"
+
+#: addons/logview/contents.tpl:82
+msgid "Level"
+msgstr "Level"
+
+#: addons/logview/contents.tpl:83
+msgid "Hostname"
+msgstr "Hostname"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -73,8 +73,8 @@ msgid "Notify user"
 msgstr "Notificar al usuario"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 msgid "Scalix email addresses"
 msgstr "Direcciones de correo electrónico de Scalix"
 
@@ -225,7 +225,7 @@ msgstr "Servicio LDAP"
 #: personal/scalix/class_scalixAccount.inc:496
 #: personal/scalix/class_scalixAccount.inc:505
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: personal/scalix/class_scalixAccount.inc:257
 #: personal/scalix/class_scalixAccount.inc:496
@@ -271,12 +271,12 @@ msgstr "Tamaño máximo del buzón de correo electrónico"
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Pulse en el botón - Editar - para cambiar la información en esta ventana"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 msgid "Scalix settings"
 msgstr "Configuración de Scalix"
 

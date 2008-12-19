@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -77,8 +77,8 @@ msgid "Notify user"
 msgstr "Zlicz użytkowników"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Adres email"
@@ -273,11 +273,11 @@ msgstr "Max rozmiar skrzynki"
 msgid "My account"
 msgstr "Moje konto "
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 #, fuzzy
 msgid "Scalix settings"
 msgstr "Ustawienia pocztowe"

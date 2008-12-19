@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:36+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,10 +13,6 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
-
-#: personal/connectivity/phpgw/phpgw.tpl:5
-msgid "PHPGroupware account"
-msgstr "Konto PHPGroupware"
 
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -48,6 +44,10 @@ msgstr "Konto połączeń"
 #: personal/connectivity/phpgw/class_phpgwAccount.inc:165
 msgid "My account"
 msgstr "Moje konto "
+
+#: personal/connectivity/phpgw/phpgw.tpl:5
+msgid "PHPGroupware account"
+msgstr "Konto PHPGroupware"
 
 #~ msgid "Removing of user/PHPgw account with dn '%s' failed."
 #~ msgstr "Usuwanie konta PHPgw z dn '%s' nieudane."

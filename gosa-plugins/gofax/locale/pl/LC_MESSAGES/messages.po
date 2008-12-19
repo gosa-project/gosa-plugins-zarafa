@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:30+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -14,46 +14,479 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:30
-msgid "FAX database"
-msgstr "Baza FAX"
+#: html/getfax.php:56
+msgid "Could not connect to database server!"
+msgstr "Nie można połączyć się z serwerem baz danych!"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:59
-msgid "FAX database configuration"
-msgstr "Konfiguracja bazy FAX"
+#: html/getfax.php:58
+msgid "Could not select database!"
+msgstr "Nie można wybrać bazy danych!"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:68
+#: html/getfax.php:63 html/getfax.php:71
+msgid "Database query failed!"
+msgstr "Zapytanie do bazy danych nieudane"
+
+#: gofax/faxreports/detail.tpl:5
+msgid "FAX preview - please wait"
+msgstr "Podgląd FAXu - proszę poczekać"
+
+#: gofax/faxreports/detail.tpl:8
+msgid "Click on fax to download"
+msgstr "Kliknij na fax aby pobrać"
+
+#: gofax/faxreports/detail.tpl:17
+msgid "FAX ID"
+msgstr "FAX ID"
+
 #: gofax/faxreports/detail.tpl:21 gofax/faxreports/contents.tpl:30
+#: admin/systems/services/gofax/class_goFaxServer.inc:68
 msgid "User"
 msgstr "Użytkownik"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:71
-#: admin/systems/services/gofax/class_goFaxServer.inc:98
-#: admin/systems/services/gofax/goFaxServer.tpl:12
-msgid "Password"
-msgstr "Hasło"
+#: gofax/faxreports/detail.tpl:25
+msgid "Date / Time"
+msgstr "Data/Czas"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:88
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
+#: gofax/faxreports/detail.tpl:29 gofax/faxreports/class_faxreport.inc:503
+msgid "Sender MSN"
+msgstr "MSN nadawcy"
+
+#: gofax/faxreports/detail.tpl:33 gofax/faxreports/class_faxreport.inc:502
+msgid "Sender ID"
+msgstr "ID nadawcy"
+
+#: gofax/faxreports/detail.tpl:37 gofax/faxreports/class_faxreport.inc:505
+msgid "Receiver MSN"
+msgstr "MSN odbiorcy"
+
+#: gofax/faxreports/detail.tpl:41 gofax/faxreports/class_faxreport.inc:504
+msgid "Receiver ID"
+msgstr "ID odbiorcy"
+
+#: gofax/faxreports/detail.tpl:45 gofax/faxreports/contents.tpl:32
+#: gofax/faxreports/class_faxreport.inc:501
+msgid "Status"
+msgstr "Status"
+
+#: gofax/faxreports/detail.tpl:49
+msgid "Status message"
+msgstr "Informacja o statusie"
+
+#: gofax/faxreports/detail.tpl:53 gofax/faxreports/class_faxreport.inc:508
+msgid "Transfer time"
+msgstr "Czas transferu"
+
+#: gofax/faxreports/detail.tpl:57 gofax/faxreports/contents.tpl:35
+msgid "# pages"
+msgstr "# stron"
+
+#: gofax/faxreports/main.inc:19
+msgid "FAX reports"
+msgstr "Raporty FAX"
+
+#: gofax/faxreports/contents.tpl:2
+msgid "Filter"
+msgstr "Filtr"
+
+#: gofax/faxreports/contents.tpl:6
+msgid "Search for"
+msgstr "Szukaj dla"
+
+#: gofax/faxreports/contents.tpl:7
+msgid "Enter user name to search for"
+msgstr "Wprowadź poszukiwaną nazwę użytkownika"
+
+#: gofax/faxreports/contents.tpl:8 gofax/faxreports/contents.tpl:16
+msgid "in"
+msgstr "w"
+
+#: gofax/faxreports/contents.tpl:9
+msgid "Select subtree to base search on"
+msgstr "Wybierz poddrzewo od którego zacząć szukanie"
+
+#: gofax/faxreports/contents.tpl:12
+msgid "during"
+msgstr "podczas"
+
+#: gofax/faxreports/contents.tpl:21
+msgid "Search"
+msgstr "Szukaj"
+
+#: gofax/faxreports/contents.tpl:31 gofax/faxreports/class_faxreport.inc:500
+msgid "Date"
+msgstr "Data"
+
+#: gofax/faxreports/contents.tpl:33
+msgid "Sender"
+msgstr "Nadawca"
+
+#: gofax/faxreports/contents.tpl:34
+msgid "Receiver"
+msgstr "Odbiorca"
+
+#: gofax/faxreports/contents.tpl:50
+msgid "Search returned no results..."
+msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
+
+#: gofax/faxreports/class_faxreport.inc:6
+msgid "FAX Reports"
+msgstr "Raporty FAX"
+
+#: gofax/faxreports/class_faxreport.inc:7
+#: gofax/blocklists/class_blocklistManagement.inc:6
+#: gofax/blocklists/class_blocklistGeneric.inc:10
+#: gofax/faxaccount/class_gofaxAccount.inc:7
+msgid "This does something"
+msgstr "To robi coś"
+
+#: gofax/faxreports/class_faxreport.inc:116
+#: gofax/faxreports/class_faxreport.inc:126
+#: gofax/faxreports/class_faxreport.inc:130
+#: gofax/faxreports/class_faxreport.inc:135
+#: gofax/faxreports/class_faxreport.inc:158
+#: gofax/faxreports/class_faxreport.inc:304
+#: gofax/blocklists/class_blocklistGeneric.inc:132
+#: gofax/faxaccount/class_gofaxAccount.inc:242
+msgid "Error"
+msgstr "Błąd"
+
+#: gofax/faxreports/class_faxreport.inc:116
+msgid "No fax server found!"
+msgstr ""
+
+#: gofax/faxreports/class_faxreport.inc:119
+#: gofax/faxreports/class_faxreport.inc:288
 #, fuzzy
-msgid "Fax database"
-msgstr "Baza FAX"
+msgid "Configuration error"
+msgstr "Plik konfiguracyjny"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:89
-msgid "Services"
-msgstr "Usługi"
+#: gofax/faxreports/class_faxreport.inc:119
+#: gofax/faxreports/class_faxreport.inc:288
+#, fuzzy, php-format
+msgid "Missing %s PHP extension!"
+msgstr "Rozszerzenie inwentarza"
 
-#: admin/systems/services/gofax/class_goFaxServer.inc:97
-msgid "Login name"
-msgstr "Nazwa login"
+#: gofax/faxreports/class_faxreport.inc:126
+#, fuzzy, php-format
+msgid "Cannot connect to %s database!"
+msgstr "Nie można połączyć się z bazą fax, nie można pokazać żadnych raportów!"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:1
-msgid "FAX database information"
-msgstr "Informacje bazy FAX"
+#: gofax/faxreports/class_faxreport.inc:130
+#, fuzzy, php-format
+msgid "Cannot select %s database!"
+msgstr "Nie można wybrać bazy danych!"
 
-#: admin/systems/services/gofax/goFaxServer.tpl:4
-msgid "FAX DB user"
-msgstr "Użytkownik bazy FAX"
+#: gofax/faxreports/class_faxreport.inc:135
+#: gofax/faxreports/class_faxreport.inc:158
+#: gofax/faxreports/class_faxreport.inc:304
+#, fuzzy, php-format
+msgid "Cannot query %s database!"
+msgstr "Nie można wybrać bazy danych!"
+
+#: gofax/faxreports/class_faxreport.inc:167
+#: gofax/faxreports/class_faxreport.inc:177
+#: gofax/blocklists/class_blocklistManagement.inc:269
+#: gofax/blocklists/class_blocklistManagement.inc:326
+#, fuzzy
+msgid "Permission error"
+msgstr "Uprawnienia"
+
+#: gofax/faxreports/class_faxreport.inc:167
+#: gofax/faxreports/class_faxreport.inc:177
+#, fuzzy
+msgid "You have no permission to view this fax id!"
+msgstr "Brak uprawnień do usunięcia tej bloklisty."
+
+#: gofax/faxreports/class_faxreport.inc:208
+#: gofax/faxreports/class_faxreport.inc:329
+msgid "Y-M-D"
+msgstr "R-M-D"
+
+#: gofax/faxreports/class_faxreport.inc:323
+#, fuzzy
+msgid "Insufficient permissions to view this attribute"
+msgstr "Brak uprawnień do zmian atrybutu '%s' w goFonMacro."
+
+#: gofax/faxreports/class_faxreport.inc:323
+#, fuzzy
+msgid "Insufficient permissions"
+msgstr "Uprawnienia pliku"
+
+#: gofax/faxreports/class_faxreport.inc:487
+#: gofax/faxreports/class_faxreport.inc:488
+msgid "Fax report"
+msgstr "Raport FAX"
+
+#: gofax/faxreports/class_faxreport.inc:488
+#, fuzzy
+msgid "All entries are readonly"
+msgstr "Wszystkie pola są zapisywalne"
+
+#: gofax/faxreports/class_faxreport.inc:493
+#, fuzzy
+msgid "Fax reports"
+msgstr "Raport FAX"
+
+#: gofax/faxreports/class_faxreport.inc:498
+msgid "Detailed view"
+msgstr "Widok szczegółowy"
+
+#: gofax/faxreports/class_faxreport.inc:499
+#, fuzzy
+msgid "Fax ID"
+msgstr "FAX ID"
+
+#: gofax/faxreports/class_faxreport.inc:500
+#, fuzzy
+msgid "Time"
+msgstr "Mime"
+
+#: gofax/faxreports/class_faxreport.inc:506
+#, fuzzy
+msgid "Number of pages"
+msgstr "Nazwa departamentu"
+
+#: gofax/faxreports/class_faxreport.inc:507
+#, fuzzy
+msgid "Status Message"
+msgstr "Informacja o statusie"
+
+#: gofax/blocklists/remove.tpl:2
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: gofax/blocklists/remove.tpl:6
+msgid ""
+"Please double check if your really want to do this since there is no way for "
+"GOsa to get your data back."
+msgstr ""
+"Proszę upewnić się, że faktycznie chcesz wykonać tą operację. Nie ma "
+"możliwości odwrócenia tego procesu."
+
+#: gofax/blocklists/remove.tpl:10
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
+"anulować."
+
+#: gofax/blocklists/generic.tpl:1 gofax/faxaccount/generic.tpl:6
+#: gofax/faxaccount/paste_generic.tpl:4
+msgid "Generic"
+msgstr "Ogólne"
+
+#: gofax/blocklists/generic.tpl:8 gofax/blocklists/paste_generic.tpl:3
+msgid "List name"
+msgstr "Nazwa listy"
+
+#: gofax/blocklists/generic.tpl:12 gofax/blocklists/paste_generic.tpl:5
+msgid "Name of blocklist"
+msgstr "Nazwa bloklisty"
+
+#: gofax/blocklists/generic.tpl:17
+#: gofax/blocklists/class_divListBlocklists.inc:86
+#: gofax/blocklists/class_blocklistGeneric.inc:387
+msgid "Base"
+msgstr "Kontener"
+
+#: gofax/blocklists/generic.tpl:20
+msgid "Choose subtree to place group in"
+msgstr "Wybierz poddrzewo do umieszczenia grupy"
+
+#: gofax/blocklists/generic.tpl:26
+msgid "Select a base"
+msgstr "Wybierz bazę"
+
+#: gofax/blocklists/generic.tpl:40
+msgid "Type"
+msgstr "Typ"
+
+#: gofax/blocklists/generic.tpl:43
+msgid "Select wether to filter incoming or outgoing calls"
+msgstr "Wybierz, czy filtrować nadchodzące czy przychodzące rozmowy"
+
+#: gofax/blocklists/generic.tpl:51
+#: gofax/blocklists/class_blocklistGeneric.inc:386
+msgid "Description"
+msgstr "Opis"
+
+#: gofax/blocklists/generic.tpl:54
+msgid "Descriptive text for this blocklist"
+msgstr "Opis tej bloklisty"
+
+#: gofax/blocklists/generic.tpl:68
+msgid "Blocked numbers"
+msgstr "Blokowane numery"
+
+#: gofax/blocklists/generic.tpl:90
+msgid "Information"
+msgstr "Informacja"
+
+#: gofax/blocklists/generic.tpl:92
+msgid "Numbers can also contain wild cards."
+msgstr "Numery mogą również zawierać maski"
+
+#: gofax/blocklists/class_divListBlocklists.inc:31
+#: gofax/blocklists/class_divListBlocklists.inc:32
+msgid "List of blocklists"
+msgstr "Lista bloklist"
+
+#: gofax/blocklists/class_divListBlocklists.inc:50
+#, fuzzy
+msgid "Select all"
+msgstr "Wybierz"
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+#: gofax/blocklists/class_blocklistGeneric.inc:219
+#: gofax/blocklists/class_blocklistGeneric.inc:222
+#: gofax/blocklists/class_blocklistGeneric.inc:229
+#: gofax/blocklists/class_blocklistGeneric.inc:385
+msgid "Name"
+msgstr "Imię"
+
+#: gofax/blocklists/class_divListBlocklists.inc:56
+msgid "Department"
+msgstr "Departament"
+
+#: gofax/blocklists/class_divListBlocklists.inc:57
+#: gofax/blocklists/class_divListBlocklists.inc:91
+msgid "Actions"
+msgstr "Akcje"
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+#: gofax/faxaccount/class_gofaxAccount.inc:881
+msgid "Send blocklist"
+msgstr "Bloklista wysyłania"
+
+#: gofax/blocklists/class_divListBlocklists.inc:60
+msgid "Show send blocklists"
+msgstr "Pokaż bloklisty wysyłania"
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+#: gofax/faxaccount/class_gofaxAccount.inc:880
+msgid "Receive blocklist"
+msgstr "Bloklista otrzymywania"
+
+#: gofax/blocklists/class_divListBlocklists.inc:61
+msgid "Show receive blocklists"
+msgstr "Pokaż bloklisty otrzymywania"
+
+#: gofax/blocklists/class_divListBlocklists.inc:67
+msgid "Regular expression for matching list names"
+msgstr "Wyrażenie regularne do dopasowania nazw list"
+
+#: gofax/blocklists/class_divListBlocklists.inc:88
+msgid "Submit department"
+msgstr "Zatwierdź departament"
+
+#: gofax/blocklists/class_divListBlocklists.inc:88
+msgid "Submit"
+msgstr "Wyślij"
+
+#: gofax/blocklists/class_divListBlocklists.inc:96
+msgid "Create"
+msgstr "Utwórz"
+
+#: gofax/blocklists/class_divListBlocklists.inc:98
+#: gofax/blocklists/class_blocklistGeneric.inc:388
+#, fuzzy
+msgid "Blocklist"
+msgstr "Bloklisty"
+
+#: gofax/blocklists/class_divListBlocklists.inc:104
+msgid "Remove"
+msgstr "Usuń"
+
+#: gofax/blocklists/class_divListBlocklists.inc:151
+msgid "edit"
+msgstr "edytuj"
+
+#: gofax/blocklists/class_divListBlocklists.inc:151
+msgid "Edit user"
+msgstr "Edytuj użytkownika"
+
+#: gofax/blocklists/class_divListBlocklists.inc:158
+msgid "delete"
+msgstr "Usuń"
+
+#: gofax/blocklists/class_divListBlocklists.inc:158
+msgid "Delete user"
+msgstr "Usuń użytkownika"
+
+#: gofax/blocklists/class_divListBlocklists.inc:195
+#: gofax/blocklists/class_divListBlocklists.inc:196
+#, fuzzy, php-format
+msgid "Number of listed '%s'"
+msgstr "Nazwa bloklisty"
+
+#: gofax/blocklists/class_divListBlocklists.inc:195
+#, fuzzy
+msgid "blocklists"
+msgstr "Bloklisty"
+
+#: gofax/blocklists/class_divListBlocklists.inc:196
+#, fuzzy
+msgid "departments"
+msgstr "Departament"
+
+#: gofax/blocklists/class_blocklistManagement.inc:5
+#, fuzzy
+msgid "FAX blocklists"
+msgstr "Bloklisty FAX"
+
+#: gofax/blocklists/class_blocklistManagement.inc:230
+#, fuzzy
+msgid "Permission"
+msgstr "Uprawnienia"
+
+#: gofax/blocklists/class_blocklistManagement.inc:246
+#: gofax/blocklists/class_blocklistManagement.inc:307
+#, fuzzy
+msgid "blocklist"
+msgstr "Bloklisty"
+
+#: gofax/blocklists/main.inc:35 gofax/blocklists/main.inc:37
+msgid "Blocklist management"
+msgstr "Zarządzanie bloklistą"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:9
+#: gofax/blocklists/class_blocklistGeneric.inc:376
+#: gofax/blocklists/class_blocklistGeneric.inc:381
+#: gofax/blocklists/class_blocklistGeneric.inc:382
+#, fuzzy
+msgid "Fax blocklists"
+msgstr "Bloklisty FAX"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:132
+#: gofax/faxaccount/class_gofaxAccount.inc:242
+#, fuzzy
+msgid "Phone number"
+msgstr "Blokowane numery"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:164
+msgid "send"
+msgstr "wysyłanie"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:164
+msgid "receive"
+msgstr "odbieranie"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:205
+#: gofax/blocklists/class_blocklistGeneric.inc:286
+#: gofax/faxaccount/class_gofaxAccount.inc:659
+#: gofax/faxaccount/class_gofaxAccount.inc:788
+#, fuzzy
+msgid "LDAP error"
+msgstr "błąd LDAP:"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:375
+#: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
+#: gofax/faxaccount/class_gofaxAccount.inc:863
+msgid "Fax"
+msgstr "Fax"
+
+#: gofax/blocklists/class_blocklistGeneric.inc:389
+msgid "Blocklist type"
+msgstr "Typ bloklisty"
 
 #: gofax/faxaccount/locals.tpl:6
 msgid "Select numbers to add"
@@ -86,17 +519,6 @@ msgstr "Wyświetl numery użytkownika"
 #: gofax/faxaccount/locals.tpl:50
 msgid "User name of which numbers are shown"
 msgstr "Nazwa użytkownika którego numery są pokazane"
-
-#: gofax/faxaccount/generic.tpl:6 gofax/faxaccount/paste_generic.tpl:4
-#: gofax/blocklists/generic.tpl:1
-msgid "Generic"
-msgstr "Ogólne"
-
-#: gofax/faxaccount/generic.tpl:10 gofax/faxaccount/paste_generic.tpl:8
-#: gofax/faxaccount/class_gofaxAccount.inc:863
-#: gofax/blocklists/class_blocklistGeneric.inc:375
-msgid "Fax"
-msgstr "Fax"
 
 #: gofax/faxaccount/generic.tpl:13
 msgid "Multiple edit"
@@ -166,41 +588,22 @@ msgstr "Edytuj"
 msgid "Blocklists for outgoing fax"
 msgstr "Bloklisty dla wychodzących faxów"
 
-#: gofax/faxaccount/lists.tpl:5
-msgid "Blocked numbers/lists"
-msgstr "Zablokowane numery/listy"
-
-#: gofax/faxaccount/lists.tpl:17
-msgid "List of predefined blocklists"
-msgstr "Lista predefiniowanych bloklist"
-
-#: gofax/faxaccount/lists.tpl:25
-msgid "Add the list to the blocklists"
-msgstr "Dodaj listę do bloklisty"
-
 #: gofax/faxaccount/paste_generic.tpl:18
 #, fuzzy
 msgid "Alternate fax numbers will not be copied"
 msgstr "Alternatywne numery faxu"
 
-#: gofax/faxaccount/main.inc:100
+#: gofax/faxaccount/main.inc:106
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr "Kliknij przycisk 'Edytuj' poniżej, aby zmienić informacje w tym oknie"
 
-#: gofax/faxaccount/main.inc:109
+#: gofax/faxaccount/main.inc:115
 msgid "FAX settings"
 msgstr "Ustawienia FAX"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:6
 msgid "FAX"
 msgstr "FAX"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:7
-#: gofax/faxreports/class_faxreport.inc:7
-#: gofax/blocklists/class_blocklistGeneric.inc:10
-#: gofax/blocklists/class_blocklistManagement.inc:6
-msgid "This does something"
-msgstr "To robi coś"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:165
 #: gofax/faxaccount/class_gofaxAccount.inc:175
@@ -216,35 +619,10 @@ msgstr "Usuń konto fax"
 msgid "Create fax account"
 msgstr "Utwórz konto fax"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:242
-#: gofax/faxreports/class_faxreport.inc:116
-#: gofax/faxreports/class_faxreport.inc:126
-#: gofax/faxreports/class_faxreport.inc:130
-#: gofax/faxreports/class_faxreport.inc:135
-#: gofax/faxreports/class_faxreport.inc:158
-#: gofax/faxreports/class_faxreport.inc:304
-#: gofax/blocklists/class_blocklistGeneric.inc:132
-msgid "Error"
-msgstr "Błąd"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:242
-#: gofax/blocklists/class_blocklistGeneric.inc:132
-#, fuzzy
-msgid "Phone number"
-msgstr "Blokowane numery"
-
 #: gofax/faxaccount/class_gofaxAccount.inc:453
 #: gofax/faxaccount/class_gofaxAccount.inc:535
 msgid "back"
 msgstr "wróć"
-
-#: gofax/faxaccount/class_gofaxAccount.inc:659
-#: gofax/faxaccount/class_gofaxAccount.inc:788
-#: gofax/blocklists/class_blocklistGeneric.inc:205
-#: gofax/blocklists/class_blocklistGeneric.inc:286
-#, fuzzy
-msgid "LDAP error"
-msgstr "błąd LDAP:"
 
 #: gofax/faxaccount/class_gofaxAccount.inc:675
 #: gofax/faxaccount/class_gofaxAccount.inc:679
@@ -282,431 +660,53 @@ msgstr "Alternatywne numery faxu"
 msgid "Enable/Disable fax"
 msgstr "Włącz/Wyłącz fax"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:880
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Receive blocklist"
-msgstr "Bloklista otrzymywania"
+#: gofax/faxaccount/lists.tpl:5
+msgid "Blocked numbers/lists"
+msgstr "Zablokowane numery/listy"
 
-#: gofax/faxaccount/class_gofaxAccount.inc:881
-#: gofax/blocklists/class_divListBlocklists.inc:60
-msgid "Send blocklist"
-msgstr "Bloklista wysyłania"
+#: gofax/faxaccount/lists.tpl:17
+msgid "List of predefined blocklists"
+msgstr "Lista predefiniowanych bloklist"
 
-#: gofax/faxreports/detail.tpl:5
-msgid "FAX preview - please wait"
-msgstr "Podgląd FAXu - proszę poczekać"
+#: gofax/faxaccount/lists.tpl:25
+msgid "Add the list to the blocklists"
+msgstr "Dodaj listę do bloklisty"
 
-#: gofax/faxreports/detail.tpl:8
-msgid "Click on fax to download"
-msgstr "Kliknij na fax aby pobrać"
+#: admin/systems/services/gofax/class_goFaxServer.inc:30
+msgid "FAX database"
+msgstr "Baza FAX"
 
-#: gofax/faxreports/detail.tpl:17
-msgid "FAX ID"
-msgstr "FAX ID"
+#: admin/systems/services/gofax/class_goFaxServer.inc:59
+msgid "FAX database configuration"
+msgstr "Konfiguracja bazy FAX"
 
-#: gofax/faxreports/detail.tpl:25
-msgid "Date / Time"
-msgstr "Data/Czas"
+#: admin/systems/services/gofax/class_goFaxServer.inc:71
+#: admin/systems/services/gofax/class_goFaxServer.inc:98
+#: admin/systems/services/gofax/goFaxServer.tpl:12
+msgid "Password"
+msgstr "Hasło"
 
-#: gofax/faxreports/detail.tpl:29 gofax/faxreports/class_faxreport.inc:503
-msgid "Sender MSN"
-msgstr "MSN nadawcy"
-
-#: gofax/faxreports/detail.tpl:33 gofax/faxreports/class_faxreport.inc:502
-msgid "Sender ID"
-msgstr "ID nadawcy"
-
-#: gofax/faxreports/detail.tpl:37 gofax/faxreports/class_faxreport.inc:505
-msgid "Receiver MSN"
-msgstr "MSN odbiorcy"
-
-#: gofax/faxreports/detail.tpl:41 gofax/faxreports/class_faxreport.inc:504
-msgid "Receiver ID"
-msgstr "ID odbiorcy"
-
-#: gofax/faxreports/detail.tpl:45 gofax/faxreports/contents.tpl:32
-#: gofax/faxreports/class_faxreport.inc:501
-msgid "Status"
-msgstr "Status"
-
-#: gofax/faxreports/detail.tpl:49
-msgid "Status message"
-msgstr "Informacja o statusie"
-
-#: gofax/faxreports/detail.tpl:53 gofax/faxreports/class_faxreport.inc:508
-msgid "Transfer time"
-msgstr "Czas transferu"
-
-#: gofax/faxreports/detail.tpl:57 gofax/faxreports/contents.tpl:35
-msgid "# pages"
-msgstr "# stron"
-
-#: gofax/faxreports/main.inc:14
-msgid "FAX reports"
-msgstr "Raporty FAX"
-
-#: gofax/faxreports/contents.tpl:2
-msgid "Filter"
-msgstr "Filtr"
-
-#: gofax/faxreports/contents.tpl:6
-msgid "Search for"
-msgstr "Szukaj dla"
-
-#: gofax/faxreports/contents.tpl:7
-msgid "Enter user name to search for"
-msgstr "Wprowadź poszukiwaną nazwę użytkownika"
-
-#: gofax/faxreports/contents.tpl:8 gofax/faxreports/contents.tpl:16
-msgid "in"
-msgstr "w"
-
-#: gofax/faxreports/contents.tpl:9
-msgid "Select subtree to base search on"
-msgstr "Wybierz poddrzewo od którego zacząć szukanie"
-
-#: gofax/faxreports/contents.tpl:12
-msgid "during"
-msgstr "podczas"
-
-#: gofax/faxreports/contents.tpl:21
-msgid "Search"
-msgstr "Szukaj"
-
-#: gofax/faxreports/contents.tpl:31 gofax/faxreports/class_faxreport.inc:500
-msgid "Date"
-msgstr "Data"
-
-#: gofax/faxreports/contents.tpl:33
-msgid "Sender"
-msgstr "Nadawca"
-
-#: gofax/faxreports/contents.tpl:34
-msgid "Receiver"
-msgstr "Odbiorca"
-
-#: gofax/faxreports/contents.tpl:50
-msgid "Search returned no results..."
-msgstr "Wyszukiwanie nie zwróciło żadnych wyników..."
-
-#: gofax/faxreports/class_faxreport.inc:6
-msgid "FAX Reports"
-msgstr "Raporty FAX"
-
-#: gofax/faxreports/class_faxreport.inc:116
-msgid "No fax server found!"
-msgstr ""
-
-#: gofax/faxreports/class_faxreport.inc:119
-#: gofax/faxreports/class_faxreport.inc:288
+#: admin/systems/services/gofax/class_goFaxServer.inc:88
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
 #, fuzzy
-msgid "Configuration error"
-msgstr "Plik konfiguracyjny"
+msgid "Fax database"
+msgstr "Baza FAX"
 
-#: gofax/faxreports/class_faxreport.inc:119
-#: gofax/faxreports/class_faxreport.inc:288
-#, fuzzy, php-format
-msgid "Missing %s PHP extension!"
-msgstr "Rozszerzenie inwentarza"
+#: admin/systems/services/gofax/class_goFaxServer.inc:89
+msgid "Services"
+msgstr "Usługi"
 
-#: gofax/faxreports/class_faxreport.inc:126
-#, fuzzy, php-format
-msgid "Cannot connect to %s database!"
-msgstr "Nie można połączyć się z bazą fax, nie można pokazać żadnych raportów!"
+#: admin/systems/services/gofax/class_goFaxServer.inc:97
+msgid "Login name"
+msgstr "Nazwa login"
 
-#: gofax/faxreports/class_faxreport.inc:130
-#, fuzzy, php-format
-msgid "Cannot select %s database!"
-msgstr "Nie można wybrać bazy danych!"
+#: admin/systems/services/gofax/goFaxServer.tpl:1
+msgid "FAX database information"
+msgstr "Informacje bazy FAX"
 
-#: gofax/faxreports/class_faxreport.inc:135
-#: gofax/faxreports/class_faxreport.inc:158
-#: gofax/faxreports/class_faxreport.inc:304
-#, fuzzy, php-format
-msgid "Cannot query %s database!"
-msgstr "Nie można wybrać bazy danych!"
-
-#: gofax/faxreports/class_faxreport.inc:167
-#: gofax/faxreports/class_faxreport.inc:177
-#: gofax/blocklists/class_blocklistManagement.inc:269
-#: gofax/blocklists/class_blocklistManagement.inc:327
-#, fuzzy
-msgid "Permission error"
-msgstr "Uprawnienia"
-
-#: gofax/faxreports/class_faxreport.inc:167
-#: gofax/faxreports/class_faxreport.inc:177
-#, fuzzy
-msgid "You have no permission to view this fax id!"
-msgstr "Brak uprawnień do usunięcia tej bloklisty."
-
-#: gofax/faxreports/class_faxreport.inc:208
-#: gofax/faxreports/class_faxreport.inc:329
-msgid "Y-M-D"
-msgstr "R-M-D"
-
-#: gofax/faxreports/class_faxreport.inc:323
-#, fuzzy
-msgid "Insufficient permissions to view this attribute"
-msgstr "Brak uprawnień do zmian atrybutu '%s' w goFonMacro."
-
-#: gofax/faxreports/class_faxreport.inc:323
-#, fuzzy
-msgid "Insufficient permissions"
-msgstr "Uprawnienia pliku"
-
-#: gofax/faxreports/class_faxreport.inc:487
-#: gofax/faxreports/class_faxreport.inc:488
-msgid "Fax report"
-msgstr "Raport FAX"
-
-#: gofax/faxreports/class_faxreport.inc:488
-#, fuzzy
-msgid "All entries are readonly"
-msgstr "Wszystkie pola są zapisywalne"
-
-#: gofax/faxreports/class_faxreport.inc:493
-#, fuzzy
-msgid "Fax reports"
-msgstr "Raport FAX"
-
-#: gofax/faxreports/class_faxreport.inc:498
-msgid "Detailed view"
-msgstr "Widok szczegółowy"
-
-#: gofax/faxreports/class_faxreport.inc:499
-#, fuzzy
-msgid "Fax ID"
-msgstr "FAX ID"
-
-#: gofax/faxreports/class_faxreport.inc:500
-#, fuzzy
-msgid "Time"
-msgstr "Mime"
-
-#: gofax/faxreports/class_faxreport.inc:506
-#, fuzzy
-msgid "Number of pages"
-msgstr "Nazwa departamentu"
-
-#: gofax/faxreports/class_faxreport.inc:507
-#, fuzzy
-msgid "Status Message"
-msgstr "Informacja o statusie"
-
-#: gofax/blocklists/generic.tpl:8 gofax/blocklists/paste_generic.tpl:3
-msgid "List name"
-msgstr "Nazwa listy"
-
-#: gofax/blocklists/generic.tpl:12 gofax/blocklists/paste_generic.tpl:5
-msgid "Name of blocklist"
-msgstr "Nazwa bloklisty"
-
-#: gofax/blocklists/generic.tpl:17
-#: gofax/blocklists/class_blocklistGeneric.inc:387
-#: gofax/blocklists/class_divListBlocklists.inc:86
-msgid "Base"
-msgstr "Kontener"
-
-#: gofax/blocklists/generic.tpl:20
-msgid "Choose subtree to place group in"
-msgstr "Wybierz poddrzewo do umieszczenia grupy"
-
-#: gofax/blocklists/generic.tpl:26
-msgid "Select a base"
-msgstr "Wybierz bazę"
-
-#: gofax/blocklists/generic.tpl:40
-msgid "Type"
-msgstr "Typ"
-
-#: gofax/blocklists/generic.tpl:43
-msgid "Select wether to filter incoming or outgoing calls"
-msgstr "Wybierz, czy filtrować nadchodzące czy przychodzące rozmowy"
-
-#: gofax/blocklists/generic.tpl:51
-#: gofax/blocklists/class_blocklistGeneric.inc:386
-msgid "Description"
-msgstr "Opis"
-
-#: gofax/blocklists/generic.tpl:54
-msgid "Descriptive text for this blocklist"
-msgstr "Opis tej bloklisty"
-
-#: gofax/blocklists/generic.tpl:68
-msgid "Blocked numbers"
-msgstr "Blokowane numery"
-
-#: gofax/blocklists/generic.tpl:90
-msgid "Information"
-msgstr "Informacja"
-
-#: gofax/blocklists/generic.tpl:92
-msgid "Numbers can also contain wild cards."
-msgstr "Numery mogą również zawierać maski"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:9
-#: gofax/blocklists/class_blocklistGeneric.inc:376
-#: gofax/blocklists/class_blocklistGeneric.inc:381
-#: gofax/blocklists/class_blocklistGeneric.inc:382
-#, fuzzy
-msgid "Fax blocklists"
-msgstr "Bloklisty FAX"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:164
-msgid "send"
-msgstr "wysyłanie"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:164
-msgid "receive"
-msgstr "odbieranie"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:219
-#: gofax/blocklists/class_blocklistGeneric.inc:222
-#: gofax/blocklists/class_blocklistGeneric.inc:229
-#: gofax/blocklists/class_blocklistGeneric.inc:385
-#: gofax/blocklists/class_divListBlocklists.inc:56
-msgid "Name"
-msgstr "Imię"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:388
-#: gofax/blocklists/class_divListBlocklists.inc:98
-#, fuzzy
-msgid "Blocklist"
-msgstr "Bloklisty"
-
-#: gofax/blocklists/class_blocklistGeneric.inc:389
-msgid "Blocklist type"
-msgstr "Typ bloklisty"
-
-#: gofax/blocklists/class_divListBlocklists.inc:31
-#: gofax/blocklists/class_divListBlocklists.inc:32
-msgid "List of blocklists"
-msgstr "Lista bloklist"
-
-#: gofax/blocklists/class_divListBlocklists.inc:50
-#, fuzzy
-msgid "Select all"
-msgstr "Wybierz"
-
-#: gofax/blocklists/class_divListBlocklists.inc:56
-msgid "Department"
-msgstr "Departament"
-
-#: gofax/blocklists/class_divListBlocklists.inc:57
-#: gofax/blocklists/class_divListBlocklists.inc:91
-msgid "Actions"
-msgstr "Akcje"
-
-#: gofax/blocklists/class_divListBlocklists.inc:60
-msgid "Show send blocklists"
-msgstr "Pokaż bloklisty wysyłania"
-
-#: gofax/blocklists/class_divListBlocklists.inc:61
-msgid "Show receive blocklists"
-msgstr "Pokaż bloklisty otrzymywania"
-
-#: gofax/blocklists/class_divListBlocklists.inc:67
-msgid "Regular expression for matching list names"
-msgstr "Wyrażenie regularne do dopasowania nazw list"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit department"
-msgstr "Zatwierdź departament"
-
-#: gofax/blocklists/class_divListBlocklists.inc:88
-msgid "Submit"
-msgstr "Wyślij"
-
-#: gofax/blocklists/class_divListBlocklists.inc:96
-msgid "Create"
-msgstr "Utwórz"
-
-#: gofax/blocklists/class_divListBlocklists.inc:104
-msgid "Remove"
-msgstr "Usuń"
-
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "edit"
-msgstr "edytuj"
-
-#: gofax/blocklists/class_divListBlocklists.inc:151
-msgid "Edit user"
-msgstr "Edytuj użytkownika"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "delete"
-msgstr "Usuń"
-
-#: gofax/blocklists/class_divListBlocklists.inc:158
-msgid "Delete user"
-msgstr "Usuń użytkownika"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-#: gofax/blocklists/class_divListBlocklists.inc:196
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Nazwa bloklisty"
-
-#: gofax/blocklists/class_divListBlocklists.inc:195
-#, fuzzy
-msgid "blocklists"
-msgstr "Bloklisty"
-
-#: gofax/blocklists/class_divListBlocklists.inc:196
-#, fuzzy
-msgid "departments"
-msgstr "Departament"
-
-#: gofax/blocklists/remove.tpl:2
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-#: gofax/blocklists/remove.tpl:6
-msgid ""
-"Please double check if your really want to do this since there is no way for "
-"GOsa to get your data back."
-msgstr ""
-"Proszę upewnić się, że faktycznie chcesz wykonać tą operację. Nie ma "
-"możliwości odwrócenia tego procesu."
-
-#: gofax/blocklists/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Jeśli jesteś pewien - naciśnij 'Usuń' aby kontynuować lub 'Anuluj' aby "
-"anulować."
-
-#: gofax/blocklists/main.inc:27 gofax/blocklists/main.inc:29
-msgid "Blocklist management"
-msgstr "Zarządzanie bloklistą"
-
-#: gofax/blocklists/class_blocklistManagement.inc:5
-#, fuzzy
-msgid "FAX blocklists"
-msgstr "Bloklisty FAX"
-
-#: gofax/blocklists/class_blocklistManagement.inc:230
-#, fuzzy
-msgid "Permission"
-msgstr "Uprawnienia"
-
-#: gofax/blocklists/class_blocklistManagement.inc:246
-#: gofax/blocklists/class_blocklistManagement.inc:308
-#, fuzzy
-msgid "blocklist"
-msgstr "Bloklisty"
-
-#: html/getfax.php:56
-msgid "Could not connect to database server!"
-msgstr "Nie można połączyć się z serwerem baz danych!"
-
-#: html/getfax.php:58
-msgid "Could not select database!"
-msgstr "Nie można wybrać bazy danych!"
-
-#: html/getfax.php:63 html/getfax.php:71
-msgid "Database query failed!"
-msgstr "Zapytanie do bazy danych nieudane"
+#: admin/systems/services/gofax/goFaxServer.tpl:4
+msgid "FAX DB user"
+msgstr "Użytkownik bazy FAX"
 
 #, fuzzy
 #~ msgid "Copy"

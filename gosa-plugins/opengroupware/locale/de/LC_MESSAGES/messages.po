@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:34+0100\n"
 "PO-Revision-Date: 2008-04-04 09:30+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -20,6 +20,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/opengroupware/opengw.tpl:1
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
+msgid "Opengroupware"
+msgstr "Opengroupware"
+
+#: personal/connectivity/opengroupware/opengw.tpl:8
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+msgid "Location team"
+msgstr "Örtliches Team"
+
+#: personal/connectivity/opengroupware/opengw.tpl:21
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+msgid "Template user"
+msgstr "Benutzer-Vorlage"
+
+#: personal/connectivity/opengroupware/opengw.tpl:33
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+msgid "Locked"
+msgstr "Gesperrt"
+
+#: personal/connectivity/opengroupware/opengw.tpl:48
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+msgid "Teams"
+msgstr "Teams"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:6
 msgid "Opengroupware account"
@@ -43,11 +68,6 @@ msgstr "Opengroupware-Datenbank"
 msgid "Open Groupware"
 msgstr "Open Groupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-#: personal/connectivity/opengroupware/opengw.tpl:1
-msgid "Opengroupware"
-msgstr "Opengroupware"
-
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:339
 msgid "Open groupware account settings"
 msgstr "Opengroupware Konto-Einstellungen"
@@ -59,23 +79,3 @@ msgstr "Konnektivitäts-Erweiterung"
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:343
 msgid "My account"
 msgstr "Mein Konto"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
-#: personal/connectivity/opengroupware/opengw.tpl:8
-msgid "Location team"
-msgstr "Örtliches Team"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
-#: personal/connectivity/opengroupware/opengw.tpl:21
-msgid "Template user"
-msgstr "Benutzer-Vorlage"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
-#: personal/connectivity/opengroupware/opengw.tpl:33
-msgid "Locked"
-msgstr "Gesperrt"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
-#: personal/connectivity/opengroupware/opengw.tpl:48
-msgid "Teams"
-msgstr "Teams"

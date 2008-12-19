@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:30+0100\n"
 "PO-Revision-Date: 2008-08-12 12:57+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -51,11 +51,11 @@ msgstr "Options"
 #: admin/ogroups/gofon/phonequeue.tpl:50
 #: admin/ogroups/gofon/class_phonequeue.inc:305
 #: admin/ogroups/gofon/class_phonequeue.inc:929
-#: gofon/conference/generic.tpl:68
-#: gofon/conference/class_phoneConferenceGeneric.inc:782
 #: gofon/phoneaccount/generic.tpl:58
 #: gofon/phoneaccount/class_phoneAccount.inc:1273
 #: gofon/phoneaccount/class_phoneAccount.inc:1612
+#: gofon/conference/generic.tpl:68
+#: gofon/conference/class_phoneConferenceGeneric.inc:782
 msgid "Home server"
 msgstr "Serveur Primaire"
 
@@ -185,14 +185,14 @@ msgid "Ring instead of playing background music"
 msgstr "Sonner au lieu de mettre une musique d'ambiance"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/conference/class_phoneConferenceGeneric.inc:103
 msgid "Obsolete entry"
 msgstr "Entrée obsolète"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #, php-format
 msgid ""
 "The current home server is not available anymore. It will be moved to '%s' "
@@ -264,13 +264,13 @@ msgstr ""
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
 #: gofon/macro/class_gofonMacro.inc:392 gofon/macro/class_gofonMacro.inc:471
+#: gofon/phoneaccount/class_phoneAccount.inc:363
+#: gofon/phoneaccount/class_phoneAccount.inc:972
 #: gofon/conference/class_phoneConferenceGeneric.inc:430
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:176
 #: gofon/fonreports/class_fonreport.inc:180
 #: gofon/fonreports/class_fonreport.inc:198
-#: gofon/phoneaccount/class_phoneAccount.inc:363
-#: gofon/phoneaccount/class_phoneAccount.inc:972
 msgid "GOfon"
 msgstr "Gofon"
 
@@ -297,17 +297,17 @@ msgstr "numéro de téléphone"
 #: admin/systems/gofon/class_phoneGeneric.inc:272
 #: gofon/macro/class_gofonMacro.inc:458 gofon/macro/class_gofonMacro.inc:467
 #: gofon/macro/class_gofonMacro.inc:505
-#: gofon/conference/class_phoneConferenceGeneric.inc:260
-#: gofon/conference/class_phoneConferenceGeneric.inc:264
-#: gofon/fonreports/class_fonreport.inc:176
-#: gofon/fonreports/class_fonreport.inc:180
-#: gofon/fonreports/class_fonreport.inc:198
 #: gofon/phoneaccount/class_phoneAccount.inc:958
 #: gofon/phoneaccount/class_phoneAccount.inc:1077
 #: gofon/phoneaccount/class_phoneAccount.inc:1350
 #: gofon/phoneaccount/class_phoneAccount.inc:1422
 #: gofon/phoneaccount/class_phoneAccount.inc:1432
 #: gofon/phoneaccount/class_phoneAccount.inc:1466
+#: gofon/conference/class_phoneConferenceGeneric.inc:260
+#: gofon/conference/class_phoneConferenceGeneric.inc:264
+#: gofon/fonreports/class_fonreport.inc:176
+#: gofon/fonreports/class_fonreport.inc:180
+#: gofon/fonreports/class_fonreport.inc:198
 msgid "Error"
 msgstr "Erreur"
 
@@ -321,9 +321,9 @@ msgstr "Erreur"
 #: gofon/macro/class_gofonMacroParameters.inc:401
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
-#: gofon/conference/class_phoneConferenceGeneric.inc:718
 #: gofon/phoneaccount/class_phoneAccount.inc:1377
 #: gofon/phoneaccount/class_phoneAccount.inc:1513
+#: gofon/conference/class_phoneConferenceGeneric.inc:718
 msgid "LDAP error"
 msgstr "Erreur LDAP"
 
@@ -477,10 +477,6 @@ msgstr "Préfixe local"
 msgid "Country code"
 msgstr "Préfixe national"
 
-#: admin/systems/gofon/paste_generic.tpl:3 admin/systems/gofon/phone.tpl:6
-msgid "Phone name"
-msgstr "Nom du téléphone"
-
 #: admin/systems/gofon/phonesettings.tpl:1
 msgid "Advanced phone settings"
 msgstr "Configuration avancée du téléphone"
@@ -566,10 +562,14 @@ msgstr "Machines qui ne peuvent pas se connecter"
 msgid "MSN"
 msgstr "MSN"
 
+#: admin/systems/gofon/paste_generic.tpl:3 admin/systems/gofon/phone.tpl:6
+msgid "Phone name"
+msgstr "Nom du téléphone"
+
 #: admin/systems/gofon/phone.tpl:17
-#: admin/systems/gofon/class_phoneGeneric.inc:517 gofon/macro/generic.tpl:27
+#: admin/systems/gofon/class_phoneGeneric.inc:517
 #: gofon/macro/class_gofonMacro.inc:573 gofon/macro/class_divListMacros.inc:79
-#: gofon/conference/generic.tpl:49
+#: gofon/macro/generic.tpl:27 gofon/conference/generic.tpl:49
 #: gofon/conference/class_phoneConferenceGeneric.inc:776
 #: gofon/conference/class_divListConferences.inc:83
 msgid "Base"
@@ -585,8 +585,9 @@ msgid "Select a base"
 msgstr "Sélectionnez une base"
 
 #: admin/systems/gofon/phone.tpl:34
-#: admin/systems/gofon/class_phoneGeneric.inc:518 gofon/macro/generic.tpl:49
-#: gofon/macro/class_gofonMacro.inc:574 gofon/conference/generic.tpl:98
+#: admin/systems/gofon/class_phoneGeneric.inc:518
+#: gofon/macro/class_gofonMacro.inc:574 gofon/macro/generic.tpl:49
+#: gofon/conference/generic.tpl:98
 #: gofon/conference/class_phoneConferenceGeneric.inc:777
 msgid "Description"
 msgstr "Description"
@@ -707,8 +708,8 @@ msgid "List of macros"
 msgstr "Liste des macros"
 
 #: gofon/macro/headpage.tpl:20 gofon/macro/class_gofonMacroParameters.inc:374
-#: gofon/conference/headpage.tpl:20
 #: gofon/phoneaccount/class_phoneAccount.inc:1504
+#: gofon/conference/headpage.tpl:20
 msgid "Information"
 msgstr "Information"
 
@@ -738,54 +739,24 @@ msgstr "Afficher les macros correspondantes"
 msgid "Regular expression for matching macro names"
 msgstr "Expression régulière correspondant à des noms de macro"
 
-#: gofon/macro/generic.tpl:6 gofon/macro/generic.tpl:9
-#: gofon/macro/paste_generic.tpl:4 gofon/macro/paste_generic.tpl:6
-#: gofon/macro/class_gofonMacro.inc:572
-msgid "Macro name"
-msgstr "Nom de la macro"
+#: gofon/macro/remove.tpl:2 gofon/conference/remove.tpl:2
+msgid "Warning"
+msgstr "Avertissement"
 
-#: gofon/macro/generic.tpl:14 gofon/macro/class_gofonMacro.inc:575
-msgid "Display name"
-msgstr "Nom à afficher"
+#: gofon/macro/remove.tpl:6
+msgid ""
+"This may be used by several groups. Please double check if your really want "
+"to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"Cela peut être utilisé par plusieurs groupes. Veuillez vérifier que vous "
+"voulez effectuer cette opération étant donné qu'il est impossible pour GOsa "
+"de récupérer vos données."
 
-#: gofon/macro/generic.tpl:18
-msgid "Macro name to be displayed"
-msgstr "Nom d'affichage de la macro"
-
-#: gofon/macro/generic.tpl:60
-msgid "Visible for user"
-msgstr "Visible pour l'utilisateur"
-
-#: gofon/macro/generic.tpl:70
-msgid "Macro text"
-msgstr "Texte de la macro"
-
-#: gofon/macro/class_gofonMacroManagement.inc:24
-msgid "Phone macros"
-msgstr "Macros téléphoniques"
-
-#: gofon/macro/class_gofonMacroManagement.inc:25
-#: gofon/fonreports/class_fonreport.inc:7
-#: gofon/phoneaccount/class_phoneAccount.inc:7
-msgid "This does something"
-msgstr "Ceci fait quelque chose"
-
-#: gofon/macro/class_gofonMacroManagement.inc:273
-#: gofon/conference/class_phoneConferenceManagment.inc:187
-msgid "Permission"
-msgstr "Permissions"
-
-#: gofon/macro/class_gofonMacroManagement.inc:320
-#: gofon/macro/class_gofonMacroManagement.inc:373
-#: gofon/macro/class_gofonMacroManagement.inc:397
-#: gofon/conference/class_phoneConferenceManagment.inc:228
-#: gofon/conference/class_phoneConferenceManagment.inc:289
-msgid "Permission error"
-msgstr "Erreur de permissions"
-
-#: gofon/macro/class_gofonMacroManagement.inc:366
-msgid "macro"
-msgstr "macro"
+#: gofon/macro/remove.tpl:9
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
+"'Annuler' pour abandonner."
 
 #: gofon/macro/class_gofonMacroParameters.inc:200
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
@@ -851,12 +822,12 @@ msgid "Macro is empty!"
 msgstr "La macro est vide !"
 
 #: gofon/macro/class_gofonMacro.inc:471
-#: gofon/fonreports/class_fonreport.inc:166
-#: gofon/fonreports/class_fonreport.inc:169
 #: gofon/phoneaccount/class_phoneAccount.inc:363
 #: gofon/phoneaccount/class_phoneAccount.inc:371
 #: gofon/phoneaccount/class_phoneAccount.inc:972
 #: gofon/phoneaccount/class_phoneAccount.inc:1471
+#: gofon/fonreports/class_fonreport.inc:166
+#: gofon/fonreports/class_fonreport.inc:169
 msgid "Configuration error"
 msgstr "Erreur de configuration"
 
@@ -868,6 +839,16 @@ msgstr "Gestion des macros d'Asterisk"
 msgid "GOfon macro"
 msgstr "Macro GOfon"
 
+#: gofon/macro/class_gofonMacro.inc:572 gofon/macro/generic.tpl:6
+#: gofon/macro/generic.tpl:9 gofon/macro/paste_generic.tpl:4
+#: gofon/macro/paste_generic.tpl:6
+msgid "Macro name"
+msgstr "Nom de la macro"
+
+#: gofon/macro/class_gofonMacro.inc:575 gofon/macro/generic.tpl:14
+msgid "Display name"
+msgstr "Nom à afficher"
+
 #: gofon/macro/class_gofonMacro.inc:576
 msgid "Macro content and parameter"
 msgstr "Contenu et paramètre des macros"
@@ -875,29 +856,6 @@ msgstr "Contenu et paramètre des macros"
 #: gofon/macro/class_gofonMacro.inc:577
 msgid "Visibility flag"
 msgstr "Etat de visibilité"
-
-#: gofon/macro/remove.tpl:2 gofon/conference/remove.tpl:2
-msgid "Warning"
-msgstr "Avertissement"
-
-#: gofon/macro/remove.tpl:6
-msgid ""
-"This may be used by several groups. Please double check if your really want "
-"to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"Cela peut être utilisé par plusieurs groupes. Veuillez vérifier que vous "
-"voulez effectuer cette opération étant donné qu'il est impossible pour GOsa "
-"de récupérer vos données."
-
-#: gofon/macro/remove.tpl:9
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou sur "
-"'Annuler' pour abandonner."
-
-#: gofon/macro/main.inc:42 gofon/macro/main.inc:46
-msgid "Phone macro management"
-msgstr "Administration des macros téléphoniques"
 
 #: gofon/macro/class_divListMacros.inc:50
 #: gofon/conference/class_divListConferences.inc:50
@@ -985,6 +943,49 @@ msgstr "macros"
 msgid "departments"
 msgstr "Départements"
 
+#: gofon/macro/generic.tpl:18
+msgid "Macro name to be displayed"
+msgstr "Nom d'affichage de la macro"
+
+#: gofon/macro/generic.tpl:60
+msgid "Visible for user"
+msgstr "Visible pour l'utilisateur"
+
+#: gofon/macro/generic.tpl:70
+msgid "Macro text"
+msgstr "Texte de la macro"
+
+#: gofon/macro/class_gofonMacroManagement.inc:24
+msgid "Phone macros"
+msgstr "Macros téléphoniques"
+
+#: gofon/macro/class_gofonMacroManagement.inc:25
+#: gofon/phoneaccount/class_phoneAccount.inc:7
+#: gofon/fonreports/class_fonreport.inc:7
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: gofon/macro/class_gofonMacroManagement.inc:273
+#: gofon/conference/class_phoneConferenceManagment.inc:187
+msgid "Permission"
+msgstr "Permissions"
+
+#: gofon/macro/class_gofonMacroManagement.inc:320
+#: gofon/macro/class_gofonMacroManagement.inc:373
+#: gofon/macro/class_gofonMacroManagement.inc:397
+#: gofon/conference/class_phoneConferenceManagment.inc:228
+#: gofon/conference/class_phoneConferenceManagment.inc:288
+msgid "Permission error"
+msgstr "Erreur de permissions"
+
+#: gofon/macro/class_gofonMacroManagement.inc:366
+msgid "macro"
+msgstr "macro"
+
+#: gofon/macro/main.inc:51 gofon/macro/main.inc:55
+msgid "Phone macro management"
+msgstr "Administration des macros téléphoniques"
+
 #: gofon/macro/parameter.tpl:4
 msgid "Argument"
 msgstr "Argument"
@@ -1000,337 +1001,6 @@ msgstr "Valeur par défaut"
 #: gofon/macro/parameter.tpl:19
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "Vous n'êtes pas autorisé à voir les paramètres de cette macro."
-
-#: gofon/conference/headpage.tpl:6
-#: gofon/conference/class_divListConferences.inc:31
-#: gofon/conference/class_divListConferences.inc:32
-msgid "List of conference rooms"
-msgstr "Liste des salles de conférence"
-
-#: gofon/conference/headpage.tpl:24
-msgid ""
-"This menu allows you to create, delete and edit selected phone conferences. "
-"Having a large number of phone conferences, you might prefer the range "
-"selectors on top of the conferences list."
-msgstr ""
-"Ce menu vous permet de d'ajouter, supprimer et éditer les conférences "
-"sélectionnés. Si vous avez un grand nombre de conférences il est conseillé "
-"d'utiliser les filtres."
-
-#: gofon/conference/headpage.tpl:35
-msgid "Display users matching"
-msgstr "Afficher les utilisateurs correspondants"
-
-#: gofon/conference/headpage.tpl:36
-msgid "Regular expression for        matching user names"
-msgstr "Expression régulière concordant avec les noms des utilisateurs"
-
-#: gofon/conference/generic.tpl:5
-msgid "Properties"
-msgstr "Propriétés"
-
-#: gofon/conference/generic.tpl:15 gofon/conference/paste_generic.tpl:5
-msgid "Conference name"
-msgstr "Nom de la conférence"
-
-#: gofon/conference/generic.tpl:21 gofon/conference/paste_generic.tpl:10
-msgid "Name of conference to create"
-msgstr "Nom de la conférence à créer"
-
-#: gofon/conference/generic.tpl:28
-msgid "Type"
-msgstr "Type"
-
-#: gofon/conference/generic.tpl:35
-msgid "Choose subtree to place conference in"
-msgstr "Sélectionnez la branche où sera enregistrée la conférence"
-
-#: gofon/conference/generic.tpl:82
-msgid "Select language"
-msgstr "Sélectionnez la langue"
-
-#: gofon/conference/generic.tpl:104
-msgid "Descriptive text for department"
-msgstr "Description du département"
-
-#: gofon/conference/generic.tpl:110
-msgid "Lifetime (in days)"
-msgstr "Durée (en jours)"
-
-#: gofon/conference/generic.tpl:157
-#: gofon/conference/class_phoneConferenceGeneric.inc:783
-msgid "Preset PIN"
-msgstr "Code PIN préselectionné"
-
-#: gofon/conference/generic.tpl:165
-#: gofon/conference/class_phoneConferenceGeneric.inc:384
-#: gofon/conference/class_divListConferences.inc:58
-msgid "PIN"
-msgstr "Code PIN"
-
-#: gofon/conference/generic.tpl:177
-#: gofon/conference/class_phoneConferenceGeneric.inc:784
-msgid "Record conference"
-msgstr "Enregistrer la conférence"
-
-#: gofon/conference/generic.tpl:185
-msgid "Sound file format"
-msgstr "Format du fichier son "
-
-#: gofon/conference/generic.tpl:188
-msgid "Choose subtree to place department in"
-msgstr ""
-"Sélectionnez la branche de l'annuaire dans laquelle sera placée le "
-"département"
-
-#: gofon/conference/generic.tpl:208
-#: gofon/conference/class_phoneConferenceGeneric.inc:785
-msgid "Play music on hold"
-msgstr "Musique d'attente"
-
-#: gofon/conference/generic.tpl:216
-msgid "Activate session menu"
-msgstr "Activer le menu de session"
-
-#: gofon/conference/generic.tpl:224
-msgid "Announce users joining or leaving the conference"
-msgstr "Annoncer les nouveaux utilisateurs et ceux qui quittent"
-
-#: gofon/conference/generic.tpl:232
-msgid "Count users"
-msgstr "Compter les utilisateurs"
-
-#: gofon/conference/remove.tpl:6
-msgid ""
-"This includes 'all' accounts, systems, etc. in this subtree. Please double "
-"check if your really want to do this since there is no way for GOsa to get "
-"your data back."
-msgstr ""
-"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
-"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
-"impossible pour GOsa de récupérer vos données."
-
-#: gofon/conference/remove.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Il est conseillé de sauvegarder l'arbre de votre annuaire LDAP dans un "
-"fichier avant de réaliser cette action. Appuyez sur 'Supprimer' pour "
-"continuer ou 'Annuler' pour abandonner."
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:264
-#, php-format
-msgid "Cannot delete entry from server '%s' because it seems to be removed!"
-msgstr ""
-"Impossible d'effacer l'entrée du serveur '%s' parceque l'entrée semble avoir "
-"déjà été effacée !"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:379
-#, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
-msgstr ""
-"Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
-"disponible !"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:396
-#: gofon/conference/class_phoneConferenceGeneric.inc:792
-msgid "Lifetime"
-msgstr "Durée"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:641
-#: gofon/conference/class_phoneConferenceGeneric.inc:643
-#, php-format
-msgid "'%s' is already assigned to '%s'!"
-msgstr "'%s' est déjà utilisé par '%s' !"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:765
-#: gofon/conference/class_divListConferences.inc:95
-#: gofon/conference/class_divListConferences.inc:208
-msgid "Conference"
-msgstr "Conférence"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:766
-msgid "Phone conference management"
-msgstr "Gestion des conférences téléphoniques"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:771
-msgid "GOfon conference"
-msgstr "Conférences téléphoniques"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:778
-msgid "Conference PIN"
-msgstr "Code Pin de la conférence"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:786
-msgid "Activate menu"
-msgstr "Activer le menu"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:787
-msgid "Announce user activity"
-msgstr "Annoncer l'activité utilisateur"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:788
-msgid "Count user"
-msgstr "Compter les utilisateurs"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:789
-msgid "Conference type"
-msgstr "Type de conférence"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:791
-msgid "Format"
-msgstr "Format"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:793
-#: gofon/phoneaccount/class_phoneAccount.inc:1609
-msgid "Telephone number"
-msgstr "Numéro de téléphone"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:794
-#: gofon/conference/class_divListConferences.inc:57
-msgid "Owner"
-msgstr "Propriétaire"
-
-#: gofon/conference/main.inc:38 gofon/conference/main.inc:40
-msgid "Conference management"
-msgstr "Gestion des conférences"
-
-#: gofon/conference/class_divListConferences.inc:65
-msgid "Regular expression for matching conference names"
-msgstr "Expression régulière concordant avec les noms des conférences"
-
-#: gofon/conference/class_divListConferences.inc:150
-msgid "Edit this entry"
-msgstr "Editer cette entrée"
-
-#: gofon/conference/class_divListConferences.inc:158
-msgid "Delete this entry"
-msgstr "Supprimer cette entrée"
-
-#: gofon/conference/class_divListConferences.inc:185
-msgid "Unknown"
-msgstr "Inconnu"
-
-#: gofon/conference/class_divListConferences.inc:225
-#: gofon/conference/class_divListConferences.inc:226
-#, php-format
-msgid "Number of listed '%s'"
-msgstr "Nombre de '%s' listés"
-
-#: gofon/conference/class_divListConferences.inc:225
-msgid "conferences"
-msgstr "Conférences"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:24
-msgid "Phone conferences"
-msgstr "Conférences téléphoniques"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:25
-msgid "Management"
-msgstr "Gestion"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:206
-#: gofon/conference/class_phoneConferenceManagment.inc:268
-msgid "conference"
-msgstr "Conférence"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:228
-#: gofon/conference/class_phoneConferenceManagment.inc:289
-msgid "You have not permission to delete this entry!"
-msgstr "Vous n'avez pas les droits nécessaires pour supprimer cette entrée !"
-
-#: gofon/fonreports/main.inc:16 gofon/fonreports/class_fonreport.inc:396
-#: gofon/fonreports/class_fonreport.inc:397
-#: gofon/fonreports/class_fonreport.inc:404
-msgid "Phone reports"
-msgstr "Rapports téléphoniques"
-
-#: gofon/fonreports/contents.tpl:2
-msgid "Filter"
-msgstr "Filtre"
-
-#: gofon/fonreports/contents.tpl:6
-msgid "Search for"
-msgstr "Recherche de"
-
-#: gofon/fonreports/contents.tpl:7
-msgid "Enter user name to search for"
-msgstr "Entrez le nom recherché"
-
-#: gofon/fonreports/contents.tpl:8 gofon/fonreports/contents.tpl:16
-msgid "in"
-msgstr "dans"
-
-#: gofon/fonreports/contents.tpl:9
-msgid "Select subtree to base search on"
-msgstr "Sélectionnez la branche de l'annuaire où sera effectuée la recherche"
-
-#: gofon/fonreports/contents.tpl:12
-msgid "during"
-msgstr "pendant"
-
-#: gofon/fonreports/contents.tpl:21
-msgid "Search"
-msgstr "Recherche"
-
-#: gofon/fonreports/contents.tpl:30 gofon/fonreports/class_fonreport.inc:409
-msgid "Date"
-msgstr "Date"
-
-#: gofon/fonreports/contents.tpl:31 gofon/fonreports/class_fonreport.inc:410
-msgid "Source"
-msgstr "Emetteur"
-
-#: gofon/fonreports/contents.tpl:32 gofon/fonreports/class_fonreport.inc:411
-msgid "Destination"
-msgstr "Destinataire"
-
-#: gofon/fonreports/contents.tpl:33 gofon/fonreports/class_fonreport.inc:412
-msgid "Channel"
-msgstr "Canal"
-
-#: gofon/fonreports/contents.tpl:34
-msgid "Application"
-msgstr "Applications"
-
-#: gofon/fonreports/contents.tpl:35
-msgid "Status"
-msgstr "Statut"
-
-#: gofon/fonreports/contents.tpl:36 gofon/fonreports/class_fonreport.inc:415
-msgid "Duration"
-msgstr "Durée"
-
-#: gofon/fonreports/contents.tpl:51
-msgid "Search returned no results..."
-msgstr "La recherche n'a renvoyé aucun résultat..."
-
-#: gofon/fonreports/class_fonreport.inc:6
-msgid "Phone Reports"
-msgstr "Rapports téléphoniques"
-
-#: gofon/fonreports/class_fonreport.inc:210
-msgid "Insufficient permissions"
-msgstr "Permission insuffisantes"
-
-#: gofon/fonreports/class_fonreport.inc:229
-msgid "Y-M-D"
-msgstr "A-M-J"
-
-#: gofon/fonreports/class_fonreport.inc:397
-msgid "All entries are readonly"
-msgstr "Tous les champs sont en lecture seule"
-
-#: gofon/fonreports/class_fonreport.inc:413
-msgid "Application called"
-msgstr "Application appelée"
-
-#: gofon/fonreports/class_fonreport.inc:414
-msgid "Disposition"
-msgstr ""
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"
@@ -1372,11 +1042,11 @@ msgstr "Code PIN du téléphone"
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: gofon/phoneaccount/paste_generic.tpl:1 gofon/phoneaccount/main.inc:123
+#: gofon/phoneaccount/paste_generic.tpl:1 gofon/phoneaccount/main.inc:133
 msgid "Phone settings"
 msgstr "Configuration du téléphone"
 
-#: gofon/phoneaccount/main.inc:113
+#: gofon/phoneaccount/main.inc:123
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Cliquez sur le bouton 'Editer' ci-dessous pour changer les informations dans "
@@ -1473,6 +1143,11 @@ msgstr "Paramètres compte téléphonique"
 msgid "My account"
 msgstr "Mon Compte"
 
+#: gofon/phoneaccount/class_phoneAccount.inc:1609
+#: gofon/conference/class_phoneConferenceGeneric.inc:793
+msgid "Telephone number"
+msgstr "Numéro de téléphone"
+
 #: gofon/phoneaccount/class_phoneAccount.inc:1610
 msgid "Macro settings"
 msgstr "Paramètres des macros"
@@ -1519,6 +1194,332 @@ msgid "The parameter %s contains invalid char. '!,#' is used as delimiter"
 msgstr ""
 "Le paramètre %s contient des caractères invalides. '!#' est utilisé comme "
 "séparateur"
+
+#: gofon/conference/headpage.tpl:6
+#: gofon/conference/class_divListConferences.inc:31
+#: gofon/conference/class_divListConferences.inc:32
+msgid "List of conference rooms"
+msgstr "Liste des salles de conférence"
+
+#: gofon/conference/headpage.tpl:24
+msgid ""
+"This menu allows you to create, delete and edit selected phone conferences. "
+"Having a large number of phone conferences, you might prefer the range "
+"selectors on top of the conferences list."
+msgstr ""
+"Ce menu vous permet de d'ajouter, supprimer et éditer les conférences "
+"sélectionnés. Si vous avez un grand nombre de conférences il est conseillé "
+"d'utiliser les filtres."
+
+#: gofon/conference/headpage.tpl:35
+msgid "Display users matching"
+msgstr "Afficher les utilisateurs correspondants"
+
+#: gofon/conference/headpage.tpl:36
+msgid "Regular expression for        matching user names"
+msgstr "Expression régulière concordant avec les noms des utilisateurs"
+
+#: gofon/conference/remove.tpl:6
+msgid ""
+"This includes 'all' accounts, systems, etc. in this subtree. Please double "
+"check if your really want to do this since there is no way for GOsa to get "
+"your data back."
+msgstr ""
+"Ceci inclus tous les comptes systèmes, etc... dans cette branche. Veuillez "
+"vérifier si vous voulez réaliser cette opération étant donné qu'il est "
+"impossible pour GOsa de récupérer vos données."
+
+#: gofon/conference/remove.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Il est conseillé de sauvegarder l'arbre de votre annuaire LDAP dans un "
+"fichier avant de réaliser cette action. Appuyez sur 'Supprimer' pour "
+"continuer ou 'Annuler' pour abandonner."
+
+#: gofon/conference/class_phoneConferenceManagment.inc:24
+msgid "Phone conferences"
+msgstr "Conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:25
+msgid "Management"
+msgstr "Gestion"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:206
+#: gofon/conference/class_phoneConferenceManagment.inc:267
+msgid "conference"
+msgstr "Conférence"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:228
+#: gofon/conference/class_phoneConferenceManagment.inc:288
+msgid "You have not permission to delete this entry!"
+msgstr "Vous n'avez pas les droits nécessaires pour supprimer cette entrée !"
+
+#: gofon/conference/generic.tpl:5
+msgid "Properties"
+msgstr "Propriétés"
+
+#: gofon/conference/generic.tpl:15 gofon/conference/paste_generic.tpl:5
+msgid "Conference name"
+msgstr "Nom de la conférence"
+
+#: gofon/conference/generic.tpl:21 gofon/conference/paste_generic.tpl:10
+msgid "Name of conference to create"
+msgstr "Nom de la conférence à créer"
+
+#: gofon/conference/generic.tpl:28
+msgid "Type"
+msgstr "Type"
+
+#: gofon/conference/generic.tpl:35
+msgid "Choose subtree to place conference in"
+msgstr "Sélectionnez la branche où sera enregistrée la conférence"
+
+#: gofon/conference/generic.tpl:82
+msgid "Select language"
+msgstr "Sélectionnez la langue"
+
+#: gofon/conference/generic.tpl:104
+msgid "Descriptive text for department"
+msgstr "Description du département"
+
+#: gofon/conference/generic.tpl:110
+msgid "Lifetime (in days)"
+msgstr "Durée (en jours)"
+
+#: gofon/conference/generic.tpl:157
+#: gofon/conference/class_phoneConferenceGeneric.inc:783
+msgid "Preset PIN"
+msgstr "Code PIN préselectionné"
+
+#: gofon/conference/generic.tpl:165
+#: gofon/conference/class_phoneConferenceGeneric.inc:384
+#: gofon/conference/class_divListConferences.inc:58
+msgid "PIN"
+msgstr "Code PIN"
+
+#: gofon/conference/generic.tpl:177
+#: gofon/conference/class_phoneConferenceGeneric.inc:784
+msgid "Record conference"
+msgstr "Enregistrer la conférence"
+
+#: gofon/conference/generic.tpl:185
+msgid "Sound file format"
+msgstr "Format du fichier son "
+
+#: gofon/conference/generic.tpl:188
+msgid "Choose subtree to place department in"
+msgstr ""
+"Sélectionnez la branche de l'annuaire dans laquelle sera placée le "
+"département"
+
+#: gofon/conference/generic.tpl:208
+#: gofon/conference/class_phoneConferenceGeneric.inc:785
+msgid "Play music on hold"
+msgstr "Musique d'attente"
+
+#: gofon/conference/generic.tpl:216
+msgid "Activate session menu"
+msgstr "Activer le menu de session"
+
+#: gofon/conference/generic.tpl:224
+msgid "Announce users joining or leaving the conference"
+msgstr "Annoncer les nouveaux utilisateurs et ceux qui quittent"
+
+#: gofon/conference/generic.tpl:232
+msgid "Count users"
+msgstr "Compter les utilisateurs"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:264
+#, php-format
+msgid "Cannot delete entry from server '%s' because it seems to be removed!"
+msgstr ""
+"Impossible d'effacer l'entrée du serveur '%s' parceque l'entrée semble avoir "
+"déjà été effacée !"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:379
+#, php-format
+msgid ""
+"The previously selected asterisk home server '%s' is no longer available!"
+msgstr ""
+"Le serveur asterisk primaire (%s) précédemment sélectionné n'est plus "
+"disponible !"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:396
+#: gofon/conference/class_phoneConferenceGeneric.inc:792
+msgid "Lifetime"
+msgstr "Durée"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:641
+#: gofon/conference/class_phoneConferenceGeneric.inc:643
+#, php-format
+msgid "'%s' is already assigned to '%s'!"
+msgstr "'%s' est déjà utilisé par '%s' !"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:765
+#: gofon/conference/class_divListConferences.inc:95
+#: gofon/conference/class_divListConferences.inc:208
+msgid "Conference"
+msgstr "Conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:766
+msgid "Phone conference management"
+msgstr "Gestion des conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:771
+msgid "GOfon conference"
+msgstr "Conférences téléphoniques"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:778
+msgid "Conference PIN"
+msgstr "Code Pin de la conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:786
+msgid "Activate menu"
+msgstr "Activer le menu"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:787
+msgid "Announce user activity"
+msgstr "Annoncer l'activité utilisateur"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:788
+msgid "Count user"
+msgstr "Compter les utilisateurs"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:789
+msgid "Conference type"
+msgstr "Type de conférence"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:791
+msgid "Format"
+msgstr "Format"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:794
+#: gofon/conference/class_divListConferences.inc:57
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: gofon/conference/main.inc:48 gofon/conference/main.inc:50
+msgid "Conference management"
+msgstr "Gestion des conférences"
+
+#: gofon/conference/class_divListConferences.inc:65
+msgid "Regular expression for matching conference names"
+msgstr "Expression régulière concordant avec les noms des conférences"
+
+#: gofon/conference/class_divListConferences.inc:150
+msgid "Edit this entry"
+msgstr "Editer cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:158
+msgid "Delete this entry"
+msgstr "Supprimer cette entrée"
+
+#: gofon/conference/class_divListConferences.inc:185
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: gofon/conference/class_divListConferences.inc:225
+#: gofon/conference/class_divListConferences.inc:226
+#, php-format
+msgid "Number of listed '%s'"
+msgstr "Nombre de '%s' listés"
+
+#: gofon/conference/class_divListConferences.inc:225
+msgid "conferences"
+msgstr "Conférences"
+
+#: gofon/fonreports/class_fonreport.inc:6
+msgid "Phone Reports"
+msgstr "Rapports téléphoniques"
+
+#: gofon/fonreports/class_fonreport.inc:210
+msgid "Insufficient permissions"
+msgstr "Permission insuffisantes"
+
+#: gofon/fonreports/class_fonreport.inc:229
+msgid "Y-M-D"
+msgstr "A-M-J"
+
+#: gofon/fonreports/class_fonreport.inc:396
+#: gofon/fonreports/class_fonreport.inc:397
+#: gofon/fonreports/class_fonreport.inc:404 gofon/fonreports/main.inc:22
+msgid "Phone reports"
+msgstr "Rapports téléphoniques"
+
+#: gofon/fonreports/class_fonreport.inc:397
+msgid "All entries are readonly"
+msgstr "Tous les champs sont en lecture seule"
+
+#: gofon/fonreports/class_fonreport.inc:409 gofon/fonreports/contents.tpl:30
+msgid "Date"
+msgstr "Date"
+
+#: gofon/fonreports/class_fonreport.inc:410 gofon/fonreports/contents.tpl:31
+msgid "Source"
+msgstr "Emetteur"
+
+#: gofon/fonreports/class_fonreport.inc:411 gofon/fonreports/contents.tpl:32
+msgid "Destination"
+msgstr "Destinataire"
+
+#: gofon/fonreports/class_fonreport.inc:412 gofon/fonreports/contents.tpl:33
+msgid "Channel"
+msgstr "Canal"
+
+#: gofon/fonreports/class_fonreport.inc:413
+msgid "Application called"
+msgstr "Application appelée"
+
+#: gofon/fonreports/class_fonreport.inc:414
+msgid "Disposition"
+msgstr ""
+
+#: gofon/fonreports/class_fonreport.inc:415 gofon/fonreports/contents.tpl:36
+msgid "Duration"
+msgstr "Durée"
+
+#: gofon/fonreports/contents.tpl:2
+msgid "Filter"
+msgstr "Filtre"
+
+#: gofon/fonreports/contents.tpl:6
+msgid "Search for"
+msgstr "Recherche de"
+
+#: gofon/fonreports/contents.tpl:7
+msgid "Enter user name to search for"
+msgstr "Entrez le nom recherché"
+
+#: gofon/fonreports/contents.tpl:8 gofon/fonreports/contents.tpl:16
+msgid "in"
+msgstr "dans"
+
+#: gofon/fonreports/contents.tpl:9
+msgid "Select subtree to base search on"
+msgstr "Sélectionnez la branche de l'annuaire où sera effectuée la recherche"
+
+#: gofon/fonreports/contents.tpl:12
+msgid "during"
+msgstr "pendant"
+
+#: gofon/fonreports/contents.tpl:21
+msgid "Search"
+msgstr "Recherche"
+
+#: gofon/fonreports/contents.tpl:34
+msgid "Application"
+msgstr "Applications"
+
+#: gofon/fonreports/contents.tpl:35
+msgid "Status"
+msgstr "Statut"
+
+#: gofon/fonreports/contents.tpl:51
+msgid "Search returned no results..."
+msgstr "La recherche n'a renvoyé aucun résultat..."
 
 #~ msgid "Addons"
 #~ msgstr "Extensions"

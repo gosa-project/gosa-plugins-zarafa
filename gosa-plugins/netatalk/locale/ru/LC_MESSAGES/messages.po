@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:34+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,21 +13,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
-
-#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:228
-#: personal/netatalk/class_netatalk.inc:382
-#, fuzzy
-msgid "Share"
-msgstr "сброс"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr ""
-
-#: personal/netatalk/main.inc:123
-#, fuzzy
-msgid "Netatalk settings"
-msgstr "Сетевые настройки"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:372
@@ -59,6 +44,12 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
+#: personal/netatalk/class_netatalk.inc:228
+#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+#, fuzzy
+msgid "Share"
+msgstr "сброс"
+
 #: personal/netatalk/class_netatalk.inc:292
 #: personal/netatalk/class_netatalk.inc:357
 #, fuzzy
@@ -73,6 +64,15 @@ msgstr "Моя учетная запись"
 #, fuzzy
 msgid "User home path"
 msgstr "Домашний телефон"
+
+#: personal/netatalk/main.inc:131
+#, fuzzy
+msgid "Netatalk settings"
+msgstr "Сетевые настройки"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr ""
 
 #, fuzzy
 #~ msgid "This account has no netatalk extensions."

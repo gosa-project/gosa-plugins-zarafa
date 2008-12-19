@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,23 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: addons/dak/class_dakqueue.inc:57
-#, fuzzy
-msgid "DAK queue"
-msgstr "Numero di telefono"
-
-#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
-#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
-#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
-#, fuzzy
-msgid "Addon"
-msgstr "Extra"
-
-#: addons/dak/class_dakqueue.inc:58
-#, fuzzy
-msgid "DAK queue management"
-msgstr "Riferimenti"
 
 #: addons/dak/dak_keyring.tpl:2 addons/dak/dak_queue.tpl:2
 #, fuzzy
@@ -48,21 +31,6 @@ msgstr "Cerca"
 #: addons/dak/dak_keyring.tpl:22
 msgid "Import"
 msgstr "Importa"
-
-#: addons/dak/dak_queue.tpl:11
-#, fuzzy
-msgid "Repositories"
-msgstr "Riprova"
-
-#: addons/dak/class_dakrepository.inc:43
-#, fuzzy
-msgid "DAK repository"
-msgstr "Directory"
-
-#: addons/dak/class_dakrepository.inc:44
-#, fuzzy
-msgid "DAK repository  management"
-msgstr "Directory"
 
 #: addons/dak/class_dakkeyring.inc:114
 msgid "Key ID"
@@ -109,19 +77,51 @@ msgstr "Esporta"
 msgid "DAK keyring"
 msgstr ""
 
+#: addons/dak/class_dakkeyring.inc:276 addons/dak/class_dakkeyring.inc:277
+#: addons/dak/class_dakrepository.inc:43 addons/dak/class_dakrepository.inc:44
+#: addons/dak/class_dakqueue.inc:57 addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "Addon"
+msgstr "Extra"
+
 #: addons/dak/class_dakkeyring.inc:277
 #, fuzzy
 msgid "DAK keyring management"
 msgstr "Riferimenti"
 
-#: addons/dak/main.inc:32
-msgid "DAK"
-msgstr ""
+#: addons/dak/dak_queue.tpl:11
+#, fuzzy
+msgid "Repositories"
+msgstr "Riprova"
+
+#: addons/dak/class_dakrepository.inc:43
+#, fuzzy
+msgid "DAK repository"
+msgstr "Directory"
+
+#: addons/dak/class_dakrepository.inc:44
+#, fuzzy
+msgid "DAK repository  management"
+msgstr "Directory"
 
 #: addons/dak/class_DAK.inc:80 addons/dak/class_DAK.inc:96
 #: addons/dak/class_DAK.inc:113
 msgid "Error"
 msgstr ""
+
+#: addons/dak/main.inc:46
+msgid "DAK"
+msgstr ""
+
+#: addons/dak/class_dakqueue.inc:57
+#, fuzzy
+msgid "DAK queue"
+msgstr "Numero di telefono"
+
+#: addons/dak/class_dakqueue.inc:58
+#, fuzzy
+msgid "DAK queue management"
+msgstr "Riferimenti"
 
 #~ msgid "Description"
 #~ msgstr "Descrizione"

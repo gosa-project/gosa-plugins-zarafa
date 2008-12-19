@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,9 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr ""
+
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:125
+#: personal/connectivity/main.inc:132
 msgid "Connectivity"
 msgstr "Conectividad"
 
@@ -37,10 +41,6 @@ msgstr "Mi cuenta"
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Connectivity addon"
 msgstr "Conectividad adicional"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr ""
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205

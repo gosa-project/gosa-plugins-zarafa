@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"在这个子树中包含了所有账号，系统等等。请再次检查您是否要这么做，因为 GOsa 没"
+"有办法将您的数据找回。"
+
+#: admin/systems/services/dns/servdns.tpl:14
+msgid "Following objects will be taken over"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:27
+#, fuzzy
+msgid "Take over DNS configuration from"
+msgstr "配置文件"
+
+#: admin/systems/services/dns/servdns.tpl:31
+#, fuzzy
+msgid "Take over"
+msgstr "主服务器"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "域"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_servDNS.inc:184
@@ -108,6 +139,29 @@ msgstr "网络地址"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:453
 msgid "Add"
 msgstr "添加"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr "此对话框允许您修改这个 DNS 区域中所有内容。"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+"这个对话框不能使用，除非当前编辑的域被保存或者域中条目已经存在于 ldap 数据库"
+"中。"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
+msgid "New entry"
+msgstr "新条目"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+msgid "Create a new DNS zone entry"
+msgstr "创建一个新 DNS zone 条目"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
 #: admin/systems/services/dns/class_servDNS.inc:547
@@ -214,11 +268,6 @@ msgstr "Mx记录"
 msgid "Zone records"
 msgstr "域记录"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "New entry"
-msgstr "新条目"
-
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
 #, fuzzy, php-format
 msgid "Cannot rename '%s' to '%s'. Name is already in use!"
@@ -262,6 +311,21 @@ msgstr ""
 msgid "Remove"
 msgstr "删除"
 
+#: admin/systems/services/dns/class_DNS.inc:161
+#, fuzzy, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, fuzzy, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
+
+#: admin/systems/services/dns/class_DNS.inc:628
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
+
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "通用配置"
@@ -302,70 +366,6 @@ msgstr "Mx记录"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "全局域记录"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
-msgid ""
-"This dialog allows you to configure all components of this DNS zone on a "
-"single list."
-msgstr "此对话框允许您修改这个 DNS 区域中所有内容。"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
-msgid ""
-"This dialog can't be used until the currently edited zone was saved or the "
-"zone entry exists in the ldap database."
-msgstr ""
-"这个对话框不能使用，除非当前编辑的域被保存或者域中条目已经存在于 ldap 数据库"
-"中。"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "Create a new DNS zone entry"
-msgstr "创建一个新 DNS zone 条目"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:7
-#, fuzzy
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"在这个子树中包含了所有账号，系统等等。请再次检查您是否要这么做，因为 GOsa 没"
-"有办法将您的数据找回。"
-
-#: admin/systems/services/dns/servdns.tpl:14
-msgid "Following objects will be taken over"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:27
-#, fuzzy
-msgid "Take over DNS configuration from"
-msgstr "配置文件"
-
-#: admin/systems/services/dns/servdns.tpl:31
-#, fuzzy
-msgid "Take over"
-msgstr "主服务器"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "域"
-
-#: admin/systems/services/dns/class_DNS.inc:161
-#, fuzzy, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr "无法找到 dns 域 '%s' 的反向解析。停止解析这个域。"
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, fuzzy, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr "找到 %s 域的一个以上的反向解析域。退出域解析。"
-
-#: admin/systems/services/dns/class_DNS.inc:628
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr ""
 
 #, fuzzy
 #~ msgid "Service start"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:38+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -13,6 +13,109 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: poEdit 1.3.1\n"
+
+#: admin/sudo/remove.tpl:2
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: admin/sudo/remove.tpl:9
+msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:295
+msgid "Error"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:337
+msgid "disabled"
+msgstr "отключен"
+
+#: admin/sudo/class_sudoGeneric.inc:338
+msgid "full access"
+msgstr "полный доступ"
+
+#: admin/sudo/class_sudoGeneric.inc:339
+msgid "allow access to these hosts"
+msgstr "разрешить доступ только на эти хосты"
+
+#: admin/sudo/class_sudoGeneric.inc:384
+#: admin/sudo/class_target_list_users.inc:177
+msgid "User"
+msgstr "Пользователь"
+
+#: admin/sudo/class_sudoGeneric.inc:385
+#: admin/sudo/class_target_list_users.inc:178
+msgid "Group"
+msgstr "Группа"
+
+#: admin/sudo/class_sudoGeneric.inc:533
+#, fuzzy
+msgid "LDAP error"
+msgstr "Ошибка LDAP:"
+
+#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
+#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
+#: admin/sudo/class_sudoGeneric.inc:669 admin/sudo/generic.tpl:7
+#: admin/sudo/generic.tpl:34 admin/sudo/paste_generic.tpl:5
+#: admin/sudo/class_divListSudo.inc:78
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/sudo/class_sudoGeneric.inc:660
+#, fuzzy
+msgid "Sudo"
+msgstr "Имя сервера"
+
+#: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
+#: admin/sudo/class_sudoManagement.inc:262
+#, fuzzy
+msgid "Sudo role"
+msgstr "состояние неизвестно"
+
+#: admin/sudo/class_sudoGeneric.inc:670 admin/sudo/generic.tpl:15
+#: admin/sudo/generic.tpl:44
+msgid "Description"
+msgstr "Описание"
+
+#: admin/sudo/class_sudoGeneric.inc:671
+msgid "Users"
+msgstr "Пользователи"
+
+#: admin/sudo/class_sudoGeneric.inc:672
+msgid "Host"
+msgstr ""
+
+#: admin/sudo/class_sudoGeneric.inc:673
+#, fuzzy
+msgid "Command"
+msgstr "и"
+
+#: admin/sudo/class_sudoGeneric.inc:674
+#, fuzzy
+msgid "Run as user"
+msgstr "Пользователи домена"
+
+#: admin/sudo/class_sudoGeneric.inc:675
+#, fuzzy
+msgid "Access control list"
+msgstr "Параметры доступа"
+
+#: admin/sudo/options.tpl:5
+msgid "Option name"
+msgstr ""
+
+#: admin/sudo/options.tpl:7
+msgid "Value"
+msgstr ""
+
+#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
+msgid "Options"
+msgstr "Параметры"
+
+#: admin/sudo/options.tpl:86
+#, fuzzy
+msgid "Available options"
+msgstr "Доступные приложения"
 
 #: admin/sudo/generic.tpl:3 admin/sudo/generic.tpl:30
 #: admin/sudo/paste_generic.tpl:1
@@ -22,19 +125,6 @@ msgstr "Общее"
 #: admin/sudo/generic.tpl:3 admin/sudo/paste_generic.tpl:1
 msgid "global defaults"
 msgstr ""
-
-#: admin/sudo/generic.tpl:7 admin/sudo/generic.tpl:34
-#: admin/sudo/paste_generic.tpl:5 admin/sudo/class_divListSudo.inc:78
-#: admin/sudo/class_sudoGeneric.inc:547 admin/sudo/class_sudoGeneric.inc:552
-#: admin/sudo/class_sudoGeneric.inc:557 admin/sudo/class_sudoGeneric.inc:566
-#: admin/sudo/class_sudoGeneric.inc:669
-msgid "Name"
-msgstr "Фамилия"
-
-#: admin/sudo/generic.tpl:15 admin/sudo/generic.tpl:44
-#: admin/sudo/class_sudoGeneric.inc:670
-msgid "Description"
-msgstr "Описание"
 
 #: admin/sudo/generic.tpl:55
 msgid "System trust"
@@ -66,22 +156,71 @@ msgstr ""
 msgid "Run as"
 msgstr ""
 
-#: admin/sudo/options.tpl:5
-msgid "Option name"
+#: admin/sudo/class_target_list_systems.inc:50
+msgid "Select the target objects for your scheduled action."
 msgstr ""
 
-#: admin/sudo/options.tpl:7
-msgid "Value"
+#: admin/sudo/class_target_list_systems.inc:51
+#: admin/sudo/class_target_list_systems.inc:52
+msgid "Available systems"
 msgstr ""
 
-#: admin/sudo/options.tpl:8 admin/sudo/class_sudoOption.inc:536
-msgid "Options"
-msgstr "Параметры"
+#: admin/sudo/class_target_list_systems.inc:61
+#: admin/sudo/class_target_list_users.inc:58
+msgid "Object name"
+msgstr "Имя объекта"
 
-#: admin/sudo/options.tpl:86
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Select to see terminals"
+msgstr "Выберите чтобы посмотреть терминалы"
+
+#: admin/sudo/class_target_list_systems.inc:64
+msgid "Show terminals"
+msgstr "Показать терминалы"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Select to see servers"
+msgstr "Выберите, чтобы просмотреть серверы"
+
+#: admin/sudo/class_target_list_systems.inc:65
+msgid "Show servers"
+msgstr "Показать серверы"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Select to see workstations"
+msgstr "Выберите чтобы посмотреть рабочие станции"
+
+#: admin/sudo/class_target_list_systems.inc:66
+msgid "Show workstations"
+msgstr "Показать рабочие станции"
+
+#: admin/sudo/class_target_list_systems.inc:73
+#: admin/sudo/class_target_list_users.inc:70
+msgid "Regular expression for matching group names"
+msgstr "Регулярное выражение, соответствующее именам групп"
+
+#: admin/sudo/class_target_list_systems.inc:140
+#: admin/sudo/class_target_list_users.inc:137
+msgid "Base"
+msgstr "Ветка"
+
+#: admin/sudo/class_target_list_systems.inc:142
+#: admin/sudo/class_target_list_users.inc:139
+msgid "Submit"
+msgstr ""
+
+#: admin/sudo/class_target_list_systems.inc:183
+msgid "Server"
+msgstr "Сервер"
+
+#: admin/sudo/class_target_list_systems.inc:185
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+#: admin/sudo/class_target_list_systems.inc:187
 #, fuzzy
-msgid "Available options"
-msgstr "Доступные приложения"
+msgid "Terminal"
+msgstr "Терминалы"
 
 #: admin/sudo/class_target_list_users.inc:47
 msgid "Select the target objects"
@@ -92,11 +231,6 @@ msgstr ""
 #, fuzzy
 msgid "Available members"
 msgstr "Доступные приложения"
-
-#: admin/sudo/class_target_list_users.inc:58
-#: admin/sudo/class_target_list_systems.inc:61
-msgid "Object name"
-msgstr "Имя объекта"
 
 #: admin/sudo/class_target_list_users.inc:60
 msgid "Select to see users"
@@ -114,42 +248,14 @@ msgstr ""
 msgid "Show groups"
 msgstr ""
 
-#: admin/sudo/class_target_list_users.inc:70
-#: admin/sudo/class_target_list_systems.inc:73
-msgid "Regular expression for matching group names"
-msgstr "Регулярное выражение, соответствующее именам групп"
-
-#: admin/sudo/class_target_list_users.inc:137
-#: admin/sudo/class_target_list_systems.inc:140
-msgid "Base"
-msgstr "Ветка"
-
 #: admin/sudo/class_target_list_users.inc:139
 msgid "Apply"
 msgstr "Применить"
 
-#: admin/sudo/class_target_list_users.inc:139
-#: admin/sudo/class_target_list_systems.inc:142
-msgid "Submit"
-msgstr ""
-
-#: admin/sudo/class_target_list_users.inc:177
-#: admin/sudo/class_sudoGeneric.inc:384
-msgid "User"
-msgstr "Пользователь"
-
-#: admin/sudo/class_target_list_users.inc:178
-#: admin/sudo/class_sudoGeneric.inc:385
-msgid "Group"
-msgstr "Группа"
-
-#: admin/sudo/remove.tpl:2
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: admin/sudo/remove.tpl:9
-msgid "If you're sure, press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
+#: admin/sudo/main.inc:50 admin/sudo/main.inc:54
+#, fuzzy
+msgid "Sudo role administration"
+msgstr "Управление группами"
 
 #: admin/sudo/class_sudoOption.inc:154
 msgid "Unknown option"
@@ -184,10 +290,25 @@ msgstr ""
 msgid "Sudo options"
 msgstr "состояние неизвестно"
 
-#: admin/sudo/main.inc:42 admin/sudo/main.inc:46
-#, fuzzy
-msgid "Sudo role administration"
-msgstr "Управление группами"
+#: admin/sudo/trust_machines.tpl:6
+msgid "Select systems to add"
+msgstr "Выберите системы для добавления"
+
+#: admin/sudo/trust_machines.tpl:26
+msgid "Display systems of department"
+msgstr "Показать системы в подразделении"
+
+#: admin/sudo/trust_machines.tpl:27
+msgid "Choose the department the search will be based on"
+msgstr "Выбрать раздел, для которого будет осуществлен поиск"
+
+#: admin/sudo/trust_machines.tpl:30
+msgid "Display systems matching"
+msgstr "Показать подходяшие системы"
+
+#: admin/sudo/trust_machines.tpl:31
+msgid "Regular expression for matching addresses"
+msgstr "Регулярное выражение для поиска адреса"
 
 #: admin/sudo/class_divListSudo.inc:51 admin/sudo/class_divListSudo.inc:52
 #, fuzzy
@@ -248,52 +369,6 @@ msgstr "Удалить"
 msgid "Number of listed roles"
 msgstr "Название группы"
 
-#: admin/sudo/class_target_list_systems.inc:50
-msgid "Select the target objects for your scheduled action."
-msgstr ""
-
-#: admin/sudo/class_target_list_systems.inc:51
-#: admin/sudo/class_target_list_systems.inc:52
-msgid "Available systems"
-msgstr ""
-
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Select to see terminals"
-msgstr "Выберите чтобы посмотреть терминалы"
-
-#: admin/sudo/class_target_list_systems.inc:64
-msgid "Show terminals"
-msgstr "Показать терминалы"
-
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Select to see servers"
-msgstr "Выберите, чтобы просмотреть серверы"
-
-#: admin/sudo/class_target_list_systems.inc:65
-msgid "Show servers"
-msgstr "Показать серверы"
-
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Select to see workstations"
-msgstr "Выберите чтобы посмотреть рабочие станции"
-
-#: admin/sudo/class_target_list_systems.inc:66
-msgid "Show workstations"
-msgstr "Показать рабочие станции"
-
-#: admin/sudo/class_target_list_systems.inc:183
-msgid "Server"
-msgstr "Сервер"
-
-#: admin/sudo/class_target_list_systems.inc:185
-msgid "Workstation"
-msgstr "Рабочая станция"
-
-#: admin/sudo/class_target_list_systems.inc:187
-#, fuzzy
-msgid "Terminal"
-msgstr "Терминалы"
-
 #: admin/sudo/class_sudoManagement.inc:31
 msgid "Sudo roles"
 msgstr ""
@@ -308,82 +383,7 @@ msgstr "Пользователи домена"
 msgid "Permission"
 msgstr "Права для членов группы"
 
-#: admin/sudo/class_sudoManagement.inc:262
-#: admin/sudo/class_sudoGeneric.inc:661 admin/sudo/class_sudoGeneric.inc:666
-#, fuzzy
-msgid "Sudo role"
-msgstr "состояние неизвестно"
-
 #: admin/sudo/class_sudoManagement.inc:295
 #, fuzzy
 msgid "Permission error"
 msgstr "Права для членов группы"
-
-#: admin/sudo/trust_machines.tpl:6
-msgid "Select systems to add"
-msgstr "Выберите системы для добавления"
-
-#: admin/sudo/trust_machines.tpl:26
-msgid "Display systems of department"
-msgstr "Показать системы в подразделении"
-
-#: admin/sudo/trust_machines.tpl:27
-msgid "Choose the department the search will be based on"
-msgstr "Выбрать раздел, для которого будет осуществлен поиск"
-
-#: admin/sudo/trust_machines.tpl:30
-msgid "Display systems matching"
-msgstr "Показать подходяшие системы"
-
-#: admin/sudo/trust_machines.tpl:31
-msgid "Regular expression for matching addresses"
-msgstr "Регулярное выражение для поиска адреса"
-
-#: admin/sudo/class_sudoGeneric.inc:295
-msgid "Error"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:337
-msgid "disabled"
-msgstr "отключен"
-
-#: admin/sudo/class_sudoGeneric.inc:338
-msgid "full access"
-msgstr "полный доступ"
-
-#: admin/sudo/class_sudoGeneric.inc:339
-msgid "allow access to these hosts"
-msgstr "разрешить доступ только на эти хосты"
-
-#: admin/sudo/class_sudoGeneric.inc:533
-#, fuzzy
-msgid "LDAP error"
-msgstr "Ошибка LDAP:"
-
-#: admin/sudo/class_sudoGeneric.inc:660
-#, fuzzy
-msgid "Sudo"
-msgstr "Имя сервера"
-
-#: admin/sudo/class_sudoGeneric.inc:671
-msgid "Users"
-msgstr "Пользователи"
-
-#: admin/sudo/class_sudoGeneric.inc:672
-msgid "Host"
-msgstr ""
-
-#: admin/sudo/class_sudoGeneric.inc:673
-#, fuzzy
-msgid "Command"
-msgstr "и"
-
-#: admin/sudo/class_sudoGeneric.inc:674
-#, fuzzy
-msgid "Run as user"
-msgstr "Пользователи домена"
-
-#: admin/sudo/class_sudoGeneric.inc:675
-#, fuzzy
-msgid "Access control list"
-msgstr "Параметры доступа"

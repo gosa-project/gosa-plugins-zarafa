@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -15,9 +15,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
+#: personal/connectivity/intranet.tpl:4
+#, fuzzy
+msgid "Intranet account"
+msgstr "Crea estensioni telefoniche"
+
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:125
+#: personal/connectivity/main.inc:132
 msgid "Connectivity"
 msgstr "Connettività"
 
@@ -36,11 +41,6 @@ msgstr "Identità"
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "Connettività"
-
-#: personal/connectivity/intranet.tpl:4
-#, fuzzy
-msgid "Intranet account"
-msgstr "Crea estensioni telefoniche"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205

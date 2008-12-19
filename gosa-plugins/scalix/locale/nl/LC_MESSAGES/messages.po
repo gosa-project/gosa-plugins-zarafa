@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -82,8 +82,8 @@ msgid "Notify user"
 msgstr "Tel het aantal gebruikers"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "E-mail adres"
@@ -281,13 +281,13 @@ msgstr "E-mail grootte"
 msgid "My account"
 msgstr "Mijn account"
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Gebruik de 'Bewerk' knop hieronder om de informatie in deze dialoog te "
 "veranderen"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 #, fuzzy
 msgid "Scalix settings"
 msgstr "E-mail instellingen"

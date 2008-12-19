@@ -104,8 +104,8 @@ class mailMethodKolab extends mailMethodCyrus
     $ret['SUB_CAT']['mail'][''] = _("Unspecified"); 
     $ret['SUB_CAT']['mail']['inbox']      = _("Inbox"); 
     $ret['SUB_CAT']['mail']['drafts']     = _("Drafts"); 
-    $ret['SUB_CAT']['mail']['sentitems']  = _("Sent items"); 
-    $ret['SUB_CAT']['mail']['junkemail']  = _("Junk mail"); 
+    $ret['SUB_CAT']['mail']['sentitems']  = _("Sent"); 
+    $ret['SUB_CAT']['mail']['junkemail']  = _("SPAM"); 
 
     $ret['SUB_CAT']['task']['defailt']     = _("Default"); 
     $ret['SUB_CAT']['journal']['defailt']  = _("Default"); 
@@ -227,7 +227,7 @@ class mailMethodKolab extends mailMethodCyrus
         $reason = _("Waiting for kolab to remove mail properties...");
         return(FALSE);
       }elseif(in_array("gosaMailAccount",$this->parent->attrs['objectClass'])){
-        $reason = _("Please remove the mail settings first to allow kolab to call its remove methods!");
+        $reason = _("Please remove the mail settings first!");
         return(FALSE);
       }
     }

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-06-09 17:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,9 +19,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "Intranet account"
+
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:125
+#: personal/connectivity/main.inc:132
 msgid "Connectivity"
 msgstr "Verbindingen"
 
@@ -39,10 +43,6 @@ msgstr "Mijn account"
 #: personal/connectivity/class_intranetAccount.inc:212
 msgid "Connectivity addon"
 msgstr "Verbindingen module"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "Intranet account"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -79,8 +79,8 @@ msgid "Notify user"
 msgstr "Paese"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "Indirizzo principale"
@@ -272,13 +272,13 @@ msgstr "Inoltra i messaggi a"
 msgid "My account"
 msgstr "Identità"
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
 "Click sul bottone 'Modifica' qui sotto per cambiare le informazioni in "
 "questo dialogo"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 #, fuzzy
 msgid "Scalix settings"
 msgstr "Opzioni di posta dell'identità"

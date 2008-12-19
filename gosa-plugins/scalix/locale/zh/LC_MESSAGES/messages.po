@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -79,8 +79,8 @@ msgid "Notify user"
 msgstr "计算机"
 
 #: admin/groups/scalix/class_scalixGroup.inc:35
-#: personal/scalix/generic.tpl:105 personal/scalix/paste_generic.tpl:4
-#: personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/generic.tpl:105 personal/scalix/class_scalixAccount.inc:476
+#: personal/scalix/paste_generic.tpl:4
 #, fuzzy
 msgid "Scalix email addresses"
 msgstr "邮件地址"
@@ -273,11 +273,11 @@ msgstr "邮件大小"
 msgid "My account"
 msgstr "我的账号"
 
-#: personal/scalix/main.inc:117
+#: personal/scalix/main.inc:126
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr "点击下面的“编辑”按钮修改该对话框内的信息"
 
-#: personal/scalix/main.inc:130
+#: personal/scalix/main.inc:139
 #, fuzzy
 msgid "Scalix settings"
 msgstr "邮件选项"

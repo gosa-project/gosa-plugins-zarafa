@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:35+0100\n"
 "PO-Revision-Date: 2008-11-30 19:54+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -23,6 +23,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/opsi/properties.tpl:1
+msgid "OPSI product properties"
+msgstr "Propriétés des produits OPSI"
+
+#: admin/opsi/properties.tpl:6
+msgid "This OPSI product has no options."
+msgstr "Ce produit OPSI n'a pas d'options."
 
 #: admin/opsi/generic.tpl:2
 msgid "OPSI host"
@@ -87,22 +95,6 @@ msgstr "Réveiller"
 msgid "Execute"
 msgstr "Exécuter"
 
-#: admin/opsi/class_opsiProperties.inc:107
-msgid "Products"
-msgstr "Produits"
-
-#: admin/opsi/class_opsiProperties.inc:108
-msgid "Product properties"
-msgstr "Propriétés du produit"
-
-#: admin/opsi/properties.tpl:1
-msgid "OPSI product properties"
-msgstr "Propriétés des produits OPSI"
-
-#: admin/opsi/properties.tpl:6
-msgid "This OPSI product has no options."
-msgstr "Ce produit OPSI n'a pas d'options."
-
 #: admin/opsi/class_opsi.inc:75 admin/opsi/class_opsigeneric.inc:709
 msgid "Opsi"
 msgstr ""
@@ -111,6 +103,11 @@ msgstr ""
 #, php-format
 msgid "More than one Opsi server were found, using the first result '%s'."
 msgstr "Plus d'un serveur Opsi on été trouvés, j'utilise le premier '%s'."
+
+#: admin/opsi/class_opsi.inc:155
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Erreur d'infrastructure"
 
 #: admin/opsi/class_opsigeneric.inc:217
 msgid "The field 'Name' must contain a domain part!"
@@ -161,3 +158,11 @@ msgstr "Informations Logiciels"
 #: admin/opsi/opsiware.tpl:14
 msgid "Device"
 msgstr "Périphériques"
+
+#: admin/opsi/class_opsiProperties.inc:107
+msgid "Products"
+msgstr "Produits"
+
+#: admin/opsi/class_opsiProperties.inc:108
+msgid "Product properties"
+msgstr "Propriétés du produit"

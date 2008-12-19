@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-04-03 14:16+0200\n"
 "Last-Translator: Jan Wenzel <jan.wenzel@gonicus.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -20,6 +20,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+msgid "DFS Management"
+msgstr "UDFS-Verwaltung"
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr "Dies tut etwas"
+
+#: addons/godfs/class_dfsManagment.inc:146
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr "LDAP-Fehler"
+
+#: addons/godfs/class_dfsManagment.inc:165
+msgid "No DFS entries found"
+msgstr "Keine DFS-Einträge gefunden"
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Go up one dfsshare"
+msgstr "Eine DFS-Freigabe nach oben"
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Up"
+msgstr "Auf"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Go to dfs root"
+msgstr "Gehe zur DFS-Wurzel"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Root"
+msgstr "Wurzel"
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Create new dfsshare"
+msgstr "Neue DFS-Freigabe erstellen"
+
+#: addons/godfs/class_dfsManagment.inc:212
+msgid "Base"
+msgstr "Basis"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit department"
+msgstr "Übertrage Abteilung"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit"
+msgstr "Übertragen"
+
+#: addons/godfs/class_dfsManagment.inc:242
+msgid "Finish"
+msgstr "Speichern"
 
 #: addons/godfs/generic.tpl:4
 msgid "DFS Properties"
@@ -49,62 +102,9 @@ msgstr "DFS-Pfad"
 msgid "Location"
 msgstr "Pfad"
 
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-#: addons/godfs/class_dfsManagment.inc:148
-msgid "LDAP error"
-msgstr "LDAP-Fehler"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+#: addons/godfs/main.inc:35 addons/godfs/main.inc:41
 msgid "Distributed File System Administration"
 msgstr "Verwaltung des Verteilten Dateisystems (DFS)"
-
-#: addons/godfs/class_dfsManagment.inc:8
-msgid "DFS Management"
-msgstr "UDFS-Verwaltung"
-
-#: addons/godfs/class_dfsManagment.inc:9
-msgid "This does something"
-msgstr "Dies tut etwas"
-
-#: addons/godfs/class_dfsManagment.inc:168
-msgid "No DFS entries found"
-msgstr "Keine DFS-Einträge gefunden"
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Go up one dfsshare"
-msgstr "Eine DFS-Freigabe nach oben"
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Up"
-msgstr "Auf"
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Go to dfs root"
-msgstr "Gehe zur DFS-Wurzel"
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Root"
-msgstr "Wurzel"
-
-#: addons/godfs/class_dfsManagment.inc:213
-msgid "Create new dfsshare"
-msgstr "Neue DFS-Freigabe erstellen"
-
-#: addons/godfs/class_dfsManagment.inc:215
-msgid "Base"
-msgstr "Basis"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit department"
-msgstr "Übertrage Abteilung"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit"
-msgstr "Übertragen"
-
-#: addons/godfs/class_dfsManagment.inc:245
-msgid "Finish"
-msgstr "Speichern"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"

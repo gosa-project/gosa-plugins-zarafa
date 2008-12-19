@@ -819,7 +819,7 @@ class mailgroup extends plugin
      */
     if($this->mailMethod->mailEqualsCN() && $this->initially_was_account){
       if($this->cn != $this->orig_cn){
-        $message[] = sprintf(_("The groups 'cn' has changed!  The cn attribute can't be changed due to the fact that this mail method '%s' relies on it.")
+        $message[] = sprintf(_("The group 'cn' has changed. It can't be changed due to the fact that mail method '%s' relies on it!")
             ,get_class($this->mailMethod));
       }
     }

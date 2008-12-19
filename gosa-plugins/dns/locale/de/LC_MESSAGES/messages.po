@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-10-07 18:29+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -20,6 +20,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr "DNS-Übernahme initiiert"
+
+#: admin/systems/services/dns/servdns.tpl:7
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"Dies umfasst 'alle' Konten, System- und Setup-Informationen dieses "
+"Teilbaums. Bitte prüfen Sie genau, ob Sie dies wünschen, da es keine "
+"Möglichkeit für GOsa gibt, die Daten wiederherzustellen. "
+
+#: admin/systems/services/dns/servdns.tpl:14
+msgid "Following objects will be taken over"
+msgstr "Die folgenden Objekte werden übernommen"
+
+#: admin/systems/services/dns/servdns.tpl:27
+msgid "Take over DNS configuration from"
+msgstr "Übernehmen der DNS-Konfiguration von"
+
+#: admin/systems/services/dns/servdns.tpl:31
+msgid "Take over"
+msgstr "Übernahme"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "Zonen"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_servDNS.inc:184
@@ -113,6 +142,32 @@ msgstr "Netzwerk-Klasse"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:453
 msgid "Add"
 msgstr "Hinzufügen"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr ""
+"Dieser Dialog erlaubt es Ihnen, alle Komponenten dieser DNS-Zone mithilfe "
+"einer einzelnen Liste zu konfigurieren."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+"Dieser Dialog kann nicht verwendet werden, bis die momentan geöffnete Zone "
+"gespeichert wurde und/oder der passende Eintrag in der LDAP-Datenbank "
+"existiert."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
+msgid "New entry"
+msgstr "Neuer Eintrag"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+msgid "Create a new DNS zone entry"
+msgstr "Einen neuen DNS-Zonen-Eintrag erstellen"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
 #: admin/systems/services/dns/class_servDNS.inc:547
@@ -219,11 +274,6 @@ msgstr "MX-Datensätze"
 msgid "Zone records"
 msgstr "Zonen-Datensätze"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "New entry"
-msgstr "Neuer Eintrag"
-
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
 #, php-format
 msgid "Cannot rename '%s' to '%s'. Name is already in use!"
@@ -270,6 +320,25 @@ msgstr "Bitte beheben Sie den doppelten Datensatz %s des Eintrags '%s'."
 msgid "Remove"
 msgstr "Entfernen"
 
+#: admin/systems/services/dns/class_DNS.inc:161
+#, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+"Konnte die Reverse-Zone für DNS-Zone '%s' nicht finden. Das Einlesen der "
+"Zone wurde abgebrochen."
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+"Es wurde mehr als eine Reverse-Zone für DNS-Zone '%s' gefunden. Das Einlesen "
+"der Zone wurde abgebrochen."
+
+#: admin/systems/services/dns/class_DNS.inc:628
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr "Unbekannter Zonenname '%s'!"
+
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "Allgemein"
@@ -312,72 +381,3 @@ msgstr "MX-Datensätze"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Globale Zonen-Datensätze"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
-msgid ""
-"This dialog allows you to configure all components of this DNS zone on a "
-"single list."
-msgstr ""
-"Dieser Dialog erlaubt es Ihnen, alle Komponenten dieser DNS-Zone mithilfe "
-"einer einzelnen Liste zu konfigurieren."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
-msgid ""
-"This dialog can't be used until the currently edited zone was saved or the "
-"zone entry exists in the ldap database."
-msgstr ""
-"Dieser Dialog kann nicht verwendet werden, bis die momentan geöffnete Zone "
-"gespeichert wurde und/oder der passende Eintrag in der LDAP-Datenbank "
-"existiert."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "Create a new DNS zone entry"
-msgstr "Einen neuen DNS-Zonen-Eintrag erstellen"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr "DNS-Übernahme initiiert"
-
-#: admin/systems/services/dns/servdns.tpl:7
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"Dies umfasst 'alle' Konten, System- und Setup-Informationen dieses "
-"Teilbaums. Bitte prüfen Sie genau, ob Sie dies wünschen, da es keine "
-"Möglichkeit für GOsa gibt, die Daten wiederherzustellen. "
-
-#: admin/systems/services/dns/servdns.tpl:14
-msgid "Following objects will be taken over"
-msgstr "Die folgenden Objekte werden übernommen"
-
-#: admin/systems/services/dns/servdns.tpl:27
-msgid "Take over DNS configuration from"
-msgstr "Übernehmen der DNS-Konfiguration von"
-
-#: admin/systems/services/dns/servdns.tpl:31
-msgid "Take over"
-msgstr "Übernahme"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "Zonen"
-
-#: admin/systems/services/dns/class_DNS.inc:161
-#, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr ""
-"Konnte die Reverse-Zone für DNS-Zone '%s' nicht finden. Das Einlesen der "
-"Zone wurde abgebrochen."
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr ""
-"Es wurde mehr als eine Reverse-Zone für DNS-Zone '%s' gefunden. Das Einlesen "
-"der Zone wurde abgebrochen."
-
-#: admin/systems/services/dns/class_DNS.inc:628
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr "Unbekannter Zonenname '%s'!"

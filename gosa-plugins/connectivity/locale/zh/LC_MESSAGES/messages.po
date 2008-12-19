@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,9 +16,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: personal/connectivity/intranet.tpl:4
+msgid "Intranet account"
+msgstr "内联网账号"
+
 #: personal/connectivity/class_connectivity.inc:15
 #: personal/connectivity/class_connectivity.inc:269
-#: personal/connectivity/main.inc:125
+#: personal/connectivity/main.inc:132
 msgid "Connectivity"
 msgstr "互联"
 
@@ -38,10 +42,6 @@ msgstr "我的账号"
 #, fuzzy
 msgid "Connectivity addon"
 msgstr "互联"
-
-#: personal/connectivity/intranet.tpl:4
-msgid "Intranet account"
-msgstr "内联网账号"
 
 #: personal/connectivity/class_intranetAccount.inc:16
 #: personal/connectivity/class_intranetAccount.inc:205

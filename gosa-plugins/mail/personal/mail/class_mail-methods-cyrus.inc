@@ -36,7 +36,7 @@ class mailMethodCyrus extends mailMethod{
     mailMethod::connect();
 
     if(!count($this->ServerList)){
-      $this->error = _("There are no imap compatible mail servers defined!");
+      $this->error = _("There are no IMAP compatible mail servers defined!");
       @DEBUG (DEBUG_MAIL, __LINE__, __FUNCTION__, __FILE__,
           "<b>IMAP: No mail servers configured, check systems->server->service->imap.</b>","");
       return(FALSE);

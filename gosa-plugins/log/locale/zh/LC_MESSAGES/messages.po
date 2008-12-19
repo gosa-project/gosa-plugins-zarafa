@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:33+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -63,6 +63,64 @@ msgstr "日志数据库"
 #: admin/systems/services/log/gosaLogServer.tpl:12
 msgid "Database user"
 msgstr "数据库用户"
+
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr "过滤器"
+
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr "显示主机"
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "行动"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "时间间隔"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "查询"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "输入要查询的字符串"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "规则集"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "编辑"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "查找"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "日期"
+
+#: addons/logview/gosa_log_contents.tpl:85
+#, fuzzy
+msgid "Object type"
+msgstr "对象名称"
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "对象"
+
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "信息"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "查无结果..."
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
 #: addons/logview/class_gosa_logview.inc:6
@@ -158,67 +216,19 @@ msgstr "日志级别"
 msgid "Log view addon"
 msgstr "向下移动"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "过滤器"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "显示主机"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "行动"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "时间间隔"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "查询"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "输入要查询的字符串"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "规则集"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "编辑"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "查找"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "日期"
-
-#: addons/logview/gosa_log_contents.tpl:85
-#, fuzzy
-msgid "Object type"
-msgstr "对象名称"
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "对象"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "信息"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "查无结果..."
-
-#: addons/logview/main.inc:34
+#: addons/logview/main.inc:49
 msgid "System log view"
 msgstr "系统日志显示"
+
+#: addons/logview/class_gosa_logview.inc:201
+#, fuzzy
+msgid "You have insufficient permissions to view syslog entries."
+msgstr "您无权查看和编辑 ACL。"
+
+#: addons/logview/class_gosa_logview.inc:236
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
 
 #: addons/logview/contents.tpl:20
 msgid "Log level"
@@ -231,16 +241,6 @@ msgstr "级别"
 #: addons/logview/contents.tpl:83
 msgid "Hostname"
 msgstr "主机名"
-
-#: addons/logview/class_gosa_logview.inc:201
-#, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "您无权查看和编辑 ACL。"
-
-#: addons/logview/class_gosa_logview.inc:236
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
 
 #~ msgid "Save"
 #~ msgstr "保存"

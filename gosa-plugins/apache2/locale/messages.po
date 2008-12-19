@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/systems/services/apache2/class_apacheUtils.inc:194
-#, php-format
-msgid ""
-"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
-"or example.com'."
+#: admin/systems/services/apache2/servApacheVhost.tpl:1
+msgid "Apache VHosts"
+msgstr ""
+
+#: admin/systems/services/apache2/servApacheVhost.tpl:8
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
+msgid "Add"
 msgstr ""
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:298
@@ -73,14 +76,28 @@ msgstr ""
 msgid "Script alias"
 msgstr ""
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:1
-msgid "Apache VHosts"
+#: admin/systems/services/apache2/class_servApacheVhost.inc:61
+#: admin/systems/services/apache2/class_servApacheVhost.inc:284
+#: admin/systems/services/apache2/class_servApacheVhost.inc:297
+msgid "Apache service"
 msgstr ""
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:8
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
-msgid "Add"
+#: admin/systems/services/apache2/class_servApacheVhost.inc:237
+#: admin/systems/services/apache2/class_servApacheVhost.inc:248
+#: admin/systems/services/apache2/class_servApacheVhost.inc:271
+msgid "LDAP error"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Apache virtual host service"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Services"
+msgstr ""
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:306
+msgid "Virtual hosts"
 msgstr ""
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
@@ -119,26 +136,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:61
-#: admin/systems/services/apache2/class_servApacheVhost.inc:284
-#: admin/systems/services/apache2/class_servApacheVhost.inc:297
-msgid "Apache service"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:237
-#: admin/systems/services/apache2/class_servApacheVhost.inc:248
-#: admin/systems/services/apache2/class_servApacheVhost.inc:271
-msgid "LDAP error"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
-msgid "Apache virtual host service"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
-msgid "Services"
-msgstr ""
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:306
-msgid "Virtual hosts"
+#: admin/systems/services/apache2/class_apacheUtils.inc:194
+#, php-format
+msgid ""
+"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
+"or example.com'."
 msgstr ""

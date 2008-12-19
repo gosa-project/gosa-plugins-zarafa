@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:37+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,65 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:6
-msgid "FTP account"
-msgstr "Estenzioni FTP"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:17
-msgid "Bandwidth"
-msgstr "Banda"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:21
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
-msgid "Upload bandwidth"
-msgstr "Banda di upload"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:26
-#: personal/connectivity/pureftpd/pureftpd.tpl:34
-msgid "kb/s"
-msgstr "kb/s"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:29
-#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
-msgid "Download bandwidth"
-msgstr "Banda di download"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:45
-msgid "Quota"
-msgstr "Quota"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:49
-msgid "Files"
-msgstr "File"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:57
-msgid "Size"
-msgstr "Dimensione"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:62
-msgid "MB"
-msgstr "Mb"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:73
-msgid "Ratio"
-msgstr "Rapporto"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:77
-msgid "Uploaded / downloaded files"
-msgstr "File in upload / File in download"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:95
-msgid "Miscellaneous"
-msgstr "Misc"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:100
-msgid "Check to disable FTP Access"
-msgstr "Seleziona per disabilitale l'accesso FTP"
-
-#: personal/connectivity/pureftpd/pureftpd.tpl:102
-msgid "Temporary disable FTP access"
-msgstr "Disabilita temporaneamente l'accesso FTP"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:6
 msgid "FTP"
@@ -87,6 +28,16 @@ msgstr "Questo fa qualcosa"
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:191
+#: personal/connectivity/pureftpd/pureftpd.tpl:21
+msgid "Upload bandwidth"
+msgstr "Banda di upload"
+
+#: personal/connectivity/pureftpd/class_pureftpdAccount.inc:194
+#: personal/connectivity/pureftpd/pureftpd.tpl:29
+msgid "Download bandwidth"
+msgstr "Banda di download"
 
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:198
 #, fuzzy
@@ -152,6 +103,55 @@ msgstr "Banda di download"
 #: personal/connectivity/pureftpd/class_pureftpdAccount.inc:277
 msgid "Status"
 msgstr "Stato"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:6
+msgid "FTP account"
+msgstr "Estenzioni FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:17
+msgid "Bandwidth"
+msgstr "Banda"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:26
+#: personal/connectivity/pureftpd/pureftpd.tpl:34
+msgid "kb/s"
+msgstr "kb/s"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:45
+msgid "Quota"
+msgstr "Quota"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:49
+msgid "Files"
+msgstr "File"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:57
+msgid "Size"
+msgstr "Dimensione"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:62
+msgid "MB"
+msgstr "Mb"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:73
+msgid "Ratio"
+msgstr "Rapporto"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:77
+msgid "Uploaded / downloaded files"
+msgstr "File in upload / File in download"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:95
+msgid "Miscellaneous"
+msgstr "Misc"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:100
+msgid "Check to disable FTP Access"
+msgstr "Seleziona per disabilitale l'accesso FTP"
+
+#: personal/connectivity/pureftpd/pureftpd.tpl:102
+msgid "Temporary disable FTP access"
+msgstr "Disabilita temporaneamente l'accesso FTP"
 
 #, fuzzy
 #~ msgid "Removing of user/pureftpd account with dn '%s' failed."

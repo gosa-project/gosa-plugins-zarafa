@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-06-04 09:22+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -13,6 +13,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+msgid "DFS Management"
+msgstr "Gestion DFS"
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr "Ceci fait quelque chose"
+
+#: addons/godfs/class_dfsManagment.inc:146
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: addons/godfs/class_dfsManagment.inc:165
+msgid "No DFS entries found"
+msgstr "Pas d'entrée DFS trouvées"
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Go up one dfsshare"
+msgstr "Monter d'un partage DFS"
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Up"
+msgstr "Au dessus"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Go to dfs root"
+msgstr "Aller au répertoire racine de DFS"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Root"
+msgstr "Racine"
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Create new dfsshare"
+msgstr "Création d'un nouveau partage dfs"
+
+#: addons/godfs/class_dfsManagment.inc:212
+msgid "Base"
+msgstr "Base"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit department"
+msgstr "Soumettre le département"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit"
+msgstr "Soumettre"
+
+#: addons/godfs/class_dfsManagment.inc:242
+msgid "Finish"
+msgstr "Terminé"
 
 #: addons/godfs/generic.tpl:4
 msgid "DFS Properties"
@@ -42,62 +95,9 @@ msgstr "Location DFS"
 msgid "Location"
 msgstr "Lieu"
 
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-#: addons/godfs/class_dfsManagment.inc:148
-msgid "LDAP error"
-msgstr "Erreur LDAP"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+#: addons/godfs/main.inc:35 addons/godfs/main.inc:41
 msgid "Distributed File System Administration"
 msgstr "Administration du systèmes de fichiers distribués DFS"
-
-#: addons/godfs/class_dfsManagment.inc:8
-msgid "DFS Management"
-msgstr "Gestion DFS"
-
-#: addons/godfs/class_dfsManagment.inc:9
-msgid "This does something"
-msgstr "Ceci fait quelque chose"
-
-#: addons/godfs/class_dfsManagment.inc:168
-msgid "No DFS entries found"
-msgstr "Pas d'entrée DFS trouvées"
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Go up one dfsshare"
-msgstr "Monter d'un partage DFS"
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Up"
-msgstr "Au dessus"
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Go to dfs root"
-msgstr "Aller au répertoire racine de DFS"
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Root"
-msgstr "Racine"
-
-#: addons/godfs/class_dfsManagment.inc:213
-msgid "Create new dfsshare"
-msgstr "Création d'un nouveau partage dfs"
-
-#: addons/godfs/class_dfsManagment.inc:215
-msgid "Base"
-msgstr "Base"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit department"
-msgstr "Soumettre le département"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit"
-msgstr "Soumettre"
-
-#: addons/godfs/class_dfsManagment.inc:245
-msgid "Finish"
-msgstr "Terminé"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"

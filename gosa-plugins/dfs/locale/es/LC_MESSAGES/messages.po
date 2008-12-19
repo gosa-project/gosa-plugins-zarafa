@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -16,6 +16,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+msgid "DFS Management"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:146
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#, fuzzy
+msgid "LDAP error"
+msgstr "Servicio LDAP"
+
+#: addons/godfs/class_dfsManagment.inc:165
+msgid "No DFS entries found"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Go up one dfsshare"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Up"
+msgstr "Arriba"
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Go to dfs root"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Root"
+msgstr "Raíz"
+
+#: addons/godfs/class_dfsManagment.inc:210
+msgid "Create new dfsshare"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:212
+msgid "Base"
+msgstr "Base"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit department"
+msgstr "Enviar departamento"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit"
+msgstr "Enviar"
+
+#: addons/godfs/class_dfsManagment.inc:242
+msgid "Finish"
+msgstr "Terminar"
 
 #: addons/godfs/generic.tpl:4
 msgid "DFS Properties"
@@ -45,63 +99,9 @@ msgstr ""
 msgid "Location"
 msgstr "Localización"
 
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-#: addons/godfs/class_dfsManagment.inc:148
-#, fuzzy
-msgid "LDAP error"
-msgstr "Servicio LDAP"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+#: addons/godfs/main.inc:35 addons/godfs/main.inc:41
 msgid "Distributed File System Administration"
 msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:8
-msgid "DFS Management"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:9
-msgid "This does something"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:168
-msgid "No DFS entries found"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Go up one dfsshare"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Up"
-msgstr "Arriba"
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Go to dfs root"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Root"
-msgstr "Raíz"
-
-#: addons/godfs/class_dfsManagment.inc:213
-msgid "Create new dfsshare"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:215
-msgid "Base"
-msgstr "Base"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit department"
-msgstr "Enviar departamento"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit"
-msgstr "Enviar"
-
-#: addons/godfs/class_dfsManagment.inc:245
-msgid "Finish"
-msgstr "Terminar"
 
 #: addons/godfs/contents.tpl:8
 msgid "DFS Shares"
@@ -109,7 +109,7 @@ msgstr ""
 
 #: addons/godfs/contents.tpl:22
 msgid "Information"
-msgstr ""
+msgstr "Información"
 
 #: addons/godfs/contents.tpl:26
 msgid ""
@@ -120,7 +120,7 @@ msgstr ""
 
 #: addons/godfs/contents.tpl:31
 msgid "Filters"
-msgstr ""
+msgstr "Filtros"
 
 #: addons/godfs/contents.tpl:40
 msgid "Display dfs shares matching"

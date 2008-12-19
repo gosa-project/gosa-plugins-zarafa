@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-08-12 12:32+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -17,14 +17,15 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#: admin/systems/services/apache2/class_apacheUtils.inc:194
-#, php-format
-msgid ""
-"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
-"or example.com'."
-msgstr ""
-"Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
-"'www.exemple.com ou exemple.com'"
+#: admin/systems/services/apache2/servApacheVhost.tpl:1
+msgid "Apache VHosts"
+msgstr "Hôtes virtuels Apache"
+
+#: admin/systems/services/apache2/servApacheVhost.tpl:8
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
+#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
+msgid "Add"
+msgstr "Ajouter"
 
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:298
 #: admin/systems/services/apache2/class_servApacheEditVhost.inc:317
@@ -77,15 +78,29 @@ msgstr ""
 msgid "Script alias"
 msgstr ""
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:1
-msgid "Apache VHosts"
-msgstr "Hôtes virtuels Apache"
+#: admin/systems/services/apache2/class_servApacheVhost.inc:61
+#: admin/systems/services/apache2/class_servApacheVhost.inc:284
+#: admin/systems/services/apache2/class_servApacheVhost.inc:297
+msgid "Apache service"
+msgstr "Service Apache"
 
-#: admin/systems/services/apache2/servApacheVhost.tpl:8
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:54
-#: admin/systems/services/apache2/servApacheVhostEdit.tpl:98
-msgid "Add"
-msgstr "Ajouter"
+#: admin/systems/services/apache2/class_servApacheVhost.inc:237
+#: admin/systems/services/apache2/class_servApacheVhost.inc:248
+#: admin/systems/services/apache2/class_servApacheVhost.inc:271
+msgid "LDAP error"
+msgstr "Erreur LDAP"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Apache virtual host service"
+msgstr "Service de nom d'hôte virtuel apache"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:298
+msgid "Services"
+msgstr "Services"
+
+#: admin/systems/services/apache2/class_servApacheVhost.inc:306
+msgid "Virtual hosts"
+msgstr "Hôtes virtuels"
 
 #: admin/systems/services/apache2/servApacheVhostEdit.tpl:1
 msgid "Generic"
@@ -123,26 +138,11 @@ msgstr "Sauver"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: admin/systems/services/apache2/class_servApacheVhost.inc:61
-#: admin/systems/services/apache2/class_servApacheVhost.inc:284
-#: admin/systems/services/apache2/class_servApacheVhost.inc:297
-msgid "Apache service"
-msgstr "Service Apache"
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:237
-#: admin/systems/services/apache2/class_servApacheVhost.inc:248
-#: admin/systems/services/apache2/class_servApacheVhost.inc:271
-msgid "LDAP error"
-msgstr "Erreur LDAP"
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
-msgid "Apache virtual host service"
-msgstr "Service de nom d'hôte virtuel apache"
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:298
-msgid "Services"
-msgstr "Services"
-
-#: admin/systems/services/apache2/class_servApacheVhost.inc:306
-msgid "Virtual hosts"
-msgstr "Hôtes virtuels"
+#: admin/systems/services/apache2/class_apacheUtils.inc:194
+#, php-format
+msgid ""
+"Undefined vhost name '%s'. Vhost name must look like this 'www.example.com "
+"or example.com'."
+msgstr ""
+"Nom d'hôte virtuel inconnu '%s'. Le nom d'hôte virtuel doit être comme ceci "
+"'www.exemple.com ou exemple.com'"

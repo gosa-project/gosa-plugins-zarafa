@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:30+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -52,11 +52,11 @@ msgstr "Параметры"
 #: admin/ogroups/gofon/phonequeue.tpl:50
 #: admin/ogroups/gofon/class_phonequeue.inc:305
 #: admin/ogroups/gofon/class_phonequeue.inc:929
-#: gofon/conference/generic.tpl:68
-#: gofon/conference/class_phoneConferenceGeneric.inc:782
 #: gofon/phoneaccount/generic.tpl:58
 #: gofon/phoneaccount/class_phoneAccount.inc:1273
 #: gofon/phoneaccount/class_phoneAccount.inc:1612
+#: gofon/conference/generic.tpl:68
+#: gofon/conference/class_phoneConferenceGeneric.inc:782
 #, fuzzy
 msgid "Home server"
 msgstr "Сервисы"
@@ -194,15 +194,15 @@ msgid "Ring instead of playing background music"
 msgstr ""
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #, fuzzy
 msgid "Obsolete entry"
 msgstr "Удалить"
 
 #: admin/ogroups/gofon/class_phonequeue.inc:91
-#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #: gofon/phoneaccount/class_phoneAccount.inc:134
+#: gofon/conference/class_phoneConferenceGeneric.inc:103
 #, php-format
 msgid ""
 "The current home server is not available anymore. It will be moved to '%s' "
@@ -278,13 +278,13 @@ msgstr "Дата"
 #: admin/ogroups/gofon/class_phonequeue.inc:378
 #: admin/ogroups/gofon/class_phonequeue.inc:732
 #: gofon/macro/class_gofonMacro.inc:392 gofon/macro/class_gofonMacro.inc:471
+#: gofon/phoneaccount/class_phoneAccount.inc:363
+#: gofon/phoneaccount/class_phoneAccount.inc:972
 #: gofon/conference/class_phoneConferenceGeneric.inc:430
 #: gofon/fonreports/class_fonreport.inc:166
 #: gofon/fonreports/class_fonreport.inc:176
 #: gofon/fonreports/class_fonreport.inc:180
 #: gofon/fonreports/class_fonreport.inc:198
-#: gofon/phoneaccount/class_phoneAccount.inc:363
-#: gofon/phoneaccount/class_phoneAccount.inc:972
 #, fuzzy
 msgid "GOfon"
 msgstr "Телефонные отчеты"
@@ -311,17 +311,17 @@ msgstr "Телефонные номера"
 #: admin/systems/gofon/class_phoneGeneric.inc:272
 #: gofon/macro/class_gofonMacro.inc:458 gofon/macro/class_gofonMacro.inc:467
 #: gofon/macro/class_gofonMacro.inc:505
-#: gofon/conference/class_phoneConferenceGeneric.inc:260
-#: gofon/conference/class_phoneConferenceGeneric.inc:264
-#: gofon/fonreports/class_fonreport.inc:176
-#: gofon/fonreports/class_fonreport.inc:180
-#: gofon/fonreports/class_fonreport.inc:198
 #: gofon/phoneaccount/class_phoneAccount.inc:958
 #: gofon/phoneaccount/class_phoneAccount.inc:1077
 #: gofon/phoneaccount/class_phoneAccount.inc:1350
 #: gofon/phoneaccount/class_phoneAccount.inc:1422
 #: gofon/phoneaccount/class_phoneAccount.inc:1432
 #: gofon/phoneaccount/class_phoneAccount.inc:1466
+#: gofon/conference/class_phoneConferenceGeneric.inc:260
+#: gofon/conference/class_phoneConferenceGeneric.inc:264
+#: gofon/fonreports/class_fonreport.inc:176
+#: gofon/fonreports/class_fonreport.inc:180
+#: gofon/fonreports/class_fonreport.inc:198
 msgid "Error"
 msgstr ""
 
@@ -335,9 +335,9 @@ msgstr ""
 #: gofon/macro/class_gofonMacroParameters.inc:401
 #: gofon/macro/class_gofonMacro.inc:479 gofon/macro/class_gofonMacro.inc:490
 #: gofon/macro/class_gofonMacro.inc:526
-#: gofon/conference/class_phoneConferenceGeneric.inc:718
 #: gofon/phoneaccount/class_phoneAccount.inc:1377
 #: gofon/phoneaccount/class_phoneAccount.inc:1513
+#: gofon/conference/class_phoneConferenceGeneric.inc:718
 #, fuzzy
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
@@ -509,10 +509,6 @@ msgstr "Каталог"
 msgid "Country code"
 msgstr "Учетная запись"
 
-#: admin/systems/gofon/paste_generic.tpl:3 admin/systems/gofon/phone.tpl:6
-msgid "Phone name"
-msgstr "Название"
-
 #: admin/systems/gofon/phonesettings.tpl:1
 #, fuzzy
 msgid "Advanced phone settings"
@@ -608,10 +604,14 @@ msgstr "У вас недостаточно прав для удаления эт
 msgid "MSN"
 msgstr ""
 
+#: admin/systems/gofon/paste_generic.tpl:3 admin/systems/gofon/phone.tpl:6
+msgid "Phone name"
+msgstr "Название"
+
 #: admin/systems/gofon/phone.tpl:17
-#: admin/systems/gofon/class_phoneGeneric.inc:517 gofon/macro/generic.tpl:27
+#: admin/systems/gofon/class_phoneGeneric.inc:517
 #: gofon/macro/class_gofonMacro.inc:573 gofon/macro/class_divListMacros.inc:79
-#: gofon/conference/generic.tpl:49
+#: gofon/macro/generic.tpl:27 gofon/conference/generic.tpl:49
 #: gofon/conference/class_phoneConferenceGeneric.inc:776
 #: gofon/conference/class_divListConferences.inc:83
 msgid "Base"
@@ -628,8 +628,9 @@ msgid "Select a base"
 msgstr "Выберите, чтобы просмотреть серверы"
 
 #: admin/systems/gofon/phone.tpl:34
-#: admin/systems/gofon/class_phoneGeneric.inc:518 gofon/macro/generic.tpl:49
-#: gofon/macro/class_gofonMacro.inc:574 gofon/conference/generic.tpl:98
+#: admin/systems/gofon/class_phoneGeneric.inc:518
+#: gofon/macro/class_gofonMacro.inc:574 gofon/macro/generic.tpl:49
+#: gofon/conference/generic.tpl:98
 #: gofon/conference/class_phoneConferenceGeneric.inc:777
 msgid "Description"
 msgstr "Описание"
@@ -765,8 +766,8 @@ msgid "List of macros"
 msgstr "Список групп"
 
 #: gofon/macro/headpage.tpl:20 gofon/macro/class_gofonMacroParameters.inc:374
-#: gofon/conference/headpage.tpl:20
 #: gofon/phoneaccount/class_phoneAccount.inc:1504
+#: gofon/conference/headpage.tpl:20
 msgid "Information"
 msgstr "Информация"
 
@@ -800,61 +801,25 @@ msgstr "Шаблон для групп"
 msgid "Regular expression for matching macro names"
 msgstr "Регулярное выражение, соответствующее именам групп"
 
-#: gofon/macro/generic.tpl:6 gofon/macro/generic.tpl:9
-#: gofon/macro/paste_generic.tpl:4 gofon/macro/paste_generic.tpl:6
-#: gofon/macro/class_gofonMacro.inc:572
-#, fuzzy
-msgid "Macro name"
-msgstr "Название"
+#: gofon/macro/remove.tpl:2 gofon/conference/remove.tpl:2
+msgid "Warning"
+msgstr "Предупреждение"
 
-#: gofon/macro/generic.tpl:14 gofon/macro/class_gofonMacro.inc:575
-msgid "Display name"
-msgstr "Отображаемое имя"
-
-#: gofon/macro/generic.tpl:18
-msgid "Macro name to be displayed"
+#: gofon/macro/remove.tpl:6
+msgid ""
+"This may be used by several groups. Please double check if your really want "
+"to do this since there is no way for GOsa to get your data back."
 msgstr ""
+"Это приложение может использоваться несколькими группами. Подумайте еще раз, "
+"действительно ли вы хотите удалить его, так как GOsa не сможет отменить "
+"результаты этой операции."
 
-#: gofon/macro/generic.tpl:60
+#: gofon/macro/remove.tpl:9
 #, fuzzy
-msgid "Visible for user"
-msgstr "Список пользователей"
-
-#: gofon/macro/generic.tpl:70
-#, fuzzy
-msgid "Macro text"
-msgstr "Название"
-
-#: gofon/macro/class_gofonMacroManagement.inc:24
-#, fuzzy
-msgid "Phone macros"
-msgstr "Телефонные отчеты"
-
-#: gofon/macro/class_gofonMacroManagement.inc:25
-#: gofon/fonreports/class_fonreport.inc:7
-#: gofon/phoneaccount/class_phoneAccount.inc:7
-msgid "This does something"
-msgstr "Что-то будет"
-
-#: gofon/macro/class_gofonMacroManagement.inc:273
-#: gofon/conference/class_phoneConferenceManagment.inc:187
-#, fuzzy
-msgid "Permission"
-msgstr "Права для членов группы"
-
-#: gofon/macro/class_gofonMacroManagement.inc:320
-#: gofon/macro/class_gofonMacroManagement.inc:373
-#: gofon/macro/class_gofonMacroManagement.inc:397
-#: gofon/conference/class_phoneConferenceManagment.inc:228
-#: gofon/conference/class_phoneConferenceManagment.inc:289
-#, fuzzy
-msgid "Permission error"
-msgstr "Права для членов группы"
-
-#: gofon/macro/class_gofonMacroManagement.inc:366
-#, fuzzy
-msgid "macro"
-msgstr "Название"
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
+"нажмите <i>Отмена</i>."
 
 #: gofon/macro/class_gofonMacroParameters.inc:200
 #: gofon/phoneaccount/generic.tpl:125 gofon/phoneaccount/generic.tpl:127
@@ -921,12 +886,12 @@ msgid "Macro is empty!"
 msgstr "Название"
 
 #: gofon/macro/class_gofonMacro.inc:471
-#: gofon/fonreports/class_fonreport.inc:166
-#: gofon/fonreports/class_fonreport.inc:169
 #: gofon/phoneaccount/class_phoneAccount.inc:363
 #: gofon/phoneaccount/class_phoneAccount.inc:371
 #: gofon/phoneaccount/class_phoneAccount.inc:972
 #: gofon/phoneaccount/class_phoneAccount.inc:1471
+#: gofon/fonreports/class_fonreport.inc:166
+#: gofon/fonreports/class_fonreport.inc:169
 #, fuzzy
 msgid "Configuration error"
 msgstr "Настроить"
@@ -941,6 +906,17 @@ msgstr "Управление системами"
 msgid "GOfon macro"
 msgstr "Телефонные отчеты"
 
+#: gofon/macro/class_gofonMacro.inc:572 gofon/macro/generic.tpl:6
+#: gofon/macro/generic.tpl:9 gofon/macro/paste_generic.tpl:4
+#: gofon/macro/paste_generic.tpl:6
+#, fuzzy
+msgid "Macro name"
+msgstr "Название"
+
+#: gofon/macro/class_gofonMacro.inc:575 gofon/macro/generic.tpl:14
+msgid "Display name"
+msgstr "Отображаемое имя"
+
 #: gofon/macro/class_gofonMacro.inc:576
 #, fuzzy
 msgid "Macro content and parameter"
@@ -949,31 +925,6 @@ msgstr "Название"
 #: gofon/macro/class_gofonMacro.inc:577
 msgid "Visibility flag"
 msgstr ""
-
-#: gofon/macro/remove.tpl:2 gofon/conference/remove.tpl:2
-msgid "Warning"
-msgstr "Предупреждение"
-
-#: gofon/macro/remove.tpl:6
-msgid ""
-"This may be used by several groups. Please double check if your really want "
-"to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"Это приложение может использоваться несколькими группами. Подумайте еще раз, "
-"действительно ли вы хотите удалить его, так как GOsa не сможет отменить "
-"результаты этой операции."
-
-#: gofon/macro/remove.tpl:9
-#, fuzzy
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
-"нажмите <i>Отмена</i>."
-
-#: gofon/macro/main.inc:42 gofon/macro/main.inc:46
-#, fuzzy
-msgid "Phone macro management"
-msgstr "Управление системами"
 
 #: gofon/macro/class_divListMacros.inc:50
 #: gofon/conference/class_divListConferences.inc:50
@@ -1073,6 +1024,56 @@ msgstr "Название"
 msgid "departments"
 msgstr "Подразделение"
 
+#: gofon/macro/generic.tpl:18
+msgid "Macro name to be displayed"
+msgstr ""
+
+#: gofon/macro/generic.tpl:60
+#, fuzzy
+msgid "Visible for user"
+msgstr "Список пользователей"
+
+#: gofon/macro/generic.tpl:70
+#, fuzzy
+msgid "Macro text"
+msgstr "Название"
+
+#: gofon/macro/class_gofonMacroManagement.inc:24
+#, fuzzy
+msgid "Phone macros"
+msgstr "Телефонные отчеты"
+
+#: gofon/macro/class_gofonMacroManagement.inc:25
+#: gofon/phoneaccount/class_phoneAccount.inc:7
+#: gofon/fonreports/class_fonreport.inc:7
+msgid "This does something"
+msgstr "Что-то будет"
+
+#: gofon/macro/class_gofonMacroManagement.inc:273
+#: gofon/conference/class_phoneConferenceManagment.inc:187
+#, fuzzy
+msgid "Permission"
+msgstr "Права для членов группы"
+
+#: gofon/macro/class_gofonMacroManagement.inc:320
+#: gofon/macro/class_gofonMacroManagement.inc:373
+#: gofon/macro/class_gofonMacroManagement.inc:397
+#: gofon/conference/class_phoneConferenceManagment.inc:228
+#: gofon/conference/class_phoneConferenceManagment.inc:288
+#, fuzzy
+msgid "Permission error"
+msgstr "Права для членов группы"
+
+#: gofon/macro/class_gofonMacroManagement.inc:366
+#, fuzzy
+msgid "macro"
+msgstr "Название"
+
+#: gofon/macro/main.inc:51 gofon/macro/main.inc:55
+#, fuzzy
+msgid "Phone macro management"
+msgstr "Управление системами"
+
 #: gofon/macro/parameter.tpl:4
 #, fuzzy
 msgid "Argument"
@@ -1091,367 +1092,6 @@ msgstr "По умолчанию"
 #, fuzzy
 msgid "You are not allowed to view the macro parameter settings"
 msgstr "У вас недостаточно прав для удаления этого пользователя!"
-
-#: gofon/conference/headpage.tpl:6
-#: gofon/conference/class_divListConferences.inc:31
-#: gofon/conference/class_divListConferences.inc:32
-#, fuzzy
-msgid "List of conference rooms"
-msgstr "Список групп"
-
-#: gofon/conference/headpage.tpl:24
-#, fuzzy
-msgid ""
-"This menu allows you to create, delete and edit selected phone conferences. "
-"Having a large number of phone conferences, you might prefer the range "
-"selectors on top of the conferences list."
-msgstr ""
-"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
-"подразделения. Если у вас достаточно большое количество подразделений, вы "
-"можете использовать групповое выделение."
-
-#: gofon/conference/headpage.tpl:35
-msgid "Display users matching"
-msgstr "Фильтр"
-
-#: gofon/conference/headpage.tpl:36
-#, fuzzy
-msgid "Regular expression for        matching user names"
-msgstr "Регулярное выражение, соответствующее именам пользователей"
-
-#: gofon/conference/generic.tpl:5
-msgid "Properties"
-msgstr "Свойства"
-
-#: gofon/conference/generic.tpl:15 gofon/conference/paste_generic.tpl:5
-#, fuzzy
-msgid "Conference name"
-msgstr "Ссылки"
-
-#: gofon/conference/generic.tpl:21 gofon/conference/paste_generic.tpl:10
-#, fuzzy
-msgid "Name of conference to create"
-msgstr "Имя создаваемой ветки"
-
-#: gofon/conference/generic.tpl:28
-msgid "Type"
-msgstr "Тип"
-
-#: gofon/conference/generic.tpl:35
-#, fuzzy
-msgid "Choose subtree to place conference in"
-msgstr "Выберите ветку для пользователя"
-
-#: gofon/conference/generic.tpl:82
-#, fuzzy
-msgid "Select language"
-msgstr "Язык"
-
-#: gofon/conference/generic.tpl:104
-msgid "Descriptive text for department"
-msgstr "Описание подразделения"
-
-#: gofon/conference/generic.tpl:110
-msgid "Lifetime (in days)"
-msgstr ""
-
-#: gofon/conference/generic.tpl:157
-#: gofon/conference/class_phoneConferenceGeneric.inc:783
-#, fuzzy
-msgid "Preset PIN"
-msgstr "присутствует"
-
-#: gofon/conference/generic.tpl:165
-#: gofon/conference/class_phoneConferenceGeneric.inc:384
-#: gofon/conference/class_divListConferences.inc:58
-msgid "PIN"
-msgstr ""
-
-#: gofon/conference/generic.tpl:177
-#: gofon/conference/class_phoneConferenceGeneric.inc:784
-#, fuzzy
-msgid "Record conference"
-msgstr "Ссылки"
-
-#: gofon/conference/generic.tpl:185
-msgid "Sound file format"
-msgstr ""
-
-#: gofon/conference/generic.tpl:188
-msgid "Choose subtree to place department in"
-msgstr "Выберите ветку для подразделения"
-
-#: gofon/conference/generic.tpl:208
-#: gofon/conference/class_phoneConferenceGeneric.inc:785
-msgid "Play music on hold"
-msgstr ""
-
-#: gofon/conference/generic.tpl:216
-#, fuzzy
-msgid "Activate session menu"
-msgstr "Включить автоответчик"
-
-#: gofon/conference/generic.tpl:224
-msgid "Announce users joining or leaving the conference"
-msgstr ""
-
-#: gofon/conference/generic.tpl:232
-#, fuzzy
-msgid "Count users"
-msgstr "Страна"
-
-#: gofon/conference/remove.tpl:6
-#, fuzzy
-msgid ""
-"This includes 'all' accounts, systems, etc. in this subtree. Please double "
-"check if your really want to do this since there is no way for GOsa to get "
-"your data back."
-msgstr ""
-"Это включает <b>все</b> учетные записи, системы и т.п. для данного "
-"подразделения. Подумайте еще раз, действительно ли вы хотите его удалить, "
-"так как GOsa не сможет отменить результаты этой операции."
-
-#: gofon/conference/remove.tpl:10
-#, fuzzy
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Лучше всего перед удалением сохранить резервную копию текущего дерева LDAP в "
-"файл. Если вы сделали это и действительно хотите выполнить удаление, нажмите "
-"<i>Удалить</i>, иначе нажмите <i>Отмена</i>."
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:264
-#, php-format
-msgid "Cannot delete entry from server '%s' because it seems to be removed!"
-msgstr ""
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:379
-#, fuzzy, php-format
-msgid ""
-"The previously selected asterisk home server '%s' is no longer available!"
-msgstr "У выбранного приложения нет параметров."
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:396
-#: gofon/conference/class_phoneConferenceGeneric.inc:792
-msgid "Lifetime"
-msgstr ""
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:641
-#: gofon/conference/class_phoneConferenceGeneric.inc:643
-#, php-format
-msgid "'%s' is already assigned to '%s'!"
-msgstr ""
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:765
-#: gofon/conference/class_divListConferences.inc:95
-#: gofon/conference/class_divListConferences.inc:208
-#, fuzzy
-msgid "Conference"
-msgstr "Ссылки"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:766
-#, fuzzy
-msgid "Phone conference management"
-msgstr "Управление подразделениями"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:771
-#, fuzzy
-msgid "GOfon conference"
-msgstr "Номер телефона"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:778
-#, fuzzy
-msgid "Conference PIN"
-msgstr "Ссылки"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:786
-#, fuzzy
-msgid "Activate menu"
-msgstr "Включить автоответчик"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:787
-msgid "Announce user activity"
-msgstr ""
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:788
-#, fuzzy
-msgid "Count user"
-msgstr "Страна"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:789
-#, fuzzy
-msgid "Conference type"
-msgstr "Ссылки"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:791
-#, fuzzy
-msgid "Format"
-msgstr "Порт"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:793
-#: gofon/phoneaccount/class_phoneAccount.inc:1609
-#, fuzzy
-msgid "Telephone number"
-msgstr "Телефонные номера"
-
-#: gofon/conference/class_phoneConferenceGeneric.inc:794
-#: gofon/conference/class_divListConferences.inc:57
-msgid "Owner"
-msgstr ""
-
-#: gofon/conference/main.inc:38 gofon/conference/main.inc:40
-#, fuzzy
-msgid "Conference management"
-msgstr "Управление подразделениями"
-
-#: gofon/conference/class_divListConferences.inc:65
-#, fuzzy
-msgid "Regular expression for matching conference names"
-msgstr "Регулярное выражение, соответствующее именам пользователей"
-
-#: gofon/conference/class_divListConferences.inc:150
-#, fuzzy
-msgid "Edit this entry"
-msgstr "Редактиовать объект"
-
-#: gofon/conference/class_divListConferences.inc:158
-#, fuzzy
-msgid "Delete this entry"
-msgstr "Удалить"
-
-#: gofon/conference/class_divListConferences.inc:185
-#, fuzzy
-msgid "Unknown"
-msgstr "состояние неизвестно"
-
-#: gofon/conference/class_divListConferences.inc:225
-#: gofon/conference/class_divListConferences.inc:226
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Подразделение"
-
-#: gofon/conference/class_divListConferences.inc:225
-#, fuzzy
-msgid "conferences"
-msgstr "Ссылки"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:24
-#, fuzzy
-msgid "Phone conferences"
-msgstr "Номер телефона"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:25
-#, fuzzy
-msgid "Management"
-msgstr "Название"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:206
-#: gofon/conference/class_phoneConferenceManagment.inc:268
-#, fuzzy
-msgid "conference"
-msgstr "Ссылки"
-
-#: gofon/conference/class_phoneConferenceManagment.inc:228
-#: gofon/conference/class_phoneConferenceManagment.inc:289
-#, fuzzy
-msgid "You have not permission to delete this entry!"
-msgstr "У вас недостаточно прав для удаления этого подразделения."
-
-#: gofon/fonreports/main.inc:16 gofon/fonreports/class_fonreport.inc:396
-#: gofon/fonreports/class_fonreport.inc:397
-#: gofon/fonreports/class_fonreport.inc:404
-msgid "Phone reports"
-msgstr "Телефонные отчеты"
-
-#: gofon/fonreports/contents.tpl:2
-msgid "Filter"
-msgstr "Фильтр"
-
-#: gofon/fonreports/contents.tpl:6
-msgid "Search for"
-msgstr "Поиск"
-
-#: gofon/fonreports/contents.tpl:7
-msgid "Enter user name to search for"
-msgstr "Введите искомое имя пользователя"
-
-#: gofon/fonreports/contents.tpl:8 gofon/fonreports/contents.tpl:16
-msgid "in"
-msgstr "в"
-
-#: gofon/fonreports/contents.tpl:9
-msgid "Select subtree to base search on"
-msgstr "Выберите ветку для поиска"
-
-#: gofon/fonreports/contents.tpl:12
-msgid "during"
-msgstr "в течение"
-
-#: gofon/fonreports/contents.tpl:21
-msgid "Search"
-msgstr "Поиск"
-
-#: gofon/fonreports/contents.tpl:30 gofon/fonreports/class_fonreport.inc:409
-msgid "Date"
-msgstr "Дата"
-
-#: gofon/fonreports/contents.tpl:31 gofon/fonreports/class_fonreport.inc:410
-msgid "Source"
-msgstr "Источник"
-
-#: gofon/fonreports/contents.tpl:32 gofon/fonreports/class_fonreport.inc:411
-msgid "Destination"
-msgstr "Назначение"
-
-#: gofon/fonreports/contents.tpl:33 gofon/fonreports/class_fonreport.inc:412
-msgid "Channel"
-msgstr "Канал"
-
-#: gofon/fonreports/contents.tpl:34
-msgid "Application"
-msgstr "Приложение"
-
-#: gofon/fonreports/contents.tpl:35
-msgid "Status"
-msgstr "Состояние"
-
-#: gofon/fonreports/contents.tpl:36 gofon/fonreports/class_fonreport.inc:415
-msgid "Duration"
-msgstr "Продолжительность"
-
-#: gofon/fonreports/contents.tpl:51
-msgid "Search returned no results..."
-msgstr "Не найдено..."
-
-#: gofon/fonreports/class_fonreport.inc:6
-msgid "Phone Reports"
-msgstr "Телефонные отчеты"
-
-#: gofon/fonreports/class_fonreport.inc:210
-#, fuzzy
-msgid "Insufficient permissions"
-msgstr "Права для членов группы"
-
-#: gofon/fonreports/class_fonreport.inc:229
-msgid "Y-M-D"
-msgstr "Г-М-Д"
-
-#: gofon/fonreports/class_fonreport.inc:397
-#, fuzzy
-msgid "All entries are readonly"
-msgstr "Все поля доступны для записи"
-
-#: gofon/fonreports/class_fonreport.inc:413
-#, fuzzy
-msgid "Application called"
-msgstr "Приложение"
-
-#: gofon/fonreports/class_fonreport.inc:414
-#, fuzzy
-msgid "Disposition"
-msgstr "Отключение"
 
 #: gofon/phoneaccount/generic.tpl:42 gofon/phoneaccount/paste_generic.tpl:27
 msgid "Telephone hardware"
@@ -1498,11 +1138,11 @@ msgstr "Телефон"
 msgid "Refresh"
 msgstr "Ссылки"
 
-#: gofon/phoneaccount/paste_generic.tpl:1 gofon/phoneaccount/main.inc:123
+#: gofon/phoneaccount/paste_generic.tpl:1 gofon/phoneaccount/main.inc:133
 msgid "Phone settings"
 msgstr "Настройки телефона"
 
-#: gofon/phoneaccount/main.inc:113
+#: gofon/phoneaccount/main.inc:123
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr "Нажмите 'Изменить' чтобы отредактировать данные в этой форме."
 
@@ -1595,6 +1235,12 @@ msgstr "Настройки телефона"
 msgid "My account"
 msgstr "Моя учетная запись"
 
+#: gofon/phoneaccount/class_phoneAccount.inc:1609
+#: gofon/conference/class_phoneConferenceGeneric.inc:793
+#, fuzzy
+msgid "Telephone number"
+msgstr "Телефонные номера"
+
 #: gofon/phoneaccount/class_phoneAccount.inc:1610
 #, fuzzy
 msgid "Macro settings"
@@ -1644,6 +1290,361 @@ msgstr "Неправильное указание таймаута '%s'"
 #, fuzzy, php-format
 msgid "The parameter %s contains invalid char. '!,#' is used as delimiter"
 msgstr "Неправильное указание таймаута '%s'"
+
+#: gofon/conference/headpage.tpl:6
+#: gofon/conference/class_divListConferences.inc:31
+#: gofon/conference/class_divListConferences.inc:32
+#, fuzzy
+msgid "List of conference rooms"
+msgstr "Список групп"
+
+#: gofon/conference/headpage.tpl:24
+#, fuzzy
+msgid ""
+"This menu allows you to create, delete and edit selected phone conferences. "
+"Having a large number of phone conferences, you might prefer the range "
+"selectors on top of the conferences list."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"подразделения. Если у вас достаточно большое количество подразделений, вы "
+"можете использовать групповое выделение."
+
+#: gofon/conference/headpage.tpl:35
+msgid "Display users matching"
+msgstr "Фильтр"
+
+#: gofon/conference/headpage.tpl:36
+#, fuzzy
+msgid "Regular expression for        matching user names"
+msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#: gofon/conference/remove.tpl:6
+#, fuzzy
+msgid ""
+"This includes 'all' accounts, systems, etc. in this subtree. Please double "
+"check if your really want to do this since there is no way for GOsa to get "
+"your data back."
+msgstr ""
+"Это включает <b>все</b> учетные записи, системы и т.п. для данного "
+"подразделения. Подумайте еще раз, действительно ли вы хотите его удалить, "
+"так как GOsa не сможет отменить результаты этой операции."
+
+#: gofon/conference/remove.tpl:10
+#, fuzzy
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+"Лучше всего перед удалением сохранить резервную копию текущего дерева LDAP в "
+"файл. Если вы сделали это и действительно хотите выполнить удаление, нажмите "
+"<i>Удалить</i>, иначе нажмите <i>Отмена</i>."
+
+#: gofon/conference/class_phoneConferenceManagment.inc:24
+#, fuzzy
+msgid "Phone conferences"
+msgstr "Номер телефона"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:25
+#, fuzzy
+msgid "Management"
+msgstr "Название"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:206
+#: gofon/conference/class_phoneConferenceManagment.inc:267
+#, fuzzy
+msgid "conference"
+msgstr "Ссылки"
+
+#: gofon/conference/class_phoneConferenceManagment.inc:228
+#: gofon/conference/class_phoneConferenceManagment.inc:288
+#, fuzzy
+msgid "You have not permission to delete this entry!"
+msgstr "У вас недостаточно прав для удаления этого подразделения."
+
+#: gofon/conference/generic.tpl:5
+msgid "Properties"
+msgstr "Свойства"
+
+#: gofon/conference/generic.tpl:15 gofon/conference/paste_generic.tpl:5
+#, fuzzy
+msgid "Conference name"
+msgstr "Ссылки"
+
+#: gofon/conference/generic.tpl:21 gofon/conference/paste_generic.tpl:10
+#, fuzzy
+msgid "Name of conference to create"
+msgstr "Имя создаваемой ветки"
+
+#: gofon/conference/generic.tpl:28
+msgid "Type"
+msgstr "Тип"
+
+#: gofon/conference/generic.tpl:35
+#, fuzzy
+msgid "Choose subtree to place conference in"
+msgstr "Выберите ветку для пользователя"
+
+#: gofon/conference/generic.tpl:82
+#, fuzzy
+msgid "Select language"
+msgstr "Язык"
+
+#: gofon/conference/generic.tpl:104
+msgid "Descriptive text for department"
+msgstr "Описание подразделения"
+
+#: gofon/conference/generic.tpl:110
+msgid "Lifetime (in days)"
+msgstr ""
+
+#: gofon/conference/generic.tpl:157
+#: gofon/conference/class_phoneConferenceGeneric.inc:783
+#, fuzzy
+msgid "Preset PIN"
+msgstr "присутствует"
+
+#: gofon/conference/generic.tpl:165
+#: gofon/conference/class_phoneConferenceGeneric.inc:384
+#: gofon/conference/class_divListConferences.inc:58
+msgid "PIN"
+msgstr ""
+
+#: gofon/conference/generic.tpl:177
+#: gofon/conference/class_phoneConferenceGeneric.inc:784
+#, fuzzy
+msgid "Record conference"
+msgstr "Ссылки"
+
+#: gofon/conference/generic.tpl:185
+msgid "Sound file format"
+msgstr ""
+
+#: gofon/conference/generic.tpl:188
+msgid "Choose subtree to place department in"
+msgstr "Выберите ветку для подразделения"
+
+#: gofon/conference/generic.tpl:208
+#: gofon/conference/class_phoneConferenceGeneric.inc:785
+msgid "Play music on hold"
+msgstr ""
+
+#: gofon/conference/generic.tpl:216
+#, fuzzy
+msgid "Activate session menu"
+msgstr "Включить автоответчик"
+
+#: gofon/conference/generic.tpl:224
+msgid "Announce users joining or leaving the conference"
+msgstr ""
+
+#: gofon/conference/generic.tpl:232
+#, fuzzy
+msgid "Count users"
+msgstr "Страна"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:264
+#, php-format
+msgid "Cannot delete entry from server '%s' because it seems to be removed!"
+msgstr ""
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:379
+#, fuzzy, php-format
+msgid ""
+"The previously selected asterisk home server '%s' is no longer available!"
+msgstr "У выбранного приложения нет параметров."
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:396
+#: gofon/conference/class_phoneConferenceGeneric.inc:792
+msgid "Lifetime"
+msgstr ""
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:641
+#: gofon/conference/class_phoneConferenceGeneric.inc:643
+#, php-format
+msgid "'%s' is already assigned to '%s'!"
+msgstr ""
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:765
+#: gofon/conference/class_divListConferences.inc:95
+#: gofon/conference/class_divListConferences.inc:208
+#, fuzzy
+msgid "Conference"
+msgstr "Ссылки"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:766
+#, fuzzy
+msgid "Phone conference management"
+msgstr "Управление подразделениями"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:771
+#, fuzzy
+msgid "GOfon conference"
+msgstr "Номер телефона"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:778
+#, fuzzy
+msgid "Conference PIN"
+msgstr "Ссылки"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:786
+#, fuzzy
+msgid "Activate menu"
+msgstr "Включить автоответчик"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:787
+msgid "Announce user activity"
+msgstr ""
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:788
+#, fuzzy
+msgid "Count user"
+msgstr "Страна"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:789
+#, fuzzy
+msgid "Conference type"
+msgstr "Ссылки"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:791
+#, fuzzy
+msgid "Format"
+msgstr "Порт"
+
+#: gofon/conference/class_phoneConferenceGeneric.inc:794
+#: gofon/conference/class_divListConferences.inc:57
+msgid "Owner"
+msgstr ""
+
+#: gofon/conference/main.inc:48 gofon/conference/main.inc:50
+#, fuzzy
+msgid "Conference management"
+msgstr "Управление подразделениями"
+
+#: gofon/conference/class_divListConferences.inc:65
+#, fuzzy
+msgid "Regular expression for matching conference names"
+msgstr "Регулярное выражение, соответствующее именам пользователей"
+
+#: gofon/conference/class_divListConferences.inc:150
+#, fuzzy
+msgid "Edit this entry"
+msgstr "Редактиовать объект"
+
+#: gofon/conference/class_divListConferences.inc:158
+#, fuzzy
+msgid "Delete this entry"
+msgstr "Удалить"
+
+#: gofon/conference/class_divListConferences.inc:185
+#, fuzzy
+msgid "Unknown"
+msgstr "состояние неизвестно"
+
+#: gofon/conference/class_divListConferences.inc:225
+#: gofon/conference/class_divListConferences.inc:226
+#, fuzzy, php-format
+msgid "Number of listed '%s'"
+msgstr "Подразделение"
+
+#: gofon/conference/class_divListConferences.inc:225
+#, fuzzy
+msgid "conferences"
+msgstr "Ссылки"
+
+#: gofon/fonreports/class_fonreport.inc:6
+msgid "Phone Reports"
+msgstr "Телефонные отчеты"
+
+#: gofon/fonreports/class_fonreport.inc:210
+#, fuzzy
+msgid "Insufficient permissions"
+msgstr "Права для членов группы"
+
+#: gofon/fonreports/class_fonreport.inc:229
+msgid "Y-M-D"
+msgstr "Г-М-Д"
+
+#: gofon/fonreports/class_fonreport.inc:396
+#: gofon/fonreports/class_fonreport.inc:397
+#: gofon/fonreports/class_fonreport.inc:404 gofon/fonreports/main.inc:22
+msgid "Phone reports"
+msgstr "Телефонные отчеты"
+
+#: gofon/fonreports/class_fonreport.inc:397
+#, fuzzy
+msgid "All entries are readonly"
+msgstr "Все поля доступны для записи"
+
+#: gofon/fonreports/class_fonreport.inc:409 gofon/fonreports/contents.tpl:30
+msgid "Date"
+msgstr "Дата"
+
+#: gofon/fonreports/class_fonreport.inc:410 gofon/fonreports/contents.tpl:31
+msgid "Source"
+msgstr "Источник"
+
+#: gofon/fonreports/class_fonreport.inc:411 gofon/fonreports/contents.tpl:32
+msgid "Destination"
+msgstr "Назначение"
+
+#: gofon/fonreports/class_fonreport.inc:412 gofon/fonreports/contents.tpl:33
+msgid "Channel"
+msgstr "Канал"
+
+#: gofon/fonreports/class_fonreport.inc:413
+#, fuzzy
+msgid "Application called"
+msgstr "Приложение"
+
+#: gofon/fonreports/class_fonreport.inc:414
+#, fuzzy
+msgid "Disposition"
+msgstr "Отключение"
+
+#: gofon/fonreports/class_fonreport.inc:415 gofon/fonreports/contents.tpl:36
+msgid "Duration"
+msgstr "Продолжительность"
+
+#: gofon/fonreports/contents.tpl:2
+msgid "Filter"
+msgstr "Фильтр"
+
+#: gofon/fonreports/contents.tpl:6
+msgid "Search for"
+msgstr "Поиск"
+
+#: gofon/fonreports/contents.tpl:7
+msgid "Enter user name to search for"
+msgstr "Введите искомое имя пользователя"
+
+#: gofon/fonreports/contents.tpl:8 gofon/fonreports/contents.tpl:16
+msgid "in"
+msgstr "в"
+
+#: gofon/fonreports/contents.tpl:9
+msgid "Select subtree to base search on"
+msgstr "Выберите ветку для поиска"
+
+#: gofon/fonreports/contents.tpl:12
+msgid "during"
+msgstr "в течение"
+
+#: gofon/fonreports/contents.tpl:21
+msgid "Search"
+msgstr "Поиск"
+
+#: gofon/fonreports/contents.tpl:34
+msgid "Application"
+msgstr "Приложение"
+
+#: gofon/fonreports/contents.tpl:35
+msgid "Status"
+msgstr "Состояние"
+
+#: gofon/fonreports/contents.tpl:51
+msgid "Search returned no results..."
+msgstr "Не найдено..."
 
 #~ msgid "Addons"
 #~ msgstr "Дополнительно"

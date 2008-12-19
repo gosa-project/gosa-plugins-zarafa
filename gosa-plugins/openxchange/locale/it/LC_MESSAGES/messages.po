@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:35+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,45 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid "Open-Xchange Account"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:2
-msgid ""
-"disabled, no Postgresql support detected. Or the specified database can't be "
-"reached"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:18
-msgid "Open-Xchange account"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:29
-msgid "Remember"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:33
-msgid "Appointment Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:39
-#: personal/connectivity/openxchange/oxchange.tpl:49
-msgid "days"
-msgstr "giorni"
-
-#: personal/connectivity/openxchange/oxchange.tpl:42
-msgid "Task Days"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:61
-msgid "User Information"
-msgstr ""
-
-#: personal/connectivity/openxchange/oxchange.tpl:65
-msgid "User Timezone"
-msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:24
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:189
@@ -128,6 +89,45 @@ msgstr ""
 
 #: personal/connectivity/openxchange/class_oxchangeAccount.inc:450
 msgid "OXTimeZone"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid "Open-Xchange Account"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:2
+msgid ""
+"disabled, no Postgresql support detected. Or the specified database can't be "
+"reached"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:18
+msgid "Open-Xchange account"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:29
+msgid "Remember"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:33
+msgid "Appointment Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:39
+#: personal/connectivity/openxchange/oxchange.tpl:49
+msgid "days"
+msgstr "giorni"
+
+#: personal/connectivity/openxchange/oxchange.tpl:42
+msgid "Task Days"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:61
+msgid "User Information"
+msgstr ""
+
+#: personal/connectivity/openxchange/oxchange.tpl:65
+msgid "User Timezone"
 msgstr ""
 
 #, fuzzy

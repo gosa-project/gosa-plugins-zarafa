@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:34+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,19 +13,6 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
-
-#: personal/netatalk/netatalk.tpl:4 personal/netatalk/class_netatalk.inc:228
-#: personal/netatalk/class_netatalk.inc:382
-msgid "Share"
-msgstr "Udział"
-
-#: personal/netatalk/netatalk.tpl:16
-msgid "Path"
-msgstr "Ścieżka"
-
-#: personal/netatalk/main.inc:123
-msgid "Netatalk settings"
-msgstr "Ustawienia Netatalk"
 
 #: personal/netatalk/class_netatalk.inc:36
 #: personal/netatalk/class_netatalk.inc:372
@@ -57,6 +44,11 @@ msgstr ""
 msgid "netatalk or NFS share"
 msgstr ""
 
+#: personal/netatalk/class_netatalk.inc:228
+#: personal/netatalk/class_netatalk.inc:382 personal/netatalk/netatalk.tpl:4
+msgid "Share"
+msgstr "Udział"
+
 #: personal/netatalk/class_netatalk.inc:292
 #: personal/netatalk/class_netatalk.inc:357
 #, fuzzy
@@ -71,6 +63,14 @@ msgstr "Moje konto "
 #, fuzzy
 msgid "User home path"
 msgstr "Ścieżka do profilu"
+
+#: personal/netatalk/main.inc:131
+msgid "Netatalk settings"
+msgstr "Ustawienia Netatalk"
+
+#: personal/netatalk/netatalk.tpl:16
+msgid "Path"
+msgstr "Ścieżka"
 
 #~ msgid "This account has no netatalk extensions."
 #~ msgstr "To konto nie posiada rozszerzeń Netatalk"

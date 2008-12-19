@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -14,6 +14,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
+
+#: addons/godfs/class_dfsManagment.inc:8
+#, fuzzy
+msgid "DFS Management"
+msgstr "Dirigenza"
+
+#: addons/godfs/class_dfsManagment.inc:9
+msgid "This does something"
+msgstr "Questo fa qualcosa"
+
+#: addons/godfs/class_dfsManagment.inc:146
+#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
+#, fuzzy
+msgid "LDAP error"
+msgstr "Errore LDAP"
+
+#: addons/godfs/class_dfsManagment.inc:165
+msgid "No DFS entries found"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:208
+#, fuzzy
+msgid "Go up one dfsshare"
+msgstr "Sali di dipartimento"
+
+#: addons/godfs/class_dfsManagment.inc:208
+msgid "Up"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Go to dfs root"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:209
+msgid "Root"
+msgstr "Root"
+
+#: addons/godfs/class_dfsManagment.inc:210
+#, fuzzy
+msgid "Create new dfsshare"
+msgstr "Crea in"
+
+#: addons/godfs/class_dfsManagment.inc:212
+msgid "Base"
+msgstr "Base"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit department"
+msgstr "Imposta dipartimento"
+
+#: addons/godfs/class_dfsManagment.inc:213
+msgid "Submit"
+msgstr ""
+
+#: addons/godfs/class_dfsManagment.inc:242
+msgid "Finish"
+msgstr "Esegui"
 
 #: addons/godfs/generic.tpl:4
 #, fuzzy
@@ -48,66 +105,9 @@ msgstr "Località"
 msgid "Location"
 msgstr "Località"
 
-#: addons/godfs/class_dfsgeneric.inc:171 addons/godfs/class_dfsgeneric.inc:200
-#: addons/godfs/class_dfsManagment.inc:148
-#, fuzzy
-msgid "LDAP error"
-msgstr "Errore LDAP"
-
-#: addons/godfs/main.inc:27 addons/godfs/main.inc:33
+#: addons/godfs/main.inc:35 addons/godfs/main.inc:41
 msgid "Distributed File System Administration"
 msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:8
-#, fuzzy
-msgid "DFS Management"
-msgstr "Dirigenza"
-
-#: addons/godfs/class_dfsManagment.inc:9
-msgid "This does something"
-msgstr "Questo fa qualcosa"
-
-#: addons/godfs/class_dfsManagment.inc:168
-msgid "No DFS entries found"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:211
-#, fuzzy
-msgid "Go up one dfsshare"
-msgstr "Sali di dipartimento"
-
-#: addons/godfs/class_dfsManagment.inc:211
-msgid "Up"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Go to dfs root"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:212
-msgid "Root"
-msgstr "Root"
-
-#: addons/godfs/class_dfsManagment.inc:213
-#, fuzzy
-msgid "Create new dfsshare"
-msgstr "Crea in"
-
-#: addons/godfs/class_dfsManagment.inc:215
-msgid "Base"
-msgstr "Base"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit department"
-msgstr "Imposta dipartimento"
-
-#: addons/godfs/class_dfsManagment.inc:216
-msgid "Submit"
-msgstr ""
-
-#: addons/godfs/class_dfsManagment.inc:245
-msgid "Finish"
-msgstr "Esegui"
 
 #: addons/godfs/contents.tpl:8
 #, fuzzy

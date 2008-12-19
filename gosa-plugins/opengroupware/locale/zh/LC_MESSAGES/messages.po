@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:34+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -15,6 +15,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: personal/connectivity/opengroupware/opengw.tpl:1
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
+msgid "Opengroupware"
+msgstr "Opengroupware"
+
+#: personal/connectivity/opengroupware/opengw.tpl:8
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
+msgid "Location team"
+msgstr "本地组"
+
+#: personal/connectivity/opengroupware/opengw.tpl:21
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
+msgid "Template user"
+msgstr "模板用户"
+
+#: personal/connectivity/opengroupware/opengw.tpl:33
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
+msgid "Locked"
+msgstr "锁定"
+
+#: personal/connectivity/opengroupware/opengw.tpl:48
+#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
+msgid "Teams"
+msgstr "团队"
 
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:6
 msgid "Opengroupware account"
@@ -42,11 +67,6 @@ msgstr "Opengroupware 账号"
 msgid "Open Groupware"
 msgstr "Opengroupware"
 
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:338
-#: personal/connectivity/opengroupware/opengw.tpl:1
-msgid "Opengroupware"
-msgstr "Opengroupware"
-
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:339
 #, fuzzy
 msgid "Open groupware account settings"
@@ -60,26 +80,6 @@ msgstr "互联"
 #: personal/connectivity/opengroupware/class_opengwAccount.inc:343
 msgid "My account"
 msgstr "我的账号"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:348
-#: personal/connectivity/opengroupware/opengw.tpl:8
-msgid "Location team"
-msgstr "本地组"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:349
-#: personal/connectivity/opengroupware/opengw.tpl:21
-msgid "Template user"
-msgstr "模板用户"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:350
-#: personal/connectivity/opengroupware/opengw.tpl:33
-msgid "Locked"
-msgstr "锁定"
-
-#: personal/connectivity/opengroupware/class_opengwAccount.inc:351
-#: personal/connectivity/opengroupware/opengw.tpl:48
-msgid "Teams"
-msgstr "团队"
 
 #, fuzzy
 #~ msgid "%s database configuration is missing!"

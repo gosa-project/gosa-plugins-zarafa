@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:05+0100\n"
+"POT-Creation-Date: 2008-12-19 08:33+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -63,6 +63,64 @@ msgstr "база пользователя"
 #, fuzzy
 msgid "Database user"
 msgstr "Базы данных"
+
+#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
+msgid "Filter"
+msgstr "Фильтр"
+
+#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
+msgid "Show hosts"
+msgstr "Показать хосты"
+
+#: addons/logview/gosa_log_contents.tpl:20
+#: addons/logview/gosa_log_contents.tpl:82
+msgid "Action"
+msgstr "Действие"
+
+#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
+msgid "Time interval"
+msgstr "Интервал времени"
+
+#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
+msgid "Search for"
+msgstr "Поиск"
+
+#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
+msgid "Enter string to search for"
+msgstr "Введите строку для поиска"
+
+#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
+msgid "Ruleset"
+msgstr "Набор правил"
+
+#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
+msgid "Edit"
+msgstr "Изменить"
+
+#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
+msgid "Search"
+msgstr "Поиск"
+
+#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
+msgid "Date"
+msgstr "Дата"
+
+#: addons/logview/gosa_log_contents.tpl:85
+#, fuzzy
+msgid "Object type"
+msgstr "Имя объекта"
+
+#: addons/logview/gosa_log_contents.tpl:86
+msgid "Object"
+msgstr "Объект"
+
+#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
+msgid "Message"
+msgstr "Сообщение"
+
+#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
+msgid "Search returned no results..."
+msgstr "Не найдено..."
 
 #: addons/logview/class_logview.inc:6 addons/logview/class_logview.inc:418
 #: addons/logview/class_gosa_logview.inc:6
@@ -157,67 +215,19 @@ msgstr "Служба печати"
 msgid "Log view addon"
 msgstr "Домен"
 
-#: addons/logview/gosa_log_contents.tpl:2 addons/logview/contents.tpl:2
-msgid "Filter"
-msgstr "Фильтр"
-
-#: addons/logview/gosa_log_contents.tpl:11 addons/logview/contents.tpl:11
-msgid "Show hosts"
-msgstr "Показать хосты"
-
-#: addons/logview/gosa_log_contents.tpl:20
-#: addons/logview/gosa_log_contents.tpl:82
-msgid "Action"
-msgstr "Действие"
-
-#: addons/logview/gosa_log_contents.tpl:38 addons/logview/contents.tpl:38
-msgid "Time interval"
-msgstr "Интервал времени"
-
-#: addons/logview/gosa_log_contents.tpl:47 addons/logview/contents.tpl:47
-msgid "Search for"
-msgstr "Поиск"
-
-#: addons/logview/gosa_log_contents.tpl:48 addons/logview/contents.tpl:48
-msgid "Enter string to search for"
-msgstr "Введите строку для поиска"
-
-#: addons/logview/gosa_log_contents.tpl:60 addons/logview/contents.tpl:60
-msgid "Ruleset"
-msgstr "Набор правил"
-
-#: addons/logview/gosa_log_contents.tpl:62 addons/logview/contents.tpl:62
-msgid "Edit"
-msgstr "Изменить"
-
-#: addons/logview/gosa_log_contents.tpl:68 addons/logview/contents.tpl:68
-msgid "Search"
-msgstr "Поиск"
-
-#: addons/logview/gosa_log_contents.tpl:83 addons/logview/contents.tpl:84
-msgid "Date"
-msgstr "Дата"
-
-#: addons/logview/gosa_log_contents.tpl:85
-#, fuzzy
-msgid "Object type"
-msgstr "Имя объекта"
-
-#: addons/logview/gosa_log_contents.tpl:86
-msgid "Object"
-msgstr "Объект"
-
-#: addons/logview/gosa_log_contents.tpl:87 addons/logview/contents.tpl:85
-msgid "Message"
-msgstr "Сообщение"
-
-#: addons/logview/gosa_log_contents.tpl:99 addons/logview/contents.tpl:97
-msgid "Search returned no results..."
-msgstr "Не найдено..."
-
-#: addons/logview/main.inc:34
+#: addons/logview/main.inc:49
 msgid "System log view"
 msgstr "Просмотр системного журнала"
+
+#: addons/logview/class_gosa_logview.inc:201
+#, fuzzy
+msgid "You have insufficient permissions to view syslog entries."
+msgstr "У вас недостаточно прав для удаления этого стоп-листа."
+
+#: addons/logview/class_gosa_logview.inc:236
+#, php-format
+msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
+msgstr ""
 
 #: addons/logview/contents.tpl:20
 msgid "Log level"
@@ -230,16 +240,6 @@ msgstr "Уровень"
 #: addons/logview/contents.tpl:83
 msgid "Hostname"
 msgstr "Имя системы"
-
-#: addons/logview/class_gosa_logview.inc:201
-#, fuzzy
-msgid "You have insufficient permissions to view syslog entries."
-msgstr "У вас недостаточно прав для удаления этого стоп-листа."
-
-#: addons/logview/class_gosa_logview.inc:236
-#, php-format
-msgid "Missing logging table (%s.%s) update your GOsa logging database schema."
-msgstr ""
 
 #~ msgid "Save"
 #~ msgstr "Сохранить"

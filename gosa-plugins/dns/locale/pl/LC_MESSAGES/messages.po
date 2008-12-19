@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -13,6 +13,37 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:7
+#, fuzzy
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"Operacja odnosi sie do 'wszystkich' kont, systemów, etc w tym poddrzewie. "
+"Proszę upewnić się czy kontynuować, gdyż nie ma operacji powrotu."
+
+#: admin/systems/services/dns/servdns.tpl:14
+msgid "Following objects will be taken over"
+msgstr ""
+
+#: admin/systems/services/dns/servdns.tpl:27
+#, fuzzy
+msgid "Take over DNS configuration from"
+msgstr "Konfiguracja bazy FAX"
+
+#: admin/systems/services/dns/servdns.tpl:31
+#, fuzzy
+msgid "Take over"
+msgstr "Serwer czasu"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "Strefy"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_servDNS.inc:184
@@ -106,6 +137,31 @@ msgstr "Adres sieciowy"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:453
 msgid "Add"
 msgstr "Dodaj"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr ""
+"Ten dialog umożliwia konfigurachę wszystkich elementów tej strefy DNS w "
+"pojedyńczej liście."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+"Ten dialog nie może zostać użyty dopóki edytowana strefa zostanie zapisana "
+"lub ta strefa będzie istniała w bazie LDAP."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
+msgid "New entry"
+msgstr "Nowy wpis"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+msgid "Create a new DNS zone entry"
+msgstr "Utwórz nowy wpis strefy DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
 #: admin/systems/services/dns/class_servDNS.inc:547
@@ -212,11 +268,6 @@ msgstr "Rekordy MX"
 msgid "Zone records"
 msgstr "Rekordy strefy"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "New entry"
-msgstr "Nowy wpis"
-
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
 #, fuzzy, php-format
 msgid "Cannot rename '%s' to '%s'. Name is already in use!"
@@ -260,6 +311,25 @@ msgstr ""
 msgid "Remove"
 msgstr "Usuń"
 
+#: admin/systems/services/dns/class_DNS.inc:161
+#, fuzzy, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+"Nie można znaleźć stefy odwrotnej dla strefy '%s'. Przerywam analizę tej "
+"strefy."
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, fuzzy, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+"Znaleziono więcej niż jedną strefę odwrotną dla strefy DNS '%s'. Anulowano "
+"przetwarzanie tej strefy."
+
+#: admin/systems/services/dns/class_DNS.inc:628
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr ""
+
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "Ogólne"
@@ -300,76 +370,6 @@ msgstr "Rekordy MX"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Globalne rekordy strefy"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
-msgid ""
-"This dialog allows you to configure all components of this DNS zone on a "
-"single list."
-msgstr ""
-"Ten dialog umożliwia konfigurachę wszystkich elementów tej strefy DNS w "
-"pojedyńczej liście."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
-msgid ""
-"This dialog can't be used until the currently edited zone was saved or the "
-"zone entry exists in the ldap database."
-msgstr ""
-"Ten dialog nie może zostać użyty dopóki edytowana strefa zostanie zapisana "
-"lub ta strefa będzie istniała w bazie LDAP."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "Create a new DNS zone entry"
-msgstr "Utwórz nowy wpis strefy DNS"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:7
-#, fuzzy
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"Operacja odnosi sie do 'wszystkich' kont, systemów, etc w tym poddrzewie. "
-"Proszę upewnić się czy kontynuować, gdyż nie ma operacji powrotu."
-
-#: admin/systems/services/dns/servdns.tpl:14
-msgid "Following objects will be taken over"
-msgstr ""
-
-#: admin/systems/services/dns/servdns.tpl:27
-#, fuzzy
-msgid "Take over DNS configuration from"
-msgstr "Konfiguracja bazy FAX"
-
-#: admin/systems/services/dns/servdns.tpl:31
-#, fuzzy
-msgid "Take over"
-msgstr "Serwer czasu"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "Strefy"
-
-#: admin/systems/services/dns/class_DNS.inc:161
-#, fuzzy, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr ""
-"Nie można znaleźć stefy odwrotnej dla strefy '%s'. Przerywam analizę tej "
-"strefy."
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, fuzzy, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr ""
-"Znaleziono więcej niż jedną strefę odwrotną dla strefy DNS '%s'. Anulowano "
-"przetwarzanie tej strefy."
-
-#: admin/systems/services/dns/class_DNS.inc:628
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr ""
 
 #, fuzzy
 #~ msgid "Service start"

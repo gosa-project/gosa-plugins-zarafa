@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 15:04+0100\n"
+"POT-Creation-Date: 2008-12-19 08:29+0100\n"
 "PO-Revision-Date: 2008-10-09 15:27+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
@@ -13,6 +13,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
+#: admin/systems/services/dns/servdns.tpl:5
+msgid "DNS take over initiated"
+msgstr "Démarrage de la prise de contrôle du DNS"
+
+#: admin/systems/services/dns/servdns.tpl:7
+msgid ""
+"This includes 'all' DNS zones that are located within this server. Please "
+"double check if your really want to do this."
+msgstr ""
+"Ceci inclus toutes les zones DNS qui sont situées dans ce serveur. Veuillez "
+"vérifier que vous voulez réaliser cette opération."
+
+#: admin/systems/services/dns/servdns.tpl:14
+msgid "Following objects will be taken over"
+msgstr "L'on prendra le contrôle sur les objets suivants"
+
+#: admin/systems/services/dns/servdns.tpl:27
+msgid "Take over DNS configuration from"
+msgstr "Prendre le contrôle sur la configuration DNS depuis"
+
+#: admin/systems/services/dns/servdns.tpl:31
+msgid "Take over"
+msgstr "Prise de contrôle"
+
+#: admin/systems/services/dns/servdns.tpl:37
+msgid "Zones"
+msgstr "Zones"
 
 #: admin/systems/services/dns/class_servDNSeditZone.inc:249
 #: admin/systems/services/dns/class_servDNS.inc:184
@@ -105,6 +133,31 @@ msgstr "Classe réseau"
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:453
 msgid "Add"
 msgstr "Ajouter"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
+msgid ""
+"This dialog allows you to configure all components of this DNS zone on a "
+"single list."
+msgstr ""
+"Ce dialogue vous permet de configurer tout les composants d'une zone DNS "
+"dans une simple liste."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
+msgid ""
+"This dialog can't be used until the currently edited zone was saved or the "
+"zone entry exists in the ldap database."
+msgstr ""
+"Cette boite de dialogue ne peut pas être tant que la zone n'a pas été sauvée "
+"ou que l'enregistrement existe dans la base de données ldap."
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
+msgid "New entry"
+msgstr "Nouvelle entrée"
+
+#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
+msgid "Create a new DNS zone entry"
+msgstr "Créer une nouvelle zone DNS"
 
 #: admin/systems/services/dns/class_servDNS.inc:31
 #: admin/systems/services/dns/class_servDNS.inc:547
@@ -211,11 +264,6 @@ msgstr "Enregistrements MX"
 msgid "Zone records"
 msgstr "Enregistrement de zone"
 
-#: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:107
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "New entry"
-msgstr "Nouvelle entrée"
-
 #: admin/systems/services/dns/class_servDNSeditZoneEntries.inc:221
 #, php-format
 msgid "Cannot rename '%s' to '%s'. Name is already in use!"
@@ -261,6 +309,25 @@ msgstr ""
 msgid "Remove"
 msgstr "Supprimer"
 
+#: admin/systems/services/dns/class_DNS.inc:161
+#, php-format
+msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
+msgstr ""
+"Impossible de trouver la zone inverse pour la zone dns '%s'. Arrêt de la "
+"lecture de la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:166
+#, php-format
+msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
+msgstr ""
+"Plus d'un zone inverse existe pour la zone dns '%s'. Arrêt de la lecture de "
+"la zone."
+
+#: admin/systems/services/dns/class_DNS.inc:628
+#, php-format
+msgid "Undefined zone name '%s'!"
+msgstr "Nom de zone non définie '%s' !"
+
 #: admin/systems/services/dns/servdnseditzone.tpl:1
 msgid "Generic"
 msgstr "Informations"
@@ -301,70 +368,3 @@ msgstr "Enregistrements mx"
 #: admin/systems/services/dns/servdnseditzone.tpl:165
 msgid "Global zone records"
 msgstr "Enregistrements pour la zone globale"
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:1
-msgid ""
-"This dialog allows you to configure all components of this DNS zone on a "
-"single list."
-msgstr ""
-"Ce dialogue vous permet de configurer tout les composants d'une zone DNS "
-"dans une simple liste."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:5
-msgid ""
-"This dialog can't be used until the currently edited zone was saved or the "
-"zone entry exists in the ldap database."
-msgstr ""
-"Cette boite de dialogue ne peut pas être tant que la zone n'a pas été sauvée "
-"ou que l'enregistrement existe dans la base de données ldap."
-
-#: admin/systems/services/dns/servDNSeditZoneEntries.tpl:13
-msgid "Create a new DNS zone entry"
-msgstr "Créer une nouvelle zone DNS"
-
-#: admin/systems/services/dns/servdns.tpl:5
-msgid "DNS take over initiated"
-msgstr "Démarrage de la prise de contrôle du DNS"
-
-#: admin/systems/services/dns/servdns.tpl:7
-msgid ""
-"This includes 'all' DNS zones that are located within this server. Please "
-"double check if your really want to do this."
-msgstr ""
-"Ceci inclus toutes les zones DNS qui sont situées dans ce serveur. Veuillez "
-"vérifier que vous voulez réaliser cette opération."
-
-#: admin/systems/services/dns/servdns.tpl:14
-msgid "Following objects will be taken over"
-msgstr "L'on prendra le contrôle sur les objets suivants"
-
-#: admin/systems/services/dns/servdns.tpl:27
-msgid "Take over DNS configuration from"
-msgstr "Prendre le contrôle sur la configuration DNS depuis"
-
-#: admin/systems/services/dns/servdns.tpl:31
-msgid "Take over"
-msgstr "Prise de contrôle"
-
-#: admin/systems/services/dns/servdns.tpl:37
-msgid "Zones"
-msgstr "Zones"
-
-#: admin/systems/services/dns/class_DNS.inc:161
-#, php-format
-msgid "Cannot find reverse zone for DNS zone '%s'. Parsing zone aborted."
-msgstr ""
-"Impossible de trouver la zone inverse pour la zone dns '%s'. Arrêt de la "
-"lecture de la zone."
-
-#: admin/systems/services/dns/class_DNS.inc:166
-#, php-format
-msgid "Found more than one reverse zone for '%s'. Parsing zone aborted."
-msgstr ""
-"Plus d'un zone inverse existe pour la zone dns '%s'. Arrêt de la lecture de "
-"la zone."
-
-#: admin/systems/services/dns/class_DNS.inc:628
-#, php-format
-msgid "Undefined zone name '%s'!"
-msgstr "Nom de zone non définie '%s' !"
