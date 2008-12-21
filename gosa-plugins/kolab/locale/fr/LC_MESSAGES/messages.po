@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-19 08:52+0100\n"
-"PO-Revision-Date: 2008-10-09 15:45+0200\n"
+"PO-Revision-Date: 2008-12-21 11:59+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,9 +30,8 @@ msgstr "Administrateur Cyrus"
 
 #: admin/systems/services/kolab/servkolab.tpl:27
 #: admin/systems/services/kolab/class_servKolab.inc:327
-#, fuzzy
 msgid "Mail domains"
-msgstr "dans le domaine"
+msgstr ""
 
 #: admin/systems/services/kolab/servkolab.tpl:27
 msgid "Postfix mydestination"
@@ -130,8 +129,7 @@ msgstr "Accepter le courrier électronique venant d'internet"
 
 #: admin/systems/services/kolab/servkolab.tpl:235
 msgid "Accept mail from other domains over non-authenticated SMTP"
-msgstr ""
-"Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
+msgstr "Accepter les messages sur du SMTP non authentifié venant d'autre domaines"
 
 #: admin/systems/services/kolab/class_servKolab.inc:107
 #, php-format
@@ -270,8 +268,7 @@ msgstr "Anonyme"
 #: personal/connectivity/kolab/class_kolabAccount.inc:351
 #: personal/connectivity/kolab/class_kolabAccount.inc:354
 msgid "Free Busy future"
-msgstr ""
-"Nombre de jours dans le futur à calculer pour l'option de disponibilité"
+msgstr "Nombre de jours dans le futur à calculer pour l'option de disponibilité"
 
 #: personal/connectivity/kolab/class_kolabAccount.inc:359
 #: personal/connectivity/kolab/class_kolabAccount.inc:362
@@ -366,29 +363,27 @@ msgstr "jours"
 #: personal/mail/kolab/class_mail-methods-kolab.inc:103
 #: personal/mail/kolab/class_mail-methods-kolab.inc:104
 msgid "Unspecified"
-msgstr ""
+msgstr "Non spécifié"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:96
-#, fuzzy
 msgid "Mails"
 msgstr "Messagerie"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:97
 msgid "Tasks"
-msgstr ""
+msgstr "Tâches"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:98
 msgid "Journals"
-msgstr ""
+msgstr "Journaux"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:99
 msgid "Calendar"
-msgstr ""
+msgstr "Calendrier"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:100
-#, fuzzy
 msgid "Contacts"
-msgstr "Contenu"
+msgstr "Carnet d'adresses"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:101
 msgid "Notes"
@@ -396,15 +391,15 @@ msgstr ""
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:105
 msgid "Inbox"
-msgstr ""
+msgstr "Boite de réception"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:106
 msgid "Drafts"
-msgstr ""
+msgstr "Brouillons"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:107
 msgid "Sent"
-msgstr ""
+msgstr "Messages Envoyés"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:108
 msgid "SPAM"
@@ -416,19 +411,17 @@ msgstr ""
 #: personal/mail/kolab/class_mail-methods-kolab.inc:113
 #: personal/mail/kolab/class_mail-methods-kolab.inc:114
 msgid "Default"
-msgstr ""
+msgstr "Défaut"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:129
 msgid "Mail settings cannot be removed while there are delegations configured!"
-msgstr ""
+msgstr "Les paramètres de la messagerie de peuvent pas être supprimé quand des délégations sont actives !"
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:227
 msgid "Waiting for kolab to remove mail properties..."
-msgstr ""
+msgstr "En attente de kolab pour la suppression des paramètres de messagerie..."
 
 #: personal/mail/kolab/class_mail-methods-kolab.inc:230
 msgid "Please remove the mail settings first!"
-msgstr ""
+msgstr "Veuillez d'abord supprimer les paramètres de messagerie !"
 
-#~ msgid "Primary mail address"
-#~ msgstr "Adresse de messagerie principale"

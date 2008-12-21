@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-19 08:35+0100\n"
-"PO-Revision-Date: 2008-11-30 19:54+0100\n"
+"PO-Revision-Date: 2008-12-21 12:35+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -105,9 +105,8 @@ msgid "More than one Opsi server were found, using the first result '%s'."
 msgstr "Plus d'un serveur Opsi on été trouvés, j'utilise le premier '%s'."
 
 #: admin/opsi/class_opsi.inc:155
-#, fuzzy
 msgid "Service infrastructure"
-msgstr "Erreur d'infrastructure"
+msgstr "Infrastructure de service"
 
 #: admin/opsi/class_opsigeneric.inc:217
 msgid "The field 'Name' must contain a domain part!"
@@ -166,3 +165,4 @@ msgstr "Produits"
 #: admin/opsi/class_opsiProperties.inc:108
 msgid "Product properties"
 msgstr "Propriétés du produit"
+

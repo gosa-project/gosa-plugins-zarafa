@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-19 09:00+0100\n"
-"PO-Revision-Date: 2008-12-03 23:10+0100\n"
+"PO-Revision-Date: 2008-12-21 12:31+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -346,8 +346,7 @@ msgstr "Activer l'utilisation de Pyzor"
 
 #: admin/systems/services/spam/goSpamServer.tpl:22
 msgid "Select required score to tag mail as spam"
-msgstr ""
-"Sélectionner le score requis pour marquer ce message comme étant un spam"
+msgstr "Sélectionner le score requis pour marquer ce message comme étant un spam"
 
 #: admin/systems/services/spam/goSpamServer.tpl:48
 #: admin/systems/services/mail/goMailServer.tpl:73
@@ -646,14 +645,12 @@ msgid "Member permission"
 msgstr "Permission des membres"
 
 #: admin/groups/mail/mail.tpl:163
-#, fuzzy
 msgid "Hide"
-msgstr "Entête"
+msgstr "Cacher"
 
 #: admin/groups/mail/mail.tpl:165
-#, fuzzy
 msgid "Show"
-msgstr "Afficher %s"
+msgstr "Afficher"
 
 #: admin/groups/mail/mail.tpl:187 personal/mail/generic.tpl:303
 msgid "Advanced mail options"
@@ -765,33 +762,30 @@ msgstr "Choisir"
 #: personal/mail/class_mailAccount.inc:1000
 #: personal/mail/class_mailAccount.inc:1004
 #: personal/mail/class_mailAccount.inc:1018
-#, fuzzy
 msgid "Mail error"
-msgstr "Serveur de messagerie"
+msgstr "Erreur du serveur de messagerie"
 
 #: admin/groups/mail/class_groupMail.inc:111
 #: personal/mail/class_mailAccount.inc:147
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot read quota settings: %s"
-msgstr "Impossible de stocker les paramètres sur le serveur IMAP !"
+msgstr "Impossible de lire les paramètres de quota : %s"
 
 #: admin/groups/mail/class_groupMail.inc:118
 #: personal/mail/class_mailAccount.inc:154
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot get list of mailboxes: %s"
-msgstr ""
-"Impossible de modifier le quota de la boite de messagerie IMAP. Le serveur "
-"répond %s."
+msgstr "Impossible d'obtenir la liste des comptes de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:125
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot receive folder types: %s"
-msgstr "Activer les permissions du dossier partagé IMAP"
+msgstr "Impossible d'obtenir les types de dossiers: %s"
 
 #: admin/groups/mail/class_groupMail.inc:132
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot receive folder permissions: %s"
-msgstr "Activer les permissions du dossier partagé IMAP"
+msgstr "Impossible d'obtenir les permissions du dossier : %s"
 
 #: admin/groups/mail/class_groupMail.inc:137
 #: admin/groups/mail/class_groupMail.inc:543
@@ -807,7 +801,7 @@ msgstr ""
 #: personal/mail/class_mailAccount.inc:162
 #, php-format
 msgid "Mailbox '%s' doesn't exists on mail server: %s"
-msgstr ""
+msgstr "Le compte de messagerie '%s' n'existe pas sur le serveur de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:297
 msgid ""
@@ -843,41 +837,38 @@ msgstr "L'adresse entrée est déjà utilisée par l'utilisateur '%s'."
 
 #: admin/groups/mail/class_groupMail.inc:547
 #: personal/mail/class_mailAccount.inc:928
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot remove mailbox: %s"
-msgstr ""
-"Impossible de supprimer la boite de messagerie IMAP. Le serveur répond %s"
+msgstr "Impossible de supprimer le compte de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:551
 #: admin/groups/mail/class_groupMail.inc:790
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot update shared folder permissions: %s"
-msgstr "Activer les permissions du dossier partagé IMAP"
+msgstr "Impossible de mettre à jour les permissions sur le dossier partagé: %s"
 
 #: admin/groups/mail/class_groupMail.inc:649
-#, fuzzy
 msgid "New"
-msgstr "Ajouter un nouveau"
+msgstr "Nouveau"
 
 #: admin/groups/mail/class_groupMail.inc:777
 #: personal/mail/class_mailAccount.inc:1000
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot update mailbox: %s"
-msgstr ""
-"Impossible de créer la boite de messagerie IMAP. Le serveur indique %s."
+msgstr "Impossible de mettre à jour le compte de messagerie : %s"
 
 #: admin/groups/mail/class_groupMail.inc:781
 #: personal/mail/class_mailAccount.inc:1004
-#, fuzzy, php-format
+#, php-format
 msgid "Cannot write quota settings: %s"
-msgstr "Impossible d'écrire le fichier de revision !"
+msgstr "Impossible d'écrire les quotas : %s"
 
 #: admin/groups/mail/class_groupMail.inc:822
 #, php-format
 msgid ""
 "The group 'cn' has changed. It can't be changed due to the fact that mail "
 "method '%s' relies on it!"
-msgstr ""
+msgstr "Le 'cn' du group a été changé. Il ne peut pas changer car la méthode de messagerie '%s' est dépendante de ce 'cn' !"
 
 #: admin/groups/mail/class_groupMail.inc:856
 #: personal/mail/class_mailAccount.inc:1434
@@ -947,8 +938,7 @@ msgid "No delivery to own mailbox"
 msgstr "Aucune distribution des messages dans la boite de l'utilisateur"
 
 #: personal/mail/generic.tpl:151
-msgid ""
-"Select to automatically response with the vacation message defined below"
+msgid "Select to automatically response with the vacation message defined below"
 msgstr ""
 "Indiquez la réponse automatique en remplissant le message d'absence ci-"
 "dessous"
@@ -974,7 +964,6 @@ msgid "Move mails tagged with spam level greater than"
 msgstr "Déplacer les messages ayant un niveau de spam supérieur à"
 
 #: personal/mail/generic.tpl:219
-#, fuzzy
 msgid "Choose spam level - smaller values are more sensitive"
 msgstr ""
 "Sélectionnez le niveau de spam - une valeur basse implique une plus grande "
@@ -1027,8 +1016,7 @@ msgstr "L'analyse à réussi"
 
 #: personal/mail/sieve/class_sieveManagement.inc:156
 #, php-format
-msgid ""
-"The specified mail server '%s' does not exist within the GOsa configuration."
+msgid "The specified mail server '%s' does not exist within the GOsa configuration."
 msgstr ""
 "Le serveur de messagerie spécifié '%s' n'existe pas dans la configuration de "
 "GOsa."
@@ -1043,8 +1031,7 @@ msgstr "Veuillez seulement utiliser des nom de script en miniscules !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:212
 msgid "Please use only alphabetical characters in script names!"
-msgstr ""
-"Seul des caractères alphabétiques sont permis dans le nom des scripts !"
+msgstr "Seul des caractères alphabétiques sont permis dans le nom des scripts !"
 
 #: personal/mail/sieve/class_sieveManagement.inc:218
 msgid "Script name already in use!"
@@ -1680,8 +1667,7 @@ msgstr ""
 "d'authentification est vide."
 
 #: personal/mail/sieve/templates/management.tpl:6
-msgid ""
-"Please verify that the attributes uid and mail are not empty and try again."
+msgid "Please verify that the attributes uid and mail are not empty and try again."
 msgstr ""
 "Veuillez vérifier que les attributs uid et mail ne sont pas vide et "
 "réessayer."
@@ -1832,14 +1818,11 @@ msgid "Please specify a valid operator."
 msgstr "Veuillez spécifier un opérateur valide."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:654
-msgid ""
-"Invalid character found in address attribute. Quotes are not allowed here."
-msgstr ""
-"Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
+msgid "Invalid character found in address attribute. Quotes are not allowed here."
+msgstr "Caractère non valide dans l'adresse. Les guillemets sont interdits ici."
 
 #: personal/mail/sieve/class_sieveElement_If.inc:669
-msgid ""
-"Invalid character found in value attribute. Quotes are not allowed here."
+msgid "Invalid character found in value attribute. Quotes are not allowed here."
 msgstr ""
 "Caractère non valide trouvé dans l'attribut. Les guillemets ne sont pas "
 "permis ici."
@@ -1931,9 +1914,8 @@ msgstr "Vous n'avez pas les droits nécessaires pour modifier ces adresses !"
 
 #: personal/mail/class_mailAccount.inc:755
 #: personal/mail/class_mailAccount.inc:758
-#, fuzzy
 msgid "unknown"
-msgstr "Inconnu"
+msgstr "inconnu"
 
 #: personal/mail/class_mailAccount.inc:1122
 #: personal/mail/class_mailAccount.inc:1130
@@ -2003,7 +1985,7 @@ msgstr "Configuration du compte de messagerie de l'utilisateur"
 #: personal/mail/class_mail-methods.inc:132
 #, php-format
 msgid "The configured mail attribute '%s' is unsupported!"
-msgstr ""
+msgstr "L'attribut de messagerie '%s' n'est pas supporté !"
 
 #: personal/mail/class_mail-methods.inc:463
 #, php-format
@@ -2012,22 +1994,20 @@ msgstr "Le méthode de messagerie '%s' est inconnue !"
 
 #: personal/mail/class_mail-methods.inc:689
 #: personal/mail/class_mail-methods.inc:690
-#, fuzzy
 msgid "None"
-msgstr "aucun"
+msgstr "Aucun"
 
 #: personal/mail/class_mail-methods.inc:779
 msgid "Unknown"
 msgstr "Inconnu"
 
 #: personal/mail/class_mail-methods.inc:781
-#, fuzzy
 msgid "Unlimited"
-msgstr "pas de limites"
+msgstr "Illimités"
 
 #: personal/mail/class_mail-methods-cyrus.inc:39
 msgid "There are no IMAP compatible mail servers defined!"
-msgstr ""
+msgstr "Il n'y a aucun serveur IMAP compatibles définis !"
 
 #: personal/mail/class_mail-methods-cyrus.inc:44
 msgid "Mail server for this account is invalid!"
@@ -2046,9 +2026,8 @@ msgstr ""
 
 #: personal/mail/class_mail-methods-cyrus.inc:354
 #: personal/mail/class_mail-methods-cyrus.inc:391
-#, fuzzy
 msgid "The module imap_getacl is not implemented!"
-msgstr "Impossible d'enlever les ACL IMAP:  imap_getacl n'est pas implementé !"
+msgstr "Le module imap_getacl n'est pas implémenté !"
 
 #: personal/mail/class_mail-methods-cyrus.inc:563
 #, php-format
@@ -2250,150 +2229,3 @@ msgstr "entête"
 msgid "Display header of this message"
 msgstr "Afficher l'entête de ce message"
 
-#, fuzzy
-#~ msgid "Cannot connect mail method: %s"
-#~ msgstr "Impossible de trouver la méthode de messagerie '%s' !"
-
-#, fuzzy
-#~ msgid "Cannot remove mailbox: %s."
-#~ msgstr ""
-#~ "Impossible de supprimer la boite de messagerie IMAP. Le serveur répond %s"
-
-#, fuzzy
-#~ msgid "Cannot update mailbox: %s."
-#~ msgstr ""
-#~ "Impossible de créer la boite de messagerie IMAP. Le serveur indique %s."
-
-#, fuzzy
-#~ msgid "Cannot write quota settings: %s."
-#~ msgstr "Impossible d'écrire le fichier de revision !"
-
-#, fuzzy
-#~ msgid "Cannot get list of mailboxes! Error was: %s."
-#~ msgstr ""
-#~ "Impossible de modifier le quota de la boite de messagerie IMAP. Le "
-#~ "serveur répond %s."
-
-#, fuzzy
-#~ msgid "Cannot connect mail method! Error was: %s."
-#~ msgstr "Impossible de trouver la méthode de messagerie '%s' !"
-
-#, fuzzy
-#~ msgid "Cannot remove mailbox! Error was: %s."
-#~ msgstr ""
-#~ "Impossible de supprimer la boite de messagerie IMAP. Le serveur répond %s"
-
-#, fuzzy
-#~ msgid "Cannot update mailbox! Error was: %s."
-#~ msgstr ""
-#~ "Impossible de créer la boite de messagerie IMAP. Le serveur indique %s."
-
-#, fuzzy
-#~ msgid "Specify the mail server where the user will  be hosted on"
-#~ msgstr "Indiquez le serveur de messagerie de l'utilisateur"
-
-#~ msgid "Multiple edit"
-#~ msgstr "Edition multiple"
-
-#~ msgid "Select mail server to place user on"
-#~ msgstr ""
-#~ "Sélectionner le serveur de messagerie sur lequel sera créé l'utilisateur"
-
-#~ msgid "not defined"
-#~ msgstr "non défini"
-
-#~ msgid "read"
-#~ msgstr "lecture"
-
-#~ msgid "post"
-#~ msgstr "envoyer"
-
-#~ msgid "external post"
-#~ msgstr "envoi externe"
-
-#~ msgid "append"
-#~ msgstr "ajouter"
-
-#~ msgid "write"
-#~ msgstr "écrire"
-
-#~ msgid "admin"
-#~ msgstr "administrateur"
-
-#~ msgid "mail"
-#~ msgstr "messagerie"
-
-#~ msgid "forward address"
-#~ msgstr "adresse de transfert"
-
-#~ msgid "Cannot forward to users own mail address!"
-#~ msgstr "Impossible de transférér des messages vers soi même !"
-
-#~ msgid "Alternate address"
-#~ msgstr "Adresses alternatives"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Unspecified"
-#~ msgstr "Non défini"
-
-#~ msgid "Mails"
-#~ msgstr "Messagerie"
-
-#~ msgid "Tasks"
-#~ msgstr "Tâche"
-
-#~ msgid "Journals"
-#~ msgstr "Journaux"
-
-#~ msgid "Calendar"
-#~ msgstr "Calendrier"
-
-#~ msgid "Contacts"
-#~ msgstr "Contacts"
-
-#~ msgid "Notes"
-#~ msgstr "Notes"
-
-#~ msgid "Inbox"
-#~ msgstr "Boîte de réception"
-
-#~ msgid "Drafts"
-#~ msgstr "Brouillons"
-
-#~ msgid "Sent items"
-#~ msgstr "Messages envoyés"
-
-#~ msgid "Junk mail"
-#~ msgstr "Messages indésirables"
-
-#~ msgid ""
-#~ "Please choose valid permission settings. Default permission can't be "
-#~ "emtpy."
-#~ msgstr ""
-#~ "Veuillez choisir des permissions valables. Les permissions par défaut ne "
-#~ "peuvent pas être vides."
-
-#~ msgid "Mail options"
-#~ msgstr "Options de messagerie"
-
-#~ msgid ""
-#~ "Mail settings cannot be removed while there are delegations configured!"
-#~ msgstr ""
-#~ "Les paramètres de messagerie ne peut pas être effacé tant qu'il y à des "
-#~ "délégations actives !"
-
-#~ msgid "Waiting for kolab to remove mail properties..."
-#~ msgstr "En attente de l'effacement des propriétés de messagerie par kolab."
-
-#~ msgid ""
-#~ "Please remove the mail settings first to allow kolab to call its remove "
-#~ "methods!"
-#~ msgstr ""
-#~ "Veuillez effacer en premier lieu le compte de messagerie pour permettre a "
-#~ "kolab d'appeler sa procédure d'effacement !"
-
-#~ msgid "Cannot retrieve IMAP ACL: imap_getacl not implemented!"
-#~ msgstr ""
-#~ "Impossible d'obtenir les ACL IMAP:  imap_getacl n'est pas implementé !"
