@@ -290,9 +290,6 @@
     <input id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-    <input id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
-{/render}
-{render acl=$gosaMailForwardingAddressACL}
     <input id='delete_forwarder' type="submit" value="{msgPool type=delButton}" name="delete_forwarder">
 {/render}
    </td>
