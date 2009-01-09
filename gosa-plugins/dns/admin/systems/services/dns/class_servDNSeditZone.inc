@@ -388,7 +388,7 @@ class servdnseditZone extends plugin
           $this->Records[$id]['type'] = $_POST['RecordTypeSelectedFor_'.$id];
         }
         if(isset($_POST['RecordValue_'.$id])){
-          $this->Records[$id]['value'] = $_POST['RecordValue_'.$id];
+          $this->Records[$id]['value'] = get_post('RecordValue_'.$id);
         }
       }
     }

@@ -92,7 +92,6 @@ class servDNSeditZoneEntries extends plugin
 
       /* Add a new Record in given object  
        */
-      
       $tmp    = preg_replace("/^.*_(.*)_.*$/","\\1",$name);
       $tmp2   = split("\|",$tmp);
 
@@ -162,7 +161,7 @@ class servDNSeditZoneEntries extends plugin
          
           /* Update value */ 
           $old = $this->Devices[$Name]['RECORDS'][$RecordID]['value'];
-          $this->Devices[$Name]['RECORDS'][$RecordID]['value'] = $value;
+          $this->Devices[$Name]['RECORDS'][$RecordID]['value'] = get_post($name);
 
           /* Handle pTRRecord */
           if(!isset($ptr_updates[$Name]) && $this->Devices[$Name]['RECORDS'][$RecordID]['type'] == "aRecord"){
