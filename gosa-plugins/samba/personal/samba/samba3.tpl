@@ -26,7 +26,8 @@
      <td><label for="sambaDomainName">{t}Domain{/t}</label></td>
      <td>
 {render acl=$sambaDomainNameACL  checkbox=$multiple_support checked=$use_sambaDomainName}
-      <select id="sambaDomainName" size="1" name="sambaDomainName">
+      <select id="sambaDomainName" size="1" name="sambaDomainName"
+       {if $display_informations} onChange="document.mainform.submit();" {/if}>
        {html_options values=$domains output=$domains selected=$sambaDomainName}
       </select>
 {/render}

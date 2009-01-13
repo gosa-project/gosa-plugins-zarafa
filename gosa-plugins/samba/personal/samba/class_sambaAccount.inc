@@ -792,7 +792,7 @@ class sambaAccount extends plugin
     }elseif($sambaLockoutDuration == -1){
       $sambaLockoutDuration = _("forever");
     }else{
-      $sambaLockoutDuration .= _("minutes");
+      $sambaLockoutDuration .= " "._("minutes");
     }
 
     /* Time of the last bad password attempt
@@ -825,7 +825,6 @@ class sambaAccount extends plugin
       $sambaRefuseMachinePwdChange = _("on");
     }
     
-
     $str =
       "\n<table>".
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
