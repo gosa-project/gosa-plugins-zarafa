@@ -32,6 +32,23 @@
 {/render}
      </td>
     </tr>
+    <tr>
+     <td>{t}Informations{/t}</td>
+     <td>
+      {if $display_informations}
+      <input type='submit' name='display_informations' value='{t}Hide{/t}'>
+      {else}
+      <input type='submit' name='display_informations' value='{t}Show{/t}'>
+      {/if}
+     </td>
+    </tr>
+    <tr>
+     <td colspan="2">
+     {if $display_informations}
+		{$samba_informations}
+     {/if}
+     <td>
+    </tr>
    </table>
   </td>
   <td style="border-left:1px solid #A0A0A0">

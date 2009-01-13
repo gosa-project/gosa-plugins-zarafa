@@ -30,6 +30,9 @@ class sambaAccount extends plugin
   var $uidNumber= 65535;
   var $gidNumber= 65535;
 
+  /* Samba 3 infos */
+  var $display_informations = FALSE;
+
   /* Samba 2 attributes */
   var $pwdLastSet= "0";
   var $logonTime= "0";
@@ -691,6 +694,13 @@ class sambaAccount extends plugin
     /* Show main page */
     $smarty->assign("multiple_support",$this->multiple_support_active);
     if ($this->samba3){
+
+      $smarty->assign("samba_informations","");
+      $smarty->assign("display_informations",$this->display_informations);
+      if($this->display_informations){
+        $smarty->assign("samba_informations",$this->get_samba_informations());
+      }
+
       $display.= $smarty->fetch (get_template_path('samba3.tpl', TRUE, dirname(__FILE__)));
     } else {
       $display.= $smarty->fetch (get_template_path('samba2.tpl', TRUE, dirname(__FILE__)));
@@ -698,6 +708,140 @@ class sambaAccount extends plugin
 
     return ($display);
   }
+
+
+  function get_samba_informations()
+  {
+
+    /* Defaults 
+     */
+    $sambaMinPwdLength = "unset";
+    $sambaPwdHistoryLength = "unset";
+    $sambaLogonToChgPwd = "unset";
+    $sambaMaxPwdAge = "unset";
+    $sambaMinPwdAge = "unset";
+    $sambaLockoutDuration = "unset";
+    $sambaBadPasswordTime = "unset";
+    $sambaLockoutThreshold = "unset";
+    $sambaForceLogoff = "unset";
+    $sambaRefuseMachinePwdChange = "unset";
+
+
+    /* Get samba SID object and parse settings.
+     */  
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    if(!empty($this->sambaDomainName) && isset($this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName])){
+      $cfg = $this->config->data['SERVERS']['SAMBA'][$this->sambaDomainName];
+      $ldap->search("(&(objectClass=sambaDomain)(sambaSID=".$cfg['SID']."))",array("*"));
+      if($ldap->count() >= 1){
+        $attrs = $ldap->fetch();
+        $attributes = array("sambaMinPwdLength","sambaPwdHistoryLength","sambaMaxPwdAge","sambaMinPwdAge","sambaLockoutDuration","sambaRefuseMachinePwdChange","sambaLogonToChgPwd","sambaBadPasswordTime","sambaLockoutThreshold","sambaForceLogoff");
+        foreach($attributes as $attr){
+          if(isset($this->$attr) && $this->$attr != ""){
+            $$attr = $this->$attr;
+          }elseif(isset($this->attrs[$attr])){
+            $$attr = $this->attrs[$attr][0];
+          }elseif(isset($attrs[$attr])){
+            $$attr = $attrs[$attr][0];
+          }
+        }
+      }
+    }
+
+    /* Password length has a default of 5 
+     */
+    if($sambaMinPwdLength == "unset" || $sambaMinPwdLength == 5){
+      $sambaMinPwdLength  = "5 <i>("._("default").")</i>";
+    }
+
+    /* Length of Password History Entries (default: 0 => off)
+     */
+    if($sambaPwdHistoryLength == "unset" || $sambaPwdHistoryLength == 0){
+      $sambaPwdHistoryLength = _("Off")." <i>("._("default").")</i>";
+    }
+
+    /* Force Users to logon for password change (default: 0 => off, 2 => on) 
+     */
+    if($sambaLogonToChgPwd == "unset" || $sambaLogonToChgPwd == 0){
+      $sambaLogonToChgPwd = _("Off")." <i>("._("default").")</i>";
+    }else{
+      $sambaLogonToChgPwd = _("On");
+    }
+    
+    /* Maximum password age, in seconds (default: -1 => never expire passwords)'
+     */
+    if($sambaMaxPwdAge == "unset" || $sambaMaxPwdAge == "-1"){
+      $sambaMaxPwdAge = _("disabled")." <i>("._("default").")</i>";
+    }else{
+      $sambaMaxPwdAge .= " "._("seconds"); 
+    }
+
+    /* Minimum password age, in seconds (default: 0 => allow immediate password change
+     */
+    if($sambaMinPwdAge == "unset" || $sambaMinPwdAge == 0){
+      $sambaMinPwdAge = _("disabled")." <i>("._("default").")</i>";
+    }else{
+      $sambaMinPwdAge .= " "._("seconds"); 
+    }
+
+    /* Lockout duration in minutes (default: 30, -1 => forever)
+     */
+    if($sambaLockoutDuration == "unset" || $sambaLockoutDuration == 30){
+      $sambaLockoutDuration = "30 "._("minutes")." <i>("._("default").")</i>";
+    }elseif($sambaLockoutDuration == -1){
+      $sambaLockoutDuration = _("forever");
+    }else{
+      $sambaLockoutDuration .= _("minutes");
+    }
+
+    /* Time of the last bad password attempt
+     */
+    if($sambaBadPasswordTime == "none" || empty($sambaBadPasswordTime)){
+      $sambaBadPasswordTime = "<i>("._("unset").")</i>";
+    }else{
+      $sambaBadPasswordTime = date("d.m.Y H:i:s",$sambaBadPasswordTime);
+    }
+
+    /* Lockout users after bad logon attempts (default: 0 => off
+     */
+    if($sambaLockoutThreshold == "unset" || $sambaLockoutThreshold == 0){
+      $sambaLockoutThreshold = _("disabled")." <i>("._("default").")</i>";
+    }
+
+    /* Disconnect Users outside logon hours (default: -1 => off, 0 => on 
+     */
+    if($sambaForceLogoff == "unset" || $sambaForceLogoff == -1){
+      $sambaForceLogoff = _("off")." <i>("._("default").")</i>";
+    }else{
+      $sambaForceLogoff = _("on");
+    }
+
+    /* Allow Machine Password changes (default: 0 => off
+     */
+    if($sambaRefuseMachinePwdChange == "none" || $sambaRefuseMachinePwdChange == 0){
+      $sambaRefuseMachinePwdChange = _("off")." <i>("._("default").")</i>";
+    }else{
+      $sambaRefuseMachinePwdChange = _("on");
+    }
+    
+
+    $str =
+      "\n<table>".
+      "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
+      "\n<tr><td>"._("Password history").":              </td><td>".$sambaPwdHistoryLength."</td></tr>".
+      "\n<tr><td>"._("Force password change").":         </td><td>".$sambaLogonToChgPwd."</td></tr>".
+      "\n<tr><td>"._("Maximum password age").":          </td><td>".$sambaMaxPwdAge."</td></tr>".
+      "\n<tr><td>"._("Minimum password age").":          </td><td>".$sambaMinPwdAge."</td></tr>".
+      "\n<tr><td>"._("Lockout duration").":              </td><td>".$sambaLockoutDuration."</td></tr>".
+      "\n<tr><td>"._("Reset count minutes").":           </td><td>".$sambaBadPasswordTime."</td></tr>".
+      "\n<tr><td>"._("Bad lockout attempt").":           </td><td>".$sambaLockoutThreshold."</td></tr>".
+      "\n<tr><td>"._("Disconnect time").":               </td><td>".$sambaForceLogoff."</td></tr>".
+      "\n<tr><td>"._("Refuse machine password change").":</td><td>".$sambaRefuseMachinePwdChange."</td></tr>".
+      "\n</table>";
+    return($str);
+  }
+
 
   function remove_from_parent()
   {
@@ -795,6 +939,10 @@ class sambaAccount extends plugin
     /* We only care if we are on the sambaTab... */
     if (isset($_POST['sambaTab'])){
       plugin::save_object();
+
+      if(isset($_POST['display_informations'])){
+        $this->display_informations = !$this->display_informations;
+      }
 
       /* Take care about access options */
       if ($this->acl_is_writeable("sambaAcctFlagsL",$SkipWrite) || ($this->acl_is_writeable("sambaAcctFlagsN",$SkipWrite))){
