@@ -27,26 +27,26 @@
      <td>
 {render acl=$sambaDomainNameACL  checkbox=$multiple_support checked=$use_sambaDomainName}
       <select id="sambaDomainName" size="1" name="sambaDomainName"
-       {if $display_informations} onChange="document.mainform.submit();" {/if}>
+       {if $display_information} onChange="document.mainform.submit();" {/if}>
        {html_options values=$domains output=$domains selected=$sambaDomainName}
       </select>
 {/render}
      </td>
     </tr>
     <tr>
-     <td>{t}Informations{/t}</td>
+     <td>{t}Information{/t}</td>
      <td>
-      {if $display_informations}
-      <input type='submit' name='display_informations' value='{t}Hide{/t}'>
+      {if $display_information}
+      <input type='submit' name='display_information' value='{t}Hide{/t}'>
       {else}
-      <input type='submit' name='display_informations' value='{t}Show{/t}'>
+      <input type='submit' name='display_information' value='{t}Show{/t}'>
       {/if}
      </td>
     </tr>
     <tr>
      <td colspan="2">
-     {if $display_informations}
-		{$samba_informations}
+     {if $display_information}
+		{$samba_information}
      {/if}
      <td>
     </tr>
