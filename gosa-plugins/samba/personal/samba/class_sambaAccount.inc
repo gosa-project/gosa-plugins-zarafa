@@ -924,8 +924,8 @@ class sambaAccount extends plugin
     }
 
     $str =
+      "\n<table style='width:100%;'><tr><td style='width:50%; border-right: solid 1px #B0B0B0;'>".
       "\n<table>".
-      "\n<tr><td>&nbsp;</td></tr>". 
       "\n<tr><td><b>"._("Domain attributes")."</b></td></tr>". 
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
       "\n<tr><td>"._("Min password length").":           </td><td>".$sambaMinPwdLength."</td></tr>". 
@@ -937,7 +937,7 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Bad lockout attempt").":           </td><td>".$sambaLockoutThreshold."</td></tr>".
       "\n<tr><td>"._("Disconnect time").":               </td><td>".$sambaForceLogoff."</td></tr>".
       "\n<tr><td>"._("Refuse machine password change").":</td><td>".$sambaRefuseMachinePwdChange."</td></tr>".
-      "\n<tr><td>&nbsp;</td></tr>". 
+      "\n</table></td><td style='vertical-align: top;'><table>".
       "\n<tr><td><b>"._("User attributes")."</b></td></tr>". 
       "\n<tr><td>"._("Last failed login").":             </td><td>".$sambaBadPasswordTime."</td></tr>".
       "\n<tr><td>"._("Logon attempts").":                </td><td>".$sambaBadPasswordCount."</td></tr>".
@@ -947,7 +947,7 @@ class sambaAccount extends plugin
       "\n<tr><td>"._("Automatic logoff").":              </td><td>".$sambaKickoffTime."</td></tr>".
       "\n<tr><td>"._("Password expires").":              </td><td>".$sambaPwdMustChange."</td></tr>".
       "\n<tr><td>"._("Password change available").":     </td><td>".$sambaPwdCanChange."</td></tr>".
-      "\n</table>";
+      "\n</table></td></tr></table>";
     return($str);
   }
 

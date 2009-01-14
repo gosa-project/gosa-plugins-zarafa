@@ -33,23 +33,6 @@
 {/render}
      </td>
     </tr>
-    <tr>
-     <td>{t}Information{/t}</td>
-     <td>
-      {if $display_information}
-      <input type='submit' name='display_information' value='{t}Hide{/t}'>
-      {else}
-      <input type='submit' name='display_information' value='{t}Show{/t}'>
-      {/if}
-     </td>
-    </tr>
-    <tr>
-     <td colspan="2">
-     {if $display_information}
-		{$samba_information}
-     {/if}
-     <td>
-    </tr>
    </table>
   </td>
   <td style="border-left:1px solid #A0A0A0">
@@ -78,6 +61,26 @@
  </tr>
 </table>
 
+<p class="seperator">&nbsp;</p>
+<h2>&nbsp;<img class="center" src='images/info_small.png'>&nbsp;{t}Information{/t}</h2>
+<table style='width:100%;'>
+ <tr>
+  <td>{t}Show information{/t}
+   {if $display_information}
+    <input type='submit' name='display_information' value='{t}Hide{/t}'>
+   {else}
+    <input type='submit' name='display_information' value='{t}Show{/t}'>
+   {/if}
+  </td> 
+ </tr>
+ {if $display_information}
+ <tr>
+  <td>
+    {$samba_information}
+  </td>
+ </tr>
+ {/if}
+</table>
 <p class="seperator">&nbsp;</p>
 
 <h2><img class="center" alt="" align="middle" src="plugins/samba/images/terminal_server.png" />&nbsp;{t}Terminal Server{/t}</h2>
